@@ -10,6 +10,7 @@ import type {
   DatetimeParts,
   Mode,
   StyleEventDetail,
+  TitleSelectedDatesFormatter,
 } from '../../interface';
 import { startFocusVisible } from '../../utils/focus-visible';
 import { getElementRoot, raf, renderHiddenInput } from '../../utils/helpers';
@@ -45,6 +46,7 @@ import {
   getPreviousWeek,
   getPreviousYear,
   getStartOfWeek,
+  validateParts,
 } from './utils/manipulation';
 import {
   clampDate,
@@ -322,6 +324,14 @@ export class Datetime implements ComponentInterface {
   @Prop() firstDayOfWeek = 0;
 
   /**
+   * A callback used to format the header text that shows how many
+   * dates are selected. Only used if there are 0 or more than 1
+   * selected (i.e. unused for exactly 1). By default, the header
+   * text is set to "numberOfDates days".
+   */
+  @Prop() titleSelectedDatesFormatter?: TitleSelectedDatesFormatter;
+
+  /**
    * If `true`, multiple dates can be selected at once. Only
    * applies to `presentation="date"` and `preferWheel="false"`.
    */
@@ -396,9 +406,8 @@ export class Datetime implements ComponentInterface {
 
   /**
    * If `true`, a header will be shown above the calendar
-   * picker. On `ios` mode this will include the
-   * slotted title, and on `md` mode this will include
-   * the slotted title and the selected date.
+   * picker. This will include both the slotted title, and
+   * the selected date.
    */
   @Prop() showDefaultTitle = false;
 
@@ -583,6 +592,19 @@ export class Datetime implements ComponentInterface {
   private setActiveParts = (parts: DatetimeParts, removeDate = false) => {
     const { multiple, activePartsClone, highlightActiveParts } = this;
 
+    /**
+     * When setting the active parts, it is possible
+     * to set invalid data. For example,
+     * when updating January 31 to February,
+     * February 31 does not exist. As a result
+     * we need to validate the active parts and
+     * ensure that we are only setting valid dates.
+     * Additionally, we need to update the working parts
+     * too in the event that the validated parts are different.
+     */
+    const validatedParts = validateParts(parts);
+    this.setWorkingParts(validatedParts);
+
     if (multiple) {
       /**
        * We read from activePartsClone here because valueChanged() only updates that,
@@ -595,20 +617,20 @@ export class Datetime implements ComponentInterface {
        */
       const activePartsArray = Array.isArray(activePartsClone) ? activePartsClone : [activePartsClone];
       if (removeDate) {
-        this.activeParts = activePartsArray.filter((p) => !isSameDay(p, parts));
+        this.activeParts = activePartsArray.filter((p) => !isSameDay(p, validatedParts));
       } else if (highlightActiveParts) {
-        this.activeParts = [...activePartsArray, parts];
+        this.activeParts = [...activePartsArray, validatedParts];
       } else {
         /**
          * If highlightActiveParts is false, that means we just have a
          * default value of today in activeParts; we need to replace that
          * rather than adding to it since it's just a placeholder.
          */
-        this.activeParts = [parts];
+        this.activeParts = [validatedParts];
       }
     } else {
       this.activeParts = {
-        ...parts,
+        ...validatedParts,
       };
     }
 
@@ -1156,9 +1178,8 @@ export class Datetime implements ComponentInterface {
   }
 
   private processValue = (value?: string | string[] | null) => {
-    const hasValue = !!value;
-    this.highlightActiveParts = hasValue;
-    let valueToProcess = parseDate(value || getToday());
+    const hasValue = (this.highlightActiveParts = value !== null && value !== undefined);
+    let valueToProcess = parseDate(value ?? getToday());
 
     const { minParts, maxParts, multiple } = this;
     if (!multiple && Array.isArray(value)) {
@@ -1454,9 +1475,10 @@ export class Datetime implements ComponentInterface {
      * If we have selected a day already, then default the column
      * to that value. Otherwise, default it to today.
      */
-    const todayString = workingParts.day
-      ? `${workingParts.year}-${workingParts.month}-${workingParts.day}`
-      : `${todayParts.year}-${todayParts.month}-${todayParts.day}`;
+    const todayString =
+      workingParts.day !== null
+        ? `${workingParts.year}-${workingParts.month}-${workingParts.day}`
+        : `${todayParts.year}-${todayParts.month}-${todayParts.day}`;
 
     return (
       <ion-picker-column-internal
@@ -1582,7 +1604,7 @@ export class Datetime implements ComponentInterface {
         class="day-column"
         color={this.color}
         items={days}
-        value={(workingParts.day || this.todayParts.day) ?? undefined}
+        value={(workingParts.day !== null ? workingParts.day : this.todayParts.day) ?? undefined}
         onIonChange={(ev: CustomEvent) => {
           // TODO(FW-1823) Remove this when iOS 14 support is dropped.
           // Due to a Safari 14 issue we need to destroy
@@ -1705,12 +1727,14 @@ export class Datetime implements ComponentInterface {
       return [];
     }
 
+    const valueIsDefined = this.value !== null && this.value !== undefined;
+
     const { hoursData, minutesData, dayPeriodData } = getTimeColumnsData(
       this.locale,
       this.workingParts,
       this.hourCycle,
-      this.value ? this.minParts : undefined,
-      this.value ? this.maxParts : undefined,
+      valueIsDefined ? this.minParts : undefined,
+      valueIsDefined ? this.maxParts : undefined,
       this.parsedHourValues,
       this.parsedMinuteValues
     );
@@ -2084,10 +2108,28 @@ export class Datetime implements ComponentInterface {
       </ion-popover>,
     ];
   }
-  private renderCalendarViewHeader(mode: Mode) {
+  private renderCalendarViewHeader() {
     const hasSlottedTitle = this.el.querySelector('[slot="title"]') !== null;
     if (!hasSlottedTitle && !this.showDefaultTitle) {
       return;
+    }
+
+    const { activeParts, titleSelectedDatesFormatter } = this;
+    const isArray = Array.isArray(activeParts);
+
+    let headerText: string;
+    if (isArray && activeParts.length !== 1) {
+      headerText = `${activeParts.length} days`; // default/fallback for multiple selection
+      if (titleSelectedDatesFormatter !== undefined) {
+        try {
+          headerText = titleSelectedDatesFormatter(convertDataToISO(activeParts));
+        } catch (e) {
+          printIonError('Exception in provided `titleSelectedDatesFormatter`: ', e);
+        }
+      }
+    } else {
+      // for exactly 1 day selected (multiple set or not), show a formatted version of that
+      headerText = getMonthAndDay(this.locale, isArray ? activeParts[0] : activeParts);
     }
 
     return (
@@ -2095,9 +2137,7 @@ export class Datetime implements ComponentInterface {
         <div class="datetime-title">
           <slot name="title">Select Date</slot>
         </div>
-        {mode === 'md' && !this.multiple && (
-          <div class="datetime-selected-date">{getMonthAndDay(this.locale, this.activeParts as DatetimeParts)}</div>
-        )}
+        <div class="datetime-selected-date">{headerText}</div>
       </div>
     );
   }
@@ -2150,7 +2190,7 @@ export class Datetime implements ComponentInterface {
     switch (presentation) {
       case 'date-time':
         return [
-          this.renderCalendarViewHeader(mode),
+          this.renderCalendarViewHeader(),
           this.renderCalendar(mode),
           this.renderCalendarViewMonthYearPicker(),
           this.renderTime(),
@@ -2158,7 +2198,7 @@ export class Datetime implements ComponentInterface {
         ];
       case 'time-date':
         return [
-          this.renderCalendarViewHeader(mode),
+          this.renderCalendarViewHeader(),
           this.renderTime(),
           this.renderCalendar(mode),
           this.renderCalendarViewMonthYearPicker(),
@@ -2172,7 +2212,7 @@ export class Datetime implements ComponentInterface {
         return [this.renderWheelView(), this.renderFooter()];
       default:
         return [
-          this.renderCalendarViewHeader(mode),
+          this.renderCalendarViewHeader(),
           this.renderCalendar(mode),
           this.renderCalendarViewMonthYearPicker(),
           this.renderFooter(),

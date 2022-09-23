@@ -155,7 +155,8 @@ export const getYear = (locale: string, refParts: DatetimeParts) => {
 };
 
 const getNormalizedDate = (refParts: DatetimeParts) => {
-  const timeString = !!refParts.hour && !!refParts.minute ? ` ${refParts.hour}:${refParts.minute}` : '';
+  const timeString =
+    refParts.hour !== undefined && refParts.minute !== undefined ? ` ${refParts.hour}:${refParts.minute}` : '';
 
   return new Date(`${refParts.month}/${refParts.day}/${refParts.year}${timeString} GMT+0000`);
 };
