@@ -210,7 +210,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     // appear as clickable to screen readers
     // https://github.com/ionic-team/ionic-framework/issues/22011
     const input = this.getFirstInput();
-    if (input && !this.clickListener) {
+    if (input !== undefined && !this.clickListener) {
       this.clickListener = (ev: Event) => this.delegateFocus(ev, input);
       this.el.addEventListener('click', this.clickListener);
     }
@@ -218,7 +218,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
 
   disconnectedCallback() {
     const input = this.getFirstInput();
-    if (input && this.clickListener) {
+    if (input !== undefined && this.clickListener) {
       this.el.removeEventListener('click', this.clickListener);
       this.clickListener = undefined;
     }

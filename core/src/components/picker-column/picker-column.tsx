@@ -351,7 +351,7 @@ export class PickerColumnCmp implements ComponentInterface {
       return;
     }
 
-    const selectedIndex = clamp(min, this.col.selectedIndex || 0, max);
+    const selectedIndex = clamp(min, this.col.selectedIndex ?? 0, max);
     if (this.col.prevSelected !== selectedIndex || forceRefresh) {
       const y = selectedIndex * this.optHeight * -1;
       this.velocity = 0;
