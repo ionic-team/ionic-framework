@@ -66,17 +66,6 @@ test.describe('textarea: clearOnEdit', () => {
     expect(await textarea.evaluate((el: HTMLIonTextareaElement) => el.value)).toBe('hello world');
   });
 
-  test('should not clear the textarea when pressing Enter', async ({ page }) => {
-    await page.setContent(`<ion-textarea value="some value" clear-on-edit="true"></ion-textarea>`);
-
-    const textarea = page.locator('ion-textarea');
-
-    await textarea.click();
-    await page.keyboard.press('Enter');
-
-    expect(await textarea.evaluate((el: HTMLIonTextareaElement) => el.value)).toBe('some value');
-  });
-
   test('should not clear the textarea if it does not have an initial value when typing', async ({ page }) => {
     await page.setContent(`<ion-textarea value="" clear-on-edit="true"></ion-textarea>`);
 
