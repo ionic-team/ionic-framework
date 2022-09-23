@@ -1816,13 +1816,19 @@ export class IonText {
 import type { TextareaChangeEventDetail as ITextareaTextareaChangeEventDetail } from '@ionic/core';
 export declare interface IonTextarea extends Components.IonTextarea {
   /**
-   * Emitted when the input value has changed. 
+   * The `ionChange` event is fired for `<ion-textarea>` elements when the user
+modifies the element's value. Unlike the `ionInput` event, the `ionChange`
+event is not necessarily fired for each alteration to an element's value.
+
+The `ionChange` event is fired when the element loses focus after its value
+has been modified. 
    */
   ionChange: EventEmitter<CustomEvent<ITextareaTextareaChangeEventDetail>>;
   /**
-   * Emitted when a keyboard input occurred. 
+   * Ths `ionInput` event fires when the `value` of an `<ion-textarea>` element
+has been changed. 
    */
-  ionInput: EventEmitter<CustomEvent<InputEvent>>;
+  ionInput: EventEmitter<CustomEvent<InputEvent | null>>;
   /**
    * Emitted when the input loses focus. 
    */

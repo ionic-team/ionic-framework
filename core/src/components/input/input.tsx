@@ -344,6 +344,7 @@ export class Input implements ComponentInterface {
    */
   private emitValueChange() {
     const { value } = this;
+    // Checks for both null and undefined values
     const newValue = value == null ? value : value.toString();
     this.ionChange.emit({ value: newValue });
   }
@@ -368,7 +369,7 @@ export class Input implements ComponentInterface {
     });
   }
 
-  private onInput = (ev: Event) => {
+  private onInput = (ev: InputEvent | Event) => {
     const input = ev.target as HTMLInputElement | null;
     if (input) {
       this.value = input.value || '';

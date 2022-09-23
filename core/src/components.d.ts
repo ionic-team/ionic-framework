@@ -2719,7 +2719,7 @@ export namespace Components {
          */
         "autofocus": boolean;
         /**
-          * If `true`, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
+          * If `true`, the value will be cleared after focus upon edit.
          */
         "clearOnEdit": boolean;
         /**
@@ -2731,7 +2731,7 @@ export namespace Components {
          */
         "cols"?: number;
         /**
-          * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. This also impacts form bindings such as `ngModel` or `v-model`.
+          * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
          */
         "debounce": number;
         /**
@@ -2751,11 +2751,11 @@ export namespace Components {
          */
         "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
         /**
-          * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
+          * This attribute specifies the maximum number of characters that the user can enter.
          */
         "maxlength"?: number;
         /**
-          * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the minimum number of characters that the user can enter.
+          * This attribute specifies the minimum number of characters that the user can enter.
          */
         "minlength"?: number;
         /**
@@ -6518,7 +6518,7 @@ declare namespace LocalJSX {
          */
         "autofocus"?: boolean;
         /**
-          * If `true`, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
+          * If `true`, the value will be cleared after focus upon edit.
          */
         "clearOnEdit"?: boolean;
         /**
@@ -6530,7 +6530,7 @@ declare namespace LocalJSX {
          */
         "cols"?: number;
         /**
-          * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. This also impacts form bindings such as `ngModel` or `v-model`.
+          * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
          */
         "debounce"?: number;
         /**
@@ -6546,11 +6546,11 @@ declare namespace LocalJSX {
          */
         "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
         /**
-          * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
+          * This attribute specifies the maximum number of characters that the user can enter.
          */
         "maxlength"?: number;
         /**
-          * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the minimum number of characters that the user can enter.
+          * This attribute specifies the minimum number of characters that the user can enter.
          */
         "minlength"?: number;
         /**
@@ -6566,7 +6566,7 @@ declare namespace LocalJSX {
          */
         "onIonBlur"?: (event: IonTextareaCustomEvent<FocusEvent>) => void;
         /**
-          * Emitted when the input value has changed.
+          * The `ionChange` event is fired for `<ion-textarea>` elements when the user modifies the element's value. Unlike the `ionInput` event, the `ionChange` event is not necessarily fired for each alteration to an element's value.  The `ionChange` event is fired when the element loses focus after its value has been modified.
          */
         "onIonChange"?: (event: IonTextareaCustomEvent<TextareaChangeEventDetail>) => void;
         /**
@@ -6574,9 +6574,9 @@ declare namespace LocalJSX {
          */
         "onIonFocus"?: (event: IonTextareaCustomEvent<FocusEvent>) => void;
         /**
-          * Emitted when a keyboard input occurred.
+          * Ths `ionInput` event fires when the `value` of an `<ion-textarea>` element has been changed.
          */
-        "onIonInput"?: (event: IonTextareaCustomEvent<InputEvent>) => void;
+        "onIonInput"?: (event: IonTextareaCustomEvent<InputEvent | null>) => void;
         /**
           * Emitted when the styles change.
          */
