@@ -147,6 +147,7 @@ class DatetimeLocaleFixture {
 
   async goto() {
     await this.page.goto(`/src/components/datetime/test/locale`);
+    await this.page.waitForSelector('.datetime-ready');
   }
 
   async setLocale(locale: string) {
