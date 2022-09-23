@@ -64,15 +64,28 @@ test.describe('input: events: ionChange', () => {
 });
 
 test.describe('input: events: ionInput', () => {
-  test.describe('should emit', () => {
-    test('when the input is cleared', async ({ page }) => {
-      await page.setContent(`<ion-input value="some value" clear-input="true"></ion-input>`);
+  test('should emit when the input is cleared', async ({ page }) => {
+    await page.setContent(`<ion-input value="some value" clear-input="true"></ion-input>`);
 
-      const ionInputSpy = await page.spyOnEvent('ionInput');
+    const ionInputSpy = await page.spyOnEvent('ionInput');
 
-      await page.click('ion-input .input-clear-icon');
+    await page.click('ion-input .input-clear-icon');
 
-      expect(ionInputSpy).toHaveReceivedEventDetail({ isTrusted: true });
-    });
+    expect(ionInputSpy).toHaveReceivedEventDetail({ isTrusted: true });
+  });
+
+  test('should emit when the input is cleared from the keyboard', async ({ page }) => {
+    await page.setContent(`<ion-input value="some value" clear-on-edit="true"></ion-input>`);
+
+    const input = page.locator('ion-input');
+    const ionInputSpy = await page.spyOnEvent('ionInput');
+
+    await input.click();
+    await page.keyboard.press('Backspace');
+
+    expect(await input.evaluate((el: HTMLIonInputElement) => el.value)).toBe('');
+
+    expect(ionInputSpy).toHaveReceivedEventTimes(1);
+    expect(ionInputSpy).toHaveReceivedEventDetail({ isTrusted: true });
   });
 });

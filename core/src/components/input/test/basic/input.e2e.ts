@@ -201,3 +201,31 @@ test.describe('input: clear button', () => {
     await expect(nativeInput).toBeFocused();
   });
 });
+
+test.describe('input: clearOnEdit', () => {
+  test('should clear the input on first keystroke of input being focused', async ({ page }) => {
+    await page.setContent(`<ion-input value="some value" clear-on-edit="true"></ion-input>`);
+
+    const input = page.locator('ion-input');
+
+    await input.click();
+    await input.type('h');
+
+    expect(await input.evaluate((el: HTMLIonInputElement) => el.value)).toBe('h');
+
+    await input.type('ello world');
+
+    expect(await input.evaluate((el: HTMLIonInputElement) => el.value)).toBe('hello world');
+  });
+
+  test('should not clear the input when pressing Enter', async ({ page }) => {
+    await page.setContent(`<ion-input value="some value" clear-on-edit="true"></ion-input>`);
+
+    const input = page.locator('ion-input');
+
+    await input.click();
+    await page.keyboard.press('Enter');
+
+    expect(await input.evaluate((el: HTMLIonInputElement) => el.value)).toBe('some value');
+  });
+});
