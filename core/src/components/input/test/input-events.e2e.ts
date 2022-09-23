@@ -86,6 +86,6 @@ test.describe('input: events: ionInput', () => {
     expect(await input.evaluate((el: HTMLIonInputElement) => el.value)).toBe('');
 
     expect(ionInputSpy).toHaveReceivedEventTimes(1);
-    expect(ionInputSpy).toHaveReceivedEventDetail({ isTrusted: true });
+    expect(ionInputSpy).toHaveReceivedEventDetail(null);
   });
 });
