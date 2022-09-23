@@ -21,6 +21,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Range](#version-7x-range)
   - [Segment](#version-7x-segment)
   - [Slides](#version-7x-slides)
+  - [Textarea](#version-7x-textarea)
   - [Virtual Scroll](#version-7x-virtual-scroll)
 - [Utilities](#version-7x-utilities)
   - [hidden attribute](#version-7x-hidden-attribute)
@@ -108,6 +109,17 @@ Developers using these components will need to migrate to using Swiper.js direct
 - [Angular](https://ionicframework.com/docs/angular/slides)
 - [React](https://ionicframework.com/docs/react/slides)
 - [Vue](https://ionicframework.com/docs/vue/slides)
+
+<h4 id="version-7x-textarea">Textarea</h4>
+
+- `ionChange` is no longer emitted when the `value` of `ion-textarea` is modified externally. `ionChange` is only emitted from user committed changes, such as typing in the textarea and the textarea losing focus.
+
+  - If your application requires immediate feedback based on the user typing actively in the textarea, consider migrating your event listeners to using `ionInput` instead.
+
+- The `debounce` property has been updated to control the timing in milliseconds to delay the event emission of the `ionInput` event after each keystroke. Previously it would delay the event emission of `ionChange`.
+
+- `ionInput` dispatches an event detail of `null` when the textarea is cleared as a result of `clear-on-edit="true"`.
+
 
 <h4 id="version-7x-virtual-scroll">Virtual Scroll</h4>
 

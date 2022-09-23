@@ -1307,7 +1307,7 @@ ion-textarea,method,setFocus,setFocus() => Promise<void>
 ion-textarea,event,ionBlur,FocusEvent,true
 ion-textarea,event,ionChange,TextareaChangeEventDetail,true
 ion-textarea,event,ionFocus,FocusEvent,true
-ion-textarea,event,ionInput,InputEvent,true
+ion-textarea,event,ionInput,InputEvent | null,true
 ion-textarea,css-prop,--background
 ion-textarea,css-prop,--border-radius
 ion-textarea,css-prop,--color
