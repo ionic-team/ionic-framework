@@ -9,11 +9,13 @@ test.describe('input: masking', () => {
   test('should filter out spaces', async ({ page, skip }) => {
     skip.rtl();
 
+    const ionInput = await page.spyOnEvent('ionInput');
     const input = page.locator('#inputTrimmed');
 
     await input.click();
 
     await page.keyboard.type('S p a c e s');
+    await ionInput.next();
 
     await expect(input).toHaveJSProperty('value', 'Spaces');
   });
