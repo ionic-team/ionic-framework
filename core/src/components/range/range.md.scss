@@ -28,6 +28,7 @@
 
 :host(.ion-color) .range-bar-active,
 :host(.ion-color) .range-knob,
+:host(.ion-color) .range-knob::before,
 :host(.ion-color) .range-pin,
 :host(.ion-color) .range-pin::before,
 :host(.ion-color) .range-tick {
@@ -63,6 +64,27 @@
   transition-timing-function: ease;
 
   z-index: 2;
+
+  &::before {
+    @include border-radius(50%);
+    @include position(null, null, null, 0);
+
+    position: absolute;
+
+    width: var(--knob-size);
+    height: var(--knob-size);
+
+    transform: scale(1);
+
+    // Value from Material Design components for the web
+    transition: 0.267s cubic-bezier(0, 0, 0.58, 1);
+
+    background: var(--knob-background);
+
+    content: "";
+    opacity: #{$range-md-knob-indicator-opacity-hover};
+    pointer-events: none;
+  }
 }
 
 .range-tick {
@@ -130,11 +152,38 @@
   }
 }
 
-.range-knob-pressed .range-pin {
+.range-knob-pressed .range-pin,
+.range-knob-handle.ion-focused .range-pin {
   @include transform(translate3d(0, -24px, 0), scale(1));
 }
 
-:host(:not(.range-has-pin)) .range-knob-pressed .range-knob {
+@media (any-hover: hover) {
+  .range-knob-handle:hover .range-knob:before {
+    transform: scale(2);
+
+    opacity: #{$range-md-knob-indicator-opacity-hover};
+  }
+}
+
+.range-knob-handle {
+  &.ion-activated .range-knob:before,
+  &.ion-focused .range-knob:before,
+  &.range-knob-pressed .range-knob:before {
+    transform: scale(2);
+  }
+
+  &.ion-focused .range-knob::before {
+    opacity: #{$range-md-knob-indicator-opacity-focus};
+  }
+
+  &.ion-activated .range-knob::before,
+  &.range-knob-pressed .range-knob::before {
+    opacity: #{$range-md-knob-indicator-opacity-active};
+  }
+}
+
+:host(:not(.range-has-pin)) .range-knob-pressed .range-knob,
+:host(:not(.range-has-pin)) .range-knob-handle.ion-focused .range-knob {
   transform: scale(1);
 }
 
