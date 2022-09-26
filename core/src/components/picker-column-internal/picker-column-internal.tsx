@@ -247,7 +247,14 @@ export class PickerColumnInternal implements ComponentInterface {
        * We add 1 to convert from a zero indexed
        * value.
        */
-      const numberButton = parseInt(target.getAttribute('data-index')!) + 1;
+      if (!target.hasAttribute('data-index')) {
+        return;
+      }
+      const index = target.getAttribute('data-index') as string;
+      const numberButton = parseInt(index) + 1;
+      if (!Number.isInteger(numberButton)) {
+        return;
+      }
 
       /**
        * From here, we determine how far
