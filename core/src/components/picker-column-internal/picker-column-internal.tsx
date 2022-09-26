@@ -448,9 +448,9 @@ export class PickerColumnInternal implements ComponentInterface {
          * increases along with non-disabled items as
          * font sizes increase.
          */}
-        <div class="picker-item picker-item-empty">&nbsp;</div>
-        <div class="picker-item picker-item-empty">&nbsp;</div>
-        <div class="picker-item picker-item-empty">&nbsp;</div>
+        <button aria-hidden="true" disabled={true} class="picker-item picker-item-empty">&nbsp;</button>
+        <button aria-hidden="true" disabled={true} class="picker-item picker-item-empty">&nbsp;</button>
+        <button aria-hidden="true" disabled={true} class="picker-item picker-item-empty">&nbsp;</button>
         {items.map((item, index) => {
           {
             /*
@@ -480,9 +480,9 @@ export class PickerColumnInternal implements ComponentInterface {
             </button>
           );
         })}
-        <div class="picker-item picker-item-empty">&nbsp;</div>
-        <div class="picker-item picker-item-empty">&nbsp;</div>
-        <div class="picker-item picker-item-empty">&nbsp;</div>
+        <button aria-hidden="true" disabled={true} class="picker-item picker-item-empty">&nbsp;</button>
+        <button aria-hidden="true" disabled={true} class="picker-item picker-item-empty">&nbsp;</button>
+        <button aria-hidden="true" disabled={true} class="picker-item picker-item-empty">&nbsp;</button>
       </Host>
     );
   }
