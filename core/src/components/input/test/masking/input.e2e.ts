@@ -14,9 +14,12 @@ test.describe('input: masking', () => {
 
     await input.click();
 
+    // Playwright types this in one character at a time.
     await page.keyboard.type('S p a c e s');
     await ionInput.next();
 
+    // ionInput is called for each character.
+    await expect(ionInput).toHaveReceivedEventTimes(11);
     await expect(input).toHaveJSProperty('value', 'Spaces');
   });
 });
