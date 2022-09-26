@@ -239,4 +239,36 @@ test.describe('input: clearOnEdit', () => {
 
     expect(await input.evaluate((el: HTMLIonInputElement) => el.value)).toBe('hello world');
   });
+
+  test('should emit ionChange once on blur', async ({ page }, testInfo) => {
+    testInfo.annotations.push({
+      type: 'issue',
+      description: 'https://ionic-cloud.atlassian.net/browse/FW-2315',
+    });
+
+    await page.setContent(`<ion-input placeholder="input" clear-on-edit="true"></ion-input>`);
+
+    const ionChangeSpy = await page.spyOnEvent('ionChange');
+    const ionInputSpy = await page.spyOnEvent('ionInput');
+
+    const input = page.locator('ion-input');
+    const nativeInput = input.locator('input');
+
+    await nativeInput.type('123', { delay: 100 });
+
+    expect(ionInputSpy).toHaveReceivedEventTimes(3);
+
+    await nativeInput.evaluate((el: HTMLInputElement) => el.blur());
+
+    expect(ionChangeSpy).toHaveReceivedEventTimes(1);
+
+    await nativeInput.type('a');
+
+    expect(await input.evaluate((el: HTMLIonInputElement) => el.value)).toBe('a');
+
+    await nativeInput.evaluate((el: HTMLInputElement) => el.blur());
+
+    expect(ionInputSpy).toHaveReceivedEventTimes(4);
+    expect(ionChangeSpy).toHaveReceivedEventTimes(2);
+  });
 });
