@@ -69,11 +69,6 @@
     @include border-radius(50%);
     @include position(null, null, null, 0);
 
-    @include rtl() {
-      /* stylelint-disable-next-line property-disallowed-list */
-      left: unset;
-    }
-
     position: absolute;
 
     width: var(--knob-size);
