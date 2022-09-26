@@ -10,10 +10,7 @@ import { createColorClasses } from '../../utils/theme';
  */
 @Component({
   tag: 'ion-chip',
-  styleUrls: {
-    ios: 'chip.ios.scss',
-    md: 'chip.md.scss',
-  },
+  styleUrl: 'chip.scss',
   shadow: true,
 })
 export class Chip implements ComponentInterface {
