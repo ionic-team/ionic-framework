@@ -447,9 +447,9 @@ export class Segment implements ComponentInterface {
       case 'last':
         return buttons[buttons.length - 1];
       case 'next':
-        return buttons[currIndex + 1] || buttons[0];
+        return buttons[currIndex + 1] ?? buttons[0];
       case 'previous':
-        return buttons[currIndex - 1] || buttons[buttons.length - 1];
+        return buttons[currIndex - 1] ?? buttons[buttons.length - 1];
       default:
         return null;
     }

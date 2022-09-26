@@ -214,7 +214,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
             </div>
           )}
 
-          {message && <div class="loading-content" innerHTML={sanitizeDOMString(message)}></div>}
+          {message !== undefined && <div class="loading-content" innerHTML={sanitizeDOMString(message)}></div>}
         </div>
 
         <div tabindex="0"></div>
