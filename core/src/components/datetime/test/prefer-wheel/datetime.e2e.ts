@@ -59,9 +59,9 @@ test.describe('datetime: prefer wheel', () => {
 
       await page.waitForSelector('.datetime-ready');
 
-      const disabledMonths = page.locator('.month-column .picker-item[disabled]');
-      const disabledYears = page.locator('.year-column .picker-item[disabled]');
-      const disabledDays = page.locator('.day-column .picker-item[disabled]');
+      const disabledMonths = page.locator('.month-column .picker-item[disabled][data-value]');
+      const disabledYears = page.locator('.year-column .picker-item[disabled][data-value]');
+      const disabledDays = page.locator('.day-column .picker-item[disabled][data-value]');
 
       expect(await disabledMonths.count()).toBe(0);
       expect(await disabledYears.count()).toBe(0);
@@ -196,7 +196,7 @@ test.describe('datetime: prefer wheel', () => {
 
       await page.waitForSelector('.datetime-ready');
 
-      const disabledDates = page.locator('.date-column .picker-item[disabled]');
+      const disabledDates = page.locator('.date-column .picker-item[disabled][data-value]');
 
       expect(await disabledDates.count()).toBe(44);
     });
@@ -301,7 +301,7 @@ test.describe('datetime: prefer wheel', () => {
 
       await page.waitForSelector('.datetime-ready');
 
-      const disabledDates = page.locator('.date-column .picker-item[disabled]');
+      const disabledDates = page.locator('.date-column .picker-item[disabled][data-value]');
 
       expect(await disabledDates.count()).toBe(44);
     });
