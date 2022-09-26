@@ -352,7 +352,6 @@ export class PickerColumnInternal implements ComponentInterface {
         const centerY = bbox.y + bbox.height / 2;
 
         const activeElement = el.shadowRoot!.elementFromPoint(centerX, centerY) as HTMLButtonElement;
-
         if (activeEl !== null) {
           activeEl.classList.remove(PICKER_COL_ACTIVE);
         }
@@ -403,7 +402,6 @@ export class PickerColumnInternal implements ComponentInterface {
           const selectedItem = this.items[index];
 
           if (selectedItem.value !== this.value) {
-            console.log('setting value', selectedItem.value);
             this.setValue(selectedItem.value);
           }
         }, 250);
@@ -448,9 +446,15 @@ export class PickerColumnInternal implements ComponentInterface {
          * increases along with non-disabled items as
          * font sizes increase.
          */}
-        <button aria-hidden="true" disabled={true} class="picker-item picker-item-empty">&nbsp;</button>
-        <button aria-hidden="true" disabled={true} class="picker-item picker-item-empty">&nbsp;</button>
-        <button aria-hidden="true" disabled={true} class="picker-item picker-item-empty">&nbsp;</button>
+        <button aria-hidden="true" disabled={true} class="picker-item picker-item-empty">
+          &nbsp;
+        </button>
+        <button aria-hidden="true" disabled={true} class="picker-item picker-item-empty">
+          &nbsp;
+        </button>
+        <button aria-hidden="true" disabled={true} class="picker-item picker-item-empty">
+          &nbsp;
+        </button>
         {items.map((item, index) => {
           {
             /*
@@ -480,9 +484,15 @@ export class PickerColumnInternal implements ComponentInterface {
             </button>
           );
         })}
-        <button aria-hidden="true" disabled={true} class="picker-item picker-item-empty">&nbsp;</button>
-        <button aria-hidden="true" disabled={true} class="picker-item picker-item-empty">&nbsp;</button>
-        <button aria-hidden="true" disabled={true} class="picker-item picker-item-empty">&nbsp;</button>
+        <button aria-hidden="true" disabled={true} class="picker-item picker-item-empty">
+          &nbsp;
+        </button>
+        <button aria-hidden="true" disabled={true} class="picker-item picker-item-empty">
+          &nbsp;
+        </button>
+        <button aria-hidden="true" disabled={true} class="picker-item picker-item-empty">
+          &nbsp;
+        </button>
       </Host>
     );
   }
