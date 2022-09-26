@@ -6,6 +6,7 @@ import type { AnimationBuilder, Color, RouterDirection } from '../../interface';
 import type { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes, hasShadowDom } from '../../utils/helpers';
+import { printIonWarning } from '../../utils/logging';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**
@@ -164,41 +165,70 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
 
     return 'bounded';
   }
-  /**
-   * Finds the appropriate form for button of type 'submit'.
-   *
-   * We first check, if there is a form specified by the form attribute. If not, we will
-   * check if the button is inside a form.
-   */
-  private findForm = (): HTMLFormElement | null => {
-    if (this.form instanceof HTMLFormElement) return this.form;
 
-    if (typeof this.form === 'string') {
-      const el = document.getElementById(this.form);
+  /**
+   * Finds the form element based on the provided `form` selector
+   * or element reference provided.
+   */
+  private findForm(): HTMLFormElement | null {
+    const { form } = this;
+    if (form instanceof HTMLFormElement) {
+      return form;
+    }
+    if (typeof form === 'string') {
+      const el = document.getElementById(form);
       if (el instanceof HTMLFormElement) {
         return el;
       }
     }
-
-    return this.el.closest('form');
-  };
+    return null;
+  }
 
   private handleClick = (ev: Event) => {
+    const { el } = this;
     if (this.type === 'button') {
       openURL(this.href, ev, this.routerDirection, this.routerAnimation);
-    } else if (hasShadowDom(this.el)) {
+    } else if (hasShadowDom(el)) {
       // this button wants to specifically submit a form
       // climb up the dom to see if we're in a <form>
       // and if so, then use JS to submit it
-      const form = this.findForm();
+      let formEl = this.findForm();
+      const { form } = this;
 
-      if (form) {
+      if (!formEl && form !== undefined) {
+        /**
+         * The developer specified a form selector for
+         * the button to submit, but it was not found.
+         */
+        if (typeof form === 'string') {
+          printIonWarning(
+            `Form with selector: "#${form}" could not be found. Verify that the selector is correct and the form is rendered in the DOM.`,
+            el
+          );
+        } else {
+          printIonWarning(
+            `The provided "form" element could not be found. Verify that the form is rendered in the DOM.`,
+            el
+          );
+        }
+        return;
+      }
+
+      if (!formEl) {
+        /**
+         * If the form element is not set, the button may be inside
+         * of a form element. Query the closest form element to the button.
+         */
+        formEl = el.closest('form');
+      }
+
+      if (formEl) {
         ev.preventDefault();
 
         const fakeButton = document.createElement('button');
         fakeButton.type = this.type;
         fakeButton.style.display = 'none';
-        form.appendChild(fakeButton);
+        formEl.appendChild(fakeButton);
         fakeButton.click();
         fakeButton.remove();
       }

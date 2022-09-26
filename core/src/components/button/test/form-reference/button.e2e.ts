@@ -22,7 +22,6 @@ test.describe('button: form', () => {
       <script>
         const form = document.querySelector('form');
         const button = document.querySelector('ion-button');
-  
         button.form = form;
       </script>
     `);
@@ -46,5 +45,49 @@ test.describe('button: form', () => {
     await page.click('ion-button');
 
     expect(submitEvent).toHaveReceivedEvent();
+  });
+
+  test.describe('should throw a warning if the form cannot be found', () => {
+    test('form is a string selector', async ({ page }) => {
+      await page.setContent(`<ion-button type="submit" form="missingForm">Submit</ion-button>`);
+
+      const logs: string[] = [];
+
+      page.on('console', (msg) => {
+        logs.push(msg.text());
+      });
+
+      await page.click('ion-button');
+
+      expect(logs.length).toBe(1);
+      expect(logs[0]).toContain(
+        '[Ionic Warning]: Form with selector: "#missingForm" could not be found. Verify that the selector is correct and the form is rendered in the DOM.'
+      );
+    });
+
+    test('form is an element reference', async ({ page }) => {
+      await page.setContent(`
+        <ion-button type="submit">Submit</ion-button>
+        <script>
+          const form = document.querySelector('form');
+          const button = document.querySelector('ion-button');
+
+          button.form = form;
+        </script>
+      `);
+
+      const logs: string[] = [];
+
+      page.on('console', (msg) => {
+        logs.push(msg.text());
+      });
+
+      await page.click('ion-button');
+
+      expect(logs.length).toBe(1);
+      expect(logs[0]).toContain(
+        '[Ionic Warning]: The provided "form" element could not be found. Verify that the form is rendered in the DOM.'
+      );
+    });
   });
 });
