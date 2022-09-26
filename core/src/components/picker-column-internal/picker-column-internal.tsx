@@ -228,16 +228,49 @@ export class PickerColumnInternal implements ComponentInterface {
   private centerPickerItemInView = (target: HTMLElement, smooth = true) => {
     const { el, isColumnVisible } = this;
     if (isColumnVisible) {
-      // (Vertical offset from parent) - (three empty picker rows) + (half the height of the target to ensure the scroll triggers)
-      const top = target.offsetTop - 3 * target.clientHeight + target.clientHeight / 2;
+      const targetBox = target.getBoundingClientRect();
+      const scrollBox = el.getBoundingClientRect();
 
-      if (el.scrollTop !== top) {
-        el.scroll({
-          top,
-          left: 0,
-          behavior: smooth ? 'smooth' : undefined,
-        });
-      }
+      /**
+       * Compute the desired offset location.
+       * This is the point where the element
+       * should be in order for it to appear
+       * centered within the column viewport.
+       */
+      const midpoint = scrollBox.height / 2 + targetBox.height / 2;
+
+      /**
+       * Use data-index to determine which
+       * number button this is. This number will
+       * be used to determine how far this button
+       * is offset from the top of the column.
+       * We add 1 to convert from a zero indexed
+       * value.
+       */
+      const numberButton = parseInt(target.getAttribute('data-index')!) + 1;
+
+      /**
+       * From here, we determine how far
+       * this button offset from the top.
+       * We add 3 to numberButton to account
+       * for the three .picker-item-empty elements.
+       */
+      const targetOffsetFromTop = (numberButton + 3) * targetBox.height;
+
+      /**
+       * Compute the scroll position necessary
+       * for the button to be centered within the view.
+       * Convert the value to an integer to avoid half
+       * pixel scrolls which can be inconsistent across
+       * browsers.
+       */
+      const top = Math.floor(targetOffsetFromTop - midpoint);
+
+      el.scroll({
+        top,
+        left: 0,
+        behavior: smooth ? 'smooth' : undefined,
+      });
     }
   };
 
@@ -319,6 +352,7 @@ export class PickerColumnInternal implements ComponentInterface {
         const centerY = bbox.y + bbox.height / 2;
 
         const activeElement = el.shadowRoot!.elementFromPoint(centerX, centerY) as HTMLButtonElement;
+
         if (activeEl !== null) {
           activeEl.classList.remove(PICKER_COL_ACTIVE);
         }
@@ -369,6 +403,7 @@ export class PickerColumnInternal implements ComponentInterface {
           const selectedItem = this.items[index];
 
           if (selectedItem.value !== this.value) {
+            console.log('setting value', selectedItem.value);
             this.setValue(selectedItem.value);
           }
         }, 250);
@@ -407,6 +442,12 @@ export class PickerColumnInternal implements ComponentInterface {
           ['picker-column-numeric-input']: numericInput,
         })}
       >
+        {/**
+         * These elements have &nbsp (whitespace text)
+         * to ensure that the heights of .picker-item-empty
+         * increases along with non-disabled items as
+         * font sizes increase.
+         */}
         <div class="picker-item picker-item-empty">&nbsp;</div>
         <div class="picker-item picker-item-empty">&nbsp;</div>
         <div class="picker-item picker-item-empty">&nbsp;</div>
