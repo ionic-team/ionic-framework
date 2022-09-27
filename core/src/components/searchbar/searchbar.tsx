@@ -26,8 +26,8 @@ export class Searchbar implements ComponentInterface {
   private shouldAlignLeft = true;
 
   /**
-  * The value of the input when the textarea is focused.
-  */
+   * The value of the input when the textarea is focused.
+   */
   private focusedValue?: string | null;
 
   @Element() el!: HTMLIonSearchbarElement;
@@ -271,7 +271,7 @@ export class Searchbar implements ComponentInterface {
   private onClearInput = async (shouldFocus?: boolean) => {
     this.ionClear.emit();
 
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       // setTimeout() fixes https://github.com/ionic-team/ionic/issues/7527
       // wait for 4 frames
       setTimeout(() => {
@@ -301,7 +301,7 @@ export class Searchbar implements ComponentInterface {
 
         resolve('cleared');
       }, 16 * 4);
-    })
+    });
   };
 
   /**
