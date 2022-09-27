@@ -2052,13 +2052,18 @@ export class Datetime implements ComponentInterface {
 
           if (popoverRef) {
             this.isTimePopoverOpen = true;
-
-            popoverRef.present(
+            /**
+             * Focuses the direct descendent when the popover is presented.
+             * We want to focus the direct descendent so that the hours
+             * picker column is announced immediately when using a screen reader.
+             */
+            popoverRef.presentFromTrigger(
               new CustomEvent('ionShadowTarget', {
                 detail: {
                   ionShadowTarget: ev.target,
                 },
-              })
+              }),
+              true
             );
 
             await popoverRef.onWillDismiss();

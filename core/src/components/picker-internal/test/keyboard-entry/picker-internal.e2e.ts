@@ -84,6 +84,8 @@ test.describe('picker-internal: keyboard entry', () => {
     await expect(firstIonChange).toHaveReceivedEventDetail({ text: '02', value: 2 });
     await expect(firstColumn).toHaveJSProperty('value', 2);
 
+    await secondColumn.click();
+
     await page.keyboard.press('Digit2+Digit4');
 
     await expect(secondIonChange).toHaveReceivedEventDetail({ text: '24', value: 24 });
