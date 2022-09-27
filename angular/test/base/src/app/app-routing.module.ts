@@ -26,6 +26,7 @@ const routes: Routes = [
   { path: 'alerts', component: AlertComponent },
   { path: 'inputs', component: InputsComponent },
   { path: 'textarea', loadChildren: () => import('./textarea/textarea.module').then(m => m.TextareaModule) },
+  { path: 'searchbar', loadChildren: () => import('./searchbar/searchbar.module').then(m => m.SearchbarModule) },
   { path: 'form', component: FormComponent },
   { path: 'modals', component: ModalComponent },
   { path: 'modal-inline', loadChildren: () => import('./modal-inline').then(m => m.ModalInlineModule) },
