@@ -339,3 +339,27 @@ export const calculateHourFromAMPM = (currentParts: DatetimeParts, newAMPM: 'am'
 
   return newHour;
 };
+
+/**
+ * Updates parts to ensure that month and day
+ * values are valid. For days that do not exist,
+ * the closest valid day is used.
+ */
+export const validateParts = (parts: DatetimeParts): DatetimeParts => {
+  const { month, day, year } = parts;
+  const partsCopy = { ...parts };
+
+  const numDays = getNumDaysInMonth(month, year);
+
+  /**
+   * If the max number of days
+   * is greater than the day we want
+   * to set, update the DatetimeParts
+   * day field to be the max days.
+   */
+  if (day !== null && numDays < day) {
+    partsCopy.day = numDays;
+  }
+
+  return partsCopy;
+};

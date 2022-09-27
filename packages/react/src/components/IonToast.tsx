@@ -3,7 +3,7 @@ import {
   ToastOptions as ToastOptionsCore,
   toastController as toastControllerCore,
 } from '@ionic/core/components';
-import { IonToast as IonToastCmp } from '@ionic/core/components/ion-toast.js';
+import { defineCustomElement } from '@ionic/core/components/ion-toast.js';
 
 import { createControllerComponent } from './createControllerComponent';
 
@@ -30,5 +30,5 @@ const toastController = {
 export const IonToast = /*@__PURE__*/ createControllerComponent<ToastOptions, HTMLIonToastElement>(
   'ion-toast',
   toastController,
-  IonToastCmp
+  defineCustomElement
 );
