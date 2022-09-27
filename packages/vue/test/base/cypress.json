@@ -1,6 +1,0 @@
-{
-  "pluginsFile": "tests/e2e/plugins/index.js",
-  "video": false,
-  "screenshotOnRunFailure": false,
-  "defaultCommandTimeout": 10000
-}

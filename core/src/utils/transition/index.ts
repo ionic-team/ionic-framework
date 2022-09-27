@@ -206,6 +206,7 @@ export const deepReady = async (el: any | undefined): Promise<void> => {
   const element = el as any;
   if (element) {
     if (element.componentOnReady != null) {
+      // eslint-disable-next-line custom-rules/no-component-on-ready-method
       const stencilEl = await element.componentOnReady();
       if (stencilEl != null) {
         return;

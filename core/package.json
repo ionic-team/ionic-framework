@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "6.2.7",
+  "version": "6.2.8",
   "description": "Base components for Ionic",
   "keywords": [
     "ionic",
@@ -31,7 +31,7 @@
     "loader/"
   ],
   "dependencies": {
-    "@stencil/core": "^2.17.4",
+    "@stencil/core": "^2.18.0",
     "ionicons": "^6.0.3",
     "tslib": "^2.1.0"
   },
@@ -58,6 +58,7 @@
     "domino": "^2.1.6",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-custom-rules": "file:custom-rules",
     "execa": "^5.0.0",
     "fs-extra": "^9.0.1",
     "jest": "^26.4.1",
