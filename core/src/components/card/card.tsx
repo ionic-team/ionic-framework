@@ -1,9 +1,11 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Host, Prop, h } from '@stencil/core';
+import { Element, Component, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { AnimationBuilder, Color, Mode, RouterDirection } from '../../interface';
 import type { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
+import type { Attributes } from '../../utils/helpers';
+import { inheritAriaAttributes } from '../../utils/helpers';
 import { createColorClasses, openURL } from '../../utils/theme';
 
 /**
@@ -20,6 +22,9 @@ import { createColorClasses, openURL } from '../../utils/theme';
   shadow: true,
 })
 export class Card implements ComponentInterface, AnchorInterface, ButtonInterface {
+  private inheritedAttributes: Attributes = {};
+
+  @Element() el!: HTMLElement;
   /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
@@ -81,6 +86,10 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
    */
   @Prop() target: string | undefined;
 
+  componentWillLoad() {
+    this.inheritedAttributes = inheritAriaAttributes(this.el);
+  }
+
   private isClickable(): boolean {
     return this.href !== undefined || this.button;
   }
@@ -91,11 +100,12 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
     if (!clickable) {
       return [<slot></slot>];
     }
-    const { href, routerAnimation, routerDirection } = this;
+    const { href, routerAnimation, routerDirection, inheritedAttributes } = this;
     const TagType = clickable ? (href === undefined ? 'button' : 'a') : ('div' as any);
+    const ariaLabel = inheritedAttributes['aria-label'];
     const attrs =
       TagType === 'button'
-        ? { type: this.type }
+        ? { type: this.type, ariaLabel }
         : {
             download: this.download,
             href: this.href,

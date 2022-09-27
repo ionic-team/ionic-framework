@@ -5,7 +5,8 @@ import { chevronForward } from 'ionicons/icons';
 import { getIonMode } from '../../global/ionic-global';
 import type { AnimationBuilder, Color, CssClassMap, RouterDirection, StyleEventDetail } from '../../interface';
 import type { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
-import { raf } from '../../utils/helpers';
+import type { Attributes } from '../../utils/helpers';
+import { inheritAriaAttributes, raf } from '../../utils/helpers';
 import { printIonError } from '../../utils/logging';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 import type { InputChangeEventDetail } from '../input/input-interface';
@@ -38,6 +39,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   private labelColorStyles = {};
   private itemStyles = new Map<string, CssClassMap>();
   private clickListener?: (ev: Event) => void;
+  private inheritedAttributes: Attributes = {};
 
   @Element() el!: HTMLIonItemElement;
 
@@ -226,6 +228,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
 
   componentDidLoad() {
     raf(() => {
+      this.inheritedAttributes = inheritAriaAttributes(this.el);
       this.setMultipleInputs();
       this.focusable = this.isFocusable();
     });
@@ -359,15 +362,17 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
       target,
       routerAnimation,
       routerDirection,
+      inheritedAttributes,
     } = this;
     const childStyles = {} as any;
     const mode = getIonMode(this);
     const clickable = this.isClickable();
     const canActivate = this.canActivate();
     const TagType = clickable ? (href === undefined ? 'button' : 'a') : ('div' as any);
+    const ariaLabel = inheritedAttributes['aria-label'];
     const attrs =
       TagType === 'button'
-        ? { type: this.type }
+        ? { type: this.type, ariaLabel }
         : {
             download,
             href,
@@ -390,6 +395,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     const ariaDisabled = disabled || childStyles['item-interactive-disabled'] ? 'true' : null;
     const fillValue = fill || 'none';
     const inList = hostContext('ion-list', this.el);
+
     return (
       <Host
         aria-disabled={ariaDisabled}
