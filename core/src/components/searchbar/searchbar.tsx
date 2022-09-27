@@ -25,6 +25,11 @@ export class Searchbar implements ComponentInterface {
   private isCancelVisible = false;
   private shouldAlignLeft = true;
 
+  /**
+  * The value of the input when the textarea is focused.
+  */
+  private focusedValue?: string | null;
+
   @Element() el!: HTMLIonSearchbarElement;
 
   @State() focused = false;
@@ -69,13 +74,13 @@ export class Searchbar implements ComponentInterface {
   @Prop() clearIcon?: string;
 
   /**
-   * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. This also impacts form bindings such as `ngModel` or `v-model`.
+   * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
    */
   @Prop() debounce = 250;
 
   @Watch('debounce')
   protected debounceChanged() {
-    this.ionChange = debounceEvent(this.ionChange, this.debounce);
+    this.ionInput = debounceEvent(this.ionInput, this.debounce);
   }
 
   /**
@@ -149,12 +154,18 @@ export class Searchbar implements ComponentInterface {
   @Prop({ mutable: true }) value?: string | null = '';
 
   /**
-   * Emitted when a keyboard input occurred.
+   * Emitted when the `value` of the `ion-searchbar` element has changed.
    */
   @Event() ionInput!: EventEmitter<KeyboardEvent>;
 
   /**
-   * Emitted when the value has changed.
+   * The `ionChange` event is fired for `<ion-searchbar>` elements when the user
+   * modifies the element's value. Unlike the `ionInput` event, the `ionChange`
+   * event is not necessarily fired for each alteration to an element's value.
+   *
+   * The `ionChange` event is fired when the element loses focus after its value
+   * has been modified. This includes modifications made when clicking the clear
+   * or cancel buttons.
    */
   @Event() ionChange!: EventEmitter<SearchbarChangeEventDetail>;
 
@@ -191,7 +202,6 @@ export class Searchbar implements ComponentInterface {
     if (inputEl && inputEl.value !== value) {
       inputEl.value = value;
     }
-    this.ionChange.emit({ value });
   }
 
   @Watch('showCancelButton')
@@ -241,30 +251,57 @@ export class Searchbar implements ComponentInterface {
   }
 
   /**
+   * Emits an `ionChange` event.
+   *
+   * This API should be called for user committed changes.
+   * This API should not be used for external value changes.
+   */
+  private emitValueChange() {
+    const { value } = this;
+    // Checks for both null and undefined values
+    const newValue = value == null ? value : value.toString();
+    // Emitting a value change should update the internal state for tracking the focused value
+    this.focusedValue = newValue;
+    this.ionChange.emit({ value: newValue });
+  }
+
+  /**
    * Clears the input field and triggers the control change.
    */
-  private onClearInput = (shouldFocus?: boolean) => {
+  private onClearInput = async (shouldFocus?: boolean) => {
     this.ionClear.emit();
 
-    // setTimeout() fixes https://github.com/ionic-team/ionic/issues/7527
-    // wait for 4 frames
-    setTimeout(() => {
-      const value = this.getValue();
-      if (value !== '') {
-        this.value = '';
-        this.ionInput.emit();
+    return new Promise(resolve => {
+      // setTimeout() fixes https://github.com/ionic-team/ionic/issues/7527
+      // wait for 4 frames
+      setTimeout(() => {
+        const value = this.getValue();
+        if (value !== '') {
+          this.value = '';
+          this.ionInput.emit();
 
-        /**
-         * When tapping clear button
-         * ensure input is focused after
-         * clearing input so users
-         * can quickly start typing.
-         */
-        if (shouldFocus && !this.focused) {
-          this.setFocus();
+          /**
+           * When tapping clear button
+           * ensure input is focused after
+           * clearing input so users
+           * can quickly start typing.
+           */
+          if (shouldFocus && !this.focused) {
+            this.setFocus();
+
+            /**
+             * The setFocus call above will clear focusedValue,
+             * but ionChange will never have gotten a chance to
+             * fire. Manually revert focusedValue so onBlur can
+             * compare against what was in the box before the clear.
+             */
+            this.focusedValue = value;
+          }
         }
-      }
-    }, 16 * 4);
+
+        resolve('cleared');
+      }, 16 * 4);
+    })
   };
 
   /**
@@ -272,13 +309,27 @@ export class Searchbar implements ComponentInterface {
    * the clearInput function doesn't want the input to blur
    * then calls the custom cancel function if the user passed one in.
    */
-  private onCancelSearchbar = (ev?: Event) => {
+  private onCancelSearchbar = async (ev?: Event) => {
     if (ev) {
       ev.preventDefault();
       ev.stopPropagation();
     }
     this.ionCancel.emit();
-    this.onClearInput();
+
+    // get cached values before clearing the input
+    const value = this.getValue();
+    const focused = this.focused;
+
+    await this.onClearInput();
+
+    /**
+     * If there used to be something in the box, and we weren't focused
+     * beforehand (meaning no blur fired that would already handle this),
+     * manually fire ionChange.
+     */
+    if (value && !focused) {
+      this.emitValueChange();
+    }
 
     if (this.nativeInput) {
       this.nativeInput.blur();
@@ -296,6 +347,10 @@ export class Searchbar implements ComponentInterface {
     this.ionInput.emit(ev as KeyboardEvent);
   };
 
+  private onChange = () => {
+    this.emitValueChange();
+  };
+
   /**
    * Sets the Searchbar to not focused and checks if it should align left
    * based on whether there is a value in the searchbar or not.
@@ -304,6 +359,10 @@ export class Searchbar implements ComponentInterface {
     this.focused = false;
     this.ionBlur.emit();
     this.positionElements();
+
+    if (this.focusedValue !== this.value) {
+      this.emitValueChange();
+    }
   };
 
   /**
@@ -311,6 +370,7 @@ export class Searchbar implements ComponentInterface {
    */
   private onFocus = () => {
     this.focused = true;
+    this.focusedValue = this.value;
     this.ionFocus.emit();
     this.positionElements();
   };
@@ -503,6 +563,7 @@ export class Searchbar implements ComponentInterface {
             inputMode={this.inputmode}
             enterKeyHint={this.enterkeyhint}
             onInput={this.onInput}
+            onChange={this.onChange}
             onBlur={this.onBlur}
             onFocus={this.onFocus}
             placeholder={this.placeholder}

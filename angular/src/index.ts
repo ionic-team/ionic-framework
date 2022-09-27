@@ -5,7 +5,6 @@ export { RadioValueAccessorDirective as RadioValueAccessor } from './directives/
 export { SelectValueAccessorDirective as SelectValueAccessor } from './directives/control-value-accessors/select-value-accessor';
 export {
   TextValueAccessorDirective as TextValueAccessor,
-  InputValueAccessorDirective as InputValueAccessor,
 } from './directives/control-value-accessors/text-value-accessor';
 export { IonTabs } from './directives/navigation/ion-tabs';
 export { IonBackButtonDelegateDirective as IonBackButtonDelegate } from './directives/navigation/ion-back-button';
