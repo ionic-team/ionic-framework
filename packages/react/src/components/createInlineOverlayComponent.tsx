@@ -122,15 +122,6 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
 
       attachProps(
         node,
-        /**
-         * Overlays using a trigger require the element to be mounted in order
-         * to emit the `willPresent` event. For these implementations we opt-in to
-         * using the Core delegate's behavior of manually moving the element to the
-         * app root.
-         *
-         * For non-trigger overlays, we use a no-op delegate to allow React portals
-         * to render the element in the correct place and within React's context.
-         */
         newProps,
         prevProps
       );
