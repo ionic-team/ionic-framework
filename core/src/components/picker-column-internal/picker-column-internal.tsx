@@ -271,20 +271,13 @@ export class PickerColumnInternal implements ComponentInterface {
        * pixel scrolls which can be inconsistent across
        * browsers.
        */
-      const top = Math.ceil(targetOffsetFromTop - midpoint);
+      const top = Math.floor(targetOffsetFromTop - midpoint);
 
-      /**
-       * This avoids scroll inconsistency
-       * issues across browsers where the
-       * scroll position is off by 1px.
-       */
-      if (el.scrollTop !== top) {
-        el.scroll({
-          top,
-          left: 0,
-          behavior: smooth ? 'smooth' : undefined,
-        });
-      }
+      el.scroll({
+        top,
+        left: 0,
+        behavior: smooth ? 'smooth' : undefined,
+      });
     }
   };
 
