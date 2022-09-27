@@ -274,6 +274,7 @@ export class PickerColumnInternal implements ComponentInterface {
       const top = Math.round(targetOffsetFromTop - midpoint);
 
       if (el.scrollTop !== top) {
+        console.log('scrolling to', top, 'current scroll is', el.scrollTop)
         el.scroll({
           top,
           left: 0,
