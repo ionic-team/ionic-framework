@@ -202,7 +202,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
          */
         if (typeof form === 'string') {
           printIonWarning(
-            `Form with selector: "#${form}" could not be found. Verify that the selector is correct and the form is rendered in the DOM.`,
+            `Form with selector: "#${form}" could not be found. Verify that the id is correct and the form is rendered in the DOM.`,
             el
           );
         } else {

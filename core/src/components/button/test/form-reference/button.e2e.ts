@@ -61,7 +61,7 @@ test.describe('button: form', () => {
 
       expect(logs.length).toBe(1);
       expect(logs[0]).toContain(
-        '[Ionic Warning]: Form with selector: "#missingForm" could not be found. Verify that the selector is correct and the form is rendered in the DOM.'
+        '[Ionic Warning]: Form with selector: "#missingForm" could not be found. Verify that the id is correct and the form is rendered in the DOM.'
       );
     });
 
