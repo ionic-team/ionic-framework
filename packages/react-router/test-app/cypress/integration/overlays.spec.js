@@ -2,8 +2,7 @@ const port = 3000;
 
 describe('Overlays', () => {
   it('should remove the overlay when going back to the previous route', () => {
-    cy.visit(`http://localhost:${port}/`);
-    cy.visit('http://localhost:3000/overlays');
+    cy.visit(`http://localhost:${port}/overlays`);
 
     cy.get('#openModal').click();
 
