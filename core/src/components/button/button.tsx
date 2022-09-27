@@ -207,7 +207,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
           );
         } else {
           printIonWarning(
-            `The provided "form" element could not be found. Verify that the form is rendered in the DOM.`,
+            `The provided "form" element is invalid. Verify that the form is a HTMLFormElement and rendered in the DOM.`,
             el
           );
         }
