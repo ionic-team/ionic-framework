@@ -34,7 +34,7 @@
     "build.ng": "ng-packagr -p package.json -c tsconfig.json",
     "clean": "node scripts/clean.js",
     "clean-generated": "node ./scripts/clean-generated.js",
-    "lint": "npm run eslint && npm run prettier -- --check",
+    "lint": "npm run eslint && npm run prettier -- --write",
     "fmt": "npm run eslint -- --fix && npm run prettier -- --write",
     "prettier": "prettier \"**/*.ts\"",
     "eslint": "eslint . --ext .ts",
