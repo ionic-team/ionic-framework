@@ -1916,6 +1916,8 @@ export class Datetime implements ComponentInterface {
 
     return (
       <div
+        // Non-visible months should be hidden from screen readers
+        aria-hidden={!isWorkingMonth ? 'true' : null}
         class={{
           'calendar-month': true,
           // Prevents scroll snap swipe gestures for months outside of the min/max bounds
