@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.9-nightly.20220927](https://github.com/ionic-team/ionic-framework/compare/v6.2.8...v6.2.9-nightly.20220927) (2022-09-27)
+
+
+### Bug Fixes
+
+* **animation:** improve compatibility with ssr ([#25992](https://github.com/ionic-team/ionic-framework/issues/25992)) ([02234f6](https://github.com/ionic-team/ionic-framework/commit/02234f69e0333266b4d500f24b3bb002c099bda2)), closes [#25987](https://github.com/ionic-team/ionic-framework/issues/25987)
+* **chip:** default color has contrast on dark mode ([#25998](https://github.com/ionic-team/ionic-framework/issues/25998)) ([ef78a12](https://github.com/ionic-team/ionic-framework/commit/ef78a123e553e27d9c41c2735bf44c21cbfa7ade)), closes [#25997](https://github.com/ionic-team/ionic-framework/issues/25997)
+* **datetime:** swiping wheel no longer dismisses card modal ([#25981](https://github.com/ionic-team/ionic-framework/issues/25981)) ([7543c84](https://github.com/ionic-team/ionic-framework/commit/7543c84445e6698d29cafe75b423c33115bc534c))
+* **datetime:** switching month and year accounts for day ([#25996](https://github.com/ionic-team/ionic-framework/issues/25996)) ([11f44e9](https://github.com/ionic-team/ionic-framework/commit/11f44e94f4abe81892f33a057055e5f9b5092528)), closes [#25585](https://github.com/ionic-team/ionic-framework/issues/25585)
+* **react:** overlays now define internal ionic components ([#25967](https://github.com/ionic-team/ionic-framework/issues/25967)) ([21dc893](https://github.com/ionic-team/ionic-framework/commit/21dc893f90a56d14d69330367daae6788e32652e)), closes [#25962](https://github.com/ionic-team/ionic-framework/issues/25962)
+
+
+
+
+
 ## [6.2.8](https://github.com/ionic-team/ionic-framework/compare/v6.2.7...v6.2.8) (2022-09-21)
 
 
