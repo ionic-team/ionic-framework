@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.9](https://github.com/ionic-team/ionic/compare/v6.2.8...v6.2.9) (2022-09-28)
+
+
+### Bug Fixes
+
+* **animation:** improve compatibility with ssr ([#25992](https://github.com/ionic-team/ionic/issues/25992)) ([02234f6](https://github.com/ionic-team/ionic/commit/02234f69e0333266b4d500f24b3bb002c099bda2)), closes [#25987](https://github.com/ionic-team/ionic/issues/25987)
+* **chip:** default color has contrast on dark mode ([#25998](https://github.com/ionic-team/ionic/issues/25998)) ([ef78a12](https://github.com/ionic-team/ionic/commit/ef78a123e553e27d9c41c2735bf44c21cbfa7ade)), closes [#25997](https://github.com/ionic-team/ionic/issues/25997)
+* **datetime:** expand/collapse icon is not announced to screen readers ([#26018](https://github.com/ionic-team/ionic/issues/26018)) ([649d3cf](https://github.com/ionic-team/ionic/commit/649d3cf688d44226f63783bf784f747d1a61476c))
+* **datetime:** swiping wheel no longer dismisses card modal ([#25981](https://github.com/ionic-team/ionic/issues/25981)) ([7543c84](https://github.com/ionic-team/ionic/commit/7543c84445e6698d29cafe75b423c33115bc534c))
+* **datetime:** switching month and year accounts for day ([#25996](https://github.com/ionic-team/ionic/issues/25996)) ([11f44e9](https://github.com/ionic-team/ionic/commit/11f44e94f4abe81892f33a057055e5f9b5092528)), closes [#25585](https://github.com/ionic-team/ionic/issues/25585)
+* **datetime:** time button is easier to access with screen readers ([#26019](https://github.com/ionic-team/ionic/issues/26019)) ([5846b41](https://github.com/ionic-team/ionic/commit/5846b418a7e0b2f0bd025c2dac1f248ecb2d17c2))
+* **picker-internal:** fonts now render consistently ([#26020](https://github.com/ionic-team/ionic/issues/26020)) ([54f99bd](https://github.com/ionic-team/ionic/commit/54f99bd5b308386d43596677c9e9227dae822541))
+
+
+
+
+
 ## [6.2.8](https://github.com/ionic-team/ionic/compare/v6.2.7...v6.2.8) (2022-09-21)
 
 
