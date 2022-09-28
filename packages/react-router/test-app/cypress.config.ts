@@ -2,6 +2,7 @@ import { defineConfig } from 'cypress';
 
 export default defineConfig({
   video: false,
+  pageLoadTimeout: 6000000000,
   screenshotOnRunFailure: false,
   defaultCommandTimeout: 10000,
   fixturesFolder: 'tests/e2e/fixtures',
