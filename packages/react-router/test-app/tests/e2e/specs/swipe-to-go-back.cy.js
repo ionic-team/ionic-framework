@@ -1,4 +1,5 @@
 const port = 3000;
+const IOS_MODE = 'ionic:mode=ios';
 
 describe('Swipe To Go Back', () => {
   /*
@@ -6,7 +7,7 @@ describe('Swipe To Go Back', () => {
   */
 
   it('should swipe and abort', () => {
-    cy.visit(`http://localhost:${port}/swipe-to-go-back`);
+    cy.visit(`http://localhost:${port}/swipe-to-go-back?${IOS_MODE}`);
     cy.ionPageVisible('main');
 
     cy.ionNav('ion-item', 'Details');
@@ -19,7 +20,7 @@ describe('Swipe To Go Back', () => {
   });
 
   it('should swipe and go back', () => {
-    cy.visit(`http://localhost:${port}/swipe-to-go-back`);
+    cy.visit(`http://localhost:${port}/swipe-to-go-back?${IOS_MODE}`);
     cy.ionPageVisible('main');
 
     cy.ionNav('ion-item', 'Details');
@@ -31,7 +32,7 @@ describe('Swipe To Go Back', () => {
   });
 
   it('should swipe and abort within a tab', () => {
-    cy.visit(`http://localhost:${port}/tabs/tab1`);
+    cy.visit(`http://localhost:${port}/tabs/tab1?${IOS_MODE}`);
     cy.ionPageVisible('tab1');
 
     cy.get('#child-one').click();
@@ -45,7 +46,7 @@ describe('Swipe To Go Back', () => {
   });
 
   it('should swipe and go back within a tab', () => {
-    cy.visit(`http://localhost:${port}/tabs/tab1`);
+    cy.visit(`http://localhost:${port}/tabs/tab1?${IOS_MODE}`);
     cy.ionPageVisible('tab1');
 
     cy.get('#child-one').click();
@@ -59,7 +60,7 @@ describe('Swipe To Go Back', () => {
   });
 
   it('should swipe and go back to correct tab after switching tabs', () => {
-    cy.visit(`http://localhost:${port}`);
+    cy.visit(`http://localhost:${port}?${IOS_MODE}`);
     cy.ionPageVisible('home');
 
     cy.get('#go-to-tabs').click();
@@ -90,7 +91,7 @@ describe('Swipe To Go Back', () => {
   });
 
   it('should be able to swipe back from child tab page after visiting', () => {
-    cy.visit(`http://localhost:${port}/tabs/tab1`);
+    cy.visit(`http://localhost:${port}/tabs/tab1?${IOS_MODE}`);
     cy.ionPageVisible('tab1');
 
     cy.get('#child-one').click();
@@ -122,7 +123,7 @@ describe('Swipe To Go Back', () => {
   })
 
   it('should not swipe to go back to the same view you are on', () => {
-    cy.visit(`http://localhost:${port}`);
+    cy.visit(`http://localhost:${port}?${IOS_MODE}`);
     cy.ionPageVisible('home');
 
     cy.ionSwipeToGoBack(false);
@@ -130,7 +131,7 @@ describe('Swipe To Go Back', () => {
   })
 
   it('should not hide a parameterized page when swiping and aborting', () => {
-    cy.visit(`http://localhost:${port}/params/0`);
+    cy.visit(`http://localhost:${port}/params/0?${IOS_MODE}`);
     cy.ionPageVisible('params-0');
 
     cy.get('#next-page').click();
