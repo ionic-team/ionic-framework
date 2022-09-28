@@ -271,7 +271,7 @@ export class Searchbar implements ComponentInterface {
   private onClearInput = async (shouldFocus?: boolean) => {
     this.ionClear.emit();
 
-    return new Promise((resolve) => {
+    return new Promise<void>((resolve) => {
       // setTimeout() fixes https://github.com/ionic-team/ionic/issues/7527
       // wait for 4 frames
       setTimeout(() => {
@@ -299,7 +299,7 @@ export class Searchbar implements ComponentInterface {
           }
         }
 
-        resolve('cleared');
+        resolve();
       }, 16 * 4);
     });
   };
