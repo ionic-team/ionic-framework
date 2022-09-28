@@ -35,6 +35,7 @@
     "clean": "node scripts/clean.js",
     "clean-generated": "node ./scripts/clean-generated.js",
     "lint": "npm run eslint && npm run prettier -- --write",
+    "lint.fix": "npm run eslint -- --fix",
     "fmt": "npm run eslint -- --fix && npm run prettier -- --write",
     "prettier": "prettier \"**/*.ts\"",
     "eslint": "eslint . --ext .ts",
