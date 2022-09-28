@@ -10,7 +10,7 @@ describe('card: button', () => {
     });
 
     const button = page.body.querySelector('ion-card')!.shadowRoot!.querySelector('button')!;
-    const ariaLabel = button.getAttribute('ariaLabel');
+    const ariaLabel = button.getAttribute('aria-label');
 
     expect(ariaLabel).toEqual('Test');
   });

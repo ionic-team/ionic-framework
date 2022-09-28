@@ -372,7 +372,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     const ariaLabel = inheritedAttributes['aria-label'];
     const attrs =
       TagType === 'button'
-        ? { type: this.type, ariaLabel }
+        ? { type: this.type, ['aria-label']: ariaLabel }
         : {
             download,
             href,

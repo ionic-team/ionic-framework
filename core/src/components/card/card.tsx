@@ -105,7 +105,7 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
     const ariaLabel = inheritedAttributes['aria-label'];
     const attrs =
       TagType === 'button'
-        ? { type: this.type, ariaLabel }
+        ? { type: this.type, ['aria-label']: ariaLabel }
         : {
             download: this.download,
             href: this.href,
