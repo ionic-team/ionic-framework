@@ -363,6 +363,7 @@ export class Searchbar implements ComponentInterface {
     if (this.focusedValue !== this.value) {
       this.emitValueChange();
     }
+    this.focusedValue = undefined;
   };
 
   /**
