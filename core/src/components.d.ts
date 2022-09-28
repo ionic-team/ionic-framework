@@ -6160,7 +6160,7 @@ declare namespace LocalJSX {
         /**
           * Emitted when the `value` of the `ion-searchbar` element has changed.
          */
-        "onIonInput"?: (event: IonSearchbarCustomEvent<KeyboardEvent>) => void;
+        "onIonInput"?: (event: IonSearchbarCustomEvent<KeyboardEvent | null>) => void;
         /**
           * Emitted when the styles change.
          */

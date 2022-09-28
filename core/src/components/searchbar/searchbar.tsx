@@ -156,7 +156,7 @@ export class Searchbar implements ComponentInterface {
   /**
    * Emitted when the `value` of the `ion-searchbar` element has changed.
    */
-  @Event() ionInput!: EventEmitter<KeyboardEvent>;
+  @Event() ionInput!: EventEmitter<KeyboardEvent | null>;
 
   /**
    * The `ionChange` event is fired for `<ion-searchbar>` elements when the user
@@ -278,7 +278,7 @@ export class Searchbar implements ComponentInterface {
         const value = this.getValue();
         if (value !== '') {
           this.value = '';
-          this.ionInput.emit();
+          this.ionInput.emit(null);
 
           /**
            * When tapping clear button
