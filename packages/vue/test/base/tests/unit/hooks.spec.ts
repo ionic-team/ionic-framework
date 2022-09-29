@@ -15,15 +15,6 @@ const BasePage = {
 }
 
 describe('useIonRouter', () => {
-  /*beforeAll(() => {
-    (HTMLElement.prototype as HTMLIonRouterOutletElement).commit = jest.fn((entering, leaving, opts) => {
-      if (opts && opts.animationBuilder) {
-        opts.animationBuilder(entering, leaving);
-      }
-
-      return Promise.resolve(true);
-    });
-  });*/
   it('should correctly navigate back', async () => {
     const Page1 = {
       ...BasePage
