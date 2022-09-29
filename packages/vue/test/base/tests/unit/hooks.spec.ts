@@ -1,4 +1,5 @@
 import { mount } from '@vue/test-utils';
+import { describe, expect, it } from 'vitest';
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { IonicVue, IonApp, IonRouterOutlet, IonPage, useIonRouter, createAnimation } from '@ionic/vue';
 import { mockAnimation, waitForRouter } from './utils';
@@ -14,7 +15,7 @@ const BasePage = {
 }
 
 describe('useIonRouter', () => {
-  beforeAll(() => {
+  /*beforeAll(() => {
     (HTMLElement.prototype as HTMLIonRouterOutletElement).commit = jest.fn((entering, leaving, opts) => {
       if (opts && opts.animationBuilder) {
         opts.animationBuilder(entering, leaving);
@@ -22,7 +23,7 @@ describe('useIonRouter', () => {
 
       return Promise.resolve(true);
     });
-  });
+  });*/
   it('should correctly navigate back', async () => {
     const Page1 = {
       ...BasePage
