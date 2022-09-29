@@ -428,6 +428,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
       return;
     }
 
+    const { presentingElement } = this;
+
     /**
      * When using an inline modal
      * and dismissing a modal it is possible to
@@ -459,7 +461,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     writeTask(() => this.el.classList.add('show-modal'));
 
     this.currentTransition = present(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, {
-      presentingEl: this.presentingElement,
+      presentingEl: presentingElement,
       currentBreakpoint: this.initialBreakpoint,
       backdropBreakpoint: this.backdropBreakpoint,
     });
@@ -630,6 +632,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
       return false;
     }
 
+    const { presentingElement } = this;
+
     /**
      * We need to start the status bar change
      * before the animation so that the change
@@ -660,7 +664,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     const enteringAnimation = activeAnimations.get(this) || [];
 
     this.currentTransition = dismiss(this, data, role, 'modalLeave', iosLeaveAnimation, mdLeaveAnimation, {
-      presentingEl: this.presentingElement,
+      presentingEl: presentingElement,
       currentBreakpoint: this.currentBreakpoint || this.initialBreakpoint,
       backdropBreakpoint: this.backdropBreakpoint,
     });
