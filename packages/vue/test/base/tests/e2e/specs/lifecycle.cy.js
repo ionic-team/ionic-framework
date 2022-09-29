@@ -1,6 +1,6 @@
 describe('Lifecycle', () => {
   it('should fire lifecycle events when navigating to and from a page', () => {
-    cy.visit('http://localhost:8080');
+    cy.visit('');
     cy.get('#lifecycle').click();
 
     testLifecycle('lifecycle', {
@@ -42,7 +42,7 @@ describe('Lifecycle', () => {
   });
 
   it('should fire lifecycle events when landed on directly', () => {
-    cy.visit('http://localhost:8080/lifecycle');
+    cy.visit('/lifecycle');
 
     testLifecycle('lifecycle', {
       ionViewWillEnter: 1,
@@ -57,7 +57,7 @@ describe('Lifecycle', () => {
   });
 
   it('should fire lifecycle events when navigating to and from a page - setup', () => {
-    cy.visit('http://localhost:8080');
+    cy.visit('');
     cy.get('#lifecycle-setup').click();
 
     testLifecycle('lifecycle-setup', {
@@ -87,7 +87,7 @@ describe('Lifecycle', () => {
   });
 
   it('should fire lifecycle events when landed on directly - setup', () => {
-    cy.visit('http://localhost:8080/lifecycle-setup');
+    cy.visit('/lifecycle-setup');
 
     testLifecycle('lifecycle-setup', {
       onIonViewWillEnter: 1,
