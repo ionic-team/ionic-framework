@@ -19,7 +19,6 @@
     "sync": "sh ./scripts/sync.sh"
   },
   "main": "./dist/index.js",
-  "module": "./dist/index.esm.js",
   "types": "./dist/types/index.d.ts",
   "files": [
     "dist/",
