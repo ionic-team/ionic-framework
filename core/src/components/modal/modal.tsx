@@ -313,7 +313,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   componentWillLoad() {
-    const { breakpoints, initialBreakpoint, swipeToClose, el } = this;
+    const { breakpoints, initialBreakpoint, el } = this;
 
     this.inheritedAttributes = inheritAttributes(el, ['role']);
 
@@ -330,12 +330,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     if (breakpoints !== undefined && initialBreakpoint !== undefined && !breakpoints.includes(initialBreakpoint)) {
       printIonWarning('Your breakpoints array must include the initialBreakpoint value.');
-    }
-
-    if (swipeToClose) {
-      printIonWarning(
-        'swipeToClose has been deprecated in favor of canDismiss.\n\nIf you want a card modal to be swipeable, set canDismiss to `true`. In the next major release of Ionic, swipeToClose will be removed, and all card modals will be swipeable by default.'
-      );
     }
   }
 
