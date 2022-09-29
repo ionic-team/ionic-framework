@@ -1,6 +1,6 @@
 describe('Routing', () => {
   it('should go to sibling page', () => {
-    cy.visit('');
+    cy.visit('/');
     cy.get('ion-item#routing').click();
 
     cy.ionPageVisible('routing');
@@ -14,7 +14,7 @@ describe('Routing', () => {
   });
 
   it('should go back home', () => {
-    cy.visit('');
+    cy.visit('/');
     cy.get('ion-item#routing').click();
 
     cy.ionBackClick('routing');
@@ -33,7 +33,7 @@ describe('Routing', () => {
   });
 
   it('should show back button', () => {
-    cy.visit('');
+    cy.visit('/');
 
     cy.get('#routing').click();
     cy.get('#child').click();
@@ -91,7 +91,7 @@ describe('Routing', () => {
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22359
   it('should work properly with async navigation guards', () => {
-    cy.visit('');
+    cy.visit('/');
     cy.get('#delayed-redirect').click();
 
     cy.get('ion-loading').should('exist');
@@ -148,7 +148,7 @@ describe('Routing', () => {
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22658
   it('should select correct leaving view when navigating between parameter urls', () => {
-    cy.visit('');
+    cy.visit('/');
 
     cy.routerPush('/routing/123');
     cy.ionPageVisible('routingparameter-123');
@@ -177,7 +177,7 @@ describe('Routing', () => {
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22528
   it('should not show ion-back-button when replacing to root page', () => {
-    cy.visit('');
+    cy.visit('/');
 
     cy.routerPush('/navigation');
     cy.ionPageVisible('navigation');
@@ -192,7 +192,7 @@ describe('Routing', () => {
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22662
   it('should push a new instance of a parameterized page so there is a transition', () => {
-    cy.visit('');
+    cy.visit('/');
 
     cy.routerPush('/routing/123');
     cy.ionPageVisible('routingparameter-123');
@@ -209,7 +209,7 @@ describe('Routing', () => {
   });
 
   it('should select correct view when using router.go()', () => {
-    cy.visit('');
+    cy.visit('/');
 
     cy.routerPush('/routing');
     cy.ionPageVisible('routing');
@@ -233,7 +233,7 @@ describe('Routing', () => {
   })
 
   it('should select correct view when traversing backward and forward through history', () => {
-    cy.visit('');
+    cy.visit('/');
 
     cy.routerPush('/routing');
     cy.ionPageVisible('routing');
@@ -265,7 +265,7 @@ describe('Routing', () => {
   })
 
   it('should create new stack items when going back then pushing pages', () => {
-    cy.visit('');
+    cy.visit('/');
 
     cy.routerPush('/routing');
     cy.ionPageVisible('routing');
@@ -289,7 +289,7 @@ describe('Routing', () => {
   })
 
   it('should properly go back using ion-back-button after using router.go()', () => {
-    cy.visit('');
+    cy.visit('/');
 
     cy.routerPush('/routing');
     cy.ionPageVisible('routing');
@@ -317,7 +317,7 @@ describe('Routing', () => {
   });
 
   it('should unmount views skipped over by using router.go with a negative value', () => {
-    cy.visit('');
+    cy.visit('/');
 
     cy.routerPush('/routing');
     cy.ionPageVisible('routing');
@@ -335,7 +335,7 @@ describe('Routing', () => {
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/23987
   it('should choose correct view when navigating back', () => {
-    cy.visit('');
+    cy.visit('/');
 
     cy.routerPush('/routing');
     cy.ionPageVisible('routing');
@@ -380,7 +380,7 @@ describe('Routing', () => {
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/24226
   it('should correctly replace a route after popping', () => {
-    cy.visit('');
+    cy.visit('/');
 
     cy.routerPush('/routing');
     cy.ionPageVisible('routing');
@@ -433,7 +433,7 @@ describe('Routing', () => {
   })
 
   it('should correctly update location history after rewriting past state', () => {
-    cy.visit('');
+    cy.visit('/');
 
     cy.routerPush('/routing');
     cy.ionPageVisible('routing');
@@ -473,7 +473,7 @@ describe('Routing', () => {
   })
 
   it('should correctly update location history after setting root state', () => {
-    cy.visit('');
+    cy.visit('/');
 
     cy.routerPush('/routing');
     cy.ionPageVisible('routing');

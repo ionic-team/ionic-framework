@@ -30,7 +30,7 @@ describe('Hardware Back Button', () => {
   });
 
   it('should correctly go back to the root tab from child pages', () => {
-    cy.visit('');
+    cy.visit('/');
 
     cy.routerPush('/tabs');
     cy.ionPageHidden('home');
@@ -59,7 +59,7 @@ describe('Hardware Back Button', () => {
 
   // TODO FW-1389
   it.skip('should correctly go back to the root tab after switching pages', () => {
-    cy.visit('');
+    cy.visit('/');
 
     cy.routerPush('/tabs');
     cy.ionPageHidden('home');

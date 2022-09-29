@@ -133,7 +133,7 @@ describe('Tabs', () => {
   });
 
   it('should go back from a tabs page to a non-tabs page using ion-back-button', () => {
-    cy.visit('');
+    cy.visit('/');
 
     cy.get('#tabs').click();
     cy.ionPageVisible('tab1');
@@ -450,7 +450,7 @@ describe('Tabs', () => {
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/24859
   it('should go back to the root page after navigating between tab and non tab outlets', () => {
-    cy.visit('');
+    cy.visit('/');
 
     cy.routerPush('/tabs/tab1');
     cy.ionPageVisible('tab1');

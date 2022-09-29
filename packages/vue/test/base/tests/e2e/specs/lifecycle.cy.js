@@ -1,6 +1,6 @@
 describe('Lifecycle', () => {
   it('should fire lifecycle events when navigating to and from a page', () => {
-    cy.visit('');
+    cy.visit('/');
     cy.get('#lifecycle').click();
 
     testLifecycle('lifecycle', {
@@ -57,7 +57,7 @@ describe('Lifecycle', () => {
   });
 
   it('should fire lifecycle events when navigating to and from a page - setup', () => {
-    cy.visit('');
+    cy.visit('/');
     cy.get('#lifecycle-setup').click();
 
     testLifecycle('lifecycle-setup', {
