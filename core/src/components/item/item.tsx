@@ -6,7 +6,7 @@ import { getIonMode } from '../../global/ionic-global';
 import type { AnimationBuilder, Color, CssClassMap, RouterDirection, StyleEventDetail } from '../../interface';
 import type { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import type { Attributes } from '../../utils/helpers';
-import { inheritAriaAttributes, raf } from '../../utils/helpers';
+import { inheritAttributes, raf } from '../../utils/helpers';
 import { printIonError } from '../../utils/logging';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 import type { InputChangeEventDetail } from '../input/input-interface';
@@ -228,7 +228,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
 
   componentDidLoad() {
     raf(() => {
-      this.inheritedAttributes = inheritAriaAttributes(this.el);
+      this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
       this.setMultipleInputs();
       this.focusable = this.isFocusable();
     });
@@ -369,7 +369,8 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     const clickable = this.isClickable();
     const canActivate = this.canActivate();
     const TagType = clickable ? (href === undefined ? 'button' : 'a') : ('div' as any);
-    const ariaLabel = inheritedAttributes['aria-label'];
+    const { ['aria-label']: ariaLabel } = inheritedAttributes;
+
     const attrs =
       TagType === 'button'
         ? { type: this.type, ['aria-label']: ariaLabel }

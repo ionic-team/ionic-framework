@@ -5,7 +5,7 @@ import { getIonMode } from '../../global/ionic-global';
 import type { AnimationBuilder, Color, Mode, RouterDirection } from '../../interface';
 import type { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import type { Attributes } from '../../utils/helpers';
-import { inheritAriaAttributes } from '../../utils/helpers';
+import { inheritAttributes } from '../../utils/helpers';
 import { createColorClasses, openURL } from '../../utils/theme';
 
 /**
@@ -87,7 +87,7 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
   @Prop() target: string | undefined;
 
   componentWillLoad() {
-    this.inheritedAttributes = inheritAriaAttributes(this.el);
+    this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
   }
 
   private isClickable(): boolean {
@@ -102,7 +102,7 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
     }
     const { href, routerAnimation, routerDirection, inheritedAttributes } = this;
     const TagType = clickable ? (href === undefined ? 'button' : 'a') : ('div' as any);
-    const ariaLabel = inheritedAttributes['aria-label'];
+    const { ['aria-label']: ariaLabel } = inheritedAttributes['aria-label'];
     const attrs =
       TagType === 'button'
         ? { type: this.type, ['aria-label']: ariaLabel }

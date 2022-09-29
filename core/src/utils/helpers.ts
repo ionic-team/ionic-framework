@@ -167,9 +167,14 @@ const ariaAttributes = [
  * Returns an array of aria attributes that should be copied from
  * the shadow host element to a target within the light DOM.
  * @param el The element that the attributes should be copied from.
+ * @param ignoreList The list of aria-attributes to ignore reflecting and removing from the host. Use this in instances where we manually specify aria attributes on the `<Host>` element.
  */
-export const inheritAriaAttributes = (el: HTMLElement) => {
-  return inheritAttributes(el, ariaAttributes);
+export const inheritAriaAttributes = (el: HTMLElement, ignoreList?: string[]) => {
+  let attributesToInherit = ariaAttributes;
+  if (ignoreList && ignoreList.length > 0) {
+    attributesToInherit = attributesToInherit.filter((attr) => !ignoreList.includes(attr));
+  }
+  return inheritAttributes(el, attributesToInherit);
 };
 
 export const addEventListener = (el: any, eventName: string, callback: any, opts?: any) => {
