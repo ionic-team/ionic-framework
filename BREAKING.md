@@ -24,6 +24,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Textarea](#version-7x-textarea)
   - [Virtual Scroll](#version-7x-virtual-scroll)
 - [JavaScript Frameworks](#version-7x-javascript-frameworks)
+  - [React](#version-7x-react)
   - [Vue](#version-7x-vue)
 - [Utilities](#version-7x-utilities)
   - [hidden attribute](#version-7x-hidden-attribute)
@@ -136,6 +137,10 @@ Developers using the component will need to migrate to a virtual scroll solution
 Any references to the virtual scroll types from `@ionic/core` have been removed. Please remove or replace these types: `Cell`, `VirtualNode`, `CellType`, `NodeChange`, `HeaderFn`, `ItemHeightFn`, `FooterHeightFn`, `ItemRenderFn` and `DomRenderFn`.
 
 <h2 id="version-7x-javascript-frameworks">JavaScript Frameworks</h2>
+
+<h4 id="version-7x-react">React</h4>
+
+`@ionic/react` and `@ionic/react-router` no longer ships a CommonJS entry point. Instead, only an ES Module entry point is provided for improved compatibility with Vite. Developers should not need to make any changes to their project.
 
 <h4 id="version-7x-vue">Vue</h4>
 
