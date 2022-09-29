@@ -134,6 +134,7 @@ describe('Tabs', () => {
 
   it('should go back from a tabs page to a non-tabs page using ion-back-button', () => {
     cy.visit('/');
+    cy.ionPageVisible('home');
 
     cy.get('#tabs').click();
     cy.ionPageVisible('tab1');
@@ -148,6 +149,7 @@ describe('Tabs', () => {
 
   it('should properly clear stack when leaving tabs', () => {
     cy.visit('/');
+    cy.ionPageVisible('home');
 
     cy.get('#tabs').click();
     cy.ionPageVisible('tab1');
@@ -203,6 +205,7 @@ describe('Tabs', () => {
   // Verifies 1 of 2 fixes for https://github.com/ionic-team/ionic-framework/issues/22519
   it('should show correct tab when switching between tabbed and non-tabbed contexts', () => {
     cy.visit('/routing');
+    cy.ionPageVisible('routing');
 
     cy.get('[data-pageid="routing"] #tab1').click();
     cy.ionPageHidden('routing');
@@ -451,6 +454,7 @@ describe('Tabs', () => {
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/24859
   it('should go back to the root page after navigating between tab and non tab outlets', () => {
     cy.visit('/');
+    cy.ionPageVisible('home');
 
     cy.routerPush('/tabs/tab1');
     cy.ionPageVisible('tab1');
@@ -510,6 +514,7 @@ describe('Tabs', () => {
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/24303
   it('should correctly perform router.go without errors after navigating into tabs', () => {
     cy.visit('/');
+    cy.ionPageVisible('home');
 
     cy.routerPush('/inputs');
     cy.ionPageVisible('inputs');

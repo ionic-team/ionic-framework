@@ -32,6 +32,7 @@ describe('Nested', () => {
 describe('Nested - Replace', () => {
   it('should replace a route but still be able to go back to main outlet', () => {
     cy.visit('/');
+    cy.ionPageVisible('home');
 
     cy.routerPush('/nested');
     cy.ionPageHidden('home');
