@@ -139,7 +139,7 @@ Any references to the virtual scroll types from `@ionic/core` have been removed.
 
 <h4 id="version-7x-vue">Vue</h4>
 
-`@ionic/vue` and `@ionic/vue-router` no longer ship a CommonJS entry point. Instead, only an ES Module entry point is provided for improved compatibility with Vite. Developers should not need to make any changes to their project.
+`@ionic/vue` and `@ionic/vue-router` no longer ship a CommonJS entry point. Instead, only an ES Module entry point is provided for improved compatibility with Vite. Developers should not need to make any changes to their projects.
 
 <h2 id="version-7x-utilities">Utilities</h2>
 
