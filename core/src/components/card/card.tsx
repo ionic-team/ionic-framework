@@ -102,7 +102,7 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
     }
     const { href, routerAnimation, routerDirection, inheritedAttributes } = this;
     const TagType = clickable ? (href === undefined ? 'button' : 'a') : ('div' as any);
-    const { ['aria-label']: ariaLabel } = inheritedAttributes['aria-label'];
+    const { ['aria-label']: ariaLabel } = inheritedAttributes;
     const attrs =
       TagType === 'button'
         ? { type: this.type, ['aria-label']: ariaLabel }
