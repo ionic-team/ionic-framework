@@ -194,12 +194,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
   @Prop() animated = true;
 
   /**
-   * If `true`, the modal can be swiped to dismiss. Only applies in iOS mode.
-   * @deprecated - To prevent modals from dismissing, use canDismiss instead.
-   */
-  @Prop() swipeToClose = false;
-
-  /**
    * The element that presented the modal. This is used for card presentation effects
    * and for stacking multiple modals on top of each other. Only applies in iOS mode.
    */
@@ -251,21 +245,13 @@ export class Modal implements ComponentInterface, OverlayInterface {
   @Prop() keepContentsMounted = false;
 
   /**
-   * TODO (FW-937)
-   * This needs to default to true in the next
-   * major release. We default it to undefined
-   * so we can force the card modal to be swipeable
-   * when using canDismiss.
-   */
-
-  /**
    * Determines whether or not a modal can dismiss
    * when calling the `dismiss` method.
    *
    * If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss.
    * If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.
    */
-  @Prop() canDismiss?: undefined | boolean | (() => Promise<boolean>);
+  @Prop() canDismiss: boolean | (() => Promise<boolean>) = true;
 
   /**
    * Emitted after the modal has presented.
@@ -315,15 +301,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
    * Shorthand for ionModalDidDismiss.
    */
   @Event({ eventName: 'didDismiss' }) didDismissShorthand!: EventEmitter<OverlayEventDetail>;
-
-  @Watch('swipeToClose')
-  async swipeToCloseChanged(enable: boolean) {
-    if (this.gesture) {
-      this.gesture.enable(enable);
-    } else if (enable) {
-      await this.initSwipeToClose();
-    }
-  }
 
   breakpointsChanged(breakpoints: number[] | undefined) {
     if (breakpoints !== undefined) {
@@ -441,14 +418,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private async checkCanDismiss() {
     const { canDismiss } = this;
 
-    /**
-     * TODO (FW-937) - Remove the following check in
-     * the next major release of Ionic.
-     */
-    if (canDismiss === undefined) {
-      return true;
-    }
-
     if (typeof canDismiss === 'function') {
       return canDismiss();
     }
@@ -501,16 +470,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       backdropBreakpoint: this.backdropBreakpoint,
     });
 
-    /**
-     * TODO (FW-937) - In the next major release of Ionic, all card modals
-     * will be swipeable by default. canDismiss will be used to determine if the
-     * modal can be dismissed. This check should change to check the presence of
-     * presentingElement instead.
-     *
-     * If we did not do this check, then not using swipeToClose would mean you could
-     * not run canDismiss on swipe as there would be no swipe gesture created.
-     */
-    const hasCardModal = this.swipeToClose || (this.canDismiss !== undefined && this.presentingElement !== undefined);
+    const hasCardModal = presentingElement !== undefined;
 
     /**
      * We need to change the status bar at the
@@ -680,9 +640,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
      * We need to start the status bar change
      * before the animation so that the change
      * finishes when the dismiss animation does.
-     * TODO (FW-937)
      */
-    const hasCardModal = this.swipeToClose || (this.canDismiss !== undefined && this.presentingElement !== undefined);
+    const hasCardModal = presentingElement !== undefined;
     if (hasCardModal && getIonMode(this) === 'ios') {
       setCardStatusBarDefault();
     }
