@@ -1,6 +1,7 @@
 describe('Hardware Back Button', () => {
   it('should correctly go back to Tab 1', () => {
     cy.visit('/tabs');
+    cy.ionPageVisible('tab1');
 
     cy.get('ion-tab-button#tab-button-tab2').click();
     cy.ionPageHidden('tab1');

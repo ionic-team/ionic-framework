@@ -2,7 +2,6 @@ describe('Routing', () => {
   it('should go to sibling page', () => {
     cy.visit('/');
     cy.ionPageVisible('home');
-    cy.ionPageVisible('home');
     cy.get('ion-item#routing').click();
 
     cy.ionPageVisible('routing');
@@ -11,7 +10,6 @@ describe('Routing', () => {
 
   it('should set query params and keep view in stack', () => {
     cy.visit('/routing');
-    cy.ionPageVisible('routing');
     cy.ionPageVisible('routing');
     cy.get('#route-params').click();
     cy.ionPageVisible('routing');
@@ -132,7 +130,6 @@ describe('Routing', () => {
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22654
   it('should show correct view when navigating between parameter urls', () => {
     cy.visit('/nested');
-
     cy.ionPageVisible('nestedchild');
 
     cy.get('[data-pageid="routeroutlet"] #trash').click();
@@ -541,6 +538,7 @@ describe('Routing - Swipe to Go Back', () => {
   beforeEach(() => {
     cy.viewport(320, 568);
     cy.visit('?ionic:mode=ios');
+    cy.ionPageVisible('home');
     cy.get('#routing').click();
     cy.ionPageHidden('home');
     cy.ionPageVisible('routing')
@@ -562,6 +560,7 @@ describe('Routing - Swipe to Go Back', () => {
 
   it.skip('swipe to go back should work when using router.go()', () => {
     cy.visit('?ionic:mode=ios');
+    cy.ionPageVisible('home');
 
     cy.routerPush('/routing');
     cy.ionPageVisible('routing');
