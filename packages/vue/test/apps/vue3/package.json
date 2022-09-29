@@ -8,11 +8,11 @@
     "build": "vite build",
     "serve": "vite preview",
     "test:unit": "vitest",
-    "test:e2e": "concurrently \"npm run start -- --mode production\" \"wait-on http-get://localhost:8080 && npm run cypress\" --kill-others --success first",
+    "test:e2e": "concurrently \"npm run build && npm run serve\" \"wait-on http-get://localhost:8080 && npm run cypress\" --kill-others --success first",
     "lint": "eslint --ext .js,.vue,.ts --ignore-path .gitignore --fix src",
     "cypress": "node_modules/.bin/cypress run --headless --browser chrome",
     "cypress.open": "cypress open",
-    "start": "npm run serve",
+    "start": "npm run dev",
     "sync": "sh ./scripts/sync.sh"
   },
   "dependencies": {

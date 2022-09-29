@@ -12,5 +12,13 @@ export default defineConfig({
   },
   test: {
     environment: 'jsdom'
+  },
+  // Server applies to "vite" command
+  server: {
+    port: 8080
+  },
+  // Preview applies to "vite preview" command
+  preview: {
+    port: 8080
   }
 })
