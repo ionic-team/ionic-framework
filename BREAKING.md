@@ -140,7 +140,7 @@ Any references to the virtual scroll types from `@ionic/core` have been removed.
 
 <h4 id="version-7x-react">React</h4>
 
-`@ionic/react` and `@ionic/react-router` no longer ships a CommonJS entry point. Instead, only an ES Module entry point is provided for improved compatibility with Vite. Developers should not need to make any changes to their project.
+`@ionic/react` and `@ionic/react-router` no longer ship a CommonJS entry point. Instead, only an ES Module entry point is provided for improved compatibility with Vite. Developers should not need to make any changes to their project.
 
 <h4 id="version-7x-vue">Vue</h4>
 
