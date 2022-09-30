@@ -161,6 +161,7 @@ export const IonButton = /*@__PURE__*/ defineContainer<JSX.IonButton>('ion-butto
   'strong',
   'target',
   'type',
+  'form',
   'ionFocus',
   'ionBlur'
 ]);
