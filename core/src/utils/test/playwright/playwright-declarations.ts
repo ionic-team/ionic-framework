@@ -96,7 +96,9 @@ export interface E2EPage extends Page {
   _e2eEvents: Map<number, any>;
 }
 
-export type BrowserNameOrCallback = string | ((browserName: string) => boolean);
+type BrowserName = 'chromium' | 'firefox' | 'webkit';
+
+export type BrowserNameOrCallback = BrowserName | ((browserName: BrowserName) => boolean);
 
 export interface E2ESkip {
   rtl: (reason?: string) => void;
