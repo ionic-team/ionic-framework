@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.10-nightly.20220930](https://github.com/ionic-team/ionic-framework/compare/v6.2.9...v6.2.10-nightly.20220930) (2022-09-30)
+
+
+### Bug Fixes
+
+* **list:** remove extra border in md inset list items ([#25972](https://github.com/ionic-team/ionic-framework/issues/25972)) ([3eb3dd5](https://github.com/ionic-team/ionic-framework/commit/3eb3dd5afa02f7257e2594f56efe570be83719b6)), closes [#25278](https://github.com/ionic-team/ionic-framework/issues/25278)
+
+
+
+
+
 ## [6.2.9](https://github.com/ionic-team/ionic-framework/compare/v6.2.8...v6.2.9) (2022-09-28)
 
 
