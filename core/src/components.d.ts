@@ -1547,7 +1547,7 @@ export namespace Components {
         /**
           * Determines whether or not a modal can dismiss when calling the `dismiss` method.  If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss. If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.
          */
-        "canDismiss"?: undefined | boolean | (() => Promise<boolean>);
+        "canDismiss": boolean | (() => Promise<boolean>);
         /**
           * The component to display inside of the modal.
          */
@@ -1637,11 +1637,6 @@ export namespace Components {
           * If `true`, a backdrop will be displayed behind the modal. This property controls whether or not the backdrop darkens the screen when the modal is presented. It does not control whether or not the backdrop is active or present in the DOM.
          */
         "showBackdrop": boolean;
-        /**
-          * If `true`, the modal can be swiped to dismiss. Only applies in iOS mode.
-          * @deprecated - To prevent modals from dismissing, use canDismiss instead.
-         */
-        "swipeToClose": boolean;
         /**
           * An ID corresponding to the trigger element that causes the modal to open when clicked.
          */
@@ -5332,7 +5327,7 @@ declare namespace LocalJSX {
         /**
           * Determines whether or not a modal can dismiss when calling the `dismiss` method.  If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss. If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.
          */
-        "canDismiss"?: undefined | boolean | (() => Promise<boolean>);
+        "canDismiss"?: boolean | (() => Promise<boolean>);
         /**
           * The component to display inside of the modal.
          */
@@ -5432,11 +5427,6 @@ declare namespace LocalJSX {
           * If `true`, a backdrop will be displayed behind the modal. This property controls whether or not the backdrop darkens the screen when the modal is presented. It does not control whether or not the backdrop is active or present in the DOM.
          */
         "showBackdrop"?: boolean;
-        /**
-          * If `true`, the modal can be swiped to dismiss. Only applies in iOS mode.
-          * @deprecated - To prevent modals from dismissing, use canDismiss instead.
-         */
-        "swipeToClose"?: boolean;
         /**
           * An ID corresponding to the trigger element that causes the modal to open when clicked.
          */
