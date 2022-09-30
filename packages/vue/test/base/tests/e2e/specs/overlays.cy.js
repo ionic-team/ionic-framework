@@ -40,7 +40,7 @@ const testComponent = (overlay, shadow = false) => {
 describe('Overlays', () => {
   beforeEach(() => {
     cy.viewport(1000, 900);
-    cy.visit('http://localhost:8080/overlays')
+    cy.visit('/overlays');
   })
 
   it(`should open and close ion-alert via controller`, () => {

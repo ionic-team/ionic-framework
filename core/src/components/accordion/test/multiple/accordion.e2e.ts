@@ -2,7 +2,9 @@ import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
 test.describe('accordion: multiple', () => {
-  test('should update value and not have visual regressions', async ({ page }) => {
+  test('should update value and visually expand items', async ({ page, skip }) => {
+    skip.rtl();
+
     await page.goto(`/src/components/accordion/test/multiple`);
     const accordionGroup = page.locator('ion-accordion-group');
     const diningHeader = page.locator('ion-accordion[value="dining"] ion-item[slot="header"]');

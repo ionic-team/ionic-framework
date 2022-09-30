@@ -1,4 +1,5 @@
 import { enableAutoUnmount, mount } from '@vue/test-utils';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import {
   IonicVue,
@@ -27,9 +28,6 @@ const BasePage = {
 }
 
 describe('Routing', () => {
-  beforeAll(() => {
-    (HTMLElement.prototype as HTMLIonRouterOutletElement).commit = jest.fn();
-  });
   it('should pass no props', async () => {
     const Page1 = {
       ...BasePage,
@@ -95,7 +93,7 @@ describe('Routing', () => {
       }
     };
 
-    const propsFn = jest.fn((route) => {
+    const propsFn = vi.fn((route) => {
       return { title: `${route.params.id} Title` }
     });
 
@@ -160,7 +158,7 @@ describe('Routing', () => {
   });
 
   it('should call vue router hooks properly', async () => {
-    const leaveHook = jest.fn();
+    const leaveHook = vi.fn();
     const Page1 = {
       ...BasePage,
       name: 'Page1',
@@ -343,7 +341,7 @@ describe('Routing', () => {
       name: 'Home',
     }
 
-    const propsFn = jest.fn((route) => {
+    const propsFn = vi.fn((route) => {
       return { title: `${route.params.id} Title` }
     });
 
@@ -422,8 +420,8 @@ describe('Routing', () => {
   });
 
   it('should fire guard written in a component', async () => {
-    const beforeRouteEnterSpy = jest.fn();
-    const beforeRouteLeaveSpy = jest.fn();
+    const beforeRouteEnterSpy = vi.fn();
+    const beforeRouteLeaveSpy = vi.fn();
     const Page = {
       beforeRouteEnter() {
         beforeRouteEnterSpy();

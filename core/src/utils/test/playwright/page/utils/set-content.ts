@@ -61,6 +61,4 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo) =
 
     await page.goto(`${baseUrl}#`);
   }
-
-  await page.waitForFunction(() => (window as any).testAppLoaded === true, { timeout: 4750 });
 };
