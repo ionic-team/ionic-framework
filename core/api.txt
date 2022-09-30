@@ -778,7 +778,7 @@ ion-modal,prop,animated,boolean,true,false,false
 ion-modal,prop,backdropBreakpoint,number,0,false,false
 ion-modal,prop,backdropDismiss,boolean,true,false,false
 ion-modal,prop,breakpoints,number[] | undefined,undefined,false,false
-ion-modal,prop,canDismiss,(() => Promise<boolean>) | boolean | undefined,undefined,false,false
+ion-modal,prop,canDismiss,(() => Promise<boolean>) | boolean,true,false,false
 ion-modal,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-modal,prop,handle,boolean | undefined,undefined,false,false
 ion-modal,prop,handleBehavior,"cycle" | "none" | undefined,'none',false,false
@@ -791,7 +791,6 @@ ion-modal,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefin
 ion-modal,prop,mode,"ios" | "md",undefined,false,false
 ion-modal,prop,presentingElement,HTMLElement | undefined,undefined,false,false
 ion-modal,prop,showBackdrop,boolean,true,false,false
-ion-modal,prop,swipeToClose,boolean,false,false,false
 ion-modal,prop,trigger,string | undefined,undefined,false,false
 ion-modal,method,dismiss,dismiss(data?: any, role?: string | undefined) => Promise<boolean>
 ion-modal,method,getCurrentBreakpoint,getCurrentBreakpoint() => Promise<number | undefined>

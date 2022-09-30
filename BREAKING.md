@@ -17,6 +17,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Accordion Group](#version-7x-accordion-group)
   - [Checkbox](#version-7x-checkbox)
   - [Input](#version-7x-input)
+  - [Modal](#version-7x-modal)
   - [Overlays](#version-7x-overlays)
   - [Range](#version-7x-range)
   - [Segment](#version-7x-segment)
@@ -73,6 +74,11 @@ This section details the desktop browser, JavaScript framework, and mobile platf
   - If your application requires immediate feedback based on the user typing actively in the input, consider migrating your event listeners to using `ionInput` instead.
 
 - The `debounce` property has been updated to control the timing in milliseconds to delay the event emission of the `ionInput` event after each keystroke. Previously it would delay the event emission of `ionChange`.
+
+<h4 id="version-7x-modal">Modal</h4>
+
+- The `swipeToClose` property has been removed in favor of `canDismiss`.
+- The `canDismiss` property now defaults to `true` and can no longer be set to `undefined`.
 
 <h4 id="version-7x-overlays">Overlays</h4>
 
@@ -144,7 +150,7 @@ Any references to the virtual scroll types from `@ionic/core` have been removed.
 
 <h4 id="version-7x-vue">Vue</h4>
 
-`@ionic/vue` and `@ionic/vue-router` no longer ships a CommonJS entry point. Instead, only an ES Module entry point is provided for improved compatibility with Vite. Developers should not need to make any changes to their project.
+`@ionic/vue` and `@ionic/vue-router` no longer ship a CommonJS entry point. Instead, only an ES Module entry point is provided for improved compatibility with Vite.
 
 <h2 id="version-7x-utilities">Utilities</h2>
 
