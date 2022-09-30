@@ -1094,7 +1094,7 @@ ion-searchbar,prop,cancelButtonIcon,string,config.get('backButtonIcon', arrowBac
 ion-searchbar,prop,cancelButtonText,string,'Cancel',false,false
 ion-searchbar,prop,clearIcon,string | undefined,undefined,false,false
 ion-searchbar,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
-ion-searchbar,prop,debounce,number,250,false,false
+ion-searchbar,prop,debounce,number | undefined,undefined,false,false
 ion-searchbar,prop,disabled,boolean,false,false,false
 ion-searchbar,prop,enterkeyhint,"done" | "enter" | "go" | "next" | "previous" | "search" | "send" | undefined,undefined,false,false
 ion-searchbar,prop,inputmode,"decimal" | "email" | "none" | "numeric" | "search" | "tel" | "text" | "url" | undefined,undefined,false,false
@@ -1113,7 +1113,7 @@ ion-searchbar,event,ionCancel,void,true
 ion-searchbar,event,ionChange,SearchbarChangeEventDetail,true
 ion-searchbar,event,ionClear,void,true
 ion-searchbar,event,ionFocus,void,true
-ion-searchbar,event,ionInput,KeyboardEvent,true
+ion-searchbar,event,ionInput,KeyboardEvent | null,true
 ion-searchbar,css-prop,--background
 ion-searchbar,css-prop,--border-radius
 ion-searchbar,css-prop,--box-shadow

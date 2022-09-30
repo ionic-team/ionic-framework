@@ -108,6 +108,8 @@ iOS:
 
 - The `debounce` property has been updated to control the timing in milliseconds to delay the event emission of the `ionInput` event after each keystroke. Previously it would delay the event emission of `ionChange`.
 
+- The `debounce` property's default value has changed from 250 to `undefined`. If `debounce` is undefined, the `ionInput` event will fire immediately.
+
 <h4 id="version-7x-segment">Segment</h4>
 
 - `ionChange` is no longer emitted when the `value` of `ion-segment` is modified externally. `ionChange` is only emitted from user committed changes, such as clicking a segment button or dragging to activate a segment button.

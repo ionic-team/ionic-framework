@@ -1520,7 +1520,7 @@ export declare interface IonSearchbar extends Components.IonSearchbar {
   /**
    * Emitted when the `value` of the `ion-searchbar` element has changed. 
    */
-  ionInput: EventEmitter<CustomEvent<KeyboardEvent>>;
+  ionInput: EventEmitter<CustomEvent<KeyboardEvent | null>>;
   /**
    * The `ionChange` event is fired for `<ion-searchbar>` elements when the user
 modifies the element's value. Unlike the `ionInput` event, the `ionChange`
