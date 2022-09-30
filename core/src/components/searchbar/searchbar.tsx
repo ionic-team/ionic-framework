@@ -24,7 +24,7 @@ export class Searchbar implements ComponentInterface {
   private nativeInput?: HTMLInputElement;
   private isCancelVisible = false;
   private shouldAlignLeft = true;
-  private unmoddedIonInput!: EventEmitter<KeyboardEvent | null>;
+  private originalIonInput!: EventEmitter<KeyboardEvent | null>;
 
   /**
    * The value of the input when the textarea is focused.
@@ -81,8 +81,13 @@ export class Searchbar implements ComponentInterface {
 
   @Watch('debounce')
   protected debounceChanged() {
-    const { ionInput, debounce, unmoddedIonInput } = this;
-    this.ionInput = debounce === undefined ? unmoddedIonInput : debounceEvent(ionInput, debounce);
+    const { ionInput, debounce, originalIonInput } = this;
+
+    /**
+     * If debounce is undefined, we have to manually revert the ionInput emitter in case
+     * debounce used to be set to a number. Otherwise, the event would stay debounced.
+     */
+    this.ionInput = debounce === undefined ? originalIonInput : debounceEvent(ionInput, debounce);
   }
 
   /**
@@ -219,7 +224,7 @@ export class Searchbar implements ComponentInterface {
   }
 
   componentDidLoad() {
-    this.unmoddedIonInput = this.ionInput;
+    this.originalIonInput = this.ionInput;
     this.positionElements();
     this.debounceChanged();
 
