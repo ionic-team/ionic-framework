@@ -10,14 +10,4 @@ test.describe('accordion: standalone', () => {
 
     expect(results.violations).toEqual([]);
   });
-
-  test('should not have visual regressions', async ({ page }) => {
-    await page.goto(`/src/components/accordion/test/standalone`);
-
-    await page.waitForChanges();
-
-    expect(await page.screenshot({ fullPage: true })).toMatchSnapshot(
-      `accordion-standalone-${page.getSnapshotSettings()}.png`
-    );
-  });
 });
