@@ -181,7 +181,7 @@ export const config: Config = {
     // },
     angularOutputTarget({
       componentCorePackage: '@ionic/core',
-      directivesProxyFile: '../angular/src/directives/proxies.ts',
+      proxyDeclarationFile: '../angular/src/directives/proxies.ts',
       directivesArrayFile: '../angular/src/directives/proxies-list.ts',
       excludeComponents: [
         // overlays
