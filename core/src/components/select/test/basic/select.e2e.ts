@@ -96,7 +96,7 @@ test.describe('select: basic', () => {
   });
 });
 
-test.describe.only('select: ionChange', () => {
+test.describe('select: ionChange', () => {
   test.beforeEach(({ skip }) => {
     skip.rtl();
   });
