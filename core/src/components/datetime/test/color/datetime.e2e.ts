@@ -19,7 +19,7 @@ test.describe('datetime: color', () => {
 
     await page.evaluate(() => document.body.classList.toggle('dark'));
     await datetime.evaluateAll((els: HTMLIonDatetimeElement[]) => {
-      els.forEach((el) => (el.value = 'danger'));
+      els.forEach((el) => (el.color = 'danger'));
     });
     await page.waitForChanges();
 
