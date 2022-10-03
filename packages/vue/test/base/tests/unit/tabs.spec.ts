@@ -1,4 +1,5 @@
 import { mount } from '@vue/test-utils';
+import { describe, expect, it } from 'vitest';
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { IonicVue, IonApp, IonRouterOutlet, IonPage, IonTabs, IonTabBar, IonTabButton, IonLabel } from '@ionic/vue';
 import { waitForRouter } from './utils';
@@ -36,9 +37,6 @@ const Tab2 = {
 }
 
 describe('ion-tabs', () => {
-  beforeAll(() => {
-    (HTMLElement.prototype as HTMLIonRouterOutletElement).commit = jest.fn();
-  });
   it('should emit will change and did change events when changing tab', async () => {
     const router = createRouter({
       history: createWebHistory(process.env.BASE_URL),
