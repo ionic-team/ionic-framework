@@ -14,14 +14,37 @@ test.describe('datetime: prefer wheel', () => {
    * are rendering quirks on Linux
    * if the datetime is too small.
    */
-  test.describe('datetime: date wheel rendering', () => {
-    test('should not have visual regressions', async ({ page }) => {
+  test.describe('datetime: wheel rendering', () => {
+    test('should not have visual regressions for date wheel', async ({ page }) => {
       await page.setContent(`
         <ion-datetime size="cover" presentation="date" prefer-wheel="true" value="2019-05-30"></ion-datetime>
       `);
 
       expect(await page.screenshot()).toMatchSnapshot(`datetime-wheel-date-diff-${page.getSnapshotSettings()}.png`);
     });
+    test('should not have visual regressions for date-time wheel', async ({ page }) => {
+      await page.setContent(`
+        <ion-datetime size="cover" presentation="date-time" prefer-wheel="true" value="2019-05-30T16:30:00"></ion-datetime>
+      `);
+
+      expect(await page.screenshot()).toMatchSnapshot(
+        `datetime-wheel-date-time-diff-${page.getSnapshotSettings()}.png`
+      );
+    });
+    test('should not have visual regressions for time-date wheel', async ({ page }) => {
+      await page.setContent(`
+        <ion-datetime size="cover" presentation="time-date" prefer-wheel="true" value="2019-05-30T16:30:00"></ion-datetime>
+      `);
+
+      expect(await page.screenshot()).toMatchSnapshot(
+        `datetime-wheel-time-date-diff-${page.getSnapshotSettings()}.png`
+      );
+    });
+  });
+  test.describe('datetime: date wheel', () => {
+    test.beforeEach(({ skip }) => {
+      skip.rtl();
+    })
     test('should respect the min bounds', async ({ page }) => {
       await page.setContent(`
         <ion-datetime presentation="date" prefer-wheel="true" min="2019-05-05" max="2023-10-01" value="2019-05-30"></ion-datetime>
@@ -149,16 +172,10 @@ test.describe('datetime: prefer wheel', () => {
       });
     });
   });
-  test.describe('datetime: date-time wheel rendering', () => {
-    test('should not have visual regressions', async ({ page }) => {
-      await page.setContent(`
-        <ion-datetime size="cover" presentation="date-time" prefer-wheel="true" value="2019-05-30T16:30:00"></ion-datetime>
-      `);
-
-      expect(await page.screenshot()).toMatchSnapshot(
-        `datetime-wheel-date-time-diff-${page.getSnapshotSettings()}.png`
-      );
-    });
+  test.describe('datetime: date-time wheel', () => {
+    test.beforeEach(({ skip }) => {
+      skip.rtl();
+    })
     test('should respect the min bounds', async ({ page }) => {
       await page.setContent(`
         <ion-datetime presentation="date-time" prefer-wheel="true" min="2019-05-05" value="2019-05-10T16:30:00"></ion-datetime>
@@ -253,17 +270,28 @@ test.describe('datetime: prefer wheel', () => {
 
       expect(await dateValues.count()).toBe(397);
     });
-  });
-  test.describe('datetime: time-date wheel rendering', () => {
-    test('should not have visual regressions', async ({ page }) => {
+    test.only('should keep sliding window if default window is within min and max constraints', async ({ page }) => {
       await page.setContent(`
-        <ion-datetime size="cover" presentation="time-date" prefer-wheel="true" value="2019-05-30T16:30:00"></ion-datetime>
+        <ion-datetime
+          presentation="date-time"
+          prefer-wheel="true"
+          value="2022-06-01"
+          max="2030-01-01"
+          min="2010-01-01"
+        ></ion-datetime>
       `);
 
-      expect(await page.screenshot()).toMatchSnapshot(
-        `datetime-wheel-time-date-diff-${page.getSnapshotSettings()}.png`
-      );
-    });
+      await page.waitForSelector('.datetime-ready');
+
+      const dayValues = page.locator('.date-column .picker-item:not(.picker-item-empty)');
+
+      expect(await dayValues.count()).toBe(92);
+    })
+  });
+  test.describe('datetime: time-date wheel', () => {
+    test.beforeEach(({ skip }) => {
+      skip.rtl();
+    })
     test('should respect the min bounds', async ({ page }) => {
       await page.setContent(`
         <ion-datetime presentation="time-date" prefer-wheel="true" min="2019-05-05" value="2019-05-10T16:30:00"></ion-datetime>
@@ -358,5 +386,22 @@ test.describe('datetime: prefer wheel', () => {
 
       expect(await dateValues.count()).toBe(397);
     });
+    test.only('should keep sliding window if default window is within min and max constraints', async ({ page }) => {
+    await page.setContent(`
+      <ion-datetime
+        presentation="time-date"
+        prefer-wheel="true"
+        value="2022-06-01"
+        max="2030-01-01"
+        min="2010-01-01"
+      ></ion-datetime>
+    `);
+
+    await page.waitForSelector('.datetime-ready');
+
+    const dayValues = page.locator('.date-column .picker-item:not(.picker-item-empty)');
+
+    expect(await dayValues.count()).toBe(92);
   });
+});
 });
