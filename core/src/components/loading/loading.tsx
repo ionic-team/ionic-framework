@@ -11,7 +11,7 @@ import type {
   OverlayInterface,
   SpinnerTypes,
 } from '../../interface';
-import { attachComponent, CoreDelegate, detachComponent } from '../../utils/framework-delegate';
+import { CoreDelegate, detachComponent } from '../../utils/framework-delegate';
 import { raf } from '../../utils/helpers';
 import { BACKDROP, dismiss, eventMethod, prepareOverlay, present } from '../../utils/overlays';
 import type { IonicSafeString } from '../../utils/sanitization';
@@ -196,10 +196,12 @@ export class Loading implements ComponentInterface, OverlayInterface {
       await this.currentTransition;
     }
 
-    const { inline, delegate } = this.getDelegate(true);
-    this.usersElement = await attachComponent(delegate, this.el, undefined, undefined, undefined, inline);
+    const { delegate } = this.getDelegate(true);
 
-    await deepReady(this.usersElement);
+    if (delegate) {
+      this.usersElement = await delegate.attachViewToDom(this.el, undefined);
+      await deepReady(this.usersElement);
+    }
 
     this.currentTransition = present(this, 'loadingEnter', iosEnterAnimation, mdEnterAnimation, undefined);
 
