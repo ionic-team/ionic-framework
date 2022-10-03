@@ -151,6 +151,11 @@ export class Select implements ComponentInterface {
     this.emitStyle();
   }
 
+  private setValue(value?: any | null) {
+    this.value = value;
+    this.ionChange.emit({ value });
+  }
+
   async connectedCallback() {
     this.updateOverlayOptions();
     this.emitStyle();
@@ -268,7 +273,7 @@ export class Select implements ComponentInterface {
         text: option.textContent,
         cssClass: optClass,
         handler: () => {
-          this.value = value;
+          this.setValue(value);
         },
       } as ActionSheetButton;
     });
@@ -329,7 +334,7 @@ export class Select implements ComponentInterface {
         checked: isOptionSelected(selectValue, value, this.compareWith),
         disabled: option.disabled,
         handler: (selected: any) => {
-          this.value = selected;
+          this.setValue(selected);
           if (!this.multiple) {
             this.close();
           }
@@ -452,7 +457,7 @@ export class Select implements ComponentInterface {
         {
           text: this.okText,
           handler: (selectedValues: any) => {
-            this.value = selectedValues;
+            this.setValue(selectedValues);
           },
         },
       ],
