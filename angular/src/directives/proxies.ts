@@ -1825,8 +1825,11 @@ has been modified.
    */
   ionChange: EventEmitter<CustomEvent<ITextareaTextareaChangeEventDetail>>;
   /**
-   * Ths `ionInput` event fires when the `value` of an `<ion-textarea>` element
-has been changed. 
+   * The `ionInput` event fires when the `value` of an `<ion-textarea>` element
+has been changed.
+
+When `clearOnEdit` is enabled, the `ionInput` event will be fired when
+the user clears the textarea by performing a keydown event. 
    */
   ionInput: EventEmitter<CustomEvent<InputEvent | null>>;
   /**

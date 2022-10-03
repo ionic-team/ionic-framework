@@ -182,8 +182,11 @@ export class Textarea implements ComponentInterface {
   @Event() ionChange!: EventEmitter<TextareaChangeEventDetail>;
 
   /**
-   * Ths `ionInput` event fires when the `value` of an `<ion-textarea>` element
+   * The `ionInput` event fires when the `value` of an `<ion-textarea>` element
    * has been changed.
+   *
+   * When `clearOnEdit` is enabled, the `ionInput` event will be fired when
+   * the user clears the textarea by performing a keydown event.
    */
   @Event() ionInput!: EventEmitter<InputEvent | null>;
 
