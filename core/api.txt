@@ -705,10 +705,14 @@ ion-loading,method,dismiss,dismiss(data?: any, role?: string) => Promise<boolean
 ion-loading,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-loading,method,onWillDismiss,onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-loading,method,present,present() => Promise<void>
+ion-loading,event,didDismiss,OverlayEventDetail<any>,true
+ion-loading,event,didPresent,void,true
 ion-loading,event,ionLoadingDidDismiss,OverlayEventDetail<any>,true
 ion-loading,event,ionLoadingDidPresent,void,true
 ion-loading,event,ionLoadingWillDismiss,OverlayEventDetail<any>,true
 ion-loading,event,ionLoadingWillPresent,void,true
+ion-loading,event,willDismiss,OverlayEventDetail<any>,true
+ion-loading,event,willPresent,void,true
 ion-loading,css-prop,--backdrop-opacity
 ion-loading,css-prop,--background
 ion-loading,css-prop,--height

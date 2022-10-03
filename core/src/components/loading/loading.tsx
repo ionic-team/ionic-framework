@@ -158,6 +158,30 @@ export class Loading implements ComponentInterface, OverlayInterface {
    */
   @Event({ eventName: 'ionLoadingDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
 
+  /**
+   * Emitted after the loading indicator has presented.
+   * Shorthand for ionLoadingWillDismiss.
+   */
+  @Event({ eventName: 'didPresent' }) didPresentShorthand!: EventEmitter<void>;
+
+  /**
+   * Emitted before the loading indicator has presented.
+   * Shorthand for ionLoadingWillPresent.
+   */
+  @Event({ eventName: 'willPresent' }) willPresentShorthand!: EventEmitter<void>;
+
+  /**
+   * Emitted before the loading indicator has dismissed.
+   * Shorthand for ionLoadingWillDismiss.
+   */
+  @Event({ eventName: 'willDismiss' }) willDismissShorthand!: EventEmitter<OverlayEventDetail>;
+
+  /**
+   * Emitted after the loading indicator has dismissed.
+   * Shorthand for ionLoadingDidDismiss.
+   */
+  @Event({ eventName: 'didDismiss' }) didDismissShorthand!: EventEmitter<OverlayEventDetail>;
+
   connectedCallback() {
     prepareOverlay(this.el);
   }

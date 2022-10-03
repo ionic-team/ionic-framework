@@ -5204,6 +5204,14 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
+          * Emitted after the loading indicator has dismissed. Shorthand for ionLoadingDidDismiss.
+         */
+        "onDidDismiss"?: (event: IonLoadingCustomEvent<OverlayEventDetail>) => void;
+        /**
+          * Emitted after the loading indicator has presented. Shorthand for ionLoadingWillDismiss.
+         */
+        "onDidPresent"?: (event: IonLoadingCustomEvent<void>) => void;
+        /**
           * Emitted after the loading has dismissed.
          */
         "onIonLoadingDidDismiss"?: (event: IonLoadingCustomEvent<OverlayEventDetail>) => void;
@@ -5219,6 +5227,14 @@ declare namespace LocalJSX {
           * Emitted before the loading has presented.
          */
         "onIonLoadingWillPresent"?: (event: IonLoadingCustomEvent<void>) => void;
+        /**
+          * Emitted before the loading indicator has dismissed. Shorthand for ionLoadingWillDismiss.
+         */
+        "onWillDismiss"?: (event: IonLoadingCustomEvent<OverlayEventDetail>) => void;
+        /**
+          * Emitted before the loading indicator has presented. Shorthand for ionLoadingWillPresent.
+         */
+        "onWillPresent"?: (event: IonLoadingCustomEvent<void>) => void;
         "overlayIndex": number;
         /**
           * If `true`, a backdrop will be displayed behind the loading indicator.
