@@ -5,7 +5,6 @@ test.describe('datetime: color', () => {
   test('should not have visual regressions', async ({ page }) => {
     await page.goto('/src/components/datetime/test/color');
 
-    const colorSelect = page.locator('ion-select');
     const datetime = page.locator('ion-datetime');
 
     await page.evaluate(() => document.body.classList.toggle('dark'));
@@ -19,7 +18,9 @@ test.describe('datetime: color', () => {
     );
 
     await page.evaluate(() => document.body.classList.toggle('dark'));
-    await colorSelect.evaluate((el: HTMLIonSelectElement) => (el.value = 'danger'));
+    await datetime.evaluateAll((els: HTMLIonDatetimeElement[]) => {
+      els.forEach((el) => (el.value = 'danger'));
+    });
     await page.waitForChanges();
 
     expect(await datetime.first().screenshot()).toMatchSnapshot(
