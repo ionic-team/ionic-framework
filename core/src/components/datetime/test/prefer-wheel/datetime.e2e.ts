@@ -44,7 +44,7 @@ test.describe('datetime: prefer wheel', () => {
   test.describe('datetime: date wheel', () => {
     test.beforeEach(({ skip }) => {
       skip.rtl();
-    })
+    });
     test('should respect the min bounds', async ({ page }) => {
       await page.setContent(`
         <ion-datetime presentation="date" prefer-wheel="true" min="2019-05-05" max="2023-10-01" value="2019-05-30"></ion-datetime>
@@ -175,7 +175,7 @@ test.describe('datetime: prefer wheel', () => {
   test.describe('datetime: date-time wheel', () => {
     test.beforeEach(({ skip }) => {
       skip.rtl();
-    })
+    });
     test('should respect the min bounds', async ({ page }) => {
       await page.setContent(`
         <ion-datetime presentation="date-time" prefer-wheel="true" min="2019-05-05" value="2019-05-10T16:30:00"></ion-datetime>
@@ -270,7 +270,7 @@ test.describe('datetime: prefer wheel', () => {
 
       expect(await dateValues.count()).toBe(397);
     });
-    test.only('should keep sliding window if default window is within min and max constraints', async ({ page }) => {
+    test('should keep sliding window if default window is within min and max constraints', async ({ page }) => {
       await page.setContent(`
         <ion-datetime
           presentation="date-time"
@@ -286,8 +286,8 @@ test.describe('datetime: prefer wheel', () => {
       const dayValues = page.locator('.date-column .picker-item:not(.picker-item-empty)');
 
       expect(await dayValues.count()).toBe(92);
-    })
-    test.only('should narrow sliding window if default window is not within min and max constraints', async ({ page }) => {
+    });
+    test('should narrow sliding window if default window is not within min and max constraints', async ({ page }) => {
       await page.setContent(`
         <ion-datetime
           presentation="date-time"
@@ -308,7 +308,7 @@ test.describe('datetime: prefer wheel', () => {
   test.describe('datetime: time-date wheel', () => {
     test.beforeEach(({ skip }) => {
       skip.rtl();
-    })
+    });
     test('should respect the min bounds', async ({ page }) => {
       await page.setContent(`
         <ion-datetime presentation="time-date" prefer-wheel="true" min="2019-05-05" value="2019-05-10T16:30:00"></ion-datetime>
@@ -403,8 +403,8 @@ test.describe('datetime: prefer wheel', () => {
 
       expect(await dateValues.count()).toBe(397);
     });
-    test.only('should keep sliding window if default window is within min and max constraints', async ({ page }) => {
-    await page.setContent(`
+    test('should keep sliding window if default window is within min and max constraints', async ({ page }) => {
+      await page.setContent(`
       <ion-datetime
         presentation="time-date"
         prefer-wheel="true"
@@ -414,14 +414,14 @@ test.describe('datetime: prefer wheel', () => {
       ></ion-datetime>
     `);
 
-    await page.waitForSelector('.datetime-ready');
+      await page.waitForSelector('.datetime-ready');
 
-    const dayValues = page.locator('.date-column .picker-item:not(.picker-item-empty)');
+      const dayValues = page.locator('.date-column .picker-item:not(.picker-item-empty)');
 
-    expect(await dayValues.count()).toBe(92);
-  });
-  test.only('should narrow sliding window if default window is not within min and max constraints', async ({ page }) => {
-    await page.setContent(`
+      expect(await dayValues.count()).toBe(92);
+    });
+    test('should narrow sliding window if default window is not within min and max constraints', async ({ page }) => {
+      await page.setContent(`
       <ion-datetime
         presentation="time-date"
         prefer-wheel="true"
@@ -431,11 +431,11 @@ test.describe('datetime: prefer wheel', () => {
       ></ion-datetime>
     `);
 
-    await page.waitForSelector('.datetime-ready');
+      await page.waitForSelector('.datetime-ready');
 
-    const dayValues = page.locator('.date-column .picker-item:not(.picker-item-empty)');
+      const dayValues = page.locator('.date-column .picker-item:not(.picker-item-empty)');
 
-    expect(await dayValues.count()).toBe(15);
+      expect(await dayValues.count()).toBe(15);
+    });
   });
-});
 });
