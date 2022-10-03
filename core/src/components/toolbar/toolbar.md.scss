@@ -31,7 +31,7 @@
 // Toolbar: Segment
 // --------------------------------------------------
 
-::slotted(ion-segment) {
+::slotted(ion-segment.md) {
   min-height: var(--min-height);
 }
 
