@@ -1,19 +1,23 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Method, Prop, h } from '@stencil/core';
+import { Watch, Component, Element, Event, Host, Method, Prop, h } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import type {
   AnimationBuilder,
+  FrameworkDelegate,
   LoadingAttributes,
   OverlayEventDetail,
   OverlayInterface,
   SpinnerTypes,
 } from '../../interface';
+import { attachComponent, CoreDelegate, detachComponent } from '../../utils/framework-delegate';
+import { raf } from '../../utils/helpers';
 import { BACKDROP, dismiss, eventMethod, prepareOverlay, present } from '../../utils/overlays';
 import type { IonicSafeString } from '../../utils/sanitization';
 import { sanitizeDOMString } from '../../utils/sanitization';
 import { getClassMap } from '../../utils/theme';
+import { deepReady } from '../../utils/transition';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
@@ -33,6 +37,12 @@ import { mdLeaveAnimation } from './animations/md.leave';
 })
 export class Loading implements ComponentInterface, OverlayInterface {
   private durationTimeout: any;
+  private coreDelegate: FrameworkDelegate = CoreDelegate();
+  private currentTransition?: Promise<any>;
+  private inline = false;
+  private workingDelegate?: FrameworkDelegate;
+  // Reference to the user's provided loading content
+  private usersElement?: HTMLElement;
 
   presented = false;
   lastFocus?: HTMLElement;
@@ -41,6 +51,12 @@ export class Loading implements ComponentInterface, OverlayInterface {
 
   /** @internal */
   @Prop() overlayIndex!: number;
+
+  /** @internal */
+  @Prop() delegate?: FrameworkDelegate;
+
+  /** @internal */
+  @Prop() hasController = false;
 
   /**
    * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
@@ -106,6 +122,23 @@ export class Loading implements ComponentInterface, OverlayInterface {
   @Prop() htmlAttributes?: LoadingAttributes;
 
   /**
+   * If `true`, the loading indicator will open. If `false`, the loading indicator will close.
+   * Use this if you need finer grained control over presentation, otherwise
+   * just use the loadingController or the `trigger` property.
+   * Note: `isOpen` will not automatically be set back to `false` when
+   * the loading indicator dismisses. You will need to do that in your code.
+   */
+  @Prop() isOpen = false;
+  @Watch('isOpen')
+  onIsOpenChange(newValue: boolean, oldValue: boolean) {
+    if (newValue === true && oldValue === false) {
+      this.present();
+    } else if (newValue === false && oldValue === true) {
+      this.dismiss();
+    }
+  }
+
+  /**
    * Emitted after the loading has presented.
    */
   @Event({ eventName: 'ionLoadingDidPresent' }) didPresent!: EventEmitter<void>;
@@ -136,16 +169,47 @@ export class Loading implements ComponentInterface, OverlayInterface {
     }
   }
 
+  componentDidLoad() {
+    /**
+     * If loading indicator was rendered with isOpen="true"
+     * then we should open loading indicator immediately.
+     */
+    if (this.isOpen === true) {
+      raf(() => this.present());
+    }
+  }
+
   /**
    * Present the loading overlay after it has been created.
    */
   @Method()
   async present(): Promise<void> {
-    await present(this, 'loadingEnter', iosEnterAnimation, mdEnterAnimation, undefined);
+    /**
+     * When using an inline loading indicator
+     * and dismissing a loading indicator it is possible to
+     * quickly present the loading indicator while it is
+     * dismissing. We need to await any current
+     * transition to allow the dismiss to finish
+     * before presenting again.
+     */
+    if (this.currentTransition !== undefined) {
+      await this.currentTransition;
+    }
+
+    const { inline, delegate } = this.getDelegate(true);
+    this.usersElement = await attachComponent(delegate, this.el, undefined, undefined, undefined, inline);
+
+    await deepReady(this.usersElement);
+
+    this.currentTransition = present(this, 'loadingEnter', iosEnterAnimation, mdEnterAnimation, undefined);
+
+    await this.currentTransition;
 
     if (this.duration > 0) {
       this.durationTimeout = setTimeout(() => this.dismiss(), this.duration + 10);
     }
+
+    this.currentTransition = undefined;
   }
 
   /**
@@ -158,11 +222,20 @@ export class Loading implements ComponentInterface, OverlayInterface {
    * Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
    */
   @Method()
-  dismiss(data?: any, role?: string): Promise<boolean> {
+  async dismiss(data?: any, role?: string): Promise<boolean> {
     if (this.durationTimeout) {
       clearTimeout(this.durationTimeout);
     }
-    return dismiss(this, data, role, 'loadingLeave', iosLeaveAnimation, mdLeaveAnimation);
+    this.currentTransition = dismiss(this, data, role, 'loadingLeave', iosLeaveAnimation, mdLeaveAnimation);
+
+    const dismissed = await this.currentTransition;
+
+    if (dismissed) {
+      const { delegate } = this.getDelegate();
+      await detachComponent(delegate, this.usersElement);
+    }
+
+    return dismissed;
   }
 
   /**
@@ -184,6 +257,39 @@ export class Loading implements ComponentInterface, OverlayInterface {
   private onBackdropTap = () => {
     this.dismiss(undefined, BACKDROP);
   };
+
+  /**
+   * Determines whether or not an overlay
+   * is being used inline or via a controller/JS
+   * and returns the correct delegate.
+   * By default, subsequent calls to getDelegate
+   * will use a cached version of the delegate.
+   * This is useful for calling dismiss after
+   * present so that the correct delegate is given.
+   */
+  private getDelegate(force = false) {
+    const { workingDelegate } = this;
+    if (workingDelegate && !force) {
+      return {
+        delegate: workingDelegate,
+        inline: this.inline,
+      };
+    }
+    /**
+     * If using overlay inline
+     * we potentially need to use the coreDelegate
+     * so that this works in vanilla JS apps.
+     * If a developer has presented this component
+     * via a controller, then we can assume
+     * the component is already in the
+     * correct place.
+     */
+    const parentEl = this.el.parentNode as HTMLElement | null;
+    const inline = (this.inline = parentEl !== null && !this.hasController);
+    const delegate = (this.workingDelegate = inline ? this.delegate || this.coreDelegate : this.delegate);
+
+    return { inline, delegate };
+  }
 
   render() {
     const { message, spinner, htmlAttributes } = this;

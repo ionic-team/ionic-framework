@@ -1377,6 +1377,7 @@ export namespace Components {
           * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
          */
         "cssClass"?: string | string[];
+        "delegate"?: FrameworkDelegate;
         /**
           * Dismiss the loading overlay after it has been presented.
           * @param data Any data to emit in the dismiss events.
@@ -1391,10 +1392,15 @@ export namespace Components {
           * Animation to use when the loading indicator is presented.
          */
         "enterAnimation"?: AnimationBuilder;
+        "hasController": boolean;
         /**
           * Additional attributes to pass to the loader.
          */
         "htmlAttributes"?: LoadingAttributes;
+        /**
+          * If `true`, the loading indicator will open. If `false`, the loading indicator will close. Use this if you need finer grained control over presentation, otherwise just use the loadingController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the loading indicator dismisses. You will need to do that in your code.
+         */
+        "isOpen": boolean;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -5163,6 +5169,7 @@ declare namespace LocalJSX {
           * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
          */
         "cssClass"?: string | string[];
+        "delegate"?: FrameworkDelegate;
         /**
           * Number of milliseconds to wait before dismissing the loading indicator.
          */
@@ -5171,10 +5178,15 @@ declare namespace LocalJSX {
           * Animation to use when the loading indicator is presented.
          */
         "enterAnimation"?: AnimationBuilder;
+        "hasController"?: boolean;
         /**
           * Additional attributes to pass to the loader.
          */
         "htmlAttributes"?: LoadingAttributes;
+        /**
+          * If `true`, the loading indicator will open. If `false`, the loading indicator will close. Use this if you need finer grained control over presentation, otherwise just use the loadingController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the loading indicator dismisses. You will need to do that in your code.
+         */
+        "isOpen"?: boolean;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
