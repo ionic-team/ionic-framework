@@ -15,8 +15,10 @@
   /**
    * Segment should inherit the
    * height of the toolbar.
+   * Note: --min-height is initially
+   * set on ion-toolbar, not ion-segment
    */
-  min-height: inherit;
+  min-height: var(--min-height);
 }
 
 
