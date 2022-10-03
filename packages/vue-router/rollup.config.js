@@ -2,13 +2,8 @@ export default {
   input: 'dist-transpiled/index.js',
   output: [
     {
-      file: 'dist/index.esm.js',
-      format: 'es',
-      sourcemap: true,
-    },
-    {
       file: 'dist/index.js',
-      format: 'commonjs',
+      format: 'es',
       sourcemap: true,
     }
   ],

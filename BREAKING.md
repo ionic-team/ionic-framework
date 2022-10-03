@@ -17,12 +17,16 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Accordion Group](#version-7x-accordion-group)
   - [Checkbox](#version-7x-checkbox)
   - [Input](#version-7x-input)
+  - [Modal](#version-7x-modal)
   - [Overlays](#version-7x-overlays)
   - [Range](#version-7x-range)
   - [Segment](#version-7x-segment)
   - [Slides](#version-7x-slides)
   - [Textarea](#version-7x-textarea)
   - [Virtual Scroll](#version-7x-virtual-scroll)
+- [JavaScript Frameworks](#version-7x-javascript-frameworks)
+  - [React](#version-7x-react)
+  - [Vue](#version-7x-vue)
 - [Utilities](#version-7x-utilities)
   - [hidden attribute](#version-7x-hidden-attribute)
 
@@ -70,6 +74,11 @@ This section details the desktop browser, JavaScript framework, and mobile platf
   - If your application requires immediate feedback based on the user typing actively in the input, consider migrating your event listeners to using `ionInput` instead.
 
 - The `debounce` property has been updated to control the timing in milliseconds to delay the event emission of the `ionInput` event after each keystroke. Previously it would delay the event emission of `ionChange`.
+
+<h4 id="version-7x-modal">Modal</h4>
+
+- The `swipeToClose` property has been removed in favor of `canDismiss`.
+- The `canDismiss` property now defaults to `true` and can no longer be set to `undefined`.
 
 <h4 id="version-7x-overlays">Overlays</h4>
 
@@ -132,6 +141,16 @@ Developers using the component will need to migrate to a virtual scroll solution
 - [Vue](https://ionicframework.com/docs/vue/virtual-scroll)
 
 Any references to the virtual scroll types from `@ionic/core` have been removed. Please remove or replace these types: `Cell`, `VirtualNode`, `CellType`, `NodeChange`, `HeaderFn`, `ItemHeightFn`, `FooterHeightFn`, `ItemRenderFn` and `DomRenderFn`.
+
+<h2 id="version-7x-javascript-frameworks">JavaScript Frameworks</h2>
+
+<h4 id="version-7x-react">React</h4>
+
+`@ionic/react` and `@ionic/react-router` no longer ship a CommonJS entry point. Instead, only an ES Module entry point is provided for improved compatibility with Vite.
+
+<h4 id="version-7x-vue">Vue</h4>
+
+`@ionic/vue` and `@ionic/vue-router` no longer ship a CommonJS entry point. Instead, only an ES Module entry point is provided for improved compatibility with Vite.
 
 <h2 id="version-7x-utilities">Utilities</h2>
 
