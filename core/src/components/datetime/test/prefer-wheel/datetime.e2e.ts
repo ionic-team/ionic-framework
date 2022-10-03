@@ -287,6 +287,23 @@ test.describe('datetime: prefer wheel', () => {
 
       expect(await dayValues.count()).toBe(92);
     })
+    test.only('should narrow sliding window if default window is not within min and max constraints', async ({ page }) => {
+      await page.setContent(`
+        <ion-datetime
+          presentation="date-time"
+          prefer-wheel="true"
+          value="2022-06-01"
+          max="2022-05-15"
+          min="2022-05-01"
+        ></ion-datetime>
+      `);
+
+      await page.waitForSelector('.datetime-ready');
+
+      const dayValues = page.locator('.date-column .picker-item:not(.picker-item-empty)');
+
+      expect(await dayValues.count()).toBe(15);
+    });
   });
   test.describe('datetime: time-date wheel', () => {
     test.beforeEach(({ skip }) => {
@@ -402,6 +419,23 @@ test.describe('datetime: prefer wheel', () => {
     const dayValues = page.locator('.date-column .picker-item:not(.picker-item-empty)');
 
     expect(await dayValues.count()).toBe(92);
+  });
+  test.only('should narrow sliding window if default window is not within min and max constraints', async ({ page }) => {
+    await page.setContent(`
+      <ion-datetime
+        presentation="time-date"
+        prefer-wheel="true"
+        value="2022-06-01"
+        max="2022-05-15"
+        min="2022-05-01"
+      ></ion-datetime>
+    `);
+
+    await page.waitForSelector('.datetime-ready');
+
+    const dayValues = page.locator('.date-column .picker-item:not(.picker-item-empty)');
+
+    expect(await dayValues.count()).toBe(15);
   });
 });
 });
