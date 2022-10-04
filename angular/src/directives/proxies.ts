@@ -1518,11 +1518,17 @@ export class IonRow {
 import type { SearchbarChangeEventDetail as ISearchbarSearchbarChangeEventDetail } from '@ionic/core';
 export declare interface IonSearchbar extends Components.IonSearchbar {
   /**
-   * Emitted when a keyboard input occurred. 
+   * Emitted when the `value` of the `ion-searchbar` element has changed. 
    */
-  ionInput: EventEmitter<CustomEvent<KeyboardEvent>>;
+  ionInput: EventEmitter<CustomEvent<KeyboardEvent | null>>;
   /**
-   * Emitted when the value has changed. 
+   * The `ionChange` event is fired for `<ion-searchbar>` elements when the user
+modifies the element's value. Unlike the `ionInput` event, the `ionChange`
+event is not necessarily fired for each alteration to an element's value.
+
+The `ionChange` event is fired when the element loses focus after its value
+has been modified. This includes modifications made when clicking the clear
+or cancel buttons. 
    */
   ionChange: EventEmitter<CustomEvent<ISearchbarSearchbarChangeEventDetail>>;
   /**
