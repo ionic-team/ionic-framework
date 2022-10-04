@@ -103,7 +103,7 @@ export type BrowserNameOrCallback = BrowserName | ((browserName: BrowserName) =>
 export interface E2ESkip {
   rtl: (reason?: string) => void;
   browser: (browserNameOrCallback: BrowserNameOrCallback, reason?: string) => void;
-  mode: (mode: string, reason?: string) => void;
+  mode: (mode: 'md' | 'ios', reason?: string) => void;
 }
 
 export interface SetIonViewportOptions {
