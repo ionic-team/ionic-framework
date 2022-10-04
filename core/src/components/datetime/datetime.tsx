@@ -84,17 +84,6 @@ export class Datetime implements ComponentInterface {
   private calendarBodyRef?: HTMLElement;
   private popoverRef?: HTMLIonPopoverElement;
   private clearFocusVisible?: () => void;
-
-  /**
-   * Whether to highlight the active day with a solid circle (as opposed
-   * to the outline circle around today). If you don't specify an initial
-   * value for the datetime, it doesn't automatically init to a default to
-   * avoid unwanted change events firing. If the solid circle were still
-   * shown then, it would look like a date had already been selected, which
-   * is misleading UX.
-   */
-  private highlightActiveParts = false;
-
   private parsedMinuteValues?: number[];
   private parsedHourValues?: number[];
   private parsedMonthValues?: number[];
@@ -491,16 +480,12 @@ export class Datetime implements ComponentInterface {
    */
   @Method()
   async confirm(closeOverlay = false) {
-    const { highlightActiveParts, isCalendarPicker, activeParts } = this;
+    const { isCalendarPicker, activeParts } = this;
 
     /**
-     * We only update the value if the presentation is not a calendar picker,
-     * or if `highlightActiveParts` is true; indicating that the user
-     * has selected a date from the calendar picker.
-     *
-     * Otherwise "today" would accidentally be set as the value.
+     * We only update the value if the presentation is not a calendar picker.
      */
-    if (highlightActiveParts || !isCalendarPicker) {
+    if (activeParts !== undefined || !isCalendarPicker) {
       const activePartsIsArray = Array.isArray(activeParts);
       if (activePartsIsArray && activeParts.length === 0) {
         this.value = undefined;
@@ -575,7 +560,7 @@ export class Datetime implements ComponentInterface {
   };
 
   private setActiveParts = (parts: DatetimeParts, removeDate = false) => {
-    const { multiple, activePartsClone, highlightActiveParts } = this;
+    const { multiple, activePartsClone } = this;
 
     /**
      * When setting the active parts, it is possible
@@ -603,33 +588,14 @@ export class Datetime implements ComponentInterface {
       const activePartsArray = Array.isArray(activePartsClone) ? activePartsClone : [activePartsClone];
       if (removeDate) {
         this.activeParts = activePartsArray.filter((p) => !isSameDay(p, validatedParts));
-      } else if (highlightActiveParts) {
-        this.activeParts = [...activePartsArray, validatedParts];
       } else {
-        /**
-         * If highlightActiveParts is false, that means we just have a
-         * default value of today in activeParts; we need to replace that
-         * rather than adding to it since it's just a placeholder.
-         */
-        this.activeParts = [validatedParts];
+        this.activeParts = [...activePartsArray, validatedParts];
       }
     } else {
       this.activeParts = {
         ...validatedParts,
       };
     }
-
-    /**
-     * Now that the user has interacted somehow to select something, we can
-     * show the solid highlight. This needs to be done after checking it above,
-     * but before the confirm call below.
-     *
-     * Note that for datetimes with confirm/cancel buttons, the value
-     * isn't updated until you call confirm(). We need to bring the
-     * solid circle back on day click for UX reasons, rather than only
-     * show the circle if `value` is truthy.
-     */
-    this.highlightActiveParts = true;
 
     const hasSlottedButtons = this.el.querySelector('[slot="buttons"]') !== null;
     if (hasSlottedButtons || this.showDefaultButtons) {
@@ -1164,7 +1130,6 @@ export class Datetime implements ComponentInterface {
 
   private processValue = (value?: string | string[] | null) => {
     const hasValue = !!value;
-    this.highlightActiveParts = hasValue;
     let valueToProcess = parseDate(value || getToday());
 
     const { minParts, maxParts, multiple } = this;
@@ -1892,7 +1857,6 @@ export class Datetime implements ComponentInterface {
     );
   }
   private renderMonth(month: number, year: number) {
-    const { highlightActiveParts } = this;
     const yearAllowed = this.parsedYearValues === undefined || this.parsedYearValues.includes(year);
     const monthAllowed = this.parsedMonthValues === undefined || this.parsedMonthValues.includes(month);
     const isCalMonthDisabled = !yearAllowed || !monthAllowed;
@@ -1970,7 +1934,7 @@ export class Datetime implements ComponentInterface {
                 class={{
                   'calendar-day-padding': day === null,
                   'calendar-day': true,
-                  'calendar-day-active': isActive && highlightActiveParts,
+                  'calendar-day-active': isActive,
                   'calendar-day-today': isToday,
                 }}
                 aria-selected={ariaSelected}
@@ -1995,7 +1959,7 @@ export class Datetime implements ComponentInterface {
                         day,
                         year,
                       },
-                      isActive && highlightActiveParts
+                      isActive
                     );
                   } else {
                     this.setActiveParts({
