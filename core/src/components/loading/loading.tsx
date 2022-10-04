@@ -227,7 +227,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
       await deepReady(this.usersElement);
     }
 
-    this.currentTransition = present(this, 'loadingEnter', iosEnterAnimation, mdEnterAnimation, undefined);
+    this.currentTransition = present(this, 'loadingEnter', iosEnterAnimation, mdEnterAnimation);
 
     await this.currentTransition;
 
@@ -258,7 +258,9 @@ export class Loading implements ComponentInterface, OverlayInterface {
 
     if (dismissed) {
       const { delegate } = this.getDelegate();
-      await detachComponent(delegate, this.usersElement);
+      if (delegate) {
+        await detachComponent(delegate, this.usersElement);
+      }
     }
 
     return dismissed;
