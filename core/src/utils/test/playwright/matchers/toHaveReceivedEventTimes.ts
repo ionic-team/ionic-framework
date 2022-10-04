@@ -1,6 +1,7 @@
 import type { EventSpy } from '../page/event-spy';
 
 export function toHaveReceivedEventTimes(eventSpy: EventSpy, count: number) {
+  // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
   if (!eventSpy) {
     return {
       message: () => `toHaveReceivedEventTimes event spy is null`,

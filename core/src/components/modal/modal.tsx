@@ -717,7 +717,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       inline === false || delegate === undefined,
       {
         presentingEl: this.presentingElement,
-        currentBreakpoint: this.currentBreakpoint || this.initialBreakpoint,
+        currentBreakpoint: this.currentBreakpoint !== undefined || this.initialBreakpoint,
         backdropBreakpoint: this.backdropBreakpoint,
       }
     );

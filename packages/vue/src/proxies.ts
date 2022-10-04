@@ -161,6 +161,7 @@ export const IonButton = /*@__PURE__*/ defineContainer<JSX.IonButton>('ion-butto
   'strong',
   'target',
   'type',
+  'form',
   'ionFocus',
   'ionBlur'
 ]);
@@ -286,6 +287,7 @@ export const IonDatetime = /*@__PURE__*/ defineContainer<JSX.IonDatetime>('ion-d
   'minuteValues',
   'locale',
   'firstDayOfWeek',
+  'titleSelectedDatesFormatter',
   'multiple',
   'value',
   'showDefaultTitle',

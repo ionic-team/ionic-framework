@@ -9,7 +9,7 @@ class GestureController {
    * Creates a gesture delegate based on the GestureConfig passed
    */
   createGesture(config: GestureConfig): GestureDelegate {
-    return new GestureDelegate(this, this.newID(), config.name, config.priority || 0, !!config.disableScroll);
+    return new GestureDelegate(this, this.newID(), config.name, config.priority ?? 0, !!config.disableScroll);
   }
 
   /**

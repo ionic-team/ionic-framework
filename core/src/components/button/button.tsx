@@ -6,6 +6,7 @@ import type { AnimationBuilder, Color, RouterDirection } from '../../interface';
 import type { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes, hasShadowDom } from '../../utils/helpers';
+import { printIonWarning } from '../../utils/logging';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**
@@ -128,6 +129,11 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
   /**
+   * The HTML form element or form element id. Used to submit a form when the button is not a child of the form.
+   */
+  @Prop() form?: string | HTMLFormElement;
+
+  /**
    * Emitted when the button has focus.
    */
   @Event() ionFocus!: EventEmitter<void>;
@@ -160,21 +166,69 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     return 'bounded';
   }
 
+  /**
+   * Finds the form element based on the provided `form` selector
+   * or element reference provided.
+   */
+  private findForm(): HTMLFormElement | null {
+    const { form } = this;
+    if (form instanceof HTMLFormElement) {
+      return form;
+    }
+    if (typeof form === 'string') {
+      const el = document.getElementById(form);
+      if (el instanceof HTMLFormElement) {
+        return el;
+      }
+    }
+    return null;
+  }
+
   private handleClick = (ev: Event) => {
+    const { el } = this;
     if (this.type === 'button') {
       openURL(this.href, ev, this.routerDirection, this.routerAnimation);
-    } else if (hasShadowDom(this.el)) {
+    } else if (hasShadowDom(el)) {
       // this button wants to specifically submit a form
       // climb up the dom to see if we're in a <form>
       // and if so, then use JS to submit it
-      const form = this.el.closest('form');
-      if (form) {
+      let formEl = this.findForm();
+      const { form } = this;
+
+      if (!formEl && form !== undefined) {
+        /**
+         * The developer specified a form selector for
+         * the button to submit, but it was not found.
+         */
+        if (typeof form === 'string') {
+          printIonWarning(
+            `Form with selector: "#${form}" could not be found. Verify that the id is correct and the form is rendered in the DOM.`,
+            el
+          );
+        } else {
+          printIonWarning(
+            `The provided "form" element is invalid. Verify that the form is a HTMLFormElement and rendered in the DOM.`,
+            el
+          );
+        }
+        return;
+      }
+
+      if (!formEl) {
+        /**
+         * If the form element is not set, the button may be inside
+         * of a form element. Query the closest form element to the button.
+         */
+        formEl = el.closest('form');
+      }
+
+      if (formEl) {
         ev.preventDefault();
 
         const fakeButton = document.createElement('button');
         fakeButton.type = this.type;
         fakeButton.style.display = 'none';
-        form.appendChild(fakeButton);
+        formEl.appendChild(fakeButton);
         fakeButton.click();
         fakeButton.remove();
       }
@@ -217,7 +271,6 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
             rel,
             target,
           };
-
     let fill = this.fill;
     if (fill === undefined) {
       fill = this.inToolbar || this.inListHeader ? 'clear' : 'solid';
