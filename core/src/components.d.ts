@@ -6566,7 +6566,7 @@ declare namespace LocalJSX {
         /**
           * The `ionInput` event fires when the `value` of an `<ion-textarea>` element has been changed.  When `clearOnEdit` is enabled, the `ionInput` event will be fired when the user clears the textarea by performing a keydown event.
          */
-        "onIonInput"?: (event: IonTextareaCustomEvent<InputEvent | null>) => void;
+        "onIonInput"?: (event: IonTextareaCustomEvent<InputEvent>) => void;
         /**
           * Emitted when the styles change.
          */

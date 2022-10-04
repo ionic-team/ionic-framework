@@ -188,7 +188,7 @@ export class Textarea implements ComponentInterface {
    * When `clearOnEdit` is enabled, the `ionInput` event will be fired when
    * the user clears the textarea by performing a keydown event.
    */
-  @Event() ionInput!: EventEmitter<InputEvent | null>;
+  @Event() ionInput!: EventEmitter<InputEvent>;
 
   /**
    * Emitted when the styles change.
@@ -310,9 +310,9 @@ export class Textarea implements ComponentInterface {
      */
     if (!this.didTextareaClearOnEdit && this.hasValue()) {
       this.value = '';
+      this.ionInput.emit();
     }
     this.didTextareaClearOnEdit = true;
-    this.ionInput.emit(null);
   }
 
   private focusChange() {
