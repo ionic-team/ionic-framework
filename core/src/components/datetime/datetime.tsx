@@ -543,6 +543,23 @@ export class Datetime implements ComponentInterface {
     }
   }
 
+  /**
+   * Returns the DatetimePart interface
+   * to use when rendering an initial set of
+   * data. This should be used when rendering an
+   * interface in an environment where the `value`
+   * may not be set. This function works
+   * by returning the first selected date in
+   * "activePartsClone" and then falling back to
+   * today's DatetimeParts if no active date is selected.
+   */
+  private getDefaultPart = () => {
+    const { activePartsClone, todayParts } = this;
+
+    const firstPart = Array.isArray(activePartsClone) ? activePartsClone[0] : activePartsClone;
+    return firstPart || todayParts;
+  };
+
   private closeParentOverlay = () => {
     const popoverOrModal = this.el.closest('ion-modal, ion-popover') as
       | HTMLIonModalElement
@@ -1703,13 +1720,15 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderHourPickerColumn(hoursData: PickerColumnItem[]) {
-    const { workingParts, activePartsClone } = this;
+    const { workingParts } = this;
     if (hoursData.length === 0) return [];
+
+    const activePart = this.getDefaultPart();
 
     return (
       <ion-picker-column-internal
         color={this.color}
-        value={(activePartsClone as DatetimeParts).hour}
+        value={activePart.hour}
         items={hoursData}
         numericInput
         onIonChange={(ev: CustomEvent) => {
@@ -1718,9 +1737,9 @@ export class Datetime implements ComponentInterface {
             hour: ev.detail.value,
           });
 
-          if (!Array.isArray(activePartsClone)) {
+          if (!Array.isArray(activePart)) {
             this.setActiveParts({
-              ...activePartsClone,
+              ...activePart,
               hour: ev.detail.value,
             });
           }
@@ -1731,13 +1750,15 @@ export class Datetime implements ComponentInterface {
     );
   }
   private renderMinutePickerColumn(minutesData: PickerColumnItem[]) {
-    const { workingParts, activePartsClone } = this;
+    const { workingParts } = this;
     if (minutesData.length === 0) return [];
+
+    const activePart = this.getDefaultPart();
 
     return (
       <ion-picker-column-internal
         color={this.color}
-        value={(activePartsClone as DatetimeParts).minute}
+        value={activePart.minute}
         items={minutesData}
         numericInput
         onIonChange={(ev: CustomEvent) => {
@@ -1746,9 +1767,9 @@ export class Datetime implements ComponentInterface {
             minute: ev.detail.value,
           });
 
-          if (!Array.isArray(activePartsClone)) {
+          if (!Array.isArray(activePart)) {
             this.setActiveParts({
-              ...activePartsClone,
+              ...activePart,
               minute: ev.detail.value,
             });
           }
@@ -1759,18 +1780,20 @@ export class Datetime implements ComponentInterface {
     );
   }
   private renderDayPeriodPickerColumn(dayPeriodData: PickerColumnItem[]) {
-    const { workingParts, activePartsClone } = this;
+    const { workingParts } = this;
     if (dayPeriodData.length === 0) {
       return [];
     }
 
+    const activePart = this.getDefaultPart();
     const isDayPeriodRTL = isLocaleDayPeriodRTL(this.locale);
+    console.log(activePart);
 
     return (
       <ion-picker-column-internal
         style={isDayPeriodRTL ? { order: '-1' } : {}}
         color={this.color}
-        value={(activePartsClone as DatetimeParts).ampm}
+        value={activePart.ampm}
         items={dayPeriodData}
         onIonChange={(ev: CustomEvent) => {
           const hour = calculateHourFromAMPM(workingParts, ev.detail.value);
@@ -1781,9 +1804,9 @@ export class Datetime implements ComponentInterface {
             hour,
           });
 
-          if (!Array.isArray(activePartsClone)) {
+          if (!Array.isArray(activePart)) {
             this.setActiveParts({
-              ...activePartsClone,
+              ...activePart,
               ampm: ev.detail.value,
               hour,
             });
@@ -2007,6 +2030,8 @@ export class Datetime implements ComponentInterface {
 
   private renderTimeOverlay() {
     const use24Hour = is24Hour(this.locale, this.hourCycle);
+    const activePart = this.getDefaultPart();
+
     return [
       <div class="time-header">{this.renderTimeLabel()}</div>,
       <button
@@ -2036,7 +2061,7 @@ export class Datetime implements ComponentInterface {
           }
         }}
       >
-        {getLocalizedTime(this.locale, this.activePartsClone as DatetimeParts, use24Hour)}
+        {getLocalizedTime(this.locale, activePart, use24Hour)}
       </button>,
       <ion-popover
         alignment="center"
@@ -2075,21 +2100,13 @@ export class Datetime implements ComponentInterface {
       return;
     }
 
-    const { activeParts, todayParts } = this;
-
-    /**
-     * Either render the active part or
-     * fall back to today's date.
-     */
-    const activePart = Array.isArray(activeParts) ? activeParts[0] : activeParts;
-
     return (
       <div class="datetime-header">
         <div class="datetime-title">
           <slot name="title">Select Date</slot>
         </div>
         {mode === 'md' && !this.multiple && (
-          <div class="datetime-selected-date">{getMonthAndDay(this.locale, activePart || todayParts)}</div>
+          <div class="datetime-selected-date">{getMonthAndDay(this.locale, this.getDefaultPart())}</div>
         )}
       </div>
     );
