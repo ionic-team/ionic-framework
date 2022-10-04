@@ -20,6 +20,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Modal](#version-7x-modal)
   - [Overlays](#version-7x-overlays)
   - [Range](#version-7x-range)
+  - [Searchbar](#version-7x-searchbar)
   - [Segment](#version-7x-segment)
   - [Segment](#version-7x-select)
   - [Slides](#version-7x-slides)
@@ -103,6 +104,16 @@ iOS:
 |`$range-ios-knob-box-shadow`|`0 3px 1px rgba(0, 0, 0, .1), 0 4px 8px rgba(0, 0, 0, .13), 0 0 0 1px rgba(0, 0, 0, .02)`|`0px 0.5px 4px rgba(0, 0, 0, 0.12), 0px 6px 13px rgba(0, 0, 0, 0.12)`|
 |`$range-ios-knob-width`|`28px`|`26px`|
 
+<h4 id="version-7x-searchbar">Searchbar</h4>
+
+- `ionChange` is no longer emitted when the `value` of `ion-searchbar` is modified externally. `ionChange` is only emitted from user committed changes, such as typing in the searchbar and the searchbar losing focus.
+
+  - If your application requires immediate feedback based on the user typing actively in the searchbar, consider migrating your event listeners to using `ionInput` instead.
+
+- The `debounce` property has been updated to control the timing in milliseconds to delay the event emission of the `ionInput` event after each keystroke. Previously it would delay the event emission of `ionChange`.
+
+- The `debounce` property's default value has changed from 250 to `undefined`. If `debounce` is undefined, the `ionInput` event will fire immediately.
+
 <h4 id="version-7x-segment">Segment</h4>
 
 - `ionChange` is no longer emitted when the `value` of `ion-segment` is modified externally. `ionChange` is only emitted from user committed changes, such as clicking a segment button or dragging to activate a segment button.
@@ -133,7 +144,6 @@ Developers using these components will need to migrate to using Swiper.js direct
 - The `debounce` property has been updated to control the timing in milliseconds to delay the event emission of the `ionInput` event after each keystroke. Previously it would delay the event emission of `ionChange`.
 
 - `ionInput` dispatches an event detail of `null` when the textarea is cleared as a result of `clear-on-edit="true"`.
-
 
 <h4 id="version-7x-virtual-scroll">Virtual Scroll</h4>
 

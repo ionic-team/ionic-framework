@@ -1,5 +1,5 @@
 export interface SearchbarChangeEventDetail {
-  value?: string;
+  value?: string | null;
 }
 
 export interface SearchbarCustomEvent extends CustomEvent {

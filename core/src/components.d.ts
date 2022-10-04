@@ -2366,9 +2366,9 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. This also impacts form bindings such as `ngModel` or `v-model`.
+          * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
          */
-        "debounce": number;
+        "debounce"?: number;
         /**
           * If `true`, the user cannot interact with the input.
          */
@@ -6108,7 +6108,7 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. This also impacts form bindings such as `ngModel` or `v-model`.
+          * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
          */
         "debounce"?: number;
         /**
@@ -6136,7 +6136,7 @@ declare namespace LocalJSX {
          */
         "onIonCancel"?: (event: IonSearchbarCustomEvent<void>) => void;
         /**
-          * Emitted when the value has changed.
+          * The `ionChange` event is fired for `<ion-searchbar>` elements when the user modifies the element's value. Unlike the `ionInput` event, the `ionChange` event is not necessarily fired for each alteration to an element's value.  The `ionChange` event is fired when the element loses focus after its value has been modified. This includes modifications made when clicking the clear or cancel buttons.
          */
         "onIonChange"?: (event: IonSearchbarCustomEvent<SearchbarChangeEventDetail>) => void;
         /**
@@ -6148,9 +6148,9 @@ declare namespace LocalJSX {
          */
         "onIonFocus"?: (event: IonSearchbarCustomEvent<void>) => void;
         /**
-          * Emitted when a keyboard input occurred.
+          * Emitted when the `value` of the `ion-searchbar` element has changed.
          */
-        "onIonInput"?: (event: IonSearchbarCustomEvent<KeyboardEvent>) => void;
+        "onIonInput"?: (event: IonSearchbarCustomEvent<KeyboardEvent | null>) => void;
         /**
           * Emitted when the styles change.
          */
