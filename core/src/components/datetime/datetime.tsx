@@ -2075,13 +2075,21 @@ export class Datetime implements ComponentInterface {
       return;
     }
 
+    const { activeParts, todayParts } = this;
+
+    /**
+     * Either render the active part or
+     * fall back to today's date.
+     */
+    const activePart = Array.isArray(activeParts) ? activeParts[0] : activeParts;
+
     return (
       <div class="datetime-header">
         <div class="datetime-title">
           <slot name="title">Select Date</slot>
         </div>
         {mode === 'md' && !this.multiple && (
-          <div class="datetime-selected-date">{getMonthAndDay(this.locale, this.activeParts as DatetimeParts)}</div>
+          <div class="datetime-selected-date">{getMonthAndDay(this.locale, activePart || todayParts)}</div>
         )}
       </div>
     );
