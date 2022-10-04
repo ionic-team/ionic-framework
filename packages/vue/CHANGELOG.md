@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.2.10-nightly.20221004](https://github.com/ionic-team/ionic/compare/v6.2.9...v6.2.10-nightly.20221004) (2022-10-04)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
 ## [6.2.9](https://github.com/ionic-team/ionic/compare/v6.2.8...v6.2.9) (2022-09-28)
 
 
