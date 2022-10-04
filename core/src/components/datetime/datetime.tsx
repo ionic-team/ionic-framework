@@ -114,18 +114,11 @@ export class Datetime implements ComponentInterface {
    * Duplicate reference to `activeParts` that does not trigger a re-render of the component.
    * Allows caching an instance of the `activeParts` in between render cycles.
    */
-  private activePartsClone!: DatetimeParts | DatetimeParts[];
+  private activePartsClone: DatetimeParts | DatetimeParts[] = [];
 
   @State() showMonthAndYear = false;
 
-  @State() activeParts: DatetimeParts | DatetimeParts[] = {
-    month: 5,
-    day: 28,
-    year: 2021,
-    hour: 13,
-    minute: 52,
-    ampm: 'pm',
-  };
+  @State() activeParts: DatetimeParts | DatetimeParts[] = [];
 
   @State() workingParts: DatetimeParts = {
     month: 5,
