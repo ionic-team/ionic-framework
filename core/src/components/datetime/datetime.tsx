@@ -1205,18 +1205,26 @@ export class Datetime implements ComponentInterface {
       ampm,
     });
 
-    if (Array.isArray(valueToProcess)) {
-      this.activeParts = [...valueToProcess];
-    } else {
-      this.activeParts = {
-        month,
-        day,
-        year,
-        hour,
-        minute,
-        tzOffset,
-        ampm,
-      };
+    /**
+     * Since `activeParts` indicates a value that
+     * been explicitly selected either by the
+     * user or the app, only update `activeParts`
+     * if the `value` property is set.
+     */
+    if (hasValue) {
+      if (Array.isArray(valueToProcess)) {
+        this.activeParts = [...valueToProcess];
+      } else {
+        this.activeParts = {
+          month,
+          day,
+          year,
+          hour,
+          minute,
+          tzOffset,
+          ampm,
+        };
+      }
     }
   };
 
