@@ -2126,7 +2126,7 @@ export class Datetime implements ComponentInterface {
       }
     } else {
       // for exactly 1 day selected (multiple set or not), show a formatted version of that
-      headerText = getMonthAndDay(this.locale, isArray ? activeParts[0] : activeParts);
+      headerText = getMonthAndDay(this.locale, this.getDefaultPart());
     }
 
     return (
