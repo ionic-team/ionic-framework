@@ -1070,7 +1070,7 @@ export namespace Components {
         /**
           * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
          */
-        "debounce": number;
+        "debounce"?: number;
         /**
           * If `true`, the user cannot interact with the input.
          */
@@ -2728,7 +2728,7 @@ export namespace Components {
         /**
           * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
          */
-        "debounce": number;
+        "debounce"?: number;
         /**
           * If `true`, the user cannot interact with the textarea.
          */

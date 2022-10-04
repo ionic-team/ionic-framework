@@ -525,7 +525,7 @@ ion-input,prop,autofocus,boolean,false,false,false
 ion-input,prop,clearInput,boolean,false,false,false
 ion-input,prop,clearOnEdit,boolean | undefined,undefined,false,false
 ion-input,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
-ion-input,prop,debounce,number,0,false,false
+ion-input,prop,debounce,number | undefined,undefined,false,false
 ion-input,prop,disabled,boolean,false,false,false
 ion-input,prop,enterkeyhint,"done" | "enter" | "go" | "next" | "previous" | "search" | "send" | undefined,undefined,false,false
 ion-input,prop,inputmode,"decimal" | "email" | "none" | "numeric" | "search" | "tel" | "text" | "url" | undefined,undefined,false,false
@@ -1286,7 +1286,7 @@ ion-textarea,prop,autofocus,boolean,false,false,false
 ion-textarea,prop,clearOnEdit,boolean,false,false,false
 ion-textarea,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-textarea,prop,cols,number | undefined,undefined,false,false
-ion-textarea,prop,debounce,number,0,false,false
+ion-textarea,prop,debounce,number | undefined,undefined,false,false
 ion-textarea,prop,disabled,boolean,false,false,false
 ion-textarea,prop,enterkeyhint,"done" | "enter" | "go" | "next" | "previous" | "search" | "send" | undefined,undefined,false,false
 ion-textarea,prop,inputmode,"decimal" | "email" | "none" | "numeric" | "search" | "tel" | "text" | "url" | undefined,undefined,false,false
