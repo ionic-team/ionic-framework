@@ -1798,7 +1798,6 @@ export class Datetime implements ComponentInterface {
 
     const activePart = this.getDefaultPart();
     const isDayPeriodRTL = isLocaleDayPeriodRTL(this.locale);
-    console.log(activePart);
 
     return (
       <ion-picker-column-internal
