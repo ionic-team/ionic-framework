@@ -9,12 +9,17 @@ test.describe('input: masking', () => {
   test('should filter out spaces', async ({ page, skip }) => {
     skip.rtl();
 
+    const ionInput = await page.spyOnEvent('ionInput');
     const input = page.locator('#inputTrimmed');
 
     await input.click();
 
-    await page.keyboard.type('S p a c e s');
+    // Playwright types this in one character at a time.
+    await page.keyboard.type('A B C', { delay: 100 });
+    await ionInput.next();
 
-    await expect(input).toHaveJSProperty('value', 'Spaces');
+    // ionInput is called for each character.
+    await expect(ionInput).toHaveReceivedEventTimes(5);
+    await expect(input).toHaveJSProperty('value', 'ABC');
   });
 });
