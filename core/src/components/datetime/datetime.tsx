@@ -565,7 +565,7 @@ export class Datetime implements ComponentInterface {
     const { activePartsClone, todayParts } = this;
 
     const firstPart = Array.isArray(activePartsClone) ? activePartsClone[0] : activePartsClone;
-    return firstPart || todayParts;
+    return firstPart ?? todayParts;
   };
 
   private closeParentOverlay = () => {
