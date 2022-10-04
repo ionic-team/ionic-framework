@@ -29,7 +29,7 @@ test.describe('datetime: set-value', () => {
     const activeDate = page.locator('ion-datetime .time-body');
     await expect(activeDate).toHaveText('12:40 PM');
   });
-  test.only('should update active item when value is not initially set', async ({ page }) => {
+  test('should update active item when value is not initially set', async ({ page }) => {
     await page.setContent(`
       <ion-datetime presentation="date" locale="en-US"></ion-datetime>
     `);
@@ -43,18 +43,22 @@ test.describe('datetime: set-value', () => {
 
     await datetime.evaluate((el: HTMLIonDatetimeElement) => (el.value = '2021-10-05'));
 
+    // Open month/year picker
     await monthYearButton.click();
     await page.waitForChanges();
 
+    // Select October 2021
     await monthColumn.locator('.picker-item[data-value="10"]').click();
     await page.waitForChanges();
 
     await yearColumn.locator('.picker-item[data-value="2021"]').click();
     await page.waitForChanges();
 
+    // Close month/year picker
     await monthYearButton.click();
     await page.waitForChanges();
 
+    // Check that correct day is highlighted
     await expect(activeDayButton).toHaveAttribute('data-day', '5');
     await expect(activeDayButton).toHaveAttribute('data-month', '10');
     await expect(activeDayButton).toHaveAttribute('data-year', '2021');
