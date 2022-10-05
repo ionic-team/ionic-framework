@@ -1320,7 +1320,12 @@ import type { RangeKnobMoveStartEventDetail as IRangeRangeKnobMoveStartEventDeta
 import type { RangeKnobMoveEndEventDetail as IRangeRangeKnobMoveEndEventDetail } from '@ionic/core';
 export declare interface IonRange extends Components.IonRange {
   /**
-   * Emitted when the value property has changed. 
+   * The `ionChange` event is fired for `<ion-range>` elements when the user
+modifies the element's value:
+- When the user releases the knob after dragging;
+- When the user moves the knob with keyboard arrows
+
+`ionChange` is not fired when the value is changed programmatically. 
    */
   ionChange: EventEmitter<CustomEvent<IRangeRangeChangeEventDetail>>;
   /**

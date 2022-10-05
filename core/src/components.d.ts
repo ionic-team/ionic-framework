@@ -2103,7 +2103,7 @@ export namespace Components {
         /**
           * How long, in milliseconds, to wait to trigger the `ionChange` event after each change in the range value. This also impacts form bindings such as `ngModel` or `v-model`.
          */
-        "debounce": number;
+        "debounce"?: number;
         /**
           * If `true`, the user cannot interact with the range.
          */
@@ -5855,7 +5855,7 @@ declare namespace LocalJSX {
          */
         "onIonBlur"?: (event: IonRangeCustomEvent<void>) => void;
         /**
-          * Emitted when the value property has changed.
+          * The `ionChange` event is fired for `<ion-range>` elements when the user modifies the element's value: - When the user releases the knob after dragging; - When the user moves the knob with keyboard arrows  `ionChange` is not fired when the value is changed programmatically.
          */
         "onIonChange"?: (event: IonRangeCustomEvent<RangeChangeEventDetail>) => void;
         /**

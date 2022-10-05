@@ -54,6 +54,7 @@ export class Range implements ComponentInterface {
   private inheritedAttributes: Attributes = {};
   private contentEl: HTMLElement | null = null;
   private initialContentScrollY = true;
+  private originalIonChange?: EventEmitter<RangeChangeEventDetail>;
 
   @Element() el!: HTMLIonRangeElement;
 
@@ -73,11 +74,16 @@ export class Range implements ComponentInterface {
    * `ionChange` event after each change in the range value.
    * This also impacts form bindings such as `ngModel` or `v-model`.
    */
-  @Prop() debounce = 0;
+  @Prop() debounce?: number;
 
   @Watch('debounce')
   protected debounceChanged() {
-    this.ionChange = debounceEvent(this.ionChange, this.debounce);
+    const { ionChange, debounce, originalIonChange } = this;
+    /**
+     * If debounce is undefined, we have to manually revert the ionChange emitter in case
+     * debounce used to be set to a number. Otherwise, the event would stay debounced.
+     */
+    this.ionChange = debounce === undefined ? originalIonChange ?? ionChange : debounceEvent(ionChange, debounce);
   }
 
   // TODO: In Ionic Framework v6 this should initialize to this.rangeId like the other form components do.
@@ -189,10 +195,7 @@ export class Range implements ComponentInterface {
     if (!this.noUpdate) {
       this.updateRatio();
     }
-
-    value = this.ensureValueInBounds(value);
-
-    this.ionChange.emit({ value });
+    this.value = this.ensureValueInBounds(value);
   }
 
   private clampBounds = (value: any): number => {
@@ -211,7 +214,12 @@ export class Range implements ComponentInterface {
   };
 
   /**
-   * Emitted when the value property has changed.
+   * The `ionChange` event is fired for `<ion-range>` elements when the user
+   * modifies the element's value:
+   * - When the user releases the knob after dragging;
+   * - When the user moves the knob with keyboard arrows
+   *
+   * `ionChange` is not fired when the value is changed programmatically.
    */
   @Event() ionChange!: EventEmitter<RangeChangeEventDetail>;
 
@@ -275,6 +283,7 @@ export class Range implements ComponentInterface {
   }
 
   connectedCallback() {
+    this.originalIonChange = this.ionChange;
     this.updateRatio();
     this.debounceChanged();
     this.disabledChanged();
@@ -317,6 +326,7 @@ export class Range implements ComponentInterface {
 
     this.ionKnobMoveStart.emit({ value: ensureValueInBounds(this.value) });
     this.updateValue();
+    this.emitValueChange();
     this.ionKnobMoveEnd.emit({ value: ensureValueInBounds(this.value) });
   };
   private getValue(): RangeValue {
@@ -342,6 +352,17 @@ export class Range implements ComponentInterface {
       interactive: true,
       'interactive-disabled': this.disabled,
     });
+  }
+
+  /**
+   * Emits an `ionChange` event.
+   *
+   * This API should be called for user committed changes.
+   * This API should not be used for external value changes.
+   */
+  private emitValueChange() {
+    const { value } = this;
+    this.ionChange.emit({ value });
   }
 
   private onStart(detail: GestureDetail) {
@@ -382,6 +403,7 @@ export class Range implements ComponentInterface {
     this.update(detail.currentX);
     this.pressedKnob = undefined;
 
+    this.emitValueChange();
     this.ionKnobMoveEnd.emit({ value: this.ensureValueInBounds(this.value) });
   }
 
