@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.3.0](https://github.com/ionic-team/ionic/compare/v6.2.9...v6.3.0) (2022-10-05)
+
+
+### Features
+
+* **angular:** use standalone components with routing ([#25589](https://github.com/ionic-team/ionic/issues/25589)) ([3c84d48](https://github.com/ionic-team/ionic/commit/3c84d48cfa87810896364cb7ca16efcbdd7e8b07)), closes [#25404](https://github.com/ionic-team/ionic/issues/25404)
+* **button:** submit from outside of form ([#25913](https://github.com/ionic-team/ionic/issues/25913)) ([b139838](https://github.com/ionic-team/ionic/commit/b13983848c9ea7387062953412eaae744c001ec7)), closes [#21194](https://github.com/ionic-team/ionic/issues/21194)
+* **datetime:** add header text to multiple selection; improve header consistency between modes ([#25817](https://github.com/ionic-team/ionic/issues/25817)) ([8a1b3c5](https://github.com/ionic-team/ionic/commit/8a1b3c5f300a1ec953d406b65601f84fa49aa807))
+
+
+
+
+
 ## [6.2.9](https://github.com/ionic-team/ionic/compare/v6.2.8...v6.2.9) (2022-09-28)
 
 **Note:** Version bump only for package @ionic/angular
