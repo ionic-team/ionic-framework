@@ -39,7 +39,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   private labelColorStyles = {};
   private itemStyles = new Map<string, CssClassMap>();
   private clickListener?: (ev: Event) => void;
-  private inheritedAttributes: Attributes = {};
+  private inheritedAriaAttributes: Attributes = {};
 
   @Element() el!: HTMLIonItemElement;
 
@@ -228,7 +228,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
 
   componentDidLoad() {
     raf(() => {
-      this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
+      this.inheritedAriaAttributes = inheritAttributes(this.el, ['aria-label']);
       this.setMultipleInputs();
       this.focusable = this.isFocusable();
     });
@@ -362,18 +362,17 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
       target,
       routerAnimation,
       routerDirection,
-      inheritedAttributes,
+      inheritedAriaAttributes,
     } = this;
     const childStyles = {} as any;
     const mode = getIonMode(this);
     const clickable = this.isClickable();
     const canActivate = this.canActivate();
     const TagType = clickable ? (href === undefined ? 'button' : 'a') : ('div' as any);
-    const { ['aria-label']: ariaLabel } = inheritedAttributes;
 
     const attrs =
       TagType === 'button'
-        ? { type: this.type, ['aria-label']: ariaLabel }
+        ? { type: this.type }
         : {
             download,
             href,
@@ -419,7 +418,14 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
         }}
         role={inList ? 'listitem' : null}
       >
-        <TagType {...attrs} class="item-native" part="native" disabled={disabled} {...clickFn}>
+        <TagType
+          {...attrs}
+          {...inheritedAriaAttributes}
+          class="item-native"
+          part="native"
+          disabled={disabled}
+          {...clickFn}
+        >
           <slot name="start"></slot>
           <div class="item-inner">
             <div class="input-wrapper">

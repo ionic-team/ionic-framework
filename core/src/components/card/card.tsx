@@ -22,7 +22,7 @@ import { createColorClasses, openURL } from '../../utils/theme';
   shadow: true,
 })
 export class Card implements ComponentInterface, AnchorInterface, ButtonInterface {
-  private inheritedAttributes: Attributes = {};
+  private inheritedAriaAttributes: Attributes = {};
 
   @Element() el!: HTMLElement;
   /**
@@ -87,7 +87,7 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
   @Prop() target: string | undefined;
 
   componentWillLoad() {
-    this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
+    this.inheritedAriaAttributes = inheritAttributes(this.el, ['aria-label']);
   }
 
   private isClickable(): boolean {
@@ -100,12 +100,11 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
     if (!clickable) {
       return [<slot></slot>];
     }
-    const { href, routerAnimation, routerDirection, inheritedAttributes } = this;
+    const { href, routerAnimation, routerDirection, inheritedAriaAttributes } = this;
     const TagType = clickable ? (href === undefined ? 'button' : 'a') : ('div' as any);
-    const { ['aria-label']: ariaLabel } = inheritedAttributes;
     const attrs =
       TagType === 'button'
-        ? { type: this.type, ['aria-label']: ariaLabel }
+        ? { type: this.type }
         : {
             download: this.download,
             href: this.href,
@@ -116,6 +115,7 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
     return (
       <TagType
         {...attrs}
+        {...inheritedAriaAttributes}
         class="card-native"
         part="native"
         disabled={this.disabled}
