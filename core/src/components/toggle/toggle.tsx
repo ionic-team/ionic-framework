@@ -107,7 +107,7 @@ export class Toggle implements ComponentInterface {
 
     this.ionChange.emit({
       checked: isNowChecked,
-      value: value,
+      value,
     });
   }
 
