@@ -627,7 +627,6 @@ export const createTriggerController = () => {
   let destroyTriggerInteraction: () => void;
 
   const configureTriggerInteraction = (el: HTMLIonOverlayElement, trigger: string) => {
-
     if (destroyTriggerInteraction) {
       destroyTriggerInteraction();
     }
@@ -649,9 +648,9 @@ export const createTriggerController = () => {
     };
 
     destroyTriggerInteraction = configureTriggerInteraction(triggerEl, el);
-  }
+  };
 
   return {
-    configureTriggerInteraction
-  }
-}
+    configureTriggerInteraction,
+  };
+};

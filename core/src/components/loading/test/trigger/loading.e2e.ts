@@ -13,5 +13,4 @@ test.describe('loading: trigger', () => {
     await ionLoadingDidPresent.next();
     await page.waitForSelector('ion-loading', { state: 'visible' });
   });
-
 });
