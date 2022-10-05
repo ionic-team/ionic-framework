@@ -97,7 +97,7 @@ export const doRender = (
         nodeRender(child, cell, i);
       } else {
         const newChild = createNode(el, cell.type);
-        child = nodeRender(newChild, cell, i) || newChild;
+        child = nodeRender(newChild, cell, i) ?? newChild;
         child.classList.add('virtual-item');
         el.appendChild(child!);
       }
@@ -132,7 +132,7 @@ export const doRender = (
 
 const createNode = (el: HTMLElement, type: CellType): HTMLElement | null => {
   const template = getTemplate(el, type);
-  if (template && el.ownerDocument) {
+  if (template && el.ownerDocument !== null) {
     return el.ownerDocument.importNode(template.content, true).children[0] as HTMLElement;
   }
   return null;
