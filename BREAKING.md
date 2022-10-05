@@ -22,7 +22,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Range](#version-7x-range)
   - [Searchbar](#version-7x-searchbar)
   - [Segment](#version-7x-segment)
-  - [Segment](#version-7x-select)
+  - [Select](#version-7x-select)
   - [Slides](#version-7x-slides)
   - [Textarea](#version-7x-textarea)
   - [Virtual Scroll](#version-7x-virtual-scroll)
