@@ -391,7 +391,7 @@ export class Searchbar implements ComponentInterface {
     const cancelButton = (this.el.shadowRoot || this.el).querySelector('.searchbar-cancel-button') as HTMLElement;
     const shouldShowCancel = this.shouldShowCancelButton();
 
-    if (cancelButton && shouldShowCancel !== this.isCancelVisible) {
+    if (cancelButton !== null && shouldShowCancel !== this.isCancelVisible) {
       const cancelStyle = cancelButton.style;
       this.isCancelVisible = shouldShowCancel;
       if (shouldShowCancel) {

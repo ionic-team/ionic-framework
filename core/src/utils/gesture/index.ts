@@ -119,7 +119,7 @@ export const createGesture = (config: GestureConfig): Gesture => {
   };
 
   const tryToCapturePan = (): boolean => {
-    if (gesture && !gesture.capture()) {
+    if (!gesture.capture()) {
       return false;
     }
     hasCapturedPan = true;
