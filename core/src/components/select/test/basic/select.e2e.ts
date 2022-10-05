@@ -99,6 +99,7 @@ test.describe('select: basic', () => {
 test.describe('select: ionChange', () => {
   test.beforeEach(({ skip }) => {
     skip.rtl();
+    skip.mode('ios', 'ionChange has a consistent behavior across modes');
   });
 
   test('should fire ionChange when confirming a value from an alert', async ({ page }) => {
