@@ -39,7 +39,7 @@ describe('Inputs', () => {
     cy.get('#reset-button').click();
 
     cy.get('ion-checkbox#first-checkbox').click();
-    cy.get('ion-toggle').invoke('prop', 'checked', true);
+    cy.get('ion-toggle').click();
 
     cy.get('ion-input').eq(0).type('hola');
     cy.get('ion-input input').eq(0).blur();
