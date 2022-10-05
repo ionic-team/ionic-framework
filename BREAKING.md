@@ -87,21 +87,24 @@ Ionic now listens on the `keydown` event instead of the `keyup` event when deter
 
 <h4 id="version-7x-range">Range</h4>
 
-Range is updated to align with the design specification for supported modes.
+- Range is updated to align with the design specification for supported modes.
 
-**Design tokens**
+  **Design tokens**
 
+  iOS:
 
-iOS:
+  | Token                             | Previous Value                                                                            | New Value                                                             |
+  | --------------------------------- | ----------------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
+  | `--bar-border-radius`             | `0px`                                                                                     | `$range-ios-bar-border-radius` (`2px` default)                        |
+  | `--knob-size`                     | `28px`                                                                                    | `$range-ios-knob-width` (`26px` default)                              |
+  | `$range-ios-bar-height`           | `2px`                                                                                     | `4px`                                                                 |
+  | `$range-ios-bar-background-color` | `rgba(var(--ion-text-color-rgb, 0, 0, 0), .1)`                                            | `var(--ion-color-step-900, #e6e6e6)`                                  |
+  | `$range-ios-knob-box-shadow`      | `0 3px 1px rgba(0, 0, 0, .1), 0 4px 8px rgba(0, 0, 0, .13), 0 0 0 1px rgba(0, 0, 0, .02)` | `0px 0.5px 4px rgba(0, 0, 0, 0.12), 0px 6px 13px rgba(0, 0, 0, 0.12)` |
+  | `$range-ios-knob-width`           | `28px`                                                                                    | `26px`                                                                |
 
-|Token|Previous Value|New Value|
-|-----|--------------|---------|
-|`--bar-border-radius`|`0px`|`$range-ios-bar-border-radius` (`2px` default)|
-|`--knob-size`|`28px`|`$range-ios-knob-width` (`26px` default)|
-|`$range-ios-bar-height`|`2px`|`4px`|
-|`$range-ios-bar-background-color`|`rgba(var(--ion-text-color-rgb, 0, 0, 0), .1)`|`var(--ion-color-step-900, #e6e6e6)`|
-|`$range-ios-knob-box-shadow`|`0 3px 1px rgba(0, 0, 0, .1), 0 4px 8px rgba(0, 0, 0, .13), 0 0 0 1px rgba(0, 0, 0, .02)`|`0px 0.5px 4px rgba(0, 0, 0, 0.12), 0px 6px 13px rgba(0, 0, 0, 0.12)`|
-|`$range-ios-knob-width`|`28px`|`26px`|
+- `ionChange` is no longer emitted when the `value` of `ion-range` is modified externally. `ionChange` is only emitted from user committed changes, such as dragging and releasing the range knob or selecting a new value with the keyboard arrows.
+
+- The `debounce` property's value value has changed from `0` to `undefined`. If `debounce` is undefined, the `ionChange` event will fire immediately.
 
 <h4 id="version-7x-searchbar">Searchbar</h4>
 
