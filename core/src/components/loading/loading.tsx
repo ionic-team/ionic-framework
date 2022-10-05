@@ -13,7 +13,7 @@ import type {
 } from '../../interface';
 import { CoreDelegate, detachComponent } from '../../utils/framework-delegate';
 import { raf } from '../../utils/helpers';
-import { BACKDROP, dismiss, eventMethod, prepareOverlay, present } from '../../utils/overlays';
+import { BACKDROP, dismiss, eventMethod, prepareOverlay, present, createTriggerController } from '../../utils/overlays';
 import type { IonicSafeString } from '../../utils/sanitization';
 import { sanitizeDOMString } from '../../utils/sanitization';
 import { getClassMap } from '../../utils/theme';
@@ -43,6 +43,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
   private workingDelegate?: FrameworkDelegate;
   // Reference to the user's provided loading content
   private usersElement?: HTMLElement;
+  private triggerController = createTriggerController();
 
   presented = false;
   lastFocus?: HTMLElement;
@@ -139,6 +140,19 @@ export class Loading implements ComponentInterface, OverlayInterface {
   }
 
   /**
+   * An ID corresponding to the trigger element that
+   * causes the loading indicator to open when clicked.
+   */
+  @Prop() trigger: string | undefined;
+  @Watch('trigger')
+  triggerChanged() {
+    const { trigger, el, triggerController } = this;
+    if (trigger) {
+      triggerController.configureTriggerInteraction(el, trigger);
+    }
+  }
+
+  /**
    * Emitted after the loading has presented.
    */
   @Event({ eventName: 'ionLoadingDidPresent' }) didPresent!: EventEmitter<void>;
@@ -201,6 +215,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
     if (this.isOpen === true) {
       raf(() => this.present());
     }
+    this.triggerChanged();
   }
 
   /**

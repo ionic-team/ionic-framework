@@ -612,3 +612,46 @@ export const safeCall = (handler: any, arg?: any) => {
 };
 
 export const BACKDROP = 'backdrop';
+
+/**
+ * Constructs a trigger interaction for an overlay.
+ * Presents an overlay when the trigger is clicked.
+ *
+ * Usage:
+ * ```ts
+ * triggerController = createTriggerController();
+ * triggerController.configureTriggerInteraction(el, trigger);
+ * ```
+ */
+export const createTriggerController = () => {
+  let destroyTriggerInteraction: () => void;
+
+  const configureTriggerInteraction = (el: HTMLIonOverlayElement, trigger: string) => {
+
+    if (destroyTriggerInteraction) {
+      destroyTriggerInteraction();
+    }
+
+    const triggerEl = trigger !== undefined ? document.getElementById(trigger) : null;
+    if (!triggerEl) {
+      return;
+    }
+
+    const configureTriggerInteraction = (trigEl: HTMLElement, overlayEl: HTMLIonOverlayElement) => {
+      const openOverlay = () => {
+        overlayEl.present();
+      };
+      trigEl.addEventListener('click', openOverlay);
+
+      return () => {
+        trigEl.removeEventListener('click', openOverlay);
+      };
+    };
+
+    destroyTriggerInteraction = configureTriggerInteraction(triggerEl, el);
+  }
+
+  return {
+    configureTriggerInteraction
+  }
+}

@@ -701,6 +701,7 @@ ion-loading,prop,mode,"ios" | "md",undefined,false,false
 ion-loading,prop,showBackdrop,boolean,true,false,false
 ion-loading,prop,spinner,"bubbles" | "circles" | "circular" | "crescent" | "dots" | "lines" | "lines-sharp" | "lines-sharp-small" | "lines-small" | null | undefined,undefined,false,false
 ion-loading,prop,translucent,boolean,false,false,false
+ion-loading,prop,trigger,string | undefined,undefined,false,false
 ion-loading,method,dismiss,dismiss(data?: any, role?: string) => Promise<boolean>
 ion-loading,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-loading,method,onWillDismiss,onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>

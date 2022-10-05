@@ -1442,6 +1442,10 @@ export namespace Components {
           * If `true`, the loading indicator will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent": boolean;
+        /**
+          * An ID corresponding to the trigger element that causes the loading indicator to open when clicked.
+         */
+        "trigger": string | undefined;
     }
     interface IonMenu {
         /**
@@ -5248,6 +5252,10 @@ declare namespace LocalJSX {
           * If `true`, the loading indicator will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent"?: boolean;
+        /**
+          * An ID corresponding to the trigger element that causes the loading indicator to open when clicked.
+         */
+        "trigger"?: string | undefined;
     }
     interface IonMenu {
         /**
