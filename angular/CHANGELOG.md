@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [6.3.0](https://github.com/ionic-team/ionic/compare/v6.2.9...v6.3.0) (2022-10-05)
+# [6.3.0 Manganese](https://github.com/ionic-team/ionic/compare/v6.2.9...v6.3.0) (2022-10-05)
 
 
 ### Features
