@@ -104,10 +104,10 @@ export const startTapClick = (config: Config) => {
   const addActivated = (el: HTMLElement, x: number, y: number) => {
     lastActivated = Date.now();
     el.classList.add(ACTIVATED);
+    if (!useRippleEffect) return;
 
-    const rippleEffect = useRippleEffect && getRippleEffect(el);
-    // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
-    if (rippleEffect && rippleEffect.addRipple) {
+    const rippleEffect = getRippleEffect(el);
+    if (rippleEffect !== null) {
       removeRipple();
       activeRipple = rippleEffect.addRipple(x, y);
     }
@@ -164,7 +164,7 @@ export const startTapClick = (config: Config) => {
 };
 
 const getActivatableTarget = (ev: UIEvent): any => {
-  if (ev.composedPath) {
+  if (ev.composedPath !== undefined) {
     /**
      * composedPath returns EventTarget[]. However,
      * objects other than Element can be targets too.

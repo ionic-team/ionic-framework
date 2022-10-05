@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { VersionTestComponent } from ".";
+import { VersionTestComponent } from "./version-test.component";
 
 @NgModule({
   imports: [
