@@ -123,7 +123,7 @@ iOS:
   
 <h4 id="version-7x-select">Select</h4>
 
-- `ionChange` is no longer emitted when the `value` of `ion-select` is modified externally. `ionChange` is only emitted from user committed changes, such confirming a selected option in the select's overlay.
+- `ionChange` is no longer emitted when the `value` of `ion-select` is modified externally. `ionChange` is only emitted from user committed changes, such as confirming a selected option in the select's overlay.
 
 <h4 id="version-7x-slides">Slides</h4>
 
