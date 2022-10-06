@@ -280,7 +280,7 @@ test.describe('datetime: visibility', () => {
   });
 });
 
-test.describe.only('datetime: ionChange', () => {
+test.describe('datetime: ionChange', () => {
   test.beforeEach(({ skip }) => {
     skip.rtl();
     skip.mode('ios', 'ionChange has consistent behavior across modes');
