@@ -47,7 +47,11 @@ describe('Form', () => {
       cy.get('ion-select').invoke('prop', 'value', 'nes');
       testStatus('INVALID');
 
-      cy.get('ion-range').invoke('prop', 'value', 40);
+      cy.get('ion-range').shadow()
+        .find('.range-knob-handle')
+        .click()
+        .focus()
+        .type('{rightarrow}'.repeat(35));
       testStatus('VALID');
 
       testData({
