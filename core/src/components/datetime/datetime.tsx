@@ -390,6 +390,8 @@ export class Datetime implements ComponentInterface {
         printIonWarning(`Unable to parse date string: ${value}. Please provide a valid ISO 8601 datetime string.`);
       }
     }
+
+    this.ionValueChange.emit({ value });
   }
 
   /**
@@ -465,6 +467,14 @@ export class Datetime implements ComponentInterface {
    * Emitted when the value (selected date) has changed.
    */
   @Event() ionChange!: EventEmitter<DatetimeChangeEventDetail>;
+
+  /**
+   * Emitted when the value property has changed.
+   * This is used to ensure that ion-datetime-button can respond
+   * to any value property changes.
+   * @internal
+   */
+  @Event() ionValueChange!: EventEmitter<DatetimeChangeEventDetail>;
 
   /**
    * Emitted when the datetime has focus.
