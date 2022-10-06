@@ -391,6 +391,7 @@ export class Datetime implements ComponentInterface {
       }
     }
 
+    this.emitStyle();
     this.ionValueChange.emit({ value });
   }
 
