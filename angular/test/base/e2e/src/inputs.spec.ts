@@ -44,14 +44,15 @@ describe('Inputs', () => {
     cy.get('ion-input').eq(0).type('hola');
     cy.get('ion-input input').eq(0).blur();
 
-    cy.get('ion-datetime').invoke('prop', 'value', '1996-03-15');
+    // Set date to 1994-03-01
+    cy.get('ion-datetime').shadow().get('.calendar-day:not([disabled])').first().click();
     cy.get('ion-select').invoke('prop', 'value', 'playstation');
     cy.get('ion-range').invoke('prop', 'value', 20);
 
     cy.get('#checkbox-note').should('have.text', 'true');
     cy.get('#toggle-note').should('have.text', 'true');
     cy.get('#input-note').should('have.text', 'hola');
-    cy.get('#datetime-note').should('have.text', '1996-03-15');
+    cy.get('#datetime-note').should('have.text', '1994-03-01');
     cy.get('#select-note').should('have.text', 'playstation');
     cy.get('#range-note').should('have.text', '20');
   });
