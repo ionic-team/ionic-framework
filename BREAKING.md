@@ -16,6 +16,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 - [Components](#version-7x-components)
   - [Accordion Group](#version-7x-accordion-group)
   - [Checkbox](#version-7x-checkbox)
+  - [Datetime](#version-7x-datetime)
   - [Input](#version-7x-input)
   - [Modal](#version-7x-modal)
   - [Overlays](#version-7x-overlays)
@@ -67,6 +68,10 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 <h4 id="version-7x-checkbox">Checkbox</h4>
 
 `ionChange` is no longer emitted when the `checked` property of `ion-checkbox` is modified externally. `ionChange` is only emitted from user committed changes, such as clicking or tapping the checkbox.
+
+<h4 id="version-7x-datetime">Datetime</h4>
+
+`ionChange` is no longer emitted when the `value` property of `ion-datetime` is modified externally. `ionChange` is only emitted from user committed changes, such as clicking or tapping a date.
 
 <h4 id="version-7x-input">Input</h4>
 
