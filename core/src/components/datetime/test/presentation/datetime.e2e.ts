@@ -169,8 +169,6 @@ class TimePickerFixture {
       el.value = newValue;
     }, value);
 
-    await ionChange.next();
-
     // Changing the value can take longer than the default 100ms to repaint
     await this.page.waitForChanges(300);
   }
