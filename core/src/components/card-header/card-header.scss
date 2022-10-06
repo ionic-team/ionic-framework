@@ -8,8 +8,9 @@
   --color: inherit;
 
   display: flex;
-  flex-direction: column;
   position: relative;
+
+  flex-direction: column;
 
   background: var(--background);
   color: var(--color);
