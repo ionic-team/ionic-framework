@@ -343,7 +343,7 @@ export class Datetime implements ComponentInterface {
 
     if (this.hasValue()) {
       if (!multiple && Array.isArray(value)) {
-        this.value = value[0];
+        this.setValue(value[0]);
         return; // setting this.value will trigger re-run of this function
       }
 
@@ -390,9 +390,6 @@ export class Datetime implements ComponentInterface {
         printIonWarning(`Unable to parse date string: ${value}. Please provide a valid ISO 8601 datetime string.`);
       }
     }
-
-    this.emitStyle();
-    this.ionChange.emit({ value });
   }
 
   /**
@@ -510,7 +507,7 @@ export class Datetime implements ComponentInterface {
     if (highlightActiveParts || !isCalendarPicker) {
       const activePartsIsArray = Array.isArray(activeParts);
       if (activePartsIsArray && activeParts.length === 0) {
-        this.value = undefined;
+        this.setValue(undefined);
       } else {
         /**
          * Prevent convertDataToISO from doing any
@@ -531,7 +528,7 @@ export class Datetime implements ComponentInterface {
           activeParts.tzOffset = date.getTimezoneOffset() * -1;
         }
 
-        this.value = convertDataToISO(activeParts);
+        this.setValue(convertDataToISO(activeParts));
       }
     }
 
@@ -564,6 +561,11 @@ export class Datetime implements ComponentInterface {
       this.closeParentOverlay();
     }
   }
+
+  private setValue = (value?: string | string[] | null) => {
+    this.value = value;
+    this.ionChange.emit({ value });
+  };
 
   private closeParentOverlay = () => {
     const popoverOrModal = this.el.closest('ion-modal, ion-popover') as
@@ -1176,7 +1178,7 @@ export class Datetime implements ComponentInterface {
 
     const { minParts, maxParts, multiple } = this;
     if (!multiple && Array.isArray(value)) {
-      this.value = value[0];
+      this.setValue(value[0]);
       valueToProcess = (valueToProcess as DatetimeParts[])[0];
     }
 
@@ -1328,7 +1330,7 @@ export class Datetime implements ComponentInterface {
 
     const clearButtonClick = () => {
       this.reset();
-      this.value = undefined;
+      this.setValue(undefined);
     };
 
     /**
