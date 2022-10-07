@@ -15,8 +15,4 @@ export class RangeComponent {
     });
   }
 
-  ngOnInit() {
-    console.log('check', this.form.get('range')?.errors);
-  }
-
 }
