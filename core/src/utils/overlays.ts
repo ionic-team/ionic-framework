@@ -626,9 +626,9 @@ export const BACKDROP = 'backdrop';
  * @param ref The component class instance.
  */
 export const createDelegateController = (ref: {
-  el: HTMLElement,
-  hasController: boolean,
-  delegate?: FrameworkDelegate
+  el: HTMLElement;
+  hasController: boolean;
+  delegate?: FrameworkDelegate;
 }) => {
   let inline = false;
   let workingDelegate: FrameworkDelegate | undefined;
