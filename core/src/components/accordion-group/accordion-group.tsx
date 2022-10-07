@@ -3,6 +3,7 @@ import { Component, Element, Event, Host, Listen, Method, Prop, Watch, h } from 
 
 import { getIonMode } from '../../global/ionic-global';
 import type { AccordionGroupChangeEventDetail } from '../../interface';
+import { printIonWarning } from '../../utils/logging';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -32,7 +33,9 @@ export class AccordionGroup implements ComponentInterface {
   @Prop() multiple?: boolean;
 
   /**
-   * The value of the accordion group.
+   * The value of the accordion group. This controls which
+   * accordions are expanded.
+   * This should be an array of strings only when `multiple="true"`
    */
   @Prop({ mutable: true }) value?: string | string[] | null;
 
@@ -74,16 +77,12 @@ export class AccordionGroup implements ComponentInterface {
   valueChanged() {
     const { value, multiple } = this;
 
-    /**
-     * If accordion group does not
-     * let multiple accordions be open
-     * at once, but user passes an array
-     * just grab the first value.
-     * This should emit ionChange because
-     * we are updating the value internally.
-     */
     if (!multiple && Array.isArray(value)) {
-      this.setValue(value[0]);
+      printIonWarning(
+        `ion-accordion-group was passed an array of values, but multiple="false". This is incorrect usage and may result in unexpected behaviors. To dismiss this warning, pass a string to the "value" property when multiple="false".
+  Value Passed: ${value}`,
+        this.el
+      );
     }
 
     /**
