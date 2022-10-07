@@ -34,7 +34,7 @@ describe('toggle', () => {
       expect(t.onOffLabelsEnabled).toBe(true);
     });
 
-    it('set custom icon on the instance', async () => {
+    it('set custom attribute on the instance', async () => {
       const t = await newToggle();
       t.enableOnOffLabels = true;
       expect(t.onOffLabelsEnabled).toBe(true);
