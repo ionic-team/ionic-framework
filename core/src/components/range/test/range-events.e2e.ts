@@ -4,6 +4,7 @@ import { test } from '@utils/test/playwright';
 test.describe('range: events: ionChange', () => {
   test.beforeEach(({ skip }) => {
     skip.rtl();
+    skip.mode('md');
   });
 
   test('should not emit if the value is set programmatically', async ({ page }) => {
