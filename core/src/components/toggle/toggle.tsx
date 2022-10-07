@@ -2,6 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
 import { checkmarkOutline, removeOutline, ellipseOutline } from 'ionicons/icons';
 
+import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import type { Color, Gesture, GestureDetail, Mode, StyleEventDetail, ToggleChangeEventDetail } from '../../interface';
 import { getAriaLabel, renderHiddenInput } from '../../utils/helpers';
@@ -131,6 +132,12 @@ export class Toggle implements ComponentInterface {
     this.emitStyle();
   }
 
+  get onOffLabelsEnabled(): boolean {
+    const { enableOnOffLabels } = this;
+
+    return enableOnOffLabels !== undefined ? enableOnOffLabels : config.get('onOffLabelsEnabled');
+  }
+
   private emitStyle() {
     this.ionStyle.emit({
       'interactive-disabled': this.disabled,
@@ -206,7 +213,7 @@ export class Toggle implements ComponentInterface {
   }
 
   render() {
-    const { activated, color, checked, disabled, el, inputId, name, enableOnOffLabels } = this;
+    const { activated, color, checked, disabled, el, inputId, name, onOffLabelsEnabled } = this;
     const mode = getIonMode(this);
     const { label, labelId, labelText } = getAriaLabel(el, inputId);
     const value = this.getValue();
@@ -233,11 +240,11 @@ export class Toggle implements ComponentInterface {
           {/* The iOS on/off labels are rendered outside of .toggle-icon-wrapper,
            since the wrapper is translated when the handle is interacted with and
            this would move the on/off labels outside of the view box */}
-          {enableOnOffLabels &&
+          {onOffLabelsEnabled &&
             mode === 'ios' && [this.renderOnOffSwitchLabels(mode, true), this.renderOnOffSwitchLabels(mode, false)]}
           <div class="toggle-icon-wrapper">
             <div class="toggle-inner" part="handle">
-              {enableOnOffLabels && mode === 'md' && this.renderOnOffSwitchLabels(mode, checked)}
+              {onOffLabelsEnabled && mode === 'md' && this.renderOnOffSwitchLabels(mode, checked)}
             </div>
           </div>
         </div>
