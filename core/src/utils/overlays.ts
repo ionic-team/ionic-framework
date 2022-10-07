@@ -619,15 +619,19 @@ export const BACKDROP = 'backdrop';
  * Creates a delegate controller.
  *
  * Requires that the component has the following properties:
- * - `delegate?: FrameworkDelegate`
  * - `el: HTMLElement`
  * - `hasController: boolean`
+ * - `delegate?: FrameworkDelegate`
  *
  * @param ref The component class instance.
  */
-export const createDelegateController = (ref: any) => {
+export const createDelegateController = (ref: {
+  el: HTMLElement,
+  hasController: boolean,
+  delegate?: FrameworkDelegate
+}) => {
   let inline = false;
-  let workingDelegate: FrameworkDelegate;
+  let workingDelegate: FrameworkDelegate | undefined;
 
   const coreDelegate: FrameworkDelegate = CoreDelegate();
 
