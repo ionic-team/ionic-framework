@@ -339,17 +339,10 @@ export class Datetime implements ComponentInterface {
    */
   @Watch('value')
   protected valueChanged() {
-    const { value, minParts, maxParts, workingParts, multiple } = this;
+    const { value, minParts, maxParts, workingParts } = this;
 
     if (this.hasValue()) {
-      if (!multiple && Array.isArray(value)) {
-        printIonWarning(
-          `ion-datetime was passed an array of values, but multiple="false". This is incorrect usage and may result in unexpected behaviors. To dismiss this warning, pass a string to the "value" property when multiple="false".
-
-Value Passed: [${value.map(v => `'${v}'`).join(', ')}]`,
-          this.el
-        );
-      }
+      this.warnIfIncorrectValueUsage();
 
       /**
        * Clones the value of the `activeParts` to the private clone, to update
@@ -576,6 +569,27 @@ Value Passed: [${value.map(v => `'${v}'`).join(', ')}]`,
       this.closeParentOverlay();
     }
   }
+
+  private warnIfIncorrectValueUsage = () => {
+    const { multiple, value } = this;
+    if (!multiple && Array.isArray(value)) {
+      /**
+       * We do some processing on the `value` array so
+       * that it looks more like an array when logged to
+       * the console.
+       * Example given ['a', 'b']
+       * Default toString() behavior: a,b
+       * Custom behavior: ['a', 'b']
+       */
+      printIonWarning(
+        `ion-datetime was passed an array of values, but multiple="false". This is incorrect usage and may result in unexpected behaviors. To dismiss this warning, pass a string to the "value" property when multiple="false".
+
+  Value Passed: [${value.map((v) => `'${v}'`).join(', ')}]
+`,
+        this.el
+      );
+    }
+  };
 
   private setValue = (value?: string | string[] | null) => {
     this.value = value;
@@ -1191,15 +1205,9 @@ Value Passed: [${value.map(v => `'${v}'`).join(', ')}]`,
     this.highlightActiveParts = hasValue;
     const valueToProcess = parseDate(value || getToday());
 
-    const { minParts, maxParts, multiple } = this;
-    if (!multiple && Array.isArray(value)) {
-      printIonWarning(
-        `ion-datetime was passed an array of values, but multiple="false". This is incorrect usage and may result in unexpected behaviors. To dismiss this warning, pass a string to the "value" property when multiple="false".
+    const { minParts, maxParts } = this;
 
-Value Passed: [${value.map(v => `'${v}'`).join(', ')}]`,
-        this.el
-      );
-    }
+    this.warnIfIncorrectValueUsage();
 
     /**
      * Datetime should only warn of out of bounds values
