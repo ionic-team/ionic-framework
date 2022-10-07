@@ -148,7 +148,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
   triggerChanged() {
     const { trigger, el, triggerController } = this;
     if (trigger) {
-      triggerController.configureTriggerInteraction(el, trigger);
+      triggerController.initializeClickListener(el, trigger);
     }
   }
 
