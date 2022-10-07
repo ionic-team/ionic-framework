@@ -6,6 +6,7 @@ import type {
   Animation,
   AnimationBuilder,
   BackButtonEvent,
+  FrameworkDelegate,
   HTMLIonOverlayElement,
   IonicConfig,
   LoadingOptions,
@@ -16,6 +17,7 @@ import type {
   ToastOptions,
 } from '../interface';
 
+import { CoreDelegate } from './framework-delegate';
 import { OVERLAY_BACK_BUTTON_PRIORITY } from './hardware-back-button';
 import { addEventListener, componentOnReady, focusElement, getElementRoot, removeEventListener } from './helpers';
 
@@ -612,3 +614,58 @@ export const safeCall = (handler: any, arg?: any) => {
 };
 
 export const BACKDROP = 'backdrop';
+
+/**
+ * Creates a delegate controller.
+ *
+ * Requires that the component has the following properties:
+ * - `delegate?: FrameworkDelegate`
+ * - `el: HTMLElement`
+ * - `hasController: boolean`
+ *
+ * @param ref The component class instance.
+ */
+export const createDelegateController = (ref: any) => {
+  let inline = false;
+  let workingDelegate: FrameworkDelegate;
+
+  const coreDelegate: FrameworkDelegate = CoreDelegate();
+
+  /**
+   *  * Determines whether or not an overlay is being used
+   * inline or via a controller/JS and returns the correct delegate.
+   * By default, subsequent calls to getDelegate will use
+   * a cached version of the delegate.
+   * This is useful for calling dismiss after present,
+   * so that the correct delegate is given.
+   * @param force `true` to force the non-cached version of the delegate.
+   * @returns The delegate to use and whether or not the overlay is inline.
+   */
+  const getDelegate = (force = false) => {
+    if (workingDelegate && !force) {
+      return {
+        delegate: workingDelegate,
+        inline,
+      };
+    }
+    const { el, hasController, delegate } = ref;
+    /**
+     * If using overlay inline
+     * we potentially need to use the coreDelegate
+     * so that this works in vanilla JS apps.
+     * If a developer has presented this component
+     * via a controller, then we can assume
+     * the component is already in the
+     * correct place.
+     */
+    const parentEl = el.parentNode as HTMLElement | null;
+    inline = parentEl !== null && !hasController;
+    workingDelegate = inline ? delegate || coreDelegate : delegate;
+
+    return { inline, delegate: workingDelegate };
+  };
+
+  return {
+    getDelegate,
+  };
+};
