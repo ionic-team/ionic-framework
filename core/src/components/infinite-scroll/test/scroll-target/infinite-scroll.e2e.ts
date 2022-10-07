@@ -14,7 +14,7 @@ test.describe('infinite-scroll: scroll-target', () => {
     const items = page.locator('ion-item');
     expect(await items.count()).toBe(30);
 
-    await content.evaluate((el: HTMLElement) => el.scrollTop = el.scrollHeight);
+    await content.evaluate((el: HTMLElement) => (el.scrollTop = el.scrollHeight));
     await ionInfiniteComplete.next();
 
     expect(await items.count()).toBe(60);
