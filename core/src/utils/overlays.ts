@@ -620,7 +620,7 @@ export const BACKDROP = 'backdrop';
  * Usage:
  * ```ts
  * triggerController = createTriggerController();
- * triggerController.configureTriggerInteraction(el, trigger);
+ * triggerController.initializeClickListener(el, trigger);
  * ```
  */
 export const createTriggerController = () => {
