@@ -80,7 +80,7 @@ export class AccordionGroup implements ComponentInterface {
     if (!multiple && Array.isArray(value)) {
       printIonWarning(
         `ion-accordion-group was passed an array of values, but multiple="false". This is incorrect usage and may result in unexpected behaviors. To dismiss this warning, pass a string to the "value" property when multiple="false".
-  Value Passed: ${value}`,
+  Value Passed: [${value.map(v => `'${v}'`).join(', ')}]`,
         this.el
       );
     }
