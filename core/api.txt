@@ -550,7 +550,7 @@ ion-input,method,setFocus,setFocus() => Promise<void>
 ion-input,event,ionBlur,FocusEvent,true
 ion-input,event,ionChange,InputChangeEventDetail,true
 ion-input,event,ionFocus,FocusEvent,true
-ion-input,event,ionInput,Event | InputEvent | null,true
+ion-input,event,ionInput,Event | InputEvent,true
 ion-input,css-prop,--background
 ion-input,css-prop,--color
 ion-input,css-prop,--padding-bottom

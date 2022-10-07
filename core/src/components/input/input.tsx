@@ -422,9 +422,9 @@ export class Input implements ComponentInterface {
      */
     if (!this.didInputClearOnEdit && this.hasValue() && ev.key !== 'Enter') {
       this.value = '';
+      this.ionInput.emit();
     }
     this.didInputClearOnEdit = true;
-    this.ionInput.emit(null);
   }
 
   private onCompositionStart = () => {
