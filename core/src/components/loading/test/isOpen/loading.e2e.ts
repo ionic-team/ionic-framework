@@ -3,6 +3,7 @@ import { test } from '@utils/test/playwright';
 test.describe('loading: isOpen', () => {
   test.beforeEach(async ({ page, skip }) => {
     skip.rtl('isOpen does not behave differently in RTL');
+    skip.mode('md', 'isOpen does not behave differently in MD');
     await page.goto('/src/components/loading/test/isOpen');
   });
 
