@@ -330,7 +330,7 @@ export class Datetime implements ComponentInterface {
 
   /**
    * The value of the datetime as a valid ISO 8601 datetime string.
-   * Should be an array of strings if `multiple="true"`.
+   * This should be an array of strings only when `multiple="true"`.
    */
   @Prop({ mutable: true }) value?: string | string[] | null;
 
@@ -343,8 +343,13 @@ export class Datetime implements ComponentInterface {
 
     if (this.hasValue()) {
       if (!multiple && Array.isArray(value)) {
-        this.setValue(value[0]);
-        return; // setting this.value will trigger re-run of this function
+        printIonWarning(
+          `ion-datetime was passed an array of values, but multiple="false". This is incorrect usage and may result in unexpected behaviors. To dismiss this warning, pass a string to the "value" property when multiple="false".
+
+Value Passed: ${value}
+              `,
+          this.el
+        );
       }
 
       /**
@@ -1185,12 +1190,17 @@ export class Datetime implements ComponentInterface {
   private processValue = (value?: string | string[] | null) => {
     const hasValue = !!value;
     this.highlightActiveParts = hasValue;
-    let valueToProcess = parseDate(value || getToday());
+    const valueToProcess = parseDate(value || getToday());
 
     const { minParts, maxParts, multiple } = this;
     if (!multiple && Array.isArray(value)) {
-      this.setValue(value[0]);
-      valueToProcess = (valueToProcess as DatetimeParts[])[0];
+      printIonWarning(
+        `ion-datetime was passed an array of values, but multiple="false". This is incorrect usage and may result in unexpected behaviors. To dismiss this warning, pass a string to the "value" property when multiple="false".
+
+Value Passed: ${value}
+      `,
+        this.el
+      );
     }
 
     /**

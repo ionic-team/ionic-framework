@@ -837,7 +837,7 @@ export namespace Components {
          */
         "size": 'cover' | 'fixed';
         /**
-          * The value of the datetime as a valid ISO 8601 datetime string. Should be an array of strings if `multiple="true"`.
+          * The value of the datetime as a valid ISO 8601 datetime string. This should be an array of strings only when `multiple="true"`.
          */
         "value"?: string | string[] | null;
         /**
@@ -4613,7 +4613,7 @@ declare namespace LocalJSX {
          */
         "size"?: 'cover' | 'fixed';
         /**
-          * The value of the datetime as a valid ISO 8601 datetime string. Should be an array of strings if `multiple="true"`.
+          * The value of the datetime as a valid ISO 8601 datetime string. This should be an array of strings only when `multiple="true"`.
          */
         "value"?: string | string[] | null;
         /**

@@ -71,7 +71,9 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 
 <h4 id="version-7x-datetime">Datetime</h4>
 
-`ionChange` is no longer emitted when the `value` property of `ion-datetime` is modified externally. `ionChange` is only emitted from user committed changes, such as clicking or tapping a date.
+- `ionChange` is no longer emitted when the `value` property of `ion-datetime` is modified externally. `ionChange` is only emitted from user committed changes, such as clicking or tapping a date.
+
+- Datetime will no longer automatically adjust the `value` property when passed an array and `multiple="false"`. Developers should update their apps to ensure they are using the API correctly.
 
 <h4 id="version-7x-input">Input</h4>
 
