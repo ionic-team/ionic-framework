@@ -4,6 +4,7 @@ import { test } from '@utils/test/playwright';
 test.describe('textarea: clearOnEdit', () => {
   test.beforeEach(async ({ skip }) => {
     skip.rtl();
+    skip.mode('md');
   });
 
   test('should clear the textarea on first keystroke of textarea being focused', async ({ page }) => {
