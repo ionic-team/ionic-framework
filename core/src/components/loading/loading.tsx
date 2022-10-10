@@ -11,7 +11,6 @@ import type {
   OverlayInterface,
   SpinnerTypes,
 } from '../../interface';
-import { detachComponent } from '../../utils/framework-delegate';
 import { raf } from '../../utils/helpers';
 import {
   BACKDROP,
@@ -24,7 +23,6 @@ import {
 import type { IonicSafeString } from '../../utils/sanitization';
 import { sanitizeDOMString } from '../../utils/sanitization';
 import { getClassMap } from '../../utils/theme';
-import { deepReady } from '../../utils/transition';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
@@ -46,8 +44,6 @@ export class Loading implements ComponentInterface, OverlayInterface {
   private readonly delegateController = createDelegateController(this);
   private durationTimeout: any;
   private currentTransition?: Promise<any>;
-  // Reference to the user's provided loading content
-  private usersElement?: HTMLElement;
 
   presented = false;
   lastFocus?: HTMLElement;
@@ -228,8 +224,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
     const { delegate } = this.delegateController.getDelegate(true);
 
     if (delegate) {
-      this.usersElement = await delegate.attachViewToDom(this.el, undefined);
-      await deepReady(this.usersElement);
+      await delegate.attachViewToDom(this.el, undefined);
     }
 
     this.currentTransition = present(this, 'loadingEnter', iosEnterAnimation, mdEnterAnimation);
@@ -264,7 +259,10 @@ export class Loading implements ComponentInterface, OverlayInterface {
     if (dismissed) {
       const { delegate } = this.delegateController.getDelegate();
       if (delegate) {
-        await detachComponent(delegate, this.usersElement);
+        const { el } = this;
+        if (el) {
+          delegate.removeViewFromDom(el.parentElement, el);
+        }
       }
     }
 
