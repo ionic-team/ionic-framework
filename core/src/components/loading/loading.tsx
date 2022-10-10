@@ -11,13 +11,19 @@ import type {
   OverlayInterface,
   SpinnerTypes,
 } from '../../interface';
-import { CoreDelegate, detachComponent } from '../../utils/framework-delegate';
 import { raf } from '../../utils/helpers';
-import { BACKDROP, dismiss, eventMethod, prepareOverlay, present, createTriggerController } from '../../utils/overlays';
+import {
+  BACKDROP,
+  dismiss,
+  eventMethod,
+  prepareOverlay,
+  present,
+  createDelegateController,
+  createTriggerController
+} from '../../utils/overlays';
 import type { IonicSafeString } from '../../utils/sanitization';
 import { sanitizeDOMString } from '../../utils/sanitization';
 import { getClassMap } from '../../utils/theme';
-import { deepReady } from '../../utils/transition';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
@@ -36,14 +42,10 @@ import { mdLeaveAnimation } from './animations/md.leave';
   scoped: true,
 })
 export class Loading implements ComponentInterface, OverlayInterface {
+  private readonly delegateController = createDelegateController(this);
   private durationTimeout: any;
-  private coreDelegate: FrameworkDelegate = CoreDelegate();
   private currentTransition?: Promise<any>;
-  private inline = false;
-  private workingDelegate?: FrameworkDelegate;
-  // Reference to the user's provided loading content
-  private usersElement?: HTMLElement;
-  private triggerController = createTriggerController();
+  private readonly triggerController = createTriggerController();
 
   presented = false;
   lastFocus?: HTMLElement;
@@ -235,11 +237,10 @@ export class Loading implements ComponentInterface, OverlayInterface {
       await this.currentTransition;
     }
 
-    const { delegate } = this.getDelegate(true);
+    const { delegate } = this.delegateController.getDelegate(true);
 
     if (delegate) {
-      this.usersElement = await delegate.attachViewToDom(this.el, undefined);
-      await deepReady(this.usersElement);
+      await delegate.attachViewToDom(this.el, undefined);
     }
 
     this.currentTransition = present(this, 'loadingEnter', iosEnterAnimation, mdEnterAnimation);
@@ -272,9 +273,12 @@ export class Loading implements ComponentInterface, OverlayInterface {
     const dismissed = await this.currentTransition;
 
     if (dismissed) {
-      const { delegate } = this.getDelegate();
+      const { delegate } = this.delegateController.getDelegate();
       if (delegate) {
-        await detachComponent(delegate, this.usersElement);
+        const { el } = this;
+        if (el) {
+          delegate.removeViewFromDom(el.parentElement, el);
+        }
       }
     }
 
@@ -300,39 +304,6 @@ export class Loading implements ComponentInterface, OverlayInterface {
   private onBackdropTap = () => {
     this.dismiss(undefined, BACKDROP);
   };
-
-  /**
-   * Determines whether or not an overlay
-   * is being used inline or via a controller/JS
-   * and returns the correct delegate.
-   * By default, subsequent calls to getDelegate
-   * will use a cached version of the delegate.
-   * This is useful for calling dismiss after
-   * present so that the correct delegate is given.
-   */
-  private getDelegate(force = false) {
-    const { workingDelegate } = this;
-    if (workingDelegate && !force) {
-      return {
-        delegate: workingDelegate,
-        inline: this.inline,
-      };
-    }
-    /**
-     * If using overlay inline
-     * we potentially need to use the coreDelegate
-     * so that this works in vanilla JS apps.
-     * If a developer has presented this component
-     * via a controller, then we can assume
-     * the component is already in the
-     * correct place.
-     */
-    const parentEl = this.el.parentNode as HTMLElement | null;
-    const inline = (this.inline = parentEl !== null && !this.hasController);
-    const delegate = (this.workingDelegate = inline ? this.delegate || this.coreDelegate : this.delegate);
-
-    return { inline, delegate };
-  }
 
   render() {
     const { message, spinner, htmlAttributes } = this;
