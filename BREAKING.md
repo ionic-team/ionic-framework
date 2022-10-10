@@ -22,6 +22,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Range](#version-7x-range)
   - [Searchbar](#version-7x-searchbar)
   - [Segment](#version-7x-segment)
+  - [Select](#version-7x-select)
   - [Slides](#version-7x-slides)
   - [Textarea](#version-7x-textarea)
   - [Virtual Scroll](#version-7x-virtual-scroll)
@@ -62,7 +63,9 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 
 <h4 id="version-7x-accordion-group">Accordion Group</h4>
 
-`ionChange` is no longer emitted when the `value` of `ion-accordion-group` is modified externally. `ionChange` is only emitted from user committed changes, such as clicking or tapping the accordion header.
+-`ionChange` is no longer emitted when the `value` of `ion-accordion-group` is modified externally. `ionChange` is only emitted from user committed changes, such as clicking or tapping the accordion header.
+
+- Accordion Group no longer automatically adjusts the `value` property when passed an array and `multiple="false"`. Developers should update their apps to ensure they are using the API correctly.
 
 <h4 id="version-7x-checkbox">Checkbox</h4>
 
@@ -119,6 +122,10 @@ iOS:
 
 - The type signature of `value` supports `string | undefined`. Previously the type signature was `string | null | undefined`.
   - Developers needing to clear the checked segment item should assign a value of `''` instead of `null`.
+  
+<h4 id="version-7x-select">Select</h4>
+
+- `ionChange` is no longer emitted when the `value` of `ion-select` is modified externally. `ionChange` is only emitted from user committed changes, such as confirming a selected option in the select's overlay.
 
 <h4 id="version-7x-slides">Slides</h4>
 

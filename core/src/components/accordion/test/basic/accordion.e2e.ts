@@ -74,30 +74,4 @@ test.describe('accordion: ionChange', () => {
     await accordionGroup.evaluate((el: HTMLIonAccordionGroupElement) => (el.value = 'second'));
     await expect(ionChange).not.toHaveReceivedEvent();
   });
-
-  test('should fire ionChange setting array of values on a single selection accordion', async ({ page }) => {
-    await page.setContent(`
-      <ion-accordion-group>
-        <ion-accordion value="first">
-          <button slot="header">Header</button>
-          <div slot="content">First Content</div>
-        </ion-accordion>
-        <ion-accordion value="second">
-          <button slot="header">Header</button>
-          <div slot="content">Second Content</div>
-        </ion-accordion>
-        <ion-accordion value="third">
-          <button slot="header">Header</button>
-          <div slot="content">Third Content</div>
-        </ion-accordion>
-      </ion-accordion-group>
-
-    `);
-
-    const ionChange = await page.spyOnEvent('ionChange');
-    const accordionGroup = page.locator('ion-accordion-group');
-
-    await accordionGroup.evaluate((el: HTMLIonAccordionGroupElement) => (el.value = ['second', 'third']));
-    await expect(ionChange).toHaveReceivedEventDetail({ value: 'second' });
-  });
 });
