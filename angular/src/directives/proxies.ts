@@ -1912,7 +1912,8 @@ export class IonTitle {
 import type { ToggleChangeEventDetail as IToggleToggleChangeEventDetail } from '@ionic/core';
 export declare interface IonToggle extends Components.IonToggle {
   /**
-   * Emitted when the value property has changed. 
+   * Emitted when the user switches the toggle on or off. Does not emit
+when programmatically changing the value of the `checked` property. 
    */
   ionChange: EventEmitter<CustomEvent<IToggleToggleChangeEventDetail>>;
   /**

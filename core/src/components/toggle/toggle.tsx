@@ -70,7 +70,8 @@ export class Toggle implements ComponentInterface {
   @Prop() enableOnOffLabels: boolean | undefined = undefined;
 
   /**
-   * Emitted when the value property has changed.
+   * Emitted when the user switches the toggle on or off. Does not emit
+   * when programmatically changing the value of the `checked` property.
    */
   @Event() ionChange!: EventEmitter<ToggleChangeEventDetail>;
 
@@ -90,20 +91,24 @@ export class Toggle implements ComponentInterface {
    */
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
-  @Watch('checked')
-  checkedChanged(isChecked: boolean) {
-    this.ionChange.emit({
-      checked: isChecked,
-      value: this.value,
-    });
-  }
-
   @Watch('disabled')
   disabledChanged() {
     this.emitStyle();
     if (this.gesture) {
       this.gesture.enable(!this.disabled);
     }
+  }
+
+  private toggleChecked() {
+    const { checked, value } = this;
+
+    const isNowChecked = !checked;
+    this.checked = isNowChecked;
+
+    this.ionChange.emit({
+      checked: isNowChecked,
+      value,
+    });
   }
 
   async connectedCallback() {
@@ -146,7 +151,7 @@ export class Toggle implements ComponentInterface {
 
   private onMove(detail: GestureDetail) {
     if (shouldToggle(isRTL(this.el), this.checked, detail.deltaX, -10)) {
-      this.checked = !this.checked;
+      this.toggleChecked();
       hapticSelection();
     }
   }
@@ -172,7 +177,7 @@ export class Toggle implements ComponentInterface {
     ev.preventDefault();
 
     if (this.lastDrag + 300 < Date.now()) {
-      this.checked = !this.checked;
+      this.toggleChecked();
     }
   };
 

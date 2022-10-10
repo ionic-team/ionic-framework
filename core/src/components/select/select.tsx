@@ -40,7 +40,6 @@ import type { SelectCompareFn } from './select-interface';
 export class Select implements ComponentInterface {
   private inputId = `ion-sel-${selectIds++}`;
   private overlay?: OverlaySelect;
-  private didInit = false;
   private focusEl?: HTMLButtonElement;
   private mutationO?: MutationObserver;
 
@@ -150,12 +149,11 @@ export class Select implements ComponentInterface {
   @Watch('value')
   valueChanged() {
     this.emitStyle();
-    // TODO: FW-1160 - Remove the `didInit` property when ionChange behavior is changed in v7.
-    if (this.didInit) {
-      this.ionChange.emit({
-        value: this.value,
-      });
-    }
+  }
+
+  private setValue(value?: any | null) {
+    this.value = value;
+    this.ionChange.emit({ value });
   }
 
   async connectedCallback() {
@@ -172,10 +170,6 @@ export class Select implements ComponentInterface {
       this.mutationO.disconnect();
       this.mutationO = undefined;
     }
-  }
-
-  componentDidLoad() {
-    this.didInit = true;
   }
 
   /**
@@ -279,7 +273,7 @@ export class Select implements ComponentInterface {
         text: option.textContent,
         cssClass: optClass,
         handler: () => {
-          this.value = value;
+          this.setValue(value);
         },
       } as ActionSheetButton;
     });
@@ -340,7 +334,7 @@ export class Select implements ComponentInterface {
         checked: isOptionSelected(selectValue, value, this.compareWith),
         disabled: option.disabled,
         handler: (selected: any) => {
-          this.value = selected;
+          this.setValue(selected);
           if (!this.multiple) {
             this.close();
           }
@@ -463,7 +457,7 @@ export class Select implements ComponentInterface {
         {
           text: this.okText,
           handler: (selectedValues: any) => {
-            this.value = selectedValues;
+            this.setValue(selectedValues);
           },
         },
       ],

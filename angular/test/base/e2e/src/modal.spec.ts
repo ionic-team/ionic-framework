@@ -102,18 +102,23 @@ describe('when in a modal', () => {
   });
 
   it('should render ion-item item-has-value class when control value is set', () => {
-    cy.get('[formControlName="select"]').invoke('attr', 'value', 0);
+    cy.get('ion-select').click();
+    cy.get('ion-alert').should('exist').should('be.visible');
+    // Option 0 option
+    cy.get('ion-alert .alert-radio-button:nth-of-type(1)').click();
+    // Click confirm button
+    cy.get('ion-alert .alert-button:not(.alert-button-role-cancel)').click();
+
     cy.get('#inputWithFloatingLabel').should('have.class', 'item-has-value');
   });
 
   it('should not render ion-item item-has-value class when control value is undefined', () => {
-    cy.get('[formControlName="select"]').invoke('attr', 'value', undefined);
+    cy.get('#set-to-undefined').click();
     cy.get('#inputWithFloatingLabel').should('not.have.class', 'item-has-value');
   });
 
   it('should not render ion-item item-has-value class when control value is null', () => {
-    cy.get('[formControlName="select"]').invoke('attr', 'value', null);
+    cy.get('#set-to-null').click();
     cy.get('#inputWithFloatingLabel').should('not.have.class', 'item-has-value');
   });
-
 });
