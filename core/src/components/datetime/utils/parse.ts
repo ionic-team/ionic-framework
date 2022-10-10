@@ -115,6 +115,7 @@ export function parseDate(val: string | string[] | undefined | null): DatetimePa
     hour: parse[4],
     minute: parse[5],
     tzOffset,
+    ampm: parse[4] < 12 ? 'am' : 'pm',
   };
 }
 
