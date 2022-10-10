@@ -681,16 +681,30 @@ export const createDelegateController = (ref: {
  * Usage:
  * ```ts
  * triggerController = createTriggerController();
- * triggerController.initializeClickListener(el, trigger);
+ * triggerController.addClickListener(el, trigger);
  * ```
  */
 export const createTriggerController = () => {
-  let destroyTriggerInteraction: () => void;
+  let destroyTriggerInteraction: (() => void) | undefined;
 
-  const initializeClickListener = (el: HTMLIonOverlayElement, trigger: string) => {
+  /**
+   * Removes the click listener from the trigger element.
+   */
+  const removeClickListener = (): void => {
     if (destroyTriggerInteraction) {
       destroyTriggerInteraction();
+      destroyTriggerInteraction = undefined;
     }
+  };
+
+  /**
+   * Adds a click listener to the trigger element.
+   * Presents the overlay when the trigger is clicked.
+   * @param el The overlay element.
+   * @param trigger The ID of the element to add a click listener to.
+   */
+  const addClickListener = (el: HTMLIonOverlayElement, trigger: string): void => {
+    removeClickListener();
 
     const triggerEl = trigger !== undefined ? document.getElementById(trigger) : null;
     if (!triggerEl) {
@@ -712,6 +726,7 @@ export const createTriggerController = () => {
   };
 
   return {
-    initializeClickListener,
+    addClickListener,
+    removeClickListener,
   };
 };

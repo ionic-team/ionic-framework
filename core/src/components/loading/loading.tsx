@@ -19,7 +19,7 @@ import {
   prepareOverlay,
   present,
   createDelegateController,
-  createTriggerController
+  createTriggerController,
 } from '../../utils/overlays';
 import type { IonicSafeString } from '../../utils/sanitization';
 import { sanitizeDOMString } from '../../utils/sanitization';
@@ -43,9 +43,9 @@ import { mdLeaveAnimation } from './animations/md.leave';
 })
 export class Loading implements ComponentInterface, OverlayInterface {
   private readonly delegateController = createDelegateController(this);
+  private readonly triggerController = createTriggerController();
   private durationTimeout: any;
   private currentTransition?: Promise<any>;
-  private readonly triggerController = createTriggerController();
 
   presented = false;
   lastFocus?: HTMLElement;
@@ -150,7 +150,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
   triggerChanged() {
     const { trigger, el, triggerController } = this;
     if (trigger) {
-      triggerController.initializeClickListener(el, trigger);
+      triggerController.addClickListener(el, trigger);
     }
   }
 
@@ -218,6 +218,10 @@ export class Loading implements ComponentInterface, OverlayInterface {
       raf(() => this.present());
     }
     this.triggerChanged();
+  }
+
+  disconnectedCallback() {
+    this.triggerController.removeClickListener();
   }
 
   /**
