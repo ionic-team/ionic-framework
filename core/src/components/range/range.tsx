@@ -191,11 +191,10 @@ export class Range implements ComponentInterface {
    */
   @Prop({ mutable: true }) value: RangeValue = 0;
   @Watch('value')
-  protected valueChanged(value: RangeValue) {
+  protected valueChanged() {
     if (!this.noUpdate) {
       this.updateRatio();
     }
-    this.value = this.ensureValueInBounds(value);
   }
 
   private clampBounds = (value: any): number => {
@@ -361,8 +360,8 @@ export class Range implements ComponentInterface {
    * This API should not be used for external value changes.
    */
   private emitValueChange() {
-    const { value } = this;
-    this.ionChange.emit({ value });
+    this.value = this.ensureValueInBounds(this.value);
+    this.ionChange.emit({ value: this.value });
   }
 
   private onStart(detail: GestureDetail) {
