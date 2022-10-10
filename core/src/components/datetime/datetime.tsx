@@ -563,10 +563,10 @@ export class Datetime implements ComponentInterface {
    * today's DatetimeParts if no active date is selected.
    */
   private getDefaultPart = () => {
-    const { activePartsClone, todayParts } = this;
+    const { activePartsClone, defaultParts } = this;
 
     const firstPart = Array.isArray(activePartsClone) ? activePartsClone[0] : activePartsClone;
-    return firstPart ?? todayParts;
+    return firstPart ?? defaultParts;
   };
 
   private closeParentOverlay = () => {
@@ -781,24 +781,24 @@ export class Datetime implements ComponentInterface {
   };
 
   private processMinParts = () => {
-    const { min, todayParts } = this;
+    const { min, defaultParts } = this;
     if (min === undefined) {
       this.minParts = undefined;
       return;
     }
 
-    this.minParts = parseMinParts(min, todayParts);
+    this.minParts = parseMinParts(min, defaultParts);
   };
 
   private processMaxParts = () => {
-    const { max, todayParts } = this;
+    const { max, defaultParts } = this;
 
     if (max === undefined) {
       this.maxParts = undefined;
       return;
     }
 
-    this.maxParts = parseMaxParts(max, todayParts);
+    this.maxParts = parseMaxParts(max, defaultParts);
   };
 
   private initializeCalendarListener = () => {
@@ -1399,7 +1399,7 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderCombinedDatePickerColumn() {
-    const { activeParts, workingParts, locale, minParts, maxParts, todayParts, isDateEnabled } = this;
+    const { activeParts, workingParts, locale, minParts, maxParts, todayParts, defaultParts, isDateEnabled } = this;
 
     /**
      * By default, generate a range of 3 months:
@@ -1463,12 +1463,12 @@ export class Datetime implements ComponentInterface {
 
     /**
      * If we have selected a day already, then default the column
-     * to that value. Otherwise, default it to today.
+     * to that value. Otherwise, set it to the default date.
      */
     const todayString =
       workingParts.day !== null
         ? `${workingParts.year}-${workingParts.month}-${workingParts.day}`
-        : `${todayParts.year}-${todayParts.month}-${todayParts.day}`;
+        : `${defaultParts.year}-${defaultParts.month}-${defaultParts.day}`;
 
     return (
       <ion-picker-column-internal
@@ -1556,7 +1556,7 @@ export class Datetime implements ComponentInterface {
 
     const shouldRenderYears = forcePresentation !== 'month' && forcePresentation !== 'time';
     const years = shouldRenderYears
-      ? getYearColumnData(this.locale, this.todayParts, this.minParts, this.maxParts, this.parsedYearValues)
+      ? getYearColumnData(this.locale, this.defaultParts, this.minParts, this.maxParts, this.parsedYearValues)
       : [];
 
     /**
@@ -1594,7 +1594,7 @@ export class Datetime implements ComponentInterface {
         class="day-column"
         color={this.color}
         items={days}
-        value={(workingParts.day !== null ? workingParts.day : this.todayParts.day) ?? undefined}
+        value={(workingParts.day !== null ? workingParts.day : this.defaultParts.day) ?? undefined}
         onIonChange={(ev: CustomEvent) => {
           // TODO(FW-1823) Remove this when iOS 14 support is dropped.
           // Due to a Safari 14 issue we need to destroy
