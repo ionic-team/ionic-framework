@@ -21,11 +21,17 @@ import { createColorClasses } from '../../utils/theme';
 export class Textarea implements ComponentInterface {
   private nativeInput?: HTMLTextAreaElement;
   private inputId = `ion-textarea-${textareaIds++}`;
-  private didBlurAfterEdit = this.hasValue();
+  /**
+   * `true` if the textarea was cleared as a result of the user typing
+   * with `clearOnEdit` enabled.
+   *
+   * Resets when the textarea loses focus.
+   */
+  private didTextareaClearOnEdit = false;
   private textareaWrapper?: HTMLElement;
   private inheritedAttributes: Attributes = {};
   /**
-   * The value of the input when the textarea is focused.
+   * The value of the textarea when the textarea is focused.
    */
   private focusedValue?: string | null;
 
@@ -176,10 +182,13 @@ export class Textarea implements ComponentInterface {
   @Event() ionChange!: EventEmitter<TextareaChangeEventDetail>;
 
   /**
-   * Ths `ionInput` event fires when the `value` of an `<ion-textarea>` element
+   * The `ionInput` event fires when the `value` of an `<ion-textarea>` element
    * has been changed.
+   *
+   * When `clearOnEdit` is enabled, the `ionInput` event will be fired when
+   * the user clears the textarea by performing a keydown event.
    */
-  @Event() ionInput!: EventEmitter<InputEvent | null>;
+  @Event() ionInput!: EventEmitter<InputEvent>;
 
   /**
    * Emitted when the styles change.
@@ -295,24 +304,18 @@ export class Textarea implements ComponentInterface {
     if (!this.clearOnEdit) {
       return;
     }
-
-    // Did the input value change after it was blurred and edited?
-    if (this.didBlurAfterEdit && this.hasValue()) {
-      // Clear the input
+    /**
+     * Clear the textarea if the control has not been previously cleared
+     * during focus.
+     */
+    if (!this.didTextareaClearOnEdit && this.hasValue()) {
       this.value = '';
+      this.ionInput.emit();
     }
-
-    this.ionInput.emit(null);
-
-    // Reset the flag
-    this.didBlurAfterEdit = false;
+    this.didTextareaClearOnEdit = true;
   }
 
   private focusChange() {
-    // If clearOnEdit is enabled and the input blurred but has a value, set a flag
-    if (this.clearOnEdit && !this.hasFocus && this.hasValue()) {
-      this.didBlurAfterEdit = true;
-    }
     this.emitStyle();
   }
 
@@ -360,7 +363,7 @@ export class Textarea implements ComponentInterface {
        */
       this.emitValueChange();
     }
-
+    this.didTextareaClearOnEdit = false;
     this.ionBlur.emit(ev);
   };
 
