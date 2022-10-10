@@ -9,12 +9,14 @@ test.describe('item-sliding: basic', () => {
     await item.evaluate(async (el: HTMLIonItemSlidingElement) => {
       await el.open('start');
     });
+    await page.waitForChanges();
 
     expect(await item.screenshot()).toMatchSnapshot(`item-sliding-start-${page.getSnapshotSettings()}.png`);
 
     await item.evaluate(async (el: HTMLIonItemSlidingElement) => {
       await el.open('end');
     });
+    await page.waitForChanges();
 
     expect(await item.screenshot()).toMatchSnapshot(`item-sliding-end-${page.getSnapshotSettings()}.png`);
   });
