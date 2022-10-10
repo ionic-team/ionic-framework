@@ -794,7 +794,7 @@ export class Nav implements NavOutlet {
       destroyQueue = [];
       for (let i = removeStart; i < removeStart + removeCount; i++) {
         const view = this.views[i];
-        if (view && view !== enteringView && view !== leavingView) {
+        if (view !== undefined && view !== enteringView && view !== leavingView) {
           destroyQueue.push(view);
         }
       }
