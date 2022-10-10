@@ -6725,7 +6725,7 @@ declare namespace LocalJSX {
          */
         "onIonBlur"?: (event: IonToggleCustomEvent<void>) => void;
         /**
-          * Emitted when the value property has changed.
+          * Emitted when the user switches the toggle on or off. Does not emit when programmatically changing the value of the `checked` property.
          */
         "onIonChange"?: (event: IonToggleCustomEvent<ToggleChangeEventDetail>) => void;
         /**
