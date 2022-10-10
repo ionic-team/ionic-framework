@@ -96,7 +96,8 @@ export class Datetime implements ComponentInterface {
 
   private minParts?: any;
   private maxParts?: any;
-  private todayParts = parseDate(getToday());
+  private todayParts!: DatetimeParts;
+  private defaultParts!: DatetimeParts;
 
   private prevPresentation: string | null = null;
 
@@ -1239,6 +1240,11 @@ export class Datetime implements ComponentInterface {
     this.parsedMonthValues = convertToArrayOfNumbers(this.monthValues);
     this.parsedYearValues = convertToArrayOfNumbers(this.yearValues);
     this.parsedDayValues = convertToArrayOfNumbers(this.dayValues);
+
+    const todayParts = (this.todayParts = parseDate(getToday()));
+    // TODO: Account for *Values props
+    this.defaultParts = { ...todayParts };
+
     this.emitStyle();
   }
 
