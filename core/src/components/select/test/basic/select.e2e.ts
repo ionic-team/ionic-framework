@@ -95,3 +95,99 @@ test.describe('select: basic', () => {
     });
   });
 });
+
+test.describe('select: ionChange', () => {
+  test.beforeEach(({ skip }) => {
+    skip.rtl();
+    skip.mode('ios', 'ionChange has a consistent behavior across modes');
+  });
+
+  test('should fire ionChange when confirming a value from an alert', async ({ page }) => {
+    await page.setContent(`
+      <ion-select interface="alert">
+        <ion-select-option value="apple">Apple</ion-select-option>
+        <ion-select-option value="banana">Banana</ion-select-option>
+      </ion-select>
+    `);
+
+    const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+    const ionChange = await page.spyOnEvent('ionChange');
+    const select = page.locator('ion-select');
+
+    await select.click();
+    await ionAlertDidPresent.next();
+
+    const alert = page.locator('ion-alert');
+    const radioButtons = alert.locator('.alert-radio-button');
+    const confirmButton = alert.locator('.alert-button:not(.alert-button-role-cancel)');
+
+    await radioButtons.nth(0).click();
+    await confirmButton.click();
+
+    await ionChange.next();
+    expect(ionChange).toHaveReceivedEventDetail({ value: 'apple' });
+  });
+
+  test('should fire ionChange when confirming a value from a popover', async ({ page }) => {
+    await page.setContent(`
+      <ion-select interface="popover">
+        <ion-select-option value="apple">Apple</ion-select-option>
+        <ion-select-option value="banana">Banana</ion-select-option>
+      </ion-select>
+    `);
+
+    const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
+    const ionChange = await page.spyOnEvent('ionChange');
+    const select = page.locator('ion-select');
+
+    await select.click();
+    await ionPopoverDidPresent.next();
+
+    const popover = page.locator('ion-popover');
+    const radioButtons = popover.locator('ion-radio');
+
+    await radioButtons.nth(0).click();
+
+    await ionChange.next();
+    expect(ionChange).toHaveReceivedEventDetail({ value: 'apple' });
+  });
+
+  test('should fire ionChange when confirming a value from an action sheet', async ({ page }) => {
+    await page.setContent(`
+      <ion-select interface="action-sheet">
+        <ion-select-option value="apple">Apple</ion-select-option>
+        <ion-select-option value="banana">Banana</ion-select-option>
+      </ion-select>
+    `);
+
+    const ionActionSheetDidPresent = await page.spyOnEvent('ionActionSheetDidPresent');
+    const ionChange = await page.spyOnEvent('ionChange');
+    const select = page.locator('ion-select');
+
+    await select.click();
+    await ionActionSheetDidPresent.next();
+
+    const actionSheet = page.locator('ion-action-sheet');
+    const buttons = actionSheet.locator('.action-sheet-button');
+
+    await buttons.nth(0).click();
+
+    await ionChange.next();
+    expect(ionChange).toHaveReceivedEventDetail({ value: 'apple' });
+  });
+
+  test('should not fire when programmatically setting a valid value', async ({ page }) => {
+    await page.setContent(`
+      <ion-select>
+        <ion-select-option value="apple">Apple</ion-select-option>
+        <ion-select-option value="banana">Banana</ion-select-option>
+      </ion-select>
+    `);
+
+    const ionChange = await page.spyOnEvent('ionChange');
+    const select = page.locator('ion-select');
+
+    await select.evaluate((el: HTMLIonSelectElement) => (el.value = 'banana'));
+    await expect(ionChange).not.toHaveReceivedEvent();
+  });
+});
