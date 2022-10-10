@@ -19,7 +19,7 @@ import { isRTL } from '../../utils/rtl';
 import { createColorClasses } from '../../utils/theme';
 import type { PickerColumnItem } from '../picker-column-internal/picker-column-internal-interfaces';
 
-import { isSameDay, warnIfValueOutOfBounds } from './utils/comparison';
+import { isSameDay, warnIfValueOutOfBounds, isBefore, isAfter } from './utils/comparison';
 import {
   generateMonths,
   getDaysOfMonth,
@@ -32,7 +32,7 @@ import {
   getCombinedDateColumnData,
 } from './utils/data';
 import { formatValue, getLocalizedTime, getMonthAndDay, getMonthAndYear } from './utils/format';
-import { is24Hour, isLocaleDayPeriodRTL, isMonthFirstLocale } from './utils/helpers';
+import { is24Hour, isLocaleDayPeriodRTL, isMonthFirstLocale, getNumDaysInMonth } from './utils/helpers';
 import {
   calculateHourFromAMPM,
   convertDataToISO,
@@ -1400,23 +1400,24 @@ export class Datetime implements ComponentInterface {
      * Previous month, current month, and next month
      */
     const monthsToRender = generateMonths(workingParts);
+    const lastMonth = monthsToRender[monthsToRender.length - 1];
 
     /**
-     * generateMonths returns the day data as well,
-     * but we do not want the day value to act as a max/min
-     * on the data we are going to generate.
+     * Ensure that users can select the entire window of dates.
      */
-    for (let i = 0; i <= monthsToRender.length - 1; i++) {
-      monthsToRender[i].day = null;
-    }
+    monthsToRender[0].day = 1;
+    lastMonth.day = getNumDaysInMonth(lastMonth.month, lastMonth.year);
 
     /**
-     * If developers have provided their own
-     * min/max values, use that instead. Otherwise,
-     * fallback to the default range of 3 months.
+     * Narrow the dates rendered based on min/max dates (if any).
+     * The `min` date is used if the min is after the generated min month.
+     * The `max` date is used if the max is before the generated max month.
+     * This ensures that the sliding window always stays at 3 months
+     * but still allows future dates to be lazily rendered based on any min/max
+     * constraints.
      */
-    const min = minParts || monthsToRender[0];
-    const max = maxParts || monthsToRender[monthsToRender.length - 1];
+    const min = minParts !== undefined && isAfter(minParts, monthsToRender[0]) ? minParts : monthsToRender[0];
+    const max = maxParts !== undefined && isBefore(maxParts, lastMonth) ? maxParts : lastMonth;
 
     const result = getCombinedDateColumnData(
       locale,
@@ -1426,6 +1427,7 @@ export class Datetime implements ComponentInterface {
       this.parsedDayValues,
       this.parsedMonthValues
     );
+
     let items = result.items;
     const parts = result.parts;
 
