@@ -85,17 +85,6 @@ export class Datetime implements ComponentInterface {
   private calendarBodyRef?: HTMLElement;
   private popoverRef?: HTMLIonPopoverElement;
   private clearFocusVisible?: () => void;
-
-  /**
-   * Whether to highlight the active day with a solid circle (as opposed
-   * to the outline circle around today). If you don't specify an initial
-   * value for the datetime, it doesn't automatically init to a default to
-   * avoid unwanted change events firing. If the solid circle were still
-   * shown then, it would look like a date had already been selected, which
-   * is misleading UX.
-   */
-  private highlightActiveParts = false;
-
   private parsedMinuteValues?: number[];
   private parsedHourValues?: number[];
   private parsedMonthValues?: number[];
@@ -115,18 +104,11 @@ export class Datetime implements ComponentInterface {
    * Duplicate reference to `activeParts` that does not trigger a re-render of the component.
    * Allows caching an instance of the `activeParts` in between render cycles.
    */
-  private activePartsClone!: DatetimeParts | DatetimeParts[];
+  private activePartsClone: DatetimeParts | DatetimeParts[] = [];
 
   @State() showMonthAndYear = false;
 
-  @State() activeParts: DatetimeParts | DatetimeParts[] = {
-    month: 5,
-    day: 28,
-    year: 2021,
-    hour: 13,
-    minute: 52,
-    ampm: 'pm',
-  };
+  @State() activeParts: DatetimeParts | DatetimeParts[] = [];
 
   @State() workingParts: DatetimeParts = {
     month: 5,
@@ -506,16 +488,12 @@ export class Datetime implements ComponentInterface {
    */
   @Method()
   async confirm(closeOverlay = false) {
-    const { highlightActiveParts, isCalendarPicker, activeParts } = this;
+    const { isCalendarPicker, activeParts } = this;
 
     /**
-     * We only update the value if the presentation is not a calendar picker,
-     * or if `highlightActiveParts` is true; indicating that the user
-     * has selected a date from the calendar picker.
-     *
-     * Otherwise "today" would accidentally be set as the value.
+     * We only update the value if the presentation is not a calendar picker.
      */
-    if (highlightActiveParts || !isCalendarPicker) {
+    if (activeParts !== undefined || !isCalendarPicker) {
       const activePartsIsArray = Array.isArray(activeParts);
       if (activePartsIsArray && activeParts.length === 0) {
         this.value = undefined;
@@ -573,6 +551,23 @@ export class Datetime implements ComponentInterface {
     }
   }
 
+  /**
+   * Returns the DatetimePart interface
+   * to use when rendering an initial set of
+   * data. This should be used when rendering an
+   * interface in an environment where the `value`
+   * may not be set. This function works
+   * by returning the first selected date in
+   * "activePartsClone" and then falling back to
+   * today's DatetimeParts if no active date is selected.
+   */
+  private getDefaultPart = () => {
+    const { activePartsClone, todayParts } = this;
+
+    const firstPart = Array.isArray(activePartsClone) ? activePartsClone[0] : activePartsClone;
+    return firstPart ?? todayParts;
+  };
+
   private closeParentOverlay = () => {
     const popoverOrModal = this.el.closest('ion-modal, ion-popover') as
       | HTMLIonModalElement
@@ -590,7 +585,7 @@ export class Datetime implements ComponentInterface {
   };
 
   private setActiveParts = (parts: DatetimeParts, removeDate = false) => {
-    const { multiple, activePartsClone, highlightActiveParts } = this;
+    const { multiple, activePartsClone } = this;
 
     /**
      * When setting the active parts, it is possible
@@ -618,33 +613,14 @@ export class Datetime implements ComponentInterface {
       const activePartsArray = Array.isArray(activePartsClone) ? activePartsClone : [activePartsClone];
       if (removeDate) {
         this.activeParts = activePartsArray.filter((p) => !isSameDay(p, validatedParts));
-      } else if (highlightActiveParts) {
-        this.activeParts = [...activePartsArray, validatedParts];
       } else {
-        /**
-         * If highlightActiveParts is false, that means we just have a
-         * default value of today in activeParts; we need to replace that
-         * rather than adding to it since it's just a placeholder.
-         */
-        this.activeParts = [validatedParts];
+        this.activeParts = [...activePartsArray, validatedParts];
       }
     } else {
       this.activeParts = {
         ...validatedParts,
       };
     }
-
-    /**
-     * Now that the user has interacted somehow to select something, we can
-     * show the solid highlight. This needs to be done after checking it above,
-     * but before the confirm call below.
-     *
-     * Note that for datetimes with confirm/cancel buttons, the value
-     * isn't updated until you call confirm(). We need to bring the
-     * solid circle back on day click for UX reasons, rather than only
-     * show the circle if `value` is truthy.
-     */
-    this.highlightActiveParts = true;
 
     const hasSlottedButtons = this.el.querySelector('[slot="buttons"]') !== null;
     if (hasSlottedButtons || this.showDefaultButtons) {
@@ -1178,7 +1154,7 @@ export class Datetime implements ComponentInterface {
   }
 
   private processValue = (value?: string | string[] | null) => {
-    const hasValue = (this.highlightActiveParts = value !== null && value !== undefined);
+    const hasValue = value !== null && value !== undefined;
     let valueToProcess = parseDate(value ?? getToday());
 
     const { minParts, maxParts, multiple } = this;
@@ -1219,18 +1195,26 @@ export class Datetime implements ComponentInterface {
       ampm,
     });
 
-    if (Array.isArray(valueToProcess)) {
-      this.activeParts = [...valueToProcess];
-    } else {
-      this.activeParts = {
-        month,
-        day,
-        year,
-        hour,
-        minute,
-        tzOffset,
-        ampm,
-      };
+    /**
+     * Since `activeParts` indicates a value that
+     * been explicitly selected either by the
+     * user or the app, only update `activeParts`
+     * if the `value` property is set.
+     */
+    if (hasValue) {
+      if (Array.isArray(valueToProcess)) {
+        this.activeParts = [...valueToProcess];
+      } else {
+        this.activeParts = {
+          month,
+          day,
+          year,
+          hour,
+          minute,
+          tzOffset,
+          ampm,
+        };
+      }
     }
   };
 
@@ -1747,13 +1731,15 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderHourPickerColumn(hoursData: PickerColumnItem[]) {
-    const { workingParts, activePartsClone } = this;
+    const { workingParts } = this;
     if (hoursData.length === 0) return [];
+
+    const activePart = this.getDefaultPart();
 
     return (
       <ion-picker-column-internal
         color={this.color}
-        value={(activePartsClone as DatetimeParts).hour}
+        value={activePart.hour}
         items={hoursData}
         numericInput
         onIonChange={(ev: CustomEvent) => {
@@ -1762,9 +1748,9 @@ export class Datetime implements ComponentInterface {
             hour: ev.detail.value,
           });
 
-          if (!Array.isArray(activePartsClone)) {
+          if (!Array.isArray(activePart)) {
             this.setActiveParts({
-              ...activePartsClone,
+              ...activePart,
               hour: ev.detail.value,
             });
           }
@@ -1775,13 +1761,15 @@ export class Datetime implements ComponentInterface {
     );
   }
   private renderMinutePickerColumn(minutesData: PickerColumnItem[]) {
-    const { workingParts, activePartsClone } = this;
+    const { workingParts } = this;
     if (minutesData.length === 0) return [];
+
+    const activePart = this.getDefaultPart();
 
     return (
       <ion-picker-column-internal
         color={this.color}
-        value={(activePartsClone as DatetimeParts).minute}
+        value={activePart.minute}
         items={minutesData}
         numericInput
         onIonChange={(ev: CustomEvent) => {
@@ -1790,9 +1778,9 @@ export class Datetime implements ComponentInterface {
             minute: ev.detail.value,
           });
 
-          if (!Array.isArray(activePartsClone)) {
+          if (!Array.isArray(activePart)) {
             this.setActiveParts({
-              ...activePartsClone,
+              ...activePart,
               minute: ev.detail.value,
             });
           }
@@ -1803,18 +1791,19 @@ export class Datetime implements ComponentInterface {
     );
   }
   private renderDayPeriodPickerColumn(dayPeriodData: PickerColumnItem[]) {
-    const { workingParts, activePartsClone } = this;
+    const { workingParts } = this;
     if (dayPeriodData.length === 0) {
       return [];
     }
 
+    const activePart = this.getDefaultPart();
     const isDayPeriodRTL = isLocaleDayPeriodRTL(this.locale);
 
     return (
       <ion-picker-column-internal
         style={isDayPeriodRTL ? { order: '-1' } : {}}
         color={this.color}
-        value={(activePartsClone as DatetimeParts).ampm}
+        value={activePart.ampm}
         items={dayPeriodData}
         onIonChange={(ev: CustomEvent) => {
           const hour = calculateHourFromAMPM(workingParts, ev.detail.value);
@@ -1825,9 +1814,9 @@ export class Datetime implements ComponentInterface {
             hour,
           });
 
-          if (!Array.isArray(activePartsClone)) {
+          if (!Array.isArray(activePart)) {
             this.setActiveParts({
-              ...activePartsClone,
+              ...activePart,
               ampm: ev.detail.value,
               hour,
             });
@@ -1901,7 +1890,6 @@ export class Datetime implements ComponentInterface {
     );
   }
   private renderMonth(month: number, year: number) {
-    const { highlightActiveParts } = this;
     const yearAllowed = this.parsedYearValues === undefined || this.parsedYearValues.includes(year);
     const monthAllowed = this.parsedMonthValues === undefined || this.parsedMonthValues.includes(month);
     const isCalMonthDisabled = !yearAllowed || !monthAllowed;
@@ -1979,7 +1967,7 @@ export class Datetime implements ComponentInterface {
                 class={{
                   'calendar-day-padding': day === null,
                   'calendar-day': true,
-                  'calendar-day-active': isActive && highlightActiveParts,
+                  'calendar-day-active': isActive,
                   'calendar-day-today': isToday,
                 }}
                 aria-selected={ariaSelected}
@@ -2004,7 +1992,7 @@ export class Datetime implements ComponentInterface {
                         day,
                         year,
                       },
-                      isActive && highlightActiveParts
+                      isActive
                     );
                   } else {
                     this.setActiveParts({
@@ -2052,6 +2040,8 @@ export class Datetime implements ComponentInterface {
 
   private renderTimeOverlay() {
     const use24Hour = is24Hour(this.locale, this.hourCycle);
+    const activePart = this.getDefaultPart();
+
     return [
       <div class="time-header">{this.renderTimeLabel()}</div>,
       <button
@@ -2081,7 +2071,7 @@ export class Datetime implements ComponentInterface {
           }
         }}
       >
-        {getLocalizedTime(this.locale, this.activePartsClone as DatetimeParts, use24Hour)}
+        {getLocalizedTime(this.locale, activePart, use24Hour)}
       </button>,
       <ion-popover
         alignment="center"
@@ -2135,7 +2125,7 @@ export class Datetime implements ComponentInterface {
       }
     } else {
       // for exactly 1 day selected (multiple set or not), show a formatted version of that
-      headerText = getMonthAndDay(this.locale, isArray ? activeParts[0] : activeParts);
+      headerText = getMonthAndDay(this.locale, this.getDefaultPart());
     }
 
     return (
