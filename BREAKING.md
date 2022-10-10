@@ -103,8 +103,9 @@ Ionic now listens on the `keydown` event instead of the `keyup` event when deter
   | `$range-ios-knob-width`           | `28px`                                                                                    | `26px`                                                                |
 
 - `ionChange` is no longer emitted when the `value` of `ion-range` is modified externally. `ionChange` is only emitted from user committed changes, such as dragging and releasing the range knob or selecting a new value with the keyboard arrows.
+  - If your application requires immediate feedback based on the user actively dragging the range knob, consider migrating your event listeners to using `ionInput` instead.
 
-- The `debounce` property's value value has changed from `0` to `undefined`. If `debounce` is undefined, the `ionChange` event will fire immediately.
+- The `debounce` property's value value has changed from `0` to `undefined`. If `debounce` is undefined, the `ionInput` event will fire immediately.
 
 <h4 id="version-7x-searchbar">Searchbar</h4>
 
