@@ -82,14 +82,14 @@ test.describe('datetime: values', () => {
     await expect(minuteItems).toHaveText(['00', '15', '30', '45']);
     await expect(minuteItems.nth(1)).toHaveClass(/picker-item-active/);
   });
-  test.only('should adjust default parts month for allowed month values', async ({ page }) => {
+  test('should adjust default parts month for allowed month values', async ({ page }) => {
     /**
      * Mock today's date for testing.
      * Playwright does not support this natively
      * so we extend the native Date interface: https://github.com/microsoft/playwright/issues/6347
      */
     await page.setContent(`
-      <ion-datetime prefer-wheel presentation="date" locale="en-US" month-values="01" hour-values="02" minute-values="0,15,30,45"></ion-datetime>
+      <ion-datetime prefer-wheel="true" presentation="date" locale="en-US" month-values="01" hour-values="02" minute-values="0,15,30,45"></ion-datetime>
 
       <script>
         const mockToday = '2022-10-10T16:22';
@@ -110,5 +110,34 @@ test.describe('datetime: values', () => {
     const monthItems = page.locator('.month-column .picker-item:not(.picker-item-empty)');
     await expect(monthItems).toHaveText(['January']);
     await expect(monthItems.nth(0)).toHaveClass(/picker-item-active/);
+  });
+  test('today date highlight should persist even if disallowed from dayValues', async ({ page }) => {
+    /**
+     * Mock today's date for testing.
+     * Playwright does not support this natively
+     * so we extend the native Date interface: https://github.com/microsoft/playwright/issues/6347
+     */
+    await page.setContent(`
+      <ion-datetime day-values="9" presentation="date" locale="en-US"></ion-datetime>
+
+      <script>
+        const mockToday = '2022-10-10T16:22';
+        Date = class extends Date {
+          constructor(...args) {
+            if (args.length === 0) {
+              super(mockToday)
+            } else {
+              super(...args);
+            }
+          }
+        }
+      </script>
+    `);
+
+    await page.waitForSelector('.datetime-ready');
+
+    const todayButton = page.locator('.calendar-day[data-day="10"][data-month="10"][data-year="2022"]');
+
+    await expect(todayButton).toHaveClass(/calendar-day-today/);
   });
 });
