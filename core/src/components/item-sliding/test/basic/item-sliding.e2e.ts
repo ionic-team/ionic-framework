@@ -25,7 +25,7 @@ test.describe('item-sliding: basic', () => {
 
     await page.goto(`/src/components/item-sliding/test/basic`);
 
-    const itemSlidingEl = page.locator('#two-options');
+    const itemSlidingEl = page.locator('#item2');
     const scrollEl = page.locator('ion-content .inner-scroll');
 
     expect(await scrollEl.evaluate((el: HTMLElement) => el.scrollTop)).toEqual(0);
