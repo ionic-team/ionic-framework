@@ -73,7 +73,7 @@ export namespace Components {
          */
         "requestAccordionToggle": (accordionValue: string | undefined, accordionExpand: boolean) => Promise<void>;
         /**
-          * The value of the accordion group.
+          * The value of the accordion group. This controls which accordions are expanded. This should be an array of strings only when `multiple="true"`
          */
         "value"?: string | string[] | null;
     }
@@ -3814,7 +3814,7 @@ declare namespace LocalJSX {
          */
         "readonly"?: boolean;
         /**
-          * The value of the accordion group.
+          * The value of the accordion group. This controls which accordions are expanded. This should be an array of strings only when `multiple="true"`
          */
         "value"?: string | string[] | null;
     }
