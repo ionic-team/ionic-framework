@@ -8,6 +8,19 @@
   --background: transparent;
 }
 
+// Segment: In Toolbar
+// --------------------------------------------------
+
+:host(.in-toolbar) {
+  /**
+   * Segment should inherit the
+   * height of the toolbar.
+   * Note: --min-height is initially
+   * set on ion-toolbar, not ion-segment
+   */
+  min-height: var(--min-height);
+}
+
 
 // Segment: Scrollable
 // --------------------------------------------------

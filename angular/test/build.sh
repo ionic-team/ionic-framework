@@ -31,3 +31,5 @@ cp -R $FULL_BASE_DIR $BUILD_APP_DIR
 # Then we can copy the specific app which
 # will override any files in the base application.
 cp -R $FULL_APP_DIR $BUILD_APP_DIR
+
+echo "Copied test app files for ${APP_DIR}"

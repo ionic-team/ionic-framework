@@ -287,12 +287,12 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
 
     rootAnimation
       .addElement(enteringEl)
-      .duration(opts.duration || DURATION)
+      .duration((opts.duration ?? 0) || DURATION)
       .easing(opts.easing || EASING)
       .fill('both')
       .beforeRemoveClass('ion-page-invisible');
 
-    if (leavingEl && navEl) {
+    if (leavingEl && navEl !== null && navEl !== undefined) {
       const navDecorAnimation = createAnimation();
       navDecorAnimation.addElement(navEl);
       rootAnimation.addAnimation(navDecorAnimation);

@@ -58,7 +58,9 @@ export class InfiniteScrollContent implements ComponentInterface {
               <ion-spinner name={this.loadingSpinner} />
             </div>
           )}
-          {this.loadingText && <div class="infinite-loading-text" innerHTML={sanitizeDOMString(this.loadingText)} />}
+          {this.loadingText !== undefined && (
+            <div class="infinite-loading-text" innerHTML={sanitizeDOMString(this.loadingText)} />
+          )}
         </div>
       </Host>
     );
