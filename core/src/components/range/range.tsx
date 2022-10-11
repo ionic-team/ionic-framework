@@ -503,6 +503,7 @@ export class Range implements ComponentInterface {
       inheritedAttributes,
       rangeId,
       pinFormatter,
+      value,
     } = this;
 
     /**
@@ -598,6 +599,13 @@ export class Range implements ComponentInterface {
           'range-pressed': pressedKnob !== undefined,
           'range-has-pin': pin,
         })}
+        role="slider"
+        tabindex={disabled ? -1 : 0}
+        aria-label={labelText}
+        aria-valuemin={min}
+        aria-valuemax={max}
+        aria-disabled={disabled ? 'true' : null}
+        aria-valuenow={value}
       >
         <slot name="start"></slot>
         <div class="range-slider" ref={(rangeEl) => (this.rangeSlider = rangeEl)}>
@@ -668,7 +676,7 @@ interface RangeKnob {
 
 const renderKnob = (
   rtl: boolean,
-  { knob, value, ratio, min, max, disabled, pressed, pin, handleKeyboard, labelText, pinFormatter }: RangeKnob
+  { knob, value, ratio, min, max, pressed, pin, handleKeyboard, pinFormatter }: RangeKnob
 ) => {
   const start = rtl ? 'right' : 'left';
 
@@ -705,13 +713,6 @@ const renderKnob = (
         'ion-focusable': true,
       }}
       style={knobStyle()}
-      role="slider"
-      tabindex={disabled ? -1 : 0}
-      aria-label={labelText}
-      aria-valuemin={min}
-      aria-valuemax={max}
-      aria-disabled={disabled ? 'true' : null}
-      aria-valuenow={value}
     >
       {pin && (
         <div class="range-pin" role="presentation" part="pin">
