@@ -5,7 +5,8 @@ import { chevronForward } from 'ionicons/icons';
 import { getIonMode } from '../../global/ionic-global';
 import type { AnimationBuilder, Color, CssClassMap, RouterDirection, StyleEventDetail } from '../../interface';
 import type { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
-import { raf } from '../../utils/helpers';
+import type { Attributes } from '../../utils/helpers';
+import { inheritAttributes, raf } from '../../utils/helpers';
 import { printIonError } from '../../utils/logging';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 import type { InputInputEventDetail } from '../input/input-interface';
@@ -37,6 +38,7 @@ import type { CounterFormatter } from './item-interface';
 export class Item implements ComponentInterface, AnchorInterface, ButtonInterface {
   private labelColorStyles = {};
   private itemStyles = new Map<string, CssClassMap>();
+  private inheritedAriaAttributes: Attributes = {};
 
   @Element() el!: HTMLIonItemElement;
 
@@ -206,6 +208,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
 
   componentDidLoad() {
     raf(() => {
+      this.inheritedAriaAttributes = inheritAttributes(this.el, ['aria-label']);
       this.setMultipleInputs();
       this.focusable = this.isFocusable();
     });
@@ -312,12 +315,14 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
       target,
       routerAnimation,
       routerDirection,
+      inheritedAriaAttributes,
     } = this;
     const childStyles = {} as any;
     const mode = getIonMode(this);
     const clickable = this.isClickable();
     const canActivate = this.canActivate();
     const TagType = clickable ? (href === undefined ? 'button' : 'a') : ('div' as any);
+
     const attrs =
       TagType === 'button'
         ? { type: this.type }
@@ -343,6 +348,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     const ariaDisabled = disabled || childStyles['item-interactive-disabled'] ? 'true' : null;
     const fillValue = fill || 'none';
     const inList = hostContext('ion-list', this.el);
+
     return (
       <Host
         aria-disabled={ariaDisabled}
@@ -365,7 +371,14 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
         }}
         role={inList ? 'listitem' : null}
       >
-        <TagType {...attrs} class="item-native" part="native" disabled={disabled} {...clickFn}>
+        <TagType
+          {...attrs}
+          {...inheritedAriaAttributes}
+          class="item-native"
+          part="native"
+          disabled={disabled}
+          {...clickFn}
+        >
           <slot name="start"></slot>
           <div class="item-inner">
             <div class="input-wrapper">

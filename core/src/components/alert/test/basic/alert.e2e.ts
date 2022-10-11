@@ -54,6 +54,29 @@ test.describe('alert: basic', () => {
     expect(alert).toHaveAttribute('data-testid', 'basic-alert');
   });
 
+  test('should dismiss when async handler resolves', async ({ page, skip }) => {
+    skip.rtl();
+    await page.goto(`/src/components/alert/test/basic`);
+
+    const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+    const ionAlertDidDismiss = await page.spyOnEvent('ionAlertDidDismiss');
+    const ionLoadingDidDismiss = await page.spyOnEvent('ionLoadingDidDismiss');
+
+    const alert = page.locator('ion-alert');
+
+    await page.click('#asyncHandler');
+    await ionAlertDidPresent.next();
+
+    await page.click('.alert-button');
+
+    await expect(alert).toBeVisible();
+
+    await ionLoadingDidDismiss.next();
+    await ionAlertDidDismiss.next();
+
+    await expect(alert).toBeHidden();
+  });
+
   test.describe('should not have visual regressions', () => {
     test('header, subheader, message', async ({ page }) => {
       await testAlert(page, 'basic');

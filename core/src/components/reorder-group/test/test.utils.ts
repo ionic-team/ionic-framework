@@ -13,9 +13,7 @@ export const moveReorderItem = async (
 ) => {
   try {
     const reorderItem =
-      parentSelectors && parentSelectors.length > 0
-        ? await (await queryDeep(page, ...parentSelectors)).$(id)
-        : await page.$(id);
+      parentSelectors.length > 0 ? await (await queryDeep(page, ...parentSelectors)).$(id) : await page.$(id);
 
     if (!reorderItem) {
       throw new Error('Reorder Item is undefined');
