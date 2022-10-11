@@ -72,7 +72,7 @@ const jsSetFocus = async (
      * If we remove the scroll padding now, users will
      * see the page jump.
      */
-    if (enableScrollPadding && contentEl) {
+    if (enableScrollPadding && contentEl !== null) {
       currentPadding += scrollData.scrollAmount;
       setScrollPadding(contentEl, currentPadding);
       setClearScrollPaddingListener(inputEl, contentEl, () => (currentPadding = 0));

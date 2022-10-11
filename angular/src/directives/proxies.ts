@@ -1838,7 +1838,7 @@ has been changed.
 When `clearOnEdit` is enabled, the `ionInput` event will be fired when
 the user clears the textarea by performing a keydown event. 
    */
-  ionInput: EventEmitter<CustomEvent<InputEvent | null>>;
+  ionInput: EventEmitter<CustomEvent<InputEvent>>;
   /**
    * Emitted when the input loses focus. 
    */
