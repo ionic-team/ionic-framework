@@ -11,14 +11,14 @@ test.describe('item-sliding: basic', () => {
     });
 
     // opening animation takes longer than waitForChanges accounts for
-    await page.waitForTimeout(500);
+    await page.waitForTimeout(1000);
     expect(await item.screenshot()).toMatchSnapshot(`item-sliding-start-${page.getSnapshotSettings()}.png`);
 
     await item.evaluate(async (el: HTMLIonItemSlidingElement) => {
       await el.open('end');
     });
 
-    await page.waitForTimeout(500);
+    await page.waitForTimeout(1000);
     expect(await item.screenshot()).toMatchSnapshot(`item-sliding-end-${page.getSnapshotSettings()}.png`);
   });
 
