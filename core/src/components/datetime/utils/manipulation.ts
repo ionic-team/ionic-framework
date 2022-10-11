@@ -422,7 +422,8 @@ const findClosestValue = (reference: number, values: number[]) => {
   let closestValue = values[0];
   let rank = Math.abs(closestValue - reference);
 
-  for (const value of values) {
+  for (let i = 1; i < values.length; i++) {
+    const value = values[i];
     /**
      * This code prioritizes the first
      * closest result. Given two values
@@ -431,7 +432,7 @@ const findClosestValue = (reference: number, values: number[]) => {
      * the two values.
      */
     const valueRank = Math.abs(value - reference);
-    if (rank === undefined || valueRank < rank) {
+    if (valueRank < rank) {
       closestValue = value;
       rank = valueRank;
     }
