@@ -1157,7 +1157,7 @@ export class Datetime implements ComponentInterface {
 
   private processValue = (value?: string | string[] | null) => {
     const hasValue = value !== null && value !== undefined;
-    let valueToProcess = parseDate(value ?? getToday());
+    let valueToProcess = (hasValue) ? parseDate(value) : this.defaultParts;
 
     const { minParts, maxParts, multiple } = this;
     if (!multiple && Array.isArray(value)) {
@@ -1235,7 +1235,6 @@ export class Datetime implements ComponentInterface {
 
     this.processMinParts();
     this.processMaxParts();
-    this.processValue(this.value);
     const hourValues = (this.parsedHourValues = convertToArrayOfNumbers(this.hourValues));
     const minuteValues = (this.parsedMinuteValues = convertToArrayOfNumbers(this.minuteValues));
     const monthValues = (this.parsedMonthValues = convertToArrayOfNumbers(this.monthValues));
@@ -1244,6 +1243,7 @@ export class Datetime implements ComponentInterface {
 
     const todayParts = (this.todayParts = parseDate(getToday()));
     this.defaultParts = getClosestValidDate(todayParts, monthValues, dayValues, yearValues, hourValues, minuteValues);
+    this.processValue(this.value);
 
     this.emitStyle();
   }
