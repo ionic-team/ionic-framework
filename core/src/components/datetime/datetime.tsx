@@ -580,7 +580,7 @@ export class Datetime implements ComponentInterface {
   private setValue = (value?: string | string[] | null) => {
     this.value = value;
     this.ionChange.emit({ value });
-  }
+  };
 
   /**
    * Returns the DatetimePart interface
