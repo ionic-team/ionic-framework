@@ -1,6 +1,7 @@
 import type { DatetimeParts } from '../datetime-interface';
 
 import { getNumDaysInMonth } from './helpers';
+import { parseAmPm } from './parse';
 
 const twoDigit = (val: number | undefined): string => {
   return ('0' + (val !== undefined ? Math.abs(val) : '0')).slice(-2);
@@ -369,6 +370,9 @@ export const validateParts = (parts: DatetimeParts): DatetimeParts => {
  * that also meets the constraints of
  * the *Values params.
  * @param refParts The reference date
+ * @param monthValues The allowed month values
+ * @param dayValues The allowed day (of the month) values
+ * @param yearValues The allowed year values
  * @param hourValues The allowed hour values
  * @param minuteValues The allowed minute values
  */
@@ -381,7 +385,7 @@ export const getClosestValidDate = (
   minuteValues?: number[]
 ) => {
   const { hour, minute, day, month, year } = refParts;
-  const copyParts = { ...refParts };
+  const copyParts = { ...refParts, dayOfWeek: undefined };
 
   if (monthValues !== undefined) {
     copyParts.month = findClosestValue(month, monthValues);
@@ -398,6 +402,7 @@ export const getClosestValidDate = (
 
   if (hour !== undefined && hourValues !== undefined) {
     copyParts.hour = findClosestValue(hour, hourValues);
+    copyParts.ampm = parseAmPm(copyParts.hour);
   }
 
   if (minute !== undefined && minuteValues !== undefined) {
