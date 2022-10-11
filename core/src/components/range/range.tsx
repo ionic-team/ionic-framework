@@ -283,12 +283,12 @@ export class Range implements ComponentInterface {
   }
 
   componentDidLoad() {
+    this.originalIonInput = this.ionInput;
     this.setupGesture();
     this.didLoad = true;
   }
 
   connectedCallback() {
-    this.originalIonInput = this.ionInput;
     this.updateRatio();
     this.debounceChanged();
     this.disabledChanged();
