@@ -216,7 +216,7 @@ export class AccordionGroup implements ComponentInterface {
        * to the array.
        */
       if (multiple) {
-        const groupValue = value || [];
+        const groupValue = value ?? [];
         const processedValue = Array.isArray(groupValue) ? groupValue : [groupValue];
         const valueExists = processedValue.find((v) => v === accordionValue);
         if (valueExists === undefined && accordionValue !== undefined) {
@@ -231,7 +231,7 @@ export class AccordionGroup implements ComponentInterface {
        * out of the values array or unset the value.
        */
       if (multiple) {
-        const groupValue = value || [];
+        const groupValue = value ?? [];
         const processedValue = Array.isArray(groupValue) ? groupValue : [groupValue];
         this.setValue(processedValue.filter((v) => v !== accordionValue));
       } else {

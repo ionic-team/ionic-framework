@@ -1,9 +1,11 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Host, Prop, h } from '@stencil/core';
+import { Element, Component, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { AnimationBuilder, Color, Mode, RouterDirection } from '../../interface';
 import type { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
+import type { Attributes } from '../../utils/helpers';
+import { inheritAttributes } from '../../utils/helpers';
 import { createColorClasses, openURL } from '../../utils/theme';
 
 /**
@@ -20,6 +22,9 @@ import { createColorClasses, openURL } from '../../utils/theme';
   shadow: true,
 })
 export class Card implements ComponentInterface, AnchorInterface, ButtonInterface {
+  private inheritedAriaAttributes: Attributes = {};
+
+  @Element() el!: HTMLElement;
   /**
    * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
@@ -81,6 +86,10 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
    */
   @Prop() target: string | undefined;
 
+  componentWillLoad() {
+    this.inheritedAriaAttributes = inheritAttributes(this.el, ['aria-label']);
+  }
+
   private isClickable(): boolean {
     return this.href !== undefined || this.button;
   }
@@ -91,7 +100,7 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
     if (!clickable) {
       return [<slot></slot>];
     }
-    const { href, routerAnimation, routerDirection } = this;
+    const { href, routerAnimation, routerDirection, inheritedAriaAttributes } = this;
     const TagType = clickable ? (href === undefined ? 'button' : 'a') : ('div' as any);
     const attrs =
       TagType === 'button'
@@ -106,6 +115,7 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
     return (
       <TagType
         {...attrs}
+        {...inheritedAriaAttributes}
         class="card-native"
         part="native"
         disabled={this.disabled}

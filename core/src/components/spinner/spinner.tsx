@@ -50,7 +50,7 @@ export class Spinner implements ComponentInterface {
     const self = this;
     const mode = getIonMode(self);
     const spinnerName = self.getName();
-    const spinner = SPINNERS[spinnerName] || SPINNERS['lines'];
+    const spinner = SPINNERS[spinnerName] ?? SPINNERS['lines'];
     const duration = typeof self.duration === 'number' && self.duration > 10 ? self.duration : spinner.dur;
     const svgs: any[] = [];
 
