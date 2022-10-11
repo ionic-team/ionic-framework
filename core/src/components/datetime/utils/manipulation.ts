@@ -363,3 +363,15 @@ export const validateParts = (parts: DatetimeParts): DatetimeParts => {
 
   return partsCopy;
 };
+
+/**
+ * Returns the closest date to refParts
+ * that also meets the constraints of
+ * the *Values params.
+ */
+export const getClosestValidDate = (
+  refParts: DatetimeParts
+) => {
+
+  return refParts;
+}
