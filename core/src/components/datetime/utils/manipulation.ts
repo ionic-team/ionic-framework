@@ -417,6 +417,10 @@ export const getClosestValidDate = (
  * numerically closest to "reference".
  * This function assumes that "values" is
  * already sorted in ascending order.
+ * @param reference The reference number to use
+ * when finding the closest value
+ * @param values The allowed values that will be
+ * searched to find the closest value to "reference"
  */
 const findClosestValue = (reference: number, values: number[]) => {
   let closestValue = values[0];
