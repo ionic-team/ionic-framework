@@ -560,9 +560,9 @@ export class Datetime implements ComponentInterface {
    * may not be set. This function works
    * by returning the first selected date in
    * "activePartsClone" and then falling back to
-   * today's DatetimeParts if no active date is selected.
+   * defaultParts if no active date is selected.
    */
-  private getDefaultPart = () => {
+  private getActivePartsWithFallback = () => {
     const { activePartsClone, defaultParts } = this;
 
     const firstPart = Array.isArray(activePartsClone) ? activePartsClone[0] : activePartsClone;
@@ -1742,7 +1742,7 @@ export class Datetime implements ComponentInterface {
     const { workingParts } = this;
     if (hoursData.length === 0) return [];
 
-    const activePart = this.getDefaultPart();
+    const activePart = this.getActivePartsWithFallback();
 
     return (
       <ion-picker-column-internal
@@ -1772,7 +1772,7 @@ export class Datetime implements ComponentInterface {
     const { workingParts } = this;
     if (minutesData.length === 0) return [];
 
-    const activePart = this.getDefaultPart();
+    const activePart = this.getActivePartsWithFallback();
 
     return (
       <ion-picker-column-internal
@@ -1804,7 +1804,7 @@ export class Datetime implements ComponentInterface {
       return [];
     }
 
-    const activePart = this.getDefaultPart();
+    const activePart = this.getActivePartsWithFallback();
     const isDayPeriodRTL = isLocaleDayPeriodRTL(this.locale);
 
     return (
@@ -2048,7 +2048,7 @@ export class Datetime implements ComponentInterface {
 
   private renderTimeOverlay() {
     const use24Hour = is24Hour(this.locale, this.hourCycle);
-    const activePart = this.getDefaultPart();
+    const activePart = this.getActivePartsWithFallback();
 
     return [
       <div class="time-header">{this.renderTimeLabel()}</div>,
@@ -2133,7 +2133,7 @@ export class Datetime implements ComponentInterface {
       }
     } else {
       // for exactly 1 day selected (multiple set or not), show a formatted version of that
-      headerText = getMonthAndDay(this.locale, this.getDefaultPart());
+      headerText = getMonthAndDay(this.locale, this.getActivePartsWithFallback());
     }
 
     return (
