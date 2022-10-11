@@ -2106,16 +2106,13 @@ export class Datetime implements ComponentInterface {
       </ion-popover>,
     ];
   }
-  private renderCalendarViewHeader() {
-    const hasSlottedTitle = this.el.querySelector('[slot="title"]') !== null;
-    if (!hasSlottedTitle && !this.showDefaultTitle) {
-      return;
-    }
 
+  private getHeaderSelectedDateText() {
     const { activeParts, titleSelectedDatesFormatter } = this;
     const isArray = Array.isArray(activeParts);
 
     let headerText: string;
+
     if (isArray && activeParts.length !== 1) {
       headerText = `${activeParts.length} days`; // default/fallback for multiple selection
       if (titleSelectedDatesFormatter !== undefined) {
@@ -2130,12 +2127,21 @@ export class Datetime implements ComponentInterface {
       headerText = getMonthAndDay(this.locale, this.getDefaultPart());
     }
 
+    return headerText;
+  }
+
+  private renderCalendarViewHeader(showExpandedHeader = true) {
+    const hasSlottedTitle = this.el.querySelector('[slot="title"]') !== null;
+    if (!hasSlottedTitle && !this.showDefaultTitle) {
+      return;
+    }
+
     return (
       <div class="datetime-header">
         <div class="datetime-title">
           <slot name="title">Select Date</slot>
         </div>
-        <div class="datetime-selected-date">{headerText}</div>
+        { showExpandedHeader && <div class="datetime-selected-date">{this.getHeaderSelectedDateText()}</div> }
       </div>
     );
   }
@@ -2182,7 +2188,7 @@ export class Datetime implements ComponentInterface {
      */
     const hasWheelVariant = presentation === 'date' || presentation === 'date-time' || presentation === 'time-date';
     if (preferWheel && hasWheelVariant) {
-      return [this.renderWheelView(), this.renderFooter()];
+      return [this.renderCalendarViewHeader(false), this.renderWheelView(), this.renderFooter()];
     }
 
     switch (presentation) {
