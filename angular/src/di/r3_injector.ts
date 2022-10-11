@@ -30,5 +30,5 @@ export abstract class EnvironmentInjector implements Injector {
   /**
    * @internal
    */
-  abstract onDestroy(callback: () => void): void;
+  abstract onDestroy?(callback: () => void): void;
 }

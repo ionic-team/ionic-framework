@@ -10,6 +10,7 @@ import type {
   DatetimeParts,
   Mode,
   StyleEventDetail,
+  TitleSelectedDatesFormatter,
 } from '../../interface';
 import { startFocusVisible } from '../../utils/focus-visible';
 import { getElementRoot, raf, renderHiddenInput } from '../../utils/helpers';
@@ -18,7 +19,7 @@ import { isRTL } from '../../utils/rtl';
 import { createColorClasses } from '../../utils/theme';
 import type { PickerColumnItem } from '../picker-column-internal/picker-column-internal-interfaces';
 
-import { isSameDay, warnIfValueOutOfBounds } from './utils/comparison';
+import { isSameDay, warnIfValueOutOfBounds, isBefore, isAfter } from './utils/comparison';
 import {
   generateMonths,
   getDaysOfMonth,
@@ -31,7 +32,7 @@ import {
   getCombinedDateColumnData,
 } from './utils/data';
 import { formatValue, getLocalizedTime, getMonthAndDay, getMonthAndYear } from './utils/format';
-import { is24Hour, isLocaleDayPeriodRTL, isMonthFirstLocale } from './utils/helpers';
+import { is24Hour, isLocaleDayPeriodRTL, isMonthFirstLocale, getNumDaysInMonth } from './utils/helpers';
 import {
   calculateHourFromAMPM,
   convertDataToISO,
@@ -84,17 +85,6 @@ export class Datetime implements ComponentInterface {
   private calendarBodyRef?: HTMLElement;
   private popoverRef?: HTMLIonPopoverElement;
   private clearFocusVisible?: () => void;
-
-  /**
-   * Whether to highlight the active day with a solid circle (as opposed
-   * to the outline circle around today). If you don't specify an initial
-   * value for the datetime, it doesn't automatically init to a default to
-   * avoid unwanted change events firing. If the solid circle were still
-   * shown then, it would look like a date had already been selected, which
-   * is misleading UX.
-   */
-  private highlightActiveParts = false;
-
   private parsedMinuteValues?: number[];
   private parsedHourValues?: number[];
   private parsedMonthValues?: number[];
@@ -114,18 +104,11 @@ export class Datetime implements ComponentInterface {
    * Duplicate reference to `activeParts` that does not trigger a re-render of the component.
    * Allows caching an instance of the `activeParts` in between render cycles.
    */
-  private activePartsClone!: DatetimeParts | DatetimeParts[];
+  private activePartsClone: DatetimeParts | DatetimeParts[] = [];
 
   @State() showMonthAndYear = false;
 
-  @State() activeParts: DatetimeParts | DatetimeParts[] = {
-    month: 5,
-    day: 28,
-    year: 2021,
-    hour: 13,
-    minute: 52,
-    ampm: 'pm',
-  };
+  @State() activeParts: DatetimeParts | DatetimeParts[] = [];
 
   @State() workingParts: DatetimeParts = {
     month: 5,
@@ -323,6 +306,14 @@ export class Datetime implements ComponentInterface {
   @Prop() firstDayOfWeek = 0;
 
   /**
+   * A callback used to format the header text that shows how many
+   * dates are selected. Only used if there are 0 or more than 1
+   * selected (i.e. unused for exactly 1). By default, the header
+   * text is set to "numberOfDates days".
+   */
+  @Prop() titleSelectedDatesFormatter?: TitleSelectedDatesFormatter;
+
+  /**
    * If `true`, multiple dates can be selected at once. Only
    * applies to `presentation="date"` and `preferWheel="false"`.
    */
@@ -394,9 +385,8 @@ export class Datetime implements ComponentInterface {
 
   /**
    * If `true`, a header will be shown above the calendar
-   * picker. On `ios` mode this will include the
-   * slotted title, and on `md` mode this will include
-   * the slotted title and the selected date.
+   * picker. This will include both the slotted title, and
+   * the selected date.
    */
   @Prop() showDefaultTitle = false;
 
@@ -503,16 +493,12 @@ export class Datetime implements ComponentInterface {
    */
   @Method()
   async confirm(closeOverlay = false) {
-    const { highlightActiveParts, isCalendarPicker, activeParts } = this;
+    const { isCalendarPicker, activeParts } = this;
 
     /**
-     * We only update the value if the presentation is not a calendar picker,
-     * or if `highlightActiveParts` is true; indicating that the user
-     * has selected a date from the calendar picker.
-     *
-     * Otherwise "today" would accidentally be set as the value.
+     * We only update the value if the presentation is not a calendar picker.
      */
-    if (highlightActiveParts || !isCalendarPicker) {
+    if (activeParts !== undefined || !isCalendarPicker) {
       const activePartsIsArray = Array.isArray(activeParts);
       if (activePartsIsArray && activeParts.length === 0) {
         this.setValue(undefined);
@@ -594,6 +580,23 @@ export class Datetime implements ComponentInterface {
   private setValue = (value?: string | string[] | null) => {
     this.value = value;
     this.ionChange.emit({ value });
+  }
+
+  /**
+   * Returns the DatetimePart interface
+   * to use when rendering an initial set of
+   * data. This should be used when rendering an
+   * interface in an environment where the `value`
+   * may not be set. This function works
+   * by returning the first selected date in
+   * "activePartsClone" and then falling back to
+   * today's DatetimeParts if no active date is selected.
+   */
+  private getDefaultPart = () => {
+    const { activePartsClone, todayParts } = this;
+
+    const firstPart = Array.isArray(activePartsClone) ? activePartsClone[0] : activePartsClone;
+    return firstPart ?? todayParts;
   };
 
   private closeParentOverlay = () => {
@@ -613,7 +616,7 @@ export class Datetime implements ComponentInterface {
   };
 
   private setActiveParts = (parts: DatetimeParts, removeDate = false) => {
-    const { multiple, activePartsClone, highlightActiveParts } = this;
+    const { multiple, activePartsClone } = this;
 
     /**
      * When setting the active parts, it is possible
@@ -641,33 +644,14 @@ export class Datetime implements ComponentInterface {
       const activePartsArray = Array.isArray(activePartsClone) ? activePartsClone : [activePartsClone];
       if (removeDate) {
         this.activeParts = activePartsArray.filter((p) => !isSameDay(p, validatedParts));
-      } else if (highlightActiveParts) {
-        this.activeParts = [...activePartsArray, validatedParts];
       } else {
-        /**
-         * If highlightActiveParts is false, that means we just have a
-         * default value of today in activeParts; we need to replace that
-         * rather than adding to it since it's just a placeholder.
-         */
-        this.activeParts = [validatedParts];
+        this.activeParts = [...activePartsArray, validatedParts];
       }
     } else {
       this.activeParts = {
         ...validatedParts,
       };
     }
-
-    /**
-     * Now that the user has interacted somehow to select something, we can
-     * show the solid highlight. This needs to be done after checking it above,
-     * but before the confirm call below.
-     *
-     * Note that for datetimes with confirm/cancel buttons, the value
-     * isn't updated until you call confirm(). We need to bring the
-     * solid circle back on day click for UX reasons, rather than only
-     * show the circle if `value` is truthy.
-     */
-    this.highlightActiveParts = true;
 
     const hasSlottedButtons = this.el.querySelector('[slot="buttons"]') !== null;
     if (hasSlottedButtons || this.showDefaultButtons) {
@@ -1201,9 +1185,8 @@ export class Datetime implements ComponentInterface {
   }
 
   private processValue = (value?: string | string[] | null) => {
-    const hasValue = !!value;
-    this.highlightActiveParts = hasValue;
-    const valueToProcess = parseDate(value || getToday());
+    const hasValue = value !== null && value !== undefined;
+    const valueToProcess = parseDate(value ?? getToday());
 
     const { minParts, maxParts } = this;
 
@@ -1241,18 +1224,26 @@ export class Datetime implements ComponentInterface {
       ampm,
     });
 
-    if (Array.isArray(valueToProcess)) {
-      this.activeParts = [...valueToProcess];
-    } else {
-      this.activeParts = {
-        month,
-        day,
-        year,
-        hour,
-        minute,
-        tzOffset,
-        ampm,
-      };
+    /**
+     * Since `activeParts` indicates a value that
+     * been explicitly selected either by the
+     * user or the app, only update `activeParts`
+     * if the `value` property is set.
+     */
+    if (hasValue) {
+      if (Array.isArray(valueToProcess)) {
+        this.activeParts = [...valueToProcess];
+      } else {
+        this.activeParts = {
+          month,
+          day,
+          year,
+          hour,
+          minute,
+          tzOffset,
+          ampm,
+        };
+      }
     }
   };
 
@@ -1438,23 +1429,24 @@ export class Datetime implements ComponentInterface {
      * Previous month, current month, and next month
      */
     const monthsToRender = generateMonths(workingParts);
+    const lastMonth = monthsToRender[monthsToRender.length - 1];
 
     /**
-     * generateMonths returns the day data as well,
-     * but we do not want the day value to act as a max/min
-     * on the data we are going to generate.
+     * Ensure that users can select the entire window of dates.
      */
-    for (let i = 0; i <= monthsToRender.length - 1; i++) {
-      monthsToRender[i].day = null;
-    }
+    monthsToRender[0].day = 1;
+    lastMonth.day = getNumDaysInMonth(lastMonth.month, lastMonth.year);
 
     /**
-     * If developers have provided their own
-     * min/max values, use that instead. Otherwise,
-     * fallback to the default range of 3 months.
+     * Narrow the dates rendered based on min/max dates (if any).
+     * The `min` date is used if the min is after the generated min month.
+     * The `max` date is used if the max is before the generated max month.
+     * This ensures that the sliding window always stays at 3 months
+     * but still allows future dates to be lazily rendered based on any min/max
+     * constraints.
      */
-    const min = minParts || monthsToRender[0];
-    const max = maxParts || monthsToRender[monthsToRender.length - 1];
+    const min = minParts !== undefined && isAfter(minParts, monthsToRender[0]) ? minParts : monthsToRender[0];
+    const max = maxParts !== undefined && isBefore(maxParts, lastMonth) ? maxParts : lastMonth;
 
     const result = getCombinedDateColumnData(
       locale,
@@ -1464,6 +1456,7 @@ export class Datetime implements ComponentInterface {
       this.parsedDayValues,
       this.parsedMonthValues
     );
+
     let items = result.items;
     const parts = result.parts;
 
@@ -1497,9 +1490,10 @@ export class Datetime implements ComponentInterface {
      * If we have selected a day already, then default the column
      * to that value. Otherwise, default it to today.
      */
-    const todayString = workingParts.day
-      ? `${workingParts.year}-${workingParts.month}-${workingParts.day}`
-      : `${todayParts.year}-${todayParts.month}-${todayParts.day}`;
+    const todayString =
+      workingParts.day !== null
+        ? `${workingParts.year}-${workingParts.month}-${workingParts.day}`
+        : `${todayParts.year}-${todayParts.month}-${todayParts.day}`;
 
     return (
       <ion-picker-column-internal
@@ -1625,7 +1619,7 @@ export class Datetime implements ComponentInterface {
         class="day-column"
         color={this.color}
         items={days}
-        value={(workingParts.day || this.todayParts.day) ?? undefined}
+        value={(workingParts.day !== null ? workingParts.day : this.todayParts.day) ?? undefined}
         onIonChange={(ev: CustomEvent) => {
           // TODO(FW-1823) Remove this when iOS 14 support is dropped.
           // Due to a Safari 14 issue we need to destroy
@@ -1748,12 +1742,14 @@ export class Datetime implements ComponentInterface {
       return [];
     }
 
+    const valueIsDefined = this.value !== null && this.value !== undefined;
+
     const { hoursData, minutesData, dayPeriodData } = getTimeColumnsData(
       this.locale,
       this.workingParts,
       this.hourCycle,
-      this.value ? this.minParts : undefined,
-      this.value ? this.maxParts : undefined,
+      valueIsDefined ? this.minParts : undefined,
+      valueIsDefined ? this.maxParts : undefined,
       this.parsedHourValues,
       this.parsedMinuteValues
     );
@@ -1766,13 +1762,15 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderHourPickerColumn(hoursData: PickerColumnItem[]) {
-    const { workingParts, activePartsClone } = this;
+    const { workingParts } = this;
     if (hoursData.length === 0) return [];
+
+    const activePart = this.getDefaultPart();
 
     return (
       <ion-picker-column-internal
         color={this.color}
-        value={(activePartsClone as DatetimeParts).hour}
+        value={activePart.hour}
         items={hoursData}
         numericInput
         onIonChange={(ev: CustomEvent) => {
@@ -1781,9 +1779,9 @@ export class Datetime implements ComponentInterface {
             hour: ev.detail.value,
           });
 
-          if (!Array.isArray(activePartsClone)) {
+          if (!Array.isArray(activePart)) {
             this.setActiveParts({
-              ...activePartsClone,
+              ...activePart,
               hour: ev.detail.value,
             });
           }
@@ -1794,13 +1792,15 @@ export class Datetime implements ComponentInterface {
     );
   }
   private renderMinutePickerColumn(minutesData: PickerColumnItem[]) {
-    const { workingParts, activePartsClone } = this;
+    const { workingParts } = this;
     if (minutesData.length === 0) return [];
+
+    const activePart = this.getDefaultPart();
 
     return (
       <ion-picker-column-internal
         color={this.color}
-        value={(activePartsClone as DatetimeParts).minute}
+        value={activePart.minute}
         items={minutesData}
         numericInput
         onIonChange={(ev: CustomEvent) => {
@@ -1809,9 +1809,9 @@ export class Datetime implements ComponentInterface {
             minute: ev.detail.value,
           });
 
-          if (!Array.isArray(activePartsClone)) {
+          if (!Array.isArray(activePart)) {
             this.setActiveParts({
-              ...activePartsClone,
+              ...activePart,
               minute: ev.detail.value,
             });
           }
@@ -1822,18 +1822,19 @@ export class Datetime implements ComponentInterface {
     );
   }
   private renderDayPeriodPickerColumn(dayPeriodData: PickerColumnItem[]) {
-    const { workingParts, activePartsClone } = this;
+    const { workingParts } = this;
     if (dayPeriodData.length === 0) {
       return [];
     }
 
+    const activePart = this.getDefaultPart();
     const isDayPeriodRTL = isLocaleDayPeriodRTL(this.locale);
 
     return (
       <ion-picker-column-internal
         style={isDayPeriodRTL ? { order: '-1' } : {}}
         color={this.color}
-        value={(activePartsClone as DatetimeParts).ampm}
+        value={activePart.ampm}
         items={dayPeriodData}
         onIonChange={(ev: CustomEvent) => {
           const hour = calculateHourFromAMPM(workingParts, ev.detail.value);
@@ -1844,9 +1845,9 @@ export class Datetime implements ComponentInterface {
             hour,
           });
 
-          if (!Array.isArray(activePartsClone)) {
+          if (!Array.isArray(activePart)) {
             this.setActiveParts({
-              ...activePartsClone,
+              ...activePart,
               ampm: ev.detail.value,
               hour,
             });
@@ -1920,7 +1921,6 @@ export class Datetime implements ComponentInterface {
     );
   }
   private renderMonth(month: number, year: number) {
-    const { highlightActiveParts } = this;
     const yearAllowed = this.parsedYearValues === undefined || this.parsedYearValues.includes(year);
     const monthAllowed = this.parsedMonthValues === undefined || this.parsedMonthValues.includes(month);
     const isCalMonthDisabled = !yearAllowed || !monthAllowed;
@@ -1998,7 +1998,7 @@ export class Datetime implements ComponentInterface {
                 class={{
                   'calendar-day-padding': day === null,
                   'calendar-day': true,
-                  'calendar-day-active': isActive && highlightActiveParts,
+                  'calendar-day-active': isActive,
                   'calendar-day-today': isToday,
                 }}
                 aria-selected={ariaSelected}
@@ -2023,7 +2023,7 @@ export class Datetime implements ComponentInterface {
                         day,
                         year,
                       },
-                      isActive && highlightActiveParts
+                      isActive
                     );
                   } else {
                     this.setActiveParts({
@@ -2071,6 +2071,8 @@ export class Datetime implements ComponentInterface {
 
   private renderTimeOverlay() {
     const use24Hour = is24Hour(this.locale, this.hourCycle);
+    const activePart = this.getDefaultPart();
+
     return [
       <div class="time-header">{this.renderTimeLabel()}</div>,
       <button
@@ -2100,7 +2102,7 @@ export class Datetime implements ComponentInterface {
           }
         }}
       >
-        {getLocalizedTime(this.locale, this.activePartsClone as DatetimeParts, use24Hour)}
+        {getLocalizedTime(this.locale, activePart, use24Hour)}
       </button>,
       <ion-popover
         alignment="center"
@@ -2133,10 +2135,28 @@ export class Datetime implements ComponentInterface {
       </ion-popover>,
     ];
   }
-  private renderCalendarViewHeader(mode: Mode) {
+  private renderCalendarViewHeader() {
     const hasSlottedTitle = this.el.querySelector('[slot="title"]') !== null;
     if (!hasSlottedTitle && !this.showDefaultTitle) {
       return;
+    }
+
+    const { activeParts, titleSelectedDatesFormatter } = this;
+    const isArray = Array.isArray(activeParts);
+
+    let headerText: string;
+    if (isArray && activeParts.length !== 1) {
+      headerText = `${activeParts.length} days`; // default/fallback for multiple selection
+      if (titleSelectedDatesFormatter !== undefined) {
+        try {
+          headerText = titleSelectedDatesFormatter(convertDataToISO(activeParts));
+        } catch (e) {
+          printIonError('Exception in provided `titleSelectedDatesFormatter`: ', e);
+        }
+      }
+    } else {
+      // for exactly 1 day selected (multiple set or not), show a formatted version of that
+      headerText = getMonthAndDay(this.locale, this.getDefaultPart());
     }
 
     return (
@@ -2144,9 +2164,7 @@ export class Datetime implements ComponentInterface {
         <div class="datetime-title">
           <slot name="title">Select Date</slot>
         </div>
-        {mode === 'md' && !this.multiple && (
-          <div class="datetime-selected-date">{getMonthAndDay(this.locale, this.activeParts as DatetimeParts)}</div>
-        )}
+        <div class="datetime-selected-date">{headerText}</div>
       </div>
     );
   }
@@ -2199,7 +2217,7 @@ export class Datetime implements ComponentInterface {
     switch (presentation) {
       case 'date-time':
         return [
-          this.renderCalendarViewHeader(mode),
+          this.renderCalendarViewHeader(),
           this.renderCalendar(mode),
           this.renderCalendarViewMonthYearPicker(),
           this.renderTime(),
@@ -2207,7 +2225,7 @@ export class Datetime implements ComponentInterface {
         ];
       case 'time-date':
         return [
-          this.renderCalendarViewHeader(mode),
+          this.renderCalendarViewHeader(),
           this.renderTime(),
           this.renderCalendar(mode),
           this.renderCalendarViewMonthYearPicker(),
@@ -2221,7 +2239,7 @@ export class Datetime implements ComponentInterface {
         return [this.renderWheelView(), this.renderFooter()];
       default:
         return [
-          this.renderCalendarViewHeader(mode),
+          this.renderCalendarViewHeader(),
           this.renderCalendar(mode),
           this.renderCalendarViewMonthYearPicker(),
           this.renderFooter(),

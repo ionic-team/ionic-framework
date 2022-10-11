@@ -2,9 +2,9 @@ import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, State, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { Color, DatetimePresentation, DatetimeParts } from '../../interface';
+import type { Color, DatetimePresentation } from '../../interface';
 import { componentOnReady, addEventListener } from '../../utils/helpers';
-import { printIonError, printIonWarning } from '../../utils/logging';
+import { printIonError } from '../../utils/logging';
 import { createColorClasses } from '../../utils/theme';
 import { getToday } from '../datetime/utils/data';
 import { getMonthAndYear, getMonthDayAndYear, getLocalizedDateTime, getLocalizedTime } from '../datetime/utils/format';
@@ -154,6 +154,24 @@ export class DatetimeButton implements ComponentInterface {
   }
 
   /**
+   * Accepts one or more string values and converts
+   * them to DatetimeParts. This is done so datetime-button
+   * can work with an array internally and not need
+   * to keep checking if the datetime value is `string` or `string[]`.
+   */
+  private getParsedDateValues = (value?: string[] | string | null): string[] => {
+    if (value === undefined || value === null) {
+      return [];
+    }
+
+    if (Array.isArray(value)) {
+      return value;
+    }
+
+    return [value];
+  };
+
+  /**
    * Check the value property on the linked
    * ion-datetime and then format it according
    * to the locale specified on ion-datetime.
@@ -165,36 +183,38 @@ export class DatetimeButton implements ComponentInterface {
       return;
     }
 
-    const { value, locale, hourCycle, preferWheel, multiple } = datetimeEl;
+    const { value, locale, hourCycle, preferWheel, multiple, titleSelectedDatesFormatter } = datetimeEl;
 
-    if (multiple) {
-      printIonWarning(
-        `Multi-date selection cannot be used with ion-datetime-button.
-
-Please upvote https://github.com/ionic-team/ionic-framework/issues/25668 if you are interested in seeing this functionality added.
-      `,
-        this.el
-      );
-      return;
-    }
+    const parsedValues = this.getParsedDateValues(value);
 
     /**
      * Both ion-datetime and ion-datetime-button default
      * to today's date and time if no value is set.
      */
-    const parsedDatetime = parseDate(value || getToday()) as DatetimeParts;
+    const parsedDatetimes = parseDate(parsedValues.length > 0 ? parsedValues : [getToday()]);
+
+    /**
+     * If developers incorrectly use multiple="true"
+     * with non "date" datetimes, then just select
+     * the first value so the interface does
+     * not appear broken. Datetime will provide a
+     * warning in the console.
+     */
+    const firstParsedDatetime = parsedDatetimes[0];
     const use24Hour = is24Hour(locale, hourCycle);
 
     // TODO(FW-1865) - Remove once FW-1831 is fixed.
-    parsedDatetime.tzOffset = undefined;
+    parsedDatetimes.forEach((parsedDatetime) => {
+      parsedDatetime.tzOffset = undefined;
+    });
 
     this.dateText = this.timeText = undefined;
 
     switch (datetimePresentation) {
       case 'date-time':
       case 'time-date':
-        const dateText = getMonthDayAndYear(locale, parsedDatetime);
-        const timeText = getLocalizedTime(locale, parsedDatetime, use24Hour);
+        const dateText = getMonthDayAndYear(locale, firstParsedDatetime);
+        const timeText = getLocalizedTime(locale, firstParsedDatetime, use24Hour);
         if (preferWheel) {
           this.dateText = `${dateText} ${timeText}`;
         } else {
@@ -203,19 +223,31 @@ Please upvote https://github.com/ionic-team/ionic-framework/issues/25668 if you 
         }
         break;
       case 'date':
-        this.dateText = getMonthDayAndYear(locale, parsedDatetime);
+        if (multiple && parsedValues.length !== 1) {
+          let headerText = `${parsedValues.length} days`; // default/fallback for multiple selection
+          if (titleSelectedDatesFormatter !== undefined) {
+            try {
+              headerText = titleSelectedDatesFormatter(parsedValues);
+            } catch (e) {
+              printIonError('Exception in provided `titleSelectedDatesFormatter`: ', e);
+            }
+          }
+          this.dateText = headerText;
+        } else {
+          this.dateText = getMonthDayAndYear(locale, firstParsedDatetime);
+        }
         break;
       case 'time':
-        this.timeText = getLocalizedTime(locale, parsedDatetime, use24Hour);
+        this.timeText = getLocalizedTime(locale, firstParsedDatetime, use24Hour);
         break;
       case 'month-year':
-        this.dateText = getMonthAndYear(locale, parsedDatetime);
+        this.dateText = getMonthAndYear(locale, firstParsedDatetime);
         break;
       case 'month':
-        this.dateText = getLocalizedDateTime(locale, parsedDatetime, { month: 'long' });
+        this.dateText = getLocalizedDateTime(locale, firstParsedDatetime, { month: 'long' });
         break;
       case 'year':
-        this.dateText = getLocalizedDateTime(locale, parsedDatetime, { year: 'numeric' });
+        this.dateText = getLocalizedDateTime(locale, firstParsedDatetime, { year: 'numeric' });
         break;
     }
   };
