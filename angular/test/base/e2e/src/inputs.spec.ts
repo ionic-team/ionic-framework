@@ -44,7 +44,8 @@ describe('Inputs', () => {
     cy.get('ion-input').eq(0).type('hola');
     cy.get('ion-input input').eq(0).blur();
 
-    cy.get('ion-datetime').invoke('prop', 'value', '1996-03-15');
+    // Set date to 1994-03-14
+    cy.get('ion-datetime').first().shadow().find('.calendar-day:not([disabled])').first().click();
 
     cy.get('ion-select#game-console').click();
     cy.get('ion-alert').should('exist').should('be.visible');
@@ -58,7 +59,7 @@ describe('Inputs', () => {
     cy.get('#checkbox-note').should('have.text', 'true');
     cy.get('#toggle-note').should('have.text', 'true');
     cy.get('#input-note').should('have.text', 'hola');
-    cy.get('#datetime-note').should('have.text', '1996-03-15');
+    cy.get('#datetime-note').should('have.text', '1994-03-14');
     cy.get('#select-note').should('have.text', 'ps');
     cy.get('#range-note').should('have.text', '20');
   });

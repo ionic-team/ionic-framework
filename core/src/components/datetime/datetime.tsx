@@ -321,7 +321,7 @@ export class Datetime implements ComponentInterface {
 
   /**
    * The value of the datetime as a valid ISO 8601 datetime string.
-   * Should be an array of strings if `multiple="true"`.
+   * This should be an array of strings only when `multiple="true"`.
    */
   @Prop({ mutable: true }) value?: string | string[] | null;
 
@@ -330,13 +330,10 @@ export class Datetime implements ComponentInterface {
    */
   @Watch('value')
   protected valueChanged() {
-    const { value, minParts, maxParts, workingParts, multiple } = this;
+    const { value, minParts, maxParts, workingParts } = this;
 
     if (this.hasValue()) {
-      if (!multiple && Array.isArray(value)) {
-        this.value = value[0];
-        return; // setting this.value will trigger re-run of this function
-      }
+      this.warnIfIncorrectValueUsage();
 
       /**
        * Clones the value of the `activeParts` to the private clone, to update
@@ -383,7 +380,7 @@ export class Datetime implements ComponentInterface {
     }
 
     this.emitStyle();
-    this.ionChange.emit({ value });
+    this.ionValueChange.emit({ value });
   }
 
   /**
@@ -460,6 +457,14 @@ export class Datetime implements ComponentInterface {
   @Event() ionChange!: EventEmitter<DatetimeChangeEventDetail>;
 
   /**
+   * Emitted when the value property has changed.
+   * This is used to ensure that ion-datetime-button can respond
+   * to any value property changes.
+   * @internal
+   */
+  @Event() ionValueChange!: EventEmitter<DatetimeChangeEventDetail>;
+
+  /**
    * Emitted when the datetime has focus.
    */
   @Event() ionFocus!: EventEmitter<void>;
@@ -496,7 +501,7 @@ export class Datetime implements ComponentInterface {
     if (activeParts !== undefined || !isCalendarPicker) {
       const activePartsIsArray = Array.isArray(activeParts);
       if (activePartsIsArray && activeParts.length === 0) {
-        this.value = undefined;
+        this.setValue(undefined);
       } else {
         /**
          * Prevent convertDataToISO from doing any
@@ -517,7 +522,7 @@ export class Datetime implements ComponentInterface {
           activeParts.tzOffset = date.getTimezoneOffset() * -1;
         }
 
-        this.value = convertDataToISO(activeParts);
+        this.setValue(convertDataToISO(activeParts));
       }
     }
 
@@ -550,6 +555,32 @@ export class Datetime implements ComponentInterface {
       this.closeParentOverlay();
     }
   }
+
+  private warnIfIncorrectValueUsage = () => {
+    const { multiple, value } = this;
+    if (!multiple && Array.isArray(value)) {
+      /**
+       * We do some processing on the `value` array so
+       * that it looks more like an array when logged to
+       * the console.
+       * Example given ['a', 'b']
+       * Default toString() behavior: a,b
+       * Custom behavior: ['a', 'b']
+       */
+      printIonWarning(
+        `ion-datetime was passed an array of values, but multiple="false". This is incorrect usage and may result in unexpected behaviors. To dismiss this warning, pass a string to the "value" property when multiple="false".
+
+  Value Passed: [${value.map((v) => `'${v}'`).join(', ')}]
+`,
+        this.el
+      );
+    }
+  };
+
+  private setValue = (value?: string | string[] | null) => {
+    this.value = value;
+    this.ionChange.emit({ value });
+  };
 
   /**
    * Returns the DatetimePart interface
@@ -1155,13 +1186,11 @@ export class Datetime implements ComponentInterface {
 
   private processValue = (value?: string | string[] | null) => {
     const hasValue = value !== null && value !== undefined;
-    let valueToProcess = parseDate(value ?? getToday());
+    const valueToProcess = parseDate(value ?? getToday());
 
-    const { minParts, maxParts, multiple } = this;
-    if (!multiple && Array.isArray(value)) {
-      this.value = value[0];
-      valueToProcess = (valueToProcess as DatetimeParts[])[0];
-    }
+    const { minParts, maxParts } = this;
+
+    this.warnIfIncorrectValueUsage();
 
     /**
      * Datetime should only warn of out of bounds values
@@ -1319,7 +1348,7 @@ export class Datetime implements ComponentInterface {
 
     const clearButtonClick = () => {
       this.reset();
-      this.value = undefined;
+      this.setValue(undefined);
     };
 
     /**
