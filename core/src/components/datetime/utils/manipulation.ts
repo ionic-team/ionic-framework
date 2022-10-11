@@ -368,10 +368,69 @@ export const validateParts = (parts: DatetimeParts): DatetimeParts => {
  * Returns the closest date to refParts
  * that also meets the constraints of
  * the *Values params.
+ * @param refParts The reference date
+ * @param hourValues The allowed hour values
+ * @param minuteValues The allowed minute values
  */
 export const getClosestValidDate = (
-  refParts: DatetimeParts
+  refParts: DatetimeParts,
+  monthValues?: number[],
+  dayValues?: number[],
+  yearValues?: number[],
+  hourValues?: number[],
+  minuteValues?: number[]
 ) => {
+  const { hour, minute, day, month, year } = refParts;
+  const copyParts = { ...refParts };
 
-  return refParts;
-}
+  if (monthValues !== undefined) {
+    copyParts.month = findClosestValue(month, monthValues);
+  }
+
+  // Day is nullable but cannot be undefined
+  if (day !== null && dayValues !== undefined) {
+    copyParts.day = findClosestValue(day, dayValues);
+  }
+
+  if (yearValues !== undefined) {
+    copyParts.year = findClosestValue(year, yearValues);
+  }
+
+  if (hour !== undefined && hourValues !== undefined) {
+    copyParts.hour = findClosestValue(hour, hourValues);
+  }
+
+  if (minute !== undefined && minuteValues !== undefined) {
+    copyParts.minute = findClosestValue(minute, minuteValues);
+  }
+
+  return copyParts;
+};
+
+/**
+ * Finds the value in "values" that is
+ * numerically closest to "reference".
+ * This function assumes that "values" is
+ * already sorted in ascending order.
+ */
+const findClosestValue = (reference: number, values: number[]) => {
+  let closestValue = values[0];
+  let rank = Math.abs(closestValue - reference);
+
+  for (const value of values) {
+    /**
+     * This code prioritizes the first
+     * closest result. Given two values
+     * with the same distance from reference,
+     * this code will prioritize the smaller of
+     * the two values.
+     */
+    const valueRank = Math.abs(value - reference);
+    if (rank === undefined || valueRank < rank) {
+      closestValue = value;
+      rank = valueRank;
+    }
+  }
+
+  return closestValue;
+};

@@ -36,6 +36,7 @@ import { is24Hour, isLocaleDayPeriodRTL, isMonthFirstLocale, getNumDaysInMonth }
 import {
   calculateHourFromAMPM,
   convertDataToISO,
+  getClosestValidDate,
   getEndOfWeek,
   getNextDay,
   getNextMonth,
@@ -1235,15 +1236,14 @@ export class Datetime implements ComponentInterface {
     this.processMinParts();
     this.processMaxParts();
     this.processValue(this.value);
-    this.parsedHourValues = convertToArrayOfNumbers(this.hourValues);
-    this.parsedMinuteValues = convertToArrayOfNumbers(this.minuteValues);
-    this.parsedMonthValues = convertToArrayOfNumbers(this.monthValues);
-    this.parsedYearValues = convertToArrayOfNumbers(this.yearValues);
-    this.parsedDayValues = convertToArrayOfNumbers(this.dayValues);
+    const hourValues = (this.parsedHourValues = convertToArrayOfNumbers(this.hourValues));
+    const minuteValues = (this.parsedMinuteValues = convertToArrayOfNumbers(this.minuteValues));
+    const monthValues = (this.parsedMonthValues = convertToArrayOfNumbers(this.monthValues));
+    const yearValues = (this.parsedYearValues = convertToArrayOfNumbers(this.yearValues));
+    const dayValues = (this.parsedDayValues = convertToArrayOfNumbers(this.dayValues));
 
     const todayParts = (this.todayParts = parseDate(getToday()));
-    // TODO: Account for *Values props
-    this.defaultParts = { ...todayParts };
+    this.defaultParts = getClosestValidDate(todayParts, monthValues, dayValues, yearValues, hourValues, minuteValues);
 
     this.emitStyle();
   }
