@@ -6,19 +6,19 @@ test.describe('item-sliding: basic', () => {
     await page.goto(`/src/components/item-sliding/test/basic`);
     const item = page.locator('#item2');
 
-    await item.evaluate(async (el: HTMLIonItemSlidingElement) => {
-      await el.open('start');
-    });
-    await page.waitForChanges();
+    const testItem = async (side: 'start' | 'end') => {
+      await item.evaluate(async (el: HTMLIonItemSlidingElement) => {
+        await el.open(side);
+      });
 
-    expect(await item.screenshot()).toMatchSnapshot(`item-sliding-start-${page.getSnapshotSettings()}.png`);
+      // opening animation takes longer than waitForChanges accounts for
+      await page.waitForTimeout(500);
 
-    await item.evaluate(async (el: HTMLIonItemSlidingElement) => {
-      await el.open('end');
-    });
-    await page.waitForChanges();
+      expect(await item.screenshot()).toMatchSnapshot(`item-sliding-${side}-${page.getSnapshotSettings()}.png`);
+    };
 
-    expect(await item.screenshot()).toMatchSnapshot(`item-sliding-end-${page.getSnapshotSettings()}.png`);
+    await testItem('start');
+    await testItem('end');
   });
 
   test('should not scroll when the item-sliding is swiped', async ({ page, skip }) => {
