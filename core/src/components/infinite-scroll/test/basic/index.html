@@ -47,7 +47,7 @@
         infiniteScroll.complete();
         appendItems();
         // Custom event consumed in the e2e tests
-        document.dispatchEvent(new CustomEvent('ionInfiniteComplete'));
+        window.dispatchEvent(new CustomEvent('ionInfiniteComplete'));
       });
 
       function appendItems() {

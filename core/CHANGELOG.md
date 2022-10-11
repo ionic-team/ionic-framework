@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.3.0](https://github.com/ionic-team/ionic/compare/v6.2.9...v6.3.0) (2022-10-05)
+
+
+### Bug Fixes
+
+* **list:** remove extra border in md inset list items ([#25972](https://github.com/ionic-team/ionic/issues/25972)) ([3eb3dd5](https://github.com/ionic-team/ionic/commit/3eb3dd5afa02f7257e2594f56efe570be83719b6)), closes [#25278](https://github.com/ionic-team/ionic/issues/25278)
+* **range:** indication when range knob is focused ([#25827](https://github.com/ionic-team/ionic/issues/25827)) ([2c815cf](https://github.com/ionic-team/ionic/commit/2c815cff139a0061883d3eef47816aea8801dcf4))
+
+
+### Features
+
+* **alert:** accept Promise for button handler ([#25702](https://github.com/ionic-team/ionic/issues/25702)) ([8e4783c](https://github.com/ionic-team/ionic/commit/8e4783c17298e8f7654590108430e80f22ed6a7a)), closes [#25700](https://github.com/ionic-team/ionic/issues/25700)
+* **button:** submit from outside of form ([#25913](https://github.com/ionic-team/ionic/issues/25913)) ([b139838](https://github.com/ionic-team/ionic/commit/b13983848c9ea7387062953412eaae744c001ec7)), closes [#21194](https://github.com/ionic-team/ionic/issues/21194)
+* **datetime-button:** support multiple date selection ([#25971](https://github.com/ionic-team/ionic/issues/25971)) ([a56a4a9](https://github.com/ionic-team/ionic/commit/a56a4a9c0528fe77859963f5b801a3d645be0b23))
+* **datetime:** add header text to multiple selection; improve header consistency between modes ([#25817](https://github.com/ionic-team/ionic/issues/25817)) ([8a1b3c5](https://github.com/ionic-team/ionic/commit/8a1b3c5f300a1ec953d406b65601f84fa49aa807))
+
+
+
+
+
 ## [6.2.9](https://github.com/ionic-team/ionic/compare/v6.2.8...v6.2.9) (2022-09-28)
 
 
