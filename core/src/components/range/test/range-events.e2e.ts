@@ -48,7 +48,6 @@ test.describe('range: events:', () => {
 
       await ionChangeSpy.next();
 
-      expect(ionChangeSpy).toHaveReceivedEvent();
       expect(ionChangeSpy).toHaveReceivedEventTimes(1);
     });
 
