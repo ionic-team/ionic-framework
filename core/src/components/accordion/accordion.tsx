@@ -157,11 +157,9 @@ export class Accordion implements ComponentInterface {
     }
 
     // This is not defined in unit tests
-    const ionItem =
-      slot.assignedElements &&
-      (slot.assignedElements().find((el) => el.tagName === 'ION-ITEM') as HTMLIonItemElement | undefined);
+    if (slot.assignedElements === undefined) return;
 
-    return ionItem;
+    return slot.assignedElements().find((el) => el.tagName === 'ION-ITEM') as HTMLIonItemElement | undefined;
   };
 
   private setAria = (expanded = false) => {

@@ -10,7 +10,7 @@ export interface ScrollData {
 }
 
 export const getScrollData = (componentEl: HTMLElement, contentEl: HTMLElement, keyboardHeight: number): ScrollData => {
-  const itemEl = (componentEl.closest('ion-item,[ion-item]') as HTMLElement) || componentEl;
+  const itemEl = (componentEl.closest('ion-item,[ion-item]') as HTMLElement) ?? componentEl;
   return calcScrollData(
     itemEl.getBoundingClientRect(),
     contentEl.getBoundingClientRect(),

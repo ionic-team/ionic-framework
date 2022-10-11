@@ -53,10 +53,12 @@ export type AlertTextareaAttributes = { [key: string]: any };
  */
 export type AlertInputAttributes = { [key: string]: any };
 
+type AlertButtonOverlayHandler = boolean | void | { [key: string]: any };
+
 export interface AlertButton {
   text: string;
   role?: 'cancel' | 'destructive' | string;
   cssClass?: string | string[];
   id?: string;
-  handler?: (value: any) => boolean | void | { [key: string]: any };
+  handler?: (value: any) => AlertButtonOverlayHandler | Promise<AlertButtonOverlayHandler>;
 }

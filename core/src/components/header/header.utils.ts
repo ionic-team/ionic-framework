@@ -40,17 +40,16 @@ export const createHeaderIndex = (headerEl: HTMLElement | undefined): HeaderInde
 
   return {
     el: headerEl,
-    toolbars:
-      Array.from(toolbars).map((toolbar: any) => {
-        const ionTitleEl = toolbar.querySelector('ion-title');
-        return {
-          el: toolbar,
-          background: toolbar.shadowRoot!.querySelector('.toolbar-background'),
-          ionTitleEl,
-          innerTitleEl: ionTitleEl ? ionTitleEl.shadowRoot!.querySelector('.toolbar-title') : null,
-          ionButtonsEl: Array.from(toolbar.querySelectorAll('ion-buttons')) || [],
-        } as ToolbarIndex;
-      }) || [],
+    toolbars: Array.from(toolbars).map((toolbar: any) => {
+      const ionTitleEl = toolbar.querySelector('ion-title');
+      return {
+        el: toolbar,
+        background: toolbar.shadowRoot!.querySelector('.toolbar-background'),
+        ionTitleEl,
+        innerTitleEl: ionTitleEl ? ionTitleEl.shadowRoot!.querySelector('.toolbar-title') : null,
+        ionButtonsEl: Array.from(toolbar.querySelectorAll('ion-buttons')),
+      } as ToolbarIndex;
+    }),
   } as HeaderIndex;
 };
 

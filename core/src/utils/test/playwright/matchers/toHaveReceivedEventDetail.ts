@@ -4,7 +4,7 @@ import deepEqual from 'fast-deep-equal';
 import type { EventSpy } from '../page/event-spy';
 
 export function toHaveReceivedEventDetail(eventSpy: EventSpy, eventDetail: any) {
-  if (!eventSpy) {
+  if (eventSpy === null || eventSpy === undefined) {
     return {
       message: () => `toHaveReceivedEventDetail event spy is null`,
       pass: false,
@@ -26,7 +26,7 @@ export function toHaveReceivedEventDetail(eventSpy: EventSpy, eventDetail: any) 
     };
   }
 
-  if (!eventSpy.lastEvent) {
+  if (eventSpy.lastEvent === null || eventSpy.lastEvent === undefined) {
     return {
       message: () => `event "${eventSpy.eventName}" was not received`,
       pass: false,
