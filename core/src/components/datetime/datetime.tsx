@@ -2141,7 +2141,7 @@ export class Datetime implements ComponentInterface {
         <div class="datetime-title">
           <slot name="title">Select Date</slot>
         </div>
-        { showExpandedHeader && <div class="datetime-selected-date">{this.getHeaderSelectedDateText()}</div> }
+        {showExpandedHeader && <div class="datetime-selected-date">{this.getHeaderSelectedDateText()}</div>}
       </div>
     );
   }

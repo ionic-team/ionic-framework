@@ -51,7 +51,7 @@ test.describe('datetime: prefer wheel', () => {
       expect(await datetime.screenshot()).toMatchSnapshot(
         `datetime-wheel-header-diff-${page.getSnapshotSettings()}.png`
       );
-    })
+    });
   });
   test.describe('datetime: date wheel', () => {
     test.beforeEach(({ skip }) => {
