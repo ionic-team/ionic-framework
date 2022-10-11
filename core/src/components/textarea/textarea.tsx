@@ -21,19 +21,19 @@ import { createColorClasses } from '../../utils/theme';
 export class Textarea implements ComponentInterface {
   private nativeInput?: HTMLTextAreaElement;
   private inputId = `ion-textarea-${textareaIds++}`;
-  private didBlurAfterEdit = false;
+  /**
+   * `true` if the textarea was cleared as a result of the user typing
+   * with `clearOnEdit` enabled.
+   *
+   * Resets when the textarea loses focus.
+   */
+  private didTextareaClearOnEdit = false;
   private textareaWrapper?: HTMLElement;
   private inheritedAttributes: Attributes = {};
-
   /**
-   * This is required for a WebKit bug which requires us to
-   * blur and focus an input to properly focus the input in
-   * an item with delegatesFocus. It will no longer be needed
-   * with iOS 14.
-   *
-   * @internal
+   * The value of the textarea when the textarea is focused.
    */
-  @Prop() fireFocusEvents = true;
+  private focusedValue?: string | null;
 
   @Element() el!: HTMLElement;
 
@@ -58,18 +58,18 @@ export class Textarea implements ComponentInterface {
   @Prop() autofocus = false;
 
   /**
-   * If `true`, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
+   * If `true`, the value will be cleared after focus upon edit.
    */
-  @Prop({ mutable: true }) clearOnEdit = false;
+  @Prop() clearOnEdit = false;
 
   /**
-   * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. This also impacts form bindings such as `ngModel` or `v-model`.
+   * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
    */
   @Prop() debounce = 0;
 
   @Watch('debounce')
   protected debounceChanged() {
-    this.ionChange = debounceEvent(this.ionChange, this.debounce);
+    this.ionInput = debounceEvent(this.ionInput, this.debounce);
   }
 
   /**
@@ -97,12 +97,12 @@ export class Textarea implements ComponentInterface {
   @Prop() enterkeyhint?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
 
   /**
-   * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
+   * This attribute specifies the maximum number of characters that the user can enter.
    */
   @Prop() maxlength?: number;
 
   /**
-   * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the minimum number of characters that the user can enter.
+   * This attribute specifies the minimum number of characters that the user can enter.
    */
   @Prop() minlength?: number;
 
@@ -169,16 +169,24 @@ export class Textarea implements ComponentInterface {
     }
     this.runAutoGrow();
     this.emitStyle();
-    this.ionChange.emit({ value });
   }
 
   /**
-   * Emitted when the input value has changed.
+   * The `ionChange` event is fired for `<ion-textarea>` elements when the user
+   * modifies the element's value. Unlike the `ionInput` event, the `ionChange`
+   * event is not necessarily fired for each alteration to an element's value.
+   *
+   * The `ionChange` event is fired when the element loses focus after its value
+   * has been modified.
    */
   @Event() ionChange!: EventEmitter<TextareaChangeEventDetail>;
 
   /**
-   * Emitted when a keyboard input occurred.
+   * The `ionInput` event fires when the `value` of an `<ion-textarea>` element
+   * has been changed.
+   *
+   * When `clearOnEdit` is enabled, the `ionInput` event will be fired when
+   * the user clears the textarea by performing a keydown event.
    */
   @Event() ionInput!: EventEmitter<InputEvent>;
 
@@ -243,18 +251,6 @@ export class Textarea implements ComponentInterface {
   }
 
   /**
-   * Sets blur on the native `textarea` in `ion-textarea`. Use this method instead of the global
-   * `textarea.blur()`.
-   * @internal
-   */
-  @Method()
-  async setBlur() {
-    if (this.nativeInput) {
-      this.nativeInput.blur();
-    }
-  }
-
-  /**
    * Returns the native `<textarea>` element used under the hood.
    */
   @Method()
@@ -272,6 +268,21 @@ export class Textarea implements ComponentInterface {
       'has-value': this.hasValue(),
       'has-focus': this.hasFocus,
     });
+  }
+
+  /**
+   * Emits an `ionChange` event.
+   *
+   * This API should be called for user committed changes.
+   * This API should not be used for external value changes.
+   */
+  private emitValueChange() {
+    const { value } = this;
+    // Checks for both null and undefined values
+    const newValue = value == null ? value : value.toString();
+    // Emitting a value change should update the internal state for tracking the focused value
+    this.focusedValue = newValue;
+    this.ionChange.emit({ value: newValue });
   }
 
   private runAutoGrow() {
@@ -293,22 +304,18 @@ export class Textarea implements ComponentInterface {
     if (!this.clearOnEdit) {
       return;
     }
-
-    // Did the input value change after it was blurred and edited?
-    if (this.didBlurAfterEdit && this.hasValue()) {
-      // Clear the input
+    /**
+     * Clear the textarea if the control has not been previously cleared
+     * during focus.
+     */
+    if (!this.didTextareaClearOnEdit && this.hasValue()) {
       this.value = '';
+      this.ionInput.emit();
     }
-
-    // Reset the flag
-    this.didBlurAfterEdit = false;
+    this.didTextareaClearOnEdit = true;
   }
 
   private focusChange() {
-    // If clearOnEdit is enabled and the input blurred but has a value, set a flag
-    if (this.clearOnEdit && !this.hasFocus && this.hasValue()) {
-      this.didBlurAfterEdit = true;
-    }
     this.emitStyle();
   }
 
@@ -320,30 +327,44 @@ export class Textarea implements ComponentInterface {
     return this.value || '';
   }
 
+  // `Event` type is used instead of `InputEvent`
+  // since the types from Stencil are not derived
+  // from the element (e.g. textarea and input
+  // should be InputEvent, but all other elements
+  // should be Event).
   private onInput = (ev: Event) => {
-    if (this.nativeInput) {
-      this.value = this.nativeInput.value;
+    const input = ev.target as HTMLTextAreaElement | null;
+    if (input) {
+      this.value = input.value || '';
     }
-    this.emitStyle();
     this.ionInput.emit(ev as InputEvent);
+  };
+
+  private onChange = () => {
+    this.emitValueChange();
   };
 
   private onFocus = (ev: FocusEvent) => {
     this.hasFocus = true;
+    this.focusedValue = this.value;
     this.focusChange();
 
-    if (this.fireFocusEvents) {
-      this.ionFocus.emit(ev);
-    }
+    this.ionFocus.emit(ev);
   };
 
   private onBlur = (ev: FocusEvent) => {
     this.hasFocus = false;
     this.focusChange();
 
-    if (this.fireFocusEvents) {
-      this.ionBlur.emit(ev);
+    if (this.focusedValue !== this.value) {
+      /**
+       * Emits the `ionChange` event when the textarea value
+       * is different than the value when the textarea was focused.
+       */
+      this.emitValueChange();
     }
+    this.didTextareaClearOnEdit = false;
+    this.ionBlur.emit(ev);
   };
 
   private onKeyDown = () => {
@@ -387,6 +408,7 @@ export class Textarea implements ComponentInterface {
             rows={this.rows}
             wrap={this.wrap}
             onInput={this.onInput}
+            onChange={this.onChange}
             onBlur={this.onBlur}
             onFocus={this.onFocus}
             onKeyDown={this.onKeyDown}

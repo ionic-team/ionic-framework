@@ -613,8 +613,10 @@ export class Range implements ComponentInterface {
             />
           ))}
 
-          <div class="range-bar" role="presentation" part="bar" />
-          <div class="range-bar range-bar-active" role="presentation" style={barStyle} part="bar-active" />
+          <div class="range-bar-container">
+            <div class="range-bar" role="presentation" part="bar" />
+            <div class="range-bar range-bar-active" role="presentation" style={barStyle} part="bar-active" />
+          </div>
 
           {renderKnob(rtl, {
             knob: 'A',

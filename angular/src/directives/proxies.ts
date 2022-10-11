@@ -31,7 +31,10 @@ export class IonAccordion {
 import type { AccordionGroupChangeEventDetail as IAccordionGroupAccordionGroupChangeEventDetail } from '@ionic/core';
 export declare interface IonAccordionGroup extends Components.IonAccordionGroup {
   /**
-   * Emitted when the value property has changed. 
+   * Emitted when the value property has changed
+as a result of a user action such as a click.
+This event will not emit when programmatically setting
+the value property. 
    */
   ionChange: EventEmitter<CustomEvent<IAccordionGroupAccordionGroupChangeEventDetail>>;
 
@@ -385,7 +388,10 @@ export class IonCardTitle {
 import type { CheckboxChangeEventDetail as ICheckboxCheckboxChangeEventDetail } from '@ionic/core';
 export declare interface IonCheckbox extends Components.IonCheckbox {
   /**
-   * Emitted when the checked property has changed. 
+   * Emitted when the checked property has changed
+as a result of a user action such as a click.
+This event will not emit when programmatically
+setting the checked property. 
    */
   ionChange: EventEmitter<CustomEvent<ICheckboxCheckboxChangeEventDetail>>;
   /**
@@ -811,14 +817,30 @@ export class IonInfiniteScrollContent {
   }
 }
 
+import type { InputInputEventDetail as IInputInputInputEventDetail } from '@ionic/core';
 import type { InputChangeEventDetail as IInputInputChangeEventDetail } from '@ionic/core';
 export declare interface IonInput extends Components.IonInput {
   /**
-   * Emitted when a keyboard input occurred. 
+   * The `ionInput` event fires when the `value` of an `<ion-input>` element
+has been changed.
+
+For elements that accept text input (`type=text`, `type=tel`, etc.), the interface
+is [`InputEvent`](https://developer.mozilla.org/en-US/docs/Web/API/InputEvent); for others,
+the interface is [`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event). If
+the input is cleared on edit, the type is `null`. 
    */
-  ionInput: EventEmitter<CustomEvent<InputEvent>>;
+  ionInput: EventEmitter<CustomEvent<IInputInputInputEventDetail>>;
   /**
-   * Emitted when the value has changed. 
+   * The `ionChange` event is fired for `<ion-input>` elements when the user
+modifies the element's value. Unlike the `ionInput` event, the `ionChange`
+event is not necessarily fired for each alteration to an element's value.
+
+Depending on the way the users interacts with the element, the `ionChange`
+event fires at a different moment:
+- When the user commits the change explicitly (e.g. by selecting a date
+from a date picker for `<ion-input type="date">`, etc.).
+- When the element loses focus after its value has changed: for elements
+where the user's interaction is typing. 
    */
   ionChange: EventEmitter<CustomEvent<IInputInputChangeEventDetail>>;
   /**
@@ -1497,11 +1519,17 @@ export class IonRow {
 import type { SearchbarChangeEventDetail as ISearchbarSearchbarChangeEventDetail } from '@ionic/core';
 export declare interface IonSearchbar extends Components.IonSearchbar {
   /**
-   * Emitted when a keyboard input occurred. 
+   * Emitted when the `value` of the `ion-searchbar` element has changed. 
    */
-  ionInput: EventEmitter<CustomEvent<KeyboardEvent>>;
+  ionInput: EventEmitter<CustomEvent<KeyboardEvent | null>>;
   /**
-   * Emitted when the value has changed. 
+   * The `ionChange` event is fired for `<ion-searchbar>` elements when the user
+modifies the element's value. Unlike the `ionInput` event, the `ionChange`
+event is not necessarily fired for each alteration to an element's value.
+
+The `ionChange` event is fired when the element loses focus after its value
+has been modified. This includes modifications made when clicking the clear
+or cancel buttons. 
    */
   ionChange: EventEmitter<CustomEvent<ISearchbarSearchbarChangeEventDetail>>;
   /**
@@ -1681,114 +1709,6 @@ export class IonSkeletonText {
 }
 
 
-export declare interface IonSlide extends Components.IonSlide {}
-
-@ProxyCmp({
-  defineCustomElementFn: undefined
-})
-@Component({
-  selector: 'ion-slide',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>'
-})
-export class IonSlide {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-  }
-}
-
-
-export declare interface IonSlides extends Components.IonSlides {
-  /**
-   * Emitted after Swiper initialization 
-   */
-  ionSlidesDidLoad: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the user taps/clicks on the slide's container. 
-   */
-  ionSlideTap: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the user double taps on the slide's container. 
-   */
-  ionSlideDoubleTap: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted before the active slide has changed. 
-   */
-  ionSlideWillChange: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted after the active slide has changed. 
-   */
-  ionSlideDidChange: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the next slide has started. 
-   */
-  ionSlideNextStart: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the previous slide has started. 
-   */
-  ionSlidePrevStart: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the next slide has ended. 
-   */
-  ionSlideNextEnd: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the previous slide has ended. 
-   */
-  ionSlidePrevEnd: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the slide transition has started. 
-   */
-  ionSlideTransitionStart: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the slide transition has ended. 
-   */
-  ionSlideTransitionEnd: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the slider is actively being moved. 
-   */
-  ionSlideDrag: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the slider is at its initial position. 
-   */
-  ionSlideReachStart: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the slider is at the last slide. 
-   */
-  ionSlideReachEnd: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the user first touches the slider. 
-   */
-  ionSlideTouchStart: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the user releases the touch. 
-   */
-  ionSlideTouchEnd: EventEmitter<CustomEvent<void>>;
-
-}
-
-@ProxyCmp({
-  defineCustomElementFn: undefined,
-  inputs: ['mode', 'options', 'pager', 'scrollbar'],
-  methods: ['update', 'updateAutoHeight', 'slideTo', 'slideNext', 'slidePrev', 'getActiveIndex', 'getPreviousIndex', 'length', 'isEnd', 'isBeginning', 'startAutoplay', 'stopAutoplay', 'lockSwipeToNext', 'lockSwipeToPrev', 'lockSwipes', 'getSwiper']
-})
-@Component({
-  selector: 'ion-slides',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  inputs: ['mode', 'options', 'pager', 'scrollbar']
-})
-export class IonSlides {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionSlidesDidLoad', 'ionSlideTap', 'ionSlideDoubleTap', 'ionSlideWillChange', 'ionSlideDidChange', 'ionSlideNextStart', 'ionSlidePrevStart', 'ionSlideNextEnd', 'ionSlidePrevEnd', 'ionSlideTransitionStart', 'ionSlideTransitionEnd', 'ionSlideDrag', 'ionSlideReachStart', 'ionSlideReachEnd', 'ionSlideTouchStart', 'ionSlideTouchEnd']);
-  }
-}
-
-
 export declare interface IonSpinner extends Components.IonSpinner {}
 
 @ProxyCmp({
@@ -1903,11 +1823,20 @@ export class IonText {
 import type { TextareaChangeEventDetail as ITextareaTextareaChangeEventDetail } from '@ionic/core';
 export declare interface IonTextarea extends Components.IonTextarea {
   /**
-   * Emitted when the input value has changed. 
+   * The `ionChange` event is fired for `<ion-textarea>` elements when the user
+modifies the element's value. Unlike the `ionInput` event, the `ionChange`
+event is not necessarily fired for each alteration to an element's value.
+
+The `ionChange` event is fired when the element loses focus after its value
+has been modified. 
    */
   ionChange: EventEmitter<CustomEvent<ITextareaTextareaChangeEventDetail>>;
   /**
-   * Emitted when a keyboard input occurred. 
+   * The `ionInput` event fires when the `value` of an `<ion-textarea>` element
+has been changed.
+
+When `clearOnEdit` is enabled, the `ionInput` event will be fired when
+the user clears the textarea by performing a keydown event. 
    */
   ionInput: EventEmitter<CustomEvent<InputEvent>>;
   /**
@@ -1984,7 +1913,8 @@ export class IonTitle {
 import type { ToggleChangeEventDetail as IToggleToggleChangeEventDetail } from '@ionic/core';
 export declare interface IonToggle extends Components.IonToggle {
   /**
-   * Emitted when the value property has changed. 
+   * Emitted when the user switches the toggle on or off. Does not emit
+when programmatically changing the value of the `checked` property. 
    */
   ionChange: EventEmitter<CustomEvent<IToggleToggleChangeEventDetail>>;
   /**

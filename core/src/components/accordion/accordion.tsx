@@ -85,14 +85,14 @@ export class Accordion implements ComponentInterface {
     const accordionGroupEl = (this.accordionGroupEl = this.el?.closest('ion-accordion-group'));
     if (accordionGroupEl) {
       this.updateState(true);
-      addEventListener(accordionGroupEl, 'ionChange', this.updateListener);
+      addEventListener(accordionGroupEl, 'ionValueChange', this.updateListener);
     }
   }
 
   disconnectedCallback() {
     const accordionGroupEl = this.accordionGroupEl;
     if (accordionGroupEl) {
-      removeEventListener(accordionGroupEl, 'ionChange', this.updateListener);
+      removeEventListener(accordionGroupEl, 'ionValueChange', this.updateListener);
     }
   }
 

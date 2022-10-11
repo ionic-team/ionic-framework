@@ -40,6 +40,7 @@
     "prettier": "prettier \"**/*.ts\"",
     "eslint": "eslint . --ext .ts",
     "prerelease": "npm run validate && np prerelease --yolo --any-branch --tag next",
+    "sync": "sh ./scripts/sync.sh",
     "test": "echo 'angular no tests yet'",
     "tsc": "tsc -p .",
     "validate": "npm i && npm run lint && npm run test && npm run build"

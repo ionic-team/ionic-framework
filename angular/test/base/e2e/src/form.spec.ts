@@ -36,13 +36,21 @@ describe('Form', () => {
     });
 
     it('should become valid', () => {
-      cy.get('ion-input.required').invoke('prop', 'value', 'Some value');
+      cy.get('ion-input.required').type('Some value');
+      cy.get('ion-input.required input').blur();
+
       testStatus('INVALID');
 
       // TODO: FW-1160 - Remove when v7 is released
       cy.wait(300);
 
-      cy.get('ion-select').invoke('prop', 'value', 'nes');
+      cy.get('ion-select').click();
+      cy.get('ion-alert').should('exist').should('be.visible');
+      // NES option
+      cy.get('ion-alert .alert-radio-button:nth-of-type(2)').click();
+      // Click confirm button
+      cy.get('ion-alert .alert-button:not(.alert-button-role-cancel)').click();
+
       testStatus('INVALID');
 
       cy.get('ion-range').invoke('prop', 'value', 40);

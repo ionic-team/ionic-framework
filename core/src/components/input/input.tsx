@@ -6,6 +6,7 @@ import type {
   AutocompleteTypes,
   Color,
   InputChangeEventDetail,
+  InputInputEventDetail,
   StyleEventDetail,
   TextFieldTypes,
 } from '../../interface';
@@ -27,19 +28,19 @@ import { createColorClasses } from '../../utils/theme';
 export class Input implements ComponentInterface {
   private nativeInput?: HTMLInputElement;
   private inputId = `ion-input-${inputIds++}`;
-  private didBlurAfterEdit = false;
   private inheritedAttributes: Attributes = {};
   private isComposing = false;
-
   /**
-   * This is required for a WebKit bug which requires us to
-   * blur and focus an input to properly focus the input in
-   * an item with delegatesFocus. It will no longer be needed
-   * with iOS 14.
+   * `true` if the input was cleared as a result of the user typing
+   * with `clearOnEdit` enabled.
    *
-   * @internal
+   * Resets when the input loses focus.
    */
-  @Prop() fireFocusEvents = true;
+  private didInputClearOnEdit = false;
+  /**
+   * The value of the input when the input is focused.
+   */
+  private focusedValue?: string | number | null;
 
   @State() hasFocus = false;
 
@@ -90,13 +91,13 @@ export class Input implements ComponentInterface {
   @Prop() clearOnEdit?: boolean;
 
   /**
-   * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. This also impacts form bindings such as `ngModel` or `v-model`.
+   * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
    */
   @Prop() debounce = 0;
 
   @Watch('debounce')
   protected debounceChanged() {
-    this.ionChange = debounceEvent(this.ionChange, this.debounce);
+    this.ionInput = debounceEvent(this.ionInput, this.debounce);
   }
 
   /**
@@ -202,12 +203,28 @@ export class Input implements ComponentInterface {
   @Prop({ mutable: true }) value?: string | number | null = '';
 
   /**
-   * Emitted when a keyboard input occurred.
+   * The `ionInput` event fires when the `value` of an `<ion-input>` element
+   * has been changed.
+   *
+   * For elements that accept text input (`type=text`, `type=tel`, etc.), the interface
+   * is [`InputEvent`](https://developer.mozilla.org/en-US/docs/Web/API/InputEvent); for others,
+   * the interface is [`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event). If
+   * the input is cleared on edit, the type is `null`.
    */
-  @Event() ionInput!: EventEmitter<InputEvent>;
+  @Event() ionInput!: EventEmitter<InputInputEventDetail>;
 
   /**
-   * Emitted when the value has changed.
+   * The `ionChange` event is fired for `<ion-input>` elements when the user
+   * modifies the element's value. Unlike the `ionInput` event, the `ionChange`
+   * event is not necessarily fired for each alteration to an element's value.
+   *
+   * Depending on the way the users interacts with the element, the `ionChange`
+   * event fires at a different moment:
+   * - When the user commits the change explicitly (e.g. by selecting a date
+   * from a date picker for `<ion-input type="date">`, etc.).
+   * - When the element loses focus after its value has changed: for elements
+   * where the user's interaction is typing.
+   *
    */
   @Event() ionChange!: EventEmitter<InputChangeEventDetail>;
 
@@ -254,7 +271,6 @@ export class Input implements ComponentInterface {
       nativeInput.value = value;
     }
     this.emitStyle();
-    this.ionChange.emit({ value: this.value == null ? this.value : this.value.toString() });
   }
 
   componentWillLoad() {
@@ -313,23 +329,26 @@ export class Input implements ComponentInterface {
   }
 
   /**
-   * Sets blur on the native `input` in `ion-input`. Use this method instead of the global
-   * `input.blur()`.
-   * @internal
-   */
-  @Method()
-  async setBlur() {
-    if (this.nativeInput) {
-      this.nativeInput.blur();
-    }
-  }
-
-  /**
    * Returns the native `<input>` element used under the hood.
    */
   @Method()
   getInputElement(): Promise<HTMLInputElement> {
     return Promise.resolve(this.nativeInput!);
+  }
+
+  /**
+   * Emits an `ionChange` event.
+   *
+   * This API should be called for user committed changes.
+   * This API should not be used for external value changes.
+   */
+  private emitValueChange() {
+    const { value } = this;
+    // Checks for both null and undefined values
+    const newValue = value == null ? value : value.toString();
+    // Emitting a value change should update the internal state for tracking the focused value
+    this.focusedValue = newValue;
+    this.ionChange.emit({ value: newValue });
   }
 
   private shouldClearOnEdit() {
@@ -352,7 +371,7 @@ export class Input implements ComponentInterface {
     });
   }
 
-  private onInput = (ev: Event) => {
+  private onInput = (ev: InputEvent | Event) => {
     const input = ev.target as HTMLInputElement | null;
     if (input) {
       this.value = input.value || '';
@@ -360,39 +379,53 @@ export class Input implements ComponentInterface {
     this.ionInput.emit(ev as InputEvent);
   };
 
+  private onChange = () => {
+    this.emitValueChange();
+  };
+
   private onBlur = (ev: FocusEvent) => {
     this.hasFocus = false;
-    this.focusChanged();
     this.emitStyle();
 
-    if (this.fireFocusEvents) {
-      this.ionBlur.emit(ev);
+    if (this.focusedValue !== this.value) {
+      /**
+       * Emits the `ionChange` event when the input value
+       * is different than the value when the input was focused.
+       */
+      this.emitValueChange();
     }
+
+    this.didInputClearOnEdit = false;
+
+    this.ionBlur.emit(ev);
   };
 
   private onFocus = (ev: FocusEvent) => {
     this.hasFocus = true;
-    this.focusChanged();
+    this.focusedValue = this.value;
     this.emitStyle();
 
-    if (this.fireFocusEvents) {
-      this.ionFocus.emit(ev);
-    }
+    this.ionFocus.emit(ev);
   };
 
   private onKeydown = (ev: KeyboardEvent) => {
-    if (this.shouldClearOnEdit()) {
-      // Did the input value change after it was blurred and edited?
-      // Do not clear if user is hitting Enter to submit form
-      if (this.didBlurAfterEdit && this.hasValue() && ev.key !== 'Enter') {
-        // Clear the input
-        this.clearTextInput();
-      }
-
-      // Reset the flag
-      this.didBlurAfterEdit = false;
-    }
+    this.checkClearOnEdit(ev);
   };
+
+  private checkClearOnEdit(ev: KeyboardEvent) {
+    if (!this.shouldClearOnEdit()) {
+      return;
+    }
+    /**
+     * Clear the input if the control has not been previously cleared during focus.
+     * Do not clear if the user hitting enter to submit a form.
+     */
+    if (!this.didInputClearOnEdit && this.hasValue() && ev.key !== 'Enter') {
+      this.value = '';
+      this.ionInput.emit();
+    }
+    this.didInputClearOnEdit = true;
+  }
 
   private onCompositionStart = () => {
     this.isComposing = true;
@@ -402,33 +435,16 @@ export class Input implements ComponentInterface {
     this.isComposing = false;
   };
 
-  private clearTextInput = (ev?: Event) => {
+  private onClearButtonClick = (ev?: Event) => {
     if (this.clearInput && !this.readonly && !this.disabled && ev) {
       ev.preventDefault();
       ev.stopPropagation();
-
       // Attempt to focus input again after pressing clear button
       this.setFocus();
     }
-
     this.value = '';
-
-    /**
-     * This is needed for clearOnEdit
-     * Otherwise the value will not be cleared
-     * if user is inside the input
-     */
-    if (this.nativeInput) {
-      this.nativeInput.value = '';
-    }
+    this.ionInput.emit(ev);
   };
-
-  private focusChanged() {
-    // If clearOnEdit is enabled and the input blurred but has a value, set a flag
-    if (!this.hasFocus && this.shouldClearOnEdit() && this.hasValue()) {
-      this.didBlurAfterEdit = true;
-    }
-  }
 
   private hasValue(): boolean {
     return this.getValue().length > 0;
@@ -480,6 +496,7 @@ export class Input implements ComponentInterface {
           type={this.type}
           value={value}
           onInput={this.onInput}
+          onChange={this.onChange}
           onBlur={this.onBlur}
           onFocus={this.onFocus}
           onKeyDown={this.onKeydown}
@@ -498,7 +515,7 @@ export class Input implements ComponentInterface {
                */
               ev.preventDefault();
             }}
-            onClick={this.clearTextInput}
+            onClick={this.onClearButtonClick}
           />
         )}
       </Host>

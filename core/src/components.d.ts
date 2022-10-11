@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AccordionGroupChangeEventDetail, ActionSheetAttributes, ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DatetimePresentation, DomRenderFn, FooterHeightFn, FrameworkDelegate, HeaderFn, HeaderHeightFn, InputChangeEventDetail, ItemHeightFn, ItemRenderFn, ItemReorderEventDetail, LoadingAttributes, MenuChangeEventDetail, ModalAttributes, ModalBreakpointChangeEventDetail, ModalHandleBehavior, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerAttributes, PickerButton, PickerColumn, PopoverAttributes, PopoverSize, PositionAlign, PositionReference, PositionSide, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextFieldTypes, TitleSelectedDatesFormatter, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, TriggerAction, ViewController } from "./interface";
+import { AccordionGroupChangeEventDetail, ActionSheetAttributes, ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DatetimePresentation, FrameworkDelegate, InputChangeEventDetail, InputInputEventDetail, ItemReorderEventDetail, LoadingAttributes, MenuChangeEventDetail, ModalAttributes, ModalBreakpointChangeEventDetail, ModalHandleBehavior, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerAttributes, PickerButton, PickerColumn, PopoverAttributes, PopoverSize, PositionAlign, PositionReference, PositionSide, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextFieldTypes, TitleSelectedDatesFormatter, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, TriggerAction, ViewController } from "./interface";
 import { IonicSafeString } from "./utils/sanitization";
 import { AlertAttributes } from "./components/alert/alert-interface";
 import { CounterFormatter } from "./components/item/item-interface";
@@ -68,9 +68,12 @@ export namespace Components {
           * If `true`, the accordion group cannot be interacted with, but does not alter the opacity.
          */
         "readonly": boolean;
+        /**
+          * This method is used to ensure that the value of ion-accordion-group is being set in a valid way. This method should only be called in response to a user generated action.
+         */
         "requestAccordionToggle": (accordionValue: string | undefined, accordionExpand: boolean) => Promise<void>;
         /**
-          * The value of the accordion group.
+          * The value of the accordion group. This controls which accordions are expanded. This should be an array of strings only when `multiple="true"`
          */
         "value"?: string | string[] | null;
     }
@@ -1073,7 +1076,7 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. This also impacts form bindings such as `ngModel` or `v-model`.
+          * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
          */
         "debounce": number;
         /**
@@ -1084,10 +1087,6 @@ export namespace Components {
           * A hint to the browser for which enter key to display. Possible values: `"enter"`, `"done"`, `"go"`, `"next"`, `"previous"`, `"search"`, and `"send"`.
          */
         "enterkeyhint"?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
-        /**
-          * This is required for a WebKit bug which requires us to blur and focus an input to properly focus the input in an item with delegatesFocus. It will no longer be needed with iOS 14.
-         */
-        "fireFocusEvents": boolean;
         /**
           * Returns the native `<input>` element used under the hood.
          */
@@ -1140,10 +1139,6 @@ export namespace Components {
           * If `true`, the user must fill in a value before submitting a form.
          */
         "required": boolean;
-        /**
-          * Sets blur on the native `input` in `ion-input`. Use this method instead of the global `input.blur()`.
-         */
-        "setBlur": () => Promise<void>;
         /**
           * Sets focus on the native `input` in `ion-input`. Use this method instead of the global `input.focus()`.
          */
@@ -1560,7 +1555,7 @@ export namespace Components {
         /**
           * Determines whether or not a modal can dismiss when calling the `dismiss` method.  If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss. If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.
          */
-        "canDismiss"?: undefined | boolean | (() => Promise<boolean>);
+        "canDismiss": boolean | (() => Promise<boolean>);
         /**
           * The component to display inside of the modal.
          */
@@ -1650,11 +1645,6 @@ export namespace Components {
           * If `true`, a backdrop will be displayed behind the modal. This property controls whether or not the backdrop darkens the screen when the modal is presented. It does not control whether or not the backdrop is active or present in the DOM.
          */
         "showBackdrop": boolean;
-        /**
-          * If `true`, the modal can be swiped to dismiss. Only applies in iOS mode.
-          * @deprecated - To prevent modals from dismissing, use canDismiss instead.
-         */
-        "swipeToClose": boolean;
         /**
           * An ID corresponding to the trigger element that causes the modal to open when clicked.
          */
@@ -2384,9 +2374,9 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. This also impacts form bindings such as `ngModel` or `v-model`.
+          * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
          */
-        "debounce": number;
+        "debounce"?: number;
         /**
           * If `true`, the user cannot interact with the input.
          */
@@ -2468,7 +2458,7 @@ export namespace Components {
         /**
           * the value of the segment.
          */
-        "value"?: string | null;
+        "value"?: string;
     }
     interface IonSegmentButton {
         /**
@@ -2584,101 +2574,6 @@ export namespace Components {
           * If `true`, the skeleton text will animate.
          */
         "animated": boolean;
-    }
-    interface IonSlide {
-    }
-    interface IonSlides {
-        /**
-          * Get the index of the active slide.
-         */
-        "getActiveIndex": () => Promise<number>;
-        /**
-          * Get the index of the previous slide.
-         */
-        "getPreviousIndex": () => Promise<number>;
-        /**
-          * Get the Swiper instance. Use this to access the full Swiper API. See https://swiperjs.com/swiper-api for all API options.
-         */
-        "getSwiper": () => Promise<any>;
-        /**
-          * Get whether or not the current slide is the first slide.
-         */
-        "isBeginning": () => Promise<boolean>;
-        /**
-          * Get whether or not the current slide is the last slide.
-         */
-        "isEnd": () => Promise<boolean>;
-        /**
-          * Get the total number of slides.
-         */
-        "length": () => Promise<number>;
-        /**
-          * Lock or unlock the ability to slide to the next slide.
-          * @param lock If `true`, disable swiping to the next slide.
-         */
-        "lockSwipeToNext": (lock: boolean) => Promise<void>;
-        /**
-          * Lock or unlock the ability to slide to the previous slide.
-          * @param lock If `true`, disable swiping to the previous slide.
-         */
-        "lockSwipeToPrev": (lock: boolean) => Promise<void>;
-        /**
-          * Lock or unlock the ability to slide to the next or previous slide.
-          * @param lock If `true`, disable swiping to the next and previous slide.
-         */
-        "lockSwipes": (lock: boolean) => Promise<void>;
-        /**
-          * The mode determines which platform styles to use.
-         */
-        "mode"?: "ios" | "md";
-        /**
-          * Options to pass to the swiper instance. See https://swiperjs.com/swiper-api for valid options
-         */
-        "options": any;
-        /**
-          * If `true`, show the pagination.
-         */
-        "pager": boolean;
-        /**
-          * If `true`, show the scrollbar.
-         */
-        "scrollbar": boolean;
-        /**
-          * Transition to the next slide.
-          * @param speed The transition duration (in ms).
-          * @param runCallbacks If true, the transition will produce [Transition/SlideChange][Start/End] transition events.
-         */
-        "slideNext": (speed?: number, runCallbacks?: boolean) => Promise<void>;
-        /**
-          * Transition to the previous slide.
-          * @param speed The transition duration (in ms).
-          * @param runCallbacks If true, the transition will produce the [Transition/SlideChange][Start/End] transition events.
-         */
-        "slidePrev": (speed?: number, runCallbacks?: boolean) => Promise<void>;
-        /**
-          * Transition to the specified slide.
-          * @param index The index of the slide to transition to.
-          * @param speed The transition duration (in ms).
-          * @param runCallbacks If true, the transition will produce [Transition/SlideChange][Start/End] transition events.
-         */
-        "slideTo": (index: number, speed?: number, runCallbacks?: boolean) => Promise<void>;
-        /**
-          * Start auto play.
-         */
-        "startAutoplay": () => Promise<void>;
-        /**
-          * Stop auto play.
-         */
-        "stopAutoplay": () => Promise<void>;
-        /**
-          * Update the underlying slider implementation. Call this if you've added or removed child slides.
-         */
-        "update": () => Promise<void>;
-        /**
-          * Force swiper to update its height (when autoHeight is enabled) for the duration equal to 'speed' parameter.
-          * @param speed The transition duration (in ms).
-         */
-        "updateAutoHeight": (speed?: number) => Promise<void>;
     }
     interface IonSpinner {
         /**
@@ -2827,7 +2722,7 @@ export namespace Components {
          */
         "autofocus": boolean;
         /**
-          * If `true`, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
+          * If `true`, the value will be cleared after focus upon edit.
          */
         "clearOnEdit": boolean;
         /**
@@ -2839,7 +2734,7 @@ export namespace Components {
          */
         "cols"?: number;
         /**
-          * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. This also impacts form bindings such as `ngModel` or `v-model`.
+          * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
          */
         "debounce": number;
         /**
@@ -2851,10 +2746,6 @@ export namespace Components {
          */
         "enterkeyhint"?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
         /**
-          * This is required for a WebKit bug which requires us to blur and focus an input to properly focus the input in an item with delegatesFocus. It will no longer be needed with iOS 14.
-         */
-        "fireFocusEvents": boolean;
-        /**
           * Returns the native `<textarea>` element used under the hood.
          */
         "getInputElement": () => Promise<HTMLTextAreaElement>;
@@ -2863,11 +2754,11 @@ export namespace Components {
          */
         "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
         /**
-          * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
+          * This attribute specifies the maximum number of characters that the user can enter.
          */
         "maxlength"?: number;
         /**
-          * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the minimum number of characters that the user can enter.
+          * This attribute specifies the minimum number of characters that the user can enter.
          */
         "minlength"?: number;
         /**
@@ -2894,10 +2785,6 @@ export namespace Components {
           * The number of visible text lines for the control.
          */
         "rows"?: number;
-        /**
-          * Sets blur on the native `textarea` in `ion-textarea`. Use this method instead of the global `textarea.blur()`.
-         */
-        "setBlur": () => Promise<void>;
         /**
           * Sets focus on the native `textarea` in `ion-textarea`. Use this method instead of the global `textarea.focus()`.
          */
@@ -3047,73 +2934,6 @@ export namespace Components {
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
-    }
-    interface IonVirtualScroll {
-        /**
-          * The approximate width of each footer template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.
-         */
-        "approxFooterHeight": number;
-        /**
-          * The approximate height of each header template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.
-         */
-        "approxHeaderHeight": number;
-        /**
-          * It is important to provide this if virtual item height will be significantly larger than the default The approximate height of each virtual item template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.
-         */
-        "approxItemHeight": number;
-        /**
-          * This method marks the tail the items array as dirty, so they can be re-rendered.  It's equivalent to calling:  ```js virtualScroll.checkRange(lastItemLen); ```
-         */
-        "checkEnd": () => Promise<void>;
-        /**
-          * This method marks a subset of items as dirty, so they can be re-rendered. Items should be marked as dirty any time the content or their style changes.  The subset of items to be updated can are specifying by an offset and a length.
-         */
-        "checkRange": (offset: number, len?: number) => Promise<void>;
-        "domRender"?: DomRenderFn;
-        /**
-          * Section footers and the data used within its given template can be dynamically created by passing a function to `footerFn`. The logic within the footer function can decide if the footer template should be used, and what data to give to the footer template. The function must return `null` if a footer cell shouldn't be created.
-         */
-        "footerFn"?: HeaderFn;
-        /**
-          * An optional function that maps each item footer within their height.
-         */
-        "footerHeight"?: FooterHeightFn;
-        /**
-          * Section headers and the data used within its given template can be dynamically created by passing a function to `headerFn`. For example, a large list of contacts usually has dividers between each letter in the alphabet. App's can provide their own custom `headerFn` which is called with each record within the dataset. The logic within the header function can decide if the header template should be used, and what data to give to the header template. The function must return `null` if a header cell shouldn't be created.
-         */
-        "headerFn"?: HeaderFn;
-        /**
-          * An optional function that maps each item header within their height.
-         */
-        "headerHeight"?: HeaderHeightFn;
-        /**
-          * An optional function that maps each item within their height. When this function is provides, heavy optimizations and fast path can be taked by `ion-virtual-scroll` leading to massive performance improvements.  This function allows to skip all DOM reads, which can be Doing so leads to massive performance
-         */
-        "itemHeight"?: ItemHeightFn;
-        /**
-          * The data that builds the templates within the virtual scroll. It's important to note that when this data has changed, then the entire virtual scroll is reset, which is an expensive operation and should be avoided if possible.
-         */
-        "items"?: any[];
-        /**
-          * NOTE: only Vanilla JS API.
-         */
-        "nodeRender"?: ItemRenderFn;
-        /**
-          * Returns the position of the virtual item at the given index.
-         */
-        "positionForItem": (index: number) => Promise<number>;
-        /**
-          * NOTE: only JSX API for stencil.  Provide a render function for the footer to be rendered. Returns a JSX virtual-dom.
-         */
-        "renderFooter"?: (item: any, index: number) => any;
-        /**
-          * NOTE: only JSX API for stencil.  Provide a render function for the header to be rendered. Returns a JSX virtual-dom.
-         */
-        "renderHeader"?: (item: any, index: number) => any;
-        /**
-          * NOTE: only JSX API for stencil.  Provide a render function for the items to be rendered. Returns a JSX virtual-dom.
-         */
-        "renderItem"?: (item: any, index: number) => any;
     }
 }
 export interface IonAccordionGroupCustomEvent<T> extends CustomEvent<T> {
@@ -3267,10 +3087,6 @@ export interface IonSegmentCustomEvent<T> extends CustomEvent<T> {
 export interface IonSelectCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIonSelectElement;
-}
-export interface IonSlidesCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLIonSlidesElement;
 }
 export interface IonSplitPaneCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -3773,18 +3589,6 @@ declare global {
         prototype: HTMLIonSkeletonTextElement;
         new (): HTMLIonSkeletonTextElement;
     };
-    interface HTMLIonSlideElement extends Components.IonSlide, HTMLStencilElement {
-    }
-    var HTMLIonSlideElement: {
-        prototype: HTMLIonSlideElement;
-        new (): HTMLIonSlideElement;
-    };
-    interface HTMLIonSlidesElement extends Components.IonSlides, HTMLStencilElement {
-    }
-    var HTMLIonSlidesElement: {
-        prototype: HTMLIonSlidesElement;
-        new (): HTMLIonSlidesElement;
-    };
     interface HTMLIonSpinnerElement extends Components.IonSpinner, HTMLStencilElement {
     }
     var HTMLIonSpinnerElement: {
@@ -3862,12 +3666,6 @@ declare global {
     var HTMLIonToolbarElement: {
         prototype: HTMLIonToolbarElement;
         new (): HTMLIonToolbarElement;
-    };
-    interface HTMLIonVirtualScrollElement extends Components.IonVirtualScroll, HTMLStencilElement {
-    }
-    var HTMLIonVirtualScrollElement: {
-        prototype: HTMLIonVirtualScrollElement;
-        new (): HTMLIonVirtualScrollElement;
     };
     interface HTMLElementTagNameMap {
         "ion-accordion": HTMLIonAccordionElement;
@@ -3948,8 +3746,6 @@ declare global {
         "ion-select-option": HTMLIonSelectOptionElement;
         "ion-select-popover": HTMLIonSelectPopoverElement;
         "ion-skeleton-text": HTMLIonSkeletonTextElement;
-        "ion-slide": HTMLIonSlideElement;
-        "ion-slides": HTMLIonSlidesElement;
         "ion-spinner": HTMLIonSpinnerElement;
         "ion-split-pane": HTMLIonSplitPaneElement;
         "ion-tab": HTMLIonTabElement;
@@ -3963,7 +3759,6 @@ declare global {
         "ion-toast": HTMLIonToastElement;
         "ion-toggle": HTMLIonToggleElement;
         "ion-toolbar": HTMLIonToolbarElement;
-        "ion-virtual-scroll": HTMLIonVirtualScrollElement;
     }
 }
 declare namespace LocalJSX {
@@ -4015,15 +3810,19 @@ declare namespace LocalJSX {
          */
         "multiple"?: boolean;
         /**
-          * Emitted when the value property has changed.
+          * Emitted when the value property has changed as a result of a user action such as a click. This event will not emit when programmatically setting the value property.
          */
         "onIonChange"?: (event: IonAccordionGroupCustomEvent<AccordionGroupChangeEventDetail>) => void;
+        /**
+          * Emitted when the value property has changed. This is used to ensure that ion-accordion can respond to any value property changes.
+         */
+        "onIonValueChange"?: (event: IonAccordionGroupCustomEvent<AccordionGroupChangeEventDetail>) => void;
         /**
           * If `true`, the accordion group cannot be interacted with, but does not alter the opacity.
          */
         "readonly"?: boolean;
         /**
-          * The value of the accordion group.
+          * The value of the accordion group. This controls which accordions are expanded. This should be an array of strings only when `multiple="true"`
          */
         "value"?: string | string[] | null;
     }
@@ -4522,7 +4321,7 @@ declare namespace LocalJSX {
          */
         "onIonBlur"?: (event: IonCheckboxCustomEvent<void>) => void;
         /**
-          * Emitted when the checked property has changed.
+          * Emitted when the checked property has changed as a result of a user action such as a click. This event will not emit when programmatically setting the checked property.
          */
         "onIonChange"?: (event: IonCheckboxCustomEvent<CheckboxChangeEventDetail>) => void;
         /**
@@ -5069,7 +4868,7 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. This also impacts form bindings such as `ngModel` or `v-model`.
+          * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
          */
         "debounce"?: number;
         /**
@@ -5080,10 +4879,6 @@ declare namespace LocalJSX {
           * A hint to the browser for which enter key to display. Possible values: `"enter"`, `"done"`, `"go"`, `"next"`, `"previous"`, `"search"`, and `"send"`.
          */
         "enterkeyhint"?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
-        /**
-          * This is required for a WebKit bug which requires us to blur and focus an input to properly focus the input in an item with delegatesFocus. It will no longer be needed with iOS 14.
-         */
-        "fireFocusEvents"?: boolean;
         /**
           * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
          */
@@ -5121,7 +4916,7 @@ declare namespace LocalJSX {
          */
         "onIonBlur"?: (event: IonInputCustomEvent<FocusEvent>) => void;
         /**
-          * Emitted when the value has changed.
+          * The `ionChange` event is fired for `<ion-input>` elements when the user modifies the element's value. Unlike the `ionInput` event, the `ionChange` event is not necessarily fired for each alteration to an element's value.  Depending on the way the users interacts with the element, the `ionChange` event fires at a different moment: - When the user commits the change explicitly (e.g. by selecting a date from a date picker for `<ion-input type="date">`, etc.). - When the element loses focus after its value has changed: for elements where the user's interaction is typing.
          */
         "onIonChange"?: (event: IonInputCustomEvent<InputChangeEventDetail>) => void;
         /**
@@ -5129,9 +4924,9 @@ declare namespace LocalJSX {
          */
         "onIonFocus"?: (event: IonInputCustomEvent<FocusEvent>) => void;
         /**
-          * Emitted when a keyboard input occurred.
+          * The `ionInput` event fires when the `value` of an `<ion-input>` element has been changed.  For elements that accept text input (`type=text`, `type=tel`, etc.), the interface is [`InputEvent`](https://developer.mozilla.org/en-US/docs/Web/API/InputEvent); for others, the interface is [`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event). If the input is cleared on edit, the type is `null`.
          */
-        "onIonInput"?: (event: IonInputCustomEvent<InputEvent>) => void;
+        "onIonInput"?: (event: IonInputCustomEvent<InputInputEventDetail>) => void;
         /**
           * Emitted when the styles change.
          */
@@ -5548,7 +5343,7 @@ declare namespace LocalJSX {
         /**
           * Determines whether or not a modal can dismiss when calling the `dismiss` method.  If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss. If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.
          */
-        "canDismiss"?: undefined | boolean | (() => Promise<boolean>);
+        "canDismiss"?: boolean | (() => Promise<boolean>);
         /**
           * The component to display inside of the modal.
          */
@@ -5648,11 +5443,6 @@ declare namespace LocalJSX {
           * If `true`, a backdrop will be displayed behind the modal. This property controls whether or not the backdrop darkens the screen when the modal is presented. It does not control whether or not the backdrop is active or present in the DOM.
          */
         "showBackdrop"?: boolean;
-        /**
-          * If `true`, the modal can be swiped to dismiss. Only applies in iOS mode.
-          * @deprecated - To prevent modals from dismissing, use canDismiss instead.
-         */
-        "swipeToClose"?: boolean;
         /**
           * An ID corresponding to the trigger element that causes the modal to open when clicked.
          */
@@ -6334,7 +6124,7 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. This also impacts form bindings such as `ngModel` or `v-model`.
+          * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
          */
         "debounce"?: number;
         /**
@@ -6362,7 +6152,7 @@ declare namespace LocalJSX {
          */
         "onIonCancel"?: (event: IonSearchbarCustomEvent<void>) => void;
         /**
-          * Emitted when the value has changed.
+          * The `ionChange` event is fired for `<ion-searchbar>` elements when the user modifies the element's value. Unlike the `ionInput` event, the `ionChange` event is not necessarily fired for each alteration to an element's value.  The `ionChange` event is fired when the element loses focus after its value has been modified. This includes modifications made when clicking the clear or cancel buttons.
          */
         "onIonChange"?: (event: IonSearchbarCustomEvent<SearchbarChangeEventDetail>) => void;
         /**
@@ -6374,9 +6164,9 @@ declare namespace LocalJSX {
          */
         "onIonFocus"?: (event: IonSearchbarCustomEvent<void>) => void;
         /**
-          * Emitted when a keyboard input occurred.
+          * Emitted when the `value` of the `ion-searchbar` element has changed.
          */
-        "onIonInput"?: (event: IonSearchbarCustomEvent<KeyboardEvent>) => void;
+        "onIonInput"?: (event: IonSearchbarCustomEvent<KeyboardEvent | null>) => void;
         /**
           * Emitted when the styles change.
          */
@@ -6428,7 +6218,7 @@ declare namespace LocalJSX {
          */
         "onIonChange"?: (event: IonSegmentCustomEvent<SegmentChangeEventDetail>) => void;
         /**
-          * Emitted when user has dragged over a new button
+          * Emitted when the value of the segment changes from user committed actions or from externally assigning a value.
          */
         "onIonSelect"?: (event: IonSegmentCustomEvent<SegmentChangeEventDetail>) => void;
         /**
@@ -6450,7 +6240,7 @@ declare namespace LocalJSX {
         /**
           * the value of the segment.
          */
-        "value"?: string | null;
+        "value"?: string;
     }
     interface IonSegmentButton {
         /**
@@ -6585,90 +6375,6 @@ declare namespace LocalJSX {
           * If `true`, the skeleton text will animate.
          */
         "animated"?: boolean;
-    }
-    interface IonSlide {
-    }
-    interface IonSlides {
-        /**
-          * The mode determines which platform styles to use.
-         */
-        "mode"?: "ios" | "md";
-        /**
-          * Emitted after the active slide has changed.
-         */
-        "onIonSlideDidChange"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the user double taps on the slide's container.
-         */
-        "onIonSlideDoubleTap"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the slider is actively being moved.
-         */
-        "onIonSlideDrag"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the next slide has ended.
-         */
-        "onIonSlideNextEnd"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the next slide has started.
-         */
-        "onIonSlideNextStart"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the previous slide has ended.
-         */
-        "onIonSlidePrevEnd"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the previous slide has started.
-         */
-        "onIonSlidePrevStart"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the slider is at the last slide.
-         */
-        "onIonSlideReachEnd"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the slider is at its initial position.
-         */
-        "onIonSlideReachStart"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the user taps/clicks on the slide's container.
-         */
-        "onIonSlideTap"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the user releases the touch.
-         */
-        "onIonSlideTouchEnd"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the user first touches the slider.
-         */
-        "onIonSlideTouchStart"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the slide transition has ended.
-         */
-        "onIonSlideTransitionEnd"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the slide transition has started.
-         */
-        "onIonSlideTransitionStart"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted before the active slide has changed.
-         */
-        "onIonSlideWillChange"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted after Swiper initialization
-         */
-        "onIonSlidesDidLoad"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Options to pass to the swiper instance. See https://swiperjs.com/swiper-api for valid options
-         */
-        "options"?: any;
-        /**
-          * If `true`, show the pagination.
-         */
-        "pager"?: boolean;
-        /**
-          * If `true`, show the scrollbar.
-         */
-        "scrollbar"?: boolean;
     }
     interface IonSpinner {
         /**
@@ -6818,7 +6524,7 @@ declare namespace LocalJSX {
          */
         "autofocus"?: boolean;
         /**
-          * If `true`, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
+          * If `true`, the value will be cleared after focus upon edit.
          */
         "clearOnEdit"?: boolean;
         /**
@@ -6830,7 +6536,7 @@ declare namespace LocalJSX {
          */
         "cols"?: number;
         /**
-          * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. This also impacts form bindings such as `ngModel` or `v-model`.
+          * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
          */
         "debounce"?: number;
         /**
@@ -6842,19 +6548,15 @@ declare namespace LocalJSX {
          */
         "enterkeyhint"?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
         /**
-          * This is required for a WebKit bug which requires us to blur and focus an input to properly focus the input in an item with delegatesFocus. It will no longer be needed with iOS 14.
-         */
-        "fireFocusEvents"?: boolean;
-        /**
           * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
          */
         "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
         /**
-          * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
+          * This attribute specifies the maximum number of characters that the user can enter.
          */
         "maxlength"?: number;
         /**
-          * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the minimum number of characters that the user can enter.
+          * This attribute specifies the minimum number of characters that the user can enter.
          */
         "minlength"?: number;
         /**
@@ -6870,7 +6572,7 @@ declare namespace LocalJSX {
          */
         "onIonBlur"?: (event: IonTextareaCustomEvent<FocusEvent>) => void;
         /**
-          * Emitted when the input value has changed.
+          * The `ionChange` event is fired for `<ion-textarea>` elements when the user modifies the element's value. Unlike the `ionInput` event, the `ionChange` event is not necessarily fired for each alteration to an element's value.  The `ionChange` event is fired when the element loses focus after its value has been modified.
          */
         "onIonChange"?: (event: IonTextareaCustomEvent<TextareaChangeEventDetail>) => void;
         /**
@@ -6878,7 +6580,7 @@ declare namespace LocalJSX {
          */
         "onIonFocus"?: (event: IonTextareaCustomEvent<FocusEvent>) => void;
         /**
-          * Emitted when a keyboard input occurred.
+          * The `ionInput` event fires when the `value` of an `<ion-textarea>` element has been changed.  When `clearOnEdit` is enabled, the `ionInput` event will be fired when the user clears the textarea by performing a keydown event.
          */
         "onIonInput"?: (event: IonTextareaCustomEvent<InputEvent>) => void;
         /**
@@ -7039,7 +6741,7 @@ declare namespace LocalJSX {
          */
         "onIonBlur"?: (event: IonToggleCustomEvent<void>) => void;
         /**
-          * Emitted when the value property has changed.
+          * Emitted when the user switches the toggle on or off. Does not emit when programmatically changing the value of the `checked` property.
          */
         "onIonChange"?: (event: IonToggleCustomEvent<ToggleChangeEventDetail>) => void;
         /**
@@ -7064,61 +6766,6 @@ declare namespace LocalJSX {
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
-    }
-    interface IonVirtualScroll {
-        /**
-          * The approximate width of each footer template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.
-         */
-        "approxFooterHeight"?: number;
-        /**
-          * The approximate height of each header template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.
-         */
-        "approxHeaderHeight"?: number;
-        /**
-          * It is important to provide this if virtual item height will be significantly larger than the default The approximate height of each virtual item template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.
-         */
-        "approxItemHeight"?: number;
-        "domRender"?: DomRenderFn;
-        /**
-          * Section footers and the data used within its given template can be dynamically created by passing a function to `footerFn`. The logic within the footer function can decide if the footer template should be used, and what data to give to the footer template. The function must return `null` if a footer cell shouldn't be created.
-         */
-        "footerFn"?: HeaderFn;
-        /**
-          * An optional function that maps each item footer within their height.
-         */
-        "footerHeight"?: FooterHeightFn;
-        /**
-          * Section headers and the data used within its given template can be dynamically created by passing a function to `headerFn`. For example, a large list of contacts usually has dividers between each letter in the alphabet. App's can provide their own custom `headerFn` which is called with each record within the dataset. The logic within the header function can decide if the header template should be used, and what data to give to the header template. The function must return `null` if a header cell shouldn't be created.
-         */
-        "headerFn"?: HeaderFn;
-        /**
-          * An optional function that maps each item header within their height.
-         */
-        "headerHeight"?: HeaderHeightFn;
-        /**
-          * An optional function that maps each item within their height. When this function is provides, heavy optimizations and fast path can be taked by `ion-virtual-scroll` leading to massive performance improvements.  This function allows to skip all DOM reads, which can be Doing so leads to massive performance
-         */
-        "itemHeight"?: ItemHeightFn;
-        /**
-          * The data that builds the templates within the virtual scroll. It's important to note that when this data has changed, then the entire virtual scroll is reset, which is an expensive operation and should be avoided if possible.
-         */
-        "items"?: any[];
-        /**
-          * NOTE: only Vanilla JS API.
-         */
-        "nodeRender"?: ItemRenderFn;
-        /**
-          * NOTE: only JSX API for stencil.  Provide a render function for the footer to be rendered. Returns a JSX virtual-dom.
-         */
-        "renderFooter"?: (item: any, index: number) => any;
-        /**
-          * NOTE: only JSX API for stencil.  Provide a render function for the header to be rendered. Returns a JSX virtual-dom.
-         */
-        "renderHeader"?: (item: any, index: number) => any;
-        /**
-          * NOTE: only JSX API for stencil.  Provide a render function for the items to be rendered. Returns a JSX virtual-dom.
-         */
-        "renderItem"?: (item: any, index: number) => any;
     }
     interface IntrinsicElements {
         "ion-accordion": IonAccordion;
@@ -7199,8 +6846,6 @@ declare namespace LocalJSX {
         "ion-select-option": IonSelectOption;
         "ion-select-popover": IonSelectPopover;
         "ion-skeleton-text": IonSkeletonText;
-        "ion-slide": IonSlide;
-        "ion-slides": IonSlides;
         "ion-spinner": IonSpinner;
         "ion-split-pane": IonSplitPane;
         "ion-tab": IonTab;
@@ -7214,7 +6859,6 @@ declare namespace LocalJSX {
         "ion-toast": IonToast;
         "ion-toggle": IonToggle;
         "ion-toolbar": IonToolbar;
-        "ion-virtual-scroll": IonVirtualScroll;
     }
 }
 export { LocalJSX as JSX };
@@ -7299,8 +6943,6 @@ declare module "@stencil/core" {
             "ion-select-option": LocalJSX.IonSelectOption & JSXBase.HTMLAttributes<HTMLIonSelectOptionElement>;
             "ion-select-popover": LocalJSX.IonSelectPopover & JSXBase.HTMLAttributes<HTMLIonSelectPopoverElement>;
             "ion-skeleton-text": LocalJSX.IonSkeletonText & JSXBase.HTMLAttributes<HTMLIonSkeletonTextElement>;
-            "ion-slide": LocalJSX.IonSlide & JSXBase.HTMLAttributes<HTMLIonSlideElement>;
-            "ion-slides": LocalJSX.IonSlides & JSXBase.HTMLAttributes<HTMLIonSlidesElement>;
             "ion-spinner": LocalJSX.IonSpinner & JSXBase.HTMLAttributes<HTMLIonSpinnerElement>;
             "ion-split-pane": LocalJSX.IonSplitPane & JSXBase.HTMLAttributes<HTMLIonSplitPaneElement>;
             "ion-tab": LocalJSX.IonTab & JSXBase.HTMLAttributes<HTMLIonTabElement>;
@@ -7314,7 +6956,6 @@ declare module "@stencil/core" {
             "ion-toast": LocalJSX.IonToast & JSXBase.HTMLAttributes<HTMLIonToastElement>;
             "ion-toggle": LocalJSX.IonToggle & JSXBase.HTMLAttributes<HTMLIonToggleElement>;
             "ion-toolbar": LocalJSX.IonToolbar & JSXBase.HTMLAttributes<HTMLIonToolbarElement>;
-            "ion-virtual-scroll": LocalJSX.IonVirtualScroll & JSXBase.HTMLAttributes<HTMLIonVirtualScrollElement>;
         }
     }
 }

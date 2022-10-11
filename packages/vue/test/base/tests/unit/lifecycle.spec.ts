@@ -1,4 +1,5 @@
 import { mount } from '@vue/test-utils';
+import { describe, expect, it, vi } from 'vitest';
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { IonicVue, IonApp, IonRouterOutlet, IonTabs, IonPage } from '@ionic/vue';
 import { defineComponent } from 'vue';
@@ -21,10 +22,10 @@ const Page1 = {
       name: 'page1'
     }
   },
-  ionViewWillEnter: jest.fn(),
-  ionViewDidEnter: jest.fn(),
-  ionViewWillLeave: jest.fn(),
-  ionViewDidLeave: jest.fn(),
+  ionViewWillEnter: vi.fn(),
+  ionViewDidEnter: vi.fn(),
+  ionViewWillLeave: vi.fn(),
+  ionViewDidLeave: vi.fn(),
 }
 
 const Page2 = defineComponent({
@@ -34,16 +35,13 @@ const Page2 = defineComponent({
       name: 'page2'
     }
   },
-  ionViewWillEnter: jest.fn(),
-  ionViewDidEnter: jest.fn(),
-  ionViewWillLeave: jest.fn(),
-  ionViewDidLeave: jest.fn(),
+  ionViewWillEnter: vi.fn(),
+  ionViewDidEnter: vi.fn(),
+  ionViewWillLeave: vi.fn(),
+  ionViewDidLeave: vi.fn(),
 });
 
 describe('Lifecycle Events', () => {
-  beforeAll(() => {
-    (HTMLElement.prototype as HTMLIonRouterOutletElement).commit = jest.fn();
-  });
   it('Triggers lifecycle events', async () => {
     const router = createRouter({
       history: createWebHistory(process.env.BASE_URL),
@@ -81,7 +79,7 @@ describe('Lifecycle Events', () => {
 
     // Navigate to 2nd page
     router.push('/2');
-    jest.resetAllMocks();
+    vi.resetAllMocks();
     await waitForRouter();
 
     // Page 1 lifecycle hooks
@@ -96,10 +94,10 @@ describe('Lifecycle Events', () => {
 
     // Page 2 lifecycle hooks
     expect(Page2.ionViewWillEnter).toHaveBeenCalled();
-    expect((Page2.ionViewWillEnter as jest.Mock).mock.instances[0]).toEqual(expect.objectContaining({ name: 'page2' }))
+    expect((Page2.ionViewWillEnter as vi.Mock).mock.instances[0]).toEqual(expect.objectContaining({ name: 'page2' }))
 
     expect(Page2.ionViewDidEnter).toHaveBeenCalled();
-    expect((Page2.ionViewDidEnter as jest.Mock).mock.instances[0]).toEqual(expect.objectContaining({ name: 'page2' }))
+    expect((Page2.ionViewDidEnter as vi.Mock).mock.instances[0]).toEqual(expect.objectContaining({ name: 'page2' }))
 
     expect(Page2.ionViewWillLeave).not.toHaveBeenCalled();
     expect(Page2.ionViewDidLeave).not.toHaveBeenCalled();
@@ -115,25 +113,25 @@ describe('Lifecycle Events', () => {
         </ion-page>
       `,
       components: { IonPage, IonTabs, IonRouterOutlet },
-      ionViewWillEnter: jest.fn(),
-      ionViewDidEnter: jest.fn(),
-      ionViewWillLeave: jest.fn(),
-      ionViewDidLeave: jest.fn(),
+      ionViewWillEnter: vi.fn(),
+      ionViewDidEnter: vi.fn(),
+      ionViewWillLeave: vi.fn(),
+      ionViewDidLeave: vi.fn(),
     }
     const Tab1Page = {
       ...BasePage,
-      ionViewWillEnter: jest.fn(),
-      ionViewDidEnter: jest.fn(),
-      ionViewWillLeave: jest.fn(),
-      ionViewDidLeave: jest.fn(),
+      ionViewWillEnter: vi.fn(),
+      ionViewDidEnter: vi.fn(),
+      ionViewWillLeave: vi.fn(),
+      ionViewDidLeave: vi.fn(),
     }
 
     const NonTabPage = {
       ...BasePage,
-      ionViewWillEnter: jest.fn(),
-      ionViewDidEnter: jest.fn(),
-      ionViewWillLeave: jest.fn(),
-      ionViewDidLeave: jest.fn(),
+      ionViewWillEnter: vi.fn(),
+      ionViewDidEnter: vi.fn(),
+      ionViewWillLeave: vi.fn(),
+      ionViewDidLeave: vi.fn(),
     }
 
 
@@ -168,7 +166,7 @@ describe('Lifecycle Events', () => {
 
     // Navigate out of tabs
     router.push('/non-tab');
-    jest.resetAllMocks();
+    vi.resetAllMocks();
     await waitForRouter();
 
     expect(TabsPage.ionViewWillLeave).toHaveBeenCalled();
@@ -184,7 +182,7 @@ describe('Lifecycle Events', () => {
 
     // Go back
     router.back();
-    jest.resetAllMocks();
+    vi.resetAllMocks();
     await waitForRouter();
 
     expect(TabsPage.ionViewWillEnter).toHaveBeenCalled();
@@ -198,7 +196,7 @@ describe('Lifecycle Events', () => {
 
     // Navigate out of tabs again
     router.push('/non-tab');
-    jest.resetAllMocks();
+    vi.resetAllMocks();
     await waitForRouter();
 
     expect(TabsPage.ionViewWillLeave).toHaveBeenCalled();
@@ -209,7 +207,7 @@ describe('Lifecycle Events', () => {
 
     // Go back again
     router.back();
-    jest.resetAllMocks();
+    vi.resetAllMocks();
     await waitForRouter();
 
     expect(TabsPage.ionViewWillEnter).toHaveBeenCalled();

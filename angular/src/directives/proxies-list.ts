@@ -1,3 +1,4 @@
+
 import * as d from './proxies';
 
 export const DIRECTIVES = [
@@ -65,8 +66,6 @@ export const DIRECTIVES = [
   d.IonSelect,
   d.IonSelectOption,
   d.IonSkeletonText,
-  d.IonSlide,
-  d.IonSlides,
   d.IonSpinner,
   d.IonSplitPane,
   d.IonTabBar,
@@ -76,5 +75,5 @@ export const DIRECTIVES = [
   d.IonThumbnail,
   d.IonTitle,
   d.IonToggle,
-  d.IonToolbar,
+  d.IonToolbar
 ];

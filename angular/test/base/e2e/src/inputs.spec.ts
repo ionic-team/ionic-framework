@@ -38,18 +38,28 @@ describe('Inputs', () => {
   it('change values should update angular', () => {
     cy.get('#reset-button').click();
 
-    cy.get('ion-checkbox').invoke('prop', 'checked', true);
-    cy.get('ion-toggle').invoke('prop', 'checked', true);
-    cy.get('ion-input').invoke('prop', 'value', 'hola');
+    cy.get('ion-checkbox#first-checkbox').click();
+    cy.get('ion-toggle').first().click();
+
+    cy.get('ion-input').eq(0).type('hola');
+    cy.get('ion-input input').eq(0).blur();
+
     cy.get('ion-datetime').invoke('prop', 'value', '1996-03-15');
-    cy.get('ion-select').invoke('prop', 'value', 'playstation');
+
+    cy.get('ion-select#game-console').click();
+    cy.get('ion-alert').should('exist').should('be.visible');
+    // Playstation option
+    cy.get('ion-alert .alert-radio-button:nth-of-type(4)').click();
+    // Click confirm button
+    cy.get('ion-alert .alert-button:not(.alert-button-role-cancel)').click();
+
     cy.get('ion-range').invoke('prop', 'value', 20);
 
     cy.get('#checkbox-note').should('have.text', 'true');
     cy.get('#toggle-note').should('have.text', 'true');
     cy.get('#input-note').should('have.text', 'hola');
     cy.get('#datetime-note').should('have.text', '1996-03-15');
-    cy.get('#select-note').should('have.text', 'playstation');
+    cy.get('#select-note').should('have.text', 'ps');
     cy.get('#range-note').should('have.text', '20');
   });
 

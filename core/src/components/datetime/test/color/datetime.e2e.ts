@@ -5,11 +5,9 @@ test.describe('datetime: color', () => {
   test('should not have visual regressions', async ({ page }) => {
     await page.goto('/src/components/datetime/test/color');
 
-    const colorSelect = page.locator('ion-select');
-    const darkModeToggle = page.locator('ion-checkbox');
     const datetime = page.locator('ion-datetime');
 
-    await darkModeToggle.evaluate((el: HTMLIonCheckboxElement) => (el.checked = true));
+    await page.evaluate(() => document.body.classList.toggle('dark'));
     await page.waitForChanges();
 
     expect(await datetime.first().screenshot()).toMatchSnapshot(
@@ -19,8 +17,10 @@ test.describe('datetime: color', () => {
       `datetime-color-custom-dark-${page.getSnapshotSettings()}.png`
     );
 
-    await darkModeToggle.evaluate((el: HTMLIonCheckboxElement) => (el.checked = false));
-    await colorSelect.evaluate((el: HTMLIonSelectElement) => (el.value = 'danger'));
+    await page.evaluate(() => document.body.classList.toggle('dark'));
+    await datetime.evaluateAll((els: HTMLIonDatetimeElement[]) => {
+      els.forEach((el) => (el.color = 'danger'));
+    });
     await page.waitForChanges();
 
     expect(await datetime.first().screenshot()).toMatchSnapshot(
@@ -30,7 +30,7 @@ test.describe('datetime: color', () => {
       `datetime-color-custom-light-color-${page.getSnapshotSettings()}.png`
     );
 
-    await darkModeToggle.evaluate((el: HTMLIonCheckboxElement) => (el.checked = true));
+    await page.evaluate(() => document.body.classList.toggle('dark'));
     await page.waitForChanges();
 
     expect(await datetime.first().screenshot()).toMatchSnapshot(

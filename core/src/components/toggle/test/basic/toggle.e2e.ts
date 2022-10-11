@@ -52,14 +52,14 @@ test.describe('toggle: basic', () => {
     });
   });
 
-  test('should fire change event if checked prop is changed directly', async ({ page }) => {
+  test('should not fire change event if checked prop is changed directly', async ({ page }) => {
     const toggle = page.locator('#orange');
     const ionChange = await page.spyOnEvent('ionChange');
 
     await toggle.evaluate((el: HTMLIonToggleElement) => (el.checked = true));
     await page.waitForChanges();
 
-    expect(ionChange).toHaveReceivedEvent();
+    expect(ionChange).toHaveReceivedEventTimes(0);
   });
 
   test('should pass properties down to hidden input', async ({ page }) => {

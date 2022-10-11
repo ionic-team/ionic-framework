@@ -7,14 +7,11 @@ import { RouterLinkPageComponent } from './router-link-page/router-link-page.com
 import { RouterLinkPage2Component } from './router-link-page2/router-link-page2.component';
 import { RouterLinkPage3Component } from './router-link-page3/router-link-page3.component';
 import { HomePageComponent } from './home-page/home-page.component';
-import { VirtualScrollComponent } from './virtual-scroll/virtual-scroll.component';
-import { VirtualScrollDetailComponent } from './virtual-scroll-detail/virtual-scroll-detail.component';
 import { NestedOutletComponent } from './nested-outlet/nested-outlet.component';
 import { NestedOutletPageComponent } from './nested-outlet-page/nested-outlet-page.component';
 import { NestedOutletPage2Component } from './nested-outlet-page2/nested-outlet-page2.component';
 import { ViewChildComponent } from './view-child/view-child.component';
 import { ProvidersComponent } from './providers/providers.component';
-import { SlidesComponent } from './slides/slides.component';
 import { FormComponent } from './form/form.component';
 import { NavigationPage1Component } from './navigation-page1/navigation-page1.component';
 import { NavigationPage2Component } from './navigation-page2/navigation-page2.component';
@@ -28,6 +25,8 @@ const routes: Routes = [
   { path: 'accordions', component: AccordionComponent },
   { path: 'alerts', component: AlertComponent },
   { path: 'inputs', component: InputsComponent },
+  { path: 'textarea', loadChildren: () => import('./textarea/textarea.module').then(m => m.TextareaModule) },
+  { path: 'searchbar', loadChildren: () => import('./searchbar/searchbar.module').then(m => m.SearchbarModule) },
   { path: 'form', component: FormComponent },
   { path: 'modals', component: ModalComponent },
   { path: 'modal-inline', loadChildren: () => import('./modal-inline').then(m => m.ModalInlineModule) },
@@ -39,9 +38,6 @@ const routes: Routes = [
   { path: 'router-link-page', component: RouterLinkPageComponent },
   { path: 'router-link-page2/:id', component: RouterLinkPage2Component },
   { path: 'router-link-page3', component: RouterLinkPage3Component },
-  { path: 'slides', component: SlidesComponent },
-  { path: 'virtual-scroll', component: VirtualScrollComponent },
-  { path: 'virtual-scroll-detail/:itemId', component: VirtualScrollDetailComponent },
   { path: 'tabs', redirectTo: '/tabs/account', pathMatch: 'full' },
   {
     path: 'navigation',

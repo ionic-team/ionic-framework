@@ -32,7 +32,6 @@ export async function ionRenderToString(
 
         // auxiliary
         'ion-picker-column',
-        'ion-virtual-scroll',
       ],
       userAgent,
     },

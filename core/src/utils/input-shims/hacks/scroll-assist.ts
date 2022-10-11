@@ -1,42 +1,47 @@
 import { getScrollElement, scrollByPoint } from '../../content';
-import { pointerCoord, raf } from '../../helpers';
+import { raf } from '../../helpers';
+import type { KeyboardResizeOptions } from '../../native/keyboard';
+import { KeyboardResize } from '../../native/keyboard';
 
-import { isFocused, relocateInput } from './common';
+import { relocateInput, SCROLL_AMOUNT_PADDING } from './common';
 import { getScrollData } from './scroll-data';
+import { setScrollPadding, setClearScrollPaddingListener } from './scroll-padding';
+
+let currentPadding = 0;
 
 export const enableScrollAssist = (
   componentEl: HTMLElement,
   inputEl: HTMLInputElement | HTMLTextAreaElement,
   contentEl: HTMLElement | null,
   footerEl: HTMLIonFooterElement | null,
-  keyboardHeight: number
+  keyboardHeight: number,
+  enableScrollPadding: boolean,
+  keyboardResize: KeyboardResizeOptions | undefined
 ) => {
-  let coord: any;
-  const touchStart = (ev: Event) => {
-    coord = pointerCoord(ev);
-  };
+  /**
+   * Scroll padding should only be added if:
+   * 1. The global scrollPadding config option
+   * is set to true.
+   * 2. The native keyboard resize mode is either "none"
+   * (keyboard overlays webview) or undefined (resize
+   * information unavailable)
+   * Resize info is available on Capacitor 4+
+   */
+  const addScrollPadding =
+    enableScrollPadding && (keyboardResize === undefined || keyboardResize.mode === KeyboardResize.None);
 
-  const touchEnd = (ev: Event) => {
-    // input cover touchend/mouseup
-    if (!coord) {
-      return;
-    }
-    // get where the touchend/mouseup ended
-    const endCoord = pointerCoord(ev);
-
-    // focus this input if the pointer hasn't moved XX pixels
-    // and the input doesn't already have focus
-    if (!hasPointerMoved(6, coord, endCoord) && !isFocused(inputEl)) {
-      // begin the input focus process
-      jsSetFocus(componentEl, inputEl, contentEl, footerEl, keyboardHeight);
-    }
+  /**
+   * When the input is about to receive
+   * focus, we need to move it to prevent
+   * mobile Safari from adjusting the viewport.
+   */
+  const focusIn = async () => {
+    jsSetFocus(componentEl, inputEl, contentEl, footerEl, keyboardHeight, addScrollPadding);
   };
-  componentEl.addEventListener('touchstart', touchStart, { capture: true, passive: true });
-  componentEl.addEventListener('touchend', touchEnd, true);
+  componentEl.addEventListener('focusin', focusIn, true);
 
   return () => {
-    componentEl.removeEventListener('touchstart', touchStart, true);
-    componentEl.removeEventListener('touchend', touchEnd, true);
+    componentEl.removeEventListener('focusin', focusIn, true);
   };
 };
 
@@ -45,7 +50,8 @@ const jsSetFocus = async (
   inputEl: HTMLInputElement | HTMLTextAreaElement,
   contentEl: HTMLElement | null,
   footerEl: HTMLIonFooterElement | null,
-  keyboardHeight: number
+  keyboardHeight: number,
+  enableScrollPadding: boolean
 ) => {
   if (!contentEl && !footerEl) {
     return;
@@ -56,6 +62,22 @@ const jsSetFocus = async (
     // the text input is in a safe position that doesn't
     // require it to be scrolled into view, just set focus now
     inputEl.focus();
+
+    /**
+     * Even though the input does not need
+     * scroll assist, we should preserve the
+     * the scroll padding as users could be moving
+     * focus from an input that needs scroll padding
+     * to an input that does not need scroll padding.
+     * If we remove the scroll padding now, users will
+     * see the page jump.
+     */
+    if (enableScrollPadding && contentEl !== null) {
+      currentPadding += scrollData.scrollAmount;
+      setScrollPadding(contentEl, currentPadding);
+      setClearScrollPaddingListener(inputEl, contentEl, () => (currentPadding = 0));
+    }
+
     return;
   }
 
@@ -71,6 +93,17 @@ const jsSetFocus = async (
    * manually fire one here.
    */
   raf(() => componentEl.click());
+
+  /**
+   * If enabled, we can add scroll padding to
+   * the bottom of the content so that scroll assist
+   * has enough room to scroll the input above
+   * the keyboard.
+   */
+  if (enableScrollPadding && contentEl) {
+    currentPadding += scrollData.scrollAmount;
+    setScrollPadding(contentEl, currentPadding);
+  }
 
   if (typeof window !== 'undefined') {
     let scrollContentTimeout: any;
@@ -94,6 +127,15 @@ const jsSetFocus = async (
 
       // ensure this is the focused input
       inputEl.focus();
+
+      /**
+       * When the input is about to be blurred
+       * we should set a timeout to remove
+       * any scroll padding.
+       */
+      if (enableScrollPadding) {
+        setClearScrollPaddingListener(inputEl, contentEl, () => (currentPadding = 0));
+      }
     };
 
     const doubleKeyboardEventListener = () => {
@@ -125,7 +167,7 @@ const jsSetFocus = async (
          */
         if (inputEl.type === 'password') {
           // Add 50px to account for the "Passwords" bar
-          scrollData.scrollAmount += 50;
+          scrollData.scrollAmount += SCROLL_AMOUNT_PADDING;
           window.addEventListener('ionKeyboardDidShow', doubleKeyboardEventListener);
         } else {
           window.addEventListener('ionKeyboardDidShow', scrollContent);
@@ -145,22 +187,3 @@ const jsSetFocus = async (
     scrollContent();
   }
 };
-
-const hasPointerMoved = (
-  threshold: number,
-  startCoord: PointerCoordinates | undefined,
-  endCoord: PointerCoordinates | undefined
-) => {
-  if (startCoord && endCoord) {
-    const deltaX = startCoord.x - endCoord.x;
-    const deltaY = startCoord.y - endCoord.y;
-    const distance = deltaX * deltaX + deltaY * deltaY;
-    return distance > threshold * threshold;
-  }
-  return false;
-};
-
-export interface PointerCoordinates {
-  x: number;
-  y: number;
-}

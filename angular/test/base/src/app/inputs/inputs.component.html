@@ -23,7 +23,7 @@
 
     <ion-item>
       <ion-label>Select</ion-label>
-      <ion-select [(ngModel)]="select">
+      <ion-select [(ngModel)]="select" id="game-console">
         <ion-select-option value="">No Game Console</ion-select-option>
         <ion-select-option value="nes">NES</ion-select-option>
         <ion-select-option value="n64" selected>Nintendo64</ion-select-option>
@@ -75,7 +75,7 @@
 
     <ion-item>
       <ion-label>Checkbox</ion-label>
-      <ion-checkbox [(ngModel)]="checkbox" slot="start"></ion-checkbox>
+      <ion-checkbox [(ngModel)]="checkbox" slot="start" id="first-checkbox"></ion-checkbox>
       <ion-note slot="end" id="checkbox-note">{{checkbox}}</ion-note>
     </ion-item>
 

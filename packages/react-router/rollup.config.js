@@ -5,15 +5,10 @@ export default {
   input: 'dist-transpiled/index.js',
   output: [
     {
-      file: 'dist/index.esm.js',
+      file: 'dist/index.js',
       format: 'es',
       sourcemap: true,
-    },
-    {
-      file: 'dist/index.js',
-      format: 'commonjs',
-      sourcemap: true,
-    },
+    }
   ],
   external: (id) => !/^(\.|\/)/.test(id),
   plugins: [resolve(), sourcemaps()],
