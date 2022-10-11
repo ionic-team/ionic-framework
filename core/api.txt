@@ -996,6 +996,7 @@ ion-range,prop,value,number | { lower: number; upper: number; },0,false,false
 ion-range,event,ionBlur,void,true
 ion-range,event,ionChange,RangeChangeEventDetail,true
 ion-range,event,ionFocus,void,true
+ion-range,event,ionInput,RangeChangeEventDetail,true
 ion-range,event,ionKnobMoveEnd,RangeKnobMoveEndEventDetail,true
 ion-range,event,ionKnobMoveStart,RangeKnobMoveStartEventDetail,true
 ion-range,css-prop,--bar-background
@@ -1306,7 +1307,7 @@ ion-textarea,method,setFocus,setFocus() => Promise<void>
 ion-textarea,event,ionBlur,FocusEvent,true
 ion-textarea,event,ionChange,TextareaChangeEventDetail,true
 ion-textarea,event,ionFocus,FocusEvent,true
-ion-textarea,event,ionInput,InputEvent | null,true
+ion-textarea,event,ionInput,InputEvent,true
 ion-textarea,css-prop,--background
 ion-textarea,css-prop,--border-radius
 ion-textarea,css-prop,--color
