@@ -53,7 +53,7 @@ test.describe('datetime: values', () => {
     const items = page.locator('ion-picker-column-internal:nth-of-type(2) .picker-item:not(.picker-item-empty)');
     await expect(items).toHaveText(['01', '02', '03']);
   });
-  test.only('should adjust default parts for allowed hour and minute values', async ({ page }) => {
+  test('should adjust default parts for allowed hour and minute values', async ({ page }) => {
     /**
      * Mock today's date for testing.
      * Playwright does not support this natively
