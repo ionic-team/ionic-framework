@@ -503,6 +503,7 @@ export class Range implements ComponentInterface {
       inheritedAttributes,
       rangeId,
       pinFormatter,
+      dualKnobs,
       value,
     } = this;
 
@@ -530,7 +531,7 @@ export class Range implements ComponentInterface {
       };
     };
 
-    if (this.dualKnobs === false) {
+    if (dualKnobs === false) {
       /**
        * When the value is less than the activeBarStart or the min value,
        * the knob will display at the start of the active bar.
@@ -600,7 +601,6 @@ export class Range implements ComponentInterface {
           'range-has-pin': pin,
         })}
         role="slider"
-        tabindex={disabled ? -1 : 0}
         aria-label={labelText}
         aria-valuemin={min}
         aria-valuemax={max}
@@ -621,8 +621,10 @@ export class Range implements ComponentInterface {
             />
           ))}
 
-          <div class="range-bar" role="presentation" part="bar" />
-          <div class="range-bar range-bar-active" role="presentation" style={barStyle} part="bar-active" />
+          <div class="range-bar-container">
+            <div class="range-bar" role="presentation" part="bar" />
+            <div class="range-bar range-bar-active" role="presentation" style={barStyle} part="bar-active" />
+          </div>
 
           {renderKnob(rtl, {
             knob: 'A',
@@ -635,10 +637,9 @@ export class Range implements ComponentInterface {
             handleKeyboard,
             min,
             max,
-            labelText,
           })}
 
-          {this.dualKnobs &&
+          {dualKnobs &&
             renderKnob(rtl, {
               knob: 'B',
               pressed: pressedKnob === 'B',
@@ -650,7 +651,6 @@ export class Range implements ComponentInterface {
               handleKeyboard,
               min,
               max,
-              labelText,
             })}
         </div>
         <slot name="end"></slot>
@@ -669,14 +669,13 @@ interface RangeKnob {
   pressed: boolean;
   pin: boolean;
   pinFormatter: PinFormatter;
-  labelText?: string | null;
 
   handleKeyboard: (name: KnobName, isIncrease: boolean) => void;
 }
 
 const renderKnob = (
   rtl: boolean,
-  { knob, value, ratio, min, max, pressed, pin, handleKeyboard, pinFormatter }: RangeKnob
+  { knob, value, ratio, min, max, disabled, pressed, pin, handleKeyboard, pinFormatter }: RangeKnob
 ) => {
   const start = rtl ? 'right' : 'left';
 
@@ -713,6 +712,7 @@ const renderKnob = (
         'ion-focusable': true,
       }}
       style={knobStyle()}
+      tabindex={disabled ? -1 : 0}
     >
       {pin && (
         <div class="range-pin" role="presentation" part="pin">
