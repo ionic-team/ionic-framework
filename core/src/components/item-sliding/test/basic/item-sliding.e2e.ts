@@ -22,7 +22,7 @@ test.describe('item-sliding: basic', () => {
 
     await page.goto(`/src/components/item-sliding/test/basic`);
     const item = page.locator('#item2');
-    
+
     const box = (await item.boundingBox())!;
     const centerX = box.x + box.width / 2;
     const centerY = box.y + box.height / 2;
