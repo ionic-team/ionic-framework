@@ -17,7 +17,6 @@ test.describe('item-sliding: basic', () => {
   });
 
   test('should open when swiped', async ({ page, skip }) => {
-    skip.mode('ios');
     skip.rtl();
 
     await page.goto(`/src/components/item-sliding/test/basic`);
