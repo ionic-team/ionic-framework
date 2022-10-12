@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { dragElementBy, test } from '@utils/test/playwright';
 
 import { testSlidingItem } from '../test.utils';
 
@@ -18,18 +18,15 @@ test.describe('item-sliding: basic', () => {
 
   test('should open when swiped', async ({ page, skip }) => {
     skip.rtl();
+    skip.browser(
+      (browserName: string) => browserName !== 'chromium',
+      'dragElementBy is flaky outside of Chrome browsers.'
+    );
 
     await page.goto(`/src/components/item-sliding/test/basic`);
     const item = page.locator('#item2');
 
-    const box = (await item.boundingBox())!;
-    const centerX = box.x + box.width / 2;
-    const centerY = box.y + box.height / 2;
-
-    await page.mouse.move(centerX, centerY);
-    await page.mouse.down();
-    await page.mouse.move(0, centerY);
-    await page.mouse.up();
+    await dragElementBy(item, page, -150);
     await page.waitForChanges();
 
     // item-sliding doesn't have an easy way to tell whether it's fully open so just screenshot it
