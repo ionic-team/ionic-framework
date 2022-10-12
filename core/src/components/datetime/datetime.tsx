@@ -1714,10 +1714,11 @@ export class Datetime implements ComponentInterface {
     }
 
     const valueIsDefined = this.value !== null && this.value !== undefined;
+    const activePart = this.getDefaultPart();
 
     const { hoursData, minutesData, dayPeriodData } = getTimeColumnsData(
       this.locale,
-      this.workingParts,
+      activePart,
       this.hourCycle,
       valueIsDefined ? this.minParts : undefined,
       valueIsDefined ? this.maxParts : undefined,
