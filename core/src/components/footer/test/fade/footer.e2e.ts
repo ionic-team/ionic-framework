@@ -15,7 +15,7 @@ test.describe('footer: fade', () => {
     const footer = page.locator('ion-footer');
     expect(await footer.screenshot()).toMatchSnapshot(`footer-fade-blurred-diff-${page.getSnapshotSettings()}.png`);
 
-    const content = (await page.$('ion-content'))!;
+    const content = page.locator('ion-content');
     await content.evaluate((el: HTMLIonContentElement) => el.scrollToBottom(0));
 
     expect(await footer.screenshot()).toMatchSnapshot(`footer-fade-not-blurred-diff-${page.getSnapshotSettings()}.png`);
