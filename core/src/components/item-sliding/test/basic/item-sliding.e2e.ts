@@ -16,6 +16,27 @@ test.describe('item-sliding: basic', () => {
     await testSlidingItem(page, item, 'end');
   });
 
+  test('should open when swiped', async ({ page, skip }) => {
+    skip.mode('ios');
+    skip.rtl();
+
+    await page.goto(`/src/components/item-sliding/test/basic`);
+    const item = page.locator('#item2');
+    
+    const box = (await item.boundingBox())!;
+    const centerX = box.x + box.width / 2;
+    const centerY = box.y + box.height / 2;
+
+    await page.mouse.move(centerX, centerY);
+    await page.mouse.down();
+    await page.mouse.move(0, centerY);
+    await page.mouse.up();
+    await page.waitForChanges();
+
+    // item-sliding doesn't have an easy way to tell whether it's fully open so just screenshot it
+    expect(await item.screenshot()).toMatchSnapshot(`item-sliding-gesture-${page.getSnapshotSettings()}.png`);
+  });
+
   test('should not scroll when the item-sliding is swiped', async ({ page, skip }) => {
     skip.browser('webkit', 'mouse.wheel is not available in WebKit');
     skip.rtl();
