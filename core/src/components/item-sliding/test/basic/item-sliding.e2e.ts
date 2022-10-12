@@ -1,26 +1,19 @@
 import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
+import { testSlidingItem } from '../test.utils';
+
 test.describe('item-sliding: basic', () => {
+  test.beforeEach(async ({ skip }) => {
+    skip.mode('ios', "item-sliding doesn't have mode-specific styling");
+  });
+
   test('should not have visual regressions', async ({ page }) => {
     await page.goto(`/src/components/item-sliding/test/basic`);
     const item = page.locator('#item2');
 
-    await item.evaluate(async (el: HTMLIonItemSlidingElement) => {
-      await el.open('start');
-    });
-
-    // opening animation takes longer than waitForChanges accounts for
-    await page.waitForTimeout(500);
-    expect(await item.screenshot()).toMatchSnapshot(`item-sliding-start-${page.getSnapshotSettings()}.png`);
-
-    await item.evaluate(async (el: HTMLIonItemSlidingElement) => {
-      await el.close();
-      await el.open('end');
-    });
-
-    await page.waitForTimeout(500);
-    expect(await item.screenshot()).toMatchSnapshot(`item-sliding-end-${page.getSnapshotSettings()}.png`);
+    await testSlidingItem(page, item, 'start', true);
+    await testSlidingItem(page, item, 'end');
   });
 
   test('should not scroll when the item-sliding is swiped', async ({ page, skip }) => {
