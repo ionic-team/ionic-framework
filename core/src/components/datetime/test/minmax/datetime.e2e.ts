@@ -235,7 +235,10 @@ test.describe('datetime: minmax', () => {
     await expect(hourPickerItems).toHaveText(['12', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11']);
   });
 
-  test('time values should be filtered based on active day even when changing working parts', async ({ page, skip }) => {
+  test('time values should be filtered based on active day even when changing working parts', async ({
+    page,
+    skip,
+  }) => {
     skip.rtl();
 
     await page.setContent(`
@@ -258,7 +261,6 @@ test.describe('datetime: minmax', () => {
     await page.click('button#bind');
 
     const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
-    const ionPopoverDidDismiss = await page.spyOnEvent('ionPopoverDidDismiss');
     const datetimeMonthDidChange = await page.spyOnEvent('datetimeMonthDidChange');
 
     // Go to the next month
@@ -282,5 +284,5 @@ test.describe('datetime: minmax', () => {
     // Ensure the number of hours and minutes are correct
     expect(await hours.count()).toBe(3);
     expect(await minutes.count()).toBe(45);
-  })
+  });
 });
