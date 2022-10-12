@@ -234,4 +234,53 @@ test.describe('datetime: minmax', () => {
     );
     await expect(hourPickerItems).toHaveText(['12', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11']);
   });
+
+  test('time values should be filtered based on active day even when changing working parts', async ({ page, skip }) => {
+    skip.rtl();
+
+    await page.setContent(`
+      <button id="bind">Bind datetimeMonthDidChange event</button>
+      <ion-datetime
+        value="2022-10-12T21:15:10.972Z"
+        min="2022-10-12T21:15:10.972Z"
+        max="2022-11-12T21:15:51.349Z"
+      ></ion-datetime>
+
+      <script type="module">
+        import { InitMonthDidChangeEvent } from '/src/components/datetime/test/utils/month-did-change-event.js';
+        document.querySelector('button').addEventListener('click', function() {
+          InitMonthDidChangeEvent();
+        });
+      </script>
+    `);
+
+    await page.waitForSelector('.datetime-ready');
+    await page.click('button#bind');
+
+    const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
+    const ionPopoverDidDismiss = await page.spyOnEvent('ionPopoverDidDismiss');
+    const datetimeMonthDidChange = await page.spyOnEvent('datetimeMonthDidChange');
+
+    // Go to the next month
+    const buttons = page.locator('ion-datetime .calendar-next-prev ion-button');
+    await buttons.nth(1).click();
+
+    // Wait for working month to change
+    await datetimeMonthDidChange.next();
+
+    // Open time popover
+    await page.click('.time-body');
+    await ionPopoverDidPresent.next();
+
+    const hours = page.locator(
+      'ion-popover ion-picker-column-internal:nth-child(1) .picker-item:not(.picker-item-empty)'
+    );
+    const minutes = page.locator(
+      'ion-popover ion-picker-column-internal:nth-child(2) .picker-item:not(.picker-item-empty)'
+    );
+
+    // Ensure the number of hours and minutes are correct
+    expect(await hours.count()).toBe(3);
+    expect(await minutes.count()).toBe(45);
+  })
 });
