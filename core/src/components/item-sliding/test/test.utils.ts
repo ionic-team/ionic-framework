@@ -1,3 +1,4 @@
+import { expect } from '@playwright/test';
 import type { Locator } from '@playwright/test';
 import type { E2EPage } from '@utils/test/playwright';
 
