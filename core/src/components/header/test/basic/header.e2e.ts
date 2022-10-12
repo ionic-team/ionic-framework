@@ -70,7 +70,9 @@ test.describe('header: basic', () => {
       `);
 
       const header = page.locator('ion-header');
-      expect(await header.screenshot()).toMatchSnapshot(`header-translucent-color-diff-${page.getSnapshotSettings()}.png`);
+      expect(await header.screenshot()).toMatchSnapshot(
+        `header-translucent-color-diff-${page.getSnapshotSettings()}.png`
+      );
     });
   });
 });
