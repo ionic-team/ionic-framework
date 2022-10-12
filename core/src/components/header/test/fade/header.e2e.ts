@@ -17,6 +17,7 @@ test.describe('header: fade', () => {
 
     const content = page.locator('ion-content');
     await content.evaluate((el: HTMLIonContentElement) => el.scrollToBottom(0));
+    await page.waitForChanges();
 
     expect(await header.screenshot()).toMatchSnapshot(`header-fade-blurred-diff-${page.getSnapshotSettings()}.png`);
   });

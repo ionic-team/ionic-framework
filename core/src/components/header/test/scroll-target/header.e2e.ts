@@ -24,6 +24,7 @@ test.describe('header: scroll-target', () => {
 
     const scrollTarget = page.locator('#scroll-target');
     await scrollTarget.evaluate((el: HTMLDivElement) => (el.scrollTop = el.scrollHeight));
+    await page.waitForChanges();
 
     expect(await header.screenshot()).toMatchSnapshot(
       `header-scroll-target-blurred-diff-${page.getSnapshotSettings()}.png`
