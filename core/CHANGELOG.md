@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.1](https://github.com/ionic-team/ionic/compare/v6.3.0...v6.3.1) (2022-10-12)
+
+
+### Bug Fixes
+
+* **datetime:** setting date async updates calendar grid ([#26070](https://github.com/ionic-team/ionic/issues/26070)) ([0aee328](https://github.com/ionic-team/ionic/commit/0aee328b4b84d5668752e5ae0792334d0173c2bb)), closes [#25776](https://github.com/ionic-team/ionic/issues/25776)
+* **datetime:** setting max/min does not increase number of nodes rendered ([#26065](https://github.com/ionic-team/ionic/issues/26065)) ([a5d178f](https://github.com/ionic-team/ionic/commit/a5d178f4c03a0ad2501095afe1f75914b0462ae1)), closes [#26059](https://github.com/ionic-team/ionic/issues/26059)
+* **item, card:** aria-label is reflected to the inner button ([#26028](https://github.com/ionic-team/ionic/issues/26028)) ([3c89ebe](https://github.com/ionic-team/ionic/commit/3c89ebe7216b2a19580a4f1ed23d5d1d4c37919d)), closes [#25885](https://github.com/ionic-team/ionic/issues/25885)
+* **toolbar:** MD height only applies to MD segment ([#26042](https://github.com/ionic-team/ionic/issues/26042)) ([ab89679](https://github.com/ionic-team/ionic/commit/ab8967936c6bef5fc0a884cb8bf8f2deb7784c13)), closes [#18617](https://github.com/ionic-team/ionic/issues/18617)
+
+
+
+
+
 # [6.3.0](https://github.com/ionic-team/ionic/compare/v6.2.9...v6.3.0) (2022-10-05)
 
 
