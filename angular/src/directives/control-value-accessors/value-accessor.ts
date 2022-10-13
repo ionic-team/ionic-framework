@@ -18,14 +18,7 @@ export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDes
   constructor(protected injector: Injector, protected el: ElementRef) {}
 
   writeValue(value: any): void {
-    /**
-     * TODO for Ionic 6:
-     * Change `value == null ? '' : value;`
-     * to `value`. This was a fix for IE9, but IE9
-     * is no longer supported; however, this change
-     * is potentially a breaking change
-     */
-    this.el.nativeElement.value = this.lastValue = value == null ? '' : value;
+    this.el.nativeElement.value = value;
     setIonicClasses(this.el);
   }
 
