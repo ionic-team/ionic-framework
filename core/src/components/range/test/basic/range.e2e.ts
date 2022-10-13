@@ -21,6 +21,9 @@ test.describe('range: basic', () => {
     await dragElementBy(rangeEl, page, testInfo.project.metadata.rtl ? -300 : 300, 0);
     await page.waitForChanges();
 
+    await rangeStart.next();
+    await rangeEnd.next();
+
     /**
      * dragElementBy defaults to starting the drag from the middle of the el,
      * so the start value should jump to 50 despite the range defaulting to 20.
@@ -33,6 +36,9 @@ test.describe('range: basic', () => {
      */
     await dragElementBy(rangeEl, page, 0, 0);
     await page.waitForChanges();
+
+    await rangeStart.next();
+    await rangeEnd.next();
 
     expect(rangeStart).toHaveReceivedEventDetail({ value: 50 });
     expect(rangeEnd).toHaveReceivedEventDetail({ value: 50 });
