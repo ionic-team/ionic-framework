@@ -2,6 +2,8 @@ import type { DatetimeParts } from '../datetime-interface';
 
 import { getNumDaysInMonth } from './helpers';
 
+import { isSameDay } from './comparison';
+
 const twoDigit = (val: number | undefined): string => {
   return ('0' + (val !== undefined ? Math.abs(val) : '0')).slice(-2);
 };
@@ -345,7 +347,11 @@ export const calculateHourFromAMPM = (currentParts: DatetimeParts, newAMPM: 'am'
  * values are valid. For days that do not exist,
  * the closest valid day is used.
  */
-export const validateParts = (parts: DatetimeParts): DatetimeParts => {
+export const validateParts = (
+  parts: DatetimeParts,
+  minParts?: DatetimeParts,
+  maxParts?: DatetimeParts
+): DatetimeParts => {
   const { month, day, year } = parts;
   const partsCopy = { ...parts };
 
@@ -359,6 +365,56 @@ export const validateParts = (parts: DatetimeParts): DatetimeParts => {
    */
   if (day !== null && numDays < day) {
     partsCopy.day = numDays;
+  }
+
+  /**
+   * If value is same day as min day,
+   * make sure the time value is in bounds.
+   */
+  if (minParts !== undefined && isSameDay(partsCopy, minParts)) {
+    /**
+     * If the hour is out of bounds,
+     * set it to the min hour.
+     * We use <= so that we can still check
+     * the minute even if the partsCopy hour
+     * is already the same as the minParts hour.
+     */
+    if (partsCopy.hour! <= minParts.hour!) {
+      partsCopy.hour = minParts.hour;
+
+      /**
+       * If the minute is out of bounds,
+       * set it to the min minute.
+       */
+      if (partsCopy.minute! < minParts.minute!) {
+        partsCopy.minute = minParts.minute
+      }
+    }
+  }
+
+  /**
+   * If value is same day as max day,
+   * make sure the time value is in bounds.
+   */
+  if (maxParts !== undefined && isSameDay(parts, maxParts)) {
+    /**
+     * If the hour is out of bounds,
+     * set it to the max hour.
+     * We use >= so that we can still check
+     * the minute even if the partsCopy hour
+     * is already the same as the maxParts hour.
+     */
+    if (partsCopy.hour! >= maxParts.hour!) {
+      partsCopy.hour = maxParts.hour;
+
+      /**
+       * If the minute is out of bounds,
+       * set it to the max minute.
+       */
+      if (partsCopy.minute! > maxParts.minute!) {
+        partsCopy.minute = maxParts.minute
+      }
+    }
   }
 
   return partsCopy;
