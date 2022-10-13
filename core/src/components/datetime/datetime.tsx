@@ -2108,11 +2108,11 @@ export class Datetime implements ComponentInterface {
       return;
     }
 
-    const { activeParts, titleSelectedDatesFormatter } = this;
+    const { activeParts, multiple, titleSelectedDatesFormatter } = this;
     const isArray = Array.isArray(activeParts);
 
     let headerText: string;
-    if (isArray && activeParts.length !== 1) {
+    if (multiple && isArray && activeParts.length !== 1) {
       headerText = `${activeParts.length} days`; // default/fallback for multiple selection
       if (titleSelectedDatesFormatter !== undefined) {
         try {
