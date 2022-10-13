@@ -112,6 +112,60 @@ test.describe('datetime: prefer wheel', () => {
       expect(await yearValues.count()).toBe(3);
       expect(await dayValues.count()).toBe(5);
     });
+    test.only('selecting month should update value when no value is set', async ({ page }) => {
+      await page.setContent(`
+        <ion-datetime
+          presentation="date"
+          prefer-wheel="true"
+        ></ion-datetime>
+      `);
+
+      await page.waitForSelector('.datetime-ready');
+
+      const ionChange = await page.spyOnEvent('ionChange');
+      const monthValues = page.locator('.month-column .picker-item:not(.picker-item-empty)');
+
+      // Change month value
+      await monthValues.nth(0).click();
+
+      await ionChange.next();
+    });
+    test.only('selecting day should update value when no value is set', async ({ page }) => {
+      await page.setContent(`
+        <ion-datetime
+          presentation="date"
+          prefer-wheel="true"
+        ></ion-datetime>
+      `);
+
+      await page.waitForSelector('.datetime-ready');
+
+      const ionChange = await page.spyOnEvent('ionChange');
+      const dayValues = page.locator('.day-column .picker-item:not(.picker-item-empty)');
+
+      // Change day value
+      await dayValues.nth(0).click();
+
+      await ionChange.next();
+    });
+    test.only('selecting year should update value when no value is set', async ({ page }) => {
+      await page.setContent(`
+        <ion-datetime
+          presentation="date"
+          prefer-wheel="true"
+        ></ion-datetime>
+      `);
+
+      await page.waitForSelector('.datetime-ready');
+
+      const ionChange = await page.spyOnEvent('ionChange');
+      const yearValues = page.locator('.year-column .picker-item:not(.picker-item-empty)');
+
+      // Change day value
+      await yearValues.nth(0).click();
+
+      await ionChange.next();
+    });
     test.describe('datetime: date wheel localization', () => {
       test('should correctly localize the date data', async ({ page }) => {
         await page.setContent(`
