@@ -378,22 +378,14 @@ export const validateParts = (
      * the minute even if the partsCopy hour
      * is already the same as the minParts hour.
      */
-    if (
-      partsCopy.hour !== undefined &&
-      minParts.hour !== undefined &&
-      partsCopy.hour <= minParts.hour
-    ) {
+    if (partsCopy.hour !== undefined && minParts.hour !== undefined && partsCopy.hour <= minParts.hour) {
       partsCopy.hour = minParts.hour;
 
       /**
        * If the minute is out of bounds,
        * set it to the min minute.
        */
-      if (
-        partsCopy.minute !== undefined &&
-        minParts.minute !== undefined &&
-        partsCopy.minute < minParts.minute
-      ) {
+      if (partsCopy.minute !== undefined && minParts.minute !== undefined && partsCopy.minute < minParts.minute) {
         partsCopy.minute = minParts.minute;
       }
     }
@@ -411,22 +403,14 @@ export const validateParts = (
      * the minute even if the partsCopy hour
      * is already the same as the maxParts hour.
      */
-    if (
-      partsCopy.hour !== undefined &&
-      maxParts.hour !== undefined &&
-      partsCopy.hour >= maxParts.hour
-    ) {
+    if (partsCopy.hour !== undefined && maxParts.hour !== undefined && partsCopy.hour >= maxParts.hour) {
       partsCopy.hour = maxParts.hour;
 
       /**
        * If the minute is out of bounds,
        * set it to the max minute.
        */
-      if (
-        partsCopy.minute !== undefined &&
-        maxParts.minute !== undefined &&
-        partsCopy.minute > maxParts.minute
-      ) {
+      if (partsCopy.minute !== undefined && maxParts.minute !== undefined && partsCopy.minute > maxParts.minute) {
         partsCopy.minute = maxParts.minute;
       }
     }
