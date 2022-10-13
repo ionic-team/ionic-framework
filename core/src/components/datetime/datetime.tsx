@@ -1908,6 +1908,8 @@ export class Datetime implements ComponentInterface {
     // can free-scroll the calendar.
     const isWorkingMonth = this.workingParts.month === month && this.workingParts.year === year;
 
+    const activePart = this.getDefaultPart();
+
     return (
       <div
         // Non-visible months should be hidden from screen readers
@@ -1992,7 +1994,7 @@ export class Datetime implements ComponentInterface {
                     );
                   } else {
                     this.setActiveParts({
-                      ...this.activeParts,
+                      ...activePart,
                       month,
                       day,
                       year,
