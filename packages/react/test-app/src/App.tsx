@@ -27,9 +27,9 @@ import OverlayComponents from './pages/overlay-components/OverlayComponents';
 import KeepContentsMounted from './pages/overlay-components/KeepContentsMounted';
 import Tabs from './pages/Tabs';
 import NavComponent from './pages/navigation/NavComponent';
-import IonModalConditionalSibling from './pages/issues/IonModalConditionalSibling';
-import IonModalConditional from './pages/issues/IonModalConditional';
-import IonModalDatetimeButton from './pages/issues/IonModalDatetimeButton';
+import IonModalConditionalSibling from './pages/overlay-components/IonModalConditionalSibling';
+import IonModalConditional from './pages/overlay-components/IonModalConditional';
+import IonModalDatetimeButton from './pages/overlay-components/IonModalDatetimeButton';
 import IonPopoverNested from './pages/overlay-components/IonPopoverNested';
 
 setupIonicReact();
