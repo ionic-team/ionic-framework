@@ -112,7 +112,7 @@ test.describe('datetime: prefer wheel', () => {
       expect(await yearValues.count()).toBe(3);
       expect(await dayValues.count()).toBe(5);
     });
-    test.only('selecting month should update value when no value is set', async ({ page }) => {
+    test('selecting month should update value when no value is set', async ({ page }) => {
       await page.setContent(`
         <ion-datetime
           presentation="date"
@@ -130,7 +130,7 @@ test.describe('datetime: prefer wheel', () => {
 
       await ionChange.next();
     });
-    test.only('selecting day should update value when no value is set', async ({ page }) => {
+    test('selecting day should update value when no value is set', async ({ page }) => {
       await page.setContent(`
         <ion-datetime
           presentation="date"
@@ -161,8 +161,12 @@ test.describe('datetime: prefer wheel', () => {
       const ionChange = await page.spyOnEvent('ionChange');
       const yearValues = page.locator('.year-column .picker-item:not(.picker-item-empty)');
 
-      // Change day value
-      await yearValues.nth(0).click();
+      /**
+       * Change year value
+       * The 0th index is the current
+       * year, so select something other than that.
+       */
+      await yearValues.nth(10).click();
 
       await ionChange.next();
     });
