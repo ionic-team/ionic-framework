@@ -189,4 +189,28 @@ test.describe('datetime: multiple date selection (functionality)', () => {
     await juneButtons.nth(0).click();
     await expect(header).toHaveText('Selected: 0');
   });
+
+  test('header text should render default date when multiple="false"', async ({ page }) => {
+    await page.setContent(`
+      <ion-datetime locale="en-US" show-default-title="true"></ion-datetime>
+
+      <script>
+        const mockToday = '2022-10-10T16:22';
+        Date = class extends Date {
+          constructor(...args) {
+            if (args.length === 0) {
+              super(mockToday)
+            } else {
+              super(...args);
+            }
+          }
+        }
+      </script>
+    `)
+    await page.waitForSelector(`.datetime-ready`);
+    const datetime = page.locator('ion-datetime');
+    const header = datetime.locator('.datetime-selected-date');
+
+    await expect(header).toHaveText('Mon, Oct 10');
+  });
 });
