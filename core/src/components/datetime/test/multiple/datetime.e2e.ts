@@ -206,7 +206,7 @@ test.describe('datetime: multiple date selection (functionality)', () => {
           }
         }
       </script>
-    `)
+    `);
     await page.waitForSelector(`.datetime-ready`);
     const datetime = page.locator('ion-datetime');
     const header = datetime.locator('.datetime-selected-date');
