@@ -126,7 +126,7 @@ export class DatetimeButton implements ComponentInterface {
        * text in the buttons.
        */
       this.setDateTimeText();
-      addEventListener(datetimeEl, 'ionChange', this.setDateTimeText);
+      addEventListener(datetimeEl, 'ionValueChange', this.setDateTimeText);
 
       /**
        * Configure the initial selected button
