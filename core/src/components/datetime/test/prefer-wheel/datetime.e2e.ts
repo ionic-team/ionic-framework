@@ -314,6 +314,24 @@ test.describe('datetime: prefer wheel', () => {
 
       expect(await dayValues.count()).toBe(15);
     });
+    test.only('selecting date should update value when no value is set', async ({ page }) => {
+      await page.setContent(`
+        <ion-datetime
+          presentation="date-time"
+          prefer-wheel="true"
+        ></ion-datetime>
+      `);
+
+      await page.waitForSelector('.datetime-ready');
+
+      const ionChange = await page.spyOnEvent('ionChange');
+      const dayValues = page.locator('.date-column .picker-item:not(.picker-item-empty)');
+
+      // Change day/month value
+      await (dayValues.nth(0)).click();
+
+      await ionChange.next();
+    })
   });
   test.describe('datetime: time-date wheel', () => {
     test.beforeEach(({ skip }) => {
