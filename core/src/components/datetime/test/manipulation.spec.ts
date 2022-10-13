@@ -491,29 +491,41 @@ describe('getPreviousYear()', () => {
 
 describe('validateParts()', () => {
   it('should move the hour back in bounds according to the min', () => {
-    expect(validateParts(
-      { month: 1, day: 1, year: 2022, hour: 8, minute: 0 },
-      { month: 1, day: 1, year: 2022, hour: 9, minute: 0 }
-    )).toEqual({ month: 1, day: 1, year: 2022, hour: 9, minute: 0 });
-  })
+    expect(
+      validateParts(
+        { month: 1, day: 1, year: 2022, hour: 8, minute: 0 },
+        { month: 1, day: 1, year: 2022, hour: 9, minute: 0 }
+      )
+    ).toEqual({ month: 1, day: 1, year: 2022, hour: 9, minute: 0 });
+  });
   it('should move the minute back in bounds according to the min', () => {
-    expect(validateParts(
-      { month: 1, day: 1, year: 2022, hour: 9, minute: 20 },
-      { month: 1, day: 1, year: 2022, hour: 9, minute: 30 }
-    )).toEqual({ month: 1, day: 1, year: 2022, hour: 9, minute: 30 });
-  })
+    expect(
+      validateParts(
+        { month: 1, day: 1, year: 2022, hour: 9, minute: 20 },
+        { month: 1, day: 1, year: 2022, hour: 9, minute: 30 }
+      )
+    ).toEqual({ month: 1, day: 1, year: 2022, hour: 9, minute: 30 });
+  });
   it('should move the hour back in bounds according to the max', () => {
-    expect(validateParts(
-      { month: 1, day: 1, year: 2022, hour: 10, minute: 0 },
-      undefined,
-      { month: 1, day: 1, year: 2022, hour: 9, minute: 0 }
-    )).toEqual({ month: 1, day: 1, year: 2022, hour: 9, minute: 0 });
-  })
+    expect(
+      validateParts({ month: 1, day: 1, year: 2022, hour: 10, minute: 0 }, undefined, {
+        month: 1,
+        day: 1,
+        year: 2022,
+        hour: 9,
+        minute: 0,
+      })
+    ).toEqual({ month: 1, day: 1, year: 2022, hour: 9, minute: 0 });
+  });
   it('should move the minute back in bounds according to the max', () => {
-    expect(validateParts(
-      { month: 1, day: 1, year: 2022, hour: 9, minute: 40 },
-      undefined,
-      { month: 1, day: 1, year: 2022, hour: 9, minute: 30 }
-    )).toEqual({ month: 1, day: 1, year: 2022, hour: 9, minute: 30 });
-  })
-})
+    expect(
+      validateParts({ month: 1, day: 1, year: 2022, hour: 9, minute: 40 }, undefined, {
+        month: 1,
+        day: 1,
+        year: 2022,
+        hour: 9,
+        minute: 30,
+      })
+    ).toEqual({ month: 1, day: 1, year: 2022, hour: 9, minute: 30 });
+  });
+});

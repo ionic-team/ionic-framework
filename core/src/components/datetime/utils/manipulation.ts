@@ -1,8 +1,7 @@
 import type { DatetimeParts } from '../datetime-interface';
 
-import { getNumDaysInMonth } from './helpers';
-
 import { isSameDay } from './comparison';
+import { getNumDaysInMonth } from './helpers';
 
 const twoDigit = (val: number | undefined): string => {
   return ('0' + (val !== undefined ? Math.abs(val) : '0')).slice(-2);
@@ -387,7 +386,7 @@ export const validateParts = (
        * set it to the min minute.
        */
       if (partsCopy.minute! < minParts.minute!) {
-        partsCopy.minute = minParts.minute
+        partsCopy.minute = minParts.minute;
       }
     }
   }
@@ -412,7 +411,7 @@ export const validateParts = (
        * set it to the max minute.
        */
       if (partsCopy.minute! > maxParts.minute!) {
-        partsCopy.minute = maxParts.minute
+        partsCopy.minute = maxParts.minute;
       }
     }
   }
