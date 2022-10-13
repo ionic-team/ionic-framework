@@ -18,7 +18,7 @@ test.describe('header: condense', () => {
     );
 
     await content.evaluate((el: HTMLIonContentElement) => el.scrollToBottom());
-    await page.waitForChanges();
+    await page.waitForTimeout(500);
 
     expect(await smallTitleHeader.screenshot()).toMatchSnapshot(
       `header-condense-large-title-collapsed-diff-${page.getSnapshotSettings()}.png`
@@ -33,10 +33,6 @@ test.describe('header: condense', () => {
 
     await content.evaluate((el: HTMLIonContentElement) => el.scrollToTop());
     await page.waitForChanges();
-
-    expect(await largeTitleHeader.screenshot()).toMatchSnapshot(
-      `header-condense-large-title-final-diff-${page.getSnapshotSettings()}.png`
-    );
 
     await expect(smallTitleHeader).toHaveAttribute('aria-hidden', 'true');
   });
