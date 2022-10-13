@@ -561,7 +561,7 @@ export class Datetime implements ComponentInterface {
    * "activePartsClone" and then falling back to
    * today's DatetimeParts if no active date is selected.
    */
-  private getDefaultPart = () => {
+  private getDefaultPart = (): DatetimeParts => {
     const { activePartsClone, todayParts } = this;
 
     const firstPart = Array.isArray(activePartsClone) ? activePartsClone[0] : activePartsClone;
@@ -1491,12 +1491,10 @@ export class Datetime implements ComponentInterface {
             ...findPart,
           });
 
-          if (!Array.isArray(activePart)) {
-            this.setActiveParts({
-              ...activePart,
-              ...findPart,
-            });
-          }
+          this.setActiveParts({
+            ...activePart,
+            ...findPart,
+          });
 
           // We can re-attach the scroll listener after
           // the working parts have been updated.
@@ -1585,7 +1583,9 @@ export class Datetime implements ComponentInterface {
       return [];
     }
 
-    const { activeParts, workingParts } = this;
+    const { workingParts } = this;
+
+    const activePart = this.getDefaultPart();
 
     return (
       <ion-picker-column-internal
@@ -1607,12 +1607,10 @@ export class Datetime implements ComponentInterface {
             day: ev.detail.value,
           });
 
-          if (!Array.isArray(activeParts)) {
-            this.setActiveParts({
-              ...activeParts,
-              day: ev.detail.value,
-            });
-          }
+          this.setActiveParts({
+            ...activePart,
+            day: ev.detail.value,
+          });
 
           // We can re-attach the scroll listener after
           // the working parts have been updated.
@@ -1629,7 +1627,9 @@ export class Datetime implements ComponentInterface {
       return [];
     }
 
-    const { activeParts, workingParts } = this;
+    const { workingParts } = this;
+
+    const activePart = this.getDefaultPart();
 
     return (
       <ion-picker-column-internal
@@ -1651,12 +1651,10 @@ export class Datetime implements ComponentInterface {
             month: ev.detail.value,
           });
 
-          if (!Array.isArray(activeParts)) {
-            this.setActiveParts({
-              ...activeParts,
-              month: ev.detail.value,
-            });
-          }
+          this.setActiveParts({
+            ...activePart,
+            month: ev.detail.value,
+          });
 
           // We can re-attach the scroll listener after
           // the working parts have been updated.
@@ -1672,7 +1670,9 @@ export class Datetime implements ComponentInterface {
       return [];
     }
 
-    const { activeParts, workingParts } = this;
+    const { workingParts } = this;
+
+    const activePart = this.getDefaultPart();
 
     return (
       <ion-picker-column-internal
@@ -1694,12 +1694,10 @@ export class Datetime implements ComponentInterface {
             year: ev.detail.value,
           });
 
-          if (!Array.isArray(activeParts)) {
-            this.setActiveParts({
-              ...activeParts,
-              year: ev.detail.value,
-            });
-          }
+          this.setActiveParts({
+            ...activePart,
+            year: ev.detail.value,
+          });
 
           // We can re-attach the scroll listener after
           // the working parts have been updated.
@@ -1752,12 +1750,10 @@ export class Datetime implements ComponentInterface {
             hour: ev.detail.value,
           });
 
-          if (!Array.isArray(activePart)) {
-            this.setActiveParts({
-              ...activePart,
-              hour: ev.detail.value,
-            });
-          }
+          this.setActiveParts({
+            ...activePart,
+            hour: ev.detail.value,
+          });
 
           ev.stopPropagation();
         }}
@@ -1782,12 +1778,10 @@ export class Datetime implements ComponentInterface {
             minute: ev.detail.value,
           });
 
-          if (!Array.isArray(activePart)) {
-            this.setActiveParts({
-              ...activePart,
-              minute: ev.detail.value,
-            });
-          }
+          this.setActiveParts({
+            ...activePart,
+            minute: ev.detail.value,
+          });
 
           ev.stopPropagation();
         }}
@@ -1818,13 +1812,11 @@ export class Datetime implements ComponentInterface {
             hour,
           });
 
-          if (!Array.isArray(activePart)) {
-            this.setActiveParts({
-              ...activePart,
-              ampm: ev.detail.value,
-              hour,
-            });
-          }
+          this.setActiveParts({
+            ...activePart,
+            ampm: ev.detail.value,
+            hour,
+          });
 
           ev.stopPropagation();
         }}
