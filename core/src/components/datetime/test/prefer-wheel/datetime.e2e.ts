@@ -314,7 +314,7 @@ test.describe('datetime: prefer wheel', () => {
 
       expect(await dayValues.count()).toBe(15);
     });
-    test.only('selecting date should update value when no value is set', async ({ page }) => {
+    test('selecting date should update value when no value is set', async ({ page }) => {
       await page.setContent(`
         <ion-datetime
           presentation="date-time"
@@ -328,10 +328,10 @@ test.describe('datetime: prefer wheel', () => {
       const dayValues = page.locator('.date-column .picker-item:not(.picker-item-empty)');
 
       // Change day/month value
-      await (dayValues.nth(0)).click();
+      await dayValues.nth(0).click();
 
       await ionChange.next();
-    })
+    });
   });
   test.describe('datetime: time-date wheel', () => {
     test.beforeEach(({ skip }) => {

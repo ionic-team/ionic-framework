@@ -1393,7 +1393,9 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderCombinedDatePickerColumn() {
-    const { activeParts, workingParts, locale, minParts, maxParts, todayParts, isDateEnabled } = this;
+    const { workingParts, locale, minParts, maxParts, todayParts, isDateEnabled } = this;
+
+    const activePart = this.getDefaultPart();
 
     /**
      * By default, generate a range of 3 months:
@@ -1489,9 +1491,9 @@ export class Datetime implements ComponentInterface {
             ...findPart,
           });
 
-          if (!Array.isArray(activeParts)) {
+          if (!Array.isArray(activePart)) {
             this.setActiveParts({
-              ...activeParts,
+              ...activePart,
               ...findPart,
             });
           }
@@ -2112,11 +2114,11 @@ export class Datetime implements ComponentInterface {
       return;
     }
 
-    const { activeParts, multiple, titleSelectedDatesFormatter } = this;
+    const { activeParts, titleSelectedDatesFormatter } = this;
     const isArray = Array.isArray(activeParts);
 
     let headerText: string;
-    if (multiple && isArray && activeParts.length !== 1) {
+    if (isArray && activeParts.length !== 1) {
       headerText = `${activeParts.length} days`; // default/fallback for multiple selection
       if (titleSelectedDatesFormatter !== undefined) {
         try {
