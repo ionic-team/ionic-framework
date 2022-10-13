@@ -29,6 +29,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Toggle](#version-7x-toggle)
   - [Virtual Scroll](#version-7x-virtual-scroll)
 - [JavaScript Frameworks](#version-7x-javascript-frameworks)
+  - [Angular](#version-7x-angular)
   - [React](#version-7x-react)
   - [Vue](#version-7x-vue)
 - [Utilities](#version-7x-utilities)
@@ -172,6 +173,10 @@ Developers using the component will need to migrate to a virtual scroll solution
 Any references to the virtual scroll types from `@ionic/core` have been removed. Please remove or replace these types: `Cell`, `VirtualNode`, `CellType`, `NodeChange`, `HeaderFn`, `ItemHeightFn`, `FooterHeightFn`, `ItemRenderFn` and `DomRenderFn`.
 
 <h2 id="version-7x-javascript-frameworks">JavaScript Frameworks</h2>
+
+<h4 id="version-7x-angular">Angular</h4>
+
+`null` or `undefined` values passed to form components in a FormControl are no longer converted to the empty string.
 
 <h4 id="version-7x-react">React</h4>
 
