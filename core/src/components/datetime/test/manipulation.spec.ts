@@ -490,6 +490,15 @@ describe('getPreviousYear()', () => {
 });
 
 describe('validateParts()', () => {
+  it('should move day in bounds', () => {
+    expect(validateParts({ month: 2, day: 31, year: 2022, hour: 8, minute: 0 })).toEqual({
+      month: 2,
+      day: 28,
+      year: 2022,
+      hour: 8,
+      minute: 0,
+    });
+  });
   it('should move the hour back in bounds according to the min', () => {
     expect(
       validateParts(
