@@ -63,4 +63,23 @@ test.describe('datetime: set-value', () => {
     await expect(activeDayButton).toHaveAttribute('data-month', '10');
     await expect(activeDayButton).toHaveAttribute('data-year', '2021');
   });
+  test.only('should set both date and time when no value is initially set', async ({ page }) => {
+    await page.setContent(`
+      <ion-datetime locale="en-US" presentation="date-time"></ion-datetime>
+    `);
+
+    await page.waitForSelector('.datetime-ready');
+    const datetime = page.locator('ion-datetime');
+    const ionChange = await page.spyOnEvent('ionChange');
+    const days = datetime.locator('.calendar-month:nth-of-type(2) .calendar-day:not([disabled]');
+
+    // Oct 1
+    await days.nth(0).click();
+
+    await ionChange.next();
+
+    const value = await datetime.evaluate((el: HTMLIonDatetimeElement) => el.value);
+    await expect(typeof value).toBe('string');
+    await expect(value!.includes('2022-10-01T16:22')).toBe(true);
+  });
 });

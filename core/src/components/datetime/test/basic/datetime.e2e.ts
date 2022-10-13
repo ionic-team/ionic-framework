@@ -104,7 +104,7 @@ test.describe('datetime: selecting a day', () => {
 
     // Check to make sure value includes current time
     await expect(value!.includes('2022-10-01T16:22')).toBe(true);
-  })
+  });
 });
 
 test.describe('datetime: confirm date', () => {
