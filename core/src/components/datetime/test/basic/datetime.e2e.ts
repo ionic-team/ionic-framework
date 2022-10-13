@@ -72,6 +72,39 @@ test.describe('datetime: selecting a day', () => {
 
     await expect(activeDay).toHaveText('13');
   });
+  test('should set both date and time when no value is initially set', async ({ page }) => {
+    await page.setContent(`
+      <ion-datetime locale="en-US" presentation="date-time"></ion-datetime>
+
+      <script>
+        const mockToday = '2022-10-10T16:22';
+        Date = class extends Date {
+          constructor(...args) {
+            if (args.length === 0) {
+              super(mockToday)
+            } else {
+              super(...args);
+            }
+          }
+        }
+      </script>
+    `);
+
+    await page.waitForSelector('.datetime-ready');
+    const datetime = page.locator('ion-datetime');
+    const ionChange = await page.spyOnEvent('ionChange');
+
+    // Oct 1, 2022
+    await page.click('.calendar-day[data-month="10"][data-year="2022"][data-day="1"]');
+
+    await ionChange.next();
+
+    const value = await datetime.evaluate((el: HTMLIonDatetimeElement) => el.value);
+    await expect(typeof value).toBe('string');
+
+    // Check to make sure value includes current time
+    await expect(value!.includes('2022-10-01T16:22')).toBe(true);
+  })
 });
 
 test.describe('datetime: confirm date', () => {
