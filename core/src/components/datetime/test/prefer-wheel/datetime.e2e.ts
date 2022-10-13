@@ -148,7 +148,7 @@ test.describe('datetime: prefer wheel', () => {
 
       await ionChange.next();
     });
-    test.only('selecting year should update value when no value is set', async ({ page }) => {
+    test('selecting year should update value when no value is set', async ({ page }) => {
       await page.setContent(`
         <ion-datetime
           presentation="date"
