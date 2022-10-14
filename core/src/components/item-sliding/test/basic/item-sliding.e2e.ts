@@ -11,7 +11,7 @@ test.describe('item-sliding: basic', () => {
   test('should not have visual regressions', async ({ page, browserName }, testInfo) => {
     // TODO(FW-2608)
     test.fixme(
-      testInfo.project.metadata.rtl === true && (browserName === 'firefox' || browserName === 'webkit'), 
+      testInfo.project.metadata.rtl === true && (browserName === 'firefox' || browserName === 'webkit'),
       'https://github.com/ionic-team/ionic-framework/issues/26103'
     );
 

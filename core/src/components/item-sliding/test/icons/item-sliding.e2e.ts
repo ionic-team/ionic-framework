@@ -9,7 +9,7 @@ test.describe('item-sliding: icons', () => {
       testInfo.project.metadata.rtl === true && (browserName === 'firefox' || browserName === 'webkit'),
       'https://github.com/ionic-team/ionic-framework/issues/26103'
     );
-    
+
     skip.mode('ios', "item-sliding doesn't have mode-specific styling");
     await page.goto(`/src/components/item-sliding/test/icons`);
 
