@@ -10,7 +10,10 @@ test.describe('range: basic', () => {
     expect(await page.screenshot()).toMatchSnapshot(`range-diff-${page.getSnapshotSettings()}.png`);
   });
 
-  test('should emit start/end events', async ({ page }, testInfo) => {
+  /**
+   * The mouse events are flaky on CI
+   */
+  test.fixme('should emit start/end events', async ({ page }, testInfo) => {
     await page.setContent(`<ion-range value="20"></ion-range>`);
 
     const rangeStart = await page.spyOnEvent('ionKnobMoveStart');

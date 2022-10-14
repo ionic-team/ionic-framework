@@ -665,7 +665,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     this.currentTransition = dismiss(this, data, role, 'modalLeave', iosLeaveAnimation, mdLeaveAnimation, {
       presentingEl: presentingElement,
-      currentBreakpoint: this.currentBreakpoint !== undefined || this.initialBreakpoint,
+      currentBreakpoint: this.currentBreakpoint ?? this.initialBreakpoint,
       backdropBreakpoint: this.backdropBreakpoint,
     });
 
