@@ -669,8 +669,31 @@ export const createDelegateController = (ref: {
     return { inline, delegate: workingDelegate };
   };
 
+  /**
+   * Attaches a component in the DOM. Teleports the component
+   * to the root of the app.
+   * @param component The component to optionally construct and append to the element.
+   */
+  const attachViewToDom = async (component?: any) => {
+    const { delegate } = getDelegate(true);
+    if (delegate) {
+      await delegate.attachViewToDom(ref.el, component);
+    }
+  };
+
+  /**
+   * Moves a component back to its original location in the DOM.
+   */
+  const removeViewFromDom = () => {
+    const { delegate } = getDelegate();
+    if (delegate && ref.el) {
+      delegate.removeViewFromDom(ref.el.parentElement, ref.el);
+    }
+  };
+
   return {
-    getDelegate,
+    attachViewToDom,
+    removeViewFromDom,
   };
 };
 

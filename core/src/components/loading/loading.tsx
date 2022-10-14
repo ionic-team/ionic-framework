@@ -241,11 +241,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
       await this.currentTransition;
     }
 
-    const { delegate } = this.delegateController.getDelegate(true);
-
-    if (delegate) {
-      await delegate.attachViewToDom(this.el, undefined);
-    }
+    await this.delegateController.attachViewToDom();
 
     this.currentTransition = present(this, 'loadingEnter', iosEnterAnimation, mdEnterAnimation);
 
@@ -277,13 +273,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
     const dismissed = await this.currentTransition;
 
     if (dismissed) {
-      const { delegate } = this.delegateController.getDelegate();
-      if (delegate) {
-        const { el } = this;
-        if (el) {
-          delegate.removeViewFromDom(el.parentElement, el);
-        }
-      }
+      this.delegateController.removeViewFromDom();
     }
 
     return dismissed;
