@@ -124,6 +124,64 @@ test.describe('datetime: prefer wheel', () => {
       expect(await yearValues.count()).toBe(3);
       expect(await dayValues.count()).toBe(5);
     });
+    test('selecting month should update value when no value is set', async ({ page }) => {
+      await page.setContent(`
+        <ion-datetime
+          presentation="date"
+          prefer-wheel="true"
+        ></ion-datetime>
+      `);
+
+      await page.waitForSelector('.datetime-ready');
+
+      const ionChange = await page.spyOnEvent('ionChange');
+      const monthValues = page.locator('.month-column .picker-item:not(.picker-item-empty)');
+
+      // Change month value
+      await monthValues.nth(0).click();
+
+      await ionChange.next();
+    });
+    test('selecting day should update value when no value is set', async ({ page }) => {
+      await page.setContent(`
+        <ion-datetime
+          presentation="date"
+          prefer-wheel="true"
+        ></ion-datetime>
+      `);
+
+      await page.waitForSelector('.datetime-ready');
+
+      const ionChange = await page.spyOnEvent('ionChange');
+      const dayValues = page.locator('.day-column .picker-item:not(.picker-item-empty)');
+
+      // Change day value
+      await dayValues.nth(0).click();
+
+      await ionChange.next();
+    });
+    test('selecting year should update value when no value is set', async ({ page }) => {
+      await page.setContent(`
+        <ion-datetime
+          presentation="date"
+          prefer-wheel="true"
+        ></ion-datetime>
+      `);
+
+      await page.waitForSelector('.datetime-ready');
+
+      const ionChange = await page.spyOnEvent('ionChange');
+      const yearValues = page.locator('.year-column .picker-item:not(.picker-item-empty)');
+
+      /**
+       * Change year value
+       * The 0th index is the current
+       * year, so select something other than that.
+       */
+      await yearValues.nth(10).click();
+
+      await ionChange.next();
+    });
     test.describe('datetime: date wheel localization', () => {
       test('should correctly localize the date data', async ({ page }) => {
         await page.setContent(`
@@ -325,6 +383,24 @@ test.describe('datetime: prefer wheel', () => {
       const dayValues = page.locator('.date-column .picker-item:not(.picker-item-empty)');
 
       expect(await dayValues.count()).toBe(15);
+    });
+    test('selecting date should update value when no value is set', async ({ page }) => {
+      await page.setContent(`
+        <ion-datetime
+          presentation="date-time"
+          prefer-wheel="true"
+        ></ion-datetime>
+      `);
+
+      await page.waitForSelector('.datetime-ready');
+
+      const ionChange = await page.spyOnEvent('ionChange');
+      const dayValues = page.locator('.date-column .picker-item:not(.picker-item-empty)');
+
+      // Change day/month value
+      await dayValues.nth(0).click();
+
+      await ionChange.next();
     });
   });
   test.describe('datetime: time-date wheel', () => {

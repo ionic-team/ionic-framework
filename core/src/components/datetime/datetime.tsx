@@ -561,7 +561,7 @@ export class Datetime implements ComponentInterface {
    * "activePartsClone" and then falling back to
    * today's DatetimeParts if no active date is selected.
    */
-  private getDefaultPart = () => {
+  private getDefaultPart = (): DatetimeParts => {
     const { activePartsClone, todayParts } = this;
 
     const firstPart = Array.isArray(activePartsClone) ? activePartsClone[0] : activePartsClone;
@@ -1393,7 +1393,9 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderCombinedDatePickerColumn() {
-    const { activeParts, workingParts, locale, minParts, maxParts, todayParts, isDateEnabled } = this;
+    const { workingParts, locale, minParts, maxParts, todayParts, isDateEnabled } = this;
+
+    const activePart = this.getDefaultPart();
 
     /**
      * By default, generate a range of 3 months:
@@ -1489,12 +1491,10 @@ export class Datetime implements ComponentInterface {
             ...findPart,
           });
 
-          if (!Array.isArray(activeParts)) {
-            this.setActiveParts({
-              ...activeParts,
-              ...findPart,
-            });
-          }
+          this.setActiveParts({
+            ...activePart,
+            ...findPart,
+          });
 
           // We can re-attach the scroll listener after
           // the working parts have been updated.
@@ -1583,7 +1583,9 @@ export class Datetime implements ComponentInterface {
       return [];
     }
 
-    const { activeParts, workingParts } = this;
+    const { workingParts } = this;
+
+    const activePart = this.getDefaultPart();
 
     return (
       <ion-picker-column-internal
@@ -1605,12 +1607,10 @@ export class Datetime implements ComponentInterface {
             day: ev.detail.value,
           });
 
-          if (!Array.isArray(activeParts)) {
-            this.setActiveParts({
-              ...activeParts,
-              day: ev.detail.value,
-            });
-          }
+          this.setActiveParts({
+            ...activePart,
+            day: ev.detail.value,
+          });
 
           // We can re-attach the scroll listener after
           // the working parts have been updated.
@@ -1627,7 +1627,9 @@ export class Datetime implements ComponentInterface {
       return [];
     }
 
-    const { activeParts, workingParts } = this;
+    const { workingParts } = this;
+
+    const activePart = this.getDefaultPart();
 
     return (
       <ion-picker-column-internal
@@ -1649,12 +1651,10 @@ export class Datetime implements ComponentInterface {
             month: ev.detail.value,
           });
 
-          if (!Array.isArray(activeParts)) {
-            this.setActiveParts({
-              ...activeParts,
-              month: ev.detail.value,
-            });
-          }
+          this.setActiveParts({
+            ...activePart,
+            month: ev.detail.value,
+          });
 
           // We can re-attach the scroll listener after
           // the working parts have been updated.
@@ -1670,7 +1670,9 @@ export class Datetime implements ComponentInterface {
       return [];
     }
 
-    const { activeParts, workingParts } = this;
+    const { workingParts } = this;
+
+    const activePart = this.getDefaultPart();
 
     return (
       <ion-picker-column-internal
@@ -1692,12 +1694,10 @@ export class Datetime implements ComponentInterface {
             year: ev.detail.value,
           });
 
-          if (!Array.isArray(activeParts)) {
-            this.setActiveParts({
-              ...activeParts,
-              year: ev.detail.value,
-            });
-          }
+          this.setActiveParts({
+            ...activePart,
+            year: ev.detail.value,
+          });
 
           // We can re-attach the scroll listener after
           // the working parts have been updated.
@@ -1750,12 +1750,10 @@ export class Datetime implements ComponentInterface {
             hour: ev.detail.value,
           });
 
-          if (!Array.isArray(activePart)) {
-            this.setActiveParts({
-              ...activePart,
-              hour: ev.detail.value,
-            });
-          }
+          this.setActiveParts({
+            ...activePart,
+            hour: ev.detail.value,
+          });
 
           ev.stopPropagation();
         }}
@@ -1780,12 +1778,10 @@ export class Datetime implements ComponentInterface {
             minute: ev.detail.value,
           });
 
-          if (!Array.isArray(activePart)) {
-            this.setActiveParts({
-              ...activePart,
-              minute: ev.detail.value,
-            });
-          }
+          this.setActiveParts({
+            ...activePart,
+            minute: ev.detail.value,
+          });
 
           ev.stopPropagation();
         }}
@@ -1816,13 +1812,11 @@ export class Datetime implements ComponentInterface {
             hour,
           });
 
-          if (!Array.isArray(activePart)) {
-            this.setActiveParts({
-              ...activePart,
-              ampm: ev.detail.value,
-              hour,
-            });
-          }
+          this.setActiveParts({
+            ...activePart,
+            ampm: ev.detail.value,
+            hour,
+          });
 
           ev.stopPropagation();
         }}
@@ -1914,6 +1908,8 @@ export class Datetime implements ComponentInterface {
     // can free-scroll the calendar.
     const isWorkingMonth = this.workingParts.month === month && this.workingParts.year === year;
 
+    const activePart = this.getDefaultPart();
+
     return (
       <div
         // Non-visible months should be hidden from screen readers
@@ -1998,7 +1994,7 @@ export class Datetime implements ComponentInterface {
                     );
                   } else {
                     this.setActiveParts({
-                      ...this.activeParts,
+                      ...activePart,
                       month,
                       day,
                       year,
@@ -2108,12 +2104,11 @@ export class Datetime implements ComponentInterface {
   }
 
   private getHeaderSelectedDateText() {
-    const { activeParts, titleSelectedDatesFormatter } = this;
+    const { activeParts, multiple, titleSelectedDatesFormatter } = this;
     const isArray = Array.isArray(activeParts);
 
     let headerText: string;
-
-    if (isArray && activeParts.length !== 1) {
+    if (multiple && isArray && activeParts.length !== 1) {
       headerText = `${activeParts.length} days`; // default/fallback for multiple selection
       if (titleSelectedDatesFormatter !== undefined) {
         try {
