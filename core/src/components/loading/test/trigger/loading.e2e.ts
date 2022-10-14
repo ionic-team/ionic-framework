@@ -3,6 +3,7 @@ import { test } from '@utils/test/playwright';
 test.describe('loading: trigger', () => {
   test.beforeEach(async ({ page, skip }) => {
     skip.rtl('trigger does not behave differently in RTL');
+    skip.mode('md');
     await page.goto('/src/components/loading/test/trigger');
   });
 
