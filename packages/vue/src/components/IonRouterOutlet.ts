@@ -12,9 +12,9 @@ import {
   Ref
 } from 'vue';
 import { AnimationBuilder, LIFECYCLE_DID_ENTER, LIFECYCLE_DID_LEAVE, LIFECYCLE_WILL_ENTER, LIFECYCLE_WILL_LEAVE } from '@ionic/core/components';
-import { IonRouterOutlet as IonRouterOutletCmp } from '@ionic/core/components/ion-router-outlet.js';
+import { defineCustomElement } from '@ionic/core/components/ion-router-outlet.js';
 import { matchedRouteKey, routeLocationKey, useRoute } from 'vue-router';
-import { fireLifecycle, generateId, getConfig, defineCustomElement } from '../utils';
+import { fireLifecycle, generateId, getConfig } from '../utils';
 
 const isViewVisible = (enteringEl: HTMLElement) => {
   return !enteringEl.classList.contains('ion-page-hidden') && !enteringEl.classList.contains('ion-page-invisible');
@@ -24,7 +24,7 @@ let viewDepthKey: InjectionKey<0> = Symbol(0);
 export const IonRouterOutlet = /*@__PURE__*/ defineComponent({
   name: 'IonRouterOutlet',
   setup() {
-    defineCustomElement('ion-router-outlet', IonRouterOutletCmp);
+    defineCustomElement();
 
     const injectedRoute = inject(routeLocationKey)!;
     const route = useRoute();
