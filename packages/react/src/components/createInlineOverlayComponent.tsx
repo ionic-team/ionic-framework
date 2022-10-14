@@ -17,15 +17,12 @@ type InlineOverlayState = {
 interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<ElementType> {
   forwardedRef?: React.ForwardedRef<ElementType>;
   ref?: React.Ref<any>;
-  key?: string;
   onDidDismiss?: (event: CustomEvent<OverlayEventDetail>) => void;
   onDidPresent?: (event: CustomEvent<OverlayEventDetail>) => void;
   onWillDismiss?: (event: CustomEvent<OverlayEventDetail>) => void;
   onWillPresent?: (event: CustomEvent<OverlayEventDetail>) => void;
   keepContentsMounted?: boolean;
 }
-
-let overlayId = 0;
 
 export const createInlineOverlayComponent = <PropType, ElementType>(
   tagName: string,
@@ -42,9 +39,6 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
     ref: React.RefObject<HTMLElement>;
     wrapperRef: React.RefObject<HTMLElement>;
     stableMergedRefs: React.RefCallback<HTMLElement>;
-    overlayEndRef: React.RefObject<HTMLTemplateElement> = React.createRef();
-
-    trackByKey = `${++overlayId}`;
 
     constructor(props: IonicReactInternalProps<PropType>) {
       super(props);
@@ -111,23 +105,8 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
       attachProps(node, this.props, prevProps);
     }
 
-    componentWillUnmount() {
-      const BaseComponent = this.ref.current;
-      const Reference = this.overlayEndRef.current;
-
-      if (BaseComponent && Reference) {
-        /**
-         * Inserts the overlay component back into the original
-         * location in the DOM. This is necessary so that React
-         * unmounts the component properly.
-         */
-        Reference.parentNode?.insertBefore(BaseComponent, Reference);
-      }
-    }
-
     render() {
       const { children, forwardedRef, style, className, ref, ...cProps } = this.props;
-      const { trackByKey } = this;
 
       const propsToPass = Object.keys(cProps).reduce((acc, name) => {
         if (name.indexOf('on') === 0 && name[2] === name[2].toUpperCase()) {
@@ -145,18 +124,11 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
         ...propsToPass,
         ref: this.stableMergedRefs,
         style,
-        key: trackByKey,
       };
 
-      return [
-        /**
-         * React will unmount the overlay component when conditional content is
-         * rendered before or after the overlay in the DOM. To work around this
-         * we create a buffer element before and after the overlay component,
-         * so that even if React unmounts those elements, the overlay will still
-         * be in the correct position in the DOM.
-         */
-        createElement('template', { key: `overlay-start-${trackByKey}` }),
+      return createElement(
+        'template',
+        {},
         createElement(
           tagName,
           newProps,
@@ -181,12 +153,8 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
                 children
               )
             : null
-        ),
-        createElement('template', {
-          key: `overlay-end-${trackByKey}`,
-          ref: this.overlayEndRef,
-        }),
-      ];
+        )
+      );
     }
 
     static get displayName() {
