@@ -373,19 +373,25 @@ export const validateParts = (
   if (minParts !== undefined && isSameDay(partsCopy, minParts)) {
     /**
      * If the hour is out of bounds,
-     * set it to the min hour.
-     * We use <= so that we can still check
-     * the minute even if the partsCopy hour
-     * is already the same as the minParts hour.
+     * update both the hour and minute.
+     * This is done so that the new time
+     * is closest to what the user selected.
      */
-    if (partsCopy.hour !== undefined && minParts.hour !== undefined && partsCopy.hour <= minParts.hour) {
-      partsCopy.hour = minParts.hour;
+    if (partsCopy.hour !== undefined && minParts.hour !== undefined) {
+      if (partsCopy.hour < minParts.hour) {
+        partsCopy.hour = minParts.hour;
+        partsCopy.minute = minParts.minute;
 
-      /**
-       * If the minute is out of bounds,
-       * set it to the min minute.
-       */
-      if (partsCopy.minute !== undefined && minParts.minute !== undefined && partsCopy.minute < minParts.minute) {
+        /**
+         * If only the minute is out of bounds,
+         * set it to the min minute.
+         */
+      } else if (
+        partsCopy.hour === minParts.hour &&
+        partsCopy.minute !== undefined &&
+        minParts.minute !== undefined &&
+        partsCopy.minute < minParts.minute
+      ) {
         partsCopy.minute = minParts.minute;
       }
     }
@@ -398,19 +404,24 @@ export const validateParts = (
   if (maxParts !== undefined && isSameDay(parts, maxParts)) {
     /**
      * If the hour is out of bounds,
-     * set it to the max hour.
-     * We use >= so that we can still check
-     * the minute even if the partsCopy hour
-     * is already the same as the maxParts hour.
+     * update both the hour and minute.
+     * This is done so that the new time
+     * is closest to what the user selected.
      */
-    if (partsCopy.hour !== undefined && maxParts.hour !== undefined && partsCopy.hour >= maxParts.hour) {
-      partsCopy.hour = maxParts.hour;
-
-      /**
-       * If the minute is out of bounds,
-       * set it to the max minute.
-       */
-      if (partsCopy.minute !== undefined && maxParts.minute !== undefined && partsCopy.minute > maxParts.minute) {
+    if (partsCopy.hour !== undefined && maxParts.hour !== undefined) {
+      if (partsCopy.hour > maxParts.hour) {
+        partsCopy.hour = maxParts.hour;
+        partsCopy.minute = maxParts.minute;
+        /**
+         * If only the minute is out of bounds,
+         * set it to the max minute.
+         */
+      } else if (
+        partsCopy.hour === maxParts.hour &&
+        partsCopy.minute !== undefined &&
+        maxParts.minute !== undefined &&
+        partsCopy.minute > maxParts.minute
+      ) {
         partsCopy.minute = maxParts.minute;
       }
     }
