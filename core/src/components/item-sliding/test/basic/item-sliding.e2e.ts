@@ -8,7 +8,13 @@ test.describe('item-sliding: basic', () => {
     skip.mode('ios', "item-sliding doesn't have mode-specific styling");
   });
 
-  test('should not have visual regressions', async ({ page }) => {
+  test('should not have visual regressions', async ({ page, browserName }, testInfo) => {
+    // TODO(FW-2608)
+    test.fixme(
+      testInfo.project.metadata.rtl === true && (browserName === 'firefox' || browserName === 'webkit'), 
+      'https://github.com/ionic-team/ionic-framework/issues/26103'
+    );
+
     await page.goto(`/src/components/item-sliding/test/basic`);
     const item = page.locator('#item2');
 
