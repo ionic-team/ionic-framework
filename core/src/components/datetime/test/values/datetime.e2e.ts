@@ -51,7 +51,7 @@ test.describe('datetime: values', () => {
   });
 });
 
-test.only('setting value to empty string should treat it as having no date', async ({ page, skip }) => {
+test('setting value to empty string should treat it as having no date', async ({ page, skip }) => {
   skip.rtl();
   skip.mode('ios');
   await page.setContent(`
