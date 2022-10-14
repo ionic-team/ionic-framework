@@ -279,3 +279,40 @@ test.describe('datetime: visibility', () => {
     await expect(monthYearInterface).toBeHidden();
   });
 });
+
+test.describe('datetime: ionChange', () => {
+  test.beforeEach(({ skip }) => {
+    skip.rtl();
+    skip.mode('ios', 'ionChange has consistent behavior across modes');
+  });
+
+  test('should fire ionChange when confirming a value from the calendar grid', async ({ page }) => {
+    await page.setContent(`
+      <ion-datetime presentation="date" value="2022-01-02"></ion-datetime>
+    `);
+
+    await page.waitForSelector('.datetime-ready');
+
+    const ionChange = await page.spyOnEvent('ionChange');
+    const calendarButtons = page.locator('.calendar-day:not([disabled])');
+
+    await calendarButtons.nth(0).click();
+
+    await ionChange.next();
+    await expect(ionChange).toHaveReceivedEventTimes(1);
+  });
+
+  test('should not fire ionChange when programmatically setting a value', async ({ page }) => {
+    await page.setContent(`
+      <ion-datetime presentation="date" value="2022-01-02"></ion-datetime>
+    `);
+
+    await page.waitForSelector('.datetime-ready');
+
+    const ionChange = await page.spyOnEvent('ionChange');
+    const datetime = page.locator('ion-datetime');
+
+    await datetime.evaluate((el: HTMLIonDatetimeElement) => (el.value = '2022-01-01'));
+    await expect(ionChange).not.toHaveReceivedEvent();
+  });
+});

@@ -297,6 +297,7 @@ export const IonDatetime = /*@__PURE__*/ defineContainer<JSX.IonDatetime>('ion-d
   'preferWheel',
   'ionCancel',
   'ionChange',
+  'ionValueChange',
   'ionFocus',
   'ionBlur',
   'ionStyle',

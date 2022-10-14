@@ -73,12 +73,12 @@ test.describe('datetime-button: multiple selection', () => {
     await page.waitForSelector('.datetime-ready');
 
     const datetime = page.locator('ion-datetime');
-    const ionChange = await page.spyOnEvent('ionChange');
+    const ionValueChange = await page.spyOnEvent('ionValueChange');
     const dateButton = page.locator('#date-button');
     await expect(dateButton).toHaveText('2 days');
 
     await datetime.evaluate((el: HTMLIonDatetimeElement) => (el.value = ['2022-06-01', '2022-06-02', '2022-06-03']));
-    await ionChange.next();
+    await ionValueChange.next();
 
     await expect(dateButton).toHaveText('3 days');
   });

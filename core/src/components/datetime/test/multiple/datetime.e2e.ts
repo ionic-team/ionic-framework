@@ -93,11 +93,6 @@ test.describe('datetime: multiple date selection (functionality)', () => {
     await expect(monthYear).toHaveText('April 2022');
   });
 
-  test('multiple=false and array for defaulut value should switch to first item', async ({ page }) => {
-    const datetime = await setup(page, 'multipleFalseArrayValue');
-    await expect(datetime).toHaveJSProperty('value', '2022-06-01');
-  });
-
   test('with buttons, should only update value when confirm is called', async ({ page }) => {
     const datetime = await setup(page, 'withButtons');
     const june2Button = datetime.locator('[data-month="6"][data-day="2"]');
