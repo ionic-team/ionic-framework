@@ -734,14 +734,14 @@ export const createTriggerController = () => {
       return;
     }
 
-    const configureTriggerInteraction = (trigEl: HTMLElement, overlayEl: HTMLIonOverlayElement) => {
+    const configureTriggerInteraction = (targetEl: HTMLElement, overlayEl: HTMLIonOverlayElement) => {
       const openOverlay = () => {
         overlayEl.present();
       };
-      trigEl.addEventListener('click', openOverlay);
+      targetEl.addEventListener('click', openOverlay);
 
       return () => {
-        trigEl.removeEventListener('click', openOverlay);
+        targetEl.removeEventListener('click', openOverlay);
       };
     };
 
