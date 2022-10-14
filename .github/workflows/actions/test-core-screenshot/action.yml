@@ -10,12 +10,12 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - uses: actions/setup-node@v1
+    - uses: actions/setup-node@v3
       with:
         node-version: 16.x
 
     - name: Cache Core Node Modules
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       env:
         cache-name: core-node-modules
       with:
@@ -72,7 +72,7 @@ runs:
       working-directory: ./core
     - name: Archive Updated Screenshots
       if: inputs.update == 'true' && steps.test-and-update.outputs.hasUpdatedScreenshots == 'true'
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: updated-screenshots-${{ inputs.shard }}-${{ inputs.totalShards }}
         path: UpdatedScreenshots-${{ inputs.shard }}-${{ inputs.totalShards }}.zip
