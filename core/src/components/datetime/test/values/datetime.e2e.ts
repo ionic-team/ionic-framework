@@ -63,4 +63,4 @@ test('setting value to empty string should treat it as having no date', async ({
   // Should render current month with today outlined.
   const calendarDayToday = page.locator('ion-datetime .calendar-day-today');
   await expect(calendarDayToday).toBeVisible();
-})
+});
