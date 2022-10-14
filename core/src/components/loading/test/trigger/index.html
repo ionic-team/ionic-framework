@@ -49,10 +49,23 @@
             <h2>Default</h2>
             <ion-button id="default">Open Loading</ion-button>
           </div>
+          <div class="grid-item">
+            <h2>Open, then close after 500ms</h2>
+            <ion-button id="timeout">Open Loading</ion-button>
+          </div>
         </div>
 
-        <ion-loading trigger="default" message="Hello world"></ion-loading>
+        <ion-loading id="default-loading" trigger="default" message="Hello world"></ion-loading>
+        <ion-loading id="timeout-loading" trigger="timeout" message="Hello world"></ion-loading>
       </ion-content>
     </ion-app>
+    <script>
+      const loadingTimeout = document.getElementById('timeout-loading');
+      loadingTimeout.addEventListener('didPresent', () => {
+        setTimeout(() => {
+          loadingTimeout.dismiss();
+        }, 500);
+      });
+    </script>
   </body>
 </html>

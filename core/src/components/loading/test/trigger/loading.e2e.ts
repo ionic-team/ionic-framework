@@ -11,6 +11,20 @@ test.describe('loading: trigger', () => {
     await page.click('#default');
 
     await ionLoadingDidPresent.next();
-    await page.waitForSelector('ion-loading', { state: 'visible' });
+    await page.waitForSelector('#default-loading', { state: 'visible' });
+  });
+
+  test('should present a previously presented loading indicator', async ({ page }) => {
+    const ionLoadingDidPresent = await page.spyOnEvent('ionLoadingDidPresent');
+    const ionLoadingDidDismiss = await page.spyOnEvent('ionLoadingDidDismiss');
+
+    await page.click('#timeout');
+
+    await ionLoadingDidDismiss.next();
+
+    await page.click('#timeout');
+
+    await ionLoadingDidPresent.next();
+    await page.waitForSelector('#timeout-loading', { state: 'visible' });
   });
 });

@@ -200,6 +200,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
 
   connectedCallback() {
     prepareOverlay(this.el);
+    this.triggerChanged();
   }
 
   componentWillLoad() {
@@ -217,7 +218,6 @@ export class Loading implements ComponentInterface, OverlayInterface {
     if (this.isOpen === true) {
       raf(() => this.present());
     }
-    this.triggerChanged();
   }
 
   disconnectedCallback() {
