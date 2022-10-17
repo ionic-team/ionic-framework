@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "6.3.1",
+  "version": "6.3.2",
   "description": "Base components for Ionic",
   "keywords": [
     "ionic",
@@ -86,7 +86,7 @@
     "css.sass": "sass --embed-sources src/css:./css",
     "eslint": "eslint src",
     "lint": "npm run lint.ts && npm run lint.sass && npm run prettier -- --write",
-    "lint.fix": "npm run lint.ts.fix && npm run lint.sass.fix",
+    "lint.fix": "npm run lint.ts.fix && npm run lint.sass.fix && npm run prettier -- --write",
     "lint.sass": "stylelint \"src/**/*.scss\"",
     "lint.sass.fix": "npm run lint.sass -- --fix",
     "lint.ts": "npm run eslint",
