@@ -1156,7 +1156,10 @@ export class Datetime implements ComponentInterface {
   }
 
   private processValue = (value?: string | string[] | null) => {
-    const hasValue = value !== null && value !== undefined;
+    /**
+     * TODO FW-2646 remove value !== ''
+     */
+    const hasValue = value !== '' && value !== null && value !== undefined;
     let valueToProcess = hasValue ? parseDate(value) : this.defaultParts;
 
     const { minParts, maxParts, multiple } = this;

@@ -160,7 +160,8 @@ export class DatetimeButton implements ComponentInterface {
    * to keep checking if the datetime value is `string` or `string[]`.
    */
   private getParsedDateValues = (value?: string[] | string | null): string[] => {
-    if (value === undefined || value === null) {
+    // TODO FW-2646 Remove value === ''
+    if (value === '' || value === undefined || value === null) {
       return [];
     }
 
