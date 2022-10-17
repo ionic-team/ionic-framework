@@ -14,6 +14,7 @@ import {
   calculateHourFromAMPM,
   subtractDays,
   addDays,
+  validateParts,
 } from '../utils/manipulation';
 
 describe('addDays()', () => {
@@ -485,5 +486,74 @@ describe('getPreviousYear()', () => {
       year: 2023,
       day: 28,
     });
+  });
+});
+
+describe('validateParts()', () => {
+  it('should move day in bounds', () => {
+    expect(validateParts({ month: 2, day: 31, year: 2022, hour: 8, minute: 0 })).toEqual({
+      month: 2,
+      day: 28,
+      year: 2022,
+      hour: 8,
+      minute: 0,
+    });
+  });
+  it('should move the hour back in bounds according to the min', () => {
+    expect(
+      validateParts(
+        { month: 1, day: 1, year: 2022, hour: 8, minute: 0 },
+        { month: 1, day: 1, year: 2022, hour: 9, minute: 0 }
+      )
+    ).toEqual({ month: 1, day: 1, year: 2022, hour: 9, minute: 0 });
+  });
+  it('should move the minute back in bounds according to the min', () => {
+    expect(
+      validateParts(
+        { month: 1, day: 1, year: 2022, hour: 9, minute: 20 },
+        { month: 1, day: 1, year: 2022, hour: 9, minute: 30 }
+      )
+    ).toEqual({ month: 1, day: 1, year: 2022, hour: 9, minute: 30 });
+  });
+  it('should move the hour and minute back in bounds according to the min', () => {
+    expect(
+      validateParts(
+        { month: 1, day: 1, year: 2022, hour: 8, minute: 30 },
+        { month: 1, day: 1, year: 2022, hour: 9, minute: 0 }
+      )
+    ).toEqual({ month: 1, day: 1, year: 2022, hour: 9, minute: 0 });
+  });
+  it('should move the hour back in bounds according to the max', () => {
+    expect(
+      validateParts({ month: 1, day: 1, year: 2022, hour: 10, minute: 0 }, undefined, {
+        month: 1,
+        day: 1,
+        year: 2022,
+        hour: 9,
+        minute: 0,
+      })
+    ).toEqual({ month: 1, day: 1, year: 2022, hour: 9, minute: 0 });
+  });
+  it('should move the minute back in bounds according to the max', () => {
+    expect(
+      validateParts({ month: 1, day: 1, year: 2022, hour: 9, minute: 40 }, undefined, {
+        month: 1,
+        day: 1,
+        year: 2022,
+        hour: 9,
+        minute: 30,
+      })
+    ).toEqual({ month: 1, day: 1, year: 2022, hour: 9, minute: 30 });
+  });
+  it('should move the hour and minute back in bounds according to the max', () => {
+    expect(
+      validateParts({ month: 1, day: 1, year: 2022, hour: 10, minute: 20 }, undefined, {
+        month: 1,
+        day: 1,
+        year: 2022,
+        hour: 9,
+        minute: 30,
+      })
+    ).toEqual({ month: 1, day: 1, year: 2022, hour: 9, minute: 30 });
   });
 });
