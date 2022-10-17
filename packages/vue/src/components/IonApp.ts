@@ -1,10 +1,9 @@
 import { h, defineComponent, shallowRef, VNode } from 'vue';
-import { defineCustomElement } from '../utils';
-import { IonApp as IonAppCmp } from '@ionic/core/components/ion-app.js';
+import { defineCustomElement } from '@ionic/core/components/ion-app.js';
 
 const userComponents = shallowRef([]);
 export const IonApp = /*@__PURE__*/ defineComponent((_, { attrs, slots }) => {
-  defineCustomElement('ion-app', IonAppCmp);
+  defineCustomElement();
   return () => {
     return h(
       'ion-app',
