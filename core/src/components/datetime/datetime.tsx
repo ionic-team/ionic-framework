@@ -587,7 +587,7 @@ export class Datetime implements ComponentInterface {
   };
 
   private setActiveParts = (parts: DatetimeParts, removeDate = false) => {
-    const { multiple, activePartsClone } = this;
+    const { multiple, minParts, maxParts, activePartsClone } = this;
 
     /**
      * When setting the active parts, it is possible
@@ -599,7 +599,7 @@ export class Datetime implements ComponentInterface {
      * Additionally, we need to update the working parts
      * too in the event that the validated parts are different.
      */
-    const validatedParts = validateParts(parts);
+    const validatedParts = validateParts(parts, minParts, maxParts);
     this.setWorkingParts(validatedParts);
 
     if (multiple) {
