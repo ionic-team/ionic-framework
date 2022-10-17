@@ -13,7 +13,26 @@ const HapticEngine = {
     return win.TapticEngine || (win.Capacitor?.isPluginAvailable('Haptics') && win.Capacitor.Plugins.Haptics);
   },
   available() {
-    return !!this.getEngine();
+    const win = window as any;
+    const engine = this.getEngine();
+    if (!engine) {
+      return false;
+    }
+
+    /**
+     * Developers can manually import the
+     * Haptics plugin in their app which will cause
+     * getEngine to return the Haptics engine. However,
+     * the Haptics engine will throw an error if
+     * used in a web browser that does not support
+     * the Vibrate API. This check avoids that error
+     * if the browser does not support the Vibrate API.
+     */
+    if (win.Capacitor?.getPlatform() === 'web') {
+      return typeof navigator !== 'undefined' && navigator.vibrate !== undefined;
+    }
+
+    return true;
   },
   isCordova() {
     return !!(window as any).TapticEngine;
@@ -89,21 +108,21 @@ export const hapticAvailable = (): boolean => {
  * (not for gestures)
  */
 export const hapticSelection = () => {
-  HapticEngine.selection();
+  hapticAvailable() && HapticEngine.selection();
 };
 
 /**
  * Tell the haptic engine that a gesture for a selection change is starting.
  */
 export const hapticSelectionStart = () => {
-  HapticEngine.selectionStart();
+  hapticAvailable() && HapticEngine.selectionStart();
 };
 
 /**
  * Tell the haptic engine that a selection changed during a gesture.
  */
 export const hapticSelectionChanged = () => {
-  HapticEngine.selectionChanged();
+  hapticAvailable() && HapticEngine.selectionChanged();
 };
 
 /**
@@ -111,7 +130,7 @@ export const hapticSelectionChanged = () => {
  * called lest resources are not properly recycled.
  */
 export const hapticSelectionEnd = () => {
-  HapticEngine.selectionEnd();
+  hapticAvailable() && HapticEngine.selectionEnd();
 };
 
 /**
@@ -119,7 +138,7 @@ export const hapticSelectionEnd = () => {
  * options should be of the type `{ type: 'success' }` (or `warning`/`error`)
  */
 export const hapticNotification = (options: HapticNotificationOptions) => {
-  HapticEngine.notification(options);
+  hapticAvailable() && HapticEngine.notification(options);
 };
 
 /**
@@ -127,5 +146,5 @@ export const hapticNotification = (options: HapticNotificationOptions) => {
  * options should be of the type `{ style: 'light' }` (or `medium`/`heavy`)
  */
 export const hapticImpact = (options: HapticImpactOptions) => {
-  HapticEngine.impact(options);
+  hapticAvailable() && HapticEngine.impact(options);
 };
