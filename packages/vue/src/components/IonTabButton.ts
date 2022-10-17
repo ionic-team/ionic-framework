@@ -1,6 +1,5 @@
 import { h, defineComponent, inject } from 'vue';
-import { defineCustomElement } from '../utils';
-import { IonTabButton as IonTabButtonCmp } from '@ionic/core/components/ion-tab-button.js';
+import { defineCustomElement } from '@ionic/core/components/ion-tab-button.js';
 
 export const IonTabButton = /*@__PURE__*/ defineComponent({
   name: 'IonTabButton',
@@ -16,7 +15,7 @@ export const IonTabButton = /*@__PURE__*/ defineComponent({
     target: String
   },
   setup(props, { slots }) {
-    defineCustomElement('ion-tab-button', IonTabButtonCmp);
+    defineCustomElement();
 
     const ionRouter: any = inject('navManager');
     const onClick = (ev: Event) => {
