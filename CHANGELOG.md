@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.2](https://github.com/ionic-team/ionic-framework/compare/v6.3.1...v6.3.2) (2022-10-17)
+
+
+### Bug Fixes
+
+* **datetime:** header renders correct date ([#26120](https://github.com/ionic-team/ionic-framework/issues/26120)) ([04df45a](https://github.com/ionic-team/ionic-framework/commit/04df45a443e4faeea644daa76dc509fea0d24ca2)), closes [#26116](https://github.com/ionic-team/ionic-framework/issues/26116)
+* **datetime:** selecting days updates value ([#26121](https://github.com/ionic-team/ionic-framework/issues/26121)) ([d76a24d](https://github.com/ionic-team/ionic-framework/commit/d76a24dd9e485a2f3cc517231bbb1dab51fa1fd3))
+* **modal:** sheet modal dismisses correctly ([#26110](https://github.com/ionic-team/ionic-framework/issues/26110)) ([256b03f](https://github.com/ionic-team/ionic-framework/commit/256b03f12a57c2b5904d9017e4fa93b11eea8fc7)), closes [#26108](https://github.com/ionic-team/ionic-framework/issues/26108)
+* **vue:** routing components define child components ([#26107](https://github.com/ionic-team/ionic-framework/issues/26107)) ([d60973b](https://github.com/ionic-team/ionic-framework/commit/d60973b2449b29a982b752a98b10d2b043ecff2f))
+
+
+
+
+
 ## [6.3.1](https://github.com/ionic-team/ionic-framework/compare/v6.3.0...v6.3.1) (2022-10-12)
 
 
