@@ -636,7 +636,7 @@ export const createDelegateController = (ref: {
   const coreDelegate: FrameworkDelegate = CoreDelegate();
 
   /**
-   *  * Determines whether or not an overlay is being used
+   * Determines whether or not an overlay is being used
    * inline or via a controller/JS and returns the correct delegate.
    * By default, subsequent calls to getDelegate will use
    * a cached version of the delegate.
@@ -675,10 +675,14 @@ export const createDelegateController = (ref: {
    * @param component The component to optionally construct and append to the element.
    */
   const attachViewToDom = async (component?: any) => {
-    const { delegate } = getDelegate(true);
+    const { delegate, inline } = getDelegate(true);
     if (delegate) {
-      await delegate.attachViewToDom(ref.el, component);
+      return await delegate.attachViewToDom(ref.el, component);
     }
+    if (!inline && typeof component !== 'string' && !(component instanceof HTMLElement)) {
+      throw new Error('framework delegate is missing');
+    }
+    return null;
   };
 
   /**
