@@ -47,9 +47,8 @@ export class Range implements ComponentInterface {
   private rangeId?: string;
   private didLoad = false;
   private noUpdate = false;
-  private rect!: ClientRect;
+  private rect!: DOMRect;
   private hasFocus = false;
-  private rangeSlider?: HTMLElement;
   private gesture?: Gesture;
   private inheritedAttributes: Attributes = {};
   private contentEl: HTMLElement | null = null;
@@ -244,21 +243,16 @@ export class Range implements ComponentInterface {
   @Event() ionKnobMoveEnd!: EventEmitter<RangeKnobMoveEndEventDetail>;
 
   private setupGesture = async () => {
-    const rangeSlider = this.rangeSlider;
-    if (rangeSlider) {
-      const el = rangeSlider.querySelector('.range-knob-a') ?? rangeSlider;
-
-      this.gesture = (await import('../../utils/gesture')).createGesture({
-        el,
-        gestureName: 'range',
-        gesturePriority: 100,
-        threshold: 0,
-        onStart: (ev) => this.onStart(ev),
-        onMove: (ev) => this.onMove(ev),
-        onEnd: (ev) => this.onEnd(ev),
-      });
-      this.gesture.enable(!this.disabled);
-    }
+    this.gesture = (await import('../../utils/gesture')).createGesture({
+      el: this.el,
+      gestureName: 'range',
+      gesturePriority: 100,
+      threshold: 1,
+      onStart: (ev) => this.onStart(ev),
+      onMove: (ev) => this.onMove(ev),
+      onEnd: (ev) => this.onEnd(ev),
+    });
+    this.gesture.enable(!this.disabled);
   };
 
   componentWillLoad() {
@@ -352,7 +346,7 @@ export class Range implements ComponentInterface {
       this.initialContentScrollY = disableContentScrollY(contentEl);
     }
 
-    const rect = (this.rect = this.rangeSlider!.getBoundingClientRect() as any);
+    const rect = (this.rect = this.el.getBoundingClientRect());
     const currentX = detail.currentX;
 
     // figure out which knob they started closer to
@@ -490,6 +484,32 @@ export class Range implements ComponentInterface {
     }
   };
 
+  /**
+   * When the range is not a dual knob, the VoiceOver cursor interaction
+   * should support swiping up or down with one finger to increment or
+   * decrement the value.
+   */
+  private onKeyDown = (ev: KeyboardEvent) => {
+    const { handleKeyboard, dualKnobs } = this;
+    if (dualKnobs === true) {
+      /**
+       * When dual knobs are enabled, the individual knob
+       * will handle the keydown event.
+       */
+      return;
+    }
+    const key = ev.key;
+    if (key === 'ArrowLeft' || key === 'ArrowDown') {
+      handleKeyboard('A', false);
+      ev.preventDefault();
+      ev.stopPropagation();
+    } else if (key === 'ArrowRight' || key === 'ArrowUp') {
+      handleKeyboard('A', true);
+      ev.preventDefault();
+      ev.stopPropagation();
+    }
+  };
+
   render() {
     const {
       min,
@@ -594,6 +614,7 @@ export class Range implements ComponentInterface {
       <Host
         onFocusin={this.onFocus}
         onFocusout={this.onBlur}
+        onKeyDown={this.onKeyDown}
         id={rangeId}
         class={createColorClasses(this.color, {
           [mode]: true,
@@ -610,7 +631,40 @@ export class Range implements ComponentInterface {
         aria-valuenow={value}
       >
         <slot name="start"></slot>
-        <div class="range-slider" ref={(rangeEl) => (this.rangeSlider = rangeEl)}>
+        <div
+          class="range-slider"
+          onPointerDown={(ev) => {
+            if (ev.pointerType === 'touch') {
+              /**
+               * On mobile devices, we need to ignore the pointer down event on the
+               * range slider. When the VoiceOver cursor is active, double
+               * tapping the slider will trigger the pointer down event and
+               * incorrectly set the knob position.
+               */
+              return;
+            }
+            /**
+             * For mouse devices, we want to be able to select a
+             * position on the range slider and have the knob update
+             * to that position.
+             */
+            const detail: GestureDetail = {
+              type: 'pan',
+              currentX: ev.clientX,
+              currentY: ev.clientY,
+              currentTime: 0,
+              deltaX: 0,
+              deltaY: 0,
+              event: ev,
+              startX: 0,
+              startY: 0,
+              startTime: 0,
+              velocityX: 0,
+              velocityY: 0,
+            };
+            this.onStart(detail);
+          }}
+        >
           {ticks.map((tick) => (
             <div
               style={tickStyle(tick)}
