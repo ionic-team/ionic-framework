@@ -663,6 +663,7 @@ export const createDelegateController = (ref: {
      * correct place.
      */
     const parentEl = el.parentNode as HTMLElement | null;
+
     inline = parentEl !== null && !hasController;
     workingDelegate = inline ? delegate || coreDelegate : delegate;
 
@@ -675,11 +676,12 @@ export const createDelegateController = (ref: {
    * @param component The component to optionally construct and append to the element.
    */
   const attachViewToDom = async (component?: any) => {
-    const { delegate, inline } = getDelegate(true);
+    const { delegate } = getDelegate(true);
     if (delegate) {
       return await delegate.attachViewToDom(ref.el, component);
     }
-    if (!inline && typeof component !== 'string' && !(component instanceof HTMLElement)) {
+    const { hasController } = ref;
+    if (hasController && component !== undefined) {
       throw new Error('framework delegate is missing');
     }
     return null;
