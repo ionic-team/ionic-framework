@@ -85,7 +85,7 @@ export class Header implements ComponentInterface {
 
     if (hasCondense) {
       const pageEl = this.el.closest('ion-app,ion-page,.ion-page,page-inner');
-      const contentEl = pageEl ? findIonContent(pageEl) : null;
+      const contentEl = pageEl ? pageEl.querySelector('ion-content') : null;
 
       // Cloned elements are always needed in iOS transition
       writeTask(() => {
@@ -98,13 +98,14 @@ export class Header implements ComponentInterface {
     } else if (hasFade) {
       const pageEl = this.el.closest('ion-app,ion-page,.ion-page,page-inner');
       const contentEl = pageEl ? findIonContent(pageEl) : null;
+      const ionContent = pageEl ? pageEl.querySelector('ion-content') : null;
 
-      if (!contentEl) {
+      if (!contentEl || !ionContent) {
         printIonContentErrorMsg(this.el);
         return;
       }
 
-      const condenseHeader = contentEl.querySelector('ion-header[collapse="condense"]') as HTMLElement | null;
+      const condenseHeader = ionContent.querySelector('ion-header[collapse="condense"]') as HTMLElement | null;
 
       await this.setupFadeHeader(contentEl, condenseHeader);
     }
@@ -150,7 +151,7 @@ export class Header implements ComponentInterface {
       return;
     }
 
-    this.scrollEl = await getScrollElement(contentEl);
+    this.scrollEl = await getScrollElement(findIonContent(pageEl) ?? contentEl);
 
     const headers = pageEl.querySelectorAll('ion-header');
     this.collapsibleMainHeader = Array.from(headers).find((header: any) => header.collapse !== 'condense') as

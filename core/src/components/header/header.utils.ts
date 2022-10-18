@@ -58,6 +58,16 @@ export const handleContentScroll = (scrollEl: HTMLElement, scrollHeaderIndex: He
     const scrollTop = scrollEl.scrollTop;
     const scale = clamp(1, 1 + -scrollTop / 500, 1.1);
 
+    /**
+     * Custom scroll targets are used with virtual scroll. We need to move the
+     * header off the viewport when the scroll container is scrolled, so that
+     * the intersection observer for handling the fade and condensed header fires.
+     */
+    const isCustomScrollTarget = scrollEl.classList.contains('ion-content-scroll-host');
+    if (isCustomScrollTarget) {
+      scrollHeaderIndex.el.style.transform = `translateY(${-1 * scrollTop}px)`;
+    }
+
     // Native refresher should not cause titles to scale
     const nativeRefresher = contentEl.querySelector('ion-refresher.refresher-native');
     if (nativeRefresher === null) {
