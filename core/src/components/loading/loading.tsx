@@ -1,16 +1,25 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Method, Prop, h } from '@stencil/core';
+import { Watch, Component, Element, Event, Host, Method, Prop, h } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import type {
   AnimationBuilder,
+  FrameworkDelegate,
   LoadingAttributes,
   OverlayEventDetail,
   OverlayInterface,
   SpinnerTypes,
 } from '../../interface';
-import { BACKDROP, dismiss, eventMethod, prepareOverlay, present } from '../../utils/overlays';
+import { raf } from '../../utils/helpers';
+import {
+  BACKDROP,
+  dismiss,
+  eventMethod,
+  prepareOverlay,
+  present,
+  createDelegateController,
+} from '../../utils/overlays';
 import type { IonicSafeString } from '../../utils/sanitization';
 import { sanitizeDOMString } from '../../utils/sanitization';
 import { getClassMap } from '../../utils/theme';
@@ -32,7 +41,9 @@ import { mdLeaveAnimation } from './animations/md.leave';
   scoped: true,
 })
 export class Loading implements ComponentInterface, OverlayInterface {
+  private readonly delegateController = createDelegateController(this);
   private durationTimeout: any;
+  private currentTransition?: Promise<any>;
 
   presented = false;
   lastFocus?: HTMLElement;
@@ -41,6 +52,12 @@ export class Loading implements ComponentInterface, OverlayInterface {
 
   /** @internal */
   @Prop() overlayIndex!: number;
+
+  /** @internal */
+  @Prop() delegate?: FrameworkDelegate;
+
+  /** @internal */
+  @Prop() hasController = false;
 
   /**
    * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
@@ -106,6 +123,23 @@ export class Loading implements ComponentInterface, OverlayInterface {
   @Prop() htmlAttributes?: LoadingAttributes;
 
   /**
+   * If `true`, the loading indicator will open. If `false`, the loading indicator will close.
+   * Use this if you need finer grained control over presentation, otherwise
+   * just use the loadingController or the `trigger` property.
+   * Note: `isOpen` will not automatically be set back to `false` when
+   * the loading indicator dismisses. You will need to do that in your code.
+   */
+  @Prop() isOpen = false;
+  @Watch('isOpen')
+  onIsOpenChange(newValue: boolean, oldValue: boolean) {
+    if (newValue === true && oldValue === false) {
+      this.present();
+    } else if (newValue === false && oldValue === true) {
+      this.dismiss();
+    }
+  }
+
+  /**
    * Emitted after the loading has presented.
    */
   @Event({ eventName: 'ionLoadingDidPresent' }) didPresent!: EventEmitter<void>;
@@ -125,6 +159,30 @@ export class Loading implements ComponentInterface, OverlayInterface {
    */
   @Event({ eventName: 'ionLoadingDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
 
+  /**
+   * Emitted after the loading indicator has presented.
+   * Shorthand for ionLoadingWillDismiss.
+   */
+  @Event({ eventName: 'didPresent' }) didPresentShorthand!: EventEmitter<void>;
+
+  /**
+   * Emitted before the loading indicator has presented.
+   * Shorthand for ionLoadingWillPresent.
+   */
+  @Event({ eventName: 'willPresent' }) willPresentShorthand!: EventEmitter<void>;
+
+  /**
+   * Emitted before the loading indicator has dismissed.
+   * Shorthand for ionLoadingWillDismiss.
+   */
+  @Event({ eventName: 'willDismiss' }) willDismissShorthand!: EventEmitter<OverlayEventDetail>;
+
+  /**
+   * Emitted after the loading indicator has dismissed.
+   * Shorthand for ionLoadingDidDismiss.
+   */
+  @Event({ eventName: 'didDismiss' }) didDismissShorthand!: EventEmitter<OverlayEventDetail>;
+
   connectedCallback() {
     prepareOverlay(this.el);
   }
@@ -136,16 +194,44 @@ export class Loading implements ComponentInterface, OverlayInterface {
     }
   }
 
+  componentDidLoad() {
+    /**
+     * If loading indicator was rendered with isOpen="true"
+     * then we should open loading indicator immediately.
+     */
+    if (this.isOpen === true) {
+      raf(() => this.present());
+    }
+  }
+
   /**
    * Present the loading overlay after it has been created.
    */
   @Method()
   async present(): Promise<void> {
-    await present(this, 'loadingEnter', iosEnterAnimation, mdEnterAnimation, undefined);
+    /**
+     * When using an inline loading indicator
+     * and dismissing a loading indicator it is possible to
+     * quickly present the loading indicator while it is
+     * dismissing. We need to await any current
+     * transition to allow the dismiss to finish
+     * before presenting again.
+     */
+    if (this.currentTransition !== undefined) {
+      await this.currentTransition;
+    }
+
+    await this.delegateController.attachViewToDom();
+
+    this.currentTransition = present(this, 'loadingEnter', iosEnterAnimation, mdEnterAnimation);
+
+    await this.currentTransition;
 
     if (this.duration > 0) {
       this.durationTimeout = setTimeout(() => this.dismiss(), this.duration + 10);
     }
+
+    this.currentTransition = undefined;
   }
 
   /**
@@ -158,11 +244,19 @@ export class Loading implements ComponentInterface, OverlayInterface {
    * Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
    */
   @Method()
-  dismiss(data?: any, role?: string): Promise<boolean> {
+  async dismiss(data?: any, role?: string): Promise<boolean> {
     if (this.durationTimeout) {
       clearTimeout(this.durationTimeout);
     }
-    return dismiss(this, data, role, 'loadingLeave', iosLeaveAnimation, mdLeaveAnimation);
+    this.currentTransition = dismiss(this, data, role, 'loadingLeave', iosLeaveAnimation, mdLeaveAnimation);
+
+    const dismissed = await this.currentTransition;
+
+    if (dismissed) {
+      this.delegateController.removeViewFromDom();
+    }
+
+    return dismissed;
   }
 
   /**

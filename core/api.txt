@@ -693,6 +693,7 @@ ion-loading,prop,cssClass,string | string[] | undefined,undefined,false,false
 ion-loading,prop,duration,number,0,false,false
 ion-loading,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-loading,prop,htmlAttributes,undefined | { [key: string]: any; },undefined,false,false
+ion-loading,prop,isOpen,boolean,false,false,false
 ion-loading,prop,keyboardClose,boolean,true,false,false
 ion-loading,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-loading,prop,message,IonicSafeString | string | undefined,undefined,false,false
@@ -704,10 +705,14 @@ ion-loading,method,dismiss,dismiss(data?: any, role?: string) => Promise<boolean
 ion-loading,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-loading,method,onWillDismiss,onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-loading,method,present,present() => Promise<void>
+ion-loading,event,didDismiss,OverlayEventDetail<any>,true
+ion-loading,event,didPresent,void,true
 ion-loading,event,ionLoadingDidDismiss,OverlayEventDetail<any>,true
 ion-loading,event,ionLoadingDidPresent,void,true
 ion-loading,event,ionLoadingWillDismiss,OverlayEventDetail<any>,true
 ion-loading,event,ionLoadingWillPresent,void,true
+ion-loading,event,willDismiss,OverlayEventDetail<any>,true
+ion-loading,event,willPresent,void,true
 ion-loading,css-prop,--backdrop-opacity
 ion-loading,css-prop,--background
 ion-loading,css-prop,--height
