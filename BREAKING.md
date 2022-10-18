@@ -118,6 +118,8 @@ Ionic now listens on the `keydown` event instead of the `keyup` event when deter
 
 - The `debounce` property's value value has changed from `0` to `undefined`. If `debounce` is undefined, the `ionInput` event will fire immediately.
 
+- Range no longer clamps assigned values within bounds. Developers will need to validate the value they are assigning to `ion-range` is within the `min` and `max` bounds when programmatically assigning a value. 
+
 <h4 id="version-7x-searchbar">Searchbar</h4>
 
 - `ionChange` is no longer emitted when the `value` of `ion-searchbar` is modified externally. `ionChange` is only emitted from user committed changes, such as typing in the searchbar and the searchbar losing focus.
