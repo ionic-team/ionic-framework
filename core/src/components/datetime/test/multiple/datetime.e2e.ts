@@ -93,11 +93,6 @@ test.describe('datetime: multiple date selection (functionality)', () => {
     await expect(monthYear).toHaveText('April 2022');
   });
 
-  test('multiple=false and array for defaulut value should switch to first item', async ({ page }) => {
-    const datetime = await setup(page, 'multipleFalseArrayValue');
-    await expect(datetime).toHaveJSProperty('value', '2022-06-01');
-  });
-
   test('with buttons, should only update value when confirm is called', async ({ page }) => {
     const datetime = await setup(page, 'withButtons');
     const june2Button = datetime.locator('[data-month="6"][data-day="2"]');
@@ -156,5 +151,61 @@ test.describe('datetime: multiple date selection (functionality)', () => {
     await firstDayButton.click();
     await ionChangeSpy.next();
     await expect(datetime).toHaveJSProperty('value', [`${year}-${month}-01`]);
+  });
+
+  test('header text should update correctly', async ({ page }) => {
+    const datetime = await setup(page, 'withHeader');
+    const header = datetime.locator('.datetime-selected-date');
+    const juneButtons = datetime.locator('[data-month="6"][data-day]');
+
+    await expect(header).toHaveText('Wed, Jun 1');
+
+    await juneButtons.nth(1).click();
+    await expect(header).toHaveText('2 days');
+
+    await juneButtons.nth(0).click();
+    await expect(header).toHaveText('Thu, Jun 2');
+
+    await juneButtons.nth(1).click();
+    await expect(header).toHaveText('0 days');
+  });
+
+  test('header text should update correctly with custom formatter', async ({ page }) => {
+    const datetime = await setup(page, 'customFormatter');
+    const header = datetime.locator('.datetime-selected-date');
+    const juneButtons = datetime.locator('[data-month="6"][data-day]');
+
+    await expect(header).toHaveText('Selected: 3');
+
+    await juneButtons.nth(1).click();
+    await juneButtons.nth(2).click();
+    await expect(header).toHaveText('Wed, Jun 1');
+
+    await juneButtons.nth(0).click();
+    await expect(header).toHaveText('Selected: 0');
+  });
+
+  test('header text should render default date when multiple="false"', async ({ page }) => {
+    await page.setContent(`
+      <ion-datetime locale="en-US" show-default-title="true"></ion-datetime>
+
+      <script>
+        const mockToday = '2022-10-10T16:22';
+        Date = class extends Date {
+          constructor(...args) {
+            if (args.length === 0) {
+              super(mockToday)
+            } else {
+              super(...args);
+            }
+          }
+        }
+      </script>
+    `);
+    await page.waitForSelector(`.datetime-ready`);
+    const datetime = page.locator('ion-datetime');
+    const header = datetime.locator('.datetime-selected-date');
+
+    await expect(header).toHaveText('Mon, Oct 10');
   });
 });

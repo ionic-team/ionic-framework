@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AccordionGroupChangeEventDetail, ActionSheetAttributes, ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DatetimePresentation, FrameworkDelegate, InputChangeEventDetail, InputInputEventDetail, ItemReorderEventDetail, LoadingAttributes, MenuChangeEventDetail, ModalAttributes, ModalBreakpointChangeEventDetail, ModalHandleBehavior, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerAttributes, PickerButton, PickerColumn, PopoverAttributes, PopoverSize, PositionAlign, PositionReference, PositionSide, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextFieldTypes, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, TriggerAction, ViewController } from "./interface";
+import { AccordionGroupChangeEventDetail, ActionSheetAttributes, ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DatetimePresentation, FrameworkDelegate, InputChangeEventDetail, InputInputEventDetail, ItemReorderEventDetail, LoadingAttributes, MenuChangeEventDetail, ModalAttributes, ModalBreakpointChangeEventDetail, ModalHandleBehavior, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerAttributes, PickerButton, PickerColumn, PopoverAttributes, PopoverSize, PositionAlign, PositionReference, PositionSide, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextFieldTypes, TitleSelectedDatesFormatter, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, TriggerAction, ViewController } from "./interface";
 import { IonicSafeString } from "./utils/sanitization";
 import { AlertAttributes } from "./components/alert/alert-interface";
 import { CounterFormatter } from "./components/item/item-interface";
@@ -73,7 +73,7 @@ export namespace Components {
          */
         "requestAccordionToggle": (accordionValue: string | undefined, accordionExpand: boolean) => Promise<void>;
         /**
-          * The value of the accordion group.
+          * The value of the accordion group. This controls which accordions are expanded. This should be an array of strings only when `multiple="true"`
          */
         "value"?: string | string[] | null;
     }
@@ -382,6 +382,10 @@ export namespace Components {
           * Set to `"clear"` for a transparent button that resembles a flat button, to `"outline"` for a transparent button with a border, or to `"solid"` for a button with a filled background. The default fill is `"solid"` except inside of a toolbar, where the default is `"clear"`.
          */
         "fill"?: 'clear' | 'outline' | 'solid' | 'default';
+        /**
+          * The HTML form element or form element id. Used to submit a form when the button is not a child of the form.
+         */
+        "form"?: string | HTMLFormElement;
         /**
           * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
          */
@@ -829,7 +833,7 @@ export namespace Components {
          */
         "showDefaultTimeLabel": boolean;
         /**
-          * If `true`, a header will be shown above the calendar picker. On `ios` mode this will include the slotted title, and on `md` mode this will include the slotted title and the selected date.
+          * If `true`, a header will be shown above the calendar picker. This will include both the slotted title, and the selected date.
          */
         "showDefaultTitle": boolean;
         /**
@@ -837,7 +841,11 @@ export namespace Components {
          */
         "size": 'cover' | 'fixed';
         /**
-          * The value of the datetime as a valid ISO 8601 datetime string. Should be an array of strings if `multiple="true"`.
+          * A callback used to format the header text that shows how many dates are selected. Only used if there are 0 or more than 1 selected (i.e. unused for exactly 1). By default, the header text is set to "numberOfDates days".
+         */
+        "titleSelectedDatesFormatter"?: TitleSelectedDatesFormatter;
+        /**
+          * The value of the datetime as a valid ISO 8601 datetime string. This should be an array of strings only when `multiple="true"`.
          */
         "value"?: string | string[] | null;
         /**
@@ -2376,9 +2384,9 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. This also impacts form bindings such as `ngModel` or `v-model`.
+          * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
          */
-        "debounce": number;
+        "debounce"?: number;
         /**
           * If `true`, the user cannot interact with the input.
          */
@@ -3824,7 +3832,7 @@ declare namespace LocalJSX {
          */
         "readonly"?: boolean;
         /**
-          * The value of the accordion group.
+          * The value of the accordion group. This controls which accordions are expanded. This should be an array of strings only when `multiple="true"`
          */
         "value"?: string | string[] | null;
     }
@@ -4148,6 +4156,10 @@ declare namespace LocalJSX {
           * Set to `"clear"` for a transparent button that resembles a flat button, to `"outline"` for a transparent button with a border, or to `"solid"` for a button with a filled background. The default fill is `"solid"` except inside of a toolbar, where the default is `"clear"`.
          */
         "fill"?: 'clear' | 'outline' | 'solid' | 'default';
+        /**
+          * The HTML form element or form element id. Used to submit a form when the button is not a child of the form.
+         */
+        "form"?: string | HTMLFormElement;
         /**
           * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
          */
@@ -4587,6 +4599,10 @@ declare namespace LocalJSX {
          */
         "onIonStyle"?: (event: IonDatetimeCustomEvent<StyleEventDetail>) => void;
         /**
+          * Emitted when the value property has changed. This is used to ensure that ion-datetime-button can respond to any value property changes.
+         */
+        "onIonValueChange"?: (event: IonDatetimeCustomEvent<DatetimeChangeEventDetail>) => void;
+        /**
           * If `true`, a wheel picker will be rendered instead of a calendar grid where possible. If `false`, a calendar grid will be rendered instead of a wheel picker where possible.  A wheel picker can be rendered instead of a grid when `presentation` is one of the following values: `'date'`, `'date-time'`, or `'time-date'`.  A wheel picker will always be rendered regardless of the `preferWheel` value when `presentation` is one of the following values: `'time'`, `'month'`, `'month-year'`, or `'year'`.
          */
         "preferWheel"?: boolean;
@@ -4611,7 +4627,7 @@ declare namespace LocalJSX {
          */
         "showDefaultTimeLabel"?: boolean;
         /**
-          * If `true`, a header will be shown above the calendar picker. On `ios` mode this will include the slotted title, and on `md` mode this will include the slotted title and the selected date.
+          * If `true`, a header will be shown above the calendar picker. This will include both the slotted title, and the selected date.
          */
         "showDefaultTitle"?: boolean;
         /**
@@ -4619,7 +4635,11 @@ declare namespace LocalJSX {
          */
         "size"?: 'cover' | 'fixed';
         /**
-          * The value of the datetime as a valid ISO 8601 datetime string. Should be an array of strings if `multiple="true"`.
+          * A callback used to format the header text that shows how many dates are selected. Only used if there are 0 or more than 1 selected (i.e. unused for exactly 1). By default, the header text is set to "numberOfDates days".
+         */
+        "titleSelectedDatesFormatter"?: TitleSelectedDatesFormatter;
+        /**
+          * The value of the datetime as a valid ISO 8601 datetime string. This should be an array of strings only when `multiple="true"`.
          */
         "value"?: string | string[] | null;
         /**
@@ -4918,7 +4938,7 @@ declare namespace LocalJSX {
          */
         "onIonFocus"?: (event: IonInputCustomEvent<FocusEvent>) => void;
         /**
-          * The `ionInput` event fires when the `value` of an `<ion-input>` element has been changed.  For elements that accept text input (`type=text`, `type=tel`, etc.), the interface is [`InputEvent`](https://developer.mozilla.org/en-US/docs/Web/API/InputEvent); for others, the interface is [`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event).
+          * The `ionInput` event fires when the `value` of an `<ion-input>` element has been changed.  For elements that accept text input (`type=text`, `type=tel`, etc.), the interface is [`InputEvent`](https://developer.mozilla.org/en-US/docs/Web/API/InputEvent); for others, the interface is [`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event). If the input is cleared on edit, the type is `null`.
          */
         "onIonInput"?: (event: IonInputCustomEvent<InputInputEventDetail>) => void;
         /**
@@ -6144,7 +6164,7 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. This also impacts form bindings such as `ngModel` or `v-model`.
+          * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
          */
         "debounce"?: number;
         /**
@@ -6172,7 +6192,7 @@ declare namespace LocalJSX {
          */
         "onIonCancel"?: (event: IonSearchbarCustomEvent<void>) => void;
         /**
-          * Emitted when the value has changed.
+          * The `ionChange` event is fired for `<ion-searchbar>` elements when the user modifies the element's value. Unlike the `ionInput` event, the `ionChange` event is not necessarily fired for each alteration to an element's value.  The `ionChange` event is fired when the element loses focus after its value has been modified. This includes modifications made when clicking the clear or cancel buttons.
          */
         "onIonChange"?: (event: IonSearchbarCustomEvent<SearchbarChangeEventDetail>) => void;
         /**
@@ -6184,9 +6204,9 @@ declare namespace LocalJSX {
          */
         "onIonFocus"?: (event: IonSearchbarCustomEvent<void>) => void;
         /**
-          * Emitted when a keyboard input occurred.
+          * Emitted when the `value` of the `ion-searchbar` element has changed.
          */
-        "onIonInput"?: (event: IonSearchbarCustomEvent<KeyboardEvent>) => void;
+        "onIonInput"?: (event: IonSearchbarCustomEvent<KeyboardEvent | null>) => void;
         /**
           * Emitted when the styles change.
          */
@@ -6600,9 +6620,9 @@ declare namespace LocalJSX {
          */
         "onIonFocus"?: (event: IonTextareaCustomEvent<FocusEvent>) => void;
         /**
-          * Ths `ionInput` event fires when the `value` of an `<ion-textarea>` element has been changed.
+          * The `ionInput` event fires when the `value` of an `<ion-textarea>` element has been changed.  When `clearOnEdit` is enabled, the `ionInput` event will be fired when the user clears the textarea by performing a keydown event.
          */
-        "onIonInput"?: (event: IonTextareaCustomEvent<InputEvent | null>) => void;
+        "onIonInput"?: (event: IonTextareaCustomEvent<InputEvent>) => void;
         /**
           * Emitted when the styles change.
          */
@@ -6761,7 +6781,7 @@ declare namespace LocalJSX {
          */
         "onIonBlur"?: (event: IonToggleCustomEvent<void>) => void;
         /**
-          * Emitted when the value property has changed.
+          * Emitted when the user switches the toggle on or off. Does not emit when programmatically changing the value of the `checked` property.
          */
         "onIonChange"?: (event: IonToggleCustomEvent<ToggleChangeEventDetail>) => void;
         /**

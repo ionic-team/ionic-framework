@@ -203,6 +203,7 @@ ion-button,prop,disabled,boolean,false,false,true
 ion-button,prop,download,string | undefined,undefined,false,false
 ion-button,prop,expand,"block" | "full" | undefined,undefined,false,true
 ion-button,prop,fill,"clear" | "default" | "outline" | "solid" | undefined,undefined,false,true
+ion-button,prop,form,HTMLFormElement | string | undefined,undefined,false,false
 ion-button,prop,href,string | undefined,undefined,false,false
 ion-button,prop,mode,"ios" | "md",undefined,false,false
 ion-button,prop,rel,string | undefined,undefined,false,false
@@ -397,6 +398,7 @@ ion-datetime,prop,showDefaultButtons,boolean,false,false,false
 ion-datetime,prop,showDefaultTimeLabel,boolean,true,false,false
 ion-datetime,prop,showDefaultTitle,boolean,false,false,false
 ion-datetime,prop,size,"cover" | "fixed",'fixed',false,false
+ion-datetime,prop,titleSelectedDatesFormatter,((selectedDates: string[]) => string) | undefined,undefined,false,false
 ion-datetime,prop,value,null | string | string[] | undefined,undefined,false,false
 ion-datetime,prop,yearValues,number | number[] | string | undefined,undefined,false,false
 ion-datetime,method,cancel,cancel(closeOverlay?: boolean) => Promise<void>
@@ -1100,7 +1102,7 @@ ion-searchbar,prop,cancelButtonIcon,string,config.get('backButtonIcon', arrowBac
 ion-searchbar,prop,cancelButtonText,string,'Cancel',false,false
 ion-searchbar,prop,clearIcon,string | undefined,undefined,false,false
 ion-searchbar,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
-ion-searchbar,prop,debounce,number,250,false,false
+ion-searchbar,prop,debounce,number | undefined,undefined,false,false
 ion-searchbar,prop,disabled,boolean,false,false,false
 ion-searchbar,prop,enterkeyhint,"done" | "enter" | "go" | "next" | "previous" | "search" | "send" | undefined,undefined,false,false
 ion-searchbar,prop,inputmode,"decimal" | "email" | "none" | "numeric" | "search" | "tel" | "text" | "url" | undefined,undefined,false,false
@@ -1119,7 +1121,7 @@ ion-searchbar,event,ionCancel,void,true
 ion-searchbar,event,ionChange,SearchbarChangeEventDetail,true
 ion-searchbar,event,ionClear,void,true
 ion-searchbar,event,ionFocus,void,true
-ion-searchbar,event,ionInput,KeyboardEvent,true
+ion-searchbar,event,ionInput,KeyboardEvent | null,true
 ion-searchbar,css-prop,--background
 ion-searchbar,css-prop,--border-radius
 ion-searchbar,css-prop,--box-shadow
@@ -1312,7 +1314,7 @@ ion-textarea,method,setFocus,setFocus() => Promise<void>
 ion-textarea,event,ionBlur,FocusEvent,true
 ion-textarea,event,ionChange,TextareaChangeEventDetail,true
 ion-textarea,event,ionFocus,FocusEvent,true
-ion-textarea,event,ionInput,InputEvent | null,true
+ion-textarea,event,ionInput,InputEvent,true
 ion-textarea,css-prop,--background
 ion-textarea,css-prop,--border-radius
 ion-textarea,css-prop,--color

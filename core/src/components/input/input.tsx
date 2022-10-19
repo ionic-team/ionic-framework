@@ -28,20 +28,19 @@ import { createColorClasses } from '../../utils/theme';
 export class Input implements ComponentInterface {
   private nativeInput?: HTMLInputElement;
   private inputId = `ion-input-${inputIds++}`;
-  private didBlurAfterEdit = false;
   private inheritedAttributes: Attributes = {};
   private isComposing = false;
   /**
-   * If `true`, the user cleared the input by pressing the clear icon,
-   * within the session of the input being focused.
+   * `true` if the input was cleared as a result of the user typing
+   * with `clearOnEdit` enabled.
    *
-   * This property is reset to `false` when the input is blurred.
+   * Resets when the input loses focus.
    */
-  private inputCleared = false;
+  private didInputClearOnEdit = false;
   /**
    * The value of the input when the input is focused.
    */
-  private focusedValue: string | number | null | undefined;
+  private focusedValue?: string | number | null;
 
   @State() hasFocus = false;
 
@@ -209,7 +208,8 @@ export class Input implements ComponentInterface {
    *
    * For elements that accept text input (`type=text`, `type=tel`, etc.), the interface
    * is [`InputEvent`](https://developer.mozilla.org/en-US/docs/Web/API/InputEvent); for others,
-   * the interface is [`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event).
+   * the interface is [`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event). If
+   * the input is cleared on edit, the type is `null`.
    */
   @Event() ionInput!: EventEmitter<InputInputEventDetail>;
 
@@ -346,6 +346,8 @@ export class Input implements ComponentInterface {
     const { value } = this;
     // Checks for both null and undefined values
     const newValue = value == null ? value : value.toString();
+    // Emitting a value change should update the internal state for tracking the focused value
+    this.focusedValue = newValue;
     this.ionChange.emit({ value: newValue });
   }
 
@@ -383,20 +385,17 @@ export class Input implements ComponentInterface {
 
   private onBlur = (ev: FocusEvent) => {
     this.hasFocus = false;
-    this.focusChanged();
     this.emitStyle();
 
-    if (this.inputCleared) {
-      if (this.focusedValue !== this.value) {
-        /**
-         * Emits the `ionChange` event when the input value
-         * is different than the value when the input was focused.
-         */
-        this.emitValueChange();
-      }
-      this.focusedValue = undefined;
-      this.inputCleared = false;
+    if (this.focusedValue !== this.value) {
+      /**
+       * Emits the `ionChange` event when the input value
+       * is different than the value when the input was focused.
+       */
+      this.emitValueChange();
     }
+
+    this.didInputClearOnEdit = false;
 
     this.ionBlur.emit(ev);
   };
@@ -404,25 +403,29 @@ export class Input implements ComponentInterface {
   private onFocus = (ev: FocusEvent) => {
     this.hasFocus = true;
     this.focusedValue = this.value;
-    this.focusChanged();
     this.emitStyle();
 
     this.ionFocus.emit(ev);
   };
 
   private onKeydown = (ev: KeyboardEvent) => {
-    if (this.shouldClearOnEdit()) {
-      // Did the input value change after it was blurred and edited?
-      // Do not clear if user is hitting Enter to submit form
-      if (this.didBlurAfterEdit && this.hasValue() && ev.key !== 'Enter') {
-        // Clear the input
-        this.clearTextInput();
-      }
-
-      // Reset the flag
-      this.didBlurAfterEdit = false;
-    }
+    this.checkClearOnEdit(ev);
   };
+
+  private checkClearOnEdit(ev: KeyboardEvent) {
+    if (!this.shouldClearOnEdit()) {
+      return;
+    }
+    /**
+     * Clear the input if the control has not been previously cleared during focus.
+     * Do not clear if the user hitting enter to submit a form.
+     */
+    if (!this.didInputClearOnEdit && this.hasValue() && ev.key !== 'Enter') {
+      this.value = '';
+      this.ionInput.emit();
+    }
+    this.didInputClearOnEdit = true;
+  }
 
   private onCompositionStart = () => {
     this.isComposing = true;
@@ -432,36 +435,16 @@ export class Input implements ComponentInterface {
     this.isComposing = false;
   };
 
-  private clearTextInput = (ev?: Event) => {
+  private onClearButtonClick = (ev?: Event) => {
     if (this.clearInput && !this.readonly && !this.disabled && ev) {
       ev.preventDefault();
       ev.stopPropagation();
-
       // Attempt to focus input again after pressing clear button
       this.setFocus();
     }
-
     this.value = '';
-    this.inputCleared = true;
-
     this.ionInput.emit(ev);
-
-    /**
-     * This is needed for clearOnEdit
-     * Otherwise the value will not be cleared
-     * if user is inside the input
-     */
-    if (this.nativeInput) {
-      this.nativeInput.value = '';
-    }
   };
-
-  private focusChanged() {
-    // If clearOnEdit is enabled and the input blurred but has a value, set a flag
-    if (!this.hasFocus && this.shouldClearOnEdit() && this.hasValue()) {
-      this.didBlurAfterEdit = true;
-    }
-  }
 
   private hasValue(): boolean {
     return this.getValue().length > 0;
@@ -532,7 +515,7 @@ export class Input implements ComponentInterface {
                */
               ev.preventDefault();
             }}
-            onClick={this.clearTextInput}
+            onClick={this.onClearButtonClick}
           />
         )}
       </Host>
