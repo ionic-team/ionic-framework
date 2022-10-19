@@ -17,7 +17,9 @@ export class IonRouteInner extends React.PureComponent<IonRouteProps> {
          *
          * TODO: FW-647
          */
-        computedMatch={(this.props as any).computedMatch}
+        {...{
+          computedMatch: (this.props as any).computedMatch,
+        }}
       />
     );
   }
