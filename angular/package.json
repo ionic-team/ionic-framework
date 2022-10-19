@@ -45,7 +45,7 @@
     "validate": "npm i && npm run lint && npm run test && npm run build"
   },
   "dependencies": {
-    "@ionic/core": "6.3.2",
+    "@ionic/core": "workspace:*",
     "jsonc-parser": "^3.0.0",
     "tslib": "^2.0.0"
   },

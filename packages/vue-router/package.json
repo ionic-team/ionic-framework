@@ -44,7 +44,7 @@
   },
   "homepage": "https://github.com/ionic-team/ionic#readme",
   "dependencies": {
-    "@ionic/vue": "6.3.2"
+    "@ionic/vue": "workspace:*"
   },
   "devDependencies": {
     "@types/jest": "^28.1.1",
