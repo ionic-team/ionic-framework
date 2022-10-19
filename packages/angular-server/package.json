@@ -60,11 +60,15 @@
     "@ionic/eslint-config": "^0.3.0",
     "@ionic/prettier-config": "^2.0.0",
     "@typescript-eslint/eslint-plugin": "^5.2.0",
-    "eslint": "^8.1.0",
+    "@typescript-eslint/parser": "^5.2.0",
+    "eslint": "^7.0.0",
     "eslint-plugin-import": "^2.25.2",
     "ng-packagr": "^12.0.0",
     "prettier": "^2.4.1",
-    "typescript": "4.2.4"
+    "rxjs": "^6.6.0",
+    "tslib": "^2.1.0",
+    "typescript": "4.2.4",
+    "zone.js": "^0.11.4"
   },
   "prettier": "@ionic/prettier-config"
 }
