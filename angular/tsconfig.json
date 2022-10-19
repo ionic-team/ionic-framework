@@ -23,7 +23,7 @@
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "outDir": "build/es2015",
+    "outDir": "dist",
     "pretty": true,
     "removeComments": false,
     "importHelpers": true,
