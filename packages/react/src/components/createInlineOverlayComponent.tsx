@@ -1,4 +1,4 @@
-import { OverlayEventDetail } from '@ionic/core/components'
+import { OverlayEventDetail } from '@ionic/core/components';
 import React, { createElement } from 'react';
 
 import {
@@ -12,7 +12,7 @@ import { createForwardRef } from './utils';
 
 type InlineOverlayState = {
   isOpen: boolean;
-}
+};
 
 interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<ElementType> {
   forwardedRef?: React.ForwardedRef<ElementType>;
@@ -32,17 +32,20 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
     defineCustomElement();
   }
   const displayName = dashToPascalCase(tagName);
-  const ReactComponent = class extends React.Component<IonicReactInternalProps<PropType>, InlineOverlayState> {
+  const ReactComponent = class extends React.Component<
+    IonicReactInternalProps<PropType>,
+    InlineOverlayState
+  > {
     ref: React.RefObject<HTMLElement>;
     wrapperRef: React.RefObject<HTMLElement>;
-    stableMergedRefs: React.RefCallback<HTMLElement>
+    stableMergedRefs: React.RefCallback<HTMLElement>;
 
     constructor(props: IonicReactInternalProps<PropType>) {
       super(props);
       // Create a local ref to to attach props to the wrapped element.
       this.ref = React.createRef();
       // React refs must be stable (not created inline).
-      this.stableMergedRefs = mergeRefs(this.ref, this.props.forwardedRef)
+      this.stableMergedRefs = mergeRefs(this.ref, this.props.forwardedRef);
       // Component is hidden by default
       this.state = { isOpen: false };
       // Create a local ref to the inner child element.
@@ -123,23 +126,34 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
         style,
       };
 
-      /**
-       * We only want the inner component
-       * to be mounted if the overlay is open,
-       * so conditionally render the component
-       * based on the isOpen state.
-       */
-      return createElement(tagName, newProps, (this.state.isOpen || this.props.keepContentsMounted) ?
-        createElement('div', {
-          id: 'ion-react-wrapper',
-          ref: this.wrapperRef,
-          style: {
-            display: 'flex',
-            flexDirection: 'column',
-            height: '100%'
-          }
-        }, children) :
-        null
+      return createElement(
+        'template',
+        {},
+        createElement(
+          tagName,
+          newProps,
+          /**
+           * We only want the inner component
+           * to be mounted if the overlay is open,
+           * so conditionally render the component
+           * based on the isOpen state.
+           */
+          this.state.isOpen || this.props.keepContentsMounted
+            ? createElement(
+                'div',
+                {
+                  id: 'ion-react-wrapper',
+                  ref: this.wrapperRef,
+                  style: {
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: '100%',
+                  },
+                },
+                children
+              )
+            : null
+        )
       );
     }
 
