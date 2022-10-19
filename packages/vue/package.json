@@ -11,6 +11,7 @@
     "bundle": "rollup --config rollup.config.js",
     "clean": "rimraf dist dist-transpiled",
     "compile": "npm run tsc",
+    "dev": "tsc -p . --watch",
     "tsc": "tsc -p .",
     "build.web-types": "node ./scripts/build-web-types.js",
     "build.vetur": "node ./scripts/build-vetur.js",
