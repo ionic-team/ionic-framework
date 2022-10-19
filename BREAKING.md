@@ -72,7 +72,7 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 
 <h4 id="version-7x-card-header">Card Header</h4>
 
-- iOS mode displays the subtitle before the title.
+- The card header has ben changed to a flex container with direction set to `column` (top to bottom). In `ios` mode the direction is set to `column-reverse` which results in the subtitle displaying on top of the title.
 
 <h4 id="version-7x-checkbox">Checkbox</h4>
 
@@ -99,7 +99,7 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 
 <h4 id="version-7x-overlays">Overlays</h4>
 
-Ionic now listens on the `keydown` event instead of the `keyup` event when determining when to dismiss overlays via the "Escape" key. Any applications that were listening on `keyup` to suppress this behavior should listen on `keydown` instead. 
+Ionic now listens on the `keydown` event instead of the `keyup` event when determining when to dismiss overlays via the "Escape" key. Any applications that were listening on `keyup` to suppress this behavior should listen on `keydown` instead.
 
 <h4 id="version-7x-range">Range</h4>
 
@@ -135,7 +135,7 @@ iOS:
 
 - The type signature of `value` supports `string | undefined`. Previously the type signature was `string | null | undefined`.
   - Developers needing to clear the checked segment item should assign a value of `''` instead of `null`.
-  
+
 <h4 id="version-7x-select">Select</h4>
 
 - `ionChange` is no longer emitted when the `value` of `ion-select` is modified externally. `ionChange` is only emitted from user committed changes, such as confirming a selected option in the select's overlay.
@@ -493,7 +493,7 @@ Developers must now provide an `ion-router-outlet` inside of `ion-tabs`. Previou
 <script>
   import { IonTabs, IonTabBar } from '@ionic/vue';
   import { defineComponent } from 'vue';
-  
+
   export default defineComponent({
     components: { IonTabs, IonTabBar }
   });
@@ -512,7 +512,7 @@ Developers must now provide an `ion-router-outlet` inside of `ion-tabs`. Previou
 <script>
   import { IonTabs, IonTabBar, IonRouterOutlet } from '@ionic/vue';
   import { defineComponent } from 'vue';
-  
+
   export default defineComponent({
     components: { IonTabs, IonTabBar, IonRouterOutlet }
   });
