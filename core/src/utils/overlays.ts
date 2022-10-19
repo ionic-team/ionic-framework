@@ -695,7 +695,7 @@ export const createDelegateController = (ref: {
    */
   const removeViewFromDom = () => {
     const { delegate } = getDelegate();
-    if (delegate && ref.el) {
+    if (delegate && ref.el !== undefined) {
       delegate.removeViewFromDom(ref.el.parentElement, ref.el);
     }
   };
