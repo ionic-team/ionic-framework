@@ -15,6 +15,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 - [Browser and Platform Support](#version-7x-browser-platform-support)
 - [Components](#version-7x-components)
   - [Accordion Group](#version-7x-accordion-group)
+  - [Card Header](#version-7x-card-header)
   - [Checkbox](#version-7x-checkbox)
   - [Datetime](#version-7x-datetime)
   - [Input](#version-7x-input)
@@ -69,6 +70,10 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 
 - Accordion Group no longer automatically adjusts the `value` property when passed an array and `multiple="false"`. Developers should update their apps to ensure they are using the API correctly.
 
+<h4 id="version-7x-card-header">Card Header</h4>
+
+- The card header has ben changed to a flex container with direction set to `column` (top to bottom). In `ios` mode the direction is set to `column-reverse` which results in the subtitle displaying on top of the title.
+
 <h4 id="version-7x-checkbox">Checkbox</h4>
 
 `ionChange` is no longer emitted when the `checked` property of `ion-checkbox` is modified externally. `ionChange` is only emitted from user committed changes, such as clicking or tapping the checkbox.
@@ -94,7 +99,7 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 
 <h4 id="version-7x-overlays">Overlays</h4>
 
-Ionic now listens on the `keydown` event instead of the `keyup` event when determining when to dismiss overlays via the "Escape" key. Any applications that were listening on `keyup` to suppress this behavior should listen on `keydown` instead. 
+Ionic now listens on the `keydown` event instead of the `keyup` event when determining when to dismiss overlays via the "Escape" key. Any applications that were listening on `keyup` to suppress this behavior should listen on `keydown` instead.
 
 <h4 id="version-7x-range">Range</h4>
 
@@ -130,7 +135,7 @@ iOS:
 
 - The type signature of `value` supports `string | undefined`. Previously the type signature was `string | null | undefined`.
   - Developers needing to clear the checked segment item should assign a value of `''` instead of `null`.
-  
+
 <h4 id="version-7x-select">Select</h4>
 
 - `ionChange` is no longer emitted when the `value` of `ion-select` is modified externally. `ionChange` is only emitted from user committed changes, such as confirming a selected option in the select's overlay.
@@ -488,7 +493,7 @@ Developers must now provide an `ion-router-outlet` inside of `ion-tabs`. Previou
 <script>
   import { IonTabs, IonTabBar } from '@ionic/vue';
   import { defineComponent } from 'vue';
-  
+
   export default defineComponent({
     components: { IonTabs, IonTabBar }
   });
@@ -507,7 +512,7 @@ Developers must now provide an `ion-router-outlet` inside of `ion-tabs`. Previou
 <script>
   import { IonTabs, IonTabBar, IonRouterOutlet } from '@ionic/vue';
   import { defineComponent } from 'vue';
-  
+
   export default defineComponent({
     components: { IonTabs, IonTabBar, IonRouterOutlet }
   });
