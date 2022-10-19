@@ -159,4 +159,24 @@ test.describe('datetime-button: modal', () => {
     await ionModalDidPresent.next();
     expect(datetime).toBeVisible();
   });
+  test('datetime should be the first child of the modal', async ({ page }, testInfo) => {
+    testInfo.annotations.push({
+      type: 'issue',
+      description: 'https://github.com/ionic-team/ionic-framework/issues/26117',
+    });
+
+    await page.locator('#date-button').click();
+    await ionModalDidPresent.next();
+    expect(datetime).toBeVisible();
+
+    expect(await modal.evaluate((el: HTMLIonModalElement) => el.firstElementChild!.tagName)).toBe('ION-DATETIME');
+    await modal.evaluate((el: HTMLIonModalElement) => el.dismiss());
+    await ionModalDidDismiss.next();
+
+    await page.locator('#date-button').click();
+    await ionModalDidPresent.next();
+    expect(datetime).toBeVisible();
+
+    expect(await modal.evaluate((el: HTMLIonModalElement) => el.firstElementChild!.tagName)).toBe('ION-DATETIME');
+  });
 });
