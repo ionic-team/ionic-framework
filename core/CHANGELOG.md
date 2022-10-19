@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.3-nightly.20221019](https://github.com/ionic-team/ionic/compare/v6.3.2...v6.3.3-nightly.20221019) (2022-10-19)
+
+
+### Bug Fixes
+
+* **datetime:** empty string is treated as no value ([#26131](https://github.com/ionic-team/ionic/issues/26131)) ([51ab5f6](https://github.com/ionic-team/ionic/commit/51ab5f67b50013c0ed8ca3160d6dfc56bc269f2a)), closes [#26116](https://github.com/ionic-team/ionic/issues/26116)
+* **datetime:** preferWheel can now show title ([#26101](https://github.com/ionic-team/ionic/issues/26101)) ([479d56b](https://github.com/ionic-team/ionic/commit/479d56b3b26d45bfd03d4095458c37ed00485c54)), closes [#26095](https://github.com/ionic-team/ionic/issues/26095)
+* **datetime:** values are adjusted to be in bounds ([#26125](https://github.com/ionic-team/ionic/issues/26125)) ([0548fe8](https://github.com/ionic-team/ionic/commit/0548fe858854f0187e0dfe00efaec142cd5bb6cf)), closes [#25894](https://github.com/ionic-team/ionic/issues/25894) [#25708](https://github.com/ionic-team/ionic/issues/25708)
+* **many:** haptics only fire on supported platforms ([#26130](https://github.com/ionic-team/ionic/issues/26130)) ([d4d569a](https://github.com/ionic-team/ionic/commit/d4d569ac09ab25ab5a490825cf1fc655fe97bb87)), closes [#26109](https://github.com/ionic-team/ionic/issues/26109)
+
+
+
+
+
 ## [6.3.2](https://github.com/ionic-team/ionic/compare/v6.3.1...v6.3.2) (2022-10-17)
 
 
