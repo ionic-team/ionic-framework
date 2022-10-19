@@ -78,3 +78,7 @@ angular/test/build/
 packages/vue/test/build/
 
 .npmrc
+
+# turbo
+.turbo
+.turbo-cookie
