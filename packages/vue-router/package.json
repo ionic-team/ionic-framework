@@ -10,6 +10,7 @@
     "build": "npm run clean && npm run compile && npm run bundle",
     "clean": "rimraf dist",
     "compile": "npm run tsc",
+    "dev": "tsc -p . --watch",
     "tsc": "tsc -p .",
     "sync": "sh ./scripts/sync.sh"
   },
