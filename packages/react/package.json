@@ -24,6 +24,7 @@
     "build": "npm run clean && npm run copy && npm run compile",
     "clean": "rimraf dist && rimraf dist-transpiled && rimraf routing",
     "compile": "npm run tsc && rollup -c",
+    "dev": "tsc -p . --watch",
     "release": "np --any-branch --yolo --no-release-draft",
     "lint": "tslint --project .",
     "lint.fix": "tslint --project . --fix",
