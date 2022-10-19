@@ -19,6 +19,7 @@ import {
   prepareOverlay,
   present,
   createDelegateController,
+  createTriggerController,
 } from '../../utils/overlays';
 import type { IonicSafeString } from '../../utils/sanitization';
 import { sanitizeDOMString } from '../../utils/sanitization';
@@ -42,6 +43,7 @@ import { mdLeaveAnimation } from './animations/md.leave';
 })
 export class Loading implements ComponentInterface, OverlayInterface {
   private readonly delegateController = createDelegateController(this);
+  private readonly triggerController = createTriggerController();
   private durationTimeout: any;
   private currentTransition?: Promise<any>;
 
@@ -140,6 +142,19 @@ export class Loading implements ComponentInterface, OverlayInterface {
   }
 
   /**
+   * An ID corresponding to the trigger element that
+   * causes the loading indicator to open when clicked.
+   */
+  @Prop() trigger: string | undefined;
+  @Watch('trigger')
+  triggerChanged() {
+    const { trigger, el, triggerController } = this;
+    if (trigger) {
+      triggerController.addClickListener(el, trigger);
+    }
+  }
+
+  /**
    * Emitted after the loading has presented.
    */
   @Event({ eventName: 'ionLoadingDidPresent' }) didPresent!: EventEmitter<void>;
@@ -185,6 +200,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
 
   connectedCallback() {
     prepareOverlay(this.el);
+    this.triggerChanged();
   }
 
   componentWillLoad() {
@@ -202,6 +218,10 @@ export class Loading implements ComponentInterface, OverlayInterface {
     if (this.isOpen === true) {
       raf(() => this.present());
     }
+  }
+
+  disconnectedCallback() {
+    this.triggerController.removeClickListener();
   }
 
   /**

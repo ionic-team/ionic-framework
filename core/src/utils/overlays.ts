@@ -636,7 +636,11 @@ export const createDelegateController = (ref: {
   const coreDelegate: FrameworkDelegate = CoreDelegate();
 
   /**
+<<<<<<< HEAD
+   *  * Determines whether or not an overlay is being used
+=======
    * Determines whether or not an overlay is being used
+>>>>>>> FW-2334
    * inline or via a controller/JS and returns the correct delegate.
    * By default, subsequent calls to getDelegate will use
    * a cached version of the delegate.
@@ -663,7 +667,6 @@ export const createDelegateController = (ref: {
      * correct place.
      */
     const parentEl = el.parentNode as HTMLElement | null;
-
     inline = parentEl !== null && !hasController;
     workingDelegate = inline ? delegate || coreDelegate : delegate;
 
@@ -700,5 +703,62 @@ export const createDelegateController = (ref: {
   return {
     attachViewToDom,
     removeViewFromDom,
+  };
+};
+
+/**
+ * Constructs a trigger interaction for an overlay.
+ * Presents an overlay when the trigger is clicked.
+ *
+ * Usage:
+ * ```ts
+ * triggerController = createTriggerController();
+ * triggerController.addClickListener(el, trigger);
+ * ```
+ */
+export const createTriggerController = () => {
+  let destroyTriggerInteraction: (() => void) | undefined;
+
+  /**
+   * Removes the click listener from the trigger element.
+   */
+  const removeClickListener = (): void => {
+    if (destroyTriggerInteraction) {
+      destroyTriggerInteraction();
+      destroyTriggerInteraction = undefined;
+    }
+  };
+
+  /**
+   * Adds a click listener to the trigger element.
+   * Presents the overlay when the trigger is clicked.
+   * @param el The overlay element.
+   * @param trigger The ID of the element to add a click listener to.
+   */
+  const addClickListener = (el: HTMLIonOverlayElement, trigger: string): void => {
+    removeClickListener();
+
+    const triggerEl = trigger !== undefined ? document.getElementById(trigger) : null;
+    if (!triggerEl) {
+      return;
+    }
+
+    const configureTriggerInteraction = (targetEl: HTMLElement, overlayEl: HTMLIonOverlayElement) => {
+      const openOverlay = () => {
+        overlayEl.present();
+      };
+      targetEl.addEventListener('click', openOverlay);
+
+      return () => {
+        targetEl.removeEventListener('click', openOverlay);
+      };
+    };
+
+    destroyTriggerInteraction = configureTriggerInteraction(triggerEl, el);
+  };
+
+  return {
+    addClickListener,
+    removeClickListener,
   };
 };
