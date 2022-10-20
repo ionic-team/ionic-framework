@@ -1,0 +1,14 @@
+{
+  "$schema": "./node_modules/ng-packagr/ng-package.schema.json",
+  "assets": [
+    {
+      "glob": "**/*",
+      "input": "node_modules/@ionic/core/css",
+      "output": "./css"
+    }
+  ],
+  "lib": {
+    "entryFile": "src/index.ts"
+  },
+  "allowedNonPeerDependencies": ["@ionic/core", "jsonc-parser"]
+}

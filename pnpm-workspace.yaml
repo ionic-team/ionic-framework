@@ -3,6 +3,5 @@ packages:
   - "packages/**"
   - "core"
   - "angular"
-  # exclude packages that are inside test directories
-  - "!**/test/**"
-  - "!**/test-app/**"
+  - "angular/test/build/**"
+  - "!angular/test/apps/**"

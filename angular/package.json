@@ -23,7 +23,8 @@
     "url": "https://github.com/ionic-team/ionic/issues"
   },
   "publishConfig": {
-    "directory": "dist"
+    "directory": "dist",
+    "linkDirectory": true
   },
   "homepage": "https://ionicframework.com/",
   "scripts": {
@@ -31,10 +32,10 @@
     "build": "npm run clean && npm run build.ng && npm run build.core && npm run clean-generated",
     "build.core": "node scripts/build-core.js",
     "build.link": "npm run build && node scripts/link-copy.js",
-    "build.ng": "ng-packagr -p package.json -c tsconfig.json",
+    "build.ng": "ng-packagr -p ng-package.json -c tsconfig.json",
     "clean": "node scripts/clean.js",
     "clean-generated": "node ./scripts/clean-generated.js",
-    "dev": "tsc -p . --watch",
+    "dev": "ng-packagr -p ng-package.json -c tsconfig.json -w",
     "lint": "npm run eslint && npm run prettier -- --write",
     "lint.fix": "npm run eslint -- --fix",
     "fmt": "npm run eslint -- --fix && npm run prettier -- --write",
@@ -42,7 +43,6 @@
     "eslint": "eslint . --ext .ts",
     "prerelease": "npm run validate && np prerelease --yolo --any-branch --tag next",
     "test": "echo 'angular no tests yet'",
-    "tsc": "tsc -p .",
     "validate": "npm i && npm run lint && npm run test && npm run build"
   },
   "dependencies": {
@@ -63,13 +63,13 @@
     "@angular-eslint/eslint-plugin": "^12.5.0",
     "@angular-eslint/eslint-plugin-template": "^12.5.0",
     "@angular-eslint/template-parser": "^12.5.0",
-    "@angular/common": "^12.0.0",
-    "@angular/compiler": "^12.0.0",
-    "@angular/compiler-cli": "^12.0.0",
-    "@angular/core": "^12.0.0",
-    "@angular/forms": "^12.0.0",
-    "@angular/platform-browser": ">=12.0.0",
-    "@angular/router": "^12.0.0",
+    "@angular/common": "^14.0.0",
+    "@angular/compiler": "^14.0.0",
+    "@angular/compiler-cli": "^14.0.0",
+    "@angular/core": "^14.0.0",
+    "@angular/forms": "^14.0.0",
+    "@angular/platform-browser": ">=14.0.0",
+    "@angular/router": "^14.0.0",
     "@ionic/eslint-config": "^0.3.0",
     "@ionic/prettier-config": "^2.0.0",
     "@schematics/angular": "^12.2.9",
@@ -79,22 +79,13 @@
     "eslint": "^7.32.0",
     "eslint-plugin-import": "^2.25.2",
     "fs-extra": "^7.0.0",
-    "ng-packagr": "^12.0.0",
+    "ng-packagr": "^14.0.0",
     "prettier": "^2.4.1",
     "rxjs": "^6.6.2",
-    "typescript": "4.2.4",
+    "typescript": "^4.6.0",
     "typescript-eslint-language-service": "^4.1.5",
     "zone.js": "~0.11.4"
   },
   "prettier": "@ionic/prettier-config",
-  "schematics": "./schematics/collection.json",
-  "ngPackage": {
-    "lib": {
-      "entryFile": "src/index.ts"
-    },
-    "allowedNonPeerDependencies": [
-      "@ionic/core",
-      "jsonc-parser"
-    ]
-  }
+  "schematics": "./schematics/collection.json"
 }
