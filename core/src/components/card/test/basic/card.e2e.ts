@@ -7,8 +7,8 @@ test.describe('card: basic', () => {
       await page.setContent(`
         <ion-card>
           <ion-card-header>
-            <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
             <ion-card-title>Card Title</ion-card-title>
+            <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
           </ion-card-header>
 
           <ion-card-content>
@@ -56,8 +56,8 @@ test.describe('card: basic', () => {
             <img style="transform: rotate(145deg) scale(1.5)" src="/src/components/card/test/img.jpg" />
           </div>
           <ion-card-header translucent="true">
-            <ion-card-subtitle> Subtitle </ion-card-subtitle>
             <ion-card-title> Title </ion-card-title>
+            <ion-card-subtitle> Subtitle </ion-card-subtitle>
           </ion-card-header>
 
           <ion-card-content style="min-height: 20px"></ion-card-content>
@@ -72,8 +72,8 @@ test.describe('card: basic', () => {
       await page.setContent(`
         <ion-card disabled="true">
           <ion-card-header>
-            <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
             <ion-card-title>Card Title</ion-card-title>
+            <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
           </ion-card-header>
 
           <ion-card-content>
@@ -90,8 +90,8 @@ test.describe('card: basic', () => {
       await page.setContent(`
         <ion-card color="danger">
           <ion-card-header>
-            <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
             <ion-card-title>Card Title</ion-card-title>
+            <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
           </ion-card-header>
 
           <ion-card-content>
