@@ -404,6 +404,7 @@ importers:
       '@types/node': ^14.0.14
       '@types/react': 16.14.0
       '@types/react-dom': ^16.9.0
+      concurrently: ^7.4.0
       fs-extra: ^9.0.1
       ionicons: ^6.0.2
       jest: ^26.6.3
@@ -434,6 +435,7 @@ importers:
       '@types/node': 14.18.32
       '@types/react': 16.14.0
       '@types/react-dom': 16.9.16
+      concurrently: 7.4.0
       fs-extra: 9.1.0
       jest: 26.6.3
       np: 6.5.0
@@ -12883,6 +12885,22 @@ packages:
       supports-color: 8.1.1
       tree-kill: 1.2.2
       yargs: 16.2.0
+    dev: true
+
+  /concurrently/7.4.0:
+    resolution: {integrity: sha512-M6AfrueDt/GEna/Vg9BqQ+93yuvzkSKmoTixnwEJkH0LlcGrRC2eCmjeG1tLLHIYfpYJABokqSGyMcXjm96AFA==}
+    engines: {node: ^12.20.0 || ^14.13.0 || >=16.0.0}
+    hasBin: true
+    dependencies:
+      chalk: 4.1.2
+      date-fns: 2.29.3
+      lodash: 4.17.21
+      rxjs: 7.5.7
+      shell-quote: 1.7.4
+      spawn-command: 0.0.2-1
+      supports-color: 8.1.1
+      tree-kill: 1.2.2
+      yargs: 17.6.0
     dev: true
 
   /condense-newlines/0.2.1:
