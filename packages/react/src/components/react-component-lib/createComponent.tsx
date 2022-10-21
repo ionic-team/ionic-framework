@@ -27,9 +27,9 @@ export const createReactComponent = <
   ReactComponentContext?: React.Context<ContextStateType>,
   manipulatePropsFunction?: (
     originalProps: StencilReactInternalProps<ElementType>,
-    propsToPass: any,
+    propsToPass: any
   ) => ExpandedPropsTypes,
-  defineCustomElement?: () => void,
+  defineCustomElement?: () => void
 ) => {
   if (defineCustomElement !== undefined) {
     defineCustomElement();
@@ -68,7 +68,7 @@ export const createReactComponent = <
           (acc as any)[name] = (cProps as any)[name];
         }
         return acc;
-      }, {});
+      }, {} as ExpandedPropsTypes);
 
       if (manipulatePropsFunction) {
         propsToPass = manipulatePropsFunction(this.props, propsToPass);
