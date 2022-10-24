@@ -2109,9 +2109,9 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * How long, in milliseconds, to wait to trigger the `ionChange` event after each change in the range value. This also impacts form bindings such as `ngModel` or `v-model`.
+          * How long, in milliseconds, to wait to trigger the `ionInput` event after each change in the range value.
          */
-        "debounce": number;
+        "debounce"?: number;
         /**
           * If `true`, the user cannot interact with the range.
          */
@@ -5843,7 +5843,7 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * How long, in milliseconds, to wait to trigger the `ionChange` event after each change in the range value. This also impacts form bindings such as `ngModel` or `v-model`.
+          * How long, in milliseconds, to wait to trigger the `ionInput` event after each change in the range value.
          */
         "debounce"?: number;
         /**
@@ -5875,13 +5875,17 @@ declare namespace LocalJSX {
          */
         "onIonBlur"?: (event: IonRangeCustomEvent<void>) => void;
         /**
-          * Emitted when the value property has changed.
+          * The `ionChange` event is fired for `<ion-range>` elements when the user modifies the element's value: - When the user releases the knob after dragging; - When the user moves the knob with keyboard arrows  `ionChange` is not fired when the value is changed programmatically.
          */
         "onIonChange"?: (event: IonRangeCustomEvent<RangeChangeEventDetail>) => void;
         /**
           * Emitted when the range has focus.
          */
         "onIonFocus"?: (event: IonRangeCustomEvent<void>) => void;
+        /**
+          * The `ionInput` event is fired for `<ion-range>` elements when the value is modified. Unlike `ionChange`, `ionInput` is fired continuously while the user is dragging the knob.
+         */
+        "onIonInput"?: (event: IonRangeCustomEvent<RangeChangeEventDetail>) => void;
         /**
           * Emitted when the user finishes moving the range knob, whether through mouse drag, touch gesture, or keyboard interaction.
          */
