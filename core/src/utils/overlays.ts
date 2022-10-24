@@ -6,6 +6,7 @@ import type {
   Animation,
   AnimationBuilder,
   BackButtonEvent,
+  FrameworkDelegate,
   HTMLIonOverlayElement,
   IonicConfig,
   LoadingOptions,
@@ -16,6 +17,7 @@ import type {
   ToastOptions,
 } from '../interface';
 
+import { CoreDelegate } from './framework-delegate';
 import { OVERLAY_BACK_BUTTON_PRIORITY } from './hardware-back-button';
 import { addEventListener, componentOnReady, focusElement, getElementRoot, removeEventListener } from './helpers';
 
@@ -612,3 +614,151 @@ export const safeCall = (handler: any, arg?: any) => {
 };
 
 export const BACKDROP = 'backdrop';
+
+/**
+ * Creates a delegate controller.
+ *
+ * Requires that the component has the following properties:
+ * - `el: HTMLElement`
+ * - `hasController: boolean`
+ * - `delegate?: FrameworkDelegate`
+ *
+ * @param ref The component class instance.
+ */
+export const createDelegateController = (ref: {
+  el: HTMLElement;
+  hasController: boolean;
+  delegate?: FrameworkDelegate;
+}) => {
+  let inline = false;
+  let workingDelegate: FrameworkDelegate | undefined;
+
+  const coreDelegate: FrameworkDelegate = CoreDelegate();
+
+  /**
+<<<<<<< HEAD
+   *  * Determines whether or not an overlay is being used
+=======
+   * Determines whether or not an overlay is being used
+>>>>>>> FW-2334
+   * inline or via a controller/JS and returns the correct delegate.
+   * By default, subsequent calls to getDelegate will use
+   * a cached version of the delegate.
+   * This is useful for calling dismiss after present,
+   * so that the correct delegate is given.
+   * @param force `true` to force the non-cached version of the delegate.
+   * @returns The delegate to use and whether or not the overlay is inline.
+   */
+  const getDelegate = (force = false) => {
+    if (workingDelegate && !force) {
+      return {
+        delegate: workingDelegate,
+        inline,
+      };
+    }
+    const { el, hasController, delegate } = ref;
+    /**
+     * If using overlay inline
+     * we potentially need to use the coreDelegate
+     * so that this works in vanilla JS apps.
+     * If a developer has presented this component
+     * via a controller, then we can assume
+     * the component is already in the
+     * correct place.
+     */
+    const parentEl = el.parentNode as HTMLElement | null;
+    inline = parentEl !== null && !hasController;
+    workingDelegate = inline ? delegate || coreDelegate : delegate;
+
+    return { inline, delegate: workingDelegate };
+  };
+
+  /**
+   * Attaches a component in the DOM. Teleports the component
+   * to the root of the app.
+   * @param component The component to optionally construct and append to the element.
+   */
+  const attachViewToDom = async (component?: any) => {
+    const { delegate } = getDelegate(true);
+    if (delegate) {
+      return await delegate.attachViewToDom(ref.el, component);
+    }
+    const { hasController } = ref;
+    if (hasController && component !== undefined) {
+      throw new Error('framework delegate is missing');
+    }
+    return null;
+  };
+
+  /**
+   * Moves a component back to its original location in the DOM.
+   */
+  const removeViewFromDom = () => {
+    const { delegate } = getDelegate();
+    if (delegate && ref.el !== undefined) {
+      delegate.removeViewFromDom(ref.el.parentElement, ref.el);
+    }
+  };
+
+  return {
+    attachViewToDom,
+    removeViewFromDom,
+  };
+};
+
+/**
+ * Constructs a trigger interaction for an overlay.
+ * Presents an overlay when the trigger is clicked.
+ *
+ * Usage:
+ * ```ts
+ * triggerController = createTriggerController();
+ * triggerController.addClickListener(el, trigger);
+ * ```
+ */
+export const createTriggerController = () => {
+  let destroyTriggerInteraction: (() => void) | undefined;
+
+  /**
+   * Removes the click listener from the trigger element.
+   */
+  const removeClickListener = (): void => {
+    if (destroyTriggerInteraction) {
+      destroyTriggerInteraction();
+      destroyTriggerInteraction = undefined;
+    }
+  };
+
+  /**
+   * Adds a click listener to the trigger element.
+   * Presents the overlay when the trigger is clicked.
+   * @param el The overlay element.
+   * @param trigger The ID of the element to add a click listener to.
+   */
+  const addClickListener = (el: HTMLIonOverlayElement, trigger: string): void => {
+    removeClickListener();
+
+    const triggerEl = trigger !== undefined ? document.getElementById(trigger) : null;
+    if (!triggerEl) {
+      return;
+    }
+
+    const configureTriggerInteraction = (targetEl: HTMLElement, overlayEl: HTMLIonOverlayElement) => {
+      const openOverlay = () => {
+        overlayEl.present();
+      };
+      targetEl.addEventListener('click', openOverlay);
+
+      return () => {
+        targetEl.removeEventListener('click', openOverlay);
+      };
+    };
+
+    destroyTriggerInteraction = configureTriggerInteraction(triggerEl, el);
+  };
+
+  return {
+    addClickListener,
+    removeClickListener,
+  };
+};
