@@ -4,7 +4,9 @@ import type { E2EPage } from '@utils/test/playwright';
 import { test } from '@utils/test/playwright';
 
 test.describe('menu-toggle: basic', () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({ page, skip }) => {
+    skip.rtl();
+    skip.mode('ios');
     await page.goto(`/src/components/menu-toggle/test/basic`);
   });
 
