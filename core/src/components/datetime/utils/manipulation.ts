@@ -1,5 +1,6 @@
 import type { DatetimeParts } from '../datetime-interface';
 
+import { isSameDay } from './comparison';
 import { getNumDaysInMonth } from './helpers';
 
 const twoDigit = (val: number | undefined): string => {
@@ -345,7 +346,11 @@ export const calculateHourFromAMPM = (currentParts: DatetimeParts, newAMPM: 'am'
  * values are valid. For days that do not exist,
  * the closest valid day is used.
  */
-export const validateParts = (parts: DatetimeParts): DatetimeParts => {
+export const validateParts = (
+  parts: DatetimeParts,
+  minParts?: DatetimeParts,
+  maxParts?: DatetimeParts
+): DatetimeParts => {
   const { month, day, year } = parts;
   const partsCopy = { ...parts };
 
@@ -359,6 +364,67 @@ export const validateParts = (parts: DatetimeParts): DatetimeParts => {
    */
   if (day !== null && numDays < day) {
     partsCopy.day = numDays;
+  }
+
+  /**
+   * If value is same day as min day,
+   * make sure the time value is in bounds.
+   */
+  if (minParts !== undefined && isSameDay(partsCopy, minParts)) {
+    /**
+     * If the hour is out of bounds,
+     * update both the hour and minute.
+     * This is done so that the new time
+     * is closest to what the user selected.
+     */
+    if (partsCopy.hour !== undefined && minParts.hour !== undefined) {
+      if (partsCopy.hour < minParts.hour) {
+        partsCopy.hour = minParts.hour;
+        partsCopy.minute = minParts.minute;
+
+        /**
+         * If only the minute is out of bounds,
+         * set it to the min minute.
+         */
+      } else if (
+        partsCopy.hour === minParts.hour &&
+        partsCopy.minute !== undefined &&
+        minParts.minute !== undefined &&
+        partsCopy.minute < minParts.minute
+      ) {
+        partsCopy.minute = minParts.minute;
+      }
+    }
+  }
+
+  /**
+   * If value is same day as max day,
+   * make sure the time value is in bounds.
+   */
+  if (maxParts !== undefined && isSameDay(parts, maxParts)) {
+    /**
+     * If the hour is out of bounds,
+     * update both the hour and minute.
+     * This is done so that the new time
+     * is closest to what the user selected.
+     */
+    if (partsCopy.hour !== undefined && maxParts.hour !== undefined) {
+      if (partsCopy.hour > maxParts.hour) {
+        partsCopy.hour = maxParts.hour;
+        partsCopy.minute = maxParts.minute;
+        /**
+         * If only the minute is out of bounds,
+         * set it to the max minute.
+         */
+      } else if (
+        partsCopy.hour === maxParts.hour &&
+        partsCopy.minute !== undefined &&
+        maxParts.minute !== undefined &&
+        partsCopy.minute > maxParts.minute
+      ) {
+        partsCopy.minute = maxParts.minute;
+      }
+    }
   }
 
   return partsCopy;
