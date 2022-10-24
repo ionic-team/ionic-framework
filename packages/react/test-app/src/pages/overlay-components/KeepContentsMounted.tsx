@@ -17,7 +17,7 @@ const KeepContentsMounted: React.FC = () => {
         <IonButton id="open-modal" onClick={() => setShowModal(true)}>Open Modal</IonButton>
         <IonButton id="open-popover" onClick={() => setShowPopover(true)}>Open Popover</IonButton>
 
-        <IonModal keepContentsMounted={true} id="default-modal" isOpen={showModal} onDidDismiss={() => setShowPopover(false)}>
+        <IonModal keepContentsMounted={true} id="default-modal" isOpen={showModal} onDidDismiss={() => setShowModal(false)}>
           <IonContent>
             <IonButton onClick={() => setShowModal(false)}>Dismiss</IonButton>
             Modal Content

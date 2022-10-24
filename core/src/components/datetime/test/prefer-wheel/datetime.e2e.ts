@@ -40,6 +40,18 @@ test.describe('datetime: prefer wheel', () => {
         `datetime-wheel-time-date-diff-${page.getSnapshotSettings()}.png`
       );
     });
+    test('should render a condense header when specified', async ({ page }) => {
+      await page.setContent(`
+        <ion-datetime size="cover" presentation="time-date" prefer-wheel="true" value="2019-05-30T16:30:00"><div slot="title">My Custom Title</div></ion-datetime>
+      `);
+      await page.waitForSelector('.datetime-ready');
+
+      const datetime = page.locator('ion-datetime');
+
+      expect(await datetime.screenshot()).toMatchSnapshot(
+        `datetime-wheel-header-diff-${page.getSnapshotSettings()}.png`
+      );
+    });
   });
   test.describe('datetime: date wheel', () => {
     test.beforeEach(({ skip }) => {
