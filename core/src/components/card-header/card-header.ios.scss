@@ -6,6 +6,8 @@
 
 :host {
   @include padding($card-ios-header-padding-top, $card-ios-header-padding-end, $card-ios-header-padding-bottom, $card-ios-header-padding-start);
+
+  flex-direction: column-reverse;
 }
 
 @supports (backdrop-filter: blur(0)) {

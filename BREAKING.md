@@ -15,6 +15,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 - [Browser and Platform Support](#version-7x-browser-platform-support)
 - [Components](#version-7x-components)
   - [Accordion Group](#version-7x-accordion-group)
+  - [Card Header](#version-7x-card-header)
   - [Checkbox](#version-7x-checkbox)
   - [Datetime](#version-7x-datetime)
   - [Input](#version-7x-input)
@@ -69,6 +70,10 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 
 - Accordion Group no longer automatically adjusts the `value` property when passed an array and `multiple="false"`. Developers should update their apps to ensure they are using the API correctly.
 
+<h4 id="version-7x-card-header">Card Header</h4>
+
+- The card header has ben changed to a flex container with direction set to `column` (top to bottom). In `ios` mode the direction is set to `column-reverse` which results in the subtitle displaying on top of the title.
+
 <h4 id="version-7x-checkbox">Checkbox</h4>
 
 `ionChange` is no longer emitted when the `checked` property of `ion-checkbox` is modified externally. `ionChange` is only emitted from user committed changes, such as clicking or tapping the checkbox.
@@ -94,25 +99,31 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 
 <h4 id="version-7x-overlays">Overlays</h4>
 
-Ionic now listens on the `keydown` event instead of the `keyup` event when determining when to dismiss overlays via the "Escape" key. Any applications that were listening on `keyup` to suppress this behavior should listen on `keydown` instead. 
+Ionic now listens on the `keydown` event instead of the `keyup` event when determining when to dismiss overlays via the "Escape" key. Any applications that were listening on `keyup` to suppress this behavior should listen on `keydown` instead.
 
 <h4 id="version-7x-range">Range</h4>
 
-Range is updated to align with the design specification for supported modes.
+- Range is updated to align with the design specification for supported modes.
 
-**Design tokens**
+  **Design tokens**
 
+  iOS:
 
-iOS:
+  | Token                             | Previous Value                                                                            | New Value                                                             |
+  | --------------------------------- | ----------------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
+  | `--bar-border-radius`             | `0px`                                                                                     | `$range-ios-bar-border-radius` (`2px` default)                        |
+  | `--knob-size`                     | `28px`                                                                                    | `$range-ios-knob-width` (`26px` default)                              |
+  | `$range-ios-bar-height`           | `2px`                                                                                     | `4px`                                                                 |
+  | `$range-ios-bar-background-color` | `rgba(var(--ion-text-color-rgb, 0, 0, 0), .1)`                                            | `var(--ion-color-step-900, #e6e6e6)`                                  |
+  | `$range-ios-knob-box-shadow`      | `0 3px 1px rgba(0, 0, 0, .1), 0 4px 8px rgba(0, 0, 0, .13), 0 0 0 1px rgba(0, 0, 0, .02)` | `0px 0.5px 4px rgba(0, 0, 0, 0.12), 0px 6px 13px rgba(0, 0, 0, 0.12)` |
+  | `$range-ios-knob-width`           | `28px`                                                                                    | `26px`                                                                |
 
-|Token|Previous Value|New Value|
-|-----|--------------|---------|
-|`--bar-border-radius`|`0px`|`$range-ios-bar-border-radius` (`2px` default)|
-|`--knob-size`|`28px`|`$range-ios-knob-width` (`26px` default)|
-|`$range-ios-bar-height`|`2px`|`4px`|
-|`$range-ios-bar-background-color`|`rgba(var(--ion-text-color-rgb, 0, 0, 0), .1)`|`var(--ion-color-step-900, #e6e6e6)`|
-|`$range-ios-knob-box-shadow`|`0 3px 1px rgba(0, 0, 0, .1), 0 4px 8px rgba(0, 0, 0, .13), 0 0 0 1px rgba(0, 0, 0, .02)`|`0px 0.5px 4px rgba(0, 0, 0, 0.12), 0px 6px 13px rgba(0, 0, 0, 0.12)`|
-|`$range-ios-knob-width`|`28px`|`26px`|
+- `ionChange` is no longer emitted when the `value` of `ion-range` is modified externally. `ionChange` is only emitted from user committed changes, such as dragging and releasing the range knob or selecting a new value with the keyboard arrows.
+  - If your application requires immediate feedback based on the user actively dragging the range knob, consider migrating your event listeners to using `ionInput` instead.
+
+- The `debounce` property's value value has changed from `0` to `undefined`. If `debounce` is undefined, the `ionInput` event will fire immediately.
+
+- Range no longer clamps assigned values within bounds. Developers will need to validate the value they are assigning to `ion-range` is within the `min` and `max` bounds when programmatically assigning a value. 
 
 <h4 id="version-7x-searchbar">Searchbar</h4>
 
@@ -130,7 +141,7 @@ iOS:
 
 - The type signature of `value` supports `string | undefined`. Previously the type signature was `string | null | undefined`.
   - Developers needing to clear the checked segment item should assign a value of `''` instead of `null`.
-  
+
 <h4 id="version-7x-select">Select</h4>
 
 - `ionChange` is no longer emitted when the `value` of `ion-select` is modified externally. `ionChange` is only emitted from user committed changes, such as confirming a selected option in the select's overlay.
@@ -488,7 +499,7 @@ Developers must now provide an `ion-router-outlet` inside of `ion-tabs`. Previou
 <script>
   import { IonTabs, IonTabBar } from '@ionic/vue';
   import { defineComponent } from 'vue';
-  
+
   export default defineComponent({
     components: { IonTabs, IonTabBar }
   });
@@ -507,7 +518,7 @@ Developers must now provide an `ion-router-outlet` inside of `ion-tabs`. Previou
 <script>
   import { IonTabs, IonTabBar, IonRouterOutlet } from '@ionic/vue';
   import { defineComponent } from 'vue';
-  
+
   export default defineComponent({
     components: { IonTabs, IonTabBar, IonRouterOutlet }
   });
