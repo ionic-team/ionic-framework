@@ -1,4 +1,4 @@
-import { RouteChain, RouteID, RouteRedirect } from './interface';
+import type { RouteChain, RouteID, RouteRedirect } from './interface';
 
 /**
  * Returns whether the given redirect matches the given path segments.
@@ -31,7 +31,7 @@ export const matchesRedirect = (segments: string[], redirect: RouteRedirect): bo
 
 /** Returns the first redirect matching the path segments or undefined when no match found. */
 export const findRouteRedirect = (segments: string[], redirects: RouteRedirect[]) => {
-  return redirects.find(redirect => matchesRedirect(segments, redirect));
+  return redirects.find((redirect) => matchesRedirect(segments, redirect));
 };
 
 export const matchesIDs = (ids: Pick<RouteID, 'id' | 'params'>[], chain: RouteChain): number => {
@@ -68,7 +68,7 @@ export const matchesIDs = (ids: Pick<RouteID, 'id' | 'params'>[], chain: RouteCh
         // [':s1',':s2']
         // ```
         //
-        const pathWithParams = routeIdParams.map(key => `:${key}`);
+        const pathWithParams = routeIdParams.map((key) => `:${key}`);
         for (let j = 0; j < pathWithParams.length; j++) {
           // Skip results where the path variable is not a match
           if (pathWithParams[j].toLowerCase() !== routeChain.segments[j]) {
@@ -77,14 +77,13 @@ export const matchesIDs = (ids: Pick<RouteID, 'id' | 'params'>[], chain: RouteCh
           // Weight path matches for the same index higher.
           score++;
         }
-
       }
     }
     // Weight id matches
     score++;
   }
   return score;
-}
+};
 
 /**
  * Matches the segments against the chain.
@@ -119,9 +118,7 @@ export const matchesSegments = (segments: string[], chain: RouteChain): RouteCha
       matchesDefault = false;
     }
   }
-  const matches = (matchesDefault)
-    ? matchesDefault === (inputSegments.next() === '')
-    : true;
+  const matches = matchesDefault ? matchesDefault === (inputSegments.next() === '') : true;
 
   if (!matches) {
     return null;
@@ -132,7 +129,7 @@ export const matchesSegments = (segments: string[], chain: RouteChain): RouteCha
       segments: route.segments,
       params: mergeParams(route.params, allparams![i]),
       beforeEnter: route.beforeEnter,
-      beforeLeave: route.beforeLeave
+      beforeLeave: route.beforeLeave,
     }));
   }
   return chain;
@@ -142,7 +139,10 @@ export const matchesSegments = (segments: string[], chain: RouteChain): RouteCha
  * Merges the route parameter objects.
  * Returns undefined when both parameters are undefined.
  */
-export const mergeParams = (a: { [key: string]: any } | undefined, b: { [key: string]: any } | undefined): { [key: string]: any } | undefined => {
+export const mergeParams = (
+  a: { [key: string]: any } | undefined,
+  b: { [key: string]: any } | undefined
+): { [key: string]: any } | undefined => {
   return a || b ? { ...a, ...b } : undefined;
 };
 
@@ -168,7 +168,7 @@ export const findChainForIDs = (ids: RouteID[], chains: RouteChain[]): RouteChai
     return match.map((route, i) => ({
       id: route.id,
       segments: route.segments,
-      params: mergeParams(route.params, ids[i]?.params)
+      params: mergeParams(route.params, ids[i]?.params),
     }));
   }
   return null;

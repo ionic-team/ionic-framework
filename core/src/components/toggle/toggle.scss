@@ -83,6 +83,7 @@ input {
   @include border-radius(var(--border-radius));
 
   display: block;
+
   position: relative;
 
   width: 100%;
@@ -95,14 +96,12 @@ input {
   overflow: inherit;
 }
 
-
 // Toggle Background Track: Checked
 // ----------------------------------------------------------
 
 :host(.toggle-checked) .toggle-icon {
   background: var(--background-checked);
 }
-
 
 // Toggle Inner Knob: Unchecked
 // --------------------------------------------------
@@ -126,7 +125,6 @@ input {
 
   contain: strict;
 }
-
 
 // Toggle Inner Knob: Checked
 // ----------------------------------------------------------

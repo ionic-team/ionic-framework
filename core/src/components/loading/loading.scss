@@ -67,11 +67,6 @@
   z-index: $z-index-overlay-wrapper;
 }
 
-.spinner-lines,
-.spinner-lines-small,
-.spinner-bubbles,
-.spinner-circles,
-.spinner-crescent,
-.spinner-dots {
+ion-spinner {
   color: var(--spinner-color);
 }

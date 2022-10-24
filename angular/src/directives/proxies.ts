@@ -239,13 +239,13 @@ export declare interface IonButton extends Components.IonButton {
 
 @ProxyCmp({
   defineCustomElementFn: undefined,
-  inputs: ['buttonType', 'color', 'disabled', 'download', 'expand', 'fill', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'shape', 'size', 'strong', 'target', 'type']
+  inputs: ['buttonType', 'color', 'disabled', 'download', 'expand', 'fill', 'form', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'shape', 'size', 'strong', 'target', 'type']
 })
 @Component({
   selector: 'ion-button',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['buttonType', 'color', 'disabled', 'download', 'expand', 'fill', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'shape', 'size', 'strong', 'target', 'type']
+  inputs: ['buttonType', 'color', 'disabled', 'download', 'expand', 'fill', 'form', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'shape', 'size', 'strong', 'target', 'type']
 })
 export class IonButton {
   protected el: HTMLElement;
@@ -464,16 +464,18 @@ import type { ScrollBaseDetail as IContentScrollBaseDetail } from '@ionic/core';
 import type { ScrollDetail as IContentScrollDetail } from '@ionic/core';
 export declare interface IonContent extends Components.IonContent {
   /**
-   * Emitted when the scroll has started. 
+   * Emitted when the scroll has started. This event is disabled by default.
+Set `scrollEvents` to `true` to enable. 
    */
   ionScrollStart: EventEmitter<CustomEvent<IContentScrollBaseDetail>>;
   /**
    * Emitted while scrolling. This event is disabled by default.
-Look at the property: `scrollEvents` 
+Set `scrollEvents` to `true` to enable. 
    */
   ionScroll: EventEmitter<CustomEvent<IContentScrollDetail>>;
   /**
-   * Emitted when the scroll has ended. 
+   * Emitted when the scroll has ended. This event is disabled by default.
+Set `scrollEvents` to `true` to enable. 
    */
   ionScrollEnd: EventEmitter<CustomEvent<IContentScrollBaseDetail>>;
 
@@ -522,14 +524,14 @@ export declare interface IonDatetime extends Components.IonDatetime {
 
 @ProxyCmp({
   defineCustomElementFn: undefined,
-  inputs: ['cancelText', 'clearText', 'color', 'dayValues', 'disabled', 'doneText', 'firstDayOfWeek', 'hourCycle', 'hourValues', 'locale', 'max', 'min', 'minuteValues', 'mode', 'monthValues', 'name', 'presentation', 'readonly', 'showClearButton', 'showDefaultButtons', 'showDefaultTimeLabel', 'showDefaultTitle', 'size', 'value', 'yearValues'],
+  inputs: ['cancelText', 'clearText', 'color', 'dayValues', 'disabled', 'doneText', 'firstDayOfWeek', 'hourCycle', 'hourValues', 'isDateEnabled', 'locale', 'max', 'min', 'minuteValues', 'mode', 'monthValues', 'multiple', 'name', 'preferWheel', 'presentation', 'readonly', 'showClearButton', 'showDefaultButtons', 'showDefaultTimeLabel', 'showDefaultTitle', 'size', 'titleSelectedDatesFormatter', 'value', 'yearValues'],
   methods: ['confirm', 'reset', 'cancel']
 })
 @Component({
   selector: 'ion-datetime',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['cancelText', 'clearText', 'color', 'dayValues', 'disabled', 'doneText', 'firstDayOfWeek', 'hourCycle', 'hourValues', 'locale', 'max', 'min', 'minuteValues', 'mode', 'monthValues', 'name', 'presentation', 'readonly', 'showClearButton', 'showDefaultButtons', 'showDefaultTimeLabel', 'showDefaultTitle', 'size', 'value', 'yearValues']
+  inputs: ['cancelText', 'clearText', 'color', 'dayValues', 'disabled', 'doneText', 'firstDayOfWeek', 'hourCycle', 'hourValues', 'isDateEnabled', 'locale', 'max', 'min', 'minuteValues', 'mode', 'monthValues', 'multiple', 'name', 'preferWheel', 'presentation', 'readonly', 'showClearButton', 'showDefaultButtons', 'showDefaultTimeLabel', 'showDefaultTitle', 'size', 'titleSelectedDatesFormatter', 'value', 'yearValues']
 })
 export class IonDatetime {
   protected el: HTMLElement;
@@ -537,6 +539,27 @@ export class IonDatetime {
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['ionCancel', 'ionChange', 'ionFocus', 'ionBlur']);
+  }
+}
+
+
+export declare interface IonDatetimeButton extends Components.IonDatetimeButton {}
+
+@ProxyCmp({
+  defineCustomElementFn: undefined,
+  inputs: ['color', 'datetime', 'disabled', 'mode']
+})
+@Component({
+  selector: 'ion-datetime-button',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  inputs: ['color', 'datetime', 'disabled', 'mode']
+})
+export class IonDatetimeButton {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
   }
 }
 
@@ -834,13 +857,13 @@ export declare interface IonItem extends Components.IonItem {}
 
 @ProxyCmp({
   defineCustomElementFn: undefined,
-  inputs: ['button', 'color', 'counter', 'detail', 'detailIcon', 'disabled', 'download', 'fill', 'href', 'lines', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'shape', 'target', 'type']
+  inputs: ['button', 'color', 'counter', 'counterFormatter', 'detail', 'detailIcon', 'disabled', 'download', 'fill', 'href', 'lines', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'shape', 'target', 'type']
 })
 @Component({
   selector: 'ion-item',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['button', 'color', 'counter', 'detail', 'detailIcon', 'disabled', 'download', 'fill', 'href', 'lines', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'shape', 'target', 'type']
+  inputs: ['button', 'color', 'counter', 'counterFormatter', 'detail', 'detailIcon', 'disabled', 'download', 'fill', 'href', 'lines', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'shape', 'target', 'type']
 })
 export class IonItem {
   protected el: HTMLElement;
@@ -1272,6 +1295,8 @@ export class IonRadioGroup {
 }
 
 import type { RangeChangeEventDetail as IRangeRangeChangeEventDetail } from '@ionic/core';
+import type { RangeKnobMoveStartEventDetail as IRangeRangeKnobMoveStartEventDetail } from '@ionic/core';
+import type { RangeKnobMoveEndEventDetail as IRangeRangeKnobMoveEndEventDetail } from '@ionic/core';
 export declare interface IonRange extends Components.IonRange {
   /**
    * Emitted when the value property has changed. 
@@ -1285,25 +1310,35 @@ export declare interface IonRange extends Components.IonRange {
    * Emitted when the range loses focus. 
    */
   ionBlur: EventEmitter<CustomEvent<void>>;
+  /**
+   * Emitted when the user starts moving the range knob, whether through
+mouse drag, touch gesture, or keyboard interaction. 
+   */
+  ionKnobMoveStart: EventEmitter<CustomEvent<IRangeRangeKnobMoveStartEventDetail>>;
+  /**
+   * Emitted when the user finishes moving the range knob, whether through
+mouse drag, touch gesture, or keyboard interaction. 
+   */
+  ionKnobMoveEnd: EventEmitter<CustomEvent<IRangeRangeKnobMoveEndEventDetail>>;
 
 }
 
 @ProxyCmp({
   defineCustomElementFn: undefined,
-  inputs: ['color', 'debounce', 'disabled', 'dualKnobs', 'max', 'min', 'mode', 'name', 'pin', 'pinFormatter', 'snaps', 'step', 'ticks', 'value']
+  inputs: ['activeBarStart', 'color', 'debounce', 'disabled', 'dualKnobs', 'max', 'min', 'mode', 'name', 'pin', 'pinFormatter', 'snaps', 'step', 'ticks', 'value']
 })
 @Component({
   selector: 'ion-range',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['color', 'debounce', 'disabled', 'dualKnobs', 'max', 'min', 'mode', 'name', 'pin', 'pinFormatter', 'snaps', 'step', 'ticks', 'value']
+  inputs: ['activeBarStart', 'color', 'debounce', 'disabled', 'dualKnobs', 'max', 'min', 'mode', 'name', 'pin', 'pinFormatter', 'snaps', 'step', 'ticks', 'value']
 })
 export class IonRange {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionChange', 'ionFocus', 'ionBlur']);
+    proxyOutputs(this, this.el, ['ionChange', 'ionFocus', 'ionBlur', 'ionKnobMoveStart', 'ionKnobMoveEnd']);
   }
 }
 
@@ -1569,6 +1604,10 @@ export declare interface IonSelect extends Components.IonSelect {
    */
   ionCancel: EventEmitter<CustomEvent<void>>;
   /**
+   * Emitted when the overlay is dismissed. 
+   */
+  ionDismiss: EventEmitter<CustomEvent<void>>;
+  /**
    * Emitted when the select has focus. 
    */
   ionFocus: EventEmitter<CustomEvent<void>>;
@@ -1595,7 +1634,7 @@ export class IonSelect {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionChange', 'ionCancel', 'ionFocus', 'ionBlur']);
+    proxyOutputs(this, this.el, ['ionChange', 'ionCancel', 'ionDismiss', 'ionFocus', 'ionBlur']);
   }
 }
 
@@ -1775,7 +1814,7 @@ export declare interface IonSplitPane extends Components.IonSplitPane {
   /**
    * Expression to be called when the split-pane visibility has changed 
    */
-  ionSplitPaneVisible: EventEmitter<CustomEvent<{visible: boolean}>>;
+  ionSplitPaneVisible: EventEmitter<CustomEvent<{ visible: boolean }>>;
 
 }
 
@@ -1961,13 +2000,13 @@ export declare interface IonToggle extends Components.IonToggle {
 
 @ProxyCmp({
   defineCustomElementFn: undefined,
-  inputs: ['checked', 'color', 'disabled', 'mode', 'name', 'value']
+  inputs: ['checked', 'color', 'disabled', 'enableOnOffLabels', 'mode', 'name', 'value']
 })
 @Component({
   selector: 'ion-toggle',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['checked', 'color', 'disabled', 'mode', 'name', 'value']
+  inputs: ['checked', 'color', 'disabled', 'enableOnOffLabels', 'mode', 'name', 'value']
 })
 export class IonToggle {
   protected el: HTMLElement;

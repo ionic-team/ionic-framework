@@ -1,56 +1,75 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-
-<head>
-  <meta charset="UTF-8">
-  <title>Toast - Standalone</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <link href="../../../../../css/core.css" rel="stylesheet">
-  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
-  <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
-  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script></head>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Toast - Standalone</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/core.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
   <script type="module">
     import { toastController } from '../../../../dist/ionic/index.esm.js';
     window.toastController = toastController;
   </script>
-<body>
-  <button id="basic-toast" onclick="openToast({ message: 'Hellooo', position: 'bottom', duration: 2000 })">Show Toast Bottom</button>
-  <button onclick="openToast({ message: 'Hellooo', position: 'top', duration: 2000 })">Show Toast Top</button>
-  <button onclick="openToast({ message: 'Hellooo', position: 'middle', duration: 2000 })">Show Toast Middle</button>
-  <button onclick="openToast({message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea voluptatibus quibusdam eum nihil optio, ullam accusamus magni, nobis suscipit reprehenderit, sequi quam amet impedit. Accusamus dolorem voluptates laborum dolor obcaecati.', duration: 2000})">Show Toast with long message</button>
-  <button onclick="openToast({message: 'click to close', buttons: ['Close'] })">Show Toast with Close Button</button>
-  <button onclick="openToast({message: 'click to close', buttons: ['closing time'] })">Show Toast with Custom Close Button Text</button>
-  <button onclick="openToast({message: 'click to close', buttons: ['Close'], translucent: true})">Show Translucent Toast</button>
-  <button onclick="openToast({message: 'click to close', buttons: ['Close'], cssClass: 'custom'})">Show Toast with Custom Properties</button>
-  <style>
-    body > button {
-      display: block;
-      clear: both;
-      width: 100%;
-      padding: 12px 8px;
-      font-size: 1em;
-      background: #f8f8f8;
-      border: 1px solid #eee;
-      border-radius: 4px;
-      margin-bottom: 8px;
-    }
+  <body>
+    <button id="basic-toast" onclick="openToast({ message: 'Hellooo', position: 'bottom', duration: 2000 })">
+      Show Toast Bottom
+    </button>
+    <button onclick="openToast({ message: 'Hellooo', position: 'top', duration: 2000 })">Show Toast Top</button>
+    <button onclick="openToast({ message: 'Hellooo', position: 'middle', duration: 2000 })">Show Toast Middle</button>
+    <button
+      onclick="openToast({message: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea voluptatibus quibusdam eum nihil optio, ullam accusamus magni, nobis suscipit reprehenderit, sequi quam amet impedit. Accusamus dolorem voluptates laborum dolor obcaecati.', duration: 2000})"
+    >
+      Show Toast with long message
+    </button>
+    <button onclick="openToast({message: 'click to close', buttons: ['Close'] })">Show Toast with Close Button</button>
+    <button onclick="openToast({message: 'click to close', buttons: ['closing time'] })">
+      Show Toast with Custom Close Button Text
+    </button>
+    <button onclick="openToast({message: 'click to close', buttons: ['Close'], translucent: true})">
+      Show Translucent Toast
+    </button>
+    <button onclick="openToast({message: 'click to close', buttons: ['Close'], cssClass: 'custom'})">
+      Show Toast with Custom Properties
+    </button>
+    <style>
+      body > button {
+        display: block;
+        clear: both;
+        width: 100%;
+        padding: 12px 8px;
+        font-size: 1em;
+        background: #f8f8f8;
+        border: 1px solid #eee;
+        border-radius: 4px;
+        margin-bottom: 8px;
+      }
 
-    .custom {
-      --background: papayawhip;
-      --button-color: blue;
-      --color: red;
-    }
-  </style>
+      .custom {
+        --background: papayawhip;
+        --button-color: blue;
+        --color: red;
+      }
+    </style>
 
-  <script>
-    window.addEventListener('ionToastDidDismiss', function(e){console.log('didDismiss', e)})
-    window.addEventListener('ionToastWillDismiss', function(e){console.log('willDismiss', e)})
+    <script>
+      window.addEventListener('ionToastDidDismiss', function (e) {
+        console.log('didDismiss', e);
+      });
+      window.addEventListener('ionToastWillDismiss', function (e) {
+        console.log('willDismiss', e);
+      });
 
-    async function openToast(opts) {
-      const toast = await toastController.create(opts);
-      await toast.present();
-    }
-  </script>
-</body>
+      async function openToast(opts) {
+        const toast = await toastController.create(opts);
+        await toast.present();
+      }
+    </script>
+  </body>
 </html>

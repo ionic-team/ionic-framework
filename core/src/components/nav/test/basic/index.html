@@ -1,53 +1,56 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Nav - Basic</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      :root {
+        --ion-background-color: #171717;
+        --ion-text-color: #ffffff;
+        --ion-color-step-50: #232323;
+        --ion-color-step-100: #2e2e2e;
+        --ion-color-step-150: #3a3a3a;
+        --ion-color-step-200: #454545;
+        --ion-color-step-250: #515151;
+        --ion-color-step-300: #5d5d5d;
+        --ion-color-step-350: #686868;
+        --ion-color-step-400: #747474;
+        --ion-color-step-450: #7f7f7f;
+        --ion-color-step-500: #8b8b8b;
+        --ion-color-step-550: #979797;
+        --ion-color-step-600: #a2a2a2;
+        --ion-color-step-650: #aeaeae;
+        --ion-color-step-700: #b9b9b9;
+        --ion-color-step-750: #c5c5c5;
+        --ion-color-step-800: #d1d1d1;
+        --ion-color-step-850: #dcdcdc;
+        --ion-color-step-900: #e8e8e8;
+        --ion-color-step-950: #f3f3f3;
 
-<head>
-  <meta charset="UTF-8">
-  <title>Nav - Basic</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
-  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
-  <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
-  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>  <style>
-  :root {
-  --ion-background-color: #171717;
-  --ion-text-color: #ffffff;
-  --ion-color-step-50: #232323;
-  --ion-color-step-100: #2e2e2e;
-  --ion-color-step-150: #3a3a3a;
-  --ion-color-step-200: #454545;
-  --ion-color-step-250: #515151;
-  --ion-color-step-300: #5d5d5d;
-  --ion-color-step-350: #686868;
-  --ion-color-step-400: #747474;
-  --ion-color-step-450: #7f7f7f;
-  --ion-color-step-500: #8b8b8b;
-  --ion-color-step-550: #979797;
-  --ion-color-step-600: #a2a2a2;
-  --ion-color-step-650: #aeaeae;
-  --ion-color-step-700: #b9b9b9;
-  --ion-color-step-750: #c5c5c5;
-  --ion-color-step-800: #d1d1d1;
-  --ion-color-step-850: #dcdcdc;
-  --ion-color-step-900: #e8e8e8;
-  --ion-color-step-950: #f3f3f3;
+        --ion-background-color-rgb: 23, 23, 23;
+        --ion-background-color-rgb: 0, 0, 0;
+        --ion-text-color-rgb: 255, 255, 255;
+      }
 
-  --ion-background-color-rgb: 23,23,23;
-  --ion-background-color-rgb: 0,0,0;
-  --ion-text-color-rgb: 255,255,255;
-}
-
-[f] {
-  background: green;
-  width: 100px;
-  height: 100px;
-}
-</style>
-  <script>
-    class PageOne extends HTMLElement {
-      connectedCallback() {
-        this.innerHTML = `
+      [f] {
+        background: green;
+        width: 100px;
+        height: 100px;
+      }
+    </style>
+    <script>
+      class PageOne extends HTMLElement {
+        connectedCallback() {
+          this.innerHTML = `
           <ion-header>
             <ion-toolbar>
               <ion-title>Page One</ion-title>
@@ -60,11 +63,11 @@
             </ion-nav-link>
           </ion-content>
         `;
+        }
       }
-    }
-    class PageTwo extends HTMLElement {
-      connectedCallback() {
-        this.innerHTML = `
+      class PageTwo extends HTMLElement {
+        connectedCallback() {
+          this.innerHTML = `
           <ion-header>
             <ion-toolbar>
               <ion-buttons slot="start">
@@ -104,11 +107,11 @@
 
           </ion-content>
         `;
+        }
       }
-    }
-    class PageThree extends HTMLElement {
-      connectedCallback() {
-        this.innerHTML = `
+      class PageThree extends HTMLElement {
+        connectedCallback() {
+          this.innerHTML = `
           <ion-header>
             <ion-toolbar>
               <ion-buttons slot="start">
@@ -121,18 +124,17 @@
             <h1>Page Three</h1>
           </ion-content>
         `;
+        }
       }
-    }
-    customElements.define('page-one', PageOne);
-    customElements.define('page-two', PageTwo);
-    customElements.define('page-three', PageThree);
-  </script>
-</head>
+      customElements.define('page-one', PageOne);
+      customElements.define('page-two', PageTwo);
+      customElements.define('page-three', PageThree);
+    </script>
+  </head>
 
-<body>
-  <ion-app>
-    <ion-nav root="page-one"></ion-nav>
-  </ion-app>
-</body>
-
+  <body>
+    <ion-app>
+      <ion-nav root="page-one"></ion-nav>
+    </ion-app>
+  </body>
 </html>

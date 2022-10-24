@@ -3,7 +3,7 @@
  * See https://github.com/microsoft/TypeScript/issues/34399.
  */
 interface DatetimeFormatOptions extends Intl.ResolvedDateTimeFormatOptions {
-  hourCycle?: 'h11' | 'h12' | 'h23' | 'h24'
+  hourCycle?: 'h11' | 'h12' | 'h23' | 'h24';
 }
 
 /**
@@ -13,8 +13,8 @@ interface DatetimeFormatOptions extends Intl.ResolvedDateTimeFormatOptions {
  * otherwise.
  */
 export const isLeapYear = (year: number) => {
-  return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
-}
+  return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+};
 
 export const is24Hour = (locale: string, hourCycle?: 'h23' | 'h12') => {
   /**
@@ -44,14 +44,14 @@ export const is24Hour = (locale: string, hourCycle?: 'h23' | 'h12') => {
    */
   const date = new Date('5/18/2021 00:00');
   const parts = formatted.formatToParts(date);
-  const hour = parts.find(p => p.type === 'hour');
+  const hour = parts.find((p) => p.type === 'hour');
 
   if (!hour) {
     throw new Error('Hour value not found from DateTimeFormat');
   }
 
   return hour.value === '00';
-}
+};
 
 /**
  * Given a date object, returns the number
@@ -60,17 +60,33 @@ export const is24Hour = (locale: string, hourCycle?: 'h23' | 'h12') => {
  * i.e. January = month 1.
  */
 export const getNumDaysInMonth = (month: number, year: number) => {
-  return (month === 4 || month === 6 || month === 9 || month === 11) ? 30 : (month === 2) ? isLeapYear(year) ? 29 : 28 : 31;
-}
+  return month === 4 || month === 6 || month === 9 || month === 11
+    ? 30
+    : month === 2
+    ? isLeapYear(year)
+      ? 29
+      : 28
+    : 31;
+};
 
 /**
  * Certain locales display month then year while
  * others display year then month.
  * We can use Intl.DateTimeFormat to determine
  * the ordering for each locale.
+ * The formatOptions param can be used to customize
+ * which pieces of a date to compare against the month
+ * with. For example, some locales render dd/mm/yyyy
+ * while others render mm/dd/yyyy. This function can be
+ * used for variations of the same "month first" check.
  */
-export const isMonthFirstLocale = (locale: string) => {
-
+export const isMonthFirstLocale = (
+  locale: string,
+  formatOptions: Intl.DateTimeFormatOptions = {
+    month: 'numeric',
+    year: 'numeric',
+  }
+) => {
   /**
    * By setting month and year we guarantee that only
    * month, year, and literal (slashes '/', for example)
@@ -83,7 +99,18 @@ export const isMonthFirstLocale = (locale: string) => {
    *
    * This ordering can be controlled by customizing the locale property.
    */
-  const parts = new Intl.DateTimeFormat(locale, { month: 'numeric', year: 'numeric' }).formatToParts(new Date());
+  const parts = new Intl.DateTimeFormat(locale, formatOptions).formatToParts(new Date());
 
   return parts[0].type === 'month';
-}
+};
+
+/**
+ * Determines if the given locale formats the day period (am/pm) to the
+ * left or right of the hour.
+ * @param locale The locale to check.
+ * @returns `true` if the locale formats the day period to the left of the hour.
+ */
+export const isLocaleDayPeriodRTL = (locale: string) => {
+  const parts = new Intl.DateTimeFormat(locale, { hour: 'numeric' }).formatToParts(new Date());
+  return parts[0].type === 'dayPeriod';
+};

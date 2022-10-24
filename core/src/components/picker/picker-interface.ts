@@ -1,6 +1,4 @@
-import { JSXBase } from '@stencil/core/internal';
-
-import { AnimationBuilder, Mode } from '../../interface';
+import type { AnimationBuilder, Mode } from '../../interface';
 
 export interface PickerOptions {
   columns: PickerColumn[];
@@ -19,7 +17,10 @@ export interface PickerOptions {
   leaveAnimation?: AnimationBuilder;
 }
 
-export interface PickerAttributes extends JSXBase.HTMLAttributes<HTMLElement> {}
+/**
+ * @deprecated - Use { [key: string]: any } directly instead.
+ */
+export type PickerAttributes = { [key: string]: any };
 
 export interface PickerButton {
   text?: string;
@@ -41,6 +42,11 @@ export interface PickerColumn {
   prefixWidth?: string;
   suffixWidth?: string;
   optionsWidth?: string;
+
+  /**
+   * @deprecated - Use the `columns` property on `ion-picker`
+   * to refresh the component view instead.
+   */
   refresh?: () => void;
 }
 

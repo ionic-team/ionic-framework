@@ -1,37 +1,17 @@
-import { newE2EPage } from '@stencil/core/testing';
-import { AxePuppeteer } from '@axe-core/puppeteer';
+import AxeBuilder from '@axe-core/playwright';
+import { expect } from '@playwright/test';
+import { test } from '@utils/test/playwright';
 
-describe('toast accessibility tests', () => {
-  test('it should not have any axe violations with polite toasts', async () => {
-    const page = await newE2EPage({
-      url: '/src/components/toast/test/a11y?ionic:_testing=true'
-    });
-
-    const ionToastDidPresent = await page.spyOnEvent('ionToastDidPresent');
-
-    await page.click('#polite');
-
-    await ionToastDidPresent.next();
-
-    /**
-     * IonToast overlays the entire screen, so
-     * Axe will be unable to verify color contrast
-     * on elements under the toast.
-     */
-    const results = await new AxePuppeteer(page)
-      .disableRules('color-contrast')
-      .analyze();
-    expect(results.violations.length).toEqual(0);
+test.describe('toast: a11y', () => {
+  test.beforeEach(async ({ page }, testInfo) => {
+    test.skip(testInfo.project.metadata.rtl === true, 'This test does not check LTR vs RTL layouts');
+    await page.goto(`/src/components/toast/test/a11y`);
   });
-
-  test('it should not have any axe violations with assertive toasts', async () => {
-    const page = await newE2EPage({
-      url: '/src/components/toast/test/a11y?ionic:_testing=true'
-    });
-
+  test('should not have any axe violations with polite toasts', async ({ page }) => {
     const ionToastDidPresent = await page.spyOnEvent('ionToastDidPresent');
 
-    await page.click('#assertive');
+    const politeButton = page.locator('#polite');
+    await politeButton.click();
 
     await ionToastDidPresent.next();
 
@@ -40,9 +20,23 @@ describe('toast accessibility tests', () => {
      * Axe will be unable to verify color contrast
      * on elements under the toast.
      */
-    const results = await new AxePuppeteer(page)
-      .disableRules('color-contrast')
-      .analyze();
-    expect(results.violations.length).toEqual(0);
+    const results = await new AxeBuilder({ page }).disableRules('color-contrast').analyze();
+    expect(results.violations).toEqual([]);
+  });
+  test('should not have any axe violations with assertive toasts', async ({ page }) => {
+    const ionToastDidPresent = await page.spyOnEvent('ionToastDidPresent');
+
+    const politeButton = page.locator('#assertive');
+    await politeButton.click();
+
+    await ionToastDidPresent.next();
+
+    /**
+     * IonToast overlays the entire screen, so
+     * Axe will be unable to verify color contrast
+     * on elements under the toast.
+     */
+    const results = await new AxeBuilder({ page }).disableRules('color-contrast').analyze();
+    expect(results.violations).toEqual([]);
   });
 });

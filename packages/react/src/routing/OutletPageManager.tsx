@@ -1,4 +1,4 @@
-import { componentOnReady } from '@ionic/core';
+import { componentOnReady } from '@ionic/core/components';
 import React from 'react';
 
 import { IonRouterOutletInner } from '../components/inner-proxies';
@@ -18,16 +18,26 @@ export class OutletPageManager extends React.Component<OutletPageManagerProps> {
   ionLifeCycleContext!: React.ContextType<typeof IonLifeCycleContext>;
   context!: React.ContextType<typeof StackContext>;
   ionRouterOutlet: HTMLIonRouterOutletElement | undefined;
+  outletIsReady: boolean;
 
   constructor(props: OutletPageManagerProps) {
     super(props);
+
+    this.outletIsReady = false;
   }
 
   componentDidMount() {
     if (this.ionRouterOutlet) {
-      componentOnReady(this.ionRouterOutlet, () => {
-        this.context.registerIonPage(this.ionRouterOutlet!, this.props.routeInfo!);
-      });
+      /**
+       * This avoids multiple raf calls
+       * when React unmounts + remounts components.
+       */
+      if (!this.outletIsReady) {
+        componentOnReady(this.ionRouterOutlet, () => {
+          this.outletIsReady = true;
+          this.context.registerIonPage(this.ionRouterOutlet!, this.props.routeInfo!);
+        });
+      }
 
       this.ionRouterOutlet.addEventListener(
         'ionViewWillEnter',

@@ -3,6 +3,277 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.2](https://github.com/ionic-team/ionic/compare/v6.3.1...v6.3.2) (2022-10-17)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [6.3.1](https://github.com/ionic-team/ionic/compare/v6.3.0...v6.3.1) (2022-10-12)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+# [6.3.0](https://github.com/ionic-team/ionic/compare/v6.2.9...v6.3.0) (2022-10-05)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [6.2.9](https://github.com/ionic-team/ionic/compare/v6.2.8...v6.2.9) (2022-09-28)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [6.2.8](https://github.com/ionic-team/ionic/compare/v6.2.7...v6.2.8) (2022-09-21)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [6.2.7](https://github.com/ionic-team/ionic/compare/v6.2.6...v6.2.7) (2022-09-14)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [6.2.6](https://github.com/ionic-team/ionic/compare/v6.2.5...v6.2.6) (2022-09-07)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [6.2.5](https://github.com/ionic-team/ionic/compare/v6.2.4...v6.2.5) (2022-08-31)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [6.2.4](https://github.com/ionic-team/ionic/compare/v6.2.3...v6.2.4) (2022-08-24)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [6.2.3](https://github.com/ionic-team/ionic/compare/v6.2.2...v6.2.3) (2022-08-17)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [6.2.2](https://github.com/ionic-team/ionic/compare/v6.2.1...v6.2.2) (2022-08-10)
+
+
+### Bug Fixes
+
+* **vue:** go back to correct view with memory history ([#25732](https://github.com/ionic-team/ionic/issues/25732)) ([8327889](https://github.com/ionic-team/ionic/commit/832788971a7098e52812f66563cbc0a63d3e5df7)), closes [#25705](https://github.com/ionic-team/ionic/issues/25705)
+
+
+
+
+
+## [6.2.1](https://github.com/ionic-team/ionic/compare/v6.2.0...v6.2.1) (2022-08-03)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+# [6.2.0](https://github.com/ionic-team/ionic/compare/v6.1.15...v6.2.0) (2022-07-27)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [6.1.15](https://github.com/ionic-team/ionic/compare/v6.1.14...v6.1.15) (2022-07-20)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [6.1.14](https://github.com/ionic-team/ionic/compare/v6.1.13...v6.1.14) (2022-07-13)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [6.1.13](https://github.com/ionic-team/ionic/compare/v6.1.12...v6.1.13) (2022-07-06)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [6.1.12](https://github.com/ionic-team/ionic/compare/v6.1.11...v6.1.12) (2022-06-29)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [6.1.11](https://github.com/ionic-team/ionic/compare/v6.1.10...v6.1.11) (2022-06-22)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [6.1.10](https://github.com/ionic-team/ionic/compare/v6.1.9...v6.1.10) (2022-06-15)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [6.1.9](https://github.com/ionic-team/ionic/compare/v6.1.8...v6.1.9) (2022-06-08)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [6.1.8](https://github.com/ionic-team/ionic/compare/v6.1.7...v6.1.8) (2022-06-01)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [6.1.7](https://github.com/ionic-team/ionic/compare/v6.1.6...v6.1.7) (2022-05-26)
+
+
+### Bug Fixes
+
+* **vue:** correct views are now unmounted in tabs ([#25270](https://github.com/ionic-team/ionic/issues/25270)) ([5e23fb1](https://github.com/ionic-team/ionic/commit/5e23fb1ce4e5b6e53828bde59268170f604167ba)), closes [#25255](https://github.com/ionic-team/ionic/issues/25255)
+
+
+
+
+
+## [6.1.6](https://github.com/ionic-team/ionic/compare/v6.1.5...v6.1.6) (2022-05-18)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [6.1.5](https://github.com/ionic-team/ionic/compare/v6.1.4...v6.1.5) (2022-05-11)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [6.1.4](https://github.com/ionic-team/ionic/compare/v6.1.3...v6.1.4) (2022-05-04)
+
+
+### Bug Fixes
+
+* **vue:** switching between tabs and going back resolves to correct route ([#25206](https://github.com/ionic-team/ionic/issues/25206)) ([b4ba70e](https://github.com/ionic-team/ionic/commit/b4ba70ea148d4f8fc7475d3de798b485238470c8)), closes [#24303](https://github.com/ionic-team/ionic/issues/24303)
+
+
+
+
+
+## [6.1.3](https://github.com/ionic-team/ionic/compare/v6.1.2...v6.1.3) (2022-04-27)
+
+
+### Bug Fixes
+
+* **vue:** replacing routes across nested outlets preserves previous route info ([#25171](https://github.com/ionic-team/ionic/issues/25171)) ([7b71607](https://github.com/ionic-team/ionic/commit/7b716076b66fbb5bd4620ea8ba74318bbbc1b7e8)), closes [#25017](https://github.com/ionic-team/ionic/issues/25017)
+
+
+
+
+
+## [6.1.2](https://github.com/ionic-team/ionic/compare/v6.1.1...v6.1.2) (2022-04-20)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [6.1.1](https://github.com/ionic-team/ionic/compare/v6.1.0...v6.1.1) (2022-04-15)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+# [6.1.0](https://github.com/ionic-team/ionic/compare/v6.0.14...v6.1.0) (2022-04-13)
+
+
+### Bug Fixes
+
+* **vue:** ensure that only tab pages get added to the tab navigation stack ([#25045](https://github.com/ionic-team/ionic/issues/25045)) ([a0054a7](https://github.com/ionic-team/ionic/commit/a0054a7cbd52def24c18fd2dadfd2e49a42b8980)), closes [#24859](https://github.com/ionic-team/ionic/issues/24859)
+
+
+
+
+
+## [6.0.16](https://github.com/ionic-team/ionic/compare/v6.0.15...v6.0.16) (2022-04-08)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [6.0.15](https://github.com/ionic-team/ionic/compare/v6.0.14...v6.0.15) (2022-04-06)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [6.0.14](https://github.com/ionic-team/ionic/compare/v6.0.13...v6.0.14) (2022-03-30)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
 ## [6.0.13](https://github.com/ionic-team/ionic/compare/v6.0.12...v6.0.13) (2022-03-23)
 
 **Note:** Version bump only for package @ionic/vue-router

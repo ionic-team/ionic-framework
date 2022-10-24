@@ -1,5 +1,6 @@
-import { DatetimeParts } from '../datetime-interface';
+import type { DatetimeParts } from '../datetime-interface';
 
+import { isSameDay } from './comparison';
 import { getNumDaysInMonth } from './helpers';
 
 const twoDigit = (val: number | undefined): string => {
@@ -10,7 +11,14 @@ const fourDigit = (val: number | undefined): string => {
   return ('000' + (val !== undefined ? Math.abs(val) : '0')).slice(-4);
 };
 
-export const convertDataToISO = (data: any): string => {
+export function convertDataToISO(data: DatetimeParts): string;
+export function convertDataToISO(data: DatetimeParts[]): string[];
+export function convertDataToISO(data: DatetimeParts | DatetimeParts[]): string | string[];
+export function convertDataToISO(data: DatetimeParts | DatetimeParts[]): string | string[] {
+  if (Array.isArray(data)) {
+    return data.map((parts) => convertDataToISO(parts));
+  }
+
   // https://www.w3.org/TR/NOTE-datetime
   let rtn = '';
   if (data.year !== undefined) {
@@ -32,29 +40,32 @@ export const convertDataToISO = (data: any): string => {
           if (data.tzOffset === undefined) {
             // YYYY-MM-DDTHH:mm:SSZ
             rtn += 'Z';
-
           } else {
-
             // YYYY-MM-DDTHH:mm:SS+/-HH:mm
-            rtn += (data.tzOffset > 0 ? '+' : '-') + twoDigit(Math.floor(Math.abs(data.tzOffset / 60))) + ':' + twoDigit(data.tzOffset % 60);
+            rtn +=
+              (data.tzOffset > 0 ? '+' : '-') +
+              twoDigit(Math.floor(Math.abs(data.tzOffset / 60))) +
+              ':' +
+              twoDigit(data.tzOffset % 60);
           }
         }
       }
     }
-
   } else if (data.hour !== undefined) {
     // HH:mm
     rtn = twoDigit(data.hour) + ':' + twoDigit(data.minute);
   }
 
   return rtn;
-};
+}
 
 /**
  * Converts an 12 hour value to 24 hours.
  */
 export const convert12HourTo24Hour = (hour: number, ampm?: 'am' | 'pm') => {
-  if (ampm === undefined) { return hour; }
+  if (ampm === undefined) {
+    return hour;
+  }
 
   /**
    * If AM and 12am
@@ -84,7 +95,7 @@ export const convert12HourTo24Hour = (hour: number, ampm?: 'am' | 'pm') => {
   }
 
   return hour + 12;
-}
+};
 
 export const getStartOfWeek = (refParts: DatetimeParts): DatetimeParts => {
   const { dayOfWeek } = refParts;
@@ -93,7 +104,7 @@ export const getStartOfWeek = (refParts: DatetimeParts): DatetimeParts => {
   }
 
   return subtractDays(refParts, dayOfWeek);
-}
+};
 
 export const getEndOfWeek = (refParts: DatetimeParts): DatetimeParts => {
   const { dayOfWeek } = refParts;
@@ -102,23 +113,23 @@ export const getEndOfWeek = (refParts: DatetimeParts): DatetimeParts => {
   }
 
   return addDays(refParts, 6 - dayOfWeek);
-}
+};
 
 export const getNextDay = (refParts: DatetimeParts): DatetimeParts => {
   return addDays(refParts, 1);
-}
+};
 
 export const getPreviousDay = (refParts: DatetimeParts): DatetimeParts => {
   return subtractDays(refParts, 1);
-}
+};
 
 export const getPreviousWeek = (refParts: DatetimeParts): DatetimeParts => {
   return subtractDays(refParts, 7);
-}
+};
 
 export const getNextWeek = (refParts: DatetimeParts): DatetimeParts => {
   return addDays(refParts, 7);
-}
+};
 
 /**
  * Given datetime parts, subtract
@@ -135,8 +146,8 @@ export const subtractDays = (refParts: DatetimeParts, numDays: number) => {
   const workingParts = {
     month,
     day,
-    year
-  }
+    year,
+  };
 
   workingParts.day = day - numDays;
 
@@ -178,7 +189,7 @@ export const subtractDays = (refParts: DatetimeParts, numDays: number) => {
   }
 
   return workingParts;
-}
+};
 
 /**
  * Given datetime parts, add
@@ -195,8 +206,8 @@ export const addDays = (refParts: DatetimeParts, numDays: number) => {
   const workingParts = {
     month,
     day,
-    year
-  }
+    year,
+  };
 
   const daysInMonth = getNumDaysInMonth(month, year);
   workingParts.day = day + numDays;
@@ -220,7 +231,7 @@ export const addDays = (refParts: DatetimeParts, numDays: number) => {
   }
 
   return workingParts;
-}
+};
 
 /**
  * Given DatetimeParts, generate the previous month.
@@ -230,14 +241,14 @@ export const getPreviousMonth = (refParts: DatetimeParts) => {
    * If current month is January, wrap backwards
    *  to December of the previous year.
    */
-  const month = (refParts.month === 1) ? 12 : refParts.month - 1;
-  const year = (refParts.month === 1) ? refParts.year - 1 : refParts.year;
+  const month = refParts.month === 1 ? 12 : refParts.month - 1;
+  const year = refParts.month === 1 ? refParts.year - 1 : refParts.year;
 
   const numDaysInMonth = getNumDaysInMonth(month, year);
-  const day = (numDaysInMonth < refParts.day!) ? numDaysInMonth : refParts.day;
+  const day = numDaysInMonth < refParts.day! ? numDaysInMonth : refParts.day;
 
   return { month, year, day };
-}
+};
 
 /**
  * Given DatetimeParts, generate the next month.
@@ -247,38 +258,38 @@ export const getNextMonth = (refParts: DatetimeParts) => {
    * If current month is December, wrap forwards
    *  to January of the next year.
    */
-  const month = (refParts.month === 12) ? 1 : refParts.month + 1;
-  const year = (refParts.month === 12) ? refParts.year + 1 : refParts.year;
+  const month = refParts.month === 12 ? 1 : refParts.month + 1;
+  const year = refParts.month === 12 ? refParts.year + 1 : refParts.year;
 
   const numDaysInMonth = getNumDaysInMonth(month, year);
-  const day = (numDaysInMonth < refParts.day!) ? numDaysInMonth : refParts.day;
+  const day = numDaysInMonth < refParts.day! ? numDaysInMonth : refParts.day;
 
   return { month, year, day };
-}
+};
 
 const changeYear = (refParts: DatetimeParts, yearDelta: number) => {
   const month = refParts.month;
   const year = refParts.year + yearDelta;
 
   const numDaysInMonth = getNumDaysInMonth(month, year);
-  const day = (numDaysInMonth < refParts.day!) ? numDaysInMonth : refParts.day;
+  const day = numDaysInMonth < refParts.day! ? numDaysInMonth : refParts.day;
 
-  return { month, year, day }
-}
+  return { month, year, day };
+};
 
 /**
  * Given DatetimeParts, generate the previous year.
  */
 export const getPreviousYear = (refParts: DatetimeParts) => {
   return changeYear(refParts, -1);
-}
+};
 
 /**
  * Given DatetimeParts, generate the next year.
  */
 export const getNextYear = (refParts: DatetimeParts) => {
   return changeYear(refParts, 1);
-}
+};
 
 /**
  * If PM, then internal value should
@@ -287,10 +298,12 @@ export const getNextYear = (refParts: DatetimeParts) => {
  * values are already 24-hr time.
  */
 export const getInternalHourValue = (hour: number, use24Hour: boolean, ampm?: 'am' | 'pm') => {
-  if (use24Hour) { return hour; }
+  if (use24Hour) {
+    return hour;
+  }
 
   return convert12HourTo24Hour(hour, ampm);
-}
+};
 
 /**
  * Unless otherwise stated, all month values are
@@ -318,12 +331,101 @@ export const calculateHourFromAMPM = (currentParts: DatetimeParts, newAMPM: 'am'
   if (currentAMPM === 'am' && newAMPM === 'pm') {
     newHour = convert12HourTo24Hour(newHour, 'pm');
 
-  /**
-   * If going from PM --> AM
-   */
+    /**
+     * If going from PM --> AM
+     */
   } else if (currentAMPM === 'pm' && newAMPM === 'am') {
     newHour = Math.abs(newHour - 12);
   }
 
   return newHour;
-}
+};
+
+/**
+ * Updates parts to ensure that month and day
+ * values are valid. For days that do not exist,
+ * the closest valid day is used.
+ */
+export const validateParts = (
+  parts: DatetimeParts,
+  minParts?: DatetimeParts,
+  maxParts?: DatetimeParts
+): DatetimeParts => {
+  const { month, day, year } = parts;
+  const partsCopy = { ...parts };
+
+  const numDays = getNumDaysInMonth(month, year);
+
+  /**
+   * If the max number of days
+   * is greater than the day we want
+   * to set, update the DatetimeParts
+   * day field to be the max days.
+   */
+  if (day !== null && numDays < day) {
+    partsCopy.day = numDays;
+  }
+
+  /**
+   * If value is same day as min day,
+   * make sure the time value is in bounds.
+   */
+  if (minParts !== undefined && isSameDay(partsCopy, minParts)) {
+    /**
+     * If the hour is out of bounds,
+     * update both the hour and minute.
+     * This is done so that the new time
+     * is closest to what the user selected.
+     */
+    if (partsCopy.hour !== undefined && minParts.hour !== undefined) {
+      if (partsCopy.hour < minParts.hour) {
+        partsCopy.hour = minParts.hour;
+        partsCopy.minute = minParts.minute;
+
+        /**
+         * If only the minute is out of bounds,
+         * set it to the min minute.
+         */
+      } else if (
+        partsCopy.hour === minParts.hour &&
+        partsCopy.minute !== undefined &&
+        minParts.minute !== undefined &&
+        partsCopy.minute < minParts.minute
+      ) {
+        partsCopy.minute = minParts.minute;
+      }
+    }
+  }
+
+  /**
+   * If value is same day as max day,
+   * make sure the time value is in bounds.
+   */
+  if (maxParts !== undefined && isSameDay(parts, maxParts)) {
+    /**
+     * If the hour is out of bounds,
+     * update both the hour and minute.
+     * This is done so that the new time
+     * is closest to what the user selected.
+     */
+    if (partsCopy.hour !== undefined && maxParts.hour !== undefined) {
+      if (partsCopy.hour > maxParts.hour) {
+        partsCopy.hour = maxParts.hour;
+        partsCopy.minute = maxParts.minute;
+        /**
+         * If only the minute is out of bounds,
+         * set it to the max minute.
+         */
+      } else if (
+        partsCopy.hour === maxParts.hour &&
+        partsCopy.minute !== undefined &&
+        maxParts.minute !== undefined &&
+        partsCopy.minute > maxParts.minute
+      ) {
+        partsCopy.minute = maxParts.minute;
+      }
+    }
+  }
+
+  return partsCopy;
+};

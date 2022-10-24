@@ -24,6 +24,13 @@ import './theme/variables.css';
 import Main from './pages/Main';
 import OverlayHooks from './pages/overlay-hooks/OverlayHooks';
 import OverlayComponents from './pages/overlay-components/OverlayComponents';
+import KeepContentsMounted from './pages/overlay-components/KeepContentsMounted';
+import Tabs from './pages/Tabs';
+import NavComponent from './pages/navigation/NavComponent';
+import IonModalConditionalSibling from './pages/overlay-components/IonModalConditionalSibling';
+import IonModalConditional from './pages/overlay-components/IonModalConditional';
+import IonModalDatetimeButton from './pages/overlay-components/IonModalDatetimeButton';
+import IonPopoverNested from './pages/overlay-components/IonPopoverNested';
 
 setupIonicReact();
 
@@ -34,6 +41,19 @@ const App: React.FC = () => (
         <Route path="/" component={Main} />
         <Route path="/overlay-hooks" component={OverlayHooks} />
         <Route path="/overlay-components" component={OverlayComponents} />
+        <Route path="/overlay-components/nested-popover" component={IonPopoverNested} />
+        <Route
+          path="/overlay-components/modal-conditional-sibling"
+          component={IonModalConditionalSibling}
+        />
+        <Route path="/overlay-components/modal-conditional" component={IonModalConditional} />
+        <Route
+          path="/overlay-components/modal-datetime-button"
+          component={IonModalDatetimeButton}
+        />
+        <Route path="/keep-contents-mounted" component={KeepContentsMounted} />
+        <Route path="/navigation" component={NavComponent} />
+        <Route path="/tabs" component={Tabs} />
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>

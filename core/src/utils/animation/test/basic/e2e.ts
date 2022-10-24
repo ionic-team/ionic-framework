@@ -20,9 +20,12 @@ test(`animation:web: basic`, async () => {
   await page.click('.play');
   await page.waitForSelector('.play');
 
-  await waitForFunctionTestContext((payload: any) => {
-    return payload.animationFinishedCount.count === 1;
-  }, { animationFinishedCount });
+  await waitForFunctionTestContext(
+    (payload: any) => {
+      return payload.animationFinishedCount.count === 1;
+    },
+    { animationFinishedCount }
+  );
 
   screenshotCompares.push(await page.compareScreenshot('end animation'));
 });
@@ -45,9 +48,12 @@ test(`animation:css: basic`, async () => {
   await page.click('.play');
   await page.waitForSelector('.play');
 
-  await waitForFunctionTestContext((payload: any) => {
-    return payload.animationFinishedCount.count === 1;
-  }, { animationFinishedCount });
+  await waitForFunctionTestContext(
+    (payload: any) => {
+      return payload.animationFinishedCount.count === 1;
+    },
+    { animationFinishedCount }
+  );
 
   screenshotCompares.push(await page.compareScreenshot('end animation'));
 });

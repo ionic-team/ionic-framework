@@ -1,4 +1,5 @@
-import { Config } from '../../interface';
+import type { Config } from '../../interface';
+import { findClosestIonContent } from '../content';
 import { componentOnReady } from '../helpers';
 
 import { enableHideCaretOnScroll } from './hacks/hide-caret';
@@ -24,12 +25,12 @@ export const startInputShims = (config: Config) => {
   const scrollAssistMap = new WeakMap<HTMLElement, () => void>();
 
   const registerInput = async (componentEl: HTMLElement) => {
-    await new Promise(resolve => componentOnReady(componentEl, resolve));
+    await new Promise((resolve) => componentOnReady(componentEl, resolve));
 
     const inputRoot = componentEl.shadowRoot || componentEl;
     const inputEl = inputRoot.querySelector('input') || inputRoot.querySelector('textarea');
-    const scrollEl = componentEl.closest('ion-content');
-    const footerEl = (!scrollEl) ? componentEl.closest('ion-footer') as HTMLIonFooterElement | null : null;
+    const scrollEl = findClosestIonContent(componentEl);
+    const footerEl = !scrollEl ? (componentEl.closest('ion-footer') as HTMLIonFooterElement | null) : null;
 
     if (!inputEl) {
       return;
@@ -40,7 +41,20 @@ export const startInputShims = (config: Config) => {
       hideCaretMap.set(componentEl, rmFn);
     }
 
-    if (SCROLL_ASSIST && (!!scrollEl || !!footerEl) && scrollAssist && !scrollAssistMap.has(componentEl)) {
+    /**
+     * date/datetime-locale inputs on mobile devices show date picker
+     * overlays instead of keyboards. As a result, scroll assist is
+     * not needed. This also works around a bug in iOS <16 where
+     * scroll assist causes the browser to lock up. See FW-1997.
+     */
+    const isDateInput = inputEl.type === 'date' || inputEl.type === 'datetime-local';
+    if (
+      SCROLL_ASSIST &&
+      !isDateInput &&
+      (!!scrollEl || !!footerEl) &&
+      scrollAssist &&
+      !scrollAssistMap.has(componentEl)
+    ) {
       const rmFn = enableScrollAssist(componentEl, inputEl, scrollEl, footerEl, keyboardHeight);
       scrollAssistMap.set(componentEl, rmFn);
     }

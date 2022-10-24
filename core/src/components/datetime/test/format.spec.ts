@@ -3,7 +3,9 @@ import {
   getMonthAndDay,
   getFormattedHour,
   addTimePadding,
-  getMonthAndYear
+  getMonthAndYear,
+  getLocalizedDayPeriod,
+  getLocalizedTime,
 } from '../utils/format';
 
 describe('generateDayAriaLabel()', () => {
@@ -50,16 +52,16 @@ describe('getMonthAndDay()', () => {
   it('should return sáb, 1 abr', () => {
     expect(getMonthAndDay('es-ES', { month: 4, day: 1, year: 2006 })).toEqual('sáb, 1 abr');
   });
-})
+});
 
 describe('getFormattedHour()', () => {
   it('should only add padding if using 24 hour time', () => {
     expect(getFormattedHour(0, true)).toEqual('00');
-    expect(getFormattedHour(0, false)).toEqual('0');
+    expect(getFormattedHour(0, false)).toEqual('12');
 
     expect(getFormattedHour(10, true)).toEqual('10');
     expect(getFormattedHour(10, false)).toEqual('10');
-  })
+  });
 });
 
 describe('addTimePadding()', () => {
@@ -68,7 +70,7 @@ describe('addTimePadding()', () => {
     expect(addTimePadding(9)).toEqual('09');
     expect(addTimePadding(10)).toEqual('10');
     expect(addTimePadding(100)).toEqual('100');
-  })
+  });
 });
 
 describe('getMonthAndYear()', () => {
@@ -87,4 +89,83 @@ describe('getMonthAndYear()', () => {
   it('should return abril de 2006', () => {
     expect(getMonthAndYear('es-ES', { month: 4, day: 1, year: 2006 })).toEqual('abril de 2006');
   });
-})
+});
+
+describe('getLocalizedDayPeriod', () => {
+  it('should return AM when the date is in the morning', () => {
+    expect(getLocalizedDayPeriod('en-US', 'am'));
+  });
+
+  it('should return PM when the date is in the afternoon', () => {
+    expect(getLocalizedDayPeriod('en-US', 'pm'));
+  });
+});
+
+describe('getLocalizedTime', () => {
+  describe('with a timezone offset', () => {
+    it('should ignore the offset and localize the time to PM', () => {
+      const datetimeParts = {
+        day: 1,
+        month: 1,
+        year: 2022,
+        hour: 13,
+        minute: 40,
+        tzOffset: -240,
+      };
+
+      expect(getLocalizedTime('en-US', datetimeParts, false)).toEqual('1:40 PM');
+    });
+
+    it('should ignore the offset and localize the time to AM', () => {
+      const datetimeParts = {
+        day: 1,
+        month: 1,
+        year: 2022,
+        hour: 9,
+        minute: 40,
+        tzOffset: -240,
+      };
+
+      expect(getLocalizedTime('en-US', datetimeParts, false)).toEqual('9:40 AM');
+    });
+  });
+
+  it('should localize the time to PM', () => {
+    const datetimeParts = {
+      day: 1,
+      month: 1,
+      year: 2022,
+      hour: 13,
+      minute: 40,
+      tzOffset: 0,
+    };
+
+    expect(getLocalizedTime('en-US', datetimeParts, false)).toEqual('1:40 PM');
+  });
+
+  it('should localize the time to AM', () => {
+    const datetimeParts = {
+      day: 1,
+      month: 1,
+      year: 2022,
+      hour: 9,
+      minute: 40,
+      tzOffset: 0,
+    };
+
+    expect(getLocalizedTime('en-US', datetimeParts, false)).toEqual('9:40 AM');
+  });
+
+  it('should avoid Chromium bug when using 12 hour time in a 24 hour locale', () => {
+    const datetimeParts = {
+      day: 1,
+      month: 1,
+      year: 2022,
+      hour: 0,
+      minute: 0,
+      tzOffset: 0,
+    };
+
+    expect(getLocalizedTime('en-GB', datetimeParts, false)).toEqual('12:00 am');
+  });
+});

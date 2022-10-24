@@ -1,12 +1,17 @@
-import { Component, ComponentInterface, Element, Host, Listen, Prop, State, forceUpdate, h } from '@stencil/core';
+import type { ComponentInterface } from '@stencil/core';
+import { Component, Element, Host, Listen, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
 import { chevronForward } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
-import { AnimationBuilder, Color, CssClassMap, RouterDirection, StyleEventDetail } from '../../interface';
-import { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
-import { raf } from '../../utils/helpers';
+import type { AnimationBuilder, Color, CssClassMap, RouterDirection, StyleEventDetail } from '../../interface';
+import type { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
+import type { Attributes } from '../../utils/helpers';
+import { inheritAttributes, raf } from '../../utils/helpers';
+import { printIonError } from '../../utils/logging';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
-import { InputChangeEventDetail } from '../input/input-interface';
+import type { InputChangeEventDetail } from '../input/input-interface';
+
+import type { CounterFormatter } from './item-interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -24,17 +29,17 @@ import { InputChangeEventDetail } from '../input/input-interface';
   tag: 'ion-item',
   styleUrls: {
     ios: 'item.ios.scss',
-    md: 'item.md.scss'
+    md: 'item.md.scss',
   },
   shadow: {
-    delegatesFocus: true
-  }
+    delegatesFocus: true,
+  },
 })
 export class Item implements ComponentInterface, AnchorInterface, ButtonInterface {
-
   private labelColorStyles = {};
   private itemStyles = new Map<string, CssClassMap>();
   private clickListener?: (ev: Event) => void;
+  private inheritedAriaAttributes: Attributes = {};
 
   @Element() el!: HTMLIonItemElement;
 
@@ -134,7 +139,18 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
    */
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
+  /**
+   * A callback used to format the counter text.
+   * By default the counter text is set to "itemLength / maxLength".
+   */
+  @Prop() counterFormatter?: CounterFormatter;
+
   @State() counterString: string | null | undefined;
+
+  @Watch('counterFormatter')
+  counterFormatterChanged() {
+    this.updateCounterOutput(this.getFirstInput());
+  }
 
   @Listen('ionChange')
   handleIonChange(ev: CustomEvent<InputChangeEventDetail>) {
@@ -165,7 +181,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     const childStyles = this.itemStyles.get(tagName) || {};
 
     let hasStyleChange = false;
-    Object.keys(updatedStyles).forEach(key => {
+    Object.keys(updatedStyles).forEach((key) => {
       if (updatedStyles[key]) {
         const itemKey = `item-${key}`;
         if (!childStyles[itemKey]) {
@@ -196,7 +212,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     // appear as clickable to screen readers
     // https://github.com/ionic-team/ionic-framework/issues/22011
     const input = this.getFirstInput();
-    if (input && !this.clickListener) {
+    if (input !== undefined && !this.clickListener) {
       this.clickListener = (ev: Event) => this.delegateFocus(ev, input);
       this.el.addEventListener('click', this.clickListener);
     }
@@ -204,7 +220,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
 
   disconnectedCallback() {
     const input = this.getFirstInput();
-    if (input && this.clickListener) {
+    if (input !== undefined && this.clickListener) {
       this.el.removeEventListener('click', this.clickListener);
       this.clickListener = undefined;
     }
@@ -212,6 +228,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
 
   componentDidLoad() {
     raf(() => {
+      this.inheritedAriaAttributes = inheritAttributes(this.el, ['aria-label']);
       this.setMultipleInputs();
       this.focusable = this.isFocusable();
     });
@@ -227,16 +244,19 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     // The following elements can accept focus alongside the previous elements
     // therefore if these elements are also a child of item, we don't want the
     // input cover on top of those interfering with their clicks
-    const inputs = this.el.querySelectorAll('ion-input, ion-range, ion-searchbar, ion-segment, ion-textarea, ion-toggle');
+    const inputs = this.el.querySelectorAll(
+      'ion-input, ion-range, ion-searchbar, ion-segment, ion-textarea, ion-toggle'
+    );
 
     // The following elements should also stay clickable when an input with cover is present
     const clickables = this.el.querySelectorAll('ion-anchor, ion-button, a, button');
 
     // Check for multiple inputs to change the position of the input cover to relative
     // for all of the covered inputs above
-    this.multipleInputs = covers.length + inputs.length > 1
-      || covers.length + clickables.length > 1
-      || covers.length > 0 && this.isClickable();
+    this.multipleInputs =
+      covers.length + inputs.length > 1 ||
+      covers.length + clickables.length > 1 ||
+      (covers.length > 0 && this.isClickable());
   }
 
   // If the item contains an input including a checkbox, datetime, select, or radio
@@ -251,20 +271,22 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   // If the item has an href or button property it will render a native
   // anchor or button that is clickable
   private isClickable(): boolean {
-    return (this.href !== undefined || this.button);
+    return this.href !== undefined || this.button;
   }
 
   private canActivate(): boolean {
-    return (this.isClickable() || this.hasCover());
+    return this.isClickable() || this.hasCover();
   }
 
   private isFocusable(): boolean {
     const focusableChild = this.el.querySelector('.ion-focusable');
-    return (this.canActivate() || focusableChild !== null);
+    return this.canActivate() || focusableChild !== null;
   }
 
   private getFirstInput(): HTMLIonInputElement | HTMLIonTextareaElement {
-    const inputs = this.el.querySelectorAll('ion-input, ion-textarea') as NodeListOf<HTMLIonInputElement | HTMLIonTextareaElement>;
+    const inputs = this.el.querySelectorAll('ion-input, ion-textarea') as NodeListOf<
+      HTMLIonInputElement | HTMLIonTextareaElement
+    >;
     return inputs[0];
   }
 
@@ -296,10 +318,25 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   }
 
   private updateCounterOutput(inputEl: HTMLIonInputElement | HTMLIonTextareaElement) {
-    if (this.counter && !this.multipleInputs && inputEl?.maxlength !== undefined) {
-      const length = inputEl?.value?.toString().length ?? '0';
-      this.counterString = `${length} / ${inputEl.maxlength}`;
+    const { counter, counterFormatter, defaultCounterFormatter } = this;
+    if (counter && !this.multipleInputs && inputEl?.maxlength !== undefined) {
+      const length = inputEl?.value?.toString().length ?? 0;
+      if (counterFormatter === undefined) {
+        this.counterString = defaultCounterFormatter(length, inputEl.maxlength);
+      } else {
+        try {
+          this.counterString = counterFormatter(length, inputEl.maxlength);
+        } catch (e) {
+          printIonError('Exception in provided `counterFormatter`.', e);
+          // Fallback to the default counter formatter when an exception happens
+          this.counterString = defaultCounterFormatter(length, inputEl.maxlength);
+        }
+      }
     }
+  }
+
+  private defaultCounterFormatter(length: number, maxlength: number) {
+    return `${length} / ${maxlength}`;
   }
 
   private hasStartEl() {
@@ -310,31 +347,55 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   }
 
   render() {
-    const { counterString, detail, detailIcon, download, fill, labelColorStyles, lines, disabled, href, rel, shape, target, routerAnimation, routerDirection } = this;
+    const {
+      counterString,
+      detail,
+      detailIcon,
+      download,
+      fill,
+      labelColorStyles,
+      lines,
+      disabled,
+      href,
+      rel,
+      shape,
+      target,
+      routerAnimation,
+      routerDirection,
+      inheritedAriaAttributes,
+    } = this;
     const childStyles = {} as any;
     const mode = getIonMode(this);
     const clickable = this.isClickable();
     const canActivate = this.canActivate();
-    const TagType = clickable ? (href === undefined ? 'button' : 'a') : 'div' as any;
-    const attrs = (TagType === 'button')
-      ? { type: this.type }
-      : {
-        download,
-        href,
-        rel,
-        target
-      };
+    const TagType = clickable ? (href === undefined ? 'button' : 'a') : ('div' as any);
+
+    const attrs =
+      TagType === 'button'
+        ? { type: this.type }
+        : {
+            download,
+            href,
+            rel,
+            target,
+          };
     // Only set onClick if the item is clickable to prevent screen
     // readers from reading all items as clickable
-    const clickFn = clickable ? {
-      onClick: (ev: Event) => { openURL(href, ev, routerDirection, routerAnimation); }
-    } : {};
+    const clickFn = clickable
+      ? {
+          onClick: (ev: Event) => {
+            openURL(href, ev, routerDirection, routerAnimation);
+          },
+        }
+      : {};
     const showDetail = detail !== undefined ? detail : mode === 'ios' && clickable;
-    this.itemStyles.forEach(value => {
+    this.itemStyles.forEach((value) => {
       Object.assign(childStyles, value);
     });
-    const ariaDisabled = (disabled || childStyles['item-interactive-disabled']) ? 'true' : null;
+    const ariaDisabled = disabled || childStyles['item-interactive-disabled'] ? 'true' : null;
     const fillValue = fill || 'none';
+    const inList = hostContext('ion-list', this.el);
+
     return (
       <Host
         aria-disabled={ariaDisabled}
@@ -342,22 +403,24 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
           ...childStyles,
           ...labelColorStyles,
           ...createColorClasses(this.color, {
-            'item': true,
+            item: true,
             [mode]: true,
             [`item-lines-${lines}`]: lines !== undefined,
             [`item-fill-${fillValue}`]: true,
             [`item-shape-${shape}`]: shape !== undefined,
             'item-disabled': disabled,
-            'in-list': hostContext('ion-list', this.el),
+            'in-list': inList,
             'item-multiple-inputs': this.multipleInputs,
             'ion-activatable': canActivate,
             'ion-focusable': this.focusable,
-            'item-rtl': document.dir === 'rtl'
-          })
+            'item-rtl': document.dir === 'rtl',
+          }),
         }}
+        role={inList ? 'listitem' : null}
       >
         <TagType
           {...attrs}
+          {...inheritedAriaAttributes}
           class="item-native"
           part="native"
           disabled={disabled}
@@ -369,7 +432,16 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
               <slot></slot>
             </div>
             <slot name="end"></slot>
-            {showDetail && <ion-icon icon={detailIcon} lazy={false} class="item-detail-icon" part="detail-icon" aria-hidden="true" flip-rtl={detailIcon === chevronForward}></ion-icon>}
+            {showDetail && (
+              <ion-icon
+                icon={detailIcon}
+                lazy={false}
+                class="item-detail-icon"
+                part="detail-icon"
+                aria-hidden="true"
+                flip-rtl={detailIcon === chevronForward}
+              ></ion-icon>
+            )}
             <div class="item-inner-highlight"></div>
           </div>
           {canActivate && mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}

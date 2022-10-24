@@ -1,7 +1,8 @@
-import { Component, ComponentInterface, Host, Listen, Prop, h } from '@stencil/core';
+import type { ComponentInterface } from '@stencil/core';
+import { Component, Host, Listen, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { SelectPopoverOption } from '../../interface';
+import type { SelectPopoverOption } from '../../interface';
 import { safeCall } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 
@@ -12,9 +13,9 @@ import { getClassMap } from '../../utils/theme';
   tag: 'ion-select-popover',
   styleUrls: {
     ios: 'select-popover.ios.scss',
-    md: 'select-popover.md.scss'
+    md: 'select-popover.md.scss',
   },
-  scoped: true
+  scoped: true,
 })
 export class SelectPopover implements ComponentInterface {
   /**
@@ -50,7 +51,7 @@ export class SelectPopover implements ComponentInterface {
 
   private findOptionFromEvent(ev: any) {
     const { options } = this;
-    return options.find(o => o.value === ev.target.value);
+    return options.find((o) => o.value === ev.target.value);
   }
 
   /**
@@ -62,7 +63,7 @@ export class SelectPopover implements ComponentInterface {
     const option = this.findOptionFromEvent(ev);
     const values = this.getValues(ev);
 
-    if (option && option.handler) {
+    if (option?.handler) {
       safeCall(option.handler, values);
     }
   }
@@ -93,7 +94,7 @@ export class SelectPopover implements ComponentInterface {
     if (multiple) {
       // this is a popover with checkboxes (multiple value select)
       // return an array of all the checked values
-      return options.filter(o => o.checked).map(o => o.value);
+      return options.filter((o) => o.checked).map((o) => o.value);
     }
 
     // this is a popover with radio buttons (single value select)
@@ -106,50 +107,40 @@ export class SelectPopover implements ComponentInterface {
     const { multiple } = this;
 
     switch (multiple) {
-      case true: return this.renderCheckboxOptions(options);
-      default: return this.renderRadioOptions(options);
+      case true:
+        return this.renderCheckboxOptions(options);
+      default:
+        return this.renderRadioOptions(options);
     }
   }
 
   renderCheckboxOptions(options: SelectPopoverOption[]) {
-    return (
-      options.map(option =>
-        <ion-item class={getClassMap(option.cssClass)}>
-          <ion-checkbox
-            slot="start"
-            value={option.value}
-            disabled={option.disabled}
-            checked={option.checked}
-          >
-          </ion-checkbox>
-          <ion-label>
-            {option.text}
-          </ion-label>
-        </ion-item>
-      )
-    )
+    return options.map((option) => (
+      <ion-item class={getClassMap(option.cssClass)}>
+        <ion-checkbox
+          slot="start"
+          value={option.value}
+          disabled={option.disabled}
+          checked={option.checked}
+        ></ion-checkbox>
+        <ion-label>{option.text}</ion-label>
+      </ion-item>
+    ));
   }
 
   renderRadioOptions(options: SelectPopoverOption[]) {
-    const checked = options.filter(o => o.checked).map(o => o.value)[0];
+    const checked = options.filter((o) => o.checked).map((o) => o.value)[0];
 
     return (
       <ion-radio-group value={checked}>
-        {options.map(option =>
+        {options.map((option) => (
           <ion-item class={getClassMap(option.cssClass)}>
-            <ion-label>
-              {option.text}
-            </ion-label>
-            <ion-radio
-              value={option.value}
-              disabled={option.disabled}
-              onClick={ev => this.rbClick(ev)}
-            >
-            </ion-radio>
+            <ion-label>{option.text}</ion-label>
+            <ion-radio value={option.value} disabled={option.disabled} onClick={(ev) => this.rbClick(ev)}></ion-radio>
           </ion-item>
-        )}
+        ))}
       </ion-radio-group>
-    )
+    );
   }
 
   render() {
@@ -160,14 +151,14 @@ export class SelectPopover implements ComponentInterface {
       <Host class={getIonMode(this)}>
         <ion-list>
           {header !== undefined && <ion-list-header>{header}</ion-list-header>}
-          { hasSubHeaderOrMessage &&
+          {hasSubHeaderOrMessage && (
             <ion-item>
               <ion-label class="ion-text-wrap">
                 {subHeader !== undefined && <h3>{subHeader}</h3>}
                 {message !== undefined && <p>{message}</p>}
               </ion-label>
             </ion-item>
-          }
+          )}
           {this.renderOptions(options)}
         </ion-list>
       </Host>

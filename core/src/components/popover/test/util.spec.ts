@@ -61,5 +61,5 @@ describe('getPrevItem', () => {
 });
 
 const createArrayOfElements = (tags: string[]) => {
-  return tags.map(tag => document.createElement(tag));
-}
+  return tags.map((tag) => document.createElement(tag));
+};

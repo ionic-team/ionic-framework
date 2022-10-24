@@ -14,15 +14,18 @@ import {
   Optional,
   Output,
   SkipSelf,
+  Input,
 } from '@angular/core';
 import { OutletContext, Router, ActivatedRoute, ChildrenOutletContexts, PRIMARY_OUTLET } from '@angular/router';
 import { componentOnReady } from '@ionic/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
 
+import { EnvironmentInjector } from '../../di/r3_injector';
 import { AnimationBuilder } from '../../ionic-core';
 import { Config } from '../../providers/config';
 import { NavController } from '../../providers/nav-controller';
+import { isComponentFactoryResolver } from '../../util/util';
 
 import { StackController } from './stack-controller';
 import { RouteView, getUrl } from './stack-utils';
@@ -31,7 +34,7 @@ import { RouteView, getUrl } from './stack-utils';
   selector: 'ion-router-outlet',
   exportAs: 'outlet',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['animated', 'animation', 'swipeGesture'],
+  inputs: ['animated', 'animation', 'mode', 'swipeGesture'],
 })
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class IonRouterOutlet implements OnDestroy, OnInit {
@@ -52,6 +55,16 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
   private currentActivatedRoute$ = new BehaviorSubject<{ component: any; activatedRoute: ActivatedRoute } | null>(null);
 
   tabsPrefix: string | undefined;
+
+  /**
+   * @experimental
+   *
+   * The `EnvironmentInjector` provider instance from the parent component.
+   * Required for using standalone components with `ion-router-outlet`.
+   *
+   * Will be deprecated and removed when Angular 13 support is dropped.
+   */
+  @Input() environmentInjector: EnvironmentInjector;
 
   @Output() stackEvents = new EventEmitter<any>();
   // eslint-disable-next-line @angular-eslint/no-output-rename
@@ -82,11 +95,11 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
   constructor(
     private parentContexts: ChildrenOutletContexts,
     private location: ViewContainerRef,
-    private resolver: ComponentFactoryResolver,
     @Attribute('name') name: string,
     @Optional() @Attribute('tabs') tabs: string,
     private config: Config,
     private navCtrl: NavController,
+    @Optional() private componentFactoryResolver: ComponentFactoryResolver,
     commonLocation: Location,
     elementRef: ElementRef,
     router: Router,
@@ -206,7 +219,10 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     }
   }
 
-  activateWith(activatedRoute: ActivatedRoute, resolver: ComponentFactoryResolver | null): void {
+  activateWith(
+    activatedRoute: ActivatedRoute,
+    resolverOrInjector?: ComponentFactoryResolver | EnvironmentInjector | null
+  ): void {
     if (this.isActivated) {
       throw new Error('Cannot activate an already activated outlet');
     }
@@ -227,11 +243,29 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
       this.updateActivatedRouteProxy(cmpRef.instance, activatedRoute);
     } else {
       const snapshot = (activatedRoute as any)._futureSnapshot;
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const component = snapshot.routeConfig!.component as any;
-      resolver = resolver || this.resolver;
 
-      const factory = resolver.resolveComponentFactory(component);
+      /**
+       * Angular 14 introduces a new `loadComponent` property to the route config.
+       * This function will assign a `component` property to the route snapshot.
+       * We check for the presence of this property to determine if the route is
+       * using standalone components.
+       */
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      if (snapshot.routeConfig!.component == null && this.environmentInjector == null) {
+        console.warn(
+          '[Ionic Warning]: You must supply an environmentInjector to use standalone components with routing:\n\n' +
+            'In your component class, add:\n\n' +
+            `   import { EnvironmentInjector } from '@angular/core';\n` +
+            '   constructor(public environmentInjector: EnvironmentInjector) {}\n' +
+            '\n' +
+            'In your router outlet template, add:\n\n' +
+            '   <ion-router-outlet [environmentInjector]="environmentInjector"></ion-router-outlet>\n\n' +
+            'Alternatively, if you are routing within ion-tabs:\n\n' +
+            '   <ion-tabs [environmentInjector]="environmentInjector"></ion-tabs>'
+        );
+        return;
+      }
+
       const childContexts = this.parentContexts.getOrCreateContext(this.name).children;
 
       // We create an activated route proxy object that will maintain future updates for this component
@@ -240,8 +274,44 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
       const activatedRouteProxy = this.createActivatedRouteProxy(component$, activatedRoute);
 
       const injector = new OutletInjector(activatedRouteProxy, childContexts, this.location.injector);
-      cmpRef = this.activated = this.location.createComponent(factory, this.location.length, injector);
 
+      /**
+       * The resolver is not always provided and is required in Angular 12.
+       * Fallback to the class-level provider when the resolver is not set.
+       */
+      resolverOrInjector = resolverOrInjector || this.componentFactoryResolver;
+
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const component = snapshot.routeConfig!.component ?? snapshot.component;
+
+      if (resolverOrInjector && isComponentFactoryResolver(resolverOrInjector)) {
+        // Backwards compatibility for Angular 13 and lower
+        const factory = resolverOrInjector.resolveComponentFactory(component);
+        cmpRef = this.activated = this.location.createComponent(factory, this.location.length, injector);
+      } else {
+        /**
+         * Angular 14 and higher.
+         *
+         * TODO: FW-1641: Migrate once Angular 13 support is dropped.
+         *
+         * When we drop < Angular 14, we can replace the following code with:
+         * ```ts
+          const environmentInjector = resolverOrInjector ?? this.environmentInjector;
+            cmpRef = this.activated = location.createComponent(component, {
+              index: location.length,
+              injector,
+              environmentInjector,
+            });
+         * ```
+         * where `this.environmentInjector` is a provider of `EnvironmentInjector` from @angular/core.
+         */
+        const environmentInjector = resolverOrInjector ?? this.environmentInjector;
+        cmpRef = this.activated = this.location.createComponent(component, {
+          index: this.location.length,
+          injector,
+          environmentInjector,
+        } as any);
+      }
       // Once the component is created we can push it to our local subject supplied to the proxy
       component$.next(cmpRef.instance);
 
@@ -255,8 +325,19 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     }
 
     this.activatedView = enteringView;
+
+    /**
+     * The top outlet is set prior to the entering view's transition completing,
+     * so that when we have nested outlets (e.g. ion-tabs inside an ion-router-outlet),
+     * the tabs outlet will be assigned as the top outlet when a view inside tabs is
+     * activated.
+     *
+     * In this scenario, activeWith is called for both the tabs and the root router outlet.
+     * To avoid a race condition, we assign the top outlet synchronously.
+     */
+    this.navCtrl.setTopOutlet(this);
+
     this.stackCtrl.setActive(enteringView).then((data) => {
-      this.navCtrl.setTopOutlet(this);
       this.activateEvents.emit(cmpRef.instance);
       this.stackEvents.emit(data);
     });

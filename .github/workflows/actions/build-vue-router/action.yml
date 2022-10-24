@@ -3,12 +3,12 @@ description: 'Builds Ionic Vue Router'
 runs:
   using: 'composite'
   steps:
-    - uses: actions/setup-node@v1
+    - uses: actions/setup-node@v3
       with:
-        node-version: 15.x
+        node-version: 16.x
 
     - name: Cache Core Node Modules
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       env:
         cache-name: core-node-modules
       with:

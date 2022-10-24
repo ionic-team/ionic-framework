@@ -1,4 +1,4 @@
-import { Animation } from '../../../interface';
+import type { Animation } from '../../../interface';
 import { createAnimation } from '../../../utils/animation/animation';
 import { getElementRoot } from '../../../utils/helpers';
 
@@ -28,8 +28,5 @@ export const iosLeaveAnimation = (baseEl: HTMLElement, position: string): Animat
       wrapperAnimation.fromTo('transform', `translateY(${bottom})`, 'translateY(100%)');
       break;
   }
-  return baseAnimation
-    .easing('cubic-bezier(.36,.66,.04,1)')
-    .duration(300)
-    .addAnimation(wrapperAnimation);
+  return baseAnimation.easing('cubic-bezier(.36,.66,.04,1)').duration(300).addAnimation(wrapperAnimation);
 };

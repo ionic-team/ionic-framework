@@ -1,4 +1,4 @@
-import { AnimationBuilder, ComponentProps, FrameworkDelegate, NavComponentWithProps } from '../../interface';
+import type { AnimationBuilder, ComponentProps, FrameworkDelegate, NavComponentWithProps } from '../../interface';
 import { attachComponent } from '../../utils/framework-delegate';
 import { assert, shallowEqualStringMap } from '../../utils/helpers';
 
@@ -7,24 +7,26 @@ export const VIEW_STATE_ATTACHED = 2;
 export const VIEW_STATE_DESTROYED = 3;
 
 export class ViewController {
-
   state = VIEW_STATE_NEW;
   nav?: any;
   element?: HTMLElement;
   delegate?: FrameworkDelegate;
   animationBuilder?: AnimationBuilder;
 
-  constructor(
-    public component: any,
-    public params: ComponentProps | undefined
-  ) {}
+  constructor(public component: any, public params: ComponentProps | undefined) {}
 
   async init(container: HTMLElement) {
     this.state = VIEW_STATE_ATTACHED;
 
     if (!this.element) {
       const component = this.component;
-      this.element = await attachComponent(this.delegate, container, component, ['ion-page', 'ion-page-invisible'], this.params);
+      this.element = await attachComponent(
+        this.delegate,
+        container,
+        component,
+        ['ion-page', 'ion-page-invisible'],
+        this.params
+      );
     }
   }
 
@@ -47,7 +49,11 @@ export class ViewController {
   }
 }
 
-export const matches = (view: ViewController | undefined, id: string, params: ComponentProps | undefined): view is ViewController => {
+export const matches = (
+  view: ViewController | undefined,
+  id: string,
+  params: ComponentProps | undefined
+): view is ViewController => {
   if (!view) {
     return false;
   }
@@ -69,20 +75,22 @@ export const convertToView = (page: any, params: ComponentProps | undefined): Vi
 };
 
 export const convertToViews = (pages: NavComponentWithProps[]): ViewController[] => {
-  return pages.map(page => {
-    if (page instanceof ViewController) {
-      return page;
-    }
-    if ('component' in page) {
-      /**
-       * TODO Ionic 6:
-       * Consider switching to just using `undefined` here
-       * as well as on the public interfaces and on
-       * `NavComponentWithProps`. Previously `pages` was
-       * of type `any[]` so TypeScript did not catch this.
-       */
-      return convertToView(page.component, (page.componentProps === null) ? undefined : page.componentProps);
-    }
-    return convertToView(page, undefined);
-  }).filter(v => v !== null) as ViewController[];
+  return pages
+    .map((page) => {
+      if (page instanceof ViewController) {
+        return page;
+      }
+      if ('component' in page) {
+        /**
+         * TODO Ionic 6:
+         * Consider switching to just using `undefined` here
+         * as well as on the public interfaces and on
+         * `NavComponentWithProps`. Previously `pages` was
+         * of type `any[]` so TypeScript did not catch this.
+         */
+        return convertToView(page.component, page.componentProps === null ? undefined : page.componentProps);
+      }
+      return convertToView(page, undefined);
+    })
+    .filter((v) => v !== null) as ViewController[];
 };

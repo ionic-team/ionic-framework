@@ -1,4 +1,4 @@
-import { inheritAttributes } from '../helpers';
+import { inheritAttributes, inheritAriaAttributes } from '../helpers';
 
 describe('inheritAttributes()', () => {
   it('should create an attribute inheritance object', () => {
@@ -10,7 +10,7 @@ describe('inheritAttributes()', () => {
 
     expect(attributeObject).toEqual({
       tabindex: '20',
-      title: 'myTitle'
+      title: 'myTitle',
     });
   });
 
@@ -21,7 +21,7 @@ describe('inheritAttributes()', () => {
     const attributeObject = inheritAttributes(el, ['tabindex', 'title']);
 
     expect(attributeObject).toEqual({
-      tabindex: '20'
+      tabindex: '20',
     });
   });
 
@@ -33,7 +33,33 @@ describe('inheritAttributes()', () => {
     const attributeObject = inheritAttributes(el, ['title']);
 
     expect(attributeObject).toEqual({
-      title: 'myTitle'
+      title: 'myTitle',
+    });
+  });
+});
+
+describe('inheritAriaAttributes()', () => {
+  it('should inherit ARIA attributes defined on the HTML element', () => {
+    const el = document.createElement('div');
+    el.setAttribute('aria-label', 'myLabel');
+    el.setAttribute('aria-describedby', 'myDescription');
+
+    const attributeObject = inheritAriaAttributes(el);
+
+    expect(attributeObject).toEqual({
+      'aria-label': 'myLabel',
+      'aria-describedby': 'myDescription',
+    });
+  });
+
+  it('should inherit the role attribute defined on the HTML element', () => {
+    const el = document.createElement('div');
+    el.setAttribute('role', 'button');
+
+    const attributeObject = inheritAriaAttributes(el);
+
+    expect(attributeObject).toEqual({
+      role: 'button',
     });
   });
 });

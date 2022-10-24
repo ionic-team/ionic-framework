@@ -1,29 +1,30 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Back Button - Navigation</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script src="../../../../../dist/ionic/ionic.js"></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <title>Back Button - Navigation</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
-  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
-  <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script src="../../../../../dist/ionic/ionic.js"></script>
-</head>
+  <body onload="loadFirstPage()">
+    <ion-app>
+      <ion-nav></ion-nav>
+    </ion-app>
+  </body>
 
-<body onload="loadFirstPage()">
-  <ion-app>
-    <ion-nav></ion-nav>
-  </ion-app>
-</body>
-
-<script>
-
-  async function loadFirstPage() {
-    const nav = document.querySelector('ion-nav');
-    const firstPage = document.createElement('div');
-    firstPage.classList.add('first-page');
-    firstPage.innerHTML = `
+  <script>
+    async function loadFirstPage() {
+      const nav = document.querySelector('ion-nav');
+      const firstPage = document.createElement('div');
+      firstPage.classList.add('first-page');
+      firstPage.innerHTML = `
       <ion-header>
         <ion-toolbar>
           <ion-buttons slot="start">
@@ -38,19 +39,19 @@
       </ion-content>
     `;
 
-    await nav.setRoot(firstPage);
+      await nav.setRoot(firstPage);
 
-    // okay cool, we're in the DOM now
-    const button = firstPage.querySelector('.next');
-    button.addEventListener('click', async () => {
-      await goToPageTwo(nav);
-    });
-  }
+      // okay cool, we're in the DOM now
+      const button = firstPage.querySelector('.next');
+      button.addEventListener('click', async () => {
+        await goToPageTwo(nav);
+      });
+    }
 
-  async function goToPageTwo(nav) {
-    const secondPage = document.createElement('div');
-    secondPage.classList.add('second-page');
-    secondPage.innerHTML = `
+    async function goToPageTwo(nav) {
+      const secondPage = document.createElement('div');
+      secondPage.classList.add('second-page');
+      secondPage.innerHTML = `
       <ion-header>
         <ion-toolbar color="secondary">
           <ion-buttons slot="start">
@@ -66,19 +67,19 @@
       </ion-content>
     `;
 
-    // okay cool, we're in the DOM now
-    await nav.push(secondPage);
+      // okay cool, we're in the DOM now
+      await nav.push(secondPage);
 
-    const nextButton = secondPage.querySelector('ion-button.next');
-    nextButton.addEventListener('click', async () => {
-      await goToPageThree(nav);
-    });
-  }
+      const nextButton = secondPage.querySelector('ion-button.next');
+      nextButton.addEventListener('click', async () => {
+        await goToPageThree(nav);
+      });
+    }
 
-  async function goToPageThree(nav) {
-    const thirdPage = document.createElement('div');
-    thirdPage.classList.add('third-page');
-    thirdPage.innerHTML = `
+    async function goToPageThree(nav) {
+      const thirdPage = document.createElement('div');
+      thirdPage.classList.add('third-page');
+      thirdPage.innerHTML = `
       <ion-header>
         <ion-toolbar>
           <ion-buttons slot="start">
@@ -94,19 +95,19 @@
       </ion-content>
     `;
 
-    // okay cool, we're in the DOM now
-    await nav.push(thirdPage);
+      // okay cool, we're in the DOM now
+      await nav.push(thirdPage);
 
-    const nextButton = thirdPage.querySelector('ion-button.next');
-    nextButton.addEventListener('click', async () => {
-      await goToPageFour(nav);
-    });
-  }
+      const nextButton = thirdPage.querySelector('ion-button.next');
+      nextButton.addEventListener('click', async () => {
+        await goToPageFour(nav);
+      });
+    }
 
-  async function goToPageFour(nav) {
-    const fourthPage = document.createElement('div');
-    fourthPage.classList.add('fourth-page');
-    fourthPage.innerHTML = `
+    async function goToPageFour(nav) {
+      const fourthPage = document.createElement('div');
+      fourthPage.classList.add('fourth-page');
+      fourthPage.innerHTML = `
       <ion-header>
         <ion-toolbar>
           <ion-buttons slot="start">
@@ -122,9 +123,8 @@
       </ion-content>
     `;
 
-    // okay cool, we're in the DOM now
-    await nav.push(fourthPage);
-  }
-</script>
-
+      // okay cool, we're in the DOM now
+      await nav.push(fourthPage);
+    }
+  </script>
 </html>

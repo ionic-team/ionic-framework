@@ -1,7 +1,8 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, Watch, h } from '@stencil/core';
+import type { ComponentInterface, EventEmitter } from '@stencil/core';
+import { Component, Element, Event, Host, Prop, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { CheckboxChangeEventDetail, Color, StyleEventDetail } from '../../interface';
+import type { CheckboxChangeEventDetail, Color, StyleEventDetail } from '../../interface';
 import { getAriaLabel, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
@@ -15,12 +16,11 @@ import { createColorClasses, hostContext } from '../../utils/theme';
   tag: 'ion-checkbox',
   styleUrls: {
     ios: 'checkbox.ios.scss',
-    md: 'checkbox.md.scss'
+    md: 'checkbox.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class Checkbox implements ComponentInterface {
-
   private inputId = `ion-cb-${checkboxIds++}`;
   private focusEl?: HTMLElement;
 
@@ -91,7 +91,7 @@ export class Checkbox implements ComponentInterface {
   checkedChanged(isChecked: boolean) {
     this.ionChange.emit({
       checked: isChecked,
-      value: this.value
+      value: this.value,
     });
     this.emitStyle();
   }
@@ -120,31 +120,35 @@ export class Checkbox implements ComponentInterface {
     this.setFocus();
     this.checked = !this.checked;
     this.indeterminate = false;
-  }
+  };
 
   private onFocus = () => {
     this.ionFocus.emit();
-  }
+  };
 
   private onBlur = () => {
     this.ionBlur.emit();
-  }
+  };
 
   render() {
     const { color, checked, disabled, el, indeterminate, inputId, name, value } = this;
     const mode = getIonMode(this);
     const { label, labelId, labelText } = getAriaLabel(el, inputId);
 
-    renderHiddenInput(true, el, name, (checked ? value : ''), disabled);
+    renderHiddenInput(true, el, name, checked ? value : '', disabled);
 
-    let path = indeterminate
-      ? <path d="M6 12L18 12" part="mark" />
-      : <path d="M5.9,12.5l3.8,3.8l8.8-8.8" part="mark" />;
+    let path = indeterminate ? (
+      <path d="M6 12L18 12" part="mark" />
+    ) : (
+      <path d="M5.9,12.5l3.8,3.8l8.8-8.8" part="mark" />
+    );
 
     if (mode === 'md') {
-      path = indeterminate
-        ? <path d="M2 12H22" part="mark" />
-        : <path d="M1.73,12.91 8.1,19.28 22.79,4.59" part="mark" />;
+      path = indeterminate ? (
+        <path d="M2 12H22" part="mark" />
+      ) : (
+        <path d="M1.73,12.91 8.1,19.28 22.79,4.59" part="mark" />
+      );
     }
 
     return (
@@ -160,15 +164,13 @@ export class Checkbox implements ComponentInterface {
           'checkbox-checked': checked,
           'checkbox-disabled': disabled,
           'checkbox-indeterminate': indeterminate,
-          'interactive': true
+          interactive: true,
         })}
       >
         <svg class="checkbox-icon" viewBox="0 0 24 24" part="container">
           {path}
         </svg>
-        <label htmlFor={inputId}>
-          {labelText}
-        </label>
+        <label htmlFor={inputId}>{labelText}</label>
         <input
           type="checkbox"
           aria-checked={`${checked}`}
@@ -176,7 +178,7 @@ export class Checkbox implements ComponentInterface {
           id={inputId}
           onFocus={() => this.onFocus()}
           onBlur={() => this.onBlur()}
-          ref={focusEl => this.focusEl = focusEl}
+          ref={(focusEl) => (this.focusEl = focusEl)}
         />
       </Host>
     );

@@ -1,18 +1,18 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Method, Prop, h } from '@stencil/core';
+import type { ComponentInterface, EventEmitter } from '@stencil/core';
+import { Component, Element, Event, Host, Method, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Side } from '../../interface';
+import type { Side } from '../../interface';
 import { isEndSide } from '../../utils/helpers';
 
 @Component({
   tag: 'ion-item-options',
   styleUrls: {
     ios: 'item-options.ios.scss',
-    md: 'item-options.md.scss'
-  }
+    md: 'item-options.md.scss',
+  },
 })
 export class ItemOptions implements ComponentInterface {
-
   @Element() el!: HTMLElement;
 
   /**
@@ -30,7 +30,7 @@ export class ItemOptions implements ComponentInterface {
   @Method()
   async fireSwipeEvent() {
     this.ionSwipe.emit({
-      side: this.side
+      side: this.side,
     });
   }
 
@@ -46,10 +46,9 @@ export class ItemOptions implements ComponentInterface {
           [`item-options-${mode}`]: true,
 
           'item-options-start': !isEnd,
-          'item-options-end': isEnd
+          'item-options-end': isEnd,
         }}
-      >
-      </Host>
+      ></Host>
     );
   }
 }

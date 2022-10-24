@@ -1,6 +1,7 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { Breadcrumbs } from '../breadcrumbs.tsx';
+
 import { Breadcrumb } from '../../breadcrumb/breadcrumb.tsx';
+import { Breadcrumbs } from '../breadcrumbs.tsx';
 
 it('should correctly provide the collapsed breadcrumbs in the event payload', async () => {
   const page = await newSpecPage({
@@ -13,7 +14,7 @@ it('should correctly provide the collapsed breadcrumbs in the event payload', as
         <ion-breadcrumb>Fourth</ion-breadcrumb>
         <ion-breadcrumb>Fifth</ion-breadcrumb>
       </ion-breadcrumbs>
-    `
+    `,
   });
 
   const onCollapsedClick = jest.fn((ev) => ev);
@@ -32,4 +33,21 @@ it('should correctly provide the collapsed breadcrumbs in the event payload', as
   expect(collapsedBreadcrumbs[0]).toBe(breadcrumb[1]);
   expect(collapsedBreadcrumbs[1]).toBe(breadcrumb[2]);
   expect(collapsedBreadcrumbs[2]).toBe(breadcrumb[3]);
+});
+
+it('should exclude the separator from narrators', async () => {
+  const page = await newSpecPage({
+    components: [Breadcrumbs, Breadcrumb],
+    html: `
+      <ion-breadcrumbs>
+        <ion-breadcrumb>First</ion-breadcrumb>
+        <ion-breadcrumb>Second</ion-breadcrumb>
+      </ion-breadcrumbs>
+    `,
+  });
+
+  const firstBreadcrumb = page.body.querySelector('ion-breadcrumb:first-of-type');
+  const separator = firstBreadcrumb.shadowRoot.querySelector('[part="separator"]');
+
+  expect(separator.getAttribute('aria-hidden')).toBe('true');
 });

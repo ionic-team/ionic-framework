@@ -3,12 +3,12 @@ description: 'Build Ionic React'
 runs:
   using: 'composite'
   steps:
-    - uses: actions/setup-node@v1
+    - uses: actions/setup-node@v3
       with:
-        node-version: 15.x
+        node-version: 16.x
 
     - name: Cache Core Node Modules
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       env:
         cache-name: core-node-modules
       with:
@@ -37,6 +37,10 @@ runs:
       working-directory: ./packages/react
     - name: Test Spec
       run: npm run test.spec
+      shell: bash
+      working-directory: ./packages/react
+    - name: Check Diff
+      run: git diff --exit-code
       shell: bash
       working-directory: ./packages/react
     - uses: ./.github/workflows/actions/upload-archive

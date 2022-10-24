@@ -3,13 +3,16 @@ description: 'Build Ionic Core'
 runs:
   using: 'composite'
   steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v1
+    - uses: actions/checkout@v3
       with:
-        node-version: 15.x
+        # Checkout the latest commit in this branch
+        ref: ${{ github.event.pull_request.head.sha }}
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16.x
 
     - name: Cache Node Modules
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       env:
         cache-name: core-node-modules
       with:
@@ -27,4 +30,9 @@ runs:
       with:
         name: ionic-core
         output: core/CoreBuild.zip
-        paths: core/dist core/components core/css core/hydrate core/loader
+        paths: core/dist core/components core/css core/hydrate core/loader core/src/components.d.ts
+    - uses: ./.github/workflows/actions/upload-archive
+      with:
+        name: ionic-core-src
+        output: core/CoreSrc.zip
+        paths: core/src

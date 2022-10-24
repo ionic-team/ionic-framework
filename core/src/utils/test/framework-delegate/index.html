@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Framework Delegate</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet">
-    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
     <script type="module">
       import { modalController, createAnimation } from '../../../../../dist/ionic/index.esm.js';
@@ -15,9 +18,7 @@
   <body>
     <ion-app>
       <ion-modal id="inline-root" trigger="button-inline-root">
-        <ion-content class="ion-padding">
-          Hello World
-        </ion-content>
+        <ion-content class="ion-padding"> Hello World </ion-content>
       </ion-modal>
       <div class="ion-page" id="main-content">
         <ion-header>
@@ -32,9 +33,7 @@
           <ion-button id="button-controller" onclick="createAndPresentModal()">Open controller modal</ion-button>
 
           <ion-modal id="inline-content" trigger="button-inline-content">
-            <ion-content class="ion-padding">
-              Hello World
-            </ion-content>
+            <ion-content class="ion-padding"> Hello World </ion-content>
           </ion-modal>
         </ion-content>
       </div>
@@ -51,17 +50,16 @@
 
         const modal = await modalController.create({
           component: div,
-          id: 'controller'
+          id: 'controller',
         });
 
         return modal;
-      }
+      };
 
       const createAndPresentModal = async () => {
         const modal = await createModal();
         await modal.present();
-      }
+      };
     </script>
-
   </body>
 </html>

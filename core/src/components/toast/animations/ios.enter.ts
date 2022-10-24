@@ -1,4 +1,4 @@
-import { Animation } from '../../../interface';
+import type { Animation } from '../../../interface';
 import { createAnimation } from '../../../utils/animation/animation';
 import { getElementRoot } from '../../../utils/helpers';
 
@@ -22,9 +22,7 @@ export const iosEnterAnimation = (baseEl: HTMLElement, position: string): Animat
       wrapperAnimation.fromTo('transform', 'translateY(-100%)', `translateY(${top})`);
       break;
     case 'middle':
-      const topPosition = Math.floor(
-        baseEl.clientHeight / 2 - wrapperEl.clientHeight / 2
-      );
+      const topPosition = Math.floor(baseEl.clientHeight / 2 - wrapperEl.clientHeight / 2);
       wrapperEl.style.top = `${topPosition}px`;
       wrapperAnimation.fromTo('opacity', 0.01, 1);
       break;
@@ -32,8 +30,5 @@ export const iosEnterAnimation = (baseEl: HTMLElement, position: string): Animat
       wrapperAnimation.fromTo('transform', 'translateY(100%)', `translateY(${bottom})`);
       break;
   }
-  return baseAnimation
-    .easing('cubic-bezier(.155,1.105,.295,1.12)')
-    .duration(400)
-    .addAnimation(wrapperAnimation);
+  return baseAnimation.easing('cubic-bezier(.155,1.105,.295,1.12)').duration(400).addAnimation(wrapperAnimation);
 };

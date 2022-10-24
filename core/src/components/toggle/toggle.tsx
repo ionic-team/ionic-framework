@@ -1,7 +1,9 @@
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, State, Watch, h } from '@stencil/core';
+import type { ComponentInterface, EventEmitter } from '@stencil/core';
+import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
+import { checkmarkOutline, removeOutline, ellipseOutline } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
-import { Color, Gesture, GestureDetail, StyleEventDetail, ToggleChangeEventDetail } from '../../interface';
+import type { Color, Gesture, GestureDetail, Mode, StyleEventDetail, ToggleChangeEventDetail } from '../../interface';
 import { getAriaLabel, renderHiddenInput } from '../../utils/helpers';
 import { hapticSelection } from '../../utils/native/haptic';
 import { isRTL } from '../../utils/rtl';
@@ -17,12 +19,11 @@ import { createColorClasses, hostContext } from '../../utils/theme';
   tag: 'ion-toggle',
   styleUrls: {
     ios: 'toggle.ios.scss',
-    md: 'toggle.md.scss'
+    md: 'toggle.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class Toggle implements ComponentInterface {
-
   private inputId = `ion-tg-${toggleIds++}`;
   private gesture?: Gesture;
   private focusEl?: HTMLElement;
@@ -64,6 +65,11 @@ export class Toggle implements ComponentInterface {
   @Prop() value?: string | null = 'on';
 
   /**
+   * Enables the on/off accessibility switch labels within the toggle.
+   */
+  @Prop() enableOnOffLabels: boolean | undefined = undefined;
+
+  /**
    * Emitted when the value property has changed.
    */
   @Event() ionChange!: EventEmitter<ToggleChangeEventDetail>;
@@ -88,7 +94,7 @@ export class Toggle implements ComponentInterface {
   checkedChanged(isChecked: boolean) {
     this.ionChange.emit({
       checked: isChecked,
-      value: this.value
+      value: this.value,
     });
   }
 
@@ -108,8 +114,8 @@ export class Toggle implements ComponentInterface {
       threshold: 5,
       passive: false,
       onStart: () => this.onStart(),
-      onMove: ev => this.onMove(ev),
-      onEnd: ev => this.onEnd(ev),
+      onMove: (ev) => this.onMove(ev),
+      onEnd: (ev) => this.onEnd(ev),
     });
     this.disabledChanged();
   }
@@ -168,23 +174,44 @@ export class Toggle implements ComponentInterface {
     if (this.lastDrag + 300 < Date.now()) {
       this.checked = !this.checked;
     }
-  }
+  };
 
   private onFocus = () => {
     this.ionFocus.emit();
-  }
+  };
 
   private onBlur = () => {
     this.ionBlur.emit();
+  };
+
+  private getSwitchLabelIcon = (mode: Mode, checked: boolean) => {
+    if (mode === 'md') {
+      return checked ? checkmarkOutline : removeOutline;
+    }
+    return checked ? removeOutline : ellipseOutline;
+  };
+
+  private renderOnOffSwitchLabels(mode: Mode, checked: boolean) {
+    const icon = this.getSwitchLabelIcon(mode, checked);
+
+    return (
+      <ion-icon
+        class={{
+          'toggle-switch-icon': true,
+          'toggle-switch-icon-checked': checked,
+        }}
+        icon={icon}
+      ></ion-icon>
+    );
   }
 
   render() {
-    const { activated, color, checked, disabled, el, inputId, name } = this;
+    const { activated, color, checked, disabled, el, inputId, name, enableOnOffLabels } = this;
     const mode = getIonMode(this);
     const { label, labelId, labelText } = getAriaLabel(el, inputId);
     const value = this.getValue();
 
-    renderHiddenInput(true, el, name, (checked ? value : ''), disabled);
+    renderHiddenInput(true, el, name, checked ? value : '', disabled);
 
     return (
       <Host
@@ -199,17 +226,22 @@ export class Toggle implements ComponentInterface {
           'toggle-activated': activated,
           'toggle-checked': checked,
           'toggle-disabled': disabled,
-          'interactive': true
+          interactive: true,
         })}
       >
         <div class="toggle-icon" part="track">
+          {/* The iOS on/off labels are rendered outside of .toggle-icon-wrapper,
+           since the wrapper is translated when the handle is interacted with and
+           this would move the on/off labels outside of the view box */}
+          {enableOnOffLabels &&
+            mode === 'ios' && [this.renderOnOffSwitchLabels(mode, true), this.renderOnOffSwitchLabels(mode, false)]}
           <div class="toggle-icon-wrapper">
-            <div class="toggle-inner" part="handle" />
+            <div class="toggle-inner" part="handle">
+              {enableOnOffLabels && mode === 'md' && this.renderOnOffSwitchLabels(mode, checked)}
+            </div>
           </div>
         </div>
-        <label htmlFor={inputId}>
-          {labelText}
-        </label>
+        <label htmlFor={inputId}>{labelText}</label>
         <input
           type="checkbox"
           role="switch"
@@ -218,7 +250,7 @@ export class Toggle implements ComponentInterface {
           id={inputId}
           onFocus={() => this.onFocus()}
           onBlur={() => this.onBlur()}
-          ref={focusEl => this.focusEl = focusEl}
+          ref={(focusEl) => (this.focusEl = focusEl)}
         />
       </Host>
     );
@@ -227,11 +259,9 @@ export class Toggle implements ComponentInterface {
 
 const shouldToggle = (rtl: boolean, checked: boolean, deltaX: number, margin: number): boolean => {
   if (checked) {
-    return (!rtl && (margin > deltaX)) ||
-      (rtl && (- margin < deltaX));
+    return (!rtl && margin > deltaX) || (rtl && -margin < deltaX);
   } else {
-    return (!rtl && (- margin < deltaX)) ||
-      (rtl && (margin > deltaX));
+    return (!rtl && -margin < deltaX) || (rtl && margin > deltaX);
   }
 };
 

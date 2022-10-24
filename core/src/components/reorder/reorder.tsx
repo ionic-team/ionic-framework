@@ -1,4 +1,5 @@
-import { Component, ComponentInterface, Element, Host, Listen, h } from '@stencil/core';
+import type { ComponentInterface } from '@stencil/core';
+import { Component, Element, Host, Listen, h } from '@stencil/core';
 import { reorderThreeOutline, reorderTwoSharp } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -12,7 +13,7 @@ import { getIonMode } from '../../global/ionic-global';
     ios: 'reorder.ios.scss',
     md: 'reorder.md.scss',
   },
-  shadow: true
+  shadow: true,
 })
 export class Reorder implements ComponentInterface {
   @Element() el!: HTMLIonReorderElement;
@@ -41,5 +42,4 @@ export class Reorder implements ComponentInterface {
       </Host>
     );
   }
-
 }

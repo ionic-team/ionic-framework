@@ -3,9 +3,9 @@ description: 'Test Core Clean Build'
 runs:
   using: 'composite'
   steps:
-    - uses: actions/setup-node@v1
+    - uses: actions/setup-node@v3
       with:
-        node-version: 15.x
+        node-version: 16.x
 
     - uses: ./.github/workflows/actions/download-archive
       with:

@@ -1,10 +1,10 @@
-import { Component, ComponentInterface, Event, EventEmitter, Prop, Watch } from '@stencil/core';
+import type { ComponentInterface, EventEmitter } from '@stencil/core';
+import { Component, Event, Prop, Watch } from '@stencil/core';
 
 @Component({
-  tag: 'ion-route-redirect'
+  tag: 'ion-route-redirect',
 })
 export class RouteRedirect implements ComponentInterface {
-
   /**
    * A redirect route, redirects "from" a URL "to" another URL. This property is that "from" URL.
    * It needs to be an exact match of the navigated URL in order to apply.

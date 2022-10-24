@@ -1,10 +1,9 @@
 import { mockWindow } from '@stencil/core/testing';
 
-import { RouteRedirect, RouteTree } from '../utils/interface';
+import type { RouteRedirect, RouteTree } from '../utils/interface';
 import { flattenRouterTree, readRedirects, readRouteNodes } from '../utils/parser';
 
 describe('parser', () => {
-
   describe('readRoutes', () => {
     it('should read URL', () => {
       const root = win.document.createElement('div');
@@ -27,13 +26,23 @@ describe('parser', () => {
       const expected: RouteTree = [
         { segments: [''], id: 'main-page', children: [], params: undefined },
         { segments: ['one-page'], id: 'one-page', children: [], params: undefined },
-        { segments: ['secondpage'], id: 'second-page', params: undefined, children: [
-          { segments: ['5', 'hola'], id: '4', params: undefined, children: [
-            { segments: ['path', 'to', 'five'], id: '5', children: [], params: undefined },
-            { segments: ['path', 'to', 'five2'], id: '6', children: [], params: undefined }
-          ] }
-        ] },
-        { segments: ['path'], id: '6', children: [], params: undefined }
+        {
+          segments: ['secondpage'],
+          id: 'second-page',
+          params: undefined,
+          children: [
+            {
+              segments: ['5', 'hola'],
+              id: '4',
+              params: undefined,
+              children: [
+                { segments: ['path', 'to', 'five'], id: '5', children: [], params: undefined },
+                { segments: ['path', 'to', 'five2'], id: '6', children: [], params: undefined },
+              ],
+            },
+          ],
+        },
+        { segments: ['path'], id: '6', children: [], params: undefined },
       ];
       expect(readRouteNodes(root)).toEqual(expected);
     });
@@ -58,7 +67,7 @@ describe('parser', () => {
 
       const expected: RouteRedirect[] = [
         { from: [''], to: undefined },
-        { from: [''], to: { segments: ['workout'] }},
+        { from: [''], to: { segments: ['workout'] } },
         { from: ['*'], to: undefined },
         { from: ['workout', '*'], to: { segments: [''] } },
         { from: ['path', 'hey'], to: { segments: ['path', 'to', 'login'] } },
@@ -73,19 +82,37 @@ describe('parser', () => {
       const entries: RouteTree = [
         { segments: [''], id: 'hola', children: [], params: undefined },
         { segments: ['one-page'], id: 'one-page', children: [], params: undefined },
-        { segments: ['secondpage'], id: 'second-page', params: undefined, children: [
-          { segments: ['5', 'hola'], id: '4', params: undefined, children: [
-            { segments: ['path', 'to', 'five'], id: '5', children: [], params: undefined },
-            { segments: ['path', 'to', 'five2'], id: '6', children: [], params: undefined }
-          ] }
-        ] }
+        {
+          segments: ['secondpage'],
+          id: 'second-page',
+          params: undefined,
+          children: [
+            {
+              segments: ['5', 'hola'],
+              id: '4',
+              params: undefined,
+              children: [
+                { segments: ['path', 'to', 'five'], id: '5', children: [], params: undefined },
+                { segments: ['path', 'to', 'five2'], id: '6', children: [], params: undefined },
+              ],
+            },
+          ],
+        },
       ];
       const routes = flattenRouterTree(entries);
       expect(routes).toEqual([
         [{ segments: [''], id: 'hola' }],
         [{ segments: ['one-page'], id: 'one-page' }],
-        [{ segments: ['secondpage'], id: 'second-page' }, { segments: ['5', 'hola'], id: '4' }, { segments: ['path', 'to', 'five'], id: '5' }],
-        [{ segments: ['secondpage'], id: 'second-page' }, { segments: ['5', 'hola'], id: '4' }, { segments: ['path', 'to', 'five2'], id: '6' }],
+        [
+          { segments: ['secondpage'], id: 'second-page' },
+          { segments: ['5', 'hola'], id: '4' },
+          { segments: ['path', 'to', 'five'], id: '5' },
+        ],
+        [
+          { segments: ['secondpage'], id: 'second-page' },
+          { segments: ['5', 'hola'], id: '4' },
+          { segments: ['path', 'to', 'five2'], id: '6' },
+        ],
       ]);
     });
   });

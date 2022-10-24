@@ -3,7 +3,7 @@ export interface DatetimeOptions {
 }
 
 export interface DatetimeChangeEventDetail {
-  value?: string | null;
+  value?: string | string[] | null;
 }
 
 export interface DatetimeCustomEvent extends CustomEvent {
@@ -21,3 +21,7 @@ export interface DatetimeParts {
   ampm?: 'am' | 'pm';
   tzOffset?: number;
 }
+
+export type DatetimePresentation = 'date-time' | 'time-date' | 'date' | 'time' | 'month' | 'year' | 'month-year';
+
+export type TitleSelectedDatesFormatter = (selectedDates: string[]) => string;

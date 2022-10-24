@@ -1,4 +1,4 @@
-import { IonicConfig } from '../interface';
+import type { IonicConfig } from '../interface';
 
 export class Config {
   private m = new Map<keyof IonicConfig, any>();
@@ -57,7 +57,7 @@ export const configFromURL = (win: Window) => {
   win.location.search
     .slice(1)
     .split('&')
-    .map(entry => entry.split('='))
+    .map((entry) => entry.split('='))
     .map(([key, value]) => [decodeURIComponent(key), decodeURIComponent(value)])
     .filter(([key]) => startsWith(key, IONIC_PREFIX))
     .map(([key, value]) => [key.slice(IONIC_PREFIX.length), value])

@@ -12,7 +12,8 @@
     "jsxFactory": "h",
     "lib": [
       "dom",
-      "es2017"
+      "es2017",
+      "es2020"
     ],
     "module": "esnext",
     "moduleResolution": "node",
@@ -26,6 +27,7 @@
     "target": "es2017",
     "baseUrl": ".",
     "paths": {
+      "@utils/*": ["src/utils/*"],
       "@utils/test": ["src/utils/test/utils"]
     }
   },
@@ -34,6 +36,8 @@
   ],
   "exclude": [
     "node_modules",
-    "**/test"
+    "**/test/**/*.spec.ts",
+    "**/test/**/*.spec.tsx",
+    "**/test/**/e2e.ts"
   ]
 }

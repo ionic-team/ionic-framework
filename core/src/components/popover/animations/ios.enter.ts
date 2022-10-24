@@ -1,7 +1,13 @@
-import { Animation } from '../../../interface';
+import type { Animation } from '../../../interface';
 import { createAnimation } from '../../../utils/animation/animation';
 import { getElementRoot } from '../../../utils/helpers';
-import { calculateWindowAdjustment, getArrowDimensions, getPopoverDimensions, getPopoverPosition, shouldShowArrow } from '../utils';
+import {
+  calculateWindowAdjustment,
+  getArrowDimensions,
+  getPopoverDimensions,
+  getPopoverPosition,
+  shouldShowArrow,
+} from '../utils';
 
 const POPOVER_IOS_BODY_PADDING = 5;
 
@@ -10,7 +16,7 @@ const POPOVER_IOS_BODY_PADDING = 5;
  */
 export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation => {
   const { event: ev, size, trigger, reference, side, align } = opts;
-  const doc = (baseEl.ownerDocument as any);
+  const doc = baseEl.ownerDocument as any;
   const isRTL = doc.dir === 'rtl';
   const bodyWidth = doc.defaultView.innerWidth;
   const bodyHeight = doc.defaultView.innerHeight;
@@ -27,15 +33,54 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation =>
     top: bodyHeight / 2 - contentHeight / 2,
     left: bodyWidth / 2 - contentWidth / 2,
     originX: isRTL ? 'right' : 'left',
-    originY: 'top'
-  }
+    originY: 'top',
+  };
 
-  const results = getPopoverPosition(isRTL, contentWidth, contentHeight, arrowWidth, arrowHeight, reference, side, align, defaultPosition, trigger, ev);
+  const results = getPopoverPosition(
+    isRTL,
+    contentWidth,
+    contentHeight,
+    arrowWidth,
+    arrowHeight,
+    reference,
+    side,
+    align,
+    defaultPosition,
+    trigger,
+    ev
+  );
 
   const padding = size === 'cover' ? 0 : POPOVER_IOS_BODY_PADDING;
   const margin = size === 'cover' ? 0 : 25;
 
-  const { originX, originY, top, left, bottom, checkSafeAreaLeft, checkSafeAreaRight, arrowTop, arrowLeft, addPopoverBottomClass } = calculateWindowAdjustment(side, results.top, results.left, padding, bodyWidth, bodyHeight, contentWidth, contentHeight, margin, results.originX, results.originY, results.referenceCoordinates, results.arrowTop, results.arrowLeft, arrowHeight);
+  const {
+    originX,
+    originY,
+    top,
+    left,
+    bottom,
+    checkSafeAreaLeft,
+    checkSafeAreaRight,
+    arrowTop,
+    arrowLeft,
+    addPopoverBottomClass,
+  } = calculateWindowAdjustment(
+    side,
+    results.top,
+    results.left,
+    padding,
+    bodyWidth,
+    bodyHeight,
+    contentWidth,
+    contentHeight,
+    margin,
+    results.originX,
+    results.originY,
+    results.referenceCoordinates,
+    results.arrowTop,
+    results.arrowLeft,
+    arrowHeight
+  );
 
   const baseAnimation = createAnimation();
   const backdropAnimation = createAnimation();
@@ -45,13 +90,11 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation =>
     .addElement(root.querySelector('ion-backdrop')!)
     .fromTo('opacity', 0.01, 'var(--backdrop-opacity)')
     .beforeStyles({
-      'pointer-events': 'none'
+      'pointer-events': 'none',
     })
     .afterClearStyles(['pointer-events']);
 
-  wrapperAnimation
-    .addElement(root.querySelector('.popover-wrapper')!)
-    .fromTo('opacity', 0.01, 1);
+  wrapperAnimation.addElement(root.querySelector('.popover-wrapper')!).fromTo('opacity', 0.01, 1);
 
   return baseAnimation
     .easing('ease')

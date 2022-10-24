@@ -1,12 +1,11 @@
 import { newE2EPage } from '@stencil/core/testing';
 
-const navChanged = () => new Promise(resolve => window.addEventListener('ionNavDidChange', resolve));
+const navChanged = () => new Promise((resolve) => window.addEventListener('ionNavDidChange', resolve));
 
 // TODO: get this to pass
 test.skip('nav: nested', async () => {
-
   const page = await newE2EPage({
-    url: '/src/components/nav/test/nested?ionic:_testing=true'
+    url: '/src/components/nav/test/nested?ionic:_testing=true',
   });
 
   expect(await page.compareScreenshot()).toMatchScreenshot();

@@ -2,17 +2,20 @@ import { componentOnReady } from '../helpers';
 
 describe('componentOnReady()', () => {
   it('should correctly call callback for a custom element', (done) => {
-    customElements.define('hello-world', class extends HTMLElement {
-      constructor() {
-        super();
+    customElements.define(
+      'hello-world',
+      class extends HTMLElement {
+        constructor() {
+          super();
+        }
       }
-    });
+    );
 
     const component = document.createElement('hello-world');
     componentOnReady(component, (el) => {
       expect(el).toBe(component);
       done();
-    })
+    });
   });
 
   it('should correctly call callback for a lazy loaded component', (done) => {
@@ -22,21 +25,24 @@ describe('componentOnReady()', () => {
       });
     });
 
-    customElements.define('hello-world', class extends HTMLElement {
-      constructor() {
-        super();
-      }
+    customElements.define(
+      'hello-world',
+      class extends HTMLElement {
+        constructor() {
+          super();
+        }
 
-      componentOnReady() {
-        return cb(this);
+        componentOnReady() {
+          return cb(this);
+        }
       }
-    });
+    );
 
     const component = document.createElement('hello-world');
     componentOnReady(component, (el) => {
       expect(el).toBe(component);
       expect(cb).toHaveBeenCalledTimes(1);
       done();
-    })
+    });
   });
 });
