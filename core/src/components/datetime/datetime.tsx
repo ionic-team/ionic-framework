@@ -1864,6 +1864,7 @@ export class Datetime implements ComponentInterface {
                   aria-hidden="true"
                   icon={this.showMonthAndYear ? expandedIcon : collapsedIcon}
                   lazy={false}
+                  flipRtl
                 ></ion-icon>
               </ion-label>
             </ion-item>
