@@ -38,8 +38,6 @@ export class RadioGroup implements ComponentInterface {
   @Watch('value')
   valueChanged(value: any | undefined) {
     this.setRadioTabindex(value);
-
-    this.ionChange.emit({ value });
   }
 
   /**
@@ -88,6 +86,17 @@ export class RadioGroup implements ComponentInterface {
     return Array.from(this.el.querySelectorAll('ion-radio'));
   }
 
+  /**
+   * Emits an `ionChange` event.
+   *
+   * This API should be called for user committed changes.
+   * This API should not be used for external value changes.
+   */
+  private emitValueChange() {
+    const { value } = this;
+    this.ionChange.emit({ value });
+  }
+
   private onClick = (ev: Event) => {
     ev.preventDefault();
 
@@ -97,8 +106,10 @@ export class RadioGroup implements ComponentInterface {
       const newValue = selectedRadio.value;
       if (newValue !== currentValue) {
         this.value = newValue;
+        this.emitValueChange();
       } else if (this.allowEmptySelection) {
         this.value = undefined;
+        this.emitValueChange();
       }
     }
   };
@@ -139,6 +150,7 @@ export class RadioGroup implements ComponentInterface {
 
         if (!inSelectPopover) {
           this.value = next.value;
+          this.emitValueChange();
         }
       }
 
@@ -146,6 +158,7 @@ export class RadioGroup implements ComponentInterface {
       // space bar on top of a selected radio
       if (['Space'].includes(ev.code)) {
         this.value = this.allowEmptySelection && this.value !== undefined ? undefined : current.value;
+        this.emitValueChange();
 
         // Prevent browsers from jumping
         // to the bottom of the screen

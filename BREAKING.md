@@ -21,6 +21,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Input](#version-7x-input)
   - [Modal](#version-7x-modal)
   - [Overlays](#version-7x-overlays)
+  - [Radio Group](#version-7x-radio-group)
   - [Range](#version-7x-range)
   - [Searchbar](#version-7x-searchbar)
   - [Segment](#version-7x-segment)
@@ -100,6 +101,10 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 <h4 id="version-7x-overlays">Overlays</h4>
 
 Ionic now listens on the `keydown` event instead of the `keyup` event when determining when to dismiss overlays via the "Escape" key. Any applications that were listening on `keyup` to suppress this behavior should listen on `keydown` instead.
+
+<h4 id="version-7x-radio-group">Radio Group</h4>
+
+- `ionChange` is no longer emitted when the `value` of `ion-radio-group` is modified externally. `ionChange` is only emitted from user committed changes, such as clicking or tapping an `ion-radio` in the group.
 
 <h4 id="version-7x-range">Range</h4>
 
