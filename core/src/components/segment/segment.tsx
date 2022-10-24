@@ -437,6 +437,10 @@ export class Segment implements ComponentInterface {
 
     this.value = current.value;
 
+    if (current !== previous) {
+      this.emitValueChange();
+    }
+
     if (this.scrollable || !this.swipeGesture) {
       if (previous) {
         this.checkButton(previous, current);
