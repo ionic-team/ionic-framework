@@ -19,6 +19,9 @@ test.describe('menu: a11y', () => {
 
     await expect(menu).toHaveAttribute('role', 'navigation');
 
+    const heading = page.locator('ion-menu h1');
+    await expect(heading).toHaveText('Open Menu');
+
     const results = await new AxeBuilder({ page }).analyze();
     expect(results.violations).toEqual([]);
   });
