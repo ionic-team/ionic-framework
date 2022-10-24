@@ -16,10 +16,10 @@ test.describe('menu-toggle: basic', () => {
     const menuToggle = page.locator('ion-menu-toggle');
 
     // do this outside testMenu since passing params to eval callback is tricky due to execution context
-    await menuToggle.evaluate((el: HTMLIonMenuToggleElement) => el.menu = 'start');
+    await menuToggle.evaluate((el: HTMLIonMenuToggleElement) => (el.menu = 'start'));
     await testMenu(page, startMenu);
 
-    await menuToggle.evaluate((el: HTMLIonMenuToggleElement) => el.menu = 'end');
+    await menuToggle.evaluate((el: HTMLIonMenuToggleElement) => (el.menu = 'end'));
     await testMenu(page, endMenu);
   });
 
@@ -29,10 +29,10 @@ test.describe('menu-toggle: basic', () => {
     const menuToggle = page.locator('ion-menu-toggle');
 
     // do this outside testMenu since passing params to eval callback is tricky due to execution context
-    await menuToggle.evaluate((el: HTMLIonMenuToggleElement) => el.menu = 'start-menu');
+    await menuToggle.evaluate((el: HTMLIonMenuToggleElement) => (el.menu = 'start-menu'));
     await testMenu(page, startMenu);
 
-    await menuToggle.evaluate((el: HTMLIonMenuToggleElement) => el.menu = 'end-menu');
+    await menuToggle.evaluate((el: HTMLIonMenuToggleElement) => (el.menu = 'end-menu'));
     await testMenu(page, endMenu);
   });
 });
