@@ -18,7 +18,7 @@ test.describe('header: condense', () => {
     );
 
     await content.evaluate((el: HTMLIonContentElement) => el.scrollToBottom());
-    await page.waitForSelector('#largeTitleHeader.header-collapse-condense-inactive');
+    await page.waitForTimeout(2000);
 
     expect(await smallTitleHeader.screenshot()).toMatchSnapshot(
       `header-condense-large-title-collapsed-diff-${page.getSnapshotSettings()}.png`
