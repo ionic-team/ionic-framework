@@ -16,29 +16,14 @@
 
   <body>
     <ion-app>
-      <ion-menu side="start" class="e2eLeftMenu" content-id="main">
+      <ion-menu side="start" content-id="main" menu-id="start-menu">
         <ion-header>
           <ion-toolbar color="secondary">
-            <ion-title>Left Menu</ion-title>
+            <ion-title>Start Menu</ion-title>
           </ion-toolbar>
         </ion-header>
 
-        <ion-content>
-          <ion-list>
-            <ion-item>Open end Menu</ion-item>
-            <ion-item>Close Menu</ion-item>
-            <ion-item>Close Menu</ion-item>
-            <ion-item>Close Menu</ion-item>
-            <ion-item>Close Menu</ion-item>
-            <ion-item>Close Menu</ion-item>
-            <ion-item>Close Menu</ion-item>
-            <ion-item>Close Menu</ion-item>
-            <ion-item>Close Menu</ion-item>
-            <ion-item>Close Menu</ion-item>
-            <ion-item>Close Menu</ion-item>
-            <ion-item>Close Menu</ion-item>
-          </ion-list>
-        </ion-content>
+        <ion-content class="ion-padding">Start menu content</ion-content>
 
         <ion-footer>
           <ion-toolbar color="secondary">
@@ -47,14 +32,14 @@
         </ion-footer>
       </ion-menu>
 
-      <ion-menu side="end">
+      <ion-menu side="end" content-id="main" menu-id="end-menu">
         <ion-header>
           <ion-toolbar>
-            <ion-title>Hola</ion-title>
+            <ion-title>End Menu</ion-title>
           </ion-toolbar>
         </ion-header>
 
-        <ion-content class="ion-padding"> hola macho </ion-content>
+        <ion-content class="ion-padding">End menu content</ion-content>
       </ion-menu>
 
       <div class="ion-page" id="main">
