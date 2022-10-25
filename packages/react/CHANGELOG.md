@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.3-nightly.20221025](https://github.com/ionic-team/ionic/compare/v6.3.2...v6.3.3-nightly.20221025) (2022-10-25)
+
+
+### Bug Fixes
+
+* **dependencies:** latest patch is installed ([#26148](https://github.com/ionic-team/ionic/issues/26148)) ([74be79e](https://github.com/ionic-team/ionic/commit/74be79e9d81fd5431ae2fc442fd6387cf37b2015)), closes [#26137](https://github.com/ionic-team/ionic/issues/26137)
+* **react:** inline overlays can be conditionally rendered  ([#26111](https://github.com/ionic-team/ionic/issues/26111)) ([8ec350a](https://github.com/ionic-team/ionic/commit/8ec350ae652095ae29e2f02a7f105cb709a72583)), closes [#25590](https://github.com/ionic-team/ionic/issues/25590)
+
+
+
+
+
 ## [6.3.2](https://github.com/ionic-team/ionic/compare/v6.3.1...v6.3.2) (2022-10-17)
 
 **Note:** Version bump only for package @ionic/react
