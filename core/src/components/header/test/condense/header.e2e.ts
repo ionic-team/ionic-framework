@@ -32,7 +32,7 @@ test.describe('header: condense', () => {
     expect(ariaHidden).toBeNull();
 
     await content.evaluate((el: HTMLIonContentElement) => el.scrollToTop());
-    await page.waitForChanges();
+    await page.waitForSelector('#smallTitleHeader.header-collapse-condense-inactive');
 
     await expect(smallTitleHeader).toHaveAttribute('aria-hidden', 'true');
   });
