@@ -1385,6 +1385,7 @@ export namespace Components {
           * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
          */
         "cssClass"?: string | string[];
+        "delegate"?: FrameworkDelegate;
         /**
           * Dismiss the loading overlay after it has been presented.
           * @param data Any data to emit in the dismiss events.
@@ -1399,10 +1400,15 @@ export namespace Components {
           * Animation to use when the loading indicator is presented.
          */
         "enterAnimation"?: AnimationBuilder;
+        "hasController": boolean;
         /**
           * Additional attributes to pass to the loader.
          */
         "htmlAttributes"?: LoadingAttributes;
+        /**
+          * If `true`, the loading indicator will open. If `false`, the loading indicator will close. Use this if you need finer grained control over presentation, otherwise just use the loadingController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the loading indicator dismisses. You will need to do that in your code.
+         */
+        "isOpen": boolean;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -1444,6 +1450,10 @@ export namespace Components {
           * If `true`, the loading indicator will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent": boolean;
+        /**
+          * An ID corresponding to the trigger element that causes the loading indicator to open when clicked.
+         */
+        "trigger": string | undefined;
     }
     interface IonMenu {
         /**
@@ -2109,9 +2119,9 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * How long, in milliseconds, to wait to trigger the `ionChange` event after each change in the range value. This also impacts form bindings such as `ngModel` or `v-model`.
+          * How long, in milliseconds, to wait to trigger the `ionInput` event after each change in the range value.
          */
-        "debounce": number;
+        "debounce"?: number;
         /**
           * If `true`, the user cannot interact with the range.
          */
@@ -5183,6 +5193,7 @@ declare namespace LocalJSX {
           * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
          */
         "cssClass"?: string | string[];
+        "delegate"?: FrameworkDelegate;
         /**
           * Number of milliseconds to wait before dismissing the loading indicator.
          */
@@ -5191,10 +5202,15 @@ declare namespace LocalJSX {
           * Animation to use when the loading indicator is presented.
          */
         "enterAnimation"?: AnimationBuilder;
+        "hasController"?: boolean;
         /**
           * Additional attributes to pass to the loader.
          */
         "htmlAttributes"?: LoadingAttributes;
+        /**
+          * If `true`, the loading indicator will open. If `false`, the loading indicator will close. Use this if you need finer grained control over presentation, otherwise just use the loadingController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the loading indicator dismisses. You will need to do that in your code.
+         */
+        "isOpen"?: boolean;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -5212,6 +5228,14 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
+          * Emitted after the loading indicator has dismissed. Shorthand for ionLoadingDidDismiss.
+         */
+        "onDidDismiss"?: (event: IonLoadingCustomEvent<OverlayEventDetail>) => void;
+        /**
+          * Emitted after the loading indicator has presented. Shorthand for ionLoadingWillDismiss.
+         */
+        "onDidPresent"?: (event: IonLoadingCustomEvent<void>) => void;
+        /**
           * Emitted after the loading has dismissed.
          */
         "onIonLoadingDidDismiss"?: (event: IonLoadingCustomEvent<OverlayEventDetail>) => void;
@@ -5227,6 +5251,14 @@ declare namespace LocalJSX {
           * Emitted before the loading has presented.
          */
         "onIonLoadingWillPresent"?: (event: IonLoadingCustomEvent<void>) => void;
+        /**
+          * Emitted before the loading indicator has dismissed. Shorthand for ionLoadingWillDismiss.
+         */
+        "onWillDismiss"?: (event: IonLoadingCustomEvent<OverlayEventDetail>) => void;
+        /**
+          * Emitted before the loading indicator has presented. Shorthand for ionLoadingWillPresent.
+         */
+        "onWillPresent"?: (event: IonLoadingCustomEvent<void>) => void;
         "overlayIndex": number;
         /**
           * If `true`, a backdrop will be displayed behind the loading indicator.
@@ -5240,6 +5272,10 @@ declare namespace LocalJSX {
           * If `true`, the loading indicator will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent"?: boolean;
+        /**
+          * An ID corresponding to the trigger element that causes the loading indicator to open when clicked.
+         */
+        "trigger"?: string | undefined;
     }
     interface IonMenu {
         /**
@@ -5843,7 +5879,7 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * How long, in milliseconds, to wait to trigger the `ionChange` event after each change in the range value. This also impacts form bindings such as `ngModel` or `v-model`.
+          * How long, in milliseconds, to wait to trigger the `ionInput` event after each change in the range value.
          */
         "debounce"?: number;
         /**
@@ -5875,13 +5911,17 @@ declare namespace LocalJSX {
          */
         "onIonBlur"?: (event: IonRangeCustomEvent<void>) => void;
         /**
-          * Emitted when the value property has changed.
+          * The `ionChange` event is fired for `<ion-range>` elements when the user modifies the element's value: - When the user releases the knob after dragging; - When the user moves the knob with keyboard arrows  `ionChange` is not fired when the value is changed programmatically.
          */
         "onIonChange"?: (event: IonRangeCustomEvent<RangeChangeEventDetail>) => void;
         /**
           * Emitted when the range has focus.
          */
         "onIonFocus"?: (event: IonRangeCustomEvent<void>) => void;
+        /**
+          * The `ionInput` event is fired for `<ion-range>` elements when the value is modified. Unlike `ionChange`, `ionInput` is fired continuously while the user is dragging the knob.
+         */
+        "onIonInput"?: (event: IonRangeCustomEvent<RangeChangeEventDetail>) => void;
         /**
           * Emitted when the user finishes moving the range knob, whether through mouse drag, touch gesture, or keyboard interaction.
          */

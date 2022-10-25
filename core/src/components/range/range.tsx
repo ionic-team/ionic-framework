@@ -54,6 +54,7 @@ export class Range implements ComponentInterface {
   private inheritedAttributes: Attributes = {};
   private contentEl: HTMLElement | null = null;
   private initialContentScrollY = true;
+  private originalIonInput?: EventEmitter<RangeChangeEventDetail>;
 
   @Element() el!: HTMLIonRangeElement;
 
@@ -70,14 +71,18 @@ export class Range implements ComponentInterface {
 
   /**
    * How long, in milliseconds, to wait to trigger the
-   * `ionChange` event after each change in the range value.
-   * This also impacts form bindings such as `ngModel` or `v-model`.
+   * `ionInput` event after each change in the range value.
    */
-  @Prop() debounce = 0;
+  @Prop() debounce?: number;
 
   @Watch('debounce')
   protected debounceChanged() {
-    this.ionChange = debounceEvent(this.ionChange, this.debounce);
+    const { ionInput, debounce, originalIonInput } = this;
+    /**
+     * If debounce is undefined, we have to manually revert the ionInput emitter in case
+     * debounce used to be set to a number. Otherwise, the event would stay debounced.
+     */
+    this.ionInput = debounce === undefined ? originalIonInput ?? ionInput : debounceEvent(ionInput, debounce);
   }
 
   // TODO: In Ionic Framework v6 this should initialize to this.rangeId like the other form components do.
@@ -185,14 +190,10 @@ export class Range implements ComponentInterface {
    */
   @Prop({ mutable: true }) value: RangeValue = 0;
   @Watch('value')
-  protected valueChanged(value: RangeValue) {
+  protected valueChanged() {
     if (!this.noUpdate) {
       this.updateRatio();
     }
-
-    value = this.ensureValueInBounds(value);
-
-    this.ionChange.emit({ value });
   }
 
   private clampBounds = (value: any): number => {
@@ -211,9 +212,21 @@ export class Range implements ComponentInterface {
   };
 
   /**
-   * Emitted when the value property has changed.
+   * The `ionChange` event is fired for `<ion-range>` elements when the user
+   * modifies the element's value:
+   * - When the user releases the knob after dragging;
+   * - When the user moves the knob with keyboard arrows
+   *
+   * `ionChange` is not fired when the value is changed programmatically.
    */
   @Event() ionChange!: EventEmitter<RangeChangeEventDetail>;
+
+  /**
+   * The `ionInput` event is fired for `<ion-range>` elements when the value
+   * is modified. Unlike `ionChange`, `ionInput` is fired continuously
+   * while the user is dragging the knob.
+   */
+  @Event() ionInput!: EventEmitter<RangeChangeEventDetail>;
 
   /**
    * Emitted when the styles change.
@@ -270,6 +283,7 @@ export class Range implements ComponentInterface {
   }
 
   componentDidLoad() {
+    this.originalIonInput = this.ionInput;
     this.setupGesture();
     this.didLoad = true;
   }
@@ -317,6 +331,7 @@ export class Range implements ComponentInterface {
 
     this.ionKnobMoveStart.emit({ value: ensureValueInBounds(this.value) });
     this.updateValue();
+    this.emitValueChange();
     this.ionKnobMoveEnd.emit({ value: ensureValueInBounds(this.value) });
   };
   private getValue(): RangeValue {
@@ -342,6 +357,17 @@ export class Range implements ComponentInterface {
       interactive: true,
       'interactive-disabled': this.disabled,
     });
+  }
+
+  /**
+   * Emits an `ionChange` event.
+   *
+   * This API should be called for user committed changes.
+   * This API should not be used for external value changes.
+   */
+  private emitValueChange() {
+    this.value = this.ensureValueInBounds(this.value);
+    this.ionChange.emit({ value: this.value });
   }
 
   private onStart(detail: GestureDetail) {
@@ -382,6 +408,7 @@ export class Range implements ComponentInterface {
     this.update(detail.currentX);
     this.pressedKnob = undefined;
 
+    this.emitValueChange();
     this.ionKnobMoveEnd.emit({ value: this.ensureValueInBounds(this.value) });
   }
 
@@ -457,6 +484,8 @@ export class Range implements ComponentInterface {
           lower: Math.min(valA, valB),
           upper: Math.max(valA, valB),
         };
+
+    this.ionInput.emit({ value: this.value });
 
     this.noUpdate = false;
   }

@@ -695,6 +695,7 @@ ion-loading,prop,cssClass,string | string[] | undefined,undefined,false,false
 ion-loading,prop,duration,number,0,false,false
 ion-loading,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-loading,prop,htmlAttributes,undefined | { [key: string]: any; },undefined,false,false
+ion-loading,prop,isOpen,boolean,false,false,false
 ion-loading,prop,keyboardClose,boolean,true,false,false
 ion-loading,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-loading,prop,message,IonicSafeString | string | undefined,undefined,false,false
@@ -702,14 +703,19 @@ ion-loading,prop,mode,"ios" | "md",undefined,false,false
 ion-loading,prop,showBackdrop,boolean,true,false,false
 ion-loading,prop,spinner,"bubbles" | "circles" | "circular" | "crescent" | "dots" | "lines" | "lines-sharp" | "lines-sharp-small" | "lines-small" | null | undefined,undefined,false,false
 ion-loading,prop,translucent,boolean,false,false,false
+ion-loading,prop,trigger,string | undefined,undefined,false,false
 ion-loading,method,dismiss,dismiss(data?: any, role?: string) => Promise<boolean>
 ion-loading,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-loading,method,onWillDismiss,onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-loading,method,present,present() => Promise<void>
+ion-loading,event,didDismiss,OverlayEventDetail<any>,true
+ion-loading,event,didPresent,void,true
 ion-loading,event,ionLoadingDidDismiss,OverlayEventDetail<any>,true
 ion-loading,event,ionLoadingDidPresent,void,true
 ion-loading,event,ionLoadingWillDismiss,OverlayEventDetail<any>,true
 ion-loading,event,ionLoadingWillPresent,void,true
+ion-loading,event,willDismiss,OverlayEventDetail<any>,true
+ion-loading,event,willPresent,void,true
 ion-loading,css-prop,--backdrop-opacity
 ion-loading,css-prop,--background
 ion-loading,css-prop,--height
@@ -982,7 +988,7 @@ ion-radio-group,event,ionChange,RadioGroupChangeEventDetail<any>,true
 ion-range,shadow
 ion-range,prop,activeBarStart,number | undefined,undefined,false,false
 ion-range,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
-ion-range,prop,debounce,number,0,false,false
+ion-range,prop,debounce,number | undefined,undefined,false,false
 ion-range,prop,disabled,boolean,false,false,false
 ion-range,prop,dualKnobs,boolean,false,false,false
 ion-range,prop,max,number,100,false,false
@@ -998,6 +1004,7 @@ ion-range,prop,value,number | { lower: number; upper: number; },0,false,false
 ion-range,event,ionBlur,void,true
 ion-range,event,ionChange,RangeChangeEventDetail,true
 ion-range,event,ionFocus,void,true
+ion-range,event,ionInput,RangeChangeEventDetail,true
 ion-range,event,ionKnobMoveEnd,RangeKnobMoveEndEventDetail,true
 ion-range,event,ionKnobMoveStart,RangeKnobMoveStartEventDetail,true
 ion-range,css-prop,--bar-background
