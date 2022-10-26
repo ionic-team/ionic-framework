@@ -92,6 +92,8 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 
 - The `debounce` property has been updated to control the timing in milliseconds to delay the event emission of the `ionInput` event after each keystroke. Previously it would delay the event emission of `ionChange`.
 
+- The `detail` payload for the `ionInput` event now contains an object containing the current `value` as well as the native event that triggered `ionInput`.
+
 <h4 id="version-7x-modal">Modal</h4>
 
 - The `swipeToClose` property has been removed in favor of `canDismiss`.
