@@ -10,7 +10,7 @@ export interface InputInputEventDetail {
   event?: Event;
 }
 
-export interface InputCustomEvent extends CustomEvent {
-  detail: InputChangeEventDetail;
+export interface InputCustomEvent<T = InputChangeEventDetail> extends CustomEvent {
+  detail: T;
   target: HTMLIonInputElement;
 }
