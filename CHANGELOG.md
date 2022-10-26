@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.3-nightly.20221026](https://github.com/ionic-team/ionic-framework/compare/v6.3.2...v6.3.3-nightly.20221026) (2022-10-26)
+
+
+### Bug Fixes
+
+* **datetime:** empty string is treated as no value ([#26131](https://github.com/ionic-team/ionic-framework/issues/26131)) ([51ab5f6](https://github.com/ionic-team/ionic-framework/commit/51ab5f67b50013c0ed8ca3160d6dfc56bc269f2a)), closes [#26116](https://github.com/ionic-team/ionic-framework/issues/26116)
+* **datetime:** preferWheel can now show title ([#26101](https://github.com/ionic-team/ionic-framework/issues/26101)) ([479d56b](https://github.com/ionic-team/ionic-framework/commit/479d56b3b26d45bfd03d4095458c37ed00485c54)), closes [#26095](https://github.com/ionic-team/ionic-framework/issues/26095)
+* **datetime:** values are adjusted to be in bounds ([#26125](https://github.com/ionic-team/ionic-framework/issues/26125)) ([0548fe8](https://github.com/ionic-team/ionic-framework/commit/0548fe858854f0187e0dfe00efaec142cd5bb6cf)), closes [#25894](https://github.com/ionic-team/ionic-framework/issues/25894) [#25708](https://github.com/ionic-team/ionic-framework/issues/25708)
+* **dependencies:** latest patch is installed ([#26148](https://github.com/ionic-team/ionic-framework/issues/26148)) ([74be79e](https://github.com/ionic-team/ionic-framework/commit/74be79e9d81fd5431ae2fc442fd6387cf37b2015)), closes [#26137](https://github.com/ionic-team/ionic-framework/issues/26137)
+* **many:** haptics only fire on supported platforms ([#26130](https://github.com/ionic-team/ionic-framework/issues/26130)) ([d4d569a](https://github.com/ionic-team/ionic-framework/commit/d4d569ac09ab25ab5a490825cf1fc655fe97bb87)), closes [#26109](https://github.com/ionic-team/ionic-framework/issues/26109)
+* **react:** inline overlays can be conditionally rendered  ([#26111](https://github.com/ionic-team/ionic-framework/issues/26111)) ([8ec350a](https://github.com/ionic-team/ionic-framework/commit/8ec350ae652095ae29e2f02a7f105cb709a72583)), closes [#25590](https://github.com/ionic-team/ionic-framework/issues/25590)
+
+
+
+
+
 ## [6.3.2](https://github.com/ionic-team/ionic-framework/compare/v6.3.1...v6.3.2) (2022-10-17)
 
 
