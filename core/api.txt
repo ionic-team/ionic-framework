@@ -28,19 +28,25 @@ ion-action-sheet,prop,cssClass,string | string[] | undefined,undefined,false,fal
 ion-action-sheet,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-action-sheet,prop,header,string | undefined,undefined,false,false
 ion-action-sheet,prop,htmlAttributes,undefined | { [key: string]: any; },undefined,false,false
+ion-action-sheet,prop,isOpen,boolean,false,false,false
 ion-action-sheet,prop,keyboardClose,boolean,true,false,false
 ion-action-sheet,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-action-sheet,prop,mode,"ios" | "md",undefined,false,false
 ion-action-sheet,prop,subHeader,string | undefined,undefined,false,false
 ion-action-sheet,prop,translucent,boolean,false,false,false
+ion-action-sheet,prop,trigger,string | undefined,undefined,false,false
 ion-action-sheet,method,dismiss,dismiss(data?: any, role?: string) => Promise<boolean>
 ion-action-sheet,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-action-sheet,method,onWillDismiss,onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-action-sheet,method,present,present() => Promise<void>
+ion-action-sheet,event,didDismiss,OverlayEventDetail<any>,true
+ion-action-sheet,event,didPresent,void,true
 ion-action-sheet,event,ionActionSheetDidDismiss,OverlayEventDetail<any>,true
 ion-action-sheet,event,ionActionSheetDidPresent,void,true
 ion-action-sheet,event,ionActionSheetWillDismiss,OverlayEventDetail<any>,true
 ion-action-sheet,event,ionActionSheetWillPresent,void,true
+ion-action-sheet,event,willDismiss,OverlayEventDetail<any>,true
+ion-action-sheet,event,willPresent,void,true
 ion-action-sheet,css-prop,--backdrop-opacity
 ion-action-sheet,css-prop,--background
 ion-action-sheet,css-prop,--button-background
