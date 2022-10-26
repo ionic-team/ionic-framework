@@ -1,8 +1,8 @@
 import {
   ActionSheetButton as ActionSheetButtonCore,
   ActionSheetOptions as ActionSheetOptionsCore,
+  JSX
 } from '@ionic/core/components';
-import { JSX } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-action-sheet.js';
 
 import { createInlineOverlayComponent } from './createInlineOverlayComponent';
