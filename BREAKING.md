@@ -166,7 +166,7 @@ Developers using these components will need to migrate to using Swiper.js direct
 
 - The `debounce` property has been updated to control the timing in milliseconds to delay the event emission of the `ionInput` event after each keystroke. Previously it would delay the event emission of `ionChange`.
 
-- `ionInput` dispatches an event detail of `null` when the textarea is cleared as a result of `clear-on-edit="true"`.
+- The `detail` payload for the `ionInput` event now contains an object containing the current `value` as well as the native event that triggered `ionInput`.
 
 <h4 id="version-7x-toggle">Toggle</h4>
 
