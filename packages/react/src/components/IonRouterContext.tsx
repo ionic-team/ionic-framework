@@ -48,7 +48,7 @@ export function useIonRouter(): UseIonRouterResult {
       canGoBack: context.canGoBack,
       routeInfo: context.routeInfo,
     }),
-    [context.back, context.canGoBack, context.push, context.routeInfo]
+    [context.back, context.push, context.canGoBack, context.routeInfo]
   );
 }
 
