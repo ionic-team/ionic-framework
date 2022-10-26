@@ -8,18 +8,6 @@ const getActiveElementID = async (page) => {
   return page.evaluate((el) => el?.id, activeElement);
 };
 
-test('menu: start menu', async () => {
-  await testMenu(DIRECTORY, '#start-menu', 'first');
-});
-
-test('menu: start custom menu', async () => {
-  await testMenu(DIRECTORY, '#custom-menu', 'custom');
-});
-
-test('menu: end menu', async () => {
-  await testMenu(DIRECTORY, '#end-menu');
-});
-
 test('menu: focus trap', async () => {
   const page = await newE2EPage({ url: '/src/components/menu/test/basic?ionic:_testing=true' });
 
@@ -62,20 +50,4 @@ test('menu: preserve scroll position', async () => {
   });
 
   expect(scrollTop).toEqual(200);
-});
-
-/**
- * RTL Tests
- */
-
-test('menu:rtl: start menu', async () => {
-  await testMenu(DIRECTORY, '#start-menu', 'first', true);
-});
-
-test('menu:rtl: start custom menu', async () => {
-  await testMenu(DIRECTORY, '#custom-menu', 'custom', true);
-});
-
-test('menu:rtl: end menu', async () => {
-  await testMenu(DIRECTORY, '#end-menu', '', true);
 });
