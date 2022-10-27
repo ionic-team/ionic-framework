@@ -53,8 +53,6 @@ export const CoreDelegate = () => {
     userComponentProps: any = {},
     cssClasses: string[] = []
   ) => {
-    const hasUserDefinedComponent = userComponent !== undefined;
-
     BaseComponent = parentElement;
     /**
      * If passing in a component via the `component` props
@@ -88,15 +86,23 @@ export const CoreDelegate = () => {
       BaseComponent.appendChild(el);
 
       await new Promise((resolve) => componentOnReady(el, resolve));
-    } else if (hasUserDefinedComponent && BaseComponent.children.length > 0) {
-      // If there is no component, then we need to create a new parent
-      // element to apply the css classes to.
-      const el = BaseComponent.ownerDocument?.createElement('div');
-      cssClasses.forEach((c) => el.classList.add(c));
-      // Move each child from the original template to the new parent element.
-      el.append(...BaseComponent.children);
-      // Append the new parent element to the original parent element.
-      BaseComponent.appendChild(el);
+    } else if (BaseComponent.children.length > 0) {
+      const root = BaseComponent.children[0] as HTMLElement & { __delegateHost?: boolean };
+      if (root.__delegateHost !== true) {
+        /**
+         * If the root element is not a delegate host, it means
+         * that the overlay has not been presented yet and we need
+         * to create the containing element with the specified classes.
+         */
+        const el = BaseComponent.ownerDocument?.createElement('div');
+        // Internal flag to track if the element is a delegate host
+        el.__delegateHost = true;
+        cssClasses.forEach((c) => el.classList.add(c));
+        // Move each child from the original template to the new parent element.
+        el.append(...BaseComponent.children);
+        // Append the new parent element to the original parent element.
+        BaseComponent.appendChild(el);
+      }
     }
 
     /**
