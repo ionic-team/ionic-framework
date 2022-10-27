@@ -306,7 +306,7 @@ export class VirtualScroll implements ComponentInterface {
     const { contentEl, scrollEl, el } = this;
     let topOffset = 0;
     let node: HTMLElement | null = el;
-    while (node && node !== contentEl) {
+    while (node !== null && node !== contentEl) {
       topOffset += node.offsetTop;
       node = node.offsetParent as HTMLElement;
     }
@@ -386,7 +386,7 @@ export class VirtualScroll implements ComponentInterface {
   }
 
   private updateState() {
-    const shouldEnable = !!(this.scrollEl && this.cells);
+    const shouldEnable = !!(this.scrollEl && this.cells.length > 0);
     if (shouldEnable !== this.isEnabled) {
       this.enableScrollEvents(shouldEnable);
       if (shouldEnable) {

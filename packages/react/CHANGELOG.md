@@ -3,6 +3,99 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.3](https://github.com/ionic-team/ionic/compare/v6.3.2...v6.3.3) (2022-10-26)
+
+
+### Bug Fixes
+
+* **dependencies:** latest patch is installed ([#26148](https://github.com/ionic-team/ionic/issues/26148)) ([74be79e](https://github.com/ionic-team/ionic/commit/74be79e9d81fd5431ae2fc442fd6387cf37b2015)), closes [#26137](https://github.com/ionic-team/ionic/issues/26137)
+* **react:** inline overlays can be conditionally rendered  ([#26111](https://github.com/ionic-team/ionic/issues/26111)) ([8ec350a](https://github.com/ionic-team/ionic/commit/8ec350ae652095ae29e2f02a7f105cb709a72583)), closes [#25590](https://github.com/ionic-team/ionic/issues/25590)
+
+
+
+
+
+## [6.3.2](https://github.com/ionic-team/ionic/compare/v6.3.1...v6.3.2) (2022-10-17)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [6.3.1](https://github.com/ionic-team/ionic/compare/v6.3.0...v6.3.1) (2022-10-12)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+# [6.3.0](https://github.com/ionic-team/ionic/compare/v6.2.9...v6.3.0) (2022-10-05)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [6.2.9](https://github.com/ionic-team/ionic/compare/v6.2.8...v6.2.9) (2022-09-28)
+
+
+### Bug Fixes
+
+* **react:** overlays now define internal ionic components ([#25967](https://github.com/ionic-team/ionic/issues/25967)) ([21dc893](https://github.com/ionic-team/ionic/commit/21dc893f90a56d14d69330367daae6788e32652e)), closes [#25962](https://github.com/ionic-team/ionic/issues/25962)
+
+
+
+
+
+## [6.2.8](https://github.com/ionic-team/ionic/compare/v6.2.7...v6.2.8) (2022-09-21)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [6.2.7](https://github.com/ionic-team/ionic/compare/v6.2.6...v6.2.7) (2022-09-14)
+
+
+### Bug Fixes
+
+* **react:** add correct type for CreateAnimation ([#25931](https://github.com/ionic-team/ionic/issues/25931)) ([89d3e3c](https://github.com/ionic-team/ionic/commit/89d3e3c819b282e4d7ce716b9099eaab82ab4de2))
+
+
+
+
+
+## [6.2.6](https://github.com/ionic-team/ionic/compare/v6.2.5...v6.2.6) (2022-09-07)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [6.2.5](https://github.com/ionic-team/ionic/compare/v6.2.4...v6.2.5) (2022-08-31)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [6.2.4](https://github.com/ionic-team/ionic/compare/v6.2.3...v6.2.4) (2022-08-24)
+
+
+### Bug Fixes
+
+* **react:** duplicate page transitions do not happen on react 18 ([#25798](https://github.com/ionic-team/ionic/issues/25798)) ([a39d776](https://github.com/ionic-team/ionic/commit/a39d776f087514b7fa744f44ce8ce2a04ed8aa43)), closes [#25797](https://github.com/ionic-team/ionic/issues/25797)
+
+
+
+
+
 ## [6.2.3](https://github.com/ionic-team/ionic/compare/v6.2.2...v6.2.3) (2022-08-17)
 
 **Note:** Version bump only for package @ionic/react

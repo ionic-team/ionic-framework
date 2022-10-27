@@ -19,10 +19,10 @@ export const mdTransitionAnimation = (_: HTMLElement, opts: TransitionOptions): 
 
   // animate the component itself
   if (backDirection) {
-    rootTransition.duration(opts.duration || 200).easing('cubic-bezier(0.47,0,0.745,0.715)');
+    rootTransition.duration((opts.duration ?? 0) || 200).easing('cubic-bezier(0.47,0,0.745,0.715)');
   } else {
     rootTransition
-      .duration(opts.duration || 280)
+      .duration((opts.duration ?? 0) || 280)
       .easing('cubic-bezier(0.36,0.66,0.04,1)')
       .fromTo('transform', `translateY(${OFF_BOTTOM})`, `translateY(${CENTER})`)
       .fromTo('opacity', 0.01, 1);
@@ -38,7 +38,7 @@ export const mdTransitionAnimation = (_: HTMLElement, opts: TransitionOptions): 
   // setup leaving view
   if (leavingEl && backDirection) {
     // leaving content
-    rootTransition.duration(opts.duration || 200).easing('cubic-bezier(0.47,0,0.745,0.715)');
+    rootTransition.duration((opts.duration ?? 0) || 200).easing('cubic-bezier(0.47,0,0.745,0.715)');
 
     const leavingPage = createAnimation();
     leavingPage

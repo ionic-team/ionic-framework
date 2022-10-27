@@ -3,6 +3,105 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.3](https://github.com/ionic-team/ionic/compare/v6.3.2...v6.3.3) (2022-10-26)
+
+
+### Bug Fixes
+
+* **dependencies:** latest patch is installed ([#26148](https://github.com/ionic-team/ionic/issues/26148)) ([74be79e](https://github.com/ionic-team/ionic/commit/74be79e9d81fd5431ae2fc442fd6387cf37b2015)), closes [#26137](https://github.com/ionic-team/ionic/issues/26137)
+
+
+
+
+
+## [6.3.2](https://github.com/ionic-team/ionic/compare/v6.3.1...v6.3.2) (2022-10-17)
+
+
+### Bug Fixes
+
+* **vue:** routing components define child components ([#26107](https://github.com/ionic-team/ionic/issues/26107)) ([d60973b](https://github.com/ionic-team/ionic/commit/d60973b2449b29a982b752a98b10d2b043ecff2f))
+
+
+
+
+
+## [6.3.1](https://github.com/ionic-team/ionic/compare/v6.3.0...v6.3.1) (2022-10-12)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+# [6.3.0](https://github.com/ionic-team/ionic/compare/v6.2.9...v6.3.0) (2022-10-05)
+
+
+### Features
+
+* **button:** submit from outside of form ([#25913](https://github.com/ionic-team/ionic/issues/25913)) ([b139838](https://github.com/ionic-team/ionic/commit/b13983848c9ea7387062953412eaae744c001ec7)), closes [#21194](https://github.com/ionic-team/ionic/issues/21194)
+* **datetime:** add header text to multiple selection; improve header consistency between modes ([#25817](https://github.com/ionic-team/ionic/issues/25817)) ([8a1b3c5](https://github.com/ionic-team/ionic/commit/8a1b3c5f300a1ec953d406b65601f84fa49aa807))
+
+
+
+
+
+## [6.2.9](https://github.com/ionic-team/ionic/compare/v6.2.8...v6.2.9) (2022-09-28)
+
+
+### Bug Fixes
+
+* **vue:** back button handler only fires in routing context ([#26014](https://github.com/ionic-team/ionic/issues/26014)) ([19f0fb7](https://github.com/ionic-team/ionic/commit/19f0fb70452c8bd003743984a3d6522369eaa3b7))
+
+
+
+
+
+## [6.2.8](https://github.com/ionic-team/ionic/compare/v6.2.7...v6.2.8) (2022-09-21)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [6.2.7](https://github.com/ionic-team/ionic/compare/v6.2.6...v6.2.7) (2022-09-14)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [6.2.6](https://github.com/ionic-team/ionic/compare/v6.2.5...v6.2.6) (2022-09-07)
+
+
+### Bug Fixes
+
+* **vue:** custom animation plays when replacing ([#25863](https://github.com/ionic-team/ionic/issues/25863)) ([2d3661a](https://github.com/ionic-team/ionic/commit/2d3661ae3894b98ac4b8b158594b8de0f0823073)), closes [#25831](https://github.com/ionic-team/ionic/issues/25831)
+
+
+
+
+
+## [6.2.5](https://github.com/ionic-team/ionic/compare/v6.2.4...v6.2.5) (2022-08-31)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [6.2.4](https://github.com/ionic-team/ionic/compare/v6.2.3...v6.2.4) (2022-08-24)
+
+
+### Bug Fixes
+
+* **vue:** lifecycles now fire on tabs pages ([#25786](https://github.com/ionic-team/ionic/issues/25786)) ([3020005](https://github.com/ionic-team/ionic/commit/30200051bbab6ce57fd363668dafc49287c87c56)), closes [#25784](https://github.com/ionic-team/ionic/issues/25784)
+
+
+
+
+
 ## [6.2.3](https://github.com/ionic-team/ionic/compare/v6.2.2...v6.2.3) (2022-08-17)
 
 **Note:** Version bump only for package @ionic/vue

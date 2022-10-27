@@ -1,6 +1,8 @@
 import type { DatetimeParts } from '../datetime-interface';
 
+import { isSameDay } from './comparison';
 import { getNumDaysInMonth } from './helpers';
+import { parseAmPm } from './parse';
 
 const twoDigit = (val: number | undefined): string => {
   return ('0' + (val !== undefined ? Math.abs(val) : '0')).slice(-2);
@@ -338,4 +340,173 @@ export const calculateHourFromAMPM = (currentParts: DatetimeParts, newAMPM: 'am'
   }
 
   return newHour;
+};
+
+/**
+ * Updates parts to ensure that month and day
+ * values are valid. For days that do not exist,
+ * the closest valid day is used.
+ */
+export const validateParts = (
+  parts: DatetimeParts,
+  minParts?: DatetimeParts,
+  maxParts?: DatetimeParts
+): DatetimeParts => {
+  const { month, day, year } = parts;
+  const partsCopy = { ...parts };
+
+  const numDays = getNumDaysInMonth(month, year);
+
+  /**
+   * If the max number of days
+   * is greater than the day we want
+   * to set, update the DatetimeParts
+   * day field to be the max days.
+   */
+  if (day !== null && numDays < day) {
+    partsCopy.day = numDays;
+  }
+
+  /**
+   * If value is same day as min day,
+   * make sure the time value is in bounds.
+   */
+  if (minParts !== undefined && isSameDay(partsCopy, minParts)) {
+    /**
+     * If the hour is out of bounds,
+     * update both the hour and minute.
+     * This is done so that the new time
+     * is closest to what the user selected.
+     */
+    if (partsCopy.hour !== undefined && minParts.hour !== undefined) {
+      if (partsCopy.hour < minParts.hour) {
+        partsCopy.hour = minParts.hour;
+        partsCopy.minute = minParts.minute;
+
+        /**
+         * If only the minute is out of bounds,
+         * set it to the min minute.
+         */
+      } else if (
+        partsCopy.hour === minParts.hour &&
+        partsCopy.minute !== undefined &&
+        minParts.minute !== undefined &&
+        partsCopy.minute < minParts.minute
+      ) {
+        partsCopy.minute = minParts.minute;
+      }
+    }
+  }
+
+  /**
+   * If value is same day as max day,
+   * make sure the time value is in bounds.
+   */
+  if (maxParts !== undefined && isSameDay(parts, maxParts)) {
+    /**
+     * If the hour is out of bounds,
+     * update both the hour and minute.
+     * This is done so that the new time
+     * is closest to what the user selected.
+     */
+    if (partsCopy.hour !== undefined && maxParts.hour !== undefined) {
+      if (partsCopy.hour > maxParts.hour) {
+        partsCopy.hour = maxParts.hour;
+        partsCopy.minute = maxParts.minute;
+        /**
+         * If only the minute is out of bounds,
+         * set it to the max minute.
+         */
+      } else if (
+        partsCopy.hour === maxParts.hour &&
+        partsCopy.minute !== undefined &&
+        maxParts.minute !== undefined &&
+        partsCopy.minute > maxParts.minute
+      ) {
+        partsCopy.minute = maxParts.minute;
+      }
+    }
+  }
+
+  return partsCopy;
+};
+
+/**
+ * Returns the closest date to refParts
+ * that also meets the constraints of
+ * the *Values params.
+ * @param refParts The reference date
+ * @param monthValues The allowed month values
+ * @param dayValues The allowed day (of the month) values
+ * @param yearValues The allowed year values
+ * @param hourValues The allowed hour values
+ * @param minuteValues The allowed minute values
+ */
+export const getClosestValidDate = (
+  refParts: DatetimeParts,
+  monthValues?: number[],
+  dayValues?: number[],
+  yearValues?: number[],
+  hourValues?: number[],
+  minuteValues?: number[]
+) => {
+  const { hour, minute, day, month, year } = refParts;
+  const copyParts = { ...refParts, dayOfWeek: undefined };
+
+  if (monthValues !== undefined) {
+    copyParts.month = findClosestValue(month, monthValues);
+  }
+
+  // Day is nullable but cannot be undefined
+  if (day !== null && dayValues !== undefined) {
+    copyParts.day = findClosestValue(day, dayValues);
+  }
+
+  if (yearValues !== undefined) {
+    copyParts.year = findClosestValue(year, yearValues);
+  }
+
+  if (hour !== undefined && hourValues !== undefined) {
+    copyParts.hour = findClosestValue(hour, hourValues);
+    copyParts.ampm = parseAmPm(copyParts.hour);
+  }
+
+  if (minute !== undefined && minuteValues !== undefined) {
+    copyParts.minute = findClosestValue(minute, minuteValues);
+  }
+
+  return copyParts;
+};
+
+/**
+ * Finds the value in "values" that is
+ * numerically closest to "reference".
+ * This function assumes that "values" is
+ * already sorted in ascending order.
+ * @param reference The reference number to use
+ * when finding the closest value
+ * @param values The allowed values that will be
+ * searched to find the closest value to "reference"
+ */
+const findClosestValue = (reference: number, values: number[]) => {
+  let closestValue = values[0];
+  let rank = Math.abs(closestValue - reference);
+
+  for (let i = 1; i < values.length; i++) {
+    const value = values[i];
+    /**
+     * This code prioritizes the first
+     * closest result. Given two values
+     * with the same distance from reference,
+     * this code will prioritize the smaller of
+     * the two values.
+     */
+    const valueRank = Math.abs(value - reference);
+    if (valueRank < rank) {
+      closestValue = value;
+      rank = valueRank;
+    }
+  }
+
+  return closestValue;
 };

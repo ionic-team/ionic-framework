@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Action Sheet - A11y</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+  <script type="module">
+    import { actionSheetController } from '../../../../dist/ionic/index.esm.js';
+    window.actionSheetController = actionSheetController;
+  </script>
+
+  <body>
+    <main class="ion-padding">
+      <h1>Action Sheet - A11y</h1>
+
+      <ion-button id="bothHeaders" expand="block" onclick="presentBothHeaders()">Both Headers</ion-button>
+      <ion-button id="subHeaderOnly" expand="block" onclick="presentSubHeaderOnly()">Subheader Only</ion-button>
+      <ion-button id="noHeaders" expand="block" onclick="presentNoHeaders()">No Headers</ion-button>
+      <ion-button id="customAria" expand="block" onclick="presentCustomAria()">Custom Aria</ion-button>
+    </main>
+
+    <script>
+      async function openActionSheet(opts) {
+        const actionSheet = await actionSheetController.create(opts);
+        await actionSheet.present();
+      }
+
+      function presentBothHeaders() {
+        openActionSheet({
+          header: 'Header',
+          subHeader: 'Subtitle',
+          buttons: ['Confirm'],
+        });
+      }
+
+      function presentSubHeaderOnly() {
+        openActionSheet({
+          subHeader: 'Subtitle',
+          buttons: ['Confirm'],
+        });
+      }
+
+      function presentNoHeaders() {
+        openActionSheet({
+          buttons: ['Confirm'],
+        });
+      }
+
+      function presentCustomAria() {
+        openActionSheet({
+          header: 'Header',
+          subHeader: 'Subtitle',
+          buttons: ['Confirm'],
+          htmlAttributes: {
+            'aria-labelledby': 'Custom title',
+            'aria-describedby': 'Custom description',
+          },
+        });
+      }
+    </script>
+  </body>
+</html>

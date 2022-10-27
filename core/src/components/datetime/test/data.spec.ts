@@ -1,4 +1,4 @@
-import { generateMonths, getDaysOfWeek, generateTime, getToday } from '../utils/data';
+import { generateMonths, getDaysOfWeek, generateTime, getToday, getCombinedDateColumnData } from '../utils/data';
 
 describe('generateMonths()', () => {
   it('should generate correct month data', () => {
@@ -63,7 +63,7 @@ describe('generateTime()', () => {
     };
     const { hours, minutes } = generateTime(today, 'h12', min);
 
-    expect(hours.length).toEqual(11);
+    expect(hours.length).toEqual(10);
     expect(minutes.length).toEqual(60);
   });
   it('should not filter according to min if not on reference day', () => {
@@ -103,7 +103,7 @@ describe('generateTime()', () => {
     };
     const { hours, minutes } = generateTime(today, 'h12', undefined, max);
 
-    expect(hours.length).toEqual(7);
+    expect(hours.length).toEqual(8);
     expect(minutes.length).toEqual(45);
   });
   it('should not filter according to min if not on reference day', () => {
@@ -340,5 +340,27 @@ describe('getToday', () => {
     const res = getToday();
 
     expect(res).toEqual('2022-02-21T18:30:00.000Z');
+  });
+});
+
+describe('getCombinedDateColumnData', () => {
+  it('should return correct data with dates across years', () => {
+    const { parts, items } = getCombinedDateColumnData(
+      'en-US',
+      { day: 1, month: 1, year: 2021 },
+      { day: 31, month: 12, year: 2020 },
+      { day: 2, month: 1, year: 2021 }
+    );
+
+    expect(parts).toEqual([
+      { month: 12, year: 2020, day: 31 },
+      { month: 1, year: 2021, day: 1 },
+      { month: 1, year: 2021, day: 2 },
+    ]);
+    expect(items).toEqual([
+      { text: 'Thu, Dec 31', value: '2020-12-31' },
+      { text: 'Today', value: '2021-1-1' },
+      { text: 'Sat, Jan 2', value: '2021-1-2' },
+    ]);
   });
 });

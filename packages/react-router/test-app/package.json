@@ -31,6 +31,7 @@
     "build": "react-scripts build",
     "test": "cypress open",
     "cypress": "node_modules/.bin/cypress run --headless --browser chrome",
+    "cypress.open": "cypress open",
     "e2e": "concurrently \"serve -s build -l 3000\" \"wait-on http-get://localhost:3000 && npm run cypress\" --kill-others --success first",
     "sync": "sh ./scripts/sync.sh"
   },
@@ -55,8 +56,8 @@
   "devDependencies": {
     "@capacitor/cli": "3.2.4",
     "concurrently": "^6.3.0",
-    "cypress": "^8.5.0",
-    "serve": "^13.0.2",
+    "cypress": "^10.9.0",
+    "serve": "^14.0.1",
     "wait-on": "^6.0.0",
     "webpack-cli": "^4.9.1"
   },

@@ -8,6 +8,11 @@ interface CustomMatchers<R = unknown> {
    * @param eventDetail The expected detail of the event.
    */
   toHaveReceivedEventDetail(eventDetail: any): R;
+
+  /**
+   * Will check how many times the event has been received.
+   */
+  toHaveReceivedEventTimes(count: number): R;
 }
 
 declare namespace PlaywrightTest {
