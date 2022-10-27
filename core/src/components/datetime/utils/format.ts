@@ -18,13 +18,25 @@ export const getLocalizedTime = (locale: string, refParts: DatetimeParts, use24H
   return new Intl.DateTimeFormat(locale, {
     hour: 'numeric',
     minute: 'numeric',
+    /**
+     * Setting the timeZone to UTC prevents
+     * new Intl.DatetimeFormat from subtracting
+     * the user's current timezone offset
+     * when formatting the time.
+     */
     timeZone: 'UTC',
     /**
      * We use hourCycle here instead of hour12 due to:
      * https://bugs.chromium.org/p/chromium/issues/detail?id=1347316&q=hour12&can=2
      */
     hourCycle: use24Hour ? 'h23' : 'h12',
-  }).format(new Date(convertDataToISO(refParts)));
+  /**
+   * Setting Z at the end indicates that this
+   * date string is in the UTC time zone. This
+   * prevents new Date from adding the time zone
+   * offset when getting the ISO string.
+   */
+  }).format(new Date(convertDataToISO(refParts) + 'Z'));
 };
 
 /**
