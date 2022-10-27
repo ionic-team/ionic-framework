@@ -29,6 +29,8 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Textarea](#version-7x-textarea)
   - [Toggle](#version-7x-toggle)
   - [Virtual Scroll](#version-7x-virtual-scroll)
+- [Types](#version-7x-types)
+  - [Overlay Attribute Interfaces](#version-7x-overlay-attribute-interfaces)
 - [JavaScript Frameworks](#version-7x-javascript-frameworks)
   - [React](#version-7x-react)
   - [Vue](#version-7x-vue)
@@ -181,6 +183,12 @@ Developers using the component will need to migrate to a virtual scroll solution
 - [Vue](https://ionicframework.com/docs/vue/virtual-scroll)
 
 Any references to the virtual scroll types from `@ionic/core` have been removed. Please remove or replace these types: `Cell`, `VirtualNode`, `CellType`, `NodeChange`, `HeaderFn`, `ItemHeightFn`, `FooterHeightFn`, `ItemRenderFn` and `DomRenderFn`.
+
+<h2 id="version-7x-types">Types</h2>
+
+<h4 id="version-7x-overlay-attribute-interfaces">Overlay Attribute Interfaces</h4>
+
+`ActionSheetAttributes`, `AlertAttributes`, `AlertTextareaAttributes`, `AlertInputAttributes`, `LoadingAttributes`, `ModalAttributes`, `PickerAttributes`, `PopoverAttributes`, and `ToastAttributes` have been removed. Developers should use `{ [key: string]: any }` instead.
 
 <h2 id="version-7x-javascript-frameworks">JavaScript Frameworks</h2>
 

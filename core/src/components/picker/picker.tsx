@@ -7,7 +7,6 @@ import type {
   CssClassMap,
   OverlayEventDetail,
   OverlayInterface,
-  PickerAttributes,
   PickerButton,
   PickerColumn,
 } from '../../interface';
@@ -93,7 +92,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
   /**
    * Additional attributes to pass to the picker.
    */
-  @Prop() htmlAttributes?: PickerAttributes;
+  @Prop() htmlAttributes?: { [key: string]: any };
 
   /**
    * Emitted after the picker has presented.

@@ -35,8 +35,6 @@ export {
 
   AlertOptions,
   AlertInput,
-  AlertTextareaAttributes,
-  AlertInputAttributes,
   AlertButton,
 
   BackButtonEvent,
