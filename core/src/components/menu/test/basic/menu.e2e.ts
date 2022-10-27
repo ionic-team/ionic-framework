@@ -20,7 +20,7 @@ test.describe('menu: basic', () => {
 
   test('should trap focus', async ({ page, skip, browserName }) => {
     skip.rtl('Trapping focus is not dependent on document direction');
-    skip.mode('md');
+    skip.browser('firefox', 'Firefox incorrectly allows keyboard focus to move to ion-content');
 
     const ionDidOpen = await page.spyOnEvent('ionDidOpen');
 
@@ -37,19 +37,41 @@ test.describe('menu: basic', () => {
 
     await expect(button).toBeFocused();
 
-    // await page.keyboard.down('Shift');
-    // await page.keyboard.press('Tab');
-    // await page.keyboard.up('Shift');
+    await page.keyboard.press('Tab');
 
-    // await expect(button).toBeFocused();
+    if (browserName === 'webkit') {
+      await page.keyboard.up('Alt');
+    }
 
-    // await page.keyboard.press('Tab');
+    await expect(button).toBeFocused();
+  });
 
-    // if (browserName === 'webkit') {
-    //   await page.keyboard.up('Alt');
-    // }
+  test('should preserve scroll position', async ({ page, skip }) => {
+    skip.rtl('Scroll position is not dependent on document direction');
+    skip.browser('firefox', 'Firefox does not preserve scroll position');
 
-    // await expect(button).toBeFocused();
+    const ionDidOpen = await page.spyOnEvent('ionDidOpen');
+
+    await page.click('#open-start');
+    await ionDidOpen.next();
+
+    await page.locator('#start-menu ion-content').evaluate(async (el: HTMLIonContentElement) => {
+      await el.scrollToPoint(0, 200);
+    });
+
+    await page.locator('#start-menu').evaluate(async (el: HTMLIonMenuElement) => {
+      await el.close();
+    });
+
+    await page.click('#open-start');
+    await ionDidOpen.next();
+
+    const scrollTop = await page.locator('#start-menu ion-content').evaluate(async (el: HTMLIonContentElement) => {
+      const contentScrollEl = await el.getScrollElement();
+      return contentScrollEl.scrollTop;
+    });
+
+    await expect(scrollTop).toBe(200);
   });
 });
 
