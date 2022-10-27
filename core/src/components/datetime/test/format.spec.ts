@@ -108,7 +108,7 @@ describe('getLocalizedTime', () => {
       month: 1,
       year: 2022,
       hour: 13,
-      minute: 40
+      minute: 40,
     };
 
     expect(getLocalizedTime('en-US', datetimeParts, false)).toEqual('1:40 PM');
@@ -120,7 +120,7 @@ describe('getLocalizedTime', () => {
       month: 1,
       year: 2022,
       hour: 9,
-      minute: 40
+      minute: 40,
     };
 
     expect(getLocalizedTime('en-US', datetimeParts, false)).toEqual('9:40 AM');
@@ -132,7 +132,7 @@ describe('getLocalizedTime', () => {
       month: 1,
       year: 2022,
       hour: 0,
-      minute: 0
+      minute: 0,
     };
 
     expect(getLocalizedTime('en-GB', datetimeParts, false)).toEqual('12:00 am');
