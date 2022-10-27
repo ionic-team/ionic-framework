@@ -503,19 +503,6 @@ export class Datetime implements ComponentInterface {
       if (activePartsIsArray && activeParts.length === 0) {
         this.setValue(undefined);
       } else {
-        /**
-         * Datetime does not manage timezones,
-         * so it should not report a timezone back
-         * even if the user provides one.
-         */
-        if (activePartsIsArray) {
-          activeParts.forEach((activePart) => {
-            activePart.tzOffset = undefined;
-          });
-        } else {
-          activeParts.tzOffset = undefined;
-        }
-
         this.setValue(convertDataToISO(activeParts));
       }
     }
@@ -1205,7 +1192,7 @@ export class Datetime implements ComponentInterface {
      */
     const singleValue = Array.isArray(valueToProcess) ? valueToProcess[0] : valueToProcess;
 
-    const { month, day, year, hour, minute, tzOffset } = clampDate(singleValue, minParts, maxParts);
+    const { month, day, year, hour, minute } = clampDate(singleValue, minParts, maxParts);
     const ampm = parseAmPm(hour!);
 
     this.setWorkingParts({
@@ -1214,7 +1201,6 @@ export class Datetime implements ComponentInterface {
       year,
       hour,
       minute,
-      tzOffset,
       ampm,
     });
 
@@ -1234,7 +1220,6 @@ export class Datetime implements ComponentInterface {
           year,
           hour,
           minute,
-          tzOffset,
           ampm,
         };
       }

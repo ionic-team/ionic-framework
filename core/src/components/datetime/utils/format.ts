@@ -24,15 +24,7 @@ export const getLocalizedTime = (locale: string, refParts: DatetimeParts, use24H
      * https://bugs.chromium.org/p/chromium/issues/detail?id=1347316&q=hour12&can=2
      */
     hourCycle: use24Hour ? 'h23' : 'h12',
-  }).format(
-    new Date(
-      convertDataToISO({
-        ...refParts,
-        // TODO: FW-1831 will remove the need to manually set the tzOffset to undefined
-        tzOffset: undefined,
-      })
-    )
-  );
+  }).format(new Date(convertDataToISO(refParts)));
 };
 
 /**

@@ -36,20 +36,6 @@ export function convertDataToISO(data: DatetimeParts | DatetimeParts[]): string 
         if (data.hour !== undefined) {
           // YYYY-MM-DDTHH:mm:SS
           rtn += `T${twoDigit(data.hour)}:${twoDigit(data.minute)}:00`;
-
-          /**
-           * If tzOffset is undefined, do not add
-           * a Z as that would assume the dates are
-           * in UTC time zone.
-           */
-          if (data.tzOffset !== undefined) {
-            // YYYY-MM-DDTHH:mm:SS+/-HH:mm
-            rtn +=
-              (data.tzOffset > 0 ? '+' : '-') +
-              twoDigit(Math.floor(Math.abs(data.tzOffset / 60))) +
-              ':' +
-              twoDigit(data.tzOffset % 60);
-          }
         }
       }
     }
