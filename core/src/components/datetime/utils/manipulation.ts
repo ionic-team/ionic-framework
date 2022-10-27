@@ -37,10 +37,12 @@ export function convertDataToISO(data: DatetimeParts | DatetimeParts[]): string 
           // YYYY-MM-DDTHH:mm:SS
           rtn += `T${twoDigit(data.hour)}:${twoDigit(data.minute)}:00`;
 
-          if (data.tzOffset === undefined) {
-            // YYYY-MM-DDTHH:mm:SSZ
-            rtn += 'Z';
-          } else {
+          /**
+           * If tzOffset is undefined, do not add
+           * a Z as that would assume the dates are
+           * in UTC time zone.
+           */
+          if (data.tzOffset !== undefined) {
             // YYYY-MM-DDTHH:mm:SS+/-HH:mm
             rtn +=
               (data.tzOffset > 0 ? '+' : '-') +

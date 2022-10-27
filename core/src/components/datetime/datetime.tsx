@@ -504,22 +504,16 @@ export class Datetime implements ComponentInterface {
         this.setValue(undefined);
       } else {
         /**
-         * Prevent convertDataToISO from doing any
-         * kind of transformation based on timezone
-         * This cancels out any change it attempts to make
-         *
-         * Important: Take the timezone offset based on
-         * the date that is currently selected, otherwise
-         * there can be 1 hr difference when dealing w/ DST
+         * Datetime does not manage timezones,
+         * so it should not report a timezone back
+         * even if the user provides one.
          */
         if (activePartsIsArray) {
-          const dates = convertDataToISO(activeParts).map((str) => new Date(str));
-          for (let i = 0; i < dates.length; i++) {
-            activeParts[i].tzOffset = dates[i].getTimezoneOffset() * -1;
-          }
+          activeParts.forEach((activePart) => {
+            activePart.tzOffset = undefined;
+          });
         } else {
-          const date = new Date(convertDataToISO(activeParts));
-          activeParts.tzOffset = date.getTimezoneOffset() * -1;
+          activeParts.tzOffset = undefined;
         }
 
         this.setValue(convertDataToISO(activeParts));
