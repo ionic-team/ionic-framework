@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.3](https://github.com/ionic-team/ionic/compare/v6.3.2...v6.3.3) (2022-10-26)
+
+
+### Bug Fixes
+
+* **dependencies:** latest patch is installed ([#26148](https://github.com/ionic-team/ionic/issues/26148)) ([74be79e](https://github.com/ionic-team/ionic/commit/74be79e9d81fd5431ae2fc442fd6387cf37b2015)), closes [#26137](https://github.com/ionic-team/ionic/issues/26137)
+
+
+
+
+
+## [6.3.2](https://github.com/ionic-team/ionic/compare/v6.3.1...v6.3.2) (2022-10-17)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [6.3.1](https://github.com/ionic-team/ionic/compare/v6.3.0...v6.3.1) (2022-10-12)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
 # [6.3.0](https://github.com/ionic-team/ionic/compare/v6.2.9...v6.3.0) (2022-10-05)
 
 **Note:** Version bump only for package @ionic/vue-router

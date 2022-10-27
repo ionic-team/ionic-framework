@@ -234,4 +234,53 @@ test.describe('datetime: minmax', () => {
     );
     await expect(hourPickerItems).toHaveText(['12', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11']);
   });
+
+  test.describe('minmax value adjustment when out of bounds', () => {
+    test.beforeEach(({ skip }) => {
+      skip.rtl();
+      skip.mode('ios', 'This implementation is the same across modes.');
+    });
+    test('should reset to min time if out of bounds', async ({ page }) => {
+      await page.setContent(`
+        <ion-datetime
+          min="2022-10-10T08:00"
+          value="2022-10-11T06:00"
+        ></ion-datetime>
+      `);
+
+      await page.waitForSelector('.datetime-ready');
+
+      const datetime = page.locator('ion-datetime');
+      const ionChange = await page.spyOnEvent('ionChange');
+      const dayButton = page.locator('ion-datetime .calendar-day[data-day="10"][data-month="10"][data-year="2022"]');
+      await dayButton.click();
+
+      await ionChange.next();
+
+      const value = await datetime.evaluate((el: HTMLIonDatetimeElement) => el.value);
+      await expect(typeof value).toBe('string');
+      await expect(value!.includes('2022-10-10T08:00')).toBe(true);
+    });
+    test('should reset to max time if out of bounds', async ({ page }) => {
+      await page.setContent(`
+        <ion-datetime
+          max="2022-10-10T08:00"
+          value="2022-10-11T09:00"
+        ></ion-datetime>
+      `);
+
+      await page.waitForSelector('.datetime-ready');
+
+      const datetime = page.locator('ion-datetime');
+      const ionChange = await page.spyOnEvent('ionChange');
+      const dayButton = page.locator('ion-datetime .calendar-day[data-day="10"][data-month="10"][data-year="2022"]');
+      await dayButton.click();
+
+      await ionChange.next();
+
+      const value = await datetime.evaluate((el: HTMLIonDatetimeElement) => el.value);
+      await expect(typeof value).toBe('string');
+      await expect(value!.includes('2022-10-10T08:00')).toBe(true);
+    });
+  });
 });

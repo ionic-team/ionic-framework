@@ -332,7 +332,17 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   connectedCallback() {
-    prepareOverlay(this.el);
+    const { configureTriggerInteraction, el } = this;
+    prepareOverlay(el);
+    configureTriggerInteraction();
+  }
+
+  disconnectedCallback() {
+    const { destroyTriggerInteraction } = this;
+
+    if (destroyTriggerInteraction) {
+      destroyTriggerInteraction();
+    }
   }
 
   componentWillLoad() {
@@ -371,7 +381,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
       raf(() => this.present());
     }
     this.breakpointsChanged(this.breakpoints);
-    this.configureTriggerInteraction();
   }
 
   private configureTriggerInteraction = () => {
@@ -708,7 +717,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     this.currentTransition = dismiss(this, data, role, 'modalLeave', iosLeaveAnimation, mdLeaveAnimation, {
       presentingEl: this.presentingElement,
-      currentBreakpoint: this.currentBreakpoint !== undefined || this.initialBreakpoint,
+      currentBreakpoint: this.currentBreakpoint ?? this.initialBreakpoint,
       backdropBreakpoint: this.backdropBreakpoint,
     });
 

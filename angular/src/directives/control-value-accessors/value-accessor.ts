@@ -19,7 +19,7 @@ export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDes
 
   writeValue(value: any): void {
     /**
-     * TODO for Ionic 6:
+     * TODO FW-2646
      * Change `value == null ? '' : value;`
      * to `value`. This was a fix for IE9, but IE9
      * is no longer supported; however, this change

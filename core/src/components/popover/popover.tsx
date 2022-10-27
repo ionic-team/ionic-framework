@@ -311,7 +311,18 @@ export class Popover implements ComponentInterface, PopoverInterface {
   @Event({ eventName: 'didDismiss' }) didDismissShorthand!: EventEmitter<OverlayEventDetail>;
 
   connectedCallback() {
-    prepareOverlay(this.el);
+    const { configureTriggerInteraction, el } = this;
+
+    prepareOverlay(el);
+    configureTriggerInteraction();
+  }
+
+  disconnectedCallback() {
+    const { destroyTriggerInteraction } = this;
+
+    if (destroyTriggerInteraction) {
+      destroyTriggerInteraction();
+    }
   }
 
   componentWillLoad() {
@@ -344,8 +355,6 @@ export class Popover implements ComponentInterface, PopoverInterface {
         this.dismiss(undefined, undefined, false);
       });
     }
-
-    this.configureTriggerInteraction();
   }
 
   /**
