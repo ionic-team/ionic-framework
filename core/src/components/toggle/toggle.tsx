@@ -135,7 +135,7 @@ export class Toggle implements ComponentInterface {
   get onOffLabelsEnabled(): boolean {
     const { enableOnOffLabels } = this;
 
-    return enableOnOffLabels !== undefined ? enableOnOffLabels : config.get('onOffLabelsEnabled');
+    return enableOnOffLabels !== undefined ? enableOnOffLabels : config.get('toggleOnOffLabels');
   }
 
   private emitStyle() {

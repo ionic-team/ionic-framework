@@ -17,24 +17,24 @@ describe('toggle', () => {
   };
 
   describe('enableOnOffLabels', () => {
-    it('set custom attribute on the instance, override config', async () => {
+    it('should disable on/off labels when setting to false on component', async () => {
       const t = await newToggle();
       t.enableOnOffLabels = false;
       config.reset({
-        onOffLabelsEnabled: true,
+        toggleOnOffLabels: true,
       });
       expect(t.onOffLabelsEnabled).toBe(false);
     });
 
-    it('set custom attribute in the config', async () => {
+    it('should enable on/off labels when setting to true on global config', async () => {
       config.reset({
-        onOffLabelsEnabled: true,
+        toggleOnOffLabels: true,
       });
       const t = await newToggle();
       expect(t.onOffLabelsEnabled).toBe(true);
     });
 
-    it('set custom attribute on the instance', async () => {
+    it('should enable on/off labels when setting to true on component', async () => {
       const t = await newToggle();
       t.enableOnOffLabels = true;
       expect(t.onOffLabelsEnabled).toBe(true);
