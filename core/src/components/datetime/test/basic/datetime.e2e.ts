@@ -99,7 +99,7 @@ test.describe('datetime: selecting a day', () => {
 
     await ionChange.next();
 
-    await expect(datetime).toHaveJSProperty('value', '2022-10-01T16:22:00Z');
+    await expect(datetime).toHaveJSProperty('value', '2022-10-01T16:22:00');
   });
 });
 
@@ -145,7 +145,7 @@ test.describe('datetime: confirm date', () => {
 
     await ionChange.next();
 
-    expect(datetime).toHaveJSProperty('value', '2021-12-25T12:40:00Z');
+    expect(datetime).toHaveJSProperty('value', '2021-12-25T12:40:00');
   });
 });
 

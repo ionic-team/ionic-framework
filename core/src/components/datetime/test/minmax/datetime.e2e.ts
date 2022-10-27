@@ -257,7 +257,7 @@ test.describe('datetime: minmax', () => {
 
       await ionChange.next();
 
-      await expect(datetime).toHaveJSProperty('value', '2022-10-10T08:00:00Z');
+      await expect(datetime).toHaveJSProperty('value', '2022-10-10T08:00:00');
     });
     test('should reset to max time if out of bounds', async ({ page }) => {
       await page.setContent(`
@@ -276,7 +276,7 @@ test.describe('datetime: minmax', () => {
 
       await ionChange.next();
 
-      await expect(datetime).toHaveJSProperty('value', '2022-10-10T08:00:00Z');
+      await expect(datetime).toHaveJSProperty('value', '2022-10-10T08:00:00');
     });
   });
 });
