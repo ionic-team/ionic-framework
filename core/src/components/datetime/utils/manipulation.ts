@@ -2,6 +2,7 @@ import type { DatetimeParts } from '../datetime-interface';
 
 import { isSameDay } from './comparison';
 import { getNumDaysInMonth } from './helpers';
+import { parseAmPm } from './parse';
 
 const twoDigit = (val: number | undefined): string => {
   return ('0' + (val !== undefined ? Math.abs(val) : '0')).slice(-2);
@@ -428,4 +429,84 @@ export const validateParts = (
   }
 
   return partsCopy;
+};
+
+/**
+ * Returns the closest date to refParts
+ * that also meets the constraints of
+ * the *Values params.
+ * @param refParts The reference date
+ * @param monthValues The allowed month values
+ * @param dayValues The allowed day (of the month) values
+ * @param yearValues The allowed year values
+ * @param hourValues The allowed hour values
+ * @param minuteValues The allowed minute values
+ */
+export const getClosestValidDate = (
+  refParts: DatetimeParts,
+  monthValues?: number[],
+  dayValues?: number[],
+  yearValues?: number[],
+  hourValues?: number[],
+  minuteValues?: number[]
+) => {
+  const { hour, minute, day, month, year } = refParts;
+  const copyParts = { ...refParts, dayOfWeek: undefined };
+
+  if (monthValues !== undefined) {
+    copyParts.month = findClosestValue(month, monthValues);
+  }
+
+  // Day is nullable but cannot be undefined
+  if (day !== null && dayValues !== undefined) {
+    copyParts.day = findClosestValue(day, dayValues);
+  }
+
+  if (yearValues !== undefined) {
+    copyParts.year = findClosestValue(year, yearValues);
+  }
+
+  if (hour !== undefined && hourValues !== undefined) {
+    copyParts.hour = findClosestValue(hour, hourValues);
+    copyParts.ampm = parseAmPm(copyParts.hour);
+  }
+
+  if (minute !== undefined && minuteValues !== undefined) {
+    copyParts.minute = findClosestValue(minute, minuteValues);
+  }
+
+  return copyParts;
+};
+
+/**
+ * Finds the value in "values" that is
+ * numerically closest to "reference".
+ * This function assumes that "values" is
+ * already sorted in ascending order.
+ * @param reference The reference number to use
+ * when finding the closest value
+ * @param values The allowed values that will be
+ * searched to find the closest value to "reference"
+ */
+const findClosestValue = (reference: number, values: number[]) => {
+  let closestValue = values[0];
+  let rank = Math.abs(closestValue - reference);
+
+  for (let i = 1; i < values.length; i++) {
+    const value = values[i];
+    /**
+     * This code prioritizes the first
+     * closest result. Given two values
+     * with the same distance from reference,
+     * this code will prioritize the smaller of
+     * the two values.
+     */
+    const valueRank = Math.abs(value - reference);
+    if (valueRank < rank) {
+      closestValue = value;
+      rank = valueRank;
+    }
+  }
+
+  return closestValue;
 };
