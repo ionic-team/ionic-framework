@@ -68,7 +68,7 @@ export class Toggle implements ComponentInterface {
   /**
    * Enables the on/off accessibility switch labels within the toggle.
    */
-  @Prop() enableOnOffLabels: boolean | undefined = undefined;
+  @Prop() enableOnOffLabels: boolean | undefined = config.get('toggleOnOffLabels');
 
   /**
    * Emitted when the value property has changed.
@@ -130,12 +130,6 @@ export class Toggle implements ComponentInterface {
 
   componentWillLoad() {
     this.emitStyle();
-  }
-
-  get onOffLabelsEnabled(): boolean {
-    const { enableOnOffLabels } = this;
-
-    return enableOnOffLabels !== undefined ? enableOnOffLabels : config.get('toggleOnOffLabels');
   }
 
   private emitStyle() {
@@ -213,7 +207,7 @@ export class Toggle implements ComponentInterface {
   }
 
   render() {
-    const { activated, color, checked, disabled, el, inputId, name, onOffLabelsEnabled } = this;
+    const { activated, color, checked, disabled, el, inputId, name, enableOnOffLabels } = this;
     const mode = getIonMode(this);
     const { label, labelId, labelText } = getAriaLabel(el, inputId);
     const value = this.getValue();
@@ -240,11 +234,11 @@ export class Toggle implements ComponentInterface {
           {/* The iOS on/off labels are rendered outside of .toggle-icon-wrapper,
            since the wrapper is translated when the handle is interacted with and
            this would move the on/off labels outside of the view box */}
-          {onOffLabelsEnabled &&
+          {enableOnOffLabels &&
             mode === 'ios' && [this.renderOnOffSwitchLabels(mode, true), this.renderOnOffSwitchLabels(mode, false)]}
           <div class="toggle-icon-wrapper">
             <div class="toggle-inner" part="handle">
-              {onOffLabelsEnabled && mode === 'md' && this.renderOnOffSwitchLabels(mode, checked)}
+              {enableOnOffLabels && mode === 'md' && this.renderOnOffSwitchLabels(mode, checked)}
             </div>
           </div>
         </div>

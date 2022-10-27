@@ -23,7 +23,7 @@ describe('toggle', () => {
       config.reset({
         toggleOnOffLabels: true,
       });
-      expect(t.onOffLabelsEnabled).toBe(false);
+      expect(t.enableOnOffLabels).toBe(false);
     });
 
     it('should enable on/off labels when setting to true on global config', async () => {
@@ -31,13 +31,13 @@ describe('toggle', () => {
         toggleOnOffLabels: true,
       });
       const t = await newToggle();
-      expect(t.onOffLabelsEnabled).toBe(true);
+      expect(t.enableOnOffLabels).toBe(true);
     });
 
     it('should enable on/off labels when setting to true on component', async () => {
       const t = await newToggle();
       t.enableOnOffLabels = true;
-      expect(t.onOffLabelsEnabled).toBe(true);
+      expect(t.enableOnOffLabels).toBe(true);
     });
   });
 });
