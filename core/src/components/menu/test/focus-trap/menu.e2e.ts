@@ -57,7 +57,7 @@ test.describe('menu: focus trap', () => {
     const otherButton = page.locator('#other-button');
     await otherButton.click();
 
-    // Safari remains focused the modal after the button is clicked
+    // Safari remains focused on the modal after the button is clicked
     if (browserName === 'webkit') {
       await expect(modal).toBeFocused();
     } else {
