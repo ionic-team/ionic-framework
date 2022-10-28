@@ -216,7 +216,6 @@ export const IonRouterOutlet = /*@__PURE__*/ defineComponent({
 
       const hasRootDirection = direction === undefined || direction === 'root' || direction === 'none';
       const result = await ionRouterOutlet.value.commit(enteringEl, leavingEl, {
-        deepWait: true,
         /**
          * replace operations result in a direction of none.
          * These typically do not have need animations, so we set
