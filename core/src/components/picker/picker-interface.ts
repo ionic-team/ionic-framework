@@ -11,16 +11,11 @@ export interface PickerOptions {
   mode?: Mode;
   keyboardClose?: boolean;
   id?: string;
-  htmlAttributes?: PickerAttributes;
+  htmlAttributes?: { [key: string]: any };
 
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;
 }
-
-/**
- * @deprecated - Use { [key: string]: any } directly instead.
- */
-export type PickerAttributes = { [key: string]: any };
 
 export interface PickerButton {
   text?: string;

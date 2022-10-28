@@ -6,7 +6,6 @@ import { getIonMode } from '../../global/ionic-global';
 import type {
   AnimationBuilder,
   FrameworkDelegate,
-  LoadingAttributes,
   OverlayEventDetail,
   OverlayInterface,
   SpinnerTypes,
@@ -122,7 +121,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
   /**
    * Additional attributes to pass to the loader.
    */
-  @Prop() htmlAttributes?: LoadingAttributes;
+  @Prop() htmlAttributes?: { [key: string]: any };
 
   /**
    * If `true`, the loading indicator will open. If `false`, the loading indicator will close.

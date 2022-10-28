@@ -11,7 +11,7 @@ export interface ToastOptions {
   translucent?: boolean;
   animated?: boolean;
   icon?: string;
-  htmlAttributes?: ToastAttributes;
+  htmlAttributes?: { [key: string]: any };
 
   color?: Color;
   mode?: Mode;
@@ -21,11 +21,6 @@ export interface ToastOptions {
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;
 }
-
-/**
- * @deprecated - Use { [key: string]: any } directly instead.
- */
-export type ToastAttributes = { [key: string]: any };
 
 export interface ToastButton {
   text?: string;
