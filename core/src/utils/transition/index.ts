@@ -7,7 +7,7 @@ import {
   LIFECYCLE_WILL_LEAVE,
 } from '../../components/nav/constants';
 import type { Animation, AnimationBuilder, NavDirection, NavOptions } from '../../interface';
-import { componentOnReady, raf } from '../helpers';
+import { raf } from '../helpers';
 
 const iosTransitionAnimation = () => import('./ios.transition');
 const mdTransitionAnimation = () => import('./md.transition');
@@ -135,9 +135,7 @@ const noAnimation = async (opts: TransitionOptions): Promise<TransitionResult> =
 
 const waitForReady = async (opts: TransitionOptions, defaultDeep: boolean) => {
   const deep = opts.deepWait !== undefined ? opts.deepWait : defaultDeep;
-  const promises = deep
-    ? [deepReady(opts.enteringEl), deepReady(opts.leavingEl)]
-    : undefined;
+  const promises = deep ? [deepReady(opts.enteringEl), deepReady(opts.leavingEl)] : undefined;
 
   if (promises !== undefined) {
     await Promise.all(promises);
