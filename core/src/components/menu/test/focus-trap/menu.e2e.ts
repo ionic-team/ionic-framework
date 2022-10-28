@@ -9,7 +9,7 @@ test.describe('menu: focus trap', () => {
     skip.browser('firefox', 'Firefox incorrectly allows keyboard focus to move to ion-content');
   });
 
-  test('should trap focus with overlays', async ({ page }) => {
+  test('should trap focus with overlays', async ({ page, browserName }) => {
     const ionDidOpen = await page.spyOnEvent('ionDidOpen');
     const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
     const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
@@ -20,7 +20,7 @@ test.describe('menu: focus trap', () => {
     const menu = await page.locator('#menu');
     await expect(menu).toBeFocused();
 
-    const openModalButton = page.locator('#open-modal-button');
+    const openModalButton = await page.locator('#open-modal-button');
     await openModalButton.click();
     await ionModalDidPresent.next();
 
@@ -32,10 +32,13 @@ test.describe('menu: focus trap', () => {
     });
     await ionModalDidDismiss.next();
 
-    // await expect(openModalButton).toBeFocused();
+    // Safari focuses the body after the modal is dismissed
+    if (browserName !== 'webkit') {
+      await expect(openModalButton).toBeFocused();
+    }
   });
 
-  test('should trap focus with content inside overlays', async ({ page }) => {
+  test('should trap focus with content inside overlays', async ({ page, browserName }) => {
     const ionDidOpen = await page.spyOnEvent('ionDidOpen');
     const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
 
@@ -48,10 +51,18 @@ test.describe('menu: focus trap', () => {
     await page.click('#open-modal-button');
     await ionModalDidPresent.next();
 
+    const modal = await page.locator('#modal');
+    await expect(modal).toBeFocused();
+
     const otherButton = page.locator('#other-button');
     await otherButton.click();
 
-    // await expect(otherButton).toBeFocused();
+    // Safari remains focused the modal after the button is clicked
+    if (browserName === 'webkit') {
+      await expect(modal).toBeFocused();
+    } else {
+      await expect(otherButton).toBeFocused();
+    }
   });
 
   test('should work with swipe gestures after modal is dismissed', async ({ page }) => {
