@@ -10,7 +10,6 @@ import type {
   ComponentRef,
   FrameworkDelegate,
   Gesture,
-  ModalAttributes,
   ModalBreakpointChangeEventDetail,
   ModalHandleBehavior,
   OverlayEventDetail,
@@ -202,7 +201,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   /**
    * Additional attributes to pass to the modal.
    */
-  @Prop() htmlAttributes?: ModalAttributes;
+  @Prop() htmlAttributes?: { [key: string]: any };
 
   /**
    * If `true`, the modal will open. If `false`, the modal will close.

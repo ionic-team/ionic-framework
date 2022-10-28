@@ -3,7 +3,6 @@ import { Watch, Component, Element, Event, Host, Method, Prop, h, readTask } fro
 
 import { getIonMode } from '../../global/ionic-global';
 import type {
-  ActionSheetAttributes,
   ActionSheetButton,
   AnimationBuilder,
   CssClassMap,
@@ -121,7 +120,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   /**
    * Additional attributes to pass to the action sheet.
    */
-  @Prop() htmlAttributes?: ActionSheetAttributes;
+  @Prop() htmlAttributes?: { [key: string]: any };
 
   /**
    * If `true`, the action sheet will open. If `false`, the action sheet will close.

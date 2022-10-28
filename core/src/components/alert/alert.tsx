@@ -5,8 +5,6 @@ import { getIonMode } from '../../global/ionic-global';
 import type {
   AlertButton,
   AlertInput,
-  AlertInputAttributes,
-  AlertTextareaAttributes,
   AnimationBuilder,
   CssClassMap,
   OverlayEventDetail,
@@ -19,7 +17,6 @@ import type { IonicSafeString } from '../../utils/sanitization';
 import { sanitizeDOMString } from '../../utils/sanitization';
 import { getClassMap } from '../../utils/theme';
 
-import type { AlertAttributes } from './alert-interface';
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
@@ -124,7 +121,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
   /**
    * Additional attributes to pass to the alert.
    */
-  @Prop() htmlAttributes?: AlertAttributes;
+  @Prop() htmlAttributes?: { [key: string]: any };
 
   /**
    * Emitted after the alert has presented.
@@ -499,7 +496,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
                   value={i.value}
                   id={i.id}
                   tabIndex={i.tabindex}
-                  {...(i.attributes as AlertTextareaAttributes)}
+                  {...(i.attributes as { [key: string]: any })}
                   disabled={i.attributes?.disabled ?? i.disabled}
                   class={inputClass(i)}
                   onInput={(e) => {
@@ -522,7 +519,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
                   value={i.value}
                   id={i.id}
                   tabIndex={i.tabindex}
-                  {...(i.attributes as AlertInputAttributes)}
+                  {...(i.attributes as { [key: string]: any })}
                   disabled={i.attributes?.disabled ?? i.disabled}
                   class={inputClass(i)}
                   onInput={(e) => {
