@@ -18,7 +18,7 @@ import type {
 } from '../../interface';
 import { findIonContent, printIonContentErrorMsg } from '../../utils/content';
 import { CoreDelegate, attachComponent, detachComponent } from '../../utils/framework-delegate';
-import { raf, inheritAttributes } from '../../utils/helpers';
+import { raf, inheritAttributes, hasLazyBuild } from '../../utils/helpers';
 import type { Attributes } from '../../utils/helpers';
 import { KEYBOARD_DID_OPEN } from '../../utils/keyboard/keyboard';
 import { printIonWarning } from '../../utils/logging';
@@ -424,11 +424,12 @@ export class Modal implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async present(): Promise<void> {
+    const a = performance.now();
     if (this.presented) {
       return;
     }
 
-    const { presentingElement } = this;
+    const { presentingElement, el } = this;
 
     /**
      * When using an inline modal
@@ -454,9 +455,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
     };
 
     const { inline, delegate } = this.getDelegate(true);
-    this.usersElement = await attachComponent(delegate, this.el, this.component, ['ion-page'], data, inline);
-
-    await deepReady(this.usersElement);
+    this.usersElement = await attachComponent(delegate, el, this.component, ['ion-page'], data, inline);
+    hasLazyBuild(el) && (await deepReady(this.usersElement));
 
     writeTask(() => this.el.classList.add('show-modal'));
 
@@ -510,6 +510,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
 
     this.currentTransition = undefined;
+
+    const b = performance.now();
+
+    console.log('Modal present took', b - a, 'ms');
   }
 
   private initSwipeToClose() {
