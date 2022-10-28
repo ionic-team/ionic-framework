@@ -12,7 +12,7 @@ test.describe('menu: a11y', () => {
     await page.goto(`/src/components/menu/test/a11y`);
 
     const menu = page.locator('ion-menu');
-    const button = page.locator('#openMenu');
+    const button = page.locator('#open-menu');
 
     await button.click();
     await page.waitForSelector('ion-menu', { state: 'visible' });
