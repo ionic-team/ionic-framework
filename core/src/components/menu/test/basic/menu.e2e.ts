@@ -13,9 +13,9 @@ test.describe('menu: basic', () => {
     const customMenu = page.locator('[menu-id="custom-menu"]');
     const endMenu = page.locator('[menu-id="end-menu"]');
 
-    await testMenu(page, startMenu, '#open-start');
-    await testMenu(page, customMenu, '#open-custom');
-    await testMenu(page, endMenu, '#open-end');
+    await testMenu(page, startMenu, 'start');
+    await testMenu(page, customMenu, 'custom');
+    await testMenu(page, endMenu, 'end');
   });
 
   test('should trap focus', async ({ page, skip, browserName }) => {
@@ -75,14 +75,16 @@ test.describe('menu: basic', () => {
   });
 });
 
-async function testMenu(page: E2EPage, menu: Locator, button: string) {
+async function testMenu(page: E2EPage, menu: Locator, menuId: string) {
   const ionDidOpen = await page.spyOnEvent('ionDidOpen');
   const ionDidClose = await page.spyOnEvent('ionDidClose');
 
-  await page.click(button);
+  await page.click(`#open-${menuId}`);
   await ionDidOpen.next();
 
   await expect(menu).toHaveClass(/show-menu/);
+
+  expect(await page.screenshot()).toMatchSnapshot(`menu-basic-${menuId}-${page.getSnapshotSettings()}.png`);
 
   await menu.evaluate(async (el: HTMLIonMenuElement) => {
     await el.close();
