@@ -424,7 +424,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async present(): Promise<void> {
-    const a = performance.now();
     if (this.presented) {
       return;
     }
@@ -510,10 +509,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
 
     this.currentTransition = undefined;
-
-    const b = performance.now();
-
-    console.log('Modal present took', b - a, 'ms');
   }
 
   private initSwipeToClose() {
