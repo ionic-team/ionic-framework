@@ -137,9 +137,12 @@ const waitForReady = async (opts: TransitionOptions, defaultDeep: boolean) => {
   const deep = opts.deepWait !== undefined ? opts.deepWait : defaultDeep;
   const promises = deep
     ? [deepReady(opts.enteringEl), deepReady(opts.leavingEl)]
-    : [shallowReady(opts.enteringEl), shallowReady(opts.leavingEl)];
+    : undefined;
 
-  await Promise.all(promises);
+  if (promises !== undefined) {
+    await Promise.all(promises);
+  }
+
   await notifyViewReady(opts.viewIsReady, opts.enteringEl);
 };
 
@@ -193,13 +196,6 @@ export const lifecycle = (el: HTMLElement | undefined, eventName: string) => {
     });
     el.dispatchEvent(ev);
   }
-};
-
-const shallowReady = (el: Element | undefined): Promise<any> => {
-  if (el) {
-    return new Promise((resolve) => componentOnReady(el, resolve));
-  }
-  return Promise.resolve();
 };
 
 export const deepReady = async (el: any | undefined): Promise<void> => {
