@@ -23,10 +23,10 @@
    * @prop --highlight-color-valid: The color of the highlight on the input when valid
    * @prop --highlight-color-invalid: The color of the highlight on the input when invalid
    *
-   * @prop --border-color: Color of the input border
-   * @prop --border-radius: Radius of the input border
-   * @prop --border-style: Style of the input border
-   * @prop --border-width: Width of the input border
+   * @prop --border-color: Color of the border below the input when using helper text, error text, or counter
+   * @prop --border-radius: Radius of the input
+   * @prop --border-style: Color of the border below the input when using helper text, error text, or counter
+   * @prop --border-width: Color of the border below the input when using helper text, error text, or counter
    */
   --placeholder-color: initial;
   --placeholder-font-style: initial;
@@ -251,10 +251,10 @@
   display: block;
 }
 
-:host(.ion-invalid) .input-bottom  .error-text {
+:host(.ion-invalid) .input-bottom .error-text {
   display: block;
 }
 
-:host(.ion-invalid) .input-bottom  .helper-text {
+:host(.ion-invalid) .input-bottom .helper-text {
   display: none;
 }

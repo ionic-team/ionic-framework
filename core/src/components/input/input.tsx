@@ -513,6 +513,9 @@ export class Input implements ComponentInterface {
     return this.getValue().length > 0;
   }
 
+  /**
+   * Renders the helper text or error text values
+   */
   private renderHintText() {
     const { helperText, errorText } = this;
 
@@ -520,7 +523,7 @@ export class Input implements ComponentInterface {
   }
 
   /**
-   * Responsible for rendering hint text,
+   * Responsible for rendering helper text,
    * error text, and counter. This element should only
    * be rendered if hint text is set or counter is enabled.
    */
