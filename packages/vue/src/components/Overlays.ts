@@ -4,7 +4,6 @@ import {
   JSX,
   actionSheetController,
   alertController,
-  loadingController,
   pickerController,
   toastController,
 } from '@ionic/core/components';
