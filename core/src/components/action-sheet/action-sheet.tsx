@@ -3,7 +3,6 @@ import { Component, Element, Event, Host, Method, Prop, h, readTask } from '@ste
 
 import { getIonMode } from '../../global/ionic-global';
 import type {
-  ActionSheetAttributes,
   ActionSheetButton,
   AnimationBuilder,
   CssClassMap,
@@ -100,7 +99,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   /**
    * Additional attributes to pass to the action sheet.
    */
-  @Prop() htmlAttributes?: ActionSheetAttributes;
+  @Prop() htmlAttributes?: { [key: string]: any };
 
   /**
    * Emitted after the alert has presented.

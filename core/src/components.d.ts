@@ -5,16 +5,14 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AccordionGroupChangeEventDetail, ActionSheetAttributes, ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DatetimePresentation, FrameworkDelegate, InputChangeEventDetail, InputInputEventDetail, ItemReorderEventDetail, LoadingAttributes, MenuChangeEventDetail, ModalAttributes, ModalBreakpointChangeEventDetail, ModalHandleBehavior, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerAttributes, PickerButton, PickerColumn, PopoverAttributes, PopoverSize, PositionAlign, PositionReference, PositionSide, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextareaInputEventDetail, TextFieldTypes, TitleSelectedDatesFormatter, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, TriggerAction, ViewController } from "./interface";
+import { AccordionGroupChangeEventDetail, ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DatetimePresentation, FrameworkDelegate, InputChangeEventDetail, InputInputEventDetail, ItemReorderEventDetail, MenuChangeEventDetail, ModalBreakpointChangeEventDetail, ModalHandleBehavior, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerButton, PickerColumn, PopoverSize, PositionAlign, PositionReference, PositionSide, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextareaInputEventDetail, TextFieldTypes, TitleSelectedDatesFormatter, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, TriggerAction, ViewController } from "./interface";
 import { IonicSafeString } from "./utils/sanitization";
-import { AlertAttributes } from "./components/alert/alert-interface";
 import { CounterFormatter } from "./components/item/item-interface";
 import { PickerColumnItem } from "./components/picker-column-internal/picker-column-internal-interfaces";
 import { PickerInternalChangeEventDetail } from "./components/picker-internal/picker-internal-interfaces";
 import { PinFormatter } from "./components/range/range-interface";
 import { NavigationHookCallback } from "./components/route/route-interface";
 import { SelectCompareFn } from "./components/select/select-interface";
-import { ToastAttributes } from "./components/toast/toast-interface";
 export namespace Components {
     interface IonAccordion {
         /**
@@ -111,7 +109,7 @@ export namespace Components {
         /**
           * Additional attributes to pass to the action sheet.
          */
-        "htmlAttributes"?: ActionSheetAttributes;
+        "htmlAttributes"?: { [key: string]: any };
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -180,7 +178,7 @@ export namespace Components {
         /**
           * Additional attributes to pass to the alert.
          */
-        "htmlAttributes"?: AlertAttributes;
+        "htmlAttributes"?: { [key: string]: any };
         /**
           * Array of input to show in the alert.
          */
@@ -1404,7 +1402,7 @@ export namespace Components {
         /**
           * Additional attributes to pass to the loader.
          */
-        "htmlAttributes"?: LoadingAttributes;
+        "htmlAttributes"?: { [key: string]: any };
         /**
           * If `true`, the loading indicator will open. If `false`, the loading indicator will close. Use this if you need finer grained control over presentation, otherwise just use the loadingController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the loading indicator dismisses. You will need to do that in your code.
          */
@@ -1605,7 +1603,7 @@ export namespace Components {
         /**
           * Additional attributes to pass to the modal.
          */
-        "htmlAttributes"?: ModalAttributes;
+        "htmlAttributes"?: { [key: string]: any };
         /**
           * A decimal value between 0 and 1 that indicates the initial point the modal will open at when creating a sheet modal. This value must also be listed in the `breakpoints` array.
          */
@@ -1853,7 +1851,7 @@ export namespace Components {
         /**
           * Additional attributes to pass to the picker.
          */
-        "htmlAttributes"?: PickerAttributes;
+        "htmlAttributes"?: { [key: string]: any };
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -1977,7 +1975,7 @@ export namespace Components {
         /**
           * Additional attributes to pass to the popover.
          */
-        "htmlAttributes"?: PopoverAttributes;
+        "htmlAttributes"?: { [key: string]: any };
         /**
           * If `true`, the popover will open. If `false`, the popover will close. Use this if you need finer grained control over presentation, otherwise just use the popoverController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the popover dismisses. You will need to do that in your code.
          */
@@ -2862,7 +2860,7 @@ export namespace Components {
         /**
           * Additional attributes to pass to the toast.
          */
-        "htmlAttributes"?: ToastAttributes;
+        "htmlAttributes"?: { [key: string]: any };
         /**
           * The name of the icon to display, or the path to a valid SVG file. See `ion-icon`. https://ionic.io/ionicons
          */
@@ -3864,7 +3862,7 @@ declare namespace LocalJSX {
         /**
           * Additional attributes to pass to the action sheet.
          */
-        "htmlAttributes"?: ActionSheetAttributes;
+        "htmlAttributes"?: { [key: string]: any };
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -3931,7 +3929,7 @@ declare namespace LocalJSX {
         /**
           * Additional attributes to pass to the alert.
          */
-        "htmlAttributes"?: AlertAttributes;
+        "htmlAttributes"?: { [key: string]: any };
         /**
           * Array of input to show in the alert.
          */
@@ -5206,7 +5204,7 @@ declare namespace LocalJSX {
         /**
           * Additional attributes to pass to the loader.
          */
-        "htmlAttributes"?: LoadingAttributes;
+        "htmlAttributes"?: { [key: string]: any };
         /**
           * If `true`, the loading indicator will open. If `false`, the loading indicator will close. Use this if you need finer grained control over presentation, otherwise just use the loadingController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the loading indicator dismisses. You will need to do that in your code.
          */
@@ -5413,7 +5411,7 @@ declare namespace LocalJSX {
         /**
           * Additional attributes to pass to the modal.
          */
-        "htmlAttributes"?: ModalAttributes;
+        "htmlAttributes"?: { [key: string]: any };
         /**
           * A decimal value between 0 and 1 that indicates the initial point the modal will open at when creating a sheet modal. This value must also be listed in the `breakpoints` array.
          */
@@ -5583,7 +5581,7 @@ declare namespace LocalJSX {
         /**
           * Additional attributes to pass to the picker.
          */
-        "htmlAttributes"?: PickerAttributes;
+        "htmlAttributes"?: { [key: string]: any };
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -5707,7 +5705,7 @@ declare namespace LocalJSX {
         /**
           * Additional attributes to pass to the popover.
          */
-        "htmlAttributes"?: PopoverAttributes;
+        "htmlAttributes"?: { [key: string]: any };
         /**
           * If `true`, the popover will open. If `false`, the popover will close. Use this if you need finer grained control over presentation, otherwise just use the popoverController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the popover dismisses. You will need to do that in your code.
          */
@@ -6708,7 +6706,7 @@ declare namespace LocalJSX {
         /**
           * Additional attributes to pass to the toast.
          */
-        "htmlAttributes"?: ToastAttributes;
+        "htmlAttributes"?: { [key: string]: any };
         /**
           * The name of the icon to display, or the path to a valid SVG file. See `ion-icon`. https://ionic.io/ionicons
          */
