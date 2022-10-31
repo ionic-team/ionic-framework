@@ -1,7 +1,8 @@
 /**
- * Creates a controller that tracks whether a form control is using the legacy or modern syntax.
+ * Creates a controller that tracks whether a form control is using the legacy or modern syntax. This should be removed when the legacy form control syntax is removed.
  *
  * @internal
+ * @prop el: The Ionic form component to reference
  */
 export const createLegacyFormController = (el: HTMLElement): LegacyFormController => {
   const controlEl: HTMLElement = el;
