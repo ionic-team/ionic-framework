@@ -93,20 +93,6 @@ export function parseDate(val: string | string[] | undefined | null): DatetimePa
     parse[i] = parse[i] !== undefined ? parseInt(parse[i], 10) : undefined;
   }
 
-  let tzOffset = 0;
-  if (parse[9] && parse[10]) {
-    // hours
-    tzOffset = parseInt(parse[10], 10) * 60;
-    if (parse[11]) {
-      // minutes
-      tzOffset += parseInt(parse[11], 10);
-    }
-    if (parse[9] === '-') {
-      // + or -
-      tzOffset *= -1;
-    }
-  }
-
   // can also get second and millisecond from parse[6] and parse[7] if needed
   return {
     year: parse[1],
@@ -114,7 +100,6 @@ export function parseDate(val: string | string[] | undefined | null): DatetimePa
     day: parse[3],
     hour: parse[4],
     minute: parse[5],
-    tzOffset,
     ampm: parse[4] < 12 ? 'am' : 'pm',
   };
 }
