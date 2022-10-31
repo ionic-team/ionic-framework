@@ -34,6 +34,19 @@ test.describe('input: bottom content', () => {
     await expect(errorText).toBeVisible();
     await expect(errorText).toHaveText('my error');
   });
+  test('error text should change when variable is customized', async ({ page }) => {
+    await page.setContent(`
+      <style>
+        ion-input {
+          --highlight-color-invalid: purple;
+        }
+      </style>
+      <ion-input class="ion-invalid" label="my label" error-text="my error"></ion-input>
+    `);
+
+    const errorText = page.locator('ion-input .error-text');
+    expect(await errorText.screenshot()).toMatchSnapshot(`input-error-custom-color-${page.getSnapshotSettings()}.png`);
+  });
 });
 
 test.describe('input: bottom content rendering', () => {
@@ -50,7 +63,9 @@ test.describe('input: bottom content rendering', () => {
       await page.setContent(`<ion-input class="ion-invalid" error-text="my helper" label="my input"></ion-input>`);
 
       const bottomEl = page.locator('ion-input .input-bottom');
-      expect(await bottomEl.screenshot()).toMatchSnapshot(`input-bottom-content-error-${page.getSnapshotSettings()}.png`);
+      expect(await bottomEl.screenshot()).toMatchSnapshot(
+        `input-bottom-content-error-${page.getSnapshotSettings()}.png`
+      );
     });
   });
 });
