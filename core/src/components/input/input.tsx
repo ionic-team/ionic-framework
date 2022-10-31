@@ -1,5 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import { printIonWarning } from '@utils/logging';
 
 import { getIonMode } from '../../global/ionic-global';
 import type {
@@ -30,6 +31,13 @@ export class Input implements ComponentInterface {
   private inputId = `ion-input-${inputIds++}`;
   private inheritedAttributes: Attributes = {};
   private isComposing = false;
+
+  // This flag ensures we log the deprecation warning at most once.
+  private hasLoggedDeprecationWarning = false;
+
+  // This flag disables behavior that is only required with legacy inputs.
+  private hasLegacyInput = true;
+
   /**
    * `true` if the input was cleared as a result of the user typing
    * with `clearOnEdit` enabled.
@@ -329,6 +337,20 @@ export class Input implements ComponentInterface {
   }
 
   connectedCallback() {
+    const { label, el, inheritedAttributes } = this;
+
+    /**
+     * Detect if developers are using the legacy form control syntax
+     * so a deprecation warning is logged. This warning can be disabled
+     * by either using the new `label` property or setting `aria-label`
+     * on the input.
+     */
+    const hasAriaLabel = el.hasAttribute('aria-label') || inheritedAttributes['aria-label'] !== undefined;
+
+    if (label !== undefined || hasAriaLabel) {
+      this.hasLegacyInput = false;
+    }
+
     this.emitStyle();
     this.debounceChanged();
     if (Build.isBrowser) {
@@ -409,14 +431,16 @@ export class Input implements ComponentInterface {
   }
 
   private emitStyle() {
-    this.ionStyle.emit({
-      interactive: true,
-      input: true,
-      'has-placeholder': this.placeholder !== undefined,
-      'has-value': this.hasValue(),
-      'has-focus': this.hasFocus,
-      'interactive-disabled': this.disabled,
-    });
+    if (this.hasLegacyInput) {
+      this.ionStyle.emit({
+        interactive: true,
+        input: true,
+        'has-placeholder': this.placeholder !== undefined,
+        'has-value': this.hasValue(),
+        'has-focus': this.hasFocus,
+        'interactive-disabled': this.disabled,
+      });
+    }
   }
 
   private onInput = (ev: InputEvent | Event) => {
@@ -498,7 +522,21 @@ export class Input implements ComponentInterface {
     return this.getValue().length > 0;
   }
 
-  render() {
+  private renderInput() {
+    return <Host>Stubbed input</Host>;
+  }
+
+  private renderLegacyInput() {
+    if (!this.hasLoggedDeprecationWarning) {
+      printIonWarning(
+        `Using ion-input with an ion-label has been deprecated. To migrate, remove the ion-label and use the "label" property on ion-input instead.
+
+For inputs that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the input.`,
+        this.el
+      );
+      this.hasLoggedDeprecationWarning = true;
+    }
+
     const mode = getIonMode(this);
     const value = this.getValue();
     const labelId = this.inputId + '-lbl';
@@ -519,7 +557,7 @@ export class Input implements ComponentInterface {
         <input
           class="native-input"
           ref={(input) => (this.nativeInput = input)}
-          aria-labelledby={label ? labelId : null}
+          aria-labelledby={label ? label.id : null}
           disabled={this.disabled}
           accept={this.accept}
           autoCapitalize={this.autocapitalize}
@@ -568,6 +606,12 @@ export class Input implements ComponentInterface {
         )}
       </Host>
     );
+  }
+
+  render() {
+    const { hasLegacyInput } = this;
+
+    return hasLegacyInput ? this.renderLegacyInput() : this.renderInput();
   }
 }
 
