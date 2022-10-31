@@ -38,12 +38,9 @@
   --padding-start: 0;
   --background: transparent;
   --color: initial;
+  --border-style: solid;
 
-  display: flex;
   position: relative;
-
-  flex: 1;
-  align-items: center;
 
   width: 100%;
 
@@ -56,6 +53,13 @@
   font-family: $font-family-base;
 
   z-index: $z-index-item-input;
+}
+
+:host(.legacy-input) {
+  display: flex;
+
+  flex: 1;
+  align-items: center;
 }
 
 :host-context(ion-item:not(.item-label)) {
@@ -199,4 +203,53 @@
   transition: opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 
   opacity: 1;
+}
+
+// Input Wrapper
+// ----------------------------------------------------------------
+.input-wrapper {
+  display: flex;
+
+  align-items: center;
+
+  flex-grow: 1;
+}
+
+// Input Bottom Content
+// ----------------------------------------------------------------
+
+.input-bottom {
+  @include padding(5px, 0, 0, 0);
+
+  display: flex;
+
+  justify-content: space-between;
+
+  font-size: 12px;
+
+  border-top: var(--border-width) var(--border-style) var(--border-color);
+}
+
+// Input Hint Text
+// ----------------------------------------------------------------
+
+/**
+ * Error text should only be shown when .ion-invalid is
+ * present on the input. Otherwise the helper text should
+ * be shown.
+ */
+.error-text {
+  display: none;
+}
+
+.helper-text {
+  display: block;
+}
+
+:host(.ion-invalid) .error-text {
+  display: block;
+}
+
+:host(.ion-invalid) .helper-text {
+  display: none;
 }

@@ -11,6 +11,9 @@
   --padding-bottom: #{$input-md-padding-bottom};
   --padding-start: #{$input-md-padding-start};
 
+  --border-width: 1px;
+  --border-color: #{$item-md-border-color};
+
   font-size: $input-md-font-size;
 }
 

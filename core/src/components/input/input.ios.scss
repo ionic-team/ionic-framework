@@ -7,6 +7,9 @@
   --padding-bottom: #{$input-ios-padding-bottom};
   --padding-start: #{$input-ios-padding-start};
 
+  --border-width: #{$hairlines-width};
+  --border-color: #{$item-ios-border-color};
+
   font-size: $input-ios-font-size;
 }
 
