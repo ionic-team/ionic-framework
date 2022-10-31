@@ -13,7 +13,8 @@ import type {
   TitleSelectedDatesFormatter,
 } from '../../interface';
 import { startFocusVisible } from '../../utils/focus-visible';
-import { getElementRoot, raf, renderHiddenInput } from '../../utils/helpers';
+import type { Attributes } from '../../utils/helpers';
+import { getElementRoot, inheritAttributes, raf, renderHiddenInput } from '../../utils/helpers';
 import { printIonError, printIonWarning } from '../../utils/logging';
 import { isRTL } from '../../utils/rtl';
 import { createColorClasses } from '../../utils/theme';
@@ -83,6 +84,7 @@ import {
 })
 export class Datetime implements ComponentInterface {
   private inputId = `ion-dt-${datetimeIds++}`;
+  private inheritedAttributes: Attributes = {};
   private calendarBodyRef?: HTMLElement;
   private popoverRef?: HTMLIonPopoverElement;
   private clearFocusVisible?: () => void;
@@ -1236,6 +1238,8 @@ export class Datetime implements ComponentInterface {
       }
     }
 
+    this.inheritedAttributes = inheritAttributes(el, ['dir']);
+
     this.processMinParts();
     this.processMaxParts();
     const hourValues = (this.parsedHourValues = convertToArrayOfNumbers(this.hourValues));
@@ -1853,6 +1857,8 @@ export class Datetime implements ComponentInterface {
    */
 
   private renderCalendarHeader(mode: Mode) {
+    const { inheritedAttributes } = this;
+
     const expandedIcon = mode === 'ios' ? chevronDown : caretUpSharp;
     const collapsedIcon = mode === 'ios' ? chevronForward : caretDownSharp;
 
@@ -1878,10 +1884,24 @@ export class Datetime implements ComponentInterface {
           <div class="calendar-next-prev">
             <ion-buttons>
               <ion-button aria-label="previous month" disabled={prevMonthDisabled} onClick={() => this.prevMonth()}>
-                <ion-icon aria-hidden="true" slot="icon-only" icon={chevronBack} lazy={false} flipRtl></ion-icon>
+                <ion-icon
+                  dir={inheritedAttributes.dir}
+                  aria-hidden="true"
+                  slot="icon-only"
+                  icon={chevronBack}
+                  lazy={false}
+                  flipRtl
+                ></ion-icon>
               </ion-button>
               <ion-button aria-label="next month" disabled={nextMonthDisabled} onClick={() => this.nextMonth()}>
-                <ion-icon aria-hidden="true" slot="icon-only" icon={chevronForward} lazy={false} flipRtl></ion-icon>
+                <ion-icon
+                  dir={inheritedAttributes.dir}
+                  aria-hidden="true"
+                  slot="icon-only"
+                  icon={chevronForward}
+                  lazy={false}
+                  flipRtl
+                ></ion-icon>
               </ion-button>
             </ion-buttons>
           </div>

@@ -312,3 +312,18 @@ test.describe('datetime: visibility', () => {
     await expect(monthYearInterface).toBeHidden();
   });
 });
+
+test.describe('datetime: RTL set on component', () => {
+  test('should flip icons when RTL is set on component directly', async ({ page, skip }) => {
+    skip.rtl(); // we're setting RTL on the component instead
+    skip.mode('md');
+
+    await page.setContent(`
+      <ion-datetime dir="rtl"></ion-datetime>
+    `);
+
+    const nextPrevIcons = page.locator('ion-datetime .calendar-next-prev ion-icon');
+    await expect(nextPrevIcons.first()).toHaveClass(/flip-rtl/);
+    await expect(nextPrevIcons.last()).toHaveClass(/flip-rtl/);
+  });
+});
