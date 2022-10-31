@@ -503,25 +503,6 @@ export class Datetime implements ComponentInterface {
       if (activePartsIsArray && activeParts.length === 0) {
         this.setValue(undefined);
       } else {
-        /**
-         * Prevent convertDataToISO from doing any
-         * kind of transformation based on timezone
-         * This cancels out any change it attempts to make
-         *
-         * Important: Take the timezone offset based on
-         * the date that is currently selected, otherwise
-         * there can be 1 hr difference when dealing w/ DST
-         */
-        if (activePartsIsArray) {
-          const dates = convertDataToISO(activeParts).map((str) => new Date(str));
-          for (let i = 0; i < dates.length; i++) {
-            activeParts[i].tzOffset = dates[i].getTimezoneOffset() * -1;
-          }
-        } else {
-          const date = new Date(convertDataToISO(activeParts));
-          activeParts.tzOffset = date.getTimezoneOffset() * -1;
-        }
-
         this.setValue(convertDataToISO(activeParts));
       }
     }
@@ -1211,7 +1192,7 @@ export class Datetime implements ComponentInterface {
      */
     const singleValue = Array.isArray(valueToProcess) ? valueToProcess[0] : valueToProcess;
 
-    const { month, day, year, hour, minute, tzOffset } = clampDate(singleValue, minParts, maxParts);
+    const { month, day, year, hour, minute } = clampDate(singleValue, minParts, maxParts);
     const ampm = parseAmPm(hour!);
 
     this.setWorkingParts({
@@ -1220,7 +1201,6 @@ export class Datetime implements ComponentInterface {
       year,
       hour,
       minute,
-      tzOffset,
       ampm,
     });
 
@@ -1240,7 +1220,6 @@ export class Datetime implements ComponentInterface {
           year,
           hour,
           minute,
-          tzOffset,
           ampm,
         };
       }

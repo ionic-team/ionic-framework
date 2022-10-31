@@ -99,11 +99,7 @@ test.describe('datetime: selecting a day', () => {
 
     await ionChange.next();
 
-    const value = await datetime.evaluate((el: HTMLIonDatetimeElement) => el.value);
-    await expect(typeof value).toBe('string');
-
-    // Check to make sure value includes current time
-    await expect(value!.includes('2022-10-01T16:22')).toBe(true);
+    await expect(datetime).toHaveJSProperty('value', '2022-10-01T16:22:00');
   });
 });
 
@@ -134,6 +130,7 @@ test.describe('datetime: confirm date', () => {
       </script>
     `);
 
+    const ionChange = await page.spyOnEvent('ionChange');
     const datetimeMonthDidChange = await page.spyOnEvent('datetimeMonthDidChange');
     const eventButton = page.locator('button#bind');
     await eventButton.click();
@@ -146,10 +143,9 @@ test.describe('datetime: confirm date', () => {
     const datetime = page.locator('ion-datetime');
     await datetime.evaluate((el: HTMLIonDatetimeElement) => el.confirm());
 
-    // Value may include timezone information so we need to check
-    // that the value at least includes the correct date/time info.
-    const value = (await datetime.evaluate((el: HTMLIonDatetimeElement) => el.value))!;
-    expect(value.includes('2021-12-25T12:40:00')).toBe(true);
+    await ionChange.next();
+
+    expect(datetime).toHaveJSProperty('value', '2021-12-25T12:40:00');
   });
 });
 
