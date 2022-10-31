@@ -135,10 +135,9 @@ const noAnimation = async (opts: TransitionOptions): Promise<TransitionResult> =
 
 const waitForReady = async (opts: TransitionOptions, defaultDeep: boolean) => {
   const deep = opts.deepWait !== undefined ? opts.deepWait : defaultDeep;
-  const promises = deep ? [deepReady(opts.enteringEl), deepReady(opts.leavingEl)] : undefined;
 
-  if (promises !== undefined) {
-    await Promise.all(promises);
+  if (deep) {
+    await Promise.all([deepReady(opts.enteringEl), deepReady(opts.leavingEl)]);
   }
 
   await notifyViewReady(opts.viewIsReady, opts.enteringEl);
