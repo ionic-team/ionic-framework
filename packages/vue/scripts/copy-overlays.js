@@ -5,7 +5,6 @@ function generateOverlays() {
   const components = [
     {
       tag: 'ion-action-sheet',
-      controller: 'actionSheetController',
       name: 'IonActionSheet'
     },
     {
