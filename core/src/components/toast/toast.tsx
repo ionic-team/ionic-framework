@@ -19,7 +19,6 @@ import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
-import type { ToastAttributes } from './toast-interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -125,7 +124,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
   /**
    * Additional attributes to pass to the toast.
    */
-  @Prop() htmlAttributes?: ToastAttributes;
+  @Prop() htmlAttributes?: { [key: string]: any };
 
   /**
    * Emitted after the toast has presented.

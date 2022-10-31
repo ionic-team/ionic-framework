@@ -8,7 +8,6 @@ import type {
   ComponentRef,
   FrameworkDelegate,
   OverlayEventDetail,
-  PopoverAttributes,
   PopoverInterface,
   PopoverSize,
   PositionAlign,
@@ -150,7 +149,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
   /**
    * Additional attributes to pass to the popover.
    */
-  @Prop() htmlAttributes?: PopoverAttributes;
+  @Prop() htmlAttributes?: { [key: string]: any };
 
   /**
    * Describes what kind of interaction with the trigger that

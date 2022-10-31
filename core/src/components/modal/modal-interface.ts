@@ -14,7 +14,7 @@ export interface ModalOptions<T extends ComponentRef = ComponentRef> {
   mode?: Mode;
   keyboardClose?: boolean;
   id?: string;
-  htmlAttributes?: ModalAttributes;
+  htmlAttributes?: { [key: string]: any };
 
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;
@@ -39,11 +39,6 @@ export interface ModalBreakpointChangeEventDetail {
 export interface ModalCustomEvent extends CustomEvent {
   target: HTMLIonModalElement;
 }
-
-/**
- * @deprecated - Use { [key: string]: any } directly instead.
- */
-export type ModalAttributes = { [key: string]: any };
 
 /**
  * The behavior setting for modals when the handle is pressed.

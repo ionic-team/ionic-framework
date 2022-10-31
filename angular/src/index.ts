@@ -75,8 +75,6 @@ export {
   ActionSheetButton,
   AlertOptions,
   AlertInput,
-  AlertTextareaAttributes,
-  AlertInputAttributes,
   AlertButton,
   BackButtonEvent,
   CheckboxCustomEvent,
