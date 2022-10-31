@@ -1,5 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import { createLegacyFormController } from '@utils/forms';
+import type { LegacyFormController } from '@utils/forms';
 import { printIonWarning } from '@utils/logging';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -32,11 +34,10 @@ export class Input implements ComponentInterface {
   private inheritedAttributes: Attributes = {};
   private isComposing = false;
 
+  private legacyFormController!: LegacyFormController;
+
   // This flag ensures we log the deprecation warning at most once.
   private hasLoggedDeprecationWarning = false;
-
-  // This flag disables behavior that is only required with legacy inputs.
-  private hasLegacyInput = true;
 
   /**
    * `true` if the input was cleared as a result of the user typing
@@ -337,19 +338,9 @@ export class Input implements ComponentInterface {
   }
 
   connectedCallback() {
-    const { label, el, inheritedAttributes } = this;
+    const { el } = this;
 
-    /**
-     * Detect if developers are using the legacy form control syntax
-     * so a deprecation warning is logged. This warning can be disabled
-     * by either using the new `label` property or setting `aria-label`
-     * on the input.
-     */
-    const hasAriaLabel = el.hasAttribute('aria-label') || inheritedAttributes['aria-label'] !== undefined;
-
-    if (label !== undefined || hasAriaLabel) {
-      this.hasLegacyInput = false;
-    }
+    this.legacyFormController = createLegacyFormController(el);
 
     this.emitStyle();
     this.debounceChanged();
@@ -431,7 +422,7 @@ export class Input implements ComponentInterface {
   }
 
   private emitStyle() {
-    if (this.hasLegacyInput) {
+    if (this.legacyFormController.hasLegacyControl()) {
       this.ionStyle.emit({
         interactive: true,
         input: true,
@@ -609,9 +600,9 @@ For inputs that do not have a visible label, developers should use "aria-label" 
   }
 
   render() {
-    const { hasLegacyInput } = this;
+    const { legacyFormController } = this;
 
-    return hasLegacyInput ? this.renderLegacyInput() : this.renderInput();
+    return legacyFormController.hasLegacyControl() ? this.renderLegacyInput() : this.renderInput();
   }
 }
 
