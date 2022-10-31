@@ -91,6 +91,17 @@ export class Input implements ComponentInterface {
   @Prop() clearOnEdit?: boolean;
 
   /**
+   * If `true`, a character counter will display the ratio of characters used and the total character limit. Developers must also set the `maxlength` property for the counter to be calculated correctly.
+   */
+  @Prop() counter = false;
+
+  /**
+   * A callback used to format the counter text.
+   * By default the counter text is set to "itemLength / maxLength".
+   */
+  @Prop() counterFormatter?: (inputLength: number, maxLength: number) => string;
+
+  /**
    * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
    */
   @Prop() debounce = 0;
@@ -118,11 +129,43 @@ export class Input implements ComponentInterface {
   @Prop() enterkeyhint?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
 
   /**
+   * Text that is placed under the input and displayed when an error is detected.
+   */
+  @Prop() errorText?: string;
+
+  /**
    * A hint to the browser for which keyboard to display.
    * Possible values: `"none"`, `"text"`, `"tel"`, `"url"`,
    * `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
    */
   @Prop() inputmode?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
+
+  /**
+   * Text that is placed under the input and displayed when no error is detected.
+   */
+  @Prop() helperText?: string;
+
+  /**
+   * How to pack the label and the input within a line. This property only applies when the input and label are on the same line. In other words, this property is ignored when `labelPlacement` is set to `'floating'` or `'stacked'`.
+   * `'start'`: The label and input are packed on the left in LTR and on the right in RTL.
+   * `'end'`: The label and input are packed on the right in LTR and on the left in RTL.
+   * `'space-between'`: The label and input are placed at either end of the line with empty space between the elements. Which end each element can be configured using the `'start'` or `'end'` values on the `labelPlacement` property.
+   */
+  @Prop() justify: 'start' | 'end' | 'space-between' = 'start';
+
+  /**
+   * The visible label associated with the input.
+   */
+  @Prop() label?: string;
+
+  /**
+   * Where to place the label relative to the input.
+   * `'start'`: The label will appear to the left of the input in LTR and to the right in RTL.
+   * `'end'`: The label will appear to the right of the input in LTR and to the left in RTL.
+   * `'floating'`: The label will appear smaller and above the input when the input is focused or it has a value. Otherwise it will appear on top of the input.
+   * `'stacked'`: The label will appear smaller and above the input regardless even when the input is blurred or has no value.
+   */
+  @Prop() labelPlacement: 'start' | 'end' | 'floating' | 'stacked' = 'start';
 
   /**
    * The maximum value, which must not be less than its minimum (min attribute) value.
@@ -175,6 +218,11 @@ export class Input implements ComponentInterface {
    * If `true`, the user must fill in a value before submitting a form.
    */
   @Prop() required = false;
+
+  /**
+   * The shape of the input. If "round" it will have increased border radius.
+   */
+  @Prop() shape?: 'round';
 
   /**
    * If `true`, the element will have its spelling and grammar checked.
