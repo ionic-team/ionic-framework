@@ -39,6 +39,9 @@
   --background: transparent;
   --color: initial;
   --border-style: solid;
+  --highlight-color-focused: #{ion-color(primary, base)};
+  --highlight-color-valid: #{ion-color(success, base)};
+  --highlight-color-invalid: #{ion-color(danger, base)};
 
   position: relative;
 
@@ -210,9 +213,9 @@
 .input-wrapper {
   display: flex;
 
-  align-items: center;
-
   flex-grow: 1;
+
+  align-items: center;
 }
 
 // Input Bottom Content
@@ -225,9 +228,9 @@
 
   justify-content: space-between;
 
-  font-size: 12px;
-
   border-top: var(--border-width) var(--border-style) var(--border-color);
+
+  font-size: 12px;
 }
 
 // Input Hint Text
@@ -238,18 +241,20 @@
  * present on the input. Otherwise the helper text should
  * be shown.
  */
-.error-text {
+.input-bottom .error-text {
   display: none;
+
+  color: var(--highlight-color-invalid);
 }
 
-.helper-text {
+.input-bottom .helper-text {
   display: block;
 }
 
-:host(.ion-invalid) .error-text {
+:host(.ion-invalid) .input-bottom  .error-text {
   display: block;
 }
 
-:host(.ion-invalid) .helper-text {
+:host(.ion-invalid) .input-bottom  .helper-text {
   display: none;
 }

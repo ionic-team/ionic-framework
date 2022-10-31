@@ -516,10 +516,7 @@ export class Input implements ComponentInterface {
   private renderHintText() {
     const { helperText, errorText } = this;
 
-    return [
-      <div class="helper-text">{helperText}</div>,
-      <div class="error-text">{errorText}</div>
-    ]
+    return [<div class="helper-text">{helperText}</div>, <div class="error-text">{errorText}</div>];
   }
 
   /**
@@ -535,11 +532,7 @@ export class Input implements ComponentInterface {
       return;
     }
 
-    return (
-      <div class="input-bottom">
-        {this.renderHintText()}
-      </div>
-    )
+    return <div class="input-bottom">{this.renderHintText()}</div>;
   }
 
   private renderInput() {
@@ -639,7 +632,7 @@ For inputs that do not have a visible label, developers should use "aria-label" 
           [mode]: true,
           'has-value': this.hasValue(),
           'has-focus': this.hasFocus,
-          'legacy-input': true
+          'legacy-input': true,
         })}
       >
         <input
