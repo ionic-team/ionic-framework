@@ -19,6 +19,7 @@ test.describe('input: bottom content', () => {
     const helperText = page.locator('ion-input .helper-text');
     const errorText = page.locator('ion-input .error-text');
     await expect(helperText).toBeVisible();
+    await expect(helperText).toHaveText('my helper');
     await expect(errorText).toBeHidden();
   });
 
@@ -31,6 +32,7 @@ test.describe('input: bottom content', () => {
     const errorText = page.locator('ion-input .error-text');
     await expect(helperText).toBeHidden();
     await expect(errorText).toBeVisible();
+    await expect(errorText).toHaveText('my error');
   });
 });
 
