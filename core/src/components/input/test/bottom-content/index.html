@@ -33,6 +33,10 @@
           padding: 0;
         }
       }
+
+      ion-input.custom-error-color {
+        --highlight-color-invalid: purple;
+      }
     </style>
   </head>
 
@@ -59,6 +63,15 @@
           <div class="grid-item">
             <h2>Error Hint</h2>
             <ion-input class="ion-invalid" label="Email" error-text="Please enter a valid email"></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Custom Error Color</h2>
+            <ion-input
+              class="ion-invalid custom-error-color"
+              label="Email"
+              error-text="Please enter a valid email"
+            ></ion-input>
           </div>
         </div>
       </ion-content>

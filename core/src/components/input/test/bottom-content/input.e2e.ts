@@ -37,11 +37,11 @@ test.describe('input: bottom content', () => {
   test('error text should change when variable is customized', async ({ page }) => {
     await page.setContent(`
       <style>
-        ion-input {
+        ion-input.custom-input {
           --highlight-color-invalid: purple;
         }
       </style>
-      <ion-input class="ion-invalid" label="my label" error-text="my error"></ion-input>
+      <ion-input class="ion-invalid custom-input" label="my label" error-text="my error"></ion-input>
     `);
 
     const errorText = page.locator('ion-input .error-text');
