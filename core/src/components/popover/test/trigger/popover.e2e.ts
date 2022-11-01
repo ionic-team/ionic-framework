@@ -5,7 +5,9 @@ import { test } from '@utils/test/playwright';
 import { openPopover } from '../test.utils';
 
 test.describe('popover: trigger', async () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({ page, skip }) => {
+    skip.rtl();
+    skip.mode('ios');
     await page.goto('/src/components/popover/test/trigger');
   });
 
@@ -31,6 +33,20 @@ test.describe('popover: trigger', async () => {
     await ionPopoverDidPresent.next();
 
     await checkPopover(page, '.hover-popover');
+  });
+
+  test('should still open popover when it has been removed and re-added to DOM', async ({ page }) => {
+    const button = page.locator('#left-click-trigger');
+    const popover = page.locator('.left-click-popover');
+
+    await popover.evaluate((popover: HTMLIonPopoverElement) => {
+      popover.remove();
+      document.querySelector('ion-button')?.insertAdjacentElement('afterend', popover);
+    });
+    await page.waitForChanges();
+
+    await button.click();
+    await expect(popover).toBeVisible();
   });
 });
 
