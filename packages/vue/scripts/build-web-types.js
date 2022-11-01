@@ -1,16 +1,39 @@
-const fs = require("fs")
-const docs = require("@ionic/core/dist/docs.json")
-const { pascalCase } = require('change-case')
+const fs = require("fs");
+const docs = require("@ionic/core/dist/docs.json");
+const { pascalCase } = require("change-case");
 
-const components = []
+const components = [];
 
-for (const component of docs.components) {
-  if (!component.usage.vue) continue
-  const attributes = []
-  const slots = []
-  const events = []
-  const componentName = pascalCase(component.tag)
-  const docUrl = "https://ionicframework.com/docs/api/" + component.tag.substr(4)
+/**
+ * The list of tag names to ignore generating web types for.
+ */
+const excludeComponents = [
+  "ion-app",
+  "ion-icon",
+  "ion-nav",
+  "ion-nav-link",
+  "ion-tabs",
+  "ion-tab-bar",
+  "ion-router",
+  "ion-route-redirect",
+  "ion-router-link",
+  "ion-router-outlet",
+];
+
+/**
+ * The filtered set of components to generate web types for.
+ */
+const filteredComponents = docs.components.filter(
+  (c) => !excludeComponents.includes(c.tag)
+);
+
+for (const component of filteredComponents) {
+  const attributes = [];
+  const slots = [];
+  const events = [];
+  const componentName = pascalCase(component.tag);
+  const docUrl =
+    "https://ionicframework.com/docs/api/" + component.tag.substr(4);
 
   for (const prop of component.props || []) {
     attributes.push({
@@ -20,9 +43,9 @@ for (const component of docs.components) {
       default: prop.default,
       value: {
         kind: "expression",
-        type: prop.type
-      }
-    })
+        type: prop.type,
+      },
+    });
   }
 
   for (const event of component.events || []) {
@@ -33,18 +56,20 @@ for (const component of docs.components) {
     events.push({
       name: eventName,
       description: event.docs,
-      arguments: [{
-        name: "detail",
-        type: event.detail
-      }]
-    })
+      arguments: [
+        {
+          name: "detail",
+          type: event.detail,
+        },
+      ],
+    });
   }
 
   for (const slot of component.slots || []) {
     slots.push({
       name: slot.name === "" ? "default" : slot.name,
-      description: slot.docs
-    })
+      description: slot.docs,
+    });
   }
 
   components.push({
@@ -52,13 +77,17 @@ for (const component of docs.components) {
     "doc-url": docUrl,
     description: component.docs,
     source: {
-      module: "@ionic/core/" + component.filePath.replace("./src/", "dist/types/").replace(".tsx", ".d.ts"),
-      symbol: componentName.substr(3)
+      module:
+        "@ionic/core/" +
+        component.filePath
+          .replace("./src/", "dist/types/")
+          .replace(".tsx", ".d.ts"),
+      symbol: componentName.substr(3),
     },
     attributes,
     slots,
-    events
-  })
+    events,
+  });
 }
 
 const webTypes = {
@@ -70,9 +99,9 @@ const webTypes = {
     html: {
       "types-syntax": "typescript",
       "description-markup": "markdown",
-      tags: components
-    }
-  }
-}
+      tags: components,
+    },
+  },
+};
 
-fs.writeFileSync("dist/web-types.json", JSON.stringify(webTypes, null, 2))
+fs.writeFileSync("dist/web-types.json", JSON.stringify(webTypes, null, 2));
