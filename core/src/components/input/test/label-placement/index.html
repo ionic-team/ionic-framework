@@ -70,28 +70,30 @@
           </div>
 
           <div class="grid-item">
+            <h2>Floating, No Value</h2>
+            <ion-input label="Email" label-placement="floating" placeholder="example@ionic.io"></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Floating, No Value 2x</h2>
+            <ion-input
+              helper-text="help me"
+              maxlength="10"
+              counter="true"
+              label="Email"
+              label-placement="floating"
+              placeholder="example@ionic.io"
+            ></ion-input>
+          </div>
+
+          <div class="grid-item">
             <h2>Stacked</h2>
-            <ion-input value="hi@ionic.io" label="Email" label-placement="start"></ion-input>
+            <ion-input value="hi@ionic.io" label="Email" label-placement="stacked"></ion-input>
           </div>
 
           <div class="grid-item">
-            <h2>Fixed</h2>
-            <ion-input value="hi@ionic.io" label="Email" label-placement="fixed"></ion-input>
-          </div>
-
-          <div class="grid-item">
-            <h2>Old with Item</h2>
-            <ion-item>
-              <ion-label>Email</ion-label>
-              <ion-input value="hi@ionic.io"></ion-input>
-            </ion-item>
-          </div>
-
-          <div class="grid-item">
-            <h2>New with Item</h2>
-            <ion-item>
-              <ion-input label="Email" label-placement="start" value="hi@ionic.io"></ion-input>
-            </ion-item>
+            <h2>Stacked, No Value</h2>
+            <ion-input label="Email" placeholder="example@ionic.io" label-placement="stacked"></ion-input>
           </div>
         </div>
       </ion-content>
