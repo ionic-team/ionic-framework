@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.4-nightly.20221101](https://github.com/ionic-team/ionic/compare/v6.3.3...v6.3.4-nightly.20221101) (2022-11-01)
+
+
+### Bug Fixes
+
+* **datetime:** account for allowed values when setting default date ([#26093](https://github.com/ionic-team/ionic/issues/26093)) ([3745083](https://github.com/ionic-team/ionic/commit/3745083b7cdf8651d1c7f5f1a0214b487ea286ca)), closes [#24722](https://github.com/ionic-team/ionic/issues/24722)
+* **modal, popover:** remove trigger click listeners when overlay is unmounted ([#26167](https://github.com/ionic-team/ionic/issues/26167)) ([1320948](https://github.com/ionic-team/ionic/commit/1320948b245be3defe8610b9f049e781a4903a6e))
+* **modal:** buttons are highlighted with VoiceOver ([#26180](https://github.com/ionic-team/ionic/issues/26180)) ([1504b88](https://github.com/ionic-team/ionic/commit/1504b8888d6f79ea382935ed52b104b9f841d150)), closes [#26156](https://github.com/ionic-team/ionic/issues/26156)
+
+
+
+
+
 ## [6.3.3](https://github.com/ionic-team/ionic/compare/v6.3.2...v6.3.3) (2022-10-26)
 
 
