@@ -13,7 +13,7 @@ test.describe('modal: a11y', () => {
 
     const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
     const button = page.locator('#open-modal');
-    const modal = page.locator('ion-modal');
+    const modal = page.locator('ion-modal .modal-wrapper');
 
     await expect(modal).toHaveAttribute('role', 'dialog');
 
@@ -32,7 +32,7 @@ test.describe('modal: a11y', () => {
     await page.setContent(`
       <ion-modal role="alertdialog"></ion-modal>
     `);
-    const modal = page.locator('ion-modal');
+    const modal = page.locator('ion-modal .modal-wrapper');
 
     await expect(modal).toHaveAttribute('role', 'alertdialog');
   });

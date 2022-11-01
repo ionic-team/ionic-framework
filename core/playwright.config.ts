@@ -1,11 +1,11 @@
-import type { PlaywrightTestConfig } from '@playwright/test';
+import type { PlaywrightTestConfig, PlaywrightTestOptions, PlaywrightWorkerOptions, Project } from '@playwright/test';
 import { devices, expect } from '@playwright/test';
 
 import { matchers } from './src/utils/test/playwright';
 
 expect.extend(matchers);
 
-const projects = [
+const projects: Project<PlaywrightTestOptions, PlaywrightWorkerOptions>[] = [
   {
     /**
      * This is really just desktop Firefox
@@ -24,10 +24,6 @@ const projects = [
         width: 393,
         height: 727
       },
-      screen: {
-        width: 393,
-        height: 851
-      }
     },
   },
   {
@@ -49,7 +45,7 @@ const projects = [
 const modes = ['ios', 'md'];
 
 const generateProjects = () => {
-  const projectsWithMetadata = [];
+  const projectsWithMetadata: Project<PlaywrightTestOptions, PlaywrightWorkerOptions>[] = [];
 
   modes.forEach(mode => {
     projects.forEach(project => {
@@ -105,9 +101,6 @@ const config: PlaywrightTestConfig = {
   use: {
     /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
     actionTimeout: 0,
-    /* Base URL to use in actions like `await page.goto('/')`. */
-    // baseURL: 'http://localhost:3000',
-
     /**
      * All failed tests should create
      * a trace file for easier debugging.

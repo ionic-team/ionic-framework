@@ -36,6 +36,7 @@ import { is24Hour, isLocaleDayPeriodRTL, isMonthFirstLocale, getNumDaysInMonth }
 import {
   calculateHourFromAMPM,
   convertDataToISO,
+  getClosestValidDate,
   getEndOfWeek,
   getNextDay,
   getNextMonth,
@@ -96,7 +97,8 @@ export class Datetime implements ComponentInterface {
 
   private minParts?: any;
   private maxParts?: any;
-  private todayParts = parseDate(getToday());
+  private todayParts!: DatetimeParts;
+  private defaultParts!: DatetimeParts;
 
   private prevPresentation: string | null = null;
 
@@ -559,13 +561,13 @@ export class Datetime implements ComponentInterface {
    * may not be set. This function works
    * by returning the first selected date in
    * "activePartsClone" and then falling back to
-   * today's DatetimeParts if no active date is selected.
+   * defaultParts if no active date is selected.
    */
-  private getDefaultPart = (): DatetimeParts => {
-    const { activePartsClone, todayParts } = this;
+  private getActivePartsWithFallback = () => {
+    const { activePartsClone, defaultParts } = this;
 
     const firstPart = Array.isArray(activePartsClone) ? activePartsClone[0] : activePartsClone;
-    return firstPart ?? todayParts;
+    return firstPart ?? defaultParts;
   };
 
   private closeParentOverlay = () => {
@@ -780,24 +782,24 @@ export class Datetime implements ComponentInterface {
   };
 
   private processMinParts = () => {
-    const { min, todayParts } = this;
+    const { min, defaultParts } = this;
     if (min === undefined) {
       this.minParts = undefined;
       return;
     }
 
-    this.minParts = parseMinParts(min, todayParts);
+    this.minParts = parseMinParts(min, defaultParts);
   };
 
   private processMaxParts = () => {
-    const { max, todayParts } = this;
+    const { max, defaultParts } = this;
 
     if (max === undefined) {
       this.maxParts = undefined;
       return;
     }
 
-    this.maxParts = parseMaxParts(max, todayParts);
+    this.maxParts = parseMaxParts(max, defaultParts);
   };
 
   private initializeCalendarListener = () => {
@@ -1158,7 +1160,7 @@ export class Datetime implements ComponentInterface {
      * TODO FW-2646 remove value !== ''
      */
     const hasValue = value !== '' && value !== null && value !== undefined;
-    let valueToProcess = parseDate(hasValue ? value : getToday());
+    let valueToProcess = hasValue ? parseDate(value) : this.defaultParts;
 
     const { minParts, maxParts, multiple } = this;
     if (!multiple && Array.isArray(value)) {
@@ -1236,12 +1238,16 @@ export class Datetime implements ComponentInterface {
 
     this.processMinParts();
     this.processMaxParts();
+    const hourValues = (this.parsedHourValues = convertToArrayOfNumbers(this.hourValues));
+    const minuteValues = (this.parsedMinuteValues = convertToArrayOfNumbers(this.minuteValues));
+    const monthValues = (this.parsedMonthValues = convertToArrayOfNumbers(this.monthValues));
+    const yearValues = (this.parsedYearValues = convertToArrayOfNumbers(this.yearValues));
+    const dayValues = (this.parsedDayValues = convertToArrayOfNumbers(this.dayValues));
+
+    const todayParts = (this.todayParts = parseDate(getToday()));
+    this.defaultParts = getClosestValidDate(todayParts, monthValues, dayValues, yearValues, hourValues, minuteValues);
     this.processValue(this.value);
-    this.parsedHourValues = convertToArrayOfNumbers(this.hourValues);
-    this.parsedMinuteValues = convertToArrayOfNumbers(this.minuteValues);
-    this.parsedMonthValues = convertToArrayOfNumbers(this.monthValues);
-    this.parsedYearValues = convertToArrayOfNumbers(this.yearValues);
-    this.parsedDayValues = convertToArrayOfNumbers(this.dayValues);
+
     this.emitStyle();
   }
 
@@ -1396,9 +1402,9 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderCombinedDatePickerColumn() {
-    const { workingParts, locale, minParts, maxParts, todayParts, isDateEnabled } = this;
+    const { defaultParts, workingParts, locale, minParts, maxParts, todayParts, isDateEnabled } = this;
 
-    const activePart = this.getDefaultPart();
+    const activePart = this.getActivePartsWithFallback();
 
     /**
      * By default, generate a range of 3 months:
@@ -1464,12 +1470,12 @@ export class Datetime implements ComponentInterface {
 
     /**
      * If we have selected a day already, then default the column
-     * to that value. Otherwise, default it to today.
+     * to that value. Otherwise, set it to the default date.
      */
     const todayString =
       workingParts.day !== null
         ? `${workingParts.year}-${workingParts.month}-${workingParts.day}`
-        : `${todayParts.year}-${todayParts.month}-${todayParts.day}`;
+        : `${defaultParts.year}-${defaultParts.month}-${defaultParts.day}`;
 
     return (
       <ion-picker-column-internal
@@ -1555,7 +1561,7 @@ export class Datetime implements ComponentInterface {
 
     const shouldRenderYears = forcePresentation !== 'month' && forcePresentation !== 'time';
     const years = shouldRenderYears
-      ? getYearColumnData(this.locale, this.todayParts, this.minParts, this.maxParts, this.parsedYearValues)
+      ? getYearColumnData(this.locale, this.defaultParts, this.minParts, this.maxParts, this.parsedYearValues)
       : [];
 
     /**
@@ -1588,14 +1594,14 @@ export class Datetime implements ComponentInterface {
 
     const { workingParts } = this;
 
-    const activePart = this.getDefaultPart();
+    const activePart = this.getActivePartsWithFallback();
 
     return (
       <ion-picker-column-internal
         class="day-column"
         color={this.color}
         items={days}
-        value={(workingParts.day !== null ? workingParts.day : this.todayParts.day) ?? undefined}
+        value={(workingParts.day !== null ? workingParts.day : this.defaultParts.day) ?? undefined}
         onIonChange={(ev: CustomEvent) => {
           // TODO(FW-1823) Remove this when iOS 14 support is dropped.
           // Due to a Safari 14 issue we need to destroy
@@ -1632,7 +1638,7 @@ export class Datetime implements ComponentInterface {
 
     const { workingParts } = this;
 
-    const activePart = this.getDefaultPart();
+    const activePart = this.getActivePartsWithFallback();
 
     return (
       <ion-picker-column-internal
@@ -1675,7 +1681,7 @@ export class Datetime implements ComponentInterface {
 
     const { workingParts } = this;
 
-    const activePart = this.getDefaultPart();
+    const activePart = this.getActivePartsWithFallback();
 
     return (
       <ion-picker-column-internal
@@ -1739,7 +1745,7 @@ export class Datetime implements ComponentInterface {
     const { workingParts } = this;
     if (hoursData.length === 0) return [];
 
-    const activePart = this.getDefaultPart();
+    const activePart = this.getActivePartsWithFallback();
 
     return (
       <ion-picker-column-internal
@@ -1767,7 +1773,7 @@ export class Datetime implements ComponentInterface {
     const { workingParts } = this;
     if (minutesData.length === 0) return [];
 
-    const activePart = this.getDefaultPart();
+    const activePart = this.getActivePartsWithFallback();
 
     return (
       <ion-picker-column-internal
@@ -1797,7 +1803,7 @@ export class Datetime implements ComponentInterface {
       return [];
     }
 
-    const activePart = this.getDefaultPart();
+    const activePart = this.getActivePartsWithFallback();
     const isDayPeriodRTL = isLocaleDayPeriodRTL(this.locale);
 
     return (
@@ -1912,7 +1918,7 @@ export class Datetime implements ComponentInterface {
     // can free-scroll the calendar.
     const isWorkingMonth = this.workingParts.month === month && this.workingParts.year === year;
 
-    const activePart = this.getDefaultPart();
+    const activePart = this.getActivePartsWithFallback();
 
     return (
       <div
@@ -2042,7 +2048,7 @@ export class Datetime implements ComponentInterface {
 
   private renderTimeOverlay() {
     const use24Hour = is24Hour(this.locale, this.hourCycle);
-    const activePart = this.getDefaultPart();
+    const activePart = this.getActivePartsWithFallback();
 
     return [
       <div class="time-header">{this.renderTimeLabel()}</div>,
@@ -2123,7 +2129,7 @@ export class Datetime implements ComponentInterface {
       }
     } else {
       // for exactly 1 day selected (multiple set or not), show a formatted version of that
-      headerText = getMonthAndDay(this.locale, this.getDefaultPart());
+      headerText = getMonthAndDay(this.locale, this.getActivePartsWithFallback());
     }
 
     return headerText;
