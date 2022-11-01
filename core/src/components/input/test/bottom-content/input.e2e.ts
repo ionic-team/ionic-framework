@@ -77,3 +77,61 @@ test.describe('input: hint text', () => {
     });
   });
 });
+test.describe('input: counter', () => {
+  test.describe('input: counter functionality', () => {
+    test.beforeEach(({ skip }) => {
+      skip.rtl();
+      skip.mode('ios', 'Rendering is the same across modes');
+    });
+    test('should not activate if maxlength is not specified even if bottom content is visible', async ({ page }) => {
+      await page.setContent(`
+        <ion-input label="my label" counter="true" helper-text="helper text"></ion-input>
+      `);
+      const itemCounter = page.locator('ion-input .counter');
+      await expect(itemCounter).toBeHidden();
+    });
+    test('default formatter should be used', async ({ page }) => {
+      await page.setContent(`
+        <ion-input label="my label" counter="true" maxlength="20"></ion-input>
+      `);
+      const itemCounter = page.locator('ion-input .counter');
+      expect(await itemCounter.textContent()).toBe('0 / 20');
+    });
+    test('custom formatter should be used when provided', async ({ page }) => {
+      await page.setContent(`
+        <ion-input label="my label" counter="true" maxlength="20"></ion-input>
+
+        <script>
+          const input = document.querySelector('ion-input');
+          input.counterFormatter = (inputLength, maxLength) => {
+            const length = maxLength - inputLength;
+            return length.toString() + ' characters left';
+          };
+        </script>
+      `);
+
+      const input = page.locator('ion-input input');
+      const itemCounter = page.locator('ion-input .counter');
+      expect(await itemCounter.textContent()).toBe('20 characters left');
+
+      await input.click();
+      await input.type('abcde');
+
+      await page.waitForChanges();
+
+      expect(await itemCounter.textContent()).toBe('15 characters left');
+    });
+  });
+  test.describe('input: counter rendering', () => {
+    test.describe('regular inputs', () => {
+      test('should not have visual regressions when rendering counter', async ({ page }) => {
+        await page.setContent(`<ion-input counter="true" maxlength="20" label="my input"></ion-input>`);
+
+        const bottomEl = page.locator('ion-input .input-bottom');
+        expect(await bottomEl.screenshot()).toMatchSnapshot(
+          `input-bottom-content-counter-${page.getSnapshotSettings()}.png`
+        );
+      });
+    });
+  });
+});
