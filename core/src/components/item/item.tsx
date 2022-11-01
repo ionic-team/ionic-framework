@@ -211,7 +211,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     const hasHelperSlot = el.querySelector('[slot="helper"]') !== null;
     if (hasHelperSlot) {
       printIonWarning(
-        'The "helper" slot has been deprecated in favor of using the "helperText" property on ion-input or ion-textarea',
+        'The "helper" slot has been deprecated in favor of using the "helperText" property on ion-input or ion-textarea.',
         el
       );
     }
@@ -219,7 +219,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     const hasErrorSlot = el.querySelector('[slot="error"]') !== null;
     if (hasErrorSlot) {
       printIonWarning(
-        'The "error" slot has been deprecated in favor of using the "errorText" property on ion-input or ion-textarea',
+        'The "error" slot has been deprecated in favor of using the "errorText" property on ion-input or ion-textarea.',
         el
       );
     }
