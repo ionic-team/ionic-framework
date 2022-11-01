@@ -111,6 +111,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
 
   /**
    * If `true`, a character counter will display the ratio of characters used and the total character limit. Only applies when the `maxlength` property is set on the inner `ion-input` or `ion-textarea`.
+   * @deprecated Use the `counter` property on `ion-input` or `ion-textarea` instead.
    */
   @Prop() counter = false;
 
@@ -141,6 +142,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   /**
    * A callback used to format the counter text.
    * By default the counter text is set to "itemLength / maxLength".
+   * @deprecated Use the `counterFormatter` property on `ion-input` or `ion-textarea` instead.
    */
   @Prop() counterFormatter?: CounterFormatter;
 
