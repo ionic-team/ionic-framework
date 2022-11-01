@@ -1,5 +1,6 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Listen, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
+import { printIonError, printIonWarning } from '@utils/logging';
 import { chevronForward } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -7,7 +8,6 @@ import type { AnimationBuilder, Color, CssClassMap, RouterDirection, StyleEventD
 import type { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAttributes, raf } from '../../utils/helpers';
-import { printIonError } from '../../utils/logging';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 import type { InputInputEventDetail } from '../input/input-interface';
 
@@ -19,8 +19,8 @@ import type { CounterFormatter } from './item-interface';
  * @slot - Content is placed between the named slots if provided without a slot.
  * @slot start - Content is placed to the left of the item text in LTR, and to the right in RTL.
  * @slot end - Content is placed to the right of the item text in LTR, and to the left in RTL.
- * @slot helper - Content is placed under the item and displayed when no error is detected.
- * @slot error - Content is placed under the item and displayed when an error is detected.
+ * @slot helper - Content is placed under the item and displayed when no error is detected. @deprecated Use the "helperText" property on ion-input or ion-textarea instead.
+ * @slot error - Content is placed under the item and displayed when an error is detected. @deprecated Use the "errorText" property on ion-input or ion-textarea instead.
  *
  * @part native - The native HTML button, anchor or div element that wraps all child elements.
  * @part detail-icon - The chevron icon for the item. Only applies when `detail="true"`.
@@ -207,8 +207,25 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   }
 
   componentDidLoad() {
+    const { el } = this;
+    const hasHelperSlot = el.querySelector('[slot="helper"]') !== null;
+    if (hasHelperSlot) {
+      printIonWarning(
+        'The "helper" slot has been deprecated in favor of using the "helperText" property on ion-input or ion-textarea',
+        el
+      );
+    }
+
+    const hasErrorSlot = el.querySelector('[slot="error"]') !== null;
+    if (hasErrorSlot) {
+      printIonWarning(
+        'The "error" slot has been deprecated in favor of using the "errorText" property on ion-input or ion-textarea',
+        el
+      );
+    }
+
     raf(() => {
-      this.inheritedAriaAttributes = inheritAttributes(this.el, ['aria-label']);
+      this.inheritedAriaAttributes = inheritAttributes(el, ['aria-label']);
       this.setMultipleInputs();
       this.focusable = this.isFocusable();
     });
