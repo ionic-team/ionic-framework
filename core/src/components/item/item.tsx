@@ -207,7 +207,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   }
 
   componentDidLoad() {
-    const { el } = this;
+    const { el, counter, counterFormatter } = this;
     const hasHelperSlot = el.querySelector('[slot="helper"]') !== null;
     if (hasHelperSlot) {
       printIonWarning(
@@ -220,6 +220,20 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     if (hasErrorSlot) {
       printIonWarning(
         'The "error" slot has been deprecated in favor of using the "errorText" property on ion-input or ion-textarea',
+        el
+      );
+    }
+
+    if (counter === true) {
+      printIonWarning(
+        'The "counter" property has been deprecated in favor of using the "counter" property on ion-input or ion-textarea.',
+        el
+      );
+    }
+
+    if (counterFormatter !== undefined) {
+      printIonWarning(
+        'The "counterFormatter" property has been deprecated in favor of using the "counterFormatter" property on ion-input or ion-textarea.',
         el
       );
     }
