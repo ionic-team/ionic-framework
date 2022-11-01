@@ -78,7 +78,6 @@
 
 .native-input {
   @include border-radius(var(--border-radius));
-  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
   @include text-inherit();
 
   display: inline-block;
@@ -119,6 +118,10 @@
   &::-ms-clear {
     display: none;
   }
+}
+
+:host(.legacy-input) .native-input {
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 }
 
 .native-input[disabled] {
@@ -211,11 +214,15 @@
 // Input Wrapper
 // ----------------------------------------------------------------
 .input-wrapper {
+   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+
   display: flex;
 
   flex-grow: 1;
 
   align-items: center;
+
+  background: inherit;
 }
 
 // Input Bottom Content
@@ -275,4 +282,22 @@
   white-space: nowrap;
 
   padding-inline-start: 16px;
+}
+
+// Input Label Placement
+// ----------------------------------------------------------------
+.label-placement-start {
+  flex-direction: row;
+}
+
+.label-placement-end {
+  flex-direction: row-reverse;
+}
+
+.label-placement-fixed label {
+  flex: 0 0 100px;
+
+  width: 100px;
+  min-width: 100px;
+  max-width: 200px;
 }

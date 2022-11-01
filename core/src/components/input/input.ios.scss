@@ -2,14 +2,22 @@
 @import "./input.ios.vars";
 
 :host {
-  --padding-top: #{$input-ios-padding-top};
-  --padding-end: #{$input-ios-padding-end};
-  --padding-bottom: #{$input-ios-padding-bottom};
-  --padding-start: #{$input-ios-padding-start};
+  --padding-top: 10px;
+  --padding-end: 10px;
+  --padding-bottom: 10px;
+  --padding-start: 10px;
+
   --border-width: #{$hairlines-width};
   --border-color: #{$item-ios-border-color};
 
   font-size: $input-ios-font-size;
+}
+
+:host(.legacy-input) {
+  --padding-top: #{$input-ios-padding-top};
+  --padding-end: #{$input-ios-padding-end};
+  --padding-bottom: #{$input-ios-padding-bottom};
+  --padding-start: #{$input-ios-padding-start};
 }
 
 :host-context(.item-label-stacked),

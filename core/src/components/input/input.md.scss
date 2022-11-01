@@ -6,14 +6,22 @@
 // --------------------------------------------------
 
 :host {
-  --padding-top: #{$input-md-padding-top};
-  --padding-end: #{$input-md-padding-end};
-  --padding-bottom: #{$input-md-padding-bottom};
-  --padding-start: #{$input-md-padding-start};
+  --padding-top: 10px;
+  --padding-end: 8px;
+  --padding-bottom: 10px;
+  --padding-start: 8px;
+
   --border-width: 1px;
   --border-color: #{$item-md-border-color};
 
   font-size: $input-md-font-size;
+}
+
+:host(.legacy-input) {
+  --padding-top: #{$input-md-padding-top};
+  --padding-end: #{$input-md-padding-end};
+  --padding-bottom: #{$input-md-padding-bottom};
+  --padding-start: #{$input-md-padding-start};
 }
 
 :host-context(.item-label-stacked),

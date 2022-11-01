@@ -557,6 +557,7 @@ export class Input implements ComponentInterface {
   }
 
   private renderInput() {
+    const { labelPlacement } = this;
     const mode = getIonMode(this);
     const value = this.getValue();
 
@@ -569,7 +570,10 @@ export class Input implements ComponentInterface {
           'has-focus': this.hasFocus,
         })}
       >
-        <div class="input-wrapper">
+        <div class={{
+          'input-wrapper': true,
+          [`label-placement-${labelPlacement}`]: true
+        }}>
           <label htmlFor={this.inputId}>{this.label}</label>
           <input
             class="native-input"
