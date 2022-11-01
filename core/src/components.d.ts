@@ -1110,7 +1110,7 @@ export namespace Components {
          */
         "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
         /**
-          * How to pack the label and the input within a line. This property only applies when the input and label are on the same line. As a result, it is ignored when `labelPlacement` is set to `'floating'` or `'stacked'`. `'start'`: The label and input are packed on the left in LTR and on the right in RTL. `'end'`: The label and input are packed on the right in LTR and on the left in RTL. `'space-between'`: The label and input are placed at either end of the line with empty space between the elements. Which end each element can be configured using the `'start'` or `'end'` values on the `labelPlacement` property.
+          * How to pack the label and the input within a line. This property only applies when the input and label are on the same line. As a result, it is ignored when `labelPlacement` is set to `'floating'` or `'stacked'`. `'start'`: The label and input are packed on the left in LTR and on the right in RTL. `'end'`: The label and input are packed on the right in LTR and on the left in RTL. `'space-between'`: The label and input are placed at either end of the line with empty space between the elements. Which end each element is on can be configured using the `'start'` or `'end'` values on the `labelPlacement` property.
          */
         "justify": 'start' | 'end' | 'space-between';
         /**
@@ -1118,9 +1118,9 @@ export namespace Components {
          */
         "label"?: string;
         /**
-          * Where to place the label relative to the input. `'start'`: The label will appear to the left of the input in LTR and to the right in RTL. `'end'`: The label will appear to the right of the input in LTR and to the left in RTL. `'floating'`: The label will appear smaller and above the input when the input is focused or it has a value. Otherwise it will appear on top of the input. `'stacked'`: The label will appear smaller and above the input regardless even when the input is blurred or has no value.
+          * Where to place the label relative to the input. `'start'`: The label will appear to the left of the input in LTR and to the right in RTL. `'end'`: The label will appear to the right of the input in LTR and to the left in RTL. `'floating'`: The label will appear smaller and above the input when the input is focused or it has a value. Otherwise it will appear on top of the input. `'stacked'`: The label will appear smaller and above the input regardless even when the input is blurred or has no value. `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
          */
-        "labelPlacement": 'start' | 'end' | 'floating' | 'stacked';
+        "labelPlacement": 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
         /**
           * The maximum value, which must not be less than its minimum (min attribute) value.
          */
@@ -4946,7 +4946,7 @@ declare namespace LocalJSX {
          */
         "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
         /**
-          * How to pack the label and the input within a line. This property only applies when the input and label are on the same line. As a result, it is ignored when `labelPlacement` is set to `'floating'` or `'stacked'`. `'start'`: The label and input are packed on the left in LTR and on the right in RTL. `'end'`: The label and input are packed on the right in LTR and on the left in RTL. `'space-between'`: The label and input are placed at either end of the line with empty space between the elements. Which end each element can be configured using the `'start'` or `'end'` values on the `labelPlacement` property.
+          * How to pack the label and the input within a line. This property only applies when the input and label are on the same line. As a result, it is ignored when `labelPlacement` is set to `'floating'` or `'stacked'`. `'start'`: The label and input are packed on the left in LTR and on the right in RTL. `'end'`: The label and input are packed on the right in LTR and on the left in RTL. `'space-between'`: The label and input are placed at either end of the line with empty space between the elements. Which end each element is on can be configured using the `'start'` or `'end'` values on the `labelPlacement` property.
          */
         "justify"?: 'start' | 'end' | 'space-between';
         /**
@@ -4954,9 +4954,9 @@ declare namespace LocalJSX {
          */
         "label"?: string;
         /**
-          * Where to place the label relative to the input. `'start'`: The label will appear to the left of the input in LTR and to the right in RTL. `'end'`: The label will appear to the right of the input in LTR and to the left in RTL. `'floating'`: The label will appear smaller and above the input when the input is focused or it has a value. Otherwise it will appear on top of the input. `'stacked'`: The label will appear smaller and above the input regardless even when the input is blurred or has no value.
+          * Where to place the label relative to the input. `'start'`: The label will appear to the left of the input in LTR and to the right in RTL. `'end'`: The label will appear to the right of the input in LTR and to the left in RTL. `'floating'`: The label will appear smaller and above the input when the input is focused or it has a value. Otherwise it will appear on top of the input. `'stacked'`: The label will appear smaller and above the input regardless even when the input is blurred or has no value. `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
          */
-        "labelPlacement"?: 'start' | 'end' | 'floating' | 'stacked';
+        "labelPlacement"?: 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
         /**
           * The maximum value, which must not be less than its minimum (min attribute) value.
          */
