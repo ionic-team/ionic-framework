@@ -32,10 +32,10 @@
   --placeholder-font-style: initial;
   --placeholder-font-weight: initial;
   --placeholder-opacity: .5;
-  --padding-top: 0;
-  --padding-end: 0;
-  --padding-bottom: 0;
-  --padding-start: 0;
+  --padding-top: 10px;
+  --padding-end: 0px;
+  --padding-bottom: 10px;
+  --padding-start: 0px;
   --background: transparent;
   --color: initial;
   --border-style: solid;
@@ -78,6 +78,7 @@
 
 .native-input {
   @include border-radius(var(--border-radius));
+  @include padding(0);
   @include text-inherit();
 
   display: inline-block;
