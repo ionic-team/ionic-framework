@@ -146,14 +146,6 @@ export class Input implements ComponentInterface {
   @Prop() helperText?: string;
 
   /**
-   * How to pack the label and the input within a line. This property only applies when the input and label are on the same line. As a result, it is ignored when `labelPlacement` is set to `'floating'` or `'stacked'`.
-   * `'start'`: The label and input are packed on the left in LTR and on the right in RTL.
-   * `'end'`: The label and input are packed on the right in LTR and on the left in RTL.
-   * `'space-between'`: The label and input are placed at either end of the line with empty space between the elements. Which end each element is on can be configured using the `'start'` or `'end'` values on the `labelPlacement` property.
-   */
-  @Prop() justify: 'start' | 'end' | 'space-between' = 'start';
-
-  /**
    * The visible label associated with the input.
    */
   @Prop() label?: string;
