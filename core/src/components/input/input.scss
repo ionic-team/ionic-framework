@@ -241,7 +241,7 @@
 // ----------------------------------------------------------------
 
 .input-bottom {
-  @include padding(5px, 0, 0, 0);
+  @include padding(5px, var(--padding-start), 0, var(--padding-end));
 
   display: flex;
 

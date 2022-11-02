@@ -55,6 +55,8 @@
   --background: #{$background-color-step-50};
   --border-color: #{$background-color-step-500};
   --border-radius: 4px;
+  --padding-start: 16px;
+  --padding-end: 16px;
 }
 
 :host(.input-fill-solid) .input-wrapper {
@@ -63,7 +65,6 @@
    * have a radius when using a solid fill.
    */
   @include border-radius(var(--border-radius), var(--border-radius), 0px, 0px);
-  @include padding(0px, 16px, 0px, 16px);
 }
 
 /**
