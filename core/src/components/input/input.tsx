@@ -540,12 +540,13 @@ export class Input implements ComponentInterface {
   }
 
   private renderInput() {
+    const { disabled, readonly, inputId } = this;
     const mode = getIonMode(this);
     const value = this.getValue();
 
     return (
       <Host
-        aria-disabled={this.disabled ? 'true' : null}
+        aria-disabled={disabled ? 'true' : null}
         class={createColorClasses(this.color, {
           [mode]: true,
           'has-value': this.hasValue(),
@@ -553,12 +554,12 @@ export class Input implements ComponentInterface {
         })}
       >
         <div class="input-wrapper">
-          <label htmlFor={this.inputId}>{this.label}</label>
+          <label htmlFor={inputId}>{this.label}</label>
           <input
             class="native-input"
             ref={(input) => (this.nativeInput = input)}
-            id={this.inputId}
-            disabled={this.disabled}
+            id={inputId}
+            disabled={disabled}
             accept={this.accept}
             autoCapitalize={this.autocapitalize}
             autoComplete={this.autocomplete}
@@ -574,7 +575,7 @@ export class Input implements ComponentInterface {
             name={this.name}
             pattern={this.pattern}
             placeholder={this.placeholder || ''}
-            readOnly={this.readonly}
+            readOnly={readonly}
             required={this.required}
             spellcheck={this.spellcheck}
             step={this.step}
@@ -588,7 +589,7 @@ export class Input implements ComponentInterface {
             onKeyDown={this.onKeydown}
             {...this.inheritedAttributes}
           />
-          {this.clearInput && !this.readonly && !this.disabled && (
+          {this.clearInput && !readonly && !disabled && (
             <button
               aria-label="reset"
               type="button"
