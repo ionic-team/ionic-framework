@@ -145,6 +145,12 @@ export class Input implements ComponentInterface {
   @Prop() errorText?: string;
 
   /**
+   * The fill for the item. If `'solid'` the item will have a background. If
+   * `'outline'` the item will be transparent with a border. Only available in `md` mode.
+   */
+  @Prop() fill?: 'outline' | 'solid';
+
+  /**
    * A hint to the browser for which keyboard to display.
    * Possible values: `"none"`, `"text"`, `"tel"`, `"url"`,
    * `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
@@ -155,14 +161,6 @@ export class Input implements ComponentInterface {
    * Text that is placed under the input and displayed when no error is detected.
    */
   @Prop() helperText?: string;
-
-  /**
-   * How to pack the label and the input within a line. This property only applies when the input and label are on the same line. As a result, it is ignored when `labelPlacement` is set to `'floating'` or `'stacked'`.
-   * `'start'`: The label and input are packed on the left in LTR and on the right in RTL.
-   * `'end'`: The label and input are packed on the right in LTR and on the left in RTL.
-   * `'space-between'`: The label and input are placed at either end of the line with empty space between the elements. Which end each element is on can be configured using the `'start'` or `'end'` values on the `labelPlacement` property.
-   */
-  @Prop() justify: 'start' | 'end' | 'space-between' = 'start';
 
   /**
    * The visible label associated with the input.
@@ -232,7 +230,7 @@ export class Input implements ComponentInterface {
   @Prop() required = false;
 
   /**
-   * The shape of the input. If "round" it will have increased border radius.
+   * The shape of the input. If "round" it will have an increased border radius.
    */
   @Prop() shape?: 'round';
 
@@ -557,12 +555,13 @@ export class Input implements ComponentInterface {
   }
 
   private renderInput() {
+    const { disabled, readonly, inputId } = this;
     const mode = getIonMode(this);
     const value = this.getValue();
 
     return (
       <Host
-        aria-disabled={this.disabled ? 'true' : null}
+        aria-disabled={disabled ? 'true' : null}
         class={createColorClasses(this.color, {
           [mode]: true,
           'has-value': this.hasValue(),
@@ -570,12 +569,12 @@ export class Input implements ComponentInterface {
         })}
       >
         <div class="input-wrapper">
-          <label htmlFor={this.inputId}>{this.label}</label>
+          <label htmlFor={inputId}>{this.label}</label>
           <input
             class="native-input"
             ref={(input) => (this.nativeInput = input)}
-            id={this.inputId}
-            disabled={this.disabled}
+            id={inputId}
+            disabled={disabled}
             accept={this.accept}
             autoCapitalize={this.autocapitalize}
             autoComplete={this.autocomplete}
@@ -591,7 +590,7 @@ export class Input implements ComponentInterface {
             name={this.name}
             pattern={this.pattern}
             placeholder={this.placeholder || ''}
-            readOnly={this.readonly}
+            readOnly={readonly}
             required={this.required}
             spellcheck={this.spellcheck}
             step={this.step}
@@ -605,7 +604,7 @@ export class Input implements ComponentInterface {
             onKeyDown={this.onKeydown}
             {...this.inheritedAttributes}
           />
-          {this.clearInput && !this.readonly && !this.disabled && (
+          {this.clearInput && !readonly && !disabled && (
             <button
               aria-label="reset"
               type="button"
