@@ -218,6 +218,8 @@
 // ----------------------------------------------------------------
 
 .input-wrapper {
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+
   display: flex;
 
   flex-grow: 1;
