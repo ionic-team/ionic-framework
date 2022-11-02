@@ -87,16 +87,16 @@ export const CoreDelegate = () => {
 
       await new Promise((resolve) => componentOnReady(el, resolve));
     } else if (BaseComponent.children.length > 0) {
-      const root = BaseComponent.children[0] as HTMLElement & { __delegateHost?: boolean };
-      if (root.__delegateHost !== true) {
+      const root = BaseComponent.children[0] as HTMLElement;
+      if (!root.classList.contains('ion-delegate-host')) {
         /**
          * If the root element is not a delegate host, it means
          * that the overlay has not been presented yet and we need
          * to create the containing element with the specified classes.
          */
         const el = BaseComponent.ownerDocument?.createElement('div');
-        // Internal flag to track if the element is a delegate host
-        el.__delegateHost = true;
+        // Add a class to track if the root element was created by the delegate.
+        el.classList.add('ion-delegate-host');
         cssClasses.forEach((c) => el.classList.add(c));
         // Move each child from the original template to the new parent element.
         el.append(...BaseComponent.children);

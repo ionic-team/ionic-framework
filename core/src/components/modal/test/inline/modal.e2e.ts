@@ -47,7 +47,7 @@ test.describe('modal: inline', () => {
     await ionModalDidPresent.next();
 
     // Verifies that the host element exists with the .ion-page class
-    expect(await modal.evaluate((el: HTMLIonModalElement) => el.firstElementChild!.className)).toBe('ion-page');
+    expect(await modal.evaluate((el: HTMLIonModalElement) => el.firstElementChild!.className)).toContain('ion-page');
 
     await modal.evaluate((el: HTMLIonModalElement) => el.dismiss());
     await ionModalDidDismiss.next();
@@ -56,9 +56,9 @@ test.describe('modal: inline', () => {
     await ionModalDidPresent.next();
 
     // Verifies that presenting the overlay again does not create a new host element
-    expect(await modal.evaluate((el: HTMLIonModalElement) => el.firstElementChild!.className)).toBe('ion-page');
+    expect(await modal.evaluate((el: HTMLIonModalElement) => el.firstElementChild!.className)).toContain('ion-page');
     expect(
       await modal.evaluate((el: HTMLIonModalElement) => el.firstElementChild!.firstElementChild!.className)
-    ).not.toBe('ion-page');
+    ).not.toContain('ion-page');
   });
 });
