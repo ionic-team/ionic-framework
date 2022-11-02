@@ -4,14 +4,15 @@ export const relocateInput = (
   componentEl: HTMLElement,
   inputEl: HTMLInputElement | HTMLTextAreaElement,
   shouldRelocate: boolean,
-  inputRelativeY = 0
+  inputRelativeY = 0,
+  disabledClonedInput = false
 ) => {
   if (cloneMap.has(componentEl) === shouldRelocate) {
     return;
   }
 
   if (shouldRelocate) {
-    addClone(componentEl, inputEl, inputRelativeY);
+    addClone(componentEl, inputEl, inputRelativeY, disabledClonedInput);
   } else {
     removeClone(componentEl, inputEl);
   }
@@ -24,7 +25,8 @@ export const isFocused = (input: HTMLInputElement | HTMLTextAreaElement): boolea
 const addClone = (
   componentEl: HTMLElement,
   inputEl: HTMLInputElement | HTMLTextAreaElement,
-  inputRelativeY: number
+  inputRelativeY: number,
+  disabledClonedInput = false
 ) => {
   // this allows for the actual input to receive the focus from
   // the user's touch event, but before it receives focus, it
@@ -35,12 +37,29 @@ const addClone = (
   // while the native input fakes out the browser by relocating itself
   // before it receives the actual focus event
   // We hide the focused input (with the visible caret) invisible by making it scale(0),
-  const parentEl = inputEl.parentNode!;
+ const parentEl = inputEl.parentNode!;
 
   // DOM WRITES
-  const clonedEl = inputEl.cloneNode(false) as HTMLElement;
+  const clonedEl = inputEl.cloneNode(false) as HTMLInputElement | HTMLTextAreaElement;
   clonedEl.classList.add('cloned-input');
   clonedEl.tabIndex = -1;
+
+  /**
+   * Making the cloned input disabled prevents
+   * Chrome for Android from still scrolling
+   * the entire page since this cloned input
+   * will briefly be hidden by the keyboard
+   * even though it is not focused.
+   *
+   * This is not needed on iOS. While this
+   * does not cause functional issues on iOS,
+   * the input still appears slightly dimmed even
+   * if we set opacity: 1.
+   * As a result, `disabledClonedInput
+   */
+  if (disabledClonedInput) {
+    clonedEl.disabled = true;
+  }
   parentEl.appendChild(clonedEl);
   cloneMap.set(componentEl, clonedEl);
 
