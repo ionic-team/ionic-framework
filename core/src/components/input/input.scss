@@ -84,6 +84,7 @@
 
 .native-input {
   @include border-radius(var(--border-radius));
+  @include padding(0, 0, 0, 0);
   @include text-inherit();
 
   display: inline-block;
@@ -93,8 +94,6 @@
   width: 100%;
   max-width: 100%;
   max-height: 100%;
-
-  padding: 0px;
 
   border: 0;
 
