@@ -12,8 +12,10 @@ const SCROLL_ASSIST = true;
 const SCROLL_PADDING = true;
 const HIDE_CARET = true;
 
-export const startInputShims = (config: Config) => {
+export const startInputShims = (config: Config, platform: 'ios' | 'android') => {
   const doc = document;
+
+  console.log('got plt', platform);
   const keyboardHeight = config.getNumber('keyboardHeight', 290);
   const scrollAssist = config.getBoolean('scrollAssist', true);
   const hideCaret = config.getBoolean('hideCaretOnScroll', true);

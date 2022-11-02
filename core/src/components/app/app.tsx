@@ -25,7 +25,12 @@ export class App implements ComponentInterface {
           import('../../utils/status-tap').then((module) => module.startStatusTap());
         }
         if (config.getBoolean('inputShims', needInputShims())) {
-          import('../../utils/input-shims/input-shims').then((module) => module.startInputShims(config));
+          /**
+           * needInputShims() ensures that only iOS and Android
+           * platforms proceed into this block.
+           */
+          const platform = isPlatform(window, 'ios') ? 'ios' : 'android';
+          import('../../utils/input-shims/input-shims').then((module) => module.startInputShims(config, platform));
         }
         const hardwareBackButtonModule = await import('../../utils/hardware-back-button');
         if (config.getBoolean('hardwareBackButton', isHybrid)) {
