@@ -92,6 +92,7 @@ export namespace Components {
           * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
          */
         "cssClass"?: string | string[];
+        "delegate"?: FrameworkDelegate;
         /**
           * Dismiss the action sheet overlay after it has been presented.
           * @param data Any data to emit in the dismiss events.
@@ -102,6 +103,7 @@ export namespace Components {
           * Animation to use when the action sheet is presented.
          */
         "enterAnimation"?: AnimationBuilder;
+        "hasController": boolean;
         /**
           * Title for the action sheet.
          */
@@ -110,6 +112,10 @@ export namespace Components {
           * Additional attributes to pass to the action sheet.
          */
         "htmlAttributes"?: { [key: string]: any };
+        /**
+          * If `true`, the action sheet will open. If `false`, the action sheet will close. Use this if you need finer grained control over presentation, otherwise just use the actionSheetController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the action sheet dismisses. You will need to do that in your code.
+         */
+        "isOpen": boolean;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -143,6 +149,10 @@ export namespace Components {
           * If `true`, the action sheet will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent": boolean;
+        /**
+          * An ID corresponding to the trigger element that causes the action sheet to open when clicked.
+         */
+        "trigger": string | undefined;
     }
     interface IonAlert {
         /**
@@ -3861,10 +3871,12 @@ declare namespace LocalJSX {
           * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
          */
         "cssClass"?: string | string[];
+        "delegate"?: FrameworkDelegate;
         /**
           * Animation to use when the action sheet is presented.
          */
         "enterAnimation"?: AnimationBuilder;
+        "hasController"?: boolean;
         /**
           * Title for the action sheet.
          */
@@ -3873,6 +3885,10 @@ declare namespace LocalJSX {
           * Additional attributes to pass to the action sheet.
          */
         "htmlAttributes"?: { [key: string]: any };
+        /**
+          * If `true`, the action sheet will open. If `false`, the action sheet will close. Use this if you need finer grained control over presentation, otherwise just use the actionSheetController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the action sheet dismisses. You will need to do that in your code.
+         */
+        "isOpen"?: boolean;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -3886,21 +3902,37 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * Emitted after the alert has dismissed.
+          * Emitted after the action sheet has dismissed. Shorthand for ionActionSheetDidDismiss.
+         */
+        "onDidDismiss"?: (event: IonActionSheetCustomEvent<OverlayEventDetail>) => void;
+        /**
+          * Emitted after the action sheet has presented. Shorthand for ionActionSheetWillDismiss.
+         */
+        "onDidPresent"?: (event: IonActionSheetCustomEvent<void>) => void;
+        /**
+          * Emitted after the action sheet has dismissed.
          */
         "onIonActionSheetDidDismiss"?: (event: IonActionSheetCustomEvent<OverlayEventDetail>) => void;
         /**
-          * Emitted after the alert has presented.
+          * Emitted after the action sheet has presented.
          */
         "onIonActionSheetDidPresent"?: (event: IonActionSheetCustomEvent<void>) => void;
         /**
-          * Emitted before the alert has dismissed.
+          * Emitted before the action sheet has dismissed.
          */
         "onIonActionSheetWillDismiss"?: (event: IonActionSheetCustomEvent<OverlayEventDetail>) => void;
         /**
-          * Emitted before the alert has presented.
+          * Emitted before the action sheet has presented.
          */
         "onIonActionSheetWillPresent"?: (event: IonActionSheetCustomEvent<void>) => void;
+        /**
+          * Emitted before the action sheet has dismissed. Shorthand for ionActionSheetWillDismiss.
+         */
+        "onWillDismiss"?: (event: IonActionSheetCustomEvent<OverlayEventDetail>) => void;
+        /**
+          * Emitted before the action sheet has presented. Shorthand for ionActionSheetWillPresent.
+         */
+        "onWillPresent"?: (event: IonActionSheetCustomEvent<void>) => void;
         "overlayIndex": number;
         /**
           * Subtitle for the action sheet.
@@ -3910,6 +3942,10 @@ declare namespace LocalJSX {
           * If `true`, the action sheet will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent"?: boolean;
+        /**
+          * An ID corresponding to the trigger element that causes the action sheet to open when clicked.
+         */
+        "trigger"?: string | undefined;
     }
     interface IonAlert {
         /**
