@@ -1347,20 +1347,26 @@ ion-toast,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefin
 ion-toast,prop,header,string | undefined,undefined,false,false
 ion-toast,prop,htmlAttributes,undefined | { [key: string]: any; },undefined,false,false
 ion-toast,prop,icon,string | undefined,undefined,false,false
+ion-toast,prop,isOpen,boolean,false,false,false
 ion-toast,prop,keyboardClose,boolean,false,false,false
 ion-toast,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-toast,prop,message,IonicSafeString | string | undefined,undefined,false,false
 ion-toast,prop,mode,"ios" | "md",undefined,false,false
 ion-toast,prop,position,"bottom" | "middle" | "top",'bottom',false,false
 ion-toast,prop,translucent,boolean,false,false,false
+ion-toast,prop,trigger,string | undefined,undefined,false,false
 ion-toast,method,dismiss,dismiss(data?: any, role?: string) => Promise<boolean>
 ion-toast,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-toast,method,onWillDismiss,onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-toast,method,present,present() => Promise<void>
+ion-toast,event,didDismiss,OverlayEventDetail<any>,true
+ion-toast,event,didPresent,void,true
 ion-toast,event,ionToastDidDismiss,OverlayEventDetail<any>,true
 ion-toast,event,ionToastDidPresent,void,true
 ion-toast,event,ionToastWillDismiss,OverlayEventDetail<any>,true
 ion-toast,event,ionToastWillPresent,void,true
+ion-toast,event,willDismiss,OverlayEventDetail<any>,true
+ion-toast,event,willPresent,void,true
 ion-toast,css-prop,--background
 ion-toast,css-prop,--border-color
 ion-toast,css-prop,--border-radius

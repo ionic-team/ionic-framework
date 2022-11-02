@@ -72,7 +72,7 @@ describe('Overlays', () => {
 
     cy.get('ion-toast').shadow().find('button').click();
 
-    cy.get('ion-toast').should('not.exist');
+    cy.get('ion-toast').should('not.be.visible');
   });
 
   it(`should open and close ion-alert via component`, () => {
@@ -104,7 +104,7 @@ describe('Overlays', () => {
 
     cy.get('ion-toast').shadow().find('button').click();
 
-    cy.get('ion-toast').should('not.exist');
+    cy.get('ion-toast').should('not.be.visible');
   });
 
   it('should pass props to modal via controller', () => {
