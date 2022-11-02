@@ -37,7 +37,7 @@ const addClone = (
   // while the native input fakes out the browser by relocating itself
   // before it receives the actual focus event
   // We hide the focused input (with the visible caret) invisible by making it scale(0),
- const parentEl = inputEl.parentNode!;
+  const parentEl = inputEl.parentNode!;
 
   // DOM WRITES
   const clonedEl = inputEl.cloneNode(false) as HTMLInputElement | HTMLTextAreaElement;

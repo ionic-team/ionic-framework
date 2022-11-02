@@ -14,8 +14,9 @@ const HIDE_CARET = true;
 
 export const startInputShims = (config: Config, platform: 'ios' | 'android') => {
   const doc = document;
-
   const isIOS = platform === 'ios';
+  const isAndroid = platform === 'android';
+
   /**
    * Hide Caret and Input Blurring are needed on iOS.
    * Scroll Assist and Scroll Padding are needed on iOS and Android
@@ -62,7 +63,7 @@ export const startInputShims = (config: Config, platform: 'ios' | 'android') => 
       scrollAssist &&
       !scrollAssistMap.has(componentEl)
     ) {
-      const rmFn = enableScrollAssist(componentEl, inputEl, scrollEl, footerEl, keyboardHeight);
+      const rmFn = enableScrollAssist(componentEl, inputEl, scrollEl, footerEl, keyboardHeight, isAndroid);
       scrollAssistMap.set(componentEl, rmFn);
     }
   };
