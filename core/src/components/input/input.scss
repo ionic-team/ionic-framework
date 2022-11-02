@@ -70,6 +70,7 @@
 
 :host(.legacy-input) .native-input {
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+  @include border-radius(var(--border-radius));
 }
 
 :host-context(ion-item:not(.item-label)) {
@@ -84,7 +85,6 @@
 // --------------------------------------------------
 
 .native-input {
-  @include border-radius(var(--border-radius));
   @include padding(0, 0, 0, 0);
   @include text-inherit();
 
