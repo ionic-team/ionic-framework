@@ -20,11 +20,9 @@ test.describe('input: fill', () => {
       `);
 
       const input = page.locator('ion-input');
-      expect(await input.screenshot()).toMatchSnapshot(
-        `input-fill-solid-${page.getSnapshotSettings()}.png`
-      );
-    })
-  })
+      expect(await input.screenshot()).toMatchSnapshot(`input-fill-solid-${page.getSnapshotSettings()}.png`);
+    });
+  });
 
   test.describe('input: fill shaped solid', () => {
     test('should not have visual regressions', async ({ page }) => {
@@ -41,9 +39,7 @@ test.describe('input: fill', () => {
       `);
 
       const input = page.locator('ion-input');
-      expect(await input.screenshot()).toMatchSnapshot(
-        `input-fill-shaped-solid-${page.getSnapshotSettings()}.png`
-      );
-    })
-  })
-})
+      expect(await input.screenshot()).toMatchSnapshot(`input-fill-shaped-solid-${page.getSnapshotSettings()}.png`);
+    });
+  });
+});
