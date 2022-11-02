@@ -23,6 +23,17 @@ test.describe('input: label placement end', () => {
   });
 });
 
+test.describe('input: label placement fixed', () => {
+  test('label should appear on the starting side of the input and have a fixed width', async ({ page }) => {
+    await page.setContent(`
+      <ion-input label="Email" value="example@ionic.io" label-placement="fixed"></ion-input>
+    `);
+
+    const input = page.locator('ion-input');
+    expect(await input.screenshot()).toMatchSnapshot(`input-placement-fixed-${page.getSnapshotSettings()}.png`);
+  });
+});
+
 test.describe('input: label placement stacked', () => {
   test('label should appear above the input when there is a value', async ({ page }) => {
     await page.setContent(`

@@ -355,6 +355,8 @@
  * on the right in RTL. Label also has a fixed width.
  */
 .label-placement-fixed label {
+  @include margin(0, 0, 0, 0);
+
   flex: 0 0 100px;
 
   width: 100px;
