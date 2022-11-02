@@ -15,11 +15,16 @@ const HIDE_CARET = true;
 export const startInputShims = (config: Config, platform: 'ios' | 'android') => {
   const doc = document;
 
-  console.log('got plt', platform);
+  const isIOS = platform === 'ios';
+  /**
+   * Hide Caret and Input Blurring are needed on iOS.
+   * Scroll Assist and Scroll Padding are needed on iOS and Android
+   * with Chrome web browser (not Chrome webview).
+   */
   const keyboardHeight = config.getNumber('keyboardHeight', 290);
   const scrollAssist = config.getBoolean('scrollAssist', true);
-  const hideCaret = config.getBoolean('hideCaretOnScroll', true);
-  const inputBlurring = config.getBoolean('inputBlurring', true);
+  const hideCaret = config.getBoolean('hideCaretOnScroll', isIOS);
+  const inputBlurring = config.getBoolean('inputBlurring', isIOS);
   const scrollPadding = config.getBoolean('scrollPadding', true);
   const inputs = Array.from(doc.querySelectorAll('ion-input, ion-textarea')) as HTMLElement[];
 
