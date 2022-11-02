@@ -47,3 +47,48 @@
 .input-wrapper {
   min-height: 56px;
 }
+
+// Input Fill: Solid
+// ----------------------------------------------------------------
+
+:host(.input-fill-solid) {
+  --background: #{$background-color-step-50};
+  --border-color: #{$background-color-step-500};
+  --border-radius: 4px;
+}
+
+:host(.input-fill-solid) .input-wrapper {
+  /**
+   * Only the top left and top right borders should.
+   * have a radius when using a solid fill.
+   */
+  @include border-radius(var(--border-radius), var(--border-radius), 0px, 0px);
+  @include padding(0px, 16px, 0px, 16px);
+}
+
+/**
+ * Background and border should be
+ * slightly darker on hover.
+ */
+@media (any-hover: hover) {
+  :host(.input-fill-solid:hover) {
+    --background: #{$background-color-step-100};
+    --border-color: #{$background-color-step-750};
+  }
+}
+
+/**
+ * Background and border should be
+ * much darker on focus.
+ */
+:host(.input-fill-solid.has-focus) {
+  --background: #{$background-color-step-150};
+  --border-color: #{$background-color-step-750};
+}
+
+// Input Shape Rounded
+// ----------------------------------------------------------------
+
+:host(.input-shape-round) {
+  --border-radius: 16px;
+}

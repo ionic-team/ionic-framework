@@ -52,7 +52,6 @@
   /* stylelint-disable-next-line all */
   padding: 0 !important;
 
-  background: var(--background);
   color: var(--color);
 
   font-family: $font-family-base;
@@ -65,6 +64,8 @@
 
   flex: 1;
   align-items: center;
+
+  background: var(--background);
 }
 
 :host-context(ion-item:not(.item-label)) {
@@ -214,6 +215,8 @@
 // ----------------------------------------------------------------
 
 .input-wrapper {
+  @include border-radius(var(--border-radius));
+
   display: flex;
 
   flex-grow: 1;
@@ -222,7 +225,11 @@
 
   height: 100%;
 
-  background: inherit;
+  transition: background-color 15ms linear;
+
+  border-bottom: var(--border-width) var(--border-style) var(--border-color);
+
+  background: var(--background);
 }
 
 // Input Bottom Content
@@ -234,8 +241,6 @@
   display: flex;
 
   justify-content: space-between;
-
-  border-top: var(--border-width) var(--border-style) var(--border-color);
 
   font-size: 12px;
 }

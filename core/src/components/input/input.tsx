@@ -555,7 +555,7 @@ export class Input implements ComponentInterface {
   }
 
   private renderInput() {
-    const { disabled, readonly, inputId, labelPlacement } = this;
+    const { disabled, fill, readonly, shape, inputId, labelPlacement } = this;
     const mode = getIonMode(this);
     const value = this.getValue();
 
@@ -566,6 +566,8 @@ export class Input implements ComponentInterface {
           [mode]: true,
           'has-value': this.hasValue(),
           'has-focus': this.hasFocus,
+          [`input-fill-${fill}`]: fill !== undefined,
+          [`input-shape-${shape}`]: shape !== undefined,
         })}
       >
         <div
