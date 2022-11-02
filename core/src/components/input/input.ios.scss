@@ -20,6 +20,15 @@
 .input-clear-icon {
   @include svg-background-image($input-ios-input-clear-icon-svg);
 
+  @supports (mask-image: url()) {
+    @include svg-mask-image($input-ios-input-clear-icon-svg);
+    background-color: $input-ios-input-clear-icon-color;
+    background-image: none;
+    mask-size: $input-ios-input-clear-icon-size;
+    mask-repeat: no-repeat;
+    mask-position: center;
+  }
+
   width: $input-ios-input-clear-icon-width;
   height: $input-ios-input-clear-icon-width;
 
