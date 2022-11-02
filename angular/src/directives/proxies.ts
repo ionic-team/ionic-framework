@@ -1832,6 +1832,7 @@ export class IonText {
 }
 
 import type { TextareaChangeEventDetail as ITextareaTextareaChangeEventDetail } from '@ionic/core';
+import type { TextareaInputEventDetail as ITextareaTextareaInputEventDetail } from '@ionic/core';
 export declare interface IonTextarea extends Components.IonTextarea {
   /**
    * The `ionChange` event is fired for `<ion-textarea>` elements when the user
@@ -1849,7 +1850,7 @@ has been changed.
 When `clearOnEdit` is enabled, the `ionInput` event will be fired when
 the user clears the textarea by performing a keydown event. 
    */
-  ionInput: EventEmitter<CustomEvent<InputEvent>>;
+  ionInput: EventEmitter<CustomEvent<ITextareaTextareaInputEventDetail>>;
   /**
    * Emitted when the input loses focus. 
    */
