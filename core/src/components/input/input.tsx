@@ -53,7 +53,7 @@ export class Input implements ComponentInterface {
 
   @State() hasFocus = false;
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonInputElement;
 
   /**
    * The color to use from your application's color palette.
