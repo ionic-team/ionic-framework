@@ -219,6 +219,7 @@
 // ----------------------------------------------------------------
 
 .input-wrapper {
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
   @include border-radius(var(--border-radius));
 
   display: flex;
