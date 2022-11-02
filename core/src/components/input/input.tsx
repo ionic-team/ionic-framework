@@ -213,7 +213,7 @@ export class Input implements ComponentInterface {
   @Prop() required = false;
 
   /**
-   * The shape of the input. If "round" it will have increased border radius.
+   * The shape of the input. If "round" it will have an increased border radius.
    */
   @Prop() shape?: 'round';
 
