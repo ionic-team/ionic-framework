@@ -98,7 +98,7 @@ describe('Overlays', () => {
   });
 
   it(`should open and close ion-action-sheet via component`, () => {
-    testComponent('ion-action-sheet');
+    testInlineOverlay('ion-action-sheet');
   });
 
   it(`should open and close ion-loading via component`, () => {
