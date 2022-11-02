@@ -1,7 +1,6 @@
 @import "./input";
 @import "./input.md.vars";
 
-
 // Material Design Input
 // --------------------------------------------------
 
@@ -23,6 +22,15 @@
 
 .input-clear-icon {
   @include svg-background-image($input-md-input-clear-icon-svg);
+
+  @supports (mask-image: url()) {
+    @include svg-mask-image($input-md-input-clear-icon-svg);
+    background-color: $input-md-input-clear-icon-color;
+    background-image: none;
+    mask-size: $input-md-input-clear-icon-size;
+    mask-repeat: no-repeat;
+    mask-position: center;
+  }
 
   width: $input-md-input-clear-icon-width;
   height: $input-md-input-clear-icon-width;

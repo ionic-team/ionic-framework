@@ -206,16 +206,17 @@
 }
 
 
-// SVG Background Image Mixin
+// SVG Image Mixin
+// @param {string} $property
 // @param {string} $svg
 // ----------------------------------------------------------
-@mixin svg-background-image($svg, $flip-rtl: false) {
+@mixin svg-property-value($property, $svg, $flip-rtl: false) {
   $url: url-encode($svg);
   $viewBox: str-split(str-extract($svg, "viewBox='", "'"), " ");
 
   @if $flip-rtl != true or $viewBox == null {
     @include multi-dir() {
-      background-image: url("data:image/svg+xml;charset=utf-8,#{$url}");
+      #{$property}: url("data:image/svg+xml;charset=utf-8,#{$url}");
     }
   } @else {
     $transform: "transform='translate(#{nth($viewBox, 3)}, 0) scale(-1, 1)'";
@@ -225,13 +226,27 @@
     $flipped-url: str-replace($flipped-url, "<polygon", "<polygon #{$transform}");
     $flipped-url: url-encode($flipped-url);
 
-    @include ltr () {
-      background-image: url("data:image/svg+xml;charset=utf-8,#{$url}");
+    @include ltr() {
+      #{$property}: url("data:image/svg+xml;charset=utf-8,#{$url}");
     }
     @include rtl() {
-      background-image: url("data:image/svg+xml;charset=utf-8,#{$flipped-url}");
+      #{$property}: url("data:image/svg+xml;charset=utf-8,#{$flipped-url}");
     }
   }
+}
+
+// SVG Background Image Mixin
+// @param {string} $svg
+// ----------------------------------------------------------
+@mixin svg-background-image($svg, $flip-rtl: false) {
+  @include svg-property-value(background-image, $svg, $flip-rtl);
+}
+
+// SVG Mask Image Mixin
+// @param {string} $svg
+// ----------------------------------------------------------
+@mixin svg-mask-image($svg, $flip-rtl: false) {
+  @include svg-property-value(mask-image, $svg, $flip-rtl);
 }
 
 // Add property horizontal
