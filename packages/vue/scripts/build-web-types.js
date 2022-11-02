@@ -12,8 +12,6 @@ const excludeComponents = [
   "ion-icon",
   "ion-nav",
   "ion-nav-link",
-  "ion-tabs",
-  "ion-tab-bar",
   "ion-router",
   "ion-route-redirect",
   "ion-router-link",
