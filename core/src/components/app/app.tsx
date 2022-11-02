@@ -73,7 +73,34 @@ export class App implements ComponentInterface {
 }
 
 const needInputShims = () => {
-  return isPlatform(window, 'ios') && isPlatform(window, 'mobile');
+  /**
+   * iOS always needs input shims
+   */
+  const needsShimsIOS = isPlatform(window, 'ios') && isPlatform(window, 'mobile');
+  if (needsShimsIOS) {
+    return true;
+  }
+
+  /**
+   * Android only needs input shims when running
+   * in the browser and only if the browser is using the
+   * new Chrome 108+ resize behavior: https://developer.chrome.com/blog/viewport-resize-behavior/
+   */
+  const isAndroidMobileWeb = isPlatform(window, 'android') && isPlatform(window, 'mobileweb');
+  if (isAndroidMobileWeb) {
+    const meta = document.querySelector('meta[name="viewport"]');
+    if (meta?.hasAttribute('content')) {
+      const content = meta.getAttribute('content') ?? '';
+      const hasLegacyChromeResize = content.includes('interactive-widget') && content.includes('resizes-content');
+      if (hasLegacyChromeResize) {
+        return false;
+      } else {
+        // TODO check for interactive-widget support
+        return true;
+      }
+    }
+  }
+  return false;
 };
 
 const rIC = (callback: () => void) => {
