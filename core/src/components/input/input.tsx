@@ -53,7 +53,7 @@ export class Input implements ComponentInterface {
 
   @State() hasFocus = false;
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonInputElement;
 
   /**
    * The color to use from your application's color palette.
@@ -143,6 +143,12 @@ export class Input implements ComponentInterface {
   @Prop() errorText?: string;
 
   /**
+   * The fill for the item. If `'solid'` the item will have a background. If
+   * `'outline'` the item will be transparent with a border. Only available in `md` mode.
+   */
+  @Prop() fill?: 'outline' | 'solid';
+
+  /**
    * A hint to the browser for which keyboard to display.
    * Possible values: `"none"`, `"text"`, `"tel"`, `"url"`,
    * `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
@@ -153,14 +159,6 @@ export class Input implements ComponentInterface {
    * Text that is placed under the input and displayed when no error is detected.
    */
   @Prop() helperText?: string;
-
-  /**
-   * How to pack the label and the input within a line. This property only applies when the input and label are on the same line. As a result, it is ignored when `labelPlacement` is set to `'floating'` or `'stacked'`.
-   * `'start'`: The label and input are packed on the left in LTR and on the right in RTL.
-   * `'end'`: The label and input are packed on the right in LTR and on the left in RTL.
-   * `'space-between'`: The label and input are placed at either end of the line with empty space between the elements. Which end each element is on can be configured using the `'start'` or `'end'` values on the `labelPlacement` property.
-   */
-  @Prop() justify: 'start' | 'end' | 'space-between' = 'start';
 
   /**
    * The visible label associated with the input.
@@ -230,7 +228,7 @@ export class Input implements ComponentInterface {
   @Prop() required = false;
 
   /**
-   * The shape of the input. If "round" it will have increased border radius.
+   * The shape of the input. If "round" it will have an increased border radius.
    */
   @Prop() shape?: 'round';
 
