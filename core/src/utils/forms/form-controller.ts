@@ -4,8 +4,8 @@
  * @internal
  * @prop el: The Ionic form component to reference
  */
-export const createLegacyFormController = (el: HTMLElement): LegacyFormController => {
-  const controlEl: HTMLElement = el;
+export const createLegacyFormController = (el: HTMLIonInputElement): LegacyFormController => {
+  const controlEl: HTMLIonInputElement = el;
   let legacyControl = true;
 
   /**
@@ -14,7 +14,7 @@ export const createLegacyFormController = (el: HTMLElement): LegacyFormControlle
    * by either using the new `label` property or setting `aria-label`
    * on the control.
    */
-  const hasLabelProp = (controlEl as any).label !== undefined;
+  const hasLabelProp = controlEl.label !== undefined;
   const hasAriaLabelAttribute = controlEl.hasAttribute('aria-label');
 
   legacyControl = !hasLabelProp && !hasAriaLabelAttribute;

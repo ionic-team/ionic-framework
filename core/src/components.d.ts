@@ -1098,6 +1098,10 @@ export namespace Components {
          */
         "errorText"?: string;
         /**
+          * The fill for the item. If `'solid'` the item will have a background. If `'outline'` the item will be transparent with a border. Only available in `md` mode.
+         */
+        "fill"?: 'outline' | 'solid';
+        /**
           * Returns the native `<input>` element used under the hood.
          */
         "getInputElement": () => Promise<HTMLInputElement>;
@@ -1109,10 +1113,6 @@ export namespace Components {
           * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
          */
         "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
-        /**
-          * How to pack the label and the input within a line. This property only applies when the input and label are on the same line. As a result, it is ignored when `labelPlacement` is set to `'floating'` or `'stacked'`. `'start'`: The label and input are packed on the left in LTR and on the right in RTL. `'end'`: The label and input are packed on the right in LTR and on the left in RTL. `'space-between'`: The label and input are placed at either end of the line with empty space between the elements. Which end each element is on can be configured using the `'start'` or `'end'` values on the `labelPlacement` property.
-         */
-        "justify": 'start' | 'end' | 'space-between';
         /**
           * The visible label associated with the input.
          */
@@ -1170,7 +1170,7 @@ export namespace Components {
          */
         "setFocus": () => Promise<void>;
         /**
-          * The shape of the input. If "round" it will have increased border radius.
+          * The shape of the input. If "round" it will have an increased border radius.
          */
         "shape"?: 'round';
         /**
@@ -4936,6 +4936,10 @@ declare namespace LocalJSX {
          */
         "errorText"?: string;
         /**
+          * The fill for the item. If `'solid'` the item will have a background. If `'outline'` the item will be transparent with a border. Only available in `md` mode.
+         */
+        "fill"?: 'outline' | 'solid';
+        /**
           * Text that is placed under the input and displayed when no error is detected.
          */
         "helperText"?: string;
@@ -4943,10 +4947,6 @@ declare namespace LocalJSX {
           * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
          */
         "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
-        /**
-          * How to pack the label and the input within a line. This property only applies when the input and label are on the same line. As a result, it is ignored when `labelPlacement` is set to `'floating'` or `'stacked'`. `'start'`: The label and input are packed on the left in LTR and on the right in RTL. `'end'`: The label and input are packed on the right in LTR and on the left in RTL. `'space-between'`: The label and input are placed at either end of the line with empty space between the elements. Which end each element is on can be configured using the `'start'` or `'end'` values on the `labelPlacement` property.
-         */
-        "justify"?: 'start' | 'end' | 'space-between';
         /**
           * The visible label associated with the input.
          */
@@ -5020,7 +5020,7 @@ declare namespace LocalJSX {
          */
         "required"?: boolean;
         /**
-          * The shape of the input. If "round" it will have increased border radius.
+          * The shape of the input. If "round" it will have an increased border radius.
          */
         "shape"?: 'round';
         /**
