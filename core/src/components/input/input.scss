@@ -32,9 +32,9 @@
   --placeholder-font-style: initial;
   --placeholder-font-weight: initial;
   --placeholder-opacity: .5;
-  --padding-top: 8px;
+  --padding-top: 0px;
   --padding-end: 0px;
-  --padding-bottom: 8px;
+  --padding-bottom: 0px;
   --padding-start: 0px;
   --background: transparent;
   --color: initial;
@@ -68,6 +68,10 @@
   background: var(--background);
 }
 
+:host(.legacy-input) .native-input {
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+}
+
 :host-context(ion-item:not(.item-label)) {
   --padding-start: 0;
 }
@@ -81,7 +85,7 @@
 
 .native-input {
   @include border-radius(var(--border-radius));
-  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+  @include padding(0, 0, 0, 0);
   @include text-inherit();
 
   display: inline-block;
