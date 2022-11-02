@@ -1098,6 +1098,10 @@ export namespace Components {
          */
         "errorText"?: string;
         /**
+          * The fill for the item. If `'solid'` the item will have a background. If `'outline'` the item will be transparent with a border. Only available in `md` mode.
+         */
+        "fill"?: 'outline' | 'solid';
+        /**
           * Returns the native `<input>` element used under the hood.
          */
         "getInputElement": () => Promise<HTMLInputElement>;
@@ -1166,7 +1170,7 @@ export namespace Components {
          */
         "setFocus": () => Promise<void>;
         /**
-          * The shape of the input. If "round" it will have increased border radius.
+          * The shape of the input. If "round" it will have an increased border radius.
          */
         "shape"?: 'round';
         /**
@@ -4932,6 +4936,10 @@ declare namespace LocalJSX {
          */
         "errorText"?: string;
         /**
+          * The fill for the item. If `'solid'` the item will have a background. If `'outline'` the item will be transparent with a border. Only available in `md` mode.
+         */
+        "fill"?: 'outline' | 'solid';
+        /**
           * Text that is placed under the input and displayed when no error is detected.
          */
         "helperText"?: string;
@@ -5012,7 +5020,7 @@ declare namespace LocalJSX {
          */
         "required"?: boolean;
         /**
-          * The shape of the input. If "round" it will have increased border radius.
+          * The shape of the input. If "round" it will have an increased border radius.
          */
         "shape"?: 'round';
         /**

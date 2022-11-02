@@ -134,6 +134,12 @@ export class Input implements ComponentInterface {
   @Prop() errorText?: string;
 
   /**
+   * The fill for the item. If `'solid'` the item will have a background. If
+   * `'outline'` the item will be transparent with a border. Only available in `md` mode.
+   */
+  @Prop() fill?: 'outline' | 'solid';
+
+  /**
    * A hint to the browser for which keyboard to display.
    * Possible values: `"none"`, `"text"`, `"tel"`, `"url"`,
    * `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
