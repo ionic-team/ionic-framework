@@ -76,6 +76,15 @@ export const componentOnReady = (el: any, callback: any) => {
   }
 };
 
+/**
+ * This functions checks if a Stencil component is using
+ * the lazy loaded build of Stencil. Returns `true` if
+ * the component is lazy loaded. Returns `false` otherwise.
+ */
+export const hasLazyBuild = (stencilEl: HTMLElement) => {
+  return (stencilEl as any).componentOnReady !== undefined;
+};
+
 export type Attributes = { [key: string]: any };
 
 /**

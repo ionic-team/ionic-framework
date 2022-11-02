@@ -86,6 +86,8 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 
 - Datetime no longer automatically adjusts the `value` property when passed an array and `multiple="false"`. Developers should update their apps to ensure they are using the API correctly.
 
+- Datetime no longer incorrectly reports the time zone when `value` is updated. Datetime does not manage time zones, so any time zone information provided is ignored.
+
 <h4 id="version-7x-input">Input</h4>
 
 - `ionChange` is no longer emitted when the `value` of `ion-input` is modified externally. `ionChange` is only emitted from user committed changes, such as typing in the input and the input losing focus or from clicking the clear action within the input.
@@ -93,6 +95,8 @@ This section details the desktop browser, JavaScript framework, and mobile platf
   - If your application requires immediate feedback based on the user typing actively in the input, consider migrating your event listeners to using `ionInput` instead.
 
 - The `debounce` property has been updated to control the timing in milliseconds to delay the event emission of the `ionInput` event after each keystroke. Previously it would delay the event emission of `ionChange`.
+
+- The `detail` payload for the `ionInput` event now contains an object with the current `value` as well as the native event that triggered `ionInput`.
 
 <h4 id="version-7x-modal">Modal</h4>
 
@@ -166,7 +170,7 @@ Developers using these components will need to migrate to using Swiper.js direct
 
 - The `debounce` property has been updated to control the timing in milliseconds to delay the event emission of the `ionInput` event after each keystroke. Previously it would delay the event emission of `ionChange`.
 
-- `ionInput` dispatches an event detail of `null` when the textarea is cleared as a result of `clear-on-edit="true"`.
+- The `detail` payload for the `ionInput` event now contains an object with the current `value` as well as the native event that triggered `ionInput`.
 
 <h4 id="version-7x-toggle">Toggle</h4>
 

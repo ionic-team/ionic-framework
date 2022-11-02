@@ -2,6 +2,10 @@ import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
 test.describe('datetime: values', () => {
+  test.beforeEach(({ skip }) => {
+    skip.rtl();
+    skip.mode('md');
+  });
   test('should render correct days', async ({ page }) => {
     await page.setContent(`
       <ion-datetime locale="en-US" presentation="date" day-values="1,2,3"></ion-datetime>
@@ -48,5 +52,104 @@ test.describe('datetime: values', () => {
 
     const items = page.locator('ion-picker-column-internal:nth-of-type(2) .picker-item:not(.picker-item-empty)');
     await expect(items).toHaveText(['01', '02', '03']);
+  });
+  test('should adjust default parts for allowed hour and minute values', async ({ page }) => {
+    /**
+     * Mock today's date for testing.
+     * Playwright does not support this natively
+     * so we extend the native Date interface: https://github.com/microsoft/playwright/issues/6347
+     */
+    await page.setContent(`
+      <ion-datetime presentation="time" locale="en-US" hour-values="02" minute-values="0,15,30,45"></ion-datetime>
+
+      <script>
+        const mockToday = '2022-10-10T16:22';
+        Date = class extends Date {
+          constructor(...args) {
+            if (args.length === 0) {
+              super(mockToday)
+            } else {
+              super(...args);
+            }
+          }
+        }
+      </script>
+    `);
+
+    await page.waitForSelector('.datetime-ready');
+
+    const minuteItems = page.locator('ion-picker-column-internal:nth-of-type(2) .picker-item:not(.picker-item-empty)');
+    await expect(minuteItems).toHaveText(['00', '15', '30', '45']);
+    await expect(minuteItems.nth(1)).toHaveClass(/picker-item-active/);
+
+    const hourItems = page.locator('ion-picker-column-internal:nth-of-type(1) .picker-item:not(.picker-item-empty)');
+    await expect(hourItems).toHaveText(['2']);
+    await expect(hourItems.nth(0)).toHaveClass(/picker-item-active/);
+
+    /**
+     * Since the allowed hour is 2AM, the time period
+     * should switch from PM to AM.
+     */
+    const ampmItems = page.locator('ion-picker-column-internal:nth-of-type(3) .picker-item:not(.picker-item-empty)');
+    await expect(ampmItems).toHaveText(['AM', 'PM']);
+    await expect(ampmItems.nth(0)).toHaveClass(/picker-item-active/);
+  });
+  test('should adjust default parts month for allowed month values', async ({ page }) => {
+    /**
+     * Mock today's date for testing.
+     * Playwright does not support this natively
+     * so we extend the native Date interface: https://github.com/microsoft/playwright/issues/6347
+     */
+    await page.setContent(`
+      <ion-datetime prefer-wheel="true" presentation="date" locale="en-US" month-values="01" hour-values="02" minute-values="0,15,30,45"></ion-datetime>
+
+      <script>
+        const mockToday = '2022-10-10T16:22';
+        Date = class extends Date {
+          constructor(...args) {
+            if (args.length === 0) {
+              super(mockToday)
+            } else {
+              super(...args);
+            }
+          }
+        }
+      </script>
+    `);
+
+    await page.waitForSelector('.datetime-ready');
+
+    const monthItems = page.locator('.month-column .picker-item:not(.picker-item-empty)');
+    await expect(monthItems).toHaveText(['January']);
+    await expect(monthItems.nth(0)).toHaveClass(/picker-item-active/);
+  });
+  test('today date highlight should persist even if disallowed from dayValues', async ({ page }) => {
+    /**
+     * Mock today's date for testing.
+     * Playwright does not support this natively
+     * so we extend the native Date interface: https://github.com/microsoft/playwright/issues/6347
+     */
+    await page.setContent(`
+      <ion-datetime day-values="9" presentation="date" locale="en-US"></ion-datetime>
+
+      <script>
+        const mockToday = '2022-10-10T16:22';
+        Date = class extends Date {
+          constructor(...args) {
+            if (args.length === 0) {
+              super(mockToday)
+            } else {
+              super(...args);
+            }
+          }
+        }
+      </script>
+    `);
+
+    await page.waitForSelector('.datetime-ready');
+
+    const todayButton = page.locator('.calendar-day[data-day="10"][data-month="10"][data-year="2022"]');
+
+    await expect(todayButton).toHaveClass(/calendar-day-today/);
   });
 });
