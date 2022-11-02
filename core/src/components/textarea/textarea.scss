@@ -139,7 +139,7 @@
   }
 }
 
-.native-textarea[disabled] {
+.native-textarea[disabled]:not(.cloned-input) {
   opacity: 0.4;
 }
 
