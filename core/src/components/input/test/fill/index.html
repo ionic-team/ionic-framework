@@ -48,7 +48,17 @@
         <div class="grid">
           <div class="grid-item">
             <h2>No Fill</h2>
-            <ion-input label="Email"></ion-input>
+            <ion-input class="no-fill" label="Email"></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Shaped No Fill</h2>
+            <ion-input shape="round" class="no-fill" label="Email"></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Shaped No Fill, Bottom Content</h2>
+            <ion-input helper-text="Enter your email" maxlength="20" counter="true" shape="round" class="no-fill" label="Email"></ion-input>
           </div>
 
           <div class="grid-item">
@@ -57,19 +67,28 @@
           </div>
 
           <div class="grid-item">
-            <h2>Solid with Bottom Content</h2>
-            <ion-input
-              fill="solid"
-              label="Email"
-              helper-text="Enter your email"
-              counter="true"
-              maxlength="20"
-            ></ion-input>
+            <h2>Shaped Solid</h2>
+            <ion-input shape="round" fill="solid" label="Email" value="liam@ionic.io"></ion-input>
           </div>
 
           <div class="grid-item">
-            <h2>Shaped Solid</h2>
-            <ion-input shape="round" fill="solid" label="Email" value="liam@ionic.io"></ion-input>
+            <h2>Shaped Solid, Bottom Content</h2>
+            <ion-input helper-text="Enter your email" maxlength="20" counter="true" shape="round" fill="solid" label="Email" value="liam@ionic.io"></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Solid, Floating Label</h2>
+            <ion-input fill="solid" label="Email" label-placement="floating" value="liam@ionic.io"></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Solid, Fixed Label</h2>
+            <ion-input fill="solid" label="Email" label-placement="fixed" value="liam@ionic.io"></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Solid, Stacked Label</h2>
+            <ion-input fill="solid" label="Email" label-placement="stacked" placeholder="example@ionic.io"></ion-input>
           </div>
         </div>
       </ion-content>
