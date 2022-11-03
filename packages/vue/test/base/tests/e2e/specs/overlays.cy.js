@@ -88,7 +88,7 @@ describe('Overlays', () => {
     cy.get('ion-button#present-overlay').click();
     cy.get('ion-toast').should('exist');
 
-    cy.get('ion-toast').shadow().find('button').click();
+    cy.get('ion-toast').shadow().find('button').first().click();
 
     cy.get('ion-toast').should('not.be.visible');
   });
