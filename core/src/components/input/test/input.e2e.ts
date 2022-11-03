@@ -12,5 +12,5 @@ test.describe('input: rendering', () => {
 
     const label = page.locator('ion-input label');
     await expect(label).toBeHidden();
-  })
+  });
 });
