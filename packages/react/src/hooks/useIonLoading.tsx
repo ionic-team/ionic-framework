@@ -18,7 +18,7 @@ export function useIonLoading(): UseIonLoadingResult {
 
   const present = useCallback(
     (
-      messageOrOptions: string | (LoadingOptions & HookOverlayOptions) = '',
+      messageOrOptions?: string | (LoadingOptions & HookOverlayOptions),
       duration?: number,
       spinner?: SpinnerTypes
     ) => {
