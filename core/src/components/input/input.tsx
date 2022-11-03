@@ -614,11 +614,7 @@ export class Input implements ComponentInterface {
           [`label-placement-${labelPlacement}`]: true,
         })}
       >
-        <div
-          class={{
-            'input-wrapper': true,
-          }}
-        >
+        <div class="input-wrapper">
           {this.renderLabelContainer()}
           <input
             class="native-input"
