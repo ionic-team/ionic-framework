@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.5-nightly.20221103](https://github.com/ionic-team/ionic-framework/compare/v6.3.4...v6.3.5-nightly.20221103) (2022-11-03)
+
+
+### Bug Fixes
+
+* **overlays:** presenting an overlay does not create nested elements ([#26154](https://github.com/ionic-team/ionic-framework/issues/26154)) ([bb00595](https://github.com/ionic-team/ionic-framework/commit/bb005956eaff7401cfe1d6befcbf512424ddd283)), closes [#26117](https://github.com/ionic-team/ionic-framework/issues/26117)
+* **vue:** generate web-types for components ([#26205](https://github.com/ionic-team/ionic-framework/issues/26205)) ([1f7fc8f](https://github.com/ionic-team/ionic-framework/commit/1f7fc8f05c03316560e0b58c3bf58db6b189d0e1)), closes [#26198](https://github.com/ionic-team/ionic-framework/issues/26198)
+
+
+
+
+
 ## [6.3.4](https://github.com/ionic-team/ionic-framework/compare/v6.3.3...v6.3.4) (2022-11-02)
 
 
