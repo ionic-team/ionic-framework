@@ -566,14 +566,10 @@ export class Input implements ComponentInterface {
           [mode]: true,
           'has-value': this.hasValue(),
           'has-focus': this.hasFocus,
+          [`input-label-placement-${labelPlacement}`]: true,
         })}
       >
-        <div
-          class={{
-            'input-wrapper': true,
-            [`label-placement-${labelPlacement}`]: true,
-          }}
-        >
+        <div class="input-wrapper">
           <label htmlFor={inputId}>{this.label}</label>
           <input
             class="native-input"

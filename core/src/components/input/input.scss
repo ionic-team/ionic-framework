@@ -329,7 +329,7 @@
  * Label is on the left of the input in LTR and
  * on the right in RTL.
  */
-.label-placement-start {
+:host(.input-label-placement-start) .input-wrapper {
   flex-direction: row;
 }
 
@@ -337,7 +337,7 @@
  * Label is on the right of the input in LTR and
  * on the left in RTL.
  */
-.label-placement-end {
+:host(.input-label-placement-end) .input-wrapper {
   flex-direction: row-reverse;
 }
 
@@ -346,7 +346,7 @@
  * the input should be on the start
  * when the label sits at the end.
  */
-.label-placement-end label {
+:host(.input-label-placement-end) label {
   @include margin(0, 0, 0, 8px);
 }
 
@@ -354,7 +354,7 @@
  * Label is on the left of the input in LTR and
  * on the right in RTL. Label also has a fixed width.
  */
-.label-placement-fixed label {
+:host(.input-label-placement-fixed) label {
   @include margin(0, 0, 0, 0);
 
   flex: 0 0 100px;
@@ -371,8 +371,8 @@
  * down when the input is focused or has a value.
  *
  */
-.label-placement-stacked,
-.label-placement-floating {
+:host(.input-label-placement-stacked) .input-wrapper,
+:host(.input-label-placement-floating) .input-wrapper {
   flex-direction: column;
   align-items: start;
 }
@@ -382,8 +382,8 @@
  * up and to the left in LTR or
  * up and to the right in RTL.
  */
-.label-placement-stacked label,
-.label-placement-floating label {
+:host(.input-label-placement-stacked) label,
+:host(.input-label-placement-floating) label {
   @include transform-origin(start, top);
 }
 
@@ -391,8 +391,8 @@
  * Ensures the input does not
  * overlap the label.
  */
-.label-placement-stacked input,
-.label-placement-floating input {
+:host(.input-label-placement-stacked) input,
+:host(.input-label-placement-floating) input {
   @include margin(1px, 0, 0, 0);
 }
 
@@ -400,7 +400,7 @@
  * This makes the label sit over the input
  * when the input is blurred and has no value.
  */
-.label-placement-floating label {
+:host(.input-label-placement-floating) label {
   @include transform(translateY(97%), scale(1));
 }
 
@@ -409,20 +409,20 @@
  * is on top of the input. This prevents the label
  * from overlapping any placeholder value.
  */
-.label-placement-floating input {
+:host(.input-label-placement-floating) input {
   opacity: 0;
 }
 
-:host(.has-focus) .label-placement-floating input,
-:host(.has-value) .label-placement-floating input {
+:host(.has-focus.input-label-placement-floating) input,
+:host(.has-value.input-label-placement-floating) input {
   opacity: 1;
 }
 
 /**
  * This makes the label sit above the input.
  */
-.label-placement-stacked label,
-:host(.has-focus) .label-placement-floating label,
-:host(.has-value) .label-placement-floating label {
+:host(.input-label-placement-stacked) label,
+:host(.has-focus.input-label-placement-floating) label,
+:host(.has-value.input-label-placement-floating) label {
   @include transform(translateY(50%), scale(.75));
 }
