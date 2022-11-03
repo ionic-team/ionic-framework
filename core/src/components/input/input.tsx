@@ -555,7 +555,7 @@ export class Input implements ComponentInterface {
   }
 
   private renderLabel() {
-    return <label htmlFor={this.inputId}>{this.label}</label>
+    return <label htmlFor={this.inputId}>{this.label}</label>;
   }
 
   /**
@@ -581,12 +581,10 @@ export class Input implements ComponentInterface {
       return [
         <div class="input-outline-container">
           <div class="input-outline-start"></div>
-          <div class="input-outline-notch">
-            {needsNotch && this.renderLabel()}
-          </div>
+          <div class="input-outline-notch">{needsNotch && this.renderLabel()}</div>
           <div class="input-outline-end"></div>
         </div>,
-        !needsNotch && this.renderLabel()
+        !needsNotch && this.renderLabel(),
       ];
     }
 
@@ -611,7 +609,7 @@ export class Input implements ComponentInterface {
           'has-focus': this.hasFocus,
           [`input-fill-${fill}`]: fill !== undefined,
           [`input-shape-${shape}`]: shape !== undefined,
-          [`label-placement-${labelPlacement}`]: true,
+          [`input-label-placement-${labelPlacement}`]: true,
         })}
       >
         <div class="input-wrapper">
