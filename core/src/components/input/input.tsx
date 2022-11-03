@@ -554,6 +554,16 @@ export class Input implements ComponentInterface {
     );
   }
 
+  private renderLabel() {
+    const { inputId, label } = this;
+
+    return <label htmlFor={inputId}>{label}</label>
+  }
+
+  private renderLabelContainer() {
+    return this.renderLabel();
+  }
+
   private renderInput() {
     const { disabled, fill, readonly, shape, inputId, labelPlacement } = this;
     const mode = getIonMode(this);
@@ -576,7 +586,7 @@ export class Input implements ComponentInterface {
             [`label-placement-${labelPlacement}`]: true,
           }}
         >
-          <label htmlFor={inputId}>{this.label}</label>
+          {this.renderLabelContainer()}
           <input
             class="native-input"
             ref={(input) => (this.nativeInput = input)}
