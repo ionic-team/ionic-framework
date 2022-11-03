@@ -6,7 +6,7 @@ import { Component, OnInit, NgZone, Input } from '@angular/core';
 })
 export class VirtualScrollInnerComponent implements OnInit {
 
-  @Input() value: string;
+  @Input() value?: string;
   onInit = 0;
 
   ngOnInit() {
