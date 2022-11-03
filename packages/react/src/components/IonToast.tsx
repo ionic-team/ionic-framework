@@ -20,7 +20,7 @@ export interface ToastOptions extends Omit<ToastOptionsCore, 'buttons'> {
   buttons?: (ToastButton | string)[];
 }
 
-export const IonToast = /*@__PURE__*/ createInlineOverlayComponent<JSX.IonActionSheet, HTMLIonActionSheetElement>(
+export const IonToast = /*@__PURE__*/ createInlineOverlayComponent<JSX.IonToast, HTMLIonToastElement>(
   'ion-toast',
   defineCustomElement
 );
