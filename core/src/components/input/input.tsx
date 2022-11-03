@@ -554,20 +554,27 @@ export class Input implements ComponentInterface {
     );
   }
 
-  private renderLabel() {
-    const { inputId, label } = this;
-
-    return <label htmlFor={inputId}>{label}</label>
-  }
-
-  private renderLabelContainer() {
-    return this.renderLabel();
+  /**
+   * Renders the border container
+   * when fill="outline".
+   */
+  private renderOutlineContainer() {
+    return (
+      <div class="input-outline-container">
+        <div class="input-outline-start"></div>
+        <div class="input-outline-notch">
+          <label>{this.label}</label>
+        </div>
+        <div class="input-outline-end"></div>
+      </div>
+    );
   }
 
   private renderInput() {
-    const { disabled, fill, readonly, shape, inputId, labelPlacement } = this;
+    const { disabled, fill, label, readonly, shape, inputId, labelPlacement } = this;
     const mode = getIonMode(this);
     const value = this.getValue();
+    const hasOutlineFill = fill === 'outline';
 
     return (
       <Host
@@ -586,7 +593,8 @@ export class Input implements ComponentInterface {
             [`label-placement-${labelPlacement}`]: true,
           }}
         >
-          {this.renderLabelContainer()}
+          {hasOutlineFill && this.renderOutlineContainer()}
+          <label htmlFor={inputId}>{label}</label>
           <input
             class="native-input"
             ref={(input) => (this.nativeInput = input)}

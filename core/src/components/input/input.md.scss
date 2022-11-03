@@ -87,6 +87,121 @@
   --border-color: #{$background-color-step-750};
 }
 
+// Input Fill: Outline
+// ----------------------------------------------------------------
+
+:host(.input-fill-outline) {
+  --border-color: #{$background-color-step-300};
+  --border-radius: 4px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+}
+
+:host(.input-fill-outline.input-shape-round) {
+  --border-radius: 9999px;
+  --padding-start: 28px;
+  --padding-end: 28px;
+}
+
+/**
+ * Border should be
+ * slightly darker on hover.
+ */
+@media (any-hover: hover) {
+  :host(.input-fill-outline:hover) {
+    --border-color: #{$background-color-step-750};
+  }
+}
+
+/**
+ * Outline inputs do not have a bottom border.
+ * Instead, they have a border that wraps the
+ * input + label.
+ */
+:host(.input-fill-outline) .input-wrapper {
+  border-bottom: none;
+}
+
+/**
+ * Floating and stacked labels need to be position absolute
+ * so they do not take up space above the input otherwise
+ * there will be a gap above the input when the label
+ * is floated up.
+ */
+:host(.input-fill-outline) .label-placement-floating.input-wrapper > label,
+:host(.input-fill-outline) .label-placement-stacked.input-wrapper > label {
+  position: absolute;
+}
+
+:host(.input-fill-outline) .input-outline-container {
+  @include position(0, 0, 0, 0);
+  display: flex;
+
+  position: absolute;
+
+
+  width: 100%;
+  height: 100%;
+
+  pointer-events: none;
+}
+
+:host(.input-fill-outline) .input-outline-start,
+:host(.input-fill-outline) .input-outline-notch,
+:host(.input-fill-outline) .input-outline-end {
+  height: 100%;
+
+  border-top: var(--border-width) var(--border-style) var(--border-color);
+  border-bottom: var(--border-width) var(--border-style) var(--border-color);
+}
+
+:host(.input-fill-outline) .input-outline-start {
+  @include border-radius(var(--border-radius), 0px, 0px, var(--border-radius));
+  width: 12px;
+
+  border-left: var(--border-width) var(--border-style) var(--border-color);
+}
+
+:host(.input-fill-outline.input-shape-round) .input-outline-start {
+  @include border-radius(var(--padding-start), 0px, 0px, var(--padding-start));
+  width: 28px;
+}
+
+:host(.input-fill-outline) .input-outline-notch {
+  max-width: calc(100% - 16px * 2);
+}
+
+:host(.input-fill-outline) .input-outline-notch label {
+  pointer-events: none;
+
+  opacity: 0;
+}
+
+:host(.input-fill-outline) .input-outline-end {
+  @include border-radius(0px, var(--border-radius), var(--border-radius), 0px);
+  flex-grow: 1;
+
+  border-right: var(--border-width) var(--border-style) var(--border-color);
+}
+
+:host(.has-focus.input-fill-outline) .label-placement-floating .input-outline-notch,
+:host(.has-value.input-fill-outline) .label-placement-floating .input-outline-notch,
+:host(.input-fill-outline) .label-placement-stacked .input-outline-notch,
+:host(.input-fill-outline) .label-placement-stacked .input-outline-notch {
+  border-top: none;
+}
+
+/**
+ * This makes the label sit above the input.
+ */
+:host(.has-focus.input-fill-outline) .label-placement-floating label,
+:host(.has-value.input-fill-outline) .label-placement-floating label,
+:host(.input-fill-outline) .label-placement-stacked label,
+:host(.input-fill-outline) .label-placement-stacked label {
+  @include transform(translateY(-32%), scale(.75));
+  @include margin(0);
+}
+
 // Input Shape Rounded
 // ----------------------------------------------------------------
 
