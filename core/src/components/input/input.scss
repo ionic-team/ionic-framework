@@ -425,7 +425,7 @@
  * when the input is blurred and has no value.
  */
 :host(.input-label-placement-floating) label {
-  @include transform(translateY(97%), scale(1));
+  @include transform(translateY(100%), scale(1));
 }
 
 /**
