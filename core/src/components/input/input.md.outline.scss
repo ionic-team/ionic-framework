@@ -1,0 +1,194 @@
+// Input Fill: Outline
+// ----------------------------------------------------------------
+
+:host(.input-fill-outline) {
+  --border-color: #{$background-color-step-300};
+  --border-radius: 4px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+}
+
+:host(.input-fill-outline.input-shape-round) {
+  --border-radius: 9999px;
+  --padding-start: 32px;
+  --padding-end: 32px;
+}
+
+/**
+ * The input should fill the entire container
+ * so that clicking anywhere inside of the outline
+ * focused the input. As a result, we apply the padding
+ * on the input.
+ */
+:host(.input-fill-outline) .input-wrapper {
+  @include padding(0);
+}
+
+/**
+ * When the label is in the starting position, padding should
+ * be applied everywhere except for the starting side of the input.
+ * The label will receive padding on its starting side.
+ */
+:host(.input-fill-outline.input-label-placement-start) .native-input,
+:host(.input-fill-outline.input-label-placement-fixed) .native-input {
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), null);
+}
+
+:host(.input-fill-outline.input-label-placement-start) label,
+:host(.input-fill-outline.input-label-placement-fixed) label {
+  @include padding(null, null, null, var(--padding-start));
+}
+
+/**
+ * When the label is in the ending position, padding should
+ * be applied everywhere except for the ending side of the input.
+ * The label will receive padding on its ending side.
+ */
+:host(.input-fill-outline.input-label-placement-end) .native-input {
+  @include padding(var(--padding-top), null, var(--padding-bottom), var(--padding-start));
+}
+
+:host(.input-fill-outline.input-label-placement-end) label {
+  @include padding(null, var(--padding-end), null, null);
+}
+
+/**
+ * When the label is in the floating or stacked position, padding
+ * should be applied on all sides of the input. No padding should
+ * be applied to the label.
+ */
+:host(.input-fill-outline.input-label-placement-floating) .native-input,
+:host(.input-fill-outline.input-label-placement-stacked) .native-input {
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-end));
+}
+
+:host(.input-fill-outline.input-label-placement-floating) label,
+:host(.input-fill-outline.input-label-placement-stacked) label {
+  @include padding(0);
+}
+
+/**
+ * Border should be
+ * slightly darker on hover.
+ */
+@media (any-hover: hover) {
+  :host(.input-fill-outline:hover) {
+    --border-color: #{$background-color-step-750};
+  }
+}
+
+/**
+ * Outline inputs do not have a bottom border.
+ * Instead, they have a border that wraps the
+ * input + label.
+ */
+:host(.input-fill-outline) .input-wrapper {
+  border-bottom: none;
+}
+
+:host(.input-fill-outline.input-label-placement-stacked) label,
+:host(.input-fill-outline.input-label-placement-floating) label {
+  @include transform-origin(center, top);
+}
+
+/**
+ * The label should appear on top of an outline
+ * container that overlaps it so it is always clickable.
+ */
+:host(.input-fill-outline) label,
+:host(.input-fill-outline) label {
+  position: relative;
+  z-index: 1;
+}
+
+/**
+ * This makes the label sit above the input.
+ */
+:host(.has-focus.input-fill-outline.input-label-placement-floating) label,
+:host(.has-value.input-fill-outline.input-label-placement-floating) label,
+:host(.input-fill-outline.input-label-placement-stacked) label,
+:host(.input-fill-outline.input-label-placement-stacked) label {
+  @include transform(translateY(-32%), scale(.75));
+  @include margin(0);
+}
+
+/**
+ * This ensures that the input does not
+ * overlap the floating label while still
+ * remaining visually centered.
+ */
+:host(.input-fill-outline.input-label-placement-stacked) input,
+:host(.input-fill-outline.input-label-placement-floating) input {
+  @include margin(6px, 0, 6px, 0);
+}
+
+// Input Fill: Outline Outline Container
+// ----------------------------------------------------------------
+
+:host(.input-fill-outline) .input-outline-container {
+  @include position(0, 0, 0, 0);
+
+  display: flex;
+
+  position: absolute;
+
+  width: 100%;
+  height: 100%;
+}
+
+:host(.input-fill-outline) .input-outline-start,
+:host(.input-fill-outline) .input-outline-end {
+  pointer-events: none;
+}
+
+/**
+ * By default, each piece of the container should have
+ * a top and bottom border. This gives the appearance
+ * of a unified container with a border.
+ */
+:host(.input-fill-outline) .input-outline-start,
+:host(.input-fill-outline) .input-outline-notch,
+:host(.input-fill-outline) .input-outline-end {
+  border-top: var(--border-width) var(--border-style) var(--border-color);
+  border-bottom: var(--border-width) var(--border-style) var(--border-color);
+}
+
+:host(.input-fill-outline) .input-outline-start {
+  @include border-radius(var(--border-radius), 0px, 0px, var(--border-radius));
+  @include border(null, null, null, var(--border-width) var(--border-style) var(--border-color));
+
+  width: 12px;
+}
+
+/**
+ * When shape="round", the starting outline fragment
+ * should appear with a pill shape.
+ */
+:host(.input-fill-outline.input-shape-round) .input-outline-start {
+  @include border-radius(28px, 0px, 0px, 28px);
+  width: 28px;
+}
+
+:host(.input-fill-outline) .input-outline-end {
+  @include border(null, var(--border-width) var(--border-style) var(--border-color), null, null);
+  @include border-radius(0px, var(--border-radius), var(--border-radius), 0px);
+
+  /**
+   * The ending outline fragment
+   * should take up the remaining free space.
+   */
+  flex-grow: 1;
+}
+
+/**
+ * When the input either has focus or a value,
+ * there should be a "cut out" at the top for
+ * the floating/stacked label. We simulate this "cut out"
+ * by removing the top border from the notch fragment.
+ */
+:host(.has-focus.input-fill-outline.input-label-placement-floating) .input-outline-notch,
+:host(.has-value.input-fill-outline.input-label-placement-floating) .input-outline-notch,
+:host(.input-fill-outline.input-label-placement-stacked) .input-outline-notch,
+:host(.input-fill-outline.input-label-placement-stacked) .input-outline-notch {
+  border-top: none;
+}
