@@ -38,7 +38,7 @@ test.describe('input: fill', () => {
       const input = page.locator('ion-input');
       expect(await input.screenshot()).toMatchSnapshot(`input-fill-shaped-solid-${page.getSnapshotSettings()}.png`);
     });
-  })
+  });
   test.describe('input: fill outline', () => {
     test('should not have visual regressions', async ({ page }) => {
       await page.setContent(`
@@ -71,5 +71,5 @@ test.describe('input: fill', () => {
       const input = page.locator('ion-input');
       expect(await input.screenshot()).toMatchSnapshot(`input-fill-shaped-outline-${page.getSnapshotSettings()}.png`);
     });
-  })
+  });
 });

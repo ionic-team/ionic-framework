@@ -90,6 +90,8 @@
 
   display: inline-block;
 
+  position: relative;
+
   flex: 1;
 
   width: 100%;
@@ -104,6 +106,17 @@
 
   box-sizing: border-box;
   appearance: none;
+
+  /**
+   * This ensures the input
+   * remains on top of any decoration
+   * that we render (particularly the
+   * outline border when fill="outline").
+   * If we did not do this then Axe would
+   * be unable to determine the color
+   * contrast of the input.
+   */
+  z-index: 1;
 
   &::placeholder {
     color: var(--placeholder-color);

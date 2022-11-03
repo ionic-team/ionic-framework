@@ -131,6 +131,13 @@
 :host(.input-fill-outline) .label-placement-floating.input-wrapper > label,
 :host(.input-fill-outline) .label-placement-stacked.input-wrapper > label {
   position: absolute;
+
+  /**
+   * Ensures the label remains on top of whatever content it
+   * overlaps otherwise Axe will be unable to determine
+   * color contrast.
+   */
+  z-index: 1;
 }
 
 :host(.input-fill-outline) .input-outline-container {
@@ -200,6 +207,16 @@
 :host(.input-fill-outline) .label-placement-stacked label {
   @include transform(translateY(-32%), scale(.75));
   @include margin(0);
+}
+
+/**
+ * This ensures that the input does not
+ * overlap the floating label while still
+ * remaining visually centered.
+ */
+:host(.input-fill-outline) .label-placement-stacked input,
+:host(.input-fill-outline) .label-placement-floating input {
+  @include margin(6px, 0, 6px, 0);
 }
 
 // Input Shape Rounded
