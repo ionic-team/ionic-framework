@@ -23,7 +23,7 @@ test.describe('radio group: events: ionChange', () => {
     await ionChangeSpy.next();
 
     expect(ionChangeSpy).toHaveReceivedEventTimes(1);
-    expect(ionChangeSpy).toHaveReceivedEventDetail({ value: '2' });
+    expect(ionChangeSpy).toHaveReceivedEventDetail({ value: '2', event: { isTrusted: true } });
   });
 
   test('should emit when the radio group does not have an initial value', async ({ page }) => {
@@ -42,7 +42,7 @@ test.describe('radio group: events: ionChange', () => {
     await ionChangeSpy.next();
 
     expect(ionChangeSpy).toHaveReceivedEventTimes(1);
-    expect(ionChangeSpy).toHaveReceivedEventDetail({ value: '2' });
+    expect(ionChangeSpy).toHaveReceivedEventDetail({ value: '2', event: { isTrusted: true } });
   });
 
   test('should not emit when selecting a checked radio', async ({ page }) => {
@@ -98,7 +98,7 @@ test.describe('radio group: events: ionChange', () => {
       await ionChangeSpy.next();
 
       expect(ionChangeSpy).toHaveReceivedEventTimes(1);
-      expect(ionChangeSpy).toHaveReceivedEventDetail({ value: undefined });
+      expect(ionChangeSpy).toHaveReceivedEventDetail({ value: undefined, event: { isTrusted: true } });
     });
   });
 });
