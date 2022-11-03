@@ -554,34 +554,53 @@ export class Input implements ComponentInterface {
     );
   }
 
+  private renderLabel() {
+    return <label htmlFor={this.inputId}>{this.label}</label>
+  }
+
   /**
    * Renders the border container
    * when fill="outline".
    */
-  private renderOutlineContainer() {
+  private renderLabelContainer() {
+    const { labelPlacement } = this;
+    const hasOutlineFill = this.fill === 'outline';
+    const needsNotch = labelPlacement === 'floating' || labelPlacement === 'stacked';
+
+    if (hasOutlineFill) {
+      /**
+       * The outline fill has a special outline
+       * that appears around the input and the label.
+       * Certain label placements cause the
+       * label to translate up and create a "cut out"
+       * inside of that border. When this happens, we need
+       * to render the label inside of the input-outline-notch
+       * element. Otherwise, we can render it as a sibling
+       * of the outline container.
+       */
+      return [
+        <div class="input-outline-container">
+          <div class="input-outline-start"></div>
+          <div class="input-outline-notch">
+            {needsNotch && this.renderLabel()}
+          </div>
+          <div class="input-outline-end"></div>
+        </div>,
+        !needsNotch && this.renderLabel()
+      ];
+    }
+
     /**
-     * This label is a clone of the real label.
-     * It exists so that `input-outline-notch`
-     * shows the correct sized gap in the border
-     * when the outline input either has focus
-     * or a value.
+     * If not using the outline style,
+     * we can render just the label.
      */
-    return (
-      <div class="input-outline-container">
-        <div class="input-outline-start"></div>
-        <div class="input-outline-notch">
-          <label>{this.label}</label>
-        </div>
-        <div class="input-outline-end"></div>
-      </div>
-    );
+    return this.renderLabel();
   }
 
   private renderInput() {
     const { disabled, fill, readonly, shape, inputId, labelPlacement } = this;
     const mode = getIonMode(this);
     const value = this.getValue();
-    const hasOutlineFill = fill === 'outline';
 
     return (
       <Host
@@ -592,16 +611,15 @@ export class Input implements ComponentInterface {
           'has-focus': this.hasFocus,
           [`input-fill-${fill}`]: fill !== undefined,
           [`input-shape-${shape}`]: shape !== undefined,
+          [`label-placement-${labelPlacement}`]: true,
         })}
       >
         <div
           class={{
             'input-wrapper': true,
-            [`label-placement-${labelPlacement}`]: true,
           }}
         >
-          {hasOutlineFill && this.renderOutlineContainer()}
-          <label htmlFor={inputId}>{this.label}</label>
+          {this.renderLabelContainer()}
           <input
             class="native-input"
             ref={(input) => (this.nativeInput = input)}
