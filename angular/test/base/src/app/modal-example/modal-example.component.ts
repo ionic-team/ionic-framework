@@ -8,7 +8,7 @@ import { ModalController, NavParams, IonNav, ViewWillLeave, ViewDidEnter, ViewDi
 })
 export class ModalExampleComponent implements OnInit, ViewWillLeave, ViewDidEnter, ViewWillLeave, ViewDidLeave {
 
-  @Input() value: string;
+  @Input() value?: string;
 
   form = new UntypedFormGroup({
     select: new UntypedFormControl([])
@@ -21,7 +21,7 @@ export class ModalExampleComponent implements OnInit, ViewWillLeave, ViewDidEnte
   willLeave = 0;
   didLeave = 0;
 
-  modal: HTMLElement;
+  modal!: HTMLElement;
 
   constructor(
     private modalCtrl: ModalController,

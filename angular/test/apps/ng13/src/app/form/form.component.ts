@@ -30,7 +30,7 @@ export class FormComponent {
     formControl.markAsTouched();
   }
 
-  onSubmit(_ev) {
+  onSubmit() {
     this.submitted = 'true';
   }
 
