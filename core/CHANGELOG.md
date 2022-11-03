@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.3](https://github.com/ionic-team/ionic/compare/v6.3.2...v6.3.3) (2022-10-26)
+
+
+### Bug Fixes
+
+* **datetime:** empty string is treated as no value ([#26131](https://github.com/ionic-team/ionic/issues/26131)) ([51ab5f6](https://github.com/ionic-team/ionic/commit/51ab5f67b50013c0ed8ca3160d6dfc56bc269f2a)), closes [#26116](https://github.com/ionic-team/ionic/issues/26116)
+* **datetime:** preferWheel can now show title ([#26101](https://github.com/ionic-team/ionic/issues/26101)) ([479d56b](https://github.com/ionic-team/ionic/commit/479d56b3b26d45bfd03d4095458c37ed00485c54)), closes [#26095](https://github.com/ionic-team/ionic/issues/26095)
+* **datetime:** values are adjusted to be in bounds ([#26125](https://github.com/ionic-team/ionic/issues/26125)) ([0548fe8](https://github.com/ionic-team/ionic/commit/0548fe858854f0187e0dfe00efaec142cd5bb6cf)), closes [#25894](https://github.com/ionic-team/ionic/issues/25894) [#25708](https://github.com/ionic-team/ionic/issues/25708)
+* **many:** haptics only fire on supported platforms ([#26130](https://github.com/ionic-team/ionic/issues/26130)) ([d4d569a](https://github.com/ionic-team/ionic/commit/d4d569ac09ab25ab5a490825cf1fc655fe97bb87)), closes [#26109](https://github.com/ionic-team/ionic/issues/26109)
+
+
+
+
+
+## [6.3.2](https://github.com/ionic-team/ionic/compare/v6.3.1...v6.3.2) (2022-10-17)
+
+
+### Bug Fixes
+
+* **datetime:** header renders correct date ([#26120](https://github.com/ionic-team/ionic/issues/26120)) ([04df45a](https://github.com/ionic-team/ionic/commit/04df45a443e4faeea644daa76dc509fea0d24ca2)), closes [#26116](https://github.com/ionic-team/ionic/issues/26116)
+* **datetime:** selecting days updates value ([#26121](https://github.com/ionic-team/ionic/issues/26121)) ([d76a24d](https://github.com/ionic-team/ionic/commit/d76a24dd9e485a2f3cc517231bbb1dab51fa1fd3))
+* **modal:** sheet modal dismisses correctly ([#26110](https://github.com/ionic-team/ionic/issues/26110)) ([256b03f](https://github.com/ionic-team/ionic/commit/256b03f12a57c2b5904d9017e4fa93b11eea8fc7)), closes [#26108](https://github.com/ionic-team/ionic/issues/26108)
+
+
+
+
+
 ## [6.3.1](https://github.com/ionic-team/ionic/compare/v6.3.0...v6.3.1) (2022-10-12)
 
 

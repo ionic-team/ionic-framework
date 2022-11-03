@@ -30,8 +30,7 @@ describe('Form', () => {
         toggle: false,
         input: '',
         input2: 'Default Value',
-        checkbox: false,
-        range: 5
+        checkbox: false
       });
     });
 
@@ -51,9 +50,6 @@ describe('Form', () => {
       // Click confirm button
       cy.get('ion-alert .alert-button:not(.alert-button-role-cancel)').click();
 
-      testStatus('INVALID');
-
-      cy.get('ion-range').invoke('prop', 'value', 40);
       testStatus('VALID');
 
       testData({
@@ -62,8 +58,7 @@ describe('Form', () => {
         toggle: false,
         input: 'Some value',
         input2: 'Default Value',
-        checkbox: false,
-        range: 40
+        checkbox: false
       });
     });
 
@@ -75,8 +70,7 @@ describe('Form', () => {
         toggle: true,
         input: '',
         input2: 'Default Value',
-        checkbox: false,
-        range: 5
+        checkbox: false
       });
     });
 
@@ -88,8 +82,7 @@ describe('Form', () => {
         toggle: false,
         input: '',
         input2: 'Default Value',
-        checkbox: true,
-        range: 5
+        checkbox: true
       });
     });
 
@@ -109,8 +102,7 @@ describe('Form', () => {
         toggle: true,
         input: '',
         input2: 'Default Value',
-        checkbox: false,
-        range: 5
+        checkbox: false
       });
       cy.get('ion-checkbox').click();
       testData({
@@ -119,8 +111,7 @@ describe('Form', () => {
         toggle: true,
         input: '',
         input2: 'Default Value',
-        checkbox: true,
-        range: 5
+        checkbox: true
       });
     });
   });

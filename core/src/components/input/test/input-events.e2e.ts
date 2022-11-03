@@ -20,7 +20,7 @@ test.describe('input: events: ionChange', () => {
 
         await ionChangeSpy.next();
 
-        expect(ionChangeSpy).toHaveReceivedEventDetail({ value: 'new value' });
+        expect(ionChangeSpy).toHaveReceivedEventDetail({ value: 'new value', event: { isTrusted: true } });
       });
     });
 
@@ -71,7 +71,7 @@ test.describe('input: events: ionInput', () => {
 
     await page.click('ion-input .input-clear-icon');
 
-    expect(ionInputSpy).toHaveReceivedEventDetail({ isTrusted: true });
+    expect(ionInputSpy).toHaveReceivedEventDetail({ value: '', event: { isTrusted: true } });
   });
 
   test('should emit when the input is cleared from the keyboard', async ({ page }) => {
@@ -86,6 +86,6 @@ test.describe('input: events: ionInput', () => {
     expect(await input.evaluate((el: HTMLIonInputElement) => el.value)).toBe('');
 
     expect(ionInputSpy).toHaveReceivedEventTimes(1);
-    expect(ionInputSpy).toHaveReceivedEventDetail(null);
+    expect(ionInputSpy).toHaveReceivedEventDetail({ value: '', event: { isTrusted: true } });
   });
 });

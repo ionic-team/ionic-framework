@@ -85,20 +85,6 @@
       <ion-note slot="end">{{checkbox}}</ion-note>
     </ion-item>
 
-    <ion-item>
-      <ion-label>Range</ion-label>
-      <ion-range [(ngModel)]="range"></ion-range>
-      <ion-note slot="end" id="range-note">{{range}}</ion-note>
-    </ion-item>
-
-    <ion-item color="dark">
-      <ion-label>Range Mirror</ion-label>
-      <ion-range [(ngModel)]="range">
-        <ion-toggle slot="start" id="nested-toggle" [(ngModel)]="toggle"></ion-toggle>
-      </ion-range>
-      <ion-note slot="end">{{range}}</ion-note>
-    </ion-item>
-
   </ion-list>
   <p>
     <ion-button (click)="setValues()" id="set-button">Set values</ion-button>

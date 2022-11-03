@@ -160,7 +160,8 @@ export class DatetimeButton implements ComponentInterface {
    * to keep checking if the datetime value is `string` or `string[]`.
    */
   private getParsedDateValues = (value?: string[] | string | null): string[] => {
-    if (value === undefined || value === null) {
+    // TODO FW-2646 Remove value === ''
+    if (value === '' || value === undefined || value === null) {
       return [];
     }
 
@@ -202,11 +203,6 @@ export class DatetimeButton implements ComponentInterface {
      */
     const firstParsedDatetime = parsedDatetimes[0];
     const use24Hour = is24Hour(locale, hourCycle);
-
-    // TODO(FW-1865) - Remove once FW-1831 is fixed.
-    parsedDatetimes.forEach((parsedDatetime) => {
-      parsedDatetime.tzOffset = undefined;
-    });
 
     this.dateText = this.timeText = undefined;
 

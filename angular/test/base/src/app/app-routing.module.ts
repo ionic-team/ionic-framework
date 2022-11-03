@@ -69,6 +69,10 @@ const routes: Routes = [
       }
     ]
   },
+  {
+    path: 'form-controls/range',
+    loadChildren: () => import('./form-controls/range/range.module').then(m => m.RangeModule)
+  }
 ];
 
 @NgModule({

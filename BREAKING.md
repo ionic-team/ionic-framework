@@ -30,6 +30,8 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Textarea](#version-7x-textarea)
   - [Toggle](#version-7x-toggle)
   - [Virtual Scroll](#version-7x-virtual-scroll)
+- [Types](#version-7x-types)
+  - [Overlay Attribute Interfaces](#version-7x-overlay-attribute-interfaces)
 - [JavaScript Frameworks](#version-7x-javascript-frameworks)
   - [React](#version-7x-react)
   - [Vue](#version-7x-vue)
@@ -85,6 +87,8 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 
 - Datetime no longer automatically adjusts the `value` property when passed an array and `multiple="false"`. Developers should update their apps to ensure they are using the API correctly.
 
+- Datetime no longer incorrectly reports the time zone when `value` is updated. Datetime does not manage time zones, so any time zone information provided is ignored.
+
 <h4 id="version-7x-input">Input</h4>
 
 - `ionChange` is no longer emitted when the `value` of `ion-input` is modified externally. `ionChange` is only emitted from user committed changes, such as typing in the input and the input losing focus or from clicking the clear action within the input.
@@ -92,6 +96,8 @@ This section details the desktop browser, JavaScript framework, and mobile platf
   - If your application requires immediate feedback based on the user typing actively in the input, consider migrating your event listeners to using `ionInput` instead.
 
 - The `debounce` property has been updated to control the timing in milliseconds to delay the event emission of the `ionInput` event after each keystroke. Previously it would delay the event emission of `ionChange`.
+
+- The `detail` payload for the `ionInput` event now contains an object with the current `value` as well as the native event that triggered `ionInput`.
 
 <h4 id="version-7x-modal">Modal</h4>
 
@@ -108,21 +114,27 @@ Ionic now listens on the `keydown` event instead of the `keyup` event when deter
 
 <h4 id="version-7x-range">Range</h4>
 
-Range is updated to align with the design specification for supported modes.
+- Range is updated to align with the design specification for supported modes.
 
-**Design tokens**
+  **Design tokens**
 
+  iOS:
 
-iOS:
+  | Token                             | Previous Value                                                                            | New Value                                                             |
+  | --------------------------------- | ----------------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
+  | `--bar-border-radius`             | `0px`                                                                                     | `$range-ios-bar-border-radius` (`2px` default)                        |
+  | `--knob-size`                     | `28px`                                                                                    | `$range-ios-knob-width` (`26px` default)                              |
+  | `$range-ios-bar-height`           | `2px`                                                                                     | `4px`                                                                 |
+  | `$range-ios-bar-background-color` | `rgba(var(--ion-text-color-rgb, 0, 0, 0), .1)`                                            | `var(--ion-color-step-900, #e6e6e6)`                                  |
+  | `$range-ios-knob-box-shadow`      | `0 3px 1px rgba(0, 0, 0, .1), 0 4px 8px rgba(0, 0, 0, .13), 0 0 0 1px rgba(0, 0, 0, .02)` | `0px 0.5px 4px rgba(0, 0, 0, 0.12), 0px 6px 13px rgba(0, 0, 0, 0.12)` |
+  | `$range-ios-knob-width`           | `28px`                                                                                    | `26px`                                                                |
 
-|Token|Previous Value|New Value|
-|-----|--------------|---------|
-|`--bar-border-radius`|`0px`|`$range-ios-bar-border-radius` (`2px` default)|
-|`--knob-size`|`28px`|`$range-ios-knob-width` (`26px` default)|
-|`$range-ios-bar-height`|`2px`|`4px`|
-|`$range-ios-bar-background-color`|`rgba(var(--ion-text-color-rgb, 0, 0, 0), .1)`|`var(--ion-color-step-900, #e6e6e6)`|
-|`$range-ios-knob-box-shadow`|`0 3px 1px rgba(0, 0, 0, .1), 0 4px 8px rgba(0, 0, 0, .13), 0 0 0 1px rgba(0, 0, 0, .02)`|`0px 0.5px 4px rgba(0, 0, 0, 0.12), 0px 6px 13px rgba(0, 0, 0, 0.12)`|
-|`$range-ios-knob-width`|`28px`|`26px`|
+- `ionChange` is no longer emitted when the `value` of `ion-range` is modified externally. `ionChange` is only emitted from user committed changes, such as dragging and releasing the range knob or selecting a new value with the keyboard arrows.
+  - If your application requires immediate feedback based on the user actively dragging the range knob, consider migrating your event listeners to using `ionInput` instead.
+
+- The `debounce` property's value value has changed from `0` to `undefined`. If `debounce` is undefined, the `ionInput` event will fire immediately.
+
+- Range no longer clamps assigned values within bounds. Developers will need to validate the value they are assigning to `ion-range` is within the `min` and `max` bounds when programmatically assigning a value. 
 
 <h4 id="version-7x-searchbar">Searchbar</h4>
 
@@ -163,7 +175,7 @@ Developers using these components will need to migrate to using Swiper.js direct
 
 - The `debounce` property has been updated to control the timing in milliseconds to delay the event emission of the `ionInput` event after each keystroke. Previously it would delay the event emission of `ionChange`.
 
-- `ionInput` dispatches an event detail of `null` when the textarea is cleared as a result of `clear-on-edit="true"`.
+- The `detail` payload for the `ionInput` event now contains an object with the current `value` as well as the native event that triggered `ionInput`.
 
 <h4 id="version-7x-toggle">Toggle</h4>
 
@@ -180,6 +192,12 @@ Developers using the component will need to migrate to a virtual scroll solution
 - [Vue](https://ionicframework.com/docs/vue/virtual-scroll)
 
 Any references to the virtual scroll types from `@ionic/core` have been removed. Please remove or replace these types: `Cell`, `VirtualNode`, `CellType`, `NodeChange`, `HeaderFn`, `ItemHeightFn`, `FooterHeightFn`, `ItemRenderFn` and `DomRenderFn`.
+
+<h2 id="version-7x-types">Types</h2>
+
+<h4 id="version-7x-overlay-attribute-interfaces">Overlay Attribute Interfaces</h4>
+
+`ActionSheetAttributes`, `AlertAttributes`, `AlertTextareaAttributes`, `AlertInputAttributes`, `LoadingAttributes`, `ModalAttributes`, `PickerAttributes`, `PopoverAttributes`, and `ToastAttributes` have been removed. Developers should use `{ [key: string]: any }` instead.
 
 <h2 id="version-7x-javascript-frameworks">JavaScript Frameworks</h2>
 

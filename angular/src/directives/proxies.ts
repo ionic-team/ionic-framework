@@ -1321,9 +1321,20 @@ import type { RangeKnobMoveStartEventDetail as IRangeRangeKnobMoveStartEventDeta
 import type { RangeKnobMoveEndEventDetail as IRangeRangeKnobMoveEndEventDetail } from '@ionic/core';
 export declare interface IonRange extends Components.IonRange {
   /**
-   * Emitted when the value property has changed. 
+   * The `ionChange` event is fired for `<ion-range>` elements when the user
+modifies the element's value:
+- When the user releases the knob after dragging;
+- When the user moves the knob with keyboard arrows
+
+`ionChange` is not fired when the value is changed programmatically. 
    */
   ionChange: EventEmitter<CustomEvent<IRangeRangeChangeEventDetail>>;
+  /**
+   * The `ionInput` event is fired for `<ion-range>` elements when the value
+is modified. Unlike `ionChange`, `ionInput` is fired continuously
+while the user is dragging the knob. 
+   */
+  ionInput: EventEmitter<CustomEvent<IRangeRangeChangeEventDetail>>;
   /**
    * Emitted when the range has focus. 
    */
@@ -1360,7 +1371,7 @@ export class IonRange {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionChange', 'ionFocus', 'ionBlur', 'ionKnobMoveStart', 'ionKnobMoveEnd']);
+    proxyOutputs(this, this.el, ['ionChange', 'ionInput', 'ionFocus', 'ionBlur', 'ionKnobMoveStart', 'ionKnobMoveEnd']);
   }
 }
 
@@ -1821,6 +1832,7 @@ export class IonText {
 }
 
 import type { TextareaChangeEventDetail as ITextareaTextareaChangeEventDetail } from '@ionic/core';
+import type { TextareaInputEventDetail as ITextareaTextareaInputEventDetail } from '@ionic/core';
 export declare interface IonTextarea extends Components.IonTextarea {
   /**
    * The `ionChange` event is fired for `<ion-textarea>` elements when the user
@@ -1838,7 +1850,7 @@ has been changed.
 When `clearOnEdit` is enabled, the `ionInput` event will be fired when
 the user clears the textarea by performing a keydown event. 
    */
-  ionInput: EventEmitter<CustomEvent<InputEvent>>;
+  ionInput: EventEmitter<CustomEvent<ITextareaTextareaInputEventDetail>>;
   /**
    * Emitted when the input loses focus. 
    */

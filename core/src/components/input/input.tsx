@@ -342,13 +342,21 @@ export class Input implements ComponentInterface {
    * This API should be called for user committed changes.
    * This API should not be used for external value changes.
    */
-  private emitValueChange() {
+  private emitValueChange(event?: Event) {
     const { value } = this;
     // Checks for both null and undefined values
     const newValue = value == null ? value : value.toString();
     // Emitting a value change should update the internal state for tracking the focused value
     this.focusedValue = newValue;
-    this.ionChange.emit({ value: newValue });
+    this.ionChange.emit({ value: newValue, event });
+  }
+
+  /**
+   * Emits an `ionInput` event.
+   */
+  private emitInputChange(event?: Event) {
+    const { value } = this;
+    this.ionInput.emit({ value, event });
   }
 
   private shouldClearOnEdit() {
@@ -376,11 +384,11 @@ export class Input implements ComponentInterface {
     if (input) {
       this.value = input.value || '';
     }
-    this.ionInput.emit(ev as InputEvent);
+    this.emitInputChange(ev);
   };
 
-  private onChange = () => {
-    this.emitValueChange();
+  private onChange = (ev: Event) => {
+    this.emitValueChange(ev);
   };
 
   private onBlur = (ev: FocusEvent) => {
@@ -392,7 +400,7 @@ export class Input implements ComponentInterface {
        * Emits the `ionChange` event when the input value
        * is different than the value when the input was focused.
        */
-      this.emitValueChange();
+      this.emitValueChange(ev);
     }
 
     this.didInputClearOnEdit = false;
@@ -422,7 +430,7 @@ export class Input implements ComponentInterface {
      */
     if (!this.didInputClearOnEdit && this.hasValue() && ev.key !== 'Enter') {
       this.value = '';
-      this.ionInput.emit();
+      this.emitInputChange(ev);
     }
     this.didInputClearOnEdit = true;
   }
@@ -443,7 +451,7 @@ export class Input implements ComponentInterface {
       this.setFocus();
     }
     this.value = '';
-    this.ionInput.emit(ev);
+    this.emitInputChange(ev);
   };
 
   private hasValue(): boolean {

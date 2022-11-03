@@ -6,12 +6,11 @@ import { Component } from '@angular/core';
 })
 export class InputsComponent {
 
-  datetime = '1994-03-15';
-  input = 'some text';
+  datetime? = '1994-03-15';
+  input? = 'some text';
   checkbox = true;
   toggle = true;
-  select = 'nes';
-  range = 10;
+  select? = 'nes';
   changes = 0;
 
   setValues() {
@@ -21,7 +20,6 @@ export class InputsComponent {
     this.checkbox = true;
     this.toggle = true;
     this.select = 'nes';
-    this.range = 10;
   }
 
   resetValues() {
@@ -31,8 +29,8 @@ export class InputsComponent {
     this.checkbox = false;
     this.toggle = false;
     this.select = undefined;
-    this.range = undefined;
   }
+  
   counter() {
     this.changes++;
     return Math.floor(this.changes / 2);

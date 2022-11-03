@@ -19,7 +19,6 @@ export class FormComponent {
       input: ['', Validators.required],
       input2: ['Default Value'],
       checkbox: [false],
-      range: [5, Validators.min(10)],
     }, {
       updateOn: typeof (window as any) !== 'undefined' && window.location.hash === '#blur' ? 'blur' : 'change'
     });
@@ -41,8 +40,7 @@ export class FormComponent {
       toggle: true,
       input: 'Some value',
       input2: 'Another values',
-      checkbox: true,
-      range: 50
+      checkbox: true
     });
   }
 
