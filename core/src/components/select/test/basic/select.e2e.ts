@@ -173,7 +173,7 @@ test.describe('select: ionChange', () => {
     await buttons.nth(0).click();
 
     await ionChange.next();
-    expect(ionChange).toHaveReceivedEventDetail({ value: 'apple', event: { isTrusted: true } });
+    expect(ionChange).toHaveReceivedEventDetail({ value: 'apple' });
   });
 
   test('should not fire when programmatically setting a valid value', async ({ page }) => {
