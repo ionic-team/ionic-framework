@@ -127,10 +127,11 @@
   }
 }
 
-.native-input[disabled] {
-  opacity: .4;
-}
 
+:host(.legacy-input) .native-input[disabled],
+:host([disabled]) {
+  opacity: 0.4;
+}
 
 
 // Input Cover: Unfocused
