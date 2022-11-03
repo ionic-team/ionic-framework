@@ -125,7 +125,7 @@ test.describe('select: ionChange', () => {
     await confirmButton.click();
 
     await ionChange.next();
-    expect(ionChange).toHaveReceivedEventDetail({ value: 'apple', event: { isTrusted: true } });
+    expect(ionChange).toHaveReceivedEventDetail({ value: 'apple' });
   });
 
   test('should fire ionChange when confirming a value from a popover', async ({ page }) => {
