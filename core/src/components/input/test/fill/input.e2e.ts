@@ -22,10 +22,7 @@ test.describe('input: fill', () => {
       const input = page.locator('ion-input');
       expect(await input.screenshot()).toMatchSnapshot(`input-fill-solid-${page.getSnapshotSettings()}.png`);
     });
-  });
-
-  test.describe('input: fill shaped solid', () => {
-    test('should not have visual regressions', async ({ page }) => {
+    test('should not have visual regressions with shaped solid', async ({ page }) => {
       await page.setContent(`
         <ion-input
           shape="rounded"
@@ -41,5 +38,5 @@ test.describe('input: fill', () => {
       const input = page.locator('ion-input');
       expect(await input.screenshot()).toMatchSnapshot(`input-fill-shaped-solid-${page.getSnapshotSettings()}.png`);
     });
-  });
+  })
 });
