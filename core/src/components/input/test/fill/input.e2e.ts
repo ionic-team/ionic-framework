@@ -39,4 +39,37 @@ test.describe('input: fill', () => {
       expect(await input.screenshot()).toMatchSnapshot(`input-fill-shaped-solid-${page.getSnapshotSettings()}.png`);
     });
   })
+  test.describe('input: fill outline', () => {
+    test('should not have visual regressions', async ({ page }) => {
+      await page.setContent(`
+        <ion-input
+          fill="outline"
+          label="Email"
+          value="hi@ionic.io"
+          helper-text="Enter your email"
+          maxlength="20"
+          counter="true"
+        ></ion-input>
+      `);
+
+      const input = page.locator('ion-input');
+      expect(await input.screenshot()).toMatchSnapshot(`input-fill-outline-${page.getSnapshotSettings()}.png`);
+    });
+    test('should not have visual regressions with shaped outline', async ({ page }) => {
+      await page.setContent(`
+        <ion-input
+          shape="rounded"
+          fill="outline"
+          label="Email"
+          value="hi@ionic.io"
+          helper-text="Enter your email"
+          maxlength="20"
+          counter="true"
+        ></ion-input>
+      `);
+
+      const input = page.locator('ion-input');
+      expect(await input.screenshot()).toMatchSnapshot(`input-fill-shaped-outline-${page.getSnapshotSettings()}.png`);
+    });
+  })
 });
