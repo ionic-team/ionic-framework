@@ -82,7 +82,15 @@ describe('Overlays', () => {
   });
 
   it(`should open and close ion-toast via controller`, () => {
-    testController('ion-toast', true);
+    cy.get(`ion-radio#ion-toast`).click();
+    cy.get('ion-radio#controller').click();
+
+    cy.get('ion-button#present-overlay').click();
+    cy.get('ion-toast').should('exist');
+
+    cy.get('ion-toast').shadow().find('button').click();
+
+    cy.get('ion-toast').should('not.be.visible');
   });
 
   it(`should open and close ion-alert via component`, () => {
@@ -106,7 +114,15 @@ describe('Overlays', () => {
   });
 
   it(`should open and close ion-toast via component`, () => {
-    testInlineOverlay('ion-toast');
+    cy.get(`ion-radio#ion-toast`).click();
+    cy.get('ion-radio#component').click();
+
+    cy.get('ion-button#present-overlay').click();
+    cy.get('ion-toast').should('exist');
+
+    cy.get('ion-toast').shadow().find('button').click();
+
+    cy.get('ion-toast').should('not.be.visible');
   });
 
   it('should pass props to modal via controller', () => {
