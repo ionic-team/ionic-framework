@@ -86,7 +86,7 @@ describe('Overlays', () => {
     cy.get('ion-radio#controller').click();
 
     cy.get('ion-button#present-overlay').click();
-    cy.get('ion-toast').should('exist');
+    cy.get('ion-toast').should('be.visible');
 
     cy.get('ion-toast').shadow().find('button').first().click();
 
