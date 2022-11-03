@@ -555,7 +555,7 @@ export class Input implements ComponentInterface {
   }
 
   private renderInput() {
-    const { disabled, readonly, inputId, labelPlacement } = this;
+    const { disabled, label, readonly, inputId, labelPlacement } = this;
     const mode = getIonMode(this);
     const value = this.getValue();
 
@@ -570,7 +570,7 @@ export class Input implements ComponentInterface {
         })}
       >
         <div class="input-wrapper">
-          <label htmlFor={inputId}>{this.label}</label>
+          {label !== undefined && <label htmlFor={inputId}>{label}</label>}
           <input
             class="native-input"
             ref={(input) => (this.nativeInput = input)}
