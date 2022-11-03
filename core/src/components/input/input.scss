@@ -256,6 +256,11 @@
 // ----------------------------------------------------------------
 
 .input-bottom {
+  /**
+   * The bottom content should take on the start and end
+   * padding so it is always aligned with either the label
+   * or the start of the text input.
+   */
   @include padding(5px, var(--padding-end), 0, var(--padding-start));
 
   display: flex;

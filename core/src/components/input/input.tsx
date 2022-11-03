@@ -559,6 +559,13 @@ export class Input implements ComponentInterface {
    * when fill="outline".
    */
   private renderOutlineContainer() {
+    /**
+     * This label is a clone of the real label.
+     * It exists so that `input-outline-notch`
+     * shows the correct sized gap in the border
+     * when the outline input either has focus
+     * or a value.
+     */
     return (
       <div class="input-outline-container">
         <div class="input-outline-start"></div>
@@ -571,7 +578,7 @@ export class Input implements ComponentInterface {
   }
 
   private renderInput() {
-    const { disabled, fill, label, readonly, shape, inputId, labelPlacement } = this;
+    const { disabled, fill, readonly, shape, inputId, labelPlacement } = this;
     const mode = getIonMode(this);
     const value = this.getValue();
     const hasOutlineFill = fill === 'outline';
@@ -594,7 +601,7 @@ export class Input implements ComponentInterface {
           }}
         >
           {hasOutlineFill && this.renderOutlineContainer()}
-          <label htmlFor={inputId}>{label}</label>
+          <label htmlFor={inputId}>{this.label}</label>
           <input
             class="native-input"
             ref={(input) => (this.nativeInput = input)}
