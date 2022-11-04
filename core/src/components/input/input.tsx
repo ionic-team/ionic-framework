@@ -596,7 +596,7 @@ export class Input implements ComponentInterface {
   }
 
   private renderInputHighlight() {
-    return <div class="input-highlight"></div>
+    return <div class="input-highlight"></div>;
   }
 
   private renderInput() {
