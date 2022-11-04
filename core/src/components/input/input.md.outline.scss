@@ -31,17 +31,8 @@
  */
 :host(.input-fill-outline.has-focus) {
   --border-width: 2px;
-  --border-color: var(--highlight-color-focused);
+  --border-color: var(--highlight-color);
 }
-
-:host(.input-fill-outline.ion-invalid) {
-  --border-color: var(--highlight-color-invalid);
-}
-
-:host(.input-fill-outline.ion-valid) {
-  --border-color: var(--highlight-color-valid);
-}
-
 
 /**
  * The bottom content should never have
