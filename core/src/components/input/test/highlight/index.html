@@ -15,7 +15,7 @@
     <style>
       .grid {
         display: grid;
-        grid-template-columns: repeat(3, minmax(250px, 1fr));
+        grid-template-columns: repeat(4, minmax(250px, 1fr));
         grid-row-gap: 20px;
         grid-column-gap: 20px;
       }
@@ -45,13 +45,14 @@
       </ion-header>
 
       <ion-content id="content" class="ion-padding">
-        <h1>No Fill</h1>
+        <h1>No Fill, Default</h1>
         <div class="grid">
           <div class="grid-item">
             <h2>Focus</h2>
             <ion-input
+              label-placement="start"
               value="hi@ionic.io"
-              class="has-focus no-fill"
+              class="has-focus"
               label="Email"
               error-text="Please enter a valid email"
               helper-text="Enter an email"
@@ -63,8 +64,9 @@
           <div class="grid-item">
             <h2>Focus, Color</h2>
             <ion-input
+              label-placement="start"
               color="warning"
-              class="has-focus no-fill"
+              class="has-focus"
               label="Email"
               error-text="Please enter a valid email"
               helper-text="Enter an email"
@@ -76,7 +78,8 @@
           <div class="grid-item">
             <h2>Valid</h2>
             <ion-input
-              class="ion-valid no-fill"
+              label-placement="start"
+              class="ion-valid"
               label="Email"
               error-text="Please enter a valid email"
               helper-text="Enter an email"
@@ -88,7 +91,8 @@
           <div class="grid-item">
             <h2>Invalid</h2>
             <ion-input
-              class="ion-invalid no-fill"
+              label-placement="start"
+              class="ion-invalid"
               label="Email"
               error-text="Please enter a valid email"
               helper-text="Enter an email"
@@ -98,14 +102,129 @@
           </div>
         </div>
 
-        <h1>Solid</h1>
+        <h1>No Fill, Floating</h1>
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Focus</h2>
+            <ion-input
+              label-placement="floating"
+              value="hi@ionic.io"
+              class="has-focus"
+              label="Email"
+              error-text="Please enter a valid email"
+              helper-text="Enter an email"
+              counter="true"
+              maxlenght="20"
+            ></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Focus, Color</h2>
+            <ion-input
+              label-placement="floating"
+              color="warning"
+              class="has-focus"
+              label="Email"
+              error-text="Please enter a valid email"
+              helper-text="Enter an email"
+              counter="true"
+              maxlenght="20"
+            ></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Valid</h2>
+            <ion-input
+              label-placement="floating"
+              class="ion-valid"
+              label="Email"
+              error-text="Please enter a valid email"
+              helper-text="Enter an email"
+              counter="true"
+              maxlenght="20"
+            ></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Invalid</h2>
+            <ion-input
+              label-placement="floating"
+              class="ion-invalid"
+              label="Email"
+              error-text="Please enter a valid email"
+              helper-text="Enter an email"
+              counter="true"
+              maxlenght="20"
+            ></ion-input>
+          </div>
+        </div>
+
+        <h1>No Fill, Stacked</h1>
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Focus</h2>
+            <ion-input
+              label-placement="stacked"
+              value="hi@ionic.io"
+              class="has-focus"
+              label="Email"
+              error-text="Please enter a valid email"
+              helper-text="Enter an email"
+              counter="true"
+              maxlenght="20"
+            ></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Focus, Color</h2>
+            <ion-input
+              label-placement="stacked"
+              color="warning"
+              class="has-focus"
+              label="Email"
+              error-text="Please enter a valid email"
+              helper-text="Enter an email"
+              counter="true"
+              maxlenght="20"
+            ></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Valid</h2>
+            <ion-input
+              label-placement="stacked"
+              class="ion-valid"
+              label="Email"
+              error-text="Please enter a valid email"
+              helper-text="Enter an email"
+              counter="true"
+              maxlenght="20"
+            ></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Invalid</h2>
+            <ion-input
+              label-placement="stacked"
+              class="ion-invalid"
+              label="Email"
+              error-text="Please enter a valid email"
+              helper-text="Enter an email"
+              counter="true"
+              maxlenght="20"
+            ></ion-input>
+          </div>
+        </div>
+
+        <h1>Solid, Default</h1>
         <div class="grid">
           <div class="grid-item">
             <h2>Focus</h2>
             <ion-input
               fill="solid"
+              label-placement="start"
               value="hi@ionic.io"
-              class="has-focus no-fill"
+              class="has-focus"
               label="Email"
               error-text="Please enter a valid email"
               helper-text="Enter an email"
@@ -118,8 +237,9 @@
             <h2>Focus, Color</h2>
             <ion-input
               fill="solid"
+              label-placement="start"
               color="warning"
-              class="has-focus no-fill"
+              class="has-focus"
               label="Email"
               error-text="Please enter a valid email"
               helper-text="Enter an email"
@@ -132,7 +252,8 @@
             <h2>Valid</h2>
             <ion-input
               fill="solid"
-              class="ion-valid no-fill"
+              label-placement="start"
+              class="ion-valid"
               label="Email"
               error-text="Please enter a valid email"
               helper-text="Enter an email"
@@ -145,7 +266,8 @@
             <h2>Invalid</h2>
             <ion-input
               fill="solid"
-              class="ion-invalid no-fill"
+              label-placement="start"
+              class="ion-invalid"
               label="Email"
               error-text="Please enter a valid email"
               helper-text="Enter an email"
@@ -155,14 +277,137 @@
           </div>
         </div>
 
-        <h1>Outline</h1>
+        <h1>Solid, Floating</h1>
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Focus</h2>
+            <ion-input
+              fill="solid"
+              label-placement="floating"
+              value="hi@ionic.io"
+              class="has-focus"
+              label="Email"
+              error-text="Please enter a valid email"
+              helper-text="Enter an email"
+              counter="true"
+              maxlenght="20"
+            ></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Focus, Color</h2>
+            <ion-input
+              fill="solid"
+              label-placement="floating"
+              color="warning"
+              class="has-focus"
+              label="Email"
+              error-text="Please enter a valid email"
+              helper-text="Enter an email"
+              counter="true"
+              maxlenght="20"
+            ></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Valid</h2>
+            <ion-input
+              fill="solid"
+              label-placement="floating"
+              class="ion-valid"
+              label="Email"
+              error-text="Please enter a valid email"
+              helper-text="Enter an email"
+              counter="true"
+              maxlenght="20"
+            ></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Invalid</h2>
+            <ion-input
+              fill="solid"
+              label-placement="floating"
+              class="ion-invalid"
+              label="Email"
+              error-text="Please enter a valid email"
+              helper-text="Enter an email"
+              counter="true"
+              maxlenght="20"
+            ></ion-input>
+          </div>
+        </div>
+
+        <h1>Solid, Stacked</h1>
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Focus</h2>
+            <ion-input
+              fill="solid"
+              label-placement="stacked"
+              value="hi@ionic.io"
+              class="has-focus"
+              label="Email"
+              error-text="Please enter a valid email"
+              helper-text="Enter an email"
+              counter="true"
+              maxlenght="20"
+            ></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Focus, Color</h2>
+            <ion-input
+              fill="solid"
+              label-placement="stacked"
+              color="warning"
+              class="has-focus"
+              label="Email"
+              error-text="Please enter a valid email"
+              helper-text="Enter an email"
+              counter="true"
+              maxlenght="20"
+            ></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Valid</h2>
+            <ion-input
+              fill="solid"
+              label-placement="stacked"
+              class="ion-valid"
+              label="Email"
+              error-text="Please enter a valid email"
+              helper-text="Enter an email"
+              counter="true"
+              maxlenght="20"
+            ></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Invalid</h2>
+            <ion-input
+              fill="solid"
+              label-placement="stacked"
+              class="ion-invalid"
+              label="Email"
+              error-text="Please enter a valid email"
+              helper-text="Enter an email"
+              counter="true"
+              maxlenght="20"
+            ></ion-input>
+          </div>
+        </div>
+
+        <h1>Outline, Default</h1>
         <div class="grid">
           <div class="grid-item">
             <h2>Focus</h2>
             <ion-input
               fill="outline"
+              label-placement="start"
               value="hi@ionic.io"
-              class="has-focus no-fill"
+              class="has-focus"
               label="Email"
               error-text="Please enter a valid email"
               helper-text="Enter an email"
@@ -175,8 +420,9 @@
             <h2>Focus, Color</h2>
             <ion-input
               fill="outline"
+              label-placement="start"
               color="warning"
-              class="has-focus no-fill"
+              class="has-focus"
               label="Email"
               error-text="Please enter a valid email"
               helper-text="Enter an email"
@@ -189,7 +435,8 @@
             <h2>Valid</h2>
             <ion-input
               fill="outline"
-              class="ion-valid no-fill"
+              label-placement="start"
+              class="ion-valid"
               label="Email"
               error-text="Please enter a valid email"
               helper-text="Enter an email"
@@ -202,7 +449,8 @@
             <h2>Invalid</h2>
             <ion-input
               fill="outline"
-              class="ion-invalid no-fill"
+              label-placement="start"
+              class="ion-invalid"
               label="Email"
               error-text="Please enter a valid email"
               helper-text="Enter an email"
@@ -212,8 +460,131 @@
           </div>
         </div>
 
-        <ion-item fill="outline" counter="true">
-          <ion-label>Email</ion-label>
+        <h1>Outline, Floating</h1>
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Focus</h2>
+            <ion-input
+              fill="outline"
+              label-placement="floating"
+              value="hi@ionic.io"
+              class="has-focus"
+              label="Email"
+              error-text="Please enter a valid email"
+              helper-text="Enter an email"
+              counter="true"
+              maxlenght="20"
+            ></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Focus, Color</h2>
+            <ion-input
+              fill="outline"
+              label-placement="floating"
+              color="warning"
+              class="has-focus"
+              label="Email"
+              error-text="Please enter a valid email"
+              helper-text="Enter an email"
+              counter="true"
+              maxlenght="20"
+            ></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Valid</h2>
+            <ion-input
+              fill="outline"
+              label-placement="floating"
+              class="ion-valid"
+              label="Email"
+              error-text="Please enter a valid email"
+              helper-text="Enter an email"
+              counter="true"
+              maxlenght="20"
+            ></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Invalid</h2>
+            <ion-input
+              fill="outline"
+              label-placement="floating"
+              class="ion-invalid"
+              label="Email"
+              error-text="Please enter a valid email"
+              helper-text="Enter an email"
+              counter="true"
+              maxlenght="20"
+            ></ion-input>
+          </div>
+        </div>
+
+        <h1>Outline, Stacked</h1>
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Focus</h2>
+            <ion-input
+              fill="outline"
+              label-placement="stacked"
+              value="hi@ionic.io"
+              class="has-focus"
+              label="Email"
+              error-text="Please enter a valid email"
+              helper-text="Enter an email"
+              counter="true"
+              maxlenght="20"
+            ></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Focus, Color</h2>
+            <ion-input
+              fill="outline"
+              label-placement="stacked"
+              color="warning"
+              class="has-focus"
+              label="Email"
+              error-text="Please enter a valid email"
+              helper-text="Enter an email"
+              counter="true"
+              maxlenght="20"
+            ></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Valid</h2>
+            <ion-input
+              fill="outline"
+              label-placement="stacked"
+              class="ion-valid"
+              label="Email"
+              error-text="Please enter a valid email"
+              helper-text="Enter an email"
+              counter="true"
+              maxlenght="20"
+            ></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Invalid</h2>
+            <ion-input
+              fill="outline"
+              label-placement="stacked"
+              class="ion-invalid"
+              label="Email"
+              error-text="Please enter a valid email"
+              helper-text="Enter an email"
+              counter="true"
+              maxlenght="20"
+            ></ion-input>
+          </div>
+        </div>
+
+
+        <ion-item counter="true">
+          <ion-label position="floating">Email</ion-label>
           <ion-input value="hi@ionic.io"></ion-input>
           <span slot="helper">Enter an email</span>
           <span slot="error">Please enter a valid email</span>
@@ -234,7 +605,7 @@
           <span slot="error">Please enter a valid email</span>
         </ion-item>
 
-        <ion-item fill="outline" class="ion-invalid" counter="true">
+        <ion-item fill="solid" color="warning"  counter="true">
           <ion-label>Email</ion-label>
           <ion-input value="hi@ionic.io"></ion-input>
           <span slot="helper">Enter an email</span>
