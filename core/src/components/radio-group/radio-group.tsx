@@ -165,8 +165,17 @@ export class RadioGroup implements ComponentInterface {
       // Update the radio group value when a user presses the
       // space bar on top of a selected radio
       if (['Space'].includes(ev.code)) {
+        const previousValue = this.value;
         this.value = this.allowEmptySelection && this.value !== undefined ? undefined : current.value;
-        this.emitValueChange(ev);
+        if (previousValue !== this.value || this.allowEmptySelection) {
+          /**
+           * Value change should only be emitted if the value is different,
+           * such as selecting a new radio with the space bar or if
+           * the radio group allows for empty selection and the user
+           * is deselecting a checked radio.
+           */
+          this.emitValueChange(ev);
+        }
 
         // Prevent browsers from jumping
         // to the bottom of the screen
