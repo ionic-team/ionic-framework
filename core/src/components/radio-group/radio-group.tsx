@@ -38,6 +38,7 @@ export class RadioGroup implements ComponentInterface {
   @Watch('value')
   valueChanged(value: any | undefined) {
     this.setRadioTabindex(value);
+    this.setRadioChecked(value);
   }
 
   /**
@@ -48,6 +49,13 @@ export class RadioGroup implements ComponentInterface {
   componentDidLoad() {
     this.setRadioTabindex(this.value);
   }
+
+  private setRadioChecked = (value: any | undefined) => {
+    const radios = this.getRadios();
+    for (const radio of radios) {
+      radio.setChecked(radio.value === value);
+    }
+  };
 
   private setRadioTabindex = (value: any | undefined) => {
     const radios = this.getRadios();

@@ -2097,6 +2097,10 @@ export namespace Components {
          */
         "name": string;
         "setButtonTabindex": (value: number) => Promise<void>;
+        /**
+          * Sets the checked state of the radio. This should only be used by the radio group to set the checked state of the radio when the value of the radio group changes.
+         */
+        "setChecked": (checked: boolean) => Promise<void>;
         "setFocus": (ev: any) => Promise<void>;
         /**
           * the value of the radio.

@@ -76,6 +76,36 @@ test.describe('radio-group: interaction', () => {
     await radioFixture.checkRadio('mouse');
     await radioFixture.expectChecked(false);
   });
+
+  test('programmatically assigning a value should update the checked radio', async ({ page }) => {
+    await page.setContent(`
+      <ion-radio-group value="1">
+        <ion-item>
+          <ion-label>Item 1</ion-label>
+          <ion-radio value="1" slot="start"></ion-radio>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Item 2</ion-label>
+          <ion-radio value="2" slot="start"></ion-radio>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Item 3</ion-label>
+          <ion-radio value="3" slot="start"></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+    `);
+
+    const radioGroup = page.locator('ion-radio-group');
+    const radioOne = page.locator('ion-radio[value="1"]');
+    const radioTwo = page.locator('ion-radio[value="2"]');
+
+    await radioGroup.evaluate((el: HTMLIonRadioGroupElement) => (el.value = '2'));
+
+    expect(radioOne).not.toHaveClass(/radio-checked/);
+    expect(radioTwo).toHaveClass(/radio-checked/);
+  });
 });
 
 class RadioFixture {

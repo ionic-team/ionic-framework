@@ -91,6 +91,19 @@ export class Radio implements ComponentInterface {
     this.buttonTabindex = value;
   }
 
+  /**
+   * Sets the checked state of the radio.
+   * This should only be used by the radio group to set the
+   * checked state of the radio when the value of the radio group changes.
+   *
+   * @internal
+   */
+  @Method()
+  async setChecked(checked: boolean) {
+    this.checked = checked;
+    this.emitStyle();
+  }
+
   connectedCallback() {
     if (this.value === undefined) {
       this.value = this.inputId;
