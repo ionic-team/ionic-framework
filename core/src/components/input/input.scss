@@ -86,9 +86,9 @@
 }
 
 :host(.ion-color) {
-  color: current-color(base);
-
   --highlight-color-focused: #{current-color(base)};
+
+  color: current-color(base);
 }
 
 // Native Text Input
