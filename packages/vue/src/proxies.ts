@@ -580,7 +580,8 @@ export const IonRadioGroup = /*@__PURE__*/ defineContainer<JSX.IonRadioGroup>('i
   'allowEmptySelection',
   'name',
   'value',
-  'ionChange'
+  'ionChange',
+  'ionValueChange'
 ],
 'value', 'v-ion-change', 'ionChange');
 

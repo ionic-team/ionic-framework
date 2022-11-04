@@ -91,19 +91,6 @@ export class Radio implements ComponentInterface {
     this.buttonTabindex = value;
   }
 
-  /**
-   * Sets the checked state of the radio.
-   * This should only be used by the radio group to set the
-   * checked state of the radio when the value of the radio group changes.
-   *
-   * @internal
-   */
-  @Method()
-  async setChecked(checked: boolean) {
-    this.checked = checked;
-    this.emitStyle();
-  }
-
   connectedCallback() {
     if (this.value === undefined) {
       this.value = this.inputId;
@@ -111,14 +98,14 @@ export class Radio implements ComponentInterface {
     const radioGroup = (this.radioGroup = this.el.closest('ion-radio-group'));
     if (radioGroup) {
       this.updateState();
-      addEventListener(radioGroup, 'ionChange', this.updateState);
+      addEventListener(radioGroup, 'ionValueChange', this.updateState);
     }
   }
 
   disconnectedCallback() {
     const radioGroup = this.radioGroup;
     if (radioGroup) {
-      removeEventListener(radioGroup, 'ionChange', this.updateState);
+      removeEventListener(radioGroup, 'ionValueChange', this.updateState);
       this.radioGroup = null;
     }
   }

@@ -38,7 +38,7 @@ export class RadioGroup implements ComponentInterface {
   @Watch('value')
   valueChanged(value: any | undefined) {
     this.setRadioTabindex(value);
-    this.setRadioChecked(value);
+    this.ionValueChange.emit({ value });
   }
 
   /**
@@ -46,16 +46,12 @@ export class RadioGroup implements ComponentInterface {
    */
   @Event() ionChange!: EventEmitter<RadioGroupChangeEventDetail>;
 
-  componentDidLoad() {
-    this.setRadioTabindex(this.value);
-  }
-
-  private setRadioChecked = (value: any | undefined) => {
-    const radios = this.getRadios();
-    for (const radio of radios) {
-      radio.setChecked(radio.value === value);
-    }
-  };
+  /**
+   * Emitted when the `value` property has changed.
+   * This is used to ensure that `ion-radio` can respond
+   * to any value property changes from the group.
+   */
+  @Event() ionValueChange!: EventEmitter<RadioGroupChangeEventDetail>;
 
   private setRadioTabindex = (value: any | undefined) => {
     const radios = this.getRadios();

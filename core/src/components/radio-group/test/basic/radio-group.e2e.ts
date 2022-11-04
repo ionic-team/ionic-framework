@@ -103,6 +103,8 @@ test.describe('radio-group: interaction', () => {
 
     await radioGroup.evaluate((el: HTMLIonRadioGroupElement) => (el.value = '2'));
 
+    await page.waitForChanges();
+
     expect(radioOne).not.toHaveClass(/radio-checked/);
     expect(radioTwo).toHaveClass(/radio-checked/);
   });

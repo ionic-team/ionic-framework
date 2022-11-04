@@ -2097,10 +2097,6 @@ export namespace Components {
          */
         "name": string;
         "setButtonTabindex": (value: number) => Promise<void>;
-        /**
-          * Sets the checked state of the radio. This should only be used by the radio group to set the checked state of the radio when the value of the radio group changes.
-         */
-        "setChecked": (checked: boolean) => Promise<void>;
         "setFocus": (ev: any) => Promise<void>;
         /**
           * the value of the radio.
@@ -5902,6 +5898,10 @@ declare namespace LocalJSX {
           * Emitted when the value has changed.
          */
         "onIonChange"?: (event: IonRadioGroupCustomEvent<RadioGroupChangeEventDetail>) => void;
+        /**
+          * Emitted when the `value` property has changed. This is used to ensure that `ion-radio` can respond to any value property changes from the group.
+         */
+        "onIonValueChange"?: (event: IonRadioGroupCustomEvent<RadioGroupChangeEventDetail>) => void;
         /**
           * the value of the radio group.
          */
