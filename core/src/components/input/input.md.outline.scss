@@ -15,6 +15,14 @@
 }
 
 /**
+ * The border should get thicker when
+ * the input is focused.
+ */
+:host(.input-fill-outline.has-focus) {
+  --border-width: 2px;
+}
+
+/**
  * The bottom content should never have
  * a border with the outline style.
  */
