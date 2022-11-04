@@ -1,0 +1,11 @@
+<ion-content>
+  <p>This test template verifies key behaviors in the <code>@stencil/angular-output-target</code>.</p>
+
+  <ion-list>
+    <ion-item>
+      <ion-label>Events are emitted once</ion-label>
+      <ion-input id="ionChangeInput" type="text" (ionChange)="onIonChange()"></ion-input>
+      <p id="ionChangeEmittedCount">{{ ionChangeEmittedCount }}</p>
+    </ion-item>
+  </ion-list>
+</ion-content>

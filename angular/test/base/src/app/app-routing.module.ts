@@ -73,6 +73,10 @@ const routes: Routes = [
       }
     ]
   },
+  {
+    path: 'output-target',
+    loadChildren: () => import('./output-target/output-target.module').then(m => m.OutputTargetModule)
+  }
 ];
 
 @NgModule({
