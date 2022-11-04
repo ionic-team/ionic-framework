@@ -13,7 +13,7 @@ describe('IonActionSheet', () => {
     //click ok
     cy.get('ion-action-sheet').get('button:contains("Ok")').click();
     cy.get('div').contains('Ok clicked');
-    cy.get('ion-action-sheet').should('not.exist');
+    cy.get('ion-action-sheet').should('not.be.visible');
   });
 
   it('display action and call dismiss to close it', () => {
@@ -21,7 +21,7 @@ describe('IonActionSheet', () => {
     cy.get('ion-button').contains('Show ActionSheet, hide after 250 ms').click();
     cy.get('ion-action-sheet').contains('Action Sheet');
 
-    //verify action sheet is gone
-    cy.get('ion-action-sheet').should('not.exist');
+    //verify action sheet is hidden
+    cy.get('ion-action-sheet').should('not.be.visible');
   });
 });

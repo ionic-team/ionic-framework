@@ -29,6 +29,8 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Textarea](#version-7x-textarea)
   - [Toggle](#version-7x-toggle)
   - [Virtual Scroll](#version-7x-virtual-scroll)
+- [Types](#version-7x-types)
+  - [Overlay Attribute Interfaces](#version-7x-overlay-attribute-interfaces)
 - [JavaScript Frameworks](#version-7x-javascript-frameworks)
   - [React](#version-7x-react)
   - [Vue](#version-7x-vue)
@@ -84,6 +86,8 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 
 - Datetime no longer automatically adjusts the `value` property when passed an array and `multiple="false"`. Developers should update their apps to ensure they are using the API correctly.
 
+- Datetime no longer incorrectly reports the time zone when `value` is updated. Datetime does not manage time zones, so any time zone information provided is ignored.
+
 <h4 id="version-7x-input">Input</h4>
 
 - `ionChange` is no longer emitted when the `value` of `ion-input` is modified externally. `ionChange` is only emitted from user committed changes, such as typing in the input and the input losing focus or from clicking the clear action within the input.
@@ -93,6 +97,8 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 - The `debounce` property has been updated to control the timing in milliseconds to delay the event emission of the `ionInput` event after each keystroke. Previously it would delay the event emission of `ionChange`.
 
 - The `debounce` property's default value has changed from `0` to `undefined`. If `debounce` is undefined, the `ionInput` event will fire immediately.
+
+- The `detail` payload for the `ionInput` event now contains an object with the current `value` as well as the native event that triggered `ionInput`.
 
 <h4 id="version-7x-modal">Modal</h4>
 
@@ -170,6 +176,8 @@ Developers using these components will need to migrate to using Swiper.js direct
 
 - `ionInput` dispatches an event detail of `null` when the textarea is cleared as a result of `clear-on-edit="true"`.
 
+- The `detail` payload for the `ionInput` event now contains an object with the current `value` as well as the native event that triggered `ionInput`.
+
 <h4 id="version-7x-toggle">Toggle</h4>
 
 - `ionChange` is no longer emitted when the `checked` property of `ion-toggle` is modified externally. `ionChange` is only emitted from user committed changes, such as clicking the toggle to set it on or off.
@@ -185,6 +193,12 @@ Developers using the component will need to migrate to a virtual scroll solution
 - [Vue](https://ionicframework.com/docs/vue/virtual-scroll)
 
 Any references to the virtual scroll types from `@ionic/core` have been removed. Please remove or replace these types: `Cell`, `VirtualNode`, `CellType`, `NodeChange`, `HeaderFn`, `ItemHeightFn`, `FooterHeightFn`, `ItemRenderFn` and `DomRenderFn`.
+
+<h2 id="version-7x-types">Types</h2>
+
+<h4 id="version-7x-overlay-attribute-interfaces">Overlay Attribute Interfaces</h4>
+
+`ActionSheetAttributes`, `AlertAttributes`, `AlertTextareaAttributes`, `AlertInputAttributes`, `LoadingAttributes`, `ModalAttributes`, `PickerAttributes`, `PopoverAttributes`, and `ToastAttributes` have been removed. Developers should use `{ [key: string]: any }` instead.
 
 <h2 id="version-7x-javascript-frameworks">JavaScript Frameworks</h2>
 

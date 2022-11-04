@@ -10,7 +10,6 @@ import type {
   ComponentRef,
   FrameworkDelegate,
   Gesture,
-  ModalAttributes,
   ModalBreakpointChangeEventDetail,
   ModalHandleBehavior,
   OverlayEventDetail,
@@ -18,7 +17,7 @@ import type {
 } from '../../interface';
 import { findIonContent, printIonContentErrorMsg } from '../../utils/content';
 import { CoreDelegate, attachComponent, detachComponent } from '../../utils/framework-delegate';
-import { raf, inheritAttributes } from '../../utils/helpers';
+import { raf, inheritAttributes, hasLazyBuild } from '../../utils/helpers';
 import type { Attributes } from '../../utils/helpers';
 import { KEYBOARD_DID_OPEN } from '../../utils/keyboard/keyboard';
 import { printIonWarning } from '../../utils/logging';
@@ -202,7 +201,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   /**
    * Additional attributes to pass to the modal.
    */
-  @Prop() htmlAttributes?: ModalAttributes;
+  @Prop() htmlAttributes?: { [key: string]: any };
 
   /**
    * If `true`, the modal will open. If `false`, the modal will close.
@@ -309,13 +308,23 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   connectedCallback() {
-    prepareOverlay(this.el);
+    const { configureTriggerInteraction, el } = this;
+    prepareOverlay(el);
+    configureTriggerInteraction();
+  }
+
+  disconnectedCallback() {
+    const { destroyTriggerInteraction } = this;
+
+    if (destroyTriggerInteraction) {
+      destroyTriggerInteraction();
+    }
   }
 
   componentWillLoad() {
     const { breakpoints, initialBreakpoint, el } = this;
 
-    this.inheritedAttributes = inheritAttributes(el, ['role']);
+    this.inheritedAttributes = inheritAttributes(el, ['aria-label', 'role']);
 
     /**
      * If user has custom ID set then we should
@@ -342,7 +351,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
       raf(() => this.present());
     }
     this.breakpointsChanged(this.breakpoints);
-    this.configureTriggerInteraction();
   }
 
   private configureTriggerInteraction = () => {
@@ -428,7 +436,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       return;
     }
 
-    const { presentingElement } = this;
+    const { presentingElement, el } = this;
 
     /**
      * When using an inline modal
@@ -454,9 +462,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
     };
 
     const { inline, delegate } = this.getDelegate(true);
-    this.usersElement = await attachComponent(delegate, this.el, this.component, ['ion-page'], data, inline);
-
-    await deepReady(this.usersElement);
+    this.usersElement = await attachComponent(delegate, el, this.component, ['ion-page'], data, inline);
+    hasLazyBuild(el) && (await deepReady(this.usersElement));
 
     writeTask(() => this.el.classList.add('show-modal'));
 
@@ -827,11 +834,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
     return (
       <Host
         no-router
-        aria-modal="true"
-        role="dialog"
         tabindex="-1"
         {...(htmlAttributes as any)}
-        {...inheritedAttributes}
         style={{
           zIndex: `${20000 + this.overlayIndex}`,
         }}
@@ -859,7 +863,20 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
         {mode === 'ios' && <div class="modal-shadow"></div>}
 
-        <div class="modal-wrapper ion-overlay-wrapper" part="content" ref={(el) => (this.wrapperEl = el)}>
+        <div
+          /*
+            role and aria-modal must be used on the
+            same element. They must also be set inside the
+            shadow DOM otherwise ion-button will not be highlighted
+            when using VoiceOver: https://bugs.webkit.org/show_bug.cgi?id=247134
+          */
+          role="dialog"
+          {...inheritedAttributes}
+          aria-modal="true"
+          class="modal-wrapper ion-overlay-wrapper"
+          part="content"
+          ref={(el) => (this.wrapperEl = el)}
+        >
           {showHandle && (
             <button
               class="modal-handle"

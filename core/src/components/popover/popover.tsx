@@ -8,7 +8,6 @@ import type {
   ComponentRef,
   FrameworkDelegate,
   OverlayEventDetail,
-  PopoverAttributes,
   PopoverInterface,
   PopoverSize,
   PositionAlign,
@@ -17,7 +16,7 @@ import type {
   TriggerAction,
 } from '../../interface';
 import { CoreDelegate, attachComponent, detachComponent } from '../../utils/framework-delegate';
-import { addEventListener, raf } from '../../utils/helpers';
+import { addEventListener, raf, hasLazyBuild } from '../../utils/helpers';
 import { BACKDROP, dismiss, eventMethod, focusFirstDescendant, prepareOverlay, present } from '../../utils/overlays';
 import { isPlatform } from '../../utils/platform';
 import { getClassMap } from '../../utils/theme';
@@ -150,7 +149,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
   /**
    * Additional attributes to pass to the popover.
    */
-  @Prop() htmlAttributes?: PopoverAttributes;
+  @Prop() htmlAttributes?: { [key: string]: any };
 
   /**
    * Describes what kind of interaction with the trigger that
@@ -311,7 +310,18 @@ export class Popover implements ComponentInterface, PopoverInterface {
   @Event({ eventName: 'didDismiss' }) didDismissShorthand!: EventEmitter<OverlayEventDetail>;
 
   connectedCallback() {
-    prepareOverlay(this.el);
+    const { configureTriggerInteraction, el } = this;
+
+    prepareOverlay(el);
+    configureTriggerInteraction();
+  }
+
+  disconnectedCallback() {
+    const { destroyTriggerInteraction } = this;
+
+    if (destroyTriggerInteraction) {
+      destroyTriggerInteraction();
+    }
   }
 
   componentWillLoad() {
@@ -344,8 +354,6 @@ export class Popover implements ComponentInterface, PopoverInterface {
         this.dismiss(undefined, undefined, false);
       });
     }
-
-    this.configureTriggerInteraction();
   }
 
   /**
@@ -423,14 +431,16 @@ export class Popover implements ComponentInterface, PopoverInterface {
       await this.currentTransition;
     }
 
+    const { el } = this;
+
     const data = {
       ...this.componentProps,
       popover: this.el,
     };
 
     const { inline, delegate } = this.getDelegate(true);
-    this.usersElement = await attachComponent(delegate, this.el, this.component, ['popover-viewport'], data, inline);
-    await deepReady(this.usersElement);
+    this.usersElement = await attachComponent(delegate, el, this.component, ['popover-viewport'], data, inline);
+    hasLazyBuild(el) && (await deepReady(this.usersElement));
 
     if (!this.keyboardEvents) {
       this.configureKeyboardInteraction();

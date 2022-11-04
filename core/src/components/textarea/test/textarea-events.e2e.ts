@@ -19,7 +19,7 @@ test.describe('textarea: events: ionChange', () => {
 
       await ionChangeSpy.next();
 
-      expect(ionChangeSpy).toHaveReceivedEventDetail({ value: 'new value' });
+      expect(ionChangeSpy).toHaveReceivedEventDetail({ value: 'new value', event: { isTrusted: true } });
       expect(ionChangeSpy).toHaveReceivedEventTimes(1);
     });
 
@@ -36,7 +36,7 @@ test.describe('textarea: events: ionChange', () => {
 
       await ionChangeSpy.next();
 
-      expect(ionChangeSpy).toHaveReceivedEventDetail({ value: 'new value' });
+      expect(ionChangeSpy).toHaveReceivedEventDetail({ value: 'new value', event: { isTrusted: true } });
       expect(ionChangeSpy).toHaveReceivedEventTimes(1);
     });
 
@@ -75,7 +75,7 @@ test.describe('textarea: events: ionInput', () => {
     const nativeTextarea = page.locator('ion-textarea textarea');
     await nativeTextarea.type('new value', { delay: 100 });
 
-    expect(ionInputSpy).toHaveReceivedEventDetail({ isTrusted: true });
+    expect(ionInputSpy).toHaveReceivedEventDetail({ value: 'new valuesome value', event: { isTrusted: true } });
   });
 
   test('should emit when the textarea is cleared on edit', async ({ page }) => {
@@ -88,6 +88,6 @@ test.describe('textarea: events: ionInput', () => {
     await textarea.press('Backspace');
 
     expect(ionInputSpy).toHaveReceivedEventTimes(1);
-    expect(ionInputSpy).toHaveReceivedEventDetail(null);
+    expect(ionInputSpy).toHaveReceivedEventDetail({ value: '', event: { isTrusted: true } });
   });
 });
