@@ -30,7 +30,7 @@ export class Textarea implements ComponentInterface {
   private didTextareaClearOnEdit = false;
   private textareaWrapper?: HTMLElement;
   private inheritedAttributes: Attributes = {};
-  private originalIonInput?: EventEmitter<InputEvent>;
+  private originalIonInput?: EventEmitter<TextareaInputEventDetail>;
 
   /**
    * The value of the textarea when the textarea is focused.
