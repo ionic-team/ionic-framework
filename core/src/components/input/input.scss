@@ -318,6 +318,15 @@
   font-size: 12px;
 }
 
+/**
+ * If the input has a validity state, the
+ * border should reflect that as a color.
+ */
+:host(.ion-touched.ion-valid) .input-bottom,
+:host(.ion-touched.ion-invalid) .input-bottom {
+  --border-color: var(--highlight-color);
+}
+
 // Input Hint Text
 // ----------------------------------------------------------------
 

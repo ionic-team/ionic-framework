@@ -19,6 +19,15 @@
   border-bottom: var(--border-width) var(--border-style) var(--border-color);
 }
 
+/**
+ * If the input has a validity state, the
+ * border should reflect that as a color.
+ */
+:host(.input-fill-solid.ion-touched.ion-valid) .input-wrapper,
+:host(.input-fill-solid.ion-touched.ion-invalid) .input-wrapper {
+  --border-color: var(--highlight-color);
+}
+
 :host(.input-fill-solid) .input-bottom {
   border-top: none;
 }
