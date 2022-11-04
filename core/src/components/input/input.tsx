@@ -595,6 +595,10 @@ export class Input implements ComponentInterface {
     return this.renderLabel();
   }
 
+  private renderInputHighlight() {
+    return <div class="input-highlight"></div>
+  }
+
   private renderInput() {
     const { disabled, fill, readonly, shape, inputId, labelPlacement } = this;
     const mode = getIonMode(this);
@@ -664,6 +668,7 @@ export class Input implements ComponentInterface {
               onClick={this.onClearButtonClick}
             />
           )}
+          {fill !== 'outline' && this.renderInputHighlight()}
         </div>
         {this.renderBottomContent()}
       </Host>

@@ -48,7 +48,7 @@
         <div class="grid">
           <div class="grid-item">
             <h2>No Fill, Focus</h2>
-            <ion-input class="has-focus no-fill" label="Email" error-text="Please enter a valid email" helper-text="Enter an email" counter="true" maxlenght="20"></ion-input>
+            <ion-input value="hi@ionic.io" class="has-focus no-fill" label="Email" error-text="Please enter a valid email" helper-text="Enter an email" counter="true" maxlenght="20"></ion-input>
           </div>
 
           <div class="grid-item">
@@ -65,7 +65,34 @@
             <h2>No Fill, Invalid</h2>
             <ion-input class="ion-invalid no-fill" label="Email" error-text="Please enter a valid email" helper-text="Enter an email" counter="true" maxlenght="20"></ion-input>
           </div>
+
+          <div class="grid-item">
+            <h2>Solid, Focus</h2>
+            <ion-input fill="solid" value="hi@ionic.io" class="has-focus no-fill" label="Email" error-text="Please enter a valid email" helper-text="Enter an email" counter="true" maxlenght="20"></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Solid, Focus, Color</h2>
+            <ion-input fill="solid" color="tertiary" class="has-focus no-fill" label="Email" error-text="Please enter a valid email" helper-text="Enter an email" counter="true" maxlenght="20"></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Solid, Valid</h2>
+            <ion-input fill="solid" class="ion-valid no-fill" label="Email" error-text="Please enter a valid email" helper-text="Enter an email" counter="true" maxlenght="20"></ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Solid, Invalid</h2>
+            <ion-input fill="solid" class="ion-invalid no-fill" label="Email" error-text="Please enter a valid email" helper-text="Enter an email" counter="true" maxlenght="20"></ion-input>
+          </div>
         </div>
+
+        <ion-item counter="true">
+          <ion-label>Email</ion-label>
+          <ion-input value="hi@ionic.io"></ion-input>
+          <span slot="helper">Enter an email</span>
+          <span slot="error">Please enter a valid email</span>
+        </ion-item>
       </ion-content>
     </ion-app>
   </body>

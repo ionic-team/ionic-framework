@@ -250,6 +250,28 @@
   background: var(--background);
 }
 
+// Input Highlight
+// ----------------------------------------------------------------
+
+.input-highlight {
+  @include position(null, null, -1px, 0);
+
+  position: absolute;
+
+  width: 100%;
+  height: 2px;
+
+  background: var(--highlight-color-focused);
+
+  transform: scale(0);
+
+  transition: transform 200ms;
+}
+
+:host(.has-focus) .input-highlight {
+  transform: scale(1);
+}
+
 // Input Bottom Content
 // ----------------------------------------------------------------
 
