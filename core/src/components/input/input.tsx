@@ -603,7 +603,7 @@ export class Input implements ComponentInterface {
     const { disabled, fill, readonly, shape, inputId, labelPlacement } = this;
     const mode = getIonMode(this);
     const value = this.getValue();
-    const shouldRenderHighlight = mode === 'ios' || fill !== 'outline';
+    const shouldRenderHighlight = mode === 'md' && fill !== 'outline';
 
     return (
       <Host
