@@ -10,6 +10,20 @@
 }
 
 /**
+ * The solid fill style has a border
+ * at the bottom of the input wrapper.
+ * As a result, the border on the "bottom
+ * content" is not needed.
+ */
+:host(.input-fill-solid) .input-wrapper {
+  border-bottom: var(--border-width) var(--border-style) var(--border-color);
+}
+
+:host(.input-fill-solid) .input-bottom {
+  border-top: none;
+}
+
+/**
  * Background and border should be
  * slightly darker on hover.
  */

@@ -247,8 +247,6 @@
 
   transition: background-color 15ms linear;
 
-  border-bottom: var(--border-width) var(--border-style) var(--border-color);
-
   background: var(--background);
 }
 
@@ -266,6 +264,8 @@
   display: flex;
 
   justify-content: space-between;
+
+  border-top: var(--border-width) var(--border-style) var(--border-color);
 
   font-size: 12px;
 }
