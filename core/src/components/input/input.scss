@@ -85,10 +85,12 @@
   --padding-start: 0;
 }
 
+:host(.legacy-input.ion-color) {
+  color: current-color(base);
+}
+
 :host(.ion-color) {
   --highlight-color-focused: #{current-color(base)};
-
-  color: current-color(base);
 }
 
 // Native Text Input
