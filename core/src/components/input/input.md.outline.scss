@@ -15,22 +15,6 @@
 }
 
 /**
- * The border should get thicker when
- * the input is focused.
- */
-:host(.input-fill-outline.has-focus) {
-  --border-width: 2px;
-}
-
-/**
- * The bottom content should never have
- * a border with the outline style.
- */
-:host(.input-fill-outline) .input-bottom {
-  border-top: none;
-}
-
-/**
  * Border should be
  * slightly darker on hover.
  */
@@ -38,6 +22,33 @@
   :host(.input-fill-outline:hover) {
     --border-color: #{$background-color-step-750};
   }
+}
+
+/**
+ * The border should get thicker
+ * and take on component color when
+ * the input is focused.
+ */
+:host(.input-fill-outline.has-focus) {
+  --border-width: 2px;
+  --border-color: var(--highlight-color-focused);
+}
+
+:host(.input-fill-outline.ion-invalid) {
+  --border-color: var(--highlight-color-invalid);
+}
+
+:host(.input-fill-outline.ion-valid) {
+  --border-color: var(--highlight-color-valid);
+}
+
+
+/**
+ * The bottom content should never have
+ * a border with the outline style.
+ */
+:host(.input-fill-outline) .input-bottom {
+  border-top: none;
 }
 
 /**
