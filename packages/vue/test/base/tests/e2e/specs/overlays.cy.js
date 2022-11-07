@@ -86,11 +86,11 @@ describe('Overlays', () => {
     cy.get('ion-radio#controller').click();
 
     cy.get('ion-button#present-overlay').click();
-    cy.get('ion-toast').should('exist');
+    cy.get('ion-toast.ion-toast-controller').should('exist');
 
-    cy.get('ion-toast').shadow().find('button').click();
+    cy.get('ion-toast.ion-toast-controller').shadow().find('button').click();
 
-    cy.get('ion-toast').should('not.exist');
+    cy.get('ion-toast.ion-toast-controller').should('not.exist');
   });
 
   it(`should open and close ion-alert via component`, () => {
@@ -122,7 +122,7 @@ describe('Overlays', () => {
 
     cy.get('ion-toast').shadow().find('button').click();
 
-    cy.get('ion-toast').should('not.exist');
+    cy.get('ion-toast').should('not.be.visible');
   });
 
   it('should pass props to modal via controller', () => {
