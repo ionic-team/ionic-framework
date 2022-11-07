@@ -1294,12 +1294,6 @@ export declare interface IonRadioGroup extends Components.IonRadioGroup {
    * Emitted when the value has changed. 
    */
   ionChange: EventEmitter<CustomEvent<IRadioGroupRadioGroupChangeEventDetail>>;
-  /**
-   * Emitted when the `value` property has changed.
-This is used to ensure that `ion-radio` can respond
-to any value property changes from the group. 
-   */
-  ionValueChange: EventEmitter<CustomEvent<IRadioGroupRadioGroupChangeEventDetail>>;
 
 }
 
@@ -1318,7 +1312,7 @@ export class IonRadioGroup {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionChange', 'ionValueChange']);
+    proxyOutputs(this, this.el, ['ionChange']);
   }
 }
 
