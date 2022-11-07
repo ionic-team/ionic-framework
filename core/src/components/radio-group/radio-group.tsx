@@ -50,7 +50,7 @@ export class RadioGroup implements ComponentInterface {
    * Emitted when the `value` property has changed.
    * This is used to ensure that `ion-radio` can respond
    * to any value property changes from the group.
-   * 
+   *
    * @internal
    */
   @Event() ionValueChange!: EventEmitter<RadioGroupChangeEventDetail>;
