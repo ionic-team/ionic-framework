@@ -3,56 +3,25 @@ import { test } from '@utils/test/playwright';
 
 test.describe('input: basic', () => {
   test.describe('input with overflow', () => {
-    test.skip('should not have visual regressions', async ({ page }) => {
+    test('should not have visual regressions', async ({ page }) => {
       await page.setContent(`
-        <ion-content>
-          <ion-list>
-            <ion-item>
-              <ion-input value="reallylonglonglonginputtoseetheedgesreallylonglonglonginputtoseetheedges"></ion-input>
-            </ion-item>
-          </ion-list>
-        </ion-content>
+        <ion-input value="reallylonglonglonginputtoseetheedgesreallylonglonglonginputtoseetheedges"></ion-input>
       `);
-      const item = page.locator('ion-item');
+      const input = page.locator('ion-input');
       // Validates the display of an input where text extends off the edge of the component.
-      expect(await item.screenshot()).toMatchSnapshot(`input-with-text-overflow-${page.getSnapshotSettings()}.png`);
+      expect(await input.screenshot()).toMatchSnapshot(`input-with-text-overflow-${page.getSnapshotSettings()}.png`);
     });
   });
-
   test.describe('input with placeholder', () => {
-    test.skip('should not have visual regressions', async ({ page }) => {
+    test('should not have visual regressions', async ({ page }) => {
       await page.setContent(`
-      <ion-content>
-        <ion-list>
-          <ion-item>
-            <ion-input placeholder="Placeholder"></ion-input>
-          </ion-item>
-        </ion-list>
-      </ion-content>
+        <ion-input placeholder="Placeholder"></ion-input>
       `);
-      const item = page.locator('ion-item');
+      const input = page.locator('ion-input');
       // Validates the display of an input with a placeholder.
-      expect(await item.screenshot()).toMatchSnapshot(`input-with-placeholder-${page.getSnapshotSettings()}.png`);
+      expect(await input.screenshot()).toMatchSnapshot(`input-with-placeholder-${page.getSnapshotSettings()}.png`);
     });
   });
-
-  test.describe('input disabled', () => {
-    test.skip('should not have visual regressions', async ({ page }) => {
-      await page.setContent(`
-      <ion-content>
-        <ion-list>
-          <ion-item>
-            <ion-input value="Input disabled" disabled></ion-input>
-          </ion-item>
-        </ion-list>
-      </ion-content>
-      `);
-      const item = page.locator('ion-item');
-      // Validates the display of an input in a disabled state.
-      expect(await item.screenshot()).toMatchSnapshot(`input-disabled-${page.getSnapshotSettings()}.png`);
-    });
-  });
-
   test.describe('input with lines="full"', () => {
     test.skip('should not have visual regressions', async ({ page }) => {
       await page.setContent(`
@@ -137,23 +106,16 @@ test.describe('input: basic', () => {
   });
 
   test.describe('input with clear button', () => {
-    test.skip('should not have visual regressions', async ({ page }) => {
+    test('should not have visual regressions', async ({ page }) => {
       await page.setContent(`
-      <ion-content>
-        <ion-list>
-          <ion-item>
-            <ion-label>Clear Input</ion-label>
-            <ion-input
-              clear-input
-              value="reallylonglonglonginputtoseetheedgesreallylonglonglonginputtoseetheedges"
-            ></ion-input>
-          </ion-item>
-        </ion-list>
-      </ion-content>
+        <ion-input
+          clear-input="true"
+          value="Text"
+        ></ion-input>
       `);
-      const item = page.locator('ion-item');
+      const input = page.locator('ion-input');
       // Validates the display of an input with a clear button.
-      expect(await item.screenshot()).toMatchSnapshot(`input-with-clear-button-${page.getSnapshotSettings()}.png`);
+      expect(await input.screenshot()).toMatchSnapshot(`input-with-clear-button-${page.getSnapshotSettings()}.png`);
     });
   });
 });
