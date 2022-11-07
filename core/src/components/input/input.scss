@@ -262,30 +262,6 @@
   background: var(--background);
 }
 
-// Input Highlight
-// ----------------------------------------------------------------
-
-.input-highlight {
-  @include position(null, null, -1px, 0);
-
-  position: absolute;
-
-  width: 100%;
-  height: 1px;
-
-  transform: scale(0);
-
-  background: var(--highlight-color);
-}
-
-:host(.ion-touched.ion-invalid) {
-  --highlight-color: var(--highlight-color-invalid);
-}
-
-:host(.ion-touched.ion-valid) {
-  --highlight-color: var(--highlight-color-valid);
-}
-
 // Input Bottom Content
 // ----------------------------------------------------------------
 
@@ -362,6 +338,13 @@
   white-space: nowrap;
 
   padding-inline-start: 16px;
+}
+
+// Input Native
+// ----------------------------------------------------------------
+
+:host(.has-focus) input {
+  caret-color: var(--highlight-color);
 }
 
 // Input Label
