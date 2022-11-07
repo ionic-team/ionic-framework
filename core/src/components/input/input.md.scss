@@ -2,6 +2,7 @@
 @import "./input.md.vars";
 @import "./input.md.solid.scss";
 @import "./input.md.outline.scss";
+@import '../item/item.md.vars.scss';
 
 // Material Design Input
 // --------------------------------------------------
@@ -34,6 +35,16 @@
   height: $input-md-input-clear-icon-width;
 
   background-size: $input-md-input-clear-icon-size;
+}
+
+/**
+ * The input with no fill in item should
+ * have start padding applied on the input
+ * not the item.
+ */
+:host(.in-item:not(.input-fill-outline)),
+:host(.in-item:not(.input-fill-solid)) {
+  --padding-start: #{$item-md-padding-start};
 }
 
 // Input Bottom

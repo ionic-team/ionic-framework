@@ -81,7 +81,7 @@
   @include border-radius(var(--border-radius));
 }
 
-:host-context(ion-item:not(.item-label)) {
+:host-context(ion-item:not(.item-label):not(.item-has-modern-input)) {
   --padding-start: 0;
 }
 
