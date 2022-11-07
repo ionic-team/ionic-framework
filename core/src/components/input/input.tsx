@@ -91,6 +91,17 @@ export class Input implements ComponentInterface {
   @Prop() clearOnEdit?: boolean;
 
   /**
+   * If `true`, a character counter will display the ratio of characters used and the total character limit. Developers must also set the `maxlength` property for the counter to be calculated correctly.
+   */
+  @Prop() counter = false;
+
+  /**
+   * A callback used to format the counter text.
+   * By default the counter text is set to "itemLength / maxLength".
+   */
+  @Prop() counterFormatter?: (inputLength: number, maxLength: number) => string;
+
+  /**
    * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
    */
   @Prop() debounce = 0;
@@ -118,11 +129,42 @@ export class Input implements ComponentInterface {
   @Prop() enterkeyhint?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
 
   /**
+   * Text that is placed under the input and displayed when an error is detected.
+   */
+  @Prop() errorText?: string;
+
+  /**
+   * The fill for the item. If `'solid'` the item will have a background. If
+   * `'outline'` the item will be transparent with a border. Only available in `md` mode.
+   */
+  @Prop() fill?: 'outline' | 'solid';
+
+  /**
    * A hint to the browser for which keyboard to display.
    * Possible values: `"none"`, `"text"`, `"tel"`, `"url"`,
    * `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
    */
   @Prop() inputmode?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
+
+  /**
+   * Text that is placed under the input and displayed when no error is detected.
+   */
+  @Prop() helperText?: string;
+
+  /**
+   * The visible label associated with the input.
+   */
+  @Prop() label?: string;
+
+  /**
+   * Where to place the label relative to the input.
+   * `'start'`: The label will appear to the left of the input in LTR and to the right in RTL.
+   * `'end'`: The label will appear to the right of the input in LTR and to the left in RTL.
+   * `'floating'`: The label will appear smaller and above the input when the input is focused or it has a value. Otherwise it will appear on top of the input.
+   * `'stacked'`: The label will appear smaller and above the input regardless even when the input is blurred or has no value.
+   * `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+   */
+  @Prop() labelPlacement: 'start' | 'end' | 'floating' | 'stacked' | 'fixed' = 'start';
 
   /**
    * The maximum value, which must not be less than its minimum (min attribute) value.
@@ -175,6 +217,11 @@ export class Input implements ComponentInterface {
    * If `true`, the user must fill in a value before submitting a form.
    */
   @Prop() required = false;
+
+  /**
+   * The shape of the input. If "round" it will have an increased border radius.
+   */
+  @Prop() shape?: 'round';
 
   /**
    * If `true`, the element will have its spelling and grammar checked.

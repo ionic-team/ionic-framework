@@ -18,6 +18,15 @@
    * @prop --placeholder-font-style: Font style of the input placeholder text
    * @prop --placeholder-font-weight: Font weight of the input placeholder text
    * @prop --placeholder-opacity: Opacity of the input placeholder text
+   *
+   * @prop --highlight-color-focused: The color of the highlight on the input when focused
+   * @prop --highlight-color-valid: The color of the highlight on the input when valid
+   * @prop --highlight-color-invalid: The color of the highlight on the input when invalid
+   *
+   * @prop --border-color: Color of the input border
+   * @prop --border-radius: Radius of the input border
+   * @prop --border-style: Style of the input border
+   * @prop --border-width: Width of the input border
    */
   --placeholder-color: initial;
   --placeholder-font-style: initial;

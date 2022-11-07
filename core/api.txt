@@ -527,10 +527,17 @@ ion-input,prop,autofocus,boolean,false,false,false
 ion-input,prop,clearInput,boolean,false,false,false
 ion-input,prop,clearOnEdit,boolean | undefined,undefined,false,false
 ion-input,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
+ion-input,prop,counter,boolean,false,false,false
+ion-input,prop,counterFormatter,((inputLength: number, maxLength: number) => string) | undefined,undefined,false,false
 ion-input,prop,debounce,number,0,false,false
 ion-input,prop,disabled,boolean,false,false,false
 ion-input,prop,enterkeyhint,"done" | "enter" | "go" | "next" | "previous" | "search" | "send" | undefined,undefined,false,false
+ion-input,prop,errorText,string | undefined,undefined,false,false
+ion-input,prop,fill,"outline" | "solid" | undefined,undefined,false,false
+ion-input,prop,helperText,string | undefined,undefined,false,false
 ion-input,prop,inputmode,"decimal" | "email" | "none" | "numeric" | "search" | "tel" | "text" | "url" | undefined,undefined,false,false
+ion-input,prop,label,string | undefined,undefined,false,false
+ion-input,prop,labelPlacement,"end" | "fixed" | "floating" | "stacked" | "start",'start',false,false
 ion-input,prop,max,number | string | undefined,undefined,false,false
 ion-input,prop,maxlength,number | undefined,undefined,false,false
 ion-input,prop,min,number | string | undefined,undefined,false,false
@@ -542,6 +549,7 @@ ion-input,prop,pattern,string | undefined,undefined,false,false
 ion-input,prop,placeholder,string | undefined,undefined,false,false
 ion-input,prop,readonly,boolean,false,false,false
 ion-input,prop,required,boolean,false,false,false
+ion-input,prop,shape,"round" | undefined,undefined,false,false
 ion-input,prop,size,number | undefined,undefined,false,false
 ion-input,prop,spellcheck,boolean,false,false,false
 ion-input,prop,step,string | undefined,undefined,false,false
@@ -554,7 +562,14 @@ ion-input,event,ionChange,InputChangeEventDetail,true
 ion-input,event,ionFocus,FocusEvent,true
 ion-input,event,ionInput,Event | InputEvent,true
 ion-input,css-prop,--background
+ion-input,css-prop,--border-color
+ion-input,css-prop,--border-radius
+ion-input,css-prop,--border-style
+ion-input,css-prop,--border-width
 ion-input,css-prop,--color
+ion-input,css-prop,--highlight-color-focused
+ion-input,css-prop,--highlight-color-invalid
+ion-input,css-prop,--highlight-color-valid
 ion-input,css-prop,--padding-bottom
 ion-input,css-prop,--padding-end
 ion-input,css-prop,--padding-start
