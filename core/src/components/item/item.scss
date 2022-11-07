@@ -95,6 +95,16 @@
   box-sizing: border-box;
 }
 
+/**
+ * The highlight on ion-input should extend to
+ * the end of the item and should overlay any
+ * border that the ion-item has added.
+ */
+:host(.item-has-modern-input) {
+  --inner-padding-end: 0px;
+
+  overflow: initial;
+}
 
 // Item: Color
 // --------------------------------------------------
