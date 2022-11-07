@@ -675,6 +675,7 @@ export class Input implements ComponentInterface {
     );
   }
 
+  // TODO FW-2764 Remove this
   private renderLegacyInput() {
     if (!this.hasLoggedDeprecationWarning) {
       printIonWarning(

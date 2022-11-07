@@ -100,6 +100,7 @@
  * the end of the item and should overlay any
  * border that the ion-item has added.
  */
+// TODO FW-2764 This should check to see if item has ion-input or ion-textarea
 :host(.item-has-modern-input) {
   --inner-padding-end: 0px;
 

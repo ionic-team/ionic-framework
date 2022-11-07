@@ -14,6 +14,7 @@
   font-size: $input-md-font-size;
 }
 
+// TODO FW-2764 Remove this
 :host(.legacy-input) {
   --padding-top: #{$input-md-padding-top};
   --padding-end: #{$input-md-padding-end};

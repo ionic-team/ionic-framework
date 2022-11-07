@@ -8,6 +8,7 @@
   font-size: $input-ios-font-size;
 }
 
+// TODO FW-2764 Remove this
 :host(.legacy-input) {
   --padding-top: #{$input-ios-padding-top};
   --padding-end: #{$input-ios-padding-end};
