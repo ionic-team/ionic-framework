@@ -15,7 +15,7 @@ import type {
 } from '../../interface';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes, debounceEvent, findItemLabel, inheritAttributes } from '../../utils/helpers';
-import { createColorClasses } from '../../utils/theme';
+import { createColorClasses, hostContext } from '../../utils/theme';
 
 import { getCounterText } from './input.utils';
 
@@ -611,6 +611,7 @@ export class Input implements ComponentInterface {
           [`input-fill-${fill}`]: fill !== undefined,
           [`input-shape-${shape}`]: shape !== undefined,
           [`input-label-placement-${labelPlacement}`]: true,
+          'in-full-item': hostContext('ion-item:not(.item-lines-inset)', this.el)
         })}
       >
         <div class="input-wrapper">

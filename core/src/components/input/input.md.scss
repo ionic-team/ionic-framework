@@ -42,8 +42,8 @@
  * have start padding applied on the input
  * not the item.
  */
-:host(.in-item:not(.input-fill-outline)),
-:host(.in-item:not(.input-fill-solid)) {
+:host(.in-full-item:not(.input-fill-outline)),
+:host(.in-full-item:not(.input-fill-solid)) {
   --padding-start: #{$item-md-padding-start};
 }
 
