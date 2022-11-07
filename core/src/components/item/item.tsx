@@ -420,7 +420,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
             'ion-activatable': canActivate,
             'ion-focusable': this.focusable,
             'item-rtl': document.dir === 'rtl',
-            'item-has-modern-input': hasModernInput
+            'item-has-modern-input': hasModernInput,
           }),
         }}
         role={inList ? 'listitem' : null}

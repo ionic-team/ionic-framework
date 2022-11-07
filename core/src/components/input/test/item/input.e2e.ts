@@ -18,7 +18,6 @@ test.describe('input: item', () => {
     `);
     const list = page.locator('ion-list');
     expect(await list.screenshot()).toMatchSnapshot(`input-list-no-fill-${page.getSnapshotSettings()}.png`);
-
   });
   test('should render correctly in list with solid fill', async ({ page }) => {
     await page.setContent(`
@@ -37,8 +36,7 @@ test.describe('input: item', () => {
     `);
     const list = page.locator('ion-list');
     expect(await list.screenshot()).toMatchSnapshot(`input-list-solid-${page.getSnapshotSettings()}.png`);
-
-  })
+  });
   test('should render correctly in list with outline fill', async ({ page }) => {
     await page.setContent(`
       <ion-list>
@@ -56,8 +54,7 @@ test.describe('input: item', () => {
     `);
     const list = page.locator('ion-list');
     expect(await list.screenshot()).toMatchSnapshot(`input-list-outline-${page.getSnapshotSettings()}.png`);
-
-  })
+  });
   test('should render correctly in inset list with no fill', async ({ page }) => {
     await page.setContent(`
       <ion-list inset="true">
@@ -74,6 +71,5 @@ test.describe('input: item', () => {
     `);
     const list = page.locator('ion-list');
     expect(await list.screenshot()).toMatchSnapshot(`input-inset-list-no-fill-${page.getSnapshotSettings()}.png`);
-
-  })
+  });
 });
