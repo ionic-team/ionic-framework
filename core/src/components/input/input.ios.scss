@@ -47,3 +47,20 @@
 :host(.input-label-placement-stacked) .input-wrapper {
   min-height: 56px;
 }
+
+// Input Label
+// ----------------------------------------------------------------
+
+/**
+ * The label and highlight only
+ * change color in iOS mode when
+ * the color prop is specified
+ * by the developer.
+ */
+:host(.has-focus.ion-color) label {
+  color: var(--highlight-color);
+}
+
+:host(.has-focus.ion-color) .input-highlight {
+  transform: scale(1);
+}
