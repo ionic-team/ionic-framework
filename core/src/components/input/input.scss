@@ -179,8 +179,12 @@
 // Clear Input Icon
 // --------------------------------------------------
 
-.input-clear-icon {
+:host(.legacy-input) .input-clear-icon {
   @include margin(0);
+}
+
+.input-clear-icon {
+  @include margin(auto);
   @include padding(0);
   @include background-position(center);
 
