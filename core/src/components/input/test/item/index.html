@@ -15,7 +15,7 @@
     <style>
       .grid {
         display: grid;
-        grid-template-columns: repeat(3, minmax(250px, 1fr));
+        grid-template-columns: repeat(4, minmax(250px, 1fr));
         grid-row-gap: 20px;
         grid-column-gap: 20px;
       }
@@ -44,42 +44,58 @@
         </ion-toolbar>
       </ion-header>
 
-      <ion-content id="content" class="ion-padding">
+      <ion-content id="content" class="ion-padding" color="light">
+        <h1>Regular List</h1>
         <div class="grid">
           <div class="grid-item">
             <h2>No Fill</h2>
-            <ion-item>
-              <ion-input class="no-fill" label="Email"></ion-input>
-            </ion-item>
-          </div>
-
-          <div class="grid-item">
-            <h2>No Fill OLD</h2>
-            <ion-item>
-              <ion-label>Email</ion-label>
-              <ion-input class="no-fill"></ion-input>
-            </ion-item>
+            <ion-list>
+              <ion-item>
+                <ion-input label="Email"></ion-input>
+              </ion-item>
+            </ion-list>
           </div>
 
           <div class="grid-item">
             <h2>Solid</h2>
-            <ion-item lines="none">
-              <ion-input fill="solid" class="no-fill" label="Email"></ion-input>
+            <ion-list>
+              <ion-item lines="none">
+                <ion-input fill="solid" label="Email"></ion-input>
             </ion-item>
+            </ion-list>
           </div>
 
           <div class="grid-item">
             <h2>Outline</h2>
-            <ion-item lines="none">
-              <ion-input fill="outline" class="no-fill" label="Email"></ion-input>
-            </ion-item>
+            <ion-list>
+              <ion-item lines="none">
+                <ion-input fill="outline" label="Email"></ion-input>
+              </ion-item>
+            </ion-list>
           </div>
 
           <div class="grid-item">
             <h2>Outline, Floating</h2>
-            <ion-item lines="none">
-              <ion-input fill="outline" class="no-fill" label="Email" label-placement="floating"></ion-input>
-            </ion-item>
+            <ion-list>
+              <ion-item lines="none">
+                <ion-input fill="outline" label="Email" label-placement="floating"></ion-input>
+              </ion-item>
+            </ion-list>
+          </div>
+        </div>
+
+        <h1>Inset List</h1>
+        <div class="grid">
+          <div class="grid-item">
+            <h2>No Fill</h2>
+            <ion-list>
+              <ion-item lines="inset">
+                <ion-input label="Email"></ion-input>
+              </ion-item>
+              <ion-item lines="inset">
+                <ion-input label="Email"></ion-input>
+              </ion-item>
+            </ion-list>
           </div>
         </div>
       </ion-content>
