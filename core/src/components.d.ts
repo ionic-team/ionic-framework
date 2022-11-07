@@ -2849,6 +2849,7 @@ export namespace Components {
           * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
          */
         "cssClass"?: string | string[];
+        "delegate"?: FrameworkDelegate;
         /**
           * Dismiss the toast overlay after it has been presented.
           * @param data Any data to emit in the dismiss events.
@@ -2863,6 +2864,7 @@ export namespace Components {
           * Animation to use when the toast is presented.
          */
         "enterAnimation"?: AnimationBuilder;
+        "hasController": boolean;
         /**
           * Header to be shown in the toast.
          */
@@ -2875,6 +2877,10 @@ export namespace Components {
           * The name of the icon to display, or the path to a valid SVG file. See `ion-icon`. https://ionic.io/ionicons
          */
         "icon"?: string;
+        /**
+          * If `true`, the toast will open. If `false`, the toast will close. Use this if you need finer grained control over presentation, otherwise just use the toastController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the toast dismisses. You will need to do that in your code.
+         */
+        "isOpen": boolean;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -2912,6 +2918,10 @@ export namespace Components {
           * If `true`, the toast will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent": boolean;
+        /**
+          * An ID corresponding to the trigger element that causes the toast to open when clicked.
+         */
+        "trigger": string | undefined;
     }
     interface IonToggle {
         /**
@@ -6727,6 +6737,7 @@ declare namespace LocalJSX {
           * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
          */
         "cssClass"?: string | string[];
+        "delegate"?: FrameworkDelegate;
         /**
           * How many milliseconds to wait before hiding the toast. By default, it will show until `dismiss()` is called.
          */
@@ -6735,6 +6746,7 @@ declare namespace LocalJSX {
           * Animation to use when the toast is presented.
          */
         "enterAnimation"?: AnimationBuilder;
+        "hasController"?: boolean;
         /**
           * Header to be shown in the toast.
          */
@@ -6747,6 +6759,10 @@ declare namespace LocalJSX {
           * The name of the icon to display, or the path to a valid SVG file. See `ion-icon`. https://ionic.io/ionicons
          */
         "icon"?: string;
+        /**
+          * If `true`, the toast will open. If `false`, the toast will close. Use this if you need finer grained control over presentation, otherwise just use the toastController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the toast dismisses. You will need to do that in your code.
+         */
+        "isOpen"?: boolean;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -6764,6 +6780,14 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
+          * Emitted after the toast has dismissed. Shorthand for ionToastDidDismiss.
+         */
+        "onDidDismiss"?: (event: IonToastCustomEvent<OverlayEventDetail>) => void;
+        /**
+          * Emitted after the toast has presented. Shorthand for ionToastWillDismiss.
+         */
+        "onDidPresent"?: (event: IonToastCustomEvent<void>) => void;
+        /**
           * Emitted after the toast has dismissed.
          */
         "onIonToastDidDismiss"?: (event: IonToastCustomEvent<OverlayEventDetail>) => void;
@@ -6779,6 +6803,14 @@ declare namespace LocalJSX {
           * Emitted before the toast has presented.
          */
         "onIonToastWillPresent"?: (event: IonToastCustomEvent<void>) => void;
+        /**
+          * Emitted before the toast has dismissed. Shorthand for ionToastWillDismiss.
+         */
+        "onWillDismiss"?: (event: IonToastCustomEvent<OverlayEventDetail>) => void;
+        /**
+          * Emitted before the toast has presented. Shorthand for ionToastWillPresent.
+         */
+        "onWillPresent"?: (event: IonToastCustomEvent<void>) => void;
         "overlayIndex": number;
         /**
           * The position of the toast on the screen.
@@ -6788,6 +6820,10 @@ declare namespace LocalJSX {
           * If `true`, the toast will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent"?: boolean;
+        /**
+          * An ID corresponding to the trigger element that causes the toast to open when clicked.
+         */
+        "trigger"?: string | undefined;
     }
     interface IonToggle {
         /**

@@ -23,7 +23,6 @@ function generateOverlays() {
     },
     {
       tag: 'ion-toast',
-      controller: 'toastController',
       name: 'IonToast'
     },
     {
