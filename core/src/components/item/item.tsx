@@ -310,6 +310,11 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     return this.canActivate() || focusableChild !== null;
   }
 
+  private hasModernInput(): boolean {
+    const input = this.el.querySelector('ion-input:not(.legacy-input)');
+    return input !== null;
+  }
+
   private getFirstInput(): HTMLIonInputElement | HTMLIonTextareaElement {
     const inputs = this.el.querySelectorAll('ion-input, ion-textarea') as NodeListOf<
       HTMLIonInputElement | HTMLIonTextareaElement
@@ -395,6 +400,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     const ariaDisabled = disabled || childStyles['item-interactive-disabled'] ? 'true' : null;
     const fillValue = fill || 'none';
     const inList = hostContext('ion-list', this.el);
+    const hasModernInput = this.hasModernInput();
 
     return (
       <Host
@@ -414,6 +420,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
             'ion-activatable': canActivate,
             'ion-focusable': this.focusable,
             'item-rtl': document.dir === 'rtl',
+            'item-has-modern-input': hasModernInput
           }),
         }}
         role={inList ? 'listitem' : null}
