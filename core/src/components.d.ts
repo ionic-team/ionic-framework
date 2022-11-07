@@ -5909,6 +5909,10 @@ declare namespace LocalJSX {
          */
         "onIonChange"?: (event: IonRadioGroupCustomEvent<RadioGroupChangeEventDetail>) => void;
         /**
+          * Emitted when the `value` property has changed. This is used to ensure that `ion-radio` can respond to any value property changes from the group.
+         */
+        "onIonValueChange"?: (event: IonRadioGroupCustomEvent<RadioGroupChangeEventDetail>) => void;
+        /**
           * the value of the radio group.
          */
         "value"?: any | null;

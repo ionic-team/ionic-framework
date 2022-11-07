@@ -149,7 +149,7 @@ test.describe('select: ionChange', () => {
     await radioButtons.nth(0).click();
 
     await ionChange.next();
-    expect(ionChange).toHaveReceivedEventDetail({ value: 'apple' });
+    expect(ionChange).toHaveReceivedEventDetail({ value: 'apple', event: { isTrusted: true } });
   });
 
   test('should fire ionChange when confirming a value from an action sheet', async ({ page }) => {
