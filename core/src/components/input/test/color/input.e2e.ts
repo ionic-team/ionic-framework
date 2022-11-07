@@ -23,9 +23,7 @@ test.describe('input: color', () => {
       `);
 
       const input = page.locator('ion-input');
-      expect(await input.screenshot()).toMatchSnapshot(
-        `input-no-fill-color-start-${page.getSnapshotSettings()}.png`
-      );
+      expect(await input.screenshot()).toMatchSnapshot(`input-no-fill-color-start-${page.getSnapshotSettings()}.png`);
     });
     test('should set label and highlight color on focus with end label placement', async ({ page }) => {
       await page.setContent(`
@@ -33,9 +31,7 @@ test.describe('input: color', () => {
       `);
 
       const input = page.locator('ion-input');
-      expect(await input.screenshot()).toMatchSnapshot(
-        `input-no-fill-color-end-${page.getSnapshotSettings()}.png`
-      );
+      expect(await input.screenshot()).toMatchSnapshot(`input-no-fill-color-end-${page.getSnapshotSettings()}.png`);
     });
     test('should set label and highlight color on focus with fixed label placement', async ({ page }) => {
       await page.setContent(`
@@ -43,9 +39,7 @@ test.describe('input: color', () => {
       `);
 
       const input = page.locator('ion-input');
-      expect(await input.screenshot()).toMatchSnapshot(
-        `input-no-fill-color-fixed-${page.getSnapshotSettings()}.png`
-      );
+      expect(await input.screenshot()).toMatchSnapshot(`input-no-fill-color-fixed-${page.getSnapshotSettings()}.png`);
     });
     test('should set label and highlight color on focus with floating label placement', async ({ page }) => {
       await page.setContent(`
@@ -63,9 +57,7 @@ test.describe('input: color', () => {
       `);
 
       const input = page.locator('ion-input');
-      expect(await input.screenshot()).toMatchSnapshot(
-        `input-no-fill-color-stacked-${page.getSnapshotSettings()}.png`
-      );
+      expect(await input.screenshot()).toMatchSnapshot(`input-no-fill-color-stacked-${page.getSnapshotSettings()}.png`);
     });
   });
   test.describe('input: fill solid', () => {
@@ -75,9 +67,7 @@ test.describe('input: color', () => {
       `);
 
       const input = page.locator('ion-input');
-      expect(await input.screenshot()).toMatchSnapshot(
-        `input-solid-color-start-${page.getSnapshotSettings()}.png`
-      );
+      expect(await input.screenshot()).toMatchSnapshot(`input-solid-color-start-${page.getSnapshotSettings()}.png`);
     });
     test('should set label and highlight color on focus with end label placement', async ({ page }) => {
       await page.setContent(`
@@ -85,9 +75,7 @@ test.describe('input: color', () => {
       `);
 
       const input = page.locator('ion-input');
-      expect(await input.screenshot()).toMatchSnapshot(
-        `input-solid-color-end-${page.getSnapshotSettings()}.png`
-      );
+      expect(await input.screenshot()).toMatchSnapshot(`input-solid-color-end-${page.getSnapshotSettings()}.png`);
     });
     test('should set label and highlight color on focus with fixed label placement', async ({ page }) => {
       await page.setContent(`
@@ -95,9 +83,7 @@ test.describe('input: color', () => {
       `);
 
       const input = page.locator('ion-input');
-      expect(await input.screenshot()).toMatchSnapshot(
-        `input-solid-color-fixed-${page.getSnapshotSettings()}.png`
-      );
+      expect(await input.screenshot()).toMatchSnapshot(`input-solid-color-fixed-${page.getSnapshotSettings()}.png`);
     });
     test('should set label and highlight color on focus with floating label placement', async ({ page }) => {
       await page.setContent(`
@@ -105,9 +91,7 @@ test.describe('input: color', () => {
       `);
 
       const input = page.locator('ion-input');
-      expect(await input.screenshot()).toMatchSnapshot(
-        `input-solid-color-floating-${page.getSnapshotSettings()}.png`
-      );
+      expect(await input.screenshot()).toMatchSnapshot(`input-solid-color-floating-${page.getSnapshotSettings()}.png`);
     });
     test('should set label and highlight color on focus with stacked label placement', async ({ page }) => {
       await page.setContent(`
@@ -115,9 +99,7 @@ test.describe('input: color', () => {
       `);
 
       const input = page.locator('ion-input');
-      expect(await input.screenshot()).toMatchSnapshot(
-        `input-solid-color-stacked-${page.getSnapshotSettings()}.png`
-      );
+      expect(await input.screenshot()).toMatchSnapshot(`input-solid-color-stacked-${page.getSnapshotSettings()}.png`);
     });
   });
   test.describe('input: fill outline', () => {
@@ -127,9 +109,7 @@ test.describe('input: color', () => {
       `);
 
       const input = page.locator('ion-input');
-      expect(await input.screenshot()).toMatchSnapshot(
-        `input-outline-color-start-${page.getSnapshotSettings()}.png`
-      );
+      expect(await input.screenshot()).toMatchSnapshot(`input-outline-color-start-${page.getSnapshotSettings()}.png`);
     });
     test('should set label and highlight color on focus with end label placement', async ({ page }) => {
       await page.setContent(`
@@ -137,9 +117,7 @@ test.describe('input: color', () => {
       `);
 
       const input = page.locator('ion-input');
-      expect(await input.screenshot()).toMatchSnapshot(
-        `input-outline-color-end-${page.getSnapshotSettings()}.png`
-      );
+      expect(await input.screenshot()).toMatchSnapshot(`input-outline-color-end-${page.getSnapshotSettings()}.png`);
     });
     test('should set label and highlight color on focus with fixed label placement', async ({ page }) => {
       await page.setContent(`
@@ -147,9 +125,7 @@ test.describe('input: color', () => {
       `);
 
       const input = page.locator('ion-input');
-      expect(await input.screenshot()).toMatchSnapshot(
-        `input-outline-color-fixed-${page.getSnapshotSettings()}.png`
-      );
+      expect(await input.screenshot()).toMatchSnapshot(`input-outline-color-fixed-${page.getSnapshotSettings()}.png`);
     });
     test('should set label and highlight color on focus with floating label placement', async ({ page }) => {
       await page.setContent(`
@@ -167,9 +143,7 @@ test.describe('input: color', () => {
       `);
 
       const input = page.locator('ion-input');
-      expect(await input.screenshot()).toMatchSnapshot(
-        `input-outline-color-stacked-${page.getSnapshotSettings()}.png`
-      );
+      expect(await input.screenshot()).toMatchSnapshot(`input-outline-color-stacked-${page.getSnapshotSettings()}.png`);
     });
   });
 });
