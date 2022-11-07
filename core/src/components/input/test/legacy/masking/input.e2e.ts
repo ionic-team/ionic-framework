@@ -3,7 +3,7 @@ import { test } from '@utils/test/playwright';
 
 test.describe('input: masking', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/src/components/input/test/masking');
+    await page.goto('/src/components/input/test/legacy/masking');
   });
 
   test('should filter out spaces', async ({ page, skip }) => {
