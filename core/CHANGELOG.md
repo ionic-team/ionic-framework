@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.5-nightly.20221107](https://github.com/ionic-team/ionic/compare/v6.3.4...v6.3.5-nightly.20221107) (2022-11-07)
+
+
+### Bug Fixes
+
+* **overlays:** presenting an overlay does not create nested elements ([#26154](https://github.com/ionic-team/ionic/issues/26154)) ([bb00595](https://github.com/ionic-team/ionic/commit/bb005956eaff7401cfe1d6befcbf512424ddd283)), closes [#26117](https://github.com/ionic-team/ionic/issues/26117)
+
+
+
+
+
 ## [6.3.4](https://github.com/ionic-team/ionic/compare/v6.3.3...v6.3.4) (2022-11-02)
 
 
