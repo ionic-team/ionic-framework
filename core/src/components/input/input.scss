@@ -266,6 +266,17 @@
   background: var(--background);
 }
 
+// Input Native Wrapper
+// ----------------------------------------------------------------
+
+.native-wrapper {
+  display: flex;
+
+  flex-grow: 1;
+
+  width: 100%;
+}
+
 // Input Bottom Content
 // ----------------------------------------------------------------
 

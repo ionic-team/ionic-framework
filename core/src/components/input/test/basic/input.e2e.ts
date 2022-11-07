@@ -106,9 +106,10 @@ test.describe('input: basic', () => {
   });
 
   test.describe('input with clear button', () => {
-    test('should not have visual regressions', async ({ page }) => {
+    test('should not have visual regressions with default label', async ({ page }) => {
       await page.setContent(`
         <ion-input
+          label="Label"
           clear-input="true"
           value="Text"
         ></ion-input>
@@ -116,6 +117,19 @@ test.describe('input: basic', () => {
       const input = page.locator('ion-input');
       // Validates the display of an input with a clear button.
       expect(await input.screenshot()).toMatchSnapshot(`input-with-clear-button-${page.getSnapshotSettings()}.png`);
+    });
+    test('should not have visual regressions with stacked label', async ({ page }) => {
+      await page.setContent(`
+        <ion-input
+          label="Label"
+          label-placement="stacked"
+          clear-input="true"
+          value="Text"
+        ></ion-input>
+      `);
+      const input = page.locator('ion-input');
+      // Validates the display of an input with a clear button.
+      expect(await input.screenshot()).toMatchSnapshot(`input-with-clear-button-stacked-${page.getSnapshotSettings()}.png`);
     });
   });
 });
