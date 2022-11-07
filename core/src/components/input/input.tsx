@@ -512,6 +512,31 @@ export class Input implements ComponentInterface {
     return this.getValue().length > 0;
   }
 
+  /**
+   * Renders the helper text or error text values
+   */
+  private renderHintText() {
+    const { helperText, errorText } = this;
+
+    return [<div class="helper-text">{helperText}</div>, <div class="error-text">{errorText}</div>];
+  }
+
+  /**
+   * Responsible for rendering helper text,
+   * error text, and counter. This element should only
+   * be rendered if hint text is set or counter is enabled.
+   */
+  private renderBottomContent() {
+    const { helperText, errorText } = this;
+
+    const hasHintText = helperText !== undefined || errorText !== undefined;
+    if (!hasHintText) {
+      return;
+    }
+
+    return <div class="input-bottom">{this.renderHintText()}</div>;
+  }
+
   private renderInput() {
     const { disabled, readonly, inputId } = this;
     const mode = getIonMode(this);
@@ -526,57 +551,60 @@ export class Input implements ComponentInterface {
           'has-focus': this.hasFocus,
         })}
       >
-        <label htmlFor={inputId}>{this.label}</label>
-        <input
-          class="native-input"
-          ref={(input) => (this.nativeInput = input)}
-          id={inputId}
-          disabled={disabled}
-          accept={this.accept}
-          autoCapitalize={this.autocapitalize}
-          autoComplete={this.autocomplete}
-          autoCorrect={this.autocorrect}
-          autoFocus={this.autofocus}
-          enterKeyHint={this.enterkeyhint}
-          inputMode={this.inputmode}
-          min={this.min}
-          max={this.max}
-          minLength={this.minlength}
-          maxLength={this.maxlength}
-          multiple={this.multiple}
-          name={this.name}
-          pattern={this.pattern}
-          placeholder={this.placeholder || ''}
-          readOnly={readonly}
-          required={this.required}
-          spellcheck={this.spellcheck}
-          step={this.step}
-          size={this.size}
-          type={this.type}
-          value={value}
-          onInput={this.onInput}
-          onChange={this.onChange}
-          onBlur={this.onBlur}
-          onFocus={this.onFocus}
-          onKeyDown={this.onKeydown}
-          {...this.inheritedAttributes}
-        />
-        {this.clearInput && !readonly && !disabled && (
-          <button
-            aria-label="reset"
-            type="button"
-            class="input-clear-icon"
-            onPointerDown={(ev) => {
-              /**
-               * This prevents mobile browsers from
-               * blurring the input when the clear
-               * button is activated.
-               */
-              ev.preventDefault();
-            }}
-            onClick={this.onClearButtonClick}
+        <div class="input-wrapper">
+          <label htmlFor={inputId}>{this.label}</label>
+          <input
+            class="native-input"
+            ref={(input) => (this.nativeInput = input)}
+            id={inputId}
+            disabled={disabled}
+            accept={this.accept}
+            autoCapitalize={this.autocapitalize}
+            autoComplete={this.autocomplete}
+            autoCorrect={this.autocorrect}
+            autoFocus={this.autofocus}
+            enterKeyHint={this.enterkeyhint}
+            inputMode={this.inputmode}
+            min={this.min}
+            max={this.max}
+            minLength={this.minlength}
+            maxLength={this.maxlength}
+            multiple={this.multiple}
+            name={this.name}
+            pattern={this.pattern}
+            placeholder={this.placeholder || ''}
+            readOnly={readonly}
+            required={this.required}
+            spellcheck={this.spellcheck}
+            step={this.step}
+            size={this.size}
+            type={this.type}
+            value={value}
+            onInput={this.onInput}
+            onChange={this.onChange}
+            onBlur={this.onBlur}
+            onFocus={this.onFocus}
+            onKeyDown={this.onKeydown}
+            {...this.inheritedAttributes}
           />
-        )}
+          {this.clearInput && !readonly && !disabled && (
+            <button
+              aria-label="reset"
+              type="button"
+              class="input-clear-icon"
+              onPointerDown={(ev) => {
+                /**
+                 * This prevents mobile browsers from
+                 * blurring the input when the clear
+                 * button is activated.
+                 */
+                ev.preventDefault();
+              }}
+              onClick={this.onClearButtonClick}
+            />
+          )}
+        </div>
+        {this.renderBottomContent()}
       </Host>
     );
   }
@@ -607,6 +635,7 @@ For inputs that do not have a visible label, developers should use "aria-label" 
           [mode]: true,
           'has-value': this.hasValue(),
           'has-focus': this.hasFocus,
+          'legacy-input': true,
         })}
       >
         <input
