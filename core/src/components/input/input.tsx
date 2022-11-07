@@ -17,6 +17,8 @@ import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes, debounceEvent, findItemLabel, inheritAttributes } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
+import { getCounterText } from './input.utils';
+
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
@@ -521,20 +523,35 @@ export class Input implements ComponentInterface {
     return [<div class="helper-text">{helperText}</div>, <div class="error-text">{errorText}</div>];
   }
 
+  private renderCounter() {
+    const { counter, maxlength, counterFormatter, value } = this;
+    if (counter !== true || maxlength === undefined) {
+      return;
+    }
+
+    return <div class="counter">{getCounterText(value, maxlength, counterFormatter)}</div>;
+  }
+
   /**
    * Responsible for rendering helper text,
    * error text, and counter. This element should only
    * be rendered if hint text is set or counter is enabled.
    */
   private renderBottomContent() {
-    const { helperText, errorText } = this;
+    const { counter, helperText, errorText, maxlength } = this;
 
     const hasHintText = helperText !== undefined || errorText !== undefined;
-    if (!hasHintText) {
+    const hasCounter = counter === true && maxlength !== undefined;
+    if (!hasHintText && !hasCounter) {
       return;
     }
 
-    return <div class="input-bottom">{this.renderHintText()}</div>;
+    return (
+      <div class="input-bottom">
+        {this.renderHintText()}
+        {this.renderCounter()}
+      </div>
+    );
   }
 
   private renderInput() {
