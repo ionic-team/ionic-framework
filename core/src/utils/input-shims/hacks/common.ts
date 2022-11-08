@@ -55,7 +55,6 @@ const addClone = (
    * does not cause functional issues on iOS,
    * the input still appears slightly dimmed even
    * if we set opacity: 1.
-   * As a result, `disabledClonedInput
    */
   if (disabledClonedInput) {
     clonedEl.disabled = true;
