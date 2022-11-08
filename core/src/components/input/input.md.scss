@@ -6,14 +6,17 @@
 // --------------------------------------------------
 
 :host {
-  --padding-top: #{$input-md-padding-top};
-  --padding-end: #{$input-md-padding-end};
-  --padding-bottom: #{$input-md-padding-bottom};
-  --padding-start: #{$input-md-padding-start};
   --border-width: 1px;
   --border-color: #{$item-md-border-color};
 
   font-size: $input-md-font-size;
+}
+
+:host(.legacy-input) {
+  --padding-top: #{$input-md-padding-top};
+  --padding-end: #{$input-md-padding-end};
+  --padding-bottom: #{$input-md-padding-bottom};
+  --padding-start: #{$input-md-padding-start};
 }
 
 :host-context(.item-label-stacked),
@@ -36,4 +39,11 @@
 // ----------------------------------------------------------------
 .input-bottom .counter {
   letter-spacing: .0333333333em;
+}
+
+// Input Wrapper
+// ----------------------------------------------------------------
+
+.input-wrapper {
+  min-height: 56px;
 }

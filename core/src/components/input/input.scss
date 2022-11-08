@@ -32,16 +32,18 @@
   --placeholder-font-style: initial;
   --placeholder-font-weight: initial;
   --placeholder-opacity: .5;
-  --padding-top: 0;
-  --padding-end: 0;
-  --padding-bottom: 0;
-  --padding-start: 0;
+  --padding-top: 0px;
+  --padding-end: 0px;
+  --padding-bottom: 0px;
+  --padding-start: 0px;
   --background: transparent;
   --color: initial;
   --border-style: solid;
   --highlight-color-focused: #{ion-color(primary, base)};
   --highlight-color-valid: #{ion-color(success, base)};
   --highlight-color-invalid: #{ion-color(danger, base)};
+
+  display: block;
 
   position: relative;
 
@@ -65,6 +67,10 @@
   align-items: center;
 }
 
+:host(.legacy-input) .native-input {
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+}
+
 :host-context(ion-item:not(.item-label)) {
   --padding-start: 0;
 }
@@ -78,7 +84,7 @@
 
 .native-input {
   @include border-radius(var(--border-radius));
-  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+  @include padding(0, 0, 0, 0);
   @include text-inherit();
 
   display: inline-block;
@@ -211,11 +217,17 @@
 // Input Wrapper
 // ----------------------------------------------------------------
 .input-wrapper {
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+
   display: flex;
 
   flex-grow: 1;
 
-  align-items: center;
+  align-items: stretch;
+
+  height: 100%;
+
+  background: inherit;
 }
 
 // Input Bottom Content
@@ -275,4 +287,141 @@
   white-space: nowrap;
 
   padding-inline-start: 16px;
+}
+
+// Input Label
+// ----------------------------------------------------------------
+
+.input-wrapper label {
+  /**
+   * The margin between the label and
+   * the input should be on the end
+   * when the label sits at the start.
+   */
+  @include margin(0, 8px, 0, 0);
+
+  /**
+   * This causes the label to take up
+   * the entire height of its container
+   * while still keeping the text centered.
+   */
+  display: flex;
+
+  align-items: center;
+
+  transition: color 150ms cubic-bezier(.4, 0, .2, 1), transform 150ms cubic-bezier(.4, 0, .2, 1);
+}
+
+.input-wrapper input {
+  /**
+   * When the floating label appears on top of the
+   * input, we need to fade the input out so that the
+   * label does not overlap with the placeholder.
+   */
+  transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+// Input Label Placement
+// ----------------------------------------------------------------
+
+/**
+ * Label is on the left of the input in LTR and
+ * on the right in RTL.
+ */
+:host(.input-label-placement-start) .input-wrapper {
+  flex-direction: row;
+}
+
+/**
+ * Label is on the right of the input in LTR and
+ * on the left in RTL.
+ */
+:host(.input-label-placement-end) .input-wrapper {
+  flex-direction: row-reverse;
+}
+
+/**
+ * The margin between the label and
+ * the input should be on the start
+ * when the label sits at the end.
+ */
+:host(.input-label-placement-end) label {
+  @include margin(0, 0, 0, 8px);
+}
+
+/**
+ * Label is on the left of the input in LTR and
+ * on the right in RTL. Label also has a fixed width.
+ */
+:host(.input-label-placement-fixed) label {
+  @include margin(0, 0, 0, 0);
+
+  flex: 0 0 100px;
+
+  width: 100px;
+  min-width: 100px;
+  max-width: 200px;
+}
+
+/**
+ * Stacked: Label sits above the input and is scaled down.
+ * Floating: Label sits over the input when the input has no
+ * value and is blurred. Label sits above the input and is scaled
+ * down when the input is focused or has a value.
+ *
+ */
+:host(.input-label-placement-stacked) .input-wrapper,
+:host(.input-label-placement-floating) .input-wrapper {
+  flex-direction: column;
+  align-items: start;
+}
+
+/**
+ * Ensures that the label animates
+ * up and to the left in LTR or
+ * up and to the right in RTL.
+ */
+:host(.input-label-placement-stacked) label,
+:host(.input-label-placement-floating) label {
+  @include transform-origin(start, top);
+}
+
+/**
+ * Ensures the input does not
+ * overlap the label.
+ */
+:host(.input-label-placement-stacked) input,
+:host(.input-label-placement-floating) input {
+  @include margin(1px, 0, 0, 0);
+}
+
+/**
+ * This makes the label sit over the input
+ * when the input is blurred and has no value.
+ */
+:host(.input-label-placement-floating) label {
+  @include transform(translateY(100%), scale(1));
+}
+
+/**
+ * The input should be hidden when the label
+ * is on top of the input. This prevents the label
+ * from overlapping any placeholder value.
+ */
+:host(.input-label-placement-floating) input {
+  opacity: 0;
+}
+
+:host(.has-focus.input-label-placement-floating) input,
+:host(.has-value.input-label-placement-floating) input {
+  opacity: 1;
+}
+
+/**
+ * This makes the label sit above the input.
+ */
+:host(.input-label-placement-stacked) label,
+:host(.has-focus.input-label-placement-floating) label,
+:host(.has-value.input-label-placement-floating) label {
+  @include transform(translateY(50%), scale(.75));
 }
