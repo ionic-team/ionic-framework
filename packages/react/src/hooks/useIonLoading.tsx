@@ -18,7 +18,7 @@ export function useIonLoading(): UseIonLoadingResult {
 
   const present = useCallback(
     (
-      messageOrOptions: string | (LoadingOptions & HookOverlayOptions) = '',
+      messageOrOptions: string | (LoadingOptions & HookOverlayOptions) = {},
       duration?: number,
       spinner?: SpinnerTypes
     ) => {
@@ -26,7 +26,7 @@ export function useIonLoading(): UseIonLoadingResult {
         return controller.present({
           message: messageOrOptions,
           duration,
-          spinner: spinner ?? 'lines',
+          spinner,
         });
       } else {
         return controller.present(messageOrOptions);
