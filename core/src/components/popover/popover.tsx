@@ -318,6 +318,12 @@ export class Popover implements ComponentInterface, PopoverInterface {
   /**
    * Emitted before the popover has presented, but after the component
    * has been mounted in the DOM.
+   * This event exists for ion-popover to resolve an issue with the
+   * popover and the lazy build, that the transition is unable to get
+   * the correct dimensions of the popover with auto sizing.
+   * This is not required for other overlays, since the existing
+   * overlay transitions are not effected by auto sizing content.
+   *
    * @internal
    */
   @Event() ionMount!: EventEmitter<void>;
@@ -453,9 +459,12 @@ export class Popover implements ComponentInterface, PopoverInterface {
     this.usersElement = await attachComponent(delegate, this.el, this.component, ['popover-viewport'], data, inline);
     await deepReady(this.usersElement);
 
-    this.ionMount.emit();
-
+    // TODO: FW-2773: Apply this to only the lazy build.
     if (inline === true) {
+      /**
+       * ionMount only needs to be emitted if the popover is inline.
+       */
+      this.ionMount.emit();
       /**
        * Wait one raf before presenting the popover.
        * This allows the lazy build enough time to
