@@ -1,21 +1,31 @@
 import { printIonError } from '@utils/logging';
 
 export const getCounterText = (
-  inputEl: HTMLIonInputElement,
+  value: string | number | null | undefined,
+  maxLength: number,
   counterFormatter?: (inputLength: number, maxLength: number) => string
 ) => {
-  const length = inputEl?.value?.toString().length ?? 0;
+  const valueLength = value == null ? 0 : value.toString().length;
+  const defaultCounterText = defaultCounterFormatter(valueLength, maxLength);
 
+  /**
+   * If developers did not pass a custom formatter,
+   * use the default one.
+   */
   if (counterFormatter === undefined) {
-    return defaultCounterFormatter(length, inputEl.maxlength!);
-  } else {
-    try {
-      return counterFormatter(length, inputEl.maxlength!);
-    } catch (e) {
-      printIonError('Exception in provided `counterFormatter`.', e);
-      // Fallback to the default counter formatter when an exception happens
-      return defaultCounterFormatter(length, inputEl.maxlength!);
-    }
+    return defaultCounterText;
+  }
+
+  /**
+   * Otherwise, try to use the custom formatter
+   * and fallback to the default formatter if
+   * there was an error.
+   */
+  try {
+    return counterFormatter(valueLength, maxLength);
+  } catch (e) {
+    printIonError('Exception in provided `counterFormatter`.', e);
+    return defaultCounterText;
   }
 };
 

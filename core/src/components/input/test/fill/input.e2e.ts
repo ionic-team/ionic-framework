@@ -25,7 +25,7 @@ test.describe('input: fill', () => {
     test('should not have visual regressions with shaped solid', async ({ page }) => {
       await page.setContent(`
         <ion-input
-          shape="rounded"
+          shape="round"
           fill="solid"
           label="Email"
           value="hi@ionic.io"
@@ -58,7 +58,7 @@ test.describe('input: fill', () => {
     test('should not have visual regressions with shaped outline', async ({ page }) => {
       await page.setContent(`
         <ion-input
-          shape="rounded"
+          shape="round"
           fill="outline"
           label="Email"
           value="hi@ionic.io"
