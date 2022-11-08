@@ -60,8 +60,8 @@
   border-bottom: none;
 }
 
-:host(.input-fill-outline.input-label-placement-stacked) label,
-:host(.input-fill-outline.input-label-placement-floating) label {
+:host(.input-fill-outline.input-label-placement-stacked) .label-text,
+:host(.input-fill-outline.input-label-placement-floating) .label-text {
   @include transform-origin(center, top);
 }
 
@@ -69,8 +69,8 @@
  * The label should appear on top of an outline
  * container that overlaps it so it is always clickable.
  */
-:host(.input-fill-outline) label,
-:host(.input-fill-outline) label {
+:host(.input-fill-outline) .label-text,
+:host(.input-fill-outline) .label-text {
   position: relative;
 
   z-index: 1;
@@ -79,10 +79,10 @@
 /**
  * This makes the label sit above the input.
  */
-:host(.has-focus.input-fill-outline.input-label-placement-floating) label,
-:host(.has-value.input-fill-outline.input-label-placement-floating) label,
-:host(.input-fill-outline.input-label-placement-stacked) label,
-:host(.input-fill-outline.input-label-placement-stacked) label {
+:host(.has-focus.input-fill-outline.input-label-placement-floating) .label-text,
+:host(.has-value.input-fill-outline.input-label-placement-floating) .label-text,
+:host(.input-fill-outline.input-label-placement-stacked) .label-text,
+:host(.input-fill-outline.input-label-placement-stacked) .label-text {
   @include transform(translateY(-32%), scale(.75));
   @include margin(0);
 }

@@ -367,7 +367,7 @@
 // Input Label
 // ----------------------------------------------------------------
 
-.input-wrapper label {
+.input-wrapper .label-text {
   /**
    * The padding on the label adds visual
    * space between the label and the input.
@@ -426,7 +426,7 @@
  * We use padding so that this space can still
  * be clicked to focus the input.
  */
-:host(.input-label-placement-end) label {
+:host(.input-label-placement-end) .label-text {
   @include padding(0, 0, 0, 8px);
 }
 
@@ -437,7 +437,7 @@
  * Label is on the left of the input in LTR and
  * on the right in RTL. Label also has a fixed width.
  */
-:host(.input-label-placement-fixed) label {
+:host(.input-label-placement-fixed) .label-text {
   @include margin(0, 0, 0, 0);
 
   flex: 0 0 100px;
@@ -468,8 +468,8 @@
  * up and to the left in LTR or
  * up and to the right in RTL.
  */
-:host(.input-label-placement-stacked) label,
-:host(.input-label-placement-floating) label {
+:host(.input-label-placement-stacked) .label-text,
+:host(.input-label-placement-floating) .label-text {
   @include transform-origin(start, top);
 }
 
@@ -486,7 +486,7 @@
  * This makes the label sit over the input
  * when the input is blurred and has no value.
  */
-:host(.input-label-placement-floating) label {
+:host(.input-label-placement-floating) .label-text {
   @include transform(translateY(100%), scale(1));
 }
 
@@ -507,8 +507,8 @@
 /**
  * This makes the label sit above the input.
  */
-:host(.input-label-placement-stacked) label,
-:host(.has-focus.input-label-placement-floating) label,
-:host(.has-value.input-label-placement-floating) label {
+:host(.input-label-placement-stacked) .label-text,
+:host(.has-focus.input-label-placement-floating) .label-text,
+:host(.has-value.input-label-placement-floating) .label-text {
   @include transform(translateY(50%), scale(.75));
 }

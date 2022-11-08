@@ -77,12 +77,12 @@
  * When the input is focused the label should
  * take on the highlight color.
  */
-:host(.has-focus) label {
+:host(.has-focus) .label-text {
   color: var(--highlight-color);
 }
 
-:host(.ion-touched.ion-valid) label,
-:host(.ion-touched.ion-invalid) label {
+:host(.ion-touched.ion-valid) .label-text,
+:host(.ion-touched.ion-invalid) .label-text {
   color: var(--highlight-color);
 }
 

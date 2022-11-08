@@ -560,7 +560,7 @@ export class Input implements ComponentInterface {
       return;
     }
 
-    return <label htmlFor={this.inputId}>{this.label}</label>;
+    return <div class="label-text">{this.label}</div>;
   }
 
   /**
@@ -619,7 +619,7 @@ export class Input implements ComponentInterface {
           'in-full-item': hostContext('ion-item:not(.item-lines-inset)', this.el),
         })}
       >
-        <div class="input-wrapper">
+        <label class="input-wrapper">
           {this.renderLabelContainer()}
           <div class="native-wrapper">
             <input
@@ -674,7 +674,7 @@ export class Input implements ComponentInterface {
             )}
           </div>
           {shouldRenderHighlight && <div class="input-highlight"></div>}
-        </div>
+        </label>
         {this.renderBottomContent()}
       </Host>
     );
