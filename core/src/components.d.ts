@@ -5908,6 +5908,10 @@ declare namespace LocalJSX {
          */
         "onDidPresent"?: (event: IonPopoverCustomEvent<void>) => void;
         /**
+          * Emitted before the popover has presented, but after the component has been mounted in the DOM.
+         */
+        "onIonMount"?: (event: IonPopoverCustomEvent<void>) => void;
+        /**
           * Emitted after the popover has dismissed.
          */
         "onIonPopoverDidDismiss"?: (event: IonPopoverCustomEvent<OverlayEventDetail>) => void;

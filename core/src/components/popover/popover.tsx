@@ -27,7 +27,12 @@ import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
-import { configureDismissInteraction, configureKeyboardInteraction, configureTriggerInteraction } from './utils';
+import {
+  configureDismissInteraction,
+  configureKeyboardInteraction,
+  configureTriggerInteraction,
+  waitOneFrame,
+} from './utils';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -310,6 +315,13 @@ export class Popover implements ComponentInterface, PopoverInterface {
    */
   @Event({ eventName: 'didDismiss' }) didDismissShorthand!: EventEmitter<OverlayEventDetail>;
 
+  /**
+   * Emitted before the popover has presented, but after the component
+   * has been mounted in the DOM.
+   * @internal
+   */
+  @Event() ionMount!: EventEmitter<void>;
+
   connectedCallback() {
     const { configureTriggerInteraction, el } = this;
 
@@ -440,6 +452,16 @@ export class Popover implements ComponentInterface, PopoverInterface {
     const { inline, delegate } = this.getDelegate(true);
     this.usersElement = await attachComponent(delegate, this.el, this.component, ['popover-viewport'], data, inline);
     await deepReady(this.usersElement);
+
+    if (inline === true) {
+      this.ionMount.emit();
+      /**
+       * Wait one raf before presenting the popover.
+       * This allows the lazy build enough time to
+       * calculate the popover dimensions for the animation.
+       */
+      await waitOneFrame();
+    }
 
     if (!this.keyboardEvents) {
       this.configureKeyboardInteraction();
