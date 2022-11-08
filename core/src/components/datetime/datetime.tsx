@@ -14,7 +14,7 @@ import type {
 } from '../../interface';
 import { startFocusVisible } from '../../utils/focus-visible';
 import type { Attributes } from '../../utils/helpers';
-import { getElementRoot, inheritAttributes, raf, renderHiddenInput } from '../../utils/helpers';
+import { getElementRoot, raf, renderHiddenInput } from '../../utils/helpers';
 import { printIonError, printIonWarning } from '../../utils/logging';
 import { isRTL } from '../../utils/rtl';
 import { createColorClasses } from '../../utils/theme';
@@ -1238,8 +1238,6 @@ export class Datetime implements ComponentInterface {
       }
     }
 
-    this.inheritedAttributes = inheritAttributes(el, ['dir']);
-
     this.processMinParts();
     this.processMaxParts();
     const hourValues = (this.parsedHourValues = convertToArrayOfNumbers(this.hourValues));
@@ -1857,13 +1855,14 @@ export class Datetime implements ComponentInterface {
    */
 
   private renderCalendarHeader(mode: Mode) {
-    const { inheritedAttributes } = this;
-
     const expandedIcon = mode === 'ios' ? chevronDown : caretUpSharp;
     const collapsedIcon = mode === 'ios' ? chevronForward : caretDownSharp;
 
     const prevMonthDisabled = isPrevMonthDisabled(this.workingParts, this.minParts, this.maxParts);
     const nextMonthDisabled = isNextMonthDisabled(this.workingParts, this.maxParts);
+
+    // don't use the inheritAttributes util because it removes dir from the host, and we still need that
+    const hostDir = this.el.getAttribute('dir') || undefined;
 
     return (
       <div class="calendar-header">
@@ -1885,7 +1884,7 @@ export class Datetime implements ComponentInterface {
             <ion-buttons>
               <ion-button aria-label="previous month" disabled={prevMonthDisabled} onClick={() => this.prevMonth()}>
                 <ion-icon
-                  dir={inheritedAttributes.dir}
+                  dir={hostDir}
                   aria-hidden="true"
                   slot="icon-only"
                   icon={chevronBack}
@@ -1895,7 +1894,7 @@ export class Datetime implements ComponentInterface {
               </ion-button>
               <ion-button aria-label="next month" disabled={nextMonthDisabled} onClick={() => this.nextMonth()}>
                 <ion-icon
-                  dir={inheritedAttributes.dir}
+                  dir={hostDir}
                   aria-hidden="true"
                   slot="icon-only"
                   icon={chevronForward}
