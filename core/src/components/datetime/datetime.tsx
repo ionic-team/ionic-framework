@@ -13,7 +13,6 @@ import type {
   TitleSelectedDatesFormatter,
 } from '../../interface';
 import { startFocusVisible } from '../../utils/focus-visible';
-import type { Attributes } from '../../utils/helpers';
 import { getElementRoot, raf, renderHiddenInput } from '../../utils/helpers';
 import { printIonError, printIonWarning } from '../../utils/logging';
 import { isRTL } from '../../utils/rtl';
