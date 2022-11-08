@@ -453,8 +453,9 @@ export class Popover implements ComponentInterface, PopoverInterface {
     this.usersElement = await attachComponent(delegate, this.el, this.component, ['popover-viewport'], data, inline);
     await deepReady(this.usersElement);
 
+    this.ionMount.emit();
+
     if (inline === true) {
-      this.ionMount.emit();
       /**
        * Wait one raf before presenting the popover.
        * This allows the lazy build enough time to
