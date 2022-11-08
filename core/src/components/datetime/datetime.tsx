@@ -84,7 +84,6 @@ import {
 })
 export class Datetime implements ComponentInterface {
   private inputId = `ion-dt-${datetimeIds++}`;
-  private inheritedAttributes: Attributes = {};
   private calendarBodyRef?: HTMLElement;
   private popoverRef?: HTMLIonPopoverElement;
   private clearFocusVisible?: () => void;
