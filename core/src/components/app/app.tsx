@@ -93,23 +93,9 @@ const needInputShims = () => {
    */
   const isAndroidMobileWeb = isPlatform(window, 'android') && isPlatform(window, 'mobileweb');
   if (isAndroidMobileWeb) {
-    const meta = document.querySelector('meta[name="viewport"]');
-    if (meta?.hasAttribute('content')) {
-      const content = meta.getAttribute('content') ?? '';
-      const hasLegacyChromeResize = content.includes('interactive-widget') && content.includes('resizes-content');
-      if (hasLegacyChromeResize) {
-        return false;
-      } else {
-        /**
-         * We do not definitively know
-         * if this Android device is using the new
-         * resize behavior, so we need to add more checks
-         * in the scroll assist code to determine this.
-         */
-        return true;
-      }
-    }
+    return true;
   }
+
   return false;
 };
 
