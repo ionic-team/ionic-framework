@@ -205,6 +205,36 @@ describe('generateTime()', () => {
     expect(minutes).toStrictEqual([10, 15, 20]);
   });
 
+  it('should allow both am/pm when min is am and max is pm', () => {
+    // https://github.com/ionic-team/ionic-framework/issues/26216
+    const today = {
+      day: 22,
+      month: 5,
+      year: 2021,
+      hour: 5,
+      minute: 43,
+    };
+    const min = {
+      day: 22,
+      month: 5,
+      year: 2021,
+      hour: 11,
+      minute: 14,
+    };
+    const max = {
+      day: 22,
+      month: 5,
+      year: 2021,
+      hour: 12,
+      minute: 14,
+    };
+
+    const { am, pm } = generateTime(today, 'h12', min, max);
+
+    expect(am).toBe(true);
+    expect(pm).toBe(true);
+  });
+
   describe('hourCycle is 23', () => {
     it('should return hours in 24 hour format', () => {
       const refValue = {
