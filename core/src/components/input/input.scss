@@ -127,10 +127,11 @@
   }
 }
 
-.native-input[disabled] {
-  opacity: .4;
-}
 
+:host(.legacy-input) .native-input[disabled],
+:host([disabled]) {
+  opacity: 0.4;
+}
 
 
 // Input Cover: Unfocused
@@ -295,12 +296,11 @@
 
 .input-wrapper label {
   /**
-   * The padding on the label adds visual
-   * space between the label and the input.
-   * We use padding so that this space can still
-   * be clicked to focus the input.
+   * The margin between the label and
+   * the input should be on the end
+   * when the label sits at the start.
    */
-  @include padding(0, 8px, 0, 0);
+  @include margin(0, 8px, 0, 0);
 
   /**
    * This causes the label to take up
@@ -343,13 +343,12 @@
 }
 
 /**
- * The padding on the label adds visual
- * space between the label and the input.
- * We use padding so that this space can still
- * be clicked to focus the input.
+ * The margin between the label and
+ * the input should be on the start
+ * when the label sits at the end.
  */
 :host(.input-label-placement-end) label {
-  @include padding(0, 0, 0, 8px);
+  @include margin(0, 0, 0, 8px);
 }
 
 /**
