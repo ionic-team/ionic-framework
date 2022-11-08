@@ -53,8 +53,6 @@ export const CoreDelegate = () => {
     userComponentProps: any = {},
     cssClasses: string[] = []
   ) => {
-    const hasUserDefinedComponent = userComponent !== undefined;
-
     BaseComponent = parentElement;
     /**
      * If passing in a component via the `component` props
