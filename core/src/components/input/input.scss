@@ -385,6 +385,13 @@
   align-items: center;
 
   transition: color 150ms cubic-bezier(.4, 0, .2, 1), transform 150ms cubic-bezier(.4, 0, .2, 1);
+
+  /**
+   * This ensures that double tapping this text
+   * clicks the <label> and focuses the input
+   * when a screen reader is enabled.
+   */
+  pointer-events: none;
 }
 
 /**
