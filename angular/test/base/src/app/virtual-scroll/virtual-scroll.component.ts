@@ -8,7 +8,7 @@ import { IonVirtualScroll } from '@ionic/angular';
 })
 export class VirtualScrollComponent {
 
-  @ViewChild(IonVirtualScroll, { static: true }) virtualScroll: IonVirtualScroll;
+  @ViewChild(IonVirtualScroll, { static: true }) virtualScroll!: IonVirtualScroll;
 
   items = Array.from({length: 100}, (_, i) => ({ name: `${i}`, checked: true}));
 
@@ -18,12 +18,14 @@ export class VirtualScrollComponent {
     if ((index % 10) === 0) {
       return `Header ${index}`;
     }
+    return '';
   }
 
   myFooterFn: HeaderFn = (_, index) => {
     if ((index % 5) === 0) {
       return `Footer ${index}`;
     }
+    return '';
   }
 
   addItems() {

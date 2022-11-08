@@ -6,12 +6,12 @@ import { Component } from '@angular/core';
 })
 export class InputsComponent {
 
-  datetime = '1994-03-15';
-  input = 'some text';
+  datetime? = '1994-03-15';
+  input? = 'some text';
   checkbox = true;
   toggle = true;
-  select = 'nes';
-  range = 10;
+  select? = 'nes';
+  range? = 10;
   changes = 0;
 
   setValues() {
