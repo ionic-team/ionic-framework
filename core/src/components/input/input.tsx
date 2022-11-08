@@ -524,12 +524,12 @@ export class Input implements ComponentInterface {
   }
 
   private renderCounter() {
-    const { counter, maxlength, el, counterFormatter } = this;
+    const { counter, maxlength, counterFormatter, value } = this;
     if (counter !== true || maxlength === undefined) {
       return;
     }
 
-    return <div class="counter">{getCounterText(el, counterFormatter)}</div>;
+    return <div class="counter">{getCounterText(value, maxlength, counterFormatter)}</div>;
   }
 
   /**
@@ -555,6 +555,11 @@ export class Input implements ComponentInterface {
   }
 
   private renderLabel() {
+    const { label } = this;
+    if (label === undefined) {
+      return;
+    }
+
     return <label htmlFor={this.inputId}>{this.label}</label>;
   }
 
