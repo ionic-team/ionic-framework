@@ -37,7 +37,7 @@ export class ModalExampleComponent implements OnInit, ViewWillLeave, ViewDidEnte
   }
 
   setSelect(value: null | undefined) {
-    this.form.get('select').setValue(value);
+    this.form.get('select')!.setValue(value);
   }
 
   ionViewWillEnter() {
