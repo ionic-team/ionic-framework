@@ -524,12 +524,12 @@ export class Input implements ComponentInterface {
   }
 
   private renderCounter() {
-    const { counter, maxlength, el, counterFormatter } = this;
+    const { counter, maxlength, counterFormatter, value } = this;
     if (counter !== true || maxlength === undefined) {
       return;
     }
 
-    return <div class="counter">{getCounterText(el, counterFormatter)}</div>;
+    return <div class="counter">{getCounterText(value, maxlength, counterFormatter)}</div>;
   }
 
   /**
@@ -555,7 +555,7 @@ export class Input implements ComponentInterface {
   }
 
   private renderInput() {
-    const { disabled, readonly, inputId, labelPlacement } = this;
+    const { disabled, label, readonly, inputId, labelPlacement } = this;
     const mode = getIonMode(this);
     const value = this.getValue();
 
@@ -570,7 +570,7 @@ export class Input implements ComponentInterface {
         })}
       >
         <div class="input-wrapper">
-          <label htmlFor={inputId}>{this.label}</label>
+          {label !== undefined && <label htmlFor={inputId}>{label}</label>}
           <input
             class="native-input"
             ref={(input) => (this.nativeInput = input)}
