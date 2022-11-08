@@ -100,7 +100,12 @@ const needInputShims = () => {
       if (hasLegacyChromeResize) {
         return false;
       } else {
-        // TODO check for interactive-widget support
+        /**
+         * We do not definitively know
+         * if this Android device is using the new
+         * resize behavior, so we need to add more checks
+         * in the scroll assist code to determine this.
+         */
         return true;
       }
     }
