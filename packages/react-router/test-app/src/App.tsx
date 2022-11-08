@@ -37,6 +37,7 @@ import DynamicIonpageClassnames from './pages/dynamic-ionpage-classnames/Dynamic
 import Tabs from './pages/tabs/Tabs';
 import TabsSecondary from './pages/tabs/TabsSecondary';
 import Params from './pages/params/Params';
+import Overlays from './pages/overlays/Overlays';
 
 setupIonicReact();
 
@@ -60,6 +61,7 @@ const App: React.FC = () => {
           <Route path="/tabs" component={Tabs} />
           <Route path="/tabs-secondary" component={TabsSecondary} />
           <Route path="/refs" component={Refs} />
+          <Route path="/overlays" component={Overlays} />
           <Route path="/params/:id" component={Params} />
         </IonRouterOutlet>
       </IonReactRouter>

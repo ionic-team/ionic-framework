@@ -1,4 +1,4 @@
-import { OverlayEventDetail } from '@ionic/core/components';
+import { HTMLIonOverlayElement, OverlayEventDetail } from '@ionic/core/components';
 import React, { createElement } from 'react';
 
 import {
@@ -36,7 +36,7 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
     IonicReactInternalProps<PropType>,
     InlineOverlayState
   > {
-    ref: React.RefObject<HTMLElement>;
+    ref: React.RefObject<HTMLIonOverlayElement>;
     wrapperRef: React.RefObject<HTMLElement>;
     stableMergedRefs: React.RefCallback<HTMLElement>;
 
@@ -103,6 +103,12 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
     componentDidUpdate(prevProps: IonicReactInternalProps<PropType>) {
       const node = this.ref.current! as HTMLElement;
       attachProps(node, this.props, prevProps);
+    }
+
+    componentWillUnmount() {
+      if (this.ref.current) {
+        this.ref.current.dismiss();
+      }
     }
 
     render() {
