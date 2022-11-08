@@ -367,7 +367,7 @@
 // Input Label
 // ----------------------------------------------------------------
 
-.input-wrapper .label-text {
+.label-text-wrapper {
   /**
    * The margin between the label and
    * the input should be on the end
@@ -385,6 +385,27 @@
   align-items: center;
 
   transition: color 150ms cubic-bezier(.4, 0, .2, 1), transform 150ms cubic-bezier(.4, 0, .2, 1);
+}
+
+/**
+ * We need to use two elements instead of
+ * one. The .label-text-wrapper is responsible
+ * for centering the label text vertically regardless
+ * of the input height using flexbox.
+ *
+ * The .label-text element is responsible for controlling
+ * overflow when label-placement="fixed".
+ * We want the ellipses to show up when the
+ * fixed label overflows, but text-overflow: ellipsis only
+ * works on block-level elements. A flex item is
+ * considered blockified (https://www.w3.org/TR/css-display-3/#blockify).
+ */
+.label-text {
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  overflow: hidden;
 }
 
 .input-wrapper input {
@@ -423,7 +444,7 @@
  * the input should be on the start
  * when the label sits at the end.
  */
-:host(.input-label-placement-end) .label-text {
+:host(.input-label-placement-end) .label-text-wrapper {
   @include margin(0, 0, 0, 8px);
 }
 
@@ -435,8 +456,6 @@
  * on the right in RTL. Label also has a fixed width.
  */
 :host(.input-label-placement-fixed) .label-text {
-  @include margin(0, 0, 0, 0);
-
   flex: 0 0 100px;
 
   width: 100px;
@@ -465,8 +484,8 @@
  * up and to the left in LTR or
  * up and to the right in RTL.
  */
-:host(.input-label-placement-stacked) .label-text,
-:host(.input-label-placement-floating) .label-text {
+:host(.input-label-placement-stacked) .label-text-wrapper,
+:host(.input-label-placement-floating) .label-text-wrapper {
   @include transform-origin(start, top);
 }
 
@@ -483,7 +502,7 @@
  * This makes the label sit over the input
  * when the input is blurred and has no value.
  */
-:host(.input-label-placement-floating) .label-text {
+:host(.input-label-placement-floating) .label-text-wrapper {
   @include transform(translateY(100%), scale(1));
 }
 
@@ -504,8 +523,8 @@
 /**
  * This makes the label sit above the input.
  */
-:host(.input-label-placement-stacked) .label-text,
-:host(.has-focus.input-label-placement-floating) .label-text,
-:host(.has-value.input-label-placement-floating) .label-text {
+:host(.input-label-placement-stacked) .label-text-wrapper,
+:host(.has-focus.input-label-placement-floating) .label-text-wrapper,
+:host(.has-value.input-label-placement-floating) .label-text-wrapper {
   @include transform(translateY(50%), scale(.75));
 }

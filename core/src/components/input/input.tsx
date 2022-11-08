@@ -560,7 +560,11 @@ export class Input implements ComponentInterface {
       return;
     }
 
-    return <div class="label-text">{this.label}</div>;
+    return (
+      <div class="label-text-wrapper">
+        <div class="label-text">{this.label}</div>
+      </div>
+    );
   }
 
   /**

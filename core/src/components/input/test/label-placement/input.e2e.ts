@@ -24,9 +24,11 @@ test.describe('input: label placement end', () => {
 });
 
 test.describe('input: label placement fixed', () => {
-  test('label should appear on the starting side of the input and have a fixed width', async ({ page }) => {
+  test('label should appear on the starting side of the input, have a fixed width, and show ellipses', async ({
+    page,
+  }) => {
     await page.setContent(`
-      <ion-input label="Email" value="example@ionic.io" label-placement="fixed"></ion-input>
+      <ion-input label="Email Email Email Email Email Email" value="example@ionic.io" label-placement="fixed"></ion-input>
     `);
 
     const input = page.locator('ion-input');
