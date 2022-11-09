@@ -6,10 +6,9 @@ import { IonTabs, IonButton } from '@ionic/angular';
   templateUrl: './view-child.component.html'
 })
 export class ViewChildComponent implements AfterViewInit {
-
-  @ViewChild(IonButton, { static: true }) button: IonButton;
-  @ViewChild(IonTabs, { static: true }) tabs: IonTabs;
-  @ViewChild('div', { static: true }) div: ElementRef;
+  @ViewChild(IonButton, { static: true }) button!: IonButton;
+  @ViewChild(IonTabs, { static: true }) tabs!: IonTabs;
+  @ViewChild('div', { static: true }) div!: ElementRef;
 
   ngAfterViewInit() {
     const loaded = !!(this.button && this.tabs && this.div);

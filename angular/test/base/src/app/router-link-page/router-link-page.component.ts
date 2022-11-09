@@ -12,7 +12,7 @@ export class RouterLinkPageComponent implements OnInit, ViewWillLeave, ViewDidEn
   didEnter = 0;
   willLeave = 0;
   didLeave = 0;
-  canGoBack: boolean = null;
+  canGoBack: boolean | null | undefined = null;
 
   constructor(
     private ionRouterOutlet: IonRouterOutlet

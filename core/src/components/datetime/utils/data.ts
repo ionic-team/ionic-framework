@@ -221,7 +221,7 @@ export const generateTime = (
           const convertedHour = refParts.ampm === 'pm' ? (hour + 12) % 24 : hour;
           return (use24Hour ? hour : convertedHour) <= maxParts.hour!;
         });
-        isPMAllowed = maxParts.hour >= 13;
+        isPMAllowed = maxParts.hour >= 12;
       }
       if (maxParts.minute !== undefined && refParts.hour === maxParts.hour) {
         // The available minutes should only be filtered when the hour is the same as the max hour.
@@ -533,7 +533,7 @@ export const getTimeColumnsData = (
   minParts?: DatetimeParts,
   maxParts?: DatetimeParts,
   allowedHourValues?: number[],
-  allowedMinuteVaues?: number[]
+  allowedMinuteValues?: number[]
 ): { [key: string]: PickerColumnItem[] } => {
   const use24Hour = is24Hour(locale, hourCycle);
   const { hours, minutes, am, pm } = generateTime(
@@ -542,7 +542,7 @@ export const getTimeColumnsData = (
     minParts,
     maxParts,
     allowedHourValues,
-    allowedMinuteVaues
+    allowedMinuteValues
   );
 
   const hoursItems = hours.map((hour) => {
