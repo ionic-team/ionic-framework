@@ -30,6 +30,8 @@ export class Textarea implements ComponentInterface {
   private didTextareaClearOnEdit = false;
   private textareaWrapper?: HTMLElement;
   private inheritedAttributes: Attributes = {};
+  private originalIonInput?: EventEmitter<TextareaInputEventDetail>;
+
   /**
    * The value of the textarea when the textarea is focused.
    */
@@ -65,11 +67,17 @@ export class Textarea implements ComponentInterface {
   /**
    * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
    */
-  @Prop() debounce = 0;
+  @Prop() debounce?: number;
 
   @Watch('debounce')
   protected debounceChanged() {
-    this.ionInput = debounceEvent(this.ionInput, this.debounce);
+    const { ionInput, debounce, originalIonInput } = this;
+
+    /**
+     * If debounce is undefined, we have to manually revert the ionInput emitter in case
+     * debounce used to be set to a number. Otherwise, the event would stay debounced.
+     */
+    this.ionInput = debounce === undefined ? originalIonInput ?? ionInput : debounceEvent(ionInput, debounce);
   }
 
   /**
@@ -236,6 +244,7 @@ export class Textarea implements ComponentInterface {
   }
 
   componentDidLoad() {
+    this.originalIonInput = this.ionInput;
     this.runAutoGrow();
   }
 

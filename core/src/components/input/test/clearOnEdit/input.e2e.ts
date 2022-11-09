@@ -67,7 +67,7 @@ test.describe('input: clearOnEdit', () => {
 
     await nativeInput.evaluate((el: HTMLInputElement) => el.blur());
 
-    expect(ionInputSpy).toHaveReceivedEventTimes(4);
+    expect(ionInputSpy).toHaveReceivedEventTimes(5);
     expect(ionChangeSpy).toHaveReceivedEventTimes(2);
   });
 });
