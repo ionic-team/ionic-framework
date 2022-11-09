@@ -175,7 +175,6 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
                 'div',
                 {
                   id: 'ion-react-wrapper',
-                  className: 'ion-delegate-host',
                   ref: this.wrapperRef,
                   className: 'ion-delegate-host',
                   style: {
