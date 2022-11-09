@@ -571,7 +571,7 @@ export class Datetime implements ComponentInterface {
   private getActivePart = () => {
     const { activePartsClone } = this;
     return Array.isArray(activePartsClone) ? activePartsClone[0] : activePartsClone;
-  }
+  };
 
   private closeParentOverlay = () => {
     const popoverOrModal = this.el.closest('ion-modal, ion-popover') as
