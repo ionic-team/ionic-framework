@@ -24,6 +24,13 @@ interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<Elem
   keepContentsMounted?: boolean;
 }
 
+/**
+ * These events are manually handled in the createInlineOverlayComponent,
+ * by adding an event listener to the overlay element and invoking
+ * the prop function.
+ */
+const excludedOverlayEvents = ['onWillPresent', 'onDidDismiss'];
+
 export const createInlineOverlayComponent = <PropType, ElementType>(
   tagName: string,
   defineCustomElement?: () => void
@@ -96,13 +103,32 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
           this.setState({ isOpen: false });
         }
 
-        this.props.onDidDismiss && this.props.onDidDismiss(evt);
+        const didComponentUnmount = this.ref.current === null;
+
+        if (didComponentUnmount === false) {
+          /**
+           * If the component is unmounted, we do not
+           * want to call the onDidDismiss handler to
+           * prevent a React state update on an unmounted component.
+           */
+          this.props.onDidDismiss && this.props.onDidDismiss(evt);
+        }
       });
     }
 
     componentDidUpdate(prevProps: IonicReactInternalProps<PropType>) {
       const node = this.ref.current! as HTMLElement;
-      attachProps(node, this.props, prevProps);
+      const propsToPass = Object.keys(this.props).reduce((acc, name) => {
+        if (!excludedOverlayEvents.includes(name)) {
+          /**
+           * Maintains all props except for the event handlers
+           * that are manually handled in the componentDidMount.
+           */
+          (acc as any)[name] = (this.props as any)[name];
+        }
+        return acc;
+      }, {});
+      attachProps(node, propsToPass, prevProps);
     }
 
     componentWillUnmount() {
@@ -149,6 +175,7 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
                 'div',
                 {
                   id: 'ion-react-wrapper',
+                  className: 'ion-delegate-host',
                   ref: this.wrapperRef,
                   style: {
                     display: 'flex',

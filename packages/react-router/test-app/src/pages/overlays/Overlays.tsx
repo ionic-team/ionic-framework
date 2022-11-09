@@ -1,5 +1,5 @@
 import { IonButton, IonContent, IonModal } from '@ionic/react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useHistory } from 'react-router';
 
 const Overlays: React.FC = () => {
@@ -10,8 +10,6 @@ const Overlays: React.FC = () => {
   const goBack = () => history.goBack();
   const replace = () => history.replace('/');
   const push = () => history.push('/');
-
-  useEffect(() => () => setIsOpen(false), []);
 
   return (
     <>
