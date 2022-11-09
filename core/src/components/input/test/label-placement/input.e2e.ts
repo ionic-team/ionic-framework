@@ -11,7 +11,7 @@ test.describe('input: label placement start', () => {
     expect(await input.screenshot()).toMatchSnapshot(`input-placement-start-${page.getSnapshotSettings()}.png`);
   });
 
-  test.only('long label should truncate', async ({ page }) => {
+  test('long label should truncate', async ({ page }) => {
     await page.setContent(`
       <ion-input label="Email Email Email Email Email Email Email Email Email Email Email Email" value="example@ionic.io" label-placement="start"></ion-input>
     `);
@@ -31,7 +31,7 @@ test.describe('input: label placement end', () => {
     const input = page.locator('ion-input');
     expect(await input.screenshot()).toMatchSnapshot(`input-placement-end-${page.getSnapshotSettings()}.png`);
   });
-  test.only('long label should truncate', async ({ page }) => {
+  test('long label should truncate', async ({ page }) => {
     await page.setContent(`
       <ion-input label="Email Email Email Email Email Email Email Email Email Email Email Email" value="example@ionic.io" label-placement="end"></ion-input>
     `);
@@ -74,7 +74,7 @@ test.describe('input: label placement stacked', () => {
       `input-placement-stacked-no-value-${page.getSnapshotSettings()}.png`
     );
   });
-  test.only('long label should truncate', async ({ page }) => {
+  test('long label should truncate', async ({ page }) => {
     await page.setContent(`
       <ion-input label="Email Email Email Email Email Email Email Email Email Email Email Email" value="example@ionic.io" label-placement="stacked"></ion-input>
     `);
@@ -121,7 +121,7 @@ test.describe('input: label placement floating', () => {
       `input-focused-placement-floating-no-value-${page.getSnapshotSettings()}.png`
     );
   });
-  test.only('long label should truncate', async ({ page }) => {
+  test('long label should truncate', async ({ page }) => {
     await page.setContent(`
       <ion-input label="Email Email Email Email Email Email Email Email Email Email Email Email" value="example@ionic.io" label-placement="floating"></ion-input>
     `);
@@ -131,7 +131,7 @@ test.describe('input: label placement floating', () => {
     );
   });
 
-  test.only('long label should truncate with outline', async ({ page, skip }) => {
+  test('long label should truncate with outline', async ({ page, skip }) => {
     skip.mode('ios', 'This style only appears on MD');
     await page.setContent(`
       <ion-input fill="outline" label="Email Email Email Email Email Email Email Email Email Email Email Email" value="example@ionic.io" label-placement="floating"></ion-input>
@@ -141,7 +141,7 @@ test.describe('input: label placement floating', () => {
       `input-placement-floating-long-label-outline-${page.getSnapshotSettings()}.png`
     );
   });
-  test.only('long label should truncate with solid', async ({ page, skip }) => {
+  test('long label should truncate with solid', async ({ page, skip }) => {
     skip.mode('ios', 'This style only appears on MD');
     await page.setContent(`
       <ion-input fill="solid" label="Email Email Email Email Email Email Email Email Email Email Email Email" value="example@ionic.io" label-placement="floating"></ion-input>
