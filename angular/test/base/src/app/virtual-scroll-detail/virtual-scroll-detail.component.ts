@@ -14,7 +14,7 @@ export class VirtualScrollDetailComponent implements OnInit, ViewWillEnter, View
   willLeave = 0;
   didLeave = 0;
 
-  itemNu = 'none';
+  itemNu: string | null = 'none';
 
   constructor(private route: ActivatedRoute) {}
 
