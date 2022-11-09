@@ -564,11 +564,14 @@ export class Datetime implements ComponentInterface {
    * defaultParts if no active date is selected.
    */
   private getActivePartsWithFallback = () => {
-    const { activePartsClone, defaultParts } = this;
-
-    const firstPart = Array.isArray(activePartsClone) ? activePartsClone[0] : activePartsClone;
-    return firstPart ?? defaultParts;
+    const { defaultParts } = this;
+    return this.getActivePart() ?? defaultParts;
   };
+
+  private getActivePart = () => {
+    const { activePartsClone } = this;
+    return Array.isArray(activePartsClone) ? activePartsClone[0] : activePartsClone;
+  }
 
   private closeParentOverlay = () => {
     const popoverOrModal = this.el.closest('ion-modal, ion-popover') as
@@ -1722,14 +1725,24 @@ export class Datetime implements ComponentInterface {
       return [];
     }
 
-    const valueIsDefined = this.value !== null && this.value !== undefined;
+    /**
+     * If a user has not selected a date,
+     * then we should show all times. If the
+     * user has selected a date (even if it has
+     * not been confirmed yet), we should apply
+     * the max and min restrictions so that the
+     * time picker shows values that are
+     * appropriate for the selected date.
+     */
+    const activePart = this.getActivePart();
+    const userHasSelectedDate = activePart !== undefined;
 
     const { hoursData, minutesData, dayPeriodData } = getTimeColumnsData(
       this.locale,
       this.workingParts,
       this.hourCycle,
-      valueIsDefined ? this.minParts : undefined,
-      valueIsDefined ? this.maxParts : undefined,
+      userHasSelectedDate ? this.minParts : undefined,
+      userHasSelectedDate ? this.maxParts : undefined,
       this.parsedHourValues,
       this.parsedMinuteValues
     );
