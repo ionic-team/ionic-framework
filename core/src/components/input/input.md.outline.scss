@@ -62,7 +62,9 @@
 
 :host(.input-fill-outline.input-label-placement-stacked) .label-text-wrapper,
 :host(.input-fill-outline.input-label-placement-floating) .label-text-wrapper {
-  @include transform-origin(center, top);
+  @include transform-origin(start, top);
+
+  position: absolute;
 }
 
 /**
@@ -85,6 +87,21 @@
 :host(.input-fill-outline.input-label-placement-stacked) .label-text-wrapper {
   @include transform(translateY(-32%), scale(.75));
   @include margin(0);
+}
+
+/**
+ * This element ensures that the notch used
+ * the size of the scaled text so that the
+ * border cut out is the correct width.
+ * The text in this element should not
+ * be interactive.
+ */
+:host(.input-fill-outline) .spacer {
+  font-size: calc(1em * 0.75);
+
+  opacity: 0;
+
+  padding-right: 8px;
 }
 
 /**
@@ -132,7 +149,15 @@
   @include border-radius(var(--border-radius), 0px, 0px, var(--border-radius));
   @include border(null, null, null, var(--border-width) var(--border-style) var(--border-color));
 
-  width: 12px;
+  /**
+   * There should be spacing between the translated text
+   * and .input-outline-start. However, we can't add this
+   * spacing onto the notch because it would cause the
+   * label to look like it is not aligned with the
+   * text input. Instead, we subtract a few pixels from
+   * this element.
+   */
+  width: calc(var(--padding-start) - 4px);
 }
 
 /**
