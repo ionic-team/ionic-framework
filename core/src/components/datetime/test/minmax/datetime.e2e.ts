@@ -284,7 +284,7 @@ test.describe('datetime: minmax', () => {
     });
   });
 
-  test.describe.only('datetime: confirm button', () => {
+  test.describe('datetime: confirm button', () => {
     test.beforeEach(({ skip }) => {
       skip.rtl();
     });
