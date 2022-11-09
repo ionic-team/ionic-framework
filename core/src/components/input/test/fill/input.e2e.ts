@@ -22,6 +22,24 @@ test.describe('input: fill', () => {
       const input = page.locator('ion-input');
       expect(await input.screenshot()).toMatchSnapshot(`input-fill-solid-${page.getSnapshotSettings()}.png`);
     });
+    test('should render correctly with floating label', async ({ page }) => {
+      await page.setContent(`
+        <ion-input
+          fill="solid"
+          label="Email"
+          label-placement="floating"
+          value="hi@ionic.io"
+          helper-text="Enter your email"
+          maxlength="20"
+          counter="true"
+        ></ion-input>
+      `);
+
+      const input = page.locator('ion-input');
+      expect(await input.screenshot()).toMatchSnapshot(
+        `input-fill-solid-label-floating-${page.getSnapshotSettings()}.png`
+      );
+    });
     test('should not have visual regressions with shaped solid', async ({ page }) => {
       await page.setContent(`
         <ion-input
@@ -81,6 +99,24 @@ test.describe('input: fill', () => {
 
       const input = page.locator('ion-input');
       expect(await input.screenshot()).toMatchSnapshot(`input-fill-outline-${page.getSnapshotSettings()}.png`);
+    });
+    test('should render correctly with floating label', async ({ page }) => {
+      await page.setContent(`
+        <ion-input
+          fill="outline"
+          label="Email"
+          label-placement="floating"
+          value="hi@ionic.io"
+          helper-text="Enter your email"
+          maxlength="20"
+          counter="true"
+        ></ion-input>
+      `);
+
+      const input = page.locator('ion-input');
+      expect(await input.screenshot()).toMatchSnapshot(
+        `input-fill-outline-label-floating-${page.getSnapshotSettings()}.png`
+      );
     });
     test('should not have visual regressions with shaped outline', async ({ page }) => {
       await page.setContent(`
