@@ -369,13 +369,6 @@
 
 .label-text-wrapper {
   /**
-   * The margin between the label and
-   * the input should be on the end
-   * when the label sits at the start.
-   */
-  @include margin(0, 8px, 0, 0);
-
-  /**
    * This causes the label to take up
    * the entire height of its container
    * while still keeping the text centered.
@@ -383,6 +376,16 @@
   display: flex;
 
   align-items: center;
+
+  /**
+   * Label text should not extend
+   * beyond the bounds of the input.
+   * However, we do not set the max
+   * width to 100% because then
+   * only the label would show and users
+   * would not be able to see what they are typing.
+   */
+  max-width: 200px;
 
   transition: color 150ms cubic-bezier(.4, 0, .2, 1), transform 150ms cubic-bezier(.4, 0, .2, 1);
 
@@ -435,6 +438,15 @@
   flex-direction: row;
 }
 
+:host(.input-label-placement-start) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the input should be on the end
+   * when the label sits at the start.
+   */
+  @include margin(0, 8px, 0, 0);
+}
+
 // Input Label Placement - End
 // ----------------------------------------------------------------
 
@@ -457,6 +469,15 @@
 
 // Input Label Placement - Fixed
 // ----------------------------------------------------------------
+
+:host(.input-label-placement-fixed) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the input should be on the end
+   * when the label sits at the start.
+   */
+  @include margin(0, 8px, 0, 0);
+}
 
 /**
  * Label is on the left of the input in LTR and

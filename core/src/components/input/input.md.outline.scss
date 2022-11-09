@@ -1,3 +1,5 @@
+@import "./input.vars";
+
 // Input Fill: Outline
 // ----------------------------------------------------------------
 
@@ -65,6 +67,12 @@
   @include transform-origin(start, top);
 
   position: absolute;
+
+  /**
+   * Label text should not extend
+   * beyond the bounds of the input.
+   */
+  max-width: calc(100% - var(--padding-start) - var(--padding-end));
 }
 
 /**
@@ -85,8 +93,14 @@
 :host(.has-value.input-fill-outline.input-label-placement-floating) .label-text-wrapper,
 :host(.input-fill-outline.input-label-placement-stacked) .label-text-wrapper,
 :host(.input-fill-outline.input-label-placement-stacked) .label-text-wrapper {
-  @include transform(translateY(-32%), scale(.75));
+  @include transform(translateY(-32%), scale(#{$input-floating-label-scale}));
   @include margin(0);
+
+  /**
+   * Label text should not extend
+   * beyond the bounds of the input.
+   */
+  max-width: calc((100% - var(--padding-start) - var(--padding-end) - #{$input-md-floating-label-padding * 2}) / #{$input-floating-label-scale});
 }
 
 /**
@@ -131,6 +145,14 @@
 }
 
 /**
+ * Ensures long labels do not cause the notch to flow
+ * out of bounds.
+ */
+:host(.input-fill-outline) .input-outline-notch {
+  max-width: calc(100% - var(--padding-start) - var(--padding-end));
+}
+
+/**
  * This element ensures that the notch used
  * the size of the scaled text so that the
  * border cut out is the correct width.
@@ -139,15 +161,15 @@
  */
 :host(.input-fill-outline) .notch-spacer {
   /**
-   * We need 4px of padding on the right.
-   * However, we also subtracted 4px from
+   * We need $input-md-floating-label-padding of padding on the right.
+   * However, we also subtracted $input-md-floating-label-padding from
    * the width of .input-outline-start
    * to create space, so we need to take
    * that into consideration here.
    */
-  @include padding(null, 8px, null, null);
+  @include padding(null, #{$input-md-floating-label-padding * 2}, null, null);
 
-  font-size: calc(1em * 0.75);
+  font-size: calc(1em * #{$input-floating-label-scale});
 
   opacity: 0;
   pointer-events: none;
@@ -166,7 +188,7 @@
    * text input. Instead, we subtract a few pixels from
    * this element.
    */
-  width: calc(var(--padding-start) - 4px);
+  width: calc(var(--padding-start) - #{$input-md-floating-label-padding});
 }
 
 :host(.input-fill-outline) .input-outline-end {
