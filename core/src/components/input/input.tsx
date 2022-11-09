@@ -572,7 +572,9 @@ export class Input implements ComponentInterface {
    * when fill="outline".
    */
   private renderLabelContainer() {
+    const { labelPlacement } = this;
     const hasOutlineFill = this.fill === 'outline';
+    const needsNotch = labelPlacement === 'floating' || labelPlacement === 'stacked';
 
     if (hasOutlineFill) {
       /**
@@ -588,12 +590,10 @@ export class Input implements ComponentInterface {
       return [
         <div class="input-outline-container">
           <div class="input-outline-start"></div>
-          <div class="input-outline-notch">
-            <div class="spacer">{this.label}</div>
-          </div>
+          <div class="input-outline-notch">{needsNotch && this.renderLabel()}</div>
           <div class="input-outline-end"></div>
         </div>,
-        this.renderLabel(),
+        !needsNotch && this.renderLabel(),
       ];
     }
 
