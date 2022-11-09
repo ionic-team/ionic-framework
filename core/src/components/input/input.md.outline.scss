@@ -9,7 +9,7 @@
 }
 
 :host(.input-fill-outline.input-shape-round) {
-  --border-radius: 9999px;
+  --border-radius: 28px;
   --padding-start: 32px;
   --padding-end: 32px;
 }
@@ -90,21 +90,6 @@
 }
 
 /**
- * This element ensures that the notch used
- * the size of the scaled text so that the
- * border cut out is the correct width.
- * The text in this element should not
- * be interactive.
- */
-:host(.input-fill-outline) .spacer {
-  font-size: calc(1em * 0.75);
-
-  opacity: 0;
-
-  padding-right: 8px;
-}
-
-/**
  * This ensures that the input does not
  * overlap the floating label while still
  * remaining visually centered.
@@ -145,6 +130,30 @@
   border-bottom: var(--border-width) var(--border-style) var(--border-color);
 }
 
+/**
+ * This element ensures that the notch used
+ * the size of the scaled text so that the
+ * border cut out is the correct width.
+ * The text in this element should not
+ * be interactive.
+ */
+:host(.input-fill-outline) .notch-spacer {
+  /**
+   * We need 4px of padding on the right.
+   * However, we also subtracted 4px from
+   * the width of .input-outline-start
+   * to create space, so we need to take
+   * that into consideration here.
+   */
+  @include padding(null, 8px, null, null);
+
+  font-size: calc(1em * 0.75);
+
+  opacity: 0;
+  pointer-events: none;
+}
+
+
 :host(.input-fill-outline) .input-outline-start {
   @include border-radius(var(--border-radius), 0px, 0px, var(--border-radius));
   @include border(null, null, null, var(--border-width) var(--border-style) var(--border-color));
@@ -158,15 +167,6 @@
    * this element.
    */
   width: calc(var(--padding-start) - 4px);
-}
-
-/**
- * When shape="round", the starting outline fragment
- * should appear with a pill shape.
- */
-:host(.input-fill-outline.input-shape-round) .input-outline-start {
-  @include border-radius(28px, 0px, 0px, 28px);
-  width: 28px;
 }
 
 :host(.input-fill-outline) .input-outline-end {

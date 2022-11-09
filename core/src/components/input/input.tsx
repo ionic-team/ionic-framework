@@ -589,7 +589,9 @@ export class Input implements ComponentInterface {
         <div class="input-outline-container">
           <div class="input-outline-start"></div>
           <div class="input-outline-notch">
-            <div class="spacer">{this.label}</div>
+            <div class="notch-spacer" aria-hidden="true">
+              {this.label}
+            </div>
           </div>
           <div class="input-outline-end"></div>
         </div>,
