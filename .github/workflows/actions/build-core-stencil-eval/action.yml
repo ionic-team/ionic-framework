@@ -1,5 +1,5 @@
-name: 'Build Ionic Core'
-description: 'Build Ionic Core'
+name: 'Build Ionic Core with Stencil Eval'
+description: 'Build Ionic Core with an Evaluation Copy of Stencil'
 runs:
   using: 'composite'
   steps:
@@ -22,6 +22,17 @@ runs:
       run: npm install
       working-directory: ./core
       shell: bash
+    - name: Retrieve Stencil Repository
+      run: git clone https://github.com/ionic-team/stencil.git stencil-repo-tmp
+      shell: bash
+    - name: Build Stencil
+      run: npm ci && npm run build && npm pack
+      working-directory: stencil-repo-tmp
+      shell: bash
+    - name: Install Stencil Eval
+      working-directory: ./core
+      # there isn't a great way to get the output of `npm pack`, just grab the first and hope for the best
+      run: npm i $(ls ../stencil-repo-tmp/*.tgz | head -1)
     - name: Build Core
       run: npm run build -- --ci
       working-directory: ./core
