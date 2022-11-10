@@ -25,6 +25,10 @@ runs:
     - name: Retrieve Stencil Repository
       run: git clone https://github.com/ionic-team/stencil.git stencil-repo-tmp
       shell: bash
+    - name: Report Stencil SHA
+      run: git rev-parse HEAD
+      working-directory: ./stencil-repo-tmp
+      shell: bash
     - name: Build Stencil
       run: npm ci && npm run build && npm pack
       working-directory: stencil-repo-tmp
