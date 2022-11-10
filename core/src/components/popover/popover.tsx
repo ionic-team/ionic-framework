@@ -459,6 +459,11 @@ export class Popover implements ComponentInterface, PopoverInterface {
     this.usersElement = await attachComponent(delegate, this.el, this.component, ['popover-viewport'], data, inline);
     await deepReady(this.usersElement);
 
+    if (!this.keyboardEvents) {
+      this.configureKeyboardInteraction();
+    }
+    this.configureDismissInteraction();
+
     // TODO: FW-2773: Apply this to only the lazy build.
     if (inline === true) {
       /**
@@ -472,11 +477,6 @@ export class Popover implements ComponentInterface, PopoverInterface {
        */
       await waitOneFrame();
     }
-
-    if (!this.keyboardEvents) {
-      this.configureKeyboardInteraction();
-    }
-    this.configureDismissInteraction();
 
     this.currentTransition = present(this, 'popoverEnter', iosEnterAnimation, mdEnterAnimation, {
       event: event || this.event,
