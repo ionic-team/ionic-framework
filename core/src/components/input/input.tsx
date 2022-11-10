@@ -579,12 +579,9 @@ export class Input implements ComponentInterface {
       /**
        * The outline fill has a special outline
        * that appears around the input and the label.
-       * Certain label placements cause the
+       * Certain stacked and floating label placements cause the
        * label to translate up and create a "cut out"
-       * inside of that border. When this happens, we need
-       * to render the label inside of the input-outline-notch
-       * element. Otherwise, we can render it as a sibling
-       * of the outline container.
+       * inside of that border by using the notch-spacer element.
        */
       return [
         <div class="input-outline-container">
