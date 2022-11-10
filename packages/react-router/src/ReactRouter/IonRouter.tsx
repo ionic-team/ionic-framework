@@ -116,7 +116,7 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
           this.incomingRouteParams = {
             routeAction: 'replace',
             routeDirection: 'none',
-            tab: this.currentTab, // TODO this isn't legit if replacing to a page that is not in the tabs
+            tab: this.currentTab,
           };
         }
         if (action === 'POP') {

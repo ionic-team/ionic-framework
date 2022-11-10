@@ -54,7 +54,6 @@
   color: current-color(contrast);
 }
 
-// TODO we should remove outer-content in favor of a color
 :host(.outer-content) {
   --background: #{$background-color-step-50};
 }

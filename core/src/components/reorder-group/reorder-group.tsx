@@ -245,9 +245,6 @@ export class ReorderGroup implements ComponentInterface {
   private itemIndexForTop(deltaY: number): number {
     const heights = this.cachedHeights;
 
-    // TODO: since heights is a sorted array of integers, we can do
-    // speed up the search using binary search. Remember that linear-search is still
-    // faster than binary-search for small arrays (<64) due CPU branch misprediction.
     for (let i = 0; i < heights.length; i++) {
       if (heights[i] > deltaY) {
         return i;
