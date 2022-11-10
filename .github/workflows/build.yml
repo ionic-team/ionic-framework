@@ -1,8 +1,9 @@
 name: 'Ionic Framework Build'
 
-on:
-  pull_request:
-    branches: [ '**' ]
+# TODO(NOW): Restore this
+# on:
+#   pull_request:
+#     branches: [ '**' ]
 
 # When pushing a new commit we should
 # cancel the previous test run to not
