@@ -7,7 +7,9 @@ runs:
       with:
         node-version: 16.x
     - name: Install Dependencies
-      run: npm install
+      # Do not create a new package-lock file
+      # as it will cause the git diff check to fail.
+      run: npm install --no-save
       working-directory: ./core
       shell: bash
     - name: Lint
