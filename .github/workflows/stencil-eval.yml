@@ -2,11 +2,17 @@
 # See https://github.com/ionic-team/stencil for contents of the repository
 name: 'Stencil Nightly Build'
 
-on:
-  schedule:
+# TODO(NOW): Restore
+# on:
+  # schedule:
     # Run every Monday-Friday
     # at 6:00 UTC (6:00 am UTC)
-    - cron: '00 06 * * 1-5'
+    # - cron: '00 06 * * 1-5'
+
+# TODO(NOW): Remove. Only for testing purposes
+on:
+  pull_request:
+    branches: [ '**' ]
 
 jobs:
   stencil-nightly-build:
