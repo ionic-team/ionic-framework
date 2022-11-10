@@ -31,12 +31,19 @@ runs:
       shell: bash
     - name: Build Stencil
       run: npm ci && npm run build && npm pack
-      working-directory: stencil-repo-tmp
+      working-directory: ./stencil-repo-tmp
+      shell: bash
+    - name: Move the Stencil Build Artifact
+      # there isn't a great way to get the output of `npm pack`, just grab the first and hope for the best
+      run: mv $(ls ./stencil-repo-tmp/*.tgz | head -1) stencil-eval.tgz
       shell: bash
     - name: Install Stencil Eval
       working-directory: ./core
-      # there isn't a great way to get the output of `npm pack`, just grab the first and hope for the best
-      run: npm i $(ls ../stencil-repo-tmp/*.tgz | head -1)
+      run: npm i ../stencil-eval.tgz
+      shell: bash
+    - name: Clean Up Stencil Build
+      run: rm -rf stencil-repo-tmp
+      shell: bash
     - name: Build Core
       run: npm run build -- --ci
       working-directory: ./core
