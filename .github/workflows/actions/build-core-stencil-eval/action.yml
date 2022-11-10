@@ -35,11 +35,11 @@ runs:
       shell: bash
     - name: Move the Stencil Build Artifact
       # there isn't a great way to get the output of `npm pack`, just grab the first and hope for the best
-      run: mv $(ls ./stencil-repo-tmp/*.tgz | head -1) stencil-eval.tgz
+      run: mv $(ls ./stencil-repo-tmp/*.tgz | head -1) ./core/stencil-eval.tgz
       shell: bash
     - name: Install Stencil Eval
       working-directory: ./core
-      run: npm i ../stencil-eval.tgz
+      run: npm i ./stencil-eval.tgz
       shell: bash
     - name: Clean Up Stencil Build
       run: rm -rf stencil-repo-tmp
