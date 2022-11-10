@@ -31,4 +31,12 @@ export const StatusBar = {
 
     engine.setStyle(options);
   },
+  getStyle: async function (): Promise<Style> {
+    const engine = this.getEngine();
+    if (!engine) {
+      return Style.Default;
+    }
+    const { style } = await engine.getInfo();
+    return style;
+  },
 };
