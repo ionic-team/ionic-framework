@@ -53,14 +53,3 @@
 :host(.input-label-placement-floating) .label-text-wrapper {
   max-width: 100%;
 }
-
-:host(.has-focus.input-label-placement-stacked) .label-text-wrapper,
-:host(.has-value.input-label-placement-stacked) .label-text-wrapper,
-:host(.has-focus.input-label-placement-floating) .label-text-wrapper,
-:host(.has-value.input-label-placement-floating) .label-text-wrapper {
-  /**
-   * Label text should not extend
-   * beyond the bounds of the input.
-   */
-  max-width: calc(100% / #{$input-floating-label-scale});
-}
