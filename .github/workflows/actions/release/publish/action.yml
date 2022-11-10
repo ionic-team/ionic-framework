@@ -1,0 +1,19 @@
+name: 'Publish'
+description: 'Publishes a package to NPM'
+inputs:
+  package:
+    description: 'The package to publish'
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16.x
+    - name: Prepare NPM Token
+      run: echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc
+      shell: bash
+      env:
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+    - name: Publish to NPM
+      run: echo stub
+      shell: bash

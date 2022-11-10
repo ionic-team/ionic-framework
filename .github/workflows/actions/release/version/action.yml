@@ -1,0 +1,14 @@
+name: 'Version'
+description: 'Updates the package version'
+inputs:
+  type:
+    description: 'The updated version'
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16.x
+    - name: Version Package
+      run: npm version ${{ inputs.type }}
+      shell: bash
