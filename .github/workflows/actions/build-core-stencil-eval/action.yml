@@ -1,0 +1,38 @@
+name: 'Build Ionic Core'
+description: 'Build Ionic Core'
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/checkout@v3
+      with:
+        # Checkout the latest commit in this branch
+        ref: ${{ github.event.pull_request.head.sha }}
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16.x
+
+    - name: Cache Node Modules
+      uses: actions/cache@v3
+      env:
+        cache-name: core-node-modules
+      with:
+        path: ./core/node_modules
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./core/package-lock.json') }}-v2
+    - name: Install Dependencies
+      run: npm install
+      working-directory: ./core
+      shell: bash
+    - name: Build Core
+      run: npm run build -- --ci
+      working-directory: ./core
+      shell: bash
+    - uses: ./.github/workflows/actions/upload-archive
+      with:
+        name: ionic-core
+        output: core/CoreBuild.zip
+        paths: core/dist core/components core/css core/hydrate core/loader core/src/components.d.ts
+    - uses: ./.github/workflows/actions/upload-archive
+      with:
+        name: ionic-core-src
+        output: core/CoreSrc.zip
+        paths: core/src
