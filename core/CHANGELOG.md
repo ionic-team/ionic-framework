@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.6-nightly.20221110](https://github.com/ionic-team/ionic/compare/v6.3.5...v6.3.6-nightly.20221110) (2022-11-10)
+
+
+### Bug Fixes
+
+* **datetime:** flip chevron icons when RTL is set on component directly ([#26195](https://github.com/ionic-team/ionic/issues/26195)) ([dd98677](https://github.com/ionic-team/ionic/commit/dd9867708b66543f5cbe978e0fa6ef34b37f9fc3))
+
+
+
+
+
 ## [6.3.5](https://github.com/ionic-team/ionic/compare/v6.3.4...v6.3.5) (2022-11-09)
 
 
