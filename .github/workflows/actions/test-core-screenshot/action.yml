@@ -24,7 +24,7 @@ runs:
         path: ./core
         filename: CoreSrc.zip
     - name: Install Playwright Dependencies
-      run: npm install @playwright/test && npx playwright install && npx playwright install-deps
+      run: npm install && npx playwright install && npx playwright install-deps
       shell: bash
       working-directory: ./core
     - name: Test
