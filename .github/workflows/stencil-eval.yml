@@ -1,4 +1,6 @@
-name: 'Ionic Nightly Build'
+# This workflow is intended to run against the `HEAD` of Stencil's primary branch.
+# See https://github.com/ionic-team/stencil for contents of the repository
+name: 'Stencil Nightly Build'
 
 on:
   schedule:
@@ -7,7 +9,7 @@ on:
     - cron: '00 06 * * 1-5'
 
 jobs:
-  nightly-build:
+  stencil-nightly-build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
