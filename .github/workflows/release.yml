@@ -27,7 +27,16 @@ jobs:
     - uses: actions/checkout@v3
       with:
         token: ${{ secrets.IONITRON_TOKEN }}
-        fetch-depth: 0
+    - name: Configure Identity
+      # Commits from github-actions do not
+      # trigger other GitHub Actions. As a result,
+      # we publish releases from Ionitron instead
+      # so actions run when merging the release branch
+      # back into main.
+      run: |
+        git config user.name ionitron
+        git config user.email hi@ionicframework.com
+      shell: bash
     - uses: ./.github/workflows/actions/release
       with:
         scope: '@ionic/core'
