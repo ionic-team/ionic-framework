@@ -42,6 +42,7 @@ jobs:
         scope: '@ionic/core'
         tag: ${{ inputs.tag }}
         version: ${{ inputs.version }}
+        working-directory: 'core'
     - name: Cache Built @ionic/core
       uses: ./.github/workflows/actions/upload-archive
       with:

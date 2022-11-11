@@ -7,21 +7,23 @@ inputs:
     description: 'The type of version to release.'
   tag:
     description: 'The tag to publish to on NPM.'
+  working-directory:
+    description: 'The directory of the package.'
+defaults:
+  run:
+    shell: bash
+    working-directory: ${{ inputs.working-directory }}
 runs:
   using: 'composite'
   steps:
     - name: Prepare NPM Token
       run: echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc
-      shell: bash
     - uses: actions/setup-node@v3
       with:
         node-version: 16.x
     - name: Install Dependencies
       run: lerna bootstrap --scope ${{ inputs.scope }} --ignore-scripts -- --legacy-peer-deps
-      shell: bash
     - name: Update Version
       run: npm version ${{ inputs.version }}
-      shell: bash
     - name: Publish to NPM
       run: npm publish --dry-run --tag ${{ inputs.tag }}
-      shell: bash
