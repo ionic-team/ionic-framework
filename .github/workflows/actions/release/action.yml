@@ -20,9 +20,6 @@ runs:
     - name: Prepare NPM Token
       run: echo //registry.npmjs.org/:_authToken=${{ inputs.NPM_TOKEN }} > .npmrc
       shell: bash
-    - name: Test Auth
-      run: npm whoami
-      shell: bash
     - name: Install Dependencies
       run: lerna bootstrap --scope ${{ inputs.scope }} --ignore-scripts -- --legacy-peer-deps
       shell: bash
