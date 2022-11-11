@@ -217,6 +217,8 @@ jobs:
       shell: bash
     - name: Create GitHub Release
       run: lerna version ${{ inputs.version }} --yes --force-publish='*' --conventional-commits --create-release github
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       shell: bash
     # Lerna does not automatically bump versions
     # of Ionic dependencies that have changed,
