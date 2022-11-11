@@ -15,19 +15,12 @@
 }
 
 /**
- * The border should get thicker when
- * the input is focused.
+ * If the input has a validity state, the
+ * border should reflect that as a color.
  */
-:host(.input-fill-outline.has-focus) {
-  --border-width: 2px;
-}
-
-/**
- * The bottom content should never have
- * a border with the outline style.
- */
-:host(.input-fill-outline) .input-bottom {
-  border-top: none;
+:host(.input-fill-outline.ion-touched.ion-valid),
+:host(.input-fill-outline.ion-touched.ion-invalid) {
+  --border-color: var(--highlight-color);
 }
 
 /**
@@ -38,6 +31,24 @@
   :host(.input-fill-outline:hover) {
     --border-color: #{$background-color-step-750};
   }
+}
+
+/**
+ * The border should get thicker
+ * and take on component color when
+ * the input is focused.
+ */
+:host(.input-fill-outline.has-focus) {
+  --border-width: 2px;
+  --border-color: var(--highlight-color);
+}
+
+/**
+ * The bottom content should never have
+ * a border with the outline style.
+ */
+:host(.input-fill-outline) .input-bottom {
+  border-top: none;
 }
 
 /**

@@ -43,6 +43,14 @@
   --highlight-color-valid: #{ion-color(success, base)};
   --highlight-color-invalid: #{ion-color(danger, base)};
 
+  /**
+   * This is a private API that is used to switch
+   * out the highlight color based on the state
+   * of the component without having to write
+   * different selectors for different fill variants.
+   */
+  --highlight-color: var(--highlight-color-focused);
+
   display: block;
 
   position: relative;
@@ -77,8 +85,12 @@
   --padding-start: 0;
 }
 
-:host(.ion-color) {
+:host(.legacy-input.ion-color) {
   color: current-color(base);
+}
+
+:host(.ion-color) {
+  --highlight-color-focused: #{current-color(base)};
 }
 
 // Native Text Input
@@ -251,6 +263,17 @@
   background: var(--background);
 }
 
+// Input Highlight
+// ----------------------------------------------------------------
+
+:host(.ion-touched.ion-invalid) {
+  --highlight-color: var(--highlight-color-invalid);
+}
+
+:host(.ion-touched.ion-valid) {
+  --highlight-color: var(--highlight-color-valid);
+}
+
 // Input Bottom Content
 // ----------------------------------------------------------------
 
@@ -269,6 +292,20 @@
   border-top: var(--border-width) var(--border-style) var(--border-color);
 
   font-size: 12px;
+}
+
+/**
+ * If the input has a validity state, the
+ * border and label should reflect that as a color.
+ */
+:host(.ion-touched.ion-valid) .input-bottom,
+:host(.ion-touched.ion-invalid) .input-bottom {
+  --border-color: var(--highlight-color);
+}
+
+:host(.ion-touched.ion-valid) label,
+:host(.ion-touched.ion-invalid) label {
+  color: var(--highlight-color);
 }
 
 // Input Hint Text
@@ -347,7 +384,7 @@
   transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-// Input Label Placement
+// Input Label Placement - Start
 // ----------------------------------------------------------------
 
 /**
@@ -357,6 +394,9 @@
 :host(.input-label-placement-start) .input-wrapper {
   flex-direction: row;
 }
+
+// Input Label Placement - End
+// ----------------------------------------------------------------
 
 /**
  * Label is on the right of the input in LTR and
@@ -375,6 +415,9 @@
   @include margin(0, 0, 0, 8px);
 }
 
+// Input Label Placement - Fixed
+// ----------------------------------------------------------------
+
 /**
  * Label is on the left of the input in LTR and
  * on the right in RTL. Label also has a fixed width.
@@ -388,6 +431,9 @@
   min-width: 100px;
   max-width: 200px;
 }
+
+// Input Label Placement - Stacked and Floating
+// ----------------------------------------------------------------
 
 /**
  * Stacked: Label sits above the input and is scaled down.
