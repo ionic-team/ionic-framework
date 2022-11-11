@@ -14,6 +14,7 @@ runs:
   steps:
     - name: Prepare NPM Token
       run: echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc
+      shell: bash
     - uses: actions/setup-node@v3
       with:
         node-version: 16.x
