@@ -1,3 +1,7 @@
+#!/bin/bash
+
+set -e
+
 # Copy ionic vue dist
 rm -rf node_modules/@ionic/vue/dist node_modules/@ionic/vue/css
 cp -a ../vue/dist node_modules/@ionic/vue/dist

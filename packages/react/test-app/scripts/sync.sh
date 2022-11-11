@@ -1,3 +1,7 @@
+#!/bin/bash
+
+set -e
+
 # Copy ionic react dist
 rm -rf node_modules/@ionic/react/dist node_modules/@ionic/react/css
 cp -a ../dist node_modules/@ionic/react/dist

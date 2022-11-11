@@ -1,3 +1,7 @@
+#!/bin/bash
+
+set -e
+
 # Copy angular dist
 rm -rf node_modules/@ionic/angular
 cp -a ../../../dist node_modules/@ionic/angular
