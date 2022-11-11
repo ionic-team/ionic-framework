@@ -209,7 +209,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   }
 
   componentDidLoad() {
-    const { el, counter, counterFormatter } = this;
+    const { el, counter, counterFormatter, fill, shape } = this;
     const hasHelperSlot = el.querySelector('[slot="helper"]') !== null;
     if (hasHelperSlot) {
       printIonWarning(
@@ -236,6 +236,20 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     if (counterFormatter !== undefined) {
       printIonWarning(
         'The "counterFormatter" property has been deprecated in favor of using the "counterFormatter" property on ion-input or ion-textarea.',
+        el
+      );
+    }
+
+    if (fill !== undefined) {
+      printIonWarning(
+        'The "fill" property has been deprecated in favor of using the "fill" property on ion-input or ion-textarea.',
+        el
+      );
+    }
+
+    if (shape !== undefined) {
+      printIonWarning(
+        'The "shape" property has been deprecated in favor of using the "shape" property on ion-input or ion-textarea.',
         el
       );
     }

@@ -52,7 +52,6 @@
   /* stylelint-disable-next-line all */
   padding: 0 !important;
 
-  background: var(--background);
   color: var(--color);
 
   font-family: $font-family-base;
@@ -65,10 +64,13 @@
 
   flex: 1;
   align-items: center;
+
+  background: var(--background);
 }
 
 :host(.legacy-input) .native-input {
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+  @include border-radius(var(--border-radius));
 }
 
 :host-context(ion-item:not(.item-label)) {
@@ -83,11 +85,12 @@
 // --------------------------------------------------
 
 .native-input {
-  @include border-radius(var(--border-radius));
   @include padding(0, 0, 0, 0);
   @include text-inherit();
 
   display: inline-block;
+
+  position: relative;
 
   flex: 1;
 
@@ -103,6 +106,17 @@
 
   box-sizing: border-box;
   appearance: none;
+
+  /**
+   * This ensures the input
+   * remains on top of any decoration
+   * that we render (particularly the
+   * outline border when fill="outline").
+   * If we did not do this then Axe would
+   * be unable to determine the color
+   * contrast of the input.
+   */
+  z-index: 1;
 
   &::placeholder {
     color: var(--placeholder-color);
@@ -220,8 +234,11 @@
 
 .input-wrapper {
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+  @include border-radius(var(--border-radius));
 
   display: flex;
+
+  position: relative;
 
   flex-grow: 1;
 
@@ -229,14 +246,21 @@
 
   height: 100%;
 
-  background: inherit;
+  transition: background-color 15ms linear;
+
+  background: var(--background);
 }
 
 // Input Bottom Content
 // ----------------------------------------------------------------
 
 .input-bottom {
-  @include padding(5px, 0, 0, 0);
+  /**
+   * The bottom content should take on the start and end
+   * padding so it is always aligned with either the label
+   * or the start of the text input.
+   */
+  @include padding(5px, var(--padding-end), 0, var(--padding-start));
 
   display: flex;
 
