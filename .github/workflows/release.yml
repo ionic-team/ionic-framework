@@ -25,6 +25,7 @@ jobs:
   release-core:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v3
     - uses: ./.github/workflows/actions/release
       with:
         scope: '@ionic/core'
@@ -43,6 +44,7 @@ jobs:
     needs: [release-core]
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v3
     - name: Restore @ionic/core built cache
       uses: ./.github/workflows/actions/download-archive
       with:
@@ -67,6 +69,7 @@ jobs:
     needs: [release-core]
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v3
     - name: Restore @ionic/core built cache
       uses: ./.github/workflows/actions/download-archive
       with:
@@ -91,6 +94,7 @@ jobs:
     needs: [release-core]
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v3
     - name: Restore @ionic/core built cache
       uses: ./.github/workflows/actions/download-archive
       with:
