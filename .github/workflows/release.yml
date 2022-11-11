@@ -25,6 +25,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.IONITRON_TOKEN }}
+        fetch-depth: 0
     - uses: ./.github/workflows/actions/release
       with:
         scope: '@ionic/core'
