@@ -1223,6 +1223,13 @@ export class Datetime implements ComponentInterface {
           ampm,
         };
       }
+    } else {
+      /**
+       * Reset the active parts if the value is not set.
+       * This will clear the selected calendar day when
+       * performing a clear action or using the reset() method.
+       */
+      this.activeParts = [];
     }
   };
 
