@@ -70,6 +70,8 @@ export class Tabs implements NavOutlet {
   async select(tab: string | HTMLIonTabElement): Promise<boolean> {
     const selectedTab = getTab(this.tabs, tab);
     if (!this.shouldSwitch(selectedTab)) {
+      // scroll to top when user clicks on current selected tab
+      this.el.querySelector('ion-content')?.scrollToTop(400)
       return false;
     }
     await this.setActive(selectedTab);
