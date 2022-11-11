@@ -5,7 +5,6 @@ test.describe('input: highlights', () => {
   test.beforeEach(({ skip }) => {
     skip.rtl();
   });
-
   test.describe('input: no fill', () => {
     test('should render valid state correctly', async ({ page }) => {
       await page.setContent(`

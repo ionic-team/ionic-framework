@@ -352,6 +352,24 @@
   padding-inline-start: 16px;
 }
 
+// Input Highlight
+// ----------------------------------------------------------------
+
+:host(.ion-touched.ion-invalid) {
+  --highlight-color: var(--highlight-color-invalid);
+}
+
+:host(.ion-touched.ion-valid) {
+  --highlight-color: var(--highlight-color-valid);
+}
+
+// Input Native
+// ----------------------------------------------------------------
+
+:host(.has-focus) input {
+  caret-color: var(--highlight-color);
+}
+
 // Input Label
 // ----------------------------------------------------------------
 
