@@ -21,8 +21,10 @@ runs:
       with:
         node-version: 16.x
     - name: Prepare NPM Token
-      run: echo //registry.npmjs.org/:_authToken=${{ inputs.NPM_TOKEN }} > .npmrc
+      run: echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc
       shell: bash
+      env:
+        NPM_TOKEN: ${{ inputs.NPM_TOKEN }}
     - name: Install Dependencies
       run: lerna bootstrap --scope ${{ inputs.scope }} --ignore-scripts -- --legacy-peer-deps
       shell: bash
