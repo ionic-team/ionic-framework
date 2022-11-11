@@ -38,3 +38,75 @@ jobs:
         name: ionic-core
         output: core/CoreBuild.zip
         paths: core/dist core/components core/css core/hydrate core/loader core/src/components.d.ts
+
+  release-angular:
+    needs: [release-core]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Restore @ionic/core built cache
+      uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-core
+        path: ./core
+        filename: CoreBuild.zip
+    - uses: ./.github/workflows/actions/release
+      with:
+        scope: '@ionic/angular'
+        tag: ${{ inputs.tag }}
+        version: ${{ inputs.version }}
+        working-directory: 'angular'
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+    - name: Cache Built @ionic/angular
+      uses: ./.github/workflows/actions/upload-archive
+      with:
+        name: ionic-angular
+        output: ./angular/AngularBuild.zip
+        paths: ./angular/dist
+
+  release-react:
+    needs: [release-core]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Restore @ionic/core built cache
+      uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-core
+        path: ./core
+        filename: CoreBuild.zip
+    - uses: ./.github/workflows/actions/release
+      with:
+        scope: '@ionic/react'
+        tag: ${{ inputs.tag }}
+        version: ${{ inputs.version }}
+        working-directory: 'packages/react'
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+    - name: Cache Built @ionic/react
+      uses: ./.github/workflows/actions/upload-archive
+      with:
+        name: ionic-react
+        output: packages/react/ReactBuild.zip
+        paths: packages/react/dist packages/react/css
+
+  release-vue:
+    needs: [release-core]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Restore @ionic/core built cache
+      uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-core
+        path: ./core
+        filename: CoreBuild.zip
+    - uses: ./.github/workflows/actions/release
+      with:
+        scope: '@ionic/vue'
+        tag: ${{ inputs.tag }}
+        version: ${{ inputs.version }}
+        working-directory: 'packages/vue'
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+    - name: Cache Built @ionic/vue
+      uses: ./.github/workflows/actions/upload-archive
+      with:
+        name: ionic-vue
+        output: packages/vue/VueBuild.zip
+        paths: packages/vue/dist packages/vue/css
