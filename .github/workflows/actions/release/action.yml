@@ -31,6 +31,9 @@ runs:
       run: npm version ${{ inputs.version }}
       shell: bash
       working-directory: ${{ inputs.working-directory }}
+    - name: Run Build
+      run: npm run build
+      shell: bash
     - name: Publish to NPM
       run: npm publish ${{ inputs.folder }} --dry-run --tag ${{ inputs.tag }}  --git-tag-version false
       shell: bash

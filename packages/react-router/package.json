@@ -20,7 +20,6 @@
     "url": "https://github.com/ionic-team/ionic.git"
   },
   "scripts": {
-    "prepublishOnly": "npm run build",
     "build": "npm run clean && npm run compile",
     "clean": "rimraf dist dist-transpiled",
     "compile": "npm run tsc && rollup -c",
