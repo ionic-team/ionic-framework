@@ -175,7 +175,6 @@
   pointer-events: none;
 }
 
-
 :host(.input-fill-outline) .input-outline-start {
   @include border-radius(var(--border-radius), 0px, 0px, var(--border-radius));
   @include border(null, null, null, var(--border-width) var(--border-style) var(--border-color));
