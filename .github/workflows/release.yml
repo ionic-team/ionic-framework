@@ -44,6 +44,7 @@ jobs:
         tag: ${{ inputs.tag }}
         version: ${{ inputs.version }}
         working-directory: 'core'
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     - name: Cache Built @ionic/core
       uses: ./.github/workflows/actions/upload-archive
       with:
