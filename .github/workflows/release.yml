@@ -82,6 +82,7 @@ jobs:
         tag: ${{ inputs.tag }}
         version: ${{ inputs.version }}
         working-directory: 'angular'
+        folder: './dist'
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     - name: Cache Built @ionic/angular
       uses: ./.github/workflows/actions/upload-archive
@@ -157,6 +158,7 @@ jobs:
         tag: ${{ inputs.tag }}
         version: ${{ inputs.version }}
         working-directory: 'packages/angular-server'
+        folder: './dist'
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   release-react-router:

@@ -9,6 +9,9 @@ inputs:
     description: 'The tag to publish to on NPM.'
   working-directory:
     description: 'The directory of the package.'
+  folder:
+    default: './'
+    description: 'A folder containing a package.json file.'
   NPM_TOKEN:
     description: 'The NPM authentication token required to publish.'
 runs:
@@ -29,6 +32,6 @@ runs:
       shell: bash
       working-directory: ${{ inputs.working-directory }}
     - name: Publish to NPM
-      run: npm publish --dry-run --tag ${{ inputs.tag }} --git-tag-version false
+      run: npm publish ${{ inputs.folder }} --dry-run --tag ${{ inputs.tag }}  --git-tag-version false
       shell: bash
       working-directory: ${{ inputs.working-directory }}
