@@ -372,25 +372,6 @@
 }
 
 // Input Highlight
-<<<<<<< HEAD
-// ----------------------------------------------------------------
-
-:host(.ion-touched.ion-invalid) {
-  --highlight-color: var(--highlight-color-invalid);
-}
-
-:host(.ion-touched.ion-valid) {
-  --highlight-color: var(--highlight-color-valid);
-}
-
-// Input Native
-// ----------------------------------------------------------------
-
-:host(.has-focus) input {
-  caret-color: var(--highlight-color);
-}
-
-// Input Label
 // ----------------------------------------------------------------
 
 :host(.ion-touched.ion-invalid) {
@@ -482,7 +463,6 @@
   flex-direction: row;
 }
 
-<<<<<<< HEAD
 :host(.input-label-placement-start) .label-text-wrapper {
   /**
    * The margin between the label and
@@ -492,8 +472,6 @@
   @include margin(0, 8px, 0, 0);
 }
 
-=======
->>>>>>> origin/FW-2591
 // Input Label Placement - End
 // ----------------------------------------------------------------
 
@@ -517,7 +495,6 @@
 // Input Label Placement - Fixed
 // ----------------------------------------------------------------
 
-<<<<<<< HEAD
 :host(.input-label-placement-fixed) .label-text-wrapper {
   /**
    * The margin between the label and
@@ -527,8 +504,6 @@
   @include margin(0, 8px, 0, 0);
 }
 
-=======
->>>>>>> origin/FW-2591
 /**
  * Label is on the left of the input in LTR and
  * on the right in RTL. Label also has a fixed width.
