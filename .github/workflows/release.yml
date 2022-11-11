@@ -44,7 +44,7 @@ jobs:
       with:
         name: ionic-docs
         output: docs/DocsBuild.zip
-        paths: docs/core.json
+        paths: docs/core.json docs/core.d.ts
 
   release-docs:
     needs: [release-core]
