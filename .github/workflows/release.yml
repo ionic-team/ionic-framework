@@ -77,7 +77,7 @@ jobs:
         path: ./core
         filename: CoreBuild.zip
     - name: Create dist directory
-      run: mkdir dist && touch dist/package.json
+      run: mkdir dist && echo "{}" > dist/package.json
       shell: bash
       working-directory: angular
     - uses: ./.github/workflows/actions/release
