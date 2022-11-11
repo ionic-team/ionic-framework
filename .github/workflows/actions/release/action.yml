@@ -12,7 +12,7 @@ inputs:
   folder:
     default: './'
     description: 'A folder containing a package.json file.'
-  NPM_TOKEN:
+  token:
     description: 'The NPM authentication token required to publish.'
 runs:
   using: 'composite'
@@ -36,7 +36,7 @@ runs:
       run: echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc
       shell: bash
       env:
-        NPM_TOKEN: ${{ inputs.NPM_TOKEN }}
+        NPM_TOKEN: ${{ inputs.token }}
     - name: Publish to NPM
       run: npm publish ${{ inputs.folder }} --dry-run --tag ${{ inputs.tag }}  --git-tag-version false
       shell: bash

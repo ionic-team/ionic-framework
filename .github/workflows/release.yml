@@ -32,7 +32,7 @@ jobs:
         tag: ${{ inputs.tag }}
         version: ${{ inputs.version }}
         working-directory: 'core'
-        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        token: ${{ secrets.NPM_TOKEN }}
     - name: Cache Built @ionic/core
       uses: ./.github/workflows/actions/upload-archive
       with:
@@ -63,7 +63,7 @@ jobs:
         tag: ${{ inputs.tag }}
         version: ${{ inputs.version }}
         working-directory: 'docs'
-        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        token: ${{ secrets.NPM_TOKEN }}
 
   release-angular:
     needs: [release-core]
@@ -83,7 +83,7 @@ jobs:
         version: ${{ inputs.version }}
         working-directory: 'angular'
         folder: './dist'
-        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        token: ${{ secrets.NPM_TOKEN }}
     - name: Cache Built @ionic/angular
       uses: ./.github/workflows/actions/upload-archive
       with:
@@ -108,7 +108,7 @@ jobs:
         tag: ${{ inputs.tag }}
         version: ${{ inputs.version }}
         working-directory: 'packages/react'
-        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        token: ${{ secrets.NPM_TOKEN }}
     - name: Cache Built @ionic/react
       uses: ./.github/workflows/actions/upload-archive
       with:
@@ -133,7 +133,7 @@ jobs:
         tag: ${{ inputs.tag }}
         version: ${{ inputs.version }}
         working-directory: 'packages/vue'
-        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        token: ${{ secrets.NPM_TOKEN }}
     - name: Cache Built @ionic/vue
       uses: ./.github/workflows/actions/upload-archive
       with:
@@ -159,7 +159,7 @@ jobs:
         version: ${{ inputs.version }}
         working-directory: 'packages/angular-server'
         folder: './dist'
-        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        token: ${{ secrets.NPM_TOKEN }}
 
   release-react-router:
     needs: [release-react]
@@ -178,7 +178,7 @@ jobs:
         tag: ${{ inputs.tag }}
         version: ${{ inputs.version }}
         working-directory: 'packages/react-router'
-        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        token: ${{ secrets.NPM_TOKEN }}
 
   release-vue-router:
     needs: [release-vue]
@@ -197,7 +197,7 @@ jobs:
         tag: ${{ inputs.tag }}
         version: ${{ inputs.version }}
         working-directory: 'packages/vue-router'
-        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        token: ${{ secrets.NPM_TOKEN }}
 
   finalize-release:
     needs: [release-react-router, release-angular-server, release-vue-router]
