@@ -19,6 +19,7 @@ on:
           - latest
           - v5-lts
           - v4-lts
+          - testing
 
 jobs:
   release-core:
