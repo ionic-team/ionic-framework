@@ -76,6 +76,10 @@ jobs:
         name: ionic-core
         path: ./core
         filename: CoreBuild.zip
+    - name: Create dist directory
+      run: mkdir dist && touch dist/package.json
+      shell: bash
+      working-directory: angular
     - uses: ./.github/workflows/actions/release
       with:
         scope: '@ionic/angular'
