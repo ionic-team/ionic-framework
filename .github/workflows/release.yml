@@ -76,10 +76,6 @@ jobs:
         name: ionic-core
         path: ./core
         filename: CoreBuild.zip
-    - name: Run Build
-      run: npm run build
-      shell: bash
-      working-directory: angular
     - uses: ./.github/workflows/actions/release
       with:
         scope: '@ionic/angular'
@@ -156,10 +152,6 @@ jobs:
         name: ionic-angular
         path: ./angular
         filename: AngularBuild.zip
-    - name: Run Build
-      run: npm run build
-      shell: bash
-      working-directory: packages/angular-server
     - uses: ./.github/workflows/actions/release
       with:
         scope: '@ionic/angular-server'
