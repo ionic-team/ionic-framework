@@ -10,7 +10,7 @@ test.describe('input: rendering', () => {
   test('should not render the label element if no label was passed', async ({ page }) => {
     await page.setContent(`<ion-input aria-label="my hidden label"></ion-label>`);
 
-    const label = page.locator('ion-input label');
+    const label = page.locator('ion-input .label-text-wrapper');
     await expect(label).toBeHidden();
   });
 });
