@@ -25,7 +25,6 @@ jobs:
   release-core:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
     - uses: ./.github/workflows/actions/release
       with:
         scope: '@ionic/core'
