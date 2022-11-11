@@ -29,6 +29,6 @@ runs:
       shell: bash
       working-directory: ${{ inputs.working-directory }}
     - name: Publish to NPM
-      run: npm publish --dry-run --tag ${{ inputs.tag }}
+      run: npm publish --dry-run --tag ${{ inputs.tag }} --git-tag-version false
       shell: bash
       working-directory: ${{ inputs.working-directory }}
