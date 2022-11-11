@@ -115,59 +115,59 @@ jobs:
         output: packages/vue/VueBuild.zip
         paths: packages/vue/dist packages/vue/css
 
-release-angular-server:
-  needs: [release-angular]
-  runs-on: ubuntu-latest
-  steps:
-  - uses: actions/checkout@v3
-  - name: Restore @ionic/angular built cache
-    uses: ./.github/workflows/actions/download-archive
-    with:
-      name: ionic-angular
-      path: ./angular
-      filename: AngularBuild.zip
-  - uses: ./.github/workflows/actions/release
-    with:
-      scope: '@ionic/angular-server'
-      tag: ${{ inputs.tag }}
-      version: ${{ inputs.version }}
-      working-directory: 'packages/angular-server'
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+  release-angular-server:
+    needs: [release-angular]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Restore @ionic/angular built cache
+      uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-angular
+        path: ./angular
+        filename: AngularBuild.zip
+    - uses: ./.github/workflows/actions/release
+      with:
+        scope: '@ionic/angular-server'
+        tag: ${{ inputs.tag }}
+        version: ${{ inputs.version }}
+        working-directory: 'packages/angular-server'
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-release-react-router:
-  needs: [release-react]
-  runs-on: ubuntu-latest
-  steps:
-  - uses: actions/checkout@v3
-  - name: Restore @ionic/react built cache
-    uses: ./.github/workflows/actions/download-archive
-    with:
-      name: ionic-react
-      path: ./packages/react
-      filename: ReactBuild.zip
-  - uses: ./.github/workflows/actions/release
-    with:
-      scope: '@ionic/react-router'
-      tag: ${{ inputs.tag }}
-      version: ${{ inputs.version }}
-      working-directory: 'packages/react-router'
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+  release-react-router:
+    needs: [release-react]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Restore @ionic/react built cache
+      uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-react
+        path: ./packages/react
+        filename: ReactBuild.zip
+    - uses: ./.github/workflows/actions/release
+      with:
+        scope: '@ionic/react-router'
+        tag: ${{ inputs.tag }}
+        version: ${{ inputs.version }}
+        working-directory: 'packages/react-router'
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-release-vue-router:
-  needs: [release-vue]
-  runs-on: ubuntu-latest
-  steps:
-  - uses: actions/checkout@v3
-  - name: Restore @ionic/vue built cache
-    uses: ./.github/workflows/actions/download-archive
-    with:
-      name: ionic-vue
-      path: ./packages/vue
-      filename: VueBuild.zip
-  - uses: ./.github/workflows/actions/release
-    with:
-      scope: '@ionic/vue-router'
-      tag: ${{ inputs.tag }}
-      version: ${{ inputs.version }}
-      working-directory: 'packages/vue-router'
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+  release-vue-router:
+    needs: [release-vue]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Restore @ionic/vue built cache
+      uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-vue
+        path: ./packages/vue
+        filename: VueBuild.zip
+    - uses: ./.github/workflows/actions/release
+      with:
+        scope: '@ionic/vue-router'
+        tag: ${{ inputs.tag }}
+        version: ${{ inputs.version }}
+        working-directory: 'packages/vue-router'
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
