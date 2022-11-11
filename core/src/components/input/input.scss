@@ -392,8 +392,6 @@
 
 // Input Label
 // ----------------------------------------------------------------
-=======
-// ----------------------------------------------------------------
 
 :host(.ion-touched.ion-invalid) {
   --highlight-color: var(--highlight-color-invalid);
@@ -412,15 +410,6 @@
 
 // Input Label
 // ----------------------------------------------------------------
-
-.label-text-wrapper {
-  /**
-   * The margin between the label and
-   * the input should be on the end
-   * when the label sits at the start.
-   */
-  @include margin(0, 8px, 0, 0);
->>>>>>> origin/FW-2591
 
 .label-text-wrapper {
   /**
