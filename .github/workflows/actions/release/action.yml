@@ -9,11 +9,13 @@ inputs:
     description: 'The tag to publish to on NPM.'
   working-directory:
     description: 'The directory of the package.'
+  NPM_TOKEN:
+    description: 'The NPM authentication token required to publish.'
 runs:
   using: 'composite'
   steps:
     - name: Prepare NPM Token
-      run: echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc
+      run: echo //registry.npmjs.org/:_authToken=${{ inputs.NPM_TOKEN }} > .npmrc
       shell: bash
     - uses: actions/setup-node@v3
       with:
