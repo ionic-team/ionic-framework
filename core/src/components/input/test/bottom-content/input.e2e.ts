@@ -4,13 +4,34 @@ import { test } from '@utils/test/playwright';
 test.describe('input: bottom content', () => {
   test.beforeEach(({ skip }) => {
     skip.rtl();
-    skip.mode('ios', 'Rendering is the same across modes');
   });
-  test('should not render bottom content if no hint or counter is enabled', async ({ page }) => {
+  test('should not render bottom content if no hint or counter is enabled', async ({ page, skip }) => {
+    skip.mode('ios', 'Rendering is the same across modes');
     await page.setContent(`<ion-input label="my input"></ion-input>`);
 
     const bottomEl = page.locator('ion-input .item-bottom');
     await expect(bottomEl).toHaveCount(0);
+  });
+  test('entire input component should render correctly with no fill', async ({ page }) => {
+    await page.setContent(`
+      <ion-input value="hi@ionic.io" label="Email" helper-text="Enter an email" maxlength="20" counter="true"></ion-input>
+    `);
+    const input = page.locator('ion-input');
+    expect(await input.screenshot()).toMatchSnapshot(`input-full-bottom-no-fill-${page.getSnapshotSettings()}.png`);
+  });
+  test('entire input component should render correctly with solid fill', async ({ page }) => {
+    await page.setContent(`
+      <ion-input fill="solid" value="hi@ionic.io" label="Email" helper-text="Enter an email" maxlength="20" counter="true"></ion-input>
+    `);
+    const input = page.locator('ion-input');
+    expect(await input.screenshot()).toMatchSnapshot(`input-full-bottom-solid-${page.getSnapshotSettings()}.png`);
+  });
+  test('entire input component should render correctly with outline fill', async ({ page }) => {
+    await page.setContent(`
+      <ion-input fill="outline" value="hi@ionic.io" label="Email" helper-text="Enter an email" maxlength="20" counter="true"></ion-input>
+    `);
+    const input = page.locator('ion-input');
+    expect(await input.screenshot()).toMatchSnapshot(`input-full-bottom-outline-${page.getSnapshotSettings()}.png`);
   });
 });
 

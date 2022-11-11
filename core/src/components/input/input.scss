@@ -67,6 +67,7 @@
   z-index: $z-index-item-input;
 }
 
+// TODO FW-2764 Remove this
 :host(.legacy-input) {
   display: flex;
 
@@ -76,15 +77,17 @@
   background: var(--background);
 }
 
+// TODO FW-2764 Remove this
 :host(.legacy-input) .native-input {
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
   @include border-radius(var(--border-radius));
 }
 
-:host-context(ion-item:not(.item-label)) {
+:host-context(ion-item:not(.item-label):not(.item-has-modern-input)) {
   --padding-start: 0;
 }
 
+// TODO FW-2764 Remove this
 :host(.legacy-input.ion-color) {
   color: current-color(base);
 }
@@ -180,8 +183,13 @@
 // Clear Input Icon
 // --------------------------------------------------
 
-.input-clear-icon {
+// TODO FW-2764 Remove this
+:host(.legacy-input) .input-clear-icon {
   @include margin(0);
+}
+
+.input-clear-icon {
+  @include margin(auto);
   @include padding(0);
   @include background-position(center);
 
@@ -261,6 +269,17 @@
   transition: background-color 15ms linear;
 
   background: var(--background);
+}
+
+// Input Native Wrapper
+// ----------------------------------------------------------------
+
+.native-wrapper {
+  display: flex;
+
+  flex-grow: 1;
+
+  width: 100%;
 }
 
 // Input Highlight

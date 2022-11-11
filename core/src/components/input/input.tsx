@@ -15,7 +15,7 @@ import type {
 } from '../../interface';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes, debounceEvent, findItemLabel, inheritAttributes } from '../../utils/helpers';
-import { createColorClasses } from '../../utils/theme';
+import { createColorClasses, hostContext } from '../../utils/theme';
 
 import { getCounterText } from './input.utils';
 
@@ -616,60 +616,63 @@ export class Input implements ComponentInterface {
           [`input-fill-${fill}`]: fill !== undefined,
           [`input-shape-${shape}`]: shape !== undefined,
           [`input-label-placement-${labelPlacement}`]: true,
+          'in-full-item': hostContext('ion-item:not(.item-lines-inset)', this.el),
         })}
       >
         <div class="input-wrapper">
           {this.renderLabelContainer()}
-          <input
-            class="native-input"
-            ref={(input) => (this.nativeInput = input)}
-            id={inputId}
-            disabled={disabled}
-            accept={this.accept}
-            autoCapitalize={this.autocapitalize}
-            autoComplete={this.autocomplete}
-            autoCorrect={this.autocorrect}
-            autoFocus={this.autofocus}
-            enterKeyHint={this.enterkeyhint}
-            inputMode={this.inputmode}
-            min={this.min}
-            max={this.max}
-            minLength={this.minlength}
-            maxLength={this.maxlength}
-            multiple={this.multiple}
-            name={this.name}
-            pattern={this.pattern}
-            placeholder={this.placeholder || ''}
-            readOnly={readonly}
-            required={this.required}
-            spellcheck={this.spellcheck}
-            step={this.step}
-            size={this.size}
-            type={this.type}
-            value={value}
-            onInput={this.onInput}
-            onChange={this.onChange}
-            onBlur={this.onBlur}
-            onFocus={this.onFocus}
-            onKeyDown={this.onKeydown}
-            {...this.inheritedAttributes}
-          />
-          {this.clearInput && !readonly && !disabled && (
-            <button
-              aria-label="reset"
-              type="button"
-              class="input-clear-icon"
-              onPointerDown={(ev) => {
-                /**
-                 * This prevents mobile browsers from
-                 * blurring the input when the clear
-                 * button is activated.
-                 */
-                ev.preventDefault();
-              }}
-              onClick={this.onClearButtonClick}
+          <div class="native-wrapper">
+            <input
+              class="native-input"
+              ref={(input) => (this.nativeInput = input)}
+              id={inputId}
+              disabled={disabled}
+              accept={this.accept}
+              autoCapitalize={this.autocapitalize}
+              autoComplete={this.autocomplete}
+              autoCorrect={this.autocorrect}
+              autoFocus={this.autofocus}
+              enterKeyHint={this.enterkeyhint}
+              inputMode={this.inputmode}
+              min={this.min}
+              max={this.max}
+              minLength={this.minlength}
+              maxLength={this.maxlength}
+              multiple={this.multiple}
+              name={this.name}
+              pattern={this.pattern}
+              placeholder={this.placeholder || ''}
+              readOnly={readonly}
+              required={this.required}
+              spellcheck={this.spellcheck}
+              step={this.step}
+              size={this.size}
+              type={this.type}
+              value={value}
+              onInput={this.onInput}
+              onChange={this.onChange}
+              onBlur={this.onBlur}
+              onFocus={this.onFocus}
+              onKeyDown={this.onKeydown}
+              {...this.inheritedAttributes}
             />
-          )}
+            {this.clearInput && !readonly && !disabled && (
+              <button
+                aria-label="reset"
+                type="button"
+                class="input-clear-icon"
+                onPointerDown={(ev) => {
+                  /**
+                   * This prevents mobile browsers from
+                   * blurring the input when the clear
+                   * button is activated.
+                   */
+                  ev.preventDefault();
+                }}
+                onClick={this.onClearButtonClick}
+              />
+            )}
+          </div>
           {shouldRenderHighlight && <div class="input-highlight"></div>}
         </div>
         {this.renderBottomContent()}
@@ -677,6 +680,7 @@ export class Input implements ComponentInterface {
     );
   }
 
+  // TODO FW-2764 Remove this
   private renderLegacyInput() {
     if (!this.hasLoggedDeprecationWarning) {
       printIonWarning(
