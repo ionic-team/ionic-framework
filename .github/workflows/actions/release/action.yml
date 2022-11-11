@@ -14,12 +14,15 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - name: Prepare NPM Token
-      run: echo //registry.npmjs.org/:_authToken=${{ inputs.NPM_TOKEN }} > .npmrc
-      shell: bash
     - uses: actions/setup-node@v3
       with:
         node-version: 16.x
+    - name: Prepare NPM Token
+      run: echo //registry.npmjs.org/:_authToken=${{ inputs.NPM_TOKEN }} > .npmrc
+      shell: bash
+    - name: Test Auth
+      run: npm whoami
+      shell: bash
     - name: Install Dependencies
       run: lerna bootstrap --scope ${{ inputs.scope }} --ignore-scripts -- --legacy-peer-deps
       shell: bash
