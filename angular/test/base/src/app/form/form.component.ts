@@ -26,10 +26,12 @@ export class FormComponent {
 
   setTouched() {
     const formControl = this.profileForm.get('input');
-    formControl.markAsTouched();
+    if (formControl) {
+      formControl.markAsTouched();
+    }
   }
 
-  onSubmit(_ev) {
+  onSubmit() {
     this.submitted = 'true';
   }
 

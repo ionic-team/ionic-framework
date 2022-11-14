@@ -19,7 +19,7 @@ import type {
 } from '../../interface';
 import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
-import { shallowEqualStringMap } from '../../utils/helpers';
+import { shallowEqualStringMap, hasLazyBuild } from '../../utils/helpers';
 import { transition } from '../../utils/transition';
 
 @Component({
@@ -238,6 +238,13 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
       enteringEl,
       leavingEl,
       baseEl: el,
+
+      /**
+       * We need to wait for all Stencil components
+       * to be ready only when using the lazy
+       * loaded bundle.
+       */
+      deepWait: hasLazyBuild(el),
       progressCallback: opts.progressAnimation
         ? (ani) => {
             /**

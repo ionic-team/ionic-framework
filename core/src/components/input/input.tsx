@@ -35,11 +35,11 @@ export class Input implements ComponentInterface {
   private inputId = `ion-input-${inputIds++}`;
   private inheritedAttributes: Attributes = {};
   private isComposing = false;
-
   private legacyFormController!: LegacyFormController;
 
   // This flag ensures we log the deprecation warning at most once.
   private hasLoggedDeprecationWarning = false;
+  private originalIonInput?: EventEmitter<InputInputEventDetail>;
 
   /**
    * `true` if the input was cleared as a result of the user typing
@@ -115,11 +115,17 @@ export class Input implements ComponentInterface {
   /**
    * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
    */
-  @Prop() debounce = 0;
+  @Prop() debounce?: number;
 
   @Watch('debounce')
   protected debounceChanged() {
-    this.ionInput = debounceEvent(this.ionInput, this.debounce);
+    const { ionInput, debounce, originalIonInput } = this;
+
+    /**
+     * If debounce is undefined, we have to manually revert the ionInput emitter in case
+     * debounce used to be set to a number. Otherwise, the event would stay debounced.
+     */
+    this.ionInput = debounce === undefined ? originalIonInput ?? ionInput : debounceEvent(ionInput, debounce);
   }
 
   /**
@@ -355,6 +361,7 @@ export class Input implements ComponentInterface {
   }
 
   componentDidLoad() {
+    this.originalIonInput = this.ionInput;
     const nativeInput = this.nativeInput;
     if (nativeInput) {
       // TODO: FW-729 Update to JSX bindings when Stencil resolves bug with:
@@ -404,13 +411,21 @@ export class Input implements ComponentInterface {
    * This API should be called for user committed changes.
    * This API should not be used for external value changes.
    */
-  private emitValueChange() {
+  private emitValueChange(event?: Event) {
     const { value } = this;
     // Checks for both null and undefined values
     const newValue = value == null ? value : value.toString();
     // Emitting a value change should update the internal state for tracking the focused value
     this.focusedValue = newValue;
-    this.ionChange.emit({ value: newValue });
+    this.ionChange.emit({ value: newValue, event });
+  }
+
+  /**
+   * Emits an `ionInput` event.
+   */
+  private emitInputChange(event?: Event) {
+    const { value } = this;
+    this.ionInput.emit({ value, event });
   }
 
   private shouldClearOnEdit() {
@@ -440,11 +455,11 @@ export class Input implements ComponentInterface {
     if (input) {
       this.value = input.value || '';
     }
-    this.ionInput.emit(ev as InputEvent);
+    this.emitInputChange(ev);
   };
 
-  private onChange = () => {
-    this.emitValueChange();
+  private onChange = (ev: Event) => {
+    this.emitValueChange(ev);
   };
 
   private onBlur = (ev: FocusEvent) => {
@@ -456,7 +471,7 @@ export class Input implements ComponentInterface {
        * Emits the `ionChange` event when the input value
        * is different than the value when the input was focused.
        */
-      this.emitValueChange();
+      this.emitValueChange(ev);
     }
 
     this.didInputClearOnEdit = false;
@@ -486,7 +501,7 @@ export class Input implements ComponentInterface {
      */
     if (!this.didInputClearOnEdit && this.hasValue() && ev.key !== 'Enter') {
       this.value = '';
-      this.ionInput.emit();
+      this.emitInputChange(ev);
     }
     this.didInputClearOnEdit = true;
   }
@@ -507,7 +522,7 @@ export class Input implements ComponentInterface {
       this.setFocus();
     }
     this.value = '';
-    this.ionInput.emit(ev);
+    this.emitInputChange(ev);
   };
 
   private hasValue(): boolean {

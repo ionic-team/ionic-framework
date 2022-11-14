@@ -2,7 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { Color, StyleEventDetail, TextareaChangeEventDetail } from '../../interface';
+import type { Color, StyleEventDetail, TextareaChangeEventDetail, TextareaInputEventDetail } from '../../interface';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes, debounceEvent, findItemLabel, inheritAttributes } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
@@ -30,6 +30,8 @@ export class Textarea implements ComponentInterface {
   private didTextareaClearOnEdit = false;
   private textareaWrapper?: HTMLElement;
   private inheritedAttributes: Attributes = {};
+  private originalIonInput?: EventEmitter<TextareaInputEventDetail>;
+
   /**
    * The value of the textarea when the textarea is focused.
    */
@@ -65,11 +67,17 @@ export class Textarea implements ComponentInterface {
   /**
    * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
    */
-  @Prop() debounce = 0;
+  @Prop() debounce?: number;
 
   @Watch('debounce')
   protected debounceChanged() {
-    this.ionInput = debounceEvent(this.ionInput, this.debounce);
+    const { ionInput, debounce, originalIonInput } = this;
+
+    /**
+     * If debounce is undefined, we have to manually revert the ionInput emitter in case
+     * debounce used to be set to a number. Otherwise, the event would stay debounced.
+     */
+    this.ionInput = debounce === undefined ? originalIonInput ?? ionInput : debounceEvent(ionInput, debounce);
   }
 
   /**
@@ -188,7 +196,7 @@ export class Textarea implements ComponentInterface {
    * When `clearOnEdit` is enabled, the `ionInput` event will be fired when
    * the user clears the textarea by performing a keydown event.
    */
-  @Event() ionInput!: EventEmitter<InputEvent>;
+  @Event() ionInput!: EventEmitter<TextareaInputEventDetail>;
 
   /**
    * Emitted when the styles change.
@@ -236,6 +244,7 @@ export class Textarea implements ComponentInterface {
   }
 
   componentDidLoad() {
+    this.originalIonInput = this.ionInput;
     this.runAutoGrow();
   }
 
@@ -276,13 +285,21 @@ export class Textarea implements ComponentInterface {
    * This API should be called for user committed changes.
    * This API should not be used for external value changes.
    */
-  private emitValueChange() {
+  private emitValueChange(event?: Event) {
     const { value } = this;
     // Checks for both null and undefined values
     const newValue = value == null ? value : value.toString();
     // Emitting a value change should update the internal state for tracking the focused value
     this.focusedValue = newValue;
-    this.ionChange.emit({ value: newValue });
+    this.ionChange.emit({ value: newValue, event });
+  }
+
+  /**
+   * Emits an `ionInput` event.
+   */
+  private emitInputChange(event?: Event) {
+    const { value } = this;
+    this.ionInput.emit({ value, event });
   }
 
   private runAutoGrow() {
@@ -300,7 +317,7 @@ export class Textarea implements ComponentInterface {
   /**
    * Check if we need to clear the text input if clearOnEdit is enabled
    */
-  private checkClearOnEdit() {
+  private checkClearOnEdit(ev: Event) {
     if (!this.clearOnEdit) {
       return;
     }
@@ -310,7 +327,7 @@ export class Textarea implements ComponentInterface {
      */
     if (!this.didTextareaClearOnEdit && this.hasValue()) {
       this.value = '';
-      this.ionInput.emit();
+      this.emitInputChange(ev);
     }
     this.didTextareaClearOnEdit = true;
   }
@@ -337,11 +354,11 @@ export class Textarea implements ComponentInterface {
     if (input) {
       this.value = input.value || '';
     }
-    this.ionInput.emit(ev as InputEvent);
+    this.emitInputChange(ev);
   };
 
-  private onChange = () => {
-    this.emitValueChange();
+  private onChange = (ev: Event) => {
+    this.emitValueChange(ev);
   };
 
   private onFocus = (ev: FocusEvent) => {
@@ -361,14 +378,14 @@ export class Textarea implements ComponentInterface {
        * Emits the `ionChange` event when the textarea value
        * is different than the value when the textarea was focused.
        */
-      this.emitValueChange();
+      this.emitValueChange(ev);
     }
     this.didTextareaClearOnEdit = false;
     this.ionBlur.emit(ev);
   };
 
-  private onKeyDown = () => {
-    this.checkClearOnEdit();
+  private onKeyDown = (ev: Event) => {
+    this.checkClearOnEdit(ev);
   };
 
   render() {

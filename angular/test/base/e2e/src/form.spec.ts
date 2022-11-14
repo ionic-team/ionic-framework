@@ -40,9 +40,6 @@ describe('Form', () => {
 
       testStatus('INVALID');
 
-      // TODO: FW-1160 - Remove when v7 is released
-      cy.wait(300);
-
       cy.get('ion-select').click();
       cy.get('ion-alert').should('exist').should('be.visible');
       // NES option

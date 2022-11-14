@@ -28,19 +28,25 @@ ion-action-sheet,prop,cssClass,string | string[] | undefined,undefined,false,fal
 ion-action-sheet,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-action-sheet,prop,header,string | undefined,undefined,false,false
 ion-action-sheet,prop,htmlAttributes,undefined | { [key: string]: any; },undefined,false,false
+ion-action-sheet,prop,isOpen,boolean,false,false,false
 ion-action-sheet,prop,keyboardClose,boolean,true,false,false
 ion-action-sheet,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-action-sheet,prop,mode,"ios" | "md",undefined,false,false
 ion-action-sheet,prop,subHeader,string | undefined,undefined,false,false
 ion-action-sheet,prop,translucent,boolean,false,false,false
+ion-action-sheet,prop,trigger,string | undefined,undefined,false,false
 ion-action-sheet,method,dismiss,dismiss(data?: any, role?: string) => Promise<boolean>
 ion-action-sheet,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-action-sheet,method,onWillDismiss,onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-action-sheet,method,present,present() => Promise<void>
+ion-action-sheet,event,didDismiss,OverlayEventDetail<any>,true
+ion-action-sheet,event,didPresent,void,true
 ion-action-sheet,event,ionActionSheetDidDismiss,OverlayEventDetail<any>,true
 ion-action-sheet,event,ionActionSheetDidPresent,void,true
 ion-action-sheet,event,ionActionSheetWillDismiss,OverlayEventDetail<any>,true
 ion-action-sheet,event,ionActionSheetWillPresent,void,true
+ion-action-sheet,event,willDismiss,OverlayEventDetail<any>,true
+ion-action-sheet,event,willPresent,void,true
 ion-action-sheet,css-prop,--backdrop-opacity
 ion-action-sheet,css-prop,--background
 ion-action-sheet,css-prop,--button-background
@@ -529,7 +535,7 @@ ion-input,prop,clearOnEdit,boolean | undefined,undefined,false,false
 ion-input,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-input,prop,counter,boolean,false,false,false
 ion-input,prop,counterFormatter,((inputLength: number, maxLength: number) => string) | undefined,undefined,false,false
-ion-input,prop,debounce,number,0,false,false
+ion-input,prop,debounce,number | undefined,undefined,false,false
 ion-input,prop,disabled,boolean,false,false,false
 ion-input,prop,enterkeyhint,"done" | "enter" | "go" | "next" | "previous" | "search" | "send" | undefined,undefined,false,false
 ion-input,prop,errorText,string | undefined,undefined,false,false
@@ -560,7 +566,7 @@ ion-input,method,setFocus,setFocus() => Promise<void>
 ion-input,event,ionBlur,FocusEvent,true
 ion-input,event,ionChange,InputChangeEventDetail,true
 ion-input,event,ionFocus,FocusEvent,true
-ion-input,event,ionInput,Event | InputEvent,true
+ion-input,event,ionInput,InputInputEventDetail,true
 ion-input,css-prop,--background
 ion-input,css-prop,--border-color
 ion-input,css-prop,--border-radius
@@ -1310,7 +1316,7 @@ ion-textarea,prop,autofocus,boolean,false,false,false
 ion-textarea,prop,clearOnEdit,boolean,false,false,false
 ion-textarea,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-textarea,prop,cols,number | undefined,undefined,false,false
-ion-textarea,prop,debounce,number,0,false,false
+ion-textarea,prop,debounce,number | undefined,undefined,false,false
 ion-textarea,prop,disabled,boolean,false,false,false
 ion-textarea,prop,enterkeyhint,"done" | "enter" | "go" | "next" | "previous" | "search" | "send" | undefined,undefined,false,false
 ion-textarea,prop,inputmode,"decimal" | "email" | "none" | "numeric" | "search" | "tel" | "text" | "url" | undefined,undefined,false,false
@@ -1330,7 +1336,7 @@ ion-textarea,method,setFocus,setFocus() => Promise<void>
 ion-textarea,event,ionBlur,FocusEvent,true
 ion-textarea,event,ionChange,TextareaChangeEventDetail,true
 ion-textarea,event,ionFocus,FocusEvent,true
-ion-textarea,event,ionInput,InputEvent,true
+ion-textarea,event,ionInput,TextareaInputEventDetail,true
 ion-textarea,css-prop,--background
 ion-textarea,css-prop,--border-radius
 ion-textarea,css-prop,--color
@@ -1362,20 +1368,26 @@ ion-toast,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefin
 ion-toast,prop,header,string | undefined,undefined,false,false
 ion-toast,prop,htmlAttributes,undefined | { [key: string]: any; },undefined,false,false
 ion-toast,prop,icon,string | undefined,undefined,false,false
+ion-toast,prop,isOpen,boolean,false,false,false
 ion-toast,prop,keyboardClose,boolean,false,false,false
 ion-toast,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-toast,prop,message,IonicSafeString | string | undefined,undefined,false,false
 ion-toast,prop,mode,"ios" | "md",undefined,false,false
 ion-toast,prop,position,"bottom" | "middle" | "top",'bottom',false,false
 ion-toast,prop,translucent,boolean,false,false,false
+ion-toast,prop,trigger,string | undefined,undefined,false,false
 ion-toast,method,dismiss,dismiss(data?: any, role?: string) => Promise<boolean>
 ion-toast,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-toast,method,onWillDismiss,onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-toast,method,present,present() => Promise<void>
+ion-toast,event,didDismiss,OverlayEventDetail<any>,true
+ion-toast,event,didPresent,void,true
 ion-toast,event,ionToastDidDismiss,OverlayEventDetail<any>,true
 ion-toast,event,ionToastDidPresent,void,true
 ion-toast,event,ionToastWillDismiss,OverlayEventDetail<any>,true
 ion-toast,event,ionToastWillPresent,void,true
+ion-toast,event,willDismiss,OverlayEventDetail<any>,true
+ion-toast,event,willPresent,void,true
 ion-toast,css-prop,--background
 ion-toast,css-prop,--border-color
 ion-toast,css-prop,--border-radius

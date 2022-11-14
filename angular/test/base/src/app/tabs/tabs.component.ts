@@ -9,13 +9,13 @@ import { IonTabBar } from '@ionic/angular';
 export class TabsComponent {
   tabsDidChangeCounter = 0;
   tabsDidChangeEvent = '';
-  tabsDidChangeSelectedTab = '';
+  tabsDidChangeSelectedTab? = '';
 
   tabsWillChangeCounter = 0;
   tabsWillChangeEvent = '';
-  tabsWillChangeSelectedTab = '';
+  tabsWillChangeSelectedTab? = '';
 
-  @ViewChild(IonTabBar) tabBar: IonTabBar;
+  @ViewChild(IonTabBar) tabBar!: IonTabBar;
 
   tabChanged(ev: { tab: string }) {
     console.log('ionTabsDidChange', this.tabBar.selectedTab);

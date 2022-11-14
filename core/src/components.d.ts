@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AccordionGroupChangeEventDetail, ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DatetimePresentation, FrameworkDelegate, InputChangeEventDetail, InputInputEventDetail, ItemReorderEventDetail, MenuChangeEventDetail, ModalBreakpointChangeEventDetail, ModalHandleBehavior, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerButton, PickerColumn, PopoverSize, PositionAlign, PositionReference, PositionSide, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextFieldTypes, TitleSelectedDatesFormatter, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, TriggerAction, ViewController } from "./interface";
+import { AccordionGroupChangeEventDetail, ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DatetimePresentation, FrameworkDelegate, InputChangeEventDetail, InputInputEventDetail, ItemReorderEventDetail, MenuChangeEventDetail, ModalBreakpointChangeEventDetail, ModalHandleBehavior, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerButton, PickerColumn, PopoverSize, PositionAlign, PositionReference, PositionSide, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextareaInputEventDetail, TextFieldTypes, TitleSelectedDatesFormatter, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, TriggerAction, ViewController } from "./interface";
 import { IonicSafeString } from "./utils/sanitization";
 import { CounterFormatter } from "./components/item/item-interface";
 import { PickerColumnItem } from "./components/picker-column-internal/picker-column-internal-interfaces";
@@ -92,6 +92,7 @@ export namespace Components {
           * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
          */
         "cssClass"?: string | string[];
+        "delegate"?: FrameworkDelegate;
         /**
           * Dismiss the action sheet overlay after it has been presented.
           * @param data Any data to emit in the dismiss events.
@@ -102,6 +103,7 @@ export namespace Components {
           * Animation to use when the action sheet is presented.
          */
         "enterAnimation"?: AnimationBuilder;
+        "hasController": boolean;
         /**
           * Title for the action sheet.
          */
@@ -110,6 +112,10 @@ export namespace Components {
           * Additional attributes to pass to the action sheet.
          */
         "htmlAttributes"?: { [key: string]: any };
+        /**
+          * If `true`, the action sheet will open. If `false`, the action sheet will close. Use this if you need finer grained control over presentation, otherwise just use the actionSheetController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the action sheet dismisses. You will need to do that in your code.
+         */
+        "isOpen": boolean;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -143,6 +149,10 @@ export namespace Components {
           * If `true`, the action sheet will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent": boolean;
+        /**
+          * An ID corresponding to the trigger element that causes the action sheet to open when clicked.
+         */
+        "trigger": string | undefined;
     }
     interface IonAlert {
         /**
@@ -1084,7 +1094,7 @@ export namespace Components {
         /**
           * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
          */
-        "debounce": number;
+        "debounce"?: number;
         /**
           * If `true`, the user cannot interact with the input.
          */
@@ -2778,7 +2788,7 @@ export namespace Components {
         /**
           * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
          */
-        "debounce": number;
+        "debounce"?: number;
         /**
           * If `true`, the user cannot interact with the textarea.
          */
@@ -2873,6 +2883,7 @@ export namespace Components {
           * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
          */
         "cssClass"?: string | string[];
+        "delegate"?: FrameworkDelegate;
         /**
           * Dismiss the toast overlay after it has been presented.
           * @param data Any data to emit in the dismiss events.
@@ -2887,6 +2898,7 @@ export namespace Components {
           * Animation to use when the toast is presented.
          */
         "enterAnimation"?: AnimationBuilder;
+        "hasController": boolean;
         /**
           * Header to be shown in the toast.
          */
@@ -2899,6 +2911,10 @@ export namespace Components {
           * The name of the icon to display, or the path to a valid SVG file. See `ion-icon`. https://ionic.io/ionicons
          */
         "icon"?: string;
+        /**
+          * If `true`, the toast will open. If `false`, the toast will close. Use this if you need finer grained control over presentation, otherwise just use the toastController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the toast dismisses. You will need to do that in your code.
+         */
+        "isOpen": boolean;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -2936,6 +2952,10 @@ export namespace Components {
           * If `true`, the toast will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent": boolean;
+        /**
+          * An ID corresponding to the trigger element that causes the toast to open when clicked.
+         */
+        "trigger": string | undefined;
     }
     interface IonToggle {
         /**
@@ -3885,10 +3905,12 @@ declare namespace LocalJSX {
           * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
          */
         "cssClass"?: string | string[];
+        "delegate"?: FrameworkDelegate;
         /**
           * Animation to use when the action sheet is presented.
          */
         "enterAnimation"?: AnimationBuilder;
+        "hasController"?: boolean;
         /**
           * Title for the action sheet.
          */
@@ -3897,6 +3919,10 @@ declare namespace LocalJSX {
           * Additional attributes to pass to the action sheet.
          */
         "htmlAttributes"?: { [key: string]: any };
+        /**
+          * If `true`, the action sheet will open. If `false`, the action sheet will close. Use this if you need finer grained control over presentation, otherwise just use the actionSheetController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the action sheet dismisses. You will need to do that in your code.
+         */
+        "isOpen"?: boolean;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -3910,21 +3936,37 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * Emitted after the alert has dismissed.
+          * Emitted after the action sheet has dismissed. Shorthand for ionActionSheetDidDismiss.
+         */
+        "onDidDismiss"?: (event: IonActionSheetCustomEvent<OverlayEventDetail>) => void;
+        /**
+          * Emitted after the action sheet has presented. Shorthand for ionActionSheetWillDismiss.
+         */
+        "onDidPresent"?: (event: IonActionSheetCustomEvent<void>) => void;
+        /**
+          * Emitted after the action sheet has dismissed.
          */
         "onIonActionSheetDidDismiss"?: (event: IonActionSheetCustomEvent<OverlayEventDetail>) => void;
         /**
-          * Emitted after the alert has presented.
+          * Emitted after the action sheet has presented.
          */
         "onIonActionSheetDidPresent"?: (event: IonActionSheetCustomEvent<void>) => void;
         /**
-          * Emitted before the alert has dismissed.
+          * Emitted before the action sheet has dismissed.
          */
         "onIonActionSheetWillDismiss"?: (event: IonActionSheetCustomEvent<OverlayEventDetail>) => void;
         /**
-          * Emitted before the alert has presented.
+          * Emitted before the action sheet has presented.
          */
         "onIonActionSheetWillPresent"?: (event: IonActionSheetCustomEvent<void>) => void;
+        /**
+          * Emitted before the action sheet has dismissed. Shorthand for ionActionSheetWillDismiss.
+         */
+        "onWillDismiss"?: (event: IonActionSheetCustomEvent<OverlayEventDetail>) => void;
+        /**
+          * Emitted before the action sheet has presented. Shorthand for ionActionSheetWillPresent.
+         */
+        "onWillPresent"?: (event: IonActionSheetCustomEvent<void>) => void;
         "overlayIndex": number;
         /**
           * Subtitle for the action sheet.
@@ -3934,6 +3976,10 @@ declare namespace LocalJSX {
           * If `true`, the action sheet will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent"?: boolean;
+        /**
+          * An ID corresponding to the trigger element that causes the action sheet to open when clicked.
+         */
+        "trigger"?: string | undefined;
     }
     interface IonAlert {
         /**
@@ -5931,6 +5977,10 @@ declare namespace LocalJSX {
          */
         "onIonChange"?: (event: IonRadioGroupCustomEvent<RadioGroupChangeEventDetail>) => void;
         /**
+          * Emitted when the `value` property has changed. This is used to ensure that `ion-radio` can respond to any value property changes from the group.
+         */
+        "onIonValueChange"?: (event: IonRadioGroupCustomEvent<RadioGroupChangeEventDetail>) => void;
+        /**
           * the value of the radio group.
          */
         "value"?: any | null;
@@ -6692,7 +6742,7 @@ declare namespace LocalJSX {
         /**
           * The `ionInput` event fires when the `value` of an `<ion-textarea>` element has been changed.  When `clearOnEdit` is enabled, the `ionInput` event will be fired when the user clears the textarea by performing a keydown event.
          */
-        "onIonInput"?: (event: IonTextareaCustomEvent<InputEvent>) => void;
+        "onIonInput"?: (event: IonTextareaCustomEvent<TextareaInputEventDetail>) => void;
         /**
           * Emitted when the styles change.
          */
@@ -6759,6 +6809,7 @@ declare namespace LocalJSX {
           * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
          */
         "cssClass"?: string | string[];
+        "delegate"?: FrameworkDelegate;
         /**
           * How many milliseconds to wait before hiding the toast. By default, it will show until `dismiss()` is called.
          */
@@ -6767,6 +6818,7 @@ declare namespace LocalJSX {
           * Animation to use when the toast is presented.
          */
         "enterAnimation"?: AnimationBuilder;
+        "hasController"?: boolean;
         /**
           * Header to be shown in the toast.
          */
@@ -6779,6 +6831,10 @@ declare namespace LocalJSX {
           * The name of the icon to display, or the path to a valid SVG file. See `ion-icon`. https://ionic.io/ionicons
          */
         "icon"?: string;
+        /**
+          * If `true`, the toast will open. If `false`, the toast will close. Use this if you need finer grained control over presentation, otherwise just use the toastController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the toast dismisses. You will need to do that in your code.
+         */
+        "isOpen"?: boolean;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -6796,6 +6852,14 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
+          * Emitted after the toast has dismissed. Shorthand for ionToastDidDismiss.
+         */
+        "onDidDismiss"?: (event: IonToastCustomEvent<OverlayEventDetail>) => void;
+        /**
+          * Emitted after the toast has presented. Shorthand for ionToastWillDismiss.
+         */
+        "onDidPresent"?: (event: IonToastCustomEvent<void>) => void;
+        /**
           * Emitted after the toast has dismissed.
          */
         "onIonToastDidDismiss"?: (event: IonToastCustomEvent<OverlayEventDetail>) => void;
@@ -6811,6 +6875,14 @@ declare namespace LocalJSX {
           * Emitted before the toast has presented.
          */
         "onIonToastWillPresent"?: (event: IonToastCustomEvent<void>) => void;
+        /**
+          * Emitted before the toast has dismissed. Shorthand for ionToastWillDismiss.
+         */
+        "onWillDismiss"?: (event: IonToastCustomEvent<OverlayEventDetail>) => void;
+        /**
+          * Emitted before the toast has presented. Shorthand for ionToastWillPresent.
+         */
+        "onWillPresent"?: (event: IonToastCustomEvent<void>) => void;
         "overlayIndex": number;
         /**
           * The position of the toast on the screen.
@@ -6820,6 +6892,10 @@ declare namespace LocalJSX {
           * If `true`, the toast will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent"?: boolean;
+        /**
+          * An ID corresponding to the trigger element that causes the toast to open when clicked.
+         */
+        "trigger"?: string | undefined;
     }
     interface IonToggle {
         /**

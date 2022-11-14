@@ -98,14 +98,14 @@ export class Radio implements ComponentInterface {
     const radioGroup = (this.radioGroup = this.el.closest('ion-radio-group'));
     if (radioGroup) {
       this.updateState();
-      addEventListener(radioGroup, 'ionChange', this.updateState);
+      addEventListener(radioGroup, 'ionValueChange', this.updateState);
     }
   }
 
   disconnectedCallback() {
     const radioGroup = this.radioGroup;
     if (radioGroup) {
-      removeEventListener(radioGroup, 'ionChange', this.updateState);
+      removeEventListener(radioGroup, 'ionValueChange', this.updateState);
       this.radioGroup = null;
     }
   }

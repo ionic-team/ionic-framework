@@ -21,6 +21,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Input](#version-7x-input)
   - [Modal](#version-7x-modal)
   - [Overlays](#version-7x-overlays)
+  - [Radio Group](#version-7x-radio-group)
   - [Range](#version-7x-range)
   - [Searchbar](#version-7x-searchbar)
   - [Segment](#version-7x-segment)
@@ -96,6 +97,10 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 
 - The `debounce` property has been updated to control the timing in milliseconds to delay the event emission of the `ionInput` event after each keystroke. Previously it would delay the event emission of `ionChange`.
 
+- The `debounce` property's default value has changed from `0` to `undefined`. If `debounce` is undefined, the `ionInput` event will fire immediately.
+
+- The `detail` payload for the `ionInput` event now contains an object with the current `value` as well as the native event that triggered `ionInput`.
+
 <h4 id="version-7x-modal">Modal</h4>
 
 - The `swipeToClose` property has been removed in favor of `canDismiss`.
@@ -104,6 +109,10 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 <h4 id="version-7x-overlays">Overlays</h4>
 
 Ionic now listens on the `keydown` event instead of the `keyup` event when determining when to dismiss overlays via the "Escape" key. Any applications that were listening on `keyup` to suppress this behavior should listen on `keydown` instead.
+
+<h4 id="version-7x-radio-group">Radio Group</h4>
+
+- `ionChange` is no longer emitted when the `value` of `ion-radio-group` is modified externally. `ionChange` is only emitted from user committed changes, such as clicking or tapping an `ion-radio` in the group.
 
 <h4 id="version-7x-range">Range</h4>
 
@@ -168,7 +177,11 @@ Developers using these components will need to migrate to using Swiper.js direct
 
 - The `debounce` property has been updated to control the timing in milliseconds to delay the event emission of the `ionInput` event after each keystroke. Previously it would delay the event emission of `ionChange`.
 
+- The `debounce` property's default value has changed from `0` to `undefined`. If `debounce` is undefined, the `ionInput` event will fire immediately.
+
 - `ionInput` dispatches an event detail of `null` when the textarea is cleared as a result of `clear-on-edit="true"`.
+
+- The `detail` payload for the `ionInput` event now contains an object with the current `value` as well as the native event that triggered `ionInput`.
 
 <h4 id="version-7x-toggle">Toggle</h4>
 

@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Method, Prop, h } from '@stencil/core';
+import { Watch, Component, Element, Event, Host, Method, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import type {
@@ -9,8 +9,18 @@ import type {
   OverlayEventDetail,
   OverlayInterface,
   ToastButton,
+  FrameworkDelegate,
 } from '../../interface';
-import { dismiss, eventMethod, isCancel, prepareOverlay, present, safeCall } from '../../utils/overlays';
+import {
+  createDelegateController,
+  createTriggerController,
+  dismiss,
+  eventMethod,
+  isCancel,
+  prepareOverlay,
+  present,
+  safeCall,
+} from '../../utils/overlays';
 import type { IonicSafeString } from '../../utils/sanitization';
 import { sanitizeDOMString } from '../../utils/sanitization';
 import { createColorClasses, getClassMap } from '../../utils/theme';
@@ -38,6 +48,9 @@ import { mdLeaveAnimation } from './animations/md.leave';
   shadow: true,
 })
 export class Toast implements ComponentInterface, OverlayInterface {
+  private readonly delegateController = createDelegateController(this);
+  private readonly triggerController = createTriggerController();
+  private currentTransition?: Promise<any>;
   private durationTimeout: any;
 
   presented = false;
@@ -48,6 +61,12 @@ export class Toast implements ComponentInterface, OverlayInterface {
    * @internal
    */
   @Prop() overlayIndex!: number;
+
+  /** @internal */
+  @Prop() delegate?: FrameworkDelegate;
+
+  /** @internal */
+  @Prop() hasController = false;
 
   /**
    * The color to use from your application's color palette.
@@ -127,6 +146,36 @@ export class Toast implements ComponentInterface, OverlayInterface {
   @Prop() htmlAttributes?: { [key: string]: any };
 
   /**
+   * If `true`, the toast will open. If `false`, the toast will close.
+   * Use this if you need finer grained control over presentation, otherwise
+   * just use the toastController or the `trigger` property.
+   * Note: `isOpen` will not automatically be set back to `false` when
+   * the toast dismisses. You will need to do that in your code.
+   */
+  @Prop() isOpen = false;
+  @Watch('isOpen')
+  onIsOpenChange(newValue: boolean, oldValue: boolean) {
+    if (newValue === true && oldValue === false) {
+      this.present();
+    } else if (newValue === false && oldValue === true) {
+      this.dismiss();
+    }
+  }
+
+  /**
+   * An ID corresponding to the trigger element that
+   * causes the toast to open when clicked.
+   */
+  @Prop() trigger: string | undefined;
+  @Watch('trigger')
+  triggerChanged() {
+    const { trigger, el, triggerController } = this;
+    if (trigger) {
+      triggerController.addClickListener(el, trigger);
+    }
+  }
+
+  /**
    * Emitted after the toast has presented.
    */
   @Event({ eventName: 'ionToastDidPresent' }) didPresent!: EventEmitter<void>;
@@ -146,8 +195,37 @@ export class Toast implements ComponentInterface, OverlayInterface {
    */
   @Event({ eventName: 'ionToastDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
 
+  /**
+   * Emitted after the toast has presented.
+   * Shorthand for ionToastWillDismiss.
+   */
+  @Event({ eventName: 'didPresent' }) didPresentShorthand!: EventEmitter<void>;
+
+  /**
+   * Emitted before the toast has presented.
+   * Shorthand for ionToastWillPresent.
+   */
+  @Event({ eventName: 'willPresent' }) willPresentShorthand!: EventEmitter<void>;
+
+  /**
+   * Emitted before the toast has dismissed.
+   * Shorthand for ionToastWillDismiss.
+   */
+  @Event({ eventName: 'willDismiss' }) willDismissShorthand!: EventEmitter<OverlayEventDetail>;
+
+  /**
+   * Emitted after the toast has dismissed.
+   * Shorthand for ionToastDidDismiss.
+   */
+  @Event({ eventName: 'didDismiss' }) didDismissShorthand!: EventEmitter<OverlayEventDetail>;
+
   connectedCallback() {
     prepareOverlay(this.el);
+    this.triggerChanged();
+  }
+
+  disconnectedCallback() {
+    this.triggerController.removeClickListener();
   }
 
   /**
@@ -155,7 +233,23 @@ export class Toast implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async present(): Promise<void> {
-    await present(this, 'toastEnter', iosEnterAnimation, mdEnterAnimation, this.position);
+    /**
+     * When using an inline toast
+     * and dismissing a toast it is possible to
+     * quickly present the toast while it is
+     * dismissing. We need to await any current
+     * transition to allow the dismiss to finish
+     * before presenting again.
+     */
+    if (this.currentTransition !== undefined) {
+      await this.currentTransition;
+    }
+
+    await this.delegateController.attachViewToDom();
+
+    this.currentTransition = present(this, 'toastEnter', iosEnterAnimation, mdEnterAnimation, this.position);
+    await this.currentTransition;
+    this.currentTransition = undefined;
 
     if (this.duration > 0) {
       this.durationTimeout = setTimeout(() => this.dismiss(undefined, 'timeout'), this.duration);
@@ -172,11 +266,27 @@ export class Toast implements ComponentInterface, OverlayInterface {
    * Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
    */
   @Method()
-  dismiss(data?: any, role?: string): Promise<boolean> {
+  async dismiss(data?: any, role?: string): Promise<boolean> {
     if (this.durationTimeout) {
       clearTimeout(this.durationTimeout);
     }
-    return dismiss(this, data, role, 'toastLeave', iosLeaveAnimation, mdLeaveAnimation, this.position);
+
+    this.currentTransition = dismiss(
+      this,
+      data,
+      role,
+      'toastLeave',
+      iosLeaveAnimation,
+      mdLeaveAnimation,
+      this.position
+    );
+    const dismissed = await this.currentTransition;
+
+    if (dismissed) {
+      this.delegateController.removeViewFromDom();
+    }
+
+    return dismissed;
   }
 
   /**

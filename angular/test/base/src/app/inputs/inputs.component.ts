@@ -30,7 +30,7 @@ export class InputsComponent {
     this.toggle = false;
     this.select = undefined;
   }
-  
+
   counter() {
     this.changes++;
     return Math.floor(this.changes / 2);
