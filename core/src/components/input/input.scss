@@ -540,6 +540,8 @@
 :host(.input-label-placement-stacked) .label-text-wrapper,
 :host(.input-label-placement-floating) .label-text-wrapper {
   @include transform-origin(start, top);
+
+  max-width: 100%;
 }
 
 /**
