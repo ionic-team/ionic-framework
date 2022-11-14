@@ -40,12 +40,14 @@
     "prettier": "prettier \"**/*.ts\"",
     "eslint": "eslint . --ext .ts",
     "prerelease": "npm run validate && np prerelease --yolo --any-branch --tag next",
+    "sync": "./scripts/sync.sh",
     "test": "echo 'angular no tests yet'",
     "tsc": "tsc -p .",
     "validate": "npm i && npm run lint && npm run test && npm run build"
   },
   "dependencies": {
     "@ionic/core": "^6.3.6",
+    "ionicons": "^6.0.4",
     "jsonc-parser": "^3.0.0",
     "tslib": "^2.0.0"
   },
@@ -92,6 +94,7 @@
     },
     "allowedNonPeerDependencies": [
       "@ionic/core",
+      "ionicons",
       "jsonc-parser"
     ]
   }
