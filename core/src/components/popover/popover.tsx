@@ -476,7 +476,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
      */
     await waitOneFrame();
 
-    this.currentTransition = present(this, 'popoverEnter', iosEnterAnimation, mdEnterAnimation, {
+    this.currentTransition = present<PopoverPresentOptions>(this, 'popoverEnter', iosEnterAnimation, mdEnterAnimation, {
       event: event || this.event,
       size: this.size,
       trigger: this.triggerEl,
@@ -527,7 +527,15 @@ export class Popover implements ComponentInterface, PopoverInterface {
       this.parentPopover.dismiss(data, role, dismissParentPopover);
     }
 
-    this.currentTransition = dismiss(this, data, role, 'popoverLeave', iosLeaveAnimation, mdLeaveAnimation, this.event);
+    this.currentTransition = dismiss<PopoverDismissOptions>(
+      this,
+      data,
+      role,
+      'popoverLeave',
+      iosLeaveAnimation,
+      mdLeaveAnimation,
+      this.event
+    );
     const shouldDismiss = await this.currentTransition;
     if (shouldDismiss) {
       if (destroyKeyboardInteraction) {
@@ -685,3 +693,32 @@ const LIFECYCLE_MAP: any = {
 };
 
 let popoverIds = 0;
+
+interface PopoverPresentOptions {
+  /**
+   * The original target event that presented the popover.
+   */
+  event: Event;
+  /**
+   * Describes how to calculate the popover width.
+   */
+  size: PopoverSize;
+  /**
+   * The element that causes the popover to open.
+   */
+  trigger?: HTMLElement | null;
+  /**
+   * Describes what to position the popover relative to.
+   */
+  reference: PositionReference;
+  /**
+   * Side of the `reference` point to position the popover on.
+   */
+  side: PositionSide;
+  /**
+   * Describes how to align the popover content with the `reference` point.
+   */
+  align?: PositionAlign;
+}
+
+type PopoverDismissOptions = Event;

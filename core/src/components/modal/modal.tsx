@@ -504,7 +504,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     writeTask(() => this.el.classList.add('show-modal'));
 
-    this.currentTransition = present(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, {
+    this.currentTransition = present<ModalPresentOptions>(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, {
       presentingEl: this.presentingElement,
       currentBreakpoint: this.initialBreakpoint,
       backdropBreakpoint: this.backdropBreakpoint,
@@ -715,11 +715,19 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     const enteringAnimation = activeAnimations.get(this) || [];
 
-    this.currentTransition = dismiss(this, data, role, 'modalLeave', iosLeaveAnimation, mdLeaveAnimation, {
-      presentingEl: this.presentingElement,
-      currentBreakpoint: this.currentBreakpoint ?? this.initialBreakpoint,
-      backdropBreakpoint: this.backdropBreakpoint,
-    });
+    this.currentTransition = dismiss<ModalDismissOptions>(
+      this,
+      data,
+      role,
+      'modalLeave',
+      iosLeaveAnimation,
+      mdLeaveAnimation,
+      {
+        presentingEl: this.presentingElement,
+        currentBreakpoint: this.currentBreakpoint ?? this.initialBreakpoint,
+        backdropBreakpoint: this.backdropBreakpoint,
+      }
+    );
 
     const dismissed = await this.currentTransition;
 
@@ -947,3 +955,22 @@ const LIFECYCLE_MAP: any = {
 };
 
 let modalIds = 0;
+
+interface ModalOverlayOptions {
+  /**
+   * The element that presented the modal.
+   */
+  presentingEl?: HTMLElement;
+  /**
+   * The current breakpoint of the sheet modal.
+   */
+  currentBreakpoint?: number;
+  /**
+   * The point after which the backdrop will being
+   * to fade in when using a sheet modal.
+   */
+  backdropBreakpoint: number;
+}
+
+type ModalPresentOptions = ModalOverlayOptions;
+type ModalDismissOptions = ModalOverlayOptions;

@@ -400,12 +400,12 @@ export const setRootAriaHidden = (hidden = false) => {
   }
 };
 
-export const present = async (
+export const present = async <OverlayPresentOptions>(
   overlay: OverlayInterface,
   name: keyof IonicConfig,
   iosEnterAnimation: AnimationBuilder,
   mdEnterAnimation: AnimationBuilder,
-  opts?: any
+  opts?: OverlayPresentOptions
 ) => {
   if (overlay.presented) {
     return;
@@ -478,14 +478,14 @@ const focusPreviousElementOnDismiss = async (overlayEl: any) => {
   previousElement.focus();
 };
 
-export const dismiss = async (
+export const dismiss = async <OverlayDismissOptions>(
   overlay: OverlayInterface,
   data: any | undefined,
   role: string | undefined,
   name: keyof IonicConfig,
   iosLeaveAnimation: AnimationBuilder,
   mdLeaveAnimation: AnimationBuilder,
-  opts?: any
+  opts?: OverlayDismissOptions
 ): Promise<boolean> => {
   if (!overlay.presented) {
     return false;
