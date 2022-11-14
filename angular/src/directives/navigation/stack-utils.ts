@@ -74,7 +74,6 @@ export const toSegments = (path: string): string[] => {
 
 export const destroyView = (view: RouteView | undefined): void => {
   if (view) {
-    // TODO lifecycle event
     view.ref.destroy();
     view.unlistenEvents();
   }

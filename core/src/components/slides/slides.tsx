@@ -353,7 +353,6 @@ export class Slides implements ComponentInterface {
 
   private normalizeOptions(): SwiperOptions {
     // Base options, can be changed
-    // TODO Add interface SwiperOptions
     const swiperOptions: SwiperOptions = {
       effect: undefined,
       direction: 'horizontal',
