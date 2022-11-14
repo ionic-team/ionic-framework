@@ -9,6 +9,7 @@ test.describe('picker: basic', () => {
 
     await page.click('#basic');
     await didPresent.next();
+    await page.waitForChanges();
 
     expect(await page.screenshot()).toMatchSnapshot(`picker-basic-${page.getSnapshotSettings()}.png`);
 
@@ -18,6 +19,7 @@ test.describe('picker: basic', () => {
 
     await page.click('#basic');
     await didPresent.next();
+    await page.waitForChanges();
 
     expect(await page.screenshot()).toMatchSnapshot(`picker-value-selected-${page.getSnapshotSettings()}.png`);
   });
