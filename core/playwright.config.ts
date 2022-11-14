@@ -87,7 +87,7 @@ const config: PlaywrightTestConfig = {
        * Increases the maximum allowed pixel difference to account
        * for slight browser rendering inconsistencies.
        */
-      maxDiffPixelRatio: 0.02
+      maxDiffPixelRatio: 0.01
     }
   },
   /* Fail the build on CI if you accidentally left test.only in the source code. */
