@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
-    <title>Title - Sizes</title>
+    <title>Title - Basic</title>
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
@@ -29,15 +29,9 @@
             <ion-button>Cancel</ion-button>
           </ion-buttons>
         </ion-toolbar>
-        <ion-toolbar>
-          <ion-searchbar></ion-searchbar>
-        </ion-toolbar>
       </ion-header>
 
       <ion-header>
-        <ion-toolbar class="hide-md">
-          <ion-title size="small">Choose a contact to add to Favorites</ion-title>
-        </ion-toolbar>
         <ion-toolbar>
           <ion-buttons slot="start">
             <ion-back-button default-href="#"></ion-back-button>
@@ -48,9 +42,6 @@
             <ion-button><ion-icon slot="icon-only" name="search"></ion-icon></ion-button>
             <ion-button><ion-icon slot="icon-only" name="menu"></ion-icon></ion-button>
           </ion-buttons>
-        </ion-toolbar>
-        <ion-toolbar>
-          <ion-searchbar></ion-searchbar>
         </ion-toolbar>
       </ion-header>
 
@@ -63,9 +54,6 @@
           <ion-buttons slot="end">
             <ion-button>Cancel</ion-button>
           </ion-buttons>
-        </ion-toolbar>
-        <ion-toolbar>
-          <ion-searchbar></ion-searchbar>
         </ion-toolbar>
       </ion-header>
 
@@ -84,27 +72,15 @@
             <ion-button>Cancel</ion-button>
           </ion-buttons>
         </ion-toolbar>
-        <ion-toolbar color="secondary">
-          <ion-searchbar></ion-searchbar>
-        </ion-toolbar>
       </ion-header>
 
       <ion-content fullscreen> </ion-content>
     </ion-app>
 
     <style>
-      .md .hide-md {
-        display: none;
-      }
-
       .ios .hide-ios {
         display: none;
       }
-
-      /* testing purposes only
-    ion-header {
-      border-top: 1px solid red;
-    } */
     </style>
   </body>
 </html>
