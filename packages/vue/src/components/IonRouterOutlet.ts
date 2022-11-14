@@ -39,7 +39,6 @@ export const IonRouterOutlet = /*@__PURE__*/ defineComponent({
     const ionRouterOutlet = ref();
     const id = generateId('ion-router-outlet');
 
-    // TODO types
     const ionRouter: any = inject('navManager');
     const viewStacks: any = inject('viewStacks');
 
@@ -143,7 +142,6 @@ export const IonRouterOutlet = /*@__PURE__*/ defineComponent({
         const customAnimation = enteringViewItem.routerAnimation;
         if (
           animationBuilder === undefined &&
-          // todo check for tab switch
           customAnimation !== undefined
         ) {
           animationBuilder = customAnimation;
@@ -198,7 +196,7 @@ export const IonRouterOutlet = /*@__PURE__*/ defineComponent({
     const transition = (
       enteringEl: HTMLElement,
       leavingEl: HTMLElement,
-      direction: any, // TODO types
+      direction: any,
       showGoBack: boolean,
       progressAnimation: boolean,
       animationBuilder?: AnimationBuilder
@@ -307,7 +305,6 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
         if (
           animationBuilder === undefined &&
           routerDirection === 'back' &&
-          // todo check for tab switch
           customAnimation !== undefined
         ) {
           animationBuilder = customAnimation;
@@ -425,7 +422,6 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
      */
     onUnmounted(() => viewStacks.clear(id));
 
-    // TODO types
     const registerIonPage = (viewItem: any, ionPageEl: HTMLElement) => {
       const oldIonPageEl = viewItem.ionPageElement;
 
@@ -471,7 +467,6 @@ See https://ionicframework.com/docs/vue/navigation#ionpage for more information.
     return h(
       'ion-router-outlet',
       { ref: 'ionRouterOutlet' },
-      // TODO types
       components && components.map((c: any) => {
         let props = {
           ref: c.vueComponentRef,
