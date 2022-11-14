@@ -38,7 +38,7 @@ test.describe('menu: focus trap', () => {
     }
   });
 
-  test('should trap focus with content inside overlays', async ({ page, browserName }) => {
+  test('should trap focus with content inside overlays', async ({ page }) => {
     const ionDidOpen = await page.spyOnEvent('ionDidOpen');
     const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
 
@@ -53,16 +53,6 @@ test.describe('menu: focus trap', () => {
 
     const modal = await page.locator('#modal');
     await expect(modal).toBeFocused();
-
-    const otherButton = page.locator('#other-button');
-    await otherButton.click();
-
-    // Safari remains focused on the modal after the button is clicked
-    if (browserName === 'webkit') {
-      await expect(modal).toBeFocused();
-    } else {
-      await expect(otherButton).toBeFocused();
-    }
   });
 
   test('should work with swipe gestures after modal is dismissed', async ({ page }) => {
