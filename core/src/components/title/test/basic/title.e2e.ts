@@ -4,9 +4,9 @@ import { test } from '@utils/test/playwright';
 test.describe('title: basic', () => {
   test('should not have visual regressions', async ({ page }) => {
     await page.goto('/src/components/title/test/basic');
+    const wrapper = page.locator('#header-wrapper');
 
-    await page.setIonViewport();
-
-    expect(await page.screenshot()).toMatchSnapshot(`title-basic-${page.getSnapshotSettings()}.png`);
+    // only screenshot the headers to avoid unnecessary blank space from ion-content
+    expect(await wrapper.screenshot()).toMatchSnapshot(`title-basic-${page.getSnapshotSettings()}.png`);
   });
 });
