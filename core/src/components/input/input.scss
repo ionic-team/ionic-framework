@@ -105,11 +105,9 @@
   }
 }
 
-.native-input[disabled] {
+.native-input[disabled]:not(.cloned-input) {
   opacity: .4;
 }
-
-
 
 // Input Cover: Unfocused
 // --------------------------------------------------
@@ -125,6 +123,15 @@
   position: absolute;
 
   pointer-events: none;
+}
+
+/**
+ * The cloned input needs to be disabled on
+ * Android otherwise the viewport will still
+ * shift when running scroll assist.
+ */
+.cloned-input:disabled {
+  opacity: 1;
 }
 
 

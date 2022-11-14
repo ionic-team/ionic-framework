@@ -17,6 +17,7 @@ test.describe('datetime-button: switching to correct view', () => {
     expect(datetime).toHaveJSProperty('presentation', 'date-time');
 
     await page.locator('#date-button').click();
+    await page.waitForChanges();
 
     expect(datetime).toHaveJSProperty('presentation', 'date');
   });
@@ -25,6 +26,7 @@ test.describe('datetime-button: switching to correct view', () => {
     expect(datetime).toHaveJSProperty('presentation', 'date-time');
 
     await page.locator('#time-button').click();
+    await page.waitForChanges();
 
     expect(datetime).toHaveJSProperty('presentation', 'time');
   });

@@ -9,7 +9,8 @@ export const enableScrollAssist = (
   inputEl: HTMLInputElement | HTMLTextAreaElement,
   contentEl: HTMLElement | null,
   footerEl: HTMLIonFooterElement | null,
-  keyboardHeight: number
+  keyboardHeight: number,
+  disableClonedInput = false
 ) => {
   let coord: any;
   const touchStart = (ev: Event) => {
@@ -28,7 +29,7 @@ export const enableScrollAssist = (
     // and the input doesn't already have focus
     if (!hasPointerMoved(6, coord, endCoord) && !isFocused(inputEl)) {
       // begin the input focus process
-      jsSetFocus(componentEl, inputEl, contentEl, footerEl, keyboardHeight);
+      jsSetFocus(componentEl, inputEl, contentEl, footerEl, keyboardHeight, disableClonedInput);
     }
   };
   componentEl.addEventListener('touchstart', touchStart, { capture: true, passive: true });
@@ -45,7 +46,8 @@ const jsSetFocus = async (
   inputEl: HTMLInputElement | HTMLTextAreaElement,
   contentEl: HTMLElement | null,
   footerEl: HTMLIonFooterElement | null,
-  keyboardHeight: number
+  keyboardHeight: number,
+  disableClonedInput = false
 ) => {
   if (!contentEl && !footerEl) {
     return;
@@ -62,7 +64,7 @@ const jsSetFocus = async (
   // temporarily move the focus to the focus holder so the browser
   // doesn't freak out while it's trying to get the input in place
   // at this point the native text input still does not have focus
-  relocateInput(componentEl, inputEl, true, scrollData.inputSafeY);
+  relocateInput(componentEl, inputEl, true, scrollData.inputSafeY, disableClonedInput);
   inputEl.focus();
 
   /**

@@ -3,6 +3,43 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.6](https://github.com/ionic-team/ionic/compare/v6.3.5...v6.3.6) (2022-11-10)
+
+
+### Bug Fixes
+
+* **datetime:** flip chevron icons when RTL is set on component directly ([#26195](https://github.com/ionic-team/ionic/issues/26195)) ([dd98677](https://github.com/ionic-team/ionic/commit/dd9867708b66543f5cbe978e0fa6ef34b37f9fc3))
+
+
+
+
+
+## [6.3.5](https://github.com/ionic-team/ionic/compare/v6.3.4...v6.3.5) (2022-11-09)
+
+
+### Bug Fixes
+
+* **android:** account for chrome 108 resize ([#26244](https://github.com/ionic-team/ionic/issues/26244)) ([1a0b9ed](https://github.com/ionic-team/ionic/commit/1a0b9ed3bacffa9f602637c204f52cb3face5a3e))
+* **datetime:** min/max correctly display available day periods ([#26241](https://github.com/ionic-team/ionic/issues/26241)) ([526e411](https://github.com/ionic-team/ionic/commit/526e4113d82d244e2574b24d72fda632bb2aa143)), closes [#26216](https://github.com/ionic-team/ionic/issues/26216)
+* **overlays:** presenting an overlay does not create nested elements ([#26154](https://github.com/ionic-team/ionic/issues/26154)) ([bb00595](https://github.com/ionic-team/ionic/commit/bb005956eaff7401cfe1d6befcbf512424ddd283)), closes [#26117](https://github.com/ionic-team/ionic/issues/26117)
+
+
+
+
+
+## [6.3.4](https://github.com/ionic-team/ionic/compare/v6.3.3...v6.3.4) (2022-11-02)
+
+
+### Bug Fixes
+
+* **datetime:** account for allowed values when setting default date ([#26093](https://github.com/ionic-team/ionic/issues/26093)) ([3745083](https://github.com/ionic-team/ionic/commit/3745083b7cdf8651d1c7f5f1a0214b487ea286ca)), closes [#24722](https://github.com/ionic-team/ionic/issues/24722)
+* **modal, popover:** remove trigger click listeners when overlay is unmounted ([#26167](https://github.com/ionic-team/ionic/issues/26167)) ([1320948](https://github.com/ionic-team/ionic/commit/1320948b245be3defe8610b9f049e781a4903a6e))
+* **modal:** buttons are highlighted with VoiceOver ([#26180](https://github.com/ionic-team/ionic/issues/26180)) ([1504b88](https://github.com/ionic-team/ionic/commit/1504b8888d6f79ea382935ed52b104b9f841d150)), closes [#26156](https://github.com/ionic-team/ionic/issues/26156)
+
+
+
+
+
 ## [6.3.3](https://github.com/ionic-team/ionic/compare/v6.3.2...v6.3.3) (2022-10-26)
 
 
