@@ -166,7 +166,7 @@
   opacity: 1;
 }
 
-:host([auto-grow]) .cloned-input {
+:host([auto-grow="true"]) .cloned-input {
   // Workaround for webkit rendering issue with scroll assist.
   // When cloning the textarea and scrolling into view,
   // a white box is rendered from the difference in height
@@ -190,6 +190,6 @@
   opacity: 1;
 }
 
-:host([auto-grow]) .native-textarea {
+:host([auto-grow="true"]) .native-textarea {
   overflow: hidden;
 }
