@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.7-nightly.20221114](https://github.com/ionic-team/ionic/compare/v6.3.6...v6.3.7-nightly.20221114) (2022-11-14)
+
+
+### Bug Fixes
+
+* **action-sheet:** icons are aligned on MD mode ([#26256](https://github.com/ionic-team/ionic/issues/26256)) ([627d654](https://github.com/ionic-team/ionic/commit/627d654d24f97e340e4004a03f07467619e60149)), closes [#26249](https://github.com/ionic-team/ionic/issues/26249)
+* **datetime:** clear button clears the selected date ([#26264](https://github.com/ionic-team/ionic/issues/26264)) ([9216744](https://github.com/ionic-team/ionic/commit/9216744205c1ecc0c3dd51490a25be102f27a91a)), closes [#26258](https://github.com/ionic-team/ionic/issues/26258)
+* **popover:** inline popover positioning with fit-content or auto width ([#26230](https://github.com/ionic-team/ionic/issues/26230)) ([0a8a958](https://github.com/ionic-team/ionic/commit/0a8a958cba02994ea0fefa265b17edddffe62e98)), closes [#24716](https://github.com/ionic-team/ionic/issues/24716)
+
+
+
+
+
 ## [6.3.6](https://github.com/ionic-team/ionic/compare/v6.3.5...v6.3.6) (2022-11-10)
 
 
