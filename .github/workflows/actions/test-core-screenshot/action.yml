@@ -13,14 +13,6 @@ runs:
     - uses: actions/setup-node@v3
       with:
         node-version: 16.x
-
-    - name: Cache Core Node Modules
-      uses: actions/cache@v3
-      env:
-        cache-name: core-node-modules
-      with:
-        path: ./core/node_modules
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('./core/package-lock.json') }}-v2
     - uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-core
@@ -32,7 +24,7 @@ runs:
         path: ./core
         filename: CoreSrc.zip
     - name: Install Playwright Dependencies
-      run: npx playwright install && npx playwright install-deps
+      run: npm install && npx playwright install && npx playwright install-deps
       shell: bash
       working-directory: ./core
     - name: Test
