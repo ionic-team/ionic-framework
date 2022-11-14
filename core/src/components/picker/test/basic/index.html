@@ -103,7 +103,6 @@
             {
               text: 'Cancel',
               role: 'cancel',
-              handler: () => console.log('Clicked Cancel!'),
             },
             {
               text: 'Save',
@@ -112,13 +111,7 @@
                 const v = ev.hours.value;
                 selectedIndex = options.findIndex((opt) => opt.value === v);
               },
-            },
-            {
-              text: 'Log',
-              handler: (val) => {
-                return false;
-              },
-            },
+            }
           ],
           columns: [
             {
