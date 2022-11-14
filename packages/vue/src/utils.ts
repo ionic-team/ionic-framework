@@ -24,7 +24,6 @@ export const generateId = (type = 'main') => {
   return (id).toString();
 };
 
-// TODO types
 export const fireLifecycle = (vueComponent: any, vueInstance: Ref<ComponentPublicInstance>, lifecycle: LIFECYCLE_EVENTS) => {
   if (vueComponent?.[lifecycle]) {
     vueComponent[lifecycle].bind(vueInstance?.value)();

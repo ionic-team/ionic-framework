@@ -73,7 +73,7 @@ Cypress.Commands.add('ionPageDoesNotExist', (selector) => {
 });
 
 Cypress.Commands.add('ionTabClick', (tabText) => {
-  // TODO: Figure out how to get rid of wait. It's a workaround for flakiness in CI.
+  // TODO FW-2790: Figure out how to get rid of wait. It's a workaround for flakiness in CI.
   cy.wait(250);
   cy.contains('ion-tab-button', tabText).click({ force: true });
 });
