@@ -465,18 +465,16 @@ export class Popover implements ComponentInterface, PopoverInterface {
     this.configureDismissInteraction();
 
     // TODO: FW-2773: Apply this to only the lazy build.
-    if (inline === true) {
-      /**
-       * ionMount only needs to be emitted if the popover is inline.
-       */
-      this.ionMount.emit();
-      /**
-       * Wait one raf before presenting the popover.
-       * This allows the lazy build enough time to
-       * calculate the popover dimensions for the animation.
-       */
-      await waitOneFrame();
-    }
+    /**
+     * ionMount only needs to be emitted if the popover is inline.
+     */
+    this.ionMount.emit();
+    /**
+     * Wait one raf before presenting the popover.
+     * This allows the lazy build enough time to
+     * calculate the popover dimensions for the animation.
+     */
+    await waitOneFrame();
 
     this.currentTransition = present(this, 'popoverEnter', iosEnterAnimation, mdEnterAnimation, {
       event: event || this.event,
