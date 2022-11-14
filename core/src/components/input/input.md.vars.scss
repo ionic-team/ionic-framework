@@ -75,3 +75,6 @@ $input-md-inset-margin-bottom:            ($item-md-padding-bottom * 0.5) !defau
 
 /// @prop - Margin start of the inset input
 $input-md-inset-margin-start:             $item-md-padding-start !default;
+
+/// @prop - The amount of whitespace to display on either side of the floating label
+$input-md-floating-label-padding:         4px !default;

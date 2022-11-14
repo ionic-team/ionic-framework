@@ -1,3 +1,5 @@
+@import "./input.vars";
+
 // Input Fill: Outline
 // ----------------------------------------------------------------
 
@@ -9,7 +11,7 @@
 }
 
 :host(.input-fill-outline.input-shape-round) {
-  --border-radius: 9999px;
+  --border-radius: 28px;
   --padding-start: 32px;
   --padding-end: 32px;
 }
@@ -62,7 +64,15 @@
 
 :host(.input-fill-outline.input-label-placement-stacked) .label-text-wrapper,
 :host(.input-fill-outline.input-label-placement-floating) .label-text-wrapper {
-  @include transform-origin(center, top);
+  @include transform-origin(start, top);
+
+  position: absolute;
+
+  /**
+   * Label text should not extend
+   * beyond the bounds of the input.
+   */
+  max-width: calc(100% - var(--padding-start) - var(--padding-end));
 }
 
 /**
@@ -81,10 +91,15 @@
  */
 :host(.has-focus.input-fill-outline.input-label-placement-floating) .label-text-wrapper,
 :host(.has-value.input-fill-outline.input-label-placement-floating) .label-text-wrapper,
-:host(.input-fill-outline.input-label-placement-stacked) .label-text-wrapper,
 :host(.input-fill-outline.input-label-placement-stacked) .label-text-wrapper {
-  @include transform(translateY(-32%), scale(.75));
+  @include transform(translateY(-32%), scale(#{$input-floating-label-scale}));
   @include margin(0);
+
+  /**
+   * Label text should not extend
+   * beyond the bounds of the input.
+   */
+  max-width: calc((100% - var(--padding-start) - var(--padding-end) - #{$input-md-floating-label-padding * 2}) / #{$input-floating-label-scale});
 }
 
 /**
@@ -128,20 +143,50 @@
   border-bottom: var(--border-width) var(--border-style) var(--border-color);
 }
 
+/**
+ * Ensures long labels do not cause the notch to flow
+ * out of bounds.
+ */
+:host(.input-fill-outline) .input-outline-notch {
+  max-width: calc(100% - var(--padding-start) - var(--padding-end));
+}
+
+/**
+ * This element ensures that the notch used
+ * the size of the scaled text so that the
+ * border cut out is the correct width.
+ * The text in this element should not
+ * be interactive.
+ */
+:host(.input-fill-outline) .notch-spacer {
+  /**
+   * We need $input-md-floating-label-padding of padding on the right.
+   * However, we also subtracted $input-md-floating-label-padding from
+   * the width of .input-outline-start
+   * to create space, so we need to take
+   * that into consideration here.
+   */
+  @include padding(null, #{$input-md-floating-label-padding * 2}, null, null);
+
+  font-size: calc(1em * #{$input-floating-label-scale});
+
+  opacity: 0;
+  pointer-events: none;
+}
+
 :host(.input-fill-outline) .input-outline-start {
   @include border-radius(var(--border-radius), 0px, 0px, var(--border-radius));
   @include border(null, null, null, var(--border-width) var(--border-style) var(--border-color));
 
-  width: 12px;
-}
-
-/**
- * When shape="round", the starting outline fragment
- * should appear with a pill shape.
- */
-:host(.input-fill-outline.input-shape-round) .input-outline-start {
-  @include border-radius(28px, 0px, 0px, 28px);
-  width: 28px;
+  /**
+   * There should be spacing between the translated text
+   * and .input-outline-start. However, we can't add this
+   * spacing onto the notch because it would cause the
+   * label to look like it is not aligned with the
+   * text input. Instead, we subtract a few pixels from
+   * this element.
+   */
+  width: calc(var(--padding-start) - #{$input-md-floating-label-padding});
 }
 
 :host(.input-fill-outline) .input-outline-end {
@@ -163,7 +208,6 @@
  */
 :host(.has-focus.input-fill-outline.input-label-placement-floating) .input-outline-notch,
 :host(.has-value.input-fill-outline.input-label-placement-floating) .input-outline-notch,
-:host(.input-fill-outline.input-label-placement-stacked) .input-outline-notch,
 :host(.input-fill-outline.input-label-placement-stacked) .input-outline-notch {
   border-top: none;
 }

@@ -1,3 +1,5 @@
+@import "./input.vars";
+
 // Input Fill: Solid
 // ----------------------------------------------------------------
 
@@ -58,4 +60,17 @@
    * have a radius when using a solid fill.
    */
   @include border-radius(var(--border-radius), var(--border-radius), 0px, 0px);
+}
+
+// Input Label
+// ----------------------------------------------------------------
+
+:host(.input-fill-solid.input-label-placement-stacked) .label-text-wrapper,
+:host(.has-focus.input-fill-solid.input-label-placement-floating) .label-text-wrapper,
+:host(.has-value.input-fill-solid.input-label-placement-floating) .label-text-wrapper {
+  /**
+   * Label text should not extend
+   * beyond the bounds of the input.
+   */
+  max-width: calc(100% / #{$input-floating-label-scale});
 }

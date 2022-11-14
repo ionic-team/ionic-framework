@@ -572,28 +572,28 @@ export class Input implements ComponentInterface {
    * when fill="outline".
    */
   private renderLabelContainer() {
-    const { labelPlacement } = this;
-    const hasOutlineFill = this.fill === 'outline';
-    const needsNotch = labelPlacement === 'floating' || labelPlacement === 'stacked';
+    const mode = getIonMode(this);
+    const hasOutlineFill = mode === 'md' && this.fill === 'outline';
 
     if (hasOutlineFill) {
       /**
        * The outline fill has a special outline
        * that appears around the input and the label.
-       * Certain label placements cause the
+       * Certain stacked and floating label placements cause the
        * label to translate up and create a "cut out"
-       * inside of that border. When this happens, we need
-       * to render the label inside of the input-outline-notch
-       * element. Otherwise, we can render it as a sibling
-       * of the outline container.
+       * inside of that border by using the notch-spacer element.
        */
       return [
         <div class="input-outline-container">
           <div class="input-outline-start"></div>
-          <div class="input-outline-notch">{needsNotch && this.renderLabel()}</div>
+          <div class="input-outline-notch">
+            <div class="notch-spacer" aria-hidden="true">
+              {this.label}
+            </div>
+          </div>
           <div class="input-outline-end"></div>
         </div>,
-        !needsNotch && this.renderLabel(),
+        this.renderLabel(),
       ];
     }
 

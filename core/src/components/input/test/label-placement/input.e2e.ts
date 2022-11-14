@@ -10,6 +10,16 @@ test.describe('input: label placement start', () => {
     const input = page.locator('ion-input');
     expect(await input.screenshot()).toMatchSnapshot(`input-placement-start-${page.getSnapshotSettings()}.png`);
   });
+
+  test('long label should truncate', async ({ page }) => {
+    await page.setContent(`
+      <ion-input label="Email Email Email Email Email Email Email Email Email Email Email Email" value="example@ionic.io" label-placement="start"></ion-input>
+    `);
+    const input = page.locator('ion-input');
+    expect(await input.screenshot()).toMatchSnapshot(
+      `input-placement-start-long-label-${page.getSnapshotSettings()}.png`
+    );
+  });
 });
 
 test.describe('input: label placement end', () => {
@@ -20,6 +30,15 @@ test.describe('input: label placement end', () => {
 
     const input = page.locator('ion-input');
     expect(await input.screenshot()).toMatchSnapshot(`input-placement-end-${page.getSnapshotSettings()}.png`);
+  });
+  test('long label should truncate', async ({ page }) => {
+    await page.setContent(`
+      <ion-input label="Email Email Email Email Email Email Email Email Email Email Email Email" value="example@ionic.io" label-placement="end"></ion-input>
+    `);
+    const input = page.locator('ion-input');
+    expect(await input.screenshot()).toMatchSnapshot(
+      `input-placement-end-long-label-${page.getSnapshotSettings()}.png`
+    );
   });
 });
 
@@ -53,6 +72,15 @@ test.describe('input: label placement stacked', () => {
     const input = page.locator('ion-input');
     expect(await input.screenshot()).toMatchSnapshot(
       `input-placement-stacked-no-value-${page.getSnapshotSettings()}.png`
+    );
+  });
+  test('long label should truncate', async ({ page }) => {
+    await page.setContent(`
+      <ion-input label="Email Email Email Email Email Email Email Email Email Email Email Email" value="example@ionic.io" label-placement="stacked"></ion-input>
+    `);
+    const input = page.locator('ion-input');
+    expect(await input.screenshot()).toMatchSnapshot(
+      `input-placement-stacked-long-label-${page.getSnapshotSettings()}.png`
     );
   });
 });
@@ -91,6 +119,36 @@ test.describe('input: label placement floating', () => {
 
     expect(await input.screenshot({ animations: 'disabled' })).toMatchSnapshot(
       `input-focused-placement-floating-no-value-${page.getSnapshotSettings()}.png`
+    );
+  });
+  test('long label should truncate', async ({ page }) => {
+    await page.setContent(`
+      <ion-input label="Email Email Email Email Email Email Email Email Email Email Email Email" value="example@ionic.io" label-placement="floating"></ion-input>
+    `);
+    const input = page.locator('ion-input');
+    expect(await input.screenshot()).toMatchSnapshot(
+      `input-placement-floating-long-label-${page.getSnapshotSettings()}.png`
+    );
+  });
+
+  test('long label should truncate with outline', async ({ page, skip }) => {
+    skip.mode('ios', 'This style only appears on MD');
+    await page.setContent(`
+      <ion-input fill="outline" label="Email Email Email Email Email Email Email Email Email Email Email Email" value="example@ionic.io" label-placement="floating"></ion-input>
+    `);
+    const input = page.locator('ion-input');
+    expect(await input.screenshot()).toMatchSnapshot(
+      `input-placement-floating-long-label-outline-${page.getSnapshotSettings()}.png`
+    );
+  });
+  test('long label should truncate with solid', async ({ page, skip }) => {
+    skip.mode('ios', 'This style only appears on MD');
+    await page.setContent(`
+      <ion-input fill="solid" label="Email Email Email Email Email Email Email Email Email Email Email Email" value="example@ionic.io" label-placement="floating"></ion-input>
+    `);
+    const input = page.locator('ion-input');
+    expect(await input.screenshot()).toMatchSnapshot(
+      `input-placement-floating-long-label-solid-${page.getSnapshotSettings()}.png`
     );
   });
 });
