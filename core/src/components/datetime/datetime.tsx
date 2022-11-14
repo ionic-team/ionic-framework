@@ -564,10 +564,13 @@ export class Datetime implements ComponentInterface {
    * defaultParts if no active date is selected.
    */
   private getActivePartsWithFallback = () => {
-    const { activePartsClone, defaultParts } = this;
+    const { defaultParts } = this;
+    return this.getActivePart() ?? defaultParts;
+  };
 
-    const firstPart = Array.isArray(activePartsClone) ? activePartsClone[0] : activePartsClone;
-    return firstPart ?? defaultParts;
+  private getActivePart = () => {
+    const { activePartsClone } = this;
+    return Array.isArray(activePartsClone) ? activePartsClone[0] : activePartsClone;
   };
 
   private closeParentOverlay = () => {
@@ -1035,7 +1038,7 @@ export class Datetime implements ComponentInterface {
       this.initializeListeners();
 
       /**
-       * TODO: Datetime needs a frame to ensure that it
+       * TODO FW-2793: Datetime needs a frame to ensure that it
        * can properly scroll contents into view. As a result
        * we hide the scrollable content until after that frame
        * so users do not see the content quickly shifting. The downside
@@ -1729,14 +1732,24 @@ export class Datetime implements ComponentInterface {
       return [];
     }
 
-    const valueIsDefined = this.value !== null && this.value !== undefined;
+    /**
+     * If a user has not selected a date,
+     * then we should show all times. If the
+     * user has selected a date (even if it has
+     * not been confirmed yet), we should apply
+     * the max and min restrictions so that the
+     * time picker shows values that are
+     * appropriate for the selected date.
+     */
+    const activePart = this.getActivePart();
+    const userHasSelectedDate = activePart !== undefined;
 
     const { hoursData, minutesData, dayPeriodData } = getTimeColumnsData(
       this.locale,
       this.workingParts,
       this.hourCycle,
-      valueIsDefined ? this.minParts : undefined,
-      valueIsDefined ? this.maxParts : undefined,
+      userHasSelectedDate ? this.minParts : undefined,
+      userHasSelectedDate ? this.maxParts : undefined,
       this.parsedHourValues,
       this.parsedMinuteValues
     );

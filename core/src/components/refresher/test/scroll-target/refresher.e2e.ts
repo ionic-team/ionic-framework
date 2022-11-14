@@ -3,7 +3,7 @@ import { test } from '@utils/test/playwright';
 
 import { pullToRefresh } from '../test.utils';
 
-// TODO: Enable this test when touch events/gestures are better supported in Playwright: https://github.com/microsoft/playwright/issues/2903
+// TODO FW-2795: Enable this test when touch events/gestures are better supported in Playwright
 test.skip('refresher: custom scroll target', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/src/components/refresher/test/scroll-target');
