@@ -183,15 +183,6 @@
 }
 
 
-// TODO: MOVE FROM RADIO
-// iOS Radio Item Label: Checked
-// -----------------------------------------
-
-// :host(.item-radio-checked) ::slotted(ion-label) {
-//   color: $radio-ios-color-on;
-// }
-
-
 // iOS Slotted Label
 // --------------------------------------------------
 
@@ -208,7 +199,6 @@
   --min-height: 68px;
 }
 
-// TODO: refactor, ion-item and ion-textarea have the same CSS
 :host(.item-label-stacked) ::slotted(ion-select),
 :host(.item-label-floating) ::slotted(ion-select) {
   --padding-top: 8px;
@@ -224,32 +214,3 @@
 :host(.item-label-fixed) ::slotted(ion-datetime) {
   --padding-start: 0;
 }
-
-// FROM TEXTAREA
-// iOS Stacked & Floating Textarea
-// --------------------------------------------------
-
-// TODO
-// .item-ios.item-label-stacked .label-ios + .input + .cloned-input,
-// .item-ios.item-label-floating .label-ios + .input + .cloned-input {
-//   @include margin-horizontal(0, null);
-// }
-
-
-// iOS Input After Label
-// --------------------------------------------------
-
-// .label-ios + .input .native-input,
-// .label-ios + .input + .cloned-input {
-//   @include margin-horizontal($input-ios-by-label-margin-start, null);
-// }
-
-// iOS Textarea After Label
-// --------------------------------------------------
-
-// .label-ios + ion-textarea .native-textarea,
-// .label-ios + .input + .cloned-input {
-//   @include margin-horizontal($textarea-ios-by-label-margin-start, null);
-
-//   width: calc(100% - (#{$item-ios-padding-end} / 2) - #{$item-ios-padding-start});
-// }
