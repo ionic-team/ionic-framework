@@ -283,4 +283,52 @@ test.describe('datetime: minmax', () => {
       await expect(value!.includes('2022-10-10T08:00')).toBe(true);
     });
   });
+
+  test.describe('datetime: confirm button', () => {
+    test.beforeEach(({ skip }) => {
+      skip.rtl();
+    });
+    test('should apply max and min constraints even when user confirmation is required', async ({ page }) => {
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/25073',
+      });
+
+      await page.setContent(`
+        <ion-datetime max="2022-01-10T15:30" show-default-buttons="true"></ion-datetime>
+
+        <script>
+          const mockToday = '2022-01-10T12:22';
+          Date = class extends Date {
+            constructor(...args) {
+              if (args.length === 0) {
+                super(mockToday)
+              } else {
+                super(...args);
+              }
+            }
+          }
+        </script>
+      `);
+      await page.waitForSelector('.datetime-ready');
+
+      // Select Jan 10, 2022
+      const maxDate = page.locator('ion-datetime .calendar-day[data-day="10"][data-month="1"][data-year="2022"]');
+      await maxDate.click();
+      await page.waitForChanges();
+
+      // Check to see that the hours have been filtered.
+      const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
+      const timeButton = page.locator('ion-datetime .time-body');
+      await timeButton.click();
+
+      await ionPopoverDidPresent.next();
+
+      const hours = page.locator(
+        'ion-popover ion-picker-column-internal:nth-child(1) .picker-item:not(.picker-item-empty)'
+      );
+
+      await expect(await hours.count()).toBe(4);
+    });
+  });
 });
