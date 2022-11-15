@@ -19,7 +19,7 @@ export class NumericValueAccessorDirective extends ValueAccessor {
   }
 
   @HostListener('ionChange', ['$event.target'])
-  _handleIonChange(el: HTMLIonInputElement): void {
+  _handleIonChange(el: HTMLInputElement): void {
     this.handleChangeEvent(el, el.value);
   }
 

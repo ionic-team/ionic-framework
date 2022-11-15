@@ -20,7 +20,7 @@ export class RadioValueAccessorDirective extends ValueAccessor {
   }
 
   @HostListener('ionSelect', ['$event.target'])
-  _handleIonSelect(el: any): void {
+  _handleIonSelect(el: HTMLInputElement): void {
     this.handleChangeEvent(el, el.checked);
   }
 }
