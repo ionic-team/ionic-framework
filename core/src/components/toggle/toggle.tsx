@@ -2,6 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
 import { createLegacyFormController } from '@utils/forms';
 import type { LegacyFormController } from '@utils/forms';
+import { printIonWarning } from '@utils/logging';
 import { checkmarkOutline, removeOutline, ellipseOutline } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -31,6 +32,9 @@ export class Toggle implements ComponentInterface {
   private focusEl?: HTMLElement;
   private lastDrag = 0;
   private legacyFormController!: LegacyFormController;
+
+  // This flag ensures we log the deprecation warning at most once.
+  private hasLoggedDeprecationWarning = false;
 
   @Element() el!: HTMLIonToggleElement;
 
@@ -247,6 +251,18 @@ export class Toggle implements ComponentInterface {
   }
 
   private renderLegacyToggle() {
+    if (!this.hasLoggedDeprecationWarning) {
+      printIonWarning(
+        `Using ion-toggle with an ion-label has been deprecated. To migrate, remove the ion-label and pass your label directly into ion-toggle instead.
+
+Example: <ion-toggle>Email:</ion-toggle>
+
+For toggles that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the toggle.`,
+        this.el
+      );
+      this.hasLoggedDeprecationWarning = true;
+    }
+
     const { activated, color, checked, disabled, el, inputId, name, enableOnOffLabels } = this;
     const mode = getIonMode(this);
     const { label, labelId, labelText } = getAriaLabel(el, inputId);
