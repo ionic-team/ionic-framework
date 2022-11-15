@@ -15,6 +15,8 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
+ * @slot - The label text to associate with the toggle. Use the "labelPlacement" property to control where the label is placed relative to the toggle.
+ *
  * @part track - The background track of the toggle.
  * @part handle - The toggle handle, or knob, used to change the checked state.
  */
@@ -247,7 +249,7 @@ export class Toggle implements ComponentInterface {
   }
 
   private renderToggle() {
-    return 'Stub';
+    return <slot></slot>;
   }
 
   private renderLegacyToggle() {
