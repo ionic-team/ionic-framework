@@ -14,7 +14,8 @@ test.describe('text: basic', () => {
       </ion-text>
     `);
 
-    expect(await page.screenshot()).toMatchSnapshot(`text-${page.getSnapshotSettings()}.png`);
+    const text = page.locator('ion-text');
+    expect(await text.screenshot()).toMatchSnapshot(`text-${page.getSnapshotSettings()}.png`);
   });
   test('should render text with color prop', async ({ page }) => {
     await page.setContent(`
@@ -24,6 +25,7 @@ test.describe('text: basic', () => {
       </ion-text>
     `);
 
-    expect(await page.screenshot()).toMatchSnapshot(`text-color-${page.getSnapshotSettings()}.png`);
+    const text = page.locator('ion-text');
+    expect(await text.screenshot()).toMatchSnapshot(`text-color-${page.getSnapshotSettings()}.png`);
   });
 });
