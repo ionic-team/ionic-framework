@@ -99,6 +99,7 @@ export declare interface IonPopover extends Components.IonPopover {
   ],
 })
 export class IonPopover {
+  // TODO(FW-2827): type
   @ContentChild(TemplateRef, { static: false }) template: TemplateRef<any>;
 
   isCmpOpen: boolean = false;

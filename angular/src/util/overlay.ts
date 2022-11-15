@@ -1,3 +1,5 @@
+// TODO(FW-2827): types
+
 interface ControllerShape<Opts, HTMLElm> {
   create(options: Opts): Promise<HTMLElm>;
   dismiss(data?: any, role?: string, id?: string): Promise<boolean>;

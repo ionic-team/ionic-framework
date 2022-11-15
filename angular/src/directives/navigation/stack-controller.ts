@@ -17,6 +17,8 @@ import {
   toSegments,
 } from './stack-utils';
 
+// TODO(FW-2827): types
+
 export class StackController {
   private views: RouteView[] = [];
   private runningTask?: Promise<any>;

@@ -21,6 +21,8 @@ import { EnvironmentInjector } from '../di/r3_injector';
 import { NavParams } from '../directives/navigation/nav-params';
 import { isComponentFactoryResolver } from '../util/util';
 
+// TODO(FW-2827): types
+
 @Injectable()
 export class AngularDelegate {
   constructor(private zone: NgZone, private appRef: ApplicationRef) {}

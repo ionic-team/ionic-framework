@@ -2,6 +2,8 @@
 /* tslint:disable */
 import { fromEvent } from 'rxjs';
 
+// TODO(FW-2827): types
+
 export const proxyInputs = (Cmp: any, inputs: string[]) => {
   const Prototype = Cmp.prototype;
   inputs.forEach(item => {

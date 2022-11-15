@@ -6,6 +6,8 @@ import { Config } from './providers/config';
 import { IonicWindow } from './types/interfaces';
 import { raf } from './util/util';
 
+// TODO(FW-2827): types
+
 export const appInitialize = (config: Config, doc: Document, zone: NgZone) => {
   return (): any => {
     const win: IonicWindow | undefined = doc.defaultView as any;

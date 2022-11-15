@@ -108,6 +108,7 @@ export declare interface IonModal extends Components.IonModal {
   ],
 })
 export class IonModal {
+  // TODO(FW-2827): type
   @ContentChild(TemplateRef, { static: false }) template: TemplateRef<any>;
 
   isCmpOpen: boolean = false;
