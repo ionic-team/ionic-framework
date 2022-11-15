@@ -31,10 +31,6 @@
     "strictPropertyInitialization": false,
     "target": "es2015",
     "baseUrl": ".",
-    "paths": {
-      "@ionic/core/hydrate": ["../core/hydrate"],
-      "@ionic/core": ["../core"]
-    },
     "plugins": [
       {
         "name": "typescript-eslint-language-service"
