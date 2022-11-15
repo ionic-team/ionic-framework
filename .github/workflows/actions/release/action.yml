@@ -1,0 +1,43 @@
+name: 'Release'
+description: 'Releases a package'
+inputs:
+  scope:
+    description: 'The package to release. Must match a package specified in lerna.json.'
+  version:
+    description: 'The type of version to release.'
+  tag:
+    description: 'The tag to publish to on NPM.'
+  working-directory:
+    description: 'The directory of the package.'
+  folder:
+    default: './'
+    description: 'A folder containing a package.json file.'
+  token:
+    description: 'The NPM authentication token required to publish.'
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16.x
+    - name: Install Dependencies
+      run: lerna bootstrap --scope ${{ inputs.scope }} --ignore-scripts -- --legacy-peer-deps
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+    - name: Update Version
+      run: npm version ${{ inputs.version }}
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+    - name: Run Build
+      run: npm run build
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+    - name: Prepare NPM Token
+      run: echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc
+      shell: bash
+      env:
+        NPM_TOKEN: ${{ inputs.token }}
+    - name: Publish to NPM
+      run: npm publish ${{ inputs.folder }} --tag ${{ inputs.tag }}  --git-tag-version false
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
