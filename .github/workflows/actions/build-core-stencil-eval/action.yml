@@ -53,8 +53,7 @@ runs:
       with:
         name: ionic-core
         output: core/CoreBuild.zip
-        # TODO(NOW): This greatly increases the size of our artifact. See if we need it, even though the tarball goes away in the future
-        paths: core/dist core/components core/css core/hydrate core/loader core/src/components.d.ts core/stencil-eval.tgz
+        paths: core/dist core/components core/css core/hydrate core/loader core/src/components.d.ts
     - uses: ./.github/workflows/actions/upload-archive
       with:
         name: ionic-core-src
