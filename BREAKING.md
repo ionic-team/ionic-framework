@@ -187,6 +187,8 @@ Developers using these components will need to migrate to using Swiper.js direct
 
 - `ionChange` is no longer emitted when the `checked` property of `ion-toggle` is modified externally. `ionChange` is only emitted from user committed changes, such as clicking the toggle to set it on or off.
 
+- The `--background` and `--background-checked` variables have been renamed to `--track-background` and `--track-background-checked`, respectively.
+
 <h4 id="version-7x-virtual-scroll">Virtual Scroll</h4>
 
 `ion-virtual-scroll` has been removed from Ionic.
