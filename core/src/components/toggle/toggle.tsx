@@ -1,5 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
+import { createLegacyFormController } from '@utils/forms';
+import type { LegacyFormController } from '@utils/forms';
 import { checkmarkOutline, removeOutline, ellipseOutline } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -28,8 +30,9 @@ export class Toggle implements ComponentInterface {
   private gesture?: Gesture;
   private focusEl?: HTMLElement;
   private lastDrag = 0;
+  private legacyFormController!: LegacyFormController;
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonToggleElement;
 
   @State() activated = false;
 
@@ -131,8 +134,12 @@ export class Toggle implements ComponentInterface {
   }
 
   async connectedCallback() {
+    const { el } = this;
+
+    this.legacyFormController = createLegacyFormController(el);
+
     this.gesture = (await import('../../utils/gesture')).createGesture({
-      el: this.el,
+      el,
       gestureName: 'toggle',
       gesturePriority: 100,
       threshold: 5,
@@ -230,6 +237,16 @@ export class Toggle implements ComponentInterface {
   }
 
   render() {
+    const { legacyFormController } = this;
+
+    return legacyFormController.hasLegacyControl() ? this.renderLegacyToggle() : this.renderToggle();
+  }
+
+  private renderToggle() {
+    return 'Stub';
+  }
+
+  private renderLegacyToggle() {
     const { activated, color, checked, disabled, el, inputId, name, enableOnOffLabels } = this;
     const mode = getIonMode(this);
     const { label, labelId, labelText } = getAriaLabel(el, inputId);
