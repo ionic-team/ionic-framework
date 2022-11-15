@@ -521,7 +521,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
      * If we did not do this check, then not using swipeToClose would mean you could
      * not run canDismiss on swipe as there would be no swipe gesture created.
      */
-    const hasCardModal = this.swipeToClose || (this.canDismiss !== undefined && this.presentingElement !== undefined);
+    const hasCardModal = this.presentingElement !== undefined && (this.swipeToClose || this.canDismiss !== undefined);
 
     /**
      * We need to change the status bar at the
