@@ -714,8 +714,6 @@ export class Refresher implements ComponentInterface {
     // set that the refresh is actively cancelling/completing
     this.state = state;
     this.setCss(0, this.closeDuration, true, delay);
-
-    // TODO: stop gesture
   }
 
   private setCss(y: number, duration: string, overflowVisible: boolean, delay: string) {
