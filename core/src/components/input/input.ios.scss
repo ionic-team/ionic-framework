@@ -2,12 +2,18 @@
 @import "./input.ios.vars";
 
 :host {
+  --border-width: #{$hairlines-width};
+  --border-color: #{$item-ios-border-color};
+
+  font-size: $input-ios-font-size;
+}
+
+// TODO FW-2764 Remove this
+:host(.legacy-input) {
   --padding-top: #{$input-ios-padding-top};
   --padding-end: #{$input-ios-padding-end};
   --padding-bottom: #{$input-ios-padding-bottom};
   --padding-start: #{$input-ios-padding-start};
-
-  font-size: $input-ios-font-size;
 }
 
 :host-context(.item-label-stacked),
@@ -24,4 +30,21 @@
   height: $input-ios-input-clear-icon-width;
 
   background-size: $input-ios-input-clear-icon-size;
+}
+
+// Input Wrapper
+// ----------------------------------------------------------------
+
+.input-wrapper {
+  min-height: 44px;
+}
+
+/**
+ * Since the label sits on top of the element,
+ * the component needs to be taller otherwise the
+ * label will appear too close to the input text.
+ */
+:host(.input-label-placement-floating) .input-wrapper,
+:host(.input-label-placement-stacked) .input-wrapper {
+  min-height: 56px;
 }

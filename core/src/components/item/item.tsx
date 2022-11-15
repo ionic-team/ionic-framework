@@ -1,5 +1,6 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Listen, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
+import { printIonError, printIonWarning } from '@utils/logging';
 import { chevronForward } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -7,7 +8,6 @@ import type { AnimationBuilder, Color, CssClassMap, RouterDirection, StyleEventD
 import type { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAttributes, raf } from '../../utils/helpers';
-import { printIonError } from '../../utils/logging';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 import type { InputInputEventDetail } from '../input/input-interface';
 
@@ -19,8 +19,8 @@ import type { CounterFormatter } from './item-interface';
  * @slot - Content is placed between the named slots if provided without a slot.
  * @slot start - Content is placed to the left of the item text in LTR, and to the right in RTL.
  * @slot end - Content is placed to the right of the item text in LTR, and to the left in RTL.
- * @slot helper - Content is placed under the item and displayed when no error is detected.
- * @slot error - Content is placed under the item and displayed when an error is detected.
+ * @slot helper - Content is placed under the item and displayed when no error is detected. @deprecated Use the "helperText" property on ion-input or ion-textarea instead.
+ * @slot error - Content is placed under the item and displayed when an error is detected. @deprecated Use the "errorText" property on ion-input or ion-textarea instead.
  *
  * @part native - The native HTML button, anchor or div element that wraps all child elements.
  * @part detail-icon - The chevron icon for the item. Only applies when `detail="true"`.
@@ -111,6 +111,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
 
   /**
    * If `true`, a character counter will display the ratio of characters used and the total character limit. Only applies when the `maxlength` property is set on the inner `ion-input` or `ion-textarea`.
+   * @deprecated Use the `counter` property on `ion-input` or `ion-textarea` instead.
    */
   @Prop() counter = false;
 
@@ -141,6 +142,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   /**
    * A callback used to format the counter text.
    * By default the counter text is set to "itemLength / maxLength".
+   * @deprecated Use the `counterFormatter` property on `ion-input` or `ion-textarea` instead.
    */
   @Prop() counterFormatter?: CounterFormatter;
 
@@ -207,8 +209,53 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   }
 
   componentDidLoad() {
+    const { el, counter, counterFormatter, fill, shape } = this;
+    const hasHelperSlot = el.querySelector('[slot="helper"]') !== null;
+    if (hasHelperSlot) {
+      printIonWarning(
+        'The "helper" slot has been deprecated in favor of using the "helperText" property on ion-input or ion-textarea.',
+        el
+      );
+    }
+
+    const hasErrorSlot = el.querySelector('[slot="error"]') !== null;
+    if (hasErrorSlot) {
+      printIonWarning(
+        'The "error" slot has been deprecated in favor of using the "errorText" property on ion-input or ion-textarea.',
+        el
+      );
+    }
+
+    if (counter === true) {
+      printIonWarning(
+        'The "counter" property has been deprecated in favor of using the "counter" property on ion-input or ion-textarea.',
+        el
+      );
+    }
+
+    if (counterFormatter !== undefined) {
+      printIonWarning(
+        'The "counterFormatter" property has been deprecated in favor of using the "counterFormatter" property on ion-input or ion-textarea.',
+        el
+      );
+    }
+
+    if (fill !== undefined) {
+      printIonWarning(
+        'The "fill" property has been deprecated in favor of using the "fill" property on ion-input or ion-textarea.',
+        el
+      );
+    }
+
+    if (shape !== undefined) {
+      printIonWarning(
+        'The "shape" property has been deprecated in favor of using the "shape" property on ion-input or ion-textarea.',
+        el
+      );
+    }
+
     raf(() => {
-      this.inheritedAriaAttributes = inheritAttributes(this.el, ['aria-label']);
+      this.inheritedAriaAttributes = inheritAttributes(el, ['aria-label']);
       this.setMultipleInputs();
       this.focusable = this.isFocusable();
     });
@@ -261,6 +308,11 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   private isFocusable(): boolean {
     const focusableChild = this.el.querySelector('.ion-focusable');
     return this.canActivate() || focusableChild !== null;
+  }
+
+  private hasModernInput(): boolean {
+    const input = this.el.querySelector('ion-input:not(.legacy-input)');
+    return input !== null;
   }
 
   private getFirstInput(): HTMLIonInputElement | HTMLIonTextareaElement {
@@ -348,6 +400,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     const ariaDisabled = disabled || childStyles['item-interactive-disabled'] ? 'true' : null;
     const fillValue = fill || 'none';
     const inList = hostContext('ion-list', this.el);
+    const hasModernInput = this.hasModernInput();
 
     return (
       <Host
@@ -367,6 +420,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
             'ion-activatable': canActivate,
             'ion-focusable': this.focusable,
             'item-rtl': document.dir === 'rtl',
+            'item-has-modern-input': hasModernInput,
           }),
         }}
         role={inList ? 'listitem' : null}

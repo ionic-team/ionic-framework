@@ -1,5 +1,8 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import { createLegacyFormController } from '@utils/forms';
+import type { LegacyFormController } from '@utils/forms';
+import { printIonWarning } from '@utils/logging';
 
 import { getIonMode } from '../../global/ionic-global';
 import type {
@@ -12,7 +15,9 @@ import type {
 } from '../../interface';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes, debounceEvent, findItemLabel, inheritAttributes } from '../../utils/helpers';
-import { createColorClasses } from '../../utils/theme';
+import { createColorClasses, hostContext } from '../../utils/theme';
+
+import { getCounterText } from './input.utils';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -30,6 +35,10 @@ export class Input implements ComponentInterface {
   private inputId = `ion-input-${inputIds++}`;
   private inheritedAttributes: Attributes = {};
   private isComposing = false;
+  private legacyFormController!: LegacyFormController;
+
+  // This flag ensures we log the deprecation warning at most once.
+  private hasLoggedDeprecationWarning = false;
   private originalIonInput?: EventEmitter<InputInputEventDetail>;
 
   /**
@@ -46,7 +55,7 @@ export class Input implements ComponentInterface {
 
   @State() hasFocus = false;
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonInputElement;
 
   /**
    * The color to use from your application's color palette.
@@ -93,6 +102,17 @@ export class Input implements ComponentInterface {
   @Prop() clearOnEdit?: boolean;
 
   /**
+   * If `true`, a character counter will display the ratio of characters used and the total character limit. Developers must also set the `maxlength` property for the counter to be calculated correctly.
+   */
+  @Prop() counter = false;
+
+  /**
+   * A callback used to format the counter text.
+   * By default the counter text is set to "itemLength / maxLength".
+   */
+  @Prop() counterFormatter?: (inputLength: number, maxLength: number) => string;
+
+  /**
    * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
    */
   @Prop() debounce?: number;
@@ -126,11 +146,42 @@ export class Input implements ComponentInterface {
   @Prop() enterkeyhint?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
 
   /**
+   * Text that is placed under the input and displayed when an error is detected.
+   */
+  @Prop() errorText?: string;
+
+  /**
+   * The fill for the item. If `'solid'` the item will have a background. If
+   * `'outline'` the item will be transparent with a border. Only available in `md` mode.
+   */
+  @Prop() fill?: 'outline' | 'solid';
+
+  /**
    * A hint to the browser for which keyboard to display.
    * Possible values: `"none"`, `"text"`, `"tel"`, `"url"`,
    * `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
    */
   @Prop() inputmode?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
+
+  /**
+   * Text that is placed under the input and displayed when no error is detected.
+   */
+  @Prop() helperText?: string;
+
+  /**
+   * The visible label associated with the input.
+   */
+  @Prop() label?: string;
+
+  /**
+   * Where to place the label relative to the input.
+   * `'start'`: The label will appear to the left of the input in LTR and to the right in RTL.
+   * `'end'`: The label will appear to the right of the input in LTR and to the left in RTL.
+   * `'floating'`: The label will appear smaller and above the input when the input is focused or it has a value. Otherwise it will appear on top of the input.
+   * `'stacked'`: The label will appear smaller and above the input regardless even when the input is blurred or has no value.
+   * `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+   */
+  @Prop() labelPlacement: 'start' | 'end' | 'floating' | 'stacked' | 'fixed' = 'start';
 
   /**
    * The maximum value, which must not be less than its minimum (min attribute) value.
@@ -183,6 +234,11 @@ export class Input implements ComponentInterface {
    * If `true`, the user must fill in a value before submitting a form.
    */
   @Prop() required = false;
+
+  /**
+   * The shape of the input. If "round" it will have an increased border radius.
+   */
+  @Prop() shape?: 'round';
 
   /**
    * If `true`, the element will have its spelling and grammar checked.
@@ -289,6 +345,10 @@ export class Input implements ComponentInterface {
   }
 
   connectedCallback() {
+    const { el } = this;
+
+    this.legacyFormController = createLegacyFormController(el);
+
     this.emitStyle();
     this.debounceChanged();
     if (Build.isBrowser) {
@@ -378,14 +438,16 @@ export class Input implements ComponentInterface {
   }
 
   private emitStyle() {
-    this.ionStyle.emit({
-      interactive: true,
-      input: true,
-      'has-placeholder': this.placeholder !== undefined,
-      'has-value': this.hasValue(),
-      'has-focus': this.hasFocus,
-      'interactive-disabled': this.disabled,
-    });
+    if (this.legacyFormController.hasLegacyControl()) {
+      this.ionStyle.emit({
+        interactive: true,
+        input: true,
+        'has-placeholder': this.placeholder !== undefined,
+        'has-value': this.hasValue(),
+        'has-focus': this.hasFocus,
+        'interactive-disabled': this.disabled,
+      });
+    }
   }
 
   private onInput = (ev: InputEvent | Event) => {
@@ -467,7 +529,188 @@ export class Input implements ComponentInterface {
     return this.getValue().length > 0;
   }
 
-  render() {
+  /**
+   * Renders the helper text or error text values
+   */
+  private renderHintText() {
+    const { helperText, errorText } = this;
+
+    return [<div class="helper-text">{helperText}</div>, <div class="error-text">{errorText}</div>];
+  }
+
+  private renderCounter() {
+    const { counter, maxlength, counterFormatter, value } = this;
+    if (counter !== true || maxlength === undefined) {
+      return;
+    }
+
+    return <div class="counter">{getCounterText(value, maxlength, counterFormatter)}</div>;
+  }
+
+  /**
+   * Responsible for rendering helper text,
+   * error text, and counter. This element should only
+   * be rendered if hint text is set or counter is enabled.
+   */
+  private renderBottomContent() {
+    const { counter, helperText, errorText, maxlength } = this;
+
+    const hasHintText = helperText !== undefined || errorText !== undefined;
+    const hasCounter = counter === true && maxlength !== undefined;
+    if (!hasHintText && !hasCounter) {
+      return;
+    }
+
+    return (
+      <div class="input-bottom">
+        {this.renderHintText()}
+        {this.renderCounter()}
+      </div>
+    );
+  }
+
+  private renderLabel() {
+    const { label } = this;
+    if (label === undefined) {
+      return;
+    }
+
+    return (
+      <div class="label-text-wrapper">
+        <div class="label-text">{this.label}</div>
+      </div>
+    );
+  }
+
+  /**
+   * Renders the border container
+   * when fill="outline".
+   */
+  private renderLabelContainer() {
+    const mode = getIonMode(this);
+    const hasOutlineFill = mode === 'md' && this.fill === 'outline';
+
+    if (hasOutlineFill) {
+      /**
+       * The outline fill has a special outline
+       * that appears around the input and the label.
+       * Certain stacked and floating label placements cause the
+       * label to translate up and create a "cut out"
+       * inside of that border by using the notch-spacer element.
+       */
+      return [
+        <div class="input-outline-container">
+          <div class="input-outline-start"></div>
+          <div class="input-outline-notch">
+            <div class="notch-spacer" aria-hidden="true">
+              {this.label}
+            </div>
+          </div>
+          <div class="input-outline-end"></div>
+        </div>,
+        this.renderLabel(),
+      ];
+    }
+
+    /**
+     * If not using the outline style,
+     * we can render just the label.
+     */
+    return this.renderLabel();
+  }
+
+  private renderInput() {
+    const { disabled, fill, readonly, shape, inputId, labelPlacement } = this;
+    const mode = getIonMode(this);
+    const value = this.getValue();
+    const shouldRenderHighlight = mode === 'md' && fill !== 'outline';
+
+    return (
+      <Host
+        aria-disabled={disabled ? 'true' : null}
+        class={createColorClasses(this.color, {
+          [mode]: true,
+          'has-value': this.hasValue(),
+          'has-focus': this.hasFocus,
+          [`input-fill-${fill}`]: fill !== undefined,
+          [`input-shape-${shape}`]: shape !== undefined,
+          [`input-label-placement-${labelPlacement}`]: true,
+          'in-full-item': hostContext('ion-item:not(.item-lines-inset)', this.el),
+        })}
+      >
+        <label class="input-wrapper">
+          {this.renderLabelContainer()}
+          <div class="native-wrapper">
+            <input
+              class="native-input"
+              ref={(input) => (this.nativeInput = input)}
+              id={inputId}
+              disabled={disabled}
+              accept={this.accept}
+              autoCapitalize={this.autocapitalize}
+              autoComplete={this.autocomplete}
+              autoCorrect={this.autocorrect}
+              autoFocus={this.autofocus}
+              enterKeyHint={this.enterkeyhint}
+              inputMode={this.inputmode}
+              min={this.min}
+              max={this.max}
+              minLength={this.minlength}
+              maxLength={this.maxlength}
+              multiple={this.multiple}
+              name={this.name}
+              pattern={this.pattern}
+              placeholder={this.placeholder || ''}
+              readOnly={readonly}
+              required={this.required}
+              spellcheck={this.spellcheck}
+              step={this.step}
+              size={this.size}
+              type={this.type}
+              value={value}
+              onInput={this.onInput}
+              onChange={this.onChange}
+              onBlur={this.onBlur}
+              onFocus={this.onFocus}
+              onKeyDown={this.onKeydown}
+              {...this.inheritedAttributes}
+            />
+            {this.clearInput && !readonly && !disabled && (
+              <button
+                aria-label="reset"
+                type="button"
+                class="input-clear-icon"
+                onPointerDown={(ev) => {
+                  /**
+                   * This prevents mobile browsers from
+                   * blurring the input when the clear
+                   * button is activated.
+                   */
+                  ev.preventDefault();
+                }}
+                onClick={this.onClearButtonClick}
+              />
+            )}
+          </div>
+          {shouldRenderHighlight && <div class="input-highlight"></div>}
+        </label>
+        {this.renderBottomContent()}
+      </Host>
+    );
+  }
+
+  // TODO FW-2764 Remove this
+  private renderLegacyInput() {
+    if (!this.hasLoggedDeprecationWarning) {
+      printIonWarning(
+        `Using ion-input with an ion-label has been deprecated. To migrate, remove the ion-label and use the "label" property on ion-input instead.
+
+For inputs that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the input.`,
+        this.el
+      );
+      this.hasLoggedDeprecationWarning = true;
+    }
+
     const mode = getIonMode(this);
     const value = this.getValue();
     const labelId = this.inputId + '-lbl';
@@ -483,12 +726,13 @@ export class Input implements ComponentInterface {
           [mode]: true,
           'has-value': this.hasValue(),
           'has-focus': this.hasFocus,
+          'legacy-input': true,
         })}
       >
         <input
           class="native-input"
           ref={(input) => (this.nativeInput = input)}
-          aria-labelledby={label ? labelId : null}
+          aria-labelledby={label ? label.id : null}
           disabled={this.disabled}
           accept={this.accept}
           autoCapitalize={this.autocapitalize}
@@ -537,6 +781,12 @@ export class Input implements ComponentInterface {
         )}
       </Host>
     );
+  }
+
+  render() {
+    const { legacyFormController } = this;
+
+    return legacyFormController.hasLegacyControl() ? this.renderLegacyInput() : this.renderInput();
   }
 }
 

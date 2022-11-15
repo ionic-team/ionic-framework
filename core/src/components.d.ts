@@ -1084,6 +1084,14 @@ export namespace Components {
          */
         "color"?: Color;
         /**
+          * If `true`, a character counter will display the ratio of characters used and the total character limit. Developers must also set the `maxlength` property for the counter to be calculated correctly.
+         */
+        "counter": boolean;
+        /**
+          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".
+         */
+        "counterFormatter"?: (inputLength: number, maxLength: number) => string;
+        /**
           * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
          */
         "debounce"?: number;
@@ -1096,13 +1104,33 @@ export namespace Components {
          */
         "enterkeyhint"?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
         /**
+          * Text that is placed under the input and displayed when an error is detected.
+         */
+        "errorText"?: string;
+        /**
+          * The fill for the item. If `'solid'` the item will have a background. If `'outline'` the item will be transparent with a border. Only available in `md` mode.
+         */
+        "fill"?: 'outline' | 'solid';
+        /**
           * Returns the native `<input>` element used under the hood.
          */
         "getInputElement": () => Promise<HTMLInputElement>;
         /**
+          * Text that is placed under the input and displayed when no error is detected.
+         */
+        "helperText"?: string;
+        /**
           * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
          */
         "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
+        /**
+          * The visible label associated with the input.
+         */
+        "label"?: string;
+        /**
+          * Where to place the label relative to the input. `'start'`: The label will appear to the left of the input in LTR and to the right in RTL. `'end'`: The label will appear to the right of the input in LTR and to the left in RTL. `'floating'`: The label will appear smaller and above the input when the input is focused or it has a value. Otherwise it will appear on top of the input. `'stacked'`: The label will appear smaller and above the input regardless even when the input is blurred or has no value. `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+         */
+        "labelPlacement": 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
         /**
           * The maximum value, which must not be less than its minimum (min attribute) value.
          */
@@ -1152,6 +1180,10 @@ export namespace Components {
          */
         "setFocus": () => Promise<void>;
         /**
+          * The shape of the input. If "round" it will have an increased border radius.
+         */
+        "shape"?: 'round';
+        /**
           * The initial size of the control. This value is in pixels unless the value of the type attribute is `"text"` or `"password"`, in which case it is an integer number of characters. This attribute applies only when the `type` attribute is set to `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, or `"password"`, otherwise it is ignored.
          */
         "size"?: number;
@@ -1183,10 +1215,12 @@ export namespace Components {
         "color"?: Color;
         /**
           * If `true`, a character counter will display the ratio of characters used and the total character limit. Only applies when the `maxlength` property is set on the inner `ion-input` or `ion-textarea`.
+          * @deprecated Use the `counter` property on `ion-input` or `ion-textarea` instead.
          */
         "counter": boolean;
         /**
           * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".
+          * @deprecated Use the `counterFormatter` property on `ion-input` or `ion-textarea` instead.
          */
         "counterFormatter"?: CounterFormatter;
         /**
@@ -4926,6 +4960,14 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
+          * If `true`, a character counter will display the ratio of characters used and the total character limit. Developers must also set the `maxlength` property for the counter to be calculated correctly.
+         */
+        "counter"?: boolean;
+        /**
+          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".
+         */
+        "counterFormatter"?: (inputLength: number, maxLength: number) => string;
+        /**
           * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
          */
         "debounce"?: number;
@@ -4938,9 +4980,29 @@ declare namespace LocalJSX {
          */
         "enterkeyhint"?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
         /**
+          * Text that is placed under the input and displayed when an error is detected.
+         */
+        "errorText"?: string;
+        /**
+          * The fill for the item. If `'solid'` the item will have a background. If `'outline'` the item will be transparent with a border. Only available in `md` mode.
+         */
+        "fill"?: 'outline' | 'solid';
+        /**
+          * Text that is placed under the input and displayed when no error is detected.
+         */
+        "helperText"?: string;
+        /**
           * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
          */
         "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
+        /**
+          * The visible label associated with the input.
+         */
+        "label"?: string;
+        /**
+          * Where to place the label relative to the input. `'start'`: The label will appear to the left of the input in LTR and to the right in RTL. `'end'`: The label will appear to the right of the input in LTR and to the left in RTL. `'floating'`: The label will appear smaller and above the input when the input is focused or it has a value. Otherwise it will appear on top of the input. `'stacked'`: The label will appear smaller and above the input regardless even when the input is blurred or has no value. `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+         */
+        "labelPlacement"?: 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
         /**
           * The maximum value, which must not be less than its minimum (min attribute) value.
          */
@@ -5006,6 +5068,10 @@ declare namespace LocalJSX {
          */
         "required"?: boolean;
         /**
+          * The shape of the input. If "round" it will have an increased border radius.
+         */
+        "shape"?: 'round';
+        /**
           * The initial size of the control. This value is in pixels unless the value of the type attribute is `"text"` or `"password"`, in which case it is an integer number of characters. This attribute applies only when the `type` attribute is set to `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, or `"password"`, otherwise it is ignored.
          */
         "size"?: number;
@@ -5037,10 +5103,12 @@ declare namespace LocalJSX {
         "color"?: Color;
         /**
           * If `true`, a character counter will display the ratio of characters used and the total character limit. Only applies when the `maxlength` property is set on the inner `ion-input` or `ion-textarea`.
+          * @deprecated Use the `counter` property on `ion-input` or `ion-textarea` instead.
          */
         "counter"?: boolean;
         /**
           * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".
+          * @deprecated Use the `counterFormatter` property on `ion-input` or `ion-textarea` instead.
          */
         "counterFormatter"?: CounterFormatter;
         /**
