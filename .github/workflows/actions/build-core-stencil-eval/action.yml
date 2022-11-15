@@ -13,7 +13,7 @@ runs:
         node-version: 16.x
 
     - name: Install Dependencies
-      run: npm install
+      run: npm ci
       working-directory: ./core
       shell: bash
     - name: Retrieve Stencil Repository
