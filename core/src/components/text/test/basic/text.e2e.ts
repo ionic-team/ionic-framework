@@ -9,8 +9,7 @@ test.describe('text: basic', () => {
   test('should render default text', async ({ page }) => {
     await page.setContent(`
       <ion-text>
-        <h1>H1: The quick brown fox jumps over the lazy dog</h1>
-        <p>This is <sub>subscript</sub>. <ion-text>This is nested text</ion-text>
+        <strong>The quick brown fox <ion-text><sup>jumps</sup></ion-text> over the <ion-text><sub>lazy dog</sub></ion-text></strong>
       </ion-text>
     `);
 
@@ -20,8 +19,7 @@ test.describe('text: basic', () => {
   test('should render text with color prop', async ({ page }) => {
     await page.setContent(`
       <ion-text color="primary">
-        <h1>H1: The quick brown fox jumps over the lazy dog</h1>
-        <p>This is <sub>subscript</sub>. <ion-text color="danger">This is nested text</ion-text>
+        <strong>The quick brown fox <ion-text color="success"><sup>jumps</sup></ion-text> over the <ion-text color="danger"><sub>lazy dog</sub></ion-text></strong>
       </ion-text>
     `);
 
