@@ -25,7 +25,7 @@ jobs:
         run: |
           echo "DATE=$(date +%Y%m%d)" >> $GITHUB_ENV
           echo "CURRENT_VERSION=$(node ./.scripts/bump-version.js)" >> $GITHUB_ENV
-          echo "NIGHTLY_HASH=${CURRENT_VERSION}-nightly.${DATE}" >> $GITHUB_OUTPUT
+          echo "NIGHTLY_HASH=${{ env.CURRENT_VERSION }}-nightly.${{ env.DATE }}" >> $GITHUB_OUTPUT
         shell: bash
   release-core:
     runs-on: ubuntu-latest
