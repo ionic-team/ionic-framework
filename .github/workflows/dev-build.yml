@@ -4,42 +4,206 @@ on:
   workflow_dispatch:
 
 jobs:
-  dev-build:
+  jobs:
+  create-dev-hash:
     runs-on: ubuntu-latest
     outputs:
-      version: ${{ steps.dev-build.outputs.version }}
+      dev-hash: ${{ steps.create-dev-hash.outputs.DEV_HASH }}
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      - name: Install Dependencies
-        run: npm ci --no-package-lock && lerna bootstrap --ignore-scripts -- --legacy-peer-deps
-        shell: bash
-      - name: Prepare NPM Token
-        run: echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc
-        shell: bash
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       # A 1 is required before the timestamp
       # as lerna will fail when there is a leading 0
       # See https://github.com/lerna/lerna/issues/2840
-      - name: Create Dev Hash
-        run: |
-          echo "HASH=1$(git log -1 --format=%H | cut -c 1-7)" >> $GITHUB_ENV
-          echo "TIMESTAMP=1$(date +%s)" >> $GITHUB_ENV
-          echo "CURRENT_VERSION=$(node ./.scripts/bump-version.js)" >> $GITHUB_ENV
+      - name: Install Dependencies
+        run: npm ci --no-package-lock
         shell: bash
-      - name: Create Dev Build
+      - id: create-dev-hash
+        name: Create Dev Hash
         run: |
-          HUSKY_SKIP_HOOKS=1 lerna publish $(echo "${{ env.CURRENT_VERSION }}")-dev.$(echo "${{ env.TIMESTAMP }}").$(echo "${{ env.HASH }}") --no-verify-access --yes --force-publish='*' --dist-tag dev --no-git-tag-version --no-push --exact
+          echo "DEV_HASH=$(node ./.scripts/bump-version.js)-dev.1$(date +%s).1$(git log -1 --format=%H | cut -c 1-7)" >> $GITHUB_OUTPUT
         shell: bash
-      - id: dev-build
-        run: echo "::set-output name=version::$(echo "${{ env.CURRENT_VERSION }}")-dev.$(echo "${{ env.TIMESTAMP }}").$(echo "${{ env.HASH }}")"
+  release-core:
+    runs-on: ubuntu-latest
+    needs: [create-dev-hash]
+    steps:
+    - uses: actions/checkout@v3
+    - uses: ./.github/workflows/actions/release
+      with:
+        scope: '@ionic/core'
+        tag: dev
+        version: ${{ needs.create-dev-hash.outputs.dev-hash }}
+        working-directory: 'core'
+        token: ${{ secrets.NPM_TOKEN }}
+    - name: Cache Built @ionic/core
+      uses: ./.github/workflows/actions/upload-archive
+      with:
+        name: ionic-core
+        output: core/CoreBuild.zip
+        paths: core/dist core/components core/css core/hydrate core/loader core/src/components.d.ts
+    - name: Cache Built @ionic/docs
+      uses: ./.github/workflows/actions/upload-archive
+      with:
+        name: ionic-docs
+        output: docs/DocsBuild.zip
+        paths: docs/core.json docs/core.d.ts
+
+  release-docs:
+    needs: [release-core]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Restore @ionic/docs built cache
+      uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-docs
+        path: ./docs
+        filename: DocsBuild.zip
+    - uses: ./.github/workflows/actions/release
+      with:
+        scope: '@ionic/docs'
+        tag: dev
+        version: ${{ needs.create-dev-hash.outputs.dev-hash }}
+        working-directory: 'docs'
+        token: ${{ secrets.NPM_TOKEN }}
+
+  release-angular:
+    needs: [release-core]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Restore @ionic/core built cache
+      uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-core
+        path: ./core
+        filename: CoreBuild.zip
+    - uses: ./.github/workflows/actions/release
+      with:
+        scope: '@ionic/angular'
+        tag: dev
+        version: ${{ needs.create-dev-hash.outputs.dev-hash }}
+        working-directory: 'angular'
+        folder: './dist'
+        token: ${{ secrets.NPM_TOKEN }}
+    - name: Cache Built @ionic/angular
+      uses: ./.github/workflows/actions/upload-archive
+      with:
+        name: ionic-angular
+        output: ./angular/AngularBuild.zip
+        paths: ./angular/dist
+
+  release-react:
+    needs: [release-core]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Restore @ionic/core built cache
+      uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-core
+        path: ./core
+        filename: CoreBuild.zip
+    - uses: ./.github/workflows/actions/release
+      with:
+        scope: '@ionic/react'
+        tag: dev
+        version: ${{ needs.create-dev-hash.outputs.dev-hash }}
+        working-directory: 'packages/react'
+        token: ${{ secrets.NPM_TOKEN }}
+    - name: Cache Built @ionic/react
+      uses: ./.github/workflows/actions/upload-archive
+      with:
+        name: ionic-react
+        output: packages/react/ReactBuild.zip
+        paths: packages/react/dist packages/react/css
+
+  release-vue:
+    needs: [release-core]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Restore @ionic/core built cache
+      uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-core
+        path: ./core
+        filename: CoreBuild.zip
+    - uses: ./.github/workflows/actions/release
+      with:
+        scope: '@ionic/vue'
+        tag: dev
+        version: ${{ needs.create-dev-hash.outputs.dev-hash }}
+        working-directory: 'packages/vue'
+        token: ${{ secrets.NPM_TOKEN }}
+    - name: Cache Built @ionic/vue
+      uses: ./.github/workflows/actions/upload-archive
+      with:
+        name: ionic-vue
+        output: packages/vue/VueBuild.zip
+        paths: packages/vue/dist packages/vue/css
+
+  release-angular-server:
+    needs: [release-angular]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Restore @ionic/angular built cache
+      uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-angular
+        path: ./angular
+        filename: AngularBuild.zip
+    - uses: ./.github/workflows/actions/release
+      with:
+        scope: '@ionic/angular-server'
+        tag: dev
+        version: ${{ needs.create-dev-hash.outputs.dev-hash }}
+        working-directory: 'packages/angular-server'
+        folder: './dist'
+        token: ${{ secrets.NPM_TOKEN }}
+
+  release-react-router:
+    needs: [release-react]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Restore @ionic/react built cache
+      uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-react
+        path: ./packages/react
+        filename: ReactBuild.zip
+    - uses: ./.github/workflows/actions/release
+      with:
+        scope: '@ionic/react-router'
+        tag: dev
+        version: ${{ needs.create-dev-hash.outputs.dev-hash }}
+        working-directory: 'packages/react-router'
+        token: ${{ secrets.NPM_TOKEN }}
+
+  release-vue-router:
+    needs: [release-vue]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Restore @ionic/vue built cache
+      uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-vue
+        path: ./packages/vue
+        filename: VueBuild.zip
+    - uses: ./.github/workflows/actions/release
+      with:
+        scope: '@ionic/vue-router'
+        tag: dev
+        version: ${{ needs.create-dev-hash.outputs.dev-hash }}
+        working-directory: 'packages/vue-router'
+        token: ${{ secrets.NPM_TOKEN }}
+
   get-build:
     name: Get your dev build!
     runs-on: ubuntu-latest
-    needs: dev-build
+    needs: [release-angular-server, release-vue-router, release-react-router]
     steps:
-      - run: echo ${{ needs.dev-build.outputs.version }}
+      - run: echo ${{ needs.create-dev-hash.outputs.dev-hash }}
 
