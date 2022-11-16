@@ -202,7 +202,7 @@ jobs:
   get-build:
     name: Get your dev build!
     runs-on: ubuntu-latest
-    needs: [release-angular-server, release-vue-router, release-react-router]
+    needs: [release-core, release-angular, release-react, release-vue, release-docs, release-angular-server, release-vue-router, release-react-router]
     steps:
       - run: echo ${{ needs.create-dev-hash.outputs.dev-hash }}
 
