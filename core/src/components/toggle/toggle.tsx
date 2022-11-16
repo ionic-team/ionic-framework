@@ -170,9 +170,11 @@ export class Toggle implements ComponentInterface {
   componentWillLoad() {
     this.emitStyle();
 
-    this.inheritedAttributes = {
-      ...inheritAriaAttributes(this.el),
-    };
+    if (!this.legacyFormController.hasLegacyControl()) {
+      this.inheritedAttributes = {
+        ...inheritAriaAttributes(this.el),
+      };
+    }
   }
 
   private emitStyle() {
