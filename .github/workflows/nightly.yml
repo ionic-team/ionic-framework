@@ -1,11 +1,18 @@
 name: 'Ionic Nightly Build'
 
 on:
-  workflow_dispatch:
+  # TODO(NOW) remove before merge
+  pull_request:
+    branches: [ '**' ]
   schedule:
     # Run every Monday-Friday
     # at 6:00 UTC (6:00 am UTC)
     - cron: '00 06 * * 1-5'
+
+# TODO(NOW) remove before merge
+concurrency:
+    group: ${{ github.ref }}
+    cancel-in-progress: true
 
 jobs:
   create-nightly-hash:
