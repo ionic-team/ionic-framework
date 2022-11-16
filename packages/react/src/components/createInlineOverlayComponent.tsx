@@ -56,6 +56,17 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
       this.componentDidUpdate(this.props);
 
       /**
+       * Mount the inner component when the
+       * overlay is about to open.
+       *
+       * For ion-popover, this is when `ionMount` is emitted.
+       * For other overlays, this is when `willPresent` is emitted.
+       */
+      this.ref.current?.addEventListener('ionMount', () => {
+        this.setState({ isOpen: true });
+      });
+
+      /**
        * Mount the inner component
        * when overlay is about to open.
        * Also manually call the onWillPresent
@@ -63,7 +74,7 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
        * cause the event handlers to be
        * destroyed and re-created.
        */
-      this.ref.current?.addEventListener('ionMount', (evt: any) => {
+      this.ref.current?.addEventListener('willPresent', (evt: any) => {
         this.setState({ isOpen: true });
 
         this.props.onWillPresent && this.props.onWillPresent(evt);

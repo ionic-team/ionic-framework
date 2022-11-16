@@ -3,6 +3,7 @@ import {
   IonButton,
   IonContent,
   IonItem,
+  IonLabel,
   IonList,
   IonListHeader,
   IonPage,
@@ -35,49 +36,56 @@ const PopoverComponent: React.FC = () => {
   return (
     <IonPage>
       <IonContent>
-        <IonPopover
-          isOpen={popoverState.showPopover}
-          event={popoverState.event}
-          onDidDismiss={() => setShowPopover({ showPopover: false, event: undefined })}
-        >
-          <PopoverList onHide={() => setShowPopover({ showPopover: false, event: undefined })} />
+        <div className="ion-padding" />
+        <div className="ion-padding" />
+        <div className="ion-padding" />
+        <div className="ion-padding" />
+        <div className="ion-padding" />
+        <div className="ion-padding" />
+        <div className="ion-padding" />
+        <div className="ion-padding" />
+        <div className="ion-padding" />
+        <div className="ion-padding" />
+        <div className="ion-padding" />
+        <div className="ion-padding" />
+
+        <IonButton id="top-center">Side=Top, Alignment=Center</IonButton>
+        <IonPopover trigger="top-center" side="top" alignment="center">
+          <IonContent>
+            <IonList>
+              <IonItem button>
+                <IonLabel>Hello World!</IonLabel>
+              </IonItem>
+              <IonItem button>
+                <IonLabel>Hello World!</IonLabel>
+              </IonItem>
+              <IonItem button>
+                <IonLabel>Hello World!</IonLabel>
+              </IonItem>
+              <IonItem button>
+                <IonLabel>Hello World!</IonLabel>
+              </IonItem>
+              <IonItem button lines="none">
+                <IonLabel>Hello World!</IonLabel>
+              </IonItem>
+            </IonList>
+          </IonContent>
         </IonPopover>
-        <IonButton
-          expand="block"
-          onClick={(e) =>
-            setShowPopover({
-              showPopover: true,
-              event: e.nativeEvent,
-            })
-          }
-        >
-          Show Popover
-        </IonButton>
-        <IonButton
-          expand="block"
-          onClick={(e) => {
-            setShowPopover({
-              showPopover: true,
-              event: e.nativeEvent,
-            });
-            setTimeout(
-              () =>
-                setShowPopover({
-                  showPopover: false,
-                  event: undefined,
-                }),
-              250
-            );
-          }}
-        >
-          Show Popover, hide after 250 ms
-        </IonButton>
-        {renderItem && <IonItem>
-          <IonButton id="openPopover">Open</IonButton>
-          <IonPopover id="popoverInItem" trigger="openPopover" dismissOnSelect={true}>
-            <IonButton id="removeItem" onClick={() => setRenderItem(false)}>Remove Item</IonButton>
-          </IonPopover>
-        </IonItem>}
+
+        <IonButton id="bottom-start">Side=Bottom, Alignment=Start</IonButton>
+        <IonPopover trigger="bottom-start" side="bottom" alignment="start">
+          <IonContent class="ion-padding">Hello World!</IonContent>
+        </IonPopover>
+
+        <IonButton id="left-start">Side=Left, Alignment=Start</IonButton>
+        <IonPopover trigger="left-start" side="left" alignment="start">
+          <IonContent class="ion-padding">Hello World!</IonContent>
+        </IonPopover>
+
+        <IonButton id="right-end">Side=Right, Alignment=End</IonButton>
+        <IonPopover trigger="right-end" side="right" alignment="end">
+          <IonContent class="ion-padding">Hello World!</IonContent>
+        </IonPopover>
       </IonContent>
     </IonPage>
   );
