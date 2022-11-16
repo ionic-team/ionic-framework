@@ -205,7 +205,7 @@ jobs:
         token: ${{ secrets.NPM_TOKEN }}
 
   finalize-release:
-    needs: [release-react-router, release-angular-server, release-vue-router]
+    needs: [release-core, release-angular, release-react, release-vue, release-docs, release-angular-server, release-vue-router, release-react-router]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
