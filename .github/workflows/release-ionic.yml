@@ -13,7 +13,6 @@ on:
         required: true
     secrets:
       NPM_TOKEN:
-        type: string
         required: true
 
 jobs:
