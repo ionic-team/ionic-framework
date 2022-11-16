@@ -38,8 +38,6 @@
 
   position: relative;
 
-  width: 100%;
-
   outline: none;
 
   cursor: pointer;
@@ -48,9 +46,13 @@
   z-index: $z-index-item-input;
 }
 
-:host(.legacy-toggle) {
-  width: auto;
+:host(:not(.legacy-toggle)) {
+  width: 100%;
 
+  background: var(--background);
+}
+
+:host(.legacy-toggle) {
   contain: content;
 }
 
@@ -94,7 +96,7 @@ input {
 
   transition: background-color 15ms linear;
 
-  background: var(--background);
+  cursor: inherit;
 }
 
 // Input Label
