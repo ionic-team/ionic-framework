@@ -2,14 +2,14 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
 
 // TODO(FW-2845) - Use @utils/forms and @utils/logging when https://github.com/ionic-team/stencil/issues/3826 is resolved
-import { createLegacyFormController } from '../../utils/forms';
-import type { LegacyFormController } from '../../utils/forms';
-import { printIonWarning } from '../../utils/logging';
 import { checkmarkOutline, removeOutline, ellipseOutline } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Color, Gesture, GestureDetail, Mode, StyleEventDetail, ToggleChangeEventDetail } from '../../interface';
+import type { LegacyFormController } from '../../utils/forms';
+import { createLegacyFormController } from '../../utils/forms';
 import { getAriaLabel, renderHiddenInput } from '../../utils/helpers';
+import { printIonWarning } from '../../utils/logging';
 import { hapticSelection } from '../../utils/native/haptic';
 import { isRTL } from '../../utils/rtl';
 import { createColorClasses, hostContext } from '../../utils/theme';
