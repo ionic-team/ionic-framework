@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.7-nightly.20221116](https://github.com/ionic-team/ionic-framework/compare/v6.3.6...v6.3.7-nightly.20221116) (2022-11-16)
+
+
+### Bug Fixes
+
+* **action-sheet:** icons are aligned on MD mode ([#26256](https://github.com/ionic-team/ionic-framework/issues/26256)) ([627d654](https://github.com/ionic-team/ionic-framework/commit/627d654d24f97e340e4004a03f07467619e60149)), closes [#26249](https://github.com/ionic-team/ionic-framework/issues/26249)
+* **datetime:** clear button clears the selected date ([#26264](https://github.com/ionic-team/ionic-framework/issues/26264)) ([9216744](https://github.com/ionic-team/ionic-framework/commit/9216744205c1ecc0c3dd51490a25be102f27a91a)), closes [#26258](https://github.com/ionic-team/ionic-framework/issues/26258)
+* **datetime:** fonts now render consistently ([#26281](https://github.com/ionic-team/ionic-framework/issues/26281)) ([f13ddca](https://github.com/ionic-team/ionic-framework/commit/f13ddcaf470fb3d070298819675812cebf5f5ceb))
+* **datetime:** max and min works with showDefaultButtons ([#26257](https://github.com/ionic-team/ionic-framework/issues/26257)) ([e5cff9e](https://github.com/ionic-team/ionic-framework/commit/e5cff9ecf39c13912cf6e062e4a084fadc59c399)), closes [#26146](https://github.com/ionic-team/ionic-framework/issues/26146)
+* **popover:** inline popover positioning with fit-content or auto width ([#26230](https://github.com/ionic-team/ionic-framework/issues/26230)) ([0a8a958](https://github.com/ionic-team/ionic-framework/commit/0a8a958cba02994ea0fefa265b17edddffe62e98)), closes [#24716](https://github.com/ionic-team/ionic-framework/issues/24716)
+* **popover:** popover positioning for controller and inline ([#26274](https://github.com/ionic-team/ionic-framework/issues/26274)) ([31ab10d](https://github.com/ionic-team/ionic-framework/commit/31ab10de4e1c8e38582b985f19414f73337a63c8)), closes [#24716](https://github.com/ionic-team/ionic-framework/issues/24716)
+* **textarea:** scrollbars are visible with overflow ([#26284](https://github.com/ionic-team/ionic-framework/issues/26284)) ([7a990ff](https://github.com/ionic-team/ionic-framework/commit/7a990ff403d7b7b80541c5d8f9cd05463c4fb593)), closes [#26278](https://github.com/ionic-team/ionic-framework/issues/26278)
+
+
+
+
+
 ## [6.3.6](https://github.com/ionic-team/ionic-framework/compare/v6.3.5...v6.3.6) (2022-11-10)
 
 
