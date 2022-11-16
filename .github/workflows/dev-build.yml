@@ -1,0 +1,40 @@
+name: 'Ionic Dev Build'
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create-dev-hash:
+    runs-on: ubuntu-latest
+    outputs:
+      dev-hash: ${{ steps.create-dev-hash.outputs.DEV_HASH }}
+    steps:
+      - uses: actions/checkout@v3
+      # A 1 is required before the timestamp
+      # as lerna will fail when there is a leading 0
+      # See https://github.com/lerna/lerna/issues/2840
+      - name: Install Dependencies
+        run: npm ci --no-package-lock
+        shell: bash
+      - id: create-dev-hash
+        name: Create Dev Hash
+        run: |
+          echo "DEV_HASH=$(node ./.scripts/bump-version.js)-dev.1$(date +%s).1$(git log -1 --format=%H | cut -c 1-7)" >> $GITHUB_OUTPUT
+        shell: bash
+
+  release-ionic:
+    needs: [create-dev-hash]
+    uses: ./.github/workflows/actions/release-ionic
+    with:
+      tag: dev
+      version: ${{ needs.create-dev-hash.outputs.dev-hash }}
+    secrets:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  get-build:
+    name: Get your dev build!
+    runs-on: ubuntu-latest
+    needs: [create-dev-hash, release-ionic]
+    steps:
+      - run: echo ${{ needs.create-dev-hash.outputs.dev-hash }}
+
