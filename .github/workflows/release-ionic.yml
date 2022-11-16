@@ -5,12 +5,15 @@ on:
     inputs:
       version:
         description: 'The type of version to release.'
+        type: string
         required: true
       tag:
         description: 'The tag to publish to on NPM.'
+        type: string
         required: true
     secrets:
       NPM_TOKEN:
+        type: string
         required: true
 
 jobs:
