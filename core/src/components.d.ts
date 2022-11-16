@@ -5850,6 +5850,10 @@ declare namespace LocalJSX {
          */
         "onDidPresent"?: (event: IonPopoverCustomEvent<void>) => void;
         /**
+          * Emitted before the popover has presented, but after the component has been mounted in the DOM. This event exists for ion-popover to resolve an issue with the popover and the lazy build, that the transition is unable to get the correct dimensions of the popover with auto sizing. This is not required for other overlays, since the existing overlay transitions are not effected by auto sizing content.
+         */
+        "onIonMount"?: (event: IonPopoverCustomEvent<void>) => void;
+        /**
           * Emitted after the popover has dismissed.
          */
         "onIonPopoverDidDismiss"?: (event: IonPopoverCustomEvent<OverlayEventDetail>) => void;

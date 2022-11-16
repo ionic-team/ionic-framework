@@ -487,7 +487,6 @@ export class Select implements ComponentInterface {
    * Close the select interface.
    */
   private close(): Promise<boolean> {
-    // TODO check !this.overlay || !this.isFocus()
     if (!this.overlay) {
       return Promise.resolve(false);
     }
