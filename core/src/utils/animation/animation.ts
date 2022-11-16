@@ -908,8 +908,6 @@ export const createAnimation = (animationId?: string): Animation => {
          * may be flickering if a new
          * animation is started on the same
          * element too quickly
-         *
-         * TODO: Is there a cleaner way to do this?
          */
         raf(() => {
           clearCSSAnimationPlayState();

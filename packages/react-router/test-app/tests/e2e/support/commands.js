@@ -101,7 +101,7 @@ Cypress.Commands.add('ionMenuNav', (contains) => {
 });
 
 Cypress.Commands.add('ionTabClick', (tabText) => {
-  // TODO: figure out how to get rid of this wait. Switching tabs after a forward nav to a details page needs it
+  // TODO FW-2800: figure out how to get rid of this wait. Switching tabs after a forward nav to a details page needs it
   cy.wait(500);
   cy.contains('ion-tab-button', tabText).click({ force: true });
   // cy.get('ion-tab-button.tab-selected').contains(tabText)
