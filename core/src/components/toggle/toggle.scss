@@ -49,6 +49,8 @@
 }
 
 :host(.legacy-toggle) {
+  width: auto;
+
   contain: content;
 }
 
