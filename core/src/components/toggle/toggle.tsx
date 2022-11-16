@@ -1,5 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
+
+// TODO(FW-2845) - Use @utils/forms when https://github.com/ionic-team/stencil/issues/3826 is resolved
 import { createLegacyFormController } from '../../utils/forms';
 import type { LegacyFormController } from '../../utils/forms';
 import { printIonWarning } from '../../utils/logging';
