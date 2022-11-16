@@ -35,7 +35,7 @@ jobs:
       with:
         scope: '@ionic/core'
         tag: nightly
-        version: ${{ NIGHTLY_HASH }}
+        version: ${{ env.NIGHTLY_HASH }}
         working-directory: 'core'
         token: ${{ secrets.NPM_TOKEN }}
     - name: Cache Built @ionic/core
@@ -66,7 +66,7 @@ jobs:
       with:
         scope: '@ionic/docs'
         tag: nightly
-        version: ${{ NIGHTLY_HASH }}
+        version: ${{ env.NIGHTLY_HASH }}
         working-directory: 'docs'
         token: ${{ secrets.NPM_TOKEN }}
 
@@ -85,7 +85,7 @@ jobs:
       with:
         scope: '@ionic/angular'
         tag: nightly
-        version: ${{ NIGHTLY_HASH }}
+        version: ${{ env.NIGHTLY_HASH }}
         working-directory: 'angular'
         folder: './dist'
         token: ${{ secrets.NPM_TOKEN }}
@@ -111,7 +111,7 @@ jobs:
       with:
         scope: '@ionic/react'
         tag: nightly
-        version: ${{ NIGHTLY_HASH }}
+        version: ${{ env.NIGHTLY_HASH }}
         working-directory: 'packages/react'
         token: ${{ secrets.NPM_TOKEN }}
     - name: Cache Built @ionic/react
@@ -136,7 +136,7 @@ jobs:
       with:
         scope: '@ionic/vue'
         tag: nightly
-        version: ${{ NIGHTLY_HASH }}
+        version: ${{ env.NIGHTLY_HASH }}
         working-directory: 'packages/vue'
         token: ${{ secrets.NPM_TOKEN }}
     - name: Cache Built @ionic/vue
@@ -161,7 +161,7 @@ jobs:
       with:
         scope: '@ionic/angular-server'
         tag: nightly
-        version: ${{ NIGHTLY_HASH }}
+        version: ${{ env.NIGHTLY_HASH }}
         working-directory: 'packages/angular-server'
         folder: './dist'
         token: ${{ secrets.NPM_TOKEN }}
@@ -181,7 +181,7 @@ jobs:
       with:
         scope: '@ionic/react-router'
         tag: nightly
-        version: ${{ NIGHTLY_HASH }}
+        version: ${{ env.NIGHTLY_HASH }}
         working-directory: 'packages/react-router'
         token: ${{ secrets.NPM_TOKEN }}
 
@@ -200,7 +200,7 @@ jobs:
       with:
         scope: '@ionic/vue-router'
         tag: nightly
-        version: ${{ NIGHTLY_HASH }}
+        version: ${{ env.NIGHTLY_HASH }}
         working-directory: 'packages/vue-router'
         token: ${{ secrets.NPM_TOKEN }}
 
