@@ -24,7 +24,7 @@ jobs:
 
   release-ionic:
     needs: [create-dev-hash]
-    uses: ./.github/workflows/actions/release-ionic
+    uses: ./.github/workflows/release-ionic.yml
     with:
       tag: dev
       version: ${{ needs.create-dev-hash.outputs.dev-hash }}
