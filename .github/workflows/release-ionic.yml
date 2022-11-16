@@ -1,5 +1,4 @@
 name: 'Release Ionic'
-description: 'Builds each Ionic package and release them to NPM'
 
 on:
   workflow_call:
