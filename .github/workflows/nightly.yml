@@ -52,7 +52,7 @@ jobs:
         paths: docs/core.json docs/core.d.ts
 
   release-docs:
-    needs: [release-core]
+    needs: [create-nightly-hash, release-core]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -71,7 +71,7 @@ jobs:
         token: ${{ secrets.NPM_TOKEN }}
 
   release-angular:
-    needs: [release-core]
+    needs: [create-nightly-hash, release-core]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -97,7 +97,7 @@ jobs:
         paths: ./angular/dist
 
   release-react:
-    needs: [release-core]
+    needs: [create-nightly-hash, release-core]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -122,7 +122,7 @@ jobs:
         paths: packages/react/dist packages/react/css
 
   release-vue:
-    needs: [release-core]
+    needs: [create-nightly-hash, release-core]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -147,7 +147,7 @@ jobs:
         paths: packages/vue/dist packages/vue/css
 
   release-angular-server:
-    needs: [release-angular]
+    needs: [create-nightly-hash, release-angular]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -167,7 +167,7 @@ jobs:
         token: ${{ secrets.NPM_TOKEN }}
 
   release-react-router:
-    needs: [release-react]
+    needs: [create-nightly-hash, release-react]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -186,7 +186,7 @@ jobs:
         token: ${{ secrets.NPM_TOKEN }}
 
   release-vue-router:
-    needs: [release-vue]
+    needs: [create-nightly-hash, release-vue]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -205,7 +205,7 @@ jobs:
         token: ${{ secrets.NPM_TOKEN }}
 
   finalize-release:
-    needs: [release-core, release-angular, release-react, release-vue, release-docs, release-angular-server, release-vue-router, release-react-router]
+    needs: [create-nightly-hash, release-core, release-angular, release-react, release-vue, release-docs, release-angular-server, release-vue-router, release-react-router]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
