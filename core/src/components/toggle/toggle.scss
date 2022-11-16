@@ -86,7 +86,7 @@ input {
 
   flex-grow: 1;
 
-  align-items: stretch;
+  align-items: center;
 
   height: 100%;
 
@@ -100,30 +100,17 @@ input {
 
 .label-text-wrapper {
   /**
-   * This causes the label to take up
-   * the entire height of its container
-   * while still keeping the text centered.
-   */
-  display: flex;
-
-  align-items: center;
-
-  /**
-   * Label text should not extend
-   * beyond the bounds of the input.
-   * However, we do not set the max
-   * width to 100% because then
-   * only the label would show and users
-   * would not be able to see what they are typing.
-   */
-  max-width: 200px;
-
-  /**
    * This ensures that double tapping this text
    * clicks the <label> and focuses the input
    * when a screen reader is enabled.
    */
   pointer-events: none;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  overflow: hidden;
 }
 
 // Toggle Native Wrapper

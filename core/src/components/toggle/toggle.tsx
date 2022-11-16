@@ -8,12 +8,11 @@ import type { Color, Gesture, GestureDetail, Mode, StyleEventDetail, ToggleChang
 import type { LegacyFormController } from '../../utils/forms';
 import { createLegacyFormController } from '../../utils/forms';
 import { getAriaLabel, renderHiddenInput, inheritAriaAttributes } from '../../utils/helpers';
+import type { Attributes } from '../../utils/helpers';
 import { printIonWarning } from '../../utils/logging';
 import { hapticSelection } from '../../utils/native/haptic';
 import { isRTL } from '../../utils/rtl';
 import { createColorClasses, hostContext } from '../../utils/theme';
-import type { Attributes } from '../../utils/helpers';
-
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -173,7 +172,7 @@ export class Toggle implements ComponentInterface {
 
     this.inheritedAttributes = {
       ...inheritAriaAttributes(this.el),
-    }
+    };
   }
 
   private emitStyle() {
