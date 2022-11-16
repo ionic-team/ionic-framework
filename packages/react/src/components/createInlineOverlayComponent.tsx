@@ -63,7 +63,7 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
        * cause the event handlers to be
        * destroyed and re-created.
        */
-      this.ref.current?.addEventListener('willPresent', (evt: any) => {
+      this.ref.current?.addEventListener('ionMount', (evt: any) => {
         this.setState({ isOpen: true });
 
         this.props.onWillPresent && this.props.onWillPresent(evt);
