@@ -17,6 +17,8 @@ import { getClassMap } from '../../utils/theme';
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 
+// TODO(FW-2832): types
+
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
@@ -29,7 +31,7 @@ import { iosLeaveAnimation } from './animations/ios.leave';
   scoped: true,
 })
 export class Picker implements ComponentInterface, OverlayInterface {
-  private durationTimeout: any;
+  private durationTimeout?: ReturnType<typeof setTimeout>;
   lastFocus?: HTMLElement;
 
   @Element() el!: HTMLIonPickerElement;

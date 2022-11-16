@@ -21,7 +21,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
   shadow: true,
 })
 export class Content implements ComponentInterface {
-  private watchDog: any;
+  private watchDog: ReturnType<typeof setInterval> | null = null;
   private isScrolling = false;
   private lastScroll = 0;
   private queued = false;
@@ -311,7 +311,7 @@ export class Content implements ComponentInterface {
   }
 
   private onScrollEnd() {
-    clearInterval(this.watchDog);
+    if (this.watchDog) clearInterval(this.watchDog);
     this.watchDog = null;
     if (this.isScrolling) {
       this.isScrolling = false;

@@ -39,7 +39,7 @@ export class ItemSliding implements ComponentInterface {
   private optsWidthRightSide = 0;
   private optsWidthLeftSide = 0;
   private sides = ItemSide.None;
-  private tmr: number | undefined;
+  private tmr?: ReturnType<typeof setTimeout>;
   private leftOptions?: HTMLIonItemOptionsElement;
   private rightOptions?: HTMLIonItemOptionsElement;
   private optsDirty = true;
@@ -418,7 +418,7 @@ export class ItemSliding implements ComponentInterface {
         if (this.gesture) {
           this.gesture.enable(!this.disabled);
         }
-      }, 600) as any;
+      }, 600);
 
       openSlidingItem = undefined;
       style.transform = '';

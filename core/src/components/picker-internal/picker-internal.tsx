@@ -24,7 +24,7 @@ export class PickerInternal implements ComponentInterface {
   private highlightEl?: HTMLElement;
   private actionOnClick?: () => void;
   private destroyKeypressListener?: () => void;
-  private singleColumnSearchTimeout?: any;
+  private singleColumnSearchTimeout?: ReturnType<typeof setTimeout>;
 
   @Element() el!: HTMLIonPickerInternalElement;
 
@@ -75,7 +75,7 @@ export class PickerInternal implements ComponentInterface {
    * for the input in the picker since having
    * that focused means we are still in input mode.
    */
-  private onFocusOut = (ev: any) => {
+  private onFocusOut = (ev: any) => { // TODO(FW-2832): type
     const { relatedTarget } = ev;
 
     if (!relatedTarget || (relatedTarget.tagName !== 'ION-PICKER-COLUMN-INTERNAL' && relatedTarget !== this.inputEl)) {
@@ -88,7 +88,7 @@ export class PickerInternal implements ComponentInterface {
    * the parent picker needs to determine
    * whether to enter/exit input mode.
    */
-  private onFocusIn = (ev: any) => {
+  private onFocusIn = (ev: any) => { // TODO(FW-2832): type
     const { target } = ev;
 
     /**

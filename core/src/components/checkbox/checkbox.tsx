@@ -114,7 +114,7 @@ export class Checkbox implements ComponentInterface {
     }
   }
 
-  private onClick = (ev: any) => {
+  private onClick = (ev: CustomEvent) => {
     ev.preventDefault();
 
     this.setFocus();

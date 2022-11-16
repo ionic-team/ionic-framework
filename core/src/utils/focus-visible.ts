@@ -32,15 +32,15 @@ export const startFocusVisible = (rootEl?: HTMLElement) => {
     setFocus([]);
   };
 
-  const onKeydown = (ev: any) => {
-    keyboardMode = FOCUS_KEYS.includes(ev.key);
+  const onKeydown = (ev: Event) => {
+    keyboardMode = FOCUS_KEYS.includes((ev as KeyboardEvent).key);
     if (!keyboardMode) {
       setFocus([]);
     }
   };
   const onFocusin = (ev: Event) => {
     if (keyboardMode && ev.composedPath !== undefined) {
-      const toFocus = ev.composedPath().filter((el: any) => {
+      const toFocus = ev.composedPath().filter((el: any) => { // TODO(FW-2832): type
         if (el.classList) {
           return el.classList.contains(ION_FOCUSABLE);
         }

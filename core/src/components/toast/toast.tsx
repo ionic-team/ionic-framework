@@ -21,6 +21,8 @@ import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
 import type { ToastAttributes } from './toast-interface';
 
+// TODO(FW-2832): types
+
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
@@ -39,7 +41,7 @@ import type { ToastAttributes } from './toast-interface';
   shadow: true,
 })
 export class Toast implements ComponentInterface, OverlayInterface {
-  private durationTimeout: any;
+  private durationTimeout?: ReturnType<typeof setTimeout>;
 
   presented = false;
 
