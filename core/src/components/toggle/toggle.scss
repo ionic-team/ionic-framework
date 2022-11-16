@@ -40,11 +40,16 @@
 
   outline: none;
 
-  contain: content;
   cursor: pointer;
   touch-action: none;
   user-select: none;
   z-index: $z-index-item-input;
+
+  width: 100%;
+}
+
+:host(.legacy-toggle) {
+  contain: content;
 }
 
 :host(.ion-focused) input {
@@ -55,7 +60,7 @@
   pointer-events: none;
 }
 
-label {
+:host(.legacy-toggle) label {
   @include input-cover();
 
   display: flex;
@@ -69,6 +74,40 @@ label {
 
 input {
   @include visually-hidden();
+}
+
+// Toggle Wrapper
+// --------------------------------------------------
+
+.toggle-wrapper {
+  display: flex;
+
+  position: relative;
+
+  flex-grow: 1;
+
+  align-items: stretch;
+
+  height: 100%;
+
+  transition: background-color 15ms linear;
+
+  background: var(--background);
+}
+
+// Toggle Justify
+// --------------------------------------------------
+
+:host(.toggle-justify-space-between) .toggle-wrapper {
+  justify-content: space-between;
+}
+
+:host(.toggle-justify-start) .toggle-wrapper {
+  justify-content: start;
+}
+
+:host(.toggle-justify-end) .toggle-wrapper {
+  justify-content: end;
 }
 
 // Toggle Background Track: Unchecked

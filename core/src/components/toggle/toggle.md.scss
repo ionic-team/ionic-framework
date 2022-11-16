@@ -17,9 +17,10 @@
   --handle-max-height: #{$toggle-md-handle-max-height};
   --handle-spacing: 0;
   --handle-transition: #{$toggle-md-transition};
+}
 
+:host(.legacy-toggle) {
   @include padding($toggle-md-padding-top, $toggle-md-padding-end, $toggle-md-padding-bottom, $toggle-md-padding-start);
-
   width: $toggle-md-track-width;
   height: $toggle-md-track-height;
 
