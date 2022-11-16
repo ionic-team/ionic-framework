@@ -1,3 +1,5 @@
+// TODO(FW-2832): types
+
 export interface Cell {
   i: number;
   index: number;

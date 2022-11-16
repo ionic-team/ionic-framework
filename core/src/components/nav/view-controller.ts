@@ -6,6 +6,8 @@ export const VIEW_STATE_NEW = 1;
 export const VIEW_STATE_ATTACHED = 2;
 export const VIEW_STATE_DESTROYED = 3;
 
+// TODO(FW-2832): types
+
 export class ViewController {
   state = VIEW_STATE_NEW;
   nav?: any;

@@ -2,6 +2,8 @@ import type { ComponentRef, FrameworkDelegate } from '../interface';
 
 import { componentOnReady } from './helpers';
 
+// TODO(FW-2832): types
+
 export const attachComponent = async (
   delegate: FrameworkDelegate | undefined,
   container: Element,

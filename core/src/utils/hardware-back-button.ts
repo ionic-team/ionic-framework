@@ -1,5 +1,6 @@
 import type { BackButtonEvent } from '../interface';
 
+// TODO(FW-2832): type
 type Handler = (processNextHandler: () => void) => Promise<any> | void | null;
 
 interface HandlerRegister {

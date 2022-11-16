@@ -104,7 +104,7 @@ export class RadioGroup implements ComponentInterface {
   };
 
   @Listen('keydown', { target: 'document' })
-  onKeydown(ev: any) {
+  onKeydown(ev: any) { // TODO(FW-2832): type
     const inSelectPopover = !!this.el.closest('ion-select-popover');
 
     if (ev.target && !this.el.contains(ev.target)) {

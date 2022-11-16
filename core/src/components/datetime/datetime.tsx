@@ -95,6 +95,7 @@ export class Datetime implements ComponentInterface {
   private destroyCalendarListener?: () => void;
   private destroyKeyboardMO?: () => void;
 
+  // TODO(FW-2832): types (DatetimeParts causes some errors that need untangling)
   private minParts?: any;
   private maxParts?: any;
   private todayParts!: DatetimeParts;

@@ -42,6 +42,8 @@ import {
   updateVDom,
 } from './virtual-scroll-utils';
 
+// TODO(FW-2832): types
+
 @Component({
   tag: 'ion-virtual-scroll',
   styleUrl: 'virtual-scroll.scss',

@@ -52,7 +52,7 @@ export class Spinner implements ComponentInterface {
     const spinnerName = self.getName();
     const spinner = SPINNERS[spinnerName] ?? SPINNERS['lines'];
     const duration = typeof self.duration === 'number' && self.duration > 10 ? self.duration : spinner.dur;
-    const svgs: any[] = [];
+    const svgs: any[] = []; // TODO(FW-2832): type
 
     if (spinner.circles !== undefined) {
       for (let i = 0; i < spinner.circles; i++) {

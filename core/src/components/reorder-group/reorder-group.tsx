@@ -6,6 +6,8 @@ import type { Gesture, GestureDetail, ItemReorderEventDetail } from '../../inter
 import { findClosestIonContent, getScrollElement } from '../../utils/content';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/native/haptic';
 
+// TODO(FW-2832): types
+
 const enum ReorderGroupState {
   Idle = 0,
   Active = 1,
