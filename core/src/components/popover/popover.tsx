@@ -457,19 +457,24 @@ export class Popover implements ComponentInterface, PopoverInterface {
     };
 
     const { inline, delegate } = this.getDelegate(true);
+    const lazyBuild = hasLazyBuild(el);
     this.usersElement = await attachComponent(delegate, el, this.component, ['popover-viewport'], data, inline);
-    hasLazyBuild(el) && (await deepReady(this.usersElement));
+    lazyBuild && (await deepReady(this.usersElement));
 
     if (!this.keyboardEvents) {
       this.configureKeyboardInteraction();
     }
     this.configureDismissInteraction();
 
-    // TODO: FW-2773: Apply this to only the lazy build.
-    /**
-     * ionMount only needs to be emitted if the popover is inline.
-     */
-    this.ionMount.emit();
+    if (lazyBuild) {
+      /**
+       * We only want to emit `ionMount` for the lazy build,
+       * since it is only needed for mounting the overlay
+       * to the DOM before the transition has started and
+       * the popover position is calculated.
+       */
+      this.ionMount.emit();
+    }
     /**
      * Wait one raf before presenting the popover.
      * This allows the lazy build enough time to
