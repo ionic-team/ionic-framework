@@ -7,11 +7,13 @@ import { getIonMode } from '../../global/ionic-global';
 import type { Color, Gesture, GestureDetail, Mode, StyleEventDetail, ToggleChangeEventDetail } from '../../interface';
 import type { LegacyFormController } from '../../utils/forms';
 import { createLegacyFormController } from '../../utils/forms';
-import { getAriaLabel, renderHiddenInput } from '../../utils/helpers';
+import { getAriaLabel, renderHiddenInput, inheritAriaAttributes } from '../../utils/helpers';
 import { printIonWarning } from '../../utils/logging';
 import { hapticSelection } from '../../utils/native/haptic';
 import { isRTL } from '../../utils/rtl';
 import { createColorClasses, hostContext } from '../../utils/theme';
+import type { Attributes } from '../../utils/helpers';
+
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -35,6 +37,7 @@ export class Toggle implements ComponentInterface {
   private focusEl?: HTMLElement;
   private lastDrag = 0;
   private legacyFormController!: LegacyFormController;
+  private inheritedAttributes: Attributes = {};
 
   // This flag ensures we log the deprecation warning at most once.
   private hasLoggedDeprecationWarning = false;
@@ -167,6 +170,10 @@ export class Toggle implements ComponentInterface {
 
   componentWillLoad() {
     this.emitStyle();
+
+    this.inheritedAttributes = {
+      ...inheritAriaAttributes(this.el),
+    }
   }
 
   private emitStyle() {
@@ -297,11 +304,13 @@ export class Toggle implements ComponentInterface {
             type="checkbox"
             role="switch"
             aria-checked={`${checked}`}
+            checked={checked}
             disabled={disabled}
             id={inputId}
             onFocus={() => this.onFocus()}
             onBlur={() => this.onBlur()}
             ref={(focusEl) => (this.focusEl = focusEl)}
+            {...this.inheritedAttributes}
           />
         </label>
       </Host>
