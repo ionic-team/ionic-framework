@@ -27,6 +27,13 @@
   contain: strict;
 }
 
+// Toggle Wrapper
+// ----------------------------------------------------------------
+
+.toggle-wrapper {
+  min-height: 48px;
+}
+
 :host(.ion-color.toggle-checked) .toggle-icon {
   background: current-color(base, $toggle-md-track-background-color-alpha-on);
 }

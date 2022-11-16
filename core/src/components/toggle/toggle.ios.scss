@@ -18,12 +18,21 @@
   --handle-spacing: #{$toggle-ios-border-width};
   --handle-transition: #{$toggle-ios-transition};
 
+  overflow: hidden;
+}
+
+:host(.legacy-toggle) {
   width: $toggle-ios-width;
   height: $toggle-ios-height;
 
   contain: strict;
+}
 
-  overflow: hidden;
+// Toggle Wrapper
+// ----------------------------------------------------------------
+
+.toggle-wrapper {
+  min-height: 44px;
 }
 
 :host(.ion-color.toggle-checked) .toggle-icon {
