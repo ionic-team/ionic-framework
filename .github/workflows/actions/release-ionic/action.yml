@@ -1,36 +1,29 @@
-name: 'Ionic Dev Build'
+name: 'Release Ionic'
+description: 'Builds each Ionic package and release them to NPM'
 
 on:
-  workflow_dispatch:
+  workflow_call:
+    inputs:
+      version:
+        description: 'The type of version to release.'
+        required: true
+      tag:
+        description: 'The tag to publish to on NPM.'
+        required: true
+    secrets:
+      NPM_TOKEN:
+        required: true
 
 jobs:
-  create-dev-hash:
-    runs-on: ubuntu-latest
-    outputs:
-      dev-hash: ${{ steps.create-dev-hash.outputs.DEV_HASH }}
-    steps:
-      - uses: actions/checkout@v3
-      # A 1 is required before the timestamp
-      # as lerna will fail when there is a leading 0
-      # See https://github.com/lerna/lerna/issues/2840
-      - name: Install Dependencies
-        run: npm ci --no-package-lock
-        shell: bash
-      - id: create-dev-hash
-        name: Create Dev Hash
-        run: |
-          echo "DEV_HASH=$(node ./.scripts/bump-version.js)-dev.1$(date +%s).1$(git log -1 --format=%H | cut -c 1-7)" >> $GITHUB_OUTPUT
-        shell: bash
   release-core:
     runs-on: ubuntu-latest
-    needs: [create-dev-hash]
     steps:
     - uses: actions/checkout@v3
     - uses: ./.github/workflows/actions/publish-npm
       with:
         scope: '@ionic/core'
-        tag: dev
-        version: ${{ needs.create-dev-hash.outputs.dev-hash }}
+        tag: ${{ inputs.tag }}
+        version: ${{ inputs.version }}
         working-directory: 'core'
         token: ${{ secrets.NPM_TOKEN }}
     - name: Cache Built @ionic/core
@@ -47,7 +40,7 @@ jobs:
         paths: docs/core.json docs/core.d.ts
 
   release-docs:
-    needs: [create-dev-hash, release-core]
+    needs: [release-core]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -60,13 +53,13 @@ jobs:
     - uses: ./.github/workflows/actions/publish-npm
       with:
         scope: '@ionic/docs'
-        tag: dev
-        version: ${{ needs.create-dev-hash.outputs.dev-hash }}
+        tag: ${{ inputs.tag }}
+        version: ${{ inputs.version }}
         working-directory: 'docs'
         token: ${{ secrets.NPM_TOKEN }}
 
   release-angular:
-    needs: [create-dev-hash, release-core]
+    needs: [release-core]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -79,8 +72,8 @@ jobs:
     - uses: ./.github/workflows/actions/publish-npm
       with:
         scope: '@ionic/angular'
-        tag: dev
-        version: ${{ needs.create-dev-hash.outputs.dev-hash }}
+        tag: ${{ inputs.tag }}
+        version: ${{ inputs.version }}
         working-directory: 'angular'
         folder: './dist'
         token: ${{ secrets.NPM_TOKEN }}
@@ -92,7 +85,7 @@ jobs:
         paths: ./angular/dist
 
   release-react:
-    needs: [create-dev-hash, release-core]
+    needs: [release-core]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -105,8 +98,8 @@ jobs:
     - uses: ./.github/workflows/actions/publish-npm
       with:
         scope: '@ionic/react'
-        tag: dev
-        version: ${{ needs.create-dev-hash.outputs.dev-hash }}
+        tag: ${{ inputs.tag }}
+        version: ${{ inputs.version }}
         working-directory: 'packages/react'
         token: ${{ secrets.NPM_TOKEN }}
     - name: Cache Built @ionic/react
@@ -117,7 +110,7 @@ jobs:
         paths: packages/react/dist packages/react/css
 
   release-vue:
-    needs: [create-dev-hash, release-core]
+    needs: [release-core]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -130,8 +123,8 @@ jobs:
     - uses: ./.github/workflows/actions/publish-npm
       with:
         scope: '@ionic/vue'
-        tag: dev
-        version: ${{ needs.create-dev-hash.outputs.dev-hash }}
+        tag: ${{ inputs.tag }}
+        version: ${{ inputs.version }}
         working-directory: 'packages/vue'
         token: ${{ secrets.NPM_TOKEN }}
     - name: Cache Built @ionic/vue
@@ -142,7 +135,7 @@ jobs:
         paths: packages/vue/dist packages/vue/css
 
   release-angular-server:
-    needs: [create-dev-hash, release-angular]
+    needs: [release-angular]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -155,14 +148,14 @@ jobs:
     - uses: ./.github/workflows/actions/publish-npm
       with:
         scope: '@ionic/angular-server'
-        tag: dev
-        version: ${{ needs.create-dev-hash.outputs.dev-hash }}
+        tag: ${{ inputs.tag }}
+        version: ${{ inputs.version }}
         working-directory: 'packages/angular-server'
         folder: './dist'
         token: ${{ secrets.NPM_TOKEN }}
 
   release-react-router:
-    needs: [create-dev-hash, release-react]
+    needs: [release-react]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -175,13 +168,13 @@ jobs:
     - uses: ./.github/workflows/actions/publish-npm
       with:
         scope: '@ionic/react-router'
-        tag: dev
-        version: ${{ needs.create-dev-hash.outputs.dev-hash }}
+        tag: ${{ inputs.tag }}
+        version: ${{ inputs.version }}
         working-directory: 'packages/react-router'
         token: ${{ secrets.NPM_TOKEN }}
 
   release-vue-router:
-    needs: [create-dev-hash, release-vue]
+    needs: [release-vue]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -194,15 +187,7 @@ jobs:
     - uses: ./.github/workflows/actions/publish-npm
       with:
         scope: '@ionic/vue-router'
-        tag: dev
-        version: ${{ needs.create-dev-hash.outputs.dev-hash }}
+        tag: ${{ inputs.tag }}
+        version: ${{ inputs.version }}
         working-directory: 'packages/vue-router'
         token: ${{ secrets.NPM_TOKEN }}
-
-  get-build:
-    name: Get your dev build!
-    runs-on: ubuntu-latest
-    needs: [create-dev-hash, release-core, release-angular, release-react, release-vue, release-docs, release-angular-server, release-vue-router, release-react-router]
-    steps:
-      - run: echo ${{ needs.create-dev-hash.outputs.dev-hash }}
-
