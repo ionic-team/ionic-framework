@@ -137,6 +137,70 @@ input {
   justify-content: end;
 }
 
+// Toggle Label Placement - Start
+// ----------------------------------------------------------------
+
+/**
+ * Label is on the left of the input in LTR and
+ * on the right in RTL.
+ */
+:host(.toggle-label-placement-start) .toggle-wrapper {
+  flex-direction: row;
+}
+
+:host(.toggle-label-placement-start) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the input should be on the end
+   * when the label sits at the start.
+   */
+  @include margin(0, 8px, 0, 0);
+}
+
+// Toggle Label Placement - End
+// ----------------------------------------------------------------
+
+/**
+ * Label is on the right of the input in LTR and
+ * on the left in RTL.
+ */
+:host(.toggle-label-placement-end) .toggle-wrapper {
+  flex-direction: row-reverse;
+}
+
+/**
+ * The margin between the label and
+ * the input should be on the start
+ * when the label sits at the end.
+ */
+:host(.toggle-label-placement-end) .label-text-wrapper {
+  @include margin(0, 0, 0, 8px);
+}
+
+// Input Label Placement - Fixed
+// ----------------------------------------------------------------
+
+:host(.toggle-label-placement-fixed) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the input should be on the end
+   * when the label sits at the start.
+   */
+  @include margin(0, 8px, 0, 0);
+}
+
+/**
+ * Label is on the left of the input in LTR and
+ * on the right in RTL. Label also has a fixed width.
+ */
+:host(.toggle-label-placement-fixed) .label-text-wrapper {
+  flex: 0 0 100px;
+
+  width: 100px;
+  min-width: 100px;
+  max-width: 200px;
+}
+
 // Toggle Background Track: Unchecked
 // --------------------------------------------------
 

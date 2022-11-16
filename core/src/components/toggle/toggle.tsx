@@ -276,7 +276,7 @@ export class Toggle implements ComponentInterface {
   }
 
   private renderToggle() {
-    const { activated, color, checked, disabled, el, justify, inputId, name } = this;
+    const { activated, color, checked, disabled, el, justify, labelPlacement, inputId, name } = this;
 
     const mode = getIonMode(this);
     const value = this.getValue();
@@ -292,6 +292,7 @@ export class Toggle implements ComponentInterface {
           'toggle-checked': checked,
           'toggle-disabled': disabled,
           [`toggle-justify-${justify}`]: true,
+          [`toggle-label-placement-${labelPlacement}`]: true,
         })}
       >
         <label class="toggle-wrapper">
