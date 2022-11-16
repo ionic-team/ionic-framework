@@ -31,7 +31,7 @@ jobs:
     needs: [create-nightly-hash]
     steps:
     - uses: actions/checkout@v3
-    - uses: ./.github/workflows/actions/release
+    - uses: ./.github/workflows/actions/publish-npm
       with:
         scope: '@ionic/core'
         tag: nightly
@@ -62,7 +62,7 @@ jobs:
         name: ionic-docs
         path: ./docs
         filename: DocsBuild.zip
-    - uses: ./.github/workflows/actions/release
+    - uses: ./.github/workflows/actions/publish-npm
       with:
         scope: '@ionic/docs'
         tag: nightly
@@ -81,7 +81,7 @@ jobs:
         name: ionic-core
         path: ./core
         filename: CoreBuild.zip
-    - uses: ./.github/workflows/actions/release
+    - uses: ./.github/workflows/actions/publish-npm
       with:
         scope: '@ionic/angular'
         tag: nightly
@@ -107,7 +107,7 @@ jobs:
         name: ionic-core
         path: ./core
         filename: CoreBuild.zip
-    - uses: ./.github/workflows/actions/release
+    - uses: ./.github/workflows/actions/publish-npm
       with:
         scope: '@ionic/react'
         tag: nightly
@@ -132,7 +132,7 @@ jobs:
         name: ionic-core
         path: ./core
         filename: CoreBuild.zip
-    - uses: ./.github/workflows/actions/release
+    - uses: ./.github/workflows/actions/publish-npm
       with:
         scope: '@ionic/vue'
         tag: nightly
@@ -157,7 +157,7 @@ jobs:
         name: ionic-angular
         path: ./angular
         filename: AngularBuild.zip
-    - uses: ./.github/workflows/actions/release
+    - uses: ./.github/workflows/actions/publish-npm
       with:
         scope: '@ionic/angular-server'
         tag: nightly
@@ -177,7 +177,7 @@ jobs:
         name: ionic-react
         path: ./packages/react
         filename: ReactBuild.zip
-    - uses: ./.github/workflows/actions/release
+    - uses: ./.github/workflows/actions/publish-npm
       with:
         scope: '@ionic/react-router'
         tag: nightly
@@ -196,7 +196,7 @@ jobs:
         name: ionic-vue
         path: ./packages/vue
         filename: VueBuild.zip
-    - uses: ./.github/workflows/actions/release
+    - uses: ./.github/workflows/actions/publish-npm
       with:
         scope: '@ionic/vue-router'
         tag: nightly

@@ -26,7 +26,7 @@ jobs:
     needs: [create-dev-hash]
     steps:
     - uses: actions/checkout@v3
-    - uses: ./.github/workflows/actions/release
+    - uses: ./.github/workflows/actions/publish-npm
       with:
         scope: '@ionic/core'
         tag: dev
@@ -57,7 +57,7 @@ jobs:
         name: ionic-docs
         path: ./docs
         filename: DocsBuild.zip
-    - uses: ./.github/workflows/actions/release
+    - uses: ./.github/workflows/actions/publish-npm
       with:
         scope: '@ionic/docs'
         tag: dev
@@ -76,7 +76,7 @@ jobs:
         name: ionic-core
         path: ./core
         filename: CoreBuild.zip
-    - uses: ./.github/workflows/actions/release
+    - uses: ./.github/workflows/actions/publish-npm
       with:
         scope: '@ionic/angular'
         tag: dev
@@ -102,7 +102,7 @@ jobs:
         name: ionic-core
         path: ./core
         filename: CoreBuild.zip
-    - uses: ./.github/workflows/actions/release
+    - uses: ./.github/workflows/actions/publish-npm
       with:
         scope: '@ionic/react'
         tag: dev
@@ -127,7 +127,7 @@ jobs:
         name: ionic-core
         path: ./core
         filename: CoreBuild.zip
-    - uses: ./.github/workflows/actions/release
+    - uses: ./.github/workflows/actions/publish-npm
       with:
         scope: '@ionic/vue'
         tag: dev
@@ -152,7 +152,7 @@ jobs:
         name: ionic-angular
         path: ./angular
         filename: AngularBuild.zip
-    - uses: ./.github/workflows/actions/release
+    - uses: ./.github/workflows/actions/publish-npm
       with:
         scope: '@ionic/angular-server'
         tag: dev
@@ -172,7 +172,7 @@ jobs:
         name: ionic-react
         path: ./packages/react
         filename: ReactBuild.zip
-    - uses: ./.github/workflows/actions/release
+    - uses: ./.github/workflows/actions/publish-npm
       with:
         scope: '@ionic/react-router'
         tag: dev
@@ -191,7 +191,7 @@ jobs:
         name: ionic-vue
         path: ./packages/vue
         filename: VueBuild.zip
-    - uses: ./.github/workflows/actions/release
+    - uses: ./.github/workflows/actions/publish-npm
       with:
         scope: '@ionic/vue-router'
         tag: dev
