@@ -260,7 +260,7 @@ export class Toggle implements ComponentInterface {
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   render() {
@@ -285,14 +285,14 @@ export class Toggle implements ComponentInterface {
           'toggle-activated': activated,
           'toggle-checked': checked,
           'toggle-disabled': disabled,
-          [`toggle-justify-${justify}`]: true
+          [`toggle-justify-${justify}`]: true,
         })}
       >
         <label class="toggle-wrapper">
-          <div class="label-wrapper"><slot></slot></div>
-          <div class="native-wrapper">
-            {this.renderToggleControl()}
+          <div class="label-text-wrapper">
+            <slot></slot>
           </div>
+          <div class="native-wrapper">{this.renderToggleControl()}</div>
           <input
             type="checkbox"
             role="switch"

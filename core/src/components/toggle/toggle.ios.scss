@@ -5,8 +5,8 @@
 // -----------------------------------------
 
 :host {
-  --background: #{$toggle-ios-background-color-off};
-  --background-checked: #{ion-color(primary, base)};
+  --track-background: #{$toggle-ios-background-color-off};
+  --track-background-checked: #{ion-color(primary, base)};
   --border-radius: #{$toggle-ios-border-radius};
   --handle-background: #{$toggle-ios-handle-background-color};
   --handle-background-checked: #{$toggle-ios-handle-background-color};
@@ -33,6 +33,14 @@
 
 .toggle-wrapper {
   min-height: 44px;
+}
+
+// Toggle Native Wrapper
+// ----------------------------------------------------------------
+
+.native-wrapper .toggle-icon {
+  width: $toggle-ios-width;
+  height: $toggle-ios-height;
 }
 
 :host(.ion-color.toggle-checked) .toggle-icon {
