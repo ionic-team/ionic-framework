@@ -22,6 +22,7 @@ jobs:
         # The date should output YYYYMMDD
         # so that it is human readable
         run: |
+          npm ci --no-package-lock
           echo "DATE=$(date +%Y%m%d)" >> $GITHUB_ENV
           echo "CURRENT_VERSION=$(node ./.scripts/bump-version.js)" >> $GITHUB_ENV
           echo "NIGHTLY_HASH=${CURRENT_VERSION}-nightly.${DATE}" >> $GITHUB_ENV
