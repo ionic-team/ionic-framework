@@ -16,7 +16,7 @@ jobs:
       # as lerna will fail when there is a leading 0
       # See https://github.com/lerna/lerna/issues/2840
       - id: create-nightly-hash
-      - name: Create Nightly Hash
+        name: Create Nightly Hash
         # The date should output YYYYMMDD
         # so that it is human readable
         run: |
