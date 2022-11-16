@@ -3,7 +3,7 @@ import { test } from '@utils/test/playwright';
 
 test.describe('toggle: enableOnOffLabels', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(`/src/components/toggle/test/enable-on-off-labels`);
+    await page.goto(`/src/components/toggle/test/legacy/enable-on-off-labels`);
   });
 
   test('should not have visual regressions', async ({ page }) => {
