@@ -3,7 +3,7 @@ import { getMode, setMode, setPlatformHelpers } from '@stencil/core';
 import type { IonicConfig, Mode } from '../interface';
 import { isPlatform, setupPlatforms } from '../utils/platform';
 
-import { config, configFromSession, configFromURL, saveConfig } from './config';
+import { config, configFromSession, configFromURL, saveConfig, validateConfig } from './config';
 
 declare const Context: any;
 
@@ -37,13 +37,15 @@ export const initialize = (userConfig: IonicConfig = {}) => {
 
   // create the Ionic.config from raw config object (if it exists)
   // and convert Ionic.config into a ConfigApi that has a get() fn
-  const configObj = {
+  const configObj: IonicConfig = {
     ...configFromSession(win),
     persistConfig: false,
     ...Ionic.config,
     ...configFromURL(win),
     ...userConfig,
   };
+
+  validateConfig(configObj);
 
   config.reset(configObj);
   if (config.getBoolean('persistConfig')) {
