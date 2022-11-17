@@ -27,6 +27,8 @@ export {
   AccordionGroupCustomEvent,
   AccordionGroupChangeEventDetail,
 
+  BaseComponentsConfig,
+
   BreadcrumbCustomEvent,
   BreadcrumbCollapsedClickEventDetail,
 
@@ -55,6 +57,7 @@ export {
 
   ItemSlidingCustomEvent,
 
+  IonicConfig,
   IonicSafeString,
 
   LoadingOptions,
@@ -69,6 +72,8 @@ export {
   PickerButton,
   PickerColumn,
   PickerColumnOption,
+
+  PlatformConfig,
 
   PopoverOptions,
 
