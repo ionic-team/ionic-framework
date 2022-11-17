@@ -3,7 +3,7 @@ import { getMode, setMode, setPlatformHelpers } from '@stencil/core';
 import type { IonicConfig, Mode } from '../interface';
 import { isPlatform, setupPlatforms } from '../utils/platform';
 
-import { isIonicElement, resetBaseComponentsCache } from './base-components';
+import { isIonicElement, isBaseComponent, resetBaseComponentsCache } from './base-components';
 import { config, configFromSession, configFromURL, saveConfig, validateConfig } from './config';
 
 declare const Context: any;
@@ -36,8 +36,6 @@ export const initialize = (userConfig: IonicConfig = {}) => {
   }
   setPlatformHelpers(platformHelpers);
 
-  validateConfig(userConfig);
-
   // create the Ionic.config from raw config object (if it exists)
   // and convert Ionic.config into a ConfigApi that has a get() fn
   const configObj: IonicConfig = {
@@ -47,6 +45,8 @@ export const initialize = (userConfig: IonicConfig = {}) => {
     ...configFromURL(win),
     ...userConfig,
   };
+
+  validateConfig(configObj);
 
   /**
    * Reset the base component look up table.
@@ -81,6 +81,7 @@ export const initialize = (userConfig: IonicConfig = {}) => {
   const isAllowedIonicModeValue = (elmMode: string) => ['ios', 'md'].includes(elmMode);
 
   setMode((elm: any) => {
+    console.log(elm.tagName, isBaseComponent(elm, config))
     while (elm) {
       const elmMode = (elm as any).mode || elm.getAttribute('mode');
       if (elmMode) {
