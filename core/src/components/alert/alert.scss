@@ -52,12 +52,9 @@
   align-items: flex-start;
 }
 
-:host ion-backdrop {
-  z-index: 0;
-}
-
 .alert-wrapper {
   display: flex;
+  position: relative;
 
   flex-direction: column;
 
