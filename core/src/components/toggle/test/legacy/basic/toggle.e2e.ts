@@ -3,7 +3,7 @@ import { test } from '@utils/test/playwright';
 
 test.describe('toggle: basic', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(`/src/components/toggle/test/basic`);
+    await page.goto(`/src/components/toggle/test/legacy/basic`);
   });
 
   test('should not have visual regressions', async ({ page }) => {

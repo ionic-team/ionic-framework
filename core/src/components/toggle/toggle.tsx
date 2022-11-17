@@ -1,16 +1,22 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
+// TODO(FW-2845) - Use @utils/forms and @utils/logging when https://github.com/ionic-team/stencil/issues/3826 is resolved
 import { checkmarkOutline, removeOutline, ellipseOutline } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Color, Gesture, GestureDetail, Mode, StyleEventDetail, ToggleChangeEventDetail } from '../../interface';
+import type { LegacyFormController } from '../../utils/forms';
+import { createLegacyFormController } from '../../utils/forms';
 import { getAriaLabel, renderHiddenInput } from '../../utils/helpers';
+import { printIonWarning } from '../../utils/logging';
 import { hapticSelection } from '../../utils/native/haptic';
 import { isRTL } from '../../utils/rtl';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
+ * @slot - The label text to associate with the toggle. Use the "labelPlacement" property to control where the label is placed relative to the toggle.
  *
  * @part track - The background track of the toggle.
  * @part handle - The toggle handle, or knob, used to change the checked state.
@@ -28,8 +34,12 @@ export class Toggle implements ComponentInterface {
   private gesture?: Gesture;
   private focusEl?: HTMLElement;
   private lastDrag = 0;
+  private legacyFormController!: LegacyFormController;
 
-  @Element() el!: HTMLElement;
+  // This flag ensures we log the deprecation warning at most once.
+  private hasLoggedDeprecationWarning = false;
+
+  @Element() el!: HTMLIonToggleElement;
 
   @State() activated = false;
 
@@ -68,6 +78,25 @@ export class Toggle implements ComponentInterface {
    * Enables the on/off accessibility switch labels within the toggle.
    */
   @Prop() enableOnOffLabels: boolean | undefined = undefined;
+
+  /**
+   * Where to place the label relative to the input.
+   * `'start'`: The label will appear to the left of the toggle in LTR and to the right in RTL.
+   * `'end'`: The label will appear to the right of the toggle in LTR and to the left in RTL.
+   * `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+   */
+  @Prop() labelPlacement: 'start' | 'end' | 'fixed' = 'start';
+
+  /**
+   * How to pack the label and toggle within a line.
+   * `'start'`: The label and toggle will appear on the left in LTR and
+   * on the right in RTL.
+   * `'end'`: The label and toggle will appear on the right in LTR and
+   * on the left in RTL.
+   * `'space-between'`: The label and toggle will appear on opposite
+   * ends of the line with space between the two elements.
+   */
+  @Prop() justify: 'start' | 'end' | 'space-between' = 'space-between';
 
   /**
    * Emitted when the user switches the toggle on or off. Does not emit
@@ -112,8 +141,12 @@ export class Toggle implements ComponentInterface {
   }
 
   async connectedCallback() {
+    const { el } = this;
+
+    this.legacyFormController = createLegacyFormController(el);
+
     this.gesture = (await import('../../utils/gesture')).createGesture({
-      el: this.el,
+      el,
       gestureName: 'toggle',
       gesturePriority: 100,
       threshold: 5,
@@ -211,6 +244,28 @@ export class Toggle implements ComponentInterface {
   }
 
   render() {
+    const { legacyFormController } = this;
+
+    return legacyFormController.hasLegacyControl() ? this.renderLegacyToggle() : this.renderToggle();
+  }
+
+  private renderToggle() {
+    return <slot></slot>;
+  }
+
+  private renderLegacyToggle() {
+    if (!this.hasLoggedDeprecationWarning) {
+      printIonWarning(
+        `Using ion-toggle with an ion-label has been deprecated. To migrate, remove the ion-label and pass your label directly into ion-toggle instead.
+
+Example: <ion-toggle>Email:</ion-toggle>
+
+For toggles that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the toggle.`,
+        this.el
+      );
+      this.hasLoggedDeprecationWarning = true;
+    }
+
     const { activated, color, checked, disabled, el, inputId, name, enableOnOffLabels } = this;
     const mode = getIonMode(this);
     const { label, labelId, labelText } = getAriaLabel(el, inputId);
