@@ -227,6 +227,7 @@ export class Toggle implements ComponentInterface {
           'toggle-checked': checked,
           'toggle-disabled': disabled,
           interactive: true,
+          'toggle-rtl': isRTL(el),
         })}
       >
         <div class="toggle-icon" part="track">
