@@ -3,7 +3,7 @@ import { getMode, setMode, setPlatformHelpers } from '@stencil/core';
 import type { IonicConfig, Mode } from '../interface';
 import { isPlatform, setupPlatforms } from '../utils/platform';
 
-import { isIonicElement, isBaseComponent, resetBaseComponentsCache } from './base-components';
+import { isIonicElement, resetBaseComponentsCache } from './base-components';
 import { config, configFromSession, configFromURL, saveConfig, validateConfig } from './config';
 
 declare const Context: any;
@@ -81,7 +81,6 @@ export const initialize = (userConfig: IonicConfig = {}) => {
   const isAllowedIonicModeValue = (elmMode: string) => ['ios', 'md'].includes(elmMode);
 
   setMode((elm: any) => {
-    console.log(elm.tagName, isBaseComponent(elm, config))
     while (elm) {
       const elmMode = (elm as any).mode || elm.getAttribute('mode');
       if (elmMode) {
