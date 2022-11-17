@@ -54,8 +54,22 @@ jobs:
         git config user.name ionitron
         git config user.email hi@ionicframework.com
       shell: bash
+    - name: Checkout Nightly Branch
+      run: |
+        git checkout -b ${{ needs.create-nightly-hash.outputs.nightly-hash }}
+        git push origin ${{ needs.create-nightly-hash.outputs.nightly-hash }}
+      shell: bash
     - name: Create GitHub Release
-      run: lerna version ${{ inputs.version }} --yes --force-publish='*' --conventional-commits --conventional-prerelease --create-release github
+      run: lerna version ${{ needs.create-nightly-hash.outputs.nightly-hash }} --yes --force-publish='*' --conventional-commits --conventional-prerelease --create-release github
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      shell: bash
+    # We need to push the commit changes in order for the tags
+    # to get updated, but we don't need to keep the changelog
+    # changes around.
+    - name: Delete Nightly Branch
+      run: |
+        git checkout main
+        git branch -D ${{ needs.create-nightly-hash.outputs.nightly-hash }}
+        git push origin --delete ${{ needs.create-nightly-hash.outputs.nightly-hash }}
       shell: bash

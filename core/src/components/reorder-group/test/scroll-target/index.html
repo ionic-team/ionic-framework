@@ -31,41 +31,36 @@
 
       <ion-content scroll-y="false">
         <div id="content" class="ion-content-scroll-host">
-          <ion-list>
-            <ion-reorder-group id="reorder" disabled="false">
-              <ion-reorder id="item-0">
-                <ion-item>
-                  <ion-label>
-                    <h2>Item 0</h2>
-                  </ion-label>
-                </ion-item>
-              </ion-reorder>
-              <ion-reorder id="item-1">
-                <ion-item>
-                  <ion-label>
-                    <h2>Item 1</h2>
-                  </ion-label>
-                </ion-item>
-              </ion-reorder>
-              <ion-reorder id="item-2">
-                <ion-item>
-                  <ion-label>
-                    <h2>Item 2</h2>
-                  </ion-label>
-                </ion-item>
-              </ion-reorder>
-            </ion-reorder-group>
-          </ion-list>
+          <ion-reorder-group disabled="false">
+            <ion-item>
+              <ion-label>Item 1</ion-label>
+              <ion-reorder slot="end"></ion-reorder>
+            </ion-item>
+            <ion-reorder>
+              <ion-item>
+                <ion-label>Item 2</ion-label>
+              </ion-item>
+            </ion-reorder>
+            <ion-item>
+              <ion-label>Item 3</ion-label>
+              <ion-reorder slot="end"></ion-reorder>
+            </ion-item>
+            <ion-reorder>
+              <ion-item>
+                <ion-label>Item 4</ion-label>
+              </ion-item>
+            </ion-reorder>
+          </ion-reorder-group>
         </div>
       </ion-content>
     </ion-app>
 
     <script>
-      const lists = Array.from(document.getElementsByTagName('ion-reorder-group'));
-
-      for (const list of lists) {
-        list.addEventListener('ionItemReorder', ({ detail }) => detail.complete(true));
-      }
+      const group = document.querySelector('ion-reorder-group');
+      group.addEventListener('ionItemReorder', (ev) => {
+        ev.detail.complete();
+        window.dispatchEvent(new CustomEvent('ionItemReorderComplete'));
+      });
     </script>
   </body>
 </html>
