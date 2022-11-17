@@ -7,7 +7,7 @@ import { NavController } from '@ionic/angular';
   templateUrl: './tabs-tab1-nested.component.html',
 })
 export class TabsTab1NestedComponent implements OnInit {
-  id = '';
+  id: string | null = '';
   constructor(
     private route: ActivatedRoute,
     public navCtrl: NavController
@@ -18,6 +18,9 @@ export class TabsTab1NestedComponent implements OnInit {
   }
 
   next() {
+    if (this.id === null) {
+      return '1';
+    }
     return parseInt(this.id, 10) + 1;
   }
 

@@ -6,11 +6,11 @@ import { IonSlides } from '@ionic/angular';
   templateUrl: './slides.component.html',
 })
 export class SlidesComponent implements AfterViewInit {
-  @ViewChild(IonSlides, { static: true }) slides: IonSlides;
+  @ViewChild(IonSlides, { static: true }) slides!: IonSlides;
 
   slideIndex = 0;
   slideIndex2 = 0;
-  slidesData = [];
+  slidesData: string[] = [];
 
   constructor() { }
 
