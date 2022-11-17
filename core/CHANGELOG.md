@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.8-alpha.0](https://github.com/ionic-team/ionic/compare/v6.3.7...v6.3.8-alpha.0) (2022-11-17)
+
+
+### Bug Fixes
+
+* **segment:** scrollable segments center button on click ([#26285](https://github.com/ionic-team/ionic/issues/26285)) ([73ea64c](https://github.com/ionic-team/ionic/commit/73ea64c02fff1d63651f6c98f03b43265ba5227a)), closes [#25367](https://github.com/ionic-team/ionic/issues/25367)
+
+
+
+
+
 ## [6.3.7](https://github.com/ionic-team/ionic/compare/v6.3.6...v6.3.7) (2022-11-16)
 
 
