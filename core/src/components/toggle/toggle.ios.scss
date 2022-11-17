@@ -17,8 +17,6 @@
   --handle-width: #{$toggle-ios-handle-width};
   --handle-spacing: #{$toggle-ios-border-width};
   --handle-transition: #{$toggle-ios-transition};
-
-  overflow: hidden;
 }
 
 :host(.legacy-toggle) {
@@ -26,6 +24,8 @@
   height: $toggle-ios-height;
 
   contain: strict;
+
+  overflow: hidden;
 }
 
 // Toggle Wrapper
@@ -37,6 +37,14 @@
 
 // Toggle Native Wrapper
 // ----------------------------------------------------------------
+
+/**
+ * The handle box shadow should not
+ * overflow outside of the track container.
+ */
+.native-wrapper {
+  overflow: hidden;
+}
 
 .native-wrapper .toggle-icon {
   width: $toggle-ios-width;
