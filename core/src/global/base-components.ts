@@ -55,6 +55,8 @@ export const isBaseComponent = (elm: HTMLElement, config: Config) => {
     return false;
   }
 
+  // TODO check if useBase property is set on element also add tests
+
   const baseComponents = config.get('baseComponents');
 
   /**
