@@ -3,7 +3,7 @@ import { getMode, setMode, setPlatformHelpers } from '@stencil/core';
 import type { IonicConfig, Mode } from '../interface';
 import { isPlatform, setupPlatforms } from '../utils/platform';
 
-import { isIonicElement } from './base-components';
+import { isIonicElement, resetBaseComponentsCache } from './base-components';
 import { config, configFromSession, configFromURL, saveConfig, validateConfig } from './config';
 
 declare const Context: any;
@@ -36,6 +36,8 @@ export const initialize = (userConfig: IonicConfig = {}) => {
   }
   setPlatformHelpers(platformHelpers);
 
+  validateConfig(userConfig);
+
   // create the Ionic.config from raw config object (if it exists)
   // and convert Ionic.config into a ConfigApi that has a get() fn
   const configObj: IonicConfig = {
@@ -46,7 +48,11 @@ export const initialize = (userConfig: IonicConfig = {}) => {
     ...userConfig,
   };
 
-  validateConfig(configObj);
+  /**
+   * Reset the base component look up table.
+   * This will be re-created when needed in setMode.
+   */
+  resetBaseComponentsCache();
 
   config.reset(configObj);
   if (config.getBoolean('persistConfig')) {

@@ -1,9 +1,13 @@
-import { config } from './config';
+import type { Config } from './config';
 
 let includeComponents: Map<string, boolean> | undefined;
 let excludeComponents: Map<string, boolean> | undefined;
 
 export const isIonicElement = (elm: any) => elm.tagName?.startsWith('ION-');
+
+export const resetBaseComponentsCache = () => {
+  includeComponents = excludeComponents = undefined;
+};
 
 /**
  * This function initializes Maps for components that are
@@ -42,7 +46,7 @@ const initializeBaseComponentsCache = (includeCmp?: string[], excludeCmp?: strin
  * Determines if a component is
  * using base components.
  */
-export const isBaseComponent = (elm: HTMLElement) => {
+export const isBaseComponent = (elm: HTMLElement, config: Config) => {
   /**
    * Only Ionic components can use
    * base components.
@@ -79,8 +83,8 @@ export const isBaseComponent = (elm: HTMLElement) => {
      * then return true. Otherwise the
      * component should not use base components.
      */
-    if (includeComponents?.has(elm.tagName.toLowerCase())) {
-      return true;
+    if (includeComponents !== undefined) {
+      return includeComponents.has(elm.tagName.toLowerCase());
     }
 
     /**
@@ -88,8 +92,8 @@ export const isBaseComponent = (elm: HTMLElement) => {
      * then return true. Otherwise the
      * component should not use base components.
      */
-    if (excludeComponents?.has(elm.tagName.toLowerCase())) {
-      return true;
+    if (excludeComponents !== undefined) {
+      return !excludeComponents.has(elm.tagName.toLowerCase());
     }
   }
 
