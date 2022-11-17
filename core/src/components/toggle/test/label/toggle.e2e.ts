@@ -86,7 +86,7 @@ test.describe('toggle: label', () => {
     test('should render a start justification with label in the fixed position', async ({ page }) => {
       await page.setContent(`
 
-        <ion-toggle label-placement="fixed" justify="start" style="width: 200px">Label</ion-toggle>
+        <ion-toggle label-placement="fixed" justify="start" style="width: 200px">This is a long label</ion-toggle>
       `);
 
       const toggle = page.locator('ion-toggle');
@@ -97,7 +97,7 @@ test.describe('toggle: label', () => {
     test('should render an end justification with label in the fixed position', async ({ page }) => {
       await page.setContent(`
 
-        <ion-toggle label-placement="fixed" justify="end" style="width: 200px">Label</ion-toggle>
+        <ion-toggle label-placement="fixed" justify="end" style="width: 200px">This is a long label</ion-toggle>
       `);
 
       const toggle = page.locator('ion-toggle');
@@ -108,7 +108,7 @@ test.describe('toggle: label', () => {
     test('should render a space between justification with label in the fixed position', async ({ page }) => {
       await page.setContent(`
 
-        <ion-toggle label-placement="fixed" justify="space-between" style="width: 200px">Label</ion-toggle>
+        <ion-toggle label-placement="fixed" justify="space-between" style="width: 200px">This is a long label</ion-toggle>
       `);
 
       const toggle = page.locator('ion-toggle');
