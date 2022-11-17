@@ -259,6 +259,9 @@ input {
 
   position: absolute;
 
+  // stylelint-disable-next-line property-disallowed-list
+  left: var(--handle-spacing);
+
   width: var(--handle-width);
   height: var(--handle-height);
 
@@ -278,21 +281,17 @@ input {
  * here because ion-toggle uses the Shadow DOM
  * and WebKit does not support :host-context.
  */
-:host(.toggle-rtl) {
-  // stylelint-disable-next-line property-disallowed-list
+:host(.toggle-rtl) .toggle-inner {
+  /* stylelint-disable property-disallowed-list */
   right: var(--handle-spacing);
-
-}
-
-:host(.toggle-ltr) {
-  // stylelint-disable-next-line property-disallowed-list
-  left: var(--handle-spacing);
+  left: unset;
+  /* stylelint-enable property-disallowed-list */
 }
 
 // Toggle Inner Knob: Checked
 // ----------------------------------------------------------
 
-:host(.toggle-ltr.toggle-checked) .toggle-icon-wrapper {
+:host(.toggle-checked) .toggle-icon-wrapper {
   // transform by 100% - handle width
   transform: translate3d(calc(100% - var(--handle-width)), 0, 0)
 }
@@ -303,12 +302,10 @@ input {
 }
 
 :host(.toggle-checked) .toggle-inner {
-  background: var(--handle-background-checked);
-}
-
-:host(.toggle-ltr.toggle-checked) .toggle-inner {
   // transform by handle spacing amount
   transform: translate3d(calc(var(--handle-spacing) * -2), 0, 0);
+
+  background: var(--handle-background-checked);
 }
 
 :host(.toggle-rtl.toggle-checked) .toggle-inner {
