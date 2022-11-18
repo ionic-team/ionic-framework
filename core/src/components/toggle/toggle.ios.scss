@@ -144,16 +144,15 @@
 
 // when pressing down on the toggle and it IS checked
 // the knob is wider so move it left by 6px in the transform
-:host(.toggle-activated.toggle-checked) .toggle-icon-wrapper {
-  @include ltr() {
-    // transform by 100% - handle width - 6px (width addition on activated)
-    transform: translate3d(calc(100% - var(--handle-width) - 6px), 0, 0);
-  }
 
-  @include rtl() {
-    // transform by -100% + handle width + 6px (width addition on activated)
-    transform: translate3d(calc(-100% + var(--handle-width) + 6px), 0, 0);
-  }
+:host(.toggle-ltr.toggle-activated.toggle-checked) .toggle-icon-wrapper {
+  // transform by 100% - handle width - 6px (width addition on activated)
+  transform: translate3d(calc(100% - var(--handle-width) - 6px), 0, 0);
+}
+
+:host(.toggle-rtl.toggle-activated.toggle-checked) .toggle-icon-wrapper {
+  // transform by -100% + handle width + 6px (width addition on activated)
+  transform: translate3d(calc(-100% + var(--handle-width) + 6px), 0, 0);
 }
 
 // iOS Toggle: Disabled
