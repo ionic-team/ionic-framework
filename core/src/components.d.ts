@@ -171,6 +171,7 @@ export namespace Components {
           * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
          */
         "cssClass"?: string | string[];
+        "delegate"?: FrameworkDelegate;
         /**
           * Dismiss the alert overlay after it has been presented.
           * @param data Any data to emit in the dismiss events.
@@ -181,6 +182,7 @@ export namespace Components {
           * Animation to use when the alert is presented.
          */
         "enterAnimation"?: AnimationBuilder;
+        "hasController": boolean;
         /**
           * The main title in the heading of the alert.
          */
@@ -193,6 +195,10 @@ export namespace Components {
           * Array of input to show in the alert.
          */
         "inputs": AlertInput[];
+        /**
+          * If `true`, the alert will open. If `false`, the alert will close. Use this if you need finer grained control over presentation, otherwise just use the alertController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the alert dismisses. You will need to do that in your code.
+         */
+        "isOpen": boolean;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -230,6 +236,10 @@ export namespace Components {
           * If `true`, the alert will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent": boolean;
+        /**
+          * An ID corresponding to the trigger element that causes the alert to open when clicked.
+         */
+        "trigger": string | undefined;
     }
     interface IonApp {
         "setFocus": (elements: HTMLElement[]) => Promise<void>;
@@ -3998,10 +4008,12 @@ declare namespace LocalJSX {
           * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
          */
         "cssClass"?: string | string[];
+        "delegate"?: FrameworkDelegate;
         /**
           * Animation to use when the alert is presented.
          */
         "enterAnimation"?: AnimationBuilder;
+        "hasController"?: boolean;
         /**
           * The main title in the heading of the alert.
          */
@@ -4014,6 +4026,10 @@ declare namespace LocalJSX {
           * Array of input to show in the alert.
          */
         "inputs"?: AlertInput[];
+        /**
+          * If `true`, the alert will open. If `false`, the alert will close. Use this if you need finer grained control over presentation, otherwise just use the alertController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the alert dismisses. You will need to do that in your code.
+         */
+        "isOpen"?: boolean;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -4031,6 +4047,14 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
+          * Emitted after the alert has dismissed. Shorthand for ionAlertDidDismiss.
+         */
+        "onDidDismiss"?: (event: IonAlertCustomEvent<OverlayEventDetail>) => void;
+        /**
+          * Emitted after the alert has presented. Shorthand for ionAlertWillDismiss.
+         */
+        "onDidPresent"?: (event: IonAlertCustomEvent<void>) => void;
+        /**
           * Emitted after the alert has dismissed.
          */
         "onIonAlertDidDismiss"?: (event: IonAlertCustomEvent<OverlayEventDetail>) => void;
@@ -4046,6 +4070,14 @@ declare namespace LocalJSX {
           * Emitted before the alert has presented.
          */
         "onIonAlertWillPresent"?: (event: IonAlertCustomEvent<void>) => void;
+        /**
+          * Emitted before the alert has dismissed. Shorthand for ionAlertWillDismiss.
+         */
+        "onWillDismiss"?: (event: IonAlertCustomEvent<OverlayEventDetail>) => void;
+        /**
+          * Emitted before the alert has presented. Shorthand for ionAlertWillPresent.
+         */
+        "onWillPresent"?: (event: IonAlertCustomEvent<void>) => void;
         "overlayIndex": number;
         /**
           * The subtitle in the heading of the alert. Displayed under the title.
@@ -4055,6 +4087,10 @@ declare namespace LocalJSX {
           * If `true`, the alert will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent"?: boolean;
+        /**
+          * An ID corresponding to the trigger element that causes the alert to open when clicked.
+         */
+        "trigger"?: string | undefined;
     }
     interface IonApp {
     }

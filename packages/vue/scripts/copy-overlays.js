@@ -9,7 +9,6 @@ function generateOverlays() {
     },
     {
       tag: 'ion-alert',
-      controller: 'alertController',
       name: 'IonAlert'
     },
     {
