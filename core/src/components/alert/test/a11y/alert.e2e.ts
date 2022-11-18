@@ -41,12 +41,7 @@ test.describe('alert: a11y', () => {
 
     await didPresent.next();
 
-    /**
-     * alert overlays the entire screen, so
-     * Axe will be unable to verify color contrast
-     * on elements under the backdrop.
-     */
-    const results = await new AxeBuilder({ page }).disableRules('color-contrast').analyze();
+    const results = await new AxeBuilder({ page }).analyze();
     expect(results.violations).toEqual([]);
   });
 
