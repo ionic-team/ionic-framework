@@ -1424,8 +1424,6 @@ ion-toggle,prop,value,null | string | undefined,'on',false,false
 ion-toggle,event,ionBlur,void,true
 ion-toggle,event,ionChange,ToggleChangeEventDetail<any>,true
 ion-toggle,event,ionFocus,void,true
-ion-toggle,css-prop,--background
-ion-toggle,css-prop,--background-checked
 ion-toggle,css-prop,--border-radius
 ion-toggle,css-prop,--handle-background
 ion-toggle,css-prop,--handle-background-checked
@@ -1436,6 +1434,8 @@ ion-toggle,css-prop,--handle-max-height
 ion-toggle,css-prop,--handle-spacing
 ion-toggle,css-prop,--handle-transition
 ion-toggle,css-prop,--handle-width
+ion-toggle,css-prop,--track-background
+ion-toggle,css-prop,--track-background-checked
 ion-toggle,part,handle
 ion-toggle,part,track
 
