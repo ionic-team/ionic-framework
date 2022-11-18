@@ -55,9 +55,13 @@ jobs:
         git config user.email hi@ionicframework.com
       shell: bash
     - name: Checkout Nightly Branch
+      # There are branch protection rules for our version
+      # branches (i.e. "6.2.x"), so we cannot name the branch
+      # the nightly hash as it would fall under the protection
+      # rule. As a result, we prefix "tmp-" to the branch.
       run: |
-        git checkout -b ${{ needs.create-nightly-hash.outputs.nightly-hash }}
-        git push origin ${{ needs.create-nightly-hash.outputs.nightly-hash }}
+        git checkout -b tmp-${{ needs.create-nightly-hash.outputs.nightly-hash }}
+        git push origin tmp-${{ needs.create-nightly-hash.outputs.nightly-hash }}
       shell: bash
     - name: Create GitHub Release
       run: lerna version ${{ needs.create-nightly-hash.outputs.nightly-hash }} --yes --force-publish='*' --conventional-commits --conventional-prerelease --create-release github
@@ -70,6 +74,6 @@ jobs:
     - name: Delete Nightly Branch
       run: |
         git checkout main
-        git branch -D ${{ needs.create-nightly-hash.outputs.nightly-hash }}
-        git push origin --delete ${{ needs.create-nightly-hash.outputs.nightly-hash }}
+        git branch -D tmp-${{ needs.create-nightly-hash.outputs.nightly-hash }}
+        git push origin --delete tmp-${{ needs.create-nightly-hash.outputs.nightly-hash }}
       shell: bash
