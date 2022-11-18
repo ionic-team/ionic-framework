@@ -16,9 +16,9 @@ export class ProvidersComponent {
   isResumed = false;
   isPaused = false;
   isResized = false;
-  isTesting: boolean = undefined;
-  isDesktop: boolean = undefined;
-  isMobile: boolean = undefined;
+  isTesting?: boolean = undefined;
+  isDesktop?: boolean = undefined;
+  isMobile?: boolean = undefined;
   keyboardHeight = 0;
   queryParams = '';
 

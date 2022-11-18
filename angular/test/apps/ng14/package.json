@@ -35,6 +35,7 @@
     "angular-in-memory-web-api": "^0.11.0",
     "core-js": "^2.6.11",
     "express": "^4.15.2",
+    "ionicons": "^6.0.4",
     "rxjs": "^6.5.5",
     "tslib": "^2.0.0",
     "typescript-eslint-language-service": "^4.1.5",
