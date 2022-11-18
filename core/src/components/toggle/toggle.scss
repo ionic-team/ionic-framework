@@ -38,10 +38,6 @@
   z-index: $z-index-item-input;
 }
 
-:host(:not(.legacy-toggle)) {
-  background: var(--background);
-}
-
 :host(.legacy-toggle) {
   contain: content;
 }
@@ -52,6 +48,10 @@
 
 :host(.toggle-disabled) {
   pointer-events: none;
+}
+
+:host(.in-item:not(.legacy-toggle)) {
+  width: 100%;
 }
 
 :host(.legacy-toggle) label {
