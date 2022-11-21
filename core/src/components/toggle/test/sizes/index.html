@@ -32,15 +32,29 @@
         <ion-toggle aria-label="Default Danger" color="danger"></ion-toggle>
         <ion-toggle aria-label="Default Danger" color="danger" checked></ion-toggle>
         <ion-toggle aria-label="Default Tertiary" color="tertiary" class="toggle-activated"></ion-toggle>
-        <ion-toggle aria-label="Default Tertiary Activated" color="tertiary" checked class="toggle-activated"></ion-toggle>
+        <ion-toggle
+          aria-label="Default Tertiary Activated"
+          color="tertiary"
+          checked
+          class="toggle-activated"
+        ></ion-toggle>
 
         <h1>Custom Widths</h1>
         <ion-toggle aria-label="Secondary Small Width" color="secondary" class="width-small"></ion-toggle>
         <ion-toggle aria-label="Secondary Small Width" color="secondary" checked class="width-small"></ion-toggle>
         <ion-toggle aria-label="Secondary Large Width" color="secondary" class="width-large"></ion-toggle>
         <ion-toggle aria-label="Secondary Large Width" color="secondary" checked class="width-large"></ion-toggle>
-        <ion-toggle aria-label="Tertiary Large Width Activated" color="tertiary" class="width-large toggle-activated"></ion-toggle>
-        <ion-toggle aria-label="Tertiary Large Width Activated" color="tertiary" checked class="width-large toggle-activated"></ion-toggle>
+        <ion-toggle
+          aria-label="Tertiary Large Width Activated"
+          color="tertiary"
+          class="width-large toggle-activated"
+        ></ion-toggle>
+        <ion-toggle
+          aria-label="Tertiary Large Width Activated"
+          color="tertiary"
+          checked
+          class="width-large toggle-activated"
+        ></ion-toggle>
 
         <h1>Custom Heights</h1>
         <div style="display: flex; flex-flow: column; float: left">
@@ -51,13 +65,35 @@
         <ion-toggle aria-label="Large Height" checked class="height-large"></ion-toggle>
         <ion-toggle aria-label="Large Height" class="handle-height-large"></ion-toggle>
         <ion-toggle aria-label="Large Height" checked class="handle-height-large"></ion-toggle>
-        <ion-toggle aria-label="Large Height Activated" checked class="handle-height-large toggle-activated"></ion-toggle>
+        <ion-toggle
+          aria-label="Large Height Activated"
+          checked
+          class="handle-height-large toggle-activated"
+        ></ion-toggle>
 
         <h1>Dynamic Sizes</h1>
-        <ion-toggle aria-label="Tertiary Small Width Small Height" color="tertiary" class="dynamic-small width-small height-small"></ion-toggle>
-        <ion-toggle aria-label="Tertiary Small Width Small Height" color="tertiary" checked class="dynamic-small width-small height-small"></ion-toggle>
-        <ion-toggle aria-label="Tertiary Large Width Large Height" color="tertiary" class="dynamic-large width-large height-large"></ion-toggle>
-        <ion-toggle aria-label="Tertiary Large Width Large Height" color="tertiary" checked class="dynamic-large width-large height-large"></ion-toggle>
+        <ion-toggle
+          aria-label="Tertiary Small Width Small Height"
+          color="tertiary"
+          class="dynamic-small width-small height-small"
+        ></ion-toggle>
+        <ion-toggle
+          aria-label="Tertiary Small Width Small Height"
+          color="tertiary"
+          checked
+          class="dynamic-small width-small height-small"
+        ></ion-toggle>
+        <ion-toggle
+          aria-label="Tertiary Large Width Large Height"
+          color="tertiary"
+          class="dynamic-large width-large height-large"
+        ></ion-toggle>
+        <ion-toggle
+          aria-label="Tertiary Large Width Large Height"
+          color="tertiary"
+          checked
+          class="dynamic-large width-large height-large"
+        ></ion-toggle>
 
         <h1>Complex Custom Toggles</h1>
         <ion-toggle aria-label="Custom" mode="ios" class="all-custom"></ion-toggle>
@@ -67,7 +103,13 @@
         <ion-toggle aria-label="Custom Overflow" checked class="custom-overflow"></ion-toggle>
 
         <ion-toggle aria-label="Custom Overflow iOS" mode="ios" color="dark" class="custom-spacing"></ion-toggle>
-        <ion-toggle aria-label="Custom Overflow iOS" mode="ios" color="dark" checked class="custom-spacing"></ion-toggle>
+        <ion-toggle
+          aria-label="Custom Overflow iOS"
+          mode="ios"
+          color="dark"
+          checked
+          class="custom-spacing"
+        ></ion-toggle>
 
         <ion-toggle aria-label="Custom Overflow MD" mode="md" color="dark" class="custom-spacing"></ion-toggle>
         <ion-toggle aria-label="Custom Overflow MD" mode="md" color="dark" checked class="custom-spacing"></ion-toggle>
@@ -138,7 +180,7 @@
         position: absolute;
         content: 'ON';
         color: white;
-        top: 16px;
+        top: 12px;
         left: 13px;
         z-index: 1;
         font-size: 8px;
@@ -159,6 +201,8 @@
       .all-custom::part(track) {
         width: 40px;
         height: 20px;
+
+        margin: 6px;
       }
 
       .all-custom::part(handle) {
