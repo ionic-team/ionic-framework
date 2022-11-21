@@ -697,7 +697,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
      * finishes when the dismiss animation does.
      * TODO (FW-937)
      */
-    const hasCardModal = this.swipeToClose || (this.canDismiss !== undefined && this.presentingElement !== undefined);
+    const hasCardModal = this.presentingElement !== undefined && (this.swipeToClose || this.canDismiss !== undefined);
     if (hasCardModal && getIonMode(this) === 'ios') {
       setCardStatusBarDefault(this.statusBarStyle);
     }
