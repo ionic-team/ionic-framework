@@ -107,7 +107,6 @@ input {
 // --------------------------------------------------
 
 .toggle-inner {
-  @include position(null, null, null, var(--handle-spacing));
   @include border-radius(var(--handle-border-radius));
 
   position: absolute;
@@ -126,31 +125,44 @@ input {
   contain: strict;
 }
 
+/**
+ * We do not use the @ltr and @rtl mixins
+ * here because ion-toggle uses the Shadow DOM
+ * and WebKit does not support :host-context.
+ */
+:host(.toggle-ltr) .toggle-inner {
+  // stylelint-disable-next-line property-disallowed-list
+  left: var(--handle-spacing);
+}
+
+:host(.toggle-rtl) .toggle-inner {
+  // stylelint-disable-next-line property-disallowed-list
+  right: var(--handle-spacing);
+}
+
 // Toggle Inner Knob: Checked
 // ----------------------------------------------------------
 
-:host(.toggle-checked) .toggle-icon-wrapper {
-  @include ltr() {
-    // transform by 100% - handle width
-    transform: translate3d(calc(100% - var(--handle-width)), 0, 0);
-  }
+:host(.toggle-ltr.toggle-checked) .toggle-icon-wrapper {
+  // transform by 100% - handle width
+  transform: translate3d(calc(100% - var(--handle-width)), 0, 0)
+}
 
-  @include rtl() {
-    // transform by -100% + handle width
-    transform: translate3d(calc(-100% + var(--handle-width)), 0, 0);
-  }
+:host(.toggle-rtl.toggle-checked) .toggle-icon-wrapper {
+  // transform by -100% + handle width
+  transform: translate3d(calc(-100% + var(--handle-width)), 0, 0);
 }
 
 :host(.toggle-checked) .toggle-inner {
-  @include ltr() {
-    // transform by handle spacing amount
-    transform: translate3d(calc(var(--handle-spacing) * -2), 0, 0);
-  }
-
-  @include rtl() {
-    // transform by handle spacing amount
-    transform: translate3d(calc(var(--handle-spacing) * 2), 0, 0);
-  }
-
   background: var(--handle-background-checked);
+}
+
+:host(.toggle-ltr.toggle-checked) .toggle-inner {
+  // transform by handle spacing amount
+  transform: translate3d(calc(var(--handle-spacing) * -2), 0, 0);
+}
+
+:host(.toggle-rtl.toggle-checked) .toggle-inner {
+  // transform by handle spacing amount
+  transform: translate3d(calc(var(--handle-spacing) * 2), 0, 0);
 }
