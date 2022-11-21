@@ -92,7 +92,7 @@
 // Material Design Toggle Within An Item
 // ----------------------------------------------------------
 
-:host(.in-item[slot]) {
+:host(.in-item.legacy-toggle[slot]) {
   @include margin(
     $toggle-md-media-margin-top,
     $toggle-md-media-margin-end,
@@ -109,7 +109,7 @@
   cursor: pointer;
 }
 
-:host(.in-item[slot="start"]) {
+:host(.in-item.legacy-toggle[slot="start"]) {
   @include padding(
     $toggle-md-item-start-padding-top,
     $toggle-md-item-start-padding-end,
