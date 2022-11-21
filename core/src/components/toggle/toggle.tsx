@@ -282,6 +282,7 @@ export class Toggle implements ComponentInterface {
 
     const mode = getIonMode(this);
     const value = this.getValue();
+    const rtl = isRTL(el) ? 'rtl' : 'ltr';
     renderHiddenInput(true, el, name, checked ? value : '', disabled);
 
     return (
@@ -295,7 +296,7 @@ export class Toggle implements ComponentInterface {
           'toggle-disabled': disabled,
           [`toggle-justify-${justify}`]: true,
           [`toggle-label-placement-${labelPlacement}`]: true,
-          'toggle-rtl': isRTL(el),
+          [`toggle-${rtl}`]: true,
         })}
       >
         <label class="toggle-wrapper">
