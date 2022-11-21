@@ -94,21 +94,21 @@
 }
 
 .toggle-switch-icon {
-  @include ltr() {
-    /* stylelint-disable-next-line property-disallowed-list */
-    right: 6px;
-  }
-
-  @include rtl() {
-    /* stylelint-disable property-disallowed-list */
-    right: initial;
-    left: 6px;
-    /* stylelint-enable property-disallowed-list */
-  }
-
   position: absolute;
 
   color: var(--ion-color-dark);
+}
+
+:host(.toggle-ltr) .toggle-switch-icon {
+  /* stylelint-disable-next-line property-disallowed-list */
+  right: 6px;
+}
+
+:host(.toggle-rtl) .toggle-switch-icon {
+  /* stylelint-disable property-disallowed-list */
+  right: initial;
+  left: 6px;
+  /* stylelint-enable property-disallowed-list */
 }
 
 :host(.toggle-checked) .toggle-switch-icon.toggle-switch-icon-checked {
@@ -122,24 +122,24 @@
 }
 
 .toggle-switch-icon-checked {
-  @include ltr() {
-    /* stylelint-disable property-disallowed-list */
-    right: initial;
-    left: 4px;
-    /* stylelint-enable property-disallowed-list */
-  }
-
-  @include rtl() {
-    /* stylelint-disable-next-line property-disallowed-list */
-    right: 4px;
-  }
-
   position: absolute;
 
   width: 15px;
   height: 15px;
 
   transform: translateY(-50%) rotate(90deg);
+}
+
+:host(.toggle-ltr) .toggle-switch-icon-checked {
+  /* stylelint-disable property-disallowed-list */
+  right: initial;
+  left: 4px;
+  /* stylelint-enable property-disallowed-list */
+}
+
+:host(.toggle-rtl) .toggle-switch-icon-checked {
+  /* stylelint-disable-next-line property-disallowed-list */
+  right: 4px;
 }
 
 // iOS Toggle Background Oval: Activated or Checked
@@ -169,16 +169,15 @@
 
 // when pressing down on the toggle and it IS checked
 // the knob is wider so move it left by 6px in the transform
-:host(.toggle-activated.toggle-checked) .toggle-icon-wrapper {
-  @include ltr() {
-    // transform by 100% - handle width - 6px (width addition on activated)
-    transform: translate3d(calc(100% - var(--handle-width) - 6px), 0, 0);
-  }
 
-  @include rtl() {
-    // transform by -100% + handle width + 6px (width addition on activated)
-    transform: translate3d(calc(-100% + var(--handle-width) + 6px), 0, 0);
-  }
+:host(.toggle-ltr.toggle-activated.toggle-checked) .toggle-icon-wrapper {
+  // transform by 100% - handle width - 6px (width addition on activated)
+  transform: translate3d(calc(100% - var(--handle-width) - 6px), 0, 0);
+}
+
+:host(.toggle-rtl.toggle-activated.toggle-checked) .toggle-icon-wrapper {
+  // transform by -100% + handle width + 6px (width addition on activated)
+  transform: translate3d(calc(-100% + var(--handle-width) + 6px), 0, 0);
 }
 
 // iOS Toggle: Disabled

@@ -12,54 +12,22 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
-    <style>
-      :root {
-        --ion-background-color: #171717;
-        --ion-text-color: #ffffff;
-        --ion-color-step-50: #232323;
-        --ion-color-step-100: #2e2e2e;
-        --ion-color-step-150: #3a3a3a;
-        --ion-color-step-200: #454545;
-        --ion-color-step-250: #515151;
-        --ion-color-step-300: #5d5d5d;
-        --ion-color-step-350: #686868;
-        --ion-color-step-400: #747474;
-        --ion-color-step-450: #7f7f7f;
-        --ion-color-step-500: #8b8b8b;
-        --ion-color-step-550: #979797;
-        --ion-color-step-600: #a2a2a2;
-        --ion-color-step-650: #aeaeae;
-        --ion-color-step-700: #b9b9b9;
-        --ion-color-step-750: #c5c5c5;
-        --ion-color-step-800: #d1d1d1;
-        --ion-color-step-850: #dcdcdc;
-        --ion-color-step-900: #e8e8e8;
-        --ion-color-step-950: #f3f3f3;
-
-        --ion-background-color-rgb: 23, 23, 23;
-        --ion-background-color-rgb: 0, 0, 0;
-        --ion-text-color-rgb: 255, 255, 255;
-      }
-
-      [f] {
-        background: green;
-        width: 100px;
-        height: 100px;
-      }
-    </style>
     <script>
       class PageOne extends HTMLElement {
         connectedCallback() {
           this.innerHTML = `
           <ion-header>
             <ion-toolbar>
+              <ion-buttons slot="start">
+                <ion-back-button></ion-back-button>
+              </ion-buttons>
               <ion-title>Page One</ion-title>
             </ion-toolbar>
           </ion-header>
           <ion-content class="ion-padding">
             <h1>Page One</h1>
             <ion-nav-link router-direction="forward" component="page-two">
-              <ion-button mode="md" class="next">Go to Page Two</ion-button>
+              <ion-button class="next">Go to Page Two</ion-button>
             </ion-nav-link>
           </ion-content>
         `;
@@ -75,19 +43,6 @@
               </ion-buttons>
               <ion-title>Page Two</ion-title>
             </ion-toolbar>
-            <ion-toolbar>
-              <ion-buttons slot="start">
-                <ion-button>
-                  <ion-icon slot="icon-only" name="star"></ion-icon>
-                </ion-button>
-              </ion-buttons>
-              <ion-searchbar></ion-searchbar>
-              <ion-buttons slot="end">
-                <ion-button>
-                  <ion-icon slot="icon-only" name="star"></ion-icon>
-                </ion-button>
-              </ion-buttons>
-            </ion-toolbar>
           </ion-header>
           <ion-content class="ion-padding">
             <h1>Page Two</h1>
@@ -96,15 +51,6 @@
                 <ion-button class="next">Go to Page Three</ion-button>
               </ion-nav-link>
             </div>
-            <div f></div>
-            <div f></div>
-            <div f></div>
-            <div f></div>
-            <div f></div>
-            <div f></div>
-            <div f></div>
-            <div f></div>
-
           </ion-content>
         `;
         }

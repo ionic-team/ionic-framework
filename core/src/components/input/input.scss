@@ -179,6 +179,15 @@
   pointer-events: none;
 }
 
+/**
+ * The cloned input needs to be disabled on
+ * Android otherwise the viewport will still
+ * shift when running scroll assist.
+ */
+.cloned-input:disabled {
+  opacity: 1;
+}
+
 
 // Clear Input Icon
 // --------------------------------------------------

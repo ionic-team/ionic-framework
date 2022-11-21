@@ -9,10 +9,21 @@ import type {
   CssClassMap,
   OverlayEventDetail,
   OverlayInterface,
+  FrameworkDelegate,
 } from '../../interface';
 import type { Gesture } from '../../utils/gesture';
 import { createButtonActiveGesture } from '../../utils/gesture/button-active';
-import { BACKDROP, dismiss, eventMethod, isCancel, prepareOverlay, present, safeCall } from '../../utils/overlays';
+import {
+  createDelegateController,
+  createTriggerController,
+  BACKDROP,
+  dismiss,
+  eventMethod,
+  isCancel,
+  prepareOverlay,
+  present,
+  safeCall,
+} from '../../utils/overlays';
 import type { IonicSafeString } from '../../utils/sanitization';
 import { sanitizeDOMString } from '../../utils/sanitization';
 import { getClassMap } from '../../utils/theme';
@@ -34,12 +45,16 @@ import { mdLeaveAnimation } from './animations/md.leave';
   scoped: true,
 })
 export class Alert implements ComponentInterface, OverlayInterface {
+  private readonly delegateController = createDelegateController(this);
+  private readonly triggerController = createTriggerController();
+
   private activeId?: string;
   private inputType?: string;
   private processedInputs: AlertInput[] = [];
   private processedButtons: AlertButton[] = [];
   private wrapperEl?: HTMLElement;
   private gesture?: Gesture;
+  private currentTransition?: Promise<any>;
 
   presented = false;
   lastFocus?: HTMLElement;
@@ -48,6 +63,12 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
   /** @internal */
   @Prop() overlayIndex!: number;
+
+  /** @internal */
+  @Prop() delegate?: FrameworkDelegate;
+
+  /** @internal */
+  @Prop() hasController = false;
 
   /**
    * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
@@ -124,6 +145,36 @@ export class Alert implements ComponentInterface, OverlayInterface {
   @Prop() htmlAttributes?: { [key: string]: any };
 
   /**
+   * If `true`, the alert will open. If `false`, the alert will close.
+   * Use this if you need finer grained control over presentation, otherwise
+   * just use the alertController or the `trigger` property.
+   * Note: `isOpen` will not automatically be set back to `false` when
+   * the alert dismisses. You will need to do that in your code.
+   */
+  @Prop() isOpen = false;
+  @Watch('isOpen')
+  onIsOpenChange(newValue: boolean, oldValue: boolean) {
+    if (newValue === true && oldValue === false) {
+      this.present();
+    } else if (newValue === false && oldValue === true) {
+      this.dismiss();
+    }
+  }
+
+  /**
+   * An ID corresponding to the trigger element that
+   * causes the alert to open when clicked.
+   */
+  @Prop() trigger: string | undefined;
+  @Watch('trigger')
+  triggerChanged() {
+    const { trigger, el, triggerController } = this;
+    if (trigger) {
+      triggerController.addClickListener(el, trigger);
+    }
+  }
+
+  /**
    * Emitted after the alert has presented.
    */
   @Event({ eventName: 'ionAlertDidPresent' }) didPresent!: EventEmitter<void>;
@@ -142,6 +193,30 @@ export class Alert implements ComponentInterface, OverlayInterface {
    * Emitted after the alert has dismissed.
    */
   @Event({ eventName: 'ionAlertDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
+
+  /**
+   * Emitted after the alert has presented.
+   * Shorthand for ionAlertWillDismiss.
+   */
+  @Event({ eventName: 'didPresent' }) didPresentShorthand!: EventEmitter<void>;
+
+  /**
+   * Emitted before the alert has presented.
+   * Shorthand for ionAlertWillPresent.
+   */
+  @Event({ eventName: 'willPresent' }) willPresentShorthand!: EventEmitter<void>;
+
+  /**
+   * Emitted before the alert has dismissed.
+   * Shorthand for ionAlertWillDismiss.
+   */
+  @Event({ eventName: 'willDismiss' }) willDismissShorthand!: EventEmitter<OverlayEventDetail>;
+
+  /**
+   * Emitted after the alert has dismissed.
+   * Shorthand for ionAlertDidDismiss.
+   */
+  @Event({ eventName: 'didDismiss' }) didDismissShorthand!: EventEmitter<OverlayEventDetail>;
 
   @Listen('keydown', { target: 'document' })
   onKeydown(ev: any) {
@@ -247,6 +322,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
   connectedCallback() {
     prepareOverlay(this.el);
+    this.triggerChanged();
   }
 
   componentWillLoad() {
@@ -255,6 +331,8 @@ export class Alert implements ComponentInterface, OverlayInterface {
   }
 
   disconnectedCallback() {
+    this.triggerController.removeClickListener();
+
     if (this.gesture) {
       this.gesture.destroy();
       this.gesture = undefined;
@@ -282,8 +360,24 @@ export class Alert implements ComponentInterface, OverlayInterface {
    * Present the alert overlay after it has been created.
    */
   @Method()
-  present(): Promise<void> {
-    return present(this, 'alertEnter', iosEnterAnimation, mdEnterAnimation);
+  async present(): Promise<void> {
+    /**
+     * When using an inline alert
+     * and dismissing an alert it is possible to
+     * quickly present the alert while it is
+     * dismissing. We need to await any current
+     * transition to allow the dismiss to finish
+     * before presenting again.
+     */
+    if (this.currentTransition !== undefined) {
+      await this.currentTransition;
+    }
+
+    await this.delegateController.attachViewToDom();
+
+    this.currentTransition = present(this, 'alertEnter', iosEnterAnimation, mdEnterAnimation);
+    await this.currentTransition;
+    this.currentTransition = undefined;
   }
 
   /**
@@ -296,8 +390,15 @@ export class Alert implements ComponentInterface, OverlayInterface {
    * Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
    */
   @Method()
-  dismiss(data?: any, role?: string): Promise<boolean> {
-    return dismiss(this, data, role, 'alertLeave', iosLeaveAnimation, mdLeaveAnimation);
+  async dismiss(data?: any, role?: string): Promise<boolean> {
+    this.currentTransition = dismiss(this, data, role, 'alertLeave', iosLeaveAnimation, mdLeaveAnimation);
+    const dismissed = await this.currentTransition;
+
+    if (dismissed) {
+      this.delegateController.removeViewFromDom();
+    }
+
+    return dismissed;
   }
 
   /**

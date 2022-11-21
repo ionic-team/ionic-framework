@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.7](https://github.com/ionic-team/ionic-framework/compare/v6.3.6...v6.3.7) (2022-11-16)
+
+
+### Bug Fixes
+
+* **action-sheet:** icons are aligned on MD mode ([#26256](https://github.com/ionic-team/ionic-framework/issues/26256)) ([627d654](https://github.com/ionic-team/ionic-framework/commit/627d654d24f97e340e4004a03f07467619e60149)), closes [#26249](https://github.com/ionic-team/ionic-framework/issues/26249)
+* **datetime:** clear button clears the selected date ([#26264](https://github.com/ionic-team/ionic-framework/issues/26264)) ([9216744](https://github.com/ionic-team/ionic-framework/commit/9216744205c1ecc0c3dd51490a25be102f27a91a)), closes [#26258](https://github.com/ionic-team/ionic-framework/issues/26258)
+* **datetime:** fonts now render consistently ([#26281](https://github.com/ionic-team/ionic-framework/issues/26281)) ([f13ddca](https://github.com/ionic-team/ionic-framework/commit/f13ddcaf470fb3d070298819675812cebf5f5ceb))
+* **datetime:** max and min works with showDefaultButtons ([#26257](https://github.com/ionic-team/ionic-framework/issues/26257)) ([e5cff9e](https://github.com/ionic-team/ionic-framework/commit/e5cff9ecf39c13912cf6e062e4a084fadc59c399)), closes [#26146](https://github.com/ionic-team/ionic-framework/issues/26146)
+* **popover:** inline popover positioning with fit-content or auto width ([#26230](https://github.com/ionic-team/ionic-framework/issues/26230)) ([0a8a958](https://github.com/ionic-team/ionic-framework/commit/0a8a958cba02994ea0fefa265b17edddffe62e98)), closes [#24716](https://github.com/ionic-team/ionic-framework/issues/24716)
+* **popover:** popover positioning for controller and inline ([#26274](https://github.com/ionic-team/ionic-framework/issues/26274)) ([31ab10d](https://github.com/ionic-team/ionic-framework/commit/31ab10de4e1c8e38582b985f19414f73337a63c8)), closes [#24716](https://github.com/ionic-team/ionic-framework/issues/24716)
+* **textarea:** scrollbars are visible with overflow ([#26284](https://github.com/ionic-team/ionic-framework/issues/26284)) ([7a990ff](https://github.com/ionic-team/ionic-framework/commit/7a990ff403d7b7b80541c5d8f9cd05463c4fb593)), closes [#26278](https://github.com/ionic-team/ionic-framework/issues/26278)
+
+
+
+
+
+## [6.3.6](https://github.com/ionic-team/ionic-framework/compare/v6.3.5...v6.3.6) (2022-11-10)
+
+
+### Bug Fixes
+
+* **datetime:** flip chevron icons when RTL is set on component directly ([#26195](https://github.com/ionic-team/ionic-framework/issues/26195)) ([dd98677](https://github.com/ionic-team/ionic-framework/commit/dd9867708b66543f5cbe978e0fa6ef34b37f9fc3))
+* **react:** inline overlays display contents consistently ([#26255](https://github.com/ionic-team/ionic-framework/issues/26255)) ([d709ff6](https://github.com/ionic-team/ionic-framework/commit/d709ff64ae29a5197dc74cecb95cba602479683d)), closes [#26253](https://github.com/ionic-team/ionic-framework/issues/26253)
+
+
+
+
+
+## [6.3.5](https://github.com/ionic-team/ionic-framework/compare/v6.3.4...v6.3.5) (2022-11-09)
+
+
+### Bug Fixes
+
+* **android:** account for chrome 108 resize ([#26244](https://github.com/ionic-team/ionic-framework/issues/26244)) ([1a0b9ed](https://github.com/ionic-team/ionic-framework/commit/1a0b9ed3bacffa9f602637c204f52cb3face5a3e))
+* **datetime:** min/max correctly display available day periods ([#26241](https://github.com/ionic-team/ionic-framework/issues/26241)) ([526e411](https://github.com/ionic-team/ionic-framework/commit/526e4113d82d244e2574b24d72fda632bb2aa143)), closes [#26216](https://github.com/ionic-team/ionic-framework/issues/26216)
+* **overlays:** presenting an overlay does not create nested elements ([#26154](https://github.com/ionic-team/ionic-framework/issues/26154)) ([bb00595](https://github.com/ionic-team/ionic-framework/commit/bb005956eaff7401cfe1d6befcbf512424ddd283)), closes [#26117](https://github.com/ionic-team/ionic-framework/issues/26117)
+* **react:** loading layout is correct with no message ([#26222](https://github.com/ionic-team/ionic-framework/issues/26222)) ([57105d5](https://github.com/ionic-team/ionic-framework/commit/57105d54ea259fc9cd1a63e3d361ec8a57dd2971)), closes [#26219](https://github.com/ionic-team/ionic-framework/issues/26219)
+* **vue:** generate web-types for components ([#26205](https://github.com/ionic-team/ionic-framework/issues/26205)) ([1f7fc8f](https://github.com/ionic-team/ionic-framework/commit/1f7fc8f05c03316560e0b58c3bf58db6b189d0e1)), closes [#26198](https://github.com/ionic-team/ionic-framework/issues/26198)
+
+
+
+
+
 ## [6.3.4](https://github.com/ionic-team/ionic-framework/compare/v6.3.3...v6.3.4) (2022-11-02)
 
 

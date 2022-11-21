@@ -16,7 +16,8 @@ export const enableScrollAssist = (
   footerEl: HTMLIonFooterElement | null,
   keyboardHeight: number,
   enableScrollPadding: boolean,
-  keyboardResize: KeyboardResizeOptions | undefined
+  keyboardResize: KeyboardResizeOptions | undefined,
+  disableClonedInput = false
 ) => {
   /**
    * Scroll padding should only be added if:
@@ -36,7 +37,7 @@ export const enableScrollAssist = (
    * mobile Safari from adjusting the viewport.
    */
   const focusIn = async () => {
-    jsSetFocus(componentEl, inputEl, contentEl, footerEl, keyboardHeight, addScrollPadding);
+    jsSetFocus(componentEl, inputEl, contentEl, footerEl, keyboardHeight, addScrollPadding, disableClonedInput);
   };
   componentEl.addEventListener('focusin', focusIn, true);
 
@@ -51,7 +52,8 @@ const jsSetFocus = async (
   contentEl: HTMLElement | null,
   footerEl: HTMLIonFooterElement | null,
   keyboardHeight: number,
-  enableScrollPadding: boolean
+  enableScrollPadding: boolean,
+  disableClonedInput = false
 ) => {
   if (!contentEl && !footerEl) {
     return;
@@ -84,7 +86,7 @@ const jsSetFocus = async (
   // temporarily move the focus to the focus holder so the browser
   // doesn't freak out while it's trying to get the input in place
   // at this point the native text input still does not have focus
-  relocateInput(componentEl, inputEl, true, scrollData.inputSafeY);
+  relocateInput(componentEl, inputEl, true, scrollData.inputSafeY, disableClonedInput);
   inputEl.focus();
 
   /**

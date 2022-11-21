@@ -181,7 +181,6 @@
 // Material Design Multi-line Item
 // --------------------------------------------------
 
-// TODO this works if manually adding the class / should it work with prop?
 // Multi-line items should align the slotted content at the top
 :host(.item-multi-line) ::slotted([slot="start"]),
 :host(.item-multi-line) ::slotted([slot="end"]) {
@@ -375,7 +374,6 @@
   --min-height: 55px;
 }
 
-// TODO: refactor, ion-item and ion-textarea have the same CSS
 :host(.item-label-stacked) ::slotted(ion-select),
 :host(.item-label-floating) ::slotted(ion-select) {
   --padding-top: 8px;
