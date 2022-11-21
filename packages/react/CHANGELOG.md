@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.8-nightly.20221121](https://github.com/ionic-team/ionic/compare/v6.3.7...v6.3.8-nightly.20221121) (2022-11-21)
+
+
+### Bug Fixes
+
+* **react:** useIonRouter hook has stable router reference ([#25000](https://github.com/ionic-team/ionic/issues/25000)) ([89e3cd6](https://github.com/ionic-team/ionic/commit/89e3cd67ce6d9cfc0607d6a89362483878a1820b)), closes [#24987](https://github.com/ionic-team/ionic/issues/24987)
+
+
+
+
+
 ## [6.3.7](https://github.com/ionic-team/ionic/compare/v6.3.6...v6.3.7) (2022-11-16)
 
 **Note:** Version bump only for package @ionic/react

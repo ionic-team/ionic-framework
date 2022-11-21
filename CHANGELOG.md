@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.8-nightly.20221121](https://github.com/ionic-team/ionic-framework/compare/v6.3.7...v6.3.8-nightly.20221121) (2022-11-21)
+
+
+### Bug Fixes
+
+* **normalize:** normalize css resets button padding ([#26214](https://github.com/ionic-team/ionic-framework/issues/26214)) ([e14c947](https://github.com/ionic-team/ionic-framework/commit/e14c94722c2c8ec145d680f911b708a34f095cd3)), closes [#23928](https://github.com/ionic-team/ionic-framework/issues/23928)
+* **react:** useIonRouter hook has stable router reference ([#25000](https://github.com/ionic-team/ionic-framework/issues/25000)) ([89e3cd6](https://github.com/ionic-team/ionic-framework/commit/89e3cd67ce6d9cfc0607d6a89362483878a1820b)), closes [#24987](https://github.com/ionic-team/ionic-framework/issues/24987)
+* **reorder-group:** support custom components ([#26289](https://github.com/ionic-team/ionic-framework/issues/26289)) ([8425734](https://github.com/ionic-team/ionic-framework/commit/842573477b1b498f2280badc8c7411832c1650a5)), closes [#19447](https://github.com/ionic-team/ionic-framework/issues/19447)
+* **segment:** scrollable segments center button on click ([#26285](https://github.com/ionic-team/ionic-framework/issues/26285)) ([73ea64c](https://github.com/ionic-team/ionic-framework/commit/73ea64c02fff1d63651f6c98f03b43265ba5227a)), closes [#25367](https://github.com/ionic-team/ionic-framework/issues/25367)
+
+
+
+
+
 ## [6.3.7](https://github.com/ionic-team/ionic-framework/compare/v6.3.6...v6.3.7) (2022-11-16)
 
 
