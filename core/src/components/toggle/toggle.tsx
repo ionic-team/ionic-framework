@@ -211,6 +211,7 @@ export class Toggle implements ComponentInterface {
     const mode = getIonMode(this);
     const { label, labelId, labelText } = getAriaLabel(el, inputId);
     const value = this.getValue();
+    const rtl = isRTL(el) ? 'rtl' : 'ltr';
 
     renderHiddenInput(true, el, name, checked ? value : '', disabled);
 
@@ -228,6 +229,7 @@ export class Toggle implements ComponentInterface {
           'toggle-checked': checked,
           'toggle-disabled': disabled,
           interactive: true,
+          [`toggle-${rtl}`]: true,
         })}
       >
         <div class="toggle-icon" part="track">

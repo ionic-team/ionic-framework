@@ -27,7 +27,12 @@ import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
-import { configureDismissInteraction, configureKeyboardInteraction, configureTriggerInteraction } from './utils';
+import {
+  configureDismissInteraction,
+  configureKeyboardInteraction,
+  configureTriggerInteraction,
+  waitOneFrame,
+} from './utils';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -310,6 +315,19 @@ export class Popover implements ComponentInterface, PopoverInterface {
    */
   @Event({ eventName: 'didDismiss' }) didDismissShorthand!: EventEmitter<OverlayEventDetail>;
 
+  /**
+   * Emitted before the popover has presented, but after the component
+   * has been mounted in the DOM.
+   * This event exists for ion-popover to resolve an issue with the
+   * popover and the lazy build, that the transition is unable to get
+   * the correct dimensions of the popover with auto sizing.
+   * This is not required for other overlays, since the existing
+   * overlay transitions are not effected by auto sizing content.
+   *
+   * @internal
+   */
+  @Event() ionMount!: EventEmitter<void>;
+
   connectedCallback() {
     const { configureTriggerInteraction, el } = this;
 
@@ -445,6 +463,18 @@ export class Popover implements ComponentInterface, PopoverInterface {
       this.configureKeyboardInteraction();
     }
     this.configureDismissInteraction();
+
+    // TODO: FW-2773: Apply this to only the lazy build.
+    /**
+     * ionMount only needs to be emitted if the popover is inline.
+     */
+    this.ionMount.emit();
+    /**
+     * Wait one raf before presenting the popover.
+     * This allows the lazy build enough time to
+     * calculate the popover dimensions for the animation.
+     */
+    await waitOneFrame();
 
     this.currentTransition = present(this, 'popoverEnter', iosEnterAnimation, mdEnterAnimation, {
       event: event || this.event,

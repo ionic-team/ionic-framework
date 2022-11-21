@@ -133,7 +133,6 @@ describe('Routing Tests', () => {
 
   it('Tab 3 > Other Page > Back, should be back on Tab 3', () => {
     // Tests transferring from one outlet to another and back again with animation
-    // TODO: how to test the transition animation happens?
     cy.visit(`http://localhost:${port}/routing/tabs/tab3`);
     cy.ionNav('ion-button', 'Go to Other Page');
     cy.ionPageVisible('other-page');

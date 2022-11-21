@@ -37,7 +37,7 @@ export class Menu implements ComponentInterface, MenuI {
   private blocker = GESTURE_CONTROLLER.createBlocker({ disableScroll: true });
 
   isAnimating = false;
-  width!: number; // TODO
+  width!: number;
   _isOpen = false;
 
   backdropEl?: HTMLElement;
@@ -465,7 +465,6 @@ export class Menu implements ComponentInterface, MenuI {
     }
     if (this._isOpen) {
       return true;
-      // TODO error
     } else if (menuController._getOpenSync()) {
       return false;
     }
@@ -534,10 +533,9 @@ export class Menu implements ComponentInterface, MenuI {
     let newStepValue = shouldComplete ? 0.001 : -0.001;
 
     /**
-     * TODO: stepValue can sometimes return a negative
+     * stepValue can sometimes return a negative
      * value, but you can't have a negative time value
      * for the cubic bezier curve (at least with web animations)
-     * Not sure if the negative step value is an error or not
      */
     const adjustedStepValue = stepValue < 0 ? 0.01 : stepValue;
 
