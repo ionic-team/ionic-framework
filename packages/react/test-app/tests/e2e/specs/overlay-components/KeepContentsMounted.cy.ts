@@ -27,6 +27,25 @@ describe('keepContentsMounted', () => {
 
       cy.get('ion-modal ion-content').should('exist');
     });
+
+    it('should display contents consistently on re-open', () => {
+      // https://github.com/ionic-team/ionic-framework/issues/26253
+      cy.visit('/keep-contents-mounted');
+
+      cy.get('#open-modal').click();
+
+      cy.get('ion-modal ion-content').should('exist');
+
+      cy.get('ion-modal ion-button').click();
+
+      cy.get('ion-modal')
+        .should('not.be.visible')
+        .should('have.class', 'overlay-hidden');
+
+      cy.get('#open-modal').click();
+
+      cy.get('ion-modal ion-button').should('be.visible');
+    })
   })
   describe('popover', () => {
     it('should not mount component if false', () => {
