@@ -9,8 +9,10 @@ import type {
   OverlayInterface,
   PickerButton,
   PickerColumn,
+  FrameworkDelegate,
 } from '../../interface';
 import {
+  createDelegateController,
   createTriggerController,
   BACKDROP,
   dismiss,
@@ -37,9 +39,11 @@ import { iosLeaveAnimation } from './animations/ios.leave';
   scoped: true,
 })
 export class Picker implements ComponentInterface, OverlayInterface {
+  private readonly delegateController = createDelegateController(this);
   private readonly triggerController = createTriggerController();
 
   private durationTimeout: any;
+  private currentTransition?: Promise<any>;
   lastFocus?: HTMLElement;
 
   @Element() el!: HTMLIonPickerElement;
@@ -48,6 +52,12 @@ export class Picker implements ComponentInterface, OverlayInterface {
 
   /** @internal */
   @Prop() overlayIndex!: number;
+
+  /** @internal */
+  @Prop() delegate?: FrameworkDelegate;
+
+  /** @internal */
+  @Prop() hasController = false;
 
   /**
    * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
@@ -193,7 +203,25 @@ export class Picker implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async present(): Promise<void> {
-    await present(this, 'pickerEnter', iosEnterAnimation, iosEnterAnimation, undefined);
+    /**
+     * When using an inline picker
+     * and dismissing an picker it is possible to
+     * quickly present the picker while it is
+     * dismissing. We need to await any current
+     * transition to allow the dismiss to finish
+     * before presenting again.
+     */
+    if (this.currentTransition !== undefined) {
+      await this.currentTransition;
+    }
+
+    await this.delegateController.attachViewToDom();
+
+    this.currentTransition = present(this, 'pickerEnter', iosEnterAnimation, iosEnterAnimation, undefined);
+
+    await this.currentTransition;
+
+    this.currentTransition = undefined;
 
     if (this.duration > 0) {
       this.durationTimeout = setTimeout(() => this.dismiss(), this.duration);
@@ -210,11 +238,18 @@ export class Picker implements ComponentInterface, OverlayInterface {
    * Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
    */
   @Method()
-  dismiss(data?: any, role?: string): Promise<boolean> {
+  async dismiss(data?: any, role?: string): Promise<boolean> {
     if (this.durationTimeout) {
       clearTimeout(this.durationTimeout);
     }
-    return dismiss(this, data, role, 'pickerLeave', iosLeaveAnimation, iosLeaveAnimation);
+    this.currentTransition = dismiss(this, data, role, 'pickerLeave', iosLeaveAnimation, iosLeaveAnimation);
+    const dismissed = await this.currentTransition;
+
+    if (dismissed) {
+      this.delegateController.removeViewFromDom();
+    }
+
+    return dismissed;
   }
 
   /**

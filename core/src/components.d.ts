@@ -1883,6 +1883,7 @@ export namespace Components {
           * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
          */
         "cssClass"?: string | string[];
+        "delegate"?: FrameworkDelegate;
         /**
           * Dismiss the picker overlay after it has been presented.
           * @param data Any data to emit in the dismiss events.
@@ -1902,6 +1903,7 @@ export namespace Components {
           * @param name The name of the column.
          */
         "getColumn": (name: string) => Promise<PickerColumn | undefined>;
+        "hasController": boolean;
         /**
           * Additional attributes to pass to the picker.
          */
@@ -5728,6 +5730,7 @@ declare namespace LocalJSX {
           * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
          */
         "cssClass"?: string | string[];
+        "delegate"?: FrameworkDelegate;
         /**
           * Number of milliseconds to wait before dismissing the picker.
          */
@@ -5736,6 +5739,7 @@ declare namespace LocalJSX {
           * Animation to use when the picker is presented.
          */
         "enterAnimation"?: AnimationBuilder;
+        "hasController"?: boolean;
         /**
           * Additional attributes to pass to the picker.
          */
