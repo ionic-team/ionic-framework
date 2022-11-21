@@ -31,17 +31,15 @@
 // Toggle Native Wrapper
 // ----------------------------------------------------------------
 
-/**
- * The handle box shadow should not
- * overflow outside of the track container.
- */
-.native-wrapper {
-  overflow: hidden;
-}
-
 .native-wrapper .toggle-icon {
   width: $toggle-ios-width;
   height: $toggle-ios-height;
+
+  /**
+   * The handle box shadow should not
+   * overflow outside of the track container.
+   */
+  overflow: hidden;
 }
 
 :host(.ion-color.toggle-checked) .toggle-icon {
