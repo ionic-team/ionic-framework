@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Method, Prop, State, h } from '@stencil/core';
+import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import type {
@@ -10,7 +10,16 @@ import type {
   PickerButton,
   PickerColumn,
 } from '../../interface';
-import { BACKDROP, dismiss, eventMethod, isCancel, prepareOverlay, present, safeCall } from '../../utils/overlays';
+import {
+  createTriggerController,
+  BACKDROP,
+  dismiss,
+  eventMethod,
+  isCancel,
+  prepareOverlay,
+  present,
+  safeCall,
+} from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
@@ -28,6 +37,8 @@ import { iosLeaveAnimation } from './animations/ios.leave';
   scoped: true,
 })
 export class Picker implements ComponentInterface, OverlayInterface {
+  private readonly triggerController = createTriggerController();
+
   private durationTimeout: any;
   lastFocus?: HTMLElement;
 
@@ -95,6 +106,36 @@ export class Picker implements ComponentInterface, OverlayInterface {
   @Prop() htmlAttributes?: { [key: string]: any };
 
   /**
+   * If `true`, the picker will open. If `false`, the picker will close.
+   * Use this if you need finer grained control over presentation, otherwise
+   * just use the pickerController or the `trigger` property.
+   * Note: `isOpen` will not automatically be set back to `false` when
+   * the picker dismisses. You will need to do that in your code.
+   */
+  @Prop() isOpen = false;
+  @Watch('isOpen')
+  onIsOpenChange(newValue: boolean, oldValue: boolean) {
+    if (newValue === true && oldValue === false) {
+      this.present();
+    } else if (newValue === false && oldValue === true) {
+      this.dismiss();
+    }
+  }
+
+  /**
+   * An ID corresponding to the trigger element that
+   * causes the picker to open when clicked.
+   */
+  @Prop() trigger: string | undefined;
+  @Watch('trigger')
+  triggerChanged() {
+    const { trigger, el, triggerController } = this;
+    if (trigger) {
+      triggerController.addClickListener(el, trigger);
+    }
+  }
+
+  /**
    * Emitted after the picker has presented.
    */
   @Event({ eventName: 'ionPickerDidPresent' }) didPresent!: EventEmitter<void>;
@@ -114,8 +155,37 @@ export class Picker implements ComponentInterface, OverlayInterface {
    */
   @Event({ eventName: 'ionPickerDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
 
+  /**
+   * Emitted after the picker has presented.
+   * Shorthand for ionAlertWillDismiss.
+   */
+  @Event({ eventName: 'didPresent' }) didPresentShorthand!: EventEmitter<void>;
+
+  /**
+   * Emitted before the picker has presented.
+   * Shorthand for ionAlertWillPresent.
+   */
+  @Event({ eventName: 'willPresent' }) willPresentShorthand!: EventEmitter<void>;
+
+  /**
+   * Emitted before the picker has dismissed.
+   * Shorthand for ionAlertWillDismiss.
+   */
+  @Event({ eventName: 'willDismiss' }) willDismissShorthand!: EventEmitter<OverlayEventDetail>;
+
+  /**
+   * Emitted after the picker has dismissed.
+   * Shorthand for ionPickerDidDismiss.
+   */
+  @Event({ eventName: 'didDismiss' }) didDismissShorthand!: EventEmitter<OverlayEventDetail>;
+
   connectedCallback() {
     prepareOverlay(this.el);
+    this.triggerChanged();
+  }
+
+  disconnectedCallback() {
+    this.triggerController.removeClickListener();
   }
 
   /**
