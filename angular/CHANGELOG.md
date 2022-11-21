@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.7](https://github.com/ionic-team/ionic/compare/v6.3.6...v6.3.7) (2022-11-16)
+
+
+### Bug Fixes
+
+* **popover:** inline popover positioning with fit-content or auto width ([#26230](https://github.com/ionic-team/ionic/issues/26230)) ([0a8a958](https://github.com/ionic-team/ionic/commit/0a8a958cba02994ea0fefa265b17edddffe62e98)), closes [#24716](https://github.com/ionic-team/ionic/issues/24716)
+
+
+
+
+
 ## [6.3.6](https://github.com/ionic-team/ionic/compare/v6.3.5...v6.3.6) (2022-11-10)
 
 **Note:** Version bump only for package @ionic/angular

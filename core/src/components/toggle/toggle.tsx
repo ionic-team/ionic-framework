@@ -2,6 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
 import { checkmarkOutline, removeOutline, ellipseOutline } from 'ionicons/icons';
 
+import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import type { Color, Gesture, GestureDetail, Mode, StyleEventDetail, ToggleChangeEventDetail } from '../../interface';
 import { getAriaLabel, renderHiddenInput } from '../../utils/helpers';
@@ -67,7 +68,7 @@ export class Toggle implements ComponentInterface {
   /**
    * Enables the on/off accessibility switch labels within the toggle.
    */
-  @Prop() enableOnOffLabels: boolean | undefined = undefined;
+  @Prop() enableOnOffLabels: boolean | undefined = config.get('toggleOnOffLabels');
 
   /**
    * Emitted when the value property has changed.
@@ -210,6 +211,7 @@ export class Toggle implements ComponentInterface {
     const mode = getIonMode(this);
     const { label, labelId, labelText } = getAriaLabel(el, inputId);
     const value = this.getValue();
+    const rtl = isRTL(el) ? 'rtl' : 'ltr';
 
     renderHiddenInput(true, el, name, checked ? value : '', disabled);
 
@@ -227,6 +229,7 @@ export class Toggle implements ComponentInterface {
           'toggle-checked': checked,
           'toggle-disabled': disabled,
           interactive: true,
+          [`toggle-${rtl}`]: true,
         })}
       >
         <div class="toggle-icon" part="track">
