@@ -108,7 +108,7 @@ export class IonPopover {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     this.el = r.nativeElement;
 
-    this.el.addEventListener('willPresent', () => {
+    this.el.addEventListener('ionMount', () => {
       this.isCmpOpen = true;
       c.detectChanges();
     });

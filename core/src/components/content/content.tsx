@@ -280,7 +280,6 @@ export class Content implements ComponentInterface {
       if (easedT < 1) {
         // do not use DomController here
         // must use nativeRaf in order to fire in the next frame
-        // TODO: remove as any
         requestAnimationFrame(step);
       } else {
         resolve();

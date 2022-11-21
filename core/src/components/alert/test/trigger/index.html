@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Alert - Trigger</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Alert - Trigger</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <ion-button id="default">Open Alert</ion-button>
+        <ion-button id="timeout">Open Alert, Close After 500ms</ion-button>
+
+        <ion-alert id="default-alert" trigger="default" header="Alert" message="Hello World!"></ion-alert>
+        <ion-alert id="timeout-alert" trigger="timeout" header="Alert" message="Hello World!"></ion-alert>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      const defaultAlert = document.querySelector('#default-alert');
+      const timeoutAlert = document.querySelector('#timeout-alert');
+
+      defaultAlert.buttons = ['OK'];
+      timeoutAlert.buttons = ['OK'];
+
+      timeoutAlert.addEventListener('didPresent', () => {
+        setTimeout(() => {
+          timeoutAlert.dismiss();
+        }, 500);
+      });
+    </script>
+  </body>
+</html>
