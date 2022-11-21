@@ -12,12 +12,6 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
-    <script>
-      const forceCSSAnimations = new URLSearchParams(window.location.search).get('ionic:_forceCSSAnimations');
-      if (forceCSSAnimations) {
-        window.Animation = null;
-      }
-    </script>
     <script type="module">
       import { menuController } from '../../../../dist/ionic/index.esm.js';
       window.menuController = menuController;
@@ -28,8 +22,8 @@
     <ion-app>
       <ion-menu
         side="start"
-        menu-id="first"
         id="start-menu"
+        menu-id="start-menu"
         content-id="main"
         class="menu-part"
         aria-label="start menu"
@@ -68,7 +62,7 @@
         </ion-content>
       </ion-menu>
 
-      <ion-menu side="start" menu-id="custom" class="my-custom-menu" id="custom-menu" content-id="main">
+      <ion-menu side="start" menu-id="custom-menu" content-id="main" class="my-custom-menu">
         <ion-header>
           <ion-toolbar color="tertiary">
             <ion-title>Custom Menu</ion-title>
@@ -85,7 +79,7 @@
         </ion-content>
       </ion-menu>
 
-      <ion-menu side="end" type="push" id="end-menu" content-id="main">
+      <ion-menu side="end" menu-id="end-menu" content-id="main" type="push">
         <ion-header>
           <ion-toolbar color="danger">
             <ion-title>End Menu</ion-title>
@@ -109,9 +103,9 @@
           </ion-toolbar>
         </ion-header>
         <ion-content class="ion-padding">
-          <ion-button expand="block" id="open-first" onclick="openFirst()">Open Start Menu</ion-button>
-          <ion-button expand="block" onclick="openEnd()">Open End Menu</ion-button>
-          <ion-button expand="block" onclick="openCustom()">Open Custom Menu</ion-button>
+          <ion-button expand="block" id="open-start" onclick="openStart()">Open Start Menu</ion-button>
+          <ion-button expand="block" id="open-end" onclick="openEnd()">Open End Menu</ion-button>
+          <ion-button expand="block" id="open-custom" onclick="openCustom()">Open Custom Menu</ion-button>
         </ion-content>
       </div>
     </ion-app>
@@ -133,18 +127,21 @@
     </style>
 
     <script>
-      async function openFirst() {
-        await menuController.enable(true, 'first');
-        await menuController.open('first');
+      async function openStart() {
+        // Open the menu by menu-id
+        await menuController.enable(true, 'start-menu');
+        await menuController.open('start-menu');
       }
 
       async function openEnd() {
+        // Open the menu by side
         await menuController.open('end');
       }
 
       async function openCustom() {
-        await menuController.enable(true, 'custom');
-        await menuController.open('custom');
+        // Open the menu by menu-id
+        await menuController.enable(true, 'custom-menu');
+        await menuController.open('custom-menu');
       }
     </script>
   </body>

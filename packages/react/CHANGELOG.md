@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.7](https://github.com/ionic-team/ionic/compare/v6.3.6...v6.3.7) (2022-11-16)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [6.3.6](https://github.com/ionic-team/ionic/compare/v6.3.5...v6.3.6) (2022-11-10)
+
+
+### Bug Fixes
+
+* **react:** inline overlays display contents consistently ([#26255](https://github.com/ionic-team/ionic/issues/26255)) ([d709ff6](https://github.com/ionic-team/ionic/commit/d709ff64ae29a5197dc74cecb95cba602479683d)), closes [#26253](https://github.com/ionic-team/ionic/issues/26253)
+
+
+
+
+
+## [6.3.5](https://github.com/ionic-team/ionic/compare/v6.3.4...v6.3.5) (2022-11-09)
+
+
+### Bug Fixes
+
+* **react:** loading layout is correct with no message ([#26222](https://github.com/ionic-team/ionic/issues/26222)) ([57105d5](https://github.com/ionic-team/ionic/commit/57105d54ea259fc9cd1a63e3d361ec8a57dd2971)), closes [#26219](https://github.com/ionic-team/ionic/issues/26219)
+
+
+
+
+
 ## [6.3.4](https://github.com/ionic-team/ionic/compare/v6.3.3...v6.3.4) (2022-11-02)
 
 **Note:** Version bump only for package @ionic/react

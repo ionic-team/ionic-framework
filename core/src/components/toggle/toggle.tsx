@@ -337,6 +337,7 @@ For toggles that do not have a visible label, developers should use "aria-label"
     const mode = getIonMode(this);
     const { label, labelId, labelText } = getAriaLabel(el, inputId);
     const value = this.getValue();
+    const rtl = isRTL(el) ? 'rtl' : 'ltr';
 
     renderHiddenInput(true, el, name, checked ? value : '', disabled);
 
@@ -355,7 +356,7 @@ For toggles that do not have a visible label, developers should use "aria-label"
           'toggle-disabled': disabled,
           'legacy-toggle': true,
           interactive: true,
-          'toggle-rtl': isRTL(el),
+          [`toggle-${rtl}`]: true,
         })}
       >
         {this.renderToggleControl()}

@@ -80,20 +80,26 @@ ion-alert,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefin
 ion-alert,prop,header,string | undefined,undefined,false,false
 ion-alert,prop,htmlAttributes,undefined | { [key: string]: any; },undefined,false,false
 ion-alert,prop,inputs,AlertInput[],[],false,false
+ion-alert,prop,isOpen,boolean,false,false,false
 ion-alert,prop,keyboardClose,boolean,true,false,false
 ion-alert,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-alert,prop,message,IonicSafeString | string | undefined,undefined,false,false
 ion-alert,prop,mode,"ios" | "md",undefined,false,false
 ion-alert,prop,subHeader,string | undefined,undefined,false,false
 ion-alert,prop,translucent,boolean,false,false,false
+ion-alert,prop,trigger,string | undefined,undefined,false,false
 ion-alert,method,dismiss,dismiss(data?: any, role?: string) => Promise<boolean>
 ion-alert,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-alert,method,onWillDismiss,onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-alert,method,present,present() => Promise<void>
+ion-alert,event,didDismiss,OverlayEventDetail<any>,true
+ion-alert,event,didPresent,void,true
 ion-alert,event,ionAlertDidDismiss,OverlayEventDetail<any>,true
 ion-alert,event,ionAlertDidPresent,void,true
 ion-alert,event,ionAlertWillDismiss,OverlayEventDetail<any>,true
 ion-alert,event,ionAlertWillPresent,void,true
+ion-alert,event,willDismiss,OverlayEventDetail<any>,true
+ion-alert,event,willPresent,void,true
 ion-alert,css-prop,--backdrop-opacity
 ion-alert,css-prop,--background
 ion-alert,css-prop,--height

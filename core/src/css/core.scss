@@ -25,11 +25,6 @@ body.backdrop-no-scroll {
   overflow: hidden;
 }
 
-// TODO: Block scrolling in ion-content, breaks inside ion-modal
-// body.backdrop-no-scroll .ion-page > ion-content {
-//   --overflow: hidden;
-// }
-
 // Modal - Card Style
 // --------------------------------------------------
 /**
@@ -252,7 +247,6 @@ ion-card-header.ion-color .ion-inherit-color {
 
 
 // Menu Styles
-// TODO: Find a better long term solution for this
 // --------------------------------------------------
 
 .menu-content {

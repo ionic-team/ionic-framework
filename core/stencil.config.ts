@@ -206,42 +206,6 @@ export const config: Config = {
         // auxiliar
         'ion-picker-column',
       ],
-      /**
-       * TODO: Abstract custom Ionic value accessor functionality
-       * to be configurable with Stencil generated value accessors.
-       */
-      // valueAccessorConfigs: [
-      //   {
-      //     elementSelectors: ['ion-input:not([type=number])', 'ion-textarea', 'ion-searchbar'],
-      //     event: 'ionChange',
-      //     targetAttr: 'value',
-      //     type: 'text',
-      //   },
-      //   {
-      //     elementSelectors: ['ion-input[type=number]'],
-      //     event: 'ionChange',
-      //     targetAttr: 'value',
-      //     type: 'number',
-      //   },
-      //   {
-      //     elementSelectors: ['ion-checkbox', 'ion-toggle'],
-      //     event: 'ionChange',
-      //     targetAttr: 'checked',
-      //     type: 'boolean',
-      //   },
-      //   {
-      //     elementSelectors: ['ion-range', 'ion-select', 'ion-radio-group', 'ion-segment', 'ion-datetime'],
-      //     event: 'ionChange',
-      //     targetAttr: 'value',
-      //     type: 'select',
-      //   },
-      //   {
-      //     elementSelectors: ['ion-radio'],
-      //     event: 'ionSelect',
-      //     targetAttr: 'checked',
-      //     type: 'radio',
-      //   },
-      // ]
     }),
   ],
   buildEs5: 'prod',
