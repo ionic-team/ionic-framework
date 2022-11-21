@@ -180,8 +180,8 @@
         position: absolute;
         content: 'ON';
         color: white;
-        top: 12px;
-        left: 13px;
+        top: 11px;
+        left: 5px;
         z-index: 1;
         font-size: 8px;
       }
@@ -190,11 +190,12 @@
         border: 2px solid #bbb;
         border-radius: 16px;
 
+        --handle-width: 20px;
         --handle-spacing: 0px;
         --handle-background: #bbbbbb;
         --handle-background-checked: white;
+        --handle-box-shadow: none;
 
-        --track-background-checked: #0366a6;
         --track-background: #ececec;
       }
 
@@ -205,12 +206,6 @@
         margin: 6px;
       }
 
-      .all-custom::part(handle) {
-        box-shadow: none;
-        width: 20px;
-        height: 20px;
-      }
-
       .all-custom.toggle-checked {
         border-color: #0366a6;
 
@@ -218,13 +213,15 @@
       }
 
       .custom-overflow {
-        overflow: visible;
-
         contain: none;
 
         --background-checked: #d6ffd6;
 
         --handle-box-shadow: 0 3px 12px rgba(255, 0, 0, 0.6), 0 3px 1px rgba(50, 70, 255, 0.6);
+      }
+
+      .custom-overflow::part(track) {
+        overflow: visible;
       }
 
       .ios.custom-spacing {
