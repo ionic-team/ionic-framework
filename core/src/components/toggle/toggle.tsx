@@ -7,7 +7,8 @@ import { getIonMode } from '../../global/ionic-global';
 import type { Color, Gesture, GestureDetail, Mode, StyleEventDetail, ToggleChangeEventDetail } from '../../interface';
 import type { LegacyFormController } from '../../utils/forms';
 import { createLegacyFormController } from '../../utils/forms';
-import { getAriaLabel, renderHiddenInput } from '../../utils/helpers';
+import { getAriaLabel, renderHiddenInput, inheritAriaAttributes } from '../../utils/helpers';
+import type { Attributes } from '../../utils/helpers';
 import { printIonWarning } from '../../utils/logging';
 import { hapticSelection } from '../../utils/native/haptic';
 import { isRTL } from '../../utils/rtl';
@@ -35,6 +36,7 @@ export class Toggle implements ComponentInterface {
   private focusEl?: HTMLElement;
   private lastDrag = 0;
   private legacyFormController!: LegacyFormController;
+  private inheritedAttributes: Attributes = {};
 
   // This flag ensures we log the deprecation warning at most once.
   private hasLoggedDeprecationWarning = false;
@@ -167,6 +169,12 @@ export class Toggle implements ComponentInterface {
 
   componentWillLoad() {
     this.emitStyle();
+
+    if (!this.legacyFormController.hasLegacyControl()) {
+      this.inheritedAttributes = {
+        ...inheritAriaAttributes(this.el),
+      };
+    }
   }
 
   private emitStyle() {
@@ -243,6 +251,26 @@ export class Toggle implements ComponentInterface {
     );
   }
 
+  private renderToggleControl() {
+    const mode = getIonMode(this);
+
+    const { enableOnOffLabels, checked } = this;
+    return (
+      <div class="toggle-icon" part="track">
+        {/* The iOS on/off labels are rendered outside of .toggle-icon-wrapper,
+         since the wrapper is translated when the handle is interacted with and
+         this would move the on/off labels outside of the view box */}
+        {enableOnOffLabels &&
+          mode === 'ios' && [this.renderOnOffSwitchLabels(mode, true), this.renderOnOffSwitchLabels(mode, false)]}
+        <div class="toggle-icon-wrapper">
+          <div class="toggle-inner" part="handle">
+            {enableOnOffLabels && mode === 'md' && this.renderOnOffSwitchLabels(mode, checked)}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   render() {
     const { legacyFormController } = this;
 
@@ -250,7 +278,47 @@ export class Toggle implements ComponentInterface {
   }
 
   private renderToggle() {
-    return <slot></slot>;
+    const { activated, color, checked, disabled, el, justify, labelPlacement, inputId, name } = this;
+
+    const mode = getIonMode(this);
+    const value = this.getValue();
+    const rtl = isRTL(el) ? 'rtl' : 'ltr';
+    renderHiddenInput(true, el, name, checked ? value : '', disabled);
+
+    return (
+      <Host
+        onClick={this.onClick}
+        class={createColorClasses(color, {
+          [mode]: true,
+          'in-item': hostContext('ion-item', el),
+          'toggle-activated': activated,
+          'toggle-checked': checked,
+          'toggle-disabled': disabled,
+          [`toggle-justify-${justify}`]: true,
+          [`toggle-label-placement-${labelPlacement}`]: true,
+          [`toggle-${rtl}`]: true,
+        })}
+      >
+        <label class="toggle-wrapper">
+          <div class="label-text-wrapper">
+            <slot></slot>
+          </div>
+          <div class="native-wrapper">{this.renderToggleControl()}</div>
+          <input
+            type="checkbox"
+            role="switch"
+            aria-checked={`${checked}`}
+            checked={checked}
+            disabled={disabled}
+            id={inputId}
+            onFocus={() => this.onFocus()}
+            onBlur={() => this.onBlur()}
+            ref={(focusEl) => (this.focusEl = focusEl)}
+            {...this.inheritedAttributes}
+          />
+        </label>
+      </Host>
+    );
   }
 
   private renderLegacyToggle() {
@@ -266,7 +334,7 @@ For toggles that do not have a visible label, developers should use "aria-label"
       this.hasLoggedDeprecationWarning = true;
     }
 
-    const { activated, color, checked, disabled, el, inputId, name, enableOnOffLabels } = this;
+    const { activated, color, checked, disabled, el, inputId, name } = this;
     const mode = getIonMode(this);
     const { label, labelId, labelText } = getAriaLabel(el, inputId);
     const value = this.getValue();
@@ -287,22 +355,12 @@ For toggles that do not have a visible label, developers should use "aria-label"
           'toggle-activated': activated,
           'toggle-checked': checked,
           'toggle-disabled': disabled,
+          'legacy-toggle': true,
           interactive: true,
           [`toggle-${rtl}`]: true,
         })}
       >
-        <div class="toggle-icon" part="track">
-          {/* The iOS on/off labels are rendered outside of .toggle-icon-wrapper,
-           since the wrapper is translated when the handle is interacted with and
-           this would move the on/off labels outside of the view box */}
-          {enableOnOffLabels &&
-            mode === 'ios' && [this.renderOnOffSwitchLabels(mode, true), this.renderOnOffSwitchLabels(mode, false)]}
-          <div class="toggle-icon-wrapper">
-            <div class="toggle-inner" part="handle">
-              {enableOnOffLabels && mode === 'md' && this.renderOnOffSwitchLabels(mode, checked)}
-            </div>
-          </div>
-        </div>
+        {this.renderToggleControl()}
         <label htmlFor={inputId}>{labelText}</label>
         <input
           type="checkbox"
