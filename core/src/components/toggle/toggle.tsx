@@ -37,7 +37,6 @@ export class Toggle implements ComponentInterface {
   private lastDrag = 0;
   private legacyFormController!: LegacyFormController;
   private inheritedAttributes: Attributes = {};
-  private labelTextWrapperEl?: HTMLElement;
 
   // This flag ensures we log the deprecation warning at most once.
   private hasLoggedDeprecationWarning = false;
@@ -273,12 +272,7 @@ export class Toggle implements ComponentInterface {
   }
 
   private get hasLabel() {
-    const { labelTextWrapperEl } = this;
-    if (labelTextWrapperEl === undefined) {
-      return false;
-    }
-
-    return labelTextWrapperEl.textContent !== '';
+    return this.el.textContent !== '';
   }
 
   render() {
@@ -315,7 +309,6 @@ export class Toggle implements ComponentInterface {
               'label-text-wrapper': true,
               'label-text-wrapper-hidden': !this.hasLabel,
             }}
-            ref={(el) => (this.labelTextWrapperEl = el)}
           >
             <slot></slot>
           </div>
