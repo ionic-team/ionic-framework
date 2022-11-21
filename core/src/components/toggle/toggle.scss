@@ -5,8 +5,8 @@
 
 :host {
   /**
-   * @prop --track-background: Background of the toggle
-   * @prop --track-background-checked: Background of the toggle when checked
+   * @prop --track-background: Background of the toggle track
+   * @prop --track-background-checked: Background of the toggle track when checked
    * @prop --border-radius: Border radius of the toggle track
    *
    * @prop --handle-background: Background of the toggle handle
@@ -19,16 +19,6 @@
    * @prop --handle-width: Width of the toggle handle
    * @prop --handle-spacing: Horizontal spacing around the toggle handle
    * @prop --handle-transition: Transition of the toggle handle
-   *
-   * @prop --ripple-color: The color of the ripple effect on MD mode.
-   *
-   * @prop --background: The background color of the component.
-   * @prop --background-activated: Background of component when pressed.
-   * @prop --background-activated-opacity: Opacity of the component background when pressed.
-   * @prop --background-hover: Background of component when hovered.
-   * @prop --background-hover-opacity: Opacity of the component background when hovered.
-   * @prop --background-focused: Background of component when focused.
-   * @prop --background-focused-opacity: Opacity of the component background when focused.
    */
 
   /* stylelint-disable-next-line declaration-no-important */
@@ -46,10 +36,6 @@
   touch-action: none;
   user-select: none;
   z-index: $z-index-item-input;
-}
-
-:host(:not(.legacy-toggle)) {
-  background: var(--background);
 }
 
 :host(.in-item:not(.legacy-toggle)) {
