@@ -167,7 +167,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
 
   /**
    * Emitted after the picker has presented.
-   * Shorthand for ionAlertWillDismiss.
+   * Shorthand for ionPickerWillDismiss.
    */
   @Event({ eventName: 'didPresent' }) didPresentShorthand!: EventEmitter<void>;
 
