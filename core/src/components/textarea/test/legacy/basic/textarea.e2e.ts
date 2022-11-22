@@ -3,7 +3,7 @@ import { test } from '@utils/test/playwright';
 
 test.describe('textarea: basic', () => {
   test('should not have visual regressions', async ({ page }) => {
-    await page.goto(`/src/components/textarea/test/basic`);
+    await page.goto(`/src/components/textarea/test/legacy/basic`);
 
     /**
      * The auto grow implementation uses a requestAnimationFrame to append styles to the textarea

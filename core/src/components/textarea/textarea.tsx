@@ -451,7 +451,7 @@ export class Textarea implements ComponentInterface {
     if (!this.hasLoggedDeprecationWarning) {
       printIonWarning(
         `Using ion-textarea with an ion-label has been deprecated. To migrate, remove the ion-label and use the "label" property on ion-textarea instead.
-For inputs that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the textarea.`,
+For textareas that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the textarea.`,
         this.el
       );
       this.hasLoggedDeprecationWarning = true;
@@ -506,14 +506,81 @@ For inputs that do not have a visible label, developers should use "aria-label" 
     );
   }
 
-  private renderInput() {
-    return <Host>Stubbed textarea</Host>;
+  private renderLabel() {
+    const { label } = this;
+    if (label === undefined) {
+      return;
+    }
+
+    return (
+      <div class="label-text-wrapper">
+        <div class="label-text">{this.label}</div>
+      </div>
+    );
+  }
+
+  /**
+   * Renders the border container when fill="outline".
+   */
+  private renderLabelContainer() {
+    return this.renderLabel();
+  }
+
+  private renderTextarea() {
+    const { inputId, disabled } = this;
+    const mode = getIonMode(this);
+    const value = this.getValue();
+
+    return (
+      <Host
+        aria-disabled={disabled ? 'true' : null}
+        class={createColorClasses(this.color, {
+          [mode]: true,
+          'has-value': this.hasValue(),
+          'has-focus': this.hasFocus,
+        })}
+      >
+        <label class="textarea-wrapper">
+          {this.renderLabelContainer()}
+          <div class="native-wrapper" ref={(el) => (this.textareaWrapper = el)}>
+            <textarea
+              class="native-textarea"
+              ref={(el) => (this.nativeInput = el)}
+              id={inputId}
+              disabled={disabled}
+              autoCapitalize={this.autocapitalize}
+              autoFocus={this.autofocus}
+              enterKeyHint={this.enterkeyhint}
+              inputMode={this.inputmode}
+              minLength={this.minlength}
+              maxLength={this.maxlength}
+              name={this.name}
+              placeholder={this.placeholder || ''}
+              readOnly={this.readonly}
+              required={this.required}
+              spellcheck={this.spellcheck}
+              cols={this.cols}
+              rows={this.rows}
+              wrap={this.wrap}
+              onInput={this.onInput}
+              onChange={this.onChange}
+              onBlur={this.onBlur}
+              onFocus={this.onFocus}
+              onKeyDown={this.onKeyDown}
+              {...this.inheritedAttributes}
+            >
+              {value}
+            </textarea>
+          </div>
+        </label>
+      </Host>
+    );
   }
 
   render() {
     const { legacyFormController } = this;
 
-    return legacyFormController.hasLegacyControl() ? this.renderLegacyTextarea() : this.renderInput();
+    return legacyFormController.hasLegacyControl() ? this.renderLegacyTextarea() : this.renderTextarea();
   }
 }
 
