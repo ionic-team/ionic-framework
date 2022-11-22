@@ -7,4 +7,25 @@ import { Component } from "@angular/core";
   selector: 'app-overlays-inline',
   templateUrl: 'overlays-inline.component.html'
 })
-export class OverlaysInlineComponent {}
+export class OverlaysInlineComponent {
+  public pickerButtons = [{ text: 'Ok' }, { text: 'Cancel', role: 'cancel' }];
+  public pickerColumns = [
+    {
+      name: 'Colors',
+      options: [
+        {
+          text: 'Red',
+          value: 'red',
+        },
+        {
+          text: 'Blue',
+          value: 'blue',
+        },
+        {
+          text: 'Green',
+          value: 'green',
+        },
+      ],
+    },
+  ];
+}

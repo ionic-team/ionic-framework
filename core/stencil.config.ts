@@ -182,9 +182,8 @@ export const config: Config = {
       directivesProxyFile: '../angular/src/directives/proxies.ts',
       directivesArrayFile: '../angular/src/directives/proxies-list.ts',
       excludeComponents: [
-        // overlays
+        // overlays that accept user components
         'ion-modal',
-        'ion-picker',
         'ion-popover',
 
         // navigation

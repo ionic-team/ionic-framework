@@ -3,6 +3,7 @@
   <ion-button id="open-action-sheet">Open Action Sheet</ion-button>
   <ion-button id="open-loading">Open Loading</ion-button>
   <ion-button id="open-toast">Open Toast</ion-button>
+  <ion-button id="open-picker">Open Picker</ion-button>
 
   <ion-alert
     trigger="open-alert"
@@ -30,4 +31,10 @@
     message="This is a toast message"
     [buttons]="['Button']"
   ></ion-toast>
+
+  <ion-picker
+    trigger="open-picker"
+    [columns]="pickerColumns"
+    [buttons]="pickerButtons"
+  ></ion-picker>
 </ion-content>
