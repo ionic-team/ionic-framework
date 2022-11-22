@@ -179,7 +179,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
 
   /**
    * Emitted before the picker has dismissed.
-   * Shorthand for ionAlertWillDismiss.
+   * Shorthand for ionPickerWillDismiss.
    */
   @Event({ eventName: 'willDismiss' }) willDismissShorthand!: EventEmitter<OverlayEventDetail>;
 
