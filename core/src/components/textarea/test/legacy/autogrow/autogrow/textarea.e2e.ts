@@ -3,7 +3,7 @@ import { test } from '@utils/test/playwright';
 
 test.describe('textarea: autogrow', () => {
   test('should not have visual regressions', async ({ page }) => {
-    await page.goto(`/src/components/textarea/test/autogrow`);
+    await page.goto(`/src/components/textarea/test/legacy/autogrow`);
 
     await page.setIonViewport();
 
