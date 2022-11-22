@@ -26,186 +26,18 @@ jobs:
         run: |
           echo "NIGHTLY_HASH=$(node ./.scripts/bump-version.js)-nightly.$(date +%Y%m%d)" >> $GITHUB_OUTPUT
         shell: bash
-  release-core:
-    runs-on: ubuntu-latest
+
+  release-ionic:
     needs: [create-nightly-hash]
-    steps:
-    - uses: actions/checkout@v3
-    - uses: ./.github/workflows/actions/release
-      with:
-        scope: '@ionic/core'
-        tag: nightly
-        version: ${{ needs.create-nightly-hash.outputs.nightly-hash }}
-        working-directory: 'core'
-        token: ${{ secrets.NPM_TOKEN }}
-    - name: Cache Built @ionic/core
-      uses: ./.github/workflows/actions/upload-archive
-      with:
-        name: ionic-core
-        output: core/CoreBuild.zip
-        paths: core/dist core/components core/css core/hydrate core/loader core/src/components.d.ts
-    - name: Cache Built @ionic/docs
-      uses: ./.github/workflows/actions/upload-archive
-      with:
-        name: ionic-docs
-        output: docs/DocsBuild.zip
-        paths: docs/core.json docs/core.d.ts
-
-  release-docs:
-    needs: [create-nightly-hash, release-core]
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - name: Restore @ionic/docs built cache
-      uses: ./.github/workflows/actions/download-archive
-      with:
-        name: ionic-docs
-        path: ./docs
-        filename: DocsBuild.zip
-    - uses: ./.github/workflows/actions/release
-      with:
-        scope: '@ionic/docs'
-        tag: nightly
-        version: ${{ needs.create-nightly-hash.outputs.nightly-hash }}
-        working-directory: 'docs'
-        token: ${{ secrets.NPM_TOKEN }}
-
-  release-angular:
-    needs: [create-nightly-hash, release-core]
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - name: Restore @ionic/core built cache
-      uses: ./.github/workflows/actions/download-archive
-      with:
-        name: ionic-core
-        path: ./core
-        filename: CoreBuild.zip
-    - uses: ./.github/workflows/actions/release
-      with:
-        scope: '@ionic/angular'
-        tag: nightly
-        version: ${{ needs.create-nightly-hash.outputs.nightly-hash }}
-        working-directory: 'angular'
-        folder: './dist'
-        token: ${{ secrets.NPM_TOKEN }}
-    - name: Cache Built @ionic/angular
-      uses: ./.github/workflows/actions/upload-archive
-      with:
-        name: ionic-angular
-        output: ./angular/AngularBuild.zip
-        paths: ./angular/dist
-
-  release-react:
-    needs: [create-nightly-hash, release-core]
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - name: Restore @ionic/core built cache
-      uses: ./.github/workflows/actions/download-archive
-      with:
-        name: ionic-core
-        path: ./core
-        filename: CoreBuild.zip
-    - uses: ./.github/workflows/actions/release
-      with:
-        scope: '@ionic/react'
-        tag: nightly
-        version: ${{ needs.create-nightly-hash.outputs.nightly-hash }}
-        working-directory: 'packages/react'
-        token: ${{ secrets.NPM_TOKEN }}
-    - name: Cache Built @ionic/react
-      uses: ./.github/workflows/actions/upload-archive
-      with:
-        name: ionic-react
-        output: packages/react/ReactBuild.zip
-        paths: packages/react/dist packages/react/css
-
-  release-vue:
-    needs: [create-nightly-hash, release-core]
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - name: Restore @ionic/core built cache
-      uses: ./.github/workflows/actions/download-archive
-      with:
-        name: ionic-core
-        path: ./core
-        filename: CoreBuild.zip
-    - uses: ./.github/workflows/actions/release
-      with:
-        scope: '@ionic/vue'
-        tag: nightly
-        version: ${{ needs.create-nightly-hash.outputs.nightly-hash }}
-        working-directory: 'packages/vue'
-        token: ${{ secrets.NPM_TOKEN }}
-    - name: Cache Built @ionic/vue
-      uses: ./.github/workflows/actions/upload-archive
-      with:
-        name: ionic-vue
-        output: packages/vue/VueBuild.zip
-        paths: packages/vue/dist packages/vue/css
-
-  release-angular-server:
-    needs: [create-nightly-hash, release-angular]
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - name: Restore @ionic/angular built cache
-      uses: ./.github/workflows/actions/download-archive
-      with:
-        name: ionic-angular
-        path: ./angular
-        filename: AngularBuild.zip
-    - uses: ./.github/workflows/actions/release
-      with:
-        scope: '@ionic/angular-server'
-        tag: nightly
-        version: ${{ needs.create-nightly-hash.outputs.nightly-hash }}
-        working-directory: 'packages/angular-server'
-        folder: './dist'
-        token: ${{ secrets.NPM_TOKEN }}
-
-  release-react-router:
-    needs: [create-nightly-hash, release-react]
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - name: Restore @ionic/react built cache
-      uses: ./.github/workflows/actions/download-archive
-      with:
-        name: ionic-react
-        path: ./packages/react
-        filename: ReactBuild.zip
-    - uses: ./.github/workflows/actions/release
-      with:
-        scope: '@ionic/react-router'
-        tag: nightly
-        version: ${{ needs.create-nightly-hash.outputs.nightly-hash }}
-        working-directory: 'packages/react-router'
-        token: ${{ secrets.NPM_TOKEN }}
-
-  release-vue-router:
-    needs: [create-nightly-hash, release-vue]
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - name: Restore @ionic/vue built cache
-      uses: ./.github/workflows/actions/download-archive
-      with:
-        name: ionic-vue
-        path: ./packages/vue
-        filename: VueBuild.zip
-    - uses: ./.github/workflows/actions/release
-      with:
-        scope: '@ionic/vue-router'
-        tag: nightly
-        version: ${{ needs.create-nightly-hash.outputs.nightly-hash }}
-        working-directory: 'packages/vue-router'
-        token: ${{ secrets.NPM_TOKEN }}
+    uses: ./.github/workflows/release-ionic.yml
+    with:
+      tag: nightly
+      version: ${{ needs.create-nightly-hash.outputs.nightly-hash }}
+    secrets:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   finalize-release:
-    needs: [create-nightly-hash, release-core, release-angular, release-react, release-vue, release-docs, release-angular-server, release-vue-router, release-react-router]
+    needs: [create-nightly-hash, release-ionic]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -223,9 +55,13 @@ jobs:
         git config user.email hi@ionicframework.com
       shell: bash
     - name: Checkout Nightly Branch
+      # There are branch protection rules for our version
+      # branches (i.e. "6.2.x"), so we cannot name the branch
+      # the nightly hash as it would fall under the protection
+      # rule. As a result, we prefix "tmp-" to the branch.
       run: |
-        git checkout -b ${{ needs.create-nightly-hash.outputs.nightly-hash }}
-        git push origin ${{ needs.create-nightly-hash.outputs.nightly-hash }}
+        git checkout -b tmp-${{ needs.create-nightly-hash.outputs.nightly-hash }}
+        git push origin tmp-${{ needs.create-nightly-hash.outputs.nightly-hash }}
       shell: bash
     - name: Create GitHub Release
       run: lerna version ${{ needs.create-nightly-hash.outputs.nightly-hash }} --yes --force-publish='*' --conventional-commits --conventional-prerelease --create-release github
@@ -238,6 +74,6 @@ jobs:
     - name: Delete Nightly Branch
       run: |
         git checkout main
-        git branch -D ${{ needs.create-nightly-hash.outputs.nightly-hash }}
-        git push origin --delete ${{ needs.create-nightly-hash.outputs.nightly-hash }}
+        git branch -D tmp-${{ needs.create-nightly-hash.outputs.nightly-hash }}
+        git push origin --delete tmp-${{ needs.create-nightly-hash.outputs.nightly-hash }}
       shell: bash
