@@ -506,14 +506,14 @@ For inputs that do not have a visible label, developers should use "aria-label" 
     );
   }
 
-  private renderInput() {
+  private renderTextarea() {
     return <Host>Stubbed textarea</Host>;
   }
 
   render() {
     const { legacyFormController } = this;
 
-    return legacyFormController.hasLegacyControl() ? this.renderLegacyTextarea() : this.renderInput();
+    return legacyFormController.hasLegacyControl() ? this.renderLegacyTextarea() : this.renderTextarea();
   }
 }
 
