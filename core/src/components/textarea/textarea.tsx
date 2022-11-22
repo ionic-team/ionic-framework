@@ -3,8 +3,11 @@ import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, h, 
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Color, StyleEventDetail, TextareaChangeEventDetail, TextareaInputEventDetail } from '../../interface';
+import type { LegacyFormController } from '../../utils/forms';
+import { createLegacyFormController } from '../../utils/forms';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes, debounceEvent, findItemLabel, inheritAttributes } from '../../utils/helpers';
+import { printIonWarning } from '../../utils/logging';
 import { createColorClasses } from '../../utils/theme';
 
 /**
@@ -31,13 +34,17 @@ export class Textarea implements ComponentInterface {
   private textareaWrapper?: HTMLElement;
   private inheritedAttributes: Attributes = {};
   private originalIonInput?: EventEmitter<TextareaInputEventDetail>;
+  private legacyFormController!: LegacyFormController;
+
+  // This flag ensures we log the deprecation warning at most once.
+  private hasLoggedDeprecationWarning = false;
 
   /**
    * The value of the textarea when the textarea is focused.
    */
   private focusedValue?: string | null;
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonTextareaElement;
 
   @State() hasFocus = false;
 
@@ -263,12 +270,14 @@ export class Textarea implements ComponentInterface {
   @Event() ionFocus!: EventEmitter<FocusEvent>;
 
   connectedCallback() {
+    const { el } = this;
+    this.legacyFormController = createLegacyFormController(el);
     this.emitStyle();
     this.debounceChanged();
     if (Build.isBrowser) {
       document.dispatchEvent(
         new CustomEvent('ionInputDidLoad', {
-          detail: this.el,
+          detail: el,
         })
       );
     }
@@ -316,15 +325,17 @@ export class Textarea implements ComponentInterface {
   }
 
   private emitStyle() {
-    this.ionStyle.emit({
-      interactive: true,
-      textarea: true,
-      input: true,
-      'interactive-disabled': this.disabled,
-      'has-placeholder': this.placeholder !== undefined,
-      'has-value': this.hasValue(),
-      'has-focus': this.hasFocus,
-    });
+    if (this.legacyFormController.hasLegacyControl()) {
+      this.ionStyle.emit({
+        interactive: true,
+        textarea: true,
+        input: true,
+        'interactive-disabled': this.disabled,
+        'has-placeholder': this.placeholder !== undefined,
+        'has-value': this.hasValue(),
+        'has-focus': this.hasFocus,
+      });
+    }
   }
 
   /**
@@ -436,7 +447,16 @@ export class Textarea implements ComponentInterface {
     this.checkClearOnEdit(ev);
   };
 
-  render() {
+  private renderLegacyTextarea() {
+    if (!this.hasLoggedDeprecationWarning) {
+      printIonWarning(
+        `Using ion-textarea with an ion-label has been deprecated. To migrate, remove the ion-label and use the "label" property on ion-textarea instead.
+For textareas that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the textarea.`,
+        this.el
+      );
+      this.hasLoggedDeprecationWarning = true;
+    }
+
     const mode = getIonMode(this);
     const value = this.getValue();
     const labelId = this.inputId + '-lbl';
@@ -455,7 +475,7 @@ export class Textarea implements ComponentInterface {
         <div class="textarea-wrapper" ref={(el) => (this.textareaWrapper = el)}>
           <textarea
             class="native-textarea"
-            aria-labelledby={label ? labelId : null}
+            aria-labelledby={label ? label.id : null}
             ref={(el) => (this.nativeInput = el)}
             autoCapitalize={this.autocapitalize}
             autoFocus={this.autofocus}
@@ -484,6 +504,16 @@ export class Textarea implements ComponentInterface {
         </div>
       </Host>
     );
+  }
+
+  private renderTextarea() {
+    return <Host>Stubbed textarea</Host>;
+  }
+
+  render() {
+    const { legacyFormController } = this;
+
+    return legacyFormController.hasLegacyControl() ? this.renderLegacyTextarea() : this.renderTextarea();
   }
 }
 
