@@ -9,7 +9,7 @@ test.describe('button: basic', () => {
 
     expect(await page.screenshot()).toMatchSnapshot(`button-diff-${page.getSnapshotSettings()}.png`);
   });
-  test.only('should correctly set fill to undefined', async ({ page, skip }) => {
+  test('should correctly set fill to undefined', async ({ page, skip }) => {
     test.info().annotations.push({
       type: 'issue',
       description: 'https://github.com/ionic-team/ionic-framework/issues/25886',
