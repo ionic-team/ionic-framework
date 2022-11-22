@@ -183,14 +183,9 @@ export const config: Config = {
       directivesArrayFile: '../angular/src/directives/proxies-list.ts',
       excludeComponents: [
         // overlays
-        'ion-action-sheet',
-        'ion-alert',
-        'ion-loading',
         'ion-modal',
         'ion-picker',
         'ion-popover',
-        'ion-toast',
-        'ion-toast',
 
         // navigation
         'ion-router',
