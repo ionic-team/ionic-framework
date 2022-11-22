@@ -32,6 +32,7 @@ const routes: Routes = [
   { path: 'modal-inline', loadChildren: () => import('./modal-inline').then(m => m.ModalInlineModule) },
   { path: 'view-child', component: ViewChildComponent },
   { path: 'keep-contents-mounted', loadChildren: () => import('./keep-contents-mounted').then(m => m.OverlayAutoMountModule) },
+  { path: 'overlays-inline', loadChildren: () => import('./overlays-inline').then(m => m.OverlaysInlineModule) },
   { path: 'popover-inline', loadChildren: () => import('./popover-inline').then(m => m.PopoverInlineModule) },
   { path: 'providers', component: ProvidersComponent },
   { path: 'router-link', component: RouterLinkComponent },

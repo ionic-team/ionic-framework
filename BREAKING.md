@@ -21,6 +21,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Input](#version-7x-input)
   - [Modal](#version-7x-modal)
   - [Overlays](#version-7x-overlays)
+  - [Picker](#version-7x-picker)
   - [Radio Group](#version-7x-radio-group)
   - [Range](#version-7x-range)
   - [Searchbar](#version-7x-searchbar)
@@ -112,6 +113,10 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 <h4 id="version-7x-overlays">Overlays</h4>
 
 Ionic now listens on the `keydown` event instead of the `keyup` event when determining when to dismiss overlays via the "Escape" key. Any applications that were listening on `keyup` to suppress this behavior should listen on `keydown` instead.
+
+<h4 id="version-7x-picker">Picker</h4>
+
+- The `refresh` key has been removed from the `PickerColumn` interface. Developers should use the `columns` property to refresh the `ion-picker` view.
 
 <h4 id="version-7x-radio-group">Radio Group</h4>
 
