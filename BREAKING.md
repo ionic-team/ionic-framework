@@ -15,6 +15,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 - [Browser and Platform Support](#version-7x-browser-platform-support)
 - [Components](#version-7x-components)
   - [Accordion Group](#version-7x-accordion-group)
+  - [Action Sheet](#version-7x-action-sheet)
   - [Card Header](#version-7x-card-header)
   - [Checkbox](#version-7x-checkbox)
   - [Datetime](#version-7x-datetime)
@@ -73,6 +74,16 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 -`ionChange` is no longer emitted when the `value` of `ion-accordion-group` is modified externally. `ionChange` is only emitted from user committed changes, such as clicking or tapping the accordion header.
 
 - Accordion Group no longer automatically adjusts the `value` property when passed an array and `multiple="false"`. Developers should update their apps to ensure they are using the API correctly.
+
+<h4 id="version-7x-action-sheet">Action Sheet</h4>
+
+- Action Sheet is updated to align with the design specification.
+
+**Design tokens**
+
+| Token      | Previous Value | New Value |
+| ---------- | -------------- | --------- |
+| `--height` | `100%`         | `auto`    |
 
 <h4 id="version-7x-card-header">Card Header</h4>
 
