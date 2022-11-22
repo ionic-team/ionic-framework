@@ -5765,7 +5765,7 @@ declare namespace LocalJSX {
          */
         "onDidDismiss"?: (event: IonPickerCustomEvent<OverlayEventDetail>) => void;
         /**
-          * Emitted after the picker has presented. Shorthand for ionAlertWillDismiss.
+          * Emitted after the picker has presented. Shorthand for ionPickerWillDismiss.
          */
         "onDidPresent"?: (event: IonPickerCustomEvent<void>) => void;
         /**
@@ -5785,11 +5785,11 @@ declare namespace LocalJSX {
          */
         "onIonPickerWillPresent"?: (event: IonPickerCustomEvent<void>) => void;
         /**
-          * Emitted before the picker has dismissed. Shorthand for ionAlertWillDismiss.
+          * Emitted before the picker has dismissed. Shorthand for ionPickerWillDismiss.
          */
         "onWillDismiss"?: (event: IonPickerCustomEvent<OverlayEventDetail>) => void;
         /**
-          * Emitted before the picker has presented. Shorthand for ionAlertWillPresent.
+          * Emitted before the picker has presented. Shorthand for ionPickerWillPresent.
          */
         "onWillPresent"?: (event: IonPickerCustomEvent<void>) => void;
         "overlayIndex": number;
