@@ -1,53 +1,67 @@
-describe('Overlays: Inline', () => {
+describe('Inputs', () => {
   beforeEach(() => {
-    cy.visit('/overlays-inline');
+    cy.visit('/inputs');
+  })
+
+  it('should have default value', () => {
+    cy.get('ion-checkbox').should('have.prop', 'checked').and('equal', true);
+    cy.get('ion-toggle').should('have.prop', 'checked').and('equal', true);
+    cy.get('ion-input').should('have.prop', 'value').and('equal', 'some text');
+    cy.get('ion-datetime').should('have.prop', 'value').and('equal', '1994-03-15');
+    cy.get('ion-select').should('have.prop', 'value').and('equal', 'nes');
   });
 
-  describe('Alert', () => {
-    it('should be visible when presenting', () => {
-      cy.get('ion-alert').should('not.be.visible');
+  it.only('should have reset value', () => {
+    cy.get('#reset-button').click();
 
-      cy.get('#open-alert').click();
-      cy.get('ion-alert').should('be.visible');
+    cy.get('ion-checkbox').should('have.prop', 'checked').and('equal', false);
+    cy.get('ion-toggle').should('have.prop', 'checked').and('equal', false);
 
-      cy.get('ion-alert ion-backdrop').click({ force: true });
-      cy.get('ion-alert').should('not.be.visible');
-    });
+    /**
+     * The `value` property gets set to undefined
+     * for these components, so we need to check
+     * not.have.prop which will check that the
+     * value property is undefined.
+     */
+    cy.get('ion-input').should('not.have.prop', 'value');
+    cy.get('ion-datetime').should('not.have.prop', 'value');
+    cy.get('ion-select').should('not.have.prop', 'value');
   });
 
-  describe('Action Sheet', () => {
-    it('should be visible when presenting', () => {
-      cy.get('ion-action-sheet').should('not.be.visible');
+  it('should get some value', () => {
+    cy.get('#reset-button').click();
+    cy.get('#set-button').click();
 
-      cy.get('#open-action-sheet').click();
-      cy.get('ion-action-sheet').should('be.visible');
-
-      cy.get('ion-action-sheet ion-backdrop').click({ force: true });
-      cy.get('ion-action-sheet').should('not.be.visible');
-    });
+    cy.get('ion-checkbox').should('have.prop', 'checked').and('equal', true);
+    cy.get('ion-toggle').should('have.prop', 'checked').and('equal', true);
+    cy.get('ion-input').should('have.prop', 'value').and('equal', 'some text');
+    cy.get('ion-datetime').should('have.prop', 'value').and('equal', '1994-03-15');
+    cy.get('ion-select').should('have.prop', 'value').and('equal', 'nes');
   });
 
-  describe('Loading', () => {
-    it('should be visible when presenting', () => {
-      cy.get('ion-loading').should('not.be.visible');
+  it('change values should update angular', () => {
+    cy.get('#reset-button').click();
 
-      cy.get('#open-loading').click();
-      cy.get('ion-loading').should('be.visible');
+    cy.get('ion-checkbox#first-checkbox').click();
+    cy.get('ion-toggle').first().click();
 
-      cy.get('ion-loading ion-backdrop').click({ force: true });
-      cy.get('ion-loading').should('not.be.visible');
-    });
-  });
+    cy.get('ion-input').eq(0).type('hola');
+    cy.get('ion-input input').eq(0).blur();
 
-  describe('Toast', () => {
-    it('should be visible when presenting', () => {
-      cy.get('ion-toast').should('not.be.visible');
+    // Set date to 1994-03-14
+    cy.get('ion-datetime').first().shadow().find('.calendar-day:not([disabled])').first().click();
 
-      cy.get('#open-toast').click();
-      cy.get('ion-toast').shadow().find('.toast-wrapper').should('be.visible');
+    cy.get('ion-select#game-console').click();
+    cy.get('ion-alert').should('exist').should('be.visible');
+    // Playstation option
+    cy.get('ion-alert .alert-radio-button:nth-of-type(4)').click();
+    // Click confirm button
+    cy.get('ion-alert .alert-button:not(.alert-button-role-cancel)').click();
 
-      cy.get('ion-toast').shadow().find('.toast-button').click();
-      cy.get('ion-toast').should('not.be.visible');
-    });
+    cy.get('#checkbox-note').should('have.text', 'true');
+    cy.get('#toggle-note').should('have.text', 'true');
+    cy.get('#input-note').should('have.text', 'hola');
+    cy.get('#datetime-note').should('have.text', '1994-03-14');
+    cy.get('#select-note').should('have.text', 'ps');
   });
 });
