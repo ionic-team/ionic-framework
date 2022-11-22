@@ -34,6 +34,7 @@
       const defaultPicker = document.querySelector('#default-picker');
       const timeoutPicker = document.querySelector('#timeout-picker');
 
+      defaultPicker.buttons = [{ text: 'Ok' }, { text: 'Cancel', role: 'cancel' }];
       defaultPicker.columns = [
         {
           name: 'Colors',
@@ -54,6 +55,7 @@
         },
       ];
 
+      timeoutPicker.buttons = [{ text: 'Ok' }, { text: 'Cancel', role: 'cancel' }];
       timeoutPicker.columns = [
         {
           name: 'Colors',
