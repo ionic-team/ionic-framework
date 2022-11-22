@@ -16,9 +16,9 @@ describe('Inputs', () => {
 
     cy.get('ion-checkbox').should('have.prop', 'checked').and('equal', false);
     cy.get('ion-toggle').should('have.prop', 'checked').and('equal', false);
-    cy.get('ion-input').should('have.prop', 'value').and('equal', undefined);
-    cy.get('ion-datetime').should('have.prop', 'value').and('equal', undefined);
-    cy.get('ion-select').should('have.prop', 'value').and('equal', undefined);
+    cy.get('ion-input').should('have.prop', 'value').and('equal', '');
+    cy.get('ion-datetime').should('have.prop', 'value').and('equal', '');
+    cy.get('ion-select').should('have.prop', 'value').and('equal', '');
   });
 
   it('should get some value', () => {
