@@ -14,7 +14,7 @@ describe.skip('IonPicker', () => {
     cy.get('ion-picker').contains('Bird').click();
     cy.get('ion-picker').contains('Bike').click();
     cy.get('ion-picker button').contains('Confirm').click();
-    cy.get('ion-picker').should('not.exist');
+    cy.get('ion-picker').should('not.be.visible');
 
     //confirm value
     cy.get('div').contains('Selected Value: bird, bike');
@@ -26,6 +26,6 @@ describe.skip('IonPicker', () => {
     cy.get('ion-picker').contains('Cat');
 
     //verify picker is gone
-    cy.get('ion-picker').should('not.exist');
+    cy.get('ion-picker').should('not.be.visible');
   });
 });

@@ -900,19 +900,25 @@ ion-picker,prop,cssClass,string | string[] | undefined,undefined,false,false
 ion-picker,prop,duration,number,0,false,false
 ion-picker,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-picker,prop,htmlAttributes,undefined | { [key: string]: any; },undefined,false,false
+ion-picker,prop,isOpen,boolean,false,false,false
 ion-picker,prop,keyboardClose,boolean,true,false,false
 ion-picker,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-picker,prop,mode,"ios" | "md",undefined,false,false
 ion-picker,prop,showBackdrop,boolean,true,false,false
+ion-picker,prop,trigger,string | undefined,undefined,false,false
 ion-picker,method,dismiss,dismiss(data?: any, role?: string) => Promise<boolean>
 ion-picker,method,getColumn,getColumn(name: string) => Promise<PickerColumn | undefined>
 ion-picker,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-picker,method,onWillDismiss,onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-picker,method,present,present() => Promise<void>
+ion-picker,event,didDismiss,OverlayEventDetail<any>,true
+ion-picker,event,didPresent,void,true
 ion-picker,event,ionPickerDidDismiss,OverlayEventDetail<any>,true
 ion-picker,event,ionPickerDidPresent,void,true
 ion-picker,event,ionPickerWillDismiss,OverlayEventDetail<any>,true
 ion-picker,event,ionPickerWillPresent,void,true
+ion-picker,event,willDismiss,OverlayEventDetail<any>,true
+ion-picker,event,willPresent,void,true
 ion-picker,css-prop,--backdrop-opacity
 ion-picker,css-prop,--background
 ion-picker,css-prop,--background-rgb

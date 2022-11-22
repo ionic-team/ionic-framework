@@ -1418,6 +1418,67 @@ export class IonNote {
   }
 }
 
+import type { OverlayEventDetail as IPickerOverlayEventDetail } from '@ionic/core';
+export declare interface IonPicker extends Components.IonPicker {
+  /**
+   * Emitted after the picker has presented. 
+   */
+  ionPickerDidPresent: EventEmitter<CustomEvent<void>>;
+  /**
+   * Emitted before the picker has presented. 
+   */
+  ionPickerWillPresent: EventEmitter<CustomEvent<void>>;
+  /**
+   * Emitted before the picker has dismissed. 
+   */
+  ionPickerWillDismiss: EventEmitter<CustomEvent<IPickerOverlayEventDetail>>;
+  /**
+   * Emitted after the picker has dismissed. 
+   */
+  ionPickerDidDismiss: EventEmitter<CustomEvent<IPickerOverlayEventDetail>>;
+  /**
+   * Emitted after the picker has presented.
+Shorthand for ionPickerWillDismiss. 
+   */
+  didPresent: EventEmitter<CustomEvent<void>>;
+  /**
+   * Emitted before the picker has presented.
+Shorthand for ionPickerWillPresent. 
+   */
+  willPresent: EventEmitter<CustomEvent<void>>;
+  /**
+   * Emitted before the picker has dismissed.
+Shorthand for ionPickerWillDismiss. 
+   */
+  willDismiss: EventEmitter<CustomEvent<IPickerOverlayEventDetail>>;
+  /**
+   * Emitted after the picker has dismissed.
+Shorthand for ionPickerDidDismiss. 
+   */
+  didDismiss: EventEmitter<CustomEvent<IPickerOverlayEventDetail>>;
+
+}
+
+@ProxyCmp({
+  defineCustomElementFn: undefined,
+  inputs: ['animated', 'backdropDismiss', 'buttons', 'columns', 'cssClass', 'duration', 'enterAnimation', 'htmlAttributes', 'isOpen', 'keyboardClose', 'leaveAnimation', 'mode', 'showBackdrop', 'trigger'],
+  methods: ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss', 'getColumn']
+})
+@Component({
+  selector: 'ion-picker',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  inputs: ['animated', 'backdropDismiss', 'buttons', 'columns', 'cssClass', 'duration', 'enterAnimation', 'htmlAttributes', 'isOpen', 'keyboardClose', 'leaveAnimation', 'mode', 'showBackdrop', 'trigger']
+})
+export class IonPicker {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionPickerDidPresent', 'ionPickerWillPresent', 'ionPickerWillDismiss', 'ionPickerDidDismiss', 'didPresent', 'willPresent', 'willDismiss', 'didDismiss']);
+  }
+}
+
 
 export declare interface IonProgressBar extends Components.IonProgressBar {}
 

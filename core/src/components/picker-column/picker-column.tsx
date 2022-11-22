@@ -171,14 +171,16 @@ export class PickerColumnCmp implements ComponentInterface {
       }
       button.style.transform = transform;
 
-      // Update selected item
-      if (selected !== opt.selected) {
-        opt.selected = selected;
-        if (selected) {
-          button.classList.add(PICKER_OPT_SELECTED);
-        } else {
-          button.classList.remove(PICKER_OPT_SELECTED);
-        }
+      /**
+       * Ensure that the select column
+       * item has the selected class
+       */
+      opt.selected = selected;
+
+      if (selected) {
+        button.classList.add(PICKER_OPT_SELECTED);
+      } else {
+        button.classList.remove(PICKER_OPT_SELECTED);
       }
     }
     this.col.prevSelected = selectedIndex;
