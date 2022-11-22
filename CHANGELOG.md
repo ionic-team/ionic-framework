@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.8-nightly.20221122](https://github.com/ionic-team/ionic-framework/compare/v6.3.7...v6.3.8-nightly.20221122) (2022-11-22)
+
+
+### Bug Fixes
+
+* **modal:** status bar style defaults to app settings ([#26291](https://github.com/ionic-team/ionic-framework/issues/26291)) ([a6c9e55](https://github.com/ionic-team/ionic-framework/commit/a6c9e55adcaa963f4829d6963b9b1a7b246cef4e)), closes [#26173](https://github.com/ionic-team/ionic-framework/issues/26173)
+* **normalize:** normalize css resets button padding ([#26214](https://github.com/ionic-team/ionic-framework/issues/26214)) ([e14c947](https://github.com/ionic-team/ionic-framework/commit/e14c94722c2c8ec145d680f911b708a34f095cd3)), closes [#23928](https://github.com/ionic-team/ionic-framework/issues/23928)
+* **popover:** popover positions correctly on all frameworks ([#26306](https://github.com/ionic-team/ionic-framework/issues/26306)) ([be9a399](https://github.com/ionic-team/ionic-framework/commit/be9a399eeed37ae4a67add78ac1283ba0c5e4b14)), closes [#25337](https://github.com/ionic-team/ionic-framework/issues/25337)
+* **react:** useIonRouter hook has stable router reference ([#25000](https://github.com/ionic-team/ionic-framework/issues/25000)) ([89e3cd6](https://github.com/ionic-team/ionic-framework/commit/89e3cd67ce6d9cfc0607d6a89362483878a1820b)), closes [#24987](https://github.com/ionic-team/ionic-framework/issues/24987)
+* **reorder-group:** support custom components ([#26289](https://github.com/ionic-team/ionic-framework/issues/26289)) ([8425734](https://github.com/ionic-team/ionic-framework/commit/842573477b1b498f2280badc8c7411832c1650a5)), closes [#19447](https://github.com/ionic-team/ionic-framework/issues/19447)
+* **segment:** scrollable segments center button on click ([#26285](https://github.com/ionic-team/ionic-framework/issues/26285)) ([73ea64c](https://github.com/ionic-team/ionic-framework/commit/73ea64c02fff1d63651f6c98f03b43265ba5227a)), closes [#25367](https://github.com/ionic-team/ionic-framework/issues/25367)
+* **toggle:** rtl layout renders correctly in safari ([#26315](https://github.com/ionic-team/ionic-framework/issues/26315)) ([0932f89](https://github.com/ionic-team/ionic-framework/commit/0932f89f5db63a1e6149f2f45de798d7485d72ee))
+
+
+
+
+
 ## [6.3.7](https://github.com/ionic-team/ionic-framework/compare/v6.3.6...v6.3.7) (2022-11-16)
 
 
