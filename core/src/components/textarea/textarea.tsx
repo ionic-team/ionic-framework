@@ -451,7 +451,7 @@ export class Textarea implements ComponentInterface {
     if (!this.hasLoggedDeprecationWarning) {
       printIonWarning(
         `Using ion-textarea with an ion-label has been deprecated. To migrate, remove the ion-label and use the "label" property on ion-textarea instead.
-For inputs that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the textarea.`,
+For textareas that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the textarea.`,
         this.el
       );
       this.hasLoggedDeprecationWarning = true;
