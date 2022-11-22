@@ -11,7 +11,7 @@ describe('Inputs', () => {
     cy.get('ion-select').should('have.prop', 'value').and('equal', 'nes');
   });
 
-  it.only('should have reset value', () => {
+  it('should have reset value', () => {
     cy.get('#reset-button').click();
 
     cy.get('ion-checkbox').should('have.prop', 'checked').and('equal', false);
