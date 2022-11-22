@@ -8,6 +8,10 @@
    * @prop --background: Background of the textarea
    *
    * @prop --border-radius: Border radius of the textarea
+   * @prop --border-color: Color of the textarea border
+   * @prop --border-radius: Radius of the textarea border
+   * @prop --border-style: Style of the textarea border
+   * @prop --border-width: Width of the textarea border
    *
    * @prop --color: Color of the text
    *
@@ -15,6 +19,10 @@
    * @prop --placeholder-font-style: Style of the placeholder text
    * @prop --placeholder-font-weight: Weight of the placeholder text
    * @prop --placeholder-opacity: Opacity of the placeholder text
+   *
+   * @prop --highlight-color-focused: The color of the highlight on the textarea when focused
+   * @prop --highlight-color-valid: The color of the highlight on the textarea when valid
+   * @prop --highlight-color-invalid: The color of the highlight on the textarea when invalid
    *
    * @prop --padding-top: Top padding of the textarea
    * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the textarea
