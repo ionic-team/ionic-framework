@@ -25,7 +25,7 @@ runs:
       shell: bash
       working-directory: ${{ inputs.working-directory }}
     - name: Update Version
-      run: lerna version ${{ inputs.version }} --yes --no-changelog --no-push --no-git-tag-version
+      run: lerna version ${{ inputs.version }} --yes --exact --no-changelog --no-push --no-git-tag-version
       shell: bash
       working-directory: ${{ inputs.working-directory }}
     - name: Run Build
