@@ -35,6 +35,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 - [Types](#version-7x-types)
   - [Overlay Attribute Interfaces](#version-7x-overlay-attribute-interfaces)
 - [JavaScript Frameworks](#version-7x-javascript-frameworks)
+  - [Angular](#version-7x-angular)
   - [React](#version-7x-react)
   - [Vue](#version-7x-vue)
 - [Utilities](#version-7x-utilities)
@@ -100,6 +101,8 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 - Datetime no longer automatically adjusts the `value` property when passed an array and `multiple="false"`. Developers should update their apps to ensure they are using the API correctly.
 
 - Datetime no longer incorrectly reports the time zone when `value` is updated. Datetime does not manage time zones, so any time zone information provided is ignored.
+
+- Passing the empty string to the `value` property will now error as it is not a valid ISO-8601 value.
 
 <h4 id="version-7x-input">Input</h4>
 
@@ -222,6 +225,10 @@ Any references to the virtual scroll types from `@ionic/core` have been removed.
 `ActionSheetAttributes`, `AlertAttributes`, `AlertTextareaAttributes`, `AlertInputAttributes`, `LoadingAttributes`, `ModalAttributes`, `PickerAttributes`, `PopoverAttributes`, and `ToastAttributes` have been removed. Developers should use `{ [key: string]: any }` instead.
 
 <h2 id="version-7x-javascript-frameworks">JavaScript Frameworks</h2>
+
+<h4 id="version-7x-angular">Angular</h4>
+
+- `null` values on form components will no longer be converted to the empty string (`''`) or `false`. This impacts `ion-checkbox`, `ion-datetime`, `ion-input`, `ion-radio`, `ion-radio-group`, ion-range`, `ion-searchbar`, `ion-segment`, `ion-select`, `ion-textarea`, and `ion-toggle`.
 
 <h4 id="version-7x-react">React</h4>
 

@@ -16,9 +16,15 @@ describe('Inputs', () => {
 
     cy.get('ion-checkbox').should('have.prop', 'checked').and('equal', false);
     cy.get('ion-toggle').should('have.prop', 'checked').and('equal', false);
-    cy.get('ion-input').should('have.prop', 'value').and('equal', '');
-    cy.get('ion-datetime').should('have.prop', 'value').and('equal', '');
-    cy.get('ion-select').should('have.prop', 'value').and('equal', '');
+    /**
+     * The `value` property gets set to undefined
+     * for these components, so we need to check
+     * not.have.prop which will check that the
+     * value property is undefined.
+     */
+    cy.get('ion-input').should('not.have.prop', 'value');
+    cy.get('ion-datetime').should('not.have.prop', 'value');
+    cy.get('ion-select').should('not.have.prop', 'value');
   });
 
   it('should get some value', () => {
