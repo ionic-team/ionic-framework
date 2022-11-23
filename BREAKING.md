@@ -215,7 +215,7 @@ Any references to the virtual scroll types from `@ionic/core` have been removed.
 
 <h2 id="version-7x-javascript-frameworks">JavaScript Frameworks</h2>
 
-<h4 id="version-7x-react">Angular</h4>
+<h4 id="version-7x-angular">Angular</h4>
 
 - `null` values on form components will no longer be converted to the empty string (`''`) or `false`. This impacts `ion-checkbox`, `ion-datetime`, `ion-input`, `ion-radio`, `ion-radio-group`, ion-range`, `ion-searchbar`, `ion-segment`, `ion-select`, `ion-textarea`, and `ion-toggle`.
 
