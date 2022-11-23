@@ -21,11 +21,7 @@
   --padding-start: 0;
 }
 
-.input-clear-icon {
-  @include svg-background-image($input-md-input-clear-icon-svg);
-
-  width: $input-md-input-clear-icon-width;
-  height: $input-md-input-clear-icon-width;
-
-  background-size: $input-md-input-clear-icon-size;
+.input-clear-icon ion-icon {
+  width: 22px;
+  height: 22px;
 }

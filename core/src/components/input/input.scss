@@ -143,6 +143,14 @@
   @include padding(0);
   @include background-position(center);
 
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 30px;
+  height: 30px;
+
   border: 0;
 
   outline: none;
@@ -152,6 +160,10 @@
 
   visibility: hidden;
   appearance: none;
+}
+
+.input-clear-icon ion-icon {
+  color: $text-color-step-400;
 }
 
 /**
