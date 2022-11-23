@@ -1,6 +1,8 @@
 import type { EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Method, Prop, State, h } from '@stencil/core';
+import { Component, Element, Event, h, Host, Method, Prop, State } from '@stencil/core';
+import { findClosestIonContent, scrollToTop } from '@utils/content';
 
+import { config } from '../../global/config';
 import type { NavOutlet, RouteID, RouteWrite, TabButtonClickEventDetail } from '../../interface';
 
 /**
@@ -70,6 +72,19 @@ export class Tabs implements NavOutlet {
   async select(tab: string | HTMLIonTabElement): Promise<boolean> {
     const selectedTab = getTab(this.tabs, tab);
     if (!this.shouldSwitch(selectedTab)) {
+      // check if tabTap is true and current tab route is root
+      const tabTap = config.getBoolean('tabTap', false);
+      // TODO: how do we know if the current tab route is root?
+      const canGoBack = this.selectedTab?.classList.contains('can-go-back');
+      if (this.selectedTab && !canGoBack && tabTap) {
+        const contentEl = findClosestIonContent(this.selectedTab);
+        // only scroll to top if we got ion-content and we're not already at the top
+        if (contentEl && contentEl.scrollTop > 0) {
+          contentEl.style.setProperty('--overflow', 'hidden');
+          await scrollToTop(contentEl, 300);
+          contentEl.style.removeProperty('--overflow');
+        }
+      }
       return false;
     }
     await this.setActive(selectedTab);

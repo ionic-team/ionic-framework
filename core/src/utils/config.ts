@@ -33,6 +33,12 @@ export interface IonicConfig {
   statusTap?: boolean;
 
   /**
+   * Whenever clicking the active tab should cause the scroll to top in an application.
+   * Defaults to `false`.
+   */
+  tabTap?: boolean;
+
+  /**
    * Overrides the default icon in all `<ion-back-button>` components.
    */
   backButtonIcon?: string;
