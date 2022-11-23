@@ -636,11 +636,7 @@ export const createDelegateController = (ref: {
   const coreDelegate: FrameworkDelegate = CoreDelegate();
 
   /**
-<<<<<<< HEAD
-   *  * Determines whether or not an overlay is being used
-=======
    * Determines whether or not an overlay is being used
->>>>>>> FW-2334
    * inline or via a controller/JS and returns the correct delegate.
    * By default, subsequent calls to getDelegate will use
    * a cached version of the delegate.
