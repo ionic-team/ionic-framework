@@ -271,6 +271,10 @@ export class Toggle implements ComponentInterface {
     );
   }
 
+  private get hasLabel() {
+    return this.el.textContent !== '';
+  }
+
   render() {
     const { legacyFormController } = this;
 
@@ -300,7 +304,12 @@ export class Toggle implements ComponentInterface {
         })}
       >
         <label class="toggle-wrapper">
-          <div class="label-text-wrapper">
+          <div
+            class={{
+              'label-text-wrapper': true,
+              'label-text-wrapper-hidden': !this.hasLabel,
+            }}
+          >
             <slot></slot>
           </div>
           <div class="native-wrapper">{this.renderToggleControl()}</div>

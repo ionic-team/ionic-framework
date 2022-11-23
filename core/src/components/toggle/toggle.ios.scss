@@ -28,27 +28,18 @@
   overflow: hidden;
 }
 
-// Toggle Wrapper
-// ----------------------------------------------------------------
-
-.toggle-wrapper {
-  min-height: 42px;
-}
-
 // Toggle Native Wrapper
 // ----------------------------------------------------------------
-
-/**
- * The handle box shadow should not
- * overflow outside of the track container.
- */
-.native-wrapper {
-  overflow: hidden;
-}
 
 .native-wrapper .toggle-icon {
   width: $toggle-ios-width;
   height: $toggle-ios-height;
+
+  /**
+   * The handle box shadow should not
+   * overflow outside of the track container.
+   */
+  overflow: hidden;
 }
 
 :host(.ion-color.toggle-checked) .toggle-icon {
@@ -190,7 +181,7 @@
 // iOS Toggle Within An Item
 // ----------------------------------------------------------
 
-:host(.in-item[slot]) {
+:host(.in-item.legacy-toggle[slot]) {
   @include margin($toggle-ios-media-margin);
   @include padding(
     $toggle-ios-item-end-padding-top,
@@ -200,7 +191,7 @@
   );
 }
 
-:host(.in-item[slot="start"]) {
+:host(.in-item.legacy-toggle[slot="start"]) {
   @include padding(
     $toggle-ios-item-start-padding-top,
     $toggle-ios-item-start-padding-end,
