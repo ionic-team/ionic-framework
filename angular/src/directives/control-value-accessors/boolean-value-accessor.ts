@@ -1,7 +1,7 @@
 import { Directive, HostListener, ElementRef, Injector } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
-import { ValueAccessor } from './value-accessor';
+import { ValueAccessor, setIonicClasses } from './value-accessor';
 
 @Directive({
   selector: 'ion-checkbox,ion-toggle',
@@ -16,6 +16,11 @@ import { ValueAccessor } from './value-accessor';
 export class BooleanValueAccessorDirective extends ValueAccessor {
   constructor(injector: Injector, el: ElementRef) {
     super(injector, el);
+  }
+
+  writeValue(value: any): void {
+    this.el.nativeElement.checked = this.lastValue = value;
+    setIonicClasses(this.el);
   }
 
   @HostListener('ionChange', ['$event.target'])
