@@ -82,7 +82,8 @@ test.describe('range: events:', () => {
   });
 
   test.describe('ionInput', () => {
-    test('should emit when the knob is dragged', async ({ page }) => {
+    // TODO(FW-2873) Enable this test when touch events/gestures are better supported in Playwright
+    test.skip('should emit when the knob is dragged', async ({ page }) => {
       await page.setContent(`<ion-range></ion-range>`);
 
       const rangeHandle = page.locator('ion-range .range-knob-handle');

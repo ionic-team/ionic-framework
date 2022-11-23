@@ -19,7 +19,7 @@ export class BooleanValueAccessorDirective extends ValueAccessor {
   }
 
   writeValue(value: any): void {
-    this.el.nativeElement.checked = this.lastValue = value == null ? false : value;
+    this.el.nativeElement.checked = this.lastValue = value;
     setIonicClasses(this.el);
   }
 

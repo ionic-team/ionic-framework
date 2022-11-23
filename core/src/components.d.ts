@@ -1883,6 +1883,7 @@ export namespace Components {
           * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
          */
         "cssClass"?: string | string[];
+        "delegate"?: FrameworkDelegate;
         /**
           * Dismiss the picker overlay after it has been presented.
           * @param data Any data to emit in the dismiss events.
@@ -1902,10 +1903,15 @@ export namespace Components {
           * @param name The name of the column.
          */
         "getColumn": (name: string) => Promise<PickerColumn | undefined>;
+        "hasController": boolean;
         /**
           * Additional attributes to pass to the picker.
          */
         "htmlAttributes"?: { [key: string]: any };
+        /**
+          * If `true`, the picker will open. If `false`, the picker will close. Use this if you need finer grained control over presentation, otherwise just use the pickerController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the picker dismisses. You will need to do that in your code.
+         */
+        "isOpen": boolean;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -1935,6 +1941,10 @@ export namespace Components {
           * If `true`, a backdrop will be displayed behind the picker.
          */
         "showBackdrop": boolean;
+        /**
+          * An ID corresponding to the trigger element that causes the picker to open when clicked.
+         */
+        "trigger": string | undefined;
     }
     interface IonPickerColumn {
         /**
@@ -5728,6 +5738,7 @@ declare namespace LocalJSX {
           * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
          */
         "cssClass"?: string | string[];
+        "delegate"?: FrameworkDelegate;
         /**
           * Number of milliseconds to wait before dismissing the picker.
          */
@@ -5736,10 +5747,15 @@ declare namespace LocalJSX {
           * Animation to use when the picker is presented.
          */
         "enterAnimation"?: AnimationBuilder;
+        "hasController"?: boolean;
         /**
           * Additional attributes to pass to the picker.
          */
         "htmlAttributes"?: { [key: string]: any };
+        /**
+          * If `true`, the picker will open. If `false`, the picker will close. Use this if you need finer grained control over presentation, otherwise just use the pickerController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the picker dismisses. You will need to do that in your code.
+         */
+        "isOpen"?: boolean;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -5752,6 +5768,14 @@ declare namespace LocalJSX {
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
+        /**
+          * Emitted after the picker has dismissed. Shorthand for ionPickerDidDismiss.
+         */
+        "onDidDismiss"?: (event: IonPickerCustomEvent<OverlayEventDetail>) => void;
+        /**
+          * Emitted after the picker has presented. Shorthand for ionPickerWillDismiss.
+         */
+        "onDidPresent"?: (event: IonPickerCustomEvent<void>) => void;
         /**
           * Emitted after the picker has dismissed.
          */
@@ -5768,11 +5792,23 @@ declare namespace LocalJSX {
           * Emitted before the picker has presented.
          */
         "onIonPickerWillPresent"?: (event: IonPickerCustomEvent<void>) => void;
+        /**
+          * Emitted before the picker has dismissed. Shorthand for ionPickerWillDismiss.
+         */
+        "onWillDismiss"?: (event: IonPickerCustomEvent<OverlayEventDetail>) => void;
+        /**
+          * Emitted before the picker has presented. Shorthand for ionPickerWillPresent.
+         */
+        "onWillPresent"?: (event: IonPickerCustomEvent<void>) => void;
         "overlayIndex": number;
         /**
           * If `true`, a backdrop will be displayed behind the picker.
          */
         "showBackdrop"?: boolean;
+        /**
+          * An ID corresponding to the trigger element that causes the picker to open when clicked.
+         */
+        "trigger"?: string | undefined;
     }
     interface IonPickerColumn {
         /**

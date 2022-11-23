@@ -15,12 +15,14 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 - [Browser and Platform Support](#version-7x-browser-platform-support)
 - [Components](#version-7x-components)
   - [Accordion Group](#version-7x-accordion-group)
+  - [Action Sheet](#version-7x-action-sheet)
   - [Card Header](#version-7x-card-header)
   - [Checkbox](#version-7x-checkbox)
   - [Datetime](#version-7x-datetime)
   - [Input](#version-7x-input)
   - [Modal](#version-7x-modal)
   - [Overlays](#version-7x-overlays)
+  - [Picker](#version-7x-picker)
   - [Radio Group](#version-7x-radio-group)
   - [Range](#version-7x-range)
   - [Searchbar](#version-7x-searchbar)
@@ -33,6 +35,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 - [Types](#version-7x-types)
   - [Overlay Attribute Interfaces](#version-7x-overlay-attribute-interfaces)
 - [JavaScript Frameworks](#version-7x-javascript-frameworks)
+  - [Angular](#version-7x-angular)
   - [React](#version-7x-react)
   - [Vue](#version-7x-vue)
 - [Utilities](#version-7x-utilities)
@@ -73,6 +76,16 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 
 - Accordion Group no longer automatically adjusts the `value` property when passed an array and `multiple="false"`. Developers should update their apps to ensure they are using the API correctly.
 
+<h4 id="version-7x-action-sheet">Action Sheet</h4>
+
+- Action Sheet is updated to align with the design specification.
+
+**Design tokens**
+
+| Token      | Previous Value | New Value |
+| ---------- | -------------- | --------- |
+| `--height` | `100%`         | `auto`    |
+
 <h4 id="version-7x-card-header">Card Header</h4>
 
 - The card header has ben changed to a flex container with direction set to `column` (top to bottom). In `ios` mode the direction is set to `column-reverse` which results in the subtitle displaying on top of the title.
@@ -88,6 +101,8 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 - Datetime no longer automatically adjusts the `value` property when passed an array and `multiple="false"`. Developers should update their apps to ensure they are using the API correctly.
 
 - Datetime no longer incorrectly reports the time zone when `value` is updated. Datetime does not manage time zones, so any time zone information provided is ignored.
+
+- Passing the empty string to the `value` property will now error as it is not a valid ISO-8601 value.
 
 <h4 id="version-7x-input">Input</h4>
 
@@ -109,6 +124,10 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 <h4 id="version-7x-overlays">Overlays</h4>
 
 Ionic now listens on the `keydown` event instead of the `keyup` event when determining when to dismiss overlays via the "Escape" key. Any applications that were listening on `keyup` to suppress this behavior should listen on `keydown` instead.
+
+<h4 id="version-7x-picker">Picker</h4>
+
+- The `refresh` key has been removed from the `PickerColumn` interface. Developers should use the `columns` property to refresh the `ion-picker` view.
 
 <h4 id="version-7x-radio-group">Radio Group</h4>
 
@@ -208,6 +227,10 @@ Any references to the virtual scroll types from `@ionic/core` have been removed.
 `ActionSheetAttributes`, `AlertAttributes`, `AlertTextareaAttributes`, `AlertInputAttributes`, `LoadingAttributes`, `ModalAttributes`, `PickerAttributes`, `PopoverAttributes`, and `ToastAttributes` have been removed. Developers should use `{ [key: string]: any }` instead.
 
 <h2 id="version-7x-javascript-frameworks">JavaScript Frameworks</h2>
+
+<h4 id="version-7x-angular">Angular</h4>
+
+- `null` values on form components will no longer be converted to the empty string (`''`) or `false`. This impacts `ion-checkbox`, `ion-datetime`, `ion-input`, `ion-radio`, `ion-radio-group`, ion-range`, `ion-searchbar`, `ion-segment`, `ion-select`, `ion-textarea`, and `ion-toggle`.
 
 <h4 id="version-7x-react">React</h4>
 

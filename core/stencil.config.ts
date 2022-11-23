@@ -182,15 +182,9 @@ export const config: Config = {
       directivesProxyFile: '../angular/src/directives/proxies.ts',
       directivesArrayFile: '../angular/src/directives/proxies-list.ts',
       excludeComponents: [
-        // overlays
-        'ion-action-sheet',
-        'ion-alert',
-        'ion-loading',
+        // overlays that accept user components
         'ion-modal',
-        'ion-picker',
         'ion-popover',
-        'ion-toast',
-        'ion-toast',
 
         // navigation
         'ion-router',
