@@ -9,6 +9,8 @@
   --padding-end: #{$textarea-ios-padding-end};
   --padding-bottom: #{$textarea-ios-padding-bottom};
   --padding-start: #{$textarea-ios-padding-start};
+  --border-width: #{$hairlines-width};
+  --border-color: #{$item-ios-border-color};
 
   font-size: $textarea-ios-font-size;
 }

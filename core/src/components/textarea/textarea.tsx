@@ -470,9 +470,10 @@ For textareas that do not have a visible label, developers should use "aria-labe
         aria-disabled={this.disabled ? 'true' : null}
         class={createColorClasses(this.color, {
           [mode]: true,
+          'legacy-textarea': true,
         })}
       >
-        <div class="textarea-wrapper" ref={(el) => (this.textareaWrapper = el)}>
+        <div class="textarea-legacy-wrapper" ref={(el) => (this.textareaWrapper = el)}>
           <textarea
             class="native-textarea"
             aria-labelledby={label ? label.id : null}
@@ -526,6 +527,31 @@ For textareas that do not have a visible label, developers should use "aria-labe
     return this.renderLabel();
   }
 
+  /**
+   * Renders the helper text or error text values
+   */
+  private renderHintText() {
+    const { helperText, errorText } = this;
+
+    return [<div class="helper-text">{helperText}</div>, <div class="error-text">{errorText}</div>];
+  }
+
+  /**
+   * Responsible for rendering helper text,
+   * error text, and counter. This element should only
+   * be rendered if hint text is set or counter is enabled.
+   */
+  private renderBottomContent() {
+    const { helperText, errorText } = this;
+
+    const hasHintText = helperText !== undefined || errorText !== undefined;
+    if (!hasHintText) {
+      return;
+    }
+
+    return <div class="textarea-bottom">{this.renderHintText()}</div>;
+  }
+
   private renderTextarea() {
     const { inputId, disabled } = this;
     const mode = getIonMode(this);
@@ -573,6 +599,7 @@ For textareas that do not have a visible label, developers should use "aria-labe
             </textarea>
           </div>
         </label>
+        {this.renderBottomContent()}
       </Host>
     );
   }
