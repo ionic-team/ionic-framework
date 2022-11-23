@@ -331,11 +331,6 @@
   --border-color: var(--highlight-color);
 }
 
-:host(.ion-touched.ion-valid) label,
-:host(.ion-touched.ion-invalid) label {
-  color: var(--highlight-color);
-}
-
 // Input Hint Text
 // ----------------------------------------------------------------
 
