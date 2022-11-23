@@ -1,8 +1,12 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+<<<<<<< HEAD
 import { createLegacyFormController } from '@utils/forms';
 import type { LegacyFormController } from '@utils/forms';
 import { printIonWarning } from '@utils/logging';
+=======
+import { closeCircle, closeSharp } from 'ionicons/icons';
+>>>>>>> origin/main
 
 import { getIonMode } from '../../global/ionic-global';
 import type {
@@ -776,8 +780,15 @@ For inputs that do not have a visible label, developers should use "aria-label" 
                */
               ev.preventDefault();
             }}
+<<<<<<< HEAD
             onClick={this.onClearButtonClick}
           />
+=======
+            onClick={this.clearTextInput}
+          >
+            <ion-icon aria-hidden="true" icon={mode === 'ios' ? closeCircle : closeSharp}></ion-icon>
+          </button>
+>>>>>>> origin/main
         )}
       </Host>
     );

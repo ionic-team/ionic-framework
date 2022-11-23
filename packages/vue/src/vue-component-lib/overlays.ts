@@ -139,6 +139,7 @@ export const defineOverlayContainer = <Props extends object>(name: string, defin
       const elementRef = ref();
 
       onMounted(() => {
+        elementRef.value.addEventListener('ion-mount', () => isOpen.value = true);
         elementRef.value.addEventListener('will-present', () => isOpen.value = true);
         elementRef.value.addEventListener('did-dismiss', () => isOpen.value = false);
       });
