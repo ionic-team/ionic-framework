@@ -140,6 +140,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+    - name: Restore @ionic/core built cache
+      uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-core
+        path: ./core
+        filename: CoreBuild.zip
     - name: Restore @ionic/angular built cache
       uses: ./.github/workflows/actions/download-archive
       with:
@@ -160,6 +166,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+    - name: Restore @ionic/core built cache
+      uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-core
+        path: ./core
+        filename: CoreBuild.zip
     - name: Restore @ionic/react built cache
       uses: ./.github/workflows/actions/download-archive
       with:
@@ -179,6 +191,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+    - name: Restore @ionic/core built cache
+      uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-core
+        path: ./core
+        filename: CoreBuild.zip
     - name: Restore @ionic/vue built cache
       uses: ./.github/workflows/actions/download-archive
       with:
