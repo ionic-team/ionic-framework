@@ -506,8 +506,75 @@ For textareas that do not have a visible label, developers should use "aria-labe
     );
   }
 
+  private renderLabel() {
+    const { label } = this;
+    if (label === undefined) {
+      return;
+    }
+
+    return (
+      <div class="label-text-wrapper">
+        <div class="label-text">{this.label}</div>
+      </div>
+    );
+  }
+
+  /**
+   * Renders the border container when fill="outline".
+   */
+  private renderLabelContainer() {
+    return this.renderLabel();
+  }
+
   private renderTextarea() {
-    return <Host>Stubbed textarea</Host>;
+    const { inputId, disabled } = this;
+    const mode = getIonMode(this);
+    const value = this.getValue();
+
+    return (
+      <Host
+        aria-disabled={disabled ? 'true' : null}
+        class={createColorClasses(this.color, {
+          [mode]: true,
+          'has-value': this.hasValue(),
+          'has-focus': this.hasFocus,
+        })}
+      >
+        <label class="textarea-wrapper">
+          {this.renderLabelContainer()}
+          <div class="native-wrapper" ref={(el) => (this.textareaWrapper = el)}>
+            <textarea
+              class="native-textarea"
+              ref={(el) => (this.nativeInput = el)}
+              id={inputId}
+              disabled={disabled}
+              autoCapitalize={this.autocapitalize}
+              autoFocus={this.autofocus}
+              enterKeyHint={this.enterkeyhint}
+              inputMode={this.inputmode}
+              minLength={this.minlength}
+              maxLength={this.maxlength}
+              name={this.name}
+              placeholder={this.placeholder || ''}
+              readOnly={this.readonly}
+              required={this.required}
+              spellcheck={this.spellcheck}
+              cols={this.cols}
+              rows={this.rows}
+              wrap={this.wrap}
+              onInput={this.onInput}
+              onChange={this.onChange}
+              onBlur={this.onBlur}
+              onFocus={this.onFocus}
+              onKeyDown={this.onKeyDown}
+              {...this.inheritedAttributes}
+            >
+              {value}
+            </textarea>
+          </div>
+        </label>
+      </Host>
+    );
   }
 
   render() {
