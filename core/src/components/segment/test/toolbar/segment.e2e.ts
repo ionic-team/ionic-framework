@@ -31,18 +31,21 @@ test.describe('segment: toolbar', () => {
               <ion-segment-button value="c" disabled="true">Third</ion-segment-button>
             </ion-segment>
           </ion-toolbar>
-        </ion-header>
-      `);
-
-      const header = page.locator('ion-header');
-
-      expect(await header.screenshot()).toMatchSnapshot(`segment-toolbar-color-${page.getSnapshotSettings()}.png`);
-    });
-
-    test.only('should not have visual regressions when used in a toolbar with light color', async ({ page }) => {
-      await page.setContent(`
-        <ion-header>
           <ion-toolbar color="light">
+            <ion-segment value="a">
+              <ion-segment-button value="a">First</ion-segment-button>
+              <ion-segment-button value="b">Second</ion-segment-button>
+              <ion-segment-button value="c" disabled="true">Third</ion-segment-button>
+            </ion-segment>
+          </ion-toolbar>
+          <ion-toolbar color="medium">
+            <ion-segment value="a">
+              <ion-segment-button value="a">First</ion-segment-button>
+              <ion-segment-button value="b">Second</ion-segment-button>
+              <ion-segment-button value="c" disabled="true">Third</ion-segment-button>
+            </ion-segment>
+          </ion-toolbar>
+          <ion-toolbar color="dark">
             <ion-segment value="a">
               <ion-segment-button value="a">First</ion-segment-button>
               <ion-segment-button value="b">Second</ion-segment-button>
@@ -54,7 +57,7 @@ test.describe('segment: toolbar', () => {
 
       const header = page.locator('ion-header');
 
-      expect(await header.screenshot()).toMatchSnapshot(`segment-toolbar-light-color-${page.getSnapshotSettings()}.png`);
+      expect(await header.screenshot()).toMatchSnapshot(`segment-toolbar-color-${page.getSnapshotSettings()}.png`);
     });
 
     test('should not inherit height when segment is MD and toolbar is iOS', async ({ page, skip }) => {
