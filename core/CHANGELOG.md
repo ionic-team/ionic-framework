@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.9-nightly.20221123](https://github.com/ionic-team/ionic/compare/v6.3.8...v6.3.9-nightly.20221123) (2022-11-23)
+
+
+### Bug Fixes
+
+* **button:** fill can be set to undefined ([#26339](https://github.com/ionic-team/ionic/issues/26339)) ([2fe23d9](https://github.com/ionic-team/ionic/commit/2fe23d9d46c3593843c781c57340332e5a86fd64)), closes [#25886](https://github.com/ionic-team/ionic/issues/25886)
+* **reorder:** items animate once in firefox ([#26326](https://github.com/ionic-team/ionic/issues/26326)) ([7ae8117](https://github.com/ionic-team/ionic/commit/7ae81172844659d7f4581956ce17e5324f73beef)), closes [#21182](https://github.com/ionic-team/ionic/issues/21182)
+
+
+
+
+
 ## [6.3.8](https://github.com/ionic-team/ionic/compare/v6.3.7...v6.3.8) (2022-11-22)
 
 
