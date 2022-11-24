@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.9-nightly.20221124](https://github.com/ionic-team/ionic-framework/compare/v6.3.8...v6.3.9-nightly.20221124) (2022-11-24)
+
+
+### Bug Fixes
+
+* **button:** fill can be set to undefined ([#26339](https://github.com/ionic-team/ionic-framework/issues/26339)) ([2fe23d9](https://github.com/ionic-team/ionic-framework/commit/2fe23d9d46c3593843c781c57340332e5a86fd64)), closes [#25886](https://github.com/ionic-team/ionic-framework/issues/25886)
+* **input:** clear icon can be styled ([#26354](https://github.com/ionic-team/ionic-framework/issues/26354)) ([ccaff8d](https://github.com/ionic-team/ionic-framework/commit/ccaff8d0dc66f8adc9cde838c084629391e4200d)), closes [#19178](https://github.com/ionic-team/ionic-framework/issues/19178) [#17168](https://github.com/ionic-team/ionic-framework/issues/17168)
+* **reorder:** items animate once in firefox ([#26326](https://github.com/ionic-team/ionic-framework/issues/26326)) ([7ae8117](https://github.com/ionic-team/ionic-framework/commit/7ae81172844659d7f4581956ce17e5324f73beef)), closes [#21182](https://github.com/ionic-team/ionic-framework/issues/21182)
+* **segment:** segment in toolbar uses correct contrast ([#26353](https://github.com/ionic-team/ionic-framework/issues/26353)) ([5a243cc](https://github.com/ionic-team/ionic-framework/commit/5a243ccebc8e27bef6eb1ed2f797a0c1166199bf)), closes [#26350](https://github.com/ionic-team/ionic-framework/issues/26350)
+
+
+
+
+
 ## [6.3.8](https://github.com/ionic-team/ionic-framework/compare/v6.3.7...v6.3.8) (2022-11-22)
 
 
