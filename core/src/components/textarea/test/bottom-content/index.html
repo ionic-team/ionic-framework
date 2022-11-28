@@ -72,7 +72,41 @@
             <ion-textarea class="ion-invalid custom-error-color" label="Email" error-text="Please enter a valid email">
             </ion-textarea>
           </div>
+
+          <div class="grid-item">
+            <h2>Counter</h2>
+            <ion-textarea label="Email" counter="true" maxlength="100"></ion-textarea>
+          </div>
+
+          <div class="grid-item">
+            <h2>Custom Counter</h2>
+            <ion-textarea id="custom-counter" label="Email" counter="true" maxlength="100"></ion-textarea>
+          </div>
+
+          <div class="grid-item">
+            <h2>Counter with Helper</h2>
+            <ion-textarea label="Email" counter="true" maxlength="100" helper-text="Enter an email"></ion-textarea>
+          </div>
+
+          <div class="grid-item">
+            <h2>Counter with Error</h2>
+            <ion-textarea
+              class="ion-invalid"
+              label="Email"
+              counter="true"
+              maxlength="100"
+              error-text="Please enter a valid email"
+            ></ion-textarea>
+          </div>
         </div>
+
+        <script>
+          const customCounterTextarea = document.querySelector('ion-textarea#custom-counter');
+          customCounterTextarea.counterFormatter = (inputLength, maxLength) => {
+            const length = maxLength - inputLength;
+            return `${maxLength - inputLength} characters left`;
+          };
+        </script>
       </ion-content>
     </ion-app>
   </body>

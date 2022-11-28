@@ -265,3 +265,21 @@
 :host(.ion-invalid) .textarea-bottom .helper-text {
   display: none;
 }
+
+// Textarea Max Length Counter
+// ----------------------------------------------------------------
+
+.textarea-bottom .counter {
+  /**
+   * Counter should always be at
+   * the end of the container even
+   * when no helper/error texts are used.
+   */
+  @include margin-horizontal(auto, null);
+
+  color: #{$background-color-step-550};
+
+  white-space: nowrap;
+
+  padding-inline-start: 16px;
+}

@@ -81,3 +81,61 @@ test.describe('textarea: hint text', () => {
     });
   });
 });
+
+test.describe('textarea: counter', () => {
+  test.describe('textarea: counter functionality', () => {
+    test.beforeEach(({ skip }) => {
+      skip.rtl();
+      skip.mode('ios', 'Rendering is the same across modes');
+    });
+    test('should not activate if maxlength is not specified even if bottom content is visible', async ({ page }) => {
+      await page.setContent(`
+        <ion-textarea label="my label" counter="true" helper-text="helper text"></ion-textarea>
+      `);
+      const itemCounter = page.locator('ion-textarea .counter');
+      await expect(itemCounter).toBeHidden();
+    });
+    test('default formatter should be used', async ({ page }) => {
+      await page.setContent(`
+        <ion-textarea label="my label" counter="true" maxlength="20"></ion-textarea>
+      `);
+      const itemCounter = page.locator('ion-textarea .counter');
+      expect(await itemCounter.textContent()).toBe('0 / 20');
+    });
+    test('custom formatter should be used when provided', async ({ page }) => {
+      await page.setContent(`
+        <ion-textarea label="my label" counter="true" maxlength="20"></ion-textarea>
+        <script>
+          const textarea = document.querySelector('ion-textarea');
+          textarea.counterFormatter = (inputLength, maxLength) => {
+            const length = maxLength - inputLength;
+            return length.toString() + ' characters left';
+          };
+        </script>
+      `);
+
+      const textarea = page.locator('ion-textarea textarea');
+      const itemCounter = page.locator('ion-textarea .counter');
+      expect(await itemCounter.textContent()).toBe('20 characters left');
+
+      await textarea.click();
+      await textarea.type('abcde');
+
+      await page.waitForChanges();
+
+      expect(await itemCounter.textContent()).toBe('15 characters left');
+    });
+  });
+  test.describe('textarea: counter rendering', () => {
+    test.describe('regular textareas', () => {
+      test('should not have visual regressions when rendering counter', async ({ page }) => {
+        await page.setContent(`<ion-textarea counter="true" maxlength="20" label="my textarea"></ion-textarea>`);
+
+        const bottomEl = page.locator('ion-textarea .textarea-bottom');
+        expect(await bottomEl.screenshot()).toMatchSnapshot(
+          `textarea-bottom-content-counter-${page.getSnapshotSettings()}.png`
+        );
+      });
+    });
+  });
+});
