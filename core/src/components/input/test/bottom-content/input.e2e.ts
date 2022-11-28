@@ -9,7 +9,7 @@ test.describe('input: bottom content', () => {
     skip.mode('ios', 'Rendering is the same across modes');
     await page.setContent(`<ion-input label="my input"></ion-input>`);
 
-    const bottomEl = page.locator('ion-input .item-bottom');
+    const bottomEl = page.locator('ion-input .input-bottom');
     await expect(bottomEl).toHaveCount(0);
   });
   test('entire input component should render correctly with no fill', async ({ page }) => {
