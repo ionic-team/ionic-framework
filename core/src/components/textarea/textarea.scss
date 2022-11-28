@@ -8,10 +8,10 @@
    * @prop --background: Background of the textarea
    *
    * @prop --border-radius: Border radius of the textarea
-   * @prop --border-color: Color of the textarea border
+   * @prop --border-color: Color of the border below the textarea when using helper text, error text, or counter
    * @prop --border-radius: Radius of the textarea border
-   * @prop --border-style: Style of the textarea border
-   * @prop --border-width: Width of the textarea border
+   * @prop --border-style: Style of the border below the textarea when using helper text, error text, or counter
+   * @prop --border-width: Width of the border below the textarea when using helper text, error text, or counter
    *
    * @prop --color: Color of the text
    *
@@ -40,11 +40,13 @@
   --padding-bottom: 0;
   --padding-start: 0;
   --border-radius: 0;
+  --border-style: solid;
+  --highlight-color-focused: #{ion-color(primary, base)};
+  --highlight-color-valid: #{ion-color(success, base)};
+  --highlight-color-invalid: #{ion-color(danger, base)};
 
   display: block;
   position: relative;
-
-  flex: 1;
 
   width: 100%;
 
@@ -53,11 +55,15 @@
 
   font-family: $font-family-base;
 
-  white-space: pre-wrap;
-
   z-index: $z-index-item-input;
 
   box-sizing: border-box;
+}
+
+:host(.legacy-textarea) {
+  flex: 1;
+
+  white-space: pre-wrap;
 }
 
 :host(.ion-color) {
@@ -82,7 +88,7 @@
 // Native Textarea
 // --------------------------------------------------
 
-.textarea-wrapper {
+.textarea-legacy-wrapper {
   display: grid;
 
   min-width: inherit;
@@ -104,7 +110,7 @@
 }
 
 .native-textarea,
-.textarea-wrapper::after {
+.textarea-legacy-wrapper::after {
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
   @include text-inherit();
 
@@ -200,4 +206,62 @@
 
 :host([auto-grow="true"]) .native-textarea {
   overflow: hidden;
+}
+
+// Textarea Wrapper
+// ----------------------------------------------------------------
+.textarea-wrapper {
+  display: flex;
+
+  flex-grow: 1;
+
+  align-items: center;
+}
+
+// Native Wrapper
+// ----------------------------------------------------------------
+
+.native-wrapper {
+  flex: 1;
+}
+
+// Textarea Bottom Content
+// ----------------------------------------------------------------
+
+.textarea-bottom {
+  @include padding(5px, 0, 0, 0);
+
+  display: flex;
+
+  justify-content: space-between;
+
+  border-top: var(--border-width) var(--border-style) var(--border-color);
+
+  font-size: 12px;
+}
+
+// Textarea Hint Text
+// ----------------------------------------------------------------
+
+/**
+ * Error text should only be shown when .ion-invalid is
+ * present on the textarea. Otherwise the helper text should
+ * be shown.
+ */
+.textarea-bottom .error-text {
+  display: none;
+
+  color: var(--highlight-color-invalid);
+}
+
+.textarea-bottom .helper-text {
+  display: block;
+}
+
+:host(.ion-invalid) .textarea-bottom .error-text {
+  display: block;
+}
+
+:host(.ion-invalid) .textarea-bottom .helper-text {
+  display: none;
 }
