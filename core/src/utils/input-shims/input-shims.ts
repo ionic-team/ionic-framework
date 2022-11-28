@@ -12,12 +12,20 @@ const SCROLL_ASSIST = true;
 const SCROLL_PADDING = true;
 const HIDE_CARET = true;
 
-export const startInputShims = (config: Config) => {
+export const startInputShims = (config: Config, platform: 'ios' | 'android') => {
   const doc = document;
+  const isIOS = platform === 'ios';
+  const isAndroid = platform === 'android';
+
+  /**
+   * Hide Caret and Input Blurring are needed on iOS.
+   * Scroll Assist and Scroll Padding are needed on iOS and Android
+   * with Chrome web browser (not Chrome webview).
+   */
   const keyboardHeight = config.getNumber('keyboardHeight', 290);
   const scrollAssist = config.getBoolean('scrollAssist', true);
-  const hideCaret = config.getBoolean('hideCaretOnScroll', true);
-  const inputBlurring = config.getBoolean('inputBlurring', true);
+  const hideCaret = config.getBoolean('hideCaretOnScroll', isIOS);
+  const inputBlurring = config.getBoolean('inputBlurring', isIOS);
   const scrollPadding = config.getBoolean('scrollPadding', true);
   const inputs = Array.from(doc.querySelectorAll('ion-input, ion-textarea')) as HTMLElement[];
 
@@ -41,8 +49,21 @@ export const startInputShims = (config: Config) => {
       hideCaretMap.set(componentEl, rmFn);
     }
 
-    if (SCROLL_ASSIST && (!!scrollEl || !!footerEl) && scrollAssist && !scrollAssistMap.has(componentEl)) {
-      const rmFn = enableScrollAssist(componentEl, inputEl, scrollEl, footerEl, keyboardHeight);
+    /**
+     * date/datetime-locale inputs on mobile devices show date picker
+     * overlays instead of keyboards. As a result, scroll assist is
+     * not needed. This also works around a bug in iOS <16 where
+     * scroll assist causes the browser to lock up. See FW-1997.
+     */
+    const isDateInput = inputEl.type === 'date' || inputEl.type === 'datetime-local';
+    if (
+      SCROLL_ASSIST &&
+      !isDateInput &&
+      (!!scrollEl || !!footerEl) &&
+      scrollAssist &&
+      !scrollAssistMap.has(componentEl)
+    ) {
+      const rmFn = enableScrollAssist(componentEl, inputEl, scrollEl, footerEl, keyboardHeight, isAndroid);
       scrollAssistMap.set(componentEl, rmFn);
     }
   };

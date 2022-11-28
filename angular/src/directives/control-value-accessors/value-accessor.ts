@@ -19,7 +19,7 @@ export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDes
 
   writeValue(value: any): void {
     /**
-     * TODO for Ionic 6:
+     * TODO FW-2646
      * Change `value == null ? '' : value;`
      * to `value`. This was a fix for IE9, but IE9
      * is no longer supported; however, this change
@@ -83,14 +83,8 @@ export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDes
     }
 
     /**
-     * TODO Remove this in favor of https://github.com/angular/angular/issues/10887
-     * whenever it is implemented. Currently, Ionic's form status classes
-     * do not react to changes when developers manually call
-     * Angular form control methods such as markAsTouched.
-     * This results in Ionic's form status classes being out
-     * of sync with the ng form status classes.
-     * This patches the methods to manually sync
-     * the classes until this feature is implemented in Angular.
+     * TODO FW-2787: Remove this in favor of https://github.com/angular/angular/issues/10887
+     * whenever it is implemented.
      */
     const formControl = ngControl.control as any;
     if (formControl) {

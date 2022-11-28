@@ -66,7 +66,6 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
   let currentRouteInfo: RouteInfo;
   let incomingRouteParams: RouteParams;
 
-  // TODO types
   let historyChangeListeners: any[] = [];
 
   if (typeof (document as any) !== 'undefined') {
@@ -104,7 +103,6 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
   });
 
   const handleNavigateBack = (defaultHref?: string, routerAnimation?: AnimationBuilder) => {
-    // todo grab default back button href from config
     const routeInfo = locationHistory.current(initialHistoryPosition, currentHistoryPosition);
     if (routeInfo && routeInfo.pushedByRoute) {
       const prevInfo = locationHistory.findLastLocation(routeInfo);
@@ -120,7 +118,12 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
              * will go back in a linear fashion.
              */
             prevInfo.pathname === routeInfo.pushedByRoute &&
-            routeInfo.tab === '' && prevInfo.tab === ''
+
+            /**
+             * Tab info can be undefined or '' (empty string)
+             * both are false-y values, so we can just use !.
+             */
+            !routeInfo.tab && !prevInfo.tab
           )
         ) {
           router.back();
@@ -556,7 +559,6 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
     }
   }
 
-  // TODO types
   const registerHistoryChangeListener = (cb: any) => {
     historyChangeListeners.push(cb);
   }

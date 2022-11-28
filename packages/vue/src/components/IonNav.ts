@@ -1,10 +1,9 @@
 import { defineComponent, h, shallowRef, VNode } from 'vue';
 import { VueDelegate } from '../framework-delegate';
-import { defineCustomElement } from '../utils';
-import { IonNav as IonNavCmp } from '@ionic/core/components/ion-nav.js';
+import { defineCustomElement } from '@ionic/core/components/ion-nav.js';
 
 export const IonNav = /*@__PURE__*/ defineComponent(() => {
-  defineCustomElement('ion-nav', IonNavCmp);
+  defineCustomElement();
   const views = shallowRef([]);
 
   /**

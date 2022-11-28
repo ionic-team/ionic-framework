@@ -114,7 +114,8 @@ export const generateKeyframeName = (keyframeRules: string) => {
 };
 
 export const getStyleContainer = (element: HTMLElement) => {
-  const rootNode = element.getRootNode() as any;
+  // getRootNode is not always available in SSR environments.
+  const rootNode = element.getRootNode !== undefined ? (element.getRootNode() as any) : element;
   return rootNode.head || rootNode;
 };
 
@@ -131,7 +132,7 @@ export const createKeyframeStylesheet = (
     return existingStylesheet;
   }
 
-  const stylesheet = (element.ownerDocument || document).createElement('style');
+  const stylesheet = (element.ownerDocument ?? document).createElement('style');
   stylesheet.id = keyframeName;
   stylesheet.textContent = `@${keyframePrefix}keyframes ${keyframeName} { ${keyframeRules} } @${keyframePrefix}keyframes ${keyframeName}-alt { ${keyframeRules} }`;
 

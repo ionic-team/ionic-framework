@@ -95,7 +95,7 @@ $item-ios-slot-start-margin-start:           0 !default;
 $item-ios-slot-end-margin-top:               null !default;
 
 /// @prop - Margin end for the end slot
-$item-ios-slot-end-margin-end:               ($item-ios-padding-start / 2) !default;
+$item-ios-slot-end-margin-end:               ($item-ios-padding-start * 0.5) !default;
 
 /// @prop - Margin bottom for the end slot
 $item-ios-slot-end-margin-bottom:            $item-ios-slot-end-margin-top !default;

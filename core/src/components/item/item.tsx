@@ -5,7 +5,8 @@ import { chevronForward } from 'ionicons/icons';
 import { getIonMode } from '../../global/ionic-global';
 import type { AnimationBuilder, Color, CssClassMap, RouterDirection, StyleEventDetail } from '../../interface';
 import type { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
-import { raf } from '../../utils/helpers';
+import type { Attributes } from '../../utils/helpers';
+import { inheritAttributes, raf } from '../../utils/helpers';
 import { printIonError } from '../../utils/logging';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 import type { InputChangeEventDetail } from '../input/input-interface';
@@ -38,6 +39,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   private labelColorStyles = {};
   private itemStyles = new Map<string, CssClassMap>();
   private clickListener?: (ev: Event) => void;
+  private inheritedAriaAttributes: Attributes = {};
 
   @Element() el!: HTMLIonItemElement;
 
@@ -210,7 +212,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     // appear as clickable to screen readers
     // https://github.com/ionic-team/ionic-framework/issues/22011
     const input = this.getFirstInput();
-    if (input && !this.clickListener) {
+    if (input !== undefined && !this.clickListener) {
       this.clickListener = (ev: Event) => this.delegateFocus(ev, input);
       this.el.addEventListener('click', this.clickListener);
     }
@@ -218,7 +220,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
 
   disconnectedCallback() {
     const input = this.getFirstInput();
-    if (input && this.clickListener) {
+    if (input !== undefined && this.clickListener) {
       this.el.removeEventListener('click', this.clickListener);
       this.clickListener = undefined;
     }
@@ -226,6 +228,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
 
   componentDidLoad() {
     raf(() => {
+      this.inheritedAriaAttributes = inheritAttributes(this.el, ['aria-label']);
       this.setMultipleInputs();
       this.focusable = this.isFocusable();
     });
@@ -359,12 +362,14 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
       target,
       routerAnimation,
       routerDirection,
+      inheritedAriaAttributes,
     } = this;
     const childStyles = {} as any;
     const mode = getIonMode(this);
     const clickable = this.isClickable();
     const canActivate = this.canActivate();
     const TagType = clickable ? (href === undefined ? 'button' : 'a') : ('div' as any);
+
     const attrs =
       TagType === 'button'
         ? { type: this.type }
@@ -389,6 +394,8 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     });
     const ariaDisabled = disabled || childStyles['item-interactive-disabled'] ? 'true' : null;
     const fillValue = fill || 'none';
+    const inList = hostContext('ion-list', this.el);
+
     return (
       <Host
         aria-disabled={ariaDisabled}
@@ -402,15 +409,23 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
             [`item-fill-${fillValue}`]: true,
             [`item-shape-${shape}`]: shape !== undefined,
             'item-disabled': disabled,
-            'in-list': hostContext('ion-list', this.el),
+            'in-list': inList,
             'item-multiple-inputs': this.multipleInputs,
             'ion-activatable': canActivate,
             'ion-focusable': this.focusable,
             'item-rtl': document.dir === 'rtl',
           }),
         }}
+        role={inList ? 'listitem' : null}
       >
-        <TagType {...attrs} class="item-native" part="native" disabled={disabled} {...clickFn}>
+        <TagType
+          {...attrs}
+          {...inheritedAriaAttributes}
+          class="item-native"
+          part="native"
+          disabled={disabled}
+          {...clickFn}
+        >
           <slot name="start"></slot>
           <div class="item-inner">
             <div class="input-wrapper">

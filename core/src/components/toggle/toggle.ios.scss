@@ -30,6 +30,9 @@
   background: current-color(base);
 }
 
+:host(.toggle-activated) .toggle-switch-icon {
+  opacity: 0;
+}
 
 // iOS Toggle Background Track: Unchecked
 // ----------------------------------------------------------
@@ -42,7 +45,6 @@
   transition: background-color $toggle-ios-transition-duration;
 }
 
-
 // iOS Toggle Inner Knob: Unchecked
 // ----------------------------------------------------------
 
@@ -50,6 +52,70 @@
   will-change: transform;
 }
 
+// iOS Toggle On/Off Labels
+// ----------------------------------------------------------
+
+.toggle-switch-icon {
+  position: absolute;
+
+  top: 50%;
+
+  width: 11px;
+  height: 11px;
+
+  transform: translateY(-50%);
+
+  transition: opacity $toggle-ios-transition-duration, color $toggle-ios-transition-duration;
+}
+
+.toggle-switch-icon {
+  position: absolute;
+
+  color: var(--ion-color-dark);
+}
+
+:host(.toggle-ltr) .toggle-switch-icon {
+  /* stylelint-disable-next-line property-disallowed-list */
+  right: 6px;
+}
+
+:host(.toggle-rtl) .toggle-switch-icon {
+  /* stylelint-disable property-disallowed-list */
+  right: initial;
+  left: 6px;
+  /* stylelint-enable property-disallowed-list */
+}
+
+:host(.toggle-checked) .toggle-switch-icon.toggle-switch-icon-checked {
+  // The color contrast of iOS default on/off labels fails to meet WCAG 2.0.
+  // We use Ionic's color contrast variables to meet the WCAG 2.0 standard (AAA).
+  color: var(--ion-color-contrast, $toggle-ios-on-off-label-checked-color);
+}
+
+:host(.toggle-checked) .toggle-switch-icon:not(.toggle-switch-icon-checked) {
+  opacity: 0;
+}
+
+.toggle-switch-icon-checked {
+  position: absolute;
+
+  width: 15px;
+  height: 15px;
+
+  transform: translateY(-50%) rotate(90deg);
+}
+
+:host(.toggle-ltr) .toggle-switch-icon-checked {
+  /* stylelint-disable property-disallowed-list */
+  right: initial;
+  left: 4px;
+  /* stylelint-enable property-disallowed-list */
+}
+
+:host(.toggle-rtl) .toggle-switch-icon-checked {
+  /* stylelint-disable-next-line property-disallowed-list */
+  right: 4px;
+}
 
 // iOS Toggle Background Oval: Activated or Checked
 // ----------------------------------------------------------
@@ -59,14 +125,12 @@
   transform: scale3d(0, 0, 0);
 }
 
-
 // iOS Toggle Background Oval: Activated and Checked
 // ----------------------------------------------------------
 
 :host(.toggle-activated.toggle-checked) .toggle-inner::before {
   transform: scale3d(0, 0, 0);
 }
-
 
 // iOS Toggle Inner Knob: Activated and Unchecked
 // ----------------------------------------------------------
@@ -75,43 +139,47 @@
   width: calc(var(--handle-width) + 6px);
 }
 
-
 // iOS Toggle Inner Knob: Activated and Checked
 // ----------------------------------------------------------
 
 // when pressing down on the toggle and it IS checked
 // the knob is wider so move it left by 6px in the transform
-:host(.toggle-activated.toggle-checked) .toggle-icon-wrapper {
-  @include ltr() {
-    // transform by 100% - handle width - 6px (width addition on activated)
-    transform: translate3d(calc(100% - var(--handle-width) - 6px), 0, 0);
-  }
 
-  @include rtl() {
-    // transform by -100% + handle width + 6px (width addition on activated)
-    transform: translate3d(calc(-100% + var(--handle-width) + 6px), 0, 0);
-  }
+:host(.toggle-ltr.toggle-activated.toggle-checked) .toggle-icon-wrapper {
+  // transform by 100% - handle width - 6px (width addition on activated)
+  transform: translate3d(calc(100% - var(--handle-width) - 6px), 0, 0);
 }
 
+:host(.toggle-rtl.toggle-activated.toggle-checked) .toggle-icon-wrapper {
+  // transform by -100% + handle width + 6px (width addition on activated)
+  transform: translate3d(calc(-100% + var(--handle-width) + 6px), 0, 0);
+}
 
 // iOS Toggle: Disabled
 // ----------------------------------------------------------
 
-// .item-ios.item-toggle-disabled ion-label
-
 :host(.toggle-disabled) {
   opacity: $toggle-ios-disabled-opacity;
 }
-
 
 // iOS Toggle Within An Item
 // ----------------------------------------------------------
 
 :host(.in-item[slot]) {
   @include margin($toggle-ios-media-margin);
-  @include padding($toggle-ios-item-end-padding-top, $toggle-ios-item-end-padding-end, $toggle-ios-item-end-padding-bottom, $toggle-ios-item-end-padding-start);
+  @include padding(
+    $toggle-ios-item-end-padding-top,
+    $toggle-ios-item-end-padding-end,
+    $toggle-ios-item-end-padding-bottom,
+    $toggle-ios-item-end-padding-start
+  );
 }
 
 :host(.in-item[slot="start"]) {
-  @include padding($toggle-ios-item-start-padding-top, $toggle-ios-item-start-padding-end, $toggle-ios-item-start-padding-bottom, $toggle-ios-item-start-padding-start);
+  @include padding(
+    $toggle-ios-item-start-padding-top,
+    $toggle-ios-item-start-padding-end,
+    $toggle-ios-item-start-padding-bottom,
+    $toggle-ios-item-start-padding-start
+  );
 }

@@ -3,7 +3,15 @@ import { Component, Element, Event, Host, Method, Prop, State, Watch, h, writeTa
 import { caretDownSharp, caretUpSharp, chevronBack, chevronDown, chevronForward } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { Color, DatetimeChangeEventDetail, DatetimeParts, Mode, StyleEventDetail } from '../../interface';
+import type {
+  Color,
+  DatetimePresentation,
+  DatetimeChangeEventDetail,
+  DatetimeParts,
+  Mode,
+  StyleEventDetail,
+  TitleSelectedDatesFormatter,
+} from '../../interface';
 import { startFocusVisible } from '../../utils/focus-visible';
 import { getElementRoot, raf, renderHiddenInput } from '../../utils/helpers';
 import { printIonError, printIonWarning } from '../../utils/logging';
@@ -11,22 +19,25 @@ import { isRTL } from '../../utils/rtl';
 import { createColorClasses } from '../../utils/theme';
 import type { PickerColumnItem } from '../picker-column-internal/picker-column-internal-interfaces';
 
+import { isSameDay, warnIfValueOutOfBounds, isBefore, isAfter } from './utils/comparison';
 import {
   generateMonths,
-  generateTime,
-  getCalendarYears,
   getDaysOfMonth,
   getDaysOfWeek,
-  getPickerMonths,
   getToday,
+  getMonthColumnData,
+  getDayColumnData,
+  getYearColumnData,
+  getTimeColumnsData,
+  getCombinedDateColumnData,
 } from './utils/data';
-import { addTimePadding, getFormattedHour, getFormattedTime, getMonthAndDay, getMonthAndYear } from './utils/format';
-import { is24Hour, isMonthFirstLocale } from './utils/helpers';
+import { formatValue, getLocalizedTime, getMonthAndDay, getMonthAndYear } from './utils/format';
+import { is24Hour, isLocaleDayPeriodRTL, isMonthFirstLocale, getNumDaysInMonth } from './utils/helpers';
 import {
   calculateHourFromAMPM,
   convertDataToISO,
+  getClosestValidDate,
   getEndOfWeek,
-  getInternalHourValue,
   getNextDay,
   getNextMonth,
   getNextWeek,
@@ -36,8 +47,17 @@ import {
   getPreviousWeek,
   getPreviousYear,
   getStartOfWeek,
+  validateParts,
 } from './utils/manipulation';
-import { convertToArrayOfNumbers, getPartsFromCalendarDay, parseDate } from './utils/parse';
+import {
+  clampDate,
+  convertToArrayOfNumbers,
+  getPartsFromCalendarDay,
+  parseAmPm,
+  parseDate,
+  parseMaxParts,
+  parseMinParts,
+} from './utils/parse';
 import {
   getCalendarDayState,
   isDayDisabled,
@@ -66,31 +86,19 @@ export class Datetime implements ComponentInterface {
   private calendarBodyRef?: HTMLElement;
   private popoverRef?: HTMLIonPopoverElement;
   private clearFocusVisible?: () => void;
-  private overlayIsPresenting = false;
-
-  /**
-   * Whether to highlight the active day with a solid circle (as opposed
-   * to the outline circle around today). If you don't specify an initial
-   * value for the datetime, it doesn't automatically init to a default to
-   * avoid unwanted change events firing. If the solid circle were still
-   * shown then, it would look like a date had already been selected, which
-   * is misleading UX.
-   */
-  private highlightActiveParts = false;
-
   private parsedMinuteValues?: number[];
   private parsedHourValues?: number[];
   private parsedMonthValues?: number[];
   private parsedYearValues?: number[];
   private parsedDayValues?: number[];
 
-  private destroyCalendarIO?: () => void;
+  private destroyCalendarListener?: () => void;
   private destroyKeyboardMO?: () => void;
-  private destroyOverlayListener?: () => void;
 
   private minParts?: any;
   private maxParts?: any;
-  private todayParts = parseDate(getToday());
+  private todayParts!: DatetimeParts;
+  private defaultParts!: DatetimeParts;
 
   private prevPresentation: string | null = null;
 
@@ -98,18 +106,11 @@ export class Datetime implements ComponentInterface {
    * Duplicate reference to `activeParts` that does not trigger a re-render of the component.
    * Allows caching an instance of the `activeParts` in between render cycles.
    */
-  private activePartsClone!: DatetimeParts;
+  private activePartsClone: DatetimeParts | DatetimeParts[] = [];
 
   @State() showMonthAndYear = false;
 
-  @State() activeParts: DatetimeParts = {
-    month: 5,
-    day: 28,
-    year: 2021,
-    hour: 13,
-    minute: 52,
-    ampm: 'pm',
-  };
+  @State() activeParts: DatetimeParts | DatetimeParts[] = [];
 
   @State() workingParts: DatetimeParts = {
     month: 5,
@@ -204,7 +205,7 @@ export class Datetime implements ComponentInterface {
    * AM/PM. `'date-time'` will show the date picker first and time picker second.
    * `'time-date'` will show the time picker first and date picker second.
    */
-  @Prop() presentation: 'date-time' | 'time-date' | 'date' | 'time' | 'month' | 'year' | 'month-year' = 'date-time';
+  @Prop() presentation: DatetimePresentation = 'date-time';
 
   /**
    * The text to display on the picker's cancel button.
@@ -307,16 +308,38 @@ export class Datetime implements ComponentInterface {
   @Prop() firstDayOfWeek = 0;
 
   /**
-   * The value of the datetime as a valid ISO 8601 datetime string.
+   * A callback used to format the header text that shows how many
+   * dates are selected. Only used if there are 0 or more than 1
+   * selected (i.e. unused for exactly 1). By default, the header
+   * text is set to "numberOfDates days".
    */
-  @Prop({ mutable: true }) value?: string | null;
+  @Prop() titleSelectedDatesFormatter?: TitleSelectedDatesFormatter;
+
+  /**
+   * If `true`, multiple dates can be selected at once. Only
+   * applies to `presentation="date"` and `preferWheel="false"`.
+   */
+  @Prop() multiple = false;
+
+  /**
+   * The value of the datetime as a valid ISO 8601 datetime string.
+   * Should be an array of strings if `multiple="true"`.
+   */
+  @Prop({ mutable: true }) value?: string | string[] | null;
 
   /**
    * Update the datetime value when the value changes
    */
   @Watch('value')
   protected valueChanged() {
+    const { value, minParts, maxParts, workingParts, multiple } = this;
+
     if (this.hasValue()) {
+      if (!multiple && Array.isArray(value)) {
+        this.value = value[0];
+        return; // setting this.value will trigger re-run of this function
+      }
+
       /**
        * Clones the value of the `activeParts` to the private clone, to update
        * the date display on the current render cycle without causing another render.
@@ -324,45 +347,51 @@ export class Datetime implements ComponentInterface {
        * This allows us to update the current value's date/time display without
        * refocusing or shifting the user's display (leaves the user in place).
        */
-      const valueDateParts = parseDate(this.value);
+      const valueDateParts = parseDate(value);
       if (valueDateParts) {
-        const { month, day, year, hour, minute } = valueDateParts;
-        const ampm = hour >= 12 ? 'pm' : 'am';
+        warnIfValueOutOfBounds(valueDateParts, minParts, maxParts);
 
-        this.activePartsClone = {
-          ...this.activeParts,
-          month,
-          day,
-          year,
-          hour,
-          minute,
-          ampm,
-        };
+        if (Array.isArray(valueDateParts)) {
+          this.activePartsClone = [...valueDateParts];
+        } else {
+          const { month, day, year, hour, minute } = valueDateParts;
+          const ampm = hour != null ? (hour >= 12 ? 'pm' : 'am') : undefined;
 
-        /**
-         * The working parts am/pm value must be updated when the value changes, to
-         * ensure the time picker hour column values are generated correctly.
-         */
-        this.setWorkingParts({
-          ...this.workingParts,
-          ampm,
-        });
+          this.activePartsClone = {
+            ...this.activeParts,
+            month,
+            day,
+            year,
+            hour,
+            minute,
+            ampm,
+          };
+
+          /**
+           * The working parts am/pm value must be updated when the value changes, to
+           * ensure the time picker hour column values are generated correctly.
+           *
+           * Note that we don't need to do this if valueDateParts is an array, since
+           * multiple="true" does not apply to time pickers.
+           */
+          this.setWorkingParts({
+            ...workingParts,
+            ampm,
+          });
+        }
       } else {
-        printIonWarning(`Unable to parse date string: ${this.value}. Please provide a valid ISO 8601 datetime string.`);
+        printIonWarning(`Unable to parse date string: ${value}. Please provide a valid ISO 8601 datetime string.`);
       }
     }
 
     this.emitStyle();
-    this.ionChange.emit({
-      value: this.value,
-    });
+    this.ionChange.emit({ value });
   }
 
   /**
    * If `true`, a header will be shown above the calendar
-   * picker. On `ios` mode this will include the
-   * slotted title, and on `md` mode this will include
-   * the slotted title and the selected date.
+   * picker. This will include both the slotted title, and
+   * the selected date.
    */
   @Prop() showDefaultTitle = false;
 
@@ -409,6 +438,20 @@ export class Datetime implements ComponentInterface {
   @Prop() size: 'cover' | 'fixed' = 'fixed';
 
   /**
+   * If `true`, a wheel picker will be rendered instead of a calendar grid
+   * where possible. If `false`, a calendar grid will be rendered instead of
+   * a wheel picker where possible.
+   *
+   * A wheel picker can be rendered instead of a grid when `presentation` is
+   * one of the following values: `'date'`, `'date-time'`, or `'time-date'`.
+   *
+   * A wheel picker will always be rendered regardless of
+   * the `preferWheel` value when `presentation` is one of the following values:
+   * `'time'`, `'month'`, `'month-year'`, or `'year'`.
+   */
+  @Prop() preferWheel = false;
+
+  /**
    * Emitted when the datetime selection was cancelled.
    */
   @Event() ionCancel!: EventEmitter<void>;
@@ -435,25 +478,50 @@ export class Datetime implements ComponentInterface {
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
   /**
+   * Emitted when componentDidRender is fired.
+   * @internal
+   */
+  @Event() ionRender!: EventEmitter<void>;
+
+  /**
    * Confirms the selected datetime value, updates the
    * `value` property, and optionally closes the popover
    * or modal that the datetime was presented in.
    */
   @Method()
   async confirm(closeOverlay = false) {
-    /**
-     * Prevent convertDataToISO from doing any
-     * kind of transformation based on timezone
-     * This cancels out any change it attempts to make
-     *
-     * Important: Take the timezone offset based on
-     * the date that is currently selected, otherwise
-     * there can be 1 hr difference when dealing w/ DST
-     */
-    const date = new Date(convertDataToISO(this.activeParts));
-    this.activeParts.tzOffset = date.getTimezoneOffset() * -1;
+    const { isCalendarPicker, activeParts } = this;
 
-    this.value = convertDataToISO(this.activeParts);
+    /**
+     * We only update the value if the presentation is not a calendar picker.
+     */
+    if (activeParts !== undefined || !isCalendarPicker) {
+      const activePartsIsArray = Array.isArray(activeParts);
+      if (activePartsIsArray && activeParts.length === 0) {
+        this.value = undefined;
+      } else {
+        /**
+         * Prevent convertDataToISO from doing any
+         * kind of transformation based on timezone
+         * This cancels out any change it attempts to make
+         *
+         * Important: Take the timezone offset based on
+         * the date that is currently selected, otherwise
+         * there can be 1 hr difference when dealing w/ DST
+         */
+        if (activePartsIsArray) {
+          const dates = convertDataToISO(activeParts).map((str) => new Date(str));
+          for (let i = 0; i < dates.length; i++) {
+            activeParts[i].tzOffset = dates[i].getTimezoneOffset() * -1;
+          }
+        } else {
+          const date = new Date(convertDataToISO(activeParts));
+          activeParts.tzOffset = date.getTimezoneOffset() * -1;
+        }
+
+        this.value = convertDataToISO(activeParts);
+      }
+    }
 
     if (closeOverlay) {
       this.closeParentOverlay();
@@ -463,7 +531,7 @@ export class Datetime implements ComponentInterface {
   /**
    * Resets the internal state of the datetime but does not update the value.
    * Passing a valid ISO-8601 string will reset the state of the component to the provided date.
-   * If no value is provided, the internal state will be reset to today.
+   * If no value is provided, the internal state will be reset to the clamped value of the min, max and today.
    */
   @Method()
   async reset(startDate?: string) {
@@ -485,6 +553,26 @@ export class Datetime implements ComponentInterface {
     }
   }
 
+  /**
+   * Returns the DatetimePart interface
+   * to use when rendering an initial set of
+   * data. This should be used when rendering an
+   * interface in an environment where the `value`
+   * may not be set. This function works
+   * by returning the first selected date in
+   * "activePartsClone" and then falling back to
+   * defaultParts if no active date is selected.
+   */
+  private getActivePartsWithFallback = () => {
+    const { defaultParts } = this;
+    return this.getActivePart() ?? defaultParts;
+  };
+
+  private getActivePart = () => {
+    const { activePartsClone } = this;
+    return Array.isArray(activePartsClone) ? activePartsClone[0] : activePartsClone;
+  };
+
   private closeParentOverlay = () => {
     const popoverOrModal = this.el.closest('ion-modal, ion-popover') as
       | HTMLIonModalElement
@@ -501,10 +589,43 @@ export class Datetime implements ComponentInterface {
     };
   };
 
-  private setActiveParts = (parts: DatetimeParts) => {
-    this.activeParts = {
-      ...parts,
-    };
+  private setActiveParts = (parts: DatetimeParts, removeDate = false) => {
+    const { multiple, minParts, maxParts, activePartsClone } = this;
+
+    /**
+     * When setting the active parts, it is possible
+     * to set invalid data. For example,
+     * when updating January 31 to February,
+     * February 31 does not exist. As a result
+     * we need to validate the active parts and
+     * ensure that we are only setting valid dates.
+     * Additionally, we need to update the working parts
+     * too in the event that the validated parts are different.
+     */
+    const validatedParts = validateParts(parts, minParts, maxParts);
+    this.setWorkingParts(validatedParts);
+
+    if (multiple) {
+      /**
+       * We read from activePartsClone here because valueChanged() only updates that,
+       * so it's the more reliable source of truth. If we read from activeParts, then
+       * if you click July 1, manually set the value to July 2, and then click July 3,
+       * the new value would be [July 1, July 3], ignoring the value set.
+       *
+       * We can then pass the new value to activeParts (rather than activePartsClone)
+       * since the clone will be updated automatically by activePartsChanged().
+       */
+      const activePartsArray = Array.isArray(activePartsClone) ? activePartsClone : [activePartsClone];
+      if (removeDate) {
+        this.activeParts = activePartsArray.filter((p) => !isSameDay(p, validatedParts));
+      } else {
+        this.activeParts = [...activePartsArray, validatedParts];
+      }
+    } else {
+      this.activeParts = {
+        ...validatedParts,
+      };
+    }
 
     const hasSlottedButtons = this.el.querySelector('[slot="buttons"]') !== null;
     if (hasSlottedButtons || this.showDefaultButtons) {
@@ -514,18 +635,13 @@ export class Datetime implements ComponentInterface {
     this.confirm();
   };
 
-  /**
-   * Stencil sometimes sets calendarBodyRef to null on rerender, even though
-   * the element is present. Query for it manually as a fallback.
-   *
-   * TODO(FW-901) Remove when issue is resolved: https://github.com/ionic-team/stencil/issues/3253
-   */
-  private getCalendarBodyEl = () => {
-    return this.calendarBodyRef || this.el.shadowRoot?.querySelector('.calendar-body');
-  };
+  private get isCalendarPicker() {
+    const { presentation } = this;
+    return presentation === 'date' || presentation === 'date-time' || presentation === 'time-date';
+  }
 
   private initializeKeyboardListeners = () => {
-    const calendarBodyRef = this.getCalendarBodyEl();
+    const calendarBodyRef = this.calendarBodyRef;
     if (!calendarBodyRef) {
       return;
     }
@@ -669,53 +785,37 @@ export class Datetime implements ComponentInterface {
   };
 
   private processMinParts = () => {
-    if (this.min === undefined) {
+    const { min, defaultParts } = this;
+    if (min === undefined) {
       this.minParts = undefined;
       return;
     }
 
-    const { month, day, year, hour, minute } = parseDate(this.min);
-
-    this.minParts = {
-      month,
-      day,
-      year,
-      hour,
-      minute,
-    };
+    this.minParts = parseMinParts(min, defaultParts);
   };
 
   private processMaxParts = () => {
-    if (this.max === undefined) {
+    const { max, defaultParts } = this;
+
+    if (max === undefined) {
       this.maxParts = undefined;
       return;
     }
 
-    const { month, day, year, hour, minute } = parseDate(this.max);
-
-    this.maxParts = {
-      month,
-      day,
-      year,
-      hour,
-      minute,
-    };
+    this.maxParts = parseMaxParts(max, defaultParts);
   };
 
-  private initializeCalendarIOListeners = () => {
-    const calendarBodyRef = this.getCalendarBodyEl();
+  private initializeCalendarListener = () => {
+    const calendarBodyRef = this.calendarBodyRef;
     if (!calendarBodyRef) {
       return;
     }
 
-    const mode = getIonMode(this);
-
     /**
      * For performance reasons, we only render 3
      * months at a time: The current month, the previous
-     * month, and the next month. We have IntersectionObservers
-     * on the previous and next month elements to append/prepend
-     * new months.
+     * month, and the next month. We have a scroll listener
+     * on the calendar body to append/prepend new months.
      *
      * We can do this because Stencil is smart enough to not
      * re-create the .calendar-month containers, but rather
@@ -731,43 +831,78 @@ export class Datetime implements ComponentInterface {
     const startMonth = months[0] as HTMLElement;
     const workingMonth = months[1] as HTMLElement;
     const endMonth = months[2] as HTMLElement;
+    const mode = getIonMode(this);
+    const needsiOSRubberBandFix = mode === 'ios' && typeof navigator !== 'undefined' && navigator.maxTouchPoints > 1;
 
     /**
-     * Before setting up the IntersectionObserver,
+     * Before setting up the scroll listener,
      * scroll the middle month into view.
      * scrollIntoView() will scroll entire page
      * if element is not in viewport. Use scrollLeft instead.
      */
-    let endIO: IntersectionObserver | undefined;
-    let startIO: IntersectionObserver | undefined;
     writeTask(() => {
       calendarBodyRef.scrollLeft = startMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
-      const ioCallback = (callbackType: 'start' | 'end', entries: IntersectionObserverEntry[]) => {
-        const refIO = callbackType === 'start' ? startIO : endIO;
-        const refMonth = callbackType === 'start' ? startMonth : endMonth;
-        const refMonthFn = callbackType === 'start' ? getPreviousMonth : getNextMonth;
+
+      const getChangedMonth = (parts: DatetimeParts): DatetimeParts | undefined => {
+        const box = calendarBodyRef.getBoundingClientRect();
+        const root = this.el!.shadowRoot!;
 
         /**
-         * If the month is not fully in view, do not do anything
+         * Get the element that is in the center of the calendar body.
+         * This will be an element inside of the active month.
          */
-        const ev = entries[0];
-        if (!ev.isIntersecting) {
+        const elementAtCenter = root.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2);
+        /**
+         * If there is no element then the
+         * component may be re-rendering on a slow device.
+         */
+        if (!elementAtCenter) return;
+
+        const month = elementAtCenter.closest('.calendar-month');
+        if (!month) return;
+
+        /**
+         * The edge of the month must be lined up with
+         * the edge of the calendar body in order for
+         * the component to update. Otherwise, it
+         * may be the case that the user has paused their
+         * swipe or the browser has not finished snapping yet.
+         * Rather than check if the x values are equal,
+         * we give it a tolerance of 2px to account for
+         * sub pixel rendering.
+         */
+        const monthBox = month.getBoundingClientRect();
+        if (Math.abs(monthBox.x - box.x) > 2) return;
+
+        /**
+         * From here, we can determine if the start
+         * month or the end month was scrolled into view.
+         * If no month was changed, then we can return from
+         * the scroll callback early.
+         */
+        if (month === startMonth) {
+          return getPreviousMonth(parts);
+        } else if (month === endMonth) {
+          return getNextMonth(parts);
+        } else {
           return;
+        }
+      };
+
+      const updateActiveMonth = () => {
+        if (needsiOSRubberBandFix) {
+          calendarBodyRef.style.removeProperty('pointer-events');
+          appliediOSRubberBandFix = false;
         }
 
         /**
-         * When presenting an inline overlay,
-         * subsequent presentations will cause
-         * the IO to fire again (since the overlay
-         * is now visible and therefore the calendar
-         * months are intersecting).
+         * If the month did not change
+         * then we can return early.
          */
-        if (this.overlayIsPresenting) {
-          this.overlayIsPresenting = false;
-          return;
-        }
+        const newDate = getChangedMonth(this.workingParts);
+        if (!newDate) return;
 
-        const { month, year, day } = refMonthFn(this.workingParts);
+        const { month, day, year } = newDate;
 
         if (
           isMonthDisabled(
@@ -782,40 +917,11 @@ export class Datetime implements ComponentInterface {
         }
 
         /**
-         * On iOS, we need to set pointer-events: none
-         * when the user is almost done with the gesture
-         * so that they cannot quickly swipe while
-         * the scrollable container is snapping.
-         * Updating the container while snapping
-         * causes WebKit to snap incorrectly.
-         */
-        if (mode === 'ios') {
-          const ratio = ev.intersectionRatio;
-          // `maxTouchPoints` will be 1 in device preview, but > 1 on device
-          const shouldDisable = Math.abs(ratio - 0.7) <= 0.1 && navigator.maxTouchPoints > 1;
-
-          if (shouldDisable) {
-            calendarBodyRef.style.setProperty('pointer-events', 'none');
-            return;
-          }
-        }
-
-        /**
          * Prevent scrolling for other browsers
          * to give the DOM time to update and the container
          * time to properly snap.
          */
         calendarBodyRef.style.setProperty('overflow', 'hidden');
-
-        /**
-         * Remove the IO temporarily
-         * otherwise you can sometimes get duplicate
-         * events when rubber banding.
-         */
-        if (refIO === undefined) {
-          return;
-        }
-        refIO.disconnect();
 
         /**
          * Use a writeTask here to ensure
@@ -827,85 +933,57 @@ export class Datetime implements ComponentInterface {
          * if we did not do this.
          */
         writeTask(() => {
-          // Disconnect all active intersection observers
-          // to avoid a re-render causing a duplicate event.
-          if (this.destroyCalendarIO) {
-            this.destroyCalendarIO();
-          }
-
-          raf(() => {
-            this.setWorkingParts({
-              ...this.workingParts,
-              month,
-              day: day!,
-              year,
-            });
-
-            calendarBodyRef.scrollLeft = workingMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
-            calendarBodyRef.style.removeProperty('overflow');
-            calendarBodyRef.style.removeProperty('pointer-events');
-
-            endIO?.observe(endMonth);
-            startIO?.observe(startMonth);
+          this.setWorkingParts({
+            ...this.workingParts,
+            month,
+            day: day!,
+            year,
           });
 
-          /**
-           * Now that state has been updated
-           * and the correct month is in view,
-           * we can resume the IO.
-           */
-          if (refIO === undefined) {
-            return;
-          }
-          refIO.observe(refMonth);
+          calendarBodyRef.scrollLeft = workingMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
+          calendarBodyRef.style.removeProperty('overflow');
         });
       };
 
-      const threshold =
-        mode === 'ios' && typeof navigator !== 'undefined' && navigator.maxTouchPoints > 1 ? [0.7, 1] : 1;
-
-      // Intersection observers cannot accurately detect the
-      // intersection with a threshold of 1, when the observed
-      // element width is a sub-pixel value (i.e. 334.05px).
-      // Setting a root margin to 1px solves the issue.
-      const rootMargin = '1px';
+      /**
+       * When the container finishes scrolling we
+       * need to update the DOM with the selected month.
+       */
+      let scrollTimeout: ReturnType<typeof setTimeout> | undefined;
 
       /**
-       * Listen on the first month to
-       * prepend a new month and on the last
-       * month to append a new month.
-       * The 0.7 threshold is required on ios
-       * so that we can remove pointer-events
-       * when adding new months.
-       * Adding to a scroll snapping container
-       * while the container is snapping does not
-       * completely work as expected in WebKit.
-       * Adding pointer-events: none allows us to
-       * avoid these issues.
-       *
-       * This should be fine on Chromium, but
-       * when you set pointer-events: none
-       * it applies to active gestures which is not
-       * something WebKit does.
+       * We do not want to attempt to set pointer-events
+       * multiple times within a single swipe gesture as
+       * that adds unnecessary work to the main thread.
        */
+      let appliediOSRubberBandFix = false;
+      const scrollCallback = () => {
+        if (scrollTimeout) {
+          clearTimeout(scrollTimeout);
+        }
 
-      endIO = new IntersectionObserver((ev) => ioCallback('end', ev), {
-        threshold,
-        root: calendarBodyRef,
-        rootMargin,
-      });
-      endIO.observe(endMonth);
+        /**
+         * On iOS it is possible to quickly rubber band
+         * the scroll area before the scroll timeout has fired.
+         * This results in users reaching the end of the scrollable
+         * container before the DOM has updated.
+         * By setting `pointer-events: none` we can ensure that
+         * subsequent swipes do not happen while the container
+         * is snapping.
+         */
+        if (!appliediOSRubberBandFix && needsiOSRubberBandFix) {
+          calendarBodyRef.style.setProperty('pointer-events', 'none');
+          appliediOSRubberBandFix = true;
+        }
 
-      startIO = new IntersectionObserver((ev) => ioCallback('start', ev), {
-        threshold,
-        root: calendarBodyRef,
-        rootMargin,
-      });
-      startIO.observe(startMonth);
+        // Wait ~3 frames
+        scrollTimeout = setTimeout(updateActiveMonth, 50);
+      };
 
-      this.destroyCalendarIO = () => {
-        endIO?.disconnect();
-        startIO?.disconnect();
+      calendarBodyRef.addEventListener('scroll', scrollCallback);
+
+      this.destroyCalendarListener = () => {
+        calendarBodyRef.removeEventListener('scroll', scrollCallback);
       };
     });
   };
@@ -927,10 +1005,10 @@ export class Datetime implements ComponentInterface {
    * if the datetime has been hidden/presented by a modal or popover.
    */
   private destroyInteractionListeners = () => {
-    const { destroyCalendarIO, destroyKeyboardMO } = this;
+    const { destroyCalendarListener, destroyKeyboardMO } = this;
 
-    if (destroyCalendarIO !== undefined) {
-      destroyCalendarIO();
+    if (destroyCalendarListener !== undefined) {
+      destroyCalendarListener();
     }
 
     if (destroyKeyboardMO !== undefined) {
@@ -939,9 +1017,8 @@ export class Datetime implements ComponentInterface {
   };
 
   private initializeListeners() {
-    this.initializeCalendarIOListeners();
+    this.initializeCalendarListener();
     this.initializeKeyboardListeners();
-    this.initializeOverlayListener();
   }
 
   componentDidLoad() {
@@ -961,7 +1038,7 @@ export class Datetime implements ComponentInterface {
       this.initializeListeners();
 
       /**
-       * TODO: Datetime needs a frame to ensure that it
+       * TODO FW-2793: Datetime needs a frame to ensure that it
        * can properly scroll contents into view. As a result
        * we hide the scrollable content until after that frame
        * so users do not see the content quickly shifting. The downside
@@ -997,6 +1074,15 @@ export class Datetime implements ComponentInterface {
 
       this.destroyInteractionListeners();
 
+      /**
+       * When datetime is hidden, we need to make sure that
+       * the month/year picker is closed. Otherwise,
+       * it will be open when the datetime re-appears
+       * and the scroll area of the calendar grid will be 0.
+       * As a result, the wrong month will be shown.
+       */
+      this.showMonthAndYear = false;
+
       writeTask(() => {
         this.el.classList.remove('datetime-ready');
       });
@@ -1023,7 +1109,28 @@ export class Datetime implements ComponentInterface {
    * so we need to re-init behavior with the new elements.
    */
   componentDidRender() {
-    const { presentation, prevPresentation } = this;
+    const { presentation, prevPresentation, calendarBodyRef, minParts, preferWheel } = this;
+
+    /**
+     * TODO(FW-2165)
+     * Remove this when https://bugs.webkit.org/show_bug.cgi?id=235960 is fixed.
+     * When using `min`, we add `scroll-snap-align: none`
+     * to the disabled month so that users cannot scroll to it.
+     * This triggers a bug in WebKit where the scroll position is reset.
+     * Since the month change logic is handled by a scroll listener,
+     * this causes the month to change leading to `scroll-snap-align`
+     * changing again, thus changing the scroll position again and causing
+     * an infinite loop.
+     * This issue only applies to the calendar grid, so we can disable
+     * it if the calendar grid is not being used.
+     */
+    const hasCalendarGrid = !preferWheel && ['date-time', 'time-date', 'date'].includes(presentation);
+    if (minParts !== undefined && hasCalendarGrid && calendarBodyRef) {
+      const workingMonth = calendarBodyRef.querySelector('.calendar-month:nth-of-type(1)');
+      if (workingMonth) {
+        calendarBodyRef.scrollLeft = workingMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
+      }
+    }
 
     if (prevPresentation === null) {
       this.prevPresentation = presentation;
@@ -1036,41 +1143,55 @@ export class Datetime implements ComponentInterface {
     this.prevPresentation = presentation;
 
     this.destroyInteractionListeners();
-    if (this.destroyOverlayListener !== undefined) {
-      this.destroyOverlayListener();
-    }
 
     this.initializeListeners();
+
+    /**
+     * The month/year picker from the date interface
+     * should be closed as it is not available in non-date
+     * interfaces.
+     */
+    this.showMonthAndYear = false;
+
+    raf(() => {
+      this.ionRender.emit();
+    });
   }
 
-  /**
-   * When doing subsequent presentations of an inline
-   * overlay, the IO callback will fire again causing
-   * the calendar to go back one month. We need to listen
-   * for the presentation of the overlay so we can properly
-   * cancel that IO callback.
-   */
-  private initializeOverlayListener = () => {
-    const overlay = this.el.closest('ion-popover, ion-modal');
-    if (overlay === null) {
-      return;
+  private processValue = (value?: string | string[] | null) => {
+    /**
+     * TODO FW-2646 remove value !== ''
+     */
+    const hasValue = value !== '' && value !== null && value !== undefined;
+    let valueToProcess = hasValue ? parseDate(value) : this.defaultParts;
+
+    const { minParts, maxParts, multiple } = this;
+    if (!multiple && Array.isArray(value)) {
+      this.value = value[0];
+      valueToProcess = (valueToProcess as DatetimeParts[])[0];
     }
 
-    const overlayListener = () => {
-      this.overlayIsPresenting = true;
-    };
+    /**
+     * Datetime should only warn of out of bounds values
+     * if set by the user. If the `value` is undefined,
+     * we will default to today's date which may be out
+     * of bounds. In this case, the warning makes it look
+     * like the developer did something wrong which is
+     * not true.
+     */
+    if (hasValue) {
+      warnIfValueOutOfBounds(valueToProcess, minParts, maxParts);
+    }
 
-    overlay.addEventListener('willPresent', overlayListener);
+    /**
+     * If there are multiple values, pick an arbitrary one to clamp to. This way,
+     * if the values are across months, we always show at least one of them. Note
+     * that the values don't necessarily have to be in order.
+     */
+    const singleValue = Array.isArray(valueToProcess) ? valueToProcess[0] : valueToProcess;
 
-    this.destroyOverlayListener = () => {
-      overlay.removeEventListener('willPresent', overlayListener);
-    };
-  };
-
-  private processValue = (value?: string | null) => {
-    this.highlightActiveParts = !!value;
-    const valueToProcess = value || getToday();
-    const { month, day, year, hour, minute, tzOffset } = parseDate(valueToProcess);
+    const { month, day, year, hour, minute, tzOffset } = clampDate(singleValue, minParts, maxParts);
+    const ampm = parseAmPm(hour!);
 
     this.setWorkingParts({
       month,
@@ -1079,29 +1200,64 @@ export class Datetime implements ComponentInterface {
       hour,
       minute,
       tzOffset,
-      ampm: hour >= 12 ? 'pm' : 'am',
+      ampm,
     });
 
-    this.activeParts = {
-      month,
-      day,
-      year,
-      hour,
-      minute,
-      tzOffset,
-      ampm: hour >= 12 ? 'pm' : 'am',
-    };
+    /**
+     * Since `activeParts` indicates a value that
+     * been explicitly selected either by the
+     * user or the app, only update `activeParts`
+     * if the `value` property is set.
+     */
+    if (hasValue) {
+      if (Array.isArray(valueToProcess)) {
+        this.activeParts = [...valueToProcess];
+      } else {
+        this.activeParts = {
+          month,
+          day,
+          year,
+          hour,
+          minute,
+          tzOffset,
+          ampm,
+        };
+      }
+    } else {
+      /**
+       * Reset the active parts if the value is not set.
+       * This will clear the selected calendar day when
+       * performing a clear action or using the reset() method.
+       */
+      this.activeParts = [];
+    }
   };
 
   componentWillLoad() {
+    const { el, multiple, presentation, preferWheel } = this;
+
+    if (multiple) {
+      if (presentation !== 'date') {
+        printIonWarning('Multiple date selection is only supported for presentation="date".', el);
+      }
+
+      if (preferWheel) {
+        printIonWarning('Multiple date selection is not supported with preferWheel="true".', el);
+      }
+    }
+
     this.processMinParts();
     this.processMaxParts();
+    const hourValues = (this.parsedHourValues = convertToArrayOfNumbers(this.hourValues));
+    const minuteValues = (this.parsedMinuteValues = convertToArrayOfNumbers(this.minuteValues));
+    const monthValues = (this.parsedMonthValues = convertToArrayOfNumbers(this.monthValues));
+    const yearValues = (this.parsedYearValues = convertToArrayOfNumbers(this.yearValues));
+    const dayValues = (this.parsedDayValues = convertToArrayOfNumbers(this.dayValues));
+
+    const todayParts = (this.todayParts = parseDate(getToday()));
+    this.defaultParts = getClosestValidDate(todayParts, monthValues, dayValues, yearValues, hourValues, minuteValues);
     this.processValue(this.value);
-    this.parsedHourValues = convertToArrayOfNumbers(this.hourValues);
-    this.parsedMinuteValues = convertToArrayOfNumbers(this.minuteValues);
-    this.parsedMonthValues = convertToArrayOfNumbers(this.monthValues);
-    this.parsedYearValues = convertToArrayOfNumbers(this.yearValues);
-    this.parsedDayValues = convertToArrayOfNumbers(this.dayValues);
+
     this.emitStyle();
   }
 
@@ -1126,7 +1282,7 @@ export class Datetime implements ComponentInterface {
   };
 
   private nextMonth = () => {
-    const calendarBodyRef = this.getCalendarBodyEl();
+    const calendarBodyRef = this.calendarBodyRef;
     if (!calendarBodyRef) {
       return;
     }
@@ -1146,7 +1302,7 @@ export class Datetime implements ComponentInterface {
   };
 
   private prevMonth = () => {
-    const calendarBodyRef = this.getCalendarBodyEl();
+    const calendarBodyRef = this.calendarBodyRef;
     if (!calendarBodyRef) {
       return;
     }
@@ -1162,6 +1318,16 @@ export class Datetime implements ComponentInterface {
       behavior: 'smooth',
     });
   };
+
+  private toggleMonthAndYearView = () => {
+    this.showMonthAndYear = !this.showMonthAndYear;
+  };
+
+  /**
+   * Universal render methods
+   * These are pieces of datetime that
+   * are rendered independently of presentation.
+   */
 
   private renderFooter() {
     const { showDefaultButtons, showClearButton } = this;
@@ -1218,107 +1384,493 @@ export class Datetime implements ComponentInterface {
     );
   }
 
-  private toggleMonthAndYearView = () => {
-    this.showMonthAndYear = !this.showMonthAndYear;
-  };
+  /**
+   * Wheel picker render methods
+   */
 
-  private renderYearView() {
-    const { presentation, workingParts, locale } = this;
-    const calendarYears = getCalendarYears(this.todayParts, this.minParts, this.maxParts, this.parsedYearValues);
-    const showMonth = presentation !== 'year';
-    const showYear = presentation !== 'month';
+  private renderWheelPicker(forcePresentation: string = this.presentation) {
+    /**
+     * If presentation="time-date" we switch the
+     * order of the render array here instead of
+     * manually reordering each date/time picker
+     * column with CSS. This allows for additional
+     * flexibility if we need to render subsets
+     * of the date/time data or do additional ordering
+     * within the child render functions.
+     */
+    const renderArray =
+      forcePresentation === 'time-date'
+        ? [this.renderTimePickerColumns(forcePresentation), this.renderDatePickerColumns(forcePresentation)]
+        : [this.renderDatePickerColumns(forcePresentation), this.renderTimePickerColumns(forcePresentation)];
+    return <ion-picker-internal>{renderArray}</ion-picker-internal>;
+  }
 
-    const months = getPickerMonths(locale, workingParts, this.minParts, this.maxParts, this.parsedMonthValues);
-    const years = calendarYears.map((year) => {
-      return {
-        text: `${year}`,
-        value: year,
-      };
-    });
+  private renderDatePickerColumns(forcePresentation: string) {
+    return forcePresentation === 'date-time' || forcePresentation === 'time-date'
+      ? this.renderCombinedDatePickerColumn()
+      : this.renderIndividualDatePickerColumns(forcePresentation);
+  }
+
+  private renderCombinedDatePickerColumn() {
+    const { defaultParts, workingParts, locale, minParts, maxParts, todayParts, isDateEnabled } = this;
+
+    const activePart = this.getActivePartsWithFallback();
+
+    /**
+     * By default, generate a range of 3 months:
+     * Previous month, current month, and next month
+     */
+    const monthsToRender = generateMonths(workingParts);
+    const lastMonth = monthsToRender[monthsToRender.length - 1];
+
+    /**
+     * Ensure that users can select the entire window of dates.
+     */
+    monthsToRender[0].day = 1;
+    lastMonth.day = getNumDaysInMonth(lastMonth.month, lastMonth.year);
+
+    /**
+     * Narrow the dates rendered based on min/max dates (if any).
+     * The `min` date is used if the min is after the generated min month.
+     * The `max` date is used if the max is before the generated max month.
+     * This ensures that the sliding window always stays at 3 months
+     * but still allows future dates to be lazily rendered based on any min/max
+     * constraints.
+     */
+    const min = minParts !== undefined && isAfter(minParts, monthsToRender[0]) ? minParts : monthsToRender[0];
+    const max = maxParts !== undefined && isBefore(maxParts, lastMonth) ? maxParts : lastMonth;
+
+    const result = getCombinedDateColumnData(
+      locale,
+      todayParts,
+      min,
+      max,
+      this.parsedDayValues,
+      this.parsedMonthValues
+    );
+
+    let items = result.items;
+    const parts = result.parts;
+
+    if (isDateEnabled) {
+      items = items.map((itemObject, index) => {
+        const referenceParts = parts[index];
+
+        let disabled;
+        try {
+          /**
+           * The `isDateEnabled` implementation is try-catch wrapped
+           * to prevent exceptions in the user's function from
+           * interrupting the calendar rendering.
+           */
+          disabled = !isDateEnabled(convertDataToISO(referenceParts));
+        } catch (e) {
+          printIonError(
+            'Exception thrown from provided `isDateEnabled` function. Please check your function and try again.',
+            e
+          );
+        }
+
+        return {
+          ...itemObject,
+          disabled,
+        };
+      });
+    }
+
+    /**
+     * If we have selected a day already, then default the column
+     * to that value. Otherwise, set it to the default date.
+     */
+    const todayString =
+      workingParts.day !== null
+        ? `${workingParts.year}-${workingParts.month}-${workingParts.day}`
+        : `${defaultParts.year}-${defaultParts.month}-${defaultParts.day}`;
+
+    return (
+      <ion-picker-column-internal
+        class="date-column"
+        color={this.color}
+        items={items}
+        value={todayString}
+        onIonChange={(ev: CustomEvent) => {
+          // TODO(FW-1823) Remove this when iOS 14 support is dropped.
+          // Due to a Safari 14 issue we need to destroy
+          // the scroll listener before we update state
+          // and trigger a re-render.
+          if (this.destroyCalendarListener) {
+            this.destroyCalendarListener();
+          }
+
+          const { value } = ev.detail;
+          const findPart = parts.find(({ month, day, year }) => value === `${year}-${month}-${day}`);
+
+          this.setWorkingParts({
+            ...workingParts,
+            ...findPart,
+          });
+
+          this.setActiveParts({
+            ...activePart,
+            ...findPart,
+          });
+
+          // We can re-attach the scroll listener after
+          // the working parts have been updated.
+          this.initializeCalendarListener();
+
+          ev.stopPropagation();
+        }}
+      ></ion-picker-column-internal>
+    );
+  }
+
+  private renderIndividualDatePickerColumns(forcePresentation: string) {
+    const { workingParts, isDateEnabled } = this;
+    const shouldRenderMonths = forcePresentation !== 'year' && forcePresentation !== 'time';
+    const months = shouldRenderMonths
+      ? getMonthColumnData(this.locale, workingParts, this.minParts, this.maxParts, this.parsedMonthValues)
+      : [];
+
+    const shouldRenderDays = forcePresentation === 'date';
+    let days = shouldRenderDays
+      ? getDayColumnData(this.locale, workingParts, this.minParts, this.maxParts, this.parsedDayValues)
+      : [];
+
+    if (isDateEnabled) {
+      days = days.map((dayObject) => {
+        const { value } = dayObject;
+        const valueNum = typeof value === 'string' ? parseInt(value) : value;
+        const referenceParts: DatetimeParts = {
+          month: workingParts.month,
+          day: valueNum,
+          year: workingParts.year,
+        };
+
+        let disabled;
+        try {
+          /**
+           * The `isDateEnabled` implementation is try-catch wrapped
+           * to prevent exceptions in the user's function from
+           * interrupting the calendar rendering.
+           */
+          disabled = !isDateEnabled(convertDataToISO(referenceParts));
+        } catch (e) {
+          printIonError(
+            'Exception thrown from provided `isDateEnabled` function. Please check your function and try again.',
+            e
+          );
+        }
+
+        return {
+          ...dayObject,
+          disabled,
+        };
+      });
+    }
+
+    const shouldRenderYears = forcePresentation !== 'month' && forcePresentation !== 'time';
+    const years = shouldRenderYears
+      ? getYearColumnData(this.locale, this.defaultParts, this.minParts, this.maxParts, this.parsedYearValues)
+      : [];
+
+    /**
+     * Certain locales show the day before the month.
+     */
+    const showMonthFirst = isMonthFirstLocale(this.locale, { month: 'numeric', day: 'numeric' });
+
+    let renderArray = [];
+    if (showMonthFirst) {
+      renderArray = [
+        this.renderMonthPickerColumn(months),
+        this.renderDayPickerColumn(days),
+        this.renderYearPickerColumn(years),
+      ];
+    } else {
+      renderArray = [
+        this.renderDayPickerColumn(days),
+        this.renderMonthPickerColumn(months),
+        this.renderYearPickerColumn(years),
+      ];
+    }
+
+    return renderArray;
+  }
+
+  private renderDayPickerColumn(days: PickerColumnItem[]) {
+    if (days.length === 0) {
+      return [];
+    }
+
+    const { workingParts } = this;
+
+    const activePart = this.getActivePartsWithFallback();
+
+    return (
+      <ion-picker-column-internal
+        class="day-column"
+        color={this.color}
+        items={days}
+        value={(workingParts.day !== null ? workingParts.day : this.defaultParts.day) ?? undefined}
+        onIonChange={(ev: CustomEvent) => {
+          // TODO(FW-1823) Remove this when iOS 14 support is dropped.
+          // Due to a Safari 14 issue we need to destroy
+          // the scroll listener before we update state
+          // and trigger a re-render.
+          if (this.destroyCalendarListener) {
+            this.destroyCalendarListener();
+          }
+
+          this.setWorkingParts({
+            ...workingParts,
+            day: ev.detail.value,
+          });
+
+          this.setActiveParts({
+            ...activePart,
+            day: ev.detail.value,
+          });
+
+          // We can re-attach the scroll listener after
+          // the working parts have been updated.
+          this.initializeCalendarListener();
+
+          ev.stopPropagation();
+        }}
+      ></ion-picker-column-internal>
+    );
+  }
+
+  private renderMonthPickerColumn(months: PickerColumnItem[]) {
+    if (months.length === 0) {
+      return [];
+    }
+
+    const { workingParts } = this;
+
+    const activePart = this.getActivePartsWithFallback();
+
+    return (
+      <ion-picker-column-internal
+        class="month-column"
+        color={this.color}
+        items={months}
+        value={workingParts.month}
+        onIonChange={(ev: CustomEvent) => {
+          // TODO(FW-1823) Remove this when iOS 14 support is dropped.
+          // Due to a Safari 14 issue we need to destroy
+          // the scroll listener before we update state
+          // and trigger a re-render.
+          if (this.destroyCalendarListener) {
+            this.destroyCalendarListener();
+          }
+
+          this.setWorkingParts({
+            ...workingParts,
+            month: ev.detail.value,
+          });
+
+          this.setActiveParts({
+            ...activePart,
+            month: ev.detail.value,
+          });
+
+          // We can re-attach the scroll listener after
+          // the working parts have been updated.
+          this.initializeCalendarListener();
+
+          ev.stopPropagation();
+        }}
+      ></ion-picker-column-internal>
+    );
+  }
+  private renderYearPickerColumn(years: PickerColumnItem[]) {
+    if (years.length === 0) {
+      return [];
+    }
+
+    const { workingParts } = this;
+
+    const activePart = this.getActivePartsWithFallback();
+
+    return (
+      <ion-picker-column-internal
+        class="year-column"
+        color={this.color}
+        items={years}
+        value={workingParts.year}
+        onIonChange={(ev: CustomEvent) => {
+          // TODO(FW-1823) Remove this when iOS 14 support is dropped.
+          // Due to a Safari 14 issue we need to destroy
+          // the scroll listener before we update state
+          // and trigger a re-render.
+          if (this.destroyCalendarListener) {
+            this.destroyCalendarListener();
+          }
+
+          this.setWorkingParts({
+            ...workingParts,
+            year: ev.detail.value,
+          });
+
+          this.setActiveParts({
+            ...activePart,
+            year: ev.detail.value,
+          });
+
+          // We can re-attach the scroll listener after
+          // the working parts have been updated.
+          this.initializeCalendarListener();
+
+          ev.stopPropagation();
+        }}
+      ></ion-picker-column-internal>
+    );
+  }
+  private renderTimePickerColumns(forcePresentation: string) {
+    if (['date', 'month', 'month-year', 'year'].includes(forcePresentation)) {
+      return [];
+    }
+
+    /**
+     * If a user has not selected a date,
+     * then we should show all times. If the
+     * user has selected a date (even if it has
+     * not been confirmed yet), we should apply
+     * the max and min restrictions so that the
+     * time picker shows values that are
+     * appropriate for the selected date.
+     */
+    const activePart = this.getActivePart();
+    const userHasSelectedDate = activePart !== undefined;
+
+    const { hoursData, minutesData, dayPeriodData } = getTimeColumnsData(
+      this.locale,
+      this.workingParts,
+      this.hourCycle,
+      userHasSelectedDate ? this.minParts : undefined,
+      userHasSelectedDate ? this.maxParts : undefined,
+      this.parsedHourValues,
+      this.parsedMinuteValues
+    );
+
+    return [
+      this.renderHourPickerColumn(hoursData),
+      this.renderMinutePickerColumn(minutesData),
+      this.renderDayPeriodPickerColumn(dayPeriodData),
+    ];
+  }
+
+  private renderHourPickerColumn(hoursData: PickerColumnItem[]) {
+    const { workingParts } = this;
+    if (hoursData.length === 0) return [];
+
+    const activePart = this.getActivePartsWithFallback();
+
+    return (
+      <ion-picker-column-internal
+        color={this.color}
+        value={activePart.hour}
+        items={hoursData}
+        numericInput
+        onIonChange={(ev: CustomEvent) => {
+          this.setWorkingParts({
+            ...workingParts,
+            hour: ev.detail.value,
+          });
+
+          this.setActiveParts({
+            ...activePart,
+            hour: ev.detail.value,
+          });
+
+          ev.stopPropagation();
+        }}
+      ></ion-picker-column-internal>
+    );
+  }
+  private renderMinutePickerColumn(minutesData: PickerColumnItem[]) {
+    const { workingParts } = this;
+    if (minutesData.length === 0) return [];
+
+    const activePart = this.getActivePartsWithFallback();
+
+    return (
+      <ion-picker-column-internal
+        color={this.color}
+        value={activePart.minute}
+        items={minutesData}
+        numericInput
+        onIonChange={(ev: CustomEvent) => {
+          this.setWorkingParts({
+            ...workingParts,
+            minute: ev.detail.value,
+          });
+
+          this.setActiveParts({
+            ...activePart,
+            minute: ev.detail.value,
+          });
+
+          ev.stopPropagation();
+        }}
+      ></ion-picker-column-internal>
+    );
+  }
+  private renderDayPeriodPickerColumn(dayPeriodData: PickerColumnItem[]) {
+    const { workingParts } = this;
+    if (dayPeriodData.length === 0) {
+      return [];
+    }
+
+    const activePart = this.getActivePartsWithFallback();
+    const isDayPeriodRTL = isLocaleDayPeriodRTL(this.locale);
+
+    return (
+      <ion-picker-column-internal
+        style={isDayPeriodRTL ? { order: '-1' } : {}}
+        color={this.color}
+        value={activePart.ampm}
+        items={dayPeriodData}
+        onIonChange={(ev: CustomEvent) => {
+          const hour = calculateHourFromAMPM(workingParts, ev.detail.value);
+
+          this.setWorkingParts({
+            ...workingParts,
+            ampm: ev.detail.value,
+            hour,
+          });
+
+          this.setActiveParts({
+            ...activePart,
+            ampm: ev.detail.value,
+            hour,
+          });
+
+          ev.stopPropagation();
+        }}
+      ></ion-picker-column-internal>
+    );
+  }
+
+  private renderWheelView(forcePresentation?: string) {
+    const { locale } = this;
     const showMonthFirst = isMonthFirstLocale(locale);
     const columnOrder = showMonthFirst ? 'month-first' : 'year-first';
     return (
-      <div class="datetime-year">
-        <div
-          class={{
-            'datetime-year-body': true,
-            [`order-${columnOrder}`]: true,
-          }}
-        >
-          <ion-picker-internal>
-            {showMonth && (
-              <ion-picker-column-internal
-                class="month-column"
-                color={this.color}
-                items={months}
-                value={workingParts.month}
-                onIonChange={(ev: CustomEvent) => {
-                  // Due to a Safari 14 issue we need to destroy
-                  // the intersection observer before we update state
-                  // and trigger a re-render.
-                  if (this.destroyCalendarIO) {
-                    this.destroyCalendarIO();
-                  }
-
-                  this.setWorkingParts({
-                    ...this.workingParts,
-                    month: ev.detail.value,
-                  });
-
-                  if (presentation === 'month' || presentation === 'month-year') {
-                    this.setActiveParts({
-                      ...this.activeParts,
-                      month: ev.detail.value,
-                    });
-                  }
-
-                  // We can re-attach the intersection observer after
-                  // the working parts have been updated.
-                  this.initializeCalendarIOListeners();
-
-                  ev.stopPropagation();
-                }}
-              ></ion-picker-column-internal>
-            )}
-            {showYear && (
-              <ion-picker-column-internal
-                class="year-column"
-                color={this.color}
-                items={years}
-                value={workingParts.year}
-                onIonChange={(ev: CustomEvent) => {
-                  // Due to a Safari 14 issue we need to destroy
-                  // the intersection observer before we update state
-                  // and trigger a re-render.
-                  if (this.destroyCalendarIO) {
-                    this.destroyCalendarIO();
-                  }
-
-                  this.setWorkingParts({
-                    ...this.workingParts,
-                    year: ev.detail.value,
-                  });
-
-                  if (presentation === 'year' || presentation === 'month-year') {
-                    this.setActiveParts({
-                      ...this.activeParts,
-                      year: ev.detail.value,
-                    });
-                  }
-
-                  // We can re-attach the intersection observer after
-                  // the working parts have been updated.
-                  this.initializeCalendarIOListeners();
-
-                  ev.stopPropagation();
-                }}
-              ></ion-picker-column-internal>
-            )}
-          </ion-picker-internal>
-        </div>
+      <div
+        class={{
+          [`wheel-order-${columnOrder}`]: true,
+        }}
+      >
+        {this.renderWheelPicker(forcePresentation)}
       </div>
     );
   }
+
+  /**
+   * Grid Render Methods
+   */
 
   private renderCalendarHeader(mode: Mode) {
     const expandedIcon = mode === 'ios' ? chevronDown : caretUpSharp;
@@ -1327,6 +1879,9 @@ export class Datetime implements ComponentInterface {
     const prevMonthDisabled = isPrevMonthDisabled(this.workingParts, this.minParts, this.maxParts);
     const nextMonthDisabled = isNextMonthDisabled(this.workingParts, this.maxParts);
 
+    // don't use the inheritAttributes util because it removes dir from the host, and we still need that
+    const hostDir = this.el.getAttribute('dir') || undefined;
+
     return (
       <div class="calendar-header">
         <div class="calendar-action-buttons">
@@ -1334,18 +1889,36 @@ export class Datetime implements ComponentInterface {
             <ion-item button detail={false} lines="none" onClick={() => this.toggleMonthAndYearView()}>
               <ion-label>
                 {getMonthAndYear(this.locale, this.workingParts)}{' '}
-                <ion-icon icon={this.showMonthAndYear ? expandedIcon : collapsedIcon} lazy={false}></ion-icon>
+                <ion-icon
+                  aria-hidden="true"
+                  icon={this.showMonthAndYear ? expandedIcon : collapsedIcon}
+                  lazy={false}
+                ></ion-icon>
               </ion-label>
             </ion-item>
           </div>
 
           <div class="calendar-next-prev">
             <ion-buttons>
-              <ion-button disabled={prevMonthDisabled} onClick={() => this.prevMonth()}>
-                <ion-icon slot="icon-only" icon={chevronBack} lazy={false} flipRtl></ion-icon>
+              <ion-button aria-label="previous month" disabled={prevMonthDisabled} onClick={() => this.prevMonth()}>
+                <ion-icon
+                  dir={hostDir}
+                  aria-hidden="true"
+                  slot="icon-only"
+                  icon={chevronBack}
+                  lazy={false}
+                  flipRtl
+                ></ion-icon>
               </ion-button>
-              <ion-button disabled={nextMonthDisabled} onClick={() => this.nextMonth()}>
-                <ion-icon slot="icon-only" icon={chevronForward} lazy={false} flipRtl></ion-icon>
+              <ion-button aria-label="next month" disabled={nextMonthDisabled} onClick={() => this.nextMonth()}>
+                <ion-icon
+                  dir={hostDir}
+                  aria-hidden="true"
+                  slot="icon-only"
+                  icon={chevronForward}
+                  lazy={false}
+                  flipRtl
+                ></ion-icon>
               </ion-button>
             </ion-buttons>
           </div>
@@ -1358,9 +1931,7 @@ export class Datetime implements ComponentInterface {
       </div>
     );
   }
-
   private renderMonth(month: number, year: number) {
-    const { highlightActiveParts } = this;
     const yearAllowed = this.parsedYearValues === undefined || this.parsedYearValues.includes(year);
     const monthAllowed = this.parsedMonthValues === undefined || this.parsedMonthValues.includes(month);
     const isCalMonthDisabled = !yearAllowed || !monthAllowed;
@@ -1383,8 +1954,12 @@ export class Datetime implements ComponentInterface {
     // can free-scroll the calendar.
     const isWorkingMonth = this.workingParts.month === month && this.workingParts.year === year;
 
+    const activePart = this.getActivePartsWithFallback();
+
     return (
       <div
+        // Non-visible months should be hidden from screen readers
+        aria-hidden={!isWorkingMonth ? 'true' : null}
         class={{
           'calendar-month': true,
           // Prevents scroll snap swipe gestures for months outside of the min/max bounds
@@ -1394,9 +1969,9 @@ export class Datetime implements ComponentInterface {
         <div class="calendar-month-grid">
           {getDaysOfMonth(month, year, this.firstDayOfWeek % 7).map((dateObject, index) => {
             const { day, dayOfWeek } = dateObject;
-            const { isDateEnabled } = this;
+            const { isDateEnabled, multiple } = this;
             const referenceParts = { month, day, year };
-            const { isActive, isToday, ariaLabel, ariaSelected, disabled } = getCalendarDayState(
+            const { isActive, isToday, ariaLabel, ariaSelected, disabled, text } = getCalendarDayState(
               this.locale,
               referenceParts,
               this.activePartsClone,
@@ -1436,7 +2011,7 @@ export class Datetime implements ComponentInterface {
                 class={{
                   'calendar-day-padding': day === null,
                   'calendar-day': true,
-                  'calendar-day-active': isActive && highlightActiveParts,
+                  'calendar-day-active': isActive,
                   'calendar-day-today': isToday,
                 }}
                 aria-selected={ariaSelected}
@@ -1446,14 +2021,6 @@ export class Datetime implements ComponentInterface {
                     return;
                   }
 
-                  /**
-                   * Note that for datetimes with confirm/cancel buttons, the value
-                   * isn't updated until you call confirm(). We need to bring the
-                   * solid circle back on day click for UX reasons, rather than only
-                   * show the circle if `value` is truthy.
-                   */
-                  this.highlightActiveParts = true;
-
                   this.setWorkingParts({
                     ...this.workingParts,
                     month,
@@ -1461,15 +2028,27 @@ export class Datetime implements ComponentInterface {
                     year,
                   });
 
-                  this.setActiveParts({
-                    ...this.activeParts,
-                    month,
-                    day,
-                    year,
-                  });
+                  // multiple only needs date info, so we can wipe out other fields like time
+                  if (multiple) {
+                    this.setActiveParts(
+                      {
+                        month,
+                        day,
+                        year,
+                      },
+                      isActive
+                    );
+                  } else {
+                    this.setActiveParts({
+                      ...activePart,
+                      month,
+                      day,
+                      year,
+                    });
+                  }
                 }}
               >
-                {day}
+                {text}
               </button>
             );
           })}
@@ -1477,7 +2056,6 @@ export class Datetime implements ComponentInterface {
       </div>
     );
   }
-
   private renderCalendarBody() {
     return (
       <div class="calendar-body ion-focusable" ref={(el) => (this.calendarBodyRef = el)} tabindex="0">
@@ -1487,16 +2065,14 @@ export class Datetime implements ComponentInterface {
       </div>
     );
   }
-
   private renderCalendar(mode: Mode) {
     return (
-      <div class="datetime-calendar">
+      <div class="datetime-calendar" key="datetime-calendar">
         {this.renderCalendarHeader(mode)}
         {this.renderCalendarBody()}
       </div>
     );
   }
-
   private renderTimeLabel() {
     const hasSlottedTimeLabel = this.el.querySelector('[slot="time-label"]') !== null;
     if (!hasSlottedTimeLabel && !this.showDefaultTimeLabel) {
@@ -1506,86 +2082,10 @@ export class Datetime implements ComponentInterface {
     return <slot name="time-label">Time</slot>;
   }
 
-  private renderTimePicker(
-    hoursItems: PickerColumnItem[],
-    minutesItems: PickerColumnItem[],
-    ampmItems: PickerColumnItem[],
-    use24Hour: boolean
-  ) {
-    const { color, activePartsClone, workingParts } = this;
+  private renderTimeOverlay() {
+    const use24Hour = is24Hour(this.locale, this.hourCycle);
+    const activePart = this.getActivePartsWithFallback();
 
-    return (
-      <ion-picker-internal>
-        <ion-picker-column-internal
-          color={color}
-          value={activePartsClone.hour}
-          items={hoursItems}
-          numericInput
-          onIonChange={(ev: CustomEvent) => {
-            this.setWorkingParts({
-              ...workingParts,
-              hour: ev.detail.value,
-            });
-            this.setActiveParts({
-              ...activePartsClone,
-              hour: ev.detail.value,
-            });
-
-            ev.stopPropagation();
-          }}
-        ></ion-picker-column-internal>
-        <ion-picker-column-internal
-          color={color}
-          value={activePartsClone.minute}
-          items={minutesItems}
-          numericInput
-          onIonChange={(ev: CustomEvent) => {
-            this.setWorkingParts({
-              ...workingParts,
-              minute: ev.detail.value,
-            });
-            this.setActiveParts({
-              ...activePartsClone,
-              minute: ev.detail.value,
-            });
-
-            ev.stopPropagation();
-          }}
-        ></ion-picker-column-internal>
-        {!use24Hour && (
-          <ion-picker-column-internal
-            color={color}
-            value={activePartsClone.ampm}
-            items={ampmItems}
-            onIonChange={(ev: CustomEvent) => {
-              const hour = calculateHourFromAMPM(workingParts, ev.detail.value);
-
-              this.setWorkingParts({
-                ...workingParts,
-                ampm: ev.detail.value,
-                hour,
-              });
-
-              this.setActiveParts({
-                ...activePartsClone,
-                ampm: ev.detail.value,
-                hour,
-              });
-
-              ev.stopPropagation();
-            }}
-          ></ion-picker-column-internal>
-        )}
-      </ion-picker-internal>
-    );
-  }
-
-  private renderTimeOverlay(
-    hoursItems: PickerColumnItem[],
-    minutesItems: PickerColumnItem[],
-    ampmItems: PickerColumnItem[],
-    use24Hour: boolean
-  ) {
     return [
       <div class="time-header">{this.renderTimeLabel()}</div>,
       <button
@@ -1615,7 +2115,7 @@ export class Datetime implements ComponentInterface {
           }
         }}
       >
-        {getFormattedTime(this.activePartsClone, use24Hour)}
+        {getLocalizedTime(this.locale, activePart, use24Hour)}
       </button>,
       <ion-popover
         alignment="center"
@@ -1637,76 +2137,41 @@ export class Datetime implements ComponentInterface {
         }}
         style={{
           '--offset-y': '-10px',
+          '--min-width': 'fit-content',
         }}
         // Allow native browser keyboard events to support up/down/home/end key
         // navigation within the time picker.
         keyboardEvents
         ref={(el) => (this.popoverRef = el)}
       >
-        {this.renderTimePicker(hoursItems, minutesItems, ampmItems, use24Hour)}
+        {this.renderWheelPicker('time')}
       </ion-popover>,
     ];
   }
 
-  /**
-   * Render time picker inside of datetime.
-   * Do not pass color prop to segment on
-   * iOS mode. MD segment has been customized and
-   * should take on the color prop, but iOS
-   * should just be the default segment.
-   */
-  private renderTime() {
-    const { workingParts, presentation } = this;
-    const timeOnlyPresentation = presentation === 'time';
-    const use24Hour = is24Hour(this.locale, this.hourCycle);
-    const { hours, minutes, am, pm } = generateTime(
-      workingParts,
-      use24Hour ? 'h23' : 'h12',
-      this.minParts,
-      this.maxParts,
-      this.parsedHourValues,
-      this.parsedMinuteValues
-    );
+  private getHeaderSelectedDateText() {
+    const { activeParts, multiple, titleSelectedDatesFormatter } = this;
+    const isArray = Array.isArray(activeParts);
 
-    const hoursItems = hours.map((hour) => {
-      return {
-        text: getFormattedHour(hour, use24Hour),
-        value: getInternalHourValue(hour, use24Hour, workingParts.ampm),
-      };
-    });
-
-    const minutesItems = minutes.map((minute) => {
-      return {
-        text: addTimePadding(minute),
-        value: minute,
-      };
-    });
-
-    const ampmItems = [];
-    if (am) {
-      ampmItems.push({
-        text: 'AM',
-        value: 'am',
-      });
+    let headerText: string;
+    if (multiple && isArray && activeParts.length !== 1) {
+      headerText = `${activeParts.length} days`; // default/fallback for multiple selection
+      if (titleSelectedDatesFormatter !== undefined) {
+        try {
+          headerText = titleSelectedDatesFormatter(convertDataToISO(activeParts));
+        } catch (e) {
+          printIonError('Exception in provided `titleSelectedDatesFormatter`: ', e);
+        }
+      }
+    } else {
+      // for exactly 1 day selected (multiple set or not), show a formatted version of that
+      headerText = getMonthAndDay(this.locale, this.getActivePartsWithFallback());
     }
 
-    if (pm) {
-      ampmItems.push({
-        text: 'PM',
-        value: 'pm',
-      });
-    }
-
-    return (
-      <div class="datetime-time">
-        {timeOnlyPresentation
-          ? this.renderTimePicker(hoursItems, minutesItems, ampmItems, use24Hour)
-          : this.renderTimeOverlay(hoursItems, minutesItems, ampmItems, use24Hour)}
-      </div>
-    );
+    return headerText;
   }
 
-  private renderCalendarViewHeader(mode: Mode) {
+  private renderCalendarViewHeader(showExpandedHeader = true) {
     const hasSlottedTitle = this.el.querySelector('[slot="title"]') !== null;
     if (!hasSlottedTitle && !this.showDefaultTitle) {
       return;
@@ -1717,28 +2182,71 @@ export class Datetime implements ComponentInterface {
         <div class="datetime-title">
           <slot name="title">Select Date</slot>
         </div>
-        {mode === 'md' && <div class="datetime-selected-date">{getMonthAndDay(this.locale, this.activeParts)}</div>}
+        {showExpandedHeader && <div class="datetime-selected-date">{this.getHeaderSelectedDateText()}</div>}
       </div>
     );
   }
 
-  private renderDatetime(mode: Mode) {
+  /**
+   * Render time picker inside of datetime.
+   * Do not pass color prop to segment on
+   * iOS mode. MD segment has been customized and
+   * should take on the color prop, but iOS
+   * should just be the default segment.
+   */
+  private renderTime() {
     const { presentation } = this;
+    const timeOnlyPresentation = presentation === 'time';
+
+    return (
+      <div class="datetime-time">{timeOnlyPresentation ? this.renderWheelPicker() : this.renderTimeOverlay()}</div>
+    );
+  }
+
+  /**
+   * Renders the month/year picker that is
+   * displayed on the calendar grid.
+   * The .datetime-year class has additional
+   * styles that let us show/hide the
+   * picker when the user clicks on the
+   * toggle in the calendar header.
+   */
+  private renderCalendarViewMonthYearPicker() {
+    return <div class="datetime-year">{this.renderWheelView('month-year')}</div>;
+  }
+
+  /**
+   * Render entry point
+   * All presentation types are rendered from here.
+   */
+
+  private renderDatetime(mode: Mode) {
+    const { presentation, preferWheel } = this;
+
+    /**
+     * Certain presentation types have separate grid and wheel displays.
+     * If preferWheel is true then we should show a wheel picker instead.
+     */
+    const hasWheelVariant = presentation === 'date' || presentation === 'date-time' || presentation === 'time-date';
+    if (preferWheel && hasWheelVariant) {
+      return [this.renderCalendarViewHeader(false), this.renderWheelView(), this.renderFooter()];
+    }
+
     switch (presentation) {
       case 'date-time':
         return [
-          this.renderCalendarViewHeader(mode),
+          this.renderCalendarViewHeader(),
           this.renderCalendar(mode),
-          this.renderYearView(),
+          this.renderCalendarViewMonthYearPicker(),
           this.renderTime(),
           this.renderFooter(),
         ];
       case 'time-date':
         return [
-          this.renderCalendarViewHeader(mode),
+          this.renderCalendarViewHeader(),
           this.renderTime(),
           this.renderCalendar(mode),
-          this.renderYearView(),
+          this.renderCalendarViewMonthYearPicker(),
           this.renderFooter(),
         ];
       case 'time':
@@ -1746,26 +2254,41 @@ export class Datetime implements ComponentInterface {
       case 'month':
       case 'month-year':
       case 'year':
-        return [this.renderYearView(), this.renderFooter()];
+        return [this.renderWheelView(), this.renderFooter()];
       default:
         return [
-          this.renderCalendarViewHeader(mode),
+          this.renderCalendarViewHeader(),
           this.renderCalendar(mode),
-          this.renderYearView(),
+          this.renderCalendarViewMonthYearPicker(),
           this.renderFooter(),
         ];
     }
   }
 
   render() {
-    const { name, value, disabled, el, color, isPresented, readonly, showMonthAndYear, presentation, size } = this;
+    const {
+      name,
+      value,
+      disabled,
+      el,
+      color,
+      isPresented,
+      readonly,
+      showMonthAndYear,
+      preferWheel,
+      presentation,
+      size,
+    } = this;
     const mode = getIonMode(this);
     const isMonthAndYearPresentation =
       presentation === 'year' || presentation === 'month' || presentation === 'month-year';
     const shouldShowMonthAndYear = showMonthAndYear || isMonthAndYearPresentation;
     const monthYearPickerOpen = showMonthAndYear && !isMonthAndYearPresentation;
+    const hasDatePresentation = presentation === 'date' || presentation === 'date-time' || presentation === 'time-date';
+    const hasWheelVariant = hasDatePresentation && preferWheel;
+    const hasGrid = hasDatePresentation && !preferWheel;
 
-    renderHiddenInput(true, el, name, value, disabled);
+    renderHiddenInput(true, el, name, formatValue(value), disabled);
 
     return (
       <Host
@@ -1782,6 +2305,8 @@ export class Datetime implements ComponentInterface {
             'month-year-picker-open': monthYearPickerOpen,
             [`datetime-presentation-${presentation}`]: true,
             [`datetime-size-${size}`]: true,
+            [`datetime-prefer-wheel`]: hasWheelVariant,
+            [`datetime-grid`]: hasGrid,
           }),
         }}
       >

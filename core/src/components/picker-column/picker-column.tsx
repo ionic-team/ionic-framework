@@ -239,8 +239,6 @@ export class PickerColumnCmp implements ComponentInterface {
     return Math.min(Math.max(Math.abs(Math.round(y / this.optHeight)), 0), this.col.options.length - 1);
   }
 
-  // TODO should this check disabled?
-
   private onStart(detail: GestureDetail) {
     // We have to prevent default in order to block scrolling under the picker
     // but we DO NOT have to stop propagation, since we still want
@@ -351,7 +349,7 @@ export class PickerColumnCmp implements ComponentInterface {
       return;
     }
 
-    const selectedIndex = clamp(min, this.col.selectedIndex || 0, max);
+    const selectedIndex = clamp(min, this.col.selectedIndex ?? 0, max);
     if (this.col.prevSelected !== selectedIndex || forceRefresh) {
       const y = selectedIndex * this.optHeight * -1;
       this.velocity = 0;

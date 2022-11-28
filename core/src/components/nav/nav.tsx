@@ -67,7 +67,7 @@ export class Nav implements NavOutlet {
 
   /**
    * By default `ion-nav` animates transition between pages based in the mode (ios or material design).
-   * However, this property allows to create custom transition using `AnimateBuilder` functions.
+   * However, this property allows to create custom transition using `AnimationBuilder` functions.
    */
   @Prop() animation?: AnimationBuilder;
 
@@ -129,6 +129,10 @@ export class Nav implements NavOutlet {
       this.onEnd.bind(this)
     );
     this.swipeGestureChanged();
+  }
+
+  connectedCallback() {
+    this.destroyed = false;
   }
 
   disconnectedCallback() {
@@ -790,7 +794,7 @@ export class Nav implements NavOutlet {
       destroyQueue = [];
       for (let i = removeStart; i < removeStart + removeCount; i++) {
         const view = this.views[i];
-        if (view && view !== enteringView && view !== leavingView) {
+        if (view !== undefined && view !== enteringView && view !== leavingView) {
           destroyQueue.push(view);
         }
       }
@@ -879,9 +883,13 @@ export class Nav implements NavOutlet {
     leavingView: ViewController | undefined,
     opts: NavOptions
   ): NavResult {
-    const cleanupView = hasCompleted ? enteringView : leavingView;
-    if (cleanupView) {
-      this.cleanup(cleanupView);
+    /**
+     * If the transition did not complete, the leavingView will still be the active
+     * view on the stack. Otherwise unmount all the views after the enteringView.
+     */
+    const activeView = hasCompleted ? enteringView : leavingView;
+    if (activeView) {
+      this.unmountInactiveViews(activeView);
     }
 
     return {
@@ -944,9 +952,13 @@ export class Nav implements NavOutlet {
   }
 
   /**
+   * Unmounts all inactive views after the specified active view.
+   *
    * DOM WRITE
+   *
+   * @param activeView The view that is actively visible in the stack. Used to calculate which views to unmount.
    */
-  private cleanup(activeView: ViewController) {
+  private unmountInactiveViews(activeView: ViewController) {
     // ok, cleanup time!! Destroy all of the views that are
     // INACTIVE and come after the active view
     // only do this if the views exist, though

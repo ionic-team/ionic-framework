@@ -28,6 +28,7 @@ export class Content implements ComponentInterface {
   private cTop = -1;
   private cBottom = -1;
   private scrollEl?: HTMLElement;
+  private backgroundContentEl?: HTMLElement;
   private isMainContent = true;
 
   // Detail is used in a hot loop in the scroll event, by allocating it here
@@ -92,18 +93,20 @@ export class Content implements ComponentInterface {
   @Prop() scrollEvents = false;
 
   /**
-   * Emitted when the scroll has started.
+   * Emitted when the scroll has started. This event is disabled by default.
+   * Set `scrollEvents` to `true` to enable.
    */
   @Event() ionScrollStart!: EventEmitter<ScrollBaseDetail>;
 
   /**
    * Emitted while scrolling. This event is disabled by default.
-   * Look at the property: `scrollEvents`
+   * Set `scrollEvents` to `true` to enable.
    */
   @Event() ionScroll!: EventEmitter<ScrollDetail>;
 
   /**
-   * Emitted when the scroll has ended.
+   * Emitted when the scroll has ended. This event is disabled by default.
+   * Set `scrollEvents` to `true` to enable.
    */
   @Event() ionScrollEnd!: EventEmitter<ScrollBaseDetail>;
 
@@ -187,6 +190,18 @@ export class Content implements ComponentInterface {
   }
 
   /**
+   * Returns the background content element.
+   * @internal
+   */
+  @Method()
+  async getBackgroundElement(): Promise<HTMLElement> {
+    if (!this.backgroundContentEl) {
+      await new Promise((resolve) => componentOnReady(this.el, resolve));
+    }
+    return Promise.resolve(this.backgroundContentEl!);
+  }
+
+  /**
    * Scroll to the top of the component.
    *
    * @param duration The amount of time to take scrolling to the top. Defaults to `0`.
@@ -265,7 +280,6 @@ export class Content implements ComponentInterface {
       if (easedT < 1) {
         // do not use DomController here
         // must use nativeRaf in order to fire in the next frame
-        // TODO: remove as any
         requestAnimationFrame(step);
       } else {
         resolve();
@@ -330,7 +344,7 @@ export class Content implements ComponentInterface {
           '--offset-bottom': `${this.cBottom}px`,
         }}
       >
-        <div id="background-content" part="background"></div>
+        <div ref={(el) => (this.backgroundContentEl = el)} id="background-content" part="background"></div>
         <TagType
           class={{
             'inner-scroll': true,

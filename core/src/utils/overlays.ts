@@ -82,9 +82,20 @@ export const createOverlay = <T extends HTMLIonOverlayElement>(
   return Promise.resolve() as any;
 };
 
+/**
+ * This query string selects elements that
+ * are eligible to receive focus. We select
+ * interactive elements that meet the following
+ * criteria:
+ * 1. Element does not have a negative tabindex
+ * 2. Element does not have `hidden`
+ * 3. Element does not have `disabled` for non-Ionic components.
+ * 4. Element does not have `disabled` or `disabled="true"` for Ionic components.
+ * Note: We need this distinction because `disabled="false"` is
+ * valid usage for the disabled property on ion-button.
+ */
 const focusableQueryString =
-  '[tabindex]:not([tabindex^="-"]), input:not([type=hidden]):not([tabindex^="-"]), textarea:not([tabindex^="-"]), button:not([tabindex^="-"]), select:not([tabindex^="-"]), .ion-focusable:not([tabindex^="-"])';
-const innerFocusableQueryString = 'input:not([type=hidden]), textarea, button, select';
+  '[tabindex]:not([tabindex^="-"]):not([hidden]):not([disabled]), input:not([type=hidden]):not([tabindex^="-"]):not([hidden]):not([disabled]), textarea:not([tabindex^="-"]):not([hidden]):not([disabled]), button:not([tabindex^="-"]):not([hidden]):not([disabled]), select:not([tabindex^="-"]):not([hidden]):not([disabled]), .ion-focusable:not([tabindex^="-"]):not([hidden]):not([disabled]), .ion-focusable[disabled="false"]:not([tabindex^="-"]):not([hidden])';
 
 export const focusFirstDescendant = (ref: Element, overlay: HTMLIonOverlayElement) => {
   let firstInput = ref.querySelector(focusableQueryString) as HTMLElement | null;
@@ -92,7 +103,7 @@ export const focusFirstDescendant = (ref: Element, overlay: HTMLIonOverlayElemen
   const shadowRoot = firstInput?.shadowRoot;
   if (shadowRoot) {
     // If there are no inner focusable elements, just focus the host element.
-    firstInput = shadowRoot.querySelector(innerFocusableQueryString) || firstInput;
+    firstInput = shadowRoot.querySelector(focusableQueryString) || firstInput;
   }
 
   if (firstInput) {
@@ -112,7 +123,7 @@ const focusLastDescendant = (ref: Element, overlay: HTMLIonOverlayElement) => {
   const shadowRoot = lastInput?.shadowRoot;
   if (shadowRoot) {
     // If there are no inner focusable elements, just focus the host element.
-    lastInput = shadowRoot.querySelector(innerFocusableQueryString) || lastInput;
+    lastInput = shadowRoot.querySelector(focusableQueryString) || lastInput;
   }
 
   if (lastInput) {
@@ -430,7 +441,13 @@ export const present = async (
     focusPreviousElementOnDismiss(overlay.el);
   }
 
-  if (overlay.keyboardClose) {
+  /**
+   * If the focused element is already
+   * inside the overlay component then
+   * focus should not be moved from that
+   * to the overlay container.
+   */
+  if (overlay.keyboardClose && (document.activeElement === null || !overlay.el.contains(document.activeElement))) {
     overlay.el.focus();
   }
 };
@@ -454,7 +471,7 @@ const focusPreviousElementOnDismiss = async (overlayEl: any) => {
   const shadowRoot = previousElement?.shadowRoot;
   if (shadowRoot) {
     // If there are no inner focusable elements, just focus the host element.
-    previousElement = shadowRoot.querySelector(innerFocusableQueryString) || previousElement;
+    previousElement = shadowRoot.querySelector(focusableQueryString) || previousElement;
   }
 
   await overlayEl.onDidDismiss();

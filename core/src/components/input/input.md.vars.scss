@@ -17,19 +17,10 @@ $input-md-padding-end:                     0 !default;
 $input-md-padding-bottom:                  10px !default;
 
 /// @prop - Margin start of the input
-$input-md-padding-start:                   ($item-md-padding-start / 2) !default;
+$input-md-padding-start:                   ($item-md-padding-start * 0.5) !default;
 
 /// @prop - Width of the icon used to clear the input
 $input-md-input-clear-icon-width:         30px !default;
-
-/// @prop - Color of the icon used to clear the input
-$input-md-input-clear-icon-color:         $text-color-step-400 !default;
-
-/// @prop - Icon used to clear the input
-$input-md-input-clear-icon-svg:           "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><polygon fill='" + $input-md-input-clear-icon-color + "' points='405,136.798 375.202,107 256,226.202 136.798,107 107,136.798 226.202,256 107,375.202 136.798,405 256,285.798 375.202,405 405,375.202 285.798,256'/></svg>" !default;
-
-/// @prop - Size of the icon used to clear the input
-$input-md-input-clear-icon-size:          22px !default;
 
 /// @prop - Placeholder Text color of the input
 $input-md-placeholder-color:              $placeholder-text-color !default;
@@ -53,25 +44,25 @@ $input-md-highlight-color-valid:          ion-color(success, base) !default;
 $input-md-highlight-color-invalid:        ion-color(danger, base) !default;
 
 /// @prop - Padding top of the inset input
-$input-md-inset-padding-top:              ($item-md-padding-top / 2) !default;
+$input-md-inset-padding-top:              ($item-md-padding-top * 0.5) !default;
 
 /// @prop - Padding end of the inset input
 $input-md-inset-padding-end:              0 !default;
 
 /// @prop - Padding bottom of the inset input
-$input-md-inset-padding-bottom:           ($item-md-padding-bottom / 2) !default;
+$input-md-inset-padding-bottom:           ($item-md-padding-bottom * 0.5) !default;
 
 /// @prop - Padding start of the inset input
-$input-md-inset-padding-start:            ($item-md-padding-start / 2) !default;
+$input-md-inset-padding-start:            ($item-md-padding-start * 0.5) !default;
 
 /// @prop - Margin top of the inset input
-$input-md-inset-margin-top:               ($item-md-padding-top / 2) !default;
+$input-md-inset-margin-top:               ($item-md-padding-top * 0.5) !default;
 
 /// @prop - Margin end of the inset input
 $input-md-inset-margin-end:               $item-md-padding-end !default;
 
 /// @prop - Margin bottom of the inset input
-$input-md-inset-margin-bottom:            ($item-md-padding-bottom / 2) !default;
+$input-md-inset-margin-bottom:            ($item-md-padding-bottom * 0.5) !default;
 
 /// @prop - Margin start of the inset input
 $input-md-inset-margin-start:             $item-md-padding-start !default;

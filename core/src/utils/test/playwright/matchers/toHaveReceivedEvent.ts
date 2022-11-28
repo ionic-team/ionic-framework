@@ -1,7 +1,7 @@
 import type { EventSpy } from '../page/event-spy';
 
 export function toHaveReceivedEvent(eventSpy: EventSpy) {
-  if (!eventSpy) {
+  if (eventSpy === undefined || eventSpy === null) {
     return {
       message: () => `expected spy to have received event, but it was not defined`,
       pass: false,

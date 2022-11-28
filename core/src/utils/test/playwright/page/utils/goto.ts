@@ -7,7 +7,7 @@ import type { Page, TestInfo } from '@playwright/test';
  * automatically waits for the Stencil components
  * to be hydrated before proceeding with the test.
  */
-export const goto = async (page: Page, url: string, testInfo: TestInfo, originalFn: typeof page.goto) => {
+export const goto = async (page: Page, url: string, options: any, testInfo: TestInfo, originalFn: typeof page.goto) => {
   const { mode, rtl, _testing } = testInfo.project.metadata;
 
   const splitUrl = url.split('?');
@@ -38,7 +38,7 @@ export const goto = async (page: Page, url: string, testInfo: TestInfo, original
 
   const result = await Promise.all([
     page.waitForFunction(() => (window as any).testAppLoaded === true, { timeout: 4750 }),
-    originalFn(formattedUrl),
+    originalFn(formattedUrl, options),
   ]);
 
   return result[1];

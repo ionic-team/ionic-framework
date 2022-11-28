@@ -40,17 +40,16 @@ export const createHeaderIndex = (headerEl: HTMLElement | undefined): HeaderInde
 
   return {
     el: headerEl,
-    toolbars:
-      Array.from(toolbars).map((toolbar: any) => {
-        const ionTitleEl = toolbar.querySelector('ion-title');
-        return {
-          el: toolbar,
-          background: toolbar.shadowRoot!.querySelector('.toolbar-background'),
-          ionTitleEl,
-          innerTitleEl: ionTitleEl ? ionTitleEl.shadowRoot!.querySelector('.toolbar-title') : null,
-          ionButtonsEl: Array.from(toolbar.querySelectorAll('ion-buttons')) || [],
-        } as ToolbarIndex;
-      }) || [],
+    toolbars: Array.from(toolbars).map((toolbar: any) => {
+      const ionTitleEl = toolbar.querySelector('ion-title');
+      return {
+        el: toolbar,
+        background: toolbar.shadowRoot!.querySelector('.toolbar-background'),
+        ionTitleEl,
+        innerTitleEl: ionTitleEl ? ionTitleEl.shadowRoot!.querySelector('.toolbar-title') : null,
+        ionButtonsEl: Array.from(toolbar.querySelectorAll('ion-buttons')),
+      } as ToolbarIndex;
+    }),
   } as HeaderIndex;
 };
 
@@ -164,10 +163,14 @@ export const handleToolbarIntersection = (
 };
 
 export const setHeaderActive = (headerIndex: HeaderIndex, active = true) => {
+  const headerEl = headerIndex.el;
+
   if (active) {
-    headerIndex.el.classList.remove('header-collapse-condense-inactive');
+    headerEl.classList.remove('header-collapse-condense-inactive');
+    headerEl.removeAttribute('aria-hidden');
   } else {
-    headerIndex.el.classList.add('header-collapse-condense-inactive');
+    headerEl.classList.add('header-collapse-condense-inactive');
+    headerEl.setAttribute('aria-hidden', 'true');
   }
 };
 

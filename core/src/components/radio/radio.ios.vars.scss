@@ -47,4 +47,4 @@ $radio-ios-item-end-margin-end:       11px !default;
 $radio-ios-item-end-margin-bottom:    $radio-ios-item-end-margin-top !default;
 
 /// @prop - Margin start of the item-end in a radio
-$radio-ios-item-end-margin-start:     ($item-ios-padding-start / 2) !default;
+$radio-ios-item-end-margin-start:     ($item-ios-padding-start * 0.5) !default;

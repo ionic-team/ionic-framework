@@ -1,9 +1,16 @@
 import type { Animation } from '../../../interface';
 import { getTimeGivenProgression } from '../../../utils/animation/cubic-bezier';
-import { isIonContent } from '../../../utils/content';
+import {
+  isIonContent,
+  findClosestIonContent,
+  disableContentScrollY,
+  resetContentScrollY,
+} from '../../../utils/content';
 import type { GestureDetail } from '../../../utils/gesture';
 import { createGesture } from '../../../utils/gesture';
-import { clamp } from '../../../utils/helpers';
+import { clamp, getElementRoot } from '../../../utils/helpers';
+import type { Style as StatusBarStyle } from '../../../utils/native/status-bar';
+import { setCardStatusBarDark, setCardStatusBarDefault } from '../utils';
 
 import { calculateSpringStep, handleCanDismiss } from './utils';
 
@@ -14,18 +21,26 @@ export const SwipeToCloseDefaults = {
 
 export const createSwipeToCloseGesture = (
   el: HTMLIonModalElement,
-  contentEl: HTMLElement,
-  scrollEl: HTMLElement,
   animation: Animation,
+  statusBarStyle: StatusBarStyle,
   onDismiss: () => void
 ) => {
+  /**
+   * The step value at which a card modal
+   * is eligible for dismissing via gesture.
+   */
+  const DISMISS_THRESHOLD = 0.5;
+
   const height = el.offsetHeight;
   let isOpen = false;
   let canDismissBlocksGesture = false;
+  let contentEl: HTMLElement | null = null;
+  let scrollEl: HTMLElement | null = null;
   const canDismissMaxStep = 0.2;
-  const hasRefresherInContent = !!contentEl.querySelector('ion-refresher');
+  let initialScrollY = true;
+  let lastStep = 0;
   const getScrollY = () => {
-    if (isIonContent(contentEl)) {
+    if (contentEl && isIonContent(contentEl)) {
       return (contentEl as HTMLIonContentElement).scrollY;
       /**
        * Custom scroll containers are intended to be
@@ -34,23 +49,6 @@ export const createSwipeToCloseGesture = (
        */
     } else {
       return true;
-    }
-  };
-  const initialScrollY = getScrollY();
-
-  const disableContentScroll = () => {
-    if (isIonContent(contentEl)) {
-      (contentEl as HTMLIonContentElement).scrollY = false;
-    } else {
-      contentEl.style.setProperty('overflow', 'hidden');
-    }
-  };
-
-  const resetContentScroll = () => {
-    if (isIonContent(contentEl)) {
-      (contentEl as HTMLIonContentElement).scrollY = initialScrollY;
-    } else {
-      contentEl.style.removeProperty('overflow');
     }
   };
 
@@ -67,9 +65,17 @@ export const createSwipeToCloseGesture = (
      * the content is scrolled all the way
      * to the top so that we do not interfere
      * with scrolling.
+     *
+     * We cannot assume that the `ion-content`
+     * target will remain consistent between
+     * swipes. For example, when using
+     * ion-nav within a card modal it is
+     * possible to swipe, push a view, and then
+     * swipe again. The target content will not
+     * be the same between swipes.
      */
-    const content = target.closest('ion-content');
-    if (content) {
+    contentEl = findClosestIonContent(target);
+    if (contentEl) {
       /**
        * The card should never swipe to close
        * on the content with a refresher.
@@ -78,8 +84,21 @@ export const createSwipeToCloseGesture = (
        * than the refresher gesture as the iOS native
        * refresh gesture uses a scroll listener in
        * addition to a gesture.
+       *
+       * Note: Do not use getScrollElement here
+       * because we need this to be a synchronous
+       * operation, and getScrollElement is
+       * asynchronous.
        */
-      return !hasRefresherInContent && scrollEl.scrollTop === 0;
+      if (isIonContent(contentEl)) {
+        const root = getElementRoot(contentEl);
+        scrollEl = root.querySelector('.inner-scroll');
+      } else {
+        scrollEl = contentEl;
+      }
+
+      const hasRefresherInContent = !!contentEl.querySelector('ion-refresher');
+      return !hasRefresherInContent && scrollEl!.scrollTop === 0;
     }
 
     /**
@@ -96,6 +115,14 @@ export const createSwipeToCloseGesture = (
 
   const onStart = (detail: GestureDetail) => {
     const { deltaY } = detail;
+
+    /**
+     * Get the initial scrollY value so
+     * that we can correctly reset the scrollY
+     * prop when the gesture ends.
+     */
+    initialScrollY = getScrollY();
+
     /**
      * If canDismiss is anything other than `true`
      * then users should be able to swipe down
@@ -113,8 +140,8 @@ export const createSwipeToCloseGesture = (
      * content. We do not want scrolling to
      * happen at the same time as the gesture.
      */
-    if (deltaY > 0) {
-      disableContentScroll();
+    if (deltaY > 0 && contentEl) {
+      disableContentScrollY(contentEl);
     }
 
     animation.progressStart(true, isOpen ? 1 : 0);
@@ -129,8 +156,8 @@ export const createSwipeToCloseGesture = (
      * content. We do not want scrolling to
      * happen at the same time as the gesture.
      */
-    if (deltaY > 0) {
-      disableContentScroll();
+    if (deltaY > 0 && contentEl) {
+      disableContentScrollY(contentEl);
     }
 
     /**
@@ -152,14 +179,14 @@ export const createSwipeToCloseGesture = (
      * should block the gesture from
      * proceeding,
      */
-    const isAttempingDismissWithCanDismiss = step >= 0 && canDismissBlocksGesture;
+    const isAttemptingDismissWithCanDismiss = step >= 0 && canDismissBlocksGesture;
 
     /**
      * If we are blocking the gesture from dismissing,
      * set the max step value so that the sheet cannot be
      * completely hidden.
      */
-    const maxStep = isAttempingDismissWithCanDismiss ? canDismissMaxStep : 0.9999;
+    const maxStep = isAttemptingDismissWithCanDismiss ? canDismissMaxStep : 0.9999;
 
     /**
      * If we are blocking the gesture from
@@ -169,21 +196,43 @@ export const createSwipeToCloseGesture = (
      * Note that the starting breakpoint is always 0,
      * so we omit adding 0 to the result.
      */
-    const processedStep = isAttempingDismissWithCanDismiss ? calculateSpringStep(step / maxStep) : step;
+    const processedStep = isAttemptingDismissWithCanDismiss ? calculateSpringStep(step / maxStep) : step;
 
     const clampedStep = clamp(0.0001, processedStep, maxStep);
 
     animation.progressStep(clampedStep);
+
+    /**
+     * When swiping down half way, the status bar style
+     * should be reset to its default value.
+     *
+     * We track lastStep so that we do not fire these
+     * functions on every onMove, only when the user has
+     * crossed a certain threshold.
+     */
+    if (clampedStep >= DISMISS_THRESHOLD && lastStep < DISMISS_THRESHOLD) {
+      setCardStatusBarDefault(statusBarStyle);
+
+      /**
+       * However, if we swipe back up, then the
+       * status bar style should be set to have light
+       * text on a dark background.
+       */
+    } else if (clampedStep < DISMISS_THRESHOLD && lastStep >= DISMISS_THRESHOLD) {
+      setCardStatusBarDark();
+    }
+
+    lastStep = clampedStep;
   };
 
   const onEnd = (detail: GestureDetail) => {
     const velocity = detail.velocityY;
     const step = detail.deltaY / height;
 
-    const isAttempingDismissWithCanDismiss = step >= 0 && canDismissBlocksGesture;
-    const maxStep = isAttempingDismissWithCanDismiss ? canDismissMaxStep : 0.9999;
+    const isAttemptingDismissWithCanDismiss = step >= 0 && canDismissBlocksGesture;
+    const maxStep = isAttemptingDismissWithCanDismiss ? canDismissMaxStep : 0.9999;
 
-    const processedStep = isAttempingDismissWithCanDismiss ? calculateSpringStep(step / maxStep) : step;
+    const processedStep = isAttemptingDismissWithCanDismiss ? calculateSpringStep(step / maxStep) : step;
 
     const clampedStep = clamp(0.0001, processedStep, maxStep);
 
@@ -195,7 +244,7 @@ export const createSwipeToCloseGesture = (
      * animation can never complete until
      * canDismiss is checked.
      */
-    const shouldComplete = !isAttempingDismissWithCanDismiss && threshold >= 0.5;
+    const shouldComplete = !isAttemptingDismissWithCanDismiss && threshold >= DISMISS_THRESHOLD;
     let newStepValue = shouldComplete ? -0.001 : 0.001;
 
     if (!shouldComplete) {
@@ -213,7 +262,9 @@ export const createSwipeToCloseGesture = (
 
     gesture.enable(false);
 
-    resetContentScroll();
+    if (contentEl) {
+      resetContentScrollY(contentEl, initialScrollY);
+    }
 
     animation
       .onFinish(() => {
@@ -235,7 +286,7 @@ export const createSwipeToCloseGesture = (
      * check canDismiss. 25% was chosen
      * to avoid accidental swipes.
      */
-    if (isAttempingDismissWithCanDismiss && clampedStep > maxStep / 4) {
+    if (isAttemptingDismissWithCanDismiss && clampedStep > maxStep / 4) {
       handleCanDismiss(el, animation);
     } else if (shouldComplete) {
       onDismiss();
@@ -245,7 +296,7 @@ export const createSwipeToCloseGesture = (
   const gesture = createGesture({
     el,
     gestureName: 'modalSwipeToClose',
-    gesturePriority: 40,
+    gesturePriority: 39,
     direction: 'y',
     threshold: 10,
     canStart,

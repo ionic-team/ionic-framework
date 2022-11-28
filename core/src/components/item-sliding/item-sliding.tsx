@@ -3,6 +3,7 @@ import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Gesture, GestureDetail, Side } from '../../interface';
+import { findClosestIonContent, disableContentScrollY, resetContentScrollY } from '../../utils/content';
 import { isEndSide } from '../../utils/helpers';
 
 const SWIPE_MARGIN = 30;
@@ -43,7 +44,7 @@ export class ItemSliding implements ComponentInterface {
   private rightOptions?: HTMLIonItemOptionsElement;
   private optsDirty = true;
   private gesture?: Gesture;
-  private closestContent: HTMLIonContentElement | null = null;
+  private contentEl: HTMLElement | null = null;
   private initialContentScrollY = true;
 
   @Element() el!: HTMLIonItemSlidingElement;
@@ -68,7 +69,7 @@ export class ItemSliding implements ComponentInterface {
 
   async connectedCallback() {
     this.item = this.el.querySelector('ion-item');
-    this.closestContent = this.el.closest('ion-content');
+    this.contentEl = findClosestIonContent(this.el);
 
     await this.updateOptions();
 
@@ -228,6 +229,7 @@ export class ItemSliding implements ComponentInterface {
        * util here since we need to wait for all of these items
        * to be ready before we set `this.sides` and `this.optsDirty`.
        */
+      // eslint-disable-next-line custom-rules/no-component-on-ready-method
       const option = (item as any).componentOnReady !== undefined ? await item.componentOnReady() : item;
 
       const side = isEndSide(option.side) ? 'end' : 'start';
@@ -264,23 +266,6 @@ export class ItemSliding implements ComponentInterface {
     return !!(this.rightOptions || this.leftOptions);
   }
 
-  private disableContentScrollY() {
-    if (this.closestContent === null) {
-      return;
-    }
-
-    this.initialContentScrollY = this.closestContent.scrollY;
-    this.closestContent.scrollY = false;
-  }
-
-  private restoreContentScrollY() {
-    if (this.closestContent === null) {
-      return;
-    }
-
-    this.closestContent.scrollY = this.initialContentScrollY;
-  }
-
   private onStart() {
     /**
      * We need to query for the ion-item
@@ -289,8 +274,10 @@ export class ItemSliding implements ComponentInterface {
      */
     this.item = this.el.querySelector('ion-item');
 
-    // Prevent scrolling during gesture
-    this.disableContentScrollY();
+    const { contentEl } = this;
+    if (contentEl) {
+      this.initialContentScrollY = disableContentScrollY(contentEl);
+    }
 
     openSlidingItem = this.el;
 
@@ -343,8 +330,10 @@ export class ItemSliding implements ComponentInterface {
   }
 
   private onEnd(gesture: GestureDetail) {
-    // Restore ion-content scrollY to initial value when gesture ends
-    this.restoreContentScrollY();
+    const { contentEl, initialContentScrollY } = this;
+    if (contentEl) {
+      resetContentScrollY(contentEl, initialContentScrollY);
+    }
 
     const velocity = gesture.velocityX;
 

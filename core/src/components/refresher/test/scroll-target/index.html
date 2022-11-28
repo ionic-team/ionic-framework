@@ -44,8 +44,8 @@
         <ion-refresher id="refresher" slot="fixed">
           <ion-refresher-content></ion-refresher-content>
         </ion-refresher>
-        <div id="content" class="ion-content-scroll-host">
-          <div id="inner-scroll">
+        <div id="content">
+          <div id="inner-scroll" class="ion-content-scroll-host">
             <ion-list id="list"></ion-list>
           </div>
         </div>
@@ -65,7 +65,7 @@
         refresher.complete();
         render();
         // Custom event consumed by e2e tests
-        document.dispatchEvent(new CustomEvent('ionRefreshComplete'));
+        window.dispatchEvent(new CustomEvent('ionRefreshComplete'));
       });
 
       function render() {

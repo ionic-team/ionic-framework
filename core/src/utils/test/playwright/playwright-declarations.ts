@@ -1,6 +1,7 @@
 import type { Page, Response } from '@playwright/test';
 
 import type { EventSpy } from './page/event-spy';
+import type { LocatorOptions, E2ELocator } from './page/utils/locator';
 
 export interface E2EPage extends Page {
   /**
@@ -27,12 +28,46 @@ export interface E2EPage extends Page {
    * @param url URL to navigate page to. The url should include scheme, e.g. `https://`. When a `baseURL` via the context options was provided and the passed URL is a path, it gets merged via the
    * [`new URL()`](https://developer.mozilla.org/en-US/docs/Web/API/URL/URL) constructor.
    */
-  goto: (url: string) => Promise<null | Response>;
+  goto: (
+    url: string,
+    options?: {
+      /**
+       * Referer header value. If provided it will take preference over the referer header value set by
+       * [page.setExtraHTTPHeaders(headers)](https://playwright.dev/docs/api/class-page#page-set-extra-http-headers).
+       */
+      referer?: string;
+
+      /**
+       * Maximum operation time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be
+       * changed by using the
+       * [browserContext.setDefaultNavigationTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-navigation-timeout),
+       * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout),
+       * [page.setDefaultNavigationTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-navigation-timeout)
+       * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+       */
+      timeout?: number;
+
+      /**
+       * When to consider operation succeeded, defaults to `load`. Events can be either:
+       * - `'domcontentloaded'` - consider operation to be finished when the `DOMContentLoaded` event is fired.
+       * - `'load'` - consider operation to be finished when the `load` event is fired.
+       * - `'networkidle'` - consider operation to be finished when there are no network connections for at least `500` ms.
+       * - `'commit'` - consider operation to be finished when network response is received and the document started loading.
+       */
+      waitUntil?: 'load' | 'domcontentloaded' | 'networkidle' | 'commit';
+    }
+  ) => Promise<null | Response>;
+  /**
+   * Find an element by selector.
+   * See https://playwright.dev/docs/locators for more information.
+   */
+  locator: (selector: string, options?: LocatorOptions) => E2ELocator;
+
   /**
    * Increases the size of the page viewport to match the `ion-content` contents.
    * Use this method when taking full-screen screenshots.
    */
-  setIonViewport: () => Promise<void>;
+  setIonViewport: (options?: SetIonViewportOptions) => Promise<void>;
   /**
    * This provides metadata that can be used to create a unique screenshot URL.
    * For example, we need to be able to differentiate between iOS in LTR mode and iOS in RTL mode.
@@ -50,11 +85,31 @@ export interface E2EPage extends Page {
    * never fires.
    *
    * Usage:
+   * ```ts
    * const ionChange = await page.spyOnEvent('ionChange');
    * ...
    * await ionChange.next();
+   * ```
    */
   spyOnEvent: (eventName: string) => Promise<EventSpy>;
   _e2eEventsIds: number;
   _e2eEvents: Map<number, any>;
+}
+
+type BrowserName = 'chromium' | 'firefox' | 'webkit';
+
+export type BrowserNameOrCallback = BrowserName | ((browserName: BrowserName) => boolean);
+
+export interface E2ESkip {
+  rtl: (reason?: string) => void;
+  browser: (browserNameOrCallback: BrowserNameOrCallback, reason?: string) => void;
+  mode: (mode: 'md' | 'ios', reason?: string) => void;
+}
+
+export interface SetIonViewportOptions {
+  /**
+   * `true` if the viewport should be scaled to match the `ion-content`
+   * scrollable width. Defaults to `false`.
+   */
+  resizeViewportWidth?: boolean;
 }

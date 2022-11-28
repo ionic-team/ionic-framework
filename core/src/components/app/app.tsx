@@ -25,7 +25,12 @@ export class App implements ComponentInterface {
           import('../../utils/status-tap').then((module) => module.startStatusTap());
         }
         if (config.getBoolean('inputShims', needInputShims())) {
-          import('../../utils/input-shims/input-shims').then((module) => module.startInputShims(config));
+          /**
+           * needInputShims() ensures that only iOS and Android
+           * platforms proceed into this block.
+           */
+          const platform = isPlatform(window, 'ios') ? 'ios' : 'android';
+          import('../../utils/input-shims/input-shims').then((module) => module.startInputShims(config, platform));
         }
         const hardwareBackButtonModule = await import('../../utils/hardware-back-button');
         if (config.getBoolean('hardwareBackButton', isHybrid)) {
@@ -73,7 +78,25 @@ export class App implements ComponentInterface {
 }
 
 const needInputShims = () => {
-  return isPlatform(window, 'ios') && isPlatform(window, 'mobile');
+  /**
+   * iOS always needs input shims
+   */
+  const needsShimsIOS = isPlatform(window, 'ios') && isPlatform(window, 'mobile');
+  if (needsShimsIOS) {
+    return true;
+  }
+
+  /**
+   * Android only needs input shims when running
+   * in the browser and only if the browser is using the
+   * new Chrome 108+ resize behavior: https://developer.chrome.com/blog/viewport-resize-behavior/
+   */
+  const isAndroidMobileWeb = isPlatform(window, 'android') && isPlatform(window, 'mobileweb');
+  if (isAndroidMobileWeb) {
+    return true;
+  }
+
+  return false;
 };
 
 const rIC = (callback: () => void) => {

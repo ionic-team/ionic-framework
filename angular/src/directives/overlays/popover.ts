@@ -51,6 +51,7 @@ export declare interface IonPopover extends Components.IonPopover {
     'alignment',
     'animated',
     'arrow',
+    'keepContentsMounted',
     'backdropDismiss',
     'cssClass',
     'dismissOnSelect',
@@ -73,11 +74,12 @@ export declare interface IonPopover extends Components.IonPopover {
 @Component({
   selector: 'ion-popover',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<ng-container [ngTemplateOutlet]="template" *ngIf="isCmpOpen"></ng-container>`,
+  template: `<ng-container [ngTemplateOutlet]="template" *ngIf="isCmpOpen || keepContentsMounted"></ng-container>`,
   inputs: [
     'alignment',
     'animated',
     'arrow',
+    'keepContentsMounted',
     'backdropDismiss',
     'cssClass',
     'dismissOnSelect',
@@ -106,7 +108,7 @@ export class IonPopover {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     this.el = r.nativeElement;
 
-    this.el.addEventListener('willPresent', () => {
+    this.el.addEventListener('ionMount', () => {
       this.isCmpOpen = true;
       c.detectChanges();
     });

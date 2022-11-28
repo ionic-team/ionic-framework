@@ -1,0 +1,17 @@
+<ion-content>
+  <ion-button id="dismiss" (click)="modal.dismiss()">Dismiss Modal</ion-button>
+  <ion-accordion-group [value]="'a'">
+    <ion-accordion value="a">
+      <ion-item slot="header">
+        <ion-label>A</ion-label>
+      </ion-item>
+      <div slot="content">A content</div>
+    </ion-accordion>
+    <ion-accordion value="b">
+      <ion-item slot="header">
+        <ion-label>B</ion-label>
+      </ion-item>
+      <div slot="content">B content</div>
+    </ion-accordion>
+  </ion-accordion-group>
+</ion-content>

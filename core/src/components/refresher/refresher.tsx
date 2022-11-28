@@ -4,8 +4,13 @@ import { Component, Element, Event, Host, Method, Prop, State, Watch, h, readTas
 import { getIonMode } from '../../global/ionic-global';
 import type { Animation, Gesture, GestureDetail, RefresherEventDetail } from '../../interface';
 import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
-import { findClosestIonContent, getScrollElement, printIonContentErrorMsg } from '../../utils/content';
-import { clamp, getElementRoot, raf, transitionEndAsync } from '../../utils/helpers';
+import {
+  getScrollElement,
+  ION_CONTENT_CLASS_SELECTOR,
+  ION_CONTENT_ELEMENT_SELECTOR,
+  printIonContentErrorMsg,
+} from '../../utils/content';
+import { clamp, componentOnReady, getElementRoot, raf, transitionEndAsync } from '../../utils/helpers';
 import { hapticImpact } from '../../utils/native/haptic';
 
 import {
@@ -332,6 +337,8 @@ export class Refresher implements ComponentInterface {
         this.state !== RefresherState.Completing &&
         this.scrollEl!.scrollTop === 0,
       onStart: (ev: GestureDetail) => {
+        this.progress = 0;
+
         ev.data = { animation: undefined, didStart: false, cancelled: false };
       },
       onMove: (ev: GestureDetail) => {
@@ -367,10 +374,10 @@ export class Refresher implements ComponentInterface {
           return;
         }
 
+        this.gesture!.enable(false);
+
         writeTask(() => this.scrollEl!.style.removeProperty('--overflow'));
         if (this.progress <= 0.4) {
-          this.gesture!.enable(false);
-
           ev.data.animation.progressEnd(0, this.progress, 500).onFinish(() => {
             this.animations.forEach((ani) => ani.destroy());
             this.animations = [];
@@ -389,6 +396,7 @@ export class Refresher implements ComponentInterface {
           await snapBackAnimation.play();
           this.beginRefresh();
           ev.data.animation.destroy();
+          this.gesture!.enable(true);
         });
       },
     });
@@ -435,47 +443,48 @@ export class Refresher implements ComponentInterface {
       console.error('Make sure you use: <ion-refresher slot="fixed">');
       return;
     }
-
-    const contentEl = findClosestIonContent(this.el);
+    const contentEl = this.el.closest(ION_CONTENT_ELEMENT_SELECTOR);
     if (!contentEl) {
       printIonContentErrorMsg(this.el);
       return;
     }
-
-    this.scrollEl = await getScrollElement(contentEl);
-
     /**
-     * Query the host `ion-content` directly (if it is available), to use its
-     * inner #background-content has the target. Otherwise fallback to the
-     * custom scroll target host.
-     *
-     * This makes it so that implementers do not need to re-create the background content
-     * element and styles.
+     * Waits for the content to be ready before querying the scroll
+     * or the background content element.
      */
-    const backgroundContentHost = this.el.closest('ion-content') ?? contentEl;
+    componentOnReady(contentEl, async () => {
+      const customScrollTarget = contentEl.querySelector(ION_CONTENT_CLASS_SELECTOR);
+      /**
+       * Query the custom scroll target (if available), first. In refresher implementations,
+       * the ion-refresher element will always be a direct child of ion-content (slot="fixed"). By
+       * querying the custom scroll target first and falling back to the ion-content element,
+       * the correct scroll element will be returned by the implementation.
+       */
+      this.scrollEl = await getScrollElement(customScrollTarget ?? contentEl);
+      /**
+       * Query the background content element from the host ion-content element directly.
+       */
+      this.backgroundContentEl = await contentEl.getBackgroundElement();
 
-    this.backgroundContentEl = getElementRoot(backgroundContentHost).querySelector(
-      '#background-content'
-    ) as HTMLElement;
+      if (await shouldUseNativeRefresher(this.el, getIonMode(this))) {
+        this.setupNativeRefresher(contentEl);
+      } else {
+        this.gesture = (await import('../../utils/gesture')).createGesture({
+          el: contentEl,
+          gestureName: 'refresher',
+          gesturePriority: 31,
+          direction: 'y',
+          threshold: 20,
+          passive: false,
+          canStart: () => this.canStart(),
+          onStart: () => this.onStart(),
+          onMove: (ev) => this.onMove(ev),
+          onEnd: () => this.onEnd(),
+        });
 
-    if (await shouldUseNativeRefresher(this.el, getIonMode(this))) {
-      this.setupNativeRefresher(contentEl);
-    } else {
-      this.gesture = (await import('../../utils/gesture')).createGesture({
-        el: contentEl,
-        gestureName: 'refresher',
-        gesturePriority: 31,
-        direction: 'y',
-        threshold: 20,
-        passive: false,
-        canStart: () => this.canStart(),
-        onStart: () => this.onStart(),
-        onMove: (ev) => this.onMove(ev),
-        onEnd: () => this.onEnd(),
-      });
-
-      this.disabledChanged();
-    }
+        this.disabledChanged();
+      }
+    });
   }
 
   disconnectedCallback() {
@@ -568,7 +577,7 @@ export class Refresher implements ComponentInterface {
     // best to do any DOM read/writes only when absolutely necessary
     // if multi-touch then get out immediately
     const ev = detail.event as TouchEvent;
-    if (ev.touches && ev.touches.length > 1) {
+    if (ev.touches !== undefined && ev.touches.length > 1) {
       return;
     }
 
@@ -705,8 +714,6 @@ export class Refresher implements ComponentInterface {
     // set that the refresh is actively cancelling/completing
     this.state = state;
     this.setCss(0, this.closeDuration, true, delay);
-
-    // TODO: stop gesture
   }
 
   private setCss(y: number, duration: string, overflowVisible: boolean, delay: string) {

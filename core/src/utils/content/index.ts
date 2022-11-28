@@ -2,8 +2,8 @@ import { componentOnReady } from '../helpers';
 import { printRequiredElementError } from '../logging';
 
 const ION_CONTENT_TAG_NAME = 'ION-CONTENT';
-const ION_CONTENT_ELEMENT_SELECTOR = 'ion-content';
-const ION_CONTENT_CLASS_SELECTOR = '.ion-content-scroll-host';
+export const ION_CONTENT_ELEMENT_SELECTOR = 'ion-content';
+export const ION_CONTENT_CLASS_SELECTOR = '.ion-content-scroll-host';
 /**
  * Selector used for implementations reliant on `<ion-content>` for scroll event changes.
  *
@@ -13,7 +13,7 @@ const ION_CONTENT_CLASS_SELECTOR = '.ion-content-scroll-host';
  */
 const ION_CONTENT_SELECTOR = `${ION_CONTENT_ELEMENT_SELECTOR}, ${ION_CONTENT_CLASS_SELECTOR}`;
 
-export const isIonContent = (el: Element) => el && el.tagName === ION_CONTENT_TAG_NAME;
+export const isIonContent = (el: Element) => el.tagName === ION_CONTENT_TAG_NAME;
 
 /**
  * Waits for the element host fully initialize before
@@ -100,4 +100,38 @@ export const scrollByPoint = (el: HTMLElement, x: number, y: number, durationMs:
  */
 export const printIonContentErrorMsg = (el: HTMLElement) => {
   return printRequiredElementError(el, ION_CONTENT_ELEMENT_SELECTOR);
+};
+
+/**
+ * Several components in Ionic need to prevent scrolling
+ * during a gesture (card modal, range, item sliding, etc).
+ * Use this utility to account for ion-content and custom content hosts.
+ */
+export const disableContentScrollY = (contentEl: HTMLElement): boolean => {
+  if (isIonContent(contentEl)) {
+    const ionContent = contentEl as HTMLIonContentElement;
+    const initialScrollY = ionContent.scrollY;
+    ionContent.scrollY = false;
+
+    /**
+     * This should be passed into resetContentScrollY
+     * so that we can revert ion-content's scrollY to the
+     * correct state. For example, if scrollY = false
+     * initially, we do not want to enable scrolling
+     * when we call resetContentScrollY.
+     */
+    return initialScrollY;
+  } else {
+    contentEl.style.setProperty('overflow', 'hidden');
+
+    return true;
+  }
+};
+
+export const resetContentScrollY = (contentEl: HTMLElement, initialScrollY: boolean) => {
+  if (isIonContent(contentEl)) {
+    (contentEl as HTMLIonContentElement).scrollY = initialScrollY;
+  } else {
+    contentEl.style.removeProperty('overflow');
+  }
 };

@@ -863,7 +863,17 @@ export const calculateWindowAdjustment = (
    */
   if (triggerTop + triggerHeight + contentHeight > bodyHeight && (side === 'top' || side === 'bottom')) {
     if (triggerTop - contentHeight > 0) {
-      top = triggerTop - contentHeight - triggerHeight - (arrowHeight - 1);
+      /**
+       * While we strive to align the popover with the trigger
+       * on smaller screens this is not always possible. As a result,
+       * we adjust the popover up so that it does not hang
+       * off the bottom of the screen. However, we do not want to move
+       * the popover up so much that it goes off the top of the screen.
+       *
+       * We chose 12 here so that the popover position looks a bit nicer as
+       * it is not right up against the edge of the screen.
+       */
+      top = Math.max(12, triggerTop - contentHeight - triggerHeight - (arrowHeight - 1));
       arrowTop = top + contentHeight;
       originY = 'bottom';
       addPopoverBottomClass = true;

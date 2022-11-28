@@ -1,38 +1,40 @@
-import { newE2EPage } from '@stencil/core/testing';
-import { generateE2EUrl } from '@utils/test';
+import type { Locator } from '@playwright/test';
+import { expect } from '@playwright/test';
+import type { E2EPage } from '@utils/test/playwright';
 
-export const testPopover = async (type: string, selector: string, expectUnmount = true, rtl = false) => {
-  try {
-    const pageUrl = generateE2EUrl('popover', type, rtl);
+export const openPopover = async (page: E2EPage, buttonID: string, useEvalClick = false) => {
+  const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
 
-    const page = await newE2EPage({
-      url: pageUrl,
-    });
+  const trigger = page.locator(`#${buttonID}`);
+  await trigger.evaluate((el: HTMLElement) => el.scrollIntoView({ block: 'center' }));
 
-    const screenshotCompares = [];
-
-    await page.click(selector);
-    await page.waitForSelector(selector);
-
-    let popover = await page.find('ion-popover');
-    await popover.waitForVisible();
-
-    screenshotCompares.push(await page.compareScreenshot());
-
-    await popover.callMethod('dismiss');
-    await popover.waitForNotVisible();
-
-    screenshotCompares.push(await page.compareScreenshot('dismiss'));
-
-    if (expectUnmount) {
-      popover = await page.find('ion-popover');
-      expect(popover).toBeNull();
-    }
-
-    for (const screenshotCompare of screenshotCompares) {
-      expect(screenshotCompare).toMatchScreenshot();
-    }
-  } catch (err) {
-    throw err;
+  /**
+   * Some tests aim to have many popovers open at once. When clicking a locator, Playwright
+   * will simply click on that coordinate, which may instead trigger the backdrop for the
+   * previous popover. Rather than set backdropDismiss=false on all popovers, we can call
+   * the click method on the button directly to avoid this behavior.
+   */
+  if (useEvalClick) {
+    trigger.evaluate((el: HTMLElement) => el.click());
+  } else {
+    await trigger.click();
   }
+
+  await ionPopoverDidPresent.next();
+};
+
+export const closePopover = async (page: E2EPage, popover?: Locator) => {
+  const ionPopoverDidDismiss = await page.spyOnEvent('ionPopoverDidDismiss');
+  popover = popover || page.locator('ion-popover');
+
+  await popover.evaluate((el: HTMLIonPopoverElement) => el.dismiss());
+  await ionPopoverDidDismiss.next();
+};
+
+export const screenshotPopover = async (page: E2EPage, buttonID: string, testName: string) => {
+  await page.goto(`src/components/popover/test/${testName}`);
+
+  await openPopover(page, buttonID);
+  await page.setIonViewport();
+  expect(await page.screenshot()).toMatchSnapshot(`popover-${testName}-${buttonID}-${page.getSnapshotSettings()}.png`);
 };

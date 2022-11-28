@@ -24,7 +24,6 @@ export const generateId = (type = 'main') => {
   return (id).toString();
 };
 
-// TODO types
 export const fireLifecycle = (vueComponent: any, vueInstance: Ref<ComponentPublicInstance>, lifecycle: LIFECYCLE_EVENTS) => {
   if (vueComponent?.[lifecycle]) {
     vueComponent[lifecycle].bind(vueInstance?.value)();
@@ -57,11 +56,3 @@ export const getConfig = (): CoreConfig | null => {
   }
   return null;
 };
-
-export const defineCustomElement = (tagName: string, customElement: any) => {
-  if (typeof customElements === 'undefined') return;
-
-  if (!customElements.get(tagName)) {
-    customElements.define(tagName, customElement);
-  }
-}

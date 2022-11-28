@@ -6,6 +6,7 @@ import type { AnimationBuilder, Color, RouterDirection } from '../../interface';
 import type { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes, hasShadowDom } from '../../utils/helpers';
+import { printIonWarning } from '../../utils/logging';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**
@@ -53,14 +54,14 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
 
   /**
    * Set to `"block"` for a full-width button or to `"full"` for a full-width button
-   * without left and right borders.
+   * with square corners and no left or right borders.
    */
   @Prop({ reflect: true }) expand?: 'full' | 'block';
 
   /**
-   * Set to `"clear"` for a transparent button, to `"outline"` for a transparent
-   * button with a border, or to `"solid"`. The default style is `"solid"` except inside of
-   * a toolbar, where the default is `"clear"`.
+   * Set to `"clear"` for a transparent button that resembles a flat button, to `"outline"`
+   * for a transparent button with a border, or to `"solid"` for a button with a filled background.
+   * The default fill is `"solid"` except inside of a toolbar, where the default is `"clear"`.
    */
   @Prop({ reflect: true, mutable: true }) fill?: 'clear' | 'outline' | 'solid' | 'default';
 
@@ -97,12 +98,16 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   @Prop() rel: string | undefined;
 
   /**
-   * The button shape.
+   * Set to `"round"` for a button with more rounded corners.
    */
   @Prop({ reflect: true }) shape?: 'round';
 
   /**
-   * The button size.
+   * Set to `"small"` for a button with less height and padding, to `"default"`
+   * for a button with the default height and padding, or to `"large"` for a button
+   * with more height and padding. By default the size is unset, unless the button
+   * is inside of an item, where the size is `"small"` by default. Set the size to
+   * `"default"` inside of an item to make it a standard size button.
    */
   @Prop({ reflect: true }) size?: 'small' | 'default' | 'large';
 
@@ -122,6 +127,11 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
    * The type of the button.
    */
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
+
+  /**
+   * The HTML form element or form element id. Used to submit a form when the button is not a child of the form.
+   */
+  @Prop() form?: string | HTMLFormElement;
 
   /**
    * Emitted when the button has focus.
@@ -156,21 +166,69 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     return 'bounded';
   }
 
+  /**
+   * Finds the form element based on the provided `form` selector
+   * or element reference provided.
+   */
+  private findForm(): HTMLFormElement | null {
+    const { form } = this;
+    if (form instanceof HTMLFormElement) {
+      return form;
+    }
+    if (typeof form === 'string') {
+      const el = document.getElementById(form);
+      if (el instanceof HTMLFormElement) {
+        return el;
+      }
+    }
+    return null;
+  }
+
   private handleClick = (ev: Event) => {
+    const { el } = this;
     if (this.type === 'button') {
       openURL(this.href, ev, this.routerDirection, this.routerAnimation);
-    } else if (hasShadowDom(this.el)) {
+    } else if (hasShadowDom(el)) {
       // this button wants to specifically submit a form
       // climb up the dom to see if we're in a <form>
       // and if so, then use JS to submit it
-      const form = this.el.closest('form');
-      if (form) {
+      let formEl = this.findForm();
+      const { form } = this;
+
+      if (!formEl && form !== undefined) {
+        /**
+         * The developer specified a form selector for
+         * the button to submit, but it was not found.
+         */
+        if (typeof form === 'string') {
+          printIonWarning(
+            `Form with selector: "#${form}" could not be found. Verify that the id is correct and the form is rendered in the DOM.`,
+            el
+          );
+        } else {
+          printIonWarning(
+            `The provided "form" element is invalid. Verify that the form is a HTMLFormElement and rendered in the DOM.`,
+            el
+          );
+        }
+        return;
+      }
+
+      if (!formEl) {
+        /**
+         * If the form element is not set, the button may be inside
+         * of a form element. Query the closest form element to the button.
+         */
+        formEl = el.closest('form');
+      }
+
+      if (formEl) {
         ev.preventDefault();
 
         const fakeButton = document.createElement('button');
         fakeButton.type = this.type;
         fakeButton.style.display = 'none';
-        form.appendChild(fakeButton);
+        formEl.appendChild(fakeButton);
         fakeButton.click();
         fakeButton.remove();
       }
@@ -213,9 +271,12 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
             rel,
             target,
           };
-
     let fill = this.fill;
-    if (fill === undefined) {
+    /**
+     * We check both undefined and null to
+     * work around https://github.com/ionic-team/stencil/issues/3586.
+     */
+    if (fill == null) {
       fill = this.inToolbar || this.inListHeader ? 'clear' : 'solid';
     }
     return (

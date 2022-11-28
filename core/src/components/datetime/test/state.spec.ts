@@ -12,6 +12,7 @@ describe('getCalendarDayState()', () => {
       disabled: false,
       ariaSelected: null,
       ariaLabel: 'Tuesday, January 1',
+      text: '1',
     });
 
     expect(getCalendarDayState('en-US', refA, refA, refC)).toEqual({
@@ -20,6 +21,7 @@ describe('getCalendarDayState()', () => {
       disabled: false,
       ariaSelected: 'true',
       ariaLabel: 'Tuesday, January 1',
+      text: '1',
     });
 
     expect(getCalendarDayState('en-US', refA, refB, refA)).toEqual({
@@ -28,6 +30,7 @@ describe('getCalendarDayState()', () => {
       disabled: false,
       ariaSelected: null,
       ariaLabel: 'Today, Tuesday, January 1',
+      text: '1',
     });
 
     expect(getCalendarDayState('en-US', refA, refA, refA)).toEqual({
@@ -36,6 +39,7 @@ describe('getCalendarDayState()', () => {
       disabled: false,
       ariaSelected: 'true',
       ariaLabel: 'Today, Tuesday, January 1',
+      text: '1',
     });
 
     expect(getCalendarDayState('en-US', refA, refA, refA, undefined, undefined, [1])).toEqual({
@@ -44,6 +48,7 @@ describe('getCalendarDayState()', () => {
       disabled: false,
       ariaSelected: 'true',
       ariaLabel: 'Today, Tuesday, January 1',
+      text: '1',
     });
 
     expect(getCalendarDayState('en-US', refA, refA, refA, undefined, undefined, [2])).toEqual({
@@ -52,6 +57,7 @@ describe('getCalendarDayState()', () => {
       disabled: true,
       ariaSelected: 'true',
       ariaLabel: 'Today, Tuesday, January 1',
+      text: '1',
     });
   });
 });

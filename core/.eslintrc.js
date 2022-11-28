@@ -13,10 +13,12 @@ module.exports = {
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": "latest",
-    "sourceType": "module"
+    "sourceType": "module",
+    "project": "tsconfig.json"
   },
   "plugins": [
-    "@typescript-eslint"
+    "@typescript-eslint",
+    "custom-rules"
   ],
   "rules": {
     "@typescript-eslint/explicit-module-boundary-types": "off",
@@ -29,6 +31,15 @@ module.exports = {
     ],
     "no-useless-catch": "off",
     "@typescript-eslint/no-non-null-assertion": "off",
-    "no-case-declarations": "off"
+    "no-case-declarations": "off",
+    "@typescript-eslint/strict-boolean-expressions": [
+      "error",
+      {
+        "allowNullableBoolean": true,
+        "allowNullableString": true,
+        "allowAny": true
+      }
+    ],
+    "custom-rules/no-component-on-ready-method": "error"
   }
 };

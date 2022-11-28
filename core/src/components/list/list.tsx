@@ -46,6 +46,7 @@ export class List implements ComponentInterface {
     const { lines, inset } = this;
     return (
       <Host
+        role="list"
         class={{
           [mode]: true,
 

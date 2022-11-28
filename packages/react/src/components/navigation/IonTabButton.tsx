@@ -34,6 +34,11 @@ export const IonTabButton = /*@__PURE__*/ (() =>
     }
 
     render() {
+      /**
+       * onClick is excluded from the props, since it has a custom
+       * implementation within IonTabBar.tsx. Calling onClick within this
+       * component would result in duplicate handler calls.
+       */
       const { onClick, ...rest } = this.props;
       return (
         <IonTabButtonInner

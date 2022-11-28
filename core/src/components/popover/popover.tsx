@@ -128,6 +128,10 @@ export class Popover implements ComponentInterface, PopoverInterface {
 
   /**
    * If `true`, a backdrop will be displayed behind the popover.
+   * This property controls whether or not the backdrop
+   * darkens the screen when the popover is presented.
+   * It does not control whether or not the backdrop
+   * is active or present in the DOM.
    */
   @Prop() showBackdrop = true;
 
@@ -250,6 +254,19 @@ export class Popover implements ComponentInterface, PopoverInterface {
   }
 
   /**
+   * If `true`, the component passed into `ion-popover` will
+   * automatically be mounted when the popover is created. The
+   * component will remain mounted even when the popover is dismissed.
+   * However, the component will be destroyed when the popover is
+   * destroyed. This property is not reactive and should only be
+   * used when initially creating a popover.
+   *
+   * Note: This feature only applies to inline popovers in JavaScript
+   * frameworks such as Angular, React, and Vue.
+   */
+  @Prop() keepContentsMounted = false;
+
+  /**
    * Emitted after the popover has presented.
    */
   @Event({ eventName: 'ionPopoverDidPresent' }) didPresent!: EventEmitter<void>;
@@ -293,8 +310,32 @@ export class Popover implements ComponentInterface, PopoverInterface {
    */
   @Event({ eventName: 'didDismiss' }) didDismissShorthand!: EventEmitter<OverlayEventDetail>;
 
+  /**
+   * Emitted before the popover has presented, but after the component
+   * has been mounted in the DOM.
+   * This event exists for ion-popover to resolve an issue with the
+   * popover and the lazy build, that the transition is unable to get
+   * the correct dimensions of the popover with auto sizing.
+   * This is not required for other overlays, since the existing
+   * overlay transitions are not effected by auto sizing content.
+   *
+   * @internal
+   */
+  @Event() ionMount!: EventEmitter<void>;
+
   connectedCallback() {
-    prepareOverlay(this.el);
+    const { configureTriggerInteraction, el } = this;
+
+    prepareOverlay(el);
+    configureTriggerInteraction();
+  }
+
+  disconnectedCallback() {
+    const { destroyTriggerInteraction } = this;
+
+    if (destroyTriggerInteraction) {
+      destroyTriggerInteraction();
+    }
   }
 
   componentWillLoad() {
@@ -327,8 +368,6 @@ export class Popover implements ComponentInterface, PopoverInterface {
         this.dismiss(undefined, undefined, false);
       });
     }
-
-    this.configureTriggerInteraction();
   }
 
   /**
@@ -420,28 +459,48 @@ export class Popover implements ComponentInterface, PopoverInterface {
     }
     this.configureDismissInteraction();
 
-    this.currentTransition = present(this, 'popoverEnter', iosEnterAnimation, mdEnterAnimation, {
-      event: event || this.event,
-      size: this.size,
-      trigger: this.triggerEl,
-      reference: this.reference,
-      side: this.side,
-      align: this.alignment,
+    this.ionMount.emit();
+
+    return new Promise((resolve) => {
+      /**
+       * Wait two request animation frame loops before presenting the popover.
+       * This allows the framework implementations enough time to mount
+       * the popover contents, so the bounding box is set when the popover
+       * transition starts.
+       *
+       * On Angular and React, a single raf is enough time, but for Vue
+       * we need to wait two rafs. As a result we are using two rafs for
+       * all frameworks to ensure the popover is presented correctly.
+       */
+      raf(() => {
+        raf(async () => {
+          this.currentTransition = present(this, 'popoverEnter', iosEnterAnimation, mdEnterAnimation, {
+            event: event || this.event,
+            size: this.size,
+            trigger: this.triggerEl,
+            reference: this.reference,
+            side: this.side,
+            align: this.alignment,
+          });
+
+          await this.currentTransition;
+
+          this.currentTransition = undefined;
+
+          /**
+           * If popover is nested and was
+           * presented using the "Right" arrow key,
+           * we need to move focus to the first
+           * descendant inside of the popover.
+           */
+          if (this.focusDescendantOnPresent) {
+            focusFirstDescendant(this.el, this.el);
+          }
+
+          resolve();
+        });
+      });
     });
-
-    await this.currentTransition;
-
-    this.currentTransition = undefined;
-
-    /**
-     * If popover is nested and was
-     * presented using the "Right" arrow key,
-     * we need to move focus to the first
-     * descendant inside of the popover.
-     */
-    if (this.focusDescendantOnPresent) {
-      focusFirstDescendant(this.el, this.el);
-    }
   }
 
   /**

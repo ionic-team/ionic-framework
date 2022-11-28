@@ -1,4 +1,4 @@
-import { getPartsFromCalendarDay } from '../utils/parse';
+import { clampDate, getPartsFromCalendarDay, parseAmPm, parseMinParts, parseMaxParts } from '../utils/parse';
 
 describe('getPartsFromCalendarDay()', () => {
   it('should extract DatetimeParts from a calendar day element', () => {
@@ -17,4 +17,144 @@ describe('getPartsFromCalendarDay()', () => {
   });
 });
 
-// TODO: parseDate()
+// TODO FW-2794: parseDate()
+
+describe('clampDate()', () => {
+  const minParts = {
+    year: 2021,
+    month: 6,
+    day: 5,
+  };
+
+  const maxParts = {
+    year: 2021,
+    month: 8,
+    day: 19,
+  };
+  it('should return the max month when the value is greater than the max', () => {
+    const dateParts = {
+      year: 2022,
+      month: 5,
+      day: 24,
+    };
+    const value = clampDate(dateParts, minParts, maxParts);
+    expect(value).toStrictEqual(maxParts);
+  });
+
+  it('should return the min month when the value is less than the min', () => {
+    const dateParts = {
+      year: 2020,
+      month: 5,
+      day: 24,
+    };
+    const value = clampDate(dateParts, minParts, maxParts);
+    expect(value).toStrictEqual(minParts);
+  });
+
+  it('should return the value when the value is greater than the min and less than the max', () => {
+    const dateParts = {
+      year: 2021,
+      month: 7,
+      day: 10,
+    };
+    const value = clampDate(dateParts, minParts, maxParts);
+    expect(value).toStrictEqual(dateParts);
+  });
+});
+
+describe('parseAmPm()', () => {
+  it('should return pm when the hour is greater than or equal to 12', () => {
+    expect(parseAmPm(12)).toEqual('pm');
+    expect(parseAmPm(13)).toEqual('pm');
+  });
+
+  it('should return am when the hour is less than 12', () => {
+    expect(parseAmPm(11)).toEqual('am');
+  });
+});
+
+describe('parseMinParts()', () => {
+  it('should fill in missing information when not provided', () => {
+    const today = {
+      day: 14,
+      month: 3,
+      year: 2022,
+      minute: 4,
+      hour: 2,
+    };
+    expect(parseMinParts('2012', today)).toEqual({
+      month: 1,
+      day: 1,
+      year: 2012,
+      hour: 0,
+      minute: 0,
+    });
+  });
+  it('should default to current year when only given HH:mm', () => {
+    const today = {
+      day: 14,
+      month: 3,
+      year: 2022,
+      minute: 4,
+      hour: 2,
+    };
+    expect(parseMinParts('04:30', today)).toEqual({
+      month: 1,
+      day: 1,
+      year: 2022,
+      hour: 4,
+      minute: 30,
+    });
+  });
+});
+
+describe('parseMaxParts()', () => {
+  it('should fill in missing information when not provided', () => {
+    const today = {
+      day: 14,
+      month: 3,
+      year: 2022,
+      minute: 4,
+      hour: 2,
+    };
+    expect(parseMaxParts('2012', today)).toEqual({
+      month: 12,
+      day: 31,
+      year: 2012,
+      hour: 23,
+      minute: 59,
+    });
+  });
+  it('should default to current year when only given HH:mm', () => {
+    const today = {
+      day: 14,
+      month: 3,
+      year: 2022,
+      minute: 4,
+      hour: 2,
+    };
+    expect(parseMaxParts('04:30', today)).toEqual({
+      month: 12,
+      day: 31,
+      year: 2022,
+      hour: 4,
+      minute: 30,
+    });
+  });
+  it('should fill in correct day during a leap year', () => {
+    const today = {
+      day: 14,
+      month: 3,
+      year: 2022,
+      minute: 4,
+      hour: 2,
+    };
+    expect(parseMaxParts('2012-02', today)).toEqual({
+      month: 2,
+      day: 29,
+      year: 2012,
+      hour: 23,
+      minute: 59,
+    });
+  });
+});

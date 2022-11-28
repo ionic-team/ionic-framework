@@ -1,8 +1,8 @@
-import { Config } from '@stencil/core';
-import { sass } from '@stencil/sass';
 import { angularOutputTarget } from '@stencil/angular-output-target';
-import { vueOutputTarget } from '@stencil/vue-output-target';
+import type { Config } from '@stencil/core';
 import { reactOutputTarget } from '@stencil/react-output-target';
+import { sass } from '@stencil/sass';
+import { vueOutputTarget } from '@stencil/vue-output-target';
 
 // @ts-ignore
 import { apiSpecGenerator } from './scripts/api-spec-generator';
@@ -182,7 +182,7 @@ export const config: Config = {
     angularOutputTarget({
       componentCorePackage: '@ionic/core',
       directivesProxyFile: '../angular/src/directives/proxies.ts',
-      directivesArrayFile: '../angular/src/directives/proxies-list.txt',
+      directivesArrayFile: '../angular/src/directives/proxies-list.ts',
       excludeComponents: [
         // overlays
         'ion-action-sheet',
@@ -209,42 +209,6 @@ export const config: Config = {
         'ion-picker-column',
         'ion-virtual-scroll'
       ],
-      /**
-       * TODO: Abstract custom Ionic value accessor functionality
-       * to be configurable with Stencil generated value accessors.
-       */
-      // valueAccessorConfigs: [
-      //   {
-      //     elementSelectors: ['ion-input:not([type=number])', 'ion-textarea', 'ion-searchbar'],
-      //     event: 'ionChange',
-      //     targetAttr: 'value',
-      //     type: 'text',
-      //   },
-      //   {
-      //     elementSelectors: ['ion-input[type=number]'],
-      //     event: 'ionChange',
-      //     targetAttr: 'value',
-      //     type: 'number',
-      //   },
-      //   {
-      //     elementSelectors: ['ion-checkbox', 'ion-toggle'],
-      //     event: 'ionChange',
-      //     targetAttr: 'checked',
-      //     type: 'boolean',
-      //   },
-      //   {
-      //     elementSelectors: ['ion-range', 'ion-select', 'ion-radio-group', 'ion-segment', 'ion-datetime'],
-      //     event: 'ionChange',
-      //     targetAttr: 'value',
-      //     type: 'select',
-      //   },
-      //   {
-      //     elementSelectors: ['ion-radio'],
-      //     event: 'ionSelect',
-      //     targetAttr: 'checked',
-      //     type: 'radio',
-      //   },
-      // ]
     }),
   ],
   buildEs5: 'prod',

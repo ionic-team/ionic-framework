@@ -105,11 +105,9 @@
   }
 }
 
-.native-input[disabled] {
+.native-input[disabled]:not(.cloned-input) {
   opacity: .4;
 }
-
-
 
 // Input Cover: Unfocused
 // --------------------------------------------------
@@ -127,6 +125,15 @@
   pointer-events: none;
 }
 
+/**
+ * The cloned input needs to be disabled on
+ * Android otherwise the viewport will still
+ * shift when running scroll assist.
+ */
+.cloned-input:disabled {
+  opacity: 1;
+}
+
 
 // Clear Input Icon
 // --------------------------------------------------
@@ -135,6 +142,14 @@
   @include margin(0);
   @include padding(0);
   @include background-position(center);
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 30px;
+  height: 30px;
 
   border: 0;
 
@@ -147,6 +162,17 @@
   appearance: none;
 }
 
+.input-clear-icon ion-icon {
+  color: $text-color-step-400;
+}
+
+/**
+ * Normally, we would not want to use :focus
+ * here because that would mean tapping the button
+ * on mobile would focus it (and keep it focused).
+ * However, the clear button always disappears after
+ * being activated, so we never get to that state.
+ */
 .input-clear-icon:focus {
   opacity: 0.5;
 }
