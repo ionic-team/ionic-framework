@@ -8,7 +8,7 @@ test.describe('framework-delegate', () => {
 
     await page.goto('/src/utils/test/framework-delegate');
   });
-  /*test('should present modal already at ion-app root', async ({ page }) => {
+  test('should present modal already at ion-app root', async ({ page }) => {
     const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
 
     await page.click('#button-inline-root');
@@ -36,5 +36,5 @@ test.describe('framework-delegate', () => {
     const modal = page.locator('#controller');
     await ionModalDidPresent.next();
     await expect(modal).toBeVisible();
-  });*/
+  });
 });
