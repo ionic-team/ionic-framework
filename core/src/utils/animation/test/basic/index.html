@@ -37,7 +37,7 @@
         ])
         .onFinish(() => {
           const ev = new CustomEvent('ionAnimationFinished');
-          squareA.dispatchEvent(ev);
+          window.dispatchEvent(ev);
         });
 
       document.querySelector('.play').addEventListener('click', () => {
