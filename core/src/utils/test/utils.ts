@@ -19,11 +19,6 @@ const getSerialElement = async (page: E2EPage, element: SerializableOrJSHandle) 
   }, element);
 };
 
-export const getActiveElementParent = async (page: E2EPage) => {
-  const activeElement = await page.evaluateHandle(() => document.activeElement!.parentElement);
-  return getSerialElement(page, activeElement);
-};
-
 export const getActiveElement = async (page: E2EPage) => {
   const activeElement = await page.evaluateHandle(() => document.activeElement);
   return getSerialElement(page, activeElement);
