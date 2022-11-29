@@ -812,6 +812,8 @@ export const IonToggle = /*@__PURE__*/ defineContainer<JSX.IonToggle>('ion-toggl
   'disabled',
   'value',
   'enableOnOffLabels',
+  'labelPlacement',
+  'justify',
   'ionChange',
   'ionFocus',
   'ionBlur',
