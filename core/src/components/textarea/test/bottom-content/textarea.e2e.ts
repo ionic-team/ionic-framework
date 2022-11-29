@@ -136,6 +136,28 @@ test.describe('textarea: counter', () => {
           `textarea-bottom-content-counter-${page.getSnapshotSettings()}.png`
         );
       });
+
+      test('should not have visual regressions when rendering counter with helper text', async ({ page }) => {
+        await page.setContent(
+          `<ion-textarea label="my textarea" counter="true" maxlength="20" helper-text="my helper"></ion-textarea>`
+        );
+
+        const bottomEl = page.locator('ion-textarea .textarea-bottom');
+        expect(await bottomEl.screenshot()).toMatchSnapshot(
+          `textarea-bottom-content-counter-helper-text-${page.getSnapshotSettings()}.png`
+        );
+      });
+
+      test('should not have visual regressions when rendering counter with error text', async ({ page }) => {
+        await page.setContent(
+          `<ion-textarea class="ion-invalid" label="my textarea" counter="true" maxlength="20" error-text="my error"></ion-textarea>`
+        );
+
+        const bottomEl = page.locator('ion-textarea .textarea-bottom');
+        expect(await bottomEl.screenshot()).toMatchSnapshot(
+          `textarea-bottom-content-counter-error-text-${page.getSnapshotSettings()}.png`
+        );
+      });
     });
   });
 });
