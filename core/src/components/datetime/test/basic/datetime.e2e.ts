@@ -373,7 +373,9 @@ test('datetime: md highlight should not clip at start or end of month', async ({
 
   await page.waitForSelector('.datetime-ready');
 
-  expect(await datetime.screenshot()).toMatchSnapshot(`date-highlight-start-of-month-${page.getSnapshotSettings()}.png`);
+  expect(await datetime.screenshot()).toMatchSnapshot(
+    `date-highlight-start-of-month-${page.getSnapshotSettings()}.png`
+  );
 
   await datetime.evaluate((el: HTMLIonDatetimeElement) => (el.value = '2021-01-31'));
   await page.waitForChanges();
