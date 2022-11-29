@@ -23,21 +23,21 @@ test.describe('animation: animationbuilder', async () => {
     await page.goto('/src/utils/animation/test/animationbuilder?ionic:_forceCSSAnimations=true');
     await testNavigation(page);
   });
-
-  const testNavigation = async (page: E2EPage) => {
-    const ionRouteDidChange = await page.spyOnEvent('ionRouteDidChange');
-
-    await page.click('page-root ion-button.next');
-    await ionRouteDidChange.next();
-    page.click('page-one ion-button.next');
-    await ionRouteDidChange.next();
-    page.click('page-two ion-button.next');
-    await ionRouteDidChange.next();
-    page.click('page-three ion-back-button');
-    await ionRouteDidChange.next();
-    page.click('page-two ion-back-button');
-    await ionRouteDidChange.next();
-    page.click('page-one ion-back-button');
-    await ionRouteDidChange.next();
-  };
 });
+
+const testNavigation = async (page: E2EPage) => {
+  const ionRouteDidChange = await page.spyOnEvent('ionRouteDidChange');
+
+  await page.click('page-root ion-button.next');
+  await ionRouteDidChange.next();
+  page.click('page-one ion-button.next');
+  await ionRouteDidChange.next();
+  page.click('page-two ion-button.next');
+  await ionRouteDidChange.next();
+  page.click('page-three ion-back-button');
+  await ionRouteDidChange.next();
+  page.click('page-two ion-back-button');
+  await ionRouteDidChange.next();
+  page.click('page-one ion-back-button');
+  await ionRouteDidChange.next();
+};
