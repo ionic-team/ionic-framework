@@ -104,6 +104,8 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 
 - Passing the empty string to the `value` property will now error as it is not a valid ISO-8601 value.
 
+- The haptics when swiping the wheel picker are now enabled only on iOS.
+
 <h4 id="version-7x-input">Input</h4>
 
 - `ionChange` is no longer emitted when the `value` of `ion-input` is modified externally. `ionChange` is only emitted from user committed changes, such as typing in the input and the input losing focus or from clicking the clear action within the input.
