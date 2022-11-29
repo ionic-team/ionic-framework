@@ -51,14 +51,10 @@
   line-height: 36px;
 }
 
-:host .calendar-body .calendar-month {
-  @include padding(4px, null);
-}
-
 // Calendar / Body
 // -----------------------------------
 :host .calendar-body .calendar-month .calendar-month-grid {
-  @include padding(0px, 10px);
+  @include padding(4px, 10px);
 
   /**
    * Calendar on MD will show an empty row
