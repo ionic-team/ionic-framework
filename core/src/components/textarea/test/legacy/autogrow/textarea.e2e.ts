@@ -28,6 +28,8 @@ test.describe('textarea: autogrow', () => {
 
     await textarea.click();
 
+    await page.waitForChanges();
+
     await textarea.type('Now, this is a story all about how');
 
     await page.setIonViewport();
