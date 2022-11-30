@@ -69,9 +69,13 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
     componentWillUnmount() {
       const node = this.ref.current;
       if (node) {
+        /**
+         * Detach the local event listener than performs the state updates,
+         * before dismissing the overlay.
+         */
+        node.removeEventListener('didDismiss', this.handleDidDismiss);
         node.dismiss();
         detachProps(node, this.props);
-        node.removeEventListener('didDismiss', this.handleDidDismiss);
       }
     }
 
