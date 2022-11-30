@@ -30,8 +30,8 @@
   z-index: 0;
 }
 
-:host .picker-before,
-:host .picker-after {
+.picker-before,
+.picker-after {
   position: absolute;
 
   width: 100%;
@@ -48,19 +48,19 @@
   pointer-events: none;
 }
 
-:host .picker-before {
+.picker-before {
   @include position(0, null, null, 0);
 
   height: 83px;
 }
 
-:host .picker-after {
+.picker-after {
   @include position(116px, null, null, 0);
 
   height: 84px;
 }
 
-:host .picker-highlight {
+.picker-highlight {
   @include border-radius(8px, 8px, 8px, 8px);
   @include position(50%, 0, 0, 0);
   @include margin(0, auto, 0, auto);
@@ -75,18 +75,18 @@
   z-index: -1;
 }
 
-:host input {
+input {
   @include visually-hidden();
 }
 
-:host ::slotted(ion-picker-column-internal:first-of-type) {
+::slotted(ion-picker-column-internal:first-of-type) {
   text-align: start;
 }
 
-:host ::slotted(ion-picker-column-internal:last-of-type) {
+::slotted(ion-picker-column-internal:last-of-type) {
   text-align: end;
 }
 
-:host ::slotted(ion-picker-column-internal:only-child) {
+::slotted(ion-picker-column-internal:only-child) {
   text-align: center;
 }
