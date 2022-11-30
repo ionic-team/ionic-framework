@@ -54,8 +54,8 @@ ion-picker-column-internal {
   width: 100%;
 }
 
-:host .calendar-body,
-:host .datetime-year {
+.calendar-body,
+.datetime-year {
   opacity: 0;
 }
 
@@ -83,19 +83,19 @@ ion-picker-column-internal {
  * the order we need to manually switch
  * the text alignment too.
  */
-:host .wheel-order-year-first .day-column {
+.wheel-order-year-first .day-column {
  order: 3;
 
  text-align: end;
 }
 
-:host .wheel-order-year-first .month-column {
+.wheel-order-year-first .month-column {
   order: 2;
 
   text-align: end;
 }
 
-:host .wheel-order-year-first .year-column {
+.wheel-order-year-first .year-column {
   order: 1;
 
   text-align: start;
@@ -112,8 +112,8 @@ ion-picker-column-internal {
  * be resized to fit into this
  * container.
  */
-:host .datetime-calendar,
-:host .datetime-year {
+.datetime-calendar,
+.datetime-year {
   display: flex;
 
   flex: 1 1 auto;
@@ -193,7 +193,7 @@ ion-picker-column-internal {
  * to the next line and should
  * show ellipsis instead.
  */
-:host .datetime-header .datetime-title {
+.datetime-header .datetime-title {
   text-overflow: ellipsis;
 
   white-space: nowrap;
@@ -204,11 +204,11 @@ ion-picker-column-internal {
 // Calendar / Header / Action Buttons
 // -----------------------------------
 
-:host .datetime-action-buttons.has-clear-button {
+.datetime-action-buttons.has-clear-button {
   width: 100%;
 }
 
-:host .datetime-action-buttons ion-buttons {
+.datetime-action-buttons ion-buttons {
   display: flex;
 
   justify-content: space-between;
@@ -219,30 +219,30 @@ ion-picker-column-internal {
  * the opposite side of the component
  * as the Next/Prev buttons
  */
-:host .calendar-action-buttons {
+.calendar-action-buttons {
   display: flex;
 
   justify-content: space-between;
 }
 
-:host .calendar-action-buttons ion-item,
-:host .calendar-action-buttons ion-button {
+.calendar-action-buttons ion-item,
+.calendar-action-buttons ion-button {
   --background: translucent;
 }
 
-:host .calendar-action-buttons ion-item ion-label {
+.calendar-action-buttons ion-item ion-label {
   display: flex;
 
   align-items: center;
 }
 
-:host .calendar-action-buttons ion-item ion-icon {
+.calendar-action-buttons ion-item ion-icon {
   @include padding(0, 0, 0, 4px);
 }
 
 // Calendar / Header / Days of Week
 // -----------------------------------
-:host .calendar-days-of-week {
+.calendar-days-of-week {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
 
@@ -251,7 +251,7 @@ ion-picker-column-internal {
 
 // Calendar / Body
 // -----------------------------------
-:host .calendar-body {
+.calendar-body {
 
   /**
    * Show all calendar months inline
@@ -283,7 +283,7 @@ ion-picker-column-internal {
   outline: none;
 }
 
-:host .calendar-body .calendar-month {
+.calendar-body .calendar-month {
   /**
    * Swiping should snap to at
    * most one month at a time.
@@ -296,7 +296,7 @@ ion-picker-column-internal {
   width: 100%;
 }
 
-:host .calendar-body .calendar-month-disabled {
+.calendar-body .calendar-month-disabled {
   /**
    * Disables swipe gesture snapping for scroll-snap containers
    */
@@ -306,11 +306,11 @@ ion-picker-column-internal {
 /**
  * Hide scrollbars on Chrome and Safari
  */
-:host .calendar-body::-webkit-scrollbar {
+.calendar-body::-webkit-scrollbar {
   display: none;
 }
 
-:host .calendar-body .calendar-month-grid {
+.calendar-body .calendar-month-grid {
   /**
    * Create 7 columns for
    * 7 days in a week.
@@ -325,7 +325,7 @@ ion-picker-column-internal {
  * Center the day text vertically
  * and horizontally within its grid cell.
  */
-:host .calendar-day {
+.calendar-day {
   @include padding(0px, 0px, 0px, 0px);
   @include margin(0px, 0px, 0px, 0px);
 
@@ -352,13 +352,13 @@ ion-picker-column-internal {
   z-index: 0;
 }
 
-:host .calendar-day[disabled] {
+.calendar-day[disabled] {
   pointer-events: none;
 
   opacity: 0.4;
 }
 
-:host .calendar-day:after {
+.calendar-day:after {
   @include border-radius(32px, 32px, 32px, 32px);
   @include padding(4px, 4px, 4px, 4px);
 
@@ -389,7 +389,7 @@ ion-picker-column-internal {
 // Time / Header
 // -----------------------------------
 
-:host .datetime-time {
+.datetime-time {
   display: flex;
 
   justify-content: space-between;
@@ -399,17 +399,17 @@ ion-picker-column-internal {
   @include padding(0);
 }
 
-:host ion-popover {
+ion-popover {
   --height: 200px;
 }
 
-:host .time-header {
+.time-header {
   display: flex;
 
   align-items: center;
 }
 
-:host .time-body {
+.time-body {
   @include border-radius(8px);
   @include padding(6px, 12px, 6px, 12px);
 
@@ -429,7 +429,7 @@ ion-picker-column-internal {
   appearance: none;
 }
 
-:host .time-body-active {
+.time-body-active {
   color: current-color(base);
 }
 

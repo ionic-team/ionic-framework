@@ -9,20 +9,20 @@
 
 // Header
 // -----------------------------------
-:host .datetime-header {
+.datetime-header {
   @include padding($datetime-md-header-padding, $datetime-md-header-padding, $datetime-md-header-padding, $datetime-md-header-padding);
 
   background: current-color(base);
   color: var(--title-color);
 }
 
-:host .datetime-header .datetime-title {
+.datetime-header .datetime-title {
   font-size: $datetime-md-title-font-size;
 
   text-transform: uppercase;
 }
 
-:host .datetime-header .datetime-selected-date {
+.datetime-header .datetime-selected-date {
   @include margin(30px, null, null, null);
 
   font-size: $datetime-md-selected-date-font-size;
@@ -30,18 +30,18 @@
 
 // Calendar / Header / Action Buttons
 // -----------------------------------
-:host .datetime-calendar .calendar-action-buttons ion-item {
+.datetime-calendar .calendar-action-buttons ion-item {
   --padding-start: #{$datetime-md-header-padding};
 }
 
-:host .calendar-action-buttons ion-item,
-:host .calendar-action-buttons ion-button {
+.calendar-action-buttons ion-item,
+.calendar-action-buttons ion-button {
   color: #{$text-color-step-350};
 }
 
 // Calendar / Header / Days of Week
 // -----------------------------------
-:host .calendar-days-of-week {
+.calendar-days-of-week {
   @include padding(0px, 10px, 0px, 10px);
 
   color: $text-color-step-500;
@@ -53,7 +53,7 @@
 
 // Calendar / Body
 // -----------------------------------
-:host .calendar-body .calendar-month .calendar-month-grid {
+.calendar-body .calendar-month .calendar-month-grid {
   /**
    * 3px top padding adds enough spacing at
    * the top of the container for the selected
@@ -73,13 +73,13 @@
 }
 
 // Individual day button in month
-:host .calendar-day {
+.calendar-day {
   @include padding(13px, 0, 13px, 0px);
 
   font-size: $datetime-md-calendar-item-font-size;
 }
 
-:host .calendar-day:focus:after {
+.calendar-day:focus:after {
   background: current-color(base, 0.2);
 
   box-shadow: 0px 0px 0px 4px current-color(base, 0.2);
@@ -89,11 +89,11 @@
  * Day that today but not selected
  * should have ion-color for text color.
  */
-:host .calendar-day.calendar-day-today {
+.calendar-day.calendar-day-today {
   color: current-color(base);
 }
 
-:host .calendar-day.calendar-day-today:after {
+.calendar-day.calendar-day-today:after {
   border: 1px solid current-color(base);
 }
 
@@ -102,11 +102,11 @@
  * is selected should have ion-color for
  * text color and be bolder.
  */
-:host .calendar-day.calendar-day-active {
+.calendar-day.calendar-day-active {
   color: current-color(contrast);
 }
 
-:host .calendar-day.calendar-day-active:after {
+.calendar-day.calendar-day-active:after {
   border: 1px solid current-color(base);
 
   background: current-color(base);
@@ -114,11 +114,11 @@
 
 // Time / Header
 // -----------------------------------
-:host .datetime-time {
+.datetime-time {
   @include padding($datetime-md-padding * 0.5, $datetime-md-padding, $datetime-md-padding * 0.5, $datetime-md-padding);
 }
 
-:host .time-header {
+.time-header {
   color: #{$text-color-step-350};
 }
 
@@ -137,7 +137,7 @@
 
 // Footer
 // -----------------------------------
-:host .datetime-buttons {
+.datetime-buttons {
   @include padding(10px, 10px, 10px, 10px);
 
   display: flex;
@@ -147,6 +147,6 @@
   justify-content: flex-end;
 }
 
-:host .datetime-view-buttons ion-button {
+.datetime-view-buttons ion-button {
   color: $text-color-step-200;
 }
