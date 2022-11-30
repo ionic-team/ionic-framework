@@ -9,6 +9,7 @@ import {
   mergeRefs,
 } from './react-component-lib/utils';
 import { createForwardRef } from './utils';
+import { detachProps } from './utils/detachProps';
 
 type InlineOverlayState = {
   isOpen: boolean;
@@ -23,13 +24,6 @@ interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<Elem
   onWillPresent?: (event: CustomEvent<OverlayEventDetail>) => void;
   keepContentsMounted?: boolean;
 }
-
-/**
- * These events are manually handled in the createInlineOverlayComponent,
- * by adding an event listener to the overlay element and invoking
- * the prop function.
- */
-const excludedOverlayEvents = ['onWillPresent', 'onDidDismiss'];
 
 export const createInlineOverlayComponent = <PropType, ElementType>(
   tagName: string,
@@ -62,89 +56,22 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
     componentDidMount() {
       this.componentDidUpdate(this.props);
 
-      /**
-       * Mount the inner component when the
-       * overlay is about to open.
-       *
-       * For ion-popover, this is when `ionMount` is emitted.
-       * For other overlays, this is when `willPresent` is emitted.
-       */
-      this.ref.current?.addEventListener('ionMount', () => {
-        this.setState({ isOpen: true });
-      });
-
-      /**
-       * Mount the inner component
-       * when overlay is about to open.
-       * Also manually call the onWillPresent
-       * handler if present as setState will
-       * cause the event handlers to be
-       * destroyed and re-created.
-       */
-      this.ref.current?.addEventListener('willPresent', (evt: any) => {
-        this.setState({ isOpen: true });
-
-        this.props.onWillPresent && this.props.onWillPresent(evt);
-      });
-
-      /**
-       * Unmount the inner component.
-       * React will call Node.removeChild
-       * which expects the child to be
-       * a direct descendent of the parent
-       * but due to the presence of
-       * Web Component slots, this is not
-       * always the case. To work around this
-       * we move the inner component to the root
-       * of the Web Component so React can
-       * cleanup properly.
-       */
-      this.ref.current?.addEventListener('didDismiss', (evt: any) => {
-        const wrapper = this.wrapperRef.current;
-        const el = this.ref.current;
-
-        /**
-         * This component might be unmounted already, if the containing
-         * element was removed while the popover was still open. (For
-         * example, if an item contains an inline popover with a button
-         * that removes the item.)
-         */
-        if (wrapper && el) {
-          el.append(wrapper);
-          this.setState({ isOpen: false });
-        }
-
-        const didComponentUnmount = this.ref.current === null;
-
-        if (didComponentUnmount === false) {
-          /**
-           * If the component is unmounted, we do not
-           * want to call the onDidDismiss handler to
-           * prevent a React state update on an unmounted component.
-           */
-          this.props.onDidDismiss && this.props.onDidDismiss(evt);
-        }
-      });
+      this.ref.current?.addEventListener('ionMount', this.handleIonMount);
+      this.ref.current?.addEventListener('willPresent', this.handleWillPresent);
+      this.ref.current?.addEventListener('didDismiss', this.handleDidDismiss);
     }
 
     componentDidUpdate(prevProps: IonicReactInternalProps<PropType>) {
       const node = this.ref.current! as HTMLElement;
-      const propsToPass = Object.keys(this.props).reduce((acc, name) => {
-        if (!excludedOverlayEvents.includes(name)) {
-          /**
-           * Maintains all props except for the event handlers
-           * that are manually handled in the componentDidMount.
-           */
-          (acc as any)[name] = (this.props as any)[name];
-        }
-        return acc;
-      }, {});
-      attachProps(node, propsToPass, prevProps);
+      attachProps(node, this.props, prevProps);
     }
 
     componentWillUnmount() {
-      if (this.ref.current) {
-        this.ref.current.dismiss();
+      const node = this.ref.current;
+      if (node) {
+        node.dismiss();
+        detachProps(node, this.props);
+        node.removeEventListener('didDismiss', this.handleDidDismiss);
       }
     }
 
@@ -204,6 +131,46 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
     static get displayName() {
       return displayName;
     }
+
+    private handleIonMount = () => {
+      /**
+       * Mount the inner component when the
+       * overlay is about to open.
+       *
+       * For ion-popover, this is when `ionMount` is emitted.
+       * For other overlays, this is when `willPresent` is emitted.
+       */
+      this.setState({ isOpen: true });
+    };
+
+    private handleWillPresent = (evt: any) => {
+      this.setState({ isOpen: true });
+      /**
+       * Manually call the onWillPresent
+       * handler if present as setState will
+       * cause the event handlers to be
+       * destroyed and re-created.
+       */
+      this.props.onWillPresent && this.props.onWillPresent(evt);
+    };
+
+    private handleDidDismiss = (evt: any) => {
+      const wrapper = this.wrapperRef.current;
+      const el = this.ref.current;
+
+      /**
+       * This component might be unmounted already, if the containing
+       * element was removed while the popover was still open. (For
+       * example, if an item contains an inline popover with a button
+       * that removes the item.)
+       */
+      if (wrapper && el) {
+        el.append(wrapper);
+        this.setState({ isOpen: false });
+      }
+
+      this.props.onDidDismiss && this.props.onDidDismiss(evt);
+    };
   };
   return createForwardRef<PropType, ElementType>(ReactComponent, displayName);
 };
