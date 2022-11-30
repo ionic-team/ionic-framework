@@ -1560,7 +1560,7 @@ export namespace Components {
         /**
           * Determines whether or not a modal can dismiss when calling the `dismiss` method.  If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss. If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.
          */
-        "canDismiss"?: undefined | boolean | (() => Promise<boolean>);
+        "canDismiss"?: undefined | boolean | ((data?: any, role?: string) => Promise<boolean>);
         /**
           * The component to display inside of the modal.
          */
@@ -5548,7 +5548,7 @@ declare namespace LocalJSX {
         /**
           * Determines whether or not a modal can dismiss when calling the `dismiss` method.  If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss. If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.
          */
-        "canDismiss"?: undefined | boolean | (() => Promise<boolean>);
+        "canDismiss"?: undefined | boolean | ((data?: any, role?: string) => Promise<boolean>);
         /**
           * The component to display inside of the modal.
          */

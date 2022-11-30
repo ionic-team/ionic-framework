@@ -267,7 +267,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
    * If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss.
    * If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.
    */
-  @Prop() canDismiss?: undefined | boolean | (() => Promise<boolean>);
+  @Prop() canDismiss?: undefined | boolean | ((data?: any, role?: string) => Promise<boolean>);
 
   /**
    * Emitted after the modal has presented.
@@ -449,7 +449,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
    * modal is allowed to dismiss based
    * on the state of the canDismiss prop.
    */
-  private async checkCanDismiss() {
+  private async checkCanDismiss(data?: any, role?: string) {
     const { canDismiss } = this;
 
     /**
@@ -461,7 +461,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
 
     if (typeof canDismiss === 'function') {
-      return canDismiss();
+      return canDismiss(data, role);
     }
 
     return canDismiss;
@@ -687,7 +687,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
      * for calling the dismiss method, we should
      * not run the canDismiss check again.
      */
-    if (role !== 'handler' && !(await this.checkCanDismiss())) {
+    if (role !== 'handler' && !(await this.checkCanDismiss(data, role))) {
       return false;
     }
 
