@@ -60,7 +60,7 @@ test.describe('datetime: minmax', () => {
     await expect(calendarMonths.nth(2)).toHaveClass(/calendar-month-disabled/);
   });
 
-  test.only('datetime: minmax navigation disabled', async ({ page }) => {
+  test('datetime: minmax navigation disabled', async ({ page }) => {
     await page.goto('/src/components/datetime/test/minmax');
     await page.waitForSelector('.datetime-ready');
 
