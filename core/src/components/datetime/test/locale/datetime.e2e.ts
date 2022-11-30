@@ -156,9 +156,8 @@ class DatetimeLocaleFixture {
   }
 
   async expectLocalizedDatePicker() {
-    await this.waitForDatetime();
-
     await this.page.setIonViewport();
+    await this.waitForDatetime();
     // Captures a screenshot of the datepicker with localized am/pm labels
     expect(await this.page.screenshot()).toMatchSnapshot(
       `datetime-locale-${this.locale}-diff-${this.page.getSnapshotSettings()}.png`
@@ -166,8 +165,8 @@ class DatetimeLocaleFixture {
   }
 
   async expectLocalizedMonthYearPicker() {
-    await this.waitForDatetime();
     await this.page.setIonViewport();
+    await this.waitForDatetime();
     // Opens the month/year picker
     const monthYearButton = this.page.locator('#am .calendar-month-year ion-item');
     await monthYearButton.click();
@@ -179,8 +178,8 @@ class DatetimeLocaleFixture {
   }
 
   async expectLocalizedTimePicker() {
-    await this.waitForDatetime();
     await this.page.setIonViewport();
+    await this.waitForDatetime();
     // Opens the timepicker
     const timePickerButton = this.page.locator('#am .time-body');
     const timePickerPopoverPresentSpy = await this.page.spyOnEvent('ionPopoverDidPresent');
@@ -193,7 +192,6 @@ class DatetimeLocaleFixture {
   }
 
   private async waitForDatetime() {
-    await this.page.locator('#am').scrollIntoViewIfNeeded();
     await this.page.locator('#am.datetime-ready').waitFor({ state: 'attached' });
     await this.page.locator('#pm').scrollIntoViewIfNeeded();
     await this.page.locator('#pm.datetime-ready').waitFor({ state: 'attached' });
