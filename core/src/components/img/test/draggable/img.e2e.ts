@@ -12,6 +12,6 @@ test.describe('img: draggable', () => {
     await expect(imgDraggableFalse).toHaveAttribute('draggable', 'false');
 
     const imgDraggableUnset = page.locator('#img-draggable-unset img');
-    await expect(imgDraggableUnset).toHaveAttribute('draggable', '');
+    expect(await imgDraggableUnset.getAttribute('draggable')).toBeNull();
   });
 });
