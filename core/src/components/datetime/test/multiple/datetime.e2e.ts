@@ -90,7 +90,7 @@ test.describe('datetime: multiple date selection (functionality)', () => {
   test('multiple default values across months should display at least one value', async ({ page }) => {
     const datetime = await setup(page, 'multipleValuesSeparateMonths');
     const monthYear = datetime.locator('.calendar-month-year');
-    await expect(monthYear).toHaveText('April 2022');
+    await expect(monthYear).toHaveText(/April 2022/);
   });
 
   test('multiple=false and array for defaulut value should switch to first item', async ({ page }) => {

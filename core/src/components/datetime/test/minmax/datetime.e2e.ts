@@ -60,14 +60,14 @@ test.describe('datetime: minmax', () => {
     await expect(calendarMonths.nth(2)).toHaveClass(/calendar-month-disabled/);
   });
 
-  test('datetime: minmax navigation disabled', async ({ page }) => {
+  test.only('datetime: minmax navigation disabled', async ({ page }) => {
     await page.goto('/src/components/datetime/test/minmax');
     await page.waitForSelector('.datetime-ready');
 
     const navButtons = page.locator('ion-datetime#outside .calendar-next-prev ion-button');
 
-    expect(await navButtons.nth(0).getAttribute('disabled')).toBeNull();
-    expect(await navButtons.nth(1).getAttribute('disabled')).toBeNull();
+    expect(navButtons.nth(0)).toHaveAttribute('disabled', '');
+    expect(navButtons.nth(1)).toHaveAttribute('disabled', '');
   });
 
   test('datetime: min including day should not disable month', async ({ page }) => {
@@ -114,7 +114,7 @@ test.describe('datetime: minmax', () => {
     test.beforeEach(({ skip }) => {
       skip.rtl();
     });
-    const testDisplayedMonth = async (page: E2EPage, content: string, expectedString = 'June 2021') => {
+    const testDisplayedMonth = async (page: E2EPage, content: string, expectedString = /June 2021/) => {
       await page.setContent(content);
       await page.waitForSelector('.datetime-ready');
 
@@ -138,7 +138,7 @@ test.describe('datetime: minmax', () => {
     });
 
     test('when max is defined', async ({ page }) => {
-      await testDisplayedMonth(page, `<ion-datetime max="2012-06-01"></ion-datetime>`, 'June 2012');
+      await testDisplayedMonth(page, `<ion-datetime max="2012-06-01"></ion-datetime>`, /June 2012/);
     });
   });
 

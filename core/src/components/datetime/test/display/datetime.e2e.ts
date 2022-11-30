@@ -106,7 +106,7 @@ test.describe('datetime: display', () => {
 
       const calendarMonthYear = page.locator('ion-datetime .calendar-month-year');
 
-      await expect(calendarMonthYear).toHaveText('March 2022');
+      await expect(calendarMonthYear).toHaveText(/March 2022/);
 
       // ensure it still works if presentation is changed more than once
       await select.selectOption('date-time');
@@ -118,7 +118,7 @@ test.describe('datetime: display', () => {
 
       await ionWorkingPartsDidChange.next();
 
-      await expect(calendarMonthYear).toHaveText('February 2022');
+      await expect(calendarMonthYear).toHaveText(/February 2022/);
     });
   });
 });

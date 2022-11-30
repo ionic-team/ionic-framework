@@ -3,7 +3,7 @@ import type { E2EPage } from '@utils/test/playwright';
 import { test } from '@utils/test/playwright';
 
 test.describe('datetime: closing time popover', () => {
-  test('it should not change months', async ({ page }) => {
+  test.only('it should not change months', async ({ page }) => {
     test.info().annotations.push({
       type: 'issue',
       description: 'https://github.com/ionic-team/ionic-framework/issues/25438',
@@ -27,7 +27,7 @@ test.describe('datetime: closing time popover', () => {
     await ionPopoverDidDismiss.next();
     await page.waitForChanges();
 
-    await expect(calendarMonthYear).toHaveText(currentMonthAndYear);
+    await expect(calendarMonthYear).toHaveText(currentMonthAndYear, { useInnerText: true });
   });
 });
 
