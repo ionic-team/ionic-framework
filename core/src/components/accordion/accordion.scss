@@ -57,6 +57,14 @@
   max-height: 0;
 }
 
+/**
+ * Prevent margins of content-wrapper
+ * from collapsing, breaking the animation.
+ */
+:host(.accordion-expanding) #content-wrapper {
+  overflow: auto;
+}
+
 :host(.accordion-disabled) #header,
 :host(.accordion-readonly) #header,
 :host(.accordion-disabled) #content,
