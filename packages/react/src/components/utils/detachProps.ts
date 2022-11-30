@@ -1,4 +1,4 @@
-import { isCoveredByReact } from "../react-component-lib/utils";
+import { isCoveredByReact } from '../react-component-lib/utils';
 
 /**
  * The @stencil/react-output-target will bind event listeners for any
