@@ -49,15 +49,6 @@ $input-ios-inset-margin-start:            0 !default;
 /// @prop - Width of the icon used to clear the input
 $input-ios-input-clear-icon-width:        30px !default;
 
-/// @prop - Color of the icon used to clear the input
-$input-ios-input-clear-icon-color:        $text-color-step-400 !default;
-
-/// @prop - Icon used to clear the input
-$input-ios-input-clear-icon-svg:          "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path fill='" + $input-ios-input-clear-icon-color + "' d='M403.1,108.9c-81.2-81.2-212.9-81.2-294.2,0s-81.2,212.9,0,294.2c81.2,81.2,212.9,81.2,294.2,0S484.3,190.1,403.1,108.9z M352,340.2L340.2,352l-84.4-84.2l-84,83.8L160,339.8l84-83.8l-84-83.8l11.8-11.8l84,83.8l84.4-84.2l11.8,11.8L267.6,256L352,340.2z'/></svg>" !default;
-
-/// @prop - Size of the icon used to clear the input
-$input-ios-input-clear-icon-size:         18px !default;
-
 /// @prop - Padding end of the input with clear input
 $input-ios-input-clear-padding-end:       ($input-ios-input-clear-icon-width + $item-ios-padding-end) !default;
 
