@@ -68,7 +68,23 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
 
     componentWillUnmount() {
       const node = this.ref.current;
-      if (node) {
+      if (node && this.state.isOpen) {
+        const overlayEventDetail = {
+          data: undefined,
+          role: undefined,
+        };
+        /**
+         * The component is presented, but the React component
+         * is unmounting. To avoid memory leaks we need to invoke
+         * the callback handlers for the overlays events before dismissing.
+         */
+        if (this.props.onWillDismiss) {
+          this.props.onWillDismiss(new CustomEvent('willDismiss', { detail: overlayEventDetail }));
+        }
+        if (this.props.onDidDismiss) {
+          this.props.onDidDismiss(new CustomEvent('didDismiss', { detail: overlayEventDetail }));
+        }
+
         /**
          * Detach the local event listener than performs the state updates,
          * before dismissing the overlay.
