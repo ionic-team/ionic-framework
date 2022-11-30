@@ -33,7 +33,7 @@
   display: none;
 }
 
-:host .picker-item {
+.picker-item {
   @include padding(0);
   @include margin(0);
 
@@ -70,14 +70,14 @@
   scroll-snap-align: center;
 }
 
-:host .picker-item-empty,
-:host .picker-item.picker-item-disabled {
+.picker-item-empty,
+.picker-item.picker-item-disabled {
   scroll-snap-align: none;
 
   cursor: default;
 }
 
-:host .picker-item.picker-item-disabled {
+.picker-item.picker-item-disabled {
   opacity: 0.4;
 }
 
