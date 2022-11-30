@@ -193,6 +193,7 @@ class DatetimeLocaleFixture {
   }
 
   private async waitForDatetime() {
+    await this.page.locator('#am').scrollIntoViewIfNeeded();
     await this.page.locator('#am.datetime-ready').waitFor({ state: 'attached' });
     await this.page.locator('#pm').scrollIntoViewIfNeeded();
     await this.page.locator('#pm.datetime-ready').waitFor({ state: 'attached' });
