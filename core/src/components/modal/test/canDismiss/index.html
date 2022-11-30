@@ -116,7 +116,7 @@
             handler = false;
             break;
           case 'promise-true':
-            handler = (data, role) => {
+            handler = () => {
               return new Promise((resolve) => {
                 setTimeout(() => {
                   resolve(true);
