@@ -24,7 +24,8 @@ test.describe('radio-group: form', () => {
     const disabledRadio = page.locator('ion-radio[value="george"]');
 
     await expect(value).toHaveText('');
-    expect(await disabledRadio.getAttribute('disabled')).toBeNull();
+
+    expect(disabledRadio).toHaveAttribute('disabled', '');
 
     await disabledRadio.click({ force: true });
     await page.waitForChanges();
