@@ -14,7 +14,7 @@ import { PickerInternalChangeEventDetail } from "./components/picker-internal/pi
 import { PinFormatter } from "./components/range/range-interface";
 import { NavigationHookCallback } from "./components/route/route-interface";
 import { SelectCompareFn } from "./components/select/select-interface";
-import { ToastAttributes } from "./components/toast/toast-interface";
+import { ToastAttributes, ToastPosition } from "./components/toast/toast-interface";
 export namespace Components {
     interface IonAccordion {
         /**
@@ -2998,7 +2998,7 @@ export namespace Components {
         /**
           * The position of the toast on the screen.
          */
-        "position": 'top' | 'bottom' | 'middle';
+        "position": ToastPosition;
         /**
           * Present the toast overlay after it has been created.
          */
@@ -7007,7 +7007,7 @@ declare namespace LocalJSX {
         /**
           * The position of the toast on the screen.
          */
-        "position"?: 'top' | 'bottom' | 'middle';
+        "position"?: ToastPosition;
         /**
           * If `true`, the toast will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */

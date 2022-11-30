@@ -65,6 +65,11 @@ export interface IonicConfig {
   spinner?: SpinnerTypes;
 
   /**
+   * Overrides the default enableOnOffLabels in all `<ion-toggle>` components.
+   */
+  toggleOnOffLabels?: boolean;
+
+  /**
    * Overrides the default spinner for all `ion-loading` overlays, ie. the ones
    * created with `ion-loading-controller`.
    */
