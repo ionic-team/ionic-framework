@@ -21,11 +21,11 @@ runs:
       with:
         node-version: 16.x
     - name: Install Dependencies
-      run: lerna bootstrap --scope ${{ inputs.scope }} --ignore-scripts -- --legacy-peer-deps
+      run: lerna bootstrap --include-dependencies --scope ${{ inputs.scope }} --ignore-scripts -- --legacy-peer-deps
       shell: bash
       working-directory: ${{ inputs.working-directory }}
     - name: Update Version
-      run: npm version ${{ inputs.version }}
+      run: lerna version ${{ inputs.version }} --yes --exact --no-changelog --no-push --no-git-tag-version
       shell: bash
       working-directory: ${{ inputs.working-directory }}
     - name: Run Build
@@ -39,6 +39,6 @@ runs:
       env:
         NPM_TOKEN: ${{ inputs.token }}
     - name: Publish to NPM
-      run: npm publish ${{ inputs.folder }} --tag ${{ inputs.tag }}  --git-tag-version false
+      run: npm publish ${{ inputs.folder }} --tag ${{ inputs.tag }}
       shell: bash
       working-directory: ${{ inputs.working-directory }}
