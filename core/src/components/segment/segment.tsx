@@ -101,6 +101,15 @@ export class Segment implements ComponentInterface {
         activeButton.scrollIntoView({
           behavior: 'smooth',
           inline: 'center',
+
+          /**
+           * Segment should scroll on the
+           * horizontal axis. `block: 'nearest'`
+           * ensures that the vertical axis
+           * does not scroll if the segment
+           * as a whole is already in view.
+           */
+          block: 'nearest',
         });
       }
     }
