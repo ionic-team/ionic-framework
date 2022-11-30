@@ -5,16 +5,19 @@
 // --------------------------------------------------
 
 :host {
+  --border-width: 1px;
+  --border-color: #{$item-md-border-color};
+
+  font-size: $textarea-md-font-size;
+}
+
+:host(.legacy-textarea) {
   --padding-top: #{$textarea-md-padding-top};
   --padding-end: #{$textarea-md-padding-end};
   --padding-bottom: #{$textarea-md-padding-bottom};
   --padding-start: #{$textarea-md-padding-start};
-  --border-width: 1px;
-  --border-color: #{$item-md-border-color};
 
   @include margin(8px, 0, 0, 0);
-
-  font-size: $textarea-md-font-size;
 }
 
 :host-context(.item-label-stacked),
