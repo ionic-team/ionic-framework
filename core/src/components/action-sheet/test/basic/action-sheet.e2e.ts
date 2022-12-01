@@ -1,120 +1,129 @@
 import { expect } from '@playwright/test';
 import type { Locator } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { test, configs } from '@utils/test/playwright';
 import type { E2EPage } from '@utils/test/playwright';
 
 test.describe('action sheet: basic', () => {
-  let actionSheetFixture: ActionSheetFixture;
-  test.beforeEach(async ({ page }) => {
-    await page.goto(`/src/components/action-sheet/test/basic`);
-    actionSheetFixture = new ActionSheetFixture(page);
-  });
-  test.describe('action sheet: data', () => {
-    test('should return data', async ({ page, skip }) => {
-      skip.rtl();
-      const ionActionSheetDidDismiss = await page.spyOnEvent('ionActionSheetDidDismiss');
+  configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
+    test.describe('action sheet: functionality', () => {
+      let actionSheetFixture: ActionSheetFixture;
+      test.beforeEach(async ({ page }) => {
+        await page.goto(`/src/components/action-sheet/test/basic`, config);
+        actionSheetFixture = new ActionSheetFixture(page);
+      });
 
-      await actionSheetFixture.open('#buttonData');
+      test.describe('action sheet: data', () => {
+        test(title('should return data'), async ({ page }) => {
+          const ionActionSheetDidDismiss = await page.spyOnEvent('ionActionSheetDidDismiss');
 
-      const buttonOption = page.locator('ion-action-sheet button#option');
-      await buttonOption.click();
+          await actionSheetFixture.open('#buttonData');
 
-      await ionActionSheetDidDismiss.next();
-      expect(ionActionSheetDidDismiss).toHaveReceivedEventDetail({ data: { type: '1' }, role: undefined });
-    });
-    test('should return cancel button data', async ({ page, skip }) => {
-      skip.rtl();
-      const ionActionSheetDidDismiss = await page.spyOnEvent('ionActionSheetDidDismiss');
+          const buttonOption = page.locator('ion-action-sheet button#option');
+          await buttonOption.click();
 
-      await actionSheetFixture.open('#buttonData');
+          await ionActionSheetDidDismiss.next();
+          expect(ionActionSheetDidDismiss).toHaveReceivedEventDetail({ data: { type: '1' }, role: undefined });
+        });
+        test(title('should return cancel button data'), async ({ page }) => {
+          const ionActionSheetDidDismiss = await page.spyOnEvent('ionActionSheetDidDismiss');
 
-      const buttonOption = page.locator('ion-action-sheet button.action-sheet-cancel');
-      await buttonOption.click();
+          await actionSheetFixture.open('#buttonData');
 
-      await ionActionSheetDidDismiss.next();
-      expect(ionActionSheetDidDismiss).toHaveReceivedEventDetail({ data: { type: 'cancel' }, role: 'cancel' });
-    });
-  });
-  test.describe('action sheet: attributes', () => {
-    test('should set htmlAttributes', async ({ page, skip }) => {
-      skip.rtl();
-      await actionSheetFixture.open('#basic');
+          const buttonOption = page.locator('ion-action-sheet button.action-sheet-cancel');
+          await buttonOption.click();
 
-      const actionSheet = page.locator('ion-action-sheet');
-      expect(actionSheet).toHaveAttribute('data-testid', 'basic-action-sheet');
-    });
-  });
-  test.describe('action sheet: variants', () => {
-    test('should open basic action sheet', async () => {
-      await actionSheetFixture.open('#basic');
-      await actionSheetFixture.screenshot('basic');
+          await ionActionSheetDidDismiss.next();
+          expect(ionActionSheetDidDismiss).toHaveReceivedEventDetail({ data: { type: 'cancel' }, role: 'cancel' });
+        });
+      });
+      test.describe('action sheet: attributes', () => {
+        test(title('should set htmlAttributes'), async ({ page }) => {
+          await actionSheetFixture.open('#basic');
 
-      /**
-       * We want to test that the dismiss method
-       * actually works, but we do not need to test
-       * it every time. As a result, we only
-       * call dismiss in this test.
-       */
-      await actionSheetFixture.dismiss();
-    });
-    test('should open cancel only action sheet', async () => {
-      await actionSheetFixture.open('#cancelOnly');
-      await actionSheetFixture.screenshot('cancel-only');
-    });
-    test('should open custom action sheet', async () => {
-      await actionSheetFixture.open('#custom');
-      await actionSheetFixture.screenshot('custom');
-    });
-    test('should open scrollable action sheet', async () => {
-      await actionSheetFixture.open('#scrollableOptions');
-      await actionSheetFixture.screenshot('scrollable-options');
-    });
-    test('should open scrollable action sheet without cancel', async () => {
-      await actionSheetFixture.open('#scrollWithoutCancel');
-      await actionSheetFixture.screenshot('scroll-without-cancel');
-    });
-    test('should open custom backdrop action sheet', async ({ page, skip }) => {
-      skip.rtl();
-      await actionSheetFixture.open('#customBackdrop');
+          const actionSheet = page.locator('ion-action-sheet');
+          expect(actionSheet).toHaveAttribute('data-testid', 'basic-action-sheet');
+        });
+      });
+      test.describe('action sheet: variants', () => {
+        test(title('should open custom backdrop action sheet'), async ({ page }) => {
+          await actionSheetFixture.open('#customBackdrop');
 
-      const backdrop = page.locator('ion-action-sheet ion-backdrop');
-      expect(backdrop).toHaveCSS('opacity', '1');
-    });
-    test('should open alert from action sheet', async ({ page, skip }) => {
-      skip.rtl();
-      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
-      await actionSheetFixture.open('#alertFromActionSheet');
+          const backdrop = page.locator('ion-action-sheet ion-backdrop');
+          expect(backdrop).toHaveCSS('opacity', '1');
+        });
+        test(title('should open alert from action sheet'), async ({ page }) => {
+          const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+          await actionSheetFixture.open('#alertFromActionSheet');
 
-      await page.locator('#open-alert').click();
+          await page.locator('#open-alert').click();
 
-      await ionAlertDidPresent.next();
-    });
-    test('should not dismiss action sheet when backdropDismiss: false', async ({ page, skip }) => {
-      skip.rtl();
-      await actionSheetFixture.open('#noBackdropDismiss');
+          await ionAlertDidPresent.next();
+        });
+        test(title('should not dismiss action sheet when backdropDismiss: false'), async ({ page }) => {
+          await actionSheetFixture.open('#noBackdropDismiss');
 
-      const actionSheet = page.locator('ion-action-sheet');
-      await actionSheet.locator('ion-backdrop').click();
+          const actionSheet = page.locator('ion-action-sheet');
+          await actionSheet.locator('ion-backdrop').click();
 
-      expect(actionSheet).toBeVisible();
+          expect(actionSheet).toBeVisible();
+        });
+      });
+      test.describe('action sheet: focus trap', () => {
+        test(title('it should trap focus in action sheet'), async ({ page, browserName }) => {
+          const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
+
+          await actionSheetFixture.open('#basic');
+          const buttons = page.locator('ion-action-sheet button');
+
+          await page.keyboard.press(tabKey);
+          await expect(buttons.nth(0)).toBeFocused();
+
+          await page.keyboard.press(`Shift+${tabKey}`);
+          await expect(buttons.nth(4)).toBeFocused();
+
+          await page.keyboard.press(tabKey);
+          await expect(buttons.nth(0)).toBeFocused();
+        });
+      });
     });
   });
-  test.describe('action sheet: focus trap', () => {
-    test('it should trap focus in action sheet', async ({ page, skip, browserName }) => {
-      skip.rtl();
-      const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
+  configs().forEach(({ title, config }) => {
+    test.describe('action sheet: rendering', () => {
+      let actionSheetFixture: ActionSheetFixture;
+      test.beforeEach(async ({ page }) => {
+        await page.goto(`/src/components/action-sheet/test/basic`, config);
+        actionSheetFixture = new ActionSheetFixture(page);
+      });
+      test.describe('action sheet: variants', () => {
+        test(title('should open basic action sheet'), async () => {
+          await actionSheetFixture.open('#basic');
+          await actionSheetFixture.screenshot('basic');
 
-      await actionSheetFixture.open('#basic');
-      const buttons = page.locator('ion-action-sheet button');
-
-      await page.keyboard.press(tabKey);
-      await expect(buttons.nth(0)).toBeFocused();
-
-      await page.keyboard.press(`Shift+${tabKey}`);
-      await expect(buttons.nth(4)).toBeFocused();
-
-      await page.keyboard.press(tabKey);
-      await expect(buttons.nth(0)).toBeFocused();
+          /**
+           * We want to test that the dismiss method
+           * actually works, but we do not need to test
+           * it every time. As a result, we only
+           * call dismiss in this test.
+           */
+          await actionSheetFixture.dismiss();
+        });
+        test(title('should open cancel only action sheet'), async () => {
+          await actionSheetFixture.open('#cancelOnly');
+          await actionSheetFixture.screenshot('cancel-only');
+        });
+        test(title('should open custom action sheet'), async () => {
+          await actionSheetFixture.open('#custom');
+          await actionSheetFixture.screenshot('custom');
+        });
+        test(title('should open scrollable action sheet'), async () => {
+          await actionSheetFixture.open('#scrollableOptions');
+          await actionSheetFixture.screenshot('scrollable-options');
+        });
+        test(title('should open scrollable action sheet without cancel'), async () => {
+          await actionSheetFixture.open('#scrollWithoutCancel');
+          await actionSheetFixture.screenshot('scroll-without-cancel');
+        });
+      });
     });
   });
 });
