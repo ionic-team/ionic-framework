@@ -14,7 +14,7 @@
   </head>
   <body>
     <ion-app>
-      <ion-menu content-id="main" id="menu">
+      <ion-menu id="menu" content-id="main">
         <ion-header>
           <ion-toolbar>
             <ion-title>Menu</ion-title>
@@ -24,7 +24,7 @@
           <ion-item>
             <ion-button id="open-modal-button">Open Modal</ion-button>
           </ion-item>
-          <ion-modal id="modal-element" trigger="open-modal-button">
+          <ion-modal id="modal" trigger="open-modal-button">
             <ion-content class="ion-padding">
               Modal content
               <ion-button onclick="dismissModal()">Dismiss Modal</ion-button>

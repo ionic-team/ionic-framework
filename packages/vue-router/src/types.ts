@@ -63,7 +63,7 @@ export interface ViewItem {
   outletId: number;
   matchedRoute: RouteLocationMatched;
   ionPageElement?: HTMLElement;
-  vueComponent: any; // todo
+  vueComponent: any;
   ionRoute: boolean;
   mount: boolean;
   exact: boolean;

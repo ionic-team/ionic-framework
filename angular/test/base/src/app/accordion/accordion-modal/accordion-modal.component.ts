@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   templateUrl: './accordion-modal.component.html',
 })
 export class AccordionModalComponent {
-  modal: HTMLIonModalElement;
+  modal!: HTMLIonModalElement;
 
   constructor() {}
 }

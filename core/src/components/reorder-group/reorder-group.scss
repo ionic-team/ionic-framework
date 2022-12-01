@@ -4,6 +4,8 @@
 // --------------------------------------------------
 
 .reorder-list-active > * {
+  display: block;
+
   transition: transform 300ms;
   will-change: transform;
 }

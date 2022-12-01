@@ -22,6 +22,7 @@ import { raf, inheritAttributes } from '../../utils/helpers';
 import type { Attributes } from '../../utils/helpers';
 import { KEYBOARD_DID_OPEN } from '../../utils/keyboard/keyboard';
 import { printIonWarning } from '../../utils/logging';
+import { Style as StatusBarStyle, StatusBar } from '../../utils/native/status-bar';
 import { BACKDROP, activeAnimations, dismiss, eventMethod, prepareOverlay, present } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 import { deepReady } from '../../utils/transition';
@@ -68,6 +69,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private keyboardOpenCallback?: () => void;
   private moveSheetToBreakpoint?: (options: MoveSheetToBreakpointOptions) => Promise<void>;
   private inheritedAttributes: Attributes = {};
+  private statusBarStyle?: StatusBarStyle;
 
   private inline = false;
   private workingDelegate?: FrameworkDelegate;
@@ -332,13 +334,23 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   connectedCallback() {
-    prepareOverlay(this.el);
+    const { configureTriggerInteraction, el } = this;
+    prepareOverlay(el);
+    configureTriggerInteraction();
+  }
+
+  disconnectedCallback() {
+    const { destroyTriggerInteraction } = this;
+
+    if (destroyTriggerInteraction) {
+      destroyTriggerInteraction();
+    }
   }
 
   componentWillLoad() {
     const { breakpoints, initialBreakpoint, swipeToClose, el } = this;
 
-    this.inheritedAttributes = inheritAttributes(el, ['role']);
+    this.inheritedAttributes = inheritAttributes(el, ['aria-label', 'role']);
 
     /**
      * If user has custom ID set then we should
@@ -371,7 +383,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
       raf(() => this.present());
     }
     this.breakpointsChanged(this.breakpoints);
-    this.configureTriggerInteraction();
   }
 
   private configureTriggerInteraction = () => {
@@ -510,7 +521,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
      * If we did not do this check, then not using swipeToClose would mean you could
      * not run canDismiss on swipe as there would be no swipe gesture created.
      */
-    const hasCardModal = this.swipeToClose || (this.canDismiss !== undefined && this.presentingElement !== undefined);
+    const hasCardModal = this.presentingElement !== undefined && (this.swipeToClose || this.canDismiss !== undefined);
 
     /**
      * We need to change the status bar at the
@@ -518,6 +529,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
      * by the time the card animation is done.
      */
     if (hasCardModal && getIonMode(this) === 'ios') {
+      // Cache the original status bar color before the modal is presented
+      this.statusBarStyle = await StatusBar.getStyle();
       setCardStatusBarDark();
     }
 
@@ -575,7 +588,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
       return;
     }
 
-    this.gesture = createSwipeToCloseGesture(el, ani, () => {
+    const statusBarStyle = this.statusBarStyle ?? StatusBarStyle.Default;
+
+    this.gesture = createSwipeToCloseGesture(el, ani, statusBarStyle, () => {
       /**
        * While the gesture animation is finishing
        * it is possible for a user to tap the backdrop.
@@ -682,9 +697,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
      * finishes when the dismiss animation does.
      * TODO (FW-937)
      */
-    const hasCardModal = this.swipeToClose || (this.canDismiss !== undefined && this.presentingElement !== undefined);
+    const hasCardModal = this.presentingElement !== undefined && (this.swipeToClose || this.canDismiss !== undefined);
     if (hasCardModal && getIonMode(this) === 'ios') {
-      setCardStatusBarDefault();
+      setCardStatusBarDefault(this.statusBarStyle);
     }
 
     /* tslint:disable-next-line */
@@ -870,11 +885,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
     return (
       <Host
         no-router
-        aria-modal="true"
-        role="dialog"
         tabindex="-1"
         {...(htmlAttributes as any)}
-        {...inheritedAttributes}
         style={{
           zIndex: `${20000 + this.overlayIndex}`,
         }}
@@ -902,7 +914,20 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
         {mode === 'ios' && <div class="modal-shadow"></div>}
 
-        <div class="modal-wrapper ion-overlay-wrapper" part="content" ref={(el) => (this.wrapperEl = el)}>
+        <div
+          /*
+            role and aria-modal must be used on the
+            same element. They must also be set inside the
+            shadow DOM otherwise ion-button will not be highlighted
+            when using VoiceOver: https://bugs.webkit.org/show_bug.cgi?id=247134
+          */
+          role="dialog"
+          {...inheritedAttributes}
+          aria-modal="true"
+          class="modal-wrapper ion-overlay-wrapper"
+          part="content"
+          ref={(el) => (this.wrapperEl = el)}
+        >
           {showHandle && (
             <button
               class="modal-handle"

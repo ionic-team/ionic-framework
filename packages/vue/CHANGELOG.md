@@ -3,6 +3,60 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.9](https://github.com/ionic-team/ionic/compare/v6.3.8...v6.3.9) (2022-11-30)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [6.3.8](https://github.com/ionic-team/ionic/compare/v6.3.7...v6.3.8) (2022-11-22)
+
+
+### Bug Fixes
+
+* **popover:** popover positions correctly on all frameworks ([#26306](https://github.com/ionic-team/ionic/issues/26306)) ([be9a399](https://github.com/ionic-team/ionic/commit/be9a399eeed37ae4a67add78ac1283ba0c5e4b14)), closes [#25337](https://github.com/ionic-team/ionic/issues/25337)
+
+
+
+
+
+## [6.3.7](https://github.com/ionic-team/ionic/compare/v6.3.6...v6.3.7) (2022-11-16)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [6.3.6](https://github.com/ionic-team/ionic/compare/v6.3.5...v6.3.6) (2022-11-10)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [6.3.5](https://github.com/ionic-team/ionic/compare/v6.3.4...v6.3.5) (2022-11-09)
+
+
+### Bug Fixes
+
+* **vue:** generate web-types for components ([#26205](https://github.com/ionic-team/ionic/issues/26205)) ([1f7fc8f](https://github.com/ionic-team/ionic/commit/1f7fc8f05c03316560e0b58c3bf58db6b189d0e1)), closes [#26198](https://github.com/ionic-team/ionic/issues/26198)
+
+
+
+
+
+## [6.3.4](https://github.com/ionic-team/ionic/compare/v6.3.3...v6.3.4) (2022-11-02)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
 ## [6.3.3](https://github.com/ionic-team/ionic/compare/v6.3.2...v6.3.3) (2022-10-26)
 
 

@@ -56,6 +56,17 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
       this.componentDidUpdate(this.props);
 
       /**
+       * Mount the inner component when the
+       * overlay is about to open.
+       *
+       * For ion-popover, this is when `ionMount` is emitted.
+       * For other overlays, this is when `willPresent` is emitted.
+       */
+      this.ref.current?.addEventListener('ionMount', () => {
+        this.setState({ isOpen: true });
+      });
+
+      /**
        * Mount the inner component
        * when overlay is about to open.
        * Also manually call the onWillPresent
@@ -144,6 +155,7 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
                 {
                   id: 'ion-react-wrapper',
                   ref: this.wrapperRef,
+                  className: 'ion-delegate-host',
                   style: {
                     display: 'flex',
                     flexDirection: 'column',

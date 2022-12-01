@@ -124,8 +124,6 @@
   resize: none;
   appearance: none;
 
-  overflow: hidden;
-
   &::placeholder {
     @include padding(0);
 
@@ -139,7 +137,7 @@
   }
 }
 
-.native-textarea[disabled] {
+.native-textarea[disabled]:not(.cloned-input) {
   opacity: 0.4;
 }
 
@@ -159,13 +157,22 @@
   pointer-events: none;
 }
 
-:host([auto-grow]) .cloned-input {
+/**
+ * The cloned input needs to be disabled on
+ * Android otherwise the viewport will still
+ * shift when running scroll assist.
+ */
+.cloned-input:disabled {
+  opacity: 1;
+}
+
+:host([auto-grow="true"]) .cloned-input {
   // Workaround for webkit rendering issue with scroll assist.
   // When cloning the textarea and scrolling into view,
   // a white box is rendered from the difference in height
   // from the auto grow container.
   // This change forces the cloned input to match the true
-  // height of the textarea container. 
+  // height of the textarea container.
   height: 100%;
 }
 
@@ -181,4 +188,8 @@
   transition: opacity 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 
   opacity: 1;
+}
+
+:host([auto-grow="true"]) .native-textarea {
+  overflow: hidden;
 }
