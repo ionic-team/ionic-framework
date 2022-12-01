@@ -1,13 +1,14 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { test, configs } from '@utils/test/playwright';
 
-test.describe('button: round', () => {
-  test('should not have visual regressions', async ({ page, skip }) => {
-    skip.rtl('All content takes up the full width, so RTL has no effect.');
-    await page.goto(`/src/components/button/test/round`);
+configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe('button: round', () => {
+    test(title('should not have visual regressions'), async ({ page }) => {
+      await page.goto(`/src/components/button/test/round`, config);
 
-    await page.setIonViewport();
+      await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`button-round-${page.getSnapshotSettings()}.png`);
+      expect(await page.screenshot()).toMatchSnapshot(`button-round-${page.getSnapshotSettings()}.png`);
+    });
   });
 });

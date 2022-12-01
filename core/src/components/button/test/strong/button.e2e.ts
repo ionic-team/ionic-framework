@@ -1,12 +1,14 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { test, configs } from '@utils/test/playwright';
 
-test.describe('button: strong', () => {
-  test('should not have visual regressions', async ({ page }) => {
-    await page.goto(`/src/components/button/test/strong`);
+configs().forEach(({ title, config }) => {
+  test.describe('button: strong', () => {
+    test(title('should not have visual regressions'), async ({ page }) => {
+      await page.goto(`/src/components/button/test/strong`, config);
 
-    await page.setIonViewport();
+      await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`button-strong-${page.getSnapshotSettings()}.png`);
+      expect(await page.screenshot()).toMatchSnapshot(`button-strong-${page.getSnapshotSettings()}.png`);
+    });
   });
 });

@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { test, configs } from '@utils/test/playwright';
 
-test.describe.only('button: basic', () => {
+test.describe('button: basic', () => {
   configs().forEach(({ title, config }) => {
     test(title('should not have visual regressions'), async ({ page }) => {
       await page.goto(`/src/components/button/test/basic`, config);
@@ -35,27 +35,27 @@ test.describe.only('button: basic', () => {
   });
 });
 
-test.describe('button: ripple effect', () => {
-  test('should not have visual regressions', async ({ page, skip }) => {
-    skip.mode('ios', 'Ripple effect is only available in MD mode.');
+configs({ modes: ['md'] }).forEach(({ title, config }) => {
+  test.describe('button: ripple effect', () => {
+    test(title('should not have visual regressions'), async ({ page }) => {
+      await page.goto(`/src/components/button/test/basic?ionic:_testing=false`, config);
 
-    await page.goto(`/src/components/button/test/basic?ionic:_testing=false`);
+      const button = page.locator('#default');
 
-    const button = page.locator('#default');
+      await button.scrollIntoViewIfNeeded();
 
-    await button.scrollIntoViewIfNeeded();
+      const boundingBox = await button.boundingBox();
 
-    const boundingBox = await button.boundingBox();
+      if (boundingBox) {
+        await page.mouse.move(boundingBox.x + boundingBox.width / 2, boundingBox.y + boundingBox.height / 2);
+        await page.mouse.down();
+      }
 
-    if (boundingBox) {
-      await page.mouse.move(boundingBox.x + boundingBox.width / 2, boundingBox.y + boundingBox.height / 2);
-      await page.mouse.down();
-    }
+      await page.waitForSelector('#default.ion-activated');
 
-    await page.waitForSelector('#default.ion-activated');
-
-    expect(await button.screenshot({ animations: 'disabled' })).toMatchSnapshot(
-      `button-ripple-effect-${page.getSnapshotSettings()}.png`
-    );
+      expect(await button.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+        `button-ripple-effect-${page.getSnapshotSettings()}.png`
+      );
+    });
   });
 });
