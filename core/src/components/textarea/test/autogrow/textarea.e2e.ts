@@ -45,4 +45,28 @@ test.describe('textarea: autogrow', () => {
 
     expect(await textarea.screenshot()).toMatchSnapshot(`textarea-autogrow-after-${page.getSnapshotSettings()}.png`);
   });
+
+  test('should break long lines without white space', async ({ page }) => {
+    test.info().annotations.push({
+      type: 'issue',
+      description: 'https://github.com/ionic-team/ionic-framework/issues/25893',
+    });
+
+    await page.setContent(
+      `<ion-app>
+        <ion-content>
+          <ion-textarea
+            auto-grow="true"
+            value="abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz">
+          </ion-textarea>
+        </ion-content>
+      </ion-app>`
+    );
+
+    const textarea = await page.locator('ion-textarea');
+
+    expect(await textarea.screenshot()).toMatchSnapshot(
+      `textarea-autogrow-word-break-${page.getSnapshotSettings()}.png`
+    );
+  });
 });

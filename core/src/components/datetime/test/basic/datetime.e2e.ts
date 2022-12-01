@@ -72,6 +72,39 @@ test.describe('datetime: selecting a day', () => {
 
     await expect(activeDay).toHaveText('13');
   });
+  test('should set both date and time when no value is initially set', async ({ page }) => {
+    await page.setContent(`
+      <ion-datetime locale="en-US" presentation="date-time"></ion-datetime>
+
+      <script>
+        const mockToday = '2022-10-10T16:22';
+        Date = class extends Date {
+          constructor(...args) {
+            if (args.length === 0) {
+              super(mockToday)
+            } else {
+              super(...args);
+            }
+          }
+        }
+      </script>
+    `);
+
+    await page.waitForSelector('.datetime-ready');
+    const datetime = page.locator('ion-datetime');
+    const ionChange = await page.spyOnEvent('ionChange');
+
+    // Oct 1, 2022
+    await page.click('.calendar-day[data-month="10"][data-year="2022"][data-day="1"]');
+
+    await ionChange.next();
+
+    const value = await datetime.evaluate((el: HTMLIonDatetimeElement) => el.value);
+    await expect(typeof value).toBe('string');
+
+    // Check to make sure value includes current time
+    await expect(value!.includes('2022-10-01T16:22')).toBe(true);
+  });
 });
 
 test.describe('datetime: confirm date', () => {
@@ -277,5 +310,48 @@ test.describe('datetime: visibility', () => {
 
     // month/year interface should be reset
     await expect(monthYearInterface).toBeHidden();
+  });
+});
+
+test.describe('datetime: RTL set on component', () => {
+  test('should flip icons when RTL is set on component directly', async ({ page, skip }) => {
+    skip.rtl(); // we're setting RTL on the component instead
+    skip.mode('md');
+
+    await page.setContent(`
+      <ion-datetime dir="rtl"></ion-datetime>
+    `);
+
+    const nextPrevIcons = page.locator('ion-datetime .calendar-next-prev ion-icon');
+    await expect(nextPrevIcons.first()).toHaveClass(/flip-rtl/);
+    await expect(nextPrevIcons.last()).toHaveClass(/flip-rtl/);
+  });
+});
+
+test.describe('datetime: clear button', () => {
+  test('should clear the active calendar day', async ({ page, skip }, testInfo) => {
+    skip.rtl();
+    skip.mode('md');
+
+    testInfo.annotations.push({
+      type: 'issue',
+      description: 'https://github.com/ionic-team/ionic-framework/issues/26258',
+    });
+
+    await page.setContent(`
+      <ion-datetime value="2022-11-10" show-clear-button="true"></ion-datetime>
+    `);
+
+    await page.waitForSelector('.datetime-ready');
+
+    const selectedDay = page.locator('ion-datetime .calendar-day-active');
+
+    await expect(selectedDay).toHaveText('10');
+
+    await page.click('ion-datetime #clear-button');
+
+    await page.waitForChanges();
+
+    await expect(selectedDay).toHaveCount(0);
   });
 });

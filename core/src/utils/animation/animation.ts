@@ -1,4 +1,5 @@
 import { raf } from '../helpers';
+import { win } from '../window';
 
 import type {
   Animation,
@@ -83,7 +84,8 @@ export const createAnimation = (animationId?: string): Animation => {
   const _afterAddWriteFunctions: any[] = [];
   const webAnimations: any[] = [];
   const supportsAnimationEffect =
-    typeof (AnimationEffect as any) === 'function' || typeof (window as any).AnimationEffect === 'function';
+    typeof (AnimationEffect as any) === 'function' ||
+    (win !== undefined && typeof (win as any).AnimationEffect === 'function');
   const supportsWebAnimations =
     typeof (Element as any) === 'function' &&
     typeof (Element as any).prototype!.animate === 'function' &&
@@ -906,8 +908,6 @@ export const createAnimation = (animationId?: string): Animation => {
          * may be flickering if a new
          * animation is started on the same
          * element too quickly
-         *
-         * TODO: Is there a cleaner way to do this?
          */
         raf(() => {
           clearCSSAnimationPlayState();

@@ -3,6 +3,125 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.9](https://github.com/ionic-team/ionic/compare/v6.3.8...v6.3.9) (2022-11-30)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [6.3.8](https://github.com/ionic-team/ionic/compare/v6.3.7...v6.3.8) (2022-11-22)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [6.3.7](https://github.com/ionic-team/ionic/compare/v6.3.6...v6.3.7) (2022-11-16)
+
+
+### Bug Fixes
+
+* **popover:** inline popover positioning with fit-content or auto width ([#26230](https://github.com/ionic-team/ionic/issues/26230)) ([0a8a958](https://github.com/ionic-team/ionic/commit/0a8a958cba02994ea0fefa265b17edddffe62e98)), closes [#24716](https://github.com/ionic-team/ionic/issues/24716)
+
+
+
+
+
+## [6.3.6](https://github.com/ionic-team/ionic/compare/v6.3.5...v6.3.6) (2022-11-10)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [6.3.5](https://github.com/ionic-team/ionic/compare/v6.3.4...v6.3.5) (2022-11-09)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [6.3.4](https://github.com/ionic-team/ionic/compare/v6.3.3...v6.3.4) (2022-11-02)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [6.3.3](https://github.com/ionic-team/ionic/compare/v6.3.2...v6.3.3) (2022-10-26)
+
+
+### Bug Fixes
+
+* **datetime:** empty string is treated as no value ([#26131](https://github.com/ionic-team/ionic/issues/26131)) ([51ab5f6](https://github.com/ionic-team/ionic/commit/51ab5f67b50013c0ed8ca3160d6dfc56bc269f2a)), closes [#26116](https://github.com/ionic-team/ionic/issues/26116)
+* **dependencies:** latest patch is installed ([#26148](https://github.com/ionic-team/ionic/issues/26148)) ([74be79e](https://github.com/ionic-team/ionic/commit/74be79e9d81fd5431ae2fc442fd6387cf37b2015)), closes [#26137](https://github.com/ionic-team/ionic/issues/26137)
+
+
+
+
+
+## [6.3.2](https://github.com/ionic-team/ionic/compare/v6.3.1...v6.3.2) (2022-10-17)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [6.3.1](https://github.com/ionic-team/ionic/compare/v6.3.0...v6.3.1) (2022-10-12)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+# [6.3.0 Manganese](https://github.com/ionic-team/ionic/compare/v6.2.9...v6.3.0) (2022-10-05)
+
+
+### Features
+
+* **angular:** use standalone components with routing ([#25589](https://github.com/ionic-team/ionic/issues/25589)) ([3c84d48](https://github.com/ionic-team/ionic/commit/3c84d48cfa87810896364cb7ca16efcbdd7e8b07)), closes [#25404](https://github.com/ionic-team/ionic/issues/25404)
+* **button:** submit from outside of form ([#25913](https://github.com/ionic-team/ionic/issues/25913)) ([b139838](https://github.com/ionic-team/ionic/commit/b13983848c9ea7387062953412eaae744c001ec7)), closes [#21194](https://github.com/ionic-team/ionic/issues/21194)
+* **datetime:** add header text to multiple selection; improve header consistency between modes ([#25817](https://github.com/ionic-team/ionic/issues/25817)) ([8a1b3c5](https://github.com/ionic-team/ionic/commit/8a1b3c5f300a1ec953d406b65601f84fa49aa807))
+
+
+
+
+
+## [6.2.9](https://github.com/ionic-team/ionic/compare/v6.2.8...v6.2.9) (2022-09-28)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [6.2.8](https://github.com/ionic-team/ionic/compare/v6.2.7...v6.2.8) (2022-09-21)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [6.2.7](https://github.com/ionic-team/ionic/compare/v6.2.6...v6.2.7) (2022-09-14)
+
+
+### Bug Fixes
+
+* **angular:** nav controller can pop views after leaving tabs outlet ([#25690](https://github.com/ionic-team/ionic/issues/25690)) ([725b13f](https://github.com/ionic-team/ionic/commit/725b13fa60775dc9f9c3491cb545c70a5a9162eb)), closes [#18593](https://github.com/ionic-team/ionic/issues/18593)
+
+
+
+
+
 ## [6.2.6](https://github.com/ionic-team/ionic/compare/v6.2.5...v6.2.6) (2022-09-07)
 
 **Note:** Version bump only for package @ionic/angular

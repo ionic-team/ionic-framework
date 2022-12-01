@@ -1,5 +1,7 @@
 import { Component } from "@angular/core";
 
+import { IonPopover } from "@ionic/angular";
+
 /**
  * Validates that inline popovers will correctly display
  * dynamic contents that are updated after the modal is
@@ -13,7 +15,7 @@ export class PopoverInlineComponent {
 
   items: string[] = [];
 
-  openPopover(popover: HTMLIonPopoverElement) {
+  openPopover(popover: IonPopover) {
     popover.present();
 
     setTimeout(() => {

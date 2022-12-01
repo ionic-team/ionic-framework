@@ -3,6 +3,130 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.9](https://github.com/ionic-team/ionic/compare/v6.3.8...v6.3.9) (2022-11-30)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [6.3.8](https://github.com/ionic-team/ionic/compare/v6.3.7...v6.3.8) (2022-11-22)
+
+
+### Bug Fixes
+
+* **popover:** popover positions correctly on all frameworks ([#26306](https://github.com/ionic-team/ionic/issues/26306)) ([be9a399](https://github.com/ionic-team/ionic/commit/be9a399eeed37ae4a67add78ac1283ba0c5e4b14)), closes [#25337](https://github.com/ionic-team/ionic/issues/25337)
+* **react:** useIonRouter hook has stable router reference ([#25000](https://github.com/ionic-team/ionic/issues/25000)) ([89e3cd6](https://github.com/ionic-team/ionic/commit/89e3cd67ce6d9cfc0607d6a89362483878a1820b)), closes [#24987](https://github.com/ionic-team/ionic/issues/24987)
+
+
+
+
+
+## [6.3.7](https://github.com/ionic-team/ionic/compare/v6.3.6...v6.3.7) (2022-11-16)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [6.3.6](https://github.com/ionic-team/ionic/compare/v6.3.5...v6.3.6) (2022-11-10)
+
+
+### Bug Fixes
+
+* **react:** inline overlays display contents consistently ([#26255](https://github.com/ionic-team/ionic/issues/26255)) ([d709ff6](https://github.com/ionic-team/ionic/commit/d709ff64ae29a5197dc74cecb95cba602479683d)), closes [#26253](https://github.com/ionic-team/ionic/issues/26253)
+
+
+
+
+
+## [6.3.5](https://github.com/ionic-team/ionic/compare/v6.3.4...v6.3.5) (2022-11-09)
+
+
+### Bug Fixes
+
+* **react:** loading layout is correct with no message ([#26222](https://github.com/ionic-team/ionic/issues/26222)) ([57105d5](https://github.com/ionic-team/ionic/commit/57105d54ea259fc9cd1a63e3d361ec8a57dd2971)), closes [#26219](https://github.com/ionic-team/ionic/issues/26219)
+
+
+
+
+
+## [6.3.4](https://github.com/ionic-team/ionic/compare/v6.3.3...v6.3.4) (2022-11-02)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [6.3.3](https://github.com/ionic-team/ionic/compare/v6.3.2...v6.3.3) (2022-10-26)
+
+
+### Bug Fixes
+
+* **dependencies:** latest patch is installed ([#26148](https://github.com/ionic-team/ionic/issues/26148)) ([74be79e](https://github.com/ionic-team/ionic/commit/74be79e9d81fd5431ae2fc442fd6387cf37b2015)), closes [#26137](https://github.com/ionic-team/ionic/issues/26137)
+* **react:** inline overlays can be conditionally rendered  ([#26111](https://github.com/ionic-team/ionic/issues/26111)) ([8ec350a](https://github.com/ionic-team/ionic/commit/8ec350ae652095ae29e2f02a7f105cb709a72583)), closes [#25590](https://github.com/ionic-team/ionic/issues/25590)
+
+
+
+
+
+## [6.3.2](https://github.com/ionic-team/ionic/compare/v6.3.1...v6.3.2) (2022-10-17)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [6.3.1](https://github.com/ionic-team/ionic/compare/v6.3.0...v6.3.1) (2022-10-12)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+# [6.3.0](https://github.com/ionic-team/ionic/compare/v6.2.9...v6.3.0) (2022-10-05)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [6.2.9](https://github.com/ionic-team/ionic/compare/v6.2.8...v6.2.9) (2022-09-28)
+
+
+### Bug Fixes
+
+* **react:** overlays now define internal ionic components ([#25967](https://github.com/ionic-team/ionic/issues/25967)) ([21dc893](https://github.com/ionic-team/ionic/commit/21dc893f90a56d14d69330367daae6788e32652e)), closes [#25962](https://github.com/ionic-team/ionic/issues/25962)
+
+
+
+
+
+## [6.2.8](https://github.com/ionic-team/ionic/compare/v6.2.7...v6.2.8) (2022-09-21)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [6.2.7](https://github.com/ionic-team/ionic/compare/v6.2.6...v6.2.7) (2022-09-14)
+
+
+### Bug Fixes
+
+* **react:** add correct type for CreateAnimation ([#25931](https://github.com/ionic-team/ionic/issues/25931)) ([89d3e3c](https://github.com/ionic-team/ionic/commit/89d3e3c819b282e4d7ce716b9099eaab82ab4de2))
+
+
+
+
+
 ## [6.2.6](https://github.com/ionic-team/ionic/compare/v6.2.5...v6.2.6) (2022-09-07)
 
 **Note:** Version bump only for package @ionic/react

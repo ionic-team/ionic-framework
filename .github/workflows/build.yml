@@ -15,7 +15,7 @@ jobs:
   build-core:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           # Checkout the latest commit in this branch
           ref: ${{ github.event.pull_request.head.sha }}
@@ -25,28 +25,28 @@ jobs:
     needs: [build-core]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: ./.github/workflows/actions/test-core-clean-build
 
   test-core-lint:
     needs: [build-core]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: ./.github/workflows/actions/test-core-lint
 
   test-core-spec:
     needs: [build-core]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: ./.github/workflows/actions/test-core-spec
 
   test-core-e2e:
     needs: [build-core]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: ./.github/workflows/actions/test-core-e2e
 
   test-core-screenshot:
@@ -67,7 +67,7 @@ jobs:
     needs: [build-core]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: ./.github/workflows/actions/test-core-screenshot
         with:
           shard: ${{ matrix.shard }}
@@ -95,14 +95,14 @@ jobs:
     needs: [build-core]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - uses: ./.github/workflows/actions/build-vue
 
   build-vue-router:
     needs: [build-vue]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - uses: ./.github/workflows/actions/build-vue-router
 
   test-vue-e2e:
@@ -113,7 +113,7 @@ jobs:
     needs: [build-vue, build-vue-router]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - uses: ./.github/workflows/actions/test-vue-e2e
       with:
         app: ${{ matrix.apps }}
@@ -131,25 +131,25 @@ jobs:
     needs: [build-core]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - uses: ./.github/workflows/actions/build-angular
 
   build-angular-server:
     needs: [build-angular]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - uses: ./.github/workflows/actions/build-angular-server
 
   test-angular-e2e:
     strategy:
       fail-fast: false
       matrix:
-        apps: [ng12, ng13, ng14]
+        apps: [ng12, ng13, ng14, ng15]
     needs: [build-angular, build-angular-server]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - uses: ./.github/workflows/actions/test-angular-e2e
       with:
         app: ${{ matrix.apps }}
@@ -167,26 +167,26 @@ jobs:
     needs: [build-core]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - uses: ./.github/workflows/actions/build-react
 
   build-react-router:
     needs: [build-react]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - uses: ./.github/workflows/actions/build-react-router
 
   test-react-router-e2e:
     needs: [build-react, build-react-router]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - uses: ./.github/workflows/actions/test-react-router-e2e
 
   test-react-e2e:
     needs: [build-react, build-react-router]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - uses: ./.github/workflows/actions/test-react-e2e

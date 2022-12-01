@@ -69,7 +69,7 @@
 }
 
 :host(.chip-outline) {
-  border-color: rgba(0, 0, 0, .32);
+  border-color: rgba($text-color-rgb, .32);
 
   background: transparent;
 }
@@ -79,11 +79,11 @@
 }
 
 :host(.chip-outline:not(.ion-color):focus) {
-  background: rgba(0, 0, 0, .04);
+  background: rgba($text-color-rgb, .04);
 }
 
 :host(.chip-outline.ion-activated:not(.ion-color)) {
-  background: rgba(0, 0, 0, .08);
+  background: rgba($text-color-rgb, .08);
 }
 
 
@@ -95,7 +95,7 @@
 }
 
 :host(:not(.ion-color)) ::slotted(ion-icon) {
-  color: rgba(0, 0, 0, .54);
+  color: rgba($text-color-rgb, .54);
 }
 
 ::slotted(ion-icon:first-child) {

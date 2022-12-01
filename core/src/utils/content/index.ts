@@ -13,7 +13,7 @@ export const ION_CONTENT_CLASS_SELECTOR = '.ion-content-scroll-host';
  */
 const ION_CONTENT_SELECTOR = `${ION_CONTENT_ELEMENT_SELECTOR}, ${ION_CONTENT_CLASS_SELECTOR}`;
 
-export const isIonContent = (el: Element) => el && el.tagName === ION_CONTENT_TAG_NAME;
+export const isIonContent = (el: Element) => el.tagName === ION_CONTENT_TAG_NAME;
 
 /**
  * Waits for the element host fully initialize before

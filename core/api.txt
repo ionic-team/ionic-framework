@@ -33,7 +33,7 @@ ion-action-sheet,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | 
 ion-action-sheet,prop,mode,"ios" | "md",undefined,false,false
 ion-action-sheet,prop,subHeader,string | undefined,undefined,false,false
 ion-action-sheet,prop,translucent,boolean,false,false,false
-ion-action-sheet,method,dismiss,dismiss(data?: any, role?: string | undefined) => Promise<boolean>
+ion-action-sheet,method,dismiss,dismiss(data?: any, role?: string) => Promise<boolean>
 ion-action-sheet,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-action-sheet,method,onWillDismiss,onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-action-sheet,method,present,present() => Promise<void>
@@ -80,7 +80,7 @@ ion-alert,prop,message,IonicSafeString | string | undefined,undefined,false,fals
 ion-alert,prop,mode,"ios" | "md",undefined,false,false
 ion-alert,prop,subHeader,string | undefined,undefined,false,false
 ion-alert,prop,translucent,boolean,false,false,false
-ion-alert,method,dismiss,dismiss(data?: any, role?: string | undefined) => Promise<boolean>
+ion-alert,method,dismiss,dismiss(data?: any, role?: string) => Promise<boolean>
 ion-alert,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-alert,method,onWillDismiss,onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-alert,method,present,present() => Promise<void>
@@ -203,6 +203,7 @@ ion-button,prop,disabled,boolean,false,false,true
 ion-button,prop,download,string | undefined,undefined,false,false
 ion-button,prop,expand,"block" | "full" | undefined,undefined,false,true
 ion-button,prop,fill,"clear" | "default" | "outline" | "solid" | undefined,undefined,false,true
+ion-button,prop,form,HTMLFormElement | string | undefined,undefined,false,false
 ion-button,prop,href,string | undefined,undefined,false,false
 ion-button,prop,mode,"ios" | "md",undefined,false,false
 ion-button,prop,rel,string | undefined,undefined,false,false
@@ -397,11 +398,12 @@ ion-datetime,prop,showDefaultButtons,boolean,false,false,false
 ion-datetime,prop,showDefaultTimeLabel,boolean,true,false,false
 ion-datetime,prop,showDefaultTitle,boolean,false,false,false
 ion-datetime,prop,size,"cover" | "fixed",'fixed',false,false
+ion-datetime,prop,titleSelectedDatesFormatter,((selectedDates: string[]) => string) | undefined,undefined,false,false
 ion-datetime,prop,value,null | string | string[] | undefined,undefined,false,false
 ion-datetime,prop,yearValues,number | number[] | string | undefined,undefined,false,false
 ion-datetime,method,cancel,cancel(closeOverlay?: boolean) => Promise<void>
 ion-datetime,method,confirm,confirm(closeOverlay?: boolean) => Promise<void>
-ion-datetime,method,reset,reset(startDate?: string | undefined) => Promise<void>
+ion-datetime,method,reset,reset(startDate?: string) => Promise<void>
 ion-datetime,event,ionBlur,void,true
 ion-datetime,event,ionCancel,void,true
 ion-datetime,event,ionChange,DatetimeChangeEventDetail,true
@@ -519,7 +521,7 @@ ion-infinite-scroll-content,prop,loadingText,IonicSafeString | string | undefine
 ion-input,scoped
 ion-input,prop,accept,string | undefined,undefined,false,false
 ion-input,prop,autocapitalize,string,'off',false,false
-ion-input,prop,autocomplete,"off" | "on" | "name" | "honorific-prefix" | "given-name" | "additional-name" | "family-name" | "honorific-suffix" | "nickname" | "email" | "username" | "new-password" | "current-password" | "one-time-code" | "organization-title" | "organization" | "street-address" | "address-line1" | "address-line2" | "address-line3" | "address-level4" | "address-level3" | "address-level2" | "address-level1" | "country" | "country-name" | "postal-code" | "cc-name" | "cc-given-name" | "cc-additional-name" | "cc-family-name" | "cc-number" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-csc" | "cc-type" | "transaction-currency" | "transaction-amount" | "language" | "bday" | "bday-day" | "bday-month" | "bday-year" | "sex" | "tel" | "tel-country-code" | "tel-national" | "tel-area-code" | "tel-local" | "tel-extension" | "impp" | "url" | "photo",'off',false,false
+ion-input,prop,autocomplete,"name" | "email" | "tel" | "url" | "on" | "off" | "honorific-prefix" | "given-name" | "additional-name" | "family-name" | "honorific-suffix" | "nickname" | "username" | "new-password" | "current-password" | "one-time-code" | "organization-title" | "organization" | "street-address" | "address-line1" | "address-line2" | "address-line3" | "address-level4" | "address-level3" | "address-level2" | "address-level1" | "country" | "country-name" | "postal-code" | "cc-name" | "cc-given-name" | "cc-additional-name" | "cc-family-name" | "cc-number" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-csc" | "cc-type" | "transaction-currency" | "transaction-amount" | "language" | "bday" | "bday-day" | "bday-month" | "bday-year" | "sex" | "tel-country-code" | "tel-national" | "tel-area-code" | "tel-local" | "tel-extension" | "impp" | "photo",'off',false,false
 ion-input,prop,autocorrect,"off" | "on",'off',false,false
 ion-input,prop,autofocus,boolean,false,false,false
 ion-input,prop,clearInput,boolean,false,false,false
@@ -700,7 +702,7 @@ ion-loading,prop,mode,"ios" | "md",undefined,false,false
 ion-loading,prop,showBackdrop,boolean,true,false,false
 ion-loading,prop,spinner,"bubbles" | "circles" | "circular" | "crescent" | "dots" | "lines" | "lines-sharp" | "lines-sharp-small" | "lines-small" | null | undefined,undefined,false,false
 ion-loading,prop,translucent,boolean,false,false,false
-ion-loading,method,dismiss,dismiss(data?: any, role?: string | undefined) => Promise<boolean>
+ion-loading,method,dismiss,dismiss(data?: any, role?: string) => Promise<boolean>
 ion-loading,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-loading,method,onWillDismiss,onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-loading,method,present,present() => Promise<void>
@@ -793,7 +795,7 @@ ion-modal,prop,presentingElement,HTMLElement | undefined,undefined,false,false
 ion-modal,prop,showBackdrop,boolean,true,false,false
 ion-modal,prop,swipeToClose,boolean,false,false,false
 ion-modal,prop,trigger,string | undefined,undefined,false,false
-ion-modal,method,dismiss,dismiss(data?: any, role?: string | undefined) => Promise<boolean>
+ion-modal,method,dismiss,dismiss(data?: any, role?: string) => Promise<boolean>
 ion-modal,method,getCurrentBreakpoint,getCurrentBreakpoint() => Promise<number | undefined>
 ion-modal,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-modal,method,onWillDismiss,onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>
@@ -830,19 +832,19 @@ ion-nav,prop,animation,((baseEl: any, opts?: any) => Animation) | undefined,unde
 ion-nav,prop,root,Function | HTMLElement | ViewController | null | string | undefined,undefined,false,false
 ion-nav,prop,rootParams,undefined | { [key: string]: any; },undefined,false,false
 ion-nav,prop,swipeGesture,boolean | undefined,undefined,false,false
-ion-nav,method,canGoBack,canGoBack(view?: ViewController | undefined) => Promise<boolean>
+ion-nav,method,canGoBack,canGoBack(view?: ViewController) => Promise<boolean>
 ion-nav,method,getActive,getActive() => Promise<ViewController | undefined>
 ion-nav,method,getByIndex,getByIndex(index: number) => Promise<ViewController | undefined>
-ion-nav,method,getPrevious,getPrevious(view?: ViewController | undefined) => Promise<ViewController | undefined>
-ion-nav,method,insert,insert<T extends NavComponent>(insertIndex: number, component: T, componentProps?: ComponentProps<T> | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>
-ion-nav,method,insertPages,insertPages(insertIndex: number, insertComponents: NavComponent[] | NavComponentWithProps[], opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>
-ion-nav,method,pop,pop(opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>
-ion-nav,method,popTo,popTo(indexOrViewCtrl: number | ViewController, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>
-ion-nav,method,popToRoot,popToRoot(opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>
-ion-nav,method,push,push<T extends NavComponent>(component: T, componentProps?: ComponentProps<T> | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>
-ion-nav,method,removeIndex,removeIndex(startIndex: number, removeCount?: number, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>
-ion-nav,method,setPages,setPages(views: NavComponent[] | NavComponentWithProps[], opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>
-ion-nav,method,setRoot,setRoot<T extends NavComponent>(component: T, componentProps?: ComponentProps<T> | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>
+ion-nav,method,getPrevious,getPrevious(view?: ViewController) => Promise<ViewController | undefined>
+ion-nav,method,insert,insert<T extends NavComponent>(insertIndex: number, component: T, componentProps?: ComponentProps<T> | null, opts?: NavOptions | null, done?: TransitionDoneFn) => Promise<boolean>
+ion-nav,method,insertPages,insertPages(insertIndex: number, insertComponents: NavComponent[] | NavComponentWithProps[], opts?: NavOptions | null, done?: TransitionDoneFn) => Promise<boolean>
+ion-nav,method,pop,pop(opts?: NavOptions | null, done?: TransitionDoneFn) => Promise<boolean>
+ion-nav,method,popTo,popTo(indexOrViewCtrl: number | ViewController, opts?: NavOptions | null, done?: TransitionDoneFn) => Promise<boolean>
+ion-nav,method,popToRoot,popToRoot(opts?: NavOptions | null, done?: TransitionDoneFn) => Promise<boolean>
+ion-nav,method,push,push<T extends NavComponent>(component: T, componentProps?: ComponentProps<T> | null, opts?: NavOptions | null, done?: TransitionDoneFn) => Promise<boolean>
+ion-nav,method,removeIndex,removeIndex(startIndex: number, removeCount?: number, opts?: NavOptions | null, done?: TransitionDoneFn) => Promise<boolean>
+ion-nav,method,setPages,setPages(views: NavComponent[] | NavComponentWithProps[], opts?: NavOptions | null, done?: TransitionDoneFn) => Promise<boolean>
+ion-nav,method,setRoot,setRoot<T extends NavComponent>(component: T, componentProps?: ComponentProps<T> | null, opts?: NavOptions | null, done?: TransitionDoneFn) => Promise<boolean>
 ion-nav,event,ionNavDidChange,void,false
 ion-nav,event,ionNavWillChange,void,false
 
@@ -870,7 +872,7 @@ ion-picker,prop,keyboardClose,boolean,true,false,false
 ion-picker,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-picker,prop,mode,"ios" | "md",undefined,false,false
 ion-picker,prop,showBackdrop,boolean,true,false,false
-ion-picker,method,dismiss,dismiss(data?: any, role?: string | undefined) => Promise<boolean>
+ion-picker,method,dismiss,dismiss(data?: any, role?: string) => Promise<boolean>
 ion-picker,method,getColumn,getColumn(name: string) => Promise<PickerColumn | undefined>
 ion-picker,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-picker,method,onWillDismiss,onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>
@@ -916,10 +918,10 @@ ion-popover,prop,size,"auto" | "cover",'auto',false,false
 ion-popover,prop,translucent,boolean,false,false,false
 ion-popover,prop,trigger,string | undefined,undefined,false,false
 ion-popover,prop,triggerAction,"click" | "context-menu" | "hover",'click',false,false
-ion-popover,method,dismiss,dismiss(data?: any, role?: string | undefined, dismissParentPopover?: boolean) => Promise<boolean>
+ion-popover,method,dismiss,dismiss(data?: any, role?: string, dismissParentPopover?: boolean) => Promise<boolean>
 ion-popover,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-popover,method,onWillDismiss,onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>
-ion-popover,method,present,present(event?: MouseEvent | TouchEvent | PointerEvent | CustomEvent<any> | undefined) => Promise<void>
+ion-popover,method,present,present(event?: MouseEvent | TouchEvent | PointerEvent | CustomEvent) => Promise<void>
 ion-popover,event,didDismiss,OverlayEventDetail<any>,true
 ion-popover,event,didPresent,void,true
 ion-popover,event,ionPopoverDidDismiss,OverlayEventDetail<any>,true
@@ -1042,7 +1044,7 @@ ion-reorder,part,icon
 
 ion-reorder-group,none
 ion-reorder-group,prop,disabled,boolean,true,false,false
-ion-reorder-group,method,complete,complete(listOrReorder?: boolean | any[] | undefined) => Promise<any>
+ion-reorder-group,method,complete,complete(listOrReorder?: boolean | any[]) => Promise<any>
 ion-reorder-group,event,ionItemReorder,ItemReorderEventDetail,true
 
 ion-ripple-effect,shadow
@@ -1066,7 +1068,7 @@ ion-router,none
 ion-router,prop,root,string,'/',false,false
 ion-router,prop,useHash,boolean,true,false,false
 ion-router,method,back,back() => Promise<void>
-ion-router,method,push,push(path: string, direction?: RouterDirection, animation?: AnimationBuilder | undefined) => Promise<boolean>
+ion-router,method,push,push(path: string, direction?: RouterDirection, animation?: AnimationBuilder) => Promise<boolean>
 ion-router,event,ionRouteDidChange,RouterEventDetail,true
 ion-router,event,ionRouteWillChange,RouterEventDetail,true
 
@@ -1089,7 +1091,7 @@ ion-row,shadow
 
 ion-searchbar,scoped
 ion-searchbar,prop,animated,boolean,false,false,false
-ion-searchbar,prop,autocomplete,"off" | "on" | "name" | "honorific-prefix" | "given-name" | "additional-name" | "family-name" | "honorific-suffix" | "nickname" | "email" | "username" | "new-password" | "current-password" | "one-time-code" | "organization-title" | "organization" | "street-address" | "address-line1" | "address-line2" | "address-line3" | "address-level4" | "address-level3" | "address-level2" | "address-level1" | "country" | "country-name" | "postal-code" | "cc-name" | "cc-given-name" | "cc-additional-name" | "cc-family-name" | "cc-number" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-csc" | "cc-type" | "transaction-currency" | "transaction-amount" | "language" | "bday" | "bday-day" | "bday-month" | "bday-year" | "sex" | "tel" | "tel-country-code" | "tel-national" | "tel-area-code" | "tel-local" | "tel-extension" | "impp" | "url" | "photo",'off',false,false
+ion-searchbar,prop,autocomplete,"name" | "email" | "tel" | "url" | "on" | "off" | "honorific-prefix" | "given-name" | "additional-name" | "family-name" | "honorific-suffix" | "nickname" | "username" | "new-password" | "current-password" | "one-time-code" | "organization-title" | "organization" | "street-address" | "address-line1" | "address-line2" | "address-line3" | "address-level4" | "address-level3" | "address-level2" | "address-level1" | "country" | "country-name" | "postal-code" | "cc-name" | "cc-given-name" | "cc-additional-name" | "cc-family-name" | "cc-number" | "cc-exp" | "cc-exp-month" | "cc-exp-year" | "cc-csc" | "cc-type" | "transaction-currency" | "transaction-amount" | "language" | "bday" | "bday-day" | "bday-month" | "bday-year" | "sex" | "tel-country-code" | "tel-national" | "tel-area-code" | "tel-local" | "tel-extension" | "impp" | "photo",'off',false,false
 ion-searchbar,prop,autocorrect,"off" | "on",'off',false,false
 ion-searchbar,prop,cancelButtonIcon,string,config.get('backButtonIcon', arrowBackSharp) as string,false,false
 ion-searchbar,prop,cancelButtonText,string,'Cancel',false,false
@@ -1189,7 +1191,7 @@ ion-select,prop,okText,string,'OK',false,false
 ion-select,prop,placeholder,string | undefined,undefined,false,false
 ion-select,prop,selectedText,null | string | undefined,undefined,false,false
 ion-select,prop,value,any,undefined,false,false
-ion-select,method,open,open(event?: UIEvent | undefined) => Promise<any>
+ion-select,method,open,open(event?: UIEvent) => Promise<any>
 ion-select,event,ionBlur,void,true
 ion-select,event,ionCancel,void,true
 ion-select,event,ionChange,SelectChangeEventDetail<any>,true
@@ -1231,13 +1233,13 @@ ion-slides,method,length,length() => Promise<number>
 ion-slides,method,lockSwipeToNext,lockSwipeToNext(lock: boolean) => Promise<void>
 ion-slides,method,lockSwipeToPrev,lockSwipeToPrev(lock: boolean) => Promise<void>
 ion-slides,method,lockSwipes,lockSwipes(lock: boolean) => Promise<void>
-ion-slides,method,slideNext,slideNext(speed?: number | undefined, runCallbacks?: boolean | undefined) => Promise<void>
-ion-slides,method,slidePrev,slidePrev(speed?: number | undefined, runCallbacks?: boolean | undefined) => Promise<void>
-ion-slides,method,slideTo,slideTo(index: number, speed?: number | undefined, runCallbacks?: boolean | undefined) => Promise<void>
+ion-slides,method,slideNext,slideNext(speed?: number, runCallbacks?: boolean) => Promise<void>
+ion-slides,method,slidePrev,slidePrev(speed?: number, runCallbacks?: boolean) => Promise<void>
+ion-slides,method,slideTo,slideTo(index: number, speed?: number, runCallbacks?: boolean) => Promise<void>
 ion-slides,method,startAutoplay,startAutoplay() => Promise<void>
 ion-slides,method,stopAutoplay,stopAutoplay() => Promise<void>
 ion-slides,method,update,update() => Promise<void>
-ion-slides,method,updateAutoHeight,updateAutoHeight(speed?: number | undefined) => Promise<void>
+ion-slides,method,updateAutoHeight,updateAutoHeight(speed?: number) => Promise<void>
 ion-slides,event,ionSlideDidChange,void,true
 ion-slides,event,ionSlideDoubleTap,void,true
 ion-slides,event,ionSlideDrag,void,true
@@ -1391,7 +1393,7 @@ ion-toast,prop,message,IonicSafeString | string | undefined,undefined,false,fals
 ion-toast,prop,mode,"ios" | "md",undefined,false,false
 ion-toast,prop,position,"bottom" | "middle" | "top",'bottom',false,false
 ion-toast,prop,translucent,boolean,false,false,false
-ion-toast,method,dismiss,dismiss(data?: any, role?: string | undefined) => Promise<boolean>
+ion-toast,method,dismiss,dismiss(data?: any, role?: string) => Promise<boolean>
 ion-toast,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-toast,method,onWillDismiss,onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-toast,method,present,present() => Promise<void>

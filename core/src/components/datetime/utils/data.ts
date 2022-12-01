@@ -44,7 +44,7 @@ const minutes = [
   0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
   32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59,
 ];
-const hour12 = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+const hour12 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 const hour23 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
 
 /**
@@ -221,7 +221,7 @@ export const generateTime = (
           const convertedHour = refParts.ampm === 'pm' ? (hour + 12) % 24 : hour;
           return (use24Hour ? hour : convertedHour) <= maxParts.hour!;
         });
-        isPMAllowed = maxParts.hour >= 13;
+        isPMAllowed = maxParts.hour >= 12;
       }
       if (maxParts.minute !== undefined && refParts.hour === maxParts.hour) {
         // The available minutes should only be filtered when the hour is the same as the max hour.
@@ -360,8 +360,14 @@ export const getDayColumnData = (
    * Otherwise, fallback to the max/min days in a month.
    */
   const numDaysInMonth = getNumDaysInMonth(month, year);
-  const maxDay = maxParts?.day && maxParts.year === year && maxParts.month === month ? maxParts.day : numDaysInMonth;
-  const minDay = minParts?.day && minParts.year === year && minParts.month === month ? minParts.day : 1;
+  const maxDay =
+    maxParts?.day !== null && maxParts?.day !== undefined && maxParts.year === year && maxParts.month === month
+      ? maxParts.day
+      : numDaysInMonth;
+  const minDay =
+    minParts?.day !== null && minParts?.day !== undefined && minParts.year === year && minParts.month === month
+      ? minParts.day
+      : 1;
 
   if (dayValues !== undefined) {
     let processedDays = dayValues;
@@ -402,8 +408,8 @@ export const getYearColumnData = (
     }
   } else {
     const { year } = refParts;
-    const maxYear = maxParts?.year || year;
-    const minYear = minParts?.year || year - 100;
+    const maxYear = maxParts?.year ?? year;
+    const minYear = minParts?.year ?? year - 100;
 
     for (let i = maxYear; i >= minYear; i--) {
       processedYears.push(i);
@@ -441,7 +447,6 @@ const getAllMonthsInRange = (currentParts: DatetimeParts, maxParts: DatetimePart
  */
 export const getCombinedDateColumnData = (
   locale: string,
-  refParts: DatetimeParts,
   todayParts: DatetimeParts,
   minParts: DatetimeParts,
   maxParts: DatetimeParts,
@@ -473,7 +478,7 @@ export const getCombinedDateColumnData = (
    * of work as the text.
    */
   months.forEach((monthObject) => {
-    const referenceMonth = { month: monthObject.month, day: null, year: refParts.year };
+    const referenceMonth = { month: monthObject.month, day: null, year: monthObject.year };
     const monthDays = getDayColumnData(locale, referenceMonth, minParts, maxParts, dayValues, {
       month: 'short',
       day: 'numeric',
@@ -492,7 +497,7 @@ export const getCombinedDateColumnData = (
        */
       dateColumnItems.push({
         text: isToday ? getTodayLabel(locale) : dayObject.text,
-        value: `${refParts.year}-${monthObject.month}-${dayObject.value}`,
+        value: `${referenceMonth.year}-${referenceMonth.month}-${dayObject.value}`,
       });
 
       /**
@@ -506,8 +511,8 @@ export const getCombinedDateColumnData = (
        * updating the picker column value.
        */
       dateParts.push({
-        month: monthObject.month,
-        year: refParts.year,
+        month: referenceMonth.month,
+        year: referenceMonth.year,
         day: dayObject.value as number,
       });
     });
@@ -528,7 +533,7 @@ export const getTimeColumnsData = (
   minParts?: DatetimeParts,
   maxParts?: DatetimeParts,
   allowedHourValues?: number[],
-  allowedMinuteVaues?: number[]
+  allowedMinuteValues?: number[]
 ): { [key: string]: PickerColumnItem[] } => {
   const use24Hour = is24Hour(locale, hourCycle);
   const { hours, minutes, am, pm } = generateTime(
@@ -537,7 +542,7 @@ export const getTimeColumnsData = (
     minParts,
     maxParts,
     allowedHourValues,
-    allowedMinuteVaues
+    allowedMinuteValues
   );
 
   const hoursItems = hours.map((hour) => {

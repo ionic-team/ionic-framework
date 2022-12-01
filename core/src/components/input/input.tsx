@@ -1,5 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import { closeCircle, closeSharp } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
 import type {
@@ -260,7 +261,7 @@ export class Input implements ComponentInterface {
   componentWillLoad() {
     this.inheritedAttributes = {
       ...inheritAriaAttributes(this.el),
-      ...inheritAttributes(this.el, ['tabindex', 'title']),
+      ...inheritAttributes(this.el, ['tabindex', 'title', 'data-form-type']),
     };
   }
 
@@ -499,7 +500,9 @@ export class Input implements ComponentInterface {
               ev.preventDefault();
             }}
             onClick={this.clearTextInput}
-          />
+          >
+            <ion-icon aria-hidden="true" icon={mode === 'ios' ? closeCircle : closeSharp}></ion-icon>
+          </button>
         )}
       </Host>
     );
