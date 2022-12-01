@@ -82,6 +82,7 @@ export const sanitizeDOMString = (untrustedString: IonicSafeString | string | un
  * and then recursively dig down into any child elements to
  * clean those up as well
  */
+// TODO(FW-2832): type (using Element triggers other type errors as well)
 const sanitizeElement = (element: any) => {
   // IE uses childNodes, so ignore nodes that are not elements
   if (element.nodeType && element.nodeType !== 1) {
@@ -123,6 +124,7 @@ const sanitizeElement = (element: any) => {
  * IE doesn't always support .children
  * so we revert to .childNodes instead
  */
+// TODO(FW-2832): type
 const getElementChildren = (el: any) => {
   return el.children != null ? el.children : el.childNodes;
 };

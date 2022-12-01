@@ -2,6 +2,8 @@ import { GESTURE_CONTROLLER } from './gesture-controller';
 import { createPointerEvents } from './pointer-events';
 import { createPanRecognizer } from './recognizers';
 
+// TODO(FW-2832): types
+
 export const createGesture = (config: GestureConfig): Gesture => {
   let hasCapturedPan = false;
   let hasStartedPan = false;

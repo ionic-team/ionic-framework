@@ -2,6 +2,8 @@ export const KEYBOARD_DID_OPEN = 'ionKeyboardDidShow';
 export const KEYBOARD_DID_CLOSE = 'ionKeyboardDidHide';
 const KEYBOARD_THRESHOLD = 150;
 
+// TODO(FW-2832): types
+
 let previousVisualViewport: any = {};
 let currentVisualViewport: any = {};
 

@@ -13,7 +13,7 @@ export const getScrollData = (componentEl: HTMLElement, contentEl: HTMLElement, 
     itemEl.getBoundingClientRect(),
     contentEl.getBoundingClientRect(),
     keyboardHeight,
-    (componentEl as any).ownerDocument.defaultView.innerHeight
+    (componentEl as any).ownerDocument.defaultView.innerHeight // TODO(FW-2832): type
   );
 };
 

@@ -5,6 +5,8 @@ import { getIonPageElement } from '../transition';
 
 const DURATION = 540;
 
+// TODO(FW-2832): types
+
 const getClonedElement = (tagName: string): any => {
   return document.querySelector(`${tagName}.ion-cloned-element`) as any;
 };
