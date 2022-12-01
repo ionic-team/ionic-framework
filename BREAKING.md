@@ -95,8 +95,8 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 
 | Token               | Previous Value | New Value |
 | ------------------- | -------------- | --------- |
-| `--icon-margin-end` | `-5px`         | `0px`     |
-| `--icon-font-size`  | `1.85em`       | `1.7em`   |
+| `--icon-margin-end` | `-5px`         | `1px`     |
+| `--icon-font-size`  | `1.85em`       | `1.6em`   |
 
 <h4 id="version-7x-card-header">Card Header</h4>
 
