@@ -690,7 +690,9 @@ export class Input implements ComponentInterface {
                   ev.preventDefault();
                 }}
                 onClick={this.clearTextInput}
-              />
+              >
+                <ion-icon aria-hidden="true" icon={mode === 'ios' ? closeCircle : closeSharp}></ion-icon>
+              </button>
             )}
           </div>
           {shouldRenderHighlight && <div class="input-highlight"></div>}
