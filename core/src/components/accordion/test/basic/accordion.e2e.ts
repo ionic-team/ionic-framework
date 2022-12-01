@@ -1,12 +1,14 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { test, configs } from '@utils/test/playwright';
 
 test.describe('accordion: basic', () => {
-  test('should not have visual regressions', async ({ page }) => {
-    await page.goto(`/src/components/accordion/test/basic`);
+  configs().forEach(({ title, config }) => {
+    test(title('should not have visual regressions'), async ({ page }) => {
+      await page.goto(`/src/components/accordion/test/basic`, config);
 
-    await page.setIonViewport();
+      await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`accordion-basic-${page.getSnapshotSettings()}.png`);
+      expect(await page.screenshot()).toMatchSnapshot(`accordion-basic-${page.getSnapshotSettings()}.png`);
+    });
   });
 });

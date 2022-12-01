@@ -1,56 +1,60 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { test, configs } from '@utils/test/playwright';
 
 test.describe('accordion: states', () => {
-  test.beforeEach(({ skip }) => {
-    skip.rtl();
-    skip.mode('ios');
-  });
-  test('should properly set readonly on child accordions', async ({ page }) => {
-    await page.setContent(`
-      <ion-accordion-group animated="false">
-        <ion-accordion>
-          <ion-item slot="header">Label</ion-item>
-          <div slot="content">Content</div>
-        </ion-accordion>
-      </ion-accordion-group>
-    `);
+  configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
+    test(title('should properly set readonly on child accordions'), async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-accordion-group animated="false">
+          <ion-accordion>
+            <ion-item slot="header">Label</ion-item>
+            <div slot="content">Content</div>
+          </ion-accordion>
+        </ion-accordion-group>
+      `,
+        config
+      );
 
-    const accordionGroup = page.locator('ion-accordion-group');
-    const accordion = page.locator('ion-accordion');
+      const accordionGroup = page.locator('ion-accordion-group');
+      const accordion = page.locator('ion-accordion');
 
-    expect(accordion).toHaveJSProperty('readonly', false);
+      expect(accordion).toHaveJSProperty('readonly', false);
 
-    await accordionGroup.evaluate((el: HTMLIonAccordionGroupElement) => {
-      el.readonly = true;
+      await accordionGroup.evaluate((el: HTMLIonAccordionGroupElement) => {
+        el.readonly = true;
+      });
+
+      await page.waitForChanges();
+
+      expect(accordion).toHaveJSProperty('readonly', true);
     });
 
-    await page.waitForChanges();
+    test(title('should properly set disabled on child accordions'), async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-accordion-group animated="false">
+          <ion-accordion>
+            <ion-item slot="header">Label</ion-item>
+            <div slot="content">Content</div>
+          </ion-accordion>
+        </ion-accordion-group>
+      `,
+        config
+      );
 
-    expect(accordion).toHaveJSProperty('readonly', true);
-  });
+      const accordionGroup = page.locator('ion-accordion-group');
+      const accordion = page.locator('ion-accordion');
 
-  test('should properly set disabled on child accordions', async ({ page }) => {
-    await page.setContent(`
-      <ion-accordion-group animated="false">
-        <ion-accordion>
-          <ion-item slot="header">Label</ion-item>
-          <div slot="content">Content</div>
-        </ion-accordion>
-      </ion-accordion-group>
-    `);
+      expect(accordion).toHaveJSProperty('disabled', false);
 
-    const accordionGroup = page.locator('ion-accordion-group');
-    const accordion = page.locator('ion-accordion');
+      await accordionGroup.evaluate((el: HTMLIonAccordionGroupElement) => {
+        el.disabled = true;
+      });
 
-    expect(accordion).toHaveJSProperty('disabled', false);
+      await page.waitForChanges();
 
-    await accordionGroup.evaluate((el: HTMLIonAccordionGroupElement) => {
-      el.disabled = true;
+      expect(accordion).toHaveJSProperty('disabled', true);
     });
-
-    await page.waitForChanges();
-
-    expect(accordion).toHaveJSProperty('disabled', true);
   });
 });

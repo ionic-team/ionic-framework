@@ -1,32 +1,37 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { test, configs } from '@utils/test/playwright';
 
-test.describe('button: basic', () => {
-  test('should not have visual regressions', async ({ page }) => {
-    await page.goto(`/src/components/button/test/basic`);
+test.describe.only('button: basic', () => {
+  configs().forEach(({ title, config }) => {
+    test(title('should not have visual regressions'), async ({ page }) => {
+      await page.goto(`/src/components/button/test/basic`, config);
 
-    await page.setIonViewport();
+      await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`button-diff-${page.getSnapshotSettings()}.png`);
-  });
-  test('should correctly set fill to undefined', async ({ page, skip }) => {
-    test.info().annotations.push({
-      type: 'issue',
-      description: 'https://github.com/ionic-team/ionic-framework/issues/25886',
+      expect(await page.screenshot()).toMatchSnapshot(`button-diff-${page.getSnapshotSettings()}.png`);
     });
-    skip.rtl();
-    skip.mode('ios', 'This behavior does not differ across modes');
-    await page.setContent(`
-      <ion-button fill="outline"></ion-button>
-    `);
+  });
+  configs({ modes: ['ios'] }).forEach(({ title, config }) => {
+    test(title('should correctly set fill to undefined'), async ({ page }) => {
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/25886',
+      });
+      await page.setContent(
+        `
+        <ion-button fill="outline"></ion-button>
+      `,
+        config
+      );
 
-    const button = page.locator('ion-button');
-    await expect(button).toHaveClass(/button-outline/);
+      const button = page.locator('ion-button');
+      await expect(button).toHaveClass(/button-outline/);
 
-    await button.evaluate((el: HTMLIonButtonElement) => (el.fill = undefined));
-    await page.waitForChanges();
+      await button.evaluate((el: HTMLIonButtonElement) => (el.fill = undefined));
+      await page.waitForChanges();
 
-    await expect(button).toHaveClass(/button-solid/);
+      await expect(button).toHaveClass(/button-solid/);
+    });
   });
 });
 
