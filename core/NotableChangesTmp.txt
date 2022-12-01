@@ -1,1 +1,2 @@
 - Accordion Standalone Test now runs in LTR mode only aligning it with the a11y test.
+- Moved the menu focus trap test in "basic" to the "focus-trap" dir
