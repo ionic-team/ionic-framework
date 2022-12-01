@@ -3,6 +3,7 @@ import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, h }
 import { createLegacyFormController } from '@utils/forms';
 import type { LegacyFormController } from '@utils/forms';
 import { printIonWarning } from '@utils/logging';
+import { closeCircle, closeSharp } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
 import type {
@@ -514,7 +515,7 @@ export class Input implements ComponentInterface {
     this.isComposing = false;
   };
 
-  private onClearButtonClick = (ev?: Event) => {
+  private clearTextInput = (ev?: Event) => {
     if (this.clearInput && !this.readonly && !this.disabled && ev) {
       ev.preventDefault();
       ev.stopPropagation();
@@ -688,7 +689,7 @@ export class Input implements ComponentInterface {
                    */
                   ev.preventDefault();
                 }}
-                onClick={this.onClearButtonClick}
+                onClick={this.clearTextInput}
               />
             )}
           </div>
@@ -776,8 +777,10 @@ For inputs that do not have a visible label, developers should use "aria-label" 
                */
               ev.preventDefault();
             }}
-            onClick={this.onClearButtonClick}
-          />
+            onClick={this.clearTextInput}
+          >
+            <ion-icon aria-hidden="true" icon={mode === 'ios' ? closeCircle : closeSharp}></ion-icon>
+          </button>
         )}
       </Host>
     );

@@ -21,6 +21,7 @@ import { raf, inheritAttributes, hasLazyBuild } from '../../utils/helpers';
 import type { Attributes } from '../../utils/helpers';
 import { KEYBOARD_DID_OPEN } from '../../utils/keyboard/keyboard';
 import { printIonWarning } from '../../utils/logging';
+import { Style as StatusBarStyle, StatusBar } from '../../utils/native/status-bar';
 import { BACKDROP, activeAnimations, dismiss, eventMethod, prepareOverlay, present } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 import { deepReady } from '../../utils/transition';
@@ -67,6 +68,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private keyboardOpenCallback?: () => void;
   private moveSheetToBreakpoint?: (options: MoveSheetToBreakpointOptions) => Promise<void>;
   private inheritedAttributes: Attributes = {};
+  private statusBarStyle?: StatusBarStyle;
 
   private inline = false;
   private workingDelegate?: FrameworkDelegate;
@@ -473,6 +475,16 @@ export class Modal implements ComponentInterface, OverlayInterface {
       backdropBreakpoint: this.backdropBreakpoint,
     });
 
+    /**
+     * TODO (FW-937) - In the next major release of Ionic, all card modals
+     * will be swipeable by default. canDismiss will be used to determine if the
+     * modal can be dismissed. This check should change to check the presence of
+     * presentingElement instead.
+     *
+     * If we did not do this check, then not using swipeToClose would mean you could
+     * not run canDismiss on swipe as there would be no swipe gesture created.
+     */
+    const hasCardModal = this.presentingElement !== undefined && (this.swipeToClose || this.canDismiss !== undefined);
     const hasCardModal = presentingElement !== undefined;
 
     /**
@@ -481,6 +493,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
      * by the time the card animation is done.
      */
     if (hasCardModal && getIonMode(this) === 'ios') {
+      // Cache the original status bar color before the modal is presented
+      this.statusBarStyle = await StatusBar.getStyle();
       setCardStatusBarDark();
     }
 
@@ -538,7 +552,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
       return;
     }
 
-    this.gesture = createSwipeToCloseGesture(el, ani, () => {
+    const statusBarStyle = this.statusBarStyle ?? StatusBarStyle.Default;
+
+    this.gesture = createSwipeToCloseGesture(el, ani, statusBarStyle, () => {
       /**
        * While the gesture animation is finishing
        * it is possible for a user to tap the backdrop.
@@ -648,7 +664,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
      */
     const hasCardModal = presentingElement !== undefined;
     if (hasCardModal && getIonMode(this) === 'ios') {
-      setCardStatusBarDefault();
+      setCardStatusBarDefault(this.statusBarStyle);
     }
 
     /* tslint:disable-next-line */
