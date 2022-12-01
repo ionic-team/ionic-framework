@@ -18,7 +18,13 @@ import {
   locator,
 } from './page/utils';
 import type { LocatorOptions } from './page/utils';
-import type { E2EPage, E2ESkip, BrowserNameOrCallback, SetIonViewportOptions } from './playwright-declarations';
+import type {
+  E2EPageOptions,
+  E2EPage,
+  E2ESkip,
+  BrowserNameOrCallback,
+  SetIonViewportOptions,
+} from './playwright-declarations';
 
 type CustomTestArgs = PlaywrightTestArgs &
   PlaywrightTestOptions &
@@ -42,13 +48,30 @@ export async function extendPageFixture(page: E2EPage, testInfo: TestInfo) {
   const originalGoto = page.goto.bind(page);
   const originalLocator = page.locator.bind(page);
 
+  let ionConfig: E2EPageOptions | undefined;
+
   // Overridden Playwright methods
-  page.goto = (url: string, options) => goToPage(page, url, options, testInfo, originalGoto);
-  page.setContent = (html: string) => setContent(page, html, testInfo);
+  page.goto = (url: string, options?: E2EPageOptions) => {
+    // TODO: Remove options! and make param always defined.
+    const { _mode, _direction, _testing } = options!;
+    if (_mode === undefined || _direction === undefined || _testing === undefined) {
+      throw new Error(
+        `The Ionic config for this test was not defined. You can generate configs using the 'configs()' generator function.`
+      );
+    }
+
+    ionConfig = {
+      _mode,
+      _direction,
+      _testing,
+    };
+    return goToPage(page, url, options, testInfo, originalGoto);
+  };
+  page.setContent = (html: string, options?: E2EPageOptions) => setContent(page, options!, html);
   page.locator = (selector: string, options?: LocatorOptions) => locator(page, originalLocator, selector, options);
 
   // Custom Ionic methods
-  page.getSnapshotSettings = () => getSnapshotSettings(page, testInfo);
+  page.getSnapshotSettings = () => getSnapshotSettings(page, ionConfig!);
   page.setIonViewport = (options?: SetIonViewportOptions) => setIonViewport(page, options);
   page.waitForChanges = (timeoutMs?: number) => waitForChanges(page, timeoutMs);
   page.spyOnEvent = (eventName: string) => spyOnEvent(page, eventName);

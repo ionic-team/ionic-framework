@@ -1,4 +1,5 @@
-import type { Page, TestInfo } from '@playwright/test';
+import type { TestInfo } from '@playwright/test';
+import type { E2EPage } from '@utils/test/playwright';
 
 /**
  * This is an extended version of Playwright's
@@ -7,8 +8,16 @@ import type { Page, TestInfo } from '@playwright/test';
  * automatically waits for the Stencil components
  * to be hydrated before proceeding with the test.
  */
-export const goto = async (page: Page, url: string, options: any, testInfo: TestInfo, originalFn: typeof page.goto) => {
-  const { mode, rtl, _testing } = testInfo.project.metadata;
+export const goto = async (
+  page: E2EPage,
+  url: string,
+  options: any,
+  testInfo: TestInfo,
+  originalFn: typeof page.goto
+) => {
+  const { _mode, _direction, _testing } = options;
+
+  const rtl = _direction === 'rtl';
 
   const splitUrl = url.split('?');
   const paramsString = splitUrl[1];
@@ -18,7 +27,7 @@ export const goto = async (page: Page, url: string, options: any, testInfo: Test
    * certain mode or LTR/RTL config per test.
    */
   const urlToParams = new URLSearchParams(paramsString);
-  const formattedMode = urlToParams.get('ionic:mode') ?? mode;
+  const formattedMode = urlToParams.get('ionic:mode') ?? _mode;
   const formattedRtl = urlToParams.get('rtl') ?? rtl;
   const ionicTesting = urlToParams.get('ionic:_testing') ?? _testing;
 

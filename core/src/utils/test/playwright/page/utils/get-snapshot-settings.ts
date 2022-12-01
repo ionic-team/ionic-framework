@@ -1,4 +1,4 @@
-import type { Page, TestInfo } from '@playwright/test';
+import type { E2EPage, E2EPageOptions } from '@utils/test/playwright';
 
 /**
  * This provides metadata that can be used to
@@ -6,12 +6,14 @@ import type { Page, TestInfo } from '@playwright/test';
  * For example, we need to be able to differentiate
  * between iOS in LTR mode and iOS in RTL mode.
  */
-export const getSnapshotSettings = (page: Page, testInfo: TestInfo) => {
+export const getSnapshotSettings = (page: E2EPage, options: E2EPageOptions) => {
   const url = page.url();
   const splitUrl = url.split('?');
   const paramsString = splitUrl[1];
 
-  const { mode, rtl } = testInfo.project.metadata;
+  const { _mode, _direction } = options;
+
+  const rtl = _direction === 'rtl';
 
   /**
    * Account for custom settings when overriding
@@ -21,7 +23,7 @@ export const getSnapshotSettings = (page: Page, testInfo: TestInfo) => {
    * before page.goto.
    */
   const urlToParams = new URLSearchParams(paramsString);
-  const formattedMode = urlToParams.get('ionic:mode') ?? mode;
+  const formattedMode = urlToParams.get('ionic:mode') ?? _mode;
   const formattedRtl = urlToParams.get('rtl') ?? rtl;
 
   /**

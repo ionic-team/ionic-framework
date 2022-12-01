@@ -4,3 +4,4 @@ export * from './page/event-spy';
 export * from './drag-element';
 export * from './matchers';
 export * from './viewports';
+export * from './generator';
