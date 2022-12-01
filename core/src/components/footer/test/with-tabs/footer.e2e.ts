@@ -1,13 +1,13 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { test, configs } from '@utils/test/playwright';
 
-test.describe('footer: with tabs', () => {
-  test('should not have extra padding when near a tab bar', async ({ page }, testInfo) => {
-    test.skip(testInfo.project.metadata.rtl === true, 'This does not test LTR vs. RTL layout.');
+configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe('footer: with tabs', () => {
+    test(title('should not have extra padding when near a tab bar'), async ({ page }) => {
+      await page.goto('/src/components/footer/test/with-tabs', config);
 
-    await page.goto('/src/components/footer/test/with-tabs');
-
-    const footer = page.locator('[tab="tab-one"] ion-footer');
-    expect(await footer.screenshot()).toMatchSnapshot(`footer-with-tabs-${page.getSnapshotSettings()}.png`);
+      const footer = page.locator('[tab="tab-one"] ion-footer');
+      expect(await footer.screenshot()).toMatchSnapshot(`footer-with-tabs-${page.getSnapshotSettings()}.png`);
+    });
   });
 });
