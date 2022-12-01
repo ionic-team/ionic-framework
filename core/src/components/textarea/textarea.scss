@@ -119,6 +119,10 @@
   word-break: break-word;
 }
 
+:host(.legacy-textarea) .native-textarea {
+  @include margin(0);
+}
+
 .native-textarea {
   @include padding(0, 0, 0, 0);
   @include border-radius(var(--border-radius));
