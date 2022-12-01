@@ -1,12 +1,14 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { test, configs } from '@utils/test/playwright';
 
-test.describe('item: alignment', () => {
-  test('should not have visual regressions', async ({ page }) => {
-    await page.goto(`/src/components/item/test/alignment`);
+configs().forEach(({ title, config }) => {
+  test.describe('item: alignment', () => {
+    test(title('should not have visual regressions'), async ({ page }) => {
+      await page.goto(`/src/components/item/test/alignment`, config);
 
-    await page.setIonViewport();
+      await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`item-alignment-diff-${page.getSnapshotSettings()}.png`);
+      expect(await page.screenshot()).toMatchSnapshot(`item-alignment-diff-${page.getSnapshotSettings()}.png`);
+    });
   });
 });

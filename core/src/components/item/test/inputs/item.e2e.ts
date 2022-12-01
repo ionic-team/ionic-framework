@@ -1,141 +1,150 @@
 import type { Locator } from '@playwright/test';
 import { expect } from '@playwright/test';
 import type { EventSpy } from '@utils/test/playwright';
-import { test } from '@utils/test/playwright';
+import { test, configs } from '@utils/test/playwright';
 
 test.describe('item: inputs', () => {
-  let ionPopoverDidPresent: EventSpy;
-  let ionPopoverDidDismiss: EventSpy;
+  configs().forEach(({ title, config }) => {
+    test.describe('item: inputs rendering', () => {
+      test.beforeEach(async ({ page }) => {
+        await page.goto(`/src/components/item/test/inputs`, config);
+      });
+      test(title('should not have visual regressions'), async ({ page }) => {
+        await page.setIonViewport();
+        expect(await page.screenshot()).toMatchSnapshot(`item-inputs-${page.getSnapshotSettings()}.png`);
+      });
 
-  let formResult: Locator;
-  let popover: Locator;
+      test(title('disabled controls should not have visual regressions'), async ({ page }) => {
+        const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
+        const ionPopoverDidDismiss = await page.spyOnEvent('ionPopoverDidDismiss');
 
-  test.beforeEach(async ({ page }) => {
-    await page.goto(`/src/components/item/test/inputs`);
+        const popover = page.locator('ion-popover#optionsPopover');
+        await page.click('#popover-trigger');
+        await ionPopoverDidPresent.next();
 
-    ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
-    ionPopoverDidDismiss = await page.spyOnEvent('ionPopoverDidDismiss');
+        await page.click('#btnDisabled');
 
-    formResult = page.locator('#form-result');
-    popover = page.locator('ion-popover#optionsPopover');
+        await page.waitForChanges();
+
+        await popover.evaluateHandle((el: HTMLIonPopoverElement) => el.dismiss());
+        await ionPopoverDidDismiss.next();
+
+        await page.setIonViewport();
+        expect(await page.screenshot()).toMatchSnapshot(`item-inputs-disabled-${page.getSnapshotSettings()}.png`);
+      });
+    });
   });
 
-  test('should not have visual regressions', async ({ page }) => {
-    await page.setIonViewport();
-    expect(await page.screenshot()).toMatchSnapshot(`item-inputs-${page.getSnapshotSettings()}.png`);
-  });
+  configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
+    test.describe('form data', () => {
+      let ionPopoverDidPresent: EventSpy;
+      let ionPopoverDidDismiss: EventSpy;
 
-  test('disabled controls should not have visual regressions', async ({ page }) => {
-    await page.click('#popover-trigger');
-    await ionPopoverDidPresent.next();
+      let formResult: Locator;
+      let popover: Locator;
 
-    await page.click('#btnDisabled');
+      test.beforeEach(async ({ page }) => {
+        await page.goto(`/src/components/item/test/inputs`, config);
 
-    await page.waitForChanges();
+        ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
+        ionPopoverDidDismiss = await page.spyOnEvent('ionPopoverDidDismiss');
 
-    await popover.evaluateHandle((el: HTMLIonPopoverElement) => el.dismiss());
-    await ionPopoverDidDismiss.next();
+        formResult = page.locator('#form-result');
+        popover = page.locator('ion-popover#optionsPopover');
+      });
 
-    await page.setIonViewport();
-    expect(await page.screenshot()).toMatchSnapshot(`item-inputs-disabled-${page.getSnapshotSettings()}.png`);
-  });
+      test(title('initial form data should be empty'), async ({ page }) => {
+        await page.click('#submit');
 
-  test.describe('form data', () => {
-    test.beforeEach(async ({ skip }) => {
-      skip.rtl();
-    });
+        await expect(await formResult.textContent()).toEqual(
+          '{"input":"","textarea":"","toggle":"","checkbox":"","select":"","datetime":"2022-04-01T10:00","range":"10"}'
+        );
+      });
 
-    test('initial form data should be empty', async ({ page }) => {
-      await page.click('#submit');
+      test(title('form controls have some value'), async ({ page }) => {
+        await page.click('#popover-trigger');
+        await ionPopoverDidPresent.next();
 
-      await expect(await formResult.textContent()).toEqual(
-        '{"input":"","textarea":"","toggle":"","checkbox":"","select":"","datetime":"2022-04-01T10:00","range":"10"}'
-      );
-    });
+        await page.click('#btnSomeValue');
+        await page.waitForChanges();
 
-    test('form controls have some value', async ({ page }) => {
-      await page.click('#popover-trigger');
-      await ionPopoverDidPresent.next();
+        await popover.evaluateHandle((el: HTMLIonPopoverElement) => el.dismiss());
+        await ionPopoverDidDismiss.next();
 
-      await page.click('#btnSomeValue');
-      await page.waitForChanges();
+        await page.click('#submit');
 
-      await popover.evaluateHandle((el: HTMLIonPopoverElement) => el.dismiss());
-      await ionPopoverDidDismiss.next();
+        await expect(await formResult.textContent()).toEqual(
+          '{"input":"Some value","textarea":"Some value","toggle":"on","checkbox":"on","select":"2","datetime":"2022-04-01T10:00","range":"20"}'
+        );
+      });
 
-      await page.click('#submit');
+      test(title('form control values set to be empty'), async ({ page }) => {
+        await page.click('#popover-trigger');
+        await ionPopoverDidPresent.next();
 
-      await expect(await formResult.textContent()).toEqual(
-        '{"input":"Some value","textarea":"Some value","toggle":"on","checkbox":"on","select":"2","datetime":"2022-04-01T10:00","range":"20"}'
-      );
-    });
+        await page.click('#btnEmptyValue');
+        await page.waitForChanges();
 
-    test('form control values set to be empty', async ({ page }) => {
-      await page.click('#popover-trigger');
-      await ionPopoverDidPresent.next();
+        await popover.evaluateHandle((el: HTMLIonPopoverElement) => el.dismiss());
+        await ionPopoverDidDismiss.next();
 
-      await page.click('#btnEmptyValue');
-      await page.waitForChanges();
+        await page.click('#submit');
 
-      await popover.evaluateHandle((el: HTMLIonPopoverElement) => el.dismiss());
-      await ionPopoverDidDismiss.next();
+        await expect(await formResult.textContent()).toEqual(
+          '{"input":"","textarea":"","toggle":"","checkbox":"","select":"","datetime":"","range":"0"}'
+        );
+      });
 
-      await page.click('#submit');
+      test(title('form control values set to null'), async ({ page }) => {
+        await page.click('#popover-trigger');
+        await ionPopoverDidPresent.next();
 
-      await expect(await formResult.textContent()).toEqual(
-        '{"input":"","textarea":"","toggle":"","checkbox":"","select":"","datetime":"","range":"0"}'
-      );
-    });
+        await page.click('#btnNullValue');
+        await page.waitForChanges();
 
-    test('form control values set to null', async ({ page }) => {
-      await page.click('#popover-trigger');
-      await ionPopoverDidPresent.next();
+        await popover.evaluateHandle((el: HTMLIonPopoverElement) => el.dismiss());
+        await ionPopoverDidDismiss.next();
 
-      await page.click('#btnNullValue');
-      await page.waitForChanges();
+        await page.click('#submit');
 
-      await popover.evaluateHandle((el: HTMLIonPopoverElement) => el.dismiss());
-      await ionPopoverDidDismiss.next();
+        await expect(await formResult.textContent()).toEqual(
+          '{"input":"","textarea":"","toggle":"","checkbox":"","select":"","datetime":"","range":"0"}'
+        );
+      });
 
-      await page.click('#submit');
+      test(title('form control values set to undefined'), async ({ page }) => {
+        await page.click('#popover-trigger');
+        await ionPopoverDidPresent.next();
 
-      await expect(await formResult.textContent()).toEqual(
-        '{"input":"","textarea":"","toggle":"","checkbox":"","select":"","datetime":"","range":"0"}'
-      );
-    });
+        await page.click('#btnUndefinedValue');
+        await page.waitForChanges();
 
-    test('form control values set to undefined', async ({ page }) => {
-      await page.click('#popover-trigger');
-      await ionPopoverDidPresent.next();
+        await popover.evaluateHandle((el: HTMLIonPopoverElement) => el.dismiss());
+        await ionPopoverDidDismiss.next();
 
-      await page.click('#btnUndefinedValue');
-      await page.waitForChanges();
+        await page.click('#submit');
 
-      await popover.evaluateHandle((el: HTMLIonPopoverElement) => el.dismiss());
-      await ionPopoverDidDismiss.next();
+        await expect(await formResult.textContent()).toEqual(
+          '{"input":"","textarea":"","toggle":"","checkbox":"","select":"","datetime":"","range":"0"}'
+        );
+      });
 
-      await page.click('#submit');
+      test(title('should not have form data when controls are disabled'), async ({ page }) => {
+        await page.click('#popover-trigger');
+        await ionPopoverDidPresent.next();
 
-      await expect(await formResult.textContent()).toEqual(
-        '{"input":"","textarea":"","toggle":"","checkbox":"","select":"","datetime":"","range":"0"}'
-      );
-    });
+        await page.click('#btnSomeValue');
+        await page.click('#btnDisabled');
 
-    test('should not have form data when controls are disabled', async ({ page }) => {
-      await page.click('#popover-trigger');
-      await ionPopoverDidPresent.next();
+        await page.waitForChanges();
 
-      await page.click('#btnSomeValue');
-      await page.click('#btnDisabled');
+        await popover.evaluateHandle((el: HTMLIonPopoverElement) => el.dismiss());
+        await ionPopoverDidDismiss.next();
 
-      await page.waitForChanges();
+        await page.click('#submit');
 
-      await popover.evaluateHandle((el: HTMLIonPopoverElement) => el.dismiss());
-      await ionPopoverDidDismiss.next();
-
-      await page.click('#submit');
-
-      await expect(await formResult.textContent()).toEqual('{}');
+        await expect(await formResult.textContent()).toEqual('{}');
+      });
     });
   });
 });
