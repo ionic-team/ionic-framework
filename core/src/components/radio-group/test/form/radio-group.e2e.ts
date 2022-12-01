@@ -10,7 +10,7 @@ test.describe('radio-group: form', () => {
     const radioGroup = page.locator('ion-radio-group');
     const ionChange = await page.spyOnEvent('ionChange');
     const griffRadio = page.locator('ion-radio[value="griff"]');
-    await await expect(radioGroup).toHaveAttribute('value', 'biff');
+    await expect(radioGroup).toHaveAttribute('value', 'biff');
 
     await griffRadio.click();
     await page.waitForChanges();
@@ -23,8 +23,7 @@ test.describe('radio-group: form', () => {
     const disabledRadio = page.locator('ion-radio[value="george"]');
 
     await expect(value).toHaveText('');
-
-    expect(disabledRadio).toHaveAttribute('disabled', '');
+    await expect(disabledRadio).toHaveAttribute('disabled', '');
 
     await disabledRadio.click({ force: true });
     await page.waitForChanges();
