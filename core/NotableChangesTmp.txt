@@ -1,0 +1,1 @@
+- Accordion Standalone Test now runs in LTR mode only aligning it with the a11y test.
