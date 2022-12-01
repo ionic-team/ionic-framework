@@ -1,15 +1,14 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { test, configs } from '@utils/test/playwright';
 
-test.describe('content: basic', () => {
-  test('should not have visual regressions', async ({ page, skip }) => {
-    skip.rtl();
-    skip.mode('ios', 'ion-content does not have mode-specific styling');
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe('content: basic', () => {
+    test(title('should not have visual regressions'), async ({ page }) => {
+      await page.goto(`/src/components/content/test/basic`, config);
 
-    await page.goto(`/src/components/content/test/basic`);
+      await page.setIonViewport();
 
-    await page.setIonViewport();
-
-    expect(await page.screenshot()).toMatchSnapshot(`content-diff-${page.getSnapshotSettings()}.png`);
+      expect(await page.screenshot()).toMatchSnapshot(`content-diff-${page.getSnapshotSettings()}.png`);
+    });
   });
 });
