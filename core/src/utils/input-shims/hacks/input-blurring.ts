@@ -15,7 +15,7 @@ export const enableInputBlurring = () => {
     focused = true;
   };
 
-  const onTouchend = (ev: any) => {
+  const onTouchend = (ev: TouchEvent) => {
     // if app did scroll return early
     if (didScroll) {
       didScroll = false;
