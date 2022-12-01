@@ -1,26 +1,28 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { test, configs } from '@utils/test/playwright';
 
-test.describe('list: lines', () => {
-  test('lines="full" should render correctly', async ({ page }) => {
-    await page.goto(`/src/components/list/test/lines`);
+configs().forEach(({ title, config }) => {
+  test.describe('list: lines', () => {
+    test(title('lines="full" should render correctly'), async ({ page }) => {
+      await page.goto(`/src/components/list/test/lines`, config);
 
-    const list = page.locator('ion-list[lines="full"]');
+      const list = page.locator('ion-list[lines="full"]');
 
-    expect(await list.screenshot()).toMatchSnapshot(`list-lines-full-${page.getSnapshotSettings()}.png`);
-  });
-  test('lines="inset" should render correctly', async ({ page }) => {
-    await page.goto(`/src/components/list/test/lines`);
+      expect(await list.screenshot()).toMatchSnapshot(`list-lines-full-${page.getSnapshotSettings()}.png`);
+    });
+    test(title('lines="inset" should render correctly'), async ({ page }) => {
+      await page.goto(`/src/components/list/test/lines`, config);
 
-    const list = page.locator('ion-list[lines="inset"]');
+      const list = page.locator('ion-list[lines="inset"]');
 
-    expect(await list.screenshot()).toMatchSnapshot(`list-lines-inset-${page.getSnapshotSettings()}.png`);
-  });
-  test('lines="none" should render correctly', async ({ page }) => {
-    await page.goto(`/src/components/list/test/lines`);
+      expect(await list.screenshot()).toMatchSnapshot(`list-lines-inset-${page.getSnapshotSettings()}.png`);
+    });
+    test(title('lines="none" should render correctly'), async ({ page }) => {
+      await page.goto(`/src/components/list/test/lines`, config);
 
-    const list = page.locator('ion-list[lines="none"]');
+      const list = page.locator('ion-list[lines="none"]');
 
-    expect(await list.screenshot()).toMatchSnapshot(`list-lines-none-${page.getSnapshotSettings()}.png`);
+      expect(await list.screenshot()).toMatchSnapshot(`list-lines-none-${page.getSnapshotSettings()}.png`);
+    });
   });
 });
