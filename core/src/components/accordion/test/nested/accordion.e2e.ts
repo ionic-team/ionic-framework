@@ -1,8 +1,8 @@
 import { expect } from '@playwright/test';
 import { test, configs } from '@utils/test/playwright';
 
-test.describe('accordion: nested', () => {
-  configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
+configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe('accordion: nested', () => {
     test.beforeEach(async ({ page }) => {
       await page.goto(`/src/components/accordion/test/nested`, config);
     });

@@ -1,8 +1,8 @@
 import { expect } from '@playwright/test';
 import { test, configs } from '@utils/test/playwright';
 
-test.describe('accordion: multiple', () => {
-  configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
+configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe('accordion: multiple', () => {
     test(title('should update value and visually expand items'), async ({ page }) => {
       await page.goto(`/src/components/accordion/test/multiple`, config);
       const accordionGroup = page.locator('ion-accordion-group');

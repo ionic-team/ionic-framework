@@ -2,8 +2,8 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect } from '@playwright/test';
 import { test, configs } from '@utils/test/playwright';
 
-test.describe('accordion: standalone', () => {
-  configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
+configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe('accordion: standalone', () => {
     test(title('should not have accessibility violations'), async ({ page }) => {
       await page.goto(`/src/components/accordion/test/standalone`, config);
 

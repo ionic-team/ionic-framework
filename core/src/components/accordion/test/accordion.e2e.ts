@@ -1,8 +1,8 @@
 import { expect } from '@playwright/test';
 import { test, configs } from '@utils/test/playwright';
 
-test.describe('accordion: states', () => {
-  configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe('accordion: states', () => {
     test(title('should properly set readonly on child accordions'), async ({ page }) => {
       await page.setContent(
         `

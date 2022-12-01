@@ -1,8 +1,8 @@
 import { expect } from '@playwright/test';
 import { test, configs } from '@utils/test/playwright';
 
-test.describe('accordion: a11y', () => {
-  configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
+configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe('accordion: a11y', () => {
     test(title('accordions should be keyboard navigable'), async ({ page, skip, browserName }) => {
       // TODO(FW-1764): remove skip once issue is resolved
       skip.browser('firefox', 'https://github.com/ionic-team/ionic-framework/issues/25070');
