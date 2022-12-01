@@ -23,7 +23,15 @@ import type { Attributes } from '../../utils/helpers';
 import { KEYBOARD_DID_OPEN } from '../../utils/keyboard/keyboard';
 import { printIonWarning } from '../../utils/logging';
 import { Style as StatusBarStyle, StatusBar } from '../../utils/native/status-bar';
-import { BACKDROP, activeAnimations, dismiss, eventMethod, prepareOverlay, present } from '../../utils/overlays';
+import {
+  GESTURE,
+  BACKDROP,
+  activeAnimations,
+  dismiss,
+  eventMethod,
+  prepareOverlay,
+  present,
+} from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 import { deepReady } from '../../utils/transition';
 
@@ -603,7 +611,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
        */
       this.gestureAnimationDismissing = true;
       this.animation!.onFinish(async () => {
-        await this.dismiss(undefined, 'gesture');
+        await this.dismiss(undefined, GESTURE);
         this.gestureAnimationDismissing = false;
       });
     });
@@ -665,7 +673,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     this.animation!.onFinish(async () => {
       this.currentBreakpoint = 0;
       this.ionBreakpointDidChange.emit({ breakpoint: this.currentBreakpoint });
-      await this.dismiss(undefined, 'gesture');
+      await this.dismiss(undefined, GESTURE);
       this.gestureAnimationDismissing = false;
     });
   }
@@ -678,7 +686,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async dismiss(data?: any, role?: string): Promise<boolean> {
-    if (this.gestureAnimationDismissing && role !== 'gesture') {
+    if (this.gestureAnimationDismissing && role !== GESTURE) {
       return false;
     }
 

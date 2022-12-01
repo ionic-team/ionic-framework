@@ -507,7 +507,7 @@ export const dismiss = async <OverlayDismissOptions>(
       : config.get(name, mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
 
     // If dismissed via gesture, no need to play leaving animation again
-    if (role !== 'gesture') {
+    if (role !== GESTURE) {
       await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
     }
     overlay.didDismiss.emit({ data, role });
@@ -612,3 +612,4 @@ export const safeCall = (handler: any, arg?: any) => {
 };
 
 export const BACKDROP = 'backdrop';
+export const GESTURE = 'gesture';
