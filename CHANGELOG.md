@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.10-nightly.20221202](https://github.com/ionic-team/ionic-framework/compare/v6.3.9...v6.3.10-nightly.20221202) (2022-12-02)
+
+
+### Bug Fixes
+
+* **datetime:** add flipRTL to monthAndYear dropdown icon ([#26378](https://github.com/ionic-team/ionic-framework/issues/26378)) ([13fe669](https://github.com/ionic-team/ionic-framework/commit/13fe669dc14eb4c9feda8ee956fec42b994b0f96))
+* **segment:** scrolling button into view is more consistent ([#26369](https://github.com/ionic-team/ionic-framework/issues/26369)) ([a2d570b](https://github.com/ionic-team/ionic-framework/commit/a2d570b7ad8b799b072ba6eb79d8fe4c6dd77cf0)), closes [#26368](https://github.com/ionic-team/ionic-framework/issues/26368)
+
+
+
+
+
 ## [6.3.9](https://github.com/ionic-team/ionic-framework/compare/v6.3.8...v6.3.9) (2022-11-30)
 
 
