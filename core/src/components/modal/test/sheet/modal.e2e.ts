@@ -164,7 +164,7 @@ configs().forEach(({ title, config }) => {
             modal.setCurrentBreakpoint(0.5);
           });
         </script>
-      `);
+      `,config);
 
       const modal = page.locator('ion-modal');
       const dismissButton = page.locator('#dismiss');

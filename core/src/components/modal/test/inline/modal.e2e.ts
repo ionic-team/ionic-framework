@@ -37,7 +37,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       <ion-modal>
         <ion-datetime id="datetime" presentation="date-time"></ion-datetime>
       </ion-modal>
-      `);
+      `,config);
 
         const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
         const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
