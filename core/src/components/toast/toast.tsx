@@ -78,7 +78,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
    * How many milliseconds to wait before hiding the toast. By default, it will show
    * until `dismiss()` is called.
    */
-  @Prop() duration = config.get('toastDuration', 0);
+  @Prop() duration = config.getNumber('toastDuration', 0);
 
   /**
    * Header to be shown in the toast.

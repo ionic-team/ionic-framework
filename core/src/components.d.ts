@@ -2953,7 +2953,7 @@ export namespace Components {
         /**
           * How many milliseconds to wait before hiding the toast. By default, it will show until `dismiss()` is called.
          */
-        "duration": any;
+        "duration": number;
         /**
           * Animation to use when the toast is presented.
          */
@@ -6954,7 +6954,7 @@ declare namespace LocalJSX {
         /**
           * How many milliseconds to wait before hiding the toast. By default, it will show until `dismiss()` is called.
          */
-        "duration"?: any;
+        "duration"?: number;
         /**
           * Animation to use when the toast is presented.
          */
