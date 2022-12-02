@@ -1,19 +1,21 @@
-import { test } from '@utils/test/playwright';
+import { test, configs } from '@utils/test/playwright';
 
-test.describe('modal: standalone', () => {
-  test('should open even without an ion-app', async ({ page }) => {
-    await page.goto('/src/components/modal/test/standalone');
-    const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
-    const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
+configs().forEach(({ title, config }) => {
+  test.describe('modal: standalone', () => {
+    test(title('should open even without an ion-app'), async ({ page }) => {
+      await page.goto('/src/components/modal/test/standalone', config);
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
 
-    await page.click('#basic-modal');
-    await ionModalDidPresent.next();
+      await page.click('#basic-modal');
+      await ionModalDidPresent.next();
 
-    const modal = await page.locator('ion-modal');
-    await modal.evaluate((el: HTMLIonModalElement) => el.dismiss());
+      const modal = await page.locator('ion-modal');
+      await modal.evaluate((el: HTMLIonModalElement) => el.dismiss());
 
-    await ionModalDidDismiss.next();
+      await ionModalDidDismiss.next();
 
-    await page.waitForSelector('ion-modal', { state: 'detached' });
+      await page.waitForSelector('ion-modal', { state: 'detached' });
+    });
   });
 });
