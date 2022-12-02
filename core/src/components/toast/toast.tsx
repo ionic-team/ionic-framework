@@ -1,6 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Method, Prop, h } from '@stencil/core';
+import { Component, Element, Event, h, Host, Method, Prop } from '@stencil/core';
 
+import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import type {
   AnimationBuilder,
@@ -77,7 +78,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
    * How many milliseconds to wait before hiding the toast. By default, it will show
    * until `dismiss()` is called.
    */
-  @Prop() duration = 0;
+  @Prop() duration = config.get('toastDuration', 0);
 
   /**
    * Header to be shown in the toast.
