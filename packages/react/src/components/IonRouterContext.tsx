@@ -1,5 +1,5 @@
 import { AnimationBuilder } from '@ionic/core/components';
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 
 import { RouteAction, RouterDirection, RouterOptions } from '../models';
 import { RouteInfo } from '../models/RouteInfo';
@@ -39,13 +39,17 @@ export const IonRouterContext = React.createContext<IonRouterContextState>({
  */
 export function useIonRouter(): UseIonRouterResult {
   const context = useContext(IonRouterContext);
-  return {
-    back: context.back,
-    push: context.push,
-    goBack: context.back,
-    canGoBack: context.canGoBack,
-    routeInfo: context.routeInfo,
-  };
+
+  return useMemo(
+    () => ({
+      back: context.back,
+      push: context.push,
+      goBack: context.back,
+      canGoBack: context.canGoBack,
+      routeInfo: context.routeInfo,
+    }),
+    [context.back, context.push, context.canGoBack, context.routeInfo]
+  );
 }
 
 export type UseIonRouterResult = {

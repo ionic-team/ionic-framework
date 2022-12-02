@@ -56,7 +56,7 @@
         })
         .onFinish(() => {
           const ev = new CustomEvent('ionAnimationFinished', { detail: 'AnimationAFinished' });
-          squareA.dispatchEvent(ev);
+          window.dispatchEvent(ev);
         });
 
       animationB
@@ -78,7 +78,7 @@
         })
         .onFinish(() => {
           const ev = new CustomEvent('ionAnimationFinished', { detail: 'AnimationBFinished' });
-          squareA.dispatchEvent(ev);
+          window.dispatchEvent(ev);
         });
 
       animationC
@@ -100,7 +100,7 @@
         })
         .onFinish(() => {
           const ev = new CustomEvent('ionAnimationFinished', { detail: 'AnimationCFinished' });
-          squareA.dispatchEvent(ev);
+          window.dispatchEvent(ev);
         });
 
       animationCSubA
@@ -110,12 +110,12 @@
         .fromTo('color', 'red', 'blue')
         .onFinish(() => {
           const ev = new CustomEvent('ionAnimationFinished', { detail: 'AnimationCSubAFinished' });
-          squareA.dispatchEvent(ev);
+          window.dispatchEvent(ev);
         });
 
       animationCSubB.addElement(squareCSubText).onFinish(() => {
         const ev = new CustomEvent('ionAnimationFinished', { detail: 'AnimationCSubBFinished' });
-        squareA.dispatchEvent(ev);
+        window.dispatchEvent(ev);
       });
 
       animationC.addAnimation([animationCSubA, animationCSubB]);
@@ -125,7 +125,7 @@
         .fill('none')
         .onFinish(() => {
           const ev = new CustomEvent('ionAnimationFinished', { detail: 'AnimationRootFinished' });
-          squareA.dispatchEvent(ev);
+          window.dispatchEvent(ev);
         });
 
       document.querySelector('.play').addEventListener('click', () => {

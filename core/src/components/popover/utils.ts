@@ -928,7 +928,3 @@ export const shouldShowArrow = (side: PositionSide, didAdjustBounds = false, ev?
 
   return true;
 };
-
-export const waitOneFrame = () => {
-  return new Promise<void>((resolve) => raf(() => resolve()));
-};
