@@ -29,7 +29,9 @@ test.describe('fab: basic (visual checks)', () => {
       height: 415,
     });
 
-    expect(await page.screenshot({ animations: 'disabled' })).toMatchSnapshot(`fab-open-${page.getSnapshotSettings()}.png`);
+    expect(await page.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+      `fab-open-${page.getSnapshotSettings()}.png`
+    );
   });
 });
 
