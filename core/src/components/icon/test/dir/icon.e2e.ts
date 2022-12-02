@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { test, configs } from '@utils/test/playwright';
 
-configs({ modes: ['ios'] }).forEach(({ title, config }) => {
+configs({ modes: ['md'] }).forEach(({ title, config }) => {
   test.describe('icon: rtl', () => {
     test(title('should flip icon when rtl is active'), async ({ page }) => {
       await page.setContent(
