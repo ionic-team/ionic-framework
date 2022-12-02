@@ -1,21 +1,18 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { test, configs } from '@utils/test/playwright';
 import type { E2EPage } from '@utils/test/playwright';
 
-test.describe('animation: hooks', async () => {
-  test.beforeEach(({ skip }) => {
-    skip.rtl();
-    skip.mode('ios');
-  });
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe('animation: hooks', async () => {
+    test(title('should fire hooks using web animations'), async ({ page }) => {
+      await page.goto('/src/utils/animation/test/hooks', config);
+      await testHooks(page);
+    });
 
-  test(`should fire hooks using web animations`, async ({ page }) => {
-    await page.goto('/src/utils/animation/test/hooks');
-    await testHooks(page);
-  });
-
-  test(`should fire hooks using css animations`, async ({ page }) => {
-    await page.goto('/src/utils/animation/test/hooks?ionic:_forceCSSAnimations=true');
-    await testHooks(page);
+    test(title('should fire hooks using css animations'), async ({ page }) => {
+      await page.goto('/src/utils/animation/test/hooks?ionic:_forceCSSAnimations=true', config);
+      await testHooks(page);
+    });
   });
 });
 

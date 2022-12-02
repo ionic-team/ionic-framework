@@ -1,20 +1,17 @@
-import { test } from '@utils/test/playwright';
+import { test, configs } from '@utils/test/playwright';
 import type { E2EPage } from '@utils/test/playwright';
 
-test.describe('animation: basic', async () => {
-  test.beforeEach(({ skip }) => {
-    skip.rtl();
-    skip.mode('ios');
-  });
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe('animation: basic', async () => {
+    test(title('should resolve using web animations'), async ({ page }) => {
+      await page.goto('/src/utils/animation/test/basic', config);
+      await testPage(page);
+    });
 
-  test(`should resolve using web animations`, async ({ page }) => {
-    await page.goto('/src/utils/animation/test/basic');
-    await testPage(page);
-  });
-
-  test(`should resolve using css animations`, async ({ page }) => {
-    await page.goto('/src/utils/animation/test/basic?ionic:_forceCSSAnimations=true');
-    await testPage(page);
+    test(title('should resolve using css animations'), async ({ page }) => {
+      await page.goto('/src/utils/animation/test/basic?ionic:_forceCSSAnimations=true', config);
+      await testPage(page);
+    });
   });
 });
 
