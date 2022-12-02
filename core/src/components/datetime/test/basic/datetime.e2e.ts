@@ -66,7 +66,7 @@ configs().forEach(({ title, config }) => {
     test(title('should update the active day'), async ({ page }) => {
       await page.setContent(`
         <ion-datetime show-default-buttons="true" value="2021-12-25T12:40:00.000Z"></ion-datetime>
-      `);
+      `,config);
 
       const activeDay = page.locator('ion-datetime .calendar-day-active');
 
@@ -94,7 +94,7 @@ configs().forEach(({ title, config }) => {
             }
           }
         </script>
-      `);
+      `,config);
 
       await page.waitForSelector('.datetime-ready');
       const datetime = page.locator('ion-datetime');
@@ -140,7 +140,7 @@ configs().forEach(({ title, config }) => {
             InitMonthDidChangeEvent();
           });
         </script>
-      `);
+      `,config);
 
       const datetimeMonthDidChange = await page.spyOnEvent('datetimeMonthDidChange');
       const eventButton = page.locator('button#bind');
