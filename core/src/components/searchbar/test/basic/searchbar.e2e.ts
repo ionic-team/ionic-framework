@@ -8,7 +8,7 @@ test.describe('searchbar: basic', () => {
 
   test('should not have visual regressions', async ({ page }) => {
     await page.setIonViewport();
-    expect(await page.screenshot()).toMatchSnapshot(`searchbar-diff-${page.getSnapshotSettings()}.png`);
+    expect(await page.screenshot({ animations: 'disabled' })).toMatchSnapshot(`searchbar-diff-${page.getSnapshotSettings()}.png`);
   });
 
   test('should show cancel button on focus if show-cancel-button=focus', async ({ page }) => {
