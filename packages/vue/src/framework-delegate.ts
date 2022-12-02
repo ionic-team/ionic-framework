@@ -5,6 +5,7 @@ import { addTeleportedUserComponent, removeTeleportedUserComponent } from './com
 
 export const VueDelegate = (addFn = addTeleportedUserComponent, removeFn = removeTeleportedUserComponent): FrameworkDelegate => {
   let Component: VNode | undefined;
+  // TODO(FW-2969): types
   const attachViewToDom = (parentElement: HTMLElement, component: any, componentProps: any = {}, classes?: string[]) => {
     /**
      * Ionic Framework passes in modal and popover element

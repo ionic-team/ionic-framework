@@ -16,6 +16,8 @@ import { defineCustomElement } from '@ionic/core/components/ion-router-outlet.js
 import { matchedRouteKey, routeLocationKey, useRoute } from 'vue-router';
 import { fireLifecycle, generateId, getConfig } from '../utils';
 
+// TODO(FW-2969): types
+
 const isViewVisible = (enteringEl: HTMLElement) => {
   return !enteringEl.classList.contains('ion-page-hidden') && !enteringEl.classList.contains('ion-page-invisible');
 }

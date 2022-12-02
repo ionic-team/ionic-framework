@@ -17,6 +17,7 @@ export const IonTabButton = /*@__PURE__*/ defineComponent({
   setup(props, { slots }) {
     defineCustomElement();
 
+    // TODO(FW-2969): type
     const ionRouter: any = inject('navManager');
     const onClick = (ev: Event) => {
       if (ev.cancelable) {

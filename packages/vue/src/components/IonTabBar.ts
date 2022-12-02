@@ -1,6 +1,8 @@
 import { h, defineComponent, getCurrentInstance, inject, VNode } from 'vue';
 import { defineCustomElement } from '@ionic/core/components/ion-tab-bar.js';
 
+// TODO(FW-2969): types
+
 interface TabState {
   activeTab?: string;
   tabs: { [k: string]: Tab };

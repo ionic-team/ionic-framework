@@ -113,6 +113,7 @@ export const createViewStacks = (router: Router) => {
     return undefined;
   }
 
+  // TODO(FW-2969): type
   const createViewItem = (outletId: number, vueComponent: any, matchedRoute: RouteLocationMatched, routeInfo: RouteInfo, ionPage?: HTMLElement): ViewItem => {
     return {
       id: generateId('viewItem'),

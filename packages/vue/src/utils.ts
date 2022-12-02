@@ -3,6 +3,8 @@ import { Config as CoreConfig, LIFECYCLE_DID_ENTER, LIFECYCLE_DID_LEAVE, LIFECYC
 
 type LIFECYCLE_EVENTS = typeof LIFECYCLE_WILL_ENTER | typeof LIFECYCLE_DID_ENTER | typeof LIFECYCLE_WILL_LEAVE | typeof LIFECYCLE_DID_LEAVE;
 
+// TODO(FW-2969): types
+
 export enum LifecycleHooks {
   WillEnter = 'onIonViewWillEnter',
   DidEnter = 'onIonViewDidEnter',

@@ -1,5 +1,7 @@
 import { defineComponent, h, ref, VNode, onMounted } from 'vue';
 
+// TODO(FW-2969): types
+
 export interface OverlayProps {
   isOpen?: boolean;
 }

@@ -3,6 +3,8 @@ import { h, defineComponent, VNode } from 'vue';
 const WILL_CHANGE = 'ionTabsWillChange';
 const DID_CHANGE = 'ionTabsDidChange';
 
+// TODO(FW-2969): types
+
 export const IonTabs = /*@__PURE__*/ defineComponent({
   name: 'IonTabs',
   emits: [WILL_CHANGE, DID_CHANGE],

@@ -18,6 +18,8 @@ import { defineCustomElement as defineIonToastCustomElement } from '@ionic/core/
 import { defineCustomElement as defineIonModalCustomElement } from '@ionic/core/components/ion-modal.js'
 import { defineCustomElement as defineIonPopoverCustomElement } from '@ionic/core/components/ion-popover.js'
 
+// TODO(FW-2969): types
+
 /**
  * Wrap the controllers export from @ionic/core
  * register the underlying Web Component and
