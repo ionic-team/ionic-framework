@@ -13,9 +13,6 @@ const queryAllWorkingMonthDisabledDays = (page: E2EPage, datetimeSelector = 'ion
 };
 configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe('datetime: disable dates', () => {
-    test.beforeEach(({ skip }) => {
-      skip.rtl();
-    });
     test.describe('check return values', () => {
       test.beforeEach(async ({ page }) => {
         await page.setContent('<ion-datetime value="2021-10-01"></ion-datetime>', config);
