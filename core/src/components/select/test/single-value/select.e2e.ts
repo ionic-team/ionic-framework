@@ -1,16 +1,18 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { test, configs } from '@utils/test/playwright';
 
-test.describe('select: single-value', () => {
-  test('should open single value select', async ({ page }) => {
-    await page.goto(`/src/components/select/test/single-value`);
+configs().forEach(({ title, config }) => {
+  test.describe('select: single-value', () => {
+    test(title('should open single value select'), async ({ page }) => {
+      await page.goto(`/src/components/select/test/single-value`, config);
 
-    const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
 
-    await page.click('#gender');
+      await page.click('#gender');
 
-    await ionAlertDidPresent.next();
+      await ionAlertDidPresent.next();
 
-    expect(await page.screenshot()).toMatchSnapshot(`select-single-value-diff-${page.getSnapshotSettings()}.png`);
+      expect(await page.screenshot()).toMatchSnapshot(`select-single-value-diff-${page.getSnapshotSettings()}.png`);
+    });
   });
 });

@@ -1,17 +1,17 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { test, configs } from '@utils/test/playwright';
 
-test.describe('select: async', () => {
-  test('should correctly set the value after a delay', async ({ page, skip }) => {
-    skip.rtl('This is checking internal logic. RTL tests are not needed');
+configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe('select: async', () => {
+    test(title('should correctly set the value after a delay'), async ({ page }) => {
+      await page.goto(`/src/components/select/test/async`, config);
+      const selectValueSet = await page.spyOnEvent('selectValueSet');
 
-    await page.goto(`/src/components/select/test/async`);
-    const selectValueSet = await page.spyOnEvent('selectValueSet');
+      const select = await page.locator('#default');
 
-    const select = await page.locator('#default');
+      await selectValueSet.next();
 
-    await selectValueSet.next();
-
-    await expect(select).toHaveJSProperty('value', 'bird');
+      await expect(select).toHaveJSProperty('value', 'bird');
+    });
   });
 });
