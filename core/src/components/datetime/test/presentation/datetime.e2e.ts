@@ -1,95 +1,99 @@
 import type { Locator } from '@playwright/test';
 import { expect } from '@playwright/test';
-import type { E2EPage } from '@utils/test/playwright';
-import { test } from '@utils/test/playwright';
+import type { E2EPage, E2EPageOptions } from '@utils/test/playwright';
+import { test, configs } from '@utils/test/playwright';
 
-test.describe('datetime: presentation', () => {
-  test('should not have visual regressions', async ({ page }) => {
-    await page.goto(`/src/components/datetime/test/presentation`);
+configs().forEach(({ title, config }) => {
+  test.describe('datetime: presentation', () => {
+    test(title('should not have visual regressions'), async ({ page }) => {
+      await page.goto(`/src/components/datetime/test/presentation`, config);
 
-    await page.setIonViewport();
+      await page.setIonViewport();
 
-    const compares = [];
-    const presentations = ['date-time', 'time-date', 'time', 'date', 'month-year', 'month', 'year'];
+      const compares = [];
+      const presentations = ['date-time', 'time-date', 'time', 'date', 'month-year', 'month', 'year'];
 
-    for (const presentation of presentations) {
-      await page.locator('select').selectOption(presentation);
+      for (const presentation of presentations) {
+        await page.locator('select').selectOption(presentation);
+        await page.waitForChanges();
+        compares.push({
+          presentation,
+          screenshot: await page.screenshot({ fullPage: true }),
+        });
+      }
+
+      for (const compare of compares) {
+        expect(compare.screenshot).toMatchSnapshot(
+          `datetime-presentation-${compare.presentation}-diff-${page.getSnapshotSettings()}.png`
+        );
+      }
+    });
+
+    test(title('presentation: time: should emit ionChange'), async ({ page }) => {
+      await page.goto(`/src/components/datetime/test/presentation`, config);
+
+      const ionChangeSpy = await page.spyOnEvent('ionChange');
+      await page.locator('select').selectOption('time');
       await page.waitForChanges();
-      compares.push({
-        presentation,
-        screenshot: await page.screenshot({ fullPage: true }),
-      });
-    }
 
-    for (const compare of compares) {
-      expect(compare.screenshot).toMatchSnapshot(
-        `datetime-presentation-${compare.presentation}-diff-${page.getSnapshotSettings()}.png`
-      );
-    }
+      await page.locator('text=AM').click();
+
+      await ionChangeSpy.next();
+
+      expect(ionChangeSpy.length).toBe(1);
+    });
+
+    test(title('presentation: month-year: should emit ionChange'), async ({ page }) => {
+      await page.goto(`/src/components/datetime/test/presentation`, config);
+
+      const ionChangeSpy = await page.spyOnEvent('ionChange');
+      await page.locator('select').selectOption('month-year');
+      await page.waitForChanges();
+
+      await page.locator('text=April').click();
+
+      await ionChangeSpy.next();
+
+      expect(ionChangeSpy.length).toBe(1);
+    });
+
+    test(title('presentation: month: should emit ionChange'), async ({ page }) => {
+      await page.goto(`/src/components/datetime/test/presentation`, config);
+
+      const ionChangeSpy = await page.spyOnEvent('ionChange');
+      await page.locator('select').selectOption('month');
+      await page.waitForChanges();
+
+      await page.locator('text=April').click();
+
+      await ionChangeSpy.next();
+
+      expect(ionChangeSpy.length).toBe(1);
+    });
+
+    test(title('presentation: year: should emit ionChange'), async ({ page }) => {
+      await page.goto(`/src/components/datetime/test/presentation`, config);
+
+      const ionChangeSpy = await page.spyOnEvent('ionChange');
+      await page.locator('select').selectOption('year');
+      await page.waitForChanges();
+
+      await page.locator('text=2021').click();
+
+      await ionChangeSpy.next();
+
+      expect(ionChangeSpy.length).toBe(1);
+    });
   });
-
-  test('presentation: time: should emit ionChange', async ({ page }) => {
-    await page.goto(`/src/components/datetime/test/presentation`);
-
-    const ionChangeSpy = await page.spyOnEvent('ionChange');
-    await page.locator('select').selectOption('time');
-    await page.waitForChanges();
-
-    await page.locator('text=AM').click();
-
-    await ionChangeSpy.next();
-
-    expect(ionChangeSpy.length).toBe(1);
-  });
-
-  test('presentation: month-year: should emit ionChange', async ({ page }) => {
-    await page.goto(`/src/components/datetime/test/presentation`);
-
-    const ionChangeSpy = await page.spyOnEvent('ionChange');
-    await page.locator('select').selectOption('month-year');
-    await page.waitForChanges();
-
-    await page.locator('text=April').click();
-
-    await ionChangeSpy.next();
-
-    expect(ionChangeSpy.length).toBe(1);
-  });
-
-  test('presentation: month: should emit ionChange', async ({ page }) => {
-    await page.goto(`/src/components/datetime/test/presentation`);
-
-    const ionChangeSpy = await page.spyOnEvent('ionChange');
-    await page.locator('select').selectOption('month');
-    await page.waitForChanges();
-
-    await page.locator('text=April').click();
-
-    await ionChangeSpy.next();
-
-    expect(ionChangeSpy.length).toBe(1);
-  });
-
-  test('presentation: year: should emit ionChange', async ({ page }) => {
-    await page.goto(`/src/components/datetime/test/presentation`);
-
-    const ionChangeSpy = await page.spyOnEvent('ionChange');
-    await page.locator('select').selectOption('year');
-    await page.waitForChanges();
-
-    await page.locator('text=2021').click();
-
-    await ionChangeSpy.next();
-
-    expect(ionChangeSpy.length).toBe(1);
-  });
-
-  test('switching presentation should close month/year picker', async ({ page, skip }) => {
-    await skip.rtl();
-
-    await page.setContent(`
+});
+configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
+  test(title('switching presentation should close month/year picker'), async ({ page }) => {
+    await page.setContent(
+      `
       <ion-datetime presentation="date"></ion-datetime>
-    `);
+    `,
+      config
+    );
 
     await page.waitForSelector('.datetime-ready');
 
@@ -105,45 +109,46 @@ test.describe('datetime: presentation', () => {
     await expect(datetime).not.toHaveClass(/show-month-and-year/);
   });
 });
+configs().forEach(({ title, config }) => {
+  test.describe('datetime: presentation: time', () => {
+    let timePickerFixture: TimePickerFixture;
 
-test.describe('datetime: presentation: time', () => {
-  let timePickerFixture: TimePickerFixture;
+    test.beforeEach(async ({ page }) => {
+      timePickerFixture = new TimePickerFixture(page);
+      await timePickerFixture.goto(config);
+    });
 
-  test.beforeEach(async ({ page }) => {
-    timePickerFixture = new TimePickerFixture(page);
-    await timePickerFixture.goto();
-  });
+    test(title('changing value from AM to AM should update the text'), async () => {
+      await timePickerFixture.setValue('04:20:00');
+      await timePickerFixture.expectTime('4', '20', 'AM');
 
-  test('changing value from AM to AM should update the text', async () => {
-    await timePickerFixture.setValue('04:20:00');
-    await timePickerFixture.expectTime('4', '20', 'AM');
+      await timePickerFixture.setValue('11:03:00');
+      await timePickerFixture.expectTime('11', '03', 'AM');
+    });
 
-    await timePickerFixture.setValue('11:03:00');
-    await timePickerFixture.expectTime('11', '03', 'AM');
-  });
+    test(title('changing value from AM to PM should update the text'), async () => {
+      await timePickerFixture.setValue('05:30:00');
+      await timePickerFixture.expectTime('5', '30', 'AM');
 
-  test('changing value from AM to PM should update the text', async () => {
-    await timePickerFixture.setValue('05:30:00');
-    await timePickerFixture.expectTime('5', '30', 'AM');
+      await timePickerFixture.setValue('16:40:00');
+      await timePickerFixture.expectTime('4', '40', 'PM');
+    });
 
-    await timePickerFixture.setValue('16:40:00');
-    await timePickerFixture.expectTime('4', '40', 'PM');
-  });
+    test(title('changing the value from PM to AM should update the text'), async () => {
+      await timePickerFixture.setValue('16:40:00');
+      await timePickerFixture.expectTime('4', '40', 'PM');
 
-  test('changing the value from PM to AM should update the text', async () => {
-    await timePickerFixture.setValue('16:40:00');
-    await timePickerFixture.expectTime('4', '40', 'PM');
+      await timePickerFixture.setValue('04:20:00');
+      await timePickerFixture.expectTime('4', '20', 'AM');
+    });
 
-    await timePickerFixture.setValue('04:20:00');
-    await timePickerFixture.expectTime('4', '20', 'AM');
-  });
+    test(title('changing the value from PM to PM should update the text'), async () => {
+      await timePickerFixture.setValue('16:40:00');
+      await timePickerFixture.expectTime('4', '40', 'PM');
 
-  test('changing the value from PM to PM should update the text', async () => {
-    await timePickerFixture.setValue('16:40:00');
-    await timePickerFixture.expectTime('4', '40', 'PM');
-
-    await timePickerFixture.setValue('19:32:00');
-    await timePickerFixture.expectTime('7', '32', 'PM');
+      await timePickerFixture.setValue('19:32:00');
+      await timePickerFixture.expectTime('7', '32', 'PM');
+    });
   });
 });
 
@@ -156,8 +161,8 @@ class TimePickerFixture {
     this.page = page;
   }
 
-  async goto() {
-    await this.page.goto(`/src/components/datetime/test/presentation`);
+  async goto(config: E2EPageOptions) {
+    await this.page.goto(`/src/components/datetime/test/presentation`, config);
     await this.page.locator('select').selectOption('time');
     await this.page.waitForSelector('.datetime-presentation-time');
     this.timePicker = this.page.locator('ion-datetime');
