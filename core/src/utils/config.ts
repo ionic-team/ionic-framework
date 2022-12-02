@@ -97,7 +97,7 @@ export interface IonicConfig {
   tabButtonLayout?: TabButtonLayout;
 
   /**
-   * Overrides the default duration for all `ion-toast` overlays.
+   * Overrides the default `duration` for all `ion-toast` components.
    */
   toastDuration?: number;
 
