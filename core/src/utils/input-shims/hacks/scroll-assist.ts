@@ -12,7 +12,7 @@ export const enableScrollAssist = (
   keyboardHeight: number,
   disableClonedInput = false
 ) => {
-  let coord: { x: number, y: number } | undefined;
+  let coord: { x: number; y: number } | undefined;
   const touchStart = (ev: Event) => {
     coord = pointerCoord(ev);
   };

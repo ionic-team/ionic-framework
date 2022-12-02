@@ -256,7 +256,8 @@ export class Menu implements ComponentInterface, MenuI {
   }
 
   @Listen('click', { capture: true })
-  onBackdropClick(ev: any) { // TODO(FW-2832): type (CustomEvent triggers errors which should be sorted)
+  onBackdropClick(ev: any) {
+    // TODO(FW-2832): type (CustomEvent triggers errors which should be sorted)
     if (this._isOpen && this.lastOnEnd < ev.timeStamp - 100) {
       const shouldClose = ev.composedPath ? !ev.composedPath().includes(this.menuInnerEl) : false;
 

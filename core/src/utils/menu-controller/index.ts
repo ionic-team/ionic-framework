@@ -208,7 +208,8 @@ const createMenuController = () => {
   registerAnimation('overlay', menuOverlayAnimation);
 
   if (typeof document !== 'undefined') {
-    document.addEventListener('ionBackButton', (ev: any) => { // TODO(FW-2832): type
+    document.addEventListener('ionBackButton', (ev: any) => {
+      // TODO(FW-2832): type
       const openMenu = _getOpenSync();
       if (openMenu) {
         (ev as BackButtonEvent).detail.register(MENU_BACK_BUTTON_PRIORITY, () => {

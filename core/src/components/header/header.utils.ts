@@ -86,7 +86,11 @@ export const setToolbarBackgroundOpacity = (headerEl: HTMLIonHeaderElement, opac
   }
 };
 
-const handleToolbarBorderIntersection = (ev: IntersectionObserverEntry[], mainHeaderIndex: HeaderIndex, scrollTop: number) => {
+const handleToolbarBorderIntersection = (
+  ev: IntersectionObserverEntry[],
+  mainHeaderIndex: HeaderIndex,
+  scrollTop: number
+) => {
   if (!ev[0].isIntersecting) {
     return;
   }

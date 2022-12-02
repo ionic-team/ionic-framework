@@ -153,9 +153,9 @@ export class Header implements ComponentInterface {
     this.scrollEl = await getScrollElement(contentEl);
 
     const headers = pageEl.querySelectorAll('ion-header');
-    this.collapsibleMainHeader = Array.from(headers).find((header: HTMLIonHeaderElement) => header.collapse !== 'condense') as
-      | HTMLElement
-      | undefined;
+    this.collapsibleMainHeader = Array.from(headers).find(
+      (header: HTMLIonHeaderElement) => header.collapse !== 'condense'
+    ) as HTMLElement | undefined;
 
     if (!this.collapsibleMainHeader) {
       return;
