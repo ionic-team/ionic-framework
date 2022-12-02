@@ -1,46 +1,48 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { test, configs } from '@utils/test/playwright';
 
 import { openPopover } from '../test.utils';
 
-test.describe('popover: dismissOnSelect', async () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto('/src/components/popover/test/dismissOnSelect');
-  });
+configs().forEach(({ title, config }) => {
+  test.describe('popover: dismissOnSelect', async () => {
+    test.beforeEach(async ({ page }) => {
+      await page.goto('/src/components/popover/test/dismissOnSelect', config);
+    });
 
-  test('should not dismiss a popover when clicking a hover trigger', async ({ page }) => {
-    const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
+    test(title('should not dismiss a popover when clicking a hover trigger'), async ({ page }) => {
+      const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
 
-    await openPopover(page, 'hover-trigger');
-    const popover = page.locator('.hover-trigger-popover');
-    const hoverTrigger = page.locator('#more-hover-trigger');
+      await openPopover(page, 'hover-trigger');
+      const popover = page.locator('.hover-trigger-popover');
+      const hoverTrigger = page.locator('#more-hover-trigger');
 
-    await hoverTrigger.hover();
-    await ionPopoverDidPresent.next(); // wait for hover popover to open
-    await hoverTrigger.click();
+      await hoverTrigger.hover();
+      await ionPopoverDidPresent.next(); // wait for hover popover to open
+      await hoverTrigger.click();
 
-    // ensure parent popover is still open
-    await expect(popover).toBeVisible();
-  });
+      // ensure parent popover is still open
+      await expect(popover).toBeVisible();
+    });
 
-  test('should not dismiss a popover when clicking a click trigger', async ({ page, skip }) => {
-    // TODO FW-1486
-    skip.browser(
-      'firefox',
-      'Parent popover disappears when click trigger is clicked. Cannot replicate locally. Needs further investigation.'
-    );
+    test(title('should not dismiss a popover when clicking a click trigger'), async ({ page, skip }) => {
+      // TODO FW-1486
+      skip.browser(
+        'firefox',
+        'Parent popover disappears when click trigger is clicked. Cannot replicate locally. Needs further investigation.'
+      );
 
-    const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
+      const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
 
-    await openPopover(page, 'click-trigger');
-    const popover = page.locator('.click-trigger-popover');
-    const clickTrigger = page.locator('#more-click-trigger');
+      await openPopover(page, 'click-trigger');
+      const popover = page.locator('.click-trigger-popover');
+      const clickTrigger = page.locator('#more-click-trigger');
 
-    await clickTrigger.hover();
-    await clickTrigger.click();
-    await ionPopoverDidPresent.next(); // wait for click popover to open
+      await clickTrigger.hover();
+      await clickTrigger.click();
+      await ionPopoverDidPresent.next(); // wait for click popover to open
 
-    // ensure parent popover is still open
-    await expect(popover).toBeVisible();
+      // ensure parent popover is still open
+      await expect(popover).toBeVisible();
+    });
   });
 });

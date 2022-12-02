@@ -1,13 +1,15 @@
-import { test } from '@utils/test/playwright';
+import { test, configs } from '@utils/test/playwright';
 
 import { screenshotPopover } from '../test.utils';
 
-test.describe('popover: reference', async () => {
-  test('should position popover relative to mouse click', async ({ page }) => {
-    await screenshotPopover(page, 'event-trigger', 'reference');
-  });
+configs().forEach(({ title, config }) => {
+  test.describe('popover: reference', async () => {
+    test(title('should position popover relative to mouse click'), async ({ page }) => {
+      await screenshotPopover(page, config, 'event-trigger', 'reference');
+    });
 
-  test('should position popover relative to trigger', async ({ page }) => {
-    await screenshotPopover(page, 'trigger-trigger', 'reference');
+    test(title('should position popover relative to trigger'), async ({ page }) => {
+      await screenshotPopover(page, config, 'trigger-trigger', 'reference');
+    });
   });
 });

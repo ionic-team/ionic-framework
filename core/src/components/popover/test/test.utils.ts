@@ -1,6 +1,6 @@
 import type { Locator } from '@playwright/test';
 import { expect } from '@playwright/test';
-import type { E2EPage } from '@utils/test/playwright';
+import type { E2EPage, E2EPageOptions } from '@utils/test/playwright';
 
 export const openPopover = async (page: E2EPage, buttonID: string, useEvalClick = false) => {
   const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
@@ -31,8 +31,8 @@ export const closePopover = async (page: E2EPage, popover?: Locator) => {
   await ionPopoverDidDismiss.next();
 };
 
-export const screenshotPopover = async (page: E2EPage, buttonID: string, testName: string) => {
-  await page.goto(`src/components/popover/test/${testName}`);
+export const screenshotPopover = async (page: E2EPage, config: E2EPageOptions, buttonID: string, testName: string) => {
+  await page.goto(`src/components/popover/test/${testName}`, config);
 
   await openPopover(page, buttonID);
   await page.setIonViewport();
