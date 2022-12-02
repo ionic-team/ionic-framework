@@ -10,6 +10,8 @@ import {
   setRef,
 } from './utils';
 
+// TODO(FW-2959): types
+
 interface OverlayElement extends HTMLElement {
   present: () => Promise<void>;
   dismiss: (data?: any, role?: string | undefined) => Promise<boolean>;

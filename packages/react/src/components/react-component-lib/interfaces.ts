@@ -1,3 +1,5 @@
+// TODO(FW-2959): types
+
 // General types important to applications using stencil built components
 export interface EventEmitter<T = any> {
   emit: (data?: T) => CustomEvent<T>;

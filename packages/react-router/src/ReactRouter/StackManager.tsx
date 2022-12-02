@@ -12,6 +12,8 @@ import { matchPath } from 'react-router-dom';
 
 import { clonePageElement } from './clonePageElement';
 
+// TODO(FW-2959): types
+
 interface StackManagerProps {
   routeInfo: RouteInfo;
 }

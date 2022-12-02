@@ -35,6 +35,8 @@ interface IonTabBarState {
   tabs: { [key: string]: TabUrls };
 }
 
+// TODO(FW-2959): types
+
 class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarState> {
   context!: React.ContextType<typeof NavContext>;
 

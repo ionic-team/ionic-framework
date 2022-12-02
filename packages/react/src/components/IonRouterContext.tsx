@@ -19,7 +19,7 @@ export interface IonRouterContextState {
 }
 
 export const IonRouterContext = React.createContext<IonRouterContextState>({
-  routeInfo: undefined as any,
+  routeInfo: undefined as any, // TODO(FW-2959): type
   push: () => {
     throw new Error('An Ionic Router is required for IonRouterContext');
   },

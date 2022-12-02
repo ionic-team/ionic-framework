@@ -21,6 +21,7 @@ export interface ActionSheetOptions extends Omit<ActionSheetOptionsCore, 'button
 }
 
 const actionSheetController = {
+  // TODO(FW-2959): type
   create: (options: ActionSheetOptions) => actionSheetControllerCore.create(options as any),
   dismiss: (data?: any, role?: string | undefined, id?: string | undefined) =>
     actionSheetControllerCore.dismiss(data, role, id),

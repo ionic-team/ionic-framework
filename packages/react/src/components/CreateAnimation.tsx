@@ -9,6 +9,8 @@ import {
 } from '@ionic/core/components';
 import React, { PropsWithChildren } from 'react';
 
+// TODO(FW-2959): types
+
 interface PartialPropertyValue {
   property: string;
   value: any;

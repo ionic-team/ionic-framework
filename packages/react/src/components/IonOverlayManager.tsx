@@ -27,7 +27,7 @@ export const IonOverlayManager: React.FC<IonOverlayManagerProps> = ({
 }) => {
   type OverlaysList = {
     [key: string]: {
-      component: any;
+      component: any; // TODO(FW-2959): type
       containerElement: HTMLDivElement;
     };
   };

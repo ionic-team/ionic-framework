@@ -27,6 +27,7 @@ export interface RouteManagerContextState {
   unMountViewItem: (viewItem: ViewItem) => void;
 }
 
+// TODO(FW-2959): types
 export const RouteManagerContext = /*@__PURE__*/ React.createContext<RouteManagerContextState>({
   addViewItem: () => undefined,
   canGoBack: () => undefined as any,

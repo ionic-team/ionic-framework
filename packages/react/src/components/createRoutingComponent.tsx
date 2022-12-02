@@ -15,6 +15,8 @@ import {
 } from './react-component-lib/utils';
 import { createForwardRef } from './utils';
 
+// TODO(FW-2959): types
+
 interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<ElementType> {
   forwardedRef?: React.ForwardedRef<ElementType>;
   href?: string;

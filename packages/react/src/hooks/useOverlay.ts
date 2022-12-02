@@ -8,6 +8,8 @@ import { generateId } from '../utils/generateId';
 
 import { HookOverlayOptions } from './HookOverlayOptions';
 
+// TODO(FW-2959): types
+
 interface OverlayBase extends HTMLElement {
   present: () => Promise<void>;
   dismiss: (data?: any, role?: string | undefined) => Promise<boolean>;
