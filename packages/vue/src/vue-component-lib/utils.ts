@@ -1,7 +1,5 @@
 import { VNode, defineComponent, getCurrentInstance, h, inject, ref, Ref } from 'vue';
 
-// TODO(FW-2969): types
-
 export interface InputProps<T> {
   modelValue?: T;
 }

@@ -8,8 +8,6 @@ import {
   mergeRefs,
 } from './utils';
 
-// TODO(FW-2959): types
-
 export interface HTMLStencilElement extends HTMLElement {
   componentOnReady(): Promise<this>;
 }
