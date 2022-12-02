@@ -17,7 +17,7 @@ test.describe('datetime-button: rendering', () => {
     await dateButton.click();
     await ionModalDidPresent.next();
 
-    expect(await page.screenshot({ animations: 'disabled ' })).toMatchSnapshot(
+    expect(await page.screenshot({ animations: 'disabled' })).toMatchSnapshot(
       `datetime-overlay-modal-${page.getSnapshotSettings()}.png`
     );
   });
