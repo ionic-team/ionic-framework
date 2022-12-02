@@ -16,6 +16,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 - [Components](#version-7x-components)
   - [Accordion Group](#version-7x-accordion-group)
   - [Action Sheet](#version-7x-action-sheet)
+  - [Back Button](#version-7x-back-button)
   - [Card Header](#version-7x-card-header)
   - [Checkbox](#version-7x-checkbox)
   - [Datetime](#version-7x-datetime)
@@ -85,6 +86,17 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 | Token      | Previous Value | New Value |
 | ---------- | -------------- | --------- |
 | `--height` | `100%`         | `auto`    |
+
+<h4 id="version-7x-back-button">Back Button</h4>
+
+- Back Button is updated to align with the design specification for iOS.
+
+**Design tokens**
+
+| Token               | Previous Value | New Value |
+| ------------------- | -------------- | --------- |
+| `--icon-margin-end` | `-5px`         | `1px`     |
+| `--icon-font-size`  | `1.85em`       | `1.6em`   |
 
 <h4 id="version-7x-card-header">Card Header</h4>
 
