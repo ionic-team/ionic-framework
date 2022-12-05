@@ -900,19 +900,25 @@ ion-picker,prop,cssClass,string | string[] | undefined,undefined,false,false
 ion-picker,prop,duration,number,0,false,false
 ion-picker,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-picker,prop,htmlAttributes,undefined | { [key: string]: any; },undefined,false,false
+ion-picker,prop,isOpen,boolean,false,false,false
 ion-picker,prop,keyboardClose,boolean,true,false,false
 ion-picker,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-picker,prop,mode,"ios" | "md",undefined,false,false
 ion-picker,prop,showBackdrop,boolean,true,false,false
+ion-picker,prop,trigger,string | undefined,undefined,false,false
 ion-picker,method,dismiss,dismiss(data?: any, role?: string) => Promise<boolean>
 ion-picker,method,getColumn,getColumn(name: string) => Promise<PickerColumn | undefined>
 ion-picker,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-picker,method,onWillDismiss,onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-picker,method,present,present() => Promise<void>
+ion-picker,event,didDismiss,OverlayEventDetail<any>,true
+ion-picker,event,didPresent,void,true
 ion-picker,event,ionPickerDidDismiss,OverlayEventDetail<any>,true
 ion-picker,event,ionPickerDidPresent,void,true
 ion-picker,event,ionPickerWillDismiss,OverlayEventDetail<any>,true
 ion-picker,event,ionPickerWillPresent,void,true
+ion-picker,event,willDismiss,OverlayEventDetail<any>,true
+ion-picker,event,willPresent,void,true
 ion-picker,css-prop,--backdrop-opacity
 ion-picker,css-prop,--background
 ion-picker,css-prop,--background-rgb
@@ -1436,14 +1442,14 @@ ion-toggle,prop,checked,boolean,false,false,false
 ion-toggle,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-toggle,prop,disabled,boolean,false,false,false
 ion-toggle,prop,enableOnOffLabels,boolean | undefined,undefined,false,false
+ion-toggle,prop,justify,"end" | "space-between" | "start",'space-between',false,false
+ion-toggle,prop,labelPlacement,"end" | "fixed" | "start",'start',false,false
 ion-toggle,prop,mode,"ios" | "md",undefined,false,false
 ion-toggle,prop,name,string,this.inputId,false,false
 ion-toggle,prop,value,null | string | undefined,'on',false,false
 ion-toggle,event,ionBlur,void,true
 ion-toggle,event,ionChange,ToggleChangeEventDetail<any>,true
 ion-toggle,event,ionFocus,void,true
-ion-toggle,css-prop,--background
-ion-toggle,css-prop,--background-checked
 ion-toggle,css-prop,--border-radius
 ion-toggle,css-prop,--handle-background
 ion-toggle,css-prop,--handle-background-checked
@@ -1454,6 +1460,8 @@ ion-toggle,css-prop,--handle-max-height
 ion-toggle,css-prop,--handle-spacing
 ion-toggle,css-prop,--handle-transition
 ion-toggle,css-prop,--handle-width
+ion-toggle,css-prop,--track-background
+ion-toggle,css-prop,--track-background-checked
 ion-toggle,part,handle
 ion-toggle,part,track
 

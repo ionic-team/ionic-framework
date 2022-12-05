@@ -64,7 +64,7 @@ jobs:
       shell: bash
 
   purge-cdn-cache:
-    needs: [release-react-router, release-angular-server, release-vue-router]
+    needs: [release-ionic]
     runs-on: ubuntu-latest
     steps:
       - name: Purge JSDelivr Cache

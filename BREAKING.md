@@ -15,6 +15,8 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 - [Browser and Platform Support](#version-7x-browser-platform-support)
 - [Components](#version-7x-components)
   - [Accordion Group](#version-7x-accordion-group)
+  - [Action Sheet](#version-7x-action-sheet)
+  - [Back Button](#version-7x-back-button)
   - [Card Header](#version-7x-card-header)
   - [Checkbox](#version-7x-checkbox)
   - [Datetime](#version-7x-datetime)
@@ -34,6 +36,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 - [Types](#version-7x-types)
   - [Overlay Attribute Interfaces](#version-7x-overlay-attribute-interfaces)
 - [JavaScript Frameworks](#version-7x-javascript-frameworks)
+  - [Angular](#version-7x-angular)
   - [React](#version-7x-react)
   - [Vue](#version-7x-vue)
 - [Utilities](#version-7x-utilities)
@@ -74,6 +77,27 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 
 - Accordion Group no longer automatically adjusts the `value` property when passed an array and `multiple="false"`. Developers should update their apps to ensure they are using the API correctly.
 
+<h4 id="version-7x-action-sheet">Action Sheet</h4>
+
+- Action Sheet is updated to align with the design specification.
+
+**Design tokens**
+
+| Token      | Previous Value | New Value |
+| ---------- | -------------- | --------- |
+| `--height` | `100%`         | `auto`    |
+
+<h4 id="version-7x-back-button">Back Button</h4>
+
+- Back Button is updated to align with the design specification for iOS.
+
+**Design tokens**
+
+| Token               | Previous Value | New Value |
+| ------------------- | -------------- | --------- |
+| `--icon-margin-end` | `-5px`         | `1px`     |
+| `--icon-font-size`  | `1.85em`       | `1.6em`   |
+
 <h4 id="version-7x-card-header">Card Header</h4>
 
 - The card header has ben changed to a flex container with direction set to `column` (top to bottom). In `ios` mode the direction is set to `column-reverse` which results in the subtitle displaying on top of the title.
@@ -89,6 +113,10 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 - Datetime no longer automatically adjusts the `value` property when passed an array and `multiple="false"`. Developers should update their apps to ensure they are using the API correctly.
 
 - Datetime no longer incorrectly reports the time zone when `value` is updated. Datetime does not manage time zones, so any time zone information provided is ignored.
+
+- Passing the empty string to the `value` property will now error as it is not a valid ISO-8601 value.
+
+- The haptics when swiping the wheel picker are now enabled only on iOS.
 
 <h4 id="version-7x-input">Input</h4>
 
@@ -192,6 +220,8 @@ Developers using these components will need to migrate to using Swiper.js direct
 
 - `ionChange` is no longer emitted when the `checked` property of `ion-toggle` is modified externally. `ionChange` is only emitted from user committed changes, such as clicking the toggle to set it on or off.
 
+- The `--background` and `--background-checked` variables have been renamed to `--track-background` and `--track-background-checked`, respectively.
+
 <h4 id="version-7x-virtual-scroll">Virtual Scroll</h4>
 
 `ion-virtual-scroll` has been removed from Ionic.
@@ -211,6 +241,10 @@ Any references to the virtual scroll types from `@ionic/core` have been removed.
 `ActionSheetAttributes`, `AlertAttributes`, `AlertTextareaAttributes`, `AlertInputAttributes`, `LoadingAttributes`, `ModalAttributes`, `PickerAttributes`, `PopoverAttributes`, and `ToastAttributes` have been removed. Developers should use `{ [key: string]: any }` instead.
 
 <h2 id="version-7x-javascript-frameworks">JavaScript Frameworks</h2>
+
+<h4 id="version-7x-angular">Angular</h4>
+
+- `null` values on form components will no longer be converted to the empty string (`''`) or `false`. This impacts `ion-checkbox`, `ion-datetime`, `ion-input`, `ion-radio`, `ion-radio-group`, ion-range`, `ion-searchbar`, `ion-segment`, `ion-select`, `ion-textarea`, and `ion-toggle`.
 
 <h4 id="version-7x-react">React</h4>
 

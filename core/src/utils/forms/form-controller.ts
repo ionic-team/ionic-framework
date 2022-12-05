@@ -15,8 +15,12 @@ export const createLegacyFormController = (el: HTMLLegacyFormControlElement): Le
    * so a deprecation warning is logged. This warning can be disabled
    * by either using the new `label` property or setting `aria-label`
    * on the control.
+   * Alternatively, components that use a slot for the label
+   * can check to see if the component has slotted text
+   * in the light DOM.
    */
-  const hasLabelProp = controlEl.label !== undefined;
+  const hasLabelProp =
+    (controlEl as any).label !== undefined || (controlEl.shadowRoot !== null && controlEl.textContent !== '');
   const hasAriaLabelAttribute = controlEl.hasAttribute('aria-label');
 
   legacyControl = !hasLabelProp && !hasAriaLabelAttribute;

@@ -5,7 +5,6 @@ import { test } from '@utils/test/playwright';
 test.describe('input: a11y', () => {
   test.beforeEach(async ({ skip }) => {
     skip.rtl();
-    skip.mode('md');
   });
 
   test('should not have accessibility violations', async ({ page }) => {

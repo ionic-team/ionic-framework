@@ -5,7 +5,6 @@
 
 import {
   JSX,
-  pickerController,
 } from '@ionic/core/components';
 
 import { defineCustomElement as defineIonActionSheetCustomElement } from '@ionic/core/components/ion-action-sheet.js'
@@ -24,7 +23,7 @@ export const IonAlert = /*@__PURE__*/ defineOverlayContainer<JSX.IonAlert>('ion-
     
 export const IonLoading = /*@__PURE__*/ defineOverlayContainer<JSX.IonLoading>('ion-loading', defineIonLoadingCustomElement, ['animated', 'backdropDismiss', 'cssClass', 'duration', 'enterAnimation', 'htmlAttributes', 'isOpen', 'keyboardClose', 'leaveAnimation', 'message', 'mode', 'showBackdrop', 'spinner', 'translucent', 'trigger']);
     
-export const IonPicker = /*@__PURE__*/ defineOverlayContainer<JSX.IonPicker>('ion-picker', defineIonPickerCustomElement, ['animated', 'backdropDismiss', 'buttons', 'columns', 'cssClass', 'duration', 'enterAnimation', 'htmlAttributes', 'keyboardClose', 'leaveAnimation', 'mode', 'showBackdrop'], pickerController);
+export const IonPicker = /*@__PURE__*/ defineOverlayContainer<JSX.IonPicker>('ion-picker', defineIonPickerCustomElement, ['animated', 'backdropDismiss', 'buttons', 'columns', 'cssClass', 'duration', 'enterAnimation', 'htmlAttributes', 'isOpen', 'keyboardClose', 'leaveAnimation', 'mode', 'showBackdrop', 'trigger']);
     
 export const IonToast = /*@__PURE__*/ defineOverlayContainer<JSX.IonToast>('ion-toast', defineIonToastCustomElement, ['animated', 'buttons', 'color', 'cssClass', 'duration', 'enterAnimation', 'header', 'htmlAttributes', 'icon', 'isOpen', 'keyboardClose', 'leaveAnimation', 'message', 'mode', 'position', 'translucent', 'trigger']);
     
