@@ -18,8 +18,7 @@ export const createLegacyFormController = (el: AllowedFormElements): LegacyFormC
    * can check to see if the component has slotted text
    * in the light DOM.
    */
-  const hasLabelProp =
-    (controlEl as any).label !== undefined || hasLabelSlot(controlEl);
+  const hasLabelProp = (controlEl as any).label !== undefined || hasLabelSlot(controlEl);
   const hasAriaLabelAttribute = controlEl.hasAttribute('aria-label');
 
   /**
@@ -46,9 +45,7 @@ const hasLabelSlot = (controlEl: HTMLElement) => {
   }
 
   const nodes = controlEl.childNodes;
-  for (let i = 0; i < nodes.length; i++) {
-    const node = nodes[i];
-
+  for (const node of nodes) {
     /**
      * Find either the raw text nodes
      * or an element that has no slot assigned.
@@ -60,6 +57,5 @@ const hasLabelSlot = (controlEl: HTMLElement) => {
     }
   }
 
-
   return false;
-}
+};
