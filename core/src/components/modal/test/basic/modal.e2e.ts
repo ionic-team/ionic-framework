@@ -38,7 +38,7 @@ configs().forEach(({ title, config }) => {
     test(
       title('focus should be returned to previously focused element when dismissing modal'),
       async ({ page, browserName }) => {
-        await page.goto('/src/components/modal/test/basic');
+        await page.goto('/src/components/modal/test/basic', config);
         const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
         const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
         const modalButton = await page.locator('#basic-modal');
