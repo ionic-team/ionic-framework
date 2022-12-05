@@ -136,6 +136,10 @@ test.describe('toast: properties', () => {
 });
 
 test.describe('toast: duration config', () => {
+  test.beforeEach(({ skip }) => {
+    skip.rtl();
+    skip.mode('ios');
+  });
   test('should have duration set to 0', async ({ page }) => {
     await page.setContent(`
     <ion-toast></ion-toast>
