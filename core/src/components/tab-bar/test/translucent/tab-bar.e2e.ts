@@ -5,6 +5,7 @@ test.describe('tab-bar: translucent', () => {
   test.beforeEach(({ skip }) => {
     skip.rtl();
     skip.mode('md', 'Translucent is only available in iOS mode');
+    skip.browser('firefox', 'Firefox does not support translucent effect');
   });
   test('should render translucent tab bar', async ({ page }) => {
     await page.setContent(`
@@ -30,7 +31,6 @@ test.describe('tab-bar: translucent', () => {
     `);
 
     const tabBar = page.locator('ion-tab-bar');
-    await page.waitForTimeout(30000000)
 
     expect(await tabBar.screenshot()).toMatchSnapshot(`tab-bar-translucent-${page.getSnapshotSettings()}.png`);
   });
