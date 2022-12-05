@@ -1142,6 +1142,10 @@ export namespace Components {
          */
         "labelPlacement": 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
         /**
+          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the `label` property. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
+         */
+        "legacy"?: boolean;
+        /**
           * The maximum value, which must not be less than its minimum (min attribute) value.
          */
         "max"?: string | number;
@@ -3010,6 +3014,10 @@ export namespace Components {
           * Where to place the label relative to the input. `'start'`: The label will appear to the left of the toggle in LTR and to the right in RTL. `'end'`: The label will appear to the right of the toggle in LTR and to the left in RTL. `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
          */
         "labelPlacement": 'start' | 'end' | 'fixed';
+        /**
+          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the default slot that contains the label text. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
+         */
+        "legacy"?: boolean;
         /**
           * The mode determines which platform styles to use.
          */
@@ -5066,6 +5074,10 @@ declare namespace LocalJSX {
          */
         "labelPlacement"?: 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
         /**
+          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the `label` property. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
+         */
+        "legacy"?: boolean;
+        /**
           * The maximum value, which must not be less than its minimum (min attribute) value.
          */
         "max"?: string | number;
@@ -7022,6 +7034,10 @@ declare namespace LocalJSX {
           * Where to place the label relative to the input. `'start'`: The label will appear to the left of the toggle in LTR and to the right in RTL. `'end'`: The label will appear to the right of the toggle in LTR and to the left in RTL. `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
          */
         "labelPlacement"?: 'start' | 'end' | 'fixed';
+        /**
+          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the default slot that contains the label text. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
+         */
+        "legacy"?: boolean;
         /**
           * The mode determines which platform styles to use.
          */

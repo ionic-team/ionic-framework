@@ -22,15 +22,6 @@ $input-md-padding-start:                   ($item-md-padding-start * 0.5) !defau
 /// @prop - Width of the icon used to clear the input
 $input-md-input-clear-icon-width:         30px !default;
 
-/// @prop - Color of the icon used to clear the input
-$input-md-input-clear-icon-color:         $text-color-step-400 !default;
-
-/// @prop - Icon used to clear the input
-$input-md-input-clear-icon-svg:           "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><polygon fill='" + $input-md-input-clear-icon-color + "' points='405,136.798 375.202,107 256,226.202 136.798,107 107,136.798 226.202,256 107,375.202 136.798,405 256,285.798 375.202,405 405,375.202 285.798,256'/></svg>" !default;
-
-/// @prop - Size of the icon used to clear the input
-$input-md-input-clear-icon-size:          22px !default;
-
 /// @prop - Placeholder Text color of the input
 $input-md-placeholder-color:              $placeholder-text-color !default;
 

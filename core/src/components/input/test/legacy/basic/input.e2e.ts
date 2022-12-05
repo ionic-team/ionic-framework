@@ -67,14 +67,16 @@ test.describe('input: basic', () => {
       const item = page.locator('ion-item');
       const input = page.locator('ion-input');
       // Validates the display of an input with an ion-item using lines="full".
-      expect(await item.screenshot()).toMatchSnapshot(`input-with-lines-full-${page.getSnapshotSettings()}.png`);
+      expect(await item.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+        `input-with-lines-full-${page.getSnapshotSettings()}.png`
+      );
 
       await input.click();
 
       // Verifies that the parent item receives .item-has-focus when the input is focused.
       await expect(item).toHaveClass(/item-has-focus/);
       // Validates the display of an input with an ion-item using lines="full" when focused.
-      expect(await item.screenshot()).toMatchSnapshot(
+      expect(await item.screenshot({ animations: 'disabled' })).toMatchSnapshot(
         `input-with-lines-full-focused-${page.getSnapshotSettings()}.png`
       );
     });
@@ -94,7 +96,9 @@ test.describe('input: basic', () => {
       const item = page.locator('ion-item');
       const input = page.locator('ion-input');
       // Validates the display of an input with an ion-item using lines="inset".
-      expect(await item.screenshot()).toMatchSnapshot(`input-with-lines-inset-${page.getSnapshotSettings()}.png`);
+      expect(await item.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+        `input-with-lines-inset-${page.getSnapshotSettings()}.png`
+      );
 
       await input.click();
 
@@ -102,7 +106,7 @@ test.describe('input: basic', () => {
       await expect(item).toHaveClass(/item-has-focus/);
 
       // Validates the display of an input with an ion-item using lines="inset" when focused.
-      expect(await item.screenshot()).toMatchSnapshot(
+      expect(await item.screenshot({ animations: 'disabled' })).toMatchSnapshot(
         `input-with-lines-inset-focused-${page.getSnapshotSettings()}.png`
       );
     });
@@ -122,7 +126,9 @@ test.describe('input: basic', () => {
       const item = page.locator('ion-item');
       const input = page.locator('ion-input');
       // Validates the display of an input with an ion-item using lines="none".
-      expect(await item.screenshot()).toMatchSnapshot(`input-with-lines-none-${page.getSnapshotSettings()}.png`);
+      expect(await item.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+        `input-with-lines-none-${page.getSnapshotSettings()}.png`
+      );
 
       await input.click();
 
@@ -130,7 +136,7 @@ test.describe('input: basic', () => {
       await expect(item).toHaveClass(/item-has-focus/);
 
       // Validates the display of an input with an ion-item using lines="none" when focused.
-      expect(await item.screenshot()).toMatchSnapshot(
+      expect(await item.screenshot({ animations: 'disabled' })).toMatchSnapshot(
         `input-with-lines-none-focused-${page.getSnapshotSettings()}.png`
       );
     });
