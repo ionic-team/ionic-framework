@@ -19,7 +19,7 @@ export const createLegacyFormController = (el: AllowedFormElements): LegacyFormC
    * in the light DOM.
    */
   const hasLabelProp =
-    (controlEl as any).label !== undefined || (controlEl.shadowRoot !== null && controlEl.querySelector(':not([slot])') !== null);
+    (controlEl as any).label !== undefined || hasLabelSlot(controlEl);
   const hasAriaLabelAttribute = controlEl.hasAttribute('aria-label');
 
   /**
@@ -38,3 +38,28 @@ export const createLegacyFormController = (el: AllowedFormElements): LegacyFormC
 export type LegacyFormController = {
   hasLegacyControl: () => boolean;
 };
+
+const hasLabelSlot = (controlEl: HTMLElement) => {
+  const root = controlEl.shadowRoot;
+  if (root === null) {
+    return false;
+  }
+
+  const nodes = controlEl.childNodes;
+  for (let i = 0; i < nodes.length; i++) {
+    const node = nodes[i];
+
+    /**
+     * Find either the raw text nodes
+     * or an element that has no slot assigned.
+     */
+    const isTextNode = node.nodeType === 3;
+    const isElementNode = node.nodeType === 1;
+    if (isTextNode || (isElementNode && !(node as HTMLElement).hasAttribute('slot'))) {
+      return true;
+    }
+  }
+
+
+  return false;
+}
