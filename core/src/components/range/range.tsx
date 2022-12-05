@@ -734,7 +734,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
   }
 
   private renderRange() {
-    return <Host>Stubbed Range</Host>;
+    return <Host>Stubbed Range<slot></slot></Host>;
   }
 
   render() {
