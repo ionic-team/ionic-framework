@@ -145,7 +145,7 @@ test.describe('toast: duration config', () => {
     <ion-toast></ion-toast>
   `);
     const toast = page.locator('ion-toast');
-    await expect(toast).toHaveAttribute('duration', '0');
+    await expect(toast).toHaveJSProperty('duration', 0);
   });
 
   test('should have duration set to 5000', async ({ page }) => {
