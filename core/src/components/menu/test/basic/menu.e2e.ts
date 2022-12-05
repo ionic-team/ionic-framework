@@ -18,7 +18,7 @@ test.describe('menu: basic', () => {
     await testMenu(page, endMenu, 'end');
   });
 
-  test.only('should trap focus', async ({ page, skip, browserName }) => {
+  test('should trap focus', async ({ page, skip, browserName }) => {
     skip.rtl('Trapping focus is not dependent on document direction');
     skip.browser('firefox', 'Firefox incorrectly allows keyboard focus to move to ion-content');
     // TODO (FW-2979)
