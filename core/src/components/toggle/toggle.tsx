@@ -90,6 +90,17 @@ export class Toggle implements ComponentInterface {
   @Prop() labelPlacement: 'start' | 'end' | 'fixed' = 'start';
 
   /**
+   * Set the `legacy` property to `true` to forcibly use the legacy form control markup.
+   * Ionic will only opt components in to the modern form markup when they are
+   * using either the `aria-label` attribute or the default slot that contains
+   * the label text. As a result, the `legacy` property should only be used as
+   * an escape hatch when you want to avoid this automatic opt-in behavior.
+   * Note that this property will be removed in an upcoming major release
+   * of Ionic, and all form components will be opted-in to using the modern form markup.
+   */
+  @Prop() legacy?: boolean;
+
+  /**
    * How to pack the label and toggle within a line.
    * `'start'`: The label and toggle will appear on the left in LTR and
    * on the right in RTL.
@@ -340,6 +351,16 @@ Example: <ion-toggle>Email:</ion-toggle>
 For toggles that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the toggle.`,
         this.el
       );
+
+      if (this.legacy) {
+        printIonWarning(
+          `ion-toggle is being used with the "legacy" property enabled which will forcibly enable the legacy form markup. This property will be removed in an upcoming major release of Ionic where this form control will use the modern form markup.
+
+Developers can dismiss this warning by removing their usage of the "legacy" property and using the new toggle syntax.`,
+          this.el
+        );
+      }
+
       this.hasLoggedDeprecationWarning = true;
     }
 

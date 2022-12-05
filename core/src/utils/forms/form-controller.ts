@@ -23,7 +23,11 @@ export const createLegacyFormController = (el: HTMLLegacyFormControlElement): Le
     (controlEl as any).label !== undefined || (controlEl.shadowRoot !== null && controlEl.textContent !== '');
   const hasAriaLabelAttribute = controlEl.hasAttribute('aria-label');
 
-  legacyControl = !hasLabelProp && !hasAriaLabelAttribute;
+  /**
+   * Developers can manually opt-out of the modern form markup
+   * by setting `legacy="true"` on components.
+   */
+  legacyControl = controlEl.legacy === true || (!hasLabelProp && !hasAriaLabelAttribute);
 
   const hasLegacyControl = () => {
     return legacyControl;
