@@ -1,5 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import { isPlatform } from '@utils/platform';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Color } from '../../interface';
@@ -229,6 +230,12 @@ export class PickerColumnInternal implements ComponentInterface {
    * the item object.
    */
   private initializeScrollListener = () => {
+    /**
+     * The haptics for the wheel picker are
+     * an iOS-only feature. As a result, they should
+     * be disabled on Android.
+     */
+    const enableHaptics = isPlatform('ios');
     const { el } = this;
 
     let timeout: any;
@@ -242,7 +249,7 @@ export class PickerColumnInternal implements ComponentInterface {
         }
 
         if (!this.isScrolling) {
-          hapticSelectionStart();
+          enableHaptics && hapticSelectionStart();
           this.isScrolling = true;
         }
 
@@ -268,7 +275,7 @@ export class PickerColumnInternal implements ComponentInterface {
          * we need to run haptics again.
          */
         if (activeElement !== activeEl) {
-          hapticSelectionChanged();
+          enableHaptics && hapticSelectionChanged();
         }
 
         activeEl = activeElement;
@@ -276,7 +283,7 @@ export class PickerColumnInternal implements ComponentInterface {
 
         timeout = setTimeout(() => {
           this.isScrolling = false;
-          hapticSelectionEnd();
+          enableHaptics && hapticSelectionEnd();
 
           /**
            * Certain tasks (such as those that

@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.3.9](https://github.com/ionic-team/ionic-framework/compare/v6.3.8...v6.3.9) (2022-11-30)
+
+
+### Bug Fixes
+
+* **button:** fill can be set to undefined ([#26339](https://github.com/ionic-team/ionic-framework/issues/26339)) ([2fe23d9](https://github.com/ionic-team/ionic-framework/commit/2fe23d9d46c3593843c781c57340332e5a86fd64)), closes [#25886](https://github.com/ionic-team/ionic-framework/issues/25886)
+* **input:** clear icon can be styled ([#26354](https://github.com/ionic-team/ionic-framework/issues/26354)) ([ccaff8d](https://github.com/ionic-team/ionic-framework/commit/ccaff8d0dc66f8adc9cde838c084629391e4200d)), closes [#19178](https://github.com/ionic-team/ionic-framework/issues/19178) [#17168](https://github.com/ionic-team/ionic-framework/issues/17168)
+* **reorder:** items animate once in firefox ([#26326](https://github.com/ionic-team/ionic-framework/issues/26326)) ([7ae8117](https://github.com/ionic-team/ionic-framework/commit/7ae81172844659d7f4581956ce17e5324f73beef)), closes [#21182](https://github.com/ionic-team/ionic-framework/issues/21182)
+* **segment:** segment in toolbar uses correct contrast ([#26353](https://github.com/ionic-team/ionic-framework/issues/26353)) ([5a243cc](https://github.com/ionic-team/ionic-framework/commit/5a243ccebc8e27bef6eb1ed2f797a0c1166199bf)), closes [#26350](https://github.com/ionic-team/ionic-framework/issues/26350)
+
+
+
+
+
+## [6.3.8](https://github.com/ionic-team/ionic-framework/compare/v6.3.7...v6.3.8) (2022-11-22)
+
+
+### Bug Fixes
+
+* **modal:** status bar style defaults to app settings ([#26291](https://github.com/ionic-team/ionic-framework/issues/26291)) ([a6c9e55](https://github.com/ionic-team/ionic-framework/commit/a6c9e55adcaa963f4829d6963b9b1a7b246cef4e)), closes [#26173](https://github.com/ionic-team/ionic-framework/issues/26173)
+* **normalize:** normalize css resets button padding ([#26214](https://github.com/ionic-team/ionic-framework/issues/26214)) ([e14c947](https://github.com/ionic-team/ionic-framework/commit/e14c94722c2c8ec145d680f911b708a34f095cd3)), closes [#23928](https://github.com/ionic-team/ionic-framework/issues/23928)
+* **popover:** popover positions correctly on all frameworks ([#26306](https://github.com/ionic-team/ionic-framework/issues/26306)) ([be9a399](https://github.com/ionic-team/ionic-framework/commit/be9a399eeed37ae4a67add78ac1283ba0c5e4b14)), closes [#25337](https://github.com/ionic-team/ionic-framework/issues/25337)
+* **react:** useIonRouter hook has stable router reference ([#25000](https://github.com/ionic-team/ionic-framework/issues/25000)) ([89e3cd6](https://github.com/ionic-team/ionic-framework/commit/89e3cd67ce6d9cfc0607d6a89362483878a1820b)), closes [#24987](https://github.com/ionic-team/ionic-framework/issues/24987)
+* **reorder-group:** support custom components ([#26289](https://github.com/ionic-team/ionic-framework/issues/26289)) ([8425734](https://github.com/ionic-team/ionic-framework/commit/842573477b1b498f2280badc8c7411832c1650a5)), closes [#19447](https://github.com/ionic-team/ionic-framework/issues/19447)
+* **segment:** scrollable segments center button on click ([#26285](https://github.com/ionic-team/ionic-framework/issues/26285)) ([73ea64c](https://github.com/ionic-team/ionic-framework/commit/73ea64c02fff1d63651f6c98f03b43265ba5227a)), closes [#25367](https://github.com/ionic-team/ionic-framework/issues/25367)
+* **toggle:** rtl layout renders correctly in safari ([#26315](https://github.com/ionic-team/ionic-framework/issues/26315)) ([0932f89](https://github.com/ionic-team/ionic-framework/commit/0932f89f5db63a1e6149f2f45de798d7485d72ee))
+
+
+
+
+
 ## [6.3.7](https://github.com/ionic-team/ionic-framework/compare/v6.3.6...v6.3.7) (2022-11-16)
 
 
