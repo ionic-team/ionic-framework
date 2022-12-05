@@ -18,10 +18,11 @@ test.describe('menu: basic', () => {
     await testMenu(page, endMenu, 'end');
   });
 
-  test('should trap focus', async ({ page, skip, browserName }) => {
+  test.only('should trap focus', async ({ page, skip, browserName }) => {
     skip.rtl('Trapping focus is not dependent on document direction');
     skip.browser('firefox', 'Firefox incorrectly allows keyboard focus to move to ion-content');
-
+    // TODO (FW-2979)
+    skip.browser('webkit', 'This does not work in Safari 16');
     const ionDidOpen = await page.spyOnEvent('ionDidOpen');
 
     await page.click('#open-start');
