@@ -144,7 +144,8 @@ configs().forEach(({ title, config }) => {
         description: 'https://github.com/ionic-team/ionic-framework/issues/25245',
       });
 
-      await page.setContent(`
+      await page.setContent(
+        `
         <ion-content>
           <ion-button id="open-modal">Open</ion-button>
           <ion-modal trigger="open-modal" initial-breakpoint="0.25">
@@ -164,7 +165,9 @@ configs().forEach(({ title, config }) => {
             modal.setCurrentBreakpoint(0.5);
           });
         </script>
-      `,config);
+      `,
+        config
+      );
 
       const modal = page.locator('ion-modal');
       const dismissButton = page.locator('#dismiss');

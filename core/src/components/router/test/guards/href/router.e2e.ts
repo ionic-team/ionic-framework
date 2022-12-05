@@ -1,90 +1,89 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { test, configs } from '@utils/test/playwright';
 
 import { setBeforeEnterHook, setBeforeLeaveHook } from '../test.utils';
 
-test.describe('router: guards: href', () => {
-  test.beforeEach(async ({ page, skip }) => {
-    skip.mode('md');
-    skip.rtl();
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe('router: guards: href', () => {
+    test.beforeEach(async ({ page }) => {
+      await page.goto(`/src/components/router/test/guards`, config);
+    });
 
-    await page.goto(`/src/components/router/test/guards`);
-  });
+    test(title('allow/allow'), async ({ page }) => {
+      // beforeEnter: allow, beforeLeave: allow
+      await setBeforeEnterHook(page, 'allow');
 
-  test('allow/allow', async ({ page }) => {
-    // beforeEnter: allow, beforeLeave: allow
-    await setBeforeEnterHook(page, 'allow');
+      await page.click('#href');
+      await page.waitForChanges();
 
-    await page.click('#href');
-    await page.waitForChanges();
+      expect(page.url()).toContain('#/child');
 
-    expect(page.url()).toContain('#/child');
+      await page.click('ion-back-button');
+      await page.waitForChanges();
 
-    await page.click('ion-back-button');
-    await page.waitForChanges();
+      expect(page.url()).toContain('#/home');
+    });
 
-    expect(page.url()).toContain('#/home');
-  });
+    test(title('block/allow'), async ({ page }) => {
+      // beforeEnter: block, beforeLeave: allow
+      await setBeforeEnterHook(page, 'block');
 
-  test('block/allow', async ({ page }) => {
-    // beforeEnter: block, beforeLeave: allow
-    await setBeforeEnterHook(page, 'block');
+      await page.click('#href');
 
-    await page.click('#href');
+      await page.waitForChanges();
 
-    await page.waitForChanges();
+      expect(page.url()).toContain('#/home');
+    });
 
-    expect(page.url()).toContain('#/home');
-  });
+    test(title('redirect/allow'), async ({ page }) => {
+      // beforeEnter: redirect, beforeLeave: allow
+      await setBeforeEnterHook(page, 'redirect');
 
-  test('redirect/allow', async ({ page }) => {
-    // beforeEnter: redirect, beforeLeave: allow
-    await setBeforeEnterHook(page, 'redirect');
+      await page.click('#href');
 
-    await page.click('#href');
+      await page.waitForChanges();
 
-    await page.waitForChanges();
+      expect(page.url()).toContain('#/test');
 
-    expect(page.url()).toContain('#/test');
+      await page.click('ion-back-button');
 
-    await page.click('ion-back-button');
+      await page.waitForChanges();
 
-    await page.waitForChanges();
+      expect(page.url()).toContain('#/home');
+    });
 
-    expect(page.url()).toContain('#/home');
-  });
+    test(title('allow/bock'), async ({ page }) => {
+      // beforeEnter: allow, beforeLeave: block
+      await setBeforeLeaveHook(page, 'block');
 
-  test('allow/bock', async ({ page }) => {
-    // beforeEnter: allow, beforeLeave: block
-    await setBeforeLeaveHook(page, 'block');
+      await page.click('#href');
 
-    await page.click('#href');
+      await page.waitForChanges();
 
-    await page.waitForChanges();
+      expect(page.url()).toContain('#/child');
 
-    expect(page.url()).toContain('#/child');
+      await page.click('ion-back-button');
 
-    await page.click('ion-back-button');
+      await page.waitForChanges();
 
-    await page.waitForChanges();
+      expect(page.url()).toContain('#/child');
+    });
 
-    expect(page.url()).toContain('#/child');
-  });
+    test(title('allow/redirect'), async ({ page }) => {
+      // beforeEnter: allow, beforeLeave: redirect
+      await setBeforeLeaveHook(page, 'redirect');
 
-  test('allow/redirect', async ({ page }) => {
-    // beforeEnter: allow, beforeLeave: redirect
-    await setBeforeLeaveHook(page, 'redirect');
+      await page.click('#href');
 
-    await page.click('#href');
+      await page.waitForChanges();
 
-    await page.waitForChanges();
+      expect(page.url()).toContain('#/child');
 
-    expect(page.url()).toContain('#/child');
+      await page.click('ion-back-button');
 
-    await page.click('ion-back-button');
+      await page.waitForChanges();
 
-    await page.waitForChanges();
-
-    expect(page.url()).toContain('#/test');
+      expect(page.url()).toContain('#/test');
+    });
   });
 });

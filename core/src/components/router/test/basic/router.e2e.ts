@@ -1,100 +1,91 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { test, configs } from '@utils/test/playwright';
 
-test.describe('router: redirect', () => {
-  test.beforeEach(({ skip }) => {
-    skip.mode('md');
-    skip.rtl();
-  });
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe('router: redirect', () => {
+    test(title('contains query parameters after redirect'), async ({ page }) => {
+      await page.goto(`/src/components/router/test/basic#/redirect-to-three`, config);
 
-  test('contains query parameters after redirect', async ({ page }) => {
-    await page.goto(`/src/components/router/test/basic#/redirect-to-three`);
-
-    expect(page.url()).toContain('#/three?has_query_string=true');
+      expect(page.url()).toContain('#/three?has_query_string=true');
+    });
   });
 });
 
-test.describe('router: push', () => {
-  test.beforeEach(({ skip }) => {
-    skip.mode('md');
-    skip.rtl();
-  });
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe('router: push', () => {
+    test(title('should support relative path'), async ({ page }) => {
+      await page.goto(`/src/components/router/test/basic#/two/three/hola`, config);
+      await page.click('#btn-rel');
 
-  test('should support relative path', async ({ page }) => {
-    await page.goto(`/src/components/router/test/basic#/two/three/hola`);
-    await page.click('#btn-rel');
+      expect(page.url()).toContain('#/two/three/relative?param=1');
+    });
 
-    expect(page.url()).toContain('#/two/three/relative?param=1');
-  });
+    test(title('should support absolute path'), async ({ page }) => {
+      await page.goto(`/src/components/router/test/basic#/two/three/hola`, config);
+      await page.click('#btn-abs');
 
-  test('should support absolute path', async ({ page }) => {
-    await page.goto(`/src/components/router/test/basic#/two/three/hola`);
-    await page.click('#btn-abs');
-
-    expect(page.url()).toContain('#/two/three/absolute');
+      expect(page.url()).toContain('#/two/three/absolute');
+    });
   });
 });
 
-test.describe('router: tabs', () => {
-  test.beforeEach(({ skip }) => {
-    skip.mode('md');
-    skip.rtl();
-  });
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe('router: tabs', () => {
+    test(title('should activate the initial tab'), async ({ page }) => {
+      await page.goto(`/src/components/router/test/basic`, config);
 
-  test('should activate the initial tab', async ({ page }) => {
-    await page.goto(`/src/components/router/test/basic`);
+      const tabOne = page.locator('tab-one');
 
-    const tabOne = page.locator('tab-one');
+      await expect(tabOne).toBeVisible();
 
-    await expect(tabOne).toBeVisible();
+      expect(page.url()).toContain('/basic?');
+    });
 
-    expect(page.url()).toContain('/basic?');
-  });
+    /**
+     * Selects the Schedule (tab two) tab and verifies that both the
+     * page is visible and the URL is correct.
+     */
+    test(title('selecting a tab routes to the tab page'), async ({ page }) => {
+      await page.goto(`/src/components/router/test/basic`, config);
 
-  /**
-   * Selects the Schedule (tab two) tab and verifies that both the
-   * page is visible and the URL is correct.
-   */
-  test('selecting a tab routes to the tab page', async ({ page }) => {
-    await page.goto(`/src/components/router/test/basic`);
+      const tabOne = page.locator('tab-one');
+      const tabTwo = page.locator('tab-two');
 
-    const tabOne = page.locator('tab-one');
-    const tabTwo = page.locator('tab-two');
+      await page.click('#tab-button-tab-two');
 
-    await page.click('#tab-button-tab-two');
+      await expect(tabOne).toBeHidden();
+      await expect(tabTwo).toBeVisible();
 
-    await expect(tabOne).toBeHidden();
-    await expect(tabTwo).toBeVisible();
+      expect(page.url()).toContain('#/two');
+    });
 
-    expect(page.url()).toContain('#/two');
-  });
+    test(title('should navigate to a nested page within a tab'), async ({ page }) => {
+      await page.goto('/src/components/router/test/basic#/two', config);
 
-  test('should navigate to a nested page within a tab', async ({ page }) => {
-    await page.goto('/src/components/router/test/basic#/two');
+      const tabTwo = page.locator('tab-two');
+      const pageOne = page.locator('page-one');
 
-    const tabTwo = page.locator('tab-two');
-    const pageOne = page.locator('page-one');
+      await expect(tabTwo).toBeVisible();
+      await expect(pageOne).toBeVisible();
 
-    await expect(tabTwo).toBeVisible();
-    await expect(pageOne).toBeVisible();
+      await page.click('text=Go to page 2');
 
-    await page.click('text=Go to page 2');
+      const pageTwo = page.locator('page-two');
 
-    const pageTwo = page.locator('page-two');
+      await expect(pageTwo).toBeVisible();
+      await expect(pageOne).toBeHidden();
 
-    await expect(pageTwo).toBeVisible();
-    await expect(pageOne).toBeHidden();
+      await expect(page.url()).toContain('#/two/second-page');
+    });
 
-    await expect(page.url()).toContain('#/two/second-page');
-  });
+    test(title('navigating directly to a sub page should activate the page'), async ({ page }) => {
+      await page.goto('/src/components/router/test/basic#/two/second-page', config);
 
-  test('navigating directly to a sub page should activate the page', async ({ page }) => {
-    await page.goto('/src/components/router/test/basic#/two/second-page');
+      const tabTwo = page.locator('tab-two');
+      const pageTwo = page.locator('page-two');
 
-    const tabTwo = page.locator('tab-two');
-    const pageTwo = page.locator('page-two');
-
-    await expect(tabTwo).toBeVisible();
-    await expect(pageTwo).toBeVisible();
+      await expect(tabTwo).toBeVisible();
+      await expect(pageTwo).toBeVisible();
+    });
   });
 });

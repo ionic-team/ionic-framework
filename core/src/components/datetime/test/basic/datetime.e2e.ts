@@ -64,9 +64,12 @@ configs().forEach(({ title, config }) => {
       await testHighlight(page, 'custom-datetime');
     });
     test(title('should update the active day'), async ({ page }) => {
-      await page.setContent(`
+      await page.setContent(
+        `
         <ion-datetime show-default-buttons="true" value="2021-12-25T12:40:00.000Z"></ion-datetime>
-      `,config);
+      `,
+        config
+      );
 
       const activeDay = page.locator('ion-datetime .calendar-day-active');
 
@@ -79,7 +82,8 @@ configs().forEach(({ title, config }) => {
       await expect(activeDay).toHaveText('13');
     });
     test(title('should set both date and time when no value is initially set'), async ({ page }) => {
-      await page.setContent(`
+      await page.setContent(
+        `
         <ion-datetime locale="en-US" presentation="date-time"></ion-datetime>
 
         <script>
@@ -94,7 +98,9 @@ configs().forEach(({ title, config }) => {
             }
           }
         </script>
-      `,config);
+      `,
+        config
+      );
 
       await page.waitForSelector('.datetime-ready');
       const datetime = page.locator('ion-datetime');
@@ -131,7 +137,8 @@ configs().forEach(({ title, config }) => {
       expect(valueAgain).toBeUndefined();
     });
     test(title('should set the date value based on the selected date'), async ({ page }) => {
-      await page.setContent(`
+      await page.setContent(
+        `
         <button id="bind">Bind datetimeMonthDidChange event</button>
         <ion-datetime value="2021-12-25T12:40:00.000Z"></ion-datetime>
         <script type="module">
@@ -140,7 +147,9 @@ configs().forEach(({ title, config }) => {
             InitMonthDidChangeEvent();
           });
         </script>
-      `,config);
+      `,
+        config
+      );
 
       const datetimeMonthDidChange = await page.spyOnEvent('datetimeMonthDidChange');
       const eventButton = page.locator('button#bind');

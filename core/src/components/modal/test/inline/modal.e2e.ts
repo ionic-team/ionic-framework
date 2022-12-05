@@ -31,13 +31,16 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
           description: 'https://github.com/ionic-team/ionic-framework/issues/26117',
         });
 
-        await page.setContent(`
+        await page.setContent(
+          `
       <ion-datetime-button datetime="datetime"></ion-datetime-button>
 
       <ion-modal>
         <ion-datetime id="datetime" presentation="date-time"></ion-datetime>
       </ion-modal>
-      `,config);
+      `,
+          config
+        );
 
         const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
         const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
