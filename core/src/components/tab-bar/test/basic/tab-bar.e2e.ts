@@ -11,6 +11,7 @@ test.describe('tab-bar: basic', () => {
       <ion-tab-bar selected-tab="1">
         <ion-tab-button tab="1">
           <ion-label>Recents</ion-label>
+          <ion-icon name="call"></ion-icon>
         </ion-tab-button>
 
         <ion-tab-button tab="2">
