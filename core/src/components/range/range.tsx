@@ -19,12 +19,15 @@ import { inheritAriaAttributes, clamp, debounceEvent, getAriaLabel, renderHidden
 import { printIonWarning } from '../../utils/logging';
 import { isRTL } from '../../utils/rtl';
 import { createColorClasses, hostContext } from '../../utils/theme';
+import type { LegacyFormController } from '../../utils/forms';
+import { createLegacyFormController } from '../../utils/forms';
 
 import type { PinFormatter } from './range-interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
+ * @slot - The label text to associate with the range. Use the "labelPlacement" property to control where the label is placed relative to the range.
  * @slot start - Content is placed to the left of the range slider in LTR, and to the right in RTL.
  * @slot end - Content is placed to the right of the range slider in LTR, and to the left in RTL.
  *
@@ -55,6 +58,10 @@ export class Range implements ComponentInterface {
   private contentEl: HTMLElement | null = null;
   private initialContentScrollY = true;
   private originalIonInput?: EventEmitter<RangeChangeEventDetail>;
+  private legacyFormController!: LegacyFormController;
+
+  // This flag ensures we log the deprecation warning at most once.
+  private hasLoggedDeprecationWarning = false;
 
   @Element() el!: HTMLIonRangeElement;
 
@@ -212,6 +219,14 @@ export class Range implements ComponentInterface {
   };
 
   /**
+   * Where to place the label relative to the range.
+   * `'start'`: The label will appear to the left of the range in LTR and to the right in RTL.
+   * `'end'`: The label will appear to the right of the range in LTR and to the left in RTL.
+   * `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+   */
+  @Prop() labelPlacement: 'start' | 'end' | 'fixed' = 'start';
+
+  /**
    * The `ionChange` event is fired for `<ion-range>` elements when the user
    * modifies the element's value:
    * - When the user releases the knob after dragging;
@@ -289,6 +304,10 @@ export class Range implements ComponentInterface {
   }
 
   connectedCallback() {
+    const { el } = this;
+
+    this.legacyFormController = createLegacyFormController(el);
+
     this.updateRatio();
     this.debounceChanged();
     this.disabledChanged();
@@ -517,7 +536,17 @@ export class Range implements ComponentInterface {
     }
   };
 
-  render() {
+  private renderLegacyRange() {
+    if (!this.hasLoggedDeprecationWarning) {
+      printIonWarning(
+        `Using ion-range with an ion-label has been deprecated. To migrate, remove the ion-label and pass your label directly into ion-toggle instead.
+Example: <ion-range>Volume:</ion-toggle>
+For ranges that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the range.`,
+        this.el
+      );
+      this.hasLoggedDeprecationWarning = true;
+    }
+
     const {
       min,
       max,
@@ -679,6 +708,15 @@ export class Range implements ComponentInterface {
         <slot name="end"></slot>
       </Host>
     );
+  }
+
+  private renderRange() {
+    return <Host>Stubbed Range</Host>;
+  }
+
+  render() {
+    const { legacyFormController } = this;
+    return legacyFormController.hasLegacyControl() ? this.renderLegacyRange() : this.renderRange();
   }
 }
 
