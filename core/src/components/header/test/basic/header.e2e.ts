@@ -43,7 +43,7 @@ test.describe('header: basic', () => {
       });
     });
 
-    configs({ modes: ['ios'] }).forEach(({ title, config }) => {
+    configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
       test.describe('header: translucent', () => {
         test.beforeEach(({ skip }) => {
           skip.browser('firefox', 'Firefox has some issues rendering translucent effects on Linux.');
