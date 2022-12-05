@@ -37,7 +37,6 @@ test.describe('footer: basic', () => {
 
     test('should not have visual regressions with translucent footer', async ({ page, skip }) => {
       skip.mode('md', 'Translucent effect is only available in iOS mode.');
-      skip.browser('firefox', 'Firefox has some issues rendering translucent effects on Linux.');
 
       await page.setContent(`
         <ion-footer translucent="true">
