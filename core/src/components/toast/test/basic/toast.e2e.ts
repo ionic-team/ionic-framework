@@ -159,6 +159,6 @@ test.describe('toast: duration config', () => {
   `);
 
     const toast = page.locator('ion-toast');
-    await expect(toast).toHaveAttribute('duration', '5000');
+    await expect(toast).toHaveJSProperty('duration', 5000);
   });
 });
