@@ -34,19 +34,19 @@
         .beforeClearStyles(['padding-bottom'])
         .beforeAddRead(() => {
           const ev = new CustomEvent('beforeRead');
-          squareA.dispatchEvent(ev);
+          window.dispatchEvent(ev);
         })
         .beforeAddWrite(() => {
           const ev = new CustomEvent('beforeWrite');
-          squareA.dispatchEvent(ev);
+          window.dispatchEvent(ev);
         })
         .afterAddRead(() => {
           const ev = new CustomEvent('afterRead');
-          squareA.dispatchEvent(ev);
+          window.dispatchEvent(ev);
         })
         .afterAddWrite(() => {
           const ev = new CustomEvent('afterWrite');
-          squareA.dispatchEvent(ev);
+          window.dispatchEvent(ev);
         })
         .afterAddClass(['hello-world'])
         .afterRemoveClass(['test-class'])
@@ -60,7 +60,7 @@
         ])
         .onFinish(() => {
           const ev = new CustomEvent('ionAnimationFinished');
-          squareA.dispatchEvent(ev);
+          window.dispatchEvent(ev);
         });
 
       document.querySelector('.play').addEventListener('click', () => {

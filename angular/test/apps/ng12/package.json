@@ -32,7 +32,6 @@
     "@ionic/angular": "^6.1.15",
     "@ionic/angular-server": "^6.1.15",
     "@nguniversal/express-engine": "^12.1.3",
-    "angular-in-memory-web-api": "^0.11.0",
     "core-js": "^2.6.11",
     "express": "^4.15.2",
     "ionicons": "^6.0.4",
