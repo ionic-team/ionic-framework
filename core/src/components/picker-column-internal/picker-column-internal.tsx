@@ -27,6 +27,7 @@ export class PickerColumnInternal implements ComponentInterface {
   private isScrolling = false;
   private scrollEndCallback?: () => void;
   private isColumnVisible = false;
+  private parentEl?: HTMLIonPickerInternalElement | null;
 
   @State() isActive = false;
 
@@ -109,7 +110,7 @@ export class PickerColumnInternal implements ComponentInterface {
     };
     new IntersectionObserver(visibleCallback, { threshold: 0.001 }).observe(this.el);
 
-    const parentEl = this.el.closest('ion-picker-internal') as HTMLIonPickerInternalElement | null;
+    const parentEl = (this.parentEl = this.el.closest('ion-picker-internal') as HTMLIonPickerInternalElement | null);
     if (parentEl !== null) {
       parentEl.addEventListener('ionInputModeChange', (ev: any) => this.inputModeChange(ev));
     }
@@ -269,6 +270,13 @@ export class PickerColumnInternal implements ComponentInterface {
          */
         if (activeElement !== activeEl) {
           hapticSelectionChanged();
+
+          /**
+           * The native iOS wheel picker
+           * only dismisses the keyboard
+           * once the selected item has changed.
+           */
+          this.exitInputMode();
         }
 
         activeEl = activeElement;
@@ -322,6 +330,31 @@ export class PickerColumnInternal implements ComponentInterface {
         el.removeEventListener('scroll', scrollCallback);
       };
     });
+  };
+
+  /**
+   * Tells the parent picker to
+   * exit text entry mode. This is only called
+   * when the selected item changes during scroll, so
+   * we know that the user likely wants to scroll
+   * instead of type.
+   */
+  private exitInputMode = () => {
+    const { parentEl } = this;
+
+    if (parentEl == null) return;
+
+    parentEl.exitInputMode();
+
+    /**
+     * setInputModeActive only takes
+     * effect once scrolling stops to avoid
+     * a component re-render while scrolling.
+     * However, we want the visual active
+     * indicator to go away immediately, so
+     * we call classList.remove here.
+     */
+    this.el.classList.remove('picker-column-active');
   };
 
   get activeItem() {
