@@ -227,6 +227,17 @@ export class Range implements ComponentInterface {
   @Prop() labelPlacement: 'start' | 'end' | 'fixed' = 'start';
 
   /**
+   * Set the `legacy` property to `true` to forcibly use the legacy form control markup.
+   * Ionic will only opt components in to the modern form markup when they are
+   * using either the `aria-label` attribute or the `label` property. As a result,
+   * the `legacy` property should only be used as an escape hatch when you want to
+   * avoid this automatic opt-in behavior.
+   * Note that this property will be removed in an upcoming major release
+   * of Ionic, and all form components will be opted-in to using the modern form markup.
+   */
+  @Prop() legacy?: boolean;
+
+  /**
    * The `ionChange` event is fired for `<ion-range>` elements when the user
    * modifies the element's value:
    * - When the user releases the knob after dragging;
@@ -540,10 +551,22 @@ export class Range implements ComponentInterface {
     if (!this.hasLoggedDeprecationWarning) {
       printIonWarning(
         `Using ion-range with an ion-label has been deprecated. To migrate, remove the ion-label and pass your label directly into ion-toggle instead.
+
 Example: <ion-range>Volume:</ion-toggle>
+
 For ranges that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the range.`,
         this.el
       );
+
+      if (this.legacy) {
+        printIonWarning(
+          `ion-range is being used with the "legacy" property enabled which will forcibly enable the legacy form markup. This property will be removed in an upcoming major release of Ionic where this form control will use the modern form markup.
+
+Developers can dismiss this warning by removing their usage of the "legacy" property and using the new range syntax.`,
+          this.el
+        );
+      }
+
       this.hasLoggedDeprecationWarning = true;
     }
 
