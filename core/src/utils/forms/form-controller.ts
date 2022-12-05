@@ -19,7 +19,7 @@ export const createLegacyFormController = (el: AllowedFormElements): LegacyFormC
    * in the light DOM.
    */
   const hasLabelProp =
-    (controlEl as any).label !== undefined || (controlEl.shadowRoot !== null && controlEl.textContent !== '');
+    (controlEl as any).label !== undefined || (controlEl.shadowRoot !== null && controlEl.querySelector(':not([slot])') !== null);
   const hasAriaLabelAttribute = controlEl.hasAttribute('aria-label');
 
   /**
