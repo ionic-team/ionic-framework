@@ -41,7 +41,9 @@ configs().forEach(({ title, config }) => {
 
         await ionAlertDidPresent.next();
 
-        expect(await page.screenshot()).toMatchSnapshot(`select-alert-diff-${page.getSnapshotSettings()}.png`);
+        expect(await page.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+          `select-alert-diff-${page.getSnapshotSettings()}.png`
+        );
 
         const alert = await page.locator('ion-alert');
         await alert.evaluate((el: HTMLIonAlertElement) => el.dismiss());
@@ -59,7 +61,9 @@ configs().forEach(({ title, config }) => {
 
         await ionActionSheetDidPresent.next();
 
-        expect(await page.screenshot()).toMatchSnapshot(`select-action-sheet-diff-${page.getSnapshotSettings()}.png`);
+        expect(await page.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+          `select-action-sheet-diff-${page.getSnapshotSettings()}.png`
+        );
 
         const actionSheet = await page.locator('ion-action-sheet');
         await actionSheet.evaluate((el: HTMLIonActionSheetElement) => el.dismiss());

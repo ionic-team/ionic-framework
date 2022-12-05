@@ -30,7 +30,9 @@ configs().forEach(({ title, config }) => {
         height: 415,
       });
 
-      expect(await page.screenshot()).toMatchSnapshot(`fab-open-${page.getSnapshotSettings()}.png`);
+      expect(await page.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+        `fab-open-${page.getSnapshotSettings()}.png`
+      );
     });
   });
 });

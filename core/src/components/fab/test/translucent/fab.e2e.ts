@@ -19,6 +19,8 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       height: 310,
     });
 
-    expect(await page.screenshot()).toMatchSnapshot(`fab-translucent-${page.getSnapshotSettings()}.png`);
+    expect(await page.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+      `fab-translucent-${page.getSnapshotSettings()}.png`
+    );
   });
 });

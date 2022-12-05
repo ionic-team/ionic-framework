@@ -12,7 +12,9 @@ configs().forEach(({ title, config }) => {
 
       await ionAlertDidPresent.next();
 
-      expect(await page.screenshot()).toMatchSnapshot(`select-single-value-diff-${page.getSnapshotSettings()}.png`);
+      expect(await page.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+        `select-single-value-diff-${page.getSnapshotSettings()}.png`
+      );
     });
   });
 });

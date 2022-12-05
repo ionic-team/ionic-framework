@@ -21,7 +21,9 @@ configs().forEach(({ title, config }) => {
       await dateButton.click();
       await ionModalDidPresent.next();
 
-      expect(await page.screenshot()).toMatchSnapshot(`datetime-overlay-modal-${page.getSnapshotSettings()}.png`);
+      expect(await page.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+        `datetime-overlay-modal-${page.getSnapshotSettings()}.png`
+      );
     });
 
     test(title('should size the popover correctly'), async ({ page }) => {
@@ -40,7 +42,9 @@ configs().forEach(({ title, config }) => {
       await dateButton.click();
       await ionPopoverDidPresent.next();
 
-      expect(await page.screenshot()).toMatchSnapshot(`datetime-overlay-popover-${page.getSnapshotSettings()}.png`);
+      expect(await page.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+        `datetime-overlay-popover-${page.getSnapshotSettings()}.png`
+      );
     });
   });
 });
