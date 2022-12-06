@@ -3,7 +3,7 @@ import { dragElementBy, test } from '@utils/test/playwright';
 
 test.describe('range: basic', () => {
   test('should not have visual regressions', async ({ page }) => {
-    await page.goto(`/src/components/range/test/basic`);
+    await page.goto(`/src/components/range/test/legacy/basic`);
 
     await page.setIonViewport();
 
@@ -61,7 +61,7 @@ test.describe('range: basic', () => {
     skip.browser('webkit', 'mouse.wheel is not available in WebKit');
     skip.rtl();
 
-    await page.goto(`/src/components/range/test/basic`);
+    await page.goto(`/src/components/range/test/legacy/basic`);
 
     const knobEl = page.locator('ion-range#stacked-range .range-knob-handle');
     const scrollEl = page.locator('ion-content .inner-scroll');

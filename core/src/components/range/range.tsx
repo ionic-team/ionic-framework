@@ -14,6 +14,8 @@ import type {
   StyleEventDetail,
 } from '../../interface';
 import { findClosestIonContent, disableContentScrollY, resetContentScrollY } from '../../utils/content';
+import type { LegacyFormController } from '../../utils/forms';
+import { createLegacyFormController } from '../../utils/forms';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes, clamp, debounceEvent, getAriaLabel, renderHiddenInput } from '../../utils/helpers';
 import { printIonWarning } from '../../utils/logging';
@@ -25,6 +27,7 @@ import type { PinFormatter } from './range-interface';
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
+ * @slot label - The label text to associate with the range. Use the "labelPlacement" property to control where the label is placed relative to the range.
  * @slot start - Content is placed to the left of the range slider in LTR, and to the right in RTL.
  * @slot end - Content is placed to the right of the range slider in LTR, and to the left in RTL.
  *
@@ -55,6 +58,10 @@ export class Range implements ComponentInterface {
   private contentEl: HTMLElement | null = null;
   private initialContentScrollY = true;
   private originalIonInput?: EventEmitter<RangeChangeEventDetail>;
+  private legacyFormController!: LegacyFormController;
+
+  // This flag ensures we log the deprecation warning at most once.
+  private hasLoggedDeprecationWarning = false;
 
   @Element() el!: HTMLIonRangeElement;
 
@@ -212,6 +219,25 @@ export class Range implements ComponentInterface {
   };
 
   /**
+   * Where to place the label relative to the range.
+   * `'start'`: The label will appear to the left of the range in LTR and to the right in RTL.
+   * `'end'`: The label will appear to the right of the range in LTR and to the left in RTL.
+   * `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+   */
+  @Prop() labelPlacement: 'start' | 'end' | 'fixed' = 'start';
+
+  /**
+   * Set the `legacy` property to `true` to forcibly use the legacy form control markup.
+   * Ionic will only opt components in to the modern form markup when they are
+   * using either the `aria-label` attribute or the `label` property. As a result,
+   * the `legacy` property should only be used as an escape hatch when you want to
+   * avoid this automatic opt-in behavior.
+   * Note that this property will be removed in an upcoming major release
+   * of Ionic, and all form components will be opted-in to using the modern form markup.
+   */
+  @Prop() legacy?: boolean;
+
+  /**
    * The `ionChange` event is fired for `<ion-range>` elements when the user
    * modifies the element's value:
    * - When the user releases the knob after dragging;
@@ -289,6 +315,10 @@ export class Range implements ComponentInterface {
   }
 
   connectedCallback() {
+    const { el } = this;
+
+    this.legacyFormController = createLegacyFormController(el);
+
     this.updateRatio();
     this.debounceChanged();
     this.disabledChanged();
@@ -517,7 +547,29 @@ export class Range implements ComponentInterface {
     }
   };
 
-  render() {
+  private renderLegacyRange() {
+    if (!this.hasLoggedDeprecationWarning) {
+      printIonWarning(
+        `Using ion-range with an ion-label has been deprecated. To migrate, remove the ion-label and pass your label directly into ion-toggle instead.
+
+Example: <ion-range>Volume:</ion-toggle>
+
+For ranges that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the range.`,
+        this.el
+      );
+
+      if (this.legacy) {
+        printIonWarning(
+          `ion-range is being used with the "legacy" property enabled which will forcibly enable the legacy form markup. This property will be removed in an upcoming major release of Ionic where this form control will use the modern form markup.
+
+Developers can dismiss this warning by removing their usage of the "legacy" property and using the new range syntax.`,
+          this.el
+        );
+      }
+
+      this.hasLoggedDeprecationWarning = true;
+    }
+
     const {
       min,
       max,
@@ -679,6 +731,19 @@ export class Range implements ComponentInterface {
         <slot name="end"></slot>
       </Host>
     );
+  }
+
+  private renderRange() {
+    return (
+      <Host>
+        Stubbed Range<slot name="label"></slot>
+      </Host>
+    );
+  }
+
+  render() {
+    const { legacyFormController } = this;
+    return legacyFormController.hasLegacyControl() ? this.renderLegacyRange() : this.renderRange();
   }
 }
 

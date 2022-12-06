@@ -6,7 +6,7 @@ test.describe('range: scroll-target', () => {
     skip.browser('webkit', 'mouse.wheel is not available in WebKit');
     skip.rtl();
 
-    await page.goto(`/src/components/range/test/scroll-target`);
+    await page.goto(`/src/components/range/test/legacy/scroll-target`);
 
     const knobEl = page.locator('ion-range .range-knob-handle');
     const scrollEl = page.locator('.ion-content-scroll-host');

@@ -45,8 +45,7 @@
               pin="true"
               active-bar-start="0"
               value="0"
-            >
-            </ion-range>
+            ></ion-range>
           </ion-item>
           <ion-item>
             <ion-label position="stacked"> activeBarStart is 0 and value is 70. </ion-label>
@@ -59,8 +58,7 @@
               pin="true"
               active-bar-start="0"
               value="70"
-            >
-            </ion-range>
+            ></ion-range>
           </ion-item>
           <ion-item>
             <ion-label position="stacked"> activeBarStart is 0 and value is -70. </ion-label>
@@ -73,8 +71,7 @@
               pin="true"
               active-bar-start="0"
               value="-70"
-            >
-            </ion-range>
+            ></ion-range>
           </ion-item>
           <ion-item>
             <ion-label position="stacked"> activeBarStart is -30 and value is 0. </ion-label>
@@ -87,8 +84,7 @@
               pin="true"
               active-bar-start="-30"
               value="0"
-            >
-            </ion-range>
+            ></ion-range>
           </ion-item>
           <ion-item>
             <ion-label position="stacked"> activeBarStart is 30 and value is 0. </ion-label>
@@ -101,8 +97,7 @@
               pin="true"
               active-bar-start="30"
               value="0"
-            >
-            </ion-range>
+            ></ion-range>
           </ion-item>
           <ion-item>
             <ion-label position="stacked">activeBarStart is between steps</ion-label>
@@ -119,13 +114,27 @@
           </ion-item>
           <ion-item>
             <ion-label position="stacked">invalid activeBarStart value (less than min)</ion-label>
-            <ion-range class="ion-no-padding" min="0" max="100" snaps="10" step="10" pin="true" active-bar-start="-30">
-            </ion-range>
+            <ion-range
+              class="ion-no-padding"
+              min="0"
+              max="100"
+              snaps="10"
+              step="10"
+              pin="true"
+              active-bar-start="-30"
+            ></ion-range>
           </ion-item>
           <ion-item>
             <ion-label position="stacked">invalid activeBarStart value (greater than max)</ion-label>
-            <ion-range class="ion-no-padding" min="0" max="100" snaps="10" step="10" pin="true" active-bar-start="110">
-            </ion-range>
+            <ion-range
+              class="ion-no-padding"
+              min="0"
+              max="100"
+              snaps="10"
+              step="10"
+              pin="true"
+              active-bar-start="110"
+            ></ion-range>
           </ion-item>
           <ion-item>
             <ion-label position="stacked"> activeBarStart is ignored with dual knobs enabled. </ion-label>

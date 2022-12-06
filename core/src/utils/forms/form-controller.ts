@@ -4,7 +4,7 @@
  * @internal
  * @prop el: The Ionic form component to reference
  */
-type AllowedFormElements = HTMLIonInputElement | HTMLIonToggleElement;
+type AllowedFormElements = HTMLIonInputElement | HTMLIonToggleElement | HTMLIonRangeElement;
 export const createLegacyFormController = (el: AllowedFormElements): LegacyFormController => {
   const controlEl: AllowedFormElements = el;
   let legacyControl = true;
@@ -18,8 +18,7 @@ export const createLegacyFormController = (el: AllowedFormElements): LegacyFormC
    * can check to see if the component has slotted text
    * in the light DOM.
    */
-  const hasLabelProp =
-    (controlEl as any).label !== undefined || (controlEl.shadowRoot !== null && controlEl.textContent !== '');
+  const hasLabelProp = (controlEl as any).label !== undefined || hasLabelSlot(controlEl);
   const hasAriaLabelAttribute = controlEl.hasAttribute('aria-label');
 
   /**
@@ -38,3 +37,33 @@ export const createLegacyFormController = (el: AllowedFormElements): LegacyFormC
 export type LegacyFormController = {
   hasLegacyControl: () => boolean;
 };
+
+const hasLabelSlot = (controlEl: HTMLElement) => {
+  const root = controlEl.shadowRoot;
+  if (root === null) {
+    return false;
+  }
+
+  /**
+   * Components that have a named label slot
+   * also have other slots, so we need to query for
+   * anything that is explicitly passed to slot="label"
+   */
+  if (NAMED_LABEL_SLOT_COMPONENTS.includes(controlEl.tagName) && controlEl.querySelector('[slot="label"]') !== null) {
+    return true;
+  }
+
+  /**
+   * Components that have an unnamed slot for the label
+   * have no other slots, so we can check the textContent
+   * of the element.
+   */
+  if (UNNAMED_LABEL_SLOT_COMPONENTS.includes(controlEl.tagName) && controlEl.textContent !== '') {
+    return true;
+  }
+
+  return false;
+};
+
+const NAMED_LABEL_SLOT_COMPONENTS = ['ION-RANGE'];
+const UNNAMED_LABEL_SLOT_COMPONENTS = ['ION-TOGGLE'];

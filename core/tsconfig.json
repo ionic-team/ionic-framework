@@ -12,6 +12,7 @@
     "jsxFactory": "h",
     "lib": [
       "dom",
+      "dom.iterable",
       "es2017",
       "es2020"
     ],
