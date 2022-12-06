@@ -191,6 +191,14 @@
 // Range Label
 // ----------------------------------------------------------------
 
+/**
+ * When the range is disabled, only the text
+ * receives an opacity. The range changes color instead.
+ */
+:host(.range-disabled) .label-text-wrapper {
+  opacity: 0.3;
+}
+
 .label-text-wrapper {
   /**
    * This ensures that double tapping this text
