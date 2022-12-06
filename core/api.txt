@@ -1382,7 +1382,7 @@ ion-toast,prop,animated,boolean,true,false,false
 ion-toast,prop,buttons,(string | ToastButton)[] | undefined,undefined,false,false
 ion-toast,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-toast,prop,cssClass,string | string[] | undefined,undefined,false,false
-ion-toast,prop,duration,number,config.getNumber('toastDuration', 0),false,false
+ion-toast,prop,duration,number,0,false,false
 ion-toast,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-toast,prop,header,string | undefined,undefined,false,false
 ion-toast,prop,htmlAttributes,undefined | { [key: string]: any; },undefined,false,false
