@@ -65,7 +65,7 @@ test.describe('textarea: label placement floating', () => {
 
     const textarea = page.locator('ion-textarea');
     expect(await textarea.screenshot()).toMatchSnapshot(
-      `input-placement-floating-value-${page.getSnapshotSettings()}.png`
+      `textarea-placement-floating-value-${page.getSnapshotSettings()}.png`
     );
   });
   test('label should appear on top of the textarea and hide the textarea when there is a no value', async ({
