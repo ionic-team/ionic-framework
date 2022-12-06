@@ -5,8 +5,8 @@ test.describe('toolbar: colors', () => {
   test('should not have visual regressions', async ({ page }) => {
     await page.goto(`/src/components/toolbar/test/colors`);
 
-    await page.setIonViewport();
-
-    expect(await page.screenshot()).toMatchSnapshot(`toolbar-colors-${page.getSnapshotSettings()}.png`);
+    // only capture the container to avoid extra white space
+    const container = page.locator('#toolbars');
+    expect(await container.screenshot()).toMatchSnapshot(`toolbar-colors-${page.getSnapshotSettings()}.png`);
   });
 });
