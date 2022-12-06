@@ -362,7 +362,7 @@ export class PickerInternal implements ComponentInterface {
      * 0+(?=0$) --> Match 1 or more zeros that must be followed by one 0 and end.
      */
     const findItemFromCompleteValue = values.find(({ text }) => {
-      const parsedText = text.replace(/^0+(?=[1-9])|0+(?=0$)/, '')
+      const parsedText = text.replace(/^0+(?=[1-9])|0+(?=0$)/, '');
       return parsedText === inputEl.value;
     });
 
