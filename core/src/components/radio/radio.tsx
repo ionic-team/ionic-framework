@@ -78,7 +78,8 @@ export class Radio implements ComponentInterface {
 
   /** @internal */
   @Method()
-  async setFocus(ev: Event) {
+  async setFocus(ev: any) {
+    // TODO(FW-2832): type (using Event triggers a build error)
     ev.stopPropagation();
     ev.preventDefault();
 
