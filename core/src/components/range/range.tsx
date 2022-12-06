@@ -625,7 +625,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
               'label-text-wrapper-hidden': !this.hasLabel,
             }}
           >
-            <slot></slot>
+            <slot name="label"></slot>
           </div>
           <div class="native-wrapper">
             <slot name="start"></slot>
@@ -638,7 +638,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
   }
 
   private get hasLabel() {
-    return this.el.textContent !== '';
+    return this.el.querySelector('[slot="label"]') !== null;
   }
 
   private renderRangeSlider() {

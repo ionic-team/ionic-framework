@@ -18,7 +18,8 @@
   --pin-color: #{ion-color(primary, contrast)};
 }
 
-::slotted([slot]),
+::slotted([slot="start"]),
+::slotted([slot="end"]),
 .range-slider .range-pin {
   font-size: $range-md-pin-font-size;
 }
