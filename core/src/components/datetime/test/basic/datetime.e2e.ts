@@ -355,3 +355,30 @@ test.describe('datetime: clear button', () => {
     await expect(selectedDay).toHaveCount(0);
   });
 });
+
+test('datetime: md highlight should not clip at start or end of month', async ({ page, skip }, testInfo) => {
+  skip.mode('ios', 'Highlight does not render on iOS');
+  skip.rtl('Highlight does not render differently for RTL.');
+
+  testInfo.annotations.push({
+    type: 'issue',
+    description: 'https://github.com/ionic-team/ionic-framework/issues/24891',
+  });
+
+  await page.setContent(`
+    <ion-datetime value="2021-01-01"></ion-datetime>
+  `);
+
+  const datetime = page.locator('ion-datetime');
+
+  await page.waitForSelector('.datetime-ready');
+
+  expect(await datetime.screenshot()).toMatchSnapshot(
+    `date-highlight-start-of-month-${page.getSnapshotSettings()}.png`
+  );
+
+  await datetime.evaluate((el: HTMLIonDatetimeElement) => (el.value = '2021-01-31'));
+  await page.waitForChanges();
+
+  expect(await datetime.screenshot()).toMatchSnapshot(`date-highlight-end-of-month-${page.getSnapshotSettings()}.png`);
+});
