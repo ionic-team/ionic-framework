@@ -200,6 +200,17 @@
 }
 
 .label-text-wrapper {
+
+  /**
+   * Label text should not extend
+   * beyond the bounds of the input.
+   * However, we do not set the max
+   * width to 100% because then
+   * only the label would show and users
+   * would not be able to see what they are typing.
+   */
+  max-width: 200px;
+
   /**
    * This ensures that double tapping this text
    * clicks the <label> and focuses the input
@@ -229,9 +240,9 @@
 .native-wrapper {
   display: flex;
 
-  align-items: center;
+  flex-grow: 1;
 
-  width: 100%;
+  align-items: center;
 }
 
 // Range Label Placement - Start
