@@ -618,7 +618,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
           [`range-label-placement-${labelPlacement}`]: true,
         })}
       >
-        <label class="range-wrapper">
+        <label class="range-wrapper" id="range-label">
           <div
             class={{
               'label-text-wrapper': true,
@@ -737,6 +737,11 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
       }
     }
 
+    let labelledBy;
+    if (!this.legacyFormController.hasLegacyControl() && this.hasLabel) {
+      labelledBy = 'range-label';
+    }
+
     return (
       <div class="range-slider" ref={(rangeEl) => (this.rangeSlider = rangeEl)}>
         {ticks.map((tick) => (
@@ -768,6 +773,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
           min,
           max,
           labelText,
+          labelledBy,
         })}
 
         {this.dualKnobs &&
@@ -783,6 +789,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
             min,
             max,
             labelText,
+            labelledBy,
           })}
       </div>
     );
@@ -805,13 +812,26 @@ interface RangeKnob {
   pin: boolean;
   pinFormatter: PinFormatter;
   labelText?: string | null;
-
+  labelledBy?: string;
   handleKeyboard: (name: KnobName, isIncrease: boolean) => void;
 }
 
 const renderKnob = (
   rtl: boolean,
-  { knob, value, ratio, min, max, disabled, pressed, pin, handleKeyboard, labelText, pinFormatter }: RangeKnob
+  {
+    knob,
+    value,
+    ratio,
+    min,
+    max,
+    disabled,
+    pressed,
+    pin,
+    handleKeyboard,
+    labelText,
+    labelledBy,
+    pinFormatter,
+  }: RangeKnob
 ) => {
   const start = rtl ? 'right' : 'left';
 
@@ -850,7 +870,8 @@ const renderKnob = (
       style={knobStyle()}
       role="slider"
       tabindex={disabled ? -1 : 0}
-      aria-label={labelText}
+      aria-label={labelledBy === undefined ? labelText : null}
+      aria-labelledby={labelledBy !== undefined ? labelledBy : null}
       aria-valuemin={min}
       aria-valuemax={max}
       aria-disabled={disabled ? 'true' : null}
