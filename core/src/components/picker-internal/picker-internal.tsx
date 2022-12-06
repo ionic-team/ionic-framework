@@ -358,7 +358,7 @@ export class PickerInternal implements ComponentInterface {
      *
      * Regex removes any leading zeros from values like "02",
      * but it keeps a single zero if there are only zeros in the string.
-     * 0+(?=[1-9) --> Match 1 or more zeros that are followed by 1-9
+     * 0+(?=[1-9]) --> Match 1 or more zeros that are followed by 1-9
      * 0+(?=0$) --> Match 1 or more zeros that must be followed by one 0 and end.
      */
     const findItemFromCompleteValue = values.find(({ text }) => {
