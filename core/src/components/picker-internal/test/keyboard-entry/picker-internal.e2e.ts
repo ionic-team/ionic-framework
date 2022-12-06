@@ -90,7 +90,7 @@ test.describe('picker-internal: keyboard entry', () => {
     await expect(secondColumn).toHaveJSProperty('value', 24);
   });
 
-  test('should select 00 when value does not match text', async ({ page }) => {
+  test('should select 00', async ({ page }) => {
     await page.setContent(`
       <ion-picker-internal>
         <ion-picker-column-internal></ion-picker-column-internal>
