@@ -44,18 +44,26 @@ const hasLabelSlot = (controlEl: HTMLElement) => {
     return false;
   }
 
-  const nodes = controlEl.childNodes;
-  for (const node of nodes) {
-    /**
-     * Find either the raw text nodes
-     * or an element that has no slot assigned.
-     */
-    const isTextNode = node.nodeType === 3;
-    const isElementNode = node.nodeType === 1;
-    if (isTextNode || (isElementNode && !(node as HTMLElement).hasAttribute('slot'))) {
-      return true;
-    }
+  /**
+   * Components that have a named label slot
+   * also have other slots, so we need to query for
+   * anything that is explicitly passed to slot="label"
+   */
+  if (NAMED_LABEL_SLOT_COMPONENTS.includes(controlEl.tagName) && controlEl.querySelector('[slot="label"]') !== null) {
+    return true;
+  }
+
+  /**
+   * Components that have an unnamed slot for the label
+   * have no other slots, so we can check the textContent
+   * of the element.
+   */
+  if (UNNAMED_LABEL_SLOT_COMPONENTS.includes(controlEl.tagName) && controlEl.textContent !== '') {
+    return true;
   }
 
   return false;
 };
+
+const NAMED_LABEL_SLOT_COMPONENTS = ['ION-RANGE'];
+const UNNAMED_LABEL_SLOT_COMPONENTS = ['ION-TOGGLE'];
