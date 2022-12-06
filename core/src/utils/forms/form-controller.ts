@@ -50,8 +50,8 @@ const hasLabelSlot = (controlEl: HTMLElement) => {
      * Find either the raw text nodes
      * or an element that has no slot assigned.
      */
-    const isTextNode = node.nodeType === 3;
-    const isElementNode = node.nodeType === 1;
+    const isTextNode = node.nodeType === Node.TEXT_NODE;
+    const isElementNode = node.nodeType === Node.ELEMENT_NODE;
     if (isTextNode || (isElementNode && !(node as HTMLElement).hasAttribute('slot'))) {
       return true;
     }
