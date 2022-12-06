@@ -16,7 +16,10 @@
   --height: #{$range-md-slider-height};
   --pin-background: #{ion-color(primary, base)};
   --pin-color: #{ion-color(primary, contrast)};
+}
 
+::slotted([slot]),
+.range-slider .range-pin {
   font-size: $range-md-pin-font-size;
 }
 
