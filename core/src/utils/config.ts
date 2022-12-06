@@ -102,6 +102,11 @@ export interface IonicConfig {
   tabButtonLayout?: TabButtonLayout;
 
   /**
+   * Overrides the default `duration` for all `ion-toast` components.
+   */
+  toastDuration?: number;
+
+  /**
    * Overrides the default "animation" of all `ion-nav` and `ion-router-outlet` across the whole application.
    * This prop allows to replace the default transition and provide a custom one that applies to all navigation outlets.
    */
