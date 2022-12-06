@@ -27,7 +27,7 @@ import type { PinFormatter } from './range-interface';
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
- * @slot - The label text to associate with the range. Use the "labelPlacement" property to control where the label is placed relative to the range.
+ * @slot label - The label text to associate with the range. Use the "labelPlacement" property to control where the label is placed relative to the range.
  * @slot start - Content is placed to the left of the range slider in LTR, and to the right in RTL.
  * @slot end - Content is placed to the right of the range slider in LTR, and to the left in RTL.
  *
@@ -736,7 +736,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
   private renderRange() {
     return (
       <Host>
-        Stubbed Range<slot></slot>
+        Stubbed Range<slot name="label"></slot>
       </Host>
     );
   }
