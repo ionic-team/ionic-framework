@@ -17,9 +17,11 @@
   --pin-background: #{ion-color(primary, base)};
   --pin-color: #{ion-color(primary, contrast)};
 
-  @include padding($range-md-padding-vertical, $range-md-padding-horizontal);
-
   font-size: $range-md-pin-font-size;
+}
+
+:host(.legacy-range) {
+  @include padding($range-md-padding-vertical, $range-md-padding-horizontal);
 }
 
 :host(.ion-color) .range-bar {

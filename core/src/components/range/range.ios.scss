@@ -14,7 +14,9 @@
   --bar-background-active: #{ion-color(primary, base)};
   --bar-border-radius: #{$range-ios-bar-border-radius};
   --height: #{$range-ios-slider-height};
+}
 
+:host(.legacy-range) {
   @include padding($range-ios-padding-vertical, $range-ios-padding-horizontal);
 }
 
