@@ -20,7 +20,14 @@ export class SelectValueAccessorDirective extends ValueAccessor {
   }
 
   @HostListener('ionChange', ['$event.target'])
-  _handleChangeEvent(el: HTMLInputElement): void {
+  _handleChangeEvent(
+    el:
+      | HTMLIonRangeElement
+      | HTMLIonSelectElement
+      | HTMLIonRadioGroupElement
+      | HTMLIonSegmentElement
+      | HTMLIonDatetimeElement
+  ): void {
     this.handleChangeEvent(el, el.value);
   }
 }
