@@ -172,3 +172,120 @@
 :host(.in-item) ::slotted(ion-label) {
   align-self: center;
 }
+
+// Range Wrapper
+// --------------------------------------------------
+
+.range-wrapper {
+  display: flex;
+
+  position: relative;
+
+  flex-grow: 1;
+
+  align-items: center;
+
+  height: 100%;
+}
+
+// Range Label
+// ----------------------------------------------------------------
+
+.label-text-wrapper {
+  /**
+   * This ensures that double tapping this text
+   * clicks the <label> and focuses the input
+   * when a screen reader is enabled.
+   */
+  pointer-events: none;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+}
+
+/**
+ * If no label text is placed into the slot
+ * then the element should be hidden otherwise
+ * there will be additional margins added.
+ */
+.label-text-wrapper-hidden {
+  display: none;
+}
+
+// Range Native Wrapper
+// ----------------------------------------------------------------
+
+.native-wrapper {
+  display: flex;
+
+  align-items: center;
+
+  width: 100%;
+}
+
+// Range Label Placement - Start
+// ----------------------------------------------------------------
+
+/**
+ * Label is on the left of the input in LTR and
+ * on the right in RTL.
+ */
+:host(.range-label-placement-start) .range-wrapper {
+  flex-direction: row;
+}
+
+:host(.range-label-placement-start) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the input should be on the end
+   * when the label sits at the start.
+   */
+  @include margin(0, 8px, 0, 0);
+}
+
+// Range Label Placement - End
+// ----------------------------------------------------------------
+
+/**
+ * Label is on the right of the input in LTR and
+ * on the left in RTL.
+ */
+:host(.range-label-placement-end) .range-wrapper {
+  flex-direction: row-reverse;
+}
+
+/**
+ * The margin between the label and
+ * the input should be on the start
+ * when the label sits at the end.
+ */
+:host(.range-label-placement-end) .label-text-wrapper {
+  @include margin(0, 0, 0, 8px);
+}
+
+// Range Label Placement - Fixed
+// ----------------------------------------------------------------
+
+:host(.range-label-placement-fixed) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the input should be on the end
+   * when the label sits at the start.
+   */
+  @include margin(0, 8px, 0, 0);
+}
+
+/**
+ * Label is on the left of the input in LTR and
+ * on the right in RTL. Label also has a fixed width.
+ */
+:host(.range-label-placement-fixed) .label-text-wrapper {
+  flex: 0 0 100px;
+
+  width: 100px;
+  min-width: 100px;
+  max-width: 200px;
+}

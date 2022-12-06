@@ -587,6 +587,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
           'range-disabled': disabled,
           'range-pressed': pressedKnob !== undefined,
           'range-has-pin': pin,
+          'legacy-range': true,
         })}
       >
         <slot name="start"></slot>
@@ -597,11 +598,47 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
   }
 
   private renderRange() {
+    const { disabled, el, rangeId, pin, pressedKnob, labelPlacement } = this;
+
+    const mode = getIonMode(this);
+
+    renderHiddenInput(true, el, this.name, JSON.stringify(this.getValue()), disabled);
+
     return (
-      <Host>
-        Stubbed Range<slot></slot>
+      <Host
+        onFocusin={this.onFocus}
+        onFocusout={this.onBlur}
+        id={rangeId}
+        class={createColorClasses(this.color, {
+          [mode]: true,
+          'in-item': hostContext('ion-item', el),
+          'range-disabled': disabled,
+          'range-pressed': pressedKnob !== undefined,
+          'range-has-pin': pin,
+          [`range-label-placement-${labelPlacement}`]: true,
+        })}
+      >
+        <label class="range-wrapper">
+          <div
+            class={{
+              'label-text-wrapper': true,
+              'label-text-wrapper-hidden': !this.hasLabel,
+            }}
+          >
+            <slot></slot>
+          </div>
+          <div class="native-wrapper">
+            <slot name="start"></slot>
+            {this.renderRangeSlider()}
+            <slot name="end"></slot>
+          </div>
+        </label>
       </Host>
     );
+  }
+
+  private get hasLabel() {
+    return this.el.textContent !== '';
   }
 
   private renderRangeSlider() {
