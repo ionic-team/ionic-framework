@@ -78,7 +78,7 @@ export class Radio implements ComponentInterface {
 
   /** @internal */
   @Method()
-  async setFocus(ev: CustomEvent) {
+  async setFocus(ev: Event) {
     ev.stopPropagation();
     ev.preventDefault();
 
