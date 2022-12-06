@@ -570,6 +570,41 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
       this.hasLoggedDeprecationWarning = true;
     }
 
+    const { el, pressedKnob, disabled, pin, rangeId } = this;
+
+    const mode = getIonMode(this);
+
+    renderHiddenInput(true, el, this.name, JSON.stringify(this.getValue()), disabled);
+
+    return (
+      <Host
+        onFocusin={this.onFocus}
+        onFocusout={this.onBlur}
+        id={rangeId}
+        class={createColorClasses(this.color, {
+          [mode]: true,
+          'in-item': hostContext('ion-item', el),
+          'range-disabled': disabled,
+          'range-pressed': pressedKnob !== undefined,
+          'range-has-pin': pin,
+        })}
+      >
+        <slot name="start"></slot>
+        {this.renderRangeSlider()}
+        <slot name="end"></slot>
+      </Host>
+    );
+  }
+
+  private renderRange() {
+    return (
+      <Host>
+        Stubbed Range<slot></slot>
+      </Host>
+    );
+  }
+
+  private renderRangeSlider() {
     const {
       min,
       max,
@@ -595,7 +630,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
     if (labelText === undefined || labelText === null) {
       labelText = inheritedAttributes['aria-label'];
     }
-    const mode = getIonMode(this);
+
     let barStart = `${ratioLower * 100}%`;
     let barEnd = `${100 - ratioUpper * 100}%`;
 
@@ -665,45 +700,45 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
       }
     }
 
-    renderHiddenInput(true, el, this.name, JSON.stringify(this.getValue()), disabled);
-
     return (
-      <Host
-        onFocusin={this.onFocus}
-        onFocusout={this.onBlur}
-        id={rangeId}
-        class={createColorClasses(this.color, {
-          [mode]: true,
-          'in-item': hostContext('ion-item', el),
-          'range-disabled': disabled,
-          'range-pressed': pressedKnob !== undefined,
-          'range-has-pin': pin,
+      <div class="range-slider" ref={(rangeEl) => (this.rangeSlider = rangeEl)}>
+        {ticks.map((tick) => (
+          <div
+            style={tickStyle(tick)}
+            role="presentation"
+            class={{
+              'range-tick': true,
+              'range-tick-active': tick.active,
+            }}
+            part={tick.active ? 'tick-active' : 'tick'}
+          />
+        ))}
+
+        <div class="range-bar-container">
+          <div class="range-bar" role="presentation" part="bar" />
+          <div class="range-bar range-bar-active" role="presentation" style={barStyle} part="bar-active" />
+        </div>
+
+        {renderKnob(rtl, {
+          knob: 'A',
+          pressed: pressedKnob === 'A',
+          value: this.valA,
+          ratio: this.ratioA,
+          pin,
+          pinFormatter,
+          disabled,
+          handleKeyboard,
+          min,
+          max,
+          labelText,
         })}
-      >
-        <slot name="start"></slot>
-        <div class="range-slider" ref={(rangeEl) => (this.rangeSlider = rangeEl)}>
-          {ticks.map((tick) => (
-            <div
-              style={tickStyle(tick)}
-              role="presentation"
-              class={{
-                'range-tick': true,
-                'range-tick-active': tick.active,
-              }}
-              part={tick.active ? 'tick-active' : 'tick'}
-            />
-          ))}
 
-          <div class="range-bar-container">
-            <div class="range-bar" role="presentation" part="bar" />
-            <div class="range-bar range-bar-active" role="presentation" style={barStyle} part="bar-active" />
-          </div>
-
-          {renderKnob(rtl, {
-            knob: 'A',
-            pressed: pressedKnob === 'A',
-            value: this.valA,
-            ratio: this.ratioA,
+        {this.dualKnobs &&
+          renderKnob(rtl, {
+            knob: 'B',
+            pressed: pressedKnob === 'B',
+            value: this.valB,
+            ratio: this.ratioB,
             pin,
             pinFormatter,
             disabled,
@@ -712,32 +747,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
             max,
             labelText,
           })}
-
-          {this.dualKnobs &&
-            renderKnob(rtl, {
-              knob: 'B',
-              pressed: pressedKnob === 'B',
-              value: this.valB,
-              ratio: this.ratioB,
-              pin,
-              pinFormatter,
-              disabled,
-              handleKeyboard,
-              min,
-              max,
-              labelText,
-            })}
-        </div>
-        <slot name="end"></slot>
-      </Host>
-    );
-  }
-
-  private renderRange() {
-    return (
-      <Host>
-        Stubbed Range<slot></slot>
-      </Host>
+      </div>
     );
   }
 
