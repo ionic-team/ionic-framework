@@ -72,7 +72,7 @@ test.describe('select: basic', () => {
   });
 
   test.describe('select: popover', () => {
-    test.only('it should open a popover select', async ({ page, browserName, skip }) => {
+    test('it should open a popover select', async ({ page, browserName, skip }) => {
       // TODO (FW-2979)
       skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
 
