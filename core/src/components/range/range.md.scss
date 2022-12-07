@@ -17,12 +17,14 @@
   --pin-background: #{ion-color(primary, base)};
   --pin-color: #{ion-color(primary, contrast)};
   --margin: 14px;
+
+  // TODO FW-2997 Apply this to the start/end slots, and the native wrapper
+  font-size: $range-md-pin-font-size;
 }
 
-::slotted([slot="start"]),
-::slotted([slot="end"]),
-.range-slider .range-pin {
-  font-size: $range-md-pin-font-size;
+// TODO FW-2997 Remove this
+::slotted([slot="label"]) {
+  font-size: initial;
 }
 
 // TODO FW-2997 remove this
