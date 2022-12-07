@@ -17,6 +17,7 @@
   --margin: 16px;
 }
 
+// TODO FW-2997 remove this
 :host(.legacy-range) {
   @include padding($range-ios-padding-vertical, $range-ios-padding-horizontal);
 }

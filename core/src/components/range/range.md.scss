@@ -25,6 +25,7 @@
   font-size: $range-md-pin-font-size;
 }
 
+// TODO FW-2997 remove this
 :host(.legacy-range) {
   @include padding($range-md-padding-vertical, $range-md-padding-horizontal);
 }

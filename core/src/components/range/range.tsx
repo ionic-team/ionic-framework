@@ -382,6 +382,7 @@ export class Range implements ComponentInterface {
     }
   }
 
+  // TODO FW-2997 remove this
   private emitStyle() {
     if (this.legacyFormController.hasLegacyControl()) {
       this.ionStyle.emit({
@@ -549,6 +550,7 @@ export class Range implements ComponentInterface {
     }
   };
 
+  // TODO FW-2997 remove this
   private renderLegacyRange() {
     if (!this.hasLoggedDeprecationWarning) {
       printIonWarning(
