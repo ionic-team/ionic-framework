@@ -378,4 +378,42 @@ test.describe('modal: canDismiss', () => {
       await ionModalDidDismiss.next();
     });
   });
+
+  test.describe('function params', () => {
+    test.beforeEach(({ skip }) => {
+      skip.rtl();
+      skip.mode('md');
+    });
+    test('should pass data and role when calling dismiss', async ({ page }) => {
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      const ionHandlerDone = await page.spyOnEvent('ionHandlerDone');
+
+      await page.click('#radio-promise-true');
+      await page.click('#show-modal');
+
+      await ionModalDidPresent.next();
+
+      const modal = await page.locator('ion-modal');
+      await modal.evaluate((el: HTMLIonModalElement) => el.dismiss('my data', 'my role'));
+
+      await ionHandlerDone.next();
+      await expect(ionHandlerDone).toHaveReceivedEventDetail({ data: 'my data', role: 'my role' });
+    });
+    test('should pass data and role when swiping', async ({ page }) => {
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      const ionHandlerDone = await page.spyOnEvent('ionHandlerDone');
+
+      await page.click('#radio-card');
+      await page.click('#radio-promise-true');
+      await page.click('#show-modal');
+
+      await ionModalDidPresent.next();
+
+      const modalHeader = await page.locator('#modal-header');
+      await dragElementBy(modalHeader, page, 0, 500);
+
+      await ionHandlerDone.next();
+      await expect(ionHandlerDone).toHaveReceivedEventDetail({ data: undefined, role: 'gesture' });
+    });
+  });
 });
