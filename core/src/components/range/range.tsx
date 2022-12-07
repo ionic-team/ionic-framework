@@ -383,10 +383,12 @@ export class Range implements ComponentInterface {
   }
 
   private emitStyle() {
-    this.ionStyle.emit({
-      interactive: true,
-      'interactive-disabled': this.disabled,
-    });
+    if (this.legacyFormController.hasLegacyControl()) {
+      this.ionStyle.emit({
+        interactive: true,
+        'interactive-disabled': this.disabled,
+      });
+    }
   }
 
   /**
