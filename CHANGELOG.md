@@ -13,16 +13,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * **segment:** scrolling button into view is more consistent ([#26369](https://github.com/ionic-team/ionic-framework/issues/26369)) ([a2d570b](https://github.com/ionic-team/ionic-framework/commit/a2d570b7ad8b799b072ba6eb79d8fe4c6dd77cf0)), closes [#26368](https://github.com/ionic-team/ionic-framework/issues/26368)
 
 
-### Features
-
-* **toast:** add global config toastDuration ([#26401](https://github.com/ionic-team/ionic-framework/issues/26401)) ([e375e9a](https://github.com/ionic-team/ionic-framework/commit/e375e9a1e7d30c481772e84c0ae34f39a019aad3))
-
-
-### Reverts
-
-* Revert "feat(toast): add global config toastDuration (#26401)" (#26424) ([b6c0019](https://github.com/ionic-team/ionic-framework/commit/b6c001935b4e51a04aa94b0bd6d849e783c8f607)), closes [#26401](https://github.com/ionic-team/ionic-framework/issues/26401) [#26424](https://github.com/ionic-team/ionic-framework/issues/26424)
-
-
 
 
 
