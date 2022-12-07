@@ -1,5 +1,5 @@
-import { expect } from '@playwright/test';
 import type { Locator, TestInfo } from '@playwright/test';
+import { expect } from '@playwright/test';
 import type { E2EPage, EventSpy } from '@utils/test/playwright';
 import { test } from '@utils/test/playwright';
 
@@ -132,5 +132,33 @@ test.describe('toast: properties', () => {
   test('should correctly set custom class', async () => {
     const { toast } = await toastFixture.openToast('#custom-class-toast');
     await expect(toast).toHaveClass(/my-custom-class/);
+  });
+});
+
+test.describe('toast: duration config', () => {
+  test.beforeEach(({ skip }) => {
+    skip.rtl();
+    skip.mode('ios');
+  });
+  test('should have duration set to 0', async ({ page }) => {
+    await page.setContent(`
+      <ion-toast></ion-toast>
+    `);
+    const toast = page.locator('ion-toast');
+    await expect(toast).toHaveJSProperty('duration', 0);
+  });
+
+  test('should have duration set to 5000', async ({ page }) => {
+    await page.setContent(`
+      <ion-toast></ion-toast>
+      <script>
+        window.Ionic = {
+          config: { toastDuration: 5000 } 
+        }
+      </script>
+    `);
+
+    const toast = page.locator('ion-toast');
+    await expect(toast).toHaveJSProperty('duration', 5000);
   });
 });
