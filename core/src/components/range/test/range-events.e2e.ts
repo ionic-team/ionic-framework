@@ -85,7 +85,7 @@ test.describe('range: events:', () => {
 
       expect(await scrollEl.evaluate((el: HTMLElement) => el.scrollTop)).toEqual(0);
     });
-  })
+  });
 
   test.describe('ionChange', () => {
     test('should not emit if the value is set programmatically', async ({ page }) => {
