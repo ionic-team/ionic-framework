@@ -16,6 +16,7 @@
   --height: #{$range-md-slider-height};
   --pin-background: #{ion-color(primary, base)};
   --pin-color: #{ion-color(primary, contrast)};
+  --margin: 14px;
 }
 
 ::slotted([slot="start"]),
@@ -43,11 +44,11 @@
 }
 
 ::slotted([slot="start"]) {
-  @include margin(0, 14px, 0, 0);
+  @include margin(0, var(--margin), 0, 0);
 }
 
 ::slotted([slot="end"]) {
-  @include margin(0, 0, 0, 14px);
+  @include margin(0, 0, 0, var(--margin));
 }
 
 :host(.range-has-pin) {
