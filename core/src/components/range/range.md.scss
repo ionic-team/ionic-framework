@@ -28,6 +28,10 @@
   @include padding($range-md-padding-vertical, $range-md-padding-horizontal);
 }
 
+:host(.in-item:not(.legacy-range)) {
+  @include margin(0, $range-md-padding-horizontal, 0, $range-md-padding-horizontal);
+}
+
 :host(.ion-color) .range-bar {
   background: current-color(base, 0.26);
 }

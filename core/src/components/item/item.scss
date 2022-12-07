@@ -108,6 +108,10 @@
   overflow: initial;
 }
 
+:host(.item-has-modern-range) {
+  --padding-start: 0px;
+}
+
 // Item: Color
 // --------------------------------------------------
 
