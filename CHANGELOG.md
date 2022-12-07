@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.4.0](https://github.com/ionic-team/ionic-framework/compare/v6.3.10...v6.4.0) (2022-12-07)
+
+
+### Features
+
+* **modal:** data and role are passed to canDismiss ([#26384](https://github.com/ionic-team/ionic-framework/issues/26384)) ([1b30fc9](https://github.com/ionic-team/ionic-framework/commit/1b30fc97d33e761866b4bcf7518efcdeb753032d)), closes [#26292](https://github.com/ionic-team/ionic-framework/issues/26292)
+* **toast:** add global config toastDuration ([#26425](https://github.com/ionic-team/ionic-framework/issues/26425)) ([a67a827](https://github.com/ionic-team/ionic-framework/commit/a67a827fedc8adf44a35c786f615871facca60fc))
+* **toggle:** add toggleOnOffLabels global config option ([#26087](https://github.com/ionic-team/ionic-framework/issues/26087)) ([43e2b39](https://github.com/ionic-team/ionic-framework/commit/43e2b3975d003e29b8060e5f5484bfb3daf457a2))
+
+
+
+
+
 ## [6.3.10](https://github.com/ionic-team/ionic-framework/compare/v6.3.9...v6.3.10) (2022-12-07)
 
 
