@@ -374,6 +374,8 @@
     * label does not overlap with the placeholder.
     */
   transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  line-height: 28px;
 }
 
 :host(.textarea-label-placement-floating) .textarea-wrapper textarea,
@@ -383,7 +385,7 @@
    * Allows multiple lines of the textarea to render
    * without partial truncation or clipping of the text.
    */
-  @include margin(4px, 0, 0, 0);
+  @include margin(1px, 0, 0, 0);
 }
 
 :host(.textarea-label-placement-start) .textarea-wrapper textarea,
