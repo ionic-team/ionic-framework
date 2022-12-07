@@ -315,7 +315,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   }
 
   private hasModernRange(): boolean {
-    return this.el.querySelector('ion-range:not(.legacy-input)') !== null;
+    return this.el.querySelector('ion-range:not(.legacy-range)') !== null;
   }
 
   private getFirstInput(): HTMLIonInputElement | HTMLIonTextareaElement {
