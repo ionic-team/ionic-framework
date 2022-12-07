@@ -23,50 +23,34 @@
       </ion-header>
 
       <ion-content id="content">
-        <ion-item>
-          <ion-label>Indeterminate</ion-label>
-          <ion-checkbox slot="end" indeterminate></ion-checkbox>
-        </ion-item>
-
-        <ion-item>
-          <ion-label>Checked / Indeterminate</ion-label>
-          <ion-checkbox slot="end" checked indeterminate></ion-checkbox>
-        </ion-item>
-
-        <ion-list-header>
-          <ion-label> Colors </ion-label>
-        </ion-list-header>
-        <div class="ion-padding-start">
-          <ion-checkbox indeterminate></ion-checkbox>
-          <ion-checkbox indeterminate color="secondary"></ion-checkbox>
-          <ion-checkbox indeterminate color="tertiary"></ion-checkbox>
-          <ion-checkbox indeterminate color="success"></ion-checkbox>
-          <ion-checkbox indeterminate color="warning"></ion-checkbox>
-          <ion-checkbox indeterminate color="danger"></ion-checkbox>
-          <ion-checkbox indeterminate color="dark"></ion-checkbox>
-          <ion-checkbox indeterminate color="medium"></ion-checkbox>
-          <ion-checkbox indeterminate color="light"></ion-checkbox>
+        <div id="checkboxes">
+          <ion-item>
+            <ion-label>Indeterminate</ion-label>
+            <ion-checkbox slot="end" indeterminate></ion-checkbox>
+          </ion-item>
+          
+          <ion-item>
+            <ion-label>Checked / Indeterminate</ion-label>
+            <ion-checkbox slot="end" checked indeterminate></ion-checkbox>
+          </ion-item>
+          
+          <ion-list-header>
+            <ion-label> Colors </ion-label>
+          </ion-list-header>
+          <div class="ion-padding-start">
+            <ion-checkbox indeterminate></ion-checkbox>
+            <ion-checkbox indeterminate color="secondary"></ion-checkbox>
+            <ion-checkbox indeterminate color="tertiary"></ion-checkbox>
+            <ion-checkbox indeterminate color="success"></ion-checkbox>
+            <ion-checkbox indeterminate color="warning"></ion-checkbox>
+            <ion-checkbox indeterminate color="danger"></ion-checkbox>
+            <ion-checkbox indeterminate color="dark"></ion-checkbox>
+            <ion-checkbox indeterminate color="medium"></ion-checkbox>
+            <ion-checkbox indeterminate color="light"></ion-checkbox>
+          </div>
         </div>
       </ion-content>
     </ion-app>
-
-    <style>
-      ul {
-        list-style: none;
-        margin: 5px 20px;
-        padding: 0;
-      }
-
-      li {
-        margin: 10px 0;
-      }
-
-      ul label {
-        display: inline-block;
-        vertical-align: top;
-        margin-top: 4px;
-      }
-    </style>
 
     <script>
       var indeterminateCheckboxes = document.getElementsByClassName('indeterminate');

@@ -5,8 +5,7 @@ test.describe('checkbox: indeterminate', () => {
   test('should not have visual regressions', async ({ page }) => {
     await page.goto(`/src/components/checkbox/test/legacy/indeterminate`);
 
-    await page.setIonViewport();
-
-    expect(await page.screenshot()).toMatchSnapshot(`checkbox-indeterminate-${page.getSnapshotSettings()}.png`);
+    const content = page.locator('#checkboxes');
+    expect(await content.screenshot()).toMatchSnapshot(`checkbox-indeterminate-${page.getSnapshotSettings()}.png`);
   });
 });
