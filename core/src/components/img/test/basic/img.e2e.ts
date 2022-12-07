@@ -49,13 +49,13 @@ test.describe('img: basic', () => {
     test('should emit ionImgWillLoad', async () => {
       await ionImgWillLoad.next();
 
-      expect(ionImgWillLoad).toHaveReceivedEvent();
+      expect(ionImgWillLoad).toHaveReceivedEventTimes(1);
     });
 
     test('should emit ionImgDidLoad', async () => {
       await ionImgDidLoad.next();
 
-      expect(ionImgWillLoad).toHaveReceivedEvent();
+      expect(ionImgWillLoad).toHaveReceivedEventTimes(1);
     });
   });
 
