@@ -15,7 +15,7 @@
     <style>
       .grid {
         display: grid;
-        grid-template-columns: repeat(3, minmax(250px, 1fr));
+        grid-template-columns: repeat(2, minmax(250px, 1fr));
         grid-row-gap: 20px;
         grid-column-gap: 20px;
       }
@@ -44,42 +44,94 @@
         </ion-toolbar>
       </ion-header>
 
-      <ion-content id="content" class="ion-padding">
+      <ion-item color="danger">
+        <ion-range><div slot="label">abc</div></ion-range>
+      </ion-item>
+
+      <ion-content color="light" id="content" class="ion-padding">
+        <h1>List</h1>
         <div class="grid">
           <div class="grid-item">
-            <h2>Placement Start</h2>
-            <ion-item>
-              <ion-range>
-                <span slot="label">Temperature</span>
-              </ion-range>
-            </ion-item>
+            <h2>Label, No Items</h2>
+            <ion-list>
+              <ion-item>
+                <ion-range>
+                  <span slot="label">Temperature</span>
+                </ion-range>
+              </ion-item>
+            </ion-list>
           </div>
           <div class="grid-item">
-            <h2>Placement End</h2>
-            <ion-item>
-            <ion-range label-placement="end">
-              <span slot="label">Temperature</span>
-            </ion-range>
-            </ion-item>
+            <h2>Label, Items</h2>
+            <ion-list>
+              <ion-item>
+                <ion-range>
+                  <span slot="label">Temperature</span>
+                  <ion-icon name="volume-off" slot="start"></ion-icon>
+                  <ion-icon name="volume-high" slot="end"></ion-icon>
+                </ion-range>
+              </ion-item>
+            </ion-list>
           </div>
           <div class="grid-item">
-            <h2>Placement Fixed</h2>
-            <ion-item>
-              <ion-range label-placement="fixed">
-                <span slot="label">Temperature</span>
-              </ion-range>
-            </ion-item>
+            <h2>No Label, Items</h2>
+            <ion-list>
+              <ion-item>
+                <ion-range aria-label="Temperature">
+                  <ion-icon name="volume-off" slot="start"></ion-icon>
+                  <ion-icon name="volume-high" slot="end"></ion-icon>
+                </ion-range> </ion-item
+            ></ion-list>
+          </div>
+          <div class="grid-item">
+            <h2>No Label, No Items</h2>
+            <ion-list>
+              <ion-item> <ion-range aria-label="Temperature"></ion-range> </ion-item
+            ></ion-list>
           </div>
         </div>
 
-        <ion-item>
-          <ion-label>Temperature</ion-label>
-          <ion-range></ion-range>
-        </ion-item>
-
-        <ion-item>
-          <input type="range" />
-        </ion-item>
+        <h1>Inset List</h1>
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Label, No Items</h2>
+            <ion-list inset="true">
+              <ion-item>
+                <ion-range>
+                  <span slot="label">Temperature</span>
+                </ion-range>
+              </ion-item>
+            </ion-list>
+          </div>
+          <div class="grid-item">
+            <h2>Label, Items</h2>
+            <ion-list inset="true">
+              <ion-item>
+                <ion-range>
+                  <span slot="label">Temperature</span>
+                  <ion-icon name="volume-off" slot="start"></ion-icon>
+                  <ion-icon name="volume-high" slot="end"></ion-icon>
+                </ion-range>
+              </ion-item>
+            </ion-list>
+          </div>
+          <div class="grid-item">
+            <h2>No Label, Items</h2>
+            <ion-list inset="true">
+              <ion-item>
+                <ion-range aria-label="Temperature">
+                  <ion-icon name="volume-off" slot="start"></ion-icon>
+                  <ion-icon name="volume-high" slot="end"></ion-icon>
+                </ion-range> </ion-item
+            ></ion-list>
+          </div>
+          <div class="grid-item">
+            <h2>No Label, No Items</h2>
+            <ion-list inset="true">
+              <ion-item> <ion-range aria-label="Temperature"></ion-range> </ion-item
+            ></ion-list>
+          </div>
+        </div>
       </ion-content>
     </ion-app>
   </body>
