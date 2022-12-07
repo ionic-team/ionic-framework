@@ -20,10 +20,6 @@
   @include padding($range-ios-padding-vertical, $range-ios-padding-horizontal);
 }
 
-:host(.in-item:not(.legacy-range)) {
-  @include margin(0, 16px, 0, 16px);
-}
-
 :host(.ion-color) .range-bar-active,
 :host(.ion-color) .range-tick-active {
   background: current-color(base);

@@ -425,7 +425,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
             'ion-focusable': this.focusable,
             'item-rtl': document.dir === 'rtl',
             'item-has-modern-input': hasModernInput,
-            'item-has-modern-range': hasModernRange
+            'item-has-modern-range': hasModernRange,
           }),
         }}
         role={inList ? 'listitem' : null}
