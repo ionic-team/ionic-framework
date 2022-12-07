@@ -555,6 +555,10 @@ export namespace Components {
          */
         "indeterminate": boolean;
         /**
+          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt checkboxes in to the modern form markup when they are using either the `aria-label` attribute or have text in the default slot. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior.  Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
+         */
+        "legacy"?: boolean;
+        /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
@@ -4458,6 +4462,10 @@ declare namespace LocalJSX {
           * If `true`, the checkbox will visually appear as indeterminate.
          */
         "indeterminate"?: boolean;
+        /**
+          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt checkboxes in to the modern form markup when they are using either the `aria-label` attribute or have text in the default slot. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior.  Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
+         */
+        "legacy"?: boolean;
         /**
           * The mode determines which platform styles to use.
          */

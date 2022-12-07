@@ -1,13 +1,19 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, Watch, h } from '@stencil/core';
 
+// TODO(FW-2845) - Use @utils/forms and @utils/logging when https://github.com/ionic-team/stencil/issues/3826 is resolved
 import { getIonMode } from '../../global/ionic-global';
 import type { CheckboxChangeEventDetail, Color, StyleEventDetail } from '../../interface';
+import type { LegacyFormController } from '../../utils/forms';
+import { createLegacyFormController } from '../../utils/forms';
 import { getAriaLabel, renderHiddenInput } from '../../utils/helpers';
+import { printIonWarning } from '../../utils/logging';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * 
+ * @slot - The label text to associate with the checkbox. Use the "labelPlacement" property to control where the label is placed relative to the checkbox.
  *
  * @part container - The container for the checkbox mark.
  * @part mark - The checkmark used to indicate the checked state.
@@ -23,8 +29,12 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 export class Checkbox implements ComponentInterface {
   private inputId = `ion-cb-${checkboxIds++}`;
   private focusEl?: HTMLElement;
+  private legacyFormController!: LegacyFormController;
 
-  @Element() el!: HTMLElement;
+  // This flag ensures we log the deprecation warning at most once.
+  private hasLoggedDeprecationWarning = false;
+
+  @Element() el!: HTMLIonCheckboxElement;
 
   /**
    * The color to use from your application's color palette.
@@ -63,6 +73,18 @@ export class Checkbox implements ComponentInterface {
   @Prop() value: any | null = 'on';
 
   /**
+   * Set the `legacy` property to `true` to forcibly use the legacy form control markup.
+   * Ionic will only opt checkboxes in to the modern form markup when they are
+   * using either the `aria-label` attribute or have text in the default slot. As a result,
+   * the `legacy` property should only be used as an escape hatch when you want to
+   * avoid this automatic opt-in behavior.
+   * 
+   * Note that this property will be removed in an upcoming major release
+   * of Ionic, and all form components will be opted-in to using the modern form markup.
+   */
+  @Prop() legacy?: boolean;
+
+  /**
    * Emitted when the checked property has changed
    * as a result of a user action such as a click.
    * This event will not emit when programmatically
@@ -85,6 +107,10 @@ export class Checkbox implements ComponentInterface {
    * @internal
    */
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
+
+  connectedCallback() {
+    this.legacyFormController = createLegacyFormController(this.el);
+  }
 
   componentWillLoad() {
     this.emitStyle();
@@ -144,6 +170,35 @@ export class Checkbox implements ComponentInterface {
   };
 
   render() {
+    const { legacyFormController } = this;
+
+    return legacyFormController.hasLegacyControl() ? this.renderLegacyCheckbox() : this.renderCheckbox();
+  }
+
+  private renderCheckbox() {
+    return <slot></slot>;
+  }
+
+  private renderLegacyCheckbox() {
+    if (!this.hasLoggedDeprecationWarning) {
+      printIonWarning(
+        `Using ion-checkbox with an ion-label has been deprecated. To migrate, remove the ion-label and pass your label directly into ion-checkbox instead.
+Example: <ion-checkbox>Email:</ion-checkbox>
+For checkboxes that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the checkbox.`,
+        this.el
+      );
+
+      if (this.legacy) {
+        printIonWarning(
+          `ion-checkbox is being used with the "legacy" property enabled which will forcibly enable the legacy form markup. This property will be removed in an upcoming major release of Ionic where this form control will use the modern form markup.
+Developers can dismiss this warning by removing their usage of the "legacy" property and using the new input syntax.`,
+          this.el
+        );
+      }
+
+      this.hasLoggedDeprecationWarning = true;
+    }
+
     const { color, checked, disabled, el, indeterminate, inputId, name, value } = this;
     const mode = getIonMode(this);
     const { label, labelId, labelText } = getAriaLabel(el, inputId);
