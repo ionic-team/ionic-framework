@@ -14,7 +14,7 @@
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
   </head>
 
-  <body onLoad="onLoad()">
+  <body>
     <ion-app>
       <ion-header>
         <ion-toolbar>
@@ -47,31 +47,6 @@
           <ion-checkbox indeterminate color="medium"></ion-checkbox>
           <ion-checkbox indeterminate color="light"></ion-checkbox>
         </div>
-
-        <ion-list-header>
-          <ion-label> Parent </ion-label>
-        </ion-list-header>
-
-        <ul>
-          <li>
-            <ion-checkbox aria-labelledby="tall-label-0" indeterminate></ion-checkbox>
-            <label id="tall-label-0">Tall Things</label>
-            <ul>
-              <li>
-                <ion-checkbox aria-labelledby="tall-label-1" checked></ion-checkbox>
-                <label id="tall-label-1">Skyscrapers</label>
-              </li>
-              <li>
-                <ion-checkbox aria-labelledby="tall-label-2"></ion-checkbox>
-                <label id="tall-label-2">Trees</label>
-              </li>
-              <li>
-                <ion-checkbox aria-labelledby="tall-label-3"></ion-checkbox>
-                <label id="tall-label-3">Giants</label>
-              </li>
-            </ul>
-          </li>
-        </ul>
       </ion-content>
     </ion-app>
 
@@ -99,65 +74,6 @@
       for (var i = 0; i < indeterminateCheckboxes.length; i++) {
         var checkbox = indeterminateCheckboxes[i];
         checkbox.indeterminate = true;
-      }
-
-      function onLoad() {
-        var checkboxes = document.getElementsByTagName('ion-checkbox');
-
-        for (var i = 0; i < checkboxes.length; i++) {
-          var checkbox = checkboxes[i];
-          checkbox.addEventListener('ionChange', function (event) {
-            checkboxChanged(this, event);
-          });
-        }
-      }
-
-      function checkboxChanged(el, ev) {
-        var isParent = el.id === 'tall';
-
-        if (isParent) {
-          checkChildren(el.checked);
-        } else {
-          checkParent();
-        }
-      }
-
-      function checkParent() {
-        var parent = document.getElementById('tall');
-        var children = getChildren();
-        var countChecked = 0;
-
-        for (var i = 0; i < children.length; i++) {
-          var child = children[i];
-          if (child.checked) {
-            countChecked = ++countChecked;
-          }
-        }
-
-        // None checked, uncheck parent
-        if (countChecked == 0) {
-          parent.checked = false;
-          parent.indeterminate = false;
-          // All checked, check parent
-        } else if (countChecked == children.length) {
-          parent.checked = true;
-          parent.indeterminate = false;
-          // One checked, indeterminate parent
-        } else {
-          parent.indeterminate = true;
-        }
-      }
-
-      function checkChildren(shouldCheck) {
-        var children = getChildren();
-        for (var i = 0; i < children.length; i++) {
-          var child = children[i];
-          child.checked = shouldCheck;
-        }
-      }
-
-      function getChildren() {
-        return document.querySelectorAll('ion-checkbox[name^=tall-]');
       }
     </script>
   </body>
