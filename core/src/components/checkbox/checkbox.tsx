@@ -12,7 +12,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
- * 
+ *
  * @slot - The label text to associate with the checkbox. Use the "labelPlacement" property to control where the label is placed relative to the checkbox.
  *
  * @part container - The container for the checkbox mark.
@@ -78,7 +78,7 @@ export class Checkbox implements ComponentInterface {
    * using either the `aria-label` attribute or have text in the default slot. As a result,
    * the `legacy` property should only be used as an escape hatch when you want to
    * avoid this automatic opt-in behavior.
-   * 
+   *
    * Note that this property will be removed in an upcoming major release
    * of Ionic, and all form components will be opted-in to using the modern form markup.
    */
