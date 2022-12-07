@@ -3,7 +3,7 @@ import { test } from '@utils/test/playwright';
 
 test.describe('checkbox: basic', () => {
   test('should not have visual regressions', async ({ page }) => {
-    await page.goto(`/src/components/checkbox/test/basic`);
+    await page.goto(`/src/components/checkbox/test/legacy/basic`);
 
     await page.setIonViewport();
 
