@@ -191,7 +191,7 @@ For checkboxes that do not have a visible label, developers should use "aria-lab
       if (this.legacy) {
         printIonWarning(
           `ion-checkbox is being used with the "legacy" property enabled which will forcibly enable the legacy form markup. This property will be removed in an upcoming major release of Ionic where this form control will use the modern form markup.
-Developers can dismiss this warning by removing their usage of the "legacy" property and using the new input syntax.`,
+Developers can dismiss this warning by removing their usage of the "legacy" property and using the new checkbox syntax.`,
           this.el
         );
       }
