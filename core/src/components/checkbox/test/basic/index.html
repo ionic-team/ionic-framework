@@ -14,6 +14,11 @@
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
   </head>
   <style>
+    ion-checkbox {
+      display: block;
+      margin-bottom: 8px;
+    }
+
     ion-checkbox.checkbox-part::part(mark) {
       transform: scale(0.5);
       transform-origin: center;
@@ -27,7 +32,7 @@
         </ion-toolbar>
       </ion-header>
 
-      <ion-content id="content">
+      <ion-content id="content" class="ion-padding">
         <ion-checkbox>Unchecked</ion-checkbox>
         <ion-checkbox checked>Checked</ion-checkbox>
         <ion-checkbox disabled>Disabled</ion-checkbox>
