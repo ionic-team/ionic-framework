@@ -7,7 +7,9 @@ test.describe('datetime: presentation', () => {
   test('should not have visual regressions', async ({ page }) => {
     await page.goto(`/src/components/datetime/test/presentation`);
 
-    await page.setIonViewport();
+    await page.waitForSelector('.datetime-ready');
+
+    const datetime = page.locator('ion-datetime');
 
     const compares = [];
     const presentations = ['date-time', 'time-date', 'time', 'date', 'month-year', 'month', 'year'];
@@ -17,7 +19,7 @@ test.describe('datetime: presentation', () => {
       await page.waitForChanges();
       compares.push({
         presentation,
-        screenshot: await page.screenshot({ fullPage: true }),
+        screenshot: await datetime.screenshot(),
       });
     }
 
