@@ -17,14 +17,17 @@
 # Frameworks
 
 ## Angular
+
 /angular/ @sean-perkins
 /packages/angular-server @sean-perkins
 
 ## React
+
 /packages/react/ @amandaejohnston
 /packages/react-router @amandaejohnston
 
 ## Vue
+
 /packages/vue/ @liamdebeasi
 /packages/vue-router/ @liamdebeasi
 
