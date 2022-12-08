@@ -40,33 +40,24 @@
 
 /core/src/components/accordion/ @liamdebeasi
 /core/src/components/accordion-group/ @liamdebeasi
-/core/src/components/accordion/test/
-/core/src/components/accordion-group/test/
 
 /core/src/components/datetime/ @liamdebeasi @amandaejohnston @sean-perkins
 /core/src/components/datetime-button/ @liamdebeasi
-/core/src/components/datetime/test/
-/core/src/components/datetime-button/test/
 
 /core/src/components/menu/ @amandaejohnston
 /core/src/components/menu-toggle/ @amandaejohnston
-/core/src/components/menu/test/
-/core/src/components/menu-toggle/test/
 
 /core/src/components/nav/ @sean-perkins
 /core/src/components/nav-link/ @sean-perkins
-/core/src/components/nav/test/
-/core/src/components/nav-link/test/
 
 /core/src/components/picker-internal/ @liamdebeasi
 /core/src/components/picker-column-internal/ @liamdebeasi
-/core/src/components/picker-internal/test/
-/core/src/components/picker-column-internal/test/
 
 /core/src/components/refresher/ @liamdebeasi
 /core/src/components/refresher-content/ @liamdebeasi
-/core/src/components/refresher/test/
-/core/src/components/refresher-content/test/
+
+# Codeowner should own the source, but everyone should  the tests
+/core/src/components/**/test/ @ionic-team/framework
 
 # Utilities
 
