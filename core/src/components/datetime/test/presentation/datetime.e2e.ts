@@ -111,7 +111,7 @@ test.describe('datetime: presentation', () => {
 test.describe('datetime: presentation: time', () => {
   let timePickerFixture: TimePickerFixture;
 
-  test.beforeEach(async ({ page, skip }) => {
+  test.beforeEach(async ({ page }) => {
     timePickerFixture = new TimePickerFixture(page);
     await timePickerFixture.goto();
   });
