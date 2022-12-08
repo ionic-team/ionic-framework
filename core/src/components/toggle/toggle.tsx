@@ -3,6 +3,7 @@ import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil
 // TODO(FW-2845) - Use @utils/forms and @utils/logging when https://github.com/ionic-team/stencil/issues/3826 is resolved
 import { checkmarkOutline, removeOutline, ellipseOutline } from 'ionicons/icons';
 
+import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import type { Color, Gesture, GestureDetail, Mode, StyleEventDetail, ToggleChangeEventDetail } from '../../interface';
 import type { LegacyFormController } from '../../utils/forms';
@@ -79,7 +80,7 @@ export class Toggle implements ComponentInterface {
   /**
    * Enables the on/off accessibility switch labels within the toggle.
    */
-  @Prop() enableOnOffLabels: boolean | undefined = undefined;
+  @Prop() enableOnOffLabels: boolean | undefined = config.get('toggleOnOffLabels');
 
   /**
    * Where to place the label relative to the input.
