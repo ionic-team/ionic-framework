@@ -1621,7 +1621,7 @@ export namespace Components {
         /**
           * Determines whether or not a modal can dismiss when calling the `dismiss` method.  If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss. If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.
          */
-        "canDismiss": boolean | (() => Promise<boolean>);
+        "canDismiss": boolean | ((data?: any, role?: string) => Promise<boolean>);
         /**
           * The component to display inside of the modal.
          */
@@ -2967,7 +2967,7 @@ export namespace Components {
         /**
           * The position of the toast on the screen.
          */
-        "position": 'top' | 'bottom' | 'middle';
+        "position": ToastPosition;
         /**
           * Present the toast overlay after it has been created.
          */
@@ -5561,7 +5561,7 @@ declare namespace LocalJSX {
         /**
           * Determines whether or not a modal can dismiss when calling the `dismiss` method.  If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss. If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.
          */
-        "canDismiss"?: boolean | (() => Promise<boolean>);
+        "canDismiss"?: boolean | ((data?: any, role?: string) => Promise<boolean>);
         /**
           * The component to display inside of the modal.
          */
@@ -6983,7 +6983,7 @@ declare namespace LocalJSX {
         /**
           * The position of the toast on the screen.
          */
-        "position"?: 'top' | 'bottom' | 'middle';
+        "position"?: ToastPosition;
         /**
           * If `true`, the toast will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
