@@ -365,19 +365,17 @@
   @include margin(10px, 0);
 
   align-self: baseline;
-
-  line-height: 28px;
 }
 
 .textarea-wrapper textarea {
+  @include padding(8px, 0, 8px, 0);
+
   /**
     * When the floating label appears on top of the
     * textarea, we need to fade the textarea out so that the
     * label does not overlap with the placeholder.
     */
   transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
-
-  line-height: 28px;
 }
 
 :host(.textarea-label-placement-floating) .textarea-wrapper textarea,
@@ -388,12 +386,6 @@
    * without partial truncation or clipping of the text.
    */
   @include margin(1px, 0, 0, 0);
-}
-
-:host(.textarea-label-placement-start) .textarea-wrapper textarea,
-:host(.textarea-label-placement-end) .textarea-wrapper textarea,
-:host(.textarea-label-placement-fixed) .textarea-wrapper textarea {
-  @include padding(10px, 0, 0, 0);
 }
 
 // Textarea Label Placement - Start
@@ -484,6 +476,7 @@
 :host(.textarea-label-placement-stacked) .label-text-wrapper,
 :host(.textarea-label-placement-floating) .label-text-wrapper {
   @include transform-origin(start, top);
+  @include margin(10px, 0, 0, 0);
 
   max-width: 100%;
 }
@@ -493,7 +486,7 @@
  * when the textarea is blurred and has no value.
  */
 :host(.textarea-label-placement-floating) .label-text-wrapper {
-  @include transform(translateY(100%), scale(1));
+  @include transform(translateY(28px), scale(1));
 }
 
 /**
@@ -516,7 +509,7 @@
 :host(.textarea-label-placement-stacked) .label-text-wrapper,
 :host(.has-focus.textarea-label-placement-floating) .label-text-wrapper,
 :host(.has-value.textarea-label-placement-floating) .label-text-wrapper {
-  @include transform(translateY(50%), scale(0.75));
+  @include transform(scale(0.82));
 
   /**
    * Label text should not extend
