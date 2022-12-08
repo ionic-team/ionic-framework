@@ -54,12 +54,7 @@
 // Calendar / Body
 // -----------------------------------
 :host .calendar-body .calendar-month .calendar-month-grid {
-  /**
-   * 3px top padding adds enough spacing at
-   * the top of the container for the selected
-   * day box shadow to display without clipping.
-   */
-  @include padding(3px, 10px, 0px, 10px);
+  @include padding(4px, 10px);
 
   /**
    * Calendar on MD will show an empty row

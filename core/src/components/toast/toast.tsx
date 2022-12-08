@@ -1,6 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Watch, Component, Element, Event, Host, Method, Prop, h } from '@stencil/core';
+import { Watch, Component, Element, Event, h, Host, Method, Prop } from '@stencil/core';
 
+import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import type {
   AnimationBuilder,
@@ -10,6 +11,7 @@ import type {
   OverlayInterface,
   ToastButton,
   FrameworkDelegate,
+  ToastPosition,
 } from '../../interface';
 import {
   createDelegateController,
@@ -95,7 +97,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
    * How many milliseconds to wait before hiding the toast. By default, it will show
    * until `dismiss()` is called.
    */
-  @Prop() duration = 0;
+  @Prop() duration = config.getNumber('toastDuration', 0);
 
   /**
    * Header to be shown in the toast.
@@ -115,7 +117,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
   /**
    * The position of the toast on the screen.
    */
-  @Prop() position: 'top' | 'bottom' | 'middle' = 'bottom';
+  @Prop() position: ToastPosition = 'bottom';
 
   /**
    * An array of buttons for the toast.
@@ -247,7 +249,13 @@ export class Toast implements ComponentInterface, OverlayInterface {
 
     await this.delegateController.attachViewToDom();
 
-    this.currentTransition = present(this, 'toastEnter', iosEnterAnimation, mdEnterAnimation, this.position);
+    this.currentTransition = present<ToastPresentOptions>(
+      this,
+      'toastEnter',
+      iosEnterAnimation,
+      mdEnterAnimation,
+      this.position
+    );
     await this.currentTransition;
     this.currentTransition = undefined;
 
@@ -271,7 +279,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
       clearTimeout(this.durationTimeout);
     }
 
-    this.currentTransition = dismiss(
+    this.currentTransition = dismiss<ToastDismissOptions>(
       this,
       data,
       role,
@@ -453,3 +461,6 @@ const buttonClass = (button: ToastButton): CssClassMap => {
     ...getClassMap(button.cssClass),
   };
 };
+
+type ToastPresentOptions = ToastPosition;
+type ToastDismissOptions = ToastPosition;
