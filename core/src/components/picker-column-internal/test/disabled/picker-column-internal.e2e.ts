@@ -60,7 +60,7 @@ test.describe('picker-column-internal: disabled', () => {
     `);
 
     const disabledItem = page.locator('ion-picker-column-internal .picker-item.picker-item-disabled');
-    expect(disabledItem).not.toBeEnabled();
+    await expect(disabledItem).not.toBeEnabled();
   });
   test('disabled picker item should not be considered active', async ({ page }) => {
     await page.setContent(`
