@@ -1,30 +1,94 @@
 import { expect } from '@playwright/test';
+import type { EventSpy } from '@utils/test/playwright';
 import { test } from '@utils/test/playwright';
 
 test.describe('img: basic', () => {
-  test('should not have visual regressions', async ({ page }) => {
-    await page.goto('/src/components/img/test/basic');
+  test.beforeEach(({ skip }) => {
+    skip.rtl();
+    skip.mode('ios');
+  });
 
-    /**
-     * The first `ion-img` resolves before the spy can be created,
-     * since the image is initially visible and the IO fires.
-     *
-     * We manually look at the image's completion state to determine
-     * that it loaded, before creating a spy for the second image.
-     */
-    const img = await page.locator('.img-part img');
-    await img.evaluate((el: HTMLImageElement) => el.complete);
+  test.describe('image successfully loads', () => {
+    let ionImgWillLoad: EventSpy;
+    let ionImgDidLoad: EventSpy;
 
-    const ionImgDidLoad = await page.spyOnEvent('ionImgDidLoad');
-    /**
-     * Resizing the viewport will cause the intersection observers of
-     * the remaining images to fire, which will cause the `ionImgDidLoad`
-     * event to fire.
-     */
-    await page.setIonViewport();
+    test.beforeEach(async ({ page }) => {
+      await page.route('**/*', (route) => {
+        if (route.request().resourceType() === 'image') {
+          return route.fulfill({
+            status: 200,
+            contentType: 'image/png',
+            body: Buffer.from(
+              'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIwAAAABJRU5ErkJggg==',
+              'base64'
+            ),
+          });
+        }
+        return route.continue();
+      });
 
-    await ionImgDidLoad.next();
+      /**
+       * We render the img intentionally without providing a source,
+       * to allow the event spies to be set-up before the events
+       * can be emitted.
+       *
+       * Later we will assign an image source to load.
+       */
+      await page.setContent('<ion-img></ion-img>');
 
-    expect(await page.screenshot()).toMatchSnapshot(`img-basic-${page.getSnapshotSettings()}.png`);
+      ionImgDidLoad = await page.spyOnEvent('ionImgDidLoad');
+      ionImgWillLoad = await page.spyOnEvent('ionImgWillLoad');
+
+      const ionImg = await page.locator('ion-img');
+      await ionImg.evaluate((el: HTMLIonImgElement) => {
+        el.src = 'https://via.placeholder.com/150';
+        return el;
+      });
+    });
+
+    test('should emit ionImgWillLoad', async () => {
+      await ionImgWillLoad.next();
+
+      expect(ionImgWillLoad).toHaveReceivedEventTimes(1);
+    });
+
+    test('should emit ionImgDidLoad', async () => {
+      await ionImgDidLoad.next();
+
+      expect(ionImgWillLoad).toHaveReceivedEventTimes(1);
+    });
+  });
+
+  test.describe('image fails to load', () => {
+    let ionError: EventSpy;
+
+    test.beforeEach(async ({ page }) => {
+      await page.route('**/*', (route) =>
+        route.request().resourceType() === 'image' ? route.abort() : route.continue()
+      );
+
+      /**
+       * We render the img intentionally without providing a source,
+       * to allow the event spies to be set-up before the events
+       * can be emitted.
+       *
+       * Later we will assign an image source to load.
+       */
+      await page.setContent('<ion-img></ion-img>');
+
+      ionError = await page.spyOnEvent('ionError');
+
+      const ionImg = await page.locator('ion-img');
+      await ionImg.evaluate((el: HTMLIonImgElement) => {
+        el.src = 'https://via.placeholder.com/150';
+        return el;
+      });
+    });
+
+    test('should emit ionError', async () => {
+      await ionError.next();
+
+      expect(ionError).toHaveReceivedEventTimes(1);
+    });
   });
 });
