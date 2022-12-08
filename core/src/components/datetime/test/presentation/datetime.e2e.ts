@@ -108,7 +108,7 @@ test.describe('datetime: presentation', () => {
   });
 });
 
-test.describe.only('datetime: presentation: time', () => {
+test.describe('datetime: presentation: time', () => {
   let timePickerFixture: TimePickerFixture;
 
   test.beforeEach(async ({ page, skip }) => {
