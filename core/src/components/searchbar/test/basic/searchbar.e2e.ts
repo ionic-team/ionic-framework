@@ -8,6 +8,16 @@ test.describe('searchbar: basic', () => {
 
   test('should not have visual regressions', async ({ page }) => {
     await page.setIonViewport();
+    /**
+     * The searchbar test template is rendering an ion-searchbar
+     * that is animated. This requires the searchbar to render,
+     * before the cancel button can be positioned correctly.
+     *
+     * We wait for changes to ensure the searchbar has rendered
+     * correctly before capturing the screenshot.
+     */
+    await page.waitForChanges();
+
     expect(await page.screenshot({ animations: 'disabled' })).toMatchSnapshot(
       `searchbar-diff-${page.getSnapshotSettings()}.png`
     );
