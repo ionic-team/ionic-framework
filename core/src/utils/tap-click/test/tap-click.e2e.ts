@@ -1,3 +1,4 @@
+import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
 test.describe('tap click utility', () => {
@@ -14,8 +15,9 @@ test.describe('tap click utility', () => {
     if (box) {
       await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
       await page.mouse.down();
+      await page.waitForChanges();
     }
 
-    await page.waitForSelector('button.ion-activated');
+    await expect(button).toHaveClass(/ion-activated/);
   });
 });
