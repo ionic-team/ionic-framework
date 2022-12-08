@@ -1386,7 +1386,7 @@ ion-toast,prop,keyboardClose,boolean,false,false,false
 ion-toast,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-toast,prop,message,IonicSafeString | string | undefined,undefined,false,false
 ion-toast,prop,mode,"ios" | "md",undefined,false,false
-ion-toast,prop,position,ToastPosition,'bottom',false,false
+ion-toast,prop,position,"bottom" | "middle" | "top",'bottom',false,false
 ion-toast,prop,translucent,boolean,false,false,false
 ion-toast,prop,trigger,string | undefined,undefined,false,false
 ion-toast,method,dismiss,dismiss(data?: any, role?: string) => Promise<boolean>

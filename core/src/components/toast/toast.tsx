@@ -11,6 +11,7 @@ import type {
   OverlayInterface,
   ToastButton,
   FrameworkDelegate,
+  ToastPosition,
 } from '../../interface';
 import {
   createDelegateController,
