@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.4.1-nightly.20221208](https://github.com/ionic-team/ionic-framework/compare/v6.4.0...v6.4.1-nightly.20221208) (2022-12-08)
+
+
+### Bug Fixes
+
+* **datetime:** keyboard can select hour 00 ([#26423](https://github.com/ionic-team/ionic-framework/issues/26423)) ([2fc96b7](https://github.com/ionic-team/ionic-framework/commit/2fc96b771412d2deac6d19883bfc5abc74d0bdbd)), closes [#26409](https://github.com/ionic-team/ionic-framework/issues/26409)
+
+
+
+
+
 # [6.4.0](https://github.com/ionic-team/ionic-framework/compare/v6.3.10...v6.4.0) (2022-12-07)
 
 
