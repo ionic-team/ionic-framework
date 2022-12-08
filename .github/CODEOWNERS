@@ -56,7 +56,7 @@
 /core/src/components/refresher/ @liamdebeasi
 /core/src/components/refresher-content/ @liamdebeasi
 
-# Codeowner should own the source, but everyone should  the tests
+# Codeowner should own the source, but everyone should own the tests
 /core/src/components/**/test/ @ionic-team/framework
 
 # Utilities
