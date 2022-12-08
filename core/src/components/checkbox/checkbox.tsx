@@ -3,7 +3,7 @@ import { Component, Element, Event, Host, Prop, Watch, h } from '@stencil/core';
 
 // TODO(FW-2845) - Use @utils/forms and @utils/logging when https://github.com/ionic-team/stencil/issues/3826 is resolved
 import { getIonMode } from '../../global/ionic-global';
-import type { CheckboxChangeEventDetail, Color, StyleEventDetail } from '../../interface';
+import type { CheckboxChangeEventDetail, Color, Mode, StyleEventDetail } from '../../interface';
 import type { LegacyFormController } from '../../utils/forms';
 import { createLegacyFormController } from '../../utils/forms';
 import { getAriaLabel, renderHiddenInput } from '../../utils/helpers';
@@ -176,25 +176,12 @@ export class Checkbox implements ComponentInterface {
   }
 
   private renderCheckbox() {
-    const { color, checked, disabled, el, indeterminate, inputId, name, value } = this;
+    const { color, checked, disabled, el, getSVGPath, indeterminate, inputId, name, value } = this;
     const mode = getIonMode(this);
     const { label, labelId, labelText } = getAriaLabel(el, inputId);
+    const path = getSVGPath(mode, indeterminate);
 
     renderHiddenInput(true, el, name, checked ? value : '', disabled);
-
-    let path = indeterminate ? (
-      <path d="M6 12L18 12" part="mark" />
-    ) : (
-      <path d="M5.9,12.5l3.8,3.8l8.8-8.8" part="mark" />
-    );
-
-    if (mode === 'md') {
-      path = indeterminate ? (
-        <path d="M2 12H22" part="mark" />
-      ) : (
-        <path d="M1.73,12.91 8.1,19.28 22.79,4.59" part="mark" />
-      );
-    }
 
     return (
       <Host
@@ -254,25 +241,12 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
       this.hasLoggedDeprecationWarning = true;
     }
 
-    const { color, checked, disabled, el, indeterminate, inputId, name, value } = this;
+    const { color, checked, disabled, el, getSVGPath, indeterminate, inputId, name, value } = this;
     const mode = getIonMode(this);
     const { label, labelId, labelText } = getAriaLabel(el, inputId);
+    const path = getSVGPath(mode, indeterminate);
 
     renderHiddenInput(true, el, name, checked ? value : '', disabled);
-
-    let path = indeterminate ? (
-      <path d="M6 12L18 12" part="mark" />
-    ) : (
-      <path d="M5.9,12.5l3.8,3.8l8.8-8.8" part="mark" />
-    );
-
-    if (mode === 'md') {
-      path = indeterminate ? (
-        <path d="M2 12H22" part="mark" />
-      ) : (
-        <path d="M1.73,12.91 8.1,19.28 22.79,4.59" part="mark" />
-      );
-    }
 
     return (
       <Host
@@ -306,6 +280,24 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
         />
       </Host>
     );
+  }
+
+  private getSVGPath(mode: Mode, indeterminate: boolean): HTMLElement {
+    let path = indeterminate ? (
+      <path d="M6 12L18 12" part="mark" />
+    ) : (
+      <path d="M5.9,12.5l3.8,3.8l8.8-8.8" part="mark" />
+    );
+
+    if (mode === 'md') {
+      path = indeterminate ? (
+        <path d="M2 12H22" part="mark" />
+      ) : (
+        <path d="M1.73,12.91 8.1,19.28 22.79,4.59" part="mark" />
+      );
+    }
+
+    return path;
   }
 }
 
