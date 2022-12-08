@@ -13,16 +13,13 @@
   --checkmark-width: 3;
 
   // Background
-  --background: #{$checkbox-md-icon-background-color-off};
+  --checkbox-background: #{$checkbox-md-icon-background-color-off};
 
   // Transition
   --transition: #{background $checkbox-md-transition-duration $checkbox-md-transition-easing};
 
   // Size
   --size: #{$checkbox-md-icon-size};
-
-  width: var(--size);
-  height: var(--size);
 }
 
 .checkbox-icon path {

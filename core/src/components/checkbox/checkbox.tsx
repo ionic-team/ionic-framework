@@ -176,7 +176,62 @@ export class Checkbox implements ComponentInterface {
   }
 
   private renderCheckbox() {
-    return <slot></slot>;
+    const { color, checked, disabled, el, indeterminate, inputId, name, value } = this;
+    const mode = getIonMode(this);
+    const { label, labelId, labelText } = getAriaLabel(el, inputId);
+
+    renderHiddenInput(true, el, name, checked ? value : '', disabled);
+
+    let path = indeterminate ? (
+      <path d="M6 12L18 12" part="mark" />
+    ) : (
+      <path d="M5.9,12.5l3.8,3.8l8.8-8.8" part="mark" />
+    );
+
+    if (mode === 'md') {
+      path = indeterminate ? (
+        <path d="M2 12H22" part="mark" />
+      ) : (
+        <path d="M1.73,12.91 8.1,19.28 22.79,4.59" part="mark" />
+      );
+    }
+
+    return (
+      <Host
+        aria-labelledby={label ? labelId : null}
+        aria-checked={`${checked}`}
+        aria-hidden={disabled ? 'true' : null}
+        role="checkbox"
+        class={createColorClasses(color, {
+          [mode]: true,
+          'in-item': hostContext('ion-item', el),
+          'checkbox-checked': checked,
+          'checkbox-disabled': disabled,
+          'checkbox-indeterminate': indeterminate,
+          interactive: true,
+        })}
+      >
+        <label class="checkbox-wrapper">
+          <div class="label-text-wrapper">
+            <slot></slot>
+          </div>
+          <svg class="checkbox-icon" viewBox="0 0 24 24" part="container">
+            {path}
+          </svg>
+          <label htmlFor={inputId}>{labelText}</label>
+          <input
+            type="checkbox"
+            aria-checked={`${checked}`}
+            disabled={disabled}
+            id={inputId}
+            onChange={this.toggleChecked}
+            onFocus={() => this.onFocus()}
+            onBlur={() => this.onBlur()}
+            ref={(focusEl) => (this.focusEl = focusEl)}
+          />
+        </label>
+      </Host>
+    );
   }
 
   private renderLegacyCheckbox() {
@@ -231,6 +286,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
           'checkbox-checked': checked,
           'checkbox-disabled': disabled,
           'checkbox-indeterminate': indeterminate,
+          'legacy-checkbox': true,
           interactive: true,
         })}
       >

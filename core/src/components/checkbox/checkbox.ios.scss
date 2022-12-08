@@ -12,13 +12,10 @@
   --border-color: #{$checkbox-ios-icon-border-color-off};
 
   // Background
-  --background: #{$checkbox-ios-background-color-off};
+  --checkbox-background: #{$checkbox-ios-background-color-off};
 
   // Size
   --size: #{$checkbox-ios-icon-size};
-
-  width: var(--size);
-  height: var(--size);
 }
 
 
