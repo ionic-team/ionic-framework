@@ -14,21 +14,21 @@ test.describe('datetime-button: switching to correct view', () => {
   });
   test('should switch to a date-only view when the date button is clicked', async ({ page }) => {
     const datetime = page.locator('ion-datetime');
-    expect(datetime).toHaveJSProperty('presentation', 'date-time');
+    await expect(datetime).toHaveJSProperty('presentation', 'date-time');
 
     await page.locator('#date-button').click();
     await page.waitForChanges();
 
-    expect(datetime).toHaveJSProperty('presentation', 'date');
+    await expect(datetime).toHaveJSProperty('presentation', 'date');
   });
   test('should switch to a time-only view when the time button is clicked', async ({ page }) => {
     const datetime = page.locator('ion-datetime');
-    expect(datetime).toHaveJSProperty('presentation', 'date-time');
+    await expect(datetime).toHaveJSProperty('presentation', 'date-time');
 
     await page.locator('#time-button').click();
     await page.waitForChanges();
 
-    expect(datetime).toHaveJSProperty('presentation', 'time');
+    await expect(datetime).toHaveJSProperty('presentation', 'time');
   });
 });
 
