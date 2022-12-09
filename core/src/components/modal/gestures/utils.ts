@@ -1,6 +1,5 @@
-import { GESTURE } from '@utils/overlays';
-
 import type { Animation } from '../../../interface';
+import { GESTURE } from '../../../utils/overlays';
 
 export const handleCanDismiss = async (el: HTMLIonModalElement, animation: Animation) => {
   /**
