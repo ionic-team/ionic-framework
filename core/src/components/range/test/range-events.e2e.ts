@@ -55,7 +55,8 @@ test.describe('range: events:', () => {
       expect(rangeEnd).toHaveReceivedEventDetail({ value: 21 });
     });
 
-    test('should not scroll when the knob is swiped', async ({ page, skip }) => {
+    // TODO FW-2873
+    test.skip('should not scroll when the knob is swiped', async ({ page, skip }) => {
       skip.browser('webkit', 'mouse.wheel is not available in WebKit');
       skip.rtl();
 
@@ -112,7 +113,8 @@ test.describe('range: events:', () => {
       expect(ionChangeSpy).toHaveReceivedEventTimes(0);
     });
 
-    test('should emit when the knob is released', async ({ page }) => {
+    // TODO FW-2873
+    test.skip('should emit when the knob is released', async ({ page }) => {
       await page.setContent(`<ion-range aria-label="range"></ion-range>`);
 
       const rangeHandle = page.locator('ion-range .range-knob-handle');
