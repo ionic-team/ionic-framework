@@ -108,33 +108,6 @@ test.describe('overlays: focus', () => {
   test.beforeEach(({ skip }) => {
     skip.rtl();
   });
-  test('should not focus the overlay container if element inside of overlay is focused', async ({ page }) => {
-    await page.setContent(`
-      <ion-button id="open-modal">Show Modal</ion-button>
-      <ion-modal trigger="open-modal">
-        <ion-content>
-          <input />
-        </ion-content>
-      </ion-modal>
-    `);
-
-    const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
-    const ionModalWillPresent = await page.spyOnEvent('ionModalWillPresent');
-    const button = page.locator('ion-button');
-    const input = page.locator('input');
-
-    await button.click();
-
-    await ionModalWillPresent.next();
-
-    await input.evaluate((el: HTMLInputElement) => el.focus());
-
-    await ionModalDidPresent.next();
-    await page.waitForChanges();
-
-    await expect(input).toBeFocused();
-  });
-
   test('should not select a hidden focusable element', async ({ page, browserName }) => {
     await page.setContent(`
       <style>
