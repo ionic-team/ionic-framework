@@ -11,30 +11,20 @@ test.describe('textarea: autogrow', () => {
   });
 
   test('should grow when typing', async ({ page }) => {
-    await page.setContent(
-      `
-      <ion-app>
-        <ion-content>
-          <ion-list>
-            <ion-item>
-              <ion-textarea auto-grow="true"></ion-textarea>
-            </ion-item>
-          </ion-list>
-        </ion-content>
-      </ion-app>`
+    await page.setContent(`
+      <ion-textarea auto-grow="true"></ion-textarea>
+    `);
+
+    const ionTextarea = page.locator('ion-textarea');
+    const nativeTextarea = ionTextarea.locator('textarea');
+
+    await nativeTextarea.type('Now, this is a story all about how');
+
+    expect(await ionTextarea.screenshot({})).toMatchSnapshot(
+      `textarea-autogrow-initial-${page.getSnapshotSettings()}.png`
     );
 
-    const textarea = await page.waitForSelector('ion-textarea');
-
-    await textarea.click();
-
-    await textarea.type('Now, this is a story all about how');
-
-    await page.setIonViewport();
-
-    expect(await textarea.screenshot()).toMatchSnapshot(`textarea-autogrow-initial-${page.getSnapshotSettings()}.png`);
-
-    await textarea.type(
+    await nativeTextarea.type(
       [
         `\nMy life got flipped-turned upside down`,
         `And I'd like to take a minute`,
@@ -43,7 +33,7 @@ test.describe('textarea: autogrow', () => {
       ].join('\n')
     );
 
-    expect(await textarea.screenshot()).toMatchSnapshot(`textarea-autogrow-after-${page.getSnapshotSettings()}.png`);
+    expect(await ionTextarea.screenshot()).toMatchSnapshot(`textarea-autogrow-after-${page.getSnapshotSettings()}.png`);
   });
 
   test('should break long lines without white space', async ({ page }) => {
@@ -53,17 +43,13 @@ test.describe('textarea: autogrow', () => {
     });
 
     await page.setContent(
-      `<ion-app>
-        <ion-content>
-          <ion-textarea
-            auto-grow="true"
-            value="abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz">
-          </ion-textarea>
-        </ion-content>
-      </ion-app>`
+      `<ion-textarea
+        auto-grow="true"
+        value="abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz">
+      </ion-textarea>`
     );
 
-    const textarea = await page.locator('ion-textarea');
+    const textarea = page.locator('ion-textarea');
 
     expect(await textarea.screenshot()).toMatchSnapshot(
       `textarea-autogrow-word-break-${page.getSnapshotSettings()}.png`

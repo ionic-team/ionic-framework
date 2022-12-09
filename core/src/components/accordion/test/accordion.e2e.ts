@@ -19,7 +19,7 @@ test.describe('accordion: states', () => {
     const accordionGroup = page.locator('ion-accordion-group');
     const accordion = page.locator('ion-accordion');
 
-    expect(accordion).toHaveJSProperty('readonly', false);
+    await expect(accordion).toHaveJSProperty('readonly', false);
 
     await accordionGroup.evaluate((el: HTMLIonAccordionGroupElement) => {
       el.readonly = true;
@@ -27,7 +27,7 @@ test.describe('accordion: states', () => {
 
     await page.waitForChanges();
 
-    expect(accordion).toHaveJSProperty('readonly', true);
+    await expect(accordion).toHaveJSProperty('readonly', true);
   });
 
   test('should properly set disabled on child accordions', async ({ page }) => {
@@ -43,7 +43,7 @@ test.describe('accordion: states', () => {
     const accordionGroup = page.locator('ion-accordion-group');
     const accordion = page.locator('ion-accordion');
 
-    expect(accordion).toHaveJSProperty('disabled', false);
+    await expect(accordion).toHaveJSProperty('disabled', false);
 
     await accordionGroup.evaluate((el: HTMLIonAccordionGroupElement) => {
       el.disabled = true;
@@ -51,6 +51,6 @@ test.describe('accordion: states', () => {
 
     await page.waitForChanges();
 
-    expect(accordion).toHaveJSProperty('disabled', true);
+    await expect(accordion).toHaveJSProperty('disabled', true);
   });
 });
