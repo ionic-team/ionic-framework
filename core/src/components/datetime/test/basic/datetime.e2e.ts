@@ -145,7 +145,7 @@ test.describe('datetime: confirm date', () => {
 
     await ionChange.next();
 
-    expect(datetime).toHaveJSProperty('value', '2021-12-25T12:40:00');
+    await expect(datetime).toHaveJSProperty('value', '2021-12-25T12:40:00');
   });
 });
 
