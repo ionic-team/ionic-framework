@@ -1,0 +1,8 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/core"
+    schedule:
+      interval: "daily"
+    allow:
+      - dependency-name: "@playwright/test"
