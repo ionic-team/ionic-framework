@@ -2,7 +2,8 @@ import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
 test.describe('picker-internal', () => {
-  test('inline pickers should not have visual regression', async ({ page }) => {
+  // TODO: FW-3020
+  test.skip('inline pickers should not have visual regression', async ({ page }) => {
     await page.goto(`/src/components/picker-internal/test/basic`);
 
     await page.setIonViewport();
