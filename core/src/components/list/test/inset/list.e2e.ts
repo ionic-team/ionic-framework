@@ -6,19 +6,21 @@ test.describe('list: inset', () => {
     test('should not have visual regressions', async ({ page }) => {
       await page.setContent(`
         <ion-content color="primary">
-          <ion-list inset="true">
-            <ion-item>Pokémon Yellow</ion-item>
-            <ion-item>Super Metroid</ion-item>
-            <ion-item>Mega Man X</ion-item>
-            <ion-item>The Legend of Zelda</ion-item>
-            <ion-item lines="full">Halo</ion-item>
-          </ion-list>
+          <div class="wrapper" style="display: flex">
+            <ion-list inset="true" style="width: 100%">
+              <ion-item>Pokémon Yellow</ion-item>
+              <ion-item>Super Metroid</ion-item>
+              <ion-item>Mega Man X</ion-item>
+              <ion-item>The Legend of Zelda</ion-item>
+              <ion-item lines="full">Halo</ion-item>
+            </ion-list>
+          </div>
         </ion-content>
       `);
 
-      const list = page.locator('ion-list');
+      const listWrapper = page.locator('.wrapper');
 
-      expect(await list.screenshot()).toMatchSnapshot(`list-inset-diff-${page.getSnapshotSettings()}.png`);
+      expect(await listWrapper.screenshot()).toMatchSnapshot(`list-inset-diff-${page.getSnapshotSettings()}.png`);
     });
   });
 });
