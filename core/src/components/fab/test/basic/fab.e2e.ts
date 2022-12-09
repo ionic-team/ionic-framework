@@ -47,28 +47,28 @@ test.describe('fab: basic (functionality checks)', () => {
     const fab = page.locator('#fab1');
     const fabList = fab.locator('ion-fab-list');
 
-    expect(fabList).not.toHaveClass(/fab-list-active/);
+    await expect(fabList).not.toHaveClass(/fab-list-active/);
 
     // open fab
     await fab.click();
     await page.waitForChanges();
-    expect(fabList).toHaveClass(/fab-list-active/);
+    await expect(fabList).toHaveClass(/fab-list-active/);
 
     // close fab
     await fab.click();
     await page.waitForChanges();
-    expect(fabList).not.toHaveClass(/fab-list-active/);
+    await expect(fabList).not.toHaveClass(/fab-list-active/);
   });
 
   test('should not open when disabled', async ({ page }) => {
     const fab = page.locator('#fab2');
     const fabList = fab.locator('ion-fab-list');
 
-    expect(fabList).not.toHaveClass(/fab-list-active/);
+    await expect(fabList).not.toHaveClass(/fab-list-active/);
 
     // attempt to open fab
     await fab.click();
     await page.waitForChanges();
-    expect(fabList).not.toHaveClass(/fab-list-active/);
+    await expect(fabList).not.toHaveClass(/fab-list-active/);
   });
 });
