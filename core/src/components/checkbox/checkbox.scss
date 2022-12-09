@@ -69,7 +69,6 @@
 }
 
 .checkbox-wrapper {
-  background: var(--background);
   display: flex;
 
   flex-grow: 1;
@@ -77,6 +76,8 @@
   align-items: center;
 
   height: 100%;
+
+  background: var(--background);
 
   cursor: inherit;
 }
@@ -92,6 +93,8 @@
 }
 
 .label-text-wrapper {
+  @include margin(0, 8px, 0, 0);
+
   /**
    * This ensures that double tapping this text
    * clicks the <label> and focuses the input
@@ -104,8 +107,6 @@
   white-space: nowrap;
 
   overflow: hidden;
-
-  @include margin(0, 8px, 0, 0);
 }
 
 /**

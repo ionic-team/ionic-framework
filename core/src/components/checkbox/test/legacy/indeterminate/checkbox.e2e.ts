@@ -6,6 +6,8 @@ test.describe('checkbox: indeterminate (legacy)', () => {
     await page.goto(`/src/components/checkbox/test/legacy/indeterminate`);
 
     const content = page.locator('#checkboxes');
-    expect(await content.screenshot()).toMatchSnapshot(`checkbox-legacy-indeterminate-${page.getSnapshotSettings()}.png`);
+    expect(await content.screenshot()).toMatchSnapshot(
+      `checkbox-legacy-indeterminate-${page.getSnapshotSettings()}.png`
+    );
   });
 });
