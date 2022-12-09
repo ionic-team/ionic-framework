@@ -41,7 +41,7 @@ test.describe('action sheet: basic', () => {
       await actionSheetFixture.open('#basic');
 
       const actionSheet = page.locator('ion-action-sheet');
-      expect(actionSheet).toHaveAttribute('data-testid', 'basic-action-sheet');
+      await expect(actionSheet).toHaveAttribute('data-testid', 'basic-action-sheet');
     });
   });
   test.describe('action sheet: variants', () => {
@@ -78,7 +78,7 @@ test.describe('action sheet: basic', () => {
       await actionSheetFixture.open('#customBackdrop');
 
       const backdrop = page.locator('ion-action-sheet ion-backdrop');
-      expect(backdrop).toHaveCSS('opacity', '1');
+      await expect(backdrop).toHaveCSS('opacity', '1');
     });
     test('should open alert from action sheet', async ({ page, skip }) => {
       skip.rtl();
@@ -96,7 +96,7 @@ test.describe('action sheet: basic', () => {
       const actionSheet = page.locator('ion-action-sheet');
       await actionSheet.locator('ion-backdrop').click();
 
-      expect(actionSheet).toBeVisible();
+      await expect(actionSheet).toBeVisible();
     });
   });
   test.describe('action sheet: focus trap', () => {
@@ -133,14 +133,14 @@ class ActionSheetFixture {
     await this.page.locator(selector).click();
     await ionActionSheetDidPresent.next();
     this.actionSheet = this.page.locator('ion-action-sheet');
-    expect(this.actionSheet).toBeVisible();
+    await expect(this.actionSheet).toBeVisible();
   }
 
   async dismiss() {
     const ionActionSheetDidDismiss = await this.page.spyOnEvent('ionActionSheetDidDismiss');
     await this.actionSheet.evaluate((el: HTMLIonActionSheetElement) => el.dismiss());
     await ionActionSheetDidDismiss.next();
-    expect(this.actionSheet).not.toBeVisible();
+    await expect(this.actionSheet).not.toBeVisible();
   }
 
   async screenshot(modifier: string) {

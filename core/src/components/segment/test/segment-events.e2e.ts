@@ -78,7 +78,8 @@ test.describe('segment: events: ionChange', () => {
     });
   });
 
-  test.describe('when the pointer is released', () => {
+  // TODO FW-3021
+  test.describe.skip('when the pointer is released', () => {
     test('should emit if the value has changed', async ({ page }) => {
       test.info().annotations.push({
         type: 'issue',
