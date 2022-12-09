@@ -24,7 +24,7 @@ test.describe('radio-group', () => {
       expect(radio).toBeHidden();
 
       // ensure radio group has the same value
-      expect(radioGroup).toHaveJSProperty('value', 'two');
+      await expect(radioGroup).toHaveJSProperty('value', 'two');
 
       // clear the search so the radio appears
       await page.fill('ion-searchbar input', '');
