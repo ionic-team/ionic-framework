@@ -108,7 +108,8 @@ test.describe('datetime: presentation', () => {
   });
 });
 
-test.describe('datetime: presentation: time', () => {
+// TODO: FW-3018
+test.skip('datetime: presentation: time', () => {
   let timePickerFixture: TimePickerFixture;
 
   test.beforeEach(async ({ page }) => {
@@ -159,9 +160,10 @@ class TimePickerFixture {
   }
 
   async goto() {
-    await this.page.goto(`/src/components/datetime/test/presentation`);
-    await this.page.locator('select').selectOption('time');
-    await this.page.waitForSelector('.datetime-presentation-time');
+    await this.page.setContent(`
+      <ion-datetime presentation="time" value="2022-03-10T13:00:00"></ion-datetime>
+    `);
+    await this.page.waitForSelector('.datetime-ready');
     this.timePicker = this.page.locator('ion-datetime');
   }
 

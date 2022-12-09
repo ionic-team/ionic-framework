@@ -145,7 +145,7 @@ test.describe('datetime: confirm date', () => {
 
     await ionChange.next();
 
-    expect(datetime).toHaveJSProperty('value', '2021-12-25T12:40:00');
+    await expect(datetime).toHaveJSProperty('value', '2021-12-25T12:40:00');
   });
 });
 
@@ -300,9 +300,12 @@ test.describe('datetime: visibility', () => {
 
     await datetime.evaluate((el: HTMLIonDatetimeElement) => el.style.setProperty('display', 'none'));
     await expect(datetime).toBeHidden();
+    await expect(datetime).not.toHaveClass(/datetime-ready/);
 
     await datetime.evaluate((el: HTMLIonDatetimeElement) => el.style.removeProperty('display'));
     await expect(datetime).toBeVisible();
+
+    await page.waitForSelector('.datetime-ready');
 
     // month/year interface should be reset
     await expect(monthYearInterface).toBeHidden();
