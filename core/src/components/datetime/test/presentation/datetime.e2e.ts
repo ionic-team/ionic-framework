@@ -108,7 +108,8 @@ test.describe('datetime: presentation', () => {
   });
 });
 
-test.describe('datetime: presentation: time', () => {
+// TODO: FW-3018
+test.skip('datetime: presentation: time', () => {
   let timePickerFixture: TimePickerFixture;
 
   test.beforeEach(async ({ page }) => {
