@@ -13,3 +13,60 @@
 
 # Global owners
 * @ionic-team/framework
+
+# Frameworks
+
+## Angular
+
+/angular/ @sean-perkins
+/packages/angular-server @sean-perkins
+/angular/test
+
+## React
+
+/packages/react/ @amandaejohnston
+/packages/react-router @amandaejohnston
+/packages/react/test-app/
+/packages/react-router/test-app/
+
+## Vue
+
+/packages/vue/ @liamdebeasi
+/packages/vue-router/ @liamdebeasi
+/packages/vue/test/
+/packages/vue-router/__tests__
+
+# Components
+
+/core/src/components/accordion/ @liamdebeasi
+/core/src/components/accordion-group/ @liamdebeasi
+
+/core/src/components/datetime/ @liamdebeasi @amandaejohnston @sean-perkins
+/core/src/components/datetime-button/ @liamdebeasi
+
+/core/src/components/menu/ @amandaejohnston
+/core/src/components/menu-toggle/ @amandaejohnston
+
+/core/src/components/nav/ @sean-perkins
+/core/src/components/nav-link/ @sean-perkins
+
+/core/src/components/picker-internal/ @liamdebeasi
+/core/src/components/picker-column-internal/ @liamdebeasi
+
+/core/src/components/refresher/ @liamdebeasi
+/core/src/components/refresher-content/ @liamdebeasi
+
+# Codeowner should own the source, but everyone should own the tests
+/core/src/components/**/test/ @ionic-team/framework
+
+# Utilities
+
+/core/src/utils/animation/ @liamdebeasi
+/core/src/utils/content/ @sean-perkins
+/core/src/utils/gesture/ @liamdebeasi
+/core/src/utils/input-shims/ @liamdebeasi
+/core/src/utils/keyboard/ @liamdebeasi
+/core/src/utils/logging/ @amandaejohnston
+/core/src/utils/sanitization/ @liamdebeasi
+/core/src/utils/tap-click/ @liamdebeasi
+/core/src/utils/transition/ @liamdebeasi

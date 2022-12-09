@@ -65,6 +65,11 @@ export interface IonicConfig {
   spinner?: SpinnerTypes;
 
   /**
+   * Overrides the default enableOnOffLabels in all `<ion-toggle>` components.
+   */
+  toggleOnOffLabels?: boolean;
+
+  /**
    * Overrides the default spinner for all `ion-loading` overlays, ie. the ones
    * created with `ion-loading-controller`.
    */
@@ -95,6 +100,11 @@ export interface IonicConfig {
    * Overrides the default "layout" of all `ion-bar-button` across the whole application.
    */
   tabButtonLayout?: TabButtonLayout;
+
+  /**
+   * Overrides the default `duration` for all `ion-toast` components.
+   */
+  toastDuration?: number;
 
   /**
    * Overrides the default "animation" of all `ion-nav` and `ion-router-outlet` across the whole application.

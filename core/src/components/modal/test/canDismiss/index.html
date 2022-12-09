@@ -116,13 +116,13 @@
             handler = false;
             break;
           case 'promise-true':
-            handler = () => {
+            handler = (data, role) => {
               return new Promise((resolve) => {
                 setTimeout(() => {
                   resolve(true);
 
                   setTimeout(() => {
-                    const event = new CustomEvent('ionHandlerDone');
+                    const event = new CustomEvent('ionHandlerDone', { detail: { data, role } });
                     window.dispatchEvent(event);
                   }, 1000);
                 }, 250);
@@ -132,11 +132,11 @@
           case 'promise-false':
             handler = () => {
               return new Promise((resolve) => {
-                setTimeout(() => {
+                setTimeout((data, role) => {
                   resolve(false);
 
                   setTimeout(() => {
-                    const event = new CustomEvent('ionHandlerDone');
+                    const event = new CustomEvent('ionHandlerDone', { detail: { data, role } });
                     window.dispatchEvent(event);
                   }, 1000);
                 }, 250);

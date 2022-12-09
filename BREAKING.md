@@ -21,6 +21,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Checkbox](#version-7x-checkbox)
   - [Datetime](#version-7x-datetime)
   - [Input](#version-7x-input)
+  - [Item](#version-7x-item)
   - [Modal](#version-7x-modal)
   - [Overlays](#version-7x-overlays)
   - [Picker](#version-7x-picker)
@@ -131,6 +132,16 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 - The `debounce` property's default value has changed from `0` to `undefined`. If `debounce` is undefined, the `ionInput` event will fire immediately.
 
 - The `detail` payload for the `ionInput` event now contains an object with the current `value` as well as the native event that triggered `ionInput`.
+
+<h4 id="version-7x-item">Item</h4>
+
+**Design tokens**
+
+iOS:
+
+| Token                 | Previous Value | New Value |
+| --------------------- | -------------- | --------- |
+| `$item-ios-font-size` | `17px`         | `16px`    |
 
 <h4 id="version-7x-modal">Modal</h4>
 

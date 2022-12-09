@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AccordionGroupChangeEventDetail, ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DatetimePresentation, FrameworkDelegate, InputChangeEventDetail, InputInputEventDetail, ItemReorderEventDetail, MenuChangeEventDetail, ModalBreakpointChangeEventDetail, ModalHandleBehavior, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerButton, PickerColumn, PopoverSize, PositionAlign, PositionReference, PositionSide, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextareaInputEventDetail, TextFieldTypes, TitleSelectedDatesFormatter, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, TriggerAction, ViewController } from "./interface";
+import { AccordionGroupChangeEventDetail, ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DatetimePresentation, FrameworkDelegate, InputChangeEventDetail, InputInputEventDetail, ItemReorderEventDetail, MenuChangeEventDetail, ModalBreakpointChangeEventDetail, ModalHandleBehavior, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerButton, PickerColumn, PopoverSize, PositionAlign, PositionReference, PositionSide, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextareaInputEventDetail, TextFieldTypes, TitleSelectedDatesFormatter, ToastButton, ToastPosition, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, TriggerAction, ViewController } from "./interface";
 import { IonicSafeString } from "./utils/sanitization";
 import { CounterFormatter } from "./components/item/item-interface";
 import { PickerColumnItem } from "./components/picker-column-internal/picker-column-internal-interfaces";
@@ -1625,7 +1625,7 @@ export namespace Components {
         /**
           * Determines whether or not a modal can dismiss when calling the `dismiss` method.  If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss. If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.
          */
-        "canDismiss": boolean | (() => Promise<boolean>);
+        "canDismiss": boolean | ((data?: any, role?: string) => Promise<boolean>);
         /**
           * The component to display inside of the modal.
          */
@@ -2971,7 +2971,7 @@ export namespace Components {
         /**
           * The position of the toast on the screen.
          */
-        "position": 'top' | 'bottom' | 'middle';
+        "position": ToastPosition;
         /**
           * Present the toast overlay after it has been created.
          */
@@ -5569,7 +5569,7 @@ declare namespace LocalJSX {
         /**
           * Determines whether or not a modal can dismiss when calling the `dismiss` method.  If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss. If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.
          */
-        "canDismiss"?: boolean | (() => Promise<boolean>);
+        "canDismiss"?: boolean | ((data?: any, role?: string) => Promise<boolean>);
         /**
           * The component to display inside of the modal.
          */
@@ -6991,7 +6991,7 @@ declare namespace LocalJSX {
         /**
           * The position of the toast on the screen.
          */
-        "position"?: 'top' | 'bottom' | 'middle';
+        "position"?: ToastPosition;
         /**
           * If `true`, the toast will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
