@@ -196,10 +196,15 @@ export class Checkbox implements ComponentInterface {
           'checkbox-disabled': disabled,
           'checkbox-indeterminate': indeterminate,
           interactive: true,
+          'ion-activatable': true,
+          'ion-focusable': true
         })}
       >
         <label class="checkbox-wrapper">
-          <div class="label-text-wrapper">
+          <div class={{
+            'label-text-wrapper': true,
+            'label-text-wrapper-hidden': el.textContent === '',
+          }}>
             <slot></slot>
           </div>
           <svg class="checkbox-icon" viewBox="0 0 24 24" part="container">

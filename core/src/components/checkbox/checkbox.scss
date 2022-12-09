@@ -21,8 +21,6 @@
    * @prop --checkmark-color: Color of the checkbox checkmark when checked
    * @prop --checkmark-width: Stroke width of the checkbox checkmark
    *
-   * @prop --ripple-color: Color of the ripple effect on MD mode
-   *
    * @prop --background: Background color of the container
    * @prop --background-activated: Background of the container when pressed
    * @prop --background-activated-opacity: Opacity of the container background when pressed
@@ -71,6 +69,7 @@
 }
 
 .checkbox-wrapper {
+  background: var(--background);
   display: flex;
 
   flex-grow: 1;
@@ -80,6 +79,16 @@
   height: 100%;
 
   cursor: inherit;
+}
+
+/**
+ * Allows us to set the background of the container
+ * While keeping the color and opacity separate.
+ */
+.checkbox-wrapper::after {
+  @include button-state();
+    
+  z-index: -1;
 }
 
 .label-text-wrapper {
@@ -95,6 +104,17 @@
   white-space: nowrap;
 
   overflow: hidden;
+
+  @include margin(0, 8px, 0, 0);
+}
+
+/**
+ * If no label text is placed into the slot
+ * then the element should be hidden otherwise
+ * there will be additional margins added.
+ */
+.label-text-wrapper-hidden {
+  display: none;
 }
 
 input {
@@ -135,6 +155,37 @@ input {
   stroke-width: var(--checkmark-width);
 
   opacity: 0;
+}
+
+// Hover State
+// ---------------------------------------------
+
+@media (any-hover: hover) {
+  :host(:not(.ion-focused):hover) .checkbox-wrapper::after {
+    background: var(--background-hover);
+    
+    opacity: var(--background-hover-opacity);
+  }
+}
+
+
+// Activated State
+// ---------------------------------------------
+
+:host(.ion-activated) .checkbox-wrapper::after {
+  background: var(--background-activated);
+  
+  opacity: var(--background-activated-opacity);
+}
+
+
+// Focused State
+// ---------------------------------------------
+
+:host(.ion-focused) .checkbox-wrapper::after {
+  background: var(--background-focused);
+
+  opacity: var(--background-focused-opacity);
 }
 
 
