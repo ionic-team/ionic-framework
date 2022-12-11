@@ -67,7 +67,7 @@ export class ItemSliding implements ComponentInterface {
    */
   @Event() ionDrag!: EventEmitter;
 
-  async connectedCallback() {
+  async componentDidLoad() {
     this.item = this.el.querySelector('ion-item');
     this.contentEl = findClosestIonContent(this.el);
 
