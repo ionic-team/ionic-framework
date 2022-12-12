@@ -509,7 +509,7 @@
 :host(.textarea-label-placement-stacked) .label-text-wrapper,
 :host(.has-focus.textarea-label-placement-floating) .label-text-wrapper,
 :host(.has-value.textarea-label-placement-floating) .label-text-wrapper {
-  @include transform(scale(0.82));
+  @include transform(scale(#{$textarea-floating-label-scale}));
 
   /**
    * Label text should not extend
