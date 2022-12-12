@@ -29,6 +29,7 @@
    * @prop --background-focused: Background of the container when focused
    * @prop --background-focused-opacity: Opacity of the container background when focused
    */
+  --background: transparent;
   --checkbox-background-checked: #{ion-color(primary, base)};
   --border-color-checked: #{ion-color(primary, base)};
   --checkmark-color: #{ion-color(primary, contrast)};
