@@ -362,7 +362,7 @@
 :host(.textarea-label-placement-start) .label-text,
 :host(.textarea-label-placement-end) .label-text,
 :host(.textarea-label-placement-fixed) .label-text {
-  @include margin(10px, 0);
+  @include margin(8px, 0);
 
   align-self: baseline;
 }
