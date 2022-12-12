@@ -6,7 +6,7 @@ test.describe('range: item', () => {
     await page.setContent(`
       <ion-list>
         <ion-item>
-          <ion-range><div slot="label">Temperature</div></ion-toggle>
+          <ion-range><div slot="label">Temperature</div></ion-range>
         </ion-item>
       </ion-list>
     `);
@@ -17,7 +17,7 @@ test.describe('range: item', () => {
     await page.setContent(`
       <ion-list inset="true">
         <ion-item>
-          <ion-range><div slot="label">Temperature</div></ion-toggle>
+          <ion-range><div slot="label">Temperature</div></ion-range>
         </ion-item>
       </ion-list>
     `);
@@ -27,8 +27,8 @@ test.describe('range: item', () => {
   test('label should have correct contrast when used in an item', async ({ page, skip }) => {
     skip.rtl();
     await page.setContent(`
-      <ion-item color="primary">
-        <ion-range><div slot="label">Temperature</div></ion-toggle>
+      <ion-item color="danger">
+        <ion-range><div slot="label">Temperature</div></ion-range>
       </ion-item>
     `);
     const item = page.locator('ion-item');
