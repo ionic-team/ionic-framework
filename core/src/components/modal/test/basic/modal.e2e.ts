@@ -60,7 +60,7 @@ test.describe('modal: focus trapping', () => {
   });
 });
 
-test.describe.only('modal: rendering', () => {
+test.describe('modal: rendering', () => {
   const runVisualTests = async (page: E2EPage, screenshotModifier = '') => {
     await page.goto('/src/components/modal/test/basic');
 
@@ -102,7 +102,9 @@ test.describe.only('modal: rendering', () => {
 });
 
 test.describe('modal: htmlAttributes inheritance', () => {
-  test('should correctly inherit attributes on host', async ({ page }) => {
+  test('should correctly inherit attributes on host', async ({ page, skip }) => {
+    skip.rtl();
+    skip.mode('md');
     await page.goto('/src/components/modal/test/basic');
     const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
 
