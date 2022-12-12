@@ -3,7 +3,7 @@ import { test } from '@utils/test/playwright';
 
 test.describe('select: basic', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/src/components/select/test/basic');
+    await page.goto('/src/components/select/test/legacy/basic');
   });
 
   test('should not open multiple alert windows when clicked multiple times', async ({ page }) => {

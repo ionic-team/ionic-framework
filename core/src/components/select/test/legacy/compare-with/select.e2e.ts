@@ -5,7 +5,7 @@ test.describe('select: compare-with', () => {
   test('should correctly set value when using compareWith property', async ({ page, skip }) => {
     skip.rtl('This is checking internal logic. RTL tests are not needed');
 
-    await page.goto('/src/components/select/test/compare-with');
+    await page.goto('/src/components/select/test/legacy/compare-with');
 
     const multipleSelect = await page.locator('#multiple');
     const singleSelect = await page.locator('#single');
