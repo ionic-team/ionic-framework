@@ -93,8 +93,6 @@
 }
 
 .label-text-wrapper {
-  @include margin(0, 8px, 0, 0);
-
   /**
    * This ensures that double tapping this text
    * clicks the <label> and focuses the input
@@ -157,6 +155,99 @@ input {
 
   opacity: 0;
 }
+
+
+// Justify Content
+// ---------------------------------------------
+
+:host(.checkbox-justify-space-between) .checkbox-wrapper {
+  justify-content: space-between;
+}
+
+:host(.checkbox-justify-space-between.checkbox-label-placement-start) .checkbox-icon,
+:host(.checkbox-justify-space-between.checkbox-label-placement-fixed) .checkbox-icon {
+  @include margin(0, 0, 0, auto);
+}
+
+:host(.checkbox-justify-space-between.checkbox-label-placement-end) .checkbox-icon {
+  @include margin(0, auto, 0, 0);
+}
+
+:host(.checkbox-justify-start) .checkbox-wrapper {
+  justify-content: start;
+}
+
+:host(.checkbox-justify-end) .checkbox-wrapper {
+  justify-content: end;
+}
+
+
+// Label Placement - Start
+// ----------------------------------------------------------------
+
+/**
+ * Label is on the left of the checkbox in LTR and
+ * on the right in RTL.
+ */
+:host(.checkbox-label-placement-start) .checkbox-wrapper {
+  flex-direction: row;
+}
+
+:host(.checkbox-label-placement-start) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the checkbox should be on the end
+   * when the label sits at the start.
+   */
+  @include margin(0, 8px, 0, 0);
+}
+
+
+// Label Placement - End
+// ----------------------------------------------------------------
+
+/**
+ * Label is on the right of the checkbox in LTR and
+ * on the left in RTL.
+ */
+:host(.checkbox-label-placement-end) .checkbox-wrapper {
+  flex-direction: row-reverse;
+}
+
+/**
+ * The margin between the label and
+ * the checkbox should be on the start
+ * when the label sits at the end.
+ */
+:host(.checkbox-label-placement-end) .label-text-wrapper {
+  @include margin(0, 0, 0, 8px);
+}
+
+
+// Label Placement - Fixed
+// ----------------------------------------------------------------
+
+:host(.checkbox-label-placement-fixed) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the checkbox should be on the end
+   * when the label sits at the start.
+   */
+  @include margin(0, 8px, 0, 0);
+}
+
+/**
+ * Label is on the left of the checkbox in LTR and
+ * on the right in RTL. Label also has a fixed width.
+ */
+:host(.checkbox-label-placement-fixed) .label-text-wrapper {
+  flex: 0 0 100px;
+
+  width: 100px;
+  min-width: 100px;
+  max-width: 200px;
+}
+
 
 // Hover State
 // ---------------------------------------------

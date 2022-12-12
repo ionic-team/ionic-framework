@@ -73,6 +73,25 @@ export class Checkbox implements ComponentInterface {
   @Prop() value: any | null = 'on';
 
   /**
+   * Where to place the label relative to the checkbox.
+   * `'start'`: The label will appear to the left of the checkbox in LTR and to the right in RTL.
+   * `'end'`: The label will appear to the right of the checkbox in LTR and to the left in RTL.
+   * `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+   */
+  @Prop() labelPlacement: 'start' | 'end' | 'fixed' = 'start';
+
+  /**
+   * How to pack the label and checkbox within a line.
+   * `'start'`: The label and checkbox will appear on the left in LTR and
+   * on the right in RTL.
+   * `'end'`: The label and checkbox will appear on the right in LTR and
+   * on the left in RTL.
+   * `'space-between'`: The label and checkbox will appear on opposite
+   * ends of the line with space between the two elements.
+   */
+  @Prop() justify: 'start' | 'end' | 'space-between' = 'space-between';
+
+  /**
    * Set the `legacy` property to `true` to forcibly use the legacy form control markup.
    * Ionic will only opt checkboxes in to the modern form markup when they are
    * using either the `aria-label` attribute or have text in the default slot. As a result,
@@ -176,7 +195,7 @@ export class Checkbox implements ComponentInterface {
   }
 
   private renderCheckbox() {
-    const { color, checked, disabled, el, getSVGPath, indeterminate, inputId, name, value } = this;
+    const { color, checked, disabled, el, getSVGPath, indeterminate, inputId, justify, labelPlacement, name, value } = this;
     const mode = getIonMode(this);
     const { label, labelId, labelText } = getAriaLabel(el, inputId);
     const path = getSVGPath(mode, indeterminate);
@@ -198,6 +217,8 @@ export class Checkbox implements ComponentInterface {
           interactive: true,
           'ion-activatable': true,
           'ion-focusable': true,
+          [`checkbox-justify-${justify}`]: true,
+          [`checkbox-label-placement-${labelPlacement}`]: true,
         })}
       >
         <label class="checkbox-wrapper">

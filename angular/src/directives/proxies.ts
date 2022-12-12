@@ -529,13 +529,13 @@ setting the checked property.
 
 @ProxyCmp({
   defineCustomElementFn: undefined,
-  inputs: ['checked', 'color', 'disabled', 'indeterminate', 'legacy', 'mode', 'name', 'value']
+  inputs: ['checked', 'color', 'disabled', 'indeterminate', 'justify', 'labelPlacement', 'legacy', 'mode', 'name', 'value']
 })
 @Component({
   selector: 'ion-checkbox',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['checked', 'color', 'disabled', 'indeterminate', 'legacy', 'mode', 'name', 'value']
+  inputs: ['checked', 'color', 'disabled', 'indeterminate', 'justify', 'labelPlacement', 'legacy', 'mode', 'name', 'value']
 })
 export class IonCheckbox {
   protected el: HTMLElement;

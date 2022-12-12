@@ -555,6 +555,14 @@ export namespace Components {
          */
         "indeterminate": boolean;
         /**
+          * How to pack the label and checkbox within a line. `'start'`: The label and checkbox will appear on the left in LTR and on the right in RTL. `'end'`: The label and checkbox will appear on the right in LTR and on the left in RTL. `'space-between'`: The label and checkbox will appear on opposite ends of the line with space between the two elements.
+         */
+        "justify": 'start' | 'end' | 'space-between';
+        /**
+          * Where to place the label relative to the checkbox. `'start'`: The label will appear to the left of the checkbox in LTR and to the right in RTL. `'end'`: The label will appear to the right of the checkbox in LTR and to the left in RTL. `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+         */
+        "labelPlacement": 'start' | 'end' | 'fixed';
+        /**
           * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt checkboxes in to the modern form markup when they are using either the `aria-label` attribute or have text in the default slot. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior.  Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
          */
         "legacy"?: boolean;
@@ -4462,6 +4470,14 @@ declare namespace LocalJSX {
           * If `true`, the checkbox will visually appear as indeterminate.
          */
         "indeterminate"?: boolean;
+        /**
+          * How to pack the label and checkbox within a line. `'start'`: The label and checkbox will appear on the left in LTR and on the right in RTL. `'end'`: The label and checkbox will appear on the right in LTR and on the left in RTL. `'space-between'`: The label and checkbox will appear on opposite ends of the line with space between the two elements.
+         */
+        "justify"?: 'start' | 'end' | 'space-between';
+        /**
+          * Where to place the label relative to the checkbox. `'start'`: The label will appear to the left of the checkbox in LTR and to the right in RTL. `'end'`: The label will appear to the right of the checkbox in LTR and to the left in RTL. `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+         */
+        "labelPlacement"?: 'start' | 'end' | 'fixed';
         /**
           * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt checkboxes in to the modern form markup when they are using either the `aria-label` attribute or have text in the default slot. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior.  Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
          */
