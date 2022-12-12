@@ -156,23 +156,21 @@ class DatetimeLocaleFixture {
   }
 
   async expectLocalizedDatePicker() {
-    // Captures a screenshot of the datepicker with localized am/pm labels
-    expect(await this.datetime.screenshot()).toMatchSnapshot(
-      `datetime-locale-${this.locale}-diff-${this.page.getSnapshotSettings()}.png`
-    );
+    await this.expectLocalizedPicker();
   }
 
   async expectLocalizedMonthYearPicker() {
-    // Capture a screenshot of the month/year picker with localized month labels.
-    expect(await this.datetime.screenshot()).toMatchSnapshot(
-      `datetime-locale-${this.locale}-month-year-diff-${this.page.getSnapshotSettings()}.png`
-    );
+    await this.expectLocalizedPicker('month-year');
   }
 
   async expectLocalizedTimePicker() {
-    // Capture a screenshot of the time picker with localized am/pm labels
+    await this.expectLocalizedPicker('time');
+  }
+
+  async expectLocalizedPicker(modifier?: string) {
+    const modifierString = modifier === undefined ? '' : `-${modifier}`;
     expect(await this.datetime.screenshot()).toMatchSnapshot(
-      `datetime-locale-${this.locale}-time-diff-${this.page.getSnapshotSettings()}.png`
+      `datetime-locale-${this.locale}${modifierString}-diff-${this.page.getSnapshotSettings()}.png`
     );
   }
 }
