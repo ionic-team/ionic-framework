@@ -15,7 +15,8 @@ test.describe('sheet modal: rendering', () => {
 });
 
 test.describe('sheet modal: backdrop', () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({ page, skip }) => {
+    skip.rtl();
     await page.goto('/src/components/modal/test/sheet');
   });
   test('should dismiss the sheet modal when clicking the active backdrop', async ({ page }) => {
@@ -55,7 +56,8 @@ test.describe('sheet modal: backdrop', () => {
 });
 
 test.describe('sheet modal: setting the breakpoint', () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({ page, skip }) => {
+    skip.rtl();
     await page.goto('/src/components/modal/test/sheet');
   });
   test.describe('sheet modal: invalid values', () => {
@@ -197,7 +199,8 @@ test.describe('sheet modal: setting the breakpoint', () => {
 });
 
 test.describe('sheet modal: clicking the handle', () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({ page, skip }) => {
+    skip.rtl();
     await page.goto('/src/components/modal/test/sheet');
   });
 
