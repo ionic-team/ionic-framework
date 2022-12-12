@@ -195,7 +195,8 @@ export class Checkbox implements ComponentInterface {
   }
 
   private renderCheckbox() {
-    const { color, checked, disabled, el, getSVGPath, indeterminate, inputId, justify, labelPlacement, name, value } = this;
+    const { color, checked, disabled, el, getSVGPath, indeterminate, inputId, justify, labelPlacement, name, value } =
+      this;
     const mode = getIonMode(this);
     const { label, labelId, labelText } = getAriaLabel(el, inputId);
     const path = getSVGPath(mode, indeterminate);
