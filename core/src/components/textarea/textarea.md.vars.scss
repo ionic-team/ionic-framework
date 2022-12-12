@@ -21,3 +21,6 @@ $textarea-md-padding-start:                   ($item-md-padding-start * 0.5) !de
 
 /// @prop - Placeholder text color of the textarea
 $textarea-md-placeholder-color:               $placeholder-text-color !default;
+
+/// @prop - How much to scale the floating label by
+$textarea-md-floating-label-scale: 0.75 !default;
