@@ -120,7 +120,9 @@ test.describe('modal: htmlAttributes inheritance', () => {
 });
 
 test.describe('modal: backdrop', () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({ page, skip }) => {
+    skip.rtl();
+    skip.mode('md');
     await page.goto('/src/components/modal/test/basic');
   });
 
