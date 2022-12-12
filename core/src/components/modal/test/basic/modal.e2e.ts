@@ -60,7 +60,7 @@ test.describe('modal: focus trapping', () => {
   });
 });
 
-test.describe('modal: rendering', () => {
+test.describe.only('modal: rendering', () => {
   const runVisualTests = async (page: E2EPage, screenshotModifier = '') => {
     await page.goto('/src/components/modal/test/basic');
 
@@ -89,9 +89,7 @@ test.describe('modal: rendering', () => {
     await ionModalWillDismiss.next();
     await ionModalDidDismiss.next();
 
-    expect(await page.screenshot()).toMatchSnapshot(
-      `modal-basic-dismiss-${screenshotModifier}${page.getSnapshotSettings()}.png`
-    );
+    await expect(modal).toBeHidden();
   };
 
   test('should not have visual regressions', async ({ page }) => {
