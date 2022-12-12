@@ -2,12 +2,9 @@ import { expect } from '@playwright/test';
 import { test, dragElementBy } from '@utils/test/playwright';
 
 test.describe('modal: canDismiss', () => {
-  test.beforeEach(async ({ skip }) => {
-    skip.rtl();
-  });
-
   test.describe('regular modal', () => {
-    test.beforeEach(async ({ page }) => {
+    test.beforeEach(async ({ page, skip }) => {
+      skip.rtl();
       await page.goto('/src/components/modal/test/canDismiss');
     });
     test('should dismiss when canDismiss is true', async ({ page }) => {
@@ -81,6 +78,7 @@ test.describe('modal: canDismiss', () => {
   });
   test.describe('card modal', () => {
     test.beforeEach(async ({ page, skip }) => {
+      skip.rtl();
       skip.mode('md');
       await page.goto('/src/components/modal/test/canDismiss');
       await page.click('#radio-card');
@@ -137,9 +135,9 @@ test.describe('modal: canDismiss', () => {
       expect(returnValue).toBe(false);
     });
   });
-
   test.describe('card modal - iOS swiping', () => {
     test.beforeEach(async ({ page, skip }) => {
+      skip.rtl();
       skip.mode('md');
       await page.goto('/src/components/modal/test/canDismiss');
       await page.click('#radio-card');
@@ -224,7 +222,8 @@ test.describe('modal: canDismiss', () => {
   });
 
   test.describe('sheet modal', () => {
-    test.beforeEach(async ({ page }) => {
+    test.beforeEach(async ({ page, skip }) => {
+      skip.rtl();
       await page.goto('/src/components/modal/test/canDismiss');
       await page.click('#radio-sheet');
     });
@@ -388,6 +387,7 @@ test.describe('modal: canDismiss', () => {
   test.describe('function params', () => {
     test.beforeEach(async ({ page, skip }) => {
       skip.mode('md');
+      skip.rtl();
       await page.goto('/src/components/modal/test/canDismiss');
     });
     test('should pass data and role when calling dismiss', async ({ page }) => {
