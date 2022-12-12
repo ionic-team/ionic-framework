@@ -7,7 +7,7 @@ test.describe('modal: canDismiss', () => {
   });
 
   test.describe('regular modal', () => {
-    test.beforeEach(({ page }) => {
+    test.beforeEach(async ({ page }) => {
       await page.goto('/src/components/modal/test/canDismiss');
     });
     test('should dismiss when canDismiss is true', async ({ page }) => {
