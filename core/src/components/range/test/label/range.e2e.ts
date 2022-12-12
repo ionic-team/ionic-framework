@@ -100,4 +100,21 @@ test.describe('range: label', () => {
       expect(await range.screenshot()).toMatchSnapshot(`range-items-fixed-${page.getSnapshotSettings()}.png`);
     });
   });
+
+  test.describe('range: label overflow', () => {
+    test('label should be truncated with ellipses', async ({ page, skip }) => {
+      skip.mode('ios');
+      skip.rtl();
+
+      await page.setContent(`
+        <ion-range>
+          <div slot="label">Temperature Temperature Temperature Temperature Temperature Temperature</div>
+        </ion-range>
+      `);
+
+      const range = page.locator('ion-range');
+
+      expect(await range.screenshot()).toMatchSnapshot(`range-label-truncate-${page.getSnapshotSettings()}.png`);
+    });
+  });
 });

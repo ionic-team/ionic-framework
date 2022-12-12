@@ -200,7 +200,7 @@
   opacity: 0.3;
 }
 
-.label-text-wrapper {
+::slotted([slot="label"]) {
 
   /**
    * Label text should not extend
@@ -225,6 +225,7 @@
 
   overflow: hidden;
 }
+
 
 /**
  * If no label text is placed into the slot
