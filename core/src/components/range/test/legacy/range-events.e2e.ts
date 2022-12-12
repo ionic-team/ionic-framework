@@ -32,7 +32,8 @@ test.describe('range: events:', () => {
       expect(ionChangeSpy).toHaveReceivedEventTimes(0);
     });
 
-    test('should emit when the knob is released', async ({ page }) => {
+    // TODO(FW-2873)
+    test.skip('should emit when the knob is released', async ({ page }) => {
       await page.setContent(`<ion-range></ion-range>`);
 
       const rangeHandle = page.locator('ion-range .range-knob-handle');
