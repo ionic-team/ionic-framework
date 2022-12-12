@@ -5,6 +5,7 @@ import type { E2EPage } from '@utils/test/playwright';
 test.describe('modal: focus trapping', () => {
   test.beforeEach(async ({ skip }) => {
     skip.rtl();
+    skip.mode('md');
     skip.browser('firefox', 'Firefox incorrectly allows keyboard focus to move to ion-content');
   });
   test('focus should be trapped inside of modal', async ({ page, browserName }) => {
