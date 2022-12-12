@@ -386,7 +386,7 @@ test.describe('modal: canDismiss', () => {
   });
 
   test.describe('function params', () => {
-    test.beforeEach(async ({ skip }) => {
+    test.beforeEach(async ({ page, skip }) => {
       skip.mode('md');
       await page.goto('/src/components/modal/test/canDismiss');
     });
