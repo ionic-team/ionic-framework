@@ -13,6 +13,7 @@ test.describe('checkbox: basic', () => {
 test.describe('checkbox: ionChange', () => {
   test.beforeEach(({ skip }) => {
     skip.rtl();
+    skip.mode('ios');
   });
 
   test('should fire ionChange when interacting with checkbox', async ({ page }) => {
