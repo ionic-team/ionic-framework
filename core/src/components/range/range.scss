@@ -204,7 +204,7 @@
 
   /**
    * Label text should not extend
-   * beyond the bounds of the input.
+   * beyond the bounds of the range.
    * However, we do not set the max
    * width to 100% because then
    * only the label would show and users
@@ -214,7 +214,7 @@
 
   /**
    * This ensures that double tapping this text
-   * clicks the <label> and focuses the input
+   * clicks the <label> and focuses the range
    * when a screen reader is enabled.
    */
   pointer-events: none;
@@ -251,7 +251,7 @@
 // ----------------------------------------------------------------
 
 /**
- * Label is on the left of the input in LTR and
+ * Label is on the left of the range in LTR and
  * on the right in RTL.
  */
 :host(.range-label-placement-start) .range-wrapper {
@@ -261,7 +261,7 @@
 :host(.range-label-placement-start) .label-text-wrapper {
   /**
    * The margin between the label and
-   * the input should be on the end
+   * the range should be on the end
    * when the label sits at the start.
    */
   @include margin(0, var(--margin), 0, 0);
@@ -271,7 +271,7 @@
 // ----------------------------------------------------------------
 
 /**
- * Label is on the right of the input in LTR and
+ * Label is on the right of the range in LTR and
  * on the left in RTL.
  */
 :host(.range-label-placement-end) .range-wrapper {
@@ -280,7 +280,7 @@
 
 /**
  * The margin between the label and
- * the input should be on the start
+ * the range should be on the start
  * when the label sits at the end.
  */
 :host(.range-label-placement-end) .label-text-wrapper {
@@ -293,14 +293,14 @@
 :host(.range-label-placement-fixed) .label-text-wrapper {
   /**
    * The margin between the label and
-   * the input should be on the end
+   * the range should be on the end
    * when the label sits at the start.
    */
   @include margin(0, var(--margin), 0, 0);
 }
 
 /**
- * Label is on the left of the input in LTR and
+ * Label is on the left of the range in LTR and
  * on the right in RTL. Label also has a fixed width.
  */
 :host(.range-label-placement-fixed) .label-text-wrapper {
