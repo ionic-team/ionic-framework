@@ -203,9 +203,6 @@ export const config: Config = {
     }),
   ],
   buildEs5: 'prod',
-  extras: {
-    initializeNextTick: true
-  },
   testing: {
     moduleNameMapper: {
       "@utils/test": ["<rootDir>/src/utils/test/utils"],
