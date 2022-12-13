@@ -18,6 +18,7 @@
    * @prop --pin-color: Color of the range pin (only available in MD mode)
    */
   --knob-handle-size: calc(var(--knob-size) * 2);
+  --margin: 8px;
 
   display: flex;
   position: relative;
@@ -171,4 +172,141 @@
 
 :host(.in-item) ::slotted(ion-label) {
   align-self: center;
+}
+
+// Range Wrapper
+// --------------------------------------------------
+
+.range-wrapper {
+  display: flex;
+
+  position: relative;
+
+  flex-grow: 1;
+
+  align-items: center;
+
+  height: 100%;
+}
+
+// Range Label
+// ----------------------------------------------------------------
+
+/**
+ * When the range is disabled, only the text
+ * receives an opacity. The range changes color instead.
+ */
+:host(.range-disabled) .label-text-wrapper {
+  opacity: 0.3;
+}
+
+::slotted([slot="label"]) {
+
+  /**
+   * Label text should not extend
+   * beyond the bounds of the range.
+   * However, we do not set the max
+   * width to 100% because then
+   * only the label would show and users
+   * would not be able to see the range.
+   */
+  max-width: 200px;
+
+  /**
+   * This ensures that double tapping this text
+   * clicks the <label> and focuses the range
+   * when a screen reader is enabled.
+   */
+  pointer-events: none;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+}
+
+
+/**
+ * If no label text is placed into the slot
+ * then the element should be hidden otherwise
+ * there will be additional margins added.
+ */
+.label-text-wrapper-hidden {
+  display: none;
+}
+
+// Range Native Wrapper
+// ----------------------------------------------------------------
+
+.native-wrapper {
+  display: flex;
+
+  flex-grow: 1;
+
+  align-items: center;
+}
+
+// Range Label Placement - Start
+// ----------------------------------------------------------------
+
+/**
+ * Label is on the left of the range in LTR and
+ * on the right in RTL.
+ */
+:host(.range-label-placement-start) .range-wrapper {
+  flex-direction: row;
+}
+
+:host(.range-label-placement-start) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the range should be on the end
+   * when the label sits at the start.
+   */
+  @include margin(0, var(--margin), 0, 0);
+}
+
+// Range Label Placement - End
+// ----------------------------------------------------------------
+
+/**
+ * Label is on the right of the range in LTR and
+ * on the left in RTL.
+ */
+:host(.range-label-placement-end) .range-wrapper {
+  flex-direction: row-reverse;
+}
+
+/**
+ * The margin between the label and
+ * the range should be on the start
+ * when the label sits at the end.
+ */
+:host(.range-label-placement-end) .label-text-wrapper {
+  @include margin(0, 0, 0, var(--margin));
+}
+
+// Range Label Placement - Fixed
+// ----------------------------------------------------------------
+
+:host(.range-label-placement-fixed) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the range should be on the end
+   * when the label sits at the start.
+   */
+  @include margin(0, var(--margin), 0, 0);
+}
+
+/**
+ * Label is on the left of the range in LTR and
+ * on the right in RTL. Label also has a fixed width.
+ */
+:host(.range-label-placement-fixed) .label-text-wrapper {
+  flex: 0 0 100px;
+
+  width: 100px;
+  min-width: 100px;
+  max-width: 200px;
 }

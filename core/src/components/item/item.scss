@@ -107,6 +107,15 @@
   overflow: initial;
 }
 
+/**
+ * The shadow of the range knob should
+ * not be clipped by the item.
+ */
+// TODO FW-2997 This should check for a slotted ion-range
+:host(.item-has-modern-range) {
+  overflow: initial;
+}
+
 // Item: Color
 // --------------------------------------------------
 
