@@ -358,9 +358,16 @@ export class PickerInternal implements ComponentInterface {
      * is "1" and we entered "2", then the complete value
      * is "12" and we should select hour 12.
      *
-     * Regex removes any leading zeros from values like "02".
+     * Regex removes any leading zeros from values like "02",
+     * but it keeps a single zero if there are only zeros in the string.
+     * 0+(?=[1-9]) --> Match 1 or more zeros that are followed by 1-9
+     * 0+(?=0$) --> Match 1 or more zeros that must be followed by one 0 and end.
      */
-    const findItemFromCompleteValue = values.find(({ text }) => text.replace(/^0+/, '') === inputEl.value);
+    const findItemFromCompleteValue = values.find(({ text }) => {
+      const parsedText = text.replace(/^0+(?=[1-9])|0+(?=0$)/, '');
+      return parsedText === inputEl.value;
+    });
+
     if (findItemFromCompleteValue) {
       inputModeColumn.setValue(findItemFromCompleteValue.value);
       return;

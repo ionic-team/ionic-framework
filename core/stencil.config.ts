@@ -58,9 +58,7 @@ export const config: Config = {
     { components: ['ion-breadcrumb', 'ion-breadcrumbs'] },
   ],
   plugins: [
-    sass({
-      injectGlobalPaths: ['src/themes/ionic.skip-warns.scss']
-    })
+    sass(),
   ],
   outputTargets: [
     reactOutputTarget({
@@ -218,39 +216,10 @@ export const config: Config = {
     scriptDataOpts: true
   },
   testing: {
-    testRegex: '(/__tests__/.*|(\\.|/)(test|spec)|[//](e2e))\\.[jt]sx?$',
-    allowableMismatchedPixels: 200,
-    pixelmatchThreshold: 0.05,
-    waitBeforeScreenshot: 20,
     moduleNameMapper: {
       "@utils/test": ["<rootDir>/src/utils/test/utils"],
       "@utils/logging": ["<rootDir>/src/utils/logging"],
-
     },
-    emulate: [
-      {
-        userAgent: 'iPhone',
-        viewport: {
-          width: 400,
-          height: 800,
-          deviceScaleFactor: 2,
-          isMobile: true,
-          hasTouch: true,
-          isLandscape: false
-        }
-      },
-      {
-        userAgent: 'Android',
-        viewport: {
-          width: 400,
-          height: 800,
-          deviceScaleFactor: 2,
-          isMobile: true,
-          hasTouch: true,
-          isLandscape: false
-        }
-      }
-    ]
   },
   preamble: '(C) Ionic http://ionicframework.com - MIT License',
   globalScript: 'src/global/ionic-global.ts',

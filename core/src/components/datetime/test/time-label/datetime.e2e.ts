@@ -2,6 +2,10 @@ import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
 test.describe('datetime: time label', () => {
+  test.beforeEach(({ skip }) => {
+    skip.rtl();
+    skip.mode('md');
+  });
   test('should render default time label', async ({ page }) => {
     await page.setContent(`
       <ion-datetime></ion-datetime>

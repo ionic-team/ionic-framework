@@ -1,14 +1,9 @@
 import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
-test.describe('searchbar: basic', () => {
+test.describe('searchbar: cancel button', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto(`/src/components/searchbar/test/basic`);
-  });
-
-  test('should not have visual regressions', async ({ page }) => {
-    await page.setIonViewport();
-    expect(await page.screenshot()).toMatchSnapshot(`searchbar-diff-${page.getSnapshotSettings()}.png`);
   });
 
   test('should show cancel button on focus if show-cancel-button=focus', async ({ page }) => {
@@ -75,5 +70,78 @@ test.describe('searchbar: clear button', () => {
     await page.waitForChanges();
 
     await expect(nativeInput).toBeFocused();
+  });
+});
+
+test.describe('searchbar: rendering', () => {
+  test('should render searchbar', async ({ page }) => {
+    await page.setContent(`
+      <ion-searchbar></ion-searchbar>
+    `);
+
+    const searchbar = page.locator('ion-searchbar');
+
+    expect(await searchbar.screenshot()).toMatchSnapshot(`searchbar-${page.getSnapshotSettings()}.png`);
+  });
+
+  test('should render cancel and clear buttons', async ({ page }) => {
+    await page.setContent(`
+      <ion-searchbar show-cancel-button="always" show-clear-button="always"></ion-searchbar>
+    `);
+
+    const searchbar = page.locator('ion-searchbar');
+
+    expect(await searchbar.screenshot()).toMatchSnapshot(`searchbar-buttons-${page.getSnapshotSettings()}.png`);
+  });
+
+  test('should render searchbar with color', async ({ page, skip }) => {
+    skip.rtl();
+
+    await page.setContent(`
+      <ion-searchbar color="danger" show-cancel-button="always" show-clear-button="always"></ion-searchbar>
+    `);
+
+    const searchbar = page.locator('ion-searchbar');
+
+    expect(await searchbar.screenshot()).toMatchSnapshot(`searchbar-color-${page.getSnapshotSettings()}.png`);
+  });
+
+  test('should render disabled searchbar', async ({ page, skip }) => {
+    skip.rtl();
+
+    await page.setContent(`
+      <ion-searchbar disabled="true"></ion-searchbar>
+    `);
+
+    const searchbar = page.locator('ion-searchbar');
+
+    expect(await searchbar.screenshot()).toMatchSnapshot(`searchbar-disabled-${page.getSnapshotSettings()}.png`);
+  });
+
+  test('should render custom search icon', async ({ page, skip }) => {
+    skip.rtl();
+
+    await page.setContent(`
+      <ion-searchbar search-icon="home"></ion-searchbar>
+    `);
+
+    const icon = page.locator('ion-searchbar ion-icon.searchbar-search-icon');
+
+    expect(await icon.screenshot()).toMatchSnapshot(`searchbar-search-icon-${page.getSnapshotSettings()}.png`);
+  });
+});
+
+test.describe('searchbar: placeholder', () => {
+  test.beforeEach(({ skip }) => {
+    skip.rtl();
+    skip.mode('ios');
+  });
+  test('should set placeholder', async ({ page }) => {
+    await page.setContent(`
+      <ion-searchbar placeholder="My Placeholder"></ion-searchbar>
+    `);
+
+    const nativeInput = page.locator('ion-searchbar input');
+    await expect(nativeInput).toHaveAttribute('placeholder', 'My Placeholder');
   });
 });
