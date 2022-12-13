@@ -741,7 +741,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
       }
     }
 
-    let labelledBy;
+    let labelledBy: string;
     if (!this.legacyFormController.hasLegacyControl() && this.hasLabel) {
       labelledBy = 'range-label';
     }
