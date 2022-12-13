@@ -5,6 +5,7 @@ import type { E2EPage } from '@utils/test/playwright';
 test.describe('modal: focus trapping', () => {
   test.beforeEach(async ({ skip }) => {
     skip.rtl();
+    skip.mode('md');
     skip.browser('firefox', 'Firefox incorrectly allows keyboard focus to move to ion-content');
   });
   test('focus should be trapped inside of modal', async ({ page, browserName }) => {
@@ -88,9 +89,7 @@ test.describe('modal: rendering', () => {
     await ionModalWillDismiss.next();
     await ionModalDidDismiss.next();
 
-    expect(await page.screenshot()).toMatchSnapshot(
-      `modal-basic-dismiss-${screenshotModifier}${page.getSnapshotSettings()}.png`
-    );
+    await expect(modal).toBeHidden();
   };
 
   test('should not have visual regressions', async ({ page }) => {
@@ -103,7 +102,9 @@ test.describe('modal: rendering', () => {
 });
 
 test.describe('modal: htmlAttributes inheritance', () => {
-  test('should correctly inherit attributes on host', async ({ page }) => {
+  test('should correctly inherit attributes on host', async ({ page, skip }) => {
+    skip.rtl();
+    skip.mode('md');
     await page.goto('/src/components/modal/test/basic');
     const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
 
@@ -119,7 +120,9 @@ test.describe('modal: htmlAttributes inheritance', () => {
 });
 
 test.describe('modal: backdrop', () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({ page, skip }) => {
+    skip.rtl();
+    skip.mode('md');
     await page.goto('/src/components/modal/test/basic');
   });
 
@@ -138,7 +141,9 @@ test.describe('modal: backdrop', () => {
 });
 
 test.describe('modal: incorrect usage', () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({ page, skip }) => {
+    skip.rtl();
+    skip.mode('md');
     await page.goto('/src/components/modal/test/basic');
   });
 
