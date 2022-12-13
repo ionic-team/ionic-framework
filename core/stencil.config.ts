@@ -204,8 +204,7 @@ export const config: Config = {
   ],
   buildEs5: 'prod',
   extras: {
-    initializeNextTick: true,
-    scriptDataOpts: true
+    initializeNextTick: true
   },
   testing: {
     moduleNameMapper: {
