@@ -22,7 +22,8 @@ test.describe('datetime-button: rendering', () => {
     );
   });
 
-  test('should size the popover correctly', async ({ page }) => {
+  test('should size the popover correctly', async ({ page, skip }) => {
+    skip.browser('firefox', 'Rendering is flaky in Firefox 107');
     await page.setContent(`
       <ion-datetime-button datetime="datetime"></ion-datetime-button>
       <ion-popover>
