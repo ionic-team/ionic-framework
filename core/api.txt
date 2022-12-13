@@ -320,6 +320,7 @@ ion-checkbox,css-prop,--checkbox-background
 ion-checkbox,css-prop,--checkbox-background-checked
 ion-checkbox,css-prop,--checkmark-color
 ion-checkbox,css-prop,--checkmark-width
+ion-checkbox,css-prop,--ripple-color
 ion-checkbox,css-prop,--size
 ion-checkbox,css-prop,--transition
 ion-checkbox,part,container

@@ -30,6 +30,7 @@ export class Checkbox implements ComponentInterface {
   private inputId = `ion-cb-${checkboxIds++}`;
   private focusEl?: HTMLElement;
   private legacyFormController!: LegacyFormController;
+  private inItem = false;
 
   // This flag ensures we log the deprecation warning at most once.
   private hasLoggedDeprecationWarning = false;
@@ -132,6 +133,7 @@ export class Checkbox implements ComponentInterface {
   }
 
   componentWillLoad() {
+    this.inItem = !!this.el.closest('ion-item');
     this.emitStyle();
   }
 
@@ -195,8 +197,20 @@ export class Checkbox implements ComponentInterface {
   }
 
   private renderCheckbox() {
-    const { color, checked, disabled, el, getSVGPath, indeterminate, inputId, justify, labelPlacement, name, value } =
-      this;
+    const {
+      color,
+      checked,
+      disabled,
+      el,
+      getSVGPath,
+      indeterminate,
+      inItem,
+      inputId,
+      justify,
+      labelPlacement,
+      name,
+      value,
+    } = this;
     const mode = getIonMode(this);
     const { label, labelId, labelText } = getAriaLabel(el, inputId);
     const path = getSVGPath(mode, indeterminate);
@@ -245,6 +259,7 @@ export class Checkbox implements ComponentInterface {
             onBlur={() => this.onBlur()}
             ref={(focusEl) => (this.focusEl = focusEl)}
           />
+          {mode === 'md' && inItem && <ion-ripple-effect></ion-ripple-effect>}
         </label>
       </Host>
     );

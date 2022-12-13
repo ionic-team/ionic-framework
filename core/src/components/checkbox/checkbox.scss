@@ -17,6 +17,7 @@
    * @prop --border-color-checked: Border color of the checkbox icon when checked
    *
    * @prop --transition: Transition of the checkbox icon
+   * @prop --ripple-color: Color of the ripple effect on MD mode, if checkbox is in an ion-item
    *
    * @prop --checkmark-color: Color of the checkbox checkmark when checked
    * @prop --checkmark-width: Stroke width of the checkbox checkmark
@@ -303,4 +304,12 @@ input {
 
 :host(.checkbox-disabled) {
   pointer-events: none;
+}
+
+
+// Ripple Effect (MD + In Item Only)
+// ---------------------------------------------
+
+ion-ripple-effect {
+  color: var(--ripple-color);
 }
