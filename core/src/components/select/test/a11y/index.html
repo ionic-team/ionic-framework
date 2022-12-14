@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Input - a11y</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <main>
+      <h1>Input - a11y</h1>
+
+      <ion-select label="My Label"></ion-select><br />
+      <ion-select aria-label="My Label"></ion-select><br />
+      <ion-select label="My Label" placeholder="Placeholder"></ion-select><br />
+      <ion-select label="My Label" value="oranges">
+        <ion-select-option value="apples">Apples</ion-select-option>
+        <ion-select-option value="bananas">Bananas</ion-select-option>
+        <ion-select-option value="oranges">Oranges</ion-select-option>
+      </ion-select>
+
+      <!--<ion-item>
+        <ion-label>My Label</ion-label>
+        <ion-select placeholder="Placeholder"></ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>My Label</ion-label>
+        <ion-select value="oranges">
+          <ion-select-option value="apples">Apples</ion-select-option>
+          <ion-select-option value="bananas">Bananas</ion-select-option>
+          <ion-select-option value="oranges">Oranges</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+
+      <input type="text" aria-label="My Label" placeholder="My Placeholder" />
+      <input type="text" aria-label="My Label" value="MY value" />-->
+    </main>
+  </body>
+</html>
