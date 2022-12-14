@@ -20,6 +20,17 @@ test.describe('textarea: label placement start', () => {
       `textarea-placement-start-multi-line-value-${page.getSnapshotSettings()}.png`
     );
   });
+
+  test('label should be truncated', async ({ page }) => {
+    await page.setContent(`
+    <ion-textarea label="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur." label-placement="start"></ion-textarea>
+  `);
+
+    const textarea = page.locator('ion-textarea');
+    expect(await textarea.screenshot()).toMatchSnapshot(
+      `textarea-placement-start-label-truncated-${page.getSnapshotSettings()}.png`
+    );
+  });
 });
 
 test.describe('textarea: label placement end', () => {
@@ -41,6 +52,16 @@ test.describe('textarea: label placement end', () => {
       `textarea-placement-end-multi-line-value-${page.getSnapshotSettings()}.png`
     );
   });
+  test('label should be truncated', async ({ page }) => {
+    await page.setContent(`
+    <ion-textarea label="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur." label-placement="end"></ion-textarea>
+  `);
+
+    const textarea = page.locator('ion-textarea');
+    expect(await textarea.screenshot()).toMatchSnapshot(
+      `textarea-placement-end-label-truncated-${page.getSnapshotSettings()}.png`
+    );
+  });
 });
 
 test.describe('textarea: label placement fixed', () => {
@@ -60,6 +81,16 @@ test.describe('textarea: label placement fixed', () => {
     const textarea = page.locator('ion-textarea');
     expect(await textarea.screenshot()).toMatchSnapshot(
       `textarea-placement-fixed-multi-line-value-${page.getSnapshotSettings()}.png`
+    );
+  });
+  test('label should be truncated', async ({ page }) => {
+    await page.setContent(`
+    <ion-textarea label="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur." label-placement="fixed"></ion-textarea>
+  `);
+
+    const textarea = page.locator('ion-textarea');
+    expect(await textarea.screenshot()).toMatchSnapshot(
+      `textarea-placement-fixed-label-truncated-${page.getSnapshotSettings()}.png`
     );
   });
 });
@@ -93,6 +124,16 @@ test.describe('textarea: label placement stacked', () => {
     const textarea = page.locator('ion-textarea');
     expect(await textarea.screenshot()).toMatchSnapshot(
       `textarea-placement-stacked-multi-line-value-${page.getSnapshotSettings()}.png`
+    );
+  });
+  test('label should be truncated', async ({ page }) => {
+    await page.setContent(`
+    <ion-textarea label="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur." label-placement="stacked"></ion-textarea>
+  `);
+
+    const textarea = page.locator('ion-textarea');
+    expect(await textarea.screenshot()).toMatchSnapshot(
+      `textarea-placement-stacked-label-truncated-${page.getSnapshotSettings()}.png`
     );
   });
 });
@@ -143,6 +184,16 @@ test.describe('textarea: label placement floating', () => {
     const textarea = page.locator('ion-textarea');
     expect(await textarea.screenshot()).toMatchSnapshot(
       `textarea-placement-floating-multi-line-value-${page.getSnapshotSettings()}.png`
+    );
+  });
+  test('label should be truncated', async ({ page }) => {
+    await page.setContent(`
+    <ion-textarea label="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur." label-placement="floating"></ion-textarea>
+  `);
+
+    const textarea = page.locator('ion-textarea');
+    expect(await textarea.screenshot()).toMatchSnapshot(
+      `textarea-placement-floating-label-truncated-${page.getSnapshotSettings()}.png`
     );
   });
 });
