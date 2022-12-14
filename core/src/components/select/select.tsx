@@ -606,7 +606,14 @@ export class Select implements ComponentInterface {
   };
 
   private renderSelect() {
-    return <Host>stub</Host>;
+    return (
+      <Host>
+        <label id="select-label">
+          Stubbed Label
+          {this.renderListbox('select-label')}
+        </label>
+      </Host>
+    );
   }
 
   private renderLegacySelect() {
@@ -682,18 +689,25 @@ For inputs that do not have a visible label, developers should use "aria-label" 
           <div class="select-icon-inner"></div>
         </div>
         <label id={labelId}>{displayLabel}</label>
-        <button
-          type="button"
-          disabled={disabled}
-          id={inputId}
-          aria-labelledby={labelId}
-          aria-haspopup="listbox"
-          aria-expanded={`${isExpanded}`}
-          onFocus={this.onFocus}
-          onBlur={this.onBlur}
-          ref={(focusEl) => (this.focusEl = focusEl)}
-        ></button>
+        {this.renderListbox(labelId)}
       </Host>
+    );
+  }
+
+  private renderListbox(labelId: string) {
+    const { disabled, inputId, isExpanded } = this;
+    return (
+      <button
+        type="button"
+        disabled={disabled}
+        id={inputId}
+        aria-labelledby={labelId}
+        aria-haspopup="listbox"
+        aria-expanded={`${isExpanded}`}
+        onFocus={this.onFocus}
+        onBlur={this.onBlur}
+        ref={(focusEl) => (this.focusEl = focusEl)}
+      ></button>
     );
   }
 
