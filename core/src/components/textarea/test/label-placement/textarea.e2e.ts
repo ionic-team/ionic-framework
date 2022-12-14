@@ -4,40 +4,70 @@ import { test } from '@utils/test/playwright';
 test.describe('textarea: label placement start', () => {
   test('label should appear on the starting side of the textarea', async ({ page }) => {
     await page.setContent(`
-      <ion-textarea label="Email" value="example@ionic.io" label-placement="start"></ion-textarea>
+      <ion-textarea label="Standard" value="Lorem ipsum" label-placement="start"></ion-textarea>
     `);
 
     const textarea = page.locator('ion-textarea');
     expect(await textarea.screenshot()).toMatchSnapshot(`textarea-placement-start-${page.getSnapshotSettings()}.png`);
+  });
+  test('textarea should render multiple lines of text', async ({ page }) => {
+    await page.setContent(`
+    <ion-textarea label="Standard" label-placement="start" value="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."></ion-textarea>
+  `);
+
+    const textarea = page.locator('ion-textarea');
+    expect(await textarea.screenshot()).toMatchSnapshot(
+      `textarea-placement-start-multi-line-value-${page.getSnapshotSettings()}.png`
+    );
   });
 });
 
 test.describe('textarea: label placement end', () => {
   test('label should appear on the ending side of the textarea', async ({ page }) => {
     await page.setContent(`
-      <ion-textarea label="Email" value="example@ionic.io" label-placement="end"></ion-textarea>
+      <ion-textarea label="Standard" value="Lorem ipsum" label-placement="end"></ion-textarea>
     `);
 
     const textarea = page.locator('ion-textarea');
     expect(await textarea.screenshot()).toMatchSnapshot(`textarea-placement-end-${page.getSnapshotSettings()}.png`);
+  });
+  test('textarea should render multiple lines of text', async ({ page }) => {
+    await page.setContent(`
+    <ion-textarea label="Standard" label-placement="end" value="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."></ion-textarea>
+  `);
+
+    const textarea = page.locator('ion-textarea');
+    expect(await textarea.screenshot()).toMatchSnapshot(
+      `textarea-placement-end-multi-line-value-${page.getSnapshotSettings()}.png`
+    );
   });
 });
 
 test.describe('textarea: label placement fixed', () => {
   test('label should appear on the starting side of the textarea and have a fixed width', async ({ page }) => {
     await page.setContent(`
-      <ion-textarea label="Email" value="example@ionic.io" label-placement="fixed"></ion-textarea>
+      <ion-textarea label="Standard" value="Lorem ipsum" label-placement="fixed"></ion-textarea>
     `);
 
     const textarea = page.locator('ion-textarea');
     expect(await textarea.screenshot()).toMatchSnapshot(`textarea-placement-fixed-${page.getSnapshotSettings()}.png`);
+  });
+  test('textarea should render multiple lines of text', async ({ page }) => {
+    await page.setContent(`
+    <ion-textarea label="Standard" label-placement="fixed" value="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."></ion-textarea>
+  `);
+
+    const textarea = page.locator('ion-textarea');
+    expect(await textarea.screenshot()).toMatchSnapshot(
+      `textarea-placement-fixed-multi-line-value-${page.getSnapshotSettings()}.png`
+    );
   });
 });
 
 test.describe('textarea: label placement stacked', () => {
   test('label should appear above the textarea when there is a value', async ({ page }) => {
     await page.setContent(`
-      <ion-textarea label="Email" value="example@ionic.io" label-placement="stacked"></ion-textarea>
+      <ion-textarea label="Standard" value="Lorem ipsum" label-placement="stacked"></ion-textarea>
     `);
 
     const textarea = page.locator('ion-textarea');
@@ -47,7 +77,7 @@ test.describe('textarea: label placement stacked', () => {
   });
   test('label should appear above the textarea when there is a no value', async ({ page }) => {
     await page.setContent(`
-      <ion-textarea label="Email" label-placement="stacked"></ion-textarea>
+      <ion-textarea label="Standard" label-placement="stacked"></ion-textarea>
     `);
 
     const textarea = page.locator('ion-textarea');
@@ -55,12 +85,22 @@ test.describe('textarea: label placement stacked', () => {
       `textarea-placement-stacked-no-value-${page.getSnapshotSettings()}.png`
     );
   });
+  test('textarea should render multiple lines of text', async ({ page }) => {
+    await page.setContent(`
+    <ion-textarea label="Standard" label-placement="stacked" value="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."></ion-textarea>
+  `);
+
+    const textarea = page.locator('ion-textarea');
+    expect(await textarea.screenshot()).toMatchSnapshot(
+      `textarea-placement-stacked-multi-line-value-${page.getSnapshotSettings()}.png`
+    );
+  });
 });
 
 test.describe('textarea: label placement floating', () => {
   test('label should appear above the textarea when there is a value', async ({ page }) => {
     await page.setContent(`
-      <ion-textarea label="Email" value="example@ionic.io" label-placement="floating"></ion-textarea>
+      <ion-textarea label="Standard" value="Lorem ipsum" label-placement="floating"></ion-textarea>
     `);
 
     const textarea = page.locator('ion-textarea');
@@ -72,7 +112,7 @@ test.describe('textarea: label placement floating', () => {
     page,
   }) => {
     await page.setContent(`
-      <ion-textarea label="Email" label-placement="floating" placeholder="example@ionic.io"></ion-textarea>
+      <ion-textarea label="Standard" label-placement="floating" placeholder="Placeholder"></ion-textarea>
     `);
 
     const textarea = page.locator('ion-textarea');
@@ -82,7 +122,7 @@ test.describe('textarea: label placement floating', () => {
   });
   test('label should appear on top of the textarea when the textarea is focused', async ({ page }) => {
     await page.setContent(`
-      <ion-textarea label="Email" label-placement="floating" placeholder="example@ionic.io"></ion-textarea>
+      <ion-textarea label="Standard" label-placement="floating" placeholder="Placeholder"></ion-textarea>
     `);
 
     const textarea = page.locator('ion-textarea');
@@ -93,6 +133,16 @@ test.describe('textarea: label placement floating', () => {
 
     expect(await textarea.screenshot({ animations: 'disabled' })).toMatchSnapshot(
       `textarea-focused-placement-floating-no-value-${page.getSnapshotSettings()}.png`
+    );
+  });
+  test('textarea should render multiple lines of text', async ({ page }) => {
+    await page.setContent(`
+    <ion-textarea label="Standard" label-placement="floating" value="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."></ion-textarea>
+  `);
+
+    const textarea = page.locator('ion-textarea');
+    expect(await textarea.screenshot()).toMatchSnapshot(
+      `textarea-placement-floating-multi-line-value-${page.getSnapshotSettings()}.png`
     );
   });
 });
