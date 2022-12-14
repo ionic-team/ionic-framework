@@ -2,7 +2,9 @@ import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
 test.describe('datetime: month-year picker', () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({ page, skip }) => {
+    skip.rtl();
+    skip.mode('md');
     await page.goto('/src/components/datetime/test/month-year-picker');
     await page.waitForSelector('.datetime-ready');
   });
