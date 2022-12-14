@@ -605,12 +605,62 @@ export class Select implements ComponentInterface {
     this.ionBlur.emit();
   };
 
+  private renderLabel() {
+    const { label } = this;
+    if (label === undefined) {
+      return;
+    }
+
+    return (
+      <div class="label-text-wrapper">
+        <div class="label-text">{this.label}</div>
+      </div>
+    );
+  }
+
+  /**
+   * Renders the border container
+   * when fill="outline".
+   */
+  private renderLabelContainer() {
+    const mode = getIonMode(this);
+    const hasOutlineFill = mode === 'md' && this.fill === 'outline';
+
+    if (hasOutlineFill) {
+      /**
+       * The outline fill has a special outline
+       * that appears around the select and the label.
+       * Certain stacked and floating label placements cause the
+       * label to translate up and create a "cut out"
+       * inside of that border by using the notch-spacer element.
+       */
+      return [
+        <div class="select-outline-container">
+          <div class="select-outline-start"></div>
+          <div class="select-outline-notch">
+            <div class="notch-spacer" aria-hidden="true">
+              {this.label}
+            </div>
+          </div>
+          <div class="select-outline-end"></div>
+        </div>,
+        this.renderLabel(),
+      ];
+    }
+
+    /**
+     * If not using the outline style,
+     * we can render just the label.
+     */
+    return this.renderLabel();
+  }
+
   private renderSelect() {
     return (
       <Host>
-        <label id="select-label">
-          Stubbed Label
-          {this.renderListbox('select-label')}
+        <label class="select-wrapper" id="select-label">
+          {this.renderLabelContainer()}
+          <div class="native-wrapper">{this.renderListbox('select-label')}</div>
         </label>
       </Host>
     );
