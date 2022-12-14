@@ -203,6 +203,8 @@ Ionic now listens on the `keydown` event instead of the `keyup` event when deter
 
 - `ionChange` is no longer emitted when the `value` of `ion-select` is modified externally. `ionChange` is only emitted from user committed changes, such as confirming a selected option in the select's overlay.
 
+- The `icon` CSS Shadow Part now targets an `ion-icon` component.
+
 **Design tokens**
 
 | Token                   | Previous Value | New Value |
