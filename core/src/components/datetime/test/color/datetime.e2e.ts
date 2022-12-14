@@ -7,7 +7,6 @@ test.describe('datetime: color', () => {
 
     await page.goto('/src/components/datetime/test/color');
 
-    const darkModeToggle = page.locator('ion-checkbox');
     const datetime = page.locator('ion-datetime');
 
     expect(await datetime.screenshot()).toMatchSnapshot(`datetime-color-${page.getSnapshotSettings()}.png`);
