@@ -27,7 +27,7 @@
   --padding-top: 0px;
   --padding-end: 0px;
   --padding-bottom: 0px;
-  --padding-left: 0px;
+  --padding-start: 0px;
   --placeholder-color: currentColor;
   --placeholder-opacity: 0.6;
 
@@ -135,10 +135,17 @@ button {
 
   flex-grow: 1;
 
-
-  align-items: stretch;
+  align-items: center;
 
   height: 100%;
+
+  /**
+   * This allows developers to set the height
+   * on the host of the element but still have
+   * the label take up the full height
+   * of the parent.
+   */
+  min-height: inherit;
 
   transition: background-color 15ms linear;
 
