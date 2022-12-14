@@ -365,6 +365,11 @@
   overflow: hidden;
 }
 
+.label-text-wrapper,
+.textarea-wrapper textarea {
+  line-height: 18px;
+}
+
 .textarea-wrapper textarea {
   /**
    * When the floating label appears on top of the
@@ -372,8 +377,6 @@
    * label does not overlap with the placeholder.
    */
   transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
-
-  line-height: 18px;
 }
 
 :host(.textarea-label-placement-start) .textarea-wrapper textarea,
