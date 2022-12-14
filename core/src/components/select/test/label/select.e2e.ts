@@ -117,4 +117,18 @@ test.describe('select: label', () => {
       );
     });
   });
+
+  test.describe('select: label overflow', () => {
+    test('label should be truncated with ellipses', async ({ page, skip }) => {
+      skip.mode('ios');
+      skip.rtl();
+
+      await page.setContent(`
+        <ion-select label="Placeholder Placeholder Placeholder Placeholder Placeholder" placeholder="Select an Item"></ion-select>
+      `);
+
+      const select = page.locator('ion-select');
+      expect(await select.screenshot()).toMatchSnapshot(`select-label-truncate-${page.getSnapshotSettings()}.png`);
+    });
+  });
 });
