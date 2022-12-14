@@ -186,7 +186,7 @@ export class Radio implements ComponentInterface {
       printIonWarning(
         `Using ion-radio with an ion-label has been deprecated. To migrate, remove the ion-label and pass your label directly into ion-radio instead.
 Example: <ion-radio>Email:</ion-radio>
-For toggles that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the radio.`,
+For radios that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the radio.`,
         this.el
       );
       this.hasLoggedDeprecationWarning = true;
