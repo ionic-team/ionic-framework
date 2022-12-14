@@ -65,6 +65,8 @@ button {
 }
 
 .select-icon {
+  @include margin(0, 0, 0, 4px);
+
   position: relative;
 
   width: 13px;
