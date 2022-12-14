@@ -662,7 +662,7 @@ export class Select implements ComponentInterface {
   }
 
   private renderSelect() {
-    const { disabled, el, isExpanded, labelPlacement } = this;
+    const { disabled, el, isExpanded, labelPlacement, justify } = this;
     const mode = getIonMode(this);
 
     return (
@@ -673,6 +673,7 @@ export class Select implements ComponentInterface {
           'in-item': hostContext('ion-item', el),
           'select-disabled': disabled,
           'select-expanded': isExpanded,
+          [`select-justify-${justify}`]: true,
           [`select-label-placement-${labelPlacement}`]: true,
         }}
       >

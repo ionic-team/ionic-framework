@@ -166,6 +166,21 @@ button {
   align-items: center;
 }
 
+// Select Justify
+// --------------------------------------------------
+
+:host(.select-justify-space-between) .select-wrapper {
+  justify-content: space-between;
+}
+
+:host(.select-justify-start) .select-wrapper {
+  justify-content: start;
+}
+
+:host(.select-justify-end) .select-wrapper {
+  justify-content: end;
+}
+
 // Select Label Placement - Start
 // ----------------------------------------------------------------
 
