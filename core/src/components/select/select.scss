@@ -24,20 +24,32 @@
    *
    * @prop --ripple-color: The color of the ripple effect on MD mode.
    */
+  --padding-top: 0px;
+  --padding-end: 0px;
+  --padding-bottom: 0px;
+  --padding-left: 0px;
   --placeholder-color: currentColor;
   --placeholder-opacity: 0.6;
 
-  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
-
-  display: flex;
+  display: block;
   position: relative;
-
-  align-items: center;
 
   font-family: $font-family-base;
 
   overflow: hidden;
   z-index: $z-index-item-input;
+}
+
+:host(.legacy-select) {
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+
+  display: flex;
+
+  align-items: center;
+}
+
+:host(:not(.legacy-select)) {
+  min-height: 44px;
 }
 
 :host(.in-item) {
@@ -115,13 +127,16 @@ button {
 // --------------------------------------------------
 
 .select-wrapper {
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+
   display: flex;
 
   position: relative;
 
   flex-grow: 1;
 
-  align-items: center;
+
+  align-items: stretch;
 
   height: 100%;
 
@@ -162,8 +177,6 @@ button {
 
 .native-wrapper {
   display: flex;
-
-  align-items: center;
 }
 
 // Select Justify

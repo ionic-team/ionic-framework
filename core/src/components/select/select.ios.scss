@@ -4,7 +4,7 @@
 // iOS Select
 // --------------------------------------------------
 
-:host {
+:host(.legacy-select) {
   --padding-top: #{$select-ios-padding-top};
   --padding-end: #{$select-ios-padding-end};
   --padding-bottom: #{$select-ios-padding-bottom};

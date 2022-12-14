@@ -4,7 +4,7 @@
 // Material Design Select
 // --------------------------------------------------
 
-:host {
+:host(.legacy-select) {
   --padding-top: #{$select-md-padding-top};
   --padding-end: #{$select-md-padding-end};
   --padding-bottom: #{$select-md-padding-bottom};
