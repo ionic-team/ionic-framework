@@ -16,7 +16,7 @@ test.describe('select: states', () => {
 
   test('should render enabled select with a value correctly', async ({ page }) => {
     await page.setContent(`
-      <ion-select label="Favorite Fruit"value="apples">
+      <ion-select label="Favorite Fruit" value="apples">
         <ion-select-option value="apples">Apples</ion-select-option>
       </ion-select>
     `);
