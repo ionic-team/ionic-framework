@@ -18,7 +18,8 @@ import type {
   SelectPopoverOption,
   StyleEventDetail,
 } from '../../interface';
-import { findItemLabel, focusElement, getAriaLabel, renderHiddenInput } from '../../utils/helpers';
+import { findItemLabel, focusElement, getAriaLabel, renderHiddenInput, inheritAttributes } from '../../utils/helpers';
+import type { Attributes } from '../../utils/helpers';
 import { actionSheetController, alertController, popoverController } from '../../utils/overlays';
 import { hostContext } from '../../utils/theme';
 import { watchForOptions } from '../../utils/watch-options';
@@ -46,6 +47,7 @@ export class Select implements ComponentInterface {
   private focusEl?: HTMLButtonElement;
   private mutationO?: MutationObserver;
   private legacyFormController!: LegacyFormController;
+  private inheritedAttributes: Attributes = {};
 
   // This flag ensures we log the deprecation warning at most once.
   private hasLoggedDeprecationWarning = false;
@@ -209,6 +211,10 @@ export class Select implements ComponentInterface {
   private setValue(value?: any | null) {
     this.value = value;
     this.ionChange.emit({ value });
+  }
+
+  componentWillLoad() {
+    this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
   }
 
   async connectedCallback() {
@@ -674,7 +680,7 @@ export class Select implements ComponentInterface {
           <div class="native-wrapper">
             {this.renderSelectText()}
             {this.renderSelectIcon()}
-            {this.renderListbox('select-label')}
+            {this.renderListbox(this.label !== undefined ? 'select-label' : undefined)}
           </div>
         </label>
       </Host>
@@ -789,13 +795,15 @@ For inputs that do not have a visible label, developers should use "aria-label" 
     );
   }
 
-  private renderListbox(labelId: string) {
-    const { disabled, inputId, isExpanded } = this;
+  private renderListbox(labelId?: string) {
+    const { disabled, inputId, isExpanded, inheritedAttributes } = this;
+
     return (
       <button
         disabled={disabled}
         id={inputId}
-        aria-labelledby={labelId}
+        aria-label={labelId === undefined ? inheritedAttributes['aria-label'] : null}
+        aria-labelledby={labelId !== undefined ? labelId : null}
         aria-haspopup="listbox"
         aria-expanded={`${isExpanded}`}
         onFocus={this.onFocus}
