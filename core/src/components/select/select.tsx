@@ -671,7 +671,11 @@ export class Select implements ComponentInterface {
       >
         <label class="select-wrapper" id="select-label">
           {this.renderLabelContainer()}
-          <div class="native-wrapper">{this.renderListbox('select-label')}</div>
+          <div class="native-wrapper">
+            {this.renderSelectText()}
+            {this.renderSelectIcon()}
+            {this.renderListbox('select-label')}
+          </div>
         </label>
       </Host>
     );
@@ -707,19 +711,10 @@ For inputs that do not have a visible label, developers should use "aria-label" 
 
     const displayValue = this.getText();
 
-    let addPlaceholderClass = false;
     let selectText = displayValue;
     if (selectText === '' && placeholder !== undefined) {
       selectText = placeholder;
-      addPlaceholderClass = true;
     }
-
-    const selectTextClasses: CssClassMap = {
-      'select-text': true,
-      'select-placeholder': addPlaceholderClass,
-    };
-
-    const textPart = addPlaceholderClass ? 'placeholder' : 'text';
 
     // If there is a label then we need to concatenate it with the
     // current value (or placeholder) and a comma so it separates
@@ -743,15 +738,54 @@ For inputs that do not have a visible label, developers should use "aria-label" 
           'legacy-select': true,
         }}
       >
-        <div aria-hidden="true" class={selectTextClasses} part={textPart}>
-          {selectText}
-        </div>
-        <div class="select-icon" role="presentation" part="icon">
-          <div class="select-icon-inner"></div>
-        </div>
+        {this.renderSelectText()}
+        {this.renderSelectIcon()}
         <label id={labelId}>{displayLabel}</label>
         {this.renderListbox(labelId)}
       </Host>
+    );
+  }
+
+  /**
+   * Renders either the placeholder
+   * or the selected values based on
+   * the state of the select.
+   */
+  private renderSelectText() {
+    const { placeholder } = this;
+
+    const displayValue = this.getText();
+
+    let addPlaceholderClass = false;
+    let selectText = displayValue;
+    if (selectText === '' && placeholder !== undefined) {
+      selectText = placeholder;
+      addPlaceholderClass = true;
+    }
+
+    const selectTextClasses: CssClassMap = {
+      'select-text': true,
+      'select-placeholder': addPlaceholderClass,
+    };
+
+    const textPart = addPlaceholderClass ? 'placeholder' : 'text';
+
+    return (
+      <div aria-hidden="true" class={selectTextClasses} part={textPart}>
+        {selectText}
+      </div>
+    );
+  }
+
+  /**
+   * Renders the chevron icon
+   * next to the select text.
+   */
+  private renderSelectIcon() {
+    return (
+      <div class="select-icon" role="presentation" part="icon">
+        <div class="select-icon-inner"></div>
+      </div>
     );
   }
 
@@ -759,7 +793,6 @@ For inputs that do not have a visible label, developers should use "aria-label" 
     const { disabled, inputId, isExpanded } = this;
     return (
       <button
-        type="button"
         disabled={disabled}
         id={inputId}
         aria-labelledby={labelId}
