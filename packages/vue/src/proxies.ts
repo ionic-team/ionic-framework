@@ -578,6 +578,8 @@ export const IonRadio = /*@__PURE__*/ defineContainer<JSX.IonRadio>('ion-radio',
   'name',
   'disabled',
   'value',
+  'labelPlacement',
+  'justify',
   'ionStyle',
   'ionFocus',
   'ionBlur'
