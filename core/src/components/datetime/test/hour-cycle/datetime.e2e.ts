@@ -2,6 +2,10 @@ import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
 test.describe('datetime: hour cycle', () => {
+  test.beforeEach(({ skip }) => {
+    skip.rtl();
+    skip.mode('md');
+  });
   test('should set the h23 hour cycle correctly', async ({ page }) => {
     await page.setContent(`
       <ion-datetime hour-cycle="h23" value="2022-01-01T16:30:00"></ion-datetime>
