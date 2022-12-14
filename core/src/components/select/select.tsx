@@ -656,8 +656,19 @@ export class Select implements ComponentInterface {
   }
 
   private renderSelect() {
+    const { disabled, el, isExpanded } = this;
+    const mode = getIonMode(this);
+
     return (
-      <Host>
+      <Host
+        onClick={this.onClick}
+        class={{
+          [mode]: true,
+          'in-item': hostContext('ion-item', el),
+          'select-disabled': disabled,
+          'select-expanded': isExpanded,
+        }}
+      >
         <label class="select-wrapper" id="select-label">
           {this.renderLabelContainer()}
           <div class="native-wrapper">{this.renderListbox('select-label')}</div>

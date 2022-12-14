@@ -61,7 +61,7 @@
   opacity: var(--placeholder-opacity);
 }
 
-label {
+:host(.legacy-select) label {
   @include input-cover();
 
   display: flex;
