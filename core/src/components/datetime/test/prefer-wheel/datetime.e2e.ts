@@ -56,6 +56,7 @@ test.describe('datetime: prefer wheel', () => {
   test.describe('datetime: date wheel', () => {
     test.beforeEach(({ skip }) => {
       skip.rtl();
+      skip.mode('ios', 'date wheel functionality is the same across modes');
     });
     test('should respect the min bounds', async ({ page }) => {
       await page.setContent(`
@@ -258,6 +259,7 @@ test.describe('datetime: prefer wheel', () => {
   test.describe('datetime: date-time wheel', () => {
     test.beforeEach(({ skip }) => {
       skip.rtl();
+      skip.mode('ios', 'date-time wheel functionality is the same across modes');
     });
     test('should respect the min bounds', async ({ page }) => {
       await page.setContent(`
@@ -419,6 +421,7 @@ test.describe('datetime: prefer wheel', () => {
   test.describe('datetime: time-date wheel', () => {
     test.beforeEach(({ skip }) => {
       skip.rtl();
+      skip.mode('ios', 'time-date wheel functionality is the same across modes');
     });
     test('should respect the min bounds', async ({ page }) => {
       await page.setContent(`
