@@ -25,7 +25,7 @@
    * @prop --ripple-color: The color of the ripple effect on MD mode.
    */
   --placeholder-color: currentColor;
-  --placeholder-opacity: 0.33;
+  --placeholder-opacity: 0.6;
 
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
