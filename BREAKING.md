@@ -203,6 +203,13 @@ Ionic now listens on the `keydown` event instead of the `keyup` event when deter
 
 - `ionChange` is no longer emitted when the `value` of `ion-select` is modified externally. `ionChange` is only emitted from user committed changes, such as confirming a selected option in the select's overlay.
 
+**Design tokens**
+
+| Token                   | Previous Value | New Value |
+| ----------------------- | -------------- | --------- |
+| `--placeholder-opacity` | `0.33`         | `0.6`     |
+
+
 <h4 id="version-7x-slides">Slides</h4>
 
 `ion-slides`, `ion-slide`, and the `IonicSwiper` plugin have been removed from Ionic.
