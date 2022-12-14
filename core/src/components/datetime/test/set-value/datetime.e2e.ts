@@ -4,6 +4,7 @@ import { test } from '@utils/test/playwright';
 test.describe('datetime: set-value', () => {
   test.beforeEach(async ({ skip }) => {
     skip.rtl();
+    skip.mode('md');
   });
   test('should update the active date when value is initially set', async ({ page }) => {
     await page.goto('/src/components/datetime/test/set-value');
