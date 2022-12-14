@@ -231,6 +231,8 @@
 
   height: 100%;
 
+  min-height: 79px;
+
   background: inherit;
 }
 
@@ -370,6 +372,8 @@
    * label does not overlap with the placeholder.
    */
   transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  line-height: 18px;
 }
 
 :host(.textarea-label-placement-start) .textarea-wrapper textarea,
