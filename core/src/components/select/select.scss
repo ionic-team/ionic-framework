@@ -110,3 +110,122 @@ button {
 
   pointer-events: none;
 }
+
+// Select Wrapper
+// --------------------------------------------------
+
+.select-wrapper {
+  display: flex;
+
+  position: relative;
+
+  flex-grow: 1;
+
+  align-items: center;
+
+  height: 100%;
+
+  transition: background-color 15ms linear;
+
+  cursor: inherit;
+}
+
+// Select Label
+// ----------------------------------------------------------------
+
+.label-text-wrapper {
+  /**
+   * This ensures that double tapping this text
+   * clicks the <label> and focuses the input
+   * when a screen reader is enabled.
+   */
+  pointer-events: none;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+}
+
+/**
+ * If no label text is placed into the slot
+ * then the element should be hidden otherwise
+ * there will be additional margins added.
+ */
+.label-text-wrapper-hidden {
+  display: none;
+}
+
+// Select Native Wrapper
+// ----------------------------------------------------------------
+
+.native-wrapper {
+  display: flex;
+
+  align-items: center;
+}
+
+// Select Label Placement - Start
+// ----------------------------------------------------------------
+
+/**
+ * Label is on the left of the input in LTR and
+ * on the right in RTL.
+ */
+:host(.select-label-placement-start) .select-wrapper {
+  flex-direction: row;
+}
+
+:host(.select-label-placement-start) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the select should be on the end
+   * when the label sits at the start.
+   */
+  @include margin(0, 8px, 0, 0);
+}
+
+// Select Label Placement - End
+// ----------------------------------------------------------------
+
+/**
+ * Label is on the right of the select in LTR and
+ * on the left in RTL.
+ */
+:host(.select-label-placement-end) .select-wrapper {
+  flex-direction: row-reverse;
+}
+
+/**
+ * The margin between the label and
+ * the select should be on the start
+ * when the label sits at the end.
+ */
+:host(.select-label-placement-end) .label-text-wrapper {
+  @include margin(0, 0, 0, 8px);
+}
+
+// Select Label Placement - Fixed
+// ----------------------------------------------------------------
+
+:host(.select-label-placement-fixed) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the select should be on the end
+   * when the label sits at the start.
+   */
+  @include margin(0, 8px, 0, 0);
+}
+
+/**
+ * Label is on the left of the select in LTR and
+ * on the right in RTL. Label also has a fixed width.
+ */
+:host(.select-label-placement-fixed) .label-text-wrapper {
+  flex: 0 0 100px;
+
+  width: 100px;
+  min-width: 100px;
+  max-width: 200px;
+}
