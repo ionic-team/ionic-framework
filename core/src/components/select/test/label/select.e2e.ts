@@ -118,7 +118,7 @@ test.describe('select: label', () => {
     });
   });
 
-  test.describe.only('select: floating placement', () => {
+  test.describe('select: floating placement', () => {
     test('label should appear above the select when there is a value', async ({ page }) => {
       await page.setContent(`
         <ion-select label="Label" value="apples" label-placement="floating">
@@ -167,6 +167,59 @@ test.describe('select: label', () => {
 
       expect(await select.screenshot({ animations: 'disabled' })).toMatchSnapshot(
         `select-label-floating-long-label-${page.getSnapshotSettings()}.png`
+      );
+    });
+  });
+
+  test.describe('select: stacked placement', () => {
+    test('label should appear above the select when there is a value', async ({ page }) => {
+      await page.setContent(`
+        <ion-select label="Label" value="apples" label-placement="stacked">
+          <ion-select-option value="apples">Apples</ion-select-option>
+        </ion-select>
+      `);
+
+      const select = page.locator('ion-select');
+      expect(await select.screenshot()).toMatchSnapshot(
+        `select-label-stacked-value-${page.getSnapshotSettings()}.png`
+      );
+    });
+    test('label should appear above the select when there is no value', async ({ page }) => {
+      await page.setContent(`
+        <ion-select label="Label" label-placement="stacked">
+          <ion-select-option value="apples">Apples</ion-select-option>
+        </ion-select>
+      `);
+
+      const select = page.locator('ion-select');
+      expect(await select.screenshot()).toMatchSnapshot(
+        `select-label-stacked-no-value-${page.getSnapshotSettings()}.png`
+      );
+    });
+    test('label should appear on top of the select when the select is expanded', async ({ page }) => {
+      await page.setContent(`
+        <ion-select class="select-expanded" label="Label" label-placement="stacked" placeholder="Select a Fruit">
+          <ion-select-option value="apples">Apples</ion-select-option>
+        </ion-select>
+      `);
+
+      const select = page.locator('ion-select');
+
+      expect(await select.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+        `select-label-stacked-expanded-${page.getSnapshotSettings()}.png`
+      );
+    });
+    test('long label should truncate', async ({ page }) => {
+      await page.setContent(`
+        <ion-select label="Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label" label-placement="stacked" value="apples" placeholder="Select a Fruit">
+          <ion-select-option value="apples">Apples</ion-select-option>
+        </ion-select>
+      `);
+
+      const select = page.locator('ion-select');
+
+      expect(await select.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+        `select-label-stacked-long-label-${page.getSnapshotSettings()}.png`
       );
     });
   });
