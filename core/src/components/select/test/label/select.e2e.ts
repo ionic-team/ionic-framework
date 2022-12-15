@@ -143,6 +143,18 @@ test.describe('select: label', () => {
         `select-label-floating-no-value-${page.getSnapshotSettings()}.png`
       );
     });
+    test('label should appear on top of the select when there is a placeholder and no value', async ({ page }) => {
+      await page.setContent(`
+        <ion-select label="Label" label-placement="floating" placeholder="Placeholder">
+          <ion-select-option value="apples">Apples</ion-select-option>
+        </ion-select>
+      `);
+
+      const select = page.locator('ion-select');
+      expect(await select.screenshot()).toMatchSnapshot(
+        `select-label-floating-no-value-placeholder-${page.getSnapshotSettings()}.png`
+      );
+    });
     test('label should appear on top of the select when the select is expanded', async ({ page }) => {
       await page.setContent(`
         <ion-select class="select-expanded" label="Label" label-placement="floating" placeholder="Select a Fruit">
