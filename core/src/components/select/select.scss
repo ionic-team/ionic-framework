@@ -109,20 +109,48 @@ button {
   width: 13px;
 }
 
+/**
+ * This rotates the chevron icon
+ * when the select is activated.
+ */
 :host(.select-expanded:not(.legacy-select)) .select-icon {
   @include transform(rotate(180deg));
 }
 
+/**
+ * The select icon should be centered with
+ * the entire container not just the control
+ * with floating/stacked labels.
+ */
 :host(.select-label-placement-stacked) .select-icon,
 :host(.select-label-placement-floating) .select-icon {
-  @include transform(translateY(-50%));
+  position: absolute;
+
+  top: 50%;
+
+  transform: translateY(-50%);
 }
 
-:host(.select-label-placement-stacked.select-expanded) .select-icon
-:host(.select-label-placement-floating.select-expanded) .select-icon {
-  @include transform(rotate(180deg), translateY(-50%));
+/**
+ * This positions the icon at the correct
+ * edge of the component with LTR and RTL
+ * text directions. The position mixin cannot be
+ * used here because the icon is in the Shadow DOM.
+ */
+:host(.select-ltr.select-label-placement-stacked) .select-icon,
+:host(.select-ltr.select-label-placement-floating) .select-icon {
+  // stylelint-disable-next-line property-disallowed-list
+  right: 0;
 }
 
+:host(.select-rtl.select-label-placement-stacked) .select-icon,
+:host(.select-rtl.select-label-placement-floating) .select-icon {
+  // stylelint-disable-next-line property-disallowed-list
+  left: 0;
+}
+
+// Select Text
+// --------------------------------------------------
 .select-text {
   flex: 1;
 

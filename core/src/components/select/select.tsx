@@ -3,6 +3,7 @@ import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '
 import { createLegacyFormController } from '@utils/forms';
 import type { LegacyFormController } from '@utils/forms';
 import { printIonWarning } from '@utils/logging';
+import { isRTL } from '@utils/rtl';
 import { caretDownSharp } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -669,7 +670,9 @@ export class Select implements ComponentInterface {
   private renderSelect() {
     const { disabled, el, isExpanded, labelPlacement, justify, placeholder } = this;
     const mode = getIonMode(this);
-    const hasJustify = labelPlacement !== 'floating' && labelPlacement !== 'stacked';
+    const hasFloatingOrStackedLabel = labelPlacement === 'floating' || labelPlacement === 'stacked';
+    const justifyEnabled = !hasFloatingOrStackedLabel;
+    const rtl = isRTL(el) ? 'rtl' : 'ltr';
 
     return (
       <Host
@@ -681,7 +684,8 @@ export class Select implements ComponentInterface {
           'select-expanded': isExpanded,
           'has-value': this.hasValue(),
           'has-placeholder': placeholder !== undefined,
-          [`select-justify-${justify}`]: hasJustify,
+          [`select-${rtl}`]: true,
+          [`select-justify-${justify}`]: justifyEnabled,
           [`select-label-placement-${labelPlacement}`]: true,
         }}
       >
@@ -689,9 +693,10 @@ export class Select implements ComponentInterface {
           {this.renderLabelContainer()}
           <div class="native-wrapper">
             {this.renderSelectText()}
-            {this.renderSelectIcon()}
+            {!hasFloatingOrStackedLabel && this.renderSelectIcon()}
             {this.renderListbox(this.label !== undefined ? 'select-label' : undefined)}
           </div>
+          {hasFloatingOrStackedLabel && this.renderSelectIcon()}
         </label>
       </Host>
     );
