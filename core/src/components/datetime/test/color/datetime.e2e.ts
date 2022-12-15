@@ -10,16 +10,6 @@ test.describe('datetime: color', () => {
     const darkModeToggle = page.locator('ion-checkbox');
     const datetime = page.locator('ion-datetime');
 
-    // incorrect: async assert with no await
-    expect(datetime).toHaveClass('test');
-    expect(datetime).toHaveValue('test');
-
-    // correct: async assert with await
-    await expect(datetime).toHaveClass('abc');
-
-    // this is a sync assert
-    expect(datetime).toBe(true);
-
     expect(await datetime.screenshot()).toMatchSnapshot(`datetime-color-${page.getSnapshotSettings()}.png`);
 
     await darkModeToggle.evaluate((el: HTMLIonCheckboxElement) => (el.checked = true));
