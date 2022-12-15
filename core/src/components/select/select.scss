@@ -209,8 +209,6 @@ button {
 .native-wrapper {
   display: flex;
 
-  flex-grow: 1;
-
   align-items: center;
 
   /**
@@ -331,10 +329,14 @@ button {
 /**
  * Ensures the select does not
  * overlap the label.
+ * Also ensure that the native wrapper
+ * takes up the remaining available height.
  */
 :host(.select-label-placement-stacked) .native-wrapper,
 :host(.select-label-placement-floating) .native-wrapper {
   @include margin(1px, 0, 0, 0);
+
+  flex-grow: 1;
 }
 
 /**
