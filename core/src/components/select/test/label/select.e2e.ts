@@ -180,9 +180,7 @@ test.describe('select: label', () => {
       `);
 
       const select = page.locator('ion-select');
-      expect(await select.screenshot()).toMatchSnapshot(
-        `select-label-stacked-value-${page.getSnapshotSettings()}.png`
-      );
+      expect(await select.screenshot()).toMatchSnapshot(`select-label-stacked-value-${page.getSnapshotSettings()}.png`);
     });
     test('label should appear above the select when there is no value', async ({ page }) => {
       await page.setContent(`
