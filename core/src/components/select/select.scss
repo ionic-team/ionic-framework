@@ -52,10 +52,21 @@
   min-height: 44px;
 }
 
-:host(.in-item) {
+// Select Used in ion-item
+// --------------------------------------------------
+:host(.in-item.legacy-select) {
   position: static;
 
   max-width: 45%;
+}
+
+:host(.in-item:not(.legacy-select)) {
+  width: 100%;
+  height: 100%;
+}
+
+:host(.in-item) .native-wrapper {
+  width: 100%;
 }
 
 :host(.select-disabled) {
@@ -211,6 +222,10 @@ button {
 
 .native-wrapper {
   display: flex;
+
+  flex-grow: 1;
+
+  align-items: center;
 
   /**
    * When the floating label appears on top of the
