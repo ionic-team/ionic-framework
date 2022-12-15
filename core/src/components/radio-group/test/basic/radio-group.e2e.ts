@@ -105,8 +105,8 @@ test.describe('radio-group: interaction', () => {
 
     await page.waitForChanges();
 
-    expect(radioOne).not.toHaveClass(/radio-checked/);
-    expect(radioTwo).toHaveClass(/radio-checked/);
+    await expect(radioOne).not.toHaveClass(/radio-checked/);
+    await expect(radioTwo).toHaveClass(/radio-checked/);
   });
 });
 

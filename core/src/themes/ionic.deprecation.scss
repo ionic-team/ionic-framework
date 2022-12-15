@@ -1,5 +1,0 @@
-$IONIC: false !default;
-
-@if not $IONIC {
-  @warn "[DEPRECATED] SCSS within ionic/core should not be imported. Next major release will remove all scss support.";
-}
