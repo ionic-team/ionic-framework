@@ -131,6 +131,12 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 
 - The `detail` payload for the `ionInput` event now contains an object with the current `value` as well as the native event that triggered `ionInput`.
 
+**Design tokens**
+
+| Token                   | Previous Value | New Value |
+| ----------------------- | -------------- | --------- |
+| `--placeholder-opacity` | `0.5`          | `0.6`     |
+
 <h4 id="version-7x-item">Item</h4>
 
 **Design tokens**
@@ -192,6 +198,13 @@ Ionic now listens on the `keydown` event instead of the `keyup` event when deter
 
 - The `debounce` property's default value has changed from 250 to `undefined`. If `debounce` is undefined, the `ionInput` event will fire immediately.
 
+**Design tokens**
+
+| Token                   | Previous Value | New Value |
+| ----------------------- | -------------- | --------- |
+| `--placeholder-opacity` | `0.5`          | `0.6`     |
+
+
 <h4 id="version-7x-segment">Segment</h4>
 
 - `ionChange` is no longer emitted when the `value` of `ion-segment` is modified externally. `ionChange` is only emitted from user committed changes, such as clicking a segment button or dragging to activate a segment button.
@@ -202,6 +215,15 @@ Ionic now listens on the `keydown` event instead of the `keyup` event when deter
 <h4 id="version-7x-select">Select</h4>
 
 - `ionChange` is no longer emitted when the `value` of `ion-select` is modified externally. `ionChange` is only emitted from user committed changes, such as confirming a selected option in the select's overlay.
+
+- The `icon` CSS Shadow Part now targets an `ion-icon` component.
+
+**Design tokens**
+
+| Token                   | Previous Value | New Value |
+| ----------------------- | -------------- | --------- |
+| `--placeholder-opacity` | `0.33`         | `0.6`     |
+
 
 <h4 id="version-7x-slides">Slides</h4>
 
@@ -226,6 +248,13 @@ Developers using these components will need to migrate to using Swiper.js direct
 - `ionInput` dispatches an event detail of `null` when the textarea is cleared as a result of `clear-on-edit="true"`.
 
 - The `detail` payload for the `ionInput` event now contains an object with the current `value` as well as the native event that triggered `ionInput`.
+
+**Design tokens**
+
+| Token                   | Previous Value | New Value |
+| ----------------------- | -------------- | --------- |
+| `--placeholder-opacity` | `0.5`          | `0.6`     |
+
 
 <h4 id="version-7x-toggle">Toggle</h4>
 

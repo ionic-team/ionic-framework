@@ -31,7 +31,7 @@
   --placeholder-color: initial;
   --placeholder-font-style: initial;
   --placeholder-font-weight: initial;
-  --placeholder-opacity: .5;
+  --placeholder-opacity: #{$placeholder-opacity};
   --padding-top: 0px;
   --padding-end: 0px;
   --padding-bottom: 0px;
@@ -597,7 +597,7 @@
 :host(.input-label-placement-stacked) .label-text-wrapper,
 :host(.has-focus.input-label-placement-floating) .label-text-wrapper,
 :host(.has-value.input-label-placement-floating) .label-text-wrapper {
-  @include transform(translateY(50%), scale(.75));
+  @include transform(translateY(50%), scale(#{$input-floating-label-scale}));
 
   /**
    * Label text should not extend

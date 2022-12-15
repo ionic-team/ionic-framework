@@ -25,7 +25,7 @@
    * @prop --ripple-color: The color of the ripple effect on MD mode.
    */
   --placeholder-color: currentColor;
-  --placeholder-opacity: 0.33;
+  --placeholder-opacity: #{$placeholder-opacity};
 
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
@@ -76,7 +76,11 @@ button {
 }
 
 .select-icon {
+  @include margin(0, 0, 0, 4px);
+
   position: relative;
+
+  width: 13px;
 }
 
 .select-text {
@@ -91,22 +95,4 @@ button {
   white-space: nowrap;
 
   overflow: hidden;
-}
-
-.select-icon-inner {
-  @include position(50%, null, null, 5px);
-  @include margin(-2px, null, null, null);
-
-  position: absolute;
-
-  width: 0;
-  height: 0;
-
-  border-top: 5px solid;
-  border-right: 5px solid transparent;
-  border-left: 5px solid transparent;
-
-  color: currentColor;
-
-  pointer-events: none;
 }
