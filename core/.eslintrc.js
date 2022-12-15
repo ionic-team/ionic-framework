@@ -40,6 +40,7 @@ module.exports = {
         "allowAny": true
       }
     ],
-    "custom-rules/no-component-on-ready-method": "error"
+    "custom-rules/no-component-on-ready-method": "error",
+    "custom-rules/await-playwright-promise-assertion": "error"
   }
 };
