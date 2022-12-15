@@ -4,7 +4,7 @@
  * @internal
  * @prop el: The Ionic form component to reference
  */
-type AllowedFormElements = HTMLIonInputElement | HTMLIonToggleElement;
+type AllowedFormElements = HTMLIonInputElement | HTMLIonToggleElement | HTMLIonRangeElement;
 export const createLegacyFormController = (el: AllowedFormElements): LegacyFormController => {
   const controlEl: AllowedFormElements = el;
   let legacyControl = true;
@@ -65,5 +65,5 @@ const hasLabelSlot = (controlEl: HTMLElement) => {
   return false;
 };
 
-const NAMED_LABEL_SLOT_COMPONENTS: string[] = [];
+const NAMED_LABEL_SLOT_COMPONENTS = ['ION-RANGE'];
 const UNNAMED_LABEL_SLOT_COMPONENTS = ['ION-TOGGLE'];
