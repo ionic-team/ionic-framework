@@ -199,7 +199,7 @@
 
           <ion-item lines="none" slot="end">
             <ion-label>Color</ion-label>
-            <ion-select value="primary">
+            <ion-select value="danger">
               <ion-select-option value="primary">Primary</ion-select-option>
               <ion-select-option value="secondary">Secondary</ion-select-option>
               <ion-select-option value="tertiary">Tertiary</ion-select-option>
@@ -214,17 +214,12 @@
         <div class="grid">
           <div class="grid-item">
             <h2>Default</h2>
-            <ion-datetime value="2022-05-03" show-default-title="true" show-default-buttons="true"></ion-datetime>
-          </div>
-
-          <div class="grid-item">
-            <h2>Custom</h2>
-            <ion-datetime value="2022-05-03" show-default-title="true" show-default-buttons="true">
-              <ion-buttons slot="buttons">
-                <ion-button color="danger">Reset</ion-button>
-                <ion-button color="primary">Confirm</ion-button>
-              </ion-buttons>
-            </ion-datetime>
+            <ion-datetime
+              color="danger"
+              value="2022-05-03"
+              show-default-title="true"
+              show-default-buttons="true"
+            ></ion-datetime>
           </div>
         </div>
       </ion-content>

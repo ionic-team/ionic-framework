@@ -3,6 +3,7 @@ import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '
 import { createLegacyFormController } from '@utils/forms';
 import type { LegacyFormController } from '@utils/forms';
 import { printIonWarning } from '@utils/logging';
+import { caretDownSharp } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
 import type {
@@ -796,11 +797,7 @@ For inputs that do not have a visible label, developers should use "aria-label" 
    * next to the select text.
    */
   private renderSelectIcon() {
-    return (
-      <div class="select-icon" role="presentation" part="icon">
-        <div class="select-icon-inner"></div>
-      </div>
-    );
+    return <ion-icon class="select-icon" part="icon" aria-hidden="true" icon={caretDownSharp}></ion-icon>;
   }
 
   private renderListbox(labelId?: string) {

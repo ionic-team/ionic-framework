@@ -29,7 +29,7 @@
   --padding-bottom: 0px;
   --padding-start: 0px;
   --placeholder-color: currentColor;
-  --placeholder-opacity: 0.6;
+  --placeholder-opacity: #{$placeholder-opacity};
 
   display: block;
   position: relative;
@@ -99,7 +99,11 @@ button {
 }
 
 .select-icon {
+  @include margin(0, 0, 0, 4px);
+
   position: relative;
+
+  width: 13px;
 }
 
 .select-text {
@@ -114,24 +118,6 @@ button {
   white-space: nowrap;
 
   overflow: hidden;
-}
-
-.select-icon-inner {
-  @include position(50%, null, null, 5px);
-  @include margin(-2px, null, null, null);
-
-  position: absolute;
-
-  width: 0;
-  height: 0;
-
-  border-top: 5px solid;
-  border-right: 5px solid transparent;
-  border-left: 5px solid transparent;
-
-  color: currentColor;
-
-  pointer-events: none;
 }
 
 // Select Wrapper
