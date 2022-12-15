@@ -211,6 +211,13 @@ button {
 
 .native-wrapper {
   display: flex;
+
+  /**
+   * When the floating label appears on top of the
+   * input, we need to fade the input out so that the
+   * label does not overlap with the placeholder.
+   */
+  transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 // Select Justify
