@@ -98,12 +98,19 @@ button {
   @include visually-hidden();
 }
 
+// Select Icon
+// --------------------------------------------------
+
 .select-icon {
   @include margin(0, 0, 0, 4px);
 
   position: relative;
 
   width: 13px;
+}
+
+:host(.select-expanded:not(.legacy-select)) .select-icon {
+  @include transform(rotate(180deg));
 }
 
 .select-text {
@@ -362,12 +369,12 @@ button {
  * from overlapping any placeholder value.
 
  */
-:host(.select-label-placement-floating:not(.has-placeholder)) .native-wrapper {
+:host(.select-label-placement-floating:not(.has-placeholder)) .native-wrapper .select-text {
   opacity: 0;
 }
 
-:host(.select-expanded.select-label-placement-floating) .native-wrapper,
-:host(.has-value.select-label-placement-floating) .native-wrapper {
+:host(.select-expanded.select-label-placement-floating) .native-wrapper .select-text,
+:host(.has-value.select-label-placement-floating) .native-wrapper .select-text {
   opacity: 1;
 }
 
