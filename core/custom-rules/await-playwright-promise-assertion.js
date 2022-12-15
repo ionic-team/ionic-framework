@@ -19,28 +19,17 @@ module.exports = {
           const { object, property } = expression.callee;
 
           /**
-           * If we are using an `expect()` call then
-           * we are likely in a Playwright assertion.
+           * Check to see if the property name is
+           * of a known Playwright async assertion.
            */
           if (
-            object !== undefined &&
-            object.callee !== undefined &&
-            object.callee.type === 'Identifier' &&
-            object.callee.name === 'expect'
+            property !== undefined &&
+            property.type === 'Identifier' &&
+            hasPlaywrightAsyncAssertion(property.name)
           ) {
-            /**
-             * From here, we can check if there is a known
-             * Playwright assertion. If so, then we can safely say
-             * that there was an async Playwright assert used
-             * that was not properly awaited.
-             */
-            if (
-              property.type === 'Identifier' &&
-              hasPlaywrightAsyncAssertion(property.name)
-            ) {
-              context.report({ node: node, messageId: 'awaitPlayewrightPromiseAssertion' });
-            }
+            context.report({ node: node, messageId: 'awaitPlayewrightPromiseAssertion' });
           }
+
         }
       }
     }
