@@ -12,46 +12,30 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(250px, 1fr));
+        grid-row-gap: 20px;
+        grid-column-gap: 20px;
+      }
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+
+        color: #6f7378;
+
+        margin-top: 10px;
+      }
+      @media screen and (max-width: 800px) {
+        .grid {
+          grid-template-columns: 1fr;
+          padding: 0;
+        }
+      }
+    </style>
   </head>
-  <style>
-    .range-part::part(bar) {
-      background: red;
-    }
 
-    .range-part::part(tick) {
-      background: purple;
-    }
-
-    .range-part::part(bar-active) {
-      background: green;
-    }
-
-    .range-part::part(tick-active) {
-      background: orange;
-    }
-
-    .range-part::part(knob) {
-      background: hotpink;
-    }
-
-    .ios.range-part::part(pin) {
-      background: orange;
-
-      top: -13px;
-
-      height: 20px;
-
-      line-height: 4px;
-      border-radius: 4px;
-
-      transform: translate(0, 0, 0);
-    }
-
-    .md.range-part::part(pin),
-    .md.range-part::part(pin)::before {
-      background: orange;
-    }
-  </style>
   <body>
     <ion-app>
       <ion-header>
@@ -60,221 +44,42 @@
         </ion-toolbar>
       </ion-header>
 
-      <ion-content id="content">
-        <ion-list>
-          <ion-list-header>
-            <ion-label> Range color </ion-label>
-          </ion-list-header>
-          <ion-item>
-            <ion-range id="basic" value="20" aria-label="Default Range"></ion-range>
-          </ion-item>
-          <ion-item>
-            <ion-range value="60" color="light" step="10" pin="true" aria-label="Light Pin Range"></ion-range>
-          </ion-item>
-          <ion-item>
-            <ion-range
-              value="80"
-              color="dark"
-              step="10"
-              snaps="true"
-              pin="true"
-              aria-label="Dark Pin Range"
-            ></ion-range>
-          </ion-item>
-          <ion-item>
-            <ion-range pin="true" color="secondary" value="86" aria-label="Secondary Dual Range">
-              <ion-icon small name="sunny" slot="start"></ion-icon>
-              <ion-icon name="sunny" slot="end"></ion-icon>
+      <ion-content id="content" class="ion-padding">
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Default</h2>
+            <ion-range class="default" value="50">
+              <span slot="label">Temperature</span>
             </ion-range>
-            <ion-range pin="true" color="danger" value="54" aria-label="Danger Dual Range">
-              <ion-icon small name="thermometer" slot="start"></ion-icon>
-              <ion-icon name="thermometer" slot="end"></ion-icon>
+          </div>
+          <div class="grid-item">
+            <h2>Dual Knobs</h2>
+            <ion-range dual-knobs="true" class="dual-knobs">
+              <span slot="label">Temperature</span>
             </ion-range>
-          </ion-item>
-          <ion-item>
-            <ion-label position="stacked">Stacked Label</ion-label>
-            <ion-range value="40" id="stacked-range">
-              <ion-label slot="start">Start</ion-label>
-              <ion-label slot="end">End</ion-label>
+          </div>
+          <div class="grid-item">
+            <h2>Ticks with Step</h2>
+            <ion-range class="ticks" step="10" snaps="true" value="50">
+              <span slot="label">Temperature</span>
             </ion-range>
-          </ion-item>
-        </ion-list>
-
-        <ion-list>
-          <ion-list-header>
-            <ion-label> Dynamic Value </ion-label>
-          </ion-list-header>
-          <ion-item>
-            <ion-range pin="true" step="0" color="secondary" id="progressValue" aria-label="Progress Range"></ion-range>
-            <div id="progressValueResult" slot="end"></div>
-          </ion-item>
-          <ion-item>
-            <ion-range pin="true" color="danger" id="brightnessValue" aria-label="Brightness Range"></ion-range>
-            <div id="brightnessValueResult" slot="end"></div>
-          </ion-item>
-          <ion-item>
-            <ion-range pin="true" color="dark" id="contrastValue" aria-label="Contrast Range"></ion-range>
-            <div id="contrastValueResult" slot="end"></div>
-          </ion-item>
-          <ion-button onclick="increaseRangeValues()"> Increase Values </ion-button>
-        </ion-list>
-
-        <ion-list>
-          <ion-list-header>
-            <ion-label> Mode </ion-label>
-          </ion-list-header>
-          <ion-item>
-            <ion-range value="50" mode="md" aria-label="Material Design Range"></ion-range>
-          </ion-item>
-          <ion-item>
-            <ion-range value="50" mode="ios" aria-label="iOS Range"></ion-range>
-          </ion-item>
-        </ion-list>
-
-        <ion-list>
-          <ion-list-header>
-            <ion-label> Options </ion-label>
-          </ion-list-header>
-          <ion-item>
-            <ion-range
-              class="range-part"
-              min="-200"
-              max="200"
-              step="10"
-              snaps="true"
-              pin="true"
-              dual-knobs="true"
-              aria-label="Custom Range"
-            ></ion-range>
-          </ion-item>
-          <ion-item>
-            <ion-range pin="true" aria-label="Custom Range"></ion-range>
-          </ion-item>
-          <ion-item>
-            <ion-range min="-200" max="200" step="10" snaps="true" pin="true" aria-label="Custom Range"></ion-range>
-          </ion-item>
-          <ion-item>
-            <ion-range min="1000" max="2000" step="100" snaps="true" id="range" aria-label="Custom Range"></ion-range>
-          </ion-item>
-          <ion-item>
-            <ion-range
-              min="1000"
-              max="2000"
-              step="100"
-              snaps="true"
-              ticks="false"
-              aria-label="Custom Range"
-            ></ion-range>
-          </ion-item>
-          <ion-item>
-            <ion-range dual-knobs="true" id="multiKnob" aria-label="Custom Range"></ion-range>
-          </ion-item>
-          <ion-item>
-            <ion-range id="debounce" debounce="5000" aria-label="Custom Range"></ion-range>
-          </ion-item>
-        </ion-list>
-
-        <ion-button onclick="elTest()">Test</ion-button>
-
-        <ion-list>
-          <ion-list-header>
-            <ion-label> Coupled sliders </ion-label>
-          </ion-list-header>
-          <ion-item>
-            <ion-range min="0" value="0" max="50" id="minRange" aria-label="Coupled Range"></ion-range>
-          </ion-item>
-          <ion-item>
-            <ion-range min="50" value="100" max="100" id="maxRange" aria-label="Coupled Range"></ion-range>
-          </ion-item>
-          <ion-item>
-            <ion-range min="0" value="50" max="100" id="targetRange" aria-label="Coupled Range"></ion-range>
-          </ion-item>
-        </ion-list>
-
-        <ion-list>
-          <ion-list-header>
-            <ion-label> Custom pin label </ion-label>
-          </ion-list-header>
-          <ion-item>
-            <ion-range pin min="1" step="0.1" max="2" id="customLabel"></ion-range>
-          </ion-item>
-        </ion-list>
+          </div>
+          <div class="grid-item">
+            <h2>Pin</h2>
+            <ion-range class="pin" pin="true">
+              <span slot="label">Temperature</span>
+            </ion-range>
+          </div>
+        </div>
       </ion-content>
     </ion-app>
 
     <script>
-      const progressValue = document.getElementById('progressValue');
-      const brightnessValue = document.getElementById('brightnessValue');
-      const contrastValue = document.getElementById('contrastValue');
-
-      const ranges = [progressValue, brightnessValue, contrastValue];
-
-      for (var i = 0; i < ranges.length; i++) {
-        var el = ranges[i];
-        el.value = (i + 1) * 10;
-        updateRangeResult(el);
-
-        el.addEventListener('ionChange', function (ev) {
-          updateRangeResult(ev.target);
-        });
-      }
-
-      progressValue.addEventListener('ionChange', function (ev) {
-        console.log(ev.detail.value);
-        brightnessValue.value = ev.detail.value;
-        contrastValue.value = ev.target.value;
-      });
-
-      function updateRangeResult(el) {
-        var resultEl = document.getElementById(`${el.id}Result`);
-        resultEl.innerHTML = Math.round(el.value);
-      }
-
-      function increaseRangeValues() {
-        for (var i = 0; i < ranges.length; i++) {
-          var el = ranges[i];
-          var newValue = el.value + 10;
-
-          if (newValue > 100) {
-            newValue = 10;
-          }
-
-          el.value = newValue;
-        }
-      }
-
-      var knob = document.getElementById('multiKnob');
-      var debounceRange = document.getElementById('debounce');
-      knob.value = {
-        lower: 33,
-        upper: 60,
+      const dualKnobs = document.querySelector('.dual-knobs');
+      dualKnobs.value = {
+        lower: '10',
+        upper: '90',
       };
-
-      function elTest() {
-        var range = document.getElementById('range');
-        range.disabled = !range.disabled;
-      }
-
-      const minRange = document.getElementById('minRange');
-      const maxRange = document.getElementById('maxRange');
-      const targetRange = document.getElementById('targetRange');
-
-      minRange.addEventListener('ionChange', function (ev) {
-        targetRange.min = ev.detail.value;
-      });
-
-      maxRange.addEventListener('ionChange', function (ev) {
-        targetRange.max = ev.detail.value;
-      });
-
-      const rangePart = document.querySelector('.range-part');
-      rangePart.value = {
-        lower: '-100',
-        upper: '100',
-      };
-
-      const customLabel = document.getElementById('customLabel');
-      customLabel.pinFormatter = (value) => value.toFixed(1);
     </script>
   </body>
 </html>
