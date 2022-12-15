@@ -41,5 +41,13 @@ module.exports = {
       }
     ],
     "custom-rules/no-component-on-ready-method": "error"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["*.e2e.ts"],
+      "rules": {
+        "custom-rules/await-playwright-promise-assertion": "error"
+      }
+    }
+  ]
 };
