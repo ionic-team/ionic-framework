@@ -201,11 +201,6 @@ export const config: Config = {
     }),
   ],
   buildEs5: 'prod',
-  extras: {
-    dynamicImportShim: true,
-    initializeNextTick: true,
-    scriptDataOpts: true
-  },
   testing: {
     moduleNameMapper: {
       "@utils/test": ["<rootDir>/src/utils/test/utils"],
