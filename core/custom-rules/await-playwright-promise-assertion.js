@@ -10,7 +10,7 @@ module.exports = {
         const expression = node.expression;
 
         /**
-         * The first expression of a properly await'ed
+         * The first expression of a properly awaited
          * Playwright assertion should be an AwaitExpression,
          * so if it goes directly to the CallExpression
          * then we potentially need to report this.
@@ -28,6 +28,12 @@ module.exports = {
             object.callee.type === 'Identifier' &&
             object.callee.name === 'expect'
           ) {
+            /**
+             * From here, we can check if there is a known
+             * Playwright assertion. If so, then we can safely say
+             * that there was an async Playwright assert used
+             * that was not properly awaited.
+             */
             if (
               property.type === 'Identifier' &&
               hasPlaywrightAsyncAssertion(property.name)
@@ -41,10 +47,15 @@ module.exports = {
   }
 };
 
+/**
+ * Returns `true` if `property` is the name
+ * of a known async Playwright assertion.
+ */
 const hasPlaywrightAsyncAssertion = (property) => {
   return ASYNC_PLAYWRIGHT_ASSERTS.includes(property);
 }
 
+// https://playwright.dev/docs/test-assertions
 const ASYNC_PLAYWRIGHT_ASSERTS = [
   'toBeChecked',
   'toBeDisabled',
