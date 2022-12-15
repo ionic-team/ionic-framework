@@ -40,7 +40,14 @@ module.exports = {
         "allowAny": true
       }
     ],
-    "custom-rules/no-component-on-ready-method": "error",
-    "custom-rules/await-playwright-promise-assertion": "error"
-  }
+    "custom-rules/no-component-on-ready-method": "error"
+  },
+  "overrides": [
+    {
+      "files": ["*.e2e.ts"],
+      "rules": {
+        "custom-rules/await-playwright-promise-assertion": "error"
+      }
+    }
+  ]
 };
