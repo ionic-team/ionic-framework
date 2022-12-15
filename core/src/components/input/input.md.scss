@@ -62,7 +62,7 @@
 // Input Wrapper
 // ----------------------------------------------------------------
 
-.input-wrapper {
+:host(:not(.legacy-input)) {
   min-height: 56px;
 }
 
