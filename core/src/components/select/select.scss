@@ -262,6 +262,13 @@ button {
    * label does not overlap with the placeholder.
    */
   transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /**
+   * This ensures that the .select-text gets
+   * truncated with ellipses when the text is
+   * too long for the screen.
+   */
+  overflow: hidden;
 }
 
 // Select Justify
