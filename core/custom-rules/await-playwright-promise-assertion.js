@@ -29,7 +29,6 @@ module.exports = {
           ) {
             context.report({ node: node, messageId: 'awaitPlayewrightPromiseAssertion' });
           }
-
         }
       }
     }
