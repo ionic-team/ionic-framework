@@ -667,6 +667,7 @@ export class Select implements ComponentInterface {
   private renderSelect() {
     const { disabled, el, isExpanded, labelPlacement, justify } = this;
     const mode = getIonMode(this);
+    const hasJustify = labelPlacement !== 'floating' && labelPlacement !== 'stacked';
 
     return (
       <Host
@@ -676,7 +677,7 @@ export class Select implements ComponentInterface {
           'in-item': hostContext('ion-item', el),
           'select-disabled': disabled,
           'select-expanded': isExpanded,
-          [`select-justify-${justify}`]: true,
+          [`select-justify-${justify}`]: hasJustify,
           [`select-label-placement-${labelPlacement}`]: true,
         }}
       >
