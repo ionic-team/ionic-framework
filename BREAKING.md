@@ -131,6 +131,12 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 
 - The `detail` payload for the `ionInput` event now contains an object with the current `value` as well as the native event that triggered `ionInput`.
 
+**Design tokens**
+
+| Token                   | Previous Value | New Value |
+| ----------------------- | -------------- | --------- |
+| `--placeholder-opacity` | `0.5`          | `0.6`     |
+
 <h4 id="version-7x-item">Item</h4>
 
 **Design tokens**
