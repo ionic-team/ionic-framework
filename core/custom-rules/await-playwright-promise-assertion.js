@@ -1,7 +1,7 @@
 module.exports = {
   meta: {
     messages: {
-      awaitPlayewrightPromiseAssertion: 'This Playwright assertion returns a Promise. Add an "await" to avoid creating a flaky test.',
+      awaitPlaywrightPromiseAssertion: 'This Playwright assertion returns a Promise. Add an "await" to avoid creating a flaky test.',
     },
   },
   create(context) {
@@ -27,7 +27,7 @@ module.exports = {
             property.type === 'Identifier' &&
             hasPlaywrightAsyncAssertion(property.name)
           ) {
-            context.report({ node: node, messageId: 'awaitPlayewrightPromiseAssertion' });
+            context.report({ node: node, messageId: 'awaitPlaywrightPromiseAssertion' });
           }
         }
       }
