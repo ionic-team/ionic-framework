@@ -1,7 +1,7 @@
 module.exports = {
   meta: {
     messages: {
-      awaitPlayewrightPromiseAssertion: 'This Playwright assertions returns a Promise. Add an "await" to avoid creating a flaky test.',
+      awaitPlayewrightPromiseAssertion: 'This Playwright assertion returns a Promise. Add an "await" to avoid creating a flaky test.',
     },
   },
   create(context) {
