@@ -110,7 +110,17 @@ button {
 }
 
 :host(.select-expanded:not(.legacy-select)) .select-icon {
-  @include transform(rotate(180deg));
+  @include transform(rotate(180deg))
+}
+
+:host(.select-label-placement-stacked) .select-icon,
+:host(.select-label-placement-floating) .select-icon {
+  @include transform(translateY(-50%))
+}
+
+:host(.select-label-placement-stacked.select-expanded) .select-icon
+:host(.select-label-placement-floating.select-expanded) .select-icon {
+  @include transform(rotate(180deg), translateY(-50%))
 }
 
 .select-text {
