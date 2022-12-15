@@ -50,7 +50,7 @@ test.describe('select: label', () => {
     test('should render a start justification with label in the end position', async ({ page }) => {
       await page.setContent(`
 
-        <ion-select label="Label" placeholder="Select an Item" label-placement=""end" justify="start" style="width: 200px"></ion-select>
+        <ion-select label="Label" placeholder="Select an Item" label-placement="end" justify="start" style="width: 200px"></ion-select>
       `);
 
       const select = page.locator('ion-select');
@@ -61,7 +61,7 @@ test.describe('select: label', () => {
     test('should render an end justification with label in the end position', async ({ page }) => {
       await page.setContent(`
 
-        <ion-select label="Label" placeholder="Select an Item" label-placement=""end" justify="end" style="width: 200px"></ion-select>
+        <ion-select label="Label" placeholder="Select an Item" label-placement="end" justify="end" style="width: 200px"></ion-select>
       `);
 
       const select = page.locator('ion-select');
@@ -72,7 +72,7 @@ test.describe('select: label', () => {
     test('should render a space between justification with label in the end position', async ({ page }) => {
       await page.setContent(`
 
-        <ion-select label="Label" placeholder="Select an Item" label-placement=""end" justify="space-between" style="width: 200px"></ion-select>
+        <ion-select label="Label" placeholder="Select an Item" label-placement="end" justify="space-between" style="width: 200px"></ion-select>
       `);
 
       const select = page.locator('ion-select');
@@ -86,7 +86,7 @@ test.describe('select: label', () => {
     test('should render a start justification with label in the fixed position', async ({ page }) => {
       await page.setContent(`
 
-        <ion-select label="Label" placeholder="Select an Item" label-placement=""fixed" justify="start" style="width: 200px">This is a long label</ion-select>
+        <ion-select label="Label" placeholder="Select an Item" label-placement="fixed" justify="start" style="width: 200px"></ion-select>
       `);
 
       const select = page.locator('ion-select');
@@ -97,7 +97,7 @@ test.describe('select: label', () => {
     test('should render an end justification with label in the fixed position', async ({ page }) => {
       await page.setContent(`
 
-        <ion-select label="Label" placeholder="Select an Item" label-placement=""fixed" justify="end" style="width: 200px">This is a long label</ion-select>
+        <ion-select label="Label" placeholder="Select an Item" label-placement="fixed" justify="end" style="width: 200px"></ion-select>
       `);
 
       const select = page.locator('ion-select');
@@ -108,12 +108,65 @@ test.describe('select: label', () => {
     test('should render a space between justification with label in the fixed position', async ({ page }) => {
       await page.setContent(`
 
-        <ion-select label="Label" placeholder="Select an Item" label-placement=""fixed" justify="space-between" style="width: 200px">This is a long label</ion-select>
+        <ion-select label="Label" placeholder="Select an Item" label-placement="fixed" justify="space-between" style="width: 200px"></ion-select>
       `);
 
       const select = page.locator('ion-select');
       expect(await select.screenshot()).toMatchSnapshot(
         `select-label-fixed-justify-space-between-${page.getSnapshotSettings()}.png`
+      );
+    });
+  });
+
+  test.describe.only('select: floating placement', () => {
+    test('label should appear above the select when there is a value', async ({ page }) => {
+      await page.setContent(`
+        <ion-select label="Label" value="apples" label-placement="floating">
+          <ion-select-option value="apples">Apples</ion-select-option>
+        </ion-select>
+      `);
+
+      const select = page.locator('ion-select');
+      expect(await select.screenshot()).toMatchSnapshot(
+        `select-label-floating-value-${page.getSnapshotSettings()}.png`
+      );
+    });
+    test('label should appear on top of the select when there is no value', async ({ page }) => {
+      await page.setContent(`
+        <ion-select label="Label" label-placement="floating">
+          <ion-select-option value="apples">Apples</ion-select-option>
+        </ion-select>
+      `);
+
+      const select = page.locator('ion-select');
+      expect(await select.screenshot()).toMatchSnapshot(
+        `select-label-floating-no-value-${page.getSnapshotSettings()}.png`
+      );
+    });
+    test('label should appear on top of the select when the select is expanded', async ({ page }) => {
+      await page.setContent(`
+        <ion-select class="select-expanded" label="Label" label-placement="floating" placeholder="Select a Fruit">
+          <ion-select-option value="apples">Apples</ion-select-option>
+        </ion-select>
+      `);
+
+      const select = page.locator('ion-select');
+
+      expect(await select.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+        `select-label-floating-expanded-${page.getSnapshotSettings()}.png`
+      );
+    });
+    test('long label should truncate', async ({ page }) => {
+      await page.setContent(`
+        <ion-select label="Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label" label-placement="floating" value="apples" placeholder="Select a Fruit">
+          <ion-select-option value="apples">Apples</ion-select-option>
+        </ion-select>
+      `);
+
+      const select = page.locator('ion-select');
+
+      expect(await select.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+        `select-label-floating-long-label-${page.getSnapshotSettings()}.png`
       );
     });
   });
@@ -124,7 +177,7 @@ test.describe('select: label', () => {
       skip.rtl();
 
       await page.setContent(`
-        <ion-select label="Placeholder Placeholder Placeholder Placeholder Placeholder" placeholder="Select an Item"></ion-select>
+        <ion-select label="Label Label Label Label Label" placeholder="Select an Item"></ion-select>
       `);
 
       const select = page.locator('ion-select');
