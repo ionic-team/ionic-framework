@@ -366,9 +366,19 @@ button {
  */
 :host(.select-label-placement-stacked) .label-text-wrapper,
 :host(.select-label-placement-floating) .label-text-wrapper {
-  @include transform-origin(start, top);
-
   max-width: 100%;
+}
+
+:host(.select-ltr.select-label-placement-stacked) .label-text-wrapper,
+:host(.select-ltr.select-label-placement-floating) .label-text-wrapper {
+  // stylelint-disable-next-line property-disallowed-list
+  transform-origin: left top;
+}
+
+:host(.select-rtl.select-label-placement-stacked) .label-text-wrapper,
+:host(.select-rtl.select-label-placement-floating) .label-text-wrapper {
+  // stylelint-disable-next-line property-disallowed-list
+  transform-origin: right top;
 }
 
 /**
