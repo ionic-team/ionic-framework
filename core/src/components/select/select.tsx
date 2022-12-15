@@ -667,7 +667,7 @@ export class Select implements ComponentInterface {
   }
 
   private renderSelect() {
-    const { disabled, el, isExpanded, labelPlacement, justify } = this;
+    const { disabled, el, isExpanded, labelPlacement, justify, placeholder } = this;
     const mode = getIonMode(this);
     const hasJustify = labelPlacement !== 'floating' && labelPlacement !== 'stacked';
 
@@ -680,6 +680,7 @@ export class Select implements ComponentInterface {
           'select-disabled': disabled,
           'select-expanded': isExpanded,
           'has-value': this.hasValue(),
+          'has-placeholder': placeholder !== undefined,
           [`select-justify-${justify}`]: hasJustify,
           [`select-label-placement-${labelPlacement}`]: true,
         }}

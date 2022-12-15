@@ -330,18 +330,27 @@ button {
  * Ensures the select does not
  * overlap the label.
  * Also ensure that the native wrapper
- * takes up the remaining available height.
+ * takes up the remaining available height and width.
  */
 :host(.select-label-placement-stacked) .native-wrapper,
 :host(.select-label-placement-floating) .native-wrapper {
   @include margin(1px, 0, 0, 0);
 
   flex-grow: 1;
+
+  width: 100%;
 }
 
 /**
- * This makes the label sit over the input
- * when the input is blurred and has no value.
+ * This makes the label sit over the select
+ * when the select is blurred and has no value.
+ * The label should not sit over the select if the
+ * select has a placeholder.
+ * Note: This is different from what ion-input does
+ * because the activating the select causes an overlay
+ * to appear. This makes it hard to read the placeholder.
+ * With ion-input, the input just focuses and the placeholder
+ * is still easy to read.
  */
 :host(.select-label-placement-floating) .label-text-wrapper {
   @include transform(translateY(100%), scale(1));
@@ -351,8 +360,9 @@ button {
  * The select should be hidden when the label
  * is on top of the input. This prevents the label
  * from overlapping any placeholder value.
+
  */
-:host(.select-label-placement-floating) .native-wrapper {
+:host(.select-label-placement-floating:not(.has-placeholder)) .native-wrapper {
   opacity: 0;
 }
 
@@ -366,7 +376,8 @@ button {
  */
 :host(.select-label-placement-stacked) .label-text-wrapper,
 :host(.select-expanded.select-label-placement-floating) .label-text-wrapper,
-:host(.has-value.select-label-placement-floating) .label-text-wrapper {
+:host(.has-value.select-label-placement-floating) .label-text-wrapper,
+:host(.has-placeholder.select-label-placement-floating) .label-text-wrapper {
   @include transform(translateY(50%), scale(.75));
 
   /**
