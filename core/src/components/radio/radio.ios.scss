@@ -6,7 +6,9 @@
 
 :host {
   --color-checked: #{ion-color(primary, base)};
+}
 
+:host(.legacy-radio) {
   width: $radio-ios-icon-width;
   height: $radio-ios-icon-height;
 }
@@ -79,4 +81,19 @@
 
 :host(.in-item[slot="start"]) {
   @include margin($radio-ios-item-start-margin-top, $radio-ios-item-start-margin-end, $radio-ios-item-start-margin-bottom, $radio-ios-item-start-margin-start);
+}
+
+// Radio Wrapper
+// ----------------------------------------------------------------
+
+.radio-wrapper {
+  min-height: 42px;
+}
+
+// Toggle Native Wrapper
+// ----------------------------------------------------------------
+
+.native-wrapper .radio-icon {
+  width: $radio-ios-icon-width;
+  height: $radio-ios-icon-height;
 }

@@ -10,7 +10,9 @@
   --border-width: #{$radio-md-icon-border-width};
   --border-style: #{$radio-md-icon-border-style};
   --border-radius: #{$radio-md-icon-border-radius};
+}
 
+:host(.legacy-radio) {
   width: $radio-md-icon-width;
   height: $radio-md-icon-height;
 }
@@ -35,7 +37,6 @@
   border-color: var(--color);
 }
 
-
 // Material Design Radio Inner Circle: Unchecked
 // -----------------------------------------
 
@@ -52,14 +53,12 @@
   background: var(--color-checked);
 }
 
-
 // Material Design Radio Outer Circle: Checked
 // -----------------------------------------
 
 :host(.radio-checked) .radio-icon {
   border-color: var(--color-checked);
 }
-
 
 // Material Design Radio Inner Circle: Checked
 // -----------------------------------------
@@ -68,7 +67,6 @@
   transform: scale3d(1, 1, 1);
 }
 
-
 // Material Design Radio: Disabled
 // -----------------------------------------
 
@@ -76,7 +74,6 @@
 :host(.radio-disabled) {
   opacity: $radio-md-disabled-opacity;
 }
-
 
 // Material Design Radio: Keyboard Focus
 // -----------------------------------------
@@ -94,20 +91,44 @@
   background: $radio-md-background-color-focused;
 
   content: "";
-  opacity: .2;
+  opacity: 0.2;
 }
-
 
 // Material Design Radio Within An Item
 // -----------------------------------------
 
 :host(.in-item) {
-  @include margin($radio-md-item-end-margin-top, $radio-md-item-end-margin-end, $radio-md-item-end-margin-bottom, $radio-md-item-end-margin-start);
+  @include margin(
+    $radio-md-item-end-margin-top,
+    $radio-md-item-end-margin-end,
+    $radio-md-item-end-margin-bottom,
+    $radio-md-item-end-margin-start
+  );
 
   display: block;
   position: static;
 }
 
 :host(.in-item[slot="start"]) {
-  @include margin($radio-md-item-start-margin-top, $radio-md-item-start-margin-end, $radio-md-item-start-margin-bottom, $radio-md-item-start-margin-start);
+  @include margin(
+    $radio-md-item-start-margin-top,
+    $radio-md-item-start-margin-end,
+    $radio-md-item-start-margin-bottom,
+    $radio-md-item-start-margin-start
+  );
+}
+
+// Radio Wrapper
+// ----------------------------------------------------------------
+
+.radio-wrapper {
+  min-height: 46px;
+}
+
+// Radio Native Wrapper
+// ----------------------------------------------------------------
+
+.native-wrapper .radio-icon {
+  width: $radio-md-icon-width;
+  height: $radio-md-icon-height;
 }

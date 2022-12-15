@@ -5,7 +5,8 @@ import { getIonMode } from '../../global/ionic-global';
 import type { Color, StyleEventDetail } from '../../interface';
 import type { LegacyFormController } from '../../utils/forms';
 import { createLegacyFormController } from '../../utils/forms';
-import { addEventListener, getAriaLabel, removeEventListener } from '../../utils/helpers';
+import type { Attributes } from '../../utils/helpers';
+import { addEventListener, getAriaLabel, inheritAriaAttributes, removeEventListener } from '../../utils/helpers';
 import { printIonWarning } from '../../utils/logging';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
@@ -30,6 +31,7 @@ export class Radio implements ComponentInterface {
   private radioGroup: HTMLIonRadioGroupElement | null = null;
   private nativeInput!: HTMLInputElement;
   private legacyFormController!: LegacyFormController;
+  private inheritedAttributes: Attributes = {};
 
   // This flag ensures we log the deprecation warning at most once.
   private hasLoggedDeprecationWarning = false;
@@ -141,6 +143,12 @@ export class Radio implements ComponentInterface {
 
   componentWillLoad() {
     this.emitStyle();
+
+    if (!this.legacyFormController.hasLegacyControl()) {
+      this.inheritedAttributes = {
+        ...inheritAriaAttributes(this.el),
+      };
+    }
   }
 
   @Watch('color')
@@ -171,6 +179,15 @@ export class Radio implements ComponentInterface {
     this.ionBlur.emit();
   };
 
+  private renderRadioControl() {
+    return (
+      <div class="radio-icon" part="container">
+        <div class="radio-inner" part="mark" />
+        <div class="radio-ripple"></div>
+      </div>
+    );
+  }
+
   render() {
     const { legacyFormController } = this;
 
@@ -178,7 +195,39 @@ export class Radio implements ComponentInterface {
   }
 
   private renderRadio() {
-    return <slot></slot>;
+    const { checked, disabled, inputId, color, el, justify, labelPlacement, inheritedAttributes } = this;
+    const mode = getIonMode(this);
+
+    return (
+      <Host
+        onClick={this.onClick}
+        class={createColorClasses(color, {
+          [mode]: true,
+          'in-item': hostContext('ion-item', el),
+          interactive: true,
+          'radio-checked': checked,
+          'radio-disabled': disabled,
+          [`radio-justify-${justify}`]: true,
+          [`radio-label-placement-${labelPlacement}`]: true,
+        })}
+      >
+        <label class="radio-wrapper">
+          <div class="label-text-wrapper">
+            <slot></slot>
+          </div>
+          <div class="native-wrapper">{this.renderRadioControl()}</div>
+          <input
+            type="radio"
+            checked={checked}
+            disabled={disabled}
+            tabindex="-1"
+            id={inputId}
+            ref={(nativeEl) => (this.nativeInput = nativeEl as HTMLInputElement)}
+            {...inheritedAttributes}
+          />
+        </label>
+      </Host>
+    );
   }
 
   private renderLegacyRadio() {
@@ -212,12 +261,10 @@ For radios that do not have a visible label, developers should use "aria-label" 
           interactive: true,
           'radio-checked': checked,
           'radio-disabled': disabled,
+          'legacy-radio': true,
         })}
       >
-        <div class="radio-icon" part="container">
-          <div class="radio-inner" part="mark" />
-          <div class="radio-ripple"></div>
-        </div>
+        {this.renderRadioControl()}
         <label htmlFor={inputId}>{labelText}</label>
         <input
           type="radio"
