@@ -677,6 +677,7 @@ export class Select implements ComponentInterface {
           'in-item': hostContext('ion-item', el),
           'select-disabled': disabled,
           'select-expanded': isExpanded,
+          'has-value': this.hasValue(),
           [`select-justify-${justify}`]: hasJustify,
           [`select-label-placement-${labelPlacement}`]: true,
         }}
