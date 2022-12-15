@@ -4,9 +4,9 @@
  * @internal
  * @prop el: The Ionic form component to reference
  */
-type AllowedFormElements = HTMLIonInputElement | HTMLIonToggleElement;
-export const createLegacyFormController = (el: AllowedFormElements): LegacyFormController => {
-  const controlEl: AllowedFormElements = el;
+type HTMLLegacyFormControlElement = HTMLElement & { label?: string; legacy?: boolean };
+export const createLegacyFormController = (el: HTMLLegacyFormControlElement): LegacyFormController => {
+  const controlEl: HTMLLegacyFormControlElement = el;
   let legacyControl = true;
 
   /**

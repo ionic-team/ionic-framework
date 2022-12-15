@@ -7,7 +7,7 @@ test.describe('radio: a11y', () => {
   });
   test('tabbing should switch between radio groups', async ({ page, browserName }) => {
     const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
-    await page.goto(`/src/components/radio/test/a11y`);
+    await page.goto(`/src/components/radio/test/legacy/a11y`);
 
     const firstGroupRadios = page.locator('#first-group ion-radio');
     const secondGroupRadios = page.locator('#second-group ion-radio');
@@ -23,7 +23,7 @@ test.describe('radio: a11y', () => {
   });
   test('using arrow keys should move between enabled radios within group', async ({ page, browserName }) => {
     const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
-    await page.goto(`/src/components/radio/test/a11y`);
+    await page.goto(`/src/components/radio/test/legacy/a11y`);
 
     const firstGroupRadios = page.locator('#first-group ion-radio');
 
