@@ -200,6 +200,17 @@ button {
   cursor: inherit;
 }
 
+// Select Highlight
+// ----------------------------------------------------------------
+
+:host(.ion-touched.ion-invalid) {
+  --highlight-color: var(--highlight-color-invalid);
+}
+
+:host(.ion-touched.ion-valid) {
+  --highlight-color: var(--highlight-color-valid);
+}
+
 // Select Label
 // ----------------------------------------------------------------
 
