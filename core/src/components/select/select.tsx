@@ -683,6 +683,7 @@ export class Select implements ComponentInterface {
     const hasFloatingOrStackedLabel = labelPlacement === 'floating' || labelPlacement === 'stacked';
     const justifyEnabled = !hasFloatingOrStackedLabel;
     const rtl = isRTL(el) ? 'rtl' : 'ltr';
+    const shouldRenderHighlight = mode === 'md' && fill !== 'outline';
 
     return (
       <Host
@@ -709,6 +710,7 @@ export class Select implements ComponentInterface {
             {this.renderListbox(this.label !== undefined ? 'select-label' : undefined)}
           </div>
           {hasFloatingOrStackedLabel && this.renderSelectIcon()}
+          {shouldRenderHighlight && <div class="select-highlight"></div>}
         </label>
       </Host>
     );
