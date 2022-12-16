@@ -190,9 +190,11 @@ export class Toggle implements ComponentInterface {
   }
 
   private emitStyle() {
-    this.ionStyle.emit({
-      'interactive-disabled': this.disabled,
-    });
+    if (this.legacyFormController.hasLegacyControl()) {
+      this.ionStyle.emit({
+        'interactive-disabled': this.disabled,
+      });
+    }
   }
 
   private onStart() {
