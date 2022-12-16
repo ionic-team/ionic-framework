@@ -695,6 +695,13 @@ export class Select implements ComponentInterface {
             {!hasFloatingOrStackedLabel && this.renderSelectIcon()}
             {this.renderListbox(this.label !== undefined ? 'select-label' : undefined)}
           </div>
+          /**
+           * The icon in a floating/stacked select
+           * must be centered with the entire select,
+           * not just the native control. As a result,
+           * we need to render the icon outside of
+           * the native wrapper.
+           */
           {hasFloatingOrStackedLabel && this.renderSelectIcon()}
         </label>
       </Host>
