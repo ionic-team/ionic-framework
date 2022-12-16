@@ -31,7 +31,6 @@ export class Checkbox implements ComponentInterface {
   private inputId = `ion-cb-${checkboxIds++}`;
   private focusEl?: HTMLElement;
   private legacyFormController!: LegacyFormController;
-  private inItem = false;
   private inheritedAttributes: Attributes = {};
 
   // This flag ensures we log the deprecation warning at most once.
@@ -135,7 +134,6 @@ export class Checkbox implements ComponentInterface {
   }
 
   componentWillLoad() {
-    this.inItem = !!this.el.closest('ion-item');
     this.emitStyle();
 
     if (!this.legacyFormController.hasLegacyControl()) {
@@ -215,7 +213,6 @@ export class Checkbox implements ComponentInterface {
       getSVGPath,
       indeterminate,
       inheritedAttributes,
-      inItem,
       inputId,
       justify,
       labelPlacement,
@@ -266,7 +263,6 @@ export class Checkbox implements ComponentInterface {
             ref={(focusEl) => (this.focusEl = focusEl)}
             {...inheritedAttributes}
           />
-          {mode === 'md' && inItem && <ion-ripple-effect></ion-ripple-effect>}
         </label>
       </Host>
     );
