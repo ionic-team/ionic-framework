@@ -39,7 +39,6 @@
 
   font-family: $font-family-base;
 
-  overflow: hidden;
   z-index: $z-index-item-input;
 }
 
@@ -49,6 +48,8 @@
   display: flex;
 
   align-items: center;
+
+  overflow: hidden;
 }
 
 :host(:not(.legacy-select)) {
