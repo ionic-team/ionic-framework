@@ -21,14 +21,6 @@
    *
    * @prop --checkmark-color: Color of the checkbox checkmark when checked
    * @prop --checkmark-width: Stroke width of the checkbox checkmark
-   *
-   * @prop --background: Background color of the container
-   * @prop --background-activated: Background of the container when pressed
-   * @prop --background-activated-opacity: Opacity of the container background when pressed
-   * @prop --background-hover: Background of the container when hovered
-   * @prop --background-hover-opacity: Opacity of the container background when hovered
-   * @prop --background-focused: Background of the container when focused
-   * @prop --background-focused-opacity: Opacity of the container background when focused
    */
   --background: transparent;
   --checkbox-background-checked: #{ion-color(primary, base)};
@@ -78,9 +70,7 @@
   align-items: center;
 
   height: 100%;
-
-  background: var(--background);
-
+  
   cursor: inherit;
 }
 
@@ -120,6 +110,12 @@
 
 input {
   @include visually-hidden();
+}
+
+.native-wrapper {
+  display: flex;
+
+  align-items: center;
 }
 
 .checkbox-icon {
@@ -164,15 +160,6 @@ input {
 
 :host(.checkbox-justify-space-between) .checkbox-wrapper {
   justify-content: space-between;
-}
-
-:host(.checkbox-justify-space-between.checkbox-label-placement-start) .checkbox-icon,
-:host(.checkbox-justify-space-between.checkbox-label-placement-fixed) .checkbox-icon {
-  @include margin(0, 0, 0, auto);
-}
-
-:host(.checkbox-justify-space-between.checkbox-label-placement-end) .checkbox-icon {
-  @include margin(0, auto, 0, 0);
 }
 
 :host(.checkbox-justify-start) .checkbox-wrapper {
@@ -248,38 +235,6 @@ input {
   width: 100px;
   min-width: 100px;
   max-width: 200px;
-}
-
-
-// Hover State
-// ---------------------------------------------
-
-@media (any-hover: hover) {
-  :host(:not(.ion-focused):hover) .checkbox-wrapper::after {
-    background: var(--background-hover);
-    
-    opacity: var(--background-hover-opacity);
-  }
-}
-
-
-// Activated State
-// ---------------------------------------------
-
-:host(.ion-activated) .checkbox-wrapper::after {
-  background: var(--background-activated);
-  
-  opacity: var(--background-activated-opacity);
-}
-
-
-// Focused State
-// ---------------------------------------------
-
-:host(.ion-focused) .checkbox-wrapper::after {
-  background: var(--background-focused);
-
-  opacity: var(--background-focused-opacity);
 }
 
 

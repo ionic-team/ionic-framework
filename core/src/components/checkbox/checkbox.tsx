@@ -6,7 +6,8 @@ import { getIonMode } from '../../global/ionic-global';
 import type { CheckboxChangeEventDetail, Color, Mode, StyleEventDetail } from '../../interface';
 import type { LegacyFormController } from '../../utils/forms';
 import { createLegacyFormController } from '../../utils/forms';
-import { getAriaLabel, renderHiddenInput } from '../../utils/helpers';
+import type { Attributes } from '../../utils/helpers';
+import { getAriaLabel, inheritAriaAttributes, renderHiddenInput } from '../../utils/helpers';
 import { printIonWarning } from '../../utils/logging';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
@@ -31,6 +32,7 @@ export class Checkbox implements ComponentInterface {
   private focusEl?: HTMLElement;
   private legacyFormController!: LegacyFormController;
   private inItem = false;
+  private inheritedAttributes: Attributes = {};
 
   // This flag ensures we log the deprecation warning at most once.
   private hasLoggedDeprecationWarning = false;
@@ -135,6 +137,12 @@ export class Checkbox implements ComponentInterface {
   componentWillLoad() {
     this.inItem = !!this.el.closest('ion-item');
     this.emitStyle();
+
+    if (!this.legacyFormController.hasLegacyControl()) {
+      this.inheritedAttributes = {
+        ...inheritAriaAttributes(this.el),
+      };
+    }
   }
 
   @Watch('checked')
@@ -206,6 +214,7 @@ export class Checkbox implements ComponentInterface {
       el,
       getSVGPath,
       indeterminate,
+      inheritedAttributes,
       inItem,
       inputId,
       justify,
@@ -214,17 +223,13 @@ export class Checkbox implements ComponentInterface {
       value,
     } = this;
     const mode = getIonMode(this);
-    const { label, labelId, labelText } = getAriaLabel(el, inputId);
     const path = getSVGPath(mode, indeterminate);
 
     renderHiddenInput(true, el, name, checked ? value : '', disabled);
 
     return (
       <Host
-        aria-labelledby={label ? labelId : null}
-        aria-checked={`${checked}`}
         aria-hidden={disabled ? 'true' : null}
-        role="checkbox"
         class={createColorClasses(color, {
           [mode]: true,
           'in-item': hostContext('ion-item', el),
@@ -232,8 +237,6 @@ export class Checkbox implements ComponentInterface {
           'checkbox-disabled': disabled,
           'checkbox-indeterminate': indeterminate,
           interactive: true,
-          'ion-activatable': true,
-          'ion-focusable': true,
           [`checkbox-justify-${justify}`]: true,
           [`checkbox-label-placement-${labelPlacement}`]: true,
         })}
@@ -247,10 +250,11 @@ export class Checkbox implements ComponentInterface {
           >
             <slot></slot>
           </div>
-          <svg class="checkbox-icon" viewBox="0 0 24 24" part="container">
-            {path}
-          </svg>
-          <label htmlFor={inputId}>{labelText}</label>
+          <div class="native-wrapper">
+            <svg class="checkbox-icon" viewBox="0 0 24 24" part="container">
+              {path}
+            </svg>
+          </div>
           <input
             type="checkbox"
             aria-checked={`${checked}`}
@@ -260,6 +264,7 @@ export class Checkbox implements ComponentInterface {
             onFocus={() => this.onFocus()}
             onBlur={() => this.onBlur()}
             ref={(focusEl) => (this.focusEl = focusEl)}
+            {...inheritedAttributes}
           />
           {mode === 'md' && inItem && <ion-ripple-effect></ion-ripple-effect>}
         </label>

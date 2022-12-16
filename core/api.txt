@@ -304,13 +304,6 @@ ion-checkbox,prop,value,any,'on',false,false
 ion-checkbox,event,ionBlur,void,true
 ion-checkbox,event,ionChange,CheckboxChangeEventDetail<any>,true
 ion-checkbox,event,ionFocus,void,true
-ion-checkbox,css-prop,--background
-ion-checkbox,css-prop,--background-activated
-ion-checkbox,css-prop,--background-activated-opacity
-ion-checkbox,css-prop,--background-focused
-ion-checkbox,css-prop,--background-focused-opacity
-ion-checkbox,css-prop,--background-hover
-ion-checkbox,css-prop,--background-hover-opacity
 ion-checkbox,css-prop,--border-color
 ion-checkbox,css-prop,--border-color-checked
 ion-checkbox,css-prop,--border-radius
