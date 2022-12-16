@@ -15,7 +15,7 @@
   display: inline-block;
   position: relative;
   box-sizing: border-box;
-  
+
   max-width: 100%;
 
   user-select: none;
@@ -60,10 +60,6 @@ input {
 
 :host(:focus) {
   outline: none;
-}
-
-:host(:not(.legacy-radio)) {
-  background: var(--background);
 }
 
 :host(.in-item:not(.legacy-radio)) {
@@ -137,7 +133,7 @@ input {
  * Label is on the left of the radio in LTR and
  * on the right in RTL.
  */
- :host(.radio-label-placement-start) .radio-wrapper {
+:host(.radio-label-placement-start) .radio-wrapper {
   flex-direction: row;
 }
 
@@ -157,7 +153,7 @@ input {
  * Label is on the right of the radio in LTR and
  * on the left in RTL.
  */
- :host(.radio-label-placement-end) .radio-wrapper {
+:host(.radio-label-placement-end) .radio-wrapper {
   flex-direction: row-reverse;
 }
 
