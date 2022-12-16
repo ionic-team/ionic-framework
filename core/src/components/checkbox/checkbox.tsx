@@ -247,9 +247,11 @@ export class Checkbox implements ComponentInterface {
           >
             <slot></slot>
           </div>
-          <svg class="checkbox-icon" viewBox="0 0 24 24" part="container">
-            {path}
-          </svg>
+          <div class="native-wrapper">
+            <svg class="checkbox-icon" viewBox="0 0 24 24" part="container">
+              {path}
+            </svg>
+          </div>
           <input
             type="checkbox"
             aria-checked={`${checked}`}

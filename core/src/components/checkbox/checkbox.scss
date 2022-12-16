@@ -110,6 +110,12 @@ input {
   @include visually-hidden();
 }
 
+.native-wrapper {
+  display: flex;
+
+  align-items: center;
+}
+
 .checkbox-icon {
   @include border-radius(var(--border-radius));
 
@@ -152,15 +158,6 @@ input {
 
 :host(.checkbox-justify-space-between) .checkbox-wrapper {
   justify-content: space-between;
-}
-
-:host(.checkbox-justify-space-between.checkbox-label-placement-start) .checkbox-icon,
-:host(.checkbox-justify-space-between.checkbox-label-placement-fixed) .checkbox-icon {
-  @include margin(0, 0, 0, auto);
-}
-
-:host(.checkbox-justify-space-between.checkbox-label-placement-end) .checkbox-icon {
-  @include margin(0, auto, 0, 0);
 }
 
 :host(.checkbox-justify-start) .checkbox-wrapper {
