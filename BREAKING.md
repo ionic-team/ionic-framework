@@ -52,7 +52,7 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 | --------------- | ----------------- |
 | Chrome          | 79+               |
 | Safari          | 14+               |
-| Firefox         | 63+               |
+| Firefox         | 70+               |
 | Edge            | 79+               |
 
 **Minimum JavaScript Framework Versions**
