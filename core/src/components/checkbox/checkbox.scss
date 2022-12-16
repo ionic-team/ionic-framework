@@ -20,14 +20,6 @@
    *
    * @prop --checkmark-color: Color of the checkbox checkmark when checked
    * @prop --checkmark-width: Stroke width of the checkbox checkmark
-   *
-   * @prop --background: Background color of the container
-   * @prop --background-activated: Background of the container when pressed
-   * @prop --background-activated-opacity: Opacity of the container background when pressed
-   * @prop --background-hover: Background of the container when hovered
-   * @prop --background-hover-opacity: Opacity of the container background when hovered
-   * @prop --background-focused: Background of the container when focused
-   * @prop --background-focused-opacity: Opacity of the container background when focused
    */
   --checkbox-background-checked: #{ion-color(primary, base)};
   --border-color-checked: #{ion-color(primary, base)};
@@ -76,9 +68,7 @@
   align-items: center;
 
   height: 100%;
-
-  background: var(--background);
-
+  
   cursor: inherit;
 }
 
@@ -154,130 +144,6 @@ input {
   stroke-width: var(--checkmark-width);
 
   opacity: 0;
-}
-
-
-// Justify Content
-// ---------------------------------------------
-
-:host(.checkbox-justify-space-between) .checkbox-wrapper {
-  justify-content: space-between;
-}
-
-:host(.checkbox-justify-space-between.checkbox-label-placement-start) .checkbox-icon,
-:host(.checkbox-justify-space-between.checkbox-label-placement-fixed) .checkbox-icon {
-  @include margin(0, 0, 0, auto);
-}
-
-:host(.checkbox-justify-space-between.checkbox-label-placement-end) .checkbox-icon {
-  @include margin(0, auto, 0, 0);
-}
-
-:host(.checkbox-justify-start) .checkbox-wrapper {
-  justify-content: start;
-}
-
-:host(.checkbox-justify-end) .checkbox-wrapper {
-  justify-content: end;
-}
-
-
-// Label Placement - Start
-// ----------------------------------------------------------------
-
-/**
- * Label is on the left of the checkbox in LTR and
- * on the right in RTL.
- */
-:host(.checkbox-label-placement-start) .checkbox-wrapper {
-  flex-direction: row;
-}
-
-:host(.checkbox-label-placement-start) .label-text-wrapper {
-  /**
-   * The margin between the label and
-   * the checkbox should be on the end
-   * when the label sits at the start.
-   */
-  @include margin(0, 8px, 0, 0);
-}
-
-
-// Label Placement - End
-// ----------------------------------------------------------------
-
-/**
- * Label is on the right of the checkbox in LTR and
- * on the left in RTL.
- */
-:host(.checkbox-label-placement-end) .checkbox-wrapper {
-  flex-direction: row-reverse;
-}
-
-/**
- * The margin between the label and
- * the checkbox should be on the start
- * when the label sits at the end.
- */
-:host(.checkbox-label-placement-end) .label-text-wrapper {
-  @include margin(0, 0, 0, 8px);
-}
-
-
-// Label Placement - Fixed
-// ----------------------------------------------------------------
-
-:host(.checkbox-label-placement-fixed) .label-text-wrapper {
-  /**
-   * The margin between the label and
-   * the checkbox should be on the end
-   * when the label sits at the start.
-   */
-  @include margin(0, 8px, 0, 0);
-}
-
-/**
- * Label is on the left of the checkbox in LTR and
- * on the right in RTL. Label also has a fixed width.
- */
-:host(.checkbox-label-placement-fixed) .label-text-wrapper {
-  flex: 0 0 100px;
-
-  width: 100px;
-  min-width: 100px;
-  max-width: 200px;
-}
-
-
-// Hover State
-// ---------------------------------------------
-
-@media (any-hover: hover) {
-  :host(:not(.ion-focused):hover) .checkbox-wrapper::after {
-    background: var(--background-hover);
-    
-    opacity: var(--background-hover-opacity);
-  }
-}
-
-
-// Activated State
-// ---------------------------------------------
-
-:host(.ion-activated) .checkbox-wrapper::after {
-  background: var(--background-activated);
-  
-  opacity: var(--background-activated-opacity);
-}
-
-
-// Focused State
-// ---------------------------------------------
-
-:host(.ion-focused) .checkbox-wrapper::after {
-  background: var(--background-focused);
-
-  opacity: var(--background-focused-opacity);
 }
 
 

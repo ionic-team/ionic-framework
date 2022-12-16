@@ -216,8 +216,6 @@ export class Checkbox implements ComponentInterface {
           'checkbox-disabled': disabled,
           'checkbox-indeterminate': indeterminate,
           interactive: true,
-          'ion-activatable': true,
-          'ion-focusable': true,
           [`checkbox-justify-${justify}`]: true,
           [`checkbox-label-placement-${labelPlacement}`]: true,
         })}
