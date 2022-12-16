@@ -45,6 +45,27 @@
   color: var(--highlight-color);
 }
 
+// Select Highlight
+// ----------------------------------------------------------------
+
+.select-highlight {
+  @include position(null, null, -1px, 0);
+
+  position: absolute;
+
+  width: 100%;
+  height: 2px;
+
+  transform: scale(0);
+
+  transition: transform 200ms;
+
+  background: var(--highlight-color);
+}
+
+:host(.select-expanded) .select-highlight {
+  transform: scale(1);
+}
 
 /**
  * Adjust the arrow so that it appears in the middle
