@@ -52,3 +52,10 @@
 
   opacity: 1;
 }
+
+// Input Shape Rounded
+// ----------------------------------------------------------------
+
+:host(.select-shape-round) {
+  --border-radius: 16px;
+}
