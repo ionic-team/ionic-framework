@@ -97,7 +97,7 @@
 // Material Design Radio Within An Item
 // -----------------------------------------
 
-:host(.in-item) {
+:host(.in-item.legacy-toggle[slot]) {
   @include margin(
     $radio-md-item-end-margin-top,
     $radio-md-item-end-margin-end,
@@ -109,7 +109,7 @@
   position: static;
 }
 
-:host(.in-item[slot="start"]) {
+:host(.in-item.legacy-toggle[slot="start"]) {
   @include margin(
     $radio-md-item-start-margin-top,
     $radio-md-item-start-margin-end,
