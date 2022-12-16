@@ -31,7 +31,7 @@
 // Input Wrapper
 // ----------------------------------------------------------------
 
-.input-wrapper {
+:host(:not(.legacy-input)) {
   min-height: 44px;
 }
 
@@ -40,7 +40,7 @@
  * the component needs to be taller otherwise the
  * label will appear too close to the input text.
  */
-:host(.input-label-placement-floating) .input-wrapper,
-:host(.input-label-placement-stacked) .input-wrapper {
+:host(.input-label-placement-floating),
+:host(.input-label-placement-stacked) {
   min-height: 56px;
 }
