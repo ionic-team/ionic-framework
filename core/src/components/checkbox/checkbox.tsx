@@ -198,14 +198,12 @@ export class Checkbox implements ComponentInterface {
     const { color, checked, disabled, el, getSVGPath, indeterminate, inputId, justify, labelPlacement, name, value } =
       this;
     const mode = getIonMode(this);
-    const { label, labelId, labelText } = getAriaLabel(el, inputId);
     const path = getSVGPath(mode, indeterminate);
 
     renderHiddenInput(true, el, name, checked ? value : '', disabled);
 
     return (
       <Host
-        aria-labelledby={label ? labelId : null}
         aria-checked={`${checked}`}
         aria-hidden={disabled ? 'true' : null}
         role="checkbox"
@@ -232,7 +230,6 @@ export class Checkbox implements ComponentInterface {
           <svg class="checkbox-icon" viewBox="0 0 24 24" part="container">
             {path}
           </svg>
-          <label htmlFor={inputId}>{labelText}</label>
           <input
             type="checkbox"
             aria-checked={`${checked}`}
