@@ -448,3 +448,10 @@ button {
    */
   max-width: calc(100% / #{$select-floating-label-scale});
 }
+
+// Input Shape Rounded
+// ----------------------------------------------------------------
+
+:host(.select-shape-round) {
+  --border-radius: 16px;
+}
