@@ -2572,6 +2572,10 @@ export namespace Components {
          */
         "cancelText": string;
         /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).  This property is only available when using the modern select syntax.
+         */
+        "color"?: Color;
+        /**
           * A property name or function used to compare object values
          */
         "compareWith"?: string | SelectCompareFn | null;
@@ -6565,6 +6569,10 @@ declare namespace LocalJSX {
           * The text to display on the cancel button.
          */
         "cancelText"?: string;
+        /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).  This property is only available when using the modern select syntax.
+         */
+        "color"?: Color;
         /**
           * A property name or function used to compare object values
          */

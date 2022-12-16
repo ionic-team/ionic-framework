@@ -12,6 +12,7 @@ import type {
   ActionSheetOptions,
   AlertInput,
   AlertOptions,
+  Color,
   CssClassMap,
   OverlaySelect,
   PopoverOptions,
@@ -23,7 +24,7 @@ import type {
 import { findItemLabel, focusElement, getAriaLabel, renderHiddenInput, inheritAttributes } from '../../utils/helpers';
 import type { Attributes } from '../../utils/helpers';
 import { actionSheetController, alertController, popoverController } from '../../utils/overlays';
-import { hostContext } from '../../utils/theme';
+import { createColorClasses, hostContext } from '../../utils/theme';
 import { watchForOptions } from '../../utils/watch-options';
 
 import type { SelectCompareFn } from './select-interface';
@@ -62,6 +63,15 @@ export class Select implements ComponentInterface {
    * The text to display on the cancel button.
    */
   @Prop() cancelText = 'Cancel';
+
+  /**
+   * The color to use from your application's color palette.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
+   *
+   * This property is only available when using the modern select syntax.
+   */
+  @Prop({ reflect: true }) color?: Color;
 
   /**
    * A property name or function used to compare object values
@@ -677,7 +687,7 @@ export class Select implements ComponentInterface {
     return (
       <Host
         onClick={this.onClick}
-        class={{
+        class={createColorClasses(this.color, {
           [mode]: true,
           'in-item': hostContext('ion-item', el),
           'select-disabled': disabled,
@@ -687,7 +697,7 @@ export class Select implements ComponentInterface {
           [`select-${rtl}`]: true,
           [`select-justify-${justify}`]: justifyEnabled,
           [`select-label-placement-${labelPlacement}`]: true,
-        }}
+        })}
       >
         <label class="select-wrapper" id="select-label">
           {this.renderLabelContainer()}
