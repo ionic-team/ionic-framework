@@ -683,7 +683,9 @@ export class Select implements ComponentInterface {
     const hasFloatingOrStackedLabel = labelPlacement === 'floating' || labelPlacement === 'stacked';
     const justifyEnabled = !hasFloatingOrStackedLabel;
     const rtl = isRTL(el) ? 'rtl' : 'ltr';
-    const shouldRenderHighlight = mode === 'md' && fill !== 'outline';
+    const shouldRenderHighlight = false;
+    // TODO: Change above to: mode === 'md' && fill !== 'outline';
+    // when enabling highlight functionality
 
     return (
       <Host
