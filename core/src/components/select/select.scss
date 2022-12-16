@@ -143,13 +143,13 @@ button {
 :host(.select-ltr.select-label-placement-stacked) .select-icon,
 :host(.select-ltr.select-label-placement-floating) .select-icon {
   // stylelint-disable-next-line property-disallowed-list
-  right: 0;
+  right: var(--padding-end, 0);;
 }
 
 :host(.select-rtl.select-label-placement-stacked) .select-icon,
 :host(.select-rtl.select-label-placement-floating) .select-icon {
   // stylelint-disable-next-line property-disallowed-list
-  left: 0;
+  left: var(--padding-start, 0);
 }
 
 // Select Text
