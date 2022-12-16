@@ -7,4 +7,11 @@ test.describe('select: a11y', () => {
     skip.rtl();
     skip.mode('md');
   });
+
+  test('should not have accessibility violations', async ({ page }) => {
+    await page.goto(`/src/components/select/test/a11y`);
+
+    const results = await new AxeBuilder({ page }).analyze();
+    expect(results.violations).toEqual([]);
+  });
 });
