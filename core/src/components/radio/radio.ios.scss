@@ -72,7 +72,7 @@
 // iOS Radio Within An Item
 // -----------------------------------------
 
-:host(.in-item.legacy-radio[slot]) {
+:host(.in-item.legacy-radio) {
   @include margin($radio-ios-item-end-margin-top, $radio-ios-item-end-margin-end, $radio-ios-item-end-margin-bottom, $radio-ios-item-end-margin-start);
 
   display: block;
