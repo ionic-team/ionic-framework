@@ -25,7 +25,7 @@
 .select-icon {
   transition: transform .15s cubic-bezier(.4, 0, .2, 1);
 
-  opacity: .55;
+  color: #{$text-color-step-500};
 }
 
 // Select Label
