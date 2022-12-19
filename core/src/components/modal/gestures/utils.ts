@@ -1,4 +1,5 @@
 import type { Animation } from '../../../interface';
+import { GESTURE } from '../../../utils/overlays';
 
 export const handleCanDismiss = async (el: HTMLIonModalElement, animation: Animation) => {
   /**
@@ -18,7 +19,7 @@ export const handleCanDismiss = async (el: HTMLIonModalElement, animation: Anima
    * If the function returns `true`,
    * then we can proceed with dismiss.
    */
-  const shouldDismiss = await el.canDismiss();
+  const shouldDismiss = await el.canDismiss(undefined, GESTURE);
   if (!shouldDismiss) {
     return;
   }
