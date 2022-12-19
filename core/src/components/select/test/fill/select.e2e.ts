@@ -9,5 +9,76 @@ test.describe('select: fill', () => {
   test.describe('select: fill solid', () => {
   });
   test.describe('select: fill outline', () => {
+    test('should not have visual regressions', async ({ page }) => {
+      await page.setContent(`
+        <ion-select
+          fill="outline"
+          label="Fruit"
+          value="apple"
+        >
+          <ion-select-option value="apple">Apple</ion-select-option>
+        </ion-select>
+      `);
+
+      const select = page.locator('ion-select');
+      expect(await select.screenshot()).toMatchSnapshot(`select-fill-outline-${page.getSnapshotSettings()}.png`);
+    });
+    test('should render correctly with floating label', async ({ page }) => {
+      await page.setContent(`
+        <ion-select
+          fill="outline"
+          label="Fruit"
+          label-placement="floating"
+          value="apple"
+        >
+          <ion-select-option value="apple">Apple</ion-select-option>
+        </ion-select>
+      `);
+
+      const select = page.locator('ion-select');
+      expect(await select.screenshot()).toMatchSnapshot(
+        `select-fill-outline-label-floating-${page.getSnapshotSettings()}.png`
+      );
+    });
+    test('should not have visual regressions with shaped outline', async ({ page }) => {
+      await page.setContent(`
+        <ion-select
+          shape="round"
+          fill="outline"
+          label="Fruit"
+          value="apple"
+        >
+          <ion-select-option value="apple">Apple</ion-select-option>
+        </ion-select>
+      `);
+
+      const select = page.locator('ion-select');
+      expect(await select.screenshot()).toMatchSnapshot(`select-fill-shaped-outline-${page.getSnapshotSettings()}.png`);
+    });
+    test('padding and border radius should be customizable', async ({ page }) => {
+      await page.setContent(`
+        <style>
+          ion-select {
+            --border-radius: 10px !important;
+            --padding-start: 50px !important;
+            --padding-end: 50px !important;
+          }
+        </style>
+        <ion-select
+          shape="round"
+          fill="outline"
+          label="Fruit"
+          label-placement="floating"
+          value="apple"
+        >
+          <ion-select-option value="apple">Apple</ion-select-option>
+        </ion-select>
+      `);
+
+      const select = page.locator('ion-select');
+      expect(await select.screenshot()).toMatchSnapshot(
+        `select-fill-shaped-outline-custom-${page.getSnapshotSettings()}.png`
+      );
+    });
   });
 });
