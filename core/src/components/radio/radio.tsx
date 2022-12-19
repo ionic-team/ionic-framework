@@ -181,6 +181,10 @@ export class Radio implements ComponentInterface {
     this.ionBlur.emit();
   };
 
+  private get hasLabel() {
+    return this.el.textContent !== '';
+  }
+
   private renderRadioControl() {
     return (
       <div class="radio-icon" part="container">
@@ -197,7 +201,7 @@ export class Radio implements ComponentInterface {
   }
 
   private renderRadio() {
-    const { checked, disabled, inputId, color, el, justify, labelPlacement, inheritedAttributes } = this;
+    const { checked, disabled, inputId, color, el, justify, labelPlacement, inheritedAttributes, hasLabel } = this;
     const mode = getIonMode(this);
 
     return (
@@ -214,7 +218,12 @@ export class Radio implements ComponentInterface {
         })}
       >
         <label class="radio-wrapper">
-          <div class="label-text-wrapper">
+          <div
+            class={{
+              'label-text-wrapper': true,
+              'label-text-wrapper-hidden': !hasLabel,
+            }}
+          >
             <slot></slot>
           </div>
           <div class="native-wrapper">{this.renderRadioControl()}</div>
