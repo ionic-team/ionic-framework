@@ -129,6 +129,15 @@ button {
 }
 
 /**
+ * Ensure that the select icon has
+ * the correct color contrast when
+ * used inside of an item.
+ */
+:host(.in-item-color) .select-icon {
+  color: inherit;
+}
+
+/**
  * This rotates the chevron icon
  * when the select is activated.
  */

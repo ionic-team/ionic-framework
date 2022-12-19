@@ -77,10 +77,10 @@
  * The icon should also take on the highlight
  * color if there is a validation state.
  */
-:host(.select-expanded) .select-icon,
-:host(.ion-touched.ion-valid) .select-icon,
-:host(.ion-touched.ion-invalid) .select-icon,
-:host(.ion-focused) .select-icon {
+:host(.select-expanded) .select-wrapper .select-icon,
+:host(.ion-touched.ion-valid) .select-wrapper .select-icon,
+:host(.ion-touched.ion-invalid) .select-wrapper .select-icon,
+:host(.ion-focused) .select-wrapper .select-icon {
   color: var(--highlight-color);
 }
 
@@ -107,13 +107,6 @@
 :host-context(.item-has-focus.item-label-stacked) .select-icon,
 :host-context(.item-has-focus.item-label-floating:not(.item-fill-outline)) .select-icon {
   @include transform(rotate(180deg), translate3d(0, -9px, 0));
-}
-
-:host-context(ion-item.ion-focused) .select-icon,
-:host-context(.item-has-focus) .select-icon {
-  color: var(--highlight-color-focused);
-
-  opacity: 1;
 }
 
 // Input Shape Rounded
