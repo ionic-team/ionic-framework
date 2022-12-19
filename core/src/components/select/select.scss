@@ -51,6 +51,8 @@
   font-family: $font-family-base;
 
   z-index: $z-index-item-input;
+
+  cursor: pointer;
 }
 
 :host(.ion-color) {
