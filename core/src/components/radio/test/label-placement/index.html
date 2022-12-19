@@ -19,6 +19,7 @@
         grid-row-gap: 20px;
         grid-column-gap: 20px;
       }
+
       h2 {
         font-size: 12px;
         font-weight: normal;
@@ -27,6 +28,7 @@
 
         margin-top: 10px;
       }
+
       @media screen and (max-width: 800px) {
         .grid {
           grid-template-columns: 1fr;
@@ -53,17 +55,23 @@
         <div class="grid">
           <div class="grid-item">
             <h2>Justify Start</h2>
-            <ion-radio label-placement="start" justify="start">Enable Notifications</ion-radio>
+            <ion-radio-group value="1">
+              <ion-radio label-placement="start" justify="start" value="1">Enable Notifications</ion-radio>
+            </ion-radio-group>
           </div>
 
           <div class="grid-item">
             <h2>Justify End</h2>
-            <ion-radio label-placement="start" justify="end">Enable Notifications</ion-radio>
+            <ion-radio-group value="1">
+              <ion-radio label-placement="start" justify="end" value="1">Enable Notifications</ion-radio>
+            </ion-radio-group>
           </div>
 
           <div class="grid-item">
             <h2>Justify Space Between</h2>
-            <ion-radio label-placement="start" justify="space-between">Enable Notifications</ion-radio>
+            <ion-radio-group value="1">
+              <ion-radio label-placement="start" justify="space-between" value="1">Enable Notifications</ion-radio>
+            </ion-radio-group>
           </div>
         </div>
 
@@ -71,17 +79,23 @@
         <div class="grid">
           <div class="grid-item">
             <h2>Justify Start</h2>
-            <ion-radio label-placement="end" justify="start">Enable Notifications</ion-radio>
+            <ion-radio-group value="1">
+              <ion-radio label-placement="end" justify="start" value="1">Enable Notifications</ion-radio>
+            </ion-radio-group>
           </div>
 
           <div class="grid-item">
             <h2>Justify End</h2>
-            <ion-radio label-placement="end" justify="end">Enable Notifications</ion-radio>
+            <ion-radio-group value="1">
+              <ion-radio label-placement="end" justify="end" value="1">Enable Notifications</ion-radio>
+            </ion-radio-group>
           </div>
 
           <div class="grid-item">
             <h2>Justify Space Between</h2>
-            <ion-radio label-placement="end" justify="space-between">Enable Notifications</ion-radio>
+            <ion-radio-group value="1">
+              <ion-radio label-placement="end" justify="space-between" value="1">Enable Notifications</ion-radio>
+            </ion-radio-group>
           </div>
         </div>
 
@@ -89,17 +103,23 @@
         <div class="grid">
           <div class="grid-item">
             <h2>Justify Start</h2>
-            <ion-radio label-placement="fixed" justify="start">Enable Notifications</ion-radio>
+            <ion-radio-group value="1">
+              <ion-radio label-placement="fixed" justify="start" value="1">Enable Notifications</ion-radio>
+            </ion-radio-group>
           </div>
 
           <div class="grid-item">
             <h2>Justify End</h2>
-            <ion-radio label-placement="fixed" justify="end">Enable Notifications</ion-radio>
+            <ion-radio-group value="1">
+              <ion-radio label-placement="fixed" justify="end" value="1">Enable Notifications</ion-radio>
+            </ion-radio-group>
           </div>
 
           <div class="grid-item">
             <h2>Justify Space Between</h2>
-            <ion-radio label-placement="fixed" justify="space-between">Enable Notifications</ion-radio>
+            <ion-radio-group value="1">
+              <ion-radio label-placement="fixed" justify="space-between" value="1">Enable Notifications</ion-radio>
+            </ion-radio-group>
           </div>
         </div>
       </ion-content>
