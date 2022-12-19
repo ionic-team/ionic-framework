@@ -333,7 +333,7 @@ button, a {
    * that there is too much end margin. We move the default
    * chevron icon over to account for this extra whitespace.
    */
-  @include margin(null, -6px, null, null);
+  @include margin(null, -6px, null, calc(var(--inner-padding-end) / 2));
 
   color: var(--detail-icon-color);
 
