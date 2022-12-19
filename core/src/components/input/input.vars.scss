@@ -2,3 +2,9 @@
 
 /// @prop - How much to scale the floating label by
 $input-floating-label-scale: 0.75 !default;
+
+/// @prop - The disabled opacity of the input text, the label, helper text, char counter and placeholder of a disabled input.
+/// This value comes from the Material Design spec:
+/// - https://github.com/material-components/material-web/pull/549
+/// We apply the same value to both iOS and MD themes.
+$input-disabled-opacity: 0.37 !default;
