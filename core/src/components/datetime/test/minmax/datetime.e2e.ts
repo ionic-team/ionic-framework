@@ -66,8 +66,8 @@ test.describe('datetime: minmax', () => {
 
     const navButtons = page.locator('ion-datetime#outside .calendar-next-prev ion-button');
 
-    expect(navButtons.nth(0)).toHaveAttribute('disabled', '');
-    expect(navButtons.nth(1)).toHaveAttribute('disabled', '');
+    await expect(navButtons.nth(0)).toHaveAttribute('disabled', '');
+    await expect(navButtons.nth(1)).toHaveAttribute('disabled', '');
   });
 
   test('datetime: min including day should not disable month', async ({ page }) => {
