@@ -144,7 +144,7 @@ button {
 :host(.select-ltr.select-label-placement-stacked) .select-icon,
 :host(.select-ltr.select-label-placement-floating) .select-icon {
   // stylelint-disable-next-line property-disallowed-list
-  right: var(--padding-end, 0);;
+  right: var(--padding-end, 0);
 }
 
 :host(.select-rtl.select-label-placement-stacked) .select-icon,
@@ -194,6 +194,8 @@ button {
   min-height: inherit;
 
   transition: background-color 15ms linear;
+
+  background: var(--background);
 
   cursor: inherit;
 }
