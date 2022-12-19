@@ -318,6 +318,10 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     return this.el.querySelector('ion-range:not(.legacy-range)') !== null;
   }
 
+  private hasModernSelect(): boolean {
+    return this.el.querySelector('ion-select:not(.legacy-range)') !== null;
+  }
+
   private getFirstInput(): HTMLIonInputElement | HTMLIonTextareaElement {
     const inputs = this.el.querySelectorAll('ion-input, ion-textarea') as NodeListOf<
       HTMLIonInputElement | HTMLIonTextareaElement
@@ -405,6 +409,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     const inList = hostContext('ion-list', this.el);
     const hasModernInput = this.hasModernInput();
     const hasModernRange = this.hasModernRange();
+    const hasModernSelect = this.hasModernSelect();
 
     return (
       <Host
@@ -426,6 +431,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
             'item-rtl': document.dir === 'rtl',
             'item-has-modern-input': hasModernInput,
             'item-has-modern-range': hasModernRange,
+            'item-has-modern-select': hasModernSelect
           }),
         }}
         role={inList ? 'listitem' : null}
