@@ -695,6 +695,7 @@ export class Select implements ComponentInterface {
           'select-expanded': isExpanded,
           'has-value': this.hasValue(),
           'has-placeholder': placeholder !== undefined,
+          'ion-focusable': true,
           [`select-${rtl}`]: true,
           [`select-fill-${fill}`]: fill !== undefined,
           [`select-justify-${justify}`]: justifyEnabled,
