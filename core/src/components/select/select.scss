@@ -5,6 +5,7 @@
 
 :host {
   /**
+   * @prop --background: Background of the select
    * @prop --padding-top: Top padding of the select
    * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the select
    * @prop --padding-bottom: Bottom padding of the select
@@ -30,6 +31,8 @@
   --padding-start: 0px;
   --placeholder-color: currentColor;
   --placeholder-opacity: #{$placeholder-opacity};
+  --background: transparent;
+  --border-style: solid;
 
   display: block;
   position: relative;

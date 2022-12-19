@@ -1222,6 +1222,7 @@ ion-segment-button,part,native
 
 ion-select,shadow
 ion-select,prop,cancelText,string,'Cancel',false,false
+ion-select,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-select,prop,compareWith,((currentValue: any, compareValue: any) => boolean) | null | string | undefined,undefined,false,false
 ion-select,prop,disabled,boolean,false,false,false
 ion-select,prop,fill,"outline" | "solid" | undefined,undefined,false,false
@@ -1245,6 +1246,7 @@ ion-select,event,ionCancel,void,true
 ion-select,event,ionChange,SelectChangeEventDetail<any>,true
 ion-select,event,ionDismiss,void,true
 ion-select,event,ionFocus,void,true
+ion-select,css-prop,--background
 ion-select,css-prop,--border-color Color of the select border
 ion-select,css-prop,--border-radius Radius of the select border
 ion-select,css-prop,--border-style Style of the select border

@@ -4,6 +4,12 @@
 // Material Design Select
 // --------------------------------------------------
 
+:host {
+  --border-width: 1px;
+  --border-color: #{$item-md-border-color};
+}
+
+
 :host(.legacy-select) {
   --padding-top: #{$select-md-padding-top};
   --padding-end: #{$select-md-padding-end};
@@ -51,4 +57,11 @@
   color: var(--highlight-color-focused);
 
   opacity: 1;
+}
+
+// Input Shape Rounded
+// ----------------------------------------------------------------
+
+:host(.select-shape-round) {
+  --border-radius: 16px;
 }
