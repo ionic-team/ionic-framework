@@ -28,6 +28,24 @@
   opacity: .55;
 }
 
+// Select Label
+// ----------------------------------------------------------------
+
+/**
+ * When the select is focused the label should
+ * take on the highlight color.
+ */
+:host(.select-expanded) .label-text-wrapper,
+:host(.select-expanded) .select-icon {
+  color: var(--highlight-color);
+}
+
+:host(.ion-touched.ion-valid) .label-text-wrapper,
+:host(.ion-touched.ion-invalid) .label-text-wrapper {
+  color: var(--highlight-color);
+}
+
+
 /**
  * Adjust the arrow so that it appears in the middle
  * of the item. If the item has fill="outline" then
