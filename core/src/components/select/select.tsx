@@ -94,6 +94,9 @@ export class Select implements ComponentInterface {
 
   /**
    * How to pack the label and select within a line.
+   * `justify` does not apply when the label and select
+   * are on different lines when `labelPlacement` is set to
+   * `'floating'` or `'stacked'`.
    * `'start'`: The label and select will appear on the left in LTR and
    * on the right in RTL.
    * `'end'`: The label and select will appear on the right in LTR and
