@@ -68,7 +68,7 @@ $toggle-ios-item-start-padding-start:  0 !default;
 $toggle-ios-item-end-padding-top:      6px !default;
 
 /// @prop - Padding end of the toggle positioned on the end in an item
-$toggle-ios-item-end-padding-end:      ($item-ios-padding-end * 0.5) !default;
+$toggle-ios-item-end-padding-end:      0 !default;
 
 /// @prop - Padding bottom of the toggle positioned on the end in an item
 $toggle-ios-item-end-padding-bottom:   5px !default;
