@@ -13,7 +13,9 @@ test.describe('input: highlights', () => {
       `);
 
       const select = page.locator('ion-select');
-      expect(await select.screenshot({ animations: 'disabled' })).toMatchSnapshot(`select-no-fill-highlight-${page.getSnapshotSettings()}.png`);
+      expect(await select.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+        `select-no-fill-highlight-${page.getSnapshotSettings()}.png`
+      );
     });
   });
   test.describe('input: solid', () => {
@@ -23,8 +25,10 @@ test.describe('input: highlights', () => {
       `);
 
       const select = page.locator('ion-select');
-      expect(await select.screenshot({ animations: 'disabled' })).toMatchSnapshot(`select-solid-highlight-${page.getSnapshotSettings()}.png`);
-    })
+      expect(await select.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+        `select-solid-highlight-${page.getSnapshotSettings()}.png`
+      );
+    });
   });
   test.describe('input: outline', () => {
     test('should render bottom highlight', async ({ page }) => {
@@ -33,7 +37,9 @@ test.describe('input: highlights', () => {
       `);
 
       const select = page.locator('ion-select');
-      expect(await select.screenshot({ animations: 'disabled' })).toMatchSnapshot(`select-outline-highlight-${page.getSnapshotSettings()}.png`);
-    })
+      expect(await select.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+        `select-outline-highlight-${page.getSnapshotSettings()}.png`
+      );
+    });
   });
 });
