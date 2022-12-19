@@ -33,6 +33,17 @@
   --placeholder-opacity: #{$placeholder-opacity};
   --background: transparent;
   --border-style: solid;
+  --highlight-color-focused: #{ion-color(primary, base)};
+  --highlight-color-valid: #{ion-color(success, base)};
+  --highlight-color-invalid: #{ion-color(danger, base)};
+
+  /**
+   * This is a private API that is used to switch
+   * out the highlight color based on the state
+   * of the component without having to write
+   * different selectors for different fill variants.
+   */
+  --highlight-color: var(--highlight-color-focused);
 
   display: block;
   position: relative;
@@ -40,6 +51,10 @@
   font-family: $font-family-base;
 
   z-index: $z-index-item-input;
+}
+
+:host(.ion-color) {
+  --highlight-color-focused: #{current-color(base)};
 }
 
 :host(.legacy-select) {
@@ -437,9 +452,8 @@ button {
 
 /**
  * The select should be hidden when the label
- * is on top of the input. This prevents the label
+ * is on top of the select. This prevents the label
  * from overlapping any placeholder value.
-
  */
 :host(.select-label-placement-floating:not(.has-placeholder)) .native-wrapper .select-text {
   opacity: 0;
@@ -455,6 +469,7 @@ button {
  */
 :host(.select-label-placement-stacked) .label-text-wrapper,
 :host(.select-expanded.select-label-placement-floating) .label-text-wrapper,
+:host(.ion-focused.select-label-placement-floating) .label-text-wrapper,
 :host(.has-value.select-label-placement-floating) .label-text-wrapper,
 :host(.has-placeholder.select-label-placement-floating) .label-text-wrapper {
   @include transform(translateY(50%), scale(.75));
