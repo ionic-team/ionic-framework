@@ -1,13 +1,13 @@
 import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
-test.describe('checkbox: basic', () => {
+test.describe('checkbox: basic (legacy)', () => {
   test('should not have visual regressions', async ({ page }) => {
     await page.goto(`/src/components/checkbox/test/legacy/basic`);
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`checkbox-basic-${page.getSnapshotSettings()}.png`);
+    expect(await page.screenshot()).toMatchSnapshot(`checkbox-legacy-basic-${page.getSnapshotSettings()}.png`);
   });
 });
 

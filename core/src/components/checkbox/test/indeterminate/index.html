@@ -22,14 +22,12 @@
         </ion-toolbar>
       </ion-header>
 
-      <ion-content id="content">
-        <ion-checkbox indeterminate>Indeterminate</ion-checkbox>
-        <ion-checkbox checked indeterminate>Checked / Indeterminate</ion-checkbox>
+      <ion-content class="ion-padding">
+        <div id="checkboxes">
+          <ion-checkbox indeterminate>Indeterminate</ion-checkbox><br />
+          <ion-checkbox checked indeterminate>Checked / Indeterminate</ion-checkbox>
 
-        <ion-list-header>
-          <ion-label>Colors</ion-label>
-        </ion-list-header>
-        <div class="ion-padding-start">
+          <h2>Colors</h2>
           <ion-checkbox aria-label="Default Indeterminate" indeterminate></ion-checkbox>
           <ion-checkbox aria-label="Secondary Indeterminate" indeterminate color="secondary"></ion-checkbox>
           <ion-checkbox aria-label="Tertiary Indeterminate" indeterminate color="tertiary"></ion-checkbox>

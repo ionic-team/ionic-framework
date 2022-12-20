@@ -3,10 +3,11 @@ import { Component, Element, Event, Host, Prop, Watch, h } from '@stencil/core';
 
 // TODO(FW-2845) - Use @utils/forms and @utils/logging when https://github.com/ionic-team/stencil/issues/3826 is resolved
 import { getIonMode } from '../../global/ionic-global';
-import type { CheckboxChangeEventDetail, Color, StyleEventDetail } from '../../interface';
+import type { CheckboxChangeEventDetail, Color, Mode, StyleEventDetail } from '../../interface';
 import type { LegacyFormController } from '../../utils/forms';
 import { createLegacyFormController } from '../../utils/forms';
-import { getAriaLabel, renderHiddenInput } from '../../utils/helpers';
+import type { Attributes } from '../../utils/helpers';
+import { getAriaLabel, inheritAriaAttributes, renderHiddenInput } from '../../utils/helpers';
 import { printIonWarning } from '../../utils/logging';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
@@ -30,6 +31,7 @@ export class Checkbox implements ComponentInterface {
   private inputId = `ion-cb-${checkboxIds++}`;
   private focusEl?: HTMLElement;
   private legacyFormController!: LegacyFormController;
+  private inheritedAttributes: Attributes = {};
 
   // This flag ensures we log the deprecation warning at most once.
   private hasLoggedDeprecationWarning = false;
@@ -73,6 +75,25 @@ export class Checkbox implements ComponentInterface {
   @Prop() value: any | null = 'on';
 
   /**
+   * Where to place the label relative to the checkbox.
+   * `'start'`: The label will appear to the left of the checkbox in LTR and to the right in RTL.
+   * `'end'`: The label will appear to the right of the checkbox in LTR and to the left in RTL.
+   * `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+   */
+  @Prop() labelPlacement: 'start' | 'end' | 'fixed' = 'start';
+
+  /**
+   * How to pack the label and checkbox within a line.
+   * `'start'`: The label and checkbox will appear on the left in LTR and
+   * on the right in RTL.
+   * `'end'`: The label and checkbox will appear on the right in LTR and
+   * on the left in RTL.
+   * `'space-between'`: The label and checkbox will appear on opposite
+   * ends of the line with space between the two elements.
+   */
+  @Prop() justify: 'start' | 'end' | 'space-between' = 'space-between';
+
+  /**
    * Set the `legacy` property to `true` to forcibly use the legacy form control markup.
    * Ionic will only opt checkboxes in to the modern form markup when they are
    * using either the `aria-label` attribute or have text in the default slot. As a result,
@@ -114,6 +135,12 @@ export class Checkbox implements ComponentInterface {
 
   componentWillLoad() {
     this.emitStyle();
+
+    if (!this.legacyFormController.hasLegacyControl()) {
+      this.inheritedAttributes = {
+        ...inheritAriaAttributes(this.el),
+      };
+    }
   }
 
   @Watch('checked')
@@ -127,10 +154,12 @@ export class Checkbox implements ComponentInterface {
   }
 
   private emitStyle() {
-    this.ionStyle.emit({
-      'checkbox-checked': this.checked,
-      'interactive-disabled': this.disabled,
-    });
+    if (this.legacyFormController.hasLegacyControl()) {
+      this.ionStyle.emit({
+        'checkbox-checked': this.checked,
+        'interactive-disabled': this.disabled,
+      });
+    }
   }
 
   private setFocus() {
@@ -176,7 +205,67 @@ export class Checkbox implements ComponentInterface {
   }
 
   private renderCheckbox() {
-    return <slot></slot>;
+    const {
+      color,
+      checked,
+      disabled,
+      el,
+      getSVGPath,
+      indeterminate,
+      inheritedAttributes,
+      inputId,
+      justify,
+      labelPlacement,
+      name,
+      value,
+    } = this;
+    const mode = getIonMode(this);
+    const path = getSVGPath(mode, indeterminate);
+
+    renderHiddenInput(true, el, name, checked ? value : '', disabled);
+
+    return (
+      <Host
+        aria-hidden={disabled ? 'true' : null}
+        class={createColorClasses(color, {
+          [mode]: true,
+          'in-item': hostContext('ion-item', el),
+          'checkbox-checked': checked,
+          'checkbox-disabled': disabled,
+          'checkbox-indeterminate': indeterminate,
+          interactive: true,
+          [`checkbox-justify-${justify}`]: true,
+          [`checkbox-label-placement-${labelPlacement}`]: true,
+        })}
+      >
+        <label class="checkbox-wrapper">
+          <div
+            class={{
+              'label-text-wrapper': true,
+              'label-text-wrapper-hidden': el.textContent === '',
+            }}
+          >
+            <slot></slot>
+          </div>
+          <div class="native-wrapper">
+            <svg class="checkbox-icon" viewBox="0 0 24 24" part="container">
+              {path}
+            </svg>
+          </div>
+          <input
+            type="checkbox"
+            aria-checked={`${checked}`}
+            disabled={disabled}
+            id={inputId}
+            onChange={this.toggleChecked}
+            onFocus={() => this.onFocus()}
+            onBlur={() => this.onBlur()}
+            ref={(focusEl) => (this.focusEl = focusEl)}
+            {...inheritedAttributes}
+          />
+        </label>
+      </Host>
+    );
   }
 
   private renderLegacyCheckbox() {
@@ -199,25 +288,12 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
       this.hasLoggedDeprecationWarning = true;
     }
 
-    const { color, checked, disabled, el, indeterminate, inputId, name, value } = this;
+    const { color, checked, disabled, el, getSVGPath, indeterminate, inputId, name, value } = this;
     const mode = getIonMode(this);
     const { label, labelId, labelText } = getAriaLabel(el, inputId);
+    const path = getSVGPath(mode, indeterminate);
 
     renderHiddenInput(true, el, name, checked ? value : '', disabled);
-
-    let path = indeterminate ? (
-      <path d="M6 12L18 12" part="mark" />
-    ) : (
-      <path d="M5.9,12.5l3.8,3.8l8.8-8.8" part="mark" />
-    );
-
-    if (mode === 'md') {
-      path = indeterminate ? (
-        <path d="M2 12H22" part="mark" />
-      ) : (
-        <path d="M1.73,12.91 8.1,19.28 22.79,4.59" part="mark" />
-      );
-    }
 
     return (
       <Host
@@ -231,6 +307,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
           'checkbox-checked': checked,
           'checkbox-disabled': disabled,
           'checkbox-indeterminate': indeterminate,
+          'legacy-checkbox': true,
           interactive: true,
         })}
       >
@@ -250,6 +327,24 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
         />
       </Host>
     );
+  }
+
+  private getSVGPath(mode: Mode, indeterminate: boolean): HTMLElement {
+    let path = indeterminate ? (
+      <path d="M6 12L18 12" part="mark" />
+    ) : (
+      <path d="M5.9,12.5l3.8,3.8l8.8-8.8" part="mark" />
+    );
+
+    if (mode === 'md') {
+      path = indeterminate ? (
+        <path d="M2 12H22" part="mark" />
+      ) : (
+        <path d="M1.73,12.91 8.1,19.28 22.79,4.59" part="mark" />
+      );
+    }
+
+    return path;
   }
 }
 
