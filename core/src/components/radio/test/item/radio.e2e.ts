@@ -6,7 +6,9 @@ test.describe('radio: item', () => {
     await page.setContent(`
       <ion-list>
         <ion-item>
-          <ion-radio>Enable Notifications</ion-radio>
+          <ion-radio-group>
+            <ion-radio>Enable Notifications</ion-radio>
+          </ion-radio-group>
         </ion-item>
       </ion-list>
     `);
@@ -17,7 +19,9 @@ test.describe('radio: item', () => {
     await page.setContent(`
       <ion-list inset="true">
         <ion-item>
-          <ion-radio>Enable Notifications</ion-radio>
+          <ion-radio-group>
+            <ion-radio>Enable Notifications</ion-radio>
+          </ion-radio-group>
         </ion-item>
       </ion-list>
     `);
