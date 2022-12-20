@@ -8,6 +8,7 @@ import { vueOutputTarget } from '@stencil/vue-output-target';
 import { apiSpecGenerator } from './scripts/api-spec-generator';
 
 export const config: Config = {
+  sourceMap: false,
   autoprefixCss: true,
   namespace: 'Ionic',
   bundles: [

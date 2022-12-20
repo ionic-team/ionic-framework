@@ -13,6 +13,14 @@ import { PickerInternalChangeEventDetail } from "./components/picker-internal/pi
 import { PinFormatter } from "./components/range/range-interface";
 import { NavigationHookCallback } from "./components/route/route-interface";
 import { SelectCompareFn } from "./components/select/select-interface";
+export { AccordionGroupChangeEventDetail, ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DatetimePresentation, FrameworkDelegate, InputChangeEventDetail, InputInputEventDetail, ItemReorderEventDetail, MenuChangeEventDetail, ModalBreakpointChangeEventDetail, ModalHandleBehavior, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerButton, PickerColumn, PopoverSize, PositionAlign, PositionReference, PositionSide, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextareaInputEventDetail, TextFieldTypes, TitleSelectedDatesFormatter, ToastButton, ToastPosition, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, TriggerAction, ViewController } from "./interface";
+export { IonicSafeString } from "./utils/sanitization";
+export { CounterFormatter } from "./components/item/item-interface";
+export { PickerColumnItem } from "./components/picker-column-internal/picker-column-internal-interfaces";
+export { PickerInternalChangeEventDetail } from "./components/picker-internal/picker-internal-interfaces";
+export { PinFormatter } from "./components/range/range-interface";
+export { NavigationHookCallback } from "./components/route/route-interface";
+export { SelectCompareFn } from "./components/select/select-interface";
 export namespace Components {
     interface IonAccordion {
         /**
@@ -1218,6 +1226,10 @@ export namespace Components {
          */
         "value"?: string | number | null;
     }
+    /**
+     * @deprecated Use the "helperText" property on ion-input or ion-textarea instead.
+     * @deprecated Use the "errorText" property on ion-input or ion-textarea instead.
+     */
     interface IonItem {
         /**
           * If `true`, a button tag will be rendered and the item will be tappable.
@@ -1729,7 +1741,7 @@ export namespace Components {
           * Returns `true` if the current view can go back.
           * @param view The view to check.
          */
-        "canGoBack": (view?: ViewController) => Promise<boolean>;
+        "canGoBack": (view?: any) => Promise<boolean>;
         "delegate"?: FrameworkDelegate;
         /**
           * Get the active view.
@@ -1744,7 +1756,7 @@ export namespace Components {
           * Get the previous view.
           * @param view The view to get.
          */
-        "getPrevious": (view?: ViewController) => Promise<ViewController | undefined>;
+        "getPrevious": (view?: any) => Promise<ViewController | undefined>;
         /**
           * Called by <ion-router> to retrieve the current component.
          */
@@ -1757,7 +1769,7 @@ export namespace Components {
           * @param opts The navigation options.
           * @param done The transition complete function.
          */
-        "insert": <T extends NavComponent>(insertIndex: number, component: T, componentProps?: ComponentProps<T> | null, opts?: NavOptions | null, done?: TransitionDoneFn) => Promise<boolean>;
+        "insert": <T extends NavComponent>(insertIndex: number, component: T, componentProps?: ComponentProps<T> | null, opts?: NavOptions | null, done?: any) => Promise<boolean>;
         /**
           * Inserts an array of components into the navigation stack at the specified index. The last component in the array will become instantiated as a view, and animate in to become the active view.
           * @param insertIndex The index to insert the components at in the stack.
@@ -1765,26 +1777,26 @@ export namespace Components {
           * @param opts The navigation options.
           * @param done The transition complete function.
          */
-        "insertPages": (insertIndex: number, insertComponents: NavComponent[] | NavComponentWithProps[], opts?: NavOptions | null, done?: TransitionDoneFn) => Promise<boolean>;
+        "insertPages": (insertIndex: number, insertComponents: NavComponent[] | NavComponentWithProps[], opts?: NavOptions | null, done?: any) => Promise<boolean>;
         /**
           * Pop a component off of the navigation stack. Navigates back from the current component.
           * @param opts The navigation options.
           * @param done The transition complete function.
          */
-        "pop": (opts?: NavOptions | null, done?: TransitionDoneFn) => Promise<boolean>;
+        "pop": (opts?: NavOptions | null, done?: any) => Promise<boolean>;
         /**
           * Pop to a specific index in the navigation stack.
           * @param indexOrViewCtrl The index or view controller to pop to.
           * @param opts The navigation options.
           * @param done The transition complete function.
          */
-        "popTo": (indexOrViewCtrl: number | ViewController, opts?: NavOptions | null, done?: TransitionDoneFn) => Promise<boolean>;
+        "popTo": (indexOrViewCtrl: number | ViewController, opts?: NavOptions | null, done?: any) => Promise<boolean>;
         /**
           * Navigate back to the root of the stack, no matter how far back that is.
           * @param opts The navigation options.
           * @param done The transition complete function.
          */
-        "popToRoot": (opts?: NavOptions | null, done?: TransitionDoneFn) => Promise<boolean>;
+        "popToRoot": (opts?: NavOptions | null, done?: any) => Promise<boolean>;
         /**
           * Push a new component onto the current navigation stack. Pass any additional information along as an object. This additional information is accessible through NavParams.
           * @param component The component to push onto the navigation stack.
@@ -1792,7 +1804,7 @@ export namespace Components {
           * @param opts The navigation options.
           * @param done The transition complete function.
          */
-        "push": <T extends NavComponent>(component: T, componentProps?: ComponentProps<T> | null, opts?: NavOptions | null, done?: TransitionDoneFn) => Promise<boolean>;
+        "push": <T extends NavComponent>(component: T, componentProps?: ComponentProps<T> | null, opts?: NavOptions | null, done?: any) => Promise<boolean>;
         /**
           * Removes a component from the navigation stack at the specified index.
           * @param startIndex The number to begin removal at.
@@ -1800,7 +1812,7 @@ export namespace Components {
           * @param opts The navigation options.
           * @param done The transition complete function.
          */
-        "removeIndex": (startIndex: number, removeCount?: number, opts?: NavOptions | null, done?: TransitionDoneFn) => Promise<boolean>;
+        "removeIndex": (startIndex: number, removeCount?: number, opts?: NavOptions | null, done?: any) => Promise<boolean>;
         /**
           * Root NavComponent to load
          */
@@ -1815,7 +1827,7 @@ export namespace Components {
           * @param opts The navigation options.
           * @param done The transition complete function.
          */
-        "setPages": (views: NavComponent[] | NavComponentWithProps[], opts?: NavOptions | null, done?: TransitionDoneFn) => Promise<boolean>;
+        "setPages": (views: NavComponent[] | NavComponentWithProps[], opts?: NavOptions | null, done?: any) => Promise<boolean>;
         /**
           * Set the root for the current navigation stack to a component.
           * @param component The component to set as the root of the navigation stack.
@@ -1823,7 +1835,7 @@ export namespace Components {
           * @param opts The navigation options.
           * @param done The transition complete function.
          */
-        "setRoot": <T extends NavComponent>(component: T, componentProps?: ComponentProps<T> | null, opts?: NavOptions | null, done?: TransitionDoneFn) => Promise<boolean>;
+        "setRoot": <T extends NavComponent>(component: T, componentProps?: ComponentProps<T> | null, opts?: NavOptions | null, done?: any) => Promise<boolean>;
         /**
           * Called by the router to update the view.
           * @param id The component tag.
@@ -2161,6 +2173,12 @@ export namespace Components {
          */
         "value"?: any | null;
     }
+    /**
+     * The Radio Group component mandates that only one radio button
+     * within the group can be selected at any given time. Since `ion-radio`
+     * is a shadow DOM component, it cannot natively perform this behavior
+     * using the `name` attribute.
+     */
     interface IonRadioGroup {
         /**
           * If `true`, the radios can be deselected.
@@ -2416,7 +2434,7 @@ export namespace Components {
           * This property allows to create custom transition using AnimationBuilder functions.
          */
         "animation"?: AnimationBuilder;
-        "commit": (enteringEl: HTMLElement, leavingEl: HTMLElement | undefined, opts?: RouterOutletOptions) => Promise<boolean>;
+        "commit": (enteringEl: HTMLElement, leavingEl: HTMLElement | undefined, opts?: any) => Promise<boolean>;
         "delegate"?: FrameworkDelegate;
         "getRouteId": () => Promise<RouteID | undefined>;
         /**
@@ -3431,6 +3449,10 @@ declare global {
         prototype: HTMLIonInputElement;
         new (): HTMLIonInputElement;
     };
+    /**
+     * @deprecated Use the "helperText" property on ion-input or ion-textarea instead.
+     * @deprecated Use the "errorText" property on ion-input or ion-textarea instead.
+     */
     interface HTMLIonItemElement extends Components.IonItem, HTMLStencilElement {
     }
     var HTMLIonItemElement: {
@@ -3575,6 +3597,12 @@ declare global {
         prototype: HTMLIonRadioElement;
         new (): HTMLIonRadioElement;
     };
+    /**
+     * The Radio Group component mandates that only one radio button
+     * within the group can be selected at any given time. Since `ion-radio`
+     * is a shadow DOM component, it cannot natively perform this behavior
+     * using the `name` attribute.
+     */
     interface HTMLIonRadioGroupElement extends Components.IonRadioGroup, HTMLStencilElement {
     }
     var HTMLIonRadioGroupElement: {
@@ -5166,6 +5194,10 @@ declare namespace LocalJSX {
          */
         "value"?: string | number | null;
     }
+    /**
+     * @deprecated Use the "helperText" property on ion-input or ion-textarea instead.
+     * @deprecated Use the "errorText" property on ion-input or ion-textarea instead.
+     */
     interface IonItem {
         /**
           * If `true`, a button tag will be rendered and the item will be tappable.
@@ -6067,6 +6099,12 @@ declare namespace LocalJSX {
          */
         "value"?: any | null;
     }
+    /**
+     * The Radio Group component mandates that only one radio button
+     * within the group can be selected at any given time. Since `ion-radio`
+     * is a shadow DOM component, it cannot natively perform this behavior
+     * using the `name` attribute.
+     */
     interface IonRadioGroup {
         /**
           * If `true`, the radios can be deselected.
@@ -7209,6 +7247,10 @@ declare module "@stencil/core" {
             "ion-infinite-scroll": LocalJSX.IonInfiniteScroll & JSXBase.HTMLAttributes<HTMLIonInfiniteScrollElement>;
             "ion-infinite-scroll-content": LocalJSX.IonInfiniteScrollContent & JSXBase.HTMLAttributes<HTMLIonInfiniteScrollContentElement>;
             "ion-input": LocalJSX.IonInput & JSXBase.HTMLAttributes<HTMLIonInputElement>;
+            /**
+             * @deprecated Use the "helperText" property on ion-input or ion-textarea instead.
+             * @deprecated Use the "errorText" property on ion-input or ion-textarea instead.
+             */
             "ion-item": LocalJSX.IonItem & JSXBase.HTMLAttributes<HTMLIonItemElement>;
             "ion-item-divider": LocalJSX.IonItemDivider & JSXBase.HTMLAttributes<HTMLIonItemDividerElement>;
             "ion-item-group": LocalJSX.IonItemGroup & JSXBase.HTMLAttributes<HTMLIonItemGroupElement>;
@@ -7233,6 +7275,12 @@ declare module "@stencil/core" {
             "ion-popover": LocalJSX.IonPopover & JSXBase.HTMLAttributes<HTMLIonPopoverElement>;
             "ion-progress-bar": LocalJSX.IonProgressBar & JSXBase.HTMLAttributes<HTMLIonProgressBarElement>;
             "ion-radio": LocalJSX.IonRadio & JSXBase.HTMLAttributes<HTMLIonRadioElement>;
+            /**
+             * The Radio Group component mandates that only one radio button
+             * within the group can be selected at any given time. Since `ion-radio`
+             * is a shadow DOM component, it cannot natively perform this behavior
+             * using the `name` attribute.
+             */
             "ion-radio-group": LocalJSX.IonRadioGroup & JSXBase.HTMLAttributes<HTMLIonRadioGroupElement>;
             "ion-range": LocalJSX.IonRange & JSXBase.HTMLAttributes<HTMLIonRangeElement>;
             "ion-refresher": LocalJSX.IonRefresher & JSXBase.HTMLAttributes<HTMLIonRefresherElement>;
