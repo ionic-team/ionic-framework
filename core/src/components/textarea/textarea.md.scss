@@ -32,18 +32,3 @@
 .textarea-bottom .counter {
   letter-spacing: 0.0333333333em;
 }
-
-/**
- * This makes the label sit above the textarea.
- */
-:host(.textarea-label-placement-stacked) .label-text-wrapper,
-:host(.has-focus.textarea-label-placement-floating) .label-text-wrapper,
-:host(.has-value.textarea-label-placement-floating) .label-text-wrapper {
-  @include transform(translateY(6px), scale(#{$textarea-md-floating-label-scale}));
-
-  /**
-    * Label text should not extend
-    * beyond the bounds of the textarea.
-    */
-  max-width: calc(100% / #{$textarea-md-floating-label-scale});
-}
