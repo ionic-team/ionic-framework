@@ -139,9 +139,7 @@ button {
 :host(.select-label-placement-floating) .select-icon {
   position: absolute;
 
-  top: 50%;
-
-  transform: translateY(-50%);
+  height: 100%;
 }
 
 /**
