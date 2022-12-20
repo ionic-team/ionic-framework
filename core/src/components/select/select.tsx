@@ -823,9 +823,10 @@ For inputs that do not have a visible label, developers should use "aria-label" 
   }
 
   private get ariaLabel() {
-    const { placeholder, label, inheritedAttributes } = this;
+    const { placeholder, label, el, inputId, inheritedAttributes } = this;
     const displayValue = this.getText();
-    const definedLabel = label ?? inheritedAttributes['aria-label'];
+    const { labelText } = getAriaLabel(el, inputId);
+    const definedLabel = label ?? inheritedAttributes['aria-label'] ?? labelText;
 
     /**
      * If developer has specified a placeholder
@@ -845,7 +846,7 @@ For inputs that do not have a visible label, developers should use "aria-label" 
      * before the values of the control.
      */
     if (definedLabel !== undefined) {
-      renderedLabel = `${definedLabel}, ${renderedLabel}`;
+      renderedLabel = renderedLabel === '' ? definedLabel : `${definedLabel}, ${renderedLabel}`;
     }
 
     return renderedLabel;
