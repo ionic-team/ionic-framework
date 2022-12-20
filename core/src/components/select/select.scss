@@ -207,6 +207,8 @@ button {
   background: var(--background);
 
   cursor: inherit;
+
+  box-sizing: border-box;
 }
 
 // Select Highlight
