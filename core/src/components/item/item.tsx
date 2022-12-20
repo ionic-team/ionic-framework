@@ -413,7 +413,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
             'item-multiple-inputs': this.multipleInputs,
             'ion-activatable': canActivate,
             'ion-focusable': this.focusable,
-            'item-rtl': document.dir === 'rtl'
+            'item-rtl': document.dir === 'rtl',
           }),
         }}
         role={inList ? 'listitem' : null}
