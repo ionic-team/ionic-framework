@@ -94,6 +94,15 @@
   transform: scale(1);
 }
 
+/**
+ * Adjust the highlight up by 1px
+ * so it is not cut off by the
+ * the item's line (if one is present).
+ */
+:host(.in-item) .input-highlight {
+  @include position(null, null, 0, 0);
+}
+
 // Input Shape Rounded
 // ----------------------------------------------------------------
 
