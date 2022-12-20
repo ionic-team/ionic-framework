@@ -17,6 +17,10 @@
   height: $radio-md-icon-height;
 }
 
+:host(:not(.legacy-radio)) {
+  min-height: 46px;
+}
+
 :host(.ion-color) .radio-inner {
   background: current-color(base);
 }
@@ -116,13 +120,6 @@
     $radio-md-item-start-margin-bottom,
     $radio-md-item-start-margin-start
   );
-}
-
-// Radio Wrapper
-// ----------------------------------------------------------------
-
-.radio-wrapper {
-  min-height: 46px;
 }
 
 // Radio Native Wrapper

@@ -18,6 +18,8 @@
 
   max-width: 100%;
 
+  min-height: inherit;
+
   user-select: none;
 
   z-index: $z-index-item-input;
@@ -78,7 +80,9 @@ input {
   align-items: center;
 
   height: 100%;
-
+  
+  min-height: inherit;
+  
   transition: background-color 15ms linear;
 
   cursor: inherit;
