@@ -231,7 +231,6 @@ export class Radio implements ComponentInterface {
             type="radio"
             checked={checked}
             disabled={disabled}
-            tabindex="-1"
             id={inputId}
             ref={(nativeEl) => (this.nativeInput = nativeEl as HTMLInputElement)}
             {...inheritedAttributes}
