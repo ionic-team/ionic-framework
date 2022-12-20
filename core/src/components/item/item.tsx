@@ -306,6 +306,13 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   }
 
   private isFocusable(): boolean {
+    /**
+     * Modern selects should be the focusable
+     * element, not the item.
+     */
+    if (this.hasModernSelect()) {
+      return false;
+    }
     const focusableChild = this.el.querySelector('.ion-focusable');
     return this.canActivate() || focusableChild !== null;
   }
