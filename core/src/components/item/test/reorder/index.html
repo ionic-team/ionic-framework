@@ -106,10 +106,7 @@
           <ion-item onClick="clickedButton(${index})"
             style="min-height: ${index * 2 + 35}px; --background: rgb(${255 - index * 4}, ${255 - index * 4}, ${
             255 - index * 4
-          })">
-            ${index}
-            <ion-reorder slot="end"></ion-reorder>
-          </ion-item>`;
+          })">${index}<ion-reorder slot="end"></ion-reorder></ion-item>`;
         }
         groupEl.innerHTML = innerHTML;
       }
