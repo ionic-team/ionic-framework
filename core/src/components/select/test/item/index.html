@@ -47,8 +47,19 @@
       <ion-content id="content" class="ion-padding" color="light">
         <div class="grid">
           <div class="grid-item">
-            <h2>List</h2>
+            <h2>Regular List</h2>
             <ion-list>
+              <ion-item>
+                <ion-select label="Fruit" value="apple">
+                  <ion-select-option value="apple">Apple</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-list>
+          </div>
+
+          <div class="grid-item">
+            <h2>Inset List</h2>
+            <ion-list inset="true">
               <ion-item>
                 <ion-select label="Fruit" value="apple">
                   <ion-select-option value="apple">Apple</ion-select-option>
