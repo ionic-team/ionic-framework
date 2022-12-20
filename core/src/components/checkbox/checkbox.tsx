@@ -154,10 +154,12 @@ export class Checkbox implements ComponentInterface {
   }
 
   private emitStyle() {
-    this.ionStyle.emit({
-      'checkbox-checked': this.checked,
-      'interactive-disabled': this.disabled,
-    });
+    if (this.legacyFormController.hasLegacyControl()) {
+      this.ionStyle.emit({
+        'checkbox-checked': this.checked,
+        'interactive-disabled': this.disabled,
+      });
+    }
   }
 
   private setFocus() {
