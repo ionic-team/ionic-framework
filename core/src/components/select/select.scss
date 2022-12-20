@@ -14,7 +14,7 @@
    * @prop --placeholder-opacity: Opacity of the select placeholder text
    */
   --placeholder-color: currentColor;
-  --placeholder-opacity: 0.33;
+  --placeholder-opacity: #{$placeholder-opacity};
 
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
