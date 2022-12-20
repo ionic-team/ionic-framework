@@ -100,10 +100,10 @@
  * The icon should also take on the highlight
  * color if there is a validation state.
  */
-:host(.select-expanded) .select-icon,
-:host(.ion-touched.ion-valid) .select-icon,
-:host(.ion-touched.ion-invalid) .select-icon,
-:host(.ion-focused) .select-icon {
+:host(.select-expanded) .select-wrapper .select-icon,
+:host(.ion-touched.ion-valid) .select-wrapper .select-icon,
+:host(.ion-touched.ion-invalid) .select-wrapper .select-icon,
+:host(.ion-focused) .select-wrapper .select-icon {
   color: var(--highlight-color);
 }
 

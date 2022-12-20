@@ -769,6 +769,7 @@ For inputs that do not have a visible label, developers should use "aria-label" 
         class={{
           [mode]: true,
           'in-item': hostContext('ion-item', el),
+          'in-item-color': hostContext('ion-item.ion-color', el),
           'select-disabled': disabled,
           'select-expanded': isExpanded,
           'legacy-select': true,
