@@ -86,6 +86,15 @@
 // ----------------------------------------------------------------
 
 /**
+ * This rotates the chevron icon
+ * when the select is activated.
+ * This should only happen on MD.
+ */
+:host(.select-expanded:not(.legacy-select)) .select-icon {
+  @include transform(rotate(180deg));
+}
+
+/**
  * When the select is focused the icon should
  * take on the highlight color.
  * The icon should also take on the highlight
