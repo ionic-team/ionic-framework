@@ -306,13 +306,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   }
 
   private isFocusable(): boolean {
-    /**
-     * Modern selects should be the focusable
-     * element, not the item.
-     */
-    if (this.hasModernSelect()) {
-      return false;
-    }
     const focusableChild = this.el.querySelector('.ion-focusable');
     return this.canActivate() || focusableChild !== null;
   }
@@ -323,10 +316,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
 
   private hasModernRange(): boolean {
     return this.el.querySelector('ion-range:not(.legacy-range)') !== null;
-  }
-
-  private hasModernSelect(): boolean {
-    return this.el.querySelector('ion-select:not(.legacy-select)') !== null;
   }
 
   private getFirstInput(): HTMLIonInputElement | HTMLIonTextareaElement {
@@ -416,7 +405,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     const inList = hostContext('ion-list', this.el);
     const hasModernInput = this.hasModernInput();
     const hasModernRange = this.hasModernRange();
-    const hasModernSelect = this.hasModernSelect();
 
     return (
       <Host
@@ -438,7 +426,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
             'item-rtl': document.dir === 'rtl',
             'item-has-modern-input': hasModernInput,
             'item-has-modern-range': hasModernRange,
-            'item-has-modern-select': hasModernSelect,
           }),
         }}
         role={inList ? 'listitem' : null}

@@ -101,8 +101,7 @@
  * border that the ion-item has added.
  */
 // TODO FW-2764 This should check to see if item has ion-input or ion-textarea
-:host(.item-has-modern-input),
-:host(.item-has-modern-select) {
+:host(.item-has-modern-input) {
   --inner-padding-end: 0px;
 
   overflow: initial;
@@ -114,13 +113,6 @@
  */
 // TODO FW-2997 This should check for a slotted ion-range
 :host(.item-has-modern-range) {
-  overflow: initial;
-}
-
-:host(.item-has-modern-select) {
-  --padding-start: 0px;
-  --inner-padding-end: 0px;
-
   overflow: initial;
 }
 

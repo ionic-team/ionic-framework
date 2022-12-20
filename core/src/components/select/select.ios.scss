@@ -15,21 +15,6 @@
   min-height: 44px;
 }
 
-// Select Item
-// ----------------------------------------------------------------
-
-/**
- * The input with no fill in item should
- * have start padding applied on the select
- * not the item.
- */
-:host(.in-item:not(.select-fill-outline)),
-:host(.in-item:not(.select-fill-solid)) {
-  --padding-start: #{$item-ios-padding-start};
-  --padding-end: #{$item-ios-padding-end};
-}
-
-
 /**
  * Since the label sits on top of the element,
  * the component needs to be taller otherwise the

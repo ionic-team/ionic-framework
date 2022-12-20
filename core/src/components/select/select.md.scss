@@ -28,20 +28,6 @@
   color: #{$text-color-step-500};
 }
 
-// Select Item
-// ----------------------------------------------------------------
-
-/**
- * The input with no fill in item should
- * have start padding applied on the select
- * not the item.
- */
-:host(.in-item:not(.select-fill-outline)),
-:host(.in-item:not(.select-fill-solid)) {
-  --padding-start: #{$item-md-padding-start};
-  --padding-end: #{$item-md-padding-end};
-}
-
 // Select Label
 // ----------------------------------------------------------------
 
