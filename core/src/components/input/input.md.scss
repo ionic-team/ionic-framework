@@ -34,16 +34,6 @@
   height: 22px;
 }
 
-/**
- * The input with no fill in item should
- * have start padding applied on the input
- * not the item.
- */
-:host(.in-full-item:not(.input-fill-outline)),
-:host(.in-full-item:not(.input-fill-solid)) {
-  --padding-start: #{$item-md-padding-start};
-}
-
 // Input Bottom
 // ----------------------------------------------------------------
 /**

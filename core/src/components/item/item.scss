@@ -91,29 +91,7 @@
   text-align: initial;
   text-decoration: none;
 
-  overflow: hidden;
   box-sizing: border-box;
-}
-
-/**
- * The highlight on ion-input should extend to
- * the end of the item and should overlay any
- * border that the ion-item has added.
- */
-// TODO FW-2764 This should check to see if item has ion-input or ion-textarea
-:host(.item-has-modern-input) {
-  --inner-padding-end: 0px;
-
-  overflow: initial;
-}
-
-/**
- * The shadow of the range knob should
- * not be clipped by the item.
- */
-// TODO FW-2997 This should check for a slotted ion-range
-:host(.item-has-modern-range) {
-  overflow: initial;
 }
 
 // Item: Color

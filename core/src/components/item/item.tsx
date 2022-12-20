@@ -310,10 +310,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     return this.canActivate() || focusableChild !== null;
   }
 
-  private hasModernInput(): boolean {
-    return this.el.querySelector('ion-input:not(.legacy-input)') !== null;
-  }
-
   private hasModernRange(): boolean {
     return this.el.querySelector('ion-range:not(.legacy-range)') !== null;
   }
@@ -403,7 +399,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     const ariaDisabled = disabled || childStyles['item-interactive-disabled'] ? 'true' : null;
     const fillValue = fill || 'none';
     const inList = hostContext('ion-list', this.el);
-    const hasModernInput = this.hasModernInput();
     const hasModernRange = this.hasModernRange();
 
     return (
@@ -424,7 +419,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
             'ion-activatable': canActivate,
             'ion-focusable': this.focusable,
             'item-rtl': document.dir === 'rtl',
-            'item-has-modern-input': hasModernInput,
             'item-has-modern-range': hasModernRange,
           }),
         }}
