@@ -25,6 +25,10 @@
   z-index: $z-index-item-input;
 }
 
+:host(:not(.legacy-radio)) {
+  cursor: pointer;
+}
+
 :host(.radio-disabled) {
   pointer-events: none;
 }
@@ -80,7 +84,7 @@ input {
   align-items: center;
 
   height: 100%;
-  
+
   min-height: inherit;
   
   transition: background-color 15ms linear;
