@@ -101,7 +101,8 @@
  * border that the ion-item has added.
  */
 // TODO FW-2764 This should check to see if item has ion-input or ion-textarea
-:host(.item-has-modern-input) {
+:host(.item-has-modern-input),
+:host(.item-has-modern-select) {
   --inner-padding-end: 0px;
 
   overflow: initial;
