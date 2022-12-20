@@ -310,10 +310,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     return this.canActivate() || focusableChild !== null;
   }
 
-  private hasModernRange(): boolean {
-    return this.el.querySelector('ion-range:not(.legacy-range)') !== null;
-  }
-
   private getFirstInput(): HTMLIonInputElement | HTMLIonTextareaElement {
     const inputs = this.el.querySelectorAll('ion-input, ion-textarea') as NodeListOf<
       HTMLIonInputElement | HTMLIonTextareaElement
@@ -399,7 +395,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     const ariaDisabled = disabled || childStyles['item-interactive-disabled'] ? 'true' : null;
     const fillValue = fill || 'none';
     const inList = hostContext('ion-list', this.el);
-    const hasModernRange = this.hasModernRange();
 
     return (
       <Host
@@ -418,8 +413,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
             'item-multiple-inputs': this.multipleInputs,
             'ion-activatable': canActivate,
             'ion-focusable': this.focusable,
-            'item-rtl': document.dir === 'rtl',
-            'item-has-modern-range': hasModernRange,
+            'item-rtl': document.dir === 'rtl'
           }),
         }}
         role={inList ? 'listitem' : null}
