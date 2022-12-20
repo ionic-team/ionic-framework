@@ -431,7 +431,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
             'item-rtl': document.dir === 'rtl',
             'item-has-modern-input': hasModernInput,
             'item-has-modern-range': hasModernRange,
-            'item-has-modern-select': hasModernSelect
+            'item-has-modern-select': hasModernSelect,
           }),
         }}
         role={inList ? 'listitem' : null}
