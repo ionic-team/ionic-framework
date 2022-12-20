@@ -4,14 +4,11 @@ import { test } from '@utils/test/playwright';
 test.describe('input: item', () => {
   test('should render correctly in list with no fill', async ({ page }) => {
     await page.setContent(`
-      <ion-list>
+      <ion-list lines="none">
         <ion-item>
           <ion-input
             label="Email"
             value="hi@ionic.io"
-            helper-text="Enter your email"
-            maxlength="20"
-            counter="true"
           ></ion-input>
         </ion-item>
       </ion-list>
@@ -26,9 +23,6 @@ test.describe('input: item', () => {
           <ion-input
             label="Email"
             value="hi@ionic.io"
-            helper-text="Enter your email"
-            maxlength="20"
-            counter="true"
           ></ion-input>
         </ion-item>
       </ion-list>
