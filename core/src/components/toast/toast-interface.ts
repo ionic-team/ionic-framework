@@ -35,3 +35,5 @@ export interface ToastButton {
   cssClass?: string | string[];
   handler?: () => boolean | void | Promise<boolean | void>;
 }
+
+export type ToastPosition = 'top' | 'bottom' | 'middle';

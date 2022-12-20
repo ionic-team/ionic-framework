@@ -141,7 +141,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async present(): Promise<void> {
-    await present(this, 'loadingEnter', iosEnterAnimation, mdEnterAnimation, undefined);
+    await present(this, 'loadingEnter', iosEnterAnimation, mdEnterAnimation);
 
     if (this.duration > 0) {
       this.durationTimeout = setTimeout(() => this.dismiss(), this.duration + 10);

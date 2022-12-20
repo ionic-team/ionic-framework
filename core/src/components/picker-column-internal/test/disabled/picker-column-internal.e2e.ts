@@ -60,7 +60,7 @@ test.describe('picker-column-internal: disabled', () => {
     `);
 
     const disabledItem = page.locator('ion-picker-column-internal .picker-item.picker-item-disabled');
-    expect(disabledItem).not.toBeEnabled();
+    await expect(disabledItem).not.toBeEnabled();
   });
   test('disabled picker item should not be considered active', async ({ page }) => {
     await page.setContent(`
@@ -79,7 +79,7 @@ test.describe('picker-column-internal: disabled', () => {
     `);
 
     const disabledItem = page.locator('ion-picker-column-internal .picker-item[data-value="b"]');
-    expect(disabledItem).not.toHaveClass(/picker-item-active/);
+    await expect(disabledItem).not.toHaveClass(/picker-item-active/);
   });
   test('setting the value to a disabled item should not cause that item to be active', async ({ page }) => {
     await page.setContent(`
@@ -103,8 +103,8 @@ test.describe('picker-column-internal: disabled', () => {
     await page.waitForChanges();
 
     const disabledItem = page.locator('ion-picker-column-internal .picker-item[data-value="b"]');
-    expect(disabledItem).toHaveClass(/picker-item-disabled/);
-    expect(disabledItem).not.toHaveClass(/picker-item-active/);
+    await expect(disabledItem).toHaveClass(/picker-item-disabled/);
+    await expect(disabledItem).not.toHaveClass(/picker-item-active/);
   });
   test('defaulting the value to a disabled item should not cause that item to be active', async ({ page }) => {
     await page.setContent(`
@@ -124,7 +124,7 @@ test.describe('picker-column-internal: disabled', () => {
     `);
 
     const disabledItem = page.locator('ion-picker-column-internal .picker-item[data-value="b"]');
-    expect(disabledItem).toHaveClass(/picker-item-disabled/);
-    expect(disabledItem).not.toHaveClass(/picker-item-active/);
+    await expect(disabledItem).toHaveClass(/picker-item-disabled/);
+    await expect(disabledItem).not.toHaveClass(/picker-item-active/);
   });
 });

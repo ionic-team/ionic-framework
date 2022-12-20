@@ -17,11 +17,11 @@
   <body>
     <ion-app>
       <ion-header>
-        <ion-toolbar color="primary">
+        <ion-toolbar>
           <ion-title>Toolbar</ion-title>
         </ion-toolbar>
 
-        <ion-toolbar color="primary">
+        <ion-toolbar>
           <ion-buttons slot="secondary">
             <ion-button>
               <ion-icon slot="icon-only" name="person-circle"></ion-icon>
@@ -37,44 +37,30 @@
           </ion-buttons>
           <ion-title>Subheader</ion-title>
         </ion-toolbar>
+
+        <ion-toolbar>
+          <ion-title>This is the title that never ends. It just goes on and on my friend.</ion-title>
+        </ion-toolbar>
+
+        <ion-toolbar>
+          <ion-buttons slot="secondary">
+            <ion-button>
+              <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+            </ion-button>
+            <ion-button>
+              <ion-icon slot="icon-only" name="search"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+          <ion-buttons slot="primary">
+            <ion-button color="secondary">
+              <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+          <ion-title>This is a long title with buttons. It just goes on and on my friend.</ion-title>
+        </ion-toolbar>
       </ion-header>
 
-      <ion-content id="content" fullscreen="true">
-        <ion-card color="secondary">
-          <ion-card-header> Card Header </ion-card-header>
-          <ion-card-content>
-            <ion-card-title> Title </ion-card-title>
-            Some normal text in content.
-            <h3>h3 in content</h3>
-            <p>Paragraph in content.</p>
-            <p>Another paragraph in content.</p>
-          </ion-card-content>
-        </ion-card>
-
-        <ion-card class="rainbow-content">
-          <ion-card-header> Custom CSS Card Header </ion-card-header>
-          <ion-card-content>
-            <ion-card-title> Custom CSS Title </ion-card-title>
-            Some normal text in content.
-            <h3>h3 in content</h3>
-            <p>Paragraph in content.</p>
-            <p>Another paragraph in content.</p>
-          </ion-card-content>
-        </ion-card>
-
-        <ion-card color="primary">
-          <ion-card-header> Card Header </ion-card-header>
-          <ion-card-content>
-            <ion-card-title> Title </ion-card-title>
-            Some normal text in content.
-            <h3>h3 in content</h3>
-            <p>Paragraph in content.</p>
-            <p>Another paragraph in content.</p>
-          </ion-card-content>
-        </ion-card>
-
-        <ion-list id="dynamicList"> </ion-list>
-      </ion-content>
+      <ion-content id="content" fullscreen="true"> Content </ion-content>
 
       <ion-footer>
         <ion-toolbar>
@@ -91,30 +77,5 @@
         </ion-toolbar>
       </ion-footer>
     </ion-app>
-
-    <style>
-      .rainbow-content {
-        background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
-        color: white;
-      }
-      .rainbow-content ion-card-header,
-      .rainbow-content ion-card-title {
-        color: white;
-      }
-    </style>
-
-    <script>
-      let items = [];
-      for (var i = 0; i < 30; i++) {
-        items.push(i + 1);
-      }
-      const list = document.getElementById('dynamicList');
-
-      let html = '';
-      for (let item of items) {
-        html += `<ion-item>${item}</ion-item>`;
-      }
-      list.innerHTML = html;
-    </script>
   </body>
 </html>

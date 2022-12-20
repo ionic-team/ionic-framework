@@ -7,6 +7,8 @@ test.describe('select: spec', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`select-spec-diff-${page.getSnapshotSettings()}.png`);
+    expect(await page.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+      `select-spec-diff-${page.getSnapshotSettings()}.png`
+    );
   });
 });

@@ -2,7 +2,8 @@ import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
 test.describe('item-sliding: scroll-target', () => {
-  test('should not scroll when the item-sliding is swiped in custom scroll target', async ({ page, skip }) => {
+  // TODO FW-3006
+  test.skip('should not scroll when the item-sliding is swiped in custom scroll target', async ({ page, skip }) => {
     skip.browser('webkit', 'mouse.wheel is not available in WebKit');
     skip.rtl();
 

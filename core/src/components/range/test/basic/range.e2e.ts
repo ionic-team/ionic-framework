@@ -12,6 +12,7 @@ test.describe('range: basic', () => {
 
   /**
    * The mouse events are flaky on CI
+   * TODO FW-2873
    */
   test.fixme('should emit start/end events', async ({ page }, testInfo) => {
     await page.setContent(`<ion-range value="20"></ion-range>`);
@@ -57,7 +58,8 @@ test.describe('range: basic', () => {
     expect(rangeEnd).toHaveReceivedEventDetail({ value: 21 });
   });
 
-  test('should not scroll when the knob is swiped', async ({ page, skip }) => {
+  // TODO FW-2873
+  test.skip('should not scroll when the knob is swiped', async ({ page, skip }) => {
     skip.browser('webkit', 'mouse.wheel is not available in WebKit');
     skip.rtl();
 
