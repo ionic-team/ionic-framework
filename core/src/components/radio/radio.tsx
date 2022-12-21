@@ -215,6 +215,8 @@ export class Radio implements ComponentInterface {
           'radio-disabled': disabled,
           [`radio-justify-${justify}`]: true,
           [`radio-label-placement-${labelPlacement}`]: true,
+          'ion-activatable': true,
+          'ion-focusable': true,
         })}
       >
         <label class="radio-wrapper">

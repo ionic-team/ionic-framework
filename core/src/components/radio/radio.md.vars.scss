@@ -60,3 +60,12 @@ $radio-md-item-end-margin-bottom:    $radio-md-item-end-margin-top !default;
 
 /// @prop - Margin start of the item-end in a radio
 $radio-md-item-end-margin-start:     0 !default;
+
+/// @prop - Opacity of the indicator shown when the radio is hovered
+$radio-md-indicator-opacity-hover: 0.13 !default;
+
+/// @prop - Opacity of the indicator shown when the radio is focused
+$radio-md-indicator-opacity-focus: 0.13 !default;
+
+/// @prop - Opacity of the indicator shown when the radio is active
+$radio-md-indicator-opacity-active: 0.25 !default;

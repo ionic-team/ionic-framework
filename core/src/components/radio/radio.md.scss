@@ -82,7 +82,7 @@
 // Material Design Radio: Keyboard Focus
 // -----------------------------------------
 
-:host(.ion-focused) .radio-icon::after {
+:host(.ion-focused.legacy-radio) .radio-icon::after {
   @include border-radius(var(--inner-border-radius));
   @include position(-12px, null, null, -12px);
 
@@ -128,4 +128,54 @@
 .native-wrapper .radio-icon {
   width: $radio-md-icon-width;
   height: $radio-md-icon-height;
+}
+
+.native-wrapper {
+  position: relative;
+}
+
+// Material Design Radio: Radio button states (hover, focused, pressed)
+// -----------------------------------------
+
+.radio-icon::after {
+  @include border-radius(50%);
+
+  position: absolute;
+
+  width: $radio-md-icon-width;
+  height: $radio-md-icon-height;
+
+  transform: scale(1);
+
+  // Value from Material Design components for the web
+  transition: 0.267s cubic-bezier(0, 0, 0.58, 1);
+
+  background: $radio-md-background-color-focused;
+
+  content: "";
+  opacity: 0;
+  pointer-events: none;
+}
+
+:host(.ion-activated) .radio-icon::after,
+:host(.ion-focused) .radio-icon::after {
+  // Scales the indicator to 1.8x the size of the radio icon (20px -> 36px)
+  transform: scale(1.8);
+}
+
+:host(.ion-focused) .radio-icon::after {
+  opacity: #{$radio-md-indicator-opacity-focus};
+}
+
+:host(.ion-activated) .radio-icon::after {
+  opacity: #{$radio-md-indicator-opacity-active};
+}
+
+@media (any-hover: hover) {
+  .radio-icon:hover::after {
+    // Scales the indicator to 1.8x the size of the radio icon (20px -> 36px)
+    transform: scale(1.8);
+
+    opacity: #{$radio-md-indicator-opacity-hover};
+  }
 }

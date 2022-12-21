@@ -36,4 +36,42 @@ test.describe('radio: states', () => {
     const radio = page.locator('ion-radio');
     expect(await radio.screenshot()).toMatchSnapshot(`radio-unchecked-${page.getSnapshotSettings()}.png`);
   });
+
+  test('should render focused radio correctly', async ({ page, skip }) => {
+    skip.mode('ios', 'iOS does not have focused styling');
+    await page.setContent(`
+      <ion-radio-group>
+        <ion-radio class="ion-focused" value="true">Label</ion-radio>
+      </ion-radio-group>
+      <style>
+        ion-radio {
+          padding: 0px 8px;
+        }
+      </style>
+    `);
+
+    const radio = page.locator('ion-radio');
+    expect(await radio.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+      `radio-focused-${page.getSnapshotSettings()}.png`
+    );
+  });
+
+  test('should render activated radio correctly', async ({ page, skip }) => {
+    skip.mode('ios', 'iOS does not have activated styling');
+    await page.setContent(`
+      <ion-radio-group>
+        <ion-radio class="ion-activated" value="true">Label</ion-radio>
+      </ion-radio-group>
+      <style>
+        ion-radio {
+          padding: 0px 8px;
+        }
+      </style>
+    `);
+
+    const radio = page.locator('ion-radio');
+    expect(await radio.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+      `radio-activated-${page.getSnapshotSettings()}.png`
+    );
+  });
 });
