@@ -125,13 +125,13 @@
 // Radio Native Wrapper
 // ----------------------------------------------------------------
 
+.native-wrapper {
+  position: relative;
+}
+
 .native-wrapper .radio-icon {
   width: $radio-md-icon-width;
   height: $radio-md-icon-height;
-}
-
-.native-wrapper {
-  position: relative;
 }
 
 // Material Design Radio: Radio button states (hover, focused, pressed)
