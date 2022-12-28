@@ -33,13 +33,15 @@ export const attachComponent = async (
   return el;
 };
 
-export const detachComponent = (delegate: FrameworkDelegate | undefined, element: HTMLElement | undefined) => {
+export const detachComponent = (delegate: FrameworkDelegate | undefined, element: HTMLElement | undefined, removeElementNode = true) => {
   if (element) {
     if (delegate) {
       const container = element.parentElement;
       return delegate.removeViewFromDom(container, element);
     }
-    element.remove();
+    if (removeElementNode) {
+      element.remove();
+    }
   }
   return Promise.resolve();
 };
