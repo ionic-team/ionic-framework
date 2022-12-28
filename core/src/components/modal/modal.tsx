@@ -747,7 +747,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     if (dismissed) {
       const { delegate } = this.getDelegate();
-      await detachComponent(delegate, this.usersElement, this.inline);
+      await detachComponent(delegate, this.usersElement);
 
       writeTask(() => this.el.classList.remove('show-modal'));
 

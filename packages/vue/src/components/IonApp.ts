@@ -33,5 +33,6 @@ export const addTeleportedUserComponent = (component: VNode) => {
 }
 
 export const removeTeleportedUserComponent = (component: VNode) => {
-  userComponents.value = userComponents.value.filter(cmp => cmp !== component);
+  const index = userComponents.value.findIndex(cmp => cmp === component);
+  userComponents.value.splice(index, 1);
 }
