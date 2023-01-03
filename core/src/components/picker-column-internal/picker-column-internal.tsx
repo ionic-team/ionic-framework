@@ -255,7 +255,7 @@ export class PickerColumnInternal implements ComponentInterface {
         const centerY = bbox.y + bbox.height / 2;
 
         const activeElement = el.shadowRoot!.elementFromPoint(centerX, centerY) as HTMLButtonElement | null;
-        
+
         if (activeEl !== null) {
           activeEl.classList.remove(PICKER_COL_ACTIVE);
         }
