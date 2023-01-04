@@ -85,7 +85,7 @@
 // Material Design Toggle Within An Item
 // ----------------------------------------------------------
 
-:host(.in-item.legacy-toggle[slot]) {
+:host(.in-item.legacy-toggle) {
   @include margin(
     $toggle-md-media-margin-top,
     $toggle-md-media-margin-end,
