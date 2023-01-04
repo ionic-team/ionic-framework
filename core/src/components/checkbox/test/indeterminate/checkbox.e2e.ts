@@ -7,7 +7,7 @@ test.describe('checkbox: indeterminate', () => {
 
     await page.goto(`/src/components/checkbox/test/indeterminate`);
 
-    const content = page.locator('#checkboxes');
-    expect(await content.screenshot()).toMatchSnapshot(`checkbox-indeterminate-${page.getSnapshotSettings()}.png`);
+    const checkbox = page.locator('ion-checkbox:first-child');
+    expect(await checkbox.screenshot()).toMatchSnapshot(`checkbox-indeterminate-${page.getSnapshotSettings()}.png`);
   });
 });
