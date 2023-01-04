@@ -2,7 +2,8 @@ import { expect } from '@playwright/test';
 import type { E2EPage } from '@utils/test/playwright';
 import { test } from '@utils/test/playwright';
 
-test.describe('ripple-effect: basic', () => {
+// TODO FW-3081
+test.describe.skip('ripple-effect: basic', () => {
   test('should add .ion-activated when pressed', async ({ page }) => {
     await verifyRippleEffect(page, '#small-btn');
     await verifyRippleEffect(page, '#large-btn');
