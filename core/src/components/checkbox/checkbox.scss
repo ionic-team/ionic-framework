@@ -27,9 +27,11 @@
   --checkmark-width: 1;
   --transition: none;
 
-  cursor: pointer;
   display: inline-block;
+
   position: relative;
+  
+  cursor: pointer;
 
   user-select: none;
   z-index: $z-index-item-input;
