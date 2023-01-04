@@ -21,7 +21,8 @@ test.describe('menu: basic', () => {
   test('should trap focus', async ({ page, skip, browserName }) => {
     skip.rtl('Trapping focus is not dependent on document direction');
     skip.browser('firefox', 'Firefox incorrectly allows keyboard focus to move to ion-content');
-
+    // TODO (FW-2979)
+    skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
     const ionDidOpen = await page.spyOnEvent('ionDidOpen');
 
     await page.click('#open-start');
