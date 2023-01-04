@@ -30,9 +30,10 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 export class Checkbox implements ComponentInterface {
   private inputId = `ion-cb-${checkboxIds++}`;
   private focusEl?: HTMLElement;
-  private legacyFormController!: LegacyFormController;
+  private legacyFormController!: LegacyFormController; // TODO(FW-3100): remove this
   private inheritedAttributes: Attributes = {};
 
+  // TODO(FW-3100): remove this
   // This flag ensures we log the deprecation warning at most once.
   private hasLoggedDeprecationWarning = false;
 
@@ -93,6 +94,7 @@ export class Checkbox implements ComponentInterface {
    */
   @Prop() justify: 'start' | 'end' | 'space-between' = 'space-between';
 
+  // TODO(FW-3100): remove this
   /**
    * Set the `legacy` property to `true` to forcibly use the legacy form control markup.
    * Ionic will only opt checkboxes in to the modern form markup when they are
@@ -129,6 +131,7 @@ export class Checkbox implements ComponentInterface {
    */
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
+  // TODO(FW-3100): remove this
   connectedCallback() {
     this.legacyFormController = createLegacyFormController(this.el);
   }
@@ -136,6 +139,7 @@ export class Checkbox implements ComponentInterface {
   componentWillLoad() {
     this.emitStyle();
 
+    // TODO(FW-3100): remove check
     if (!this.legacyFormController.hasLegacyControl()) {
       this.inheritedAttributes = {
         ...inheritAriaAttributes(this.el),
@@ -153,6 +157,7 @@ export class Checkbox implements ComponentInterface {
     this.emitStyle();
   }
 
+  // TODO(FW-3100): remove this
   private emitStyle() {
     if (this.legacyFormController.hasLegacyControl()) {
       this.ionStyle.emit({
@@ -198,6 +203,7 @@ export class Checkbox implements ComponentInterface {
     this.ionBlur.emit();
   };
 
+  // TODO(FW-3100): run contents of renderCheckbox directly instead
   render() {
     const { legacyFormController } = this;
 
@@ -268,6 +274,7 @@ export class Checkbox implements ComponentInterface {
     );
   }
 
+  // TODO(FW-3100): remove this
   private renderLegacyCheckbox() {
     if (!this.hasLoggedDeprecationWarning) {
       printIonWarning(
