@@ -260,7 +260,7 @@ export class PickerColumnInternal implements ComponentInterface {
           activeEl.classList.remove(PICKER_COL_ACTIVE);
         }
 
-        if (!activeElement || activeElement.disabled) {
+        if (activeElement === null || activeElement.disabled) {
           return;
         }
 
