@@ -131,6 +131,19 @@ test.describe('datetime: prefer wheel', () => {
           presentation="date"
           prefer-wheel="true"
         ></ion-datetime>
+
+        <script>
+          const mockToday = '2022-10-10T16:22';
+          Date = class extends Date {
+            constructor(...args) {
+              if (args.length === 0) {
+                super(mockToday)
+              } else {
+                super(...args);
+              }
+            }
+          }
+        </script>
       `);
 
       await page.waitForSelector('.datetime-ready');
