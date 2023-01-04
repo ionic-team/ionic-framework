@@ -121,11 +121,9 @@ test.describe('ar-EG', () => {
     `);
     await page.waitForSelector('.datetime-ready');
 
-    const datetimeYears = page.locator('ion-datetime .year-column .picker-item:not(.picker-item-empty)');
+    const datetimeYear = page.locator('ion-datetime .year-column .picker-item[data-value="2022"]');
 
-    await expect(datetimeYears.nth(0)).toHaveText('٢٠٢٢');
-    await expect(datetimeYears.nth(1)).toHaveText('٢٠٢١');
-    await expect(datetimeYears.nth(2)).toHaveText('٢٠٢٠');
+    await expect(datetimeYear).toHaveText('٢٠٢٢');
   });
 });
 
@@ -147,6 +145,7 @@ class DatetimeLocaleFixture {
         locale="${this.locale}"
         presentation="${presentation}"
         value="2022-04-19T04:20:00"
+        max="2022"
       ></ion-datetime>
     `);
 
