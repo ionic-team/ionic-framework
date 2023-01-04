@@ -49,7 +49,8 @@
  * Background and border should be
  * much darker on focus.
  */
-:host(.select-fill-solid.select-expanded) {
+:host(.select-fill-solid.select-expanded),
+:host(.select-fill-solid.ion-focused) {
   --background: #{$background-color-step-150};
   --border-color: #{$background-color-step-750};
 }
@@ -67,6 +68,7 @@
 
 :host(.select-fill-solid.select-label-placement-stacked) .label-text-wrapper,
 :host(.select-expanded.select-fill-solid.select-label-placement-floating) .label-text-wrapper,
+:host(.ion-focused.select-fill-solid.select-label-placement-floating) .label-text-wrapper,
 :host(.has-value.select-fill-solid.select-label-placement-floating) .label-text-wrapper {
   /**
    * Label text should not extend

@@ -683,9 +683,7 @@ export class Select implements ComponentInterface {
     const hasFloatingOrStackedLabel = labelPlacement === 'floating' || labelPlacement === 'stacked';
     const justifyEnabled = !hasFloatingOrStackedLabel;
     const rtl = isRTL(el) ? 'rtl' : 'ltr';
-    const shouldRenderHighlight = false;
-    // TODO: Change above to: mode === 'md' && fill !== 'outline';
-    // when enabling highlight functionality
+    const shouldRenderHighlight = mode === 'md' && fill !== 'outline';
 
     return (
       <Host
@@ -697,6 +695,7 @@ export class Select implements ComponentInterface {
           'select-expanded': isExpanded,
           'has-value': this.hasValue(),
           'has-placeholder': placeholder !== undefined,
+          'ion-focusable': true,
           [`select-${rtl}`]: true,
           [`select-fill-${fill}`]: fill !== undefined,
           [`select-justify-${justify}`]: justifyEnabled,
@@ -709,7 +708,7 @@ export class Select implements ComponentInterface {
           <div class="native-wrapper">
             {this.renderSelectText()}
             {!hasFloatingOrStackedLabel && this.renderSelectIcon()}
-            {this.renderListbox(this.label !== undefined ? 'select-label' : undefined)}
+            {this.renderListbox()}
           </div>
           {hasFloatingOrStackedLabel && this.renderSelectIcon()}
           {shouldRenderHighlight && <div class="select-highlight"></div>}
@@ -770,6 +769,7 @@ For inputs that do not have a visible label, developers should use "aria-label" 
         class={{
           [mode]: true,
           'in-item': hostContext('ion-item', el),
+          'in-item-color': hostContext('ion-item.ion-color', el),
           'select-disabled': disabled,
           'select-expanded': isExpanded,
           'legacy-select': true,
@@ -778,7 +778,7 @@ For inputs that do not have a visible label, developers should use "aria-label" 
         {this.renderSelectText()}
         {this.renderSelectIcon()}
         <label id={labelId}>{displayLabel}</label>
-        {this.renderListbox(labelId)}
+        {this.renderListbox()}
       </Host>
     );
   }
@@ -822,15 +822,44 @@ For inputs that do not have a visible label, developers should use "aria-label" 
     return <ion-icon class="select-icon" part="icon" aria-hidden="true" icon={caretDownSharp}></ion-icon>;
   }
 
-  private renderListbox(labelId?: string) {
-    const { disabled, inputId, isExpanded, inheritedAttributes } = this;
+  private get ariaLabel() {
+    const { placeholder, label, el, inputId, inheritedAttributes } = this;
+    const displayValue = this.getText();
+    const { labelText } = getAriaLabel(el, inputId);
+    const definedLabel = label ?? inheritedAttributes['aria-label'] ?? labelText;
+
+    /**
+     * If developer has specified a placeholder
+     * and there is nothing selected, the selectText
+     * should have the placeholder value.
+     */
+    let renderedLabel = displayValue;
+    if (renderedLabel === '' && placeholder !== undefined) {
+      renderedLabel = placeholder;
+    }
+
+    /**
+     * If there is a developer-defined label,
+     * then we need to concatenate the developer label
+     * string with the current current value.
+     * The label for the control should be read
+     * before the values of the control.
+     */
+    if (definedLabel !== undefined) {
+      renderedLabel = renderedLabel === '' ? definedLabel : `${definedLabel}, ${renderedLabel}`;
+    }
+
+    return renderedLabel;
+  }
+
+  private renderListbox() {
+    const { disabled, inputId, isExpanded } = this;
 
     return (
       <button
         disabled={disabled}
         id={inputId}
-        aria-label={labelId === undefined ? inheritedAttributes['aria-label'] : null}
-        aria-labelledby={labelId !== undefined ? labelId : null}
+        aria-label={this.ariaLabel}
         aria-haspopup="listbox"
         aria-expanded={`${isExpanded}`}
         onFocus={this.onFocus}

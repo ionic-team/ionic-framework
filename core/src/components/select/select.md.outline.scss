@@ -40,7 +40,8 @@
  * and take on component color when
  * the select is focused.
  */
-:host(.select-fill-outline.select-expanded) {
+:host(.select-fill-outline.select-expanded),
+:host(.select-fill-outline.ion-focused) {
   --border-width: 2px;
   --border-color: var(--highlight-color);
 }
@@ -100,6 +101,7 @@
  * This makes the label sit above the select.
  */
 :host(.select-expanded.select-fill-outline.select-label-placement-floating) .label-text-wrapper,
+:host(.ion-focused.select-fill-outline.select-label-placement-floating) .label-text-wrapper,
 :host(.has-value.select-fill-outline.select-label-placement-floating) .label-text-wrapper,
 :host(.select-fill-outline.select-label-placement-stacked) .label-text-wrapper {
   @include transform(translateY(-32%), scale(#{$select-floating-label-scale}));
@@ -249,6 +251,7 @@
  * by removing the top border from the notch fragment.
  */
 :host(.select-expanded.select-fill-outline.select-label-placement-floating) .select-outline-notch,
+:host(.ion-focused.select-fill-outline.select-label-placement-floating) .select-outline-notch,
 :host(.has-value.select-fill-outline.select-label-placement-floating) .select-outline-notch,
 :host(.select-fill-outline.select-label-placement-stacked) .select-outline-notch {
   border-top: none;
