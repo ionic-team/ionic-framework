@@ -68,8 +68,26 @@
   transform: scale(1);
 }
 
+/**
+ * Adjust the highlight up by 1px
+ * so it is not cut off by the
+ * the item's line (if one is present).
+ */
+:host(.in-item) .select-highlight {
+  @include position(null, null, 0, 0);
+}
+
 // Select Icon
 // ----------------------------------------------------------------
+
+/**
+ * This rotates the chevron icon
+ * when the select is activated.
+ * This should only happen on MD.
+ */
+:host(.select-expanded:not(.legacy-select)) .select-icon {
+  @include transform(rotate(180deg));
+}
 
 /**
  * When the select is focused the icon should
@@ -109,7 +127,7 @@
   @include transform(rotate(180deg), translate3d(0, -9px, 0));
 }
 
-// Input Shape Rounded
+// Select Shape Rounded
 // ----------------------------------------------------------------
 
 :host(.select-shape-round) {

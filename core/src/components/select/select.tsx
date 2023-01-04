@@ -708,7 +708,7 @@ export class Select implements ComponentInterface {
           <div class="native-wrapper">
             {this.renderSelectText()}
             {!hasFloatingOrStackedLabel && this.renderSelectIcon()}
-            {this.renderListbox(this.label !== undefined ? 'select-label' : undefined)}
+            {this.renderListbox()}
           </div>
           {hasFloatingOrStackedLabel && this.renderSelectIcon()}
           {shouldRenderHighlight && <div class="select-highlight"></div>}
@@ -778,7 +778,7 @@ For inputs that do not have a visible label, developers should use "aria-label" 
         {this.renderSelectText()}
         {this.renderSelectIcon()}
         <label id={labelId}>{displayLabel}</label>
-        {this.renderListbox(labelId)}
+        {this.renderListbox()}
       </Host>
     );
   }
@@ -822,15 +822,44 @@ For inputs that do not have a visible label, developers should use "aria-label" 
     return <ion-icon class="select-icon" part="icon" aria-hidden="true" icon={caretDownSharp}></ion-icon>;
   }
 
-  private renderListbox(labelId?: string) {
-    const { disabled, inputId, isExpanded, inheritedAttributes } = this;
+  private get ariaLabel() {
+    const { placeholder, label, el, inputId, inheritedAttributes } = this;
+    const displayValue = this.getText();
+    const { labelText } = getAriaLabel(el, inputId);
+    const definedLabel = label ?? inheritedAttributes['aria-label'] ?? labelText;
+
+    /**
+     * If developer has specified a placeholder
+     * and there is nothing selected, the selectText
+     * should have the placeholder value.
+     */
+    let renderedLabel = displayValue;
+    if (renderedLabel === '' && placeholder !== undefined) {
+      renderedLabel = placeholder;
+    }
+
+    /**
+     * If there is a developer-defined label,
+     * then we need to concatenate the developer label
+     * string with the current current value.
+     * The label for the control should be read
+     * before the values of the control.
+     */
+    if (definedLabel !== undefined) {
+      renderedLabel = renderedLabel === '' ? definedLabel : `${definedLabel}, ${renderedLabel}`;
+    }
+
+    return renderedLabel;
+  }
+
+  private renderListbox() {
+    const { disabled, inputId, isExpanded } = this;
 
     return (
       <button
         disabled={disabled}
         id={inputId}
-        aria-label={labelId === undefined ? inheritedAttributes['aria-label'] : null}
-        aria-labelledby={labelId !== undefined ? labelId : null}
+        aria-label={this.ariaLabel}
         aria-haspopup="listbox"
         aria-expanded={`${isExpanded}`}
         onFocus={this.onFocus}

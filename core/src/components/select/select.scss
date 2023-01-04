@@ -50,6 +50,8 @@
 
   font-family: $font-family-base;
 
+  cursor: pointer;
+
   z-index: $z-index-item-input;
 }
 
@@ -154,9 +156,7 @@ button {
 :host(.select-label-placement-floating) .select-icon {
   position: absolute;
 
-  top: 50%;
-
-  transform: translateY(-50%);
+  height: 100%;
 }
 
 /**
@@ -222,6 +222,8 @@ button {
   background: var(--background);
 
   cursor: inherit;
+
+  box-sizing: border-box;
 }
 
 // Select Highlight
