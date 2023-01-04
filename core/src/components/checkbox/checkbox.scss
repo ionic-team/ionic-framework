@@ -27,6 +27,7 @@
   --checkmark-width: 1;
   --transition: none;
 
+  cursor: pointer;
   display: inline-block;
   position: relative;
 
@@ -73,16 +74,6 @@
   height: 100%;
   
   cursor: inherit;
-}
-
-/**
- * Allows us to set the background of the container
- * While keeping the color and opacity separate.
- */
-.checkbox-wrapper::after {
-  @include button-state();
-    
-  z-index: -1;
 }
 
 .label-text-wrapper {
