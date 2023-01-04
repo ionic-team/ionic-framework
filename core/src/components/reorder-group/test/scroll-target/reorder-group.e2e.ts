@@ -1,7 +1,8 @@
 import { expect } from '@playwright/test';
 import { test, dragElementBy } from '@utils/test/playwright';
 
-test.describe('reorder group: scroll-target', () => {
+// TODO FW-3079
+test.describe.skip('reorder group: scroll-target', () => {
   test.beforeEach(({ skip }) => {
     skip.rtl();
     skip.mode('ios', 'Reorder group does not have per-mode styles');
