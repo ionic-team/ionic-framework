@@ -1,12 +1,50 @@
 import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
-test.describe('checkbox: basic', () => {
-  test('should not have visual regressions', async ({ page }) => {
-    await page.goto(`/src/components/checkbox/test/basic`);
+test.describe('checkbox: basic visual tests', () => {
+  test('should render unchecked checkbox correctly', async ({ page }) => {
+    await page.setContent(`
+      <ion-checkbox>Unchecked</ion-checkbox>
+    `);
 
-    const content = page.locator('#checkboxes');
-    expect(await content.screenshot()).toMatchSnapshot(`checkbox-basic-${page.getSnapshotSettings()}.png`);
+    const checkbox = page.locator('ion-checkbox');
+    expect(await checkbox.screenshot()).toMatchSnapshot(`checkbox-unchecked-${page.getSnapshotSettings()}.png`);
+  });
+
+  test('should render checked checkbox correctly', async ({ page }) => {
+    await page.setContent(`
+      <ion-checkbox checked>Checked</ion-checkbox>
+    `);
+
+    const checkbox = page.locator('ion-checkbox');
+    expect(await checkbox.screenshot()).toMatchSnapshot(`checkbox-checked-${page.getSnapshotSettings()}.png`);
+  });
+
+  test('should render disabled checkbox correctly', async ({ page }) => {
+    await page.setContent(`
+      <ion-checkbox checked disabled>Disabled</ion-checkbox>
+    `);
+
+    const checkbox = page.locator('ion-checkbox');
+    expect(await checkbox.screenshot()).toMatchSnapshot(`checkbox-disabled-${page.getSnapshotSettings()}.png`);
+  });
+
+  test('should render custom checkmark-width correctly', async ({ page }) => {
+    await page.setContent(`
+      <ion-checkbox checked style="--checkmark-width: 7">Checkmark Width</ion-checkbox>
+    `);
+
+    const checkbox = page.locator('ion-checkbox');
+    expect(await checkbox.screenshot()).toMatchSnapshot(`checkbox-checkmark-width-${page.getSnapshotSettings()}.png`);
+  });
+
+  test('should render custom size correctly', async ({ page }) => {
+    await page.setContent(`
+      <ion-checkbox checked style="--size: 100px">Size</ion-checkbox>
+    `);
+
+    const checkbox = page.locator('ion-checkbox');
+    expect(await checkbox.screenshot()).toMatchSnapshot(`checkbox-size-${page.getSnapshotSettings()}.png`);
   });
 });
 
