@@ -650,7 +650,7 @@ export class Input implements ComponentInterface {
           [`input-fill-${fill}`]: fill !== undefined,
           [`input-shape-${shape}`]: shape !== undefined,
           [`input-label-placement-${labelPlacement}`]: true,
-          'in-full-item': hostContext('ion-item:not(.item-lines-inset)', this.el),
+          'in-item': hostContext('ion-item', this.el),
         })}
       >
         <label class="input-wrapper">
