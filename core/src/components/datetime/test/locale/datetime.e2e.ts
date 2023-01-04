@@ -145,6 +145,7 @@ class DatetimeLocaleFixture {
         locale="${this.locale}"
         presentation="${presentation}"
         value="2022-04-19T04:20:00"
+        max="2022"
       ></ion-datetime>
     `);
 
