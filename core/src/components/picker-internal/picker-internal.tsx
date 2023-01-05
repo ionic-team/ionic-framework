@@ -527,7 +527,6 @@ export class PickerInternal implements ComponentInterface {
    */
   private emitInputModeChange = () => {
     const { useInputMode, inputModeColumn } = this;
-    console.log('emit',useInputMode)
 
     this.ionInputModeChange.emit({
       useInputMode,

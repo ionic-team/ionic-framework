@@ -28,6 +28,7 @@ export class PickerColumnInternal implements ComponentInterface {
   private scrollEndCallback?: () => void;
   private isColumnVisible = false;
   private parentEl?: HTMLIonPickerInternalElement | null;
+  private canExitInputMode = true;
 
   @State() isActive = false;
 
@@ -141,7 +142,7 @@ export class PickerColumnInternal implements ComponentInterface {
     const activeEl = this.activeItem;
 
     if (activeEl) {
-      this.centerPickerItemInView(activeEl, false);
+      this.centerPickerItemInView(activeEl, false, false);
     }
   }
 
@@ -162,13 +163,21 @@ export class PickerColumnInternal implements ComponentInterface {
     }
   }
 
-  private centerPickerItemInView = (target: HTMLElement, smooth = true) => {
+  private centerPickerItemInView = (target: HTMLElement, smooth = true, canExitInputMode = true) => {
     const { el, isColumnVisible } = this;
     if (isColumnVisible) {
       // (Vertical offset from parent) - (three empty picker rows) + (half the height of the target to ensure the scroll triggers)
       const top = target.offsetTop - 3 * target.clientHeight + target.clientHeight / 2;
 
       if (el.scrollTop !== top) {
+        /**
+         * Setting this flag prevents input
+         * mode from exiting in the picker column's
+         * scroll callback. This is useful when the user manually
+         * taps an item or types on the keyboard as both
+         * of these can cause a scroll to occur.
+         */
+        this.canExitInputMode = canExitInputMode;
         el.scroll({
           top,
           left: 0,
@@ -270,13 +279,20 @@ export class PickerColumnInternal implements ComponentInterface {
          */
         if (activeElement !== activeEl) {
           hapticSelectionChanged();
-
-          /**
-           * The native iOS wheel picker
-           * only dismisses the keyboard
-           * once the selected item has changed.
-           */
-          this.exitInputMode();
+          if (this.canExitInputMode) {
+            /**
+             * The native iOS wheel picker
+             * only dismisses the keyboard
+             * once the selected item has changed
+             * as a result of a swipe
+             * from the user. If `canExitInputMode` is
+             * `false` then this means that the
+             * scroll is happening as a result of
+             * the `value` property programmatically changing
+             * either by an application or by the user via the keyboard.
+             */
+            this.exitInputMode();
+          }
         }
 
         activeEl = activeElement;
@@ -314,6 +330,14 @@ export class PickerColumnInternal implements ComponentInterface {
 
           if (selectedItem.value !== this.value) {
             this.setValue(selectedItem.value);
+
+            /**
+             * Reset this flag as the
+             * next scroll interaction could
+             * be a scroll from the user. In this
+             * case, we should exit input mode.
+             */
+            this.canExitInputMode = true;
           }
         }, 250);
       });
@@ -400,7 +424,7 @@ export class PickerColumnInternal implements ComponentInterface {
               data-value={item.value}
               data-index={index}
               onClick={(ev: Event) => {
-                this.centerPickerItemInView(ev.target as HTMLElement);
+                this.centerPickerItemInView(ev.target as HTMLElement, true);
               }}
               disabled={item.disabled}
             >
