@@ -279,7 +279,7 @@ export class Checkbox implements ComponentInterface {
     if (!this.hasLoggedDeprecationWarning) {
       printIonWarning(
         `Using ion-checkbox with an ion-label has been deprecated. To migrate, remove the ion-label and pass your label directly into ion-checkbox instead.
-Example: <ion-checkbox>Email:</ion-checkbox>
+Example: <ion-checkbox>Label</ion-checkbox>
 For checkboxes that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the checkbox.`,
         this.el
       );
