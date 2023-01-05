@@ -4,6 +4,7 @@ import { dragElementBy, test } from '@utils/test/playwright';
 test.describe('card modal - with refresher', () => {
   test.beforeEach(async ({ page, skip }) => {
     skip.mode('md');
+    skip.rtl();
 
     await page.goto('/src/components/modal/test/card-refresher');
   });

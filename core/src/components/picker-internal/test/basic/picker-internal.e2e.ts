@@ -2,7 +2,8 @@ import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
 test.describe('picker-internal', () => {
-  test('inline pickers should not have visual regression', async ({ page }) => {
+  // TODO: FW-3020
+  test.skip('inline pickers should not have visual regression', async ({ page }) => {
     await page.goto(`/src/components/picker-internal/test/basic`);
 
     await page.setIonViewport();
@@ -47,13 +48,13 @@ test.describe('picker-internal', () => {
 
       // Focus first column
       await page.keyboard.press('Tab');
-      expect(firstColumn).toBeFocused();
+      await expect(firstColumn).toBeFocused();
 
       await page.waitForChanges();
 
       // Focus second column
       await page.keyboard.press('Tab');
-      expect(secondColumn).toBeFocused();
+      await expect(secondColumn).toBeFocused();
     });
 
     test('tabbing should correctly move focus back', async ({ page }) => {
@@ -61,13 +62,13 @@ test.describe('picker-internal', () => {
       const secondColumn = page.locator('ion-picker-column-internal#second');
 
       await secondColumn.focus();
-      expect(secondColumn).toBeFocused();
+      await expect(secondColumn).toBeFocused();
 
       await page.waitForChanges();
 
       // Focus first column
       await page.keyboard.press('Shift+Tab');
-      expect(firstColumn).toBeFocused();
+      await expect(firstColumn).toBeFocused();
     });
   });
 

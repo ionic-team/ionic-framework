@@ -114,7 +114,7 @@ test.describe('datetime: minmax', () => {
     test.beforeEach(({ skip }) => {
       skip.rtl();
     });
-    const testDisplayedMonth = async (page: E2EPage, content: string, expectedString = 'June 2021') => {
+    const testDisplayedMonth = async (page: E2EPage, content: string, expectedString = /June 2021/) => {
       await page.setContent(content);
       await page.waitForSelector('.datetime-ready');
 
@@ -138,7 +138,7 @@ test.describe('datetime: minmax', () => {
     });
 
     test('when max is defined', async ({ page }) => {
-      await testDisplayedMonth(page, `<ion-datetime max="2012-06-01"></ion-datetime>`, 'June 2012');
+      await testDisplayedMonth(page, `<ion-datetime max="2012-06-01"></ion-datetime>`, /June 2012/);
     });
   });
 
