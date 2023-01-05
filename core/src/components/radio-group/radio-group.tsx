@@ -12,6 +12,7 @@ import type { RadioGroupChangeEventDetail } from '../../interface';
  */
 @Component({
   tag: 'ion-radio-group',
+  styleUrl: 'radio-group.scss',
 })
 export class RadioGroup implements ComponentInterface {
   private inputId = `ion-rg-${radioGroupIds++}`;

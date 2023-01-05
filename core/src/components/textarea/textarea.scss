@@ -26,7 +26,7 @@
   --placeholder-color: initial;
   --placeholder-font-style: initial;
   --placeholder-font-weight: initial;
-  --placeholder-opacity: 0.5;
+  --placeholder-opacity: #{$placeholder-opacity};
   --padding-top: 0;
   --padding-end: 0;
   --padding-bottom: 0;

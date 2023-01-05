@@ -18,9 +18,15 @@
 
   max-width: 100%;
 
+  min-height: inherit;
+
   user-select: none;
 
   z-index: $z-index-item-input;
+}
+
+:host(:not(.legacy-radio)) {
+  cursor: pointer;
 }
 
 :host(.radio-disabled) {
@@ -79,6 +85,8 @@ input {
 
   height: 100%;
 
+  min-height: inherit;
+  
   transition: background-color 15ms linear;
 
   cursor: inherit;
