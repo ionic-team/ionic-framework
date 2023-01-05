@@ -82,9 +82,12 @@
 // Material Design Radio: Keyboard Focus
 // -----------------------------------------
 
+:host(.ion-focused.legacy-radio) .radio-icon::after {
+  @include position(-12px, null, null, -12px);
+}
+
 :host(.ion-focused) .radio-icon::after {
   @include border-radius(var(--inner-border-radius));
-  @include position(-12px, null, null, -12px);
 
   display: block;
   position: absolute;

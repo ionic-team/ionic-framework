@@ -214,18 +214,21 @@ export class Radio implements ComponentInterface {
   private renderRadio() {
     const { checked, disabled, inputId, color, el, justify, labelPlacement, inheritedAttributes, hasLabel } = this;
     const mode = getIonMode(this);
+    const inItem = hostContext('ion-item', el);
 
     return (
       <Host
         onClick={this.onClick}
         class={createColorClasses(color, {
           [mode]: true,
-          'in-item': hostContext('ion-item', el),
-          interactive: true,
+          'in-item': inItem,
           'radio-checked': checked,
           'radio-disabled': disabled,
           [`radio-justify-${justify}`]: true,
           [`radio-label-placement-${labelPlacement}`]: true,
+          // Focus and active styling should not apply when the radio is in an item
+          'ion-activatable': !inItem,
+          'ion-focusable': !inItem,
         })}
       >
         <label class="radio-wrapper">
