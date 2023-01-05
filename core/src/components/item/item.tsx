@@ -19,8 +19,8 @@ import type { CounterFormatter } from './item-interface';
  * @slot - Content is placed between the named slots if provided without a slot.
  * @slot start - Content is placed to the left of the item text in LTR, and to the right in RTL.
  * @slot end - Content is placed to the right of the item text in LTR, and to the left in RTL.
- * @slot helper - Content is placed under the item and displayed when no error is detected. @deprecated Use the "helperText" property on ion-input or ion-textarea instead.
- * @slot error - Content is placed under the item and displayed when an error is detected. @deprecated Use the "errorText" property on ion-input or ion-textarea instead.
+ * @slot helper - Content is placed under the item and displayed when no error is detected. **DEPRECATED** Use the "helperText" property on ion-input or ion-textarea instead.
+ * @slot error - Content is placed under the item and displayed when an error is detected. **DEPRECATED** Use the "errorText" property on ion-input or ion-textarea instead.
  *
  * @part native - The native HTML button, anchor or div element that wraps all child elements.
  * @part detail-icon - The chevron icon for the item. Only applies when `detail="true"`.
@@ -310,11 +310,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     return this.canActivate() || focusableChild !== null;
   }
 
-  private hasModernInput(): boolean {
-    const input = this.el.querySelector('ion-input:not(.legacy-input)');
-    return input !== null;
-  }
-
   private getFirstInput(): HTMLIonInputElement | HTMLIonTextareaElement {
     const inputs = this.el.querySelectorAll('ion-input, ion-textarea') as NodeListOf<
       HTMLIonInputElement | HTMLIonTextareaElement
@@ -400,7 +395,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     const ariaDisabled = disabled || childStyles['item-interactive-disabled'] ? 'true' : null;
     const fillValue = fill || 'none';
     const inList = hostContext('ion-list', this.el);
-    const hasModernInput = this.hasModernInput();
 
     return (
       <Host
@@ -420,7 +414,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
             'ion-activatable': canActivate,
             'ion-focusable': this.focusable,
             'item-rtl': document.dir === 'rtl',
-            'item-has-modern-input': hasModernInput,
           }),
         }}
         role={inList ? 'listitem' : null}
