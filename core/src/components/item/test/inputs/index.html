@@ -183,6 +183,7 @@
           json[key] = value;
         });
         document.getElementById('form-result').textContent = JSON.stringify(json);
+        window.dispatchEvent(new CustomEvent('formData', { detail: json }));
         return false;
       }
     </script>

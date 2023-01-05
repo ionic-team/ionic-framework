@@ -6,8 +6,8 @@ import { test } from '@utils/test/playwright';
 test.describe('item: inputs', () => {
   let ionPopoverDidPresent: EventSpy;
   let ionPopoverDidDismiss: EventSpy;
+  let formData: EventSpy;
 
-  let formResult: Locator;
   let popover: Locator;
 
   test.beforeEach(async ({ page }) => {
@@ -15,8 +15,8 @@ test.describe('item: inputs', () => {
 
     ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
     ionPopoverDidDismiss = await page.spyOnEvent('ionPopoverDidDismiss');
+    formData = await page.spyOnEvent('formData');
 
-    formResult = page.locator('#form-result');
     popover = page.locator('ion-popover#optionsPopover');
   });
 
@@ -48,9 +48,17 @@ test.describe('item: inputs', () => {
     test('initial form data should be empty', async ({ page }) => {
       await page.click('#submit');
 
-      await expect(await formResult.textContent()).toEqual(
-        '{"input":"","textarea":"","toggle":"","checkbox":"","select":"","datetime":"2022-04-01T10:00","range":"10"}'
-      );
+      await formData.next();
+
+      expect(formData).toHaveReceivedEventDetail({
+        input: '',
+        textarea: '',
+        toggle: '',
+        checkbox: '',
+        select: '',
+        datetime: '2022-04-01T10:00',
+        range: '10',
+      });
     });
 
     test('form controls have some value', async ({ page }) => {
@@ -65,9 +73,17 @@ test.describe('item: inputs', () => {
 
       await page.click('#submit');
 
-      await expect(await formResult.textContent()).toEqual(
-        '{"input":"Some value","textarea":"Some value","toggle":"on","checkbox":"on","select":"2","datetime":"2022-04-01T10:00","range":"20"}'
-      );
+      await formData.next();
+
+      expect(formData).toHaveReceivedEventDetail({
+        input: 'Some value',
+        textarea: 'Some value',
+        toggle: 'on',
+        checkbox: 'on',
+        select: '2',
+        datetime: '2022-04-01T10:00',
+        range: '20',
+      });
     });
 
     test('form control values set to be empty', async ({ page }) => {
@@ -82,9 +98,17 @@ test.describe('item: inputs', () => {
 
       await page.click('#submit');
 
-      await expect(await formResult.textContent()).toEqual(
-        '{"input":"","textarea":"","toggle":"","checkbox":"","select":"","datetime":"","range":"0"}'
-      );
+      await formData.next();
+
+      expect(formData).toHaveReceivedEventDetail({
+        input: '',
+        textarea: '',
+        toggle: '',
+        checkbox: '',
+        select: '',
+        datetime: '',
+        range: '0',
+      });
     });
 
     test('form control values set to null', async ({ page }) => {
@@ -99,9 +123,17 @@ test.describe('item: inputs', () => {
 
       await page.click('#submit');
 
-      await expect(await formResult.textContent()).toEqual(
-        '{"input":"","textarea":"","toggle":"","checkbox":"","select":"","datetime":"","range":"0"}'
-      );
+      await formData.next();
+
+      expect(formData).toHaveReceivedEventDetail({
+        input: '',
+        textarea: '',
+        toggle: '',
+        checkbox: '',
+        select: '',
+        datetime: '',
+        range: '0',
+      });
     });
 
     test('form control values set to undefined', async ({ page }) => {
@@ -116,9 +148,17 @@ test.describe('item: inputs', () => {
 
       await page.click('#submit');
 
-      await expect(await formResult.textContent()).toEqual(
-        '{"input":"","textarea":"","toggle":"","checkbox":"","select":"","datetime":"","range":"0"}'
-      );
+      await formData.next();
+
+      expect(formData).toHaveReceivedEventDetail({
+        input: '',
+        textarea: '',
+        toggle: '',
+        checkbox: '',
+        select: '',
+        datetime: '',
+        range: '0',
+      });
     });
 
     test('should not have form data when controls are disabled', async ({ page }) => {
@@ -135,7 +175,9 @@ test.describe('item: inputs', () => {
 
       await page.click('#submit');
 
-      await expect(await formResult.textContent()).toEqual('{}');
+      await formData.next();
+
+      expect(formData).toHaveReceivedEventDetail({});
     });
   });
 });
