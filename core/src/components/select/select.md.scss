@@ -4,11 +4,15 @@
 // Material Design Select
 // --------------------------------------------------
 
-:host {
+:host(.legacy-select) {
   --padding-top: #{$select-md-padding-top};
   --padding-end: #{$select-md-padding-end};
   --padding-bottom: #{$select-md-padding-bottom};
   --padding-start: #{$select-md-padding-start};
+}
+
+:host(:not(.legacy-select)) {
+  min-height: 56px;
 }
 
 .select-icon {
