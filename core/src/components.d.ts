@@ -1190,7 +1190,7 @@ export namespace Components {
          */
         "required": boolean;
         /**
-          * Sets focus on the native `input` in `ion-input`. Use this method instead of the global `input.focus()`.
+          * Sets focus on the native `input` in `ion-input`. Use this method instead of the global `input.focus()`.  Developers who wish to focus an input when a page enters should call `setFocus()` in the `ionViewDidEnter()` lifecycle method.
          */
         "setFocus": () => Promise<void>;
         /**

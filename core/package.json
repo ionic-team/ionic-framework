@@ -40,7 +40,7 @@
     "@ionic/eslint-config": "^0.3.0",
     "@ionic/prettier-config": "^2.0.0",
     "@jest/core": "^27.5.1",
-    "@playwright/test": "^1.23.3",
+    "@playwright/test": "^1.29.0",
     "@rollup/plugin-node-resolve": "^8.4.0",
     "@rollup/plugin-virtual": "^2.0.3",
     "@stencil/angular-output-target": "^0.4.0",
@@ -71,12 +71,11 @@
     "typescript": "^4.0.5"
   },
   "scripts": {
-    "build": "npm run clean && npm run build.css && stencil build --es5 --docs-json dist/docs.json && npm run cdnloader",
+    "build": "npm run clean && npm run build.css && stencil build --es5 --docs-json dist/docs.json",
     "build.css": "npm run css.sass && npm run css.minify",
     "build.debug": "npm run clean && stencil build --debug",
     "build.docs.json": "stencil build --docs-json dist/docs.json",
     "clean": "node scripts/clean.js",
-    "cdnloader": "node scripts/copy-cdn-loader.js",
     "css.minify": "cleancss -O2 -o ./css/ionic.bundle.css ./css/ionic.bundle.css",
     "css.sass": "sass --embed-sources src/css:./css",
     "eslint": "eslint src",
