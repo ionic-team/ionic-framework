@@ -37,16 +37,15 @@
   z-index: $z-index-item-input;
 }
 
+:host(.in-item) {
+  width: 100%;
+  height: 100%;
+}
+
 // TODO(FW-3100): remove this
 :host(.legacy-checkbox) {
   width: var(--size);
   height: var(--size);
-}
-
-// TODO(FW-3100): remove :not selector
-:host(.in-item:not(.legacy-checkbox)) {
-  width: 100%;
-  height: 100%;
 }
 
 :host(.ion-color) {
@@ -81,7 +80,7 @@
 .label-text-wrapper {
   /**
    * This ensures that double tapping this text
-   * clicks the <label> and focuses the input
+   * clicks the <label> and focuses the checkbox
    * when a screen reader is enabled.
    */
   pointer-events: none;
