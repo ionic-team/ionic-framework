@@ -148,6 +148,8 @@ iOS:
 | Token                 | Previous Value | New Value |
 | --------------------- | -------------- | --------- |
 | `$item-ios-font-size` | `17px`         | `16px`    |
+| `--inner-padding-end` | `10px`         | `16px`    |
+| `--padding-start`     | `20px`         | `16px`    |
 
 <h4 id="version-7x-modal">Modal</h4>
 
