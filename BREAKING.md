@@ -105,7 +105,9 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 
 <h4 id="version-7x-checkbox">Checkbox</h4>
 
-`ionChange` is no longer emitted when the `checked` property of `ion-checkbox` is modified externally. `ionChange` is only emitted from user committed changes, such as clicking or tapping the checkbox.
+- `ionChange` is no longer emitted when the `checked` property of `ion-checkbox` is modified externally. `ionChange` is only emitted from user committed changes, such as clicking or tapping the checkbox.
+
+- The `--background` and `--background-checked` CSS variables have been renamed to `--checkbox-background` and `--checkbox-background-checked` respectively.
 
 <h4 id="version-7x-datetime">Datetime</h4>
 
@@ -146,6 +148,8 @@ iOS:
 | Token                 | Previous Value | New Value |
 | --------------------- | -------------- | --------- |
 | `$item-ios-font-size` | `17px`         | `16px`    |
+| `--inner-padding-end` | `10px`         | `16px`    |
+| `--padding-start`     | `20px`         | `16px`    |
 
 <h4 id="version-7x-modal">Modal</h4>
 

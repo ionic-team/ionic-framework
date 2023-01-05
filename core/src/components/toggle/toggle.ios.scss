@@ -181,7 +181,7 @@
 // iOS Toggle Within An Item
 // ----------------------------------------------------------
 
-:host(.in-item.legacy-toggle[slot]) {
+:host(.in-item.legacy-toggle) {
   @include margin($toggle-ios-media-margin);
   @include padding(
     $toggle-ios-item-end-padding-top,

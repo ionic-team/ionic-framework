@@ -304,6 +304,16 @@ button, a {
 // --------------------------------------------------
 
 .item-detail-icon {
+  /**
+   * IonItem applies its own end padding. However,
+   * all IonIcons have the same bounding box meaning
+   * there may be white space for narrow icons. As
+   * a result, the white space gives the appearance
+   * that there is too much end margin. We move the default
+   * chevron icon over to account for this extra whitespace.
+   */
+  @include margin(null, -6px, null, calc(var(--inner-padding-end) / 2));
+
   color: var(--detail-icon-color);
 
   font-size: var(--detail-icon-font-size);

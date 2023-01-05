@@ -19,8 +19,8 @@ import type { CounterFormatter } from './item-interface';
  * @slot - Content is placed between the named slots if provided without a slot.
  * @slot start - Content is placed to the left of the item text in LTR, and to the right in RTL.
  * @slot end - Content is placed to the right of the item text in LTR, and to the left in RTL.
- * @slot helper - Content is placed under the item and displayed when no error is detected. @deprecated Use the "helperText" property on ion-input or ion-textarea instead.
- * @slot error - Content is placed under the item and displayed when an error is detected. @deprecated Use the "errorText" property on ion-input or ion-textarea instead.
+ * @slot helper - Content is placed under the item and displayed when no error is detected. **DEPRECATED** Use the "helperText" property on ion-input or ion-textarea instead.
+ * @slot error - Content is placed under the item and displayed when an error is detected. **DEPRECATED** Use the "errorText" property on ion-input or ion-textarea instead.
  *
  * @part native - The native HTML button, anchor or div element that wraps all child elements.
  * @part detail-icon - The chevron icon for the item. Only applies when `detail="true"`.
