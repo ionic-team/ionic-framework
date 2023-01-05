@@ -17,14 +17,14 @@ test.describe('datetime: prefer wheel', () => {
   test.describe('datetime: wheel rendering', () => {
     test('should not have visual regressions for date wheel', async ({ page }) => {
       await page.setContent(`
-        <ion-datetime size="cover" presentation="date" prefer-wheel="true" value="2019-05-30"></ion-datetime>
+        <ion-datetime size="cover" presentation="date" prefer-wheel="true" value="2019-05-30" max="2022"></ion-datetime>
       `);
 
       expect(await page.screenshot()).toMatchSnapshot(`datetime-wheel-date-diff-${page.getSnapshotSettings()}.png`);
     });
     test('should not have visual regressions for date-time wheel', async ({ page }) => {
       await page.setContent(`
-        <ion-datetime size="cover" presentation="date-time" prefer-wheel="true" value="2019-05-30T16:30:00"></ion-datetime>
+        <ion-datetime size="cover" presentation="date-time" prefer-wheel="true" value="2019-05-30T16:30:00" max="2022"></ion-datetime>
       `);
 
       expect(await page.screenshot()).toMatchSnapshot(
@@ -33,7 +33,7 @@ test.describe('datetime: prefer wheel', () => {
     });
     test('should not have visual regressions for time-date wheel', async ({ page }) => {
       await page.setContent(`
-        <ion-datetime size="cover" presentation="time-date" prefer-wheel="true" value="2019-05-30T16:30:00"></ion-datetime>
+        <ion-datetime size="cover" presentation="time-date" prefer-wheel="true" value="2019-05-30T16:30:00" max="2022"></ion-datetime>
       `);
 
       expect(await page.screenshot()).toMatchSnapshot(
@@ -42,7 +42,7 @@ test.describe('datetime: prefer wheel', () => {
     });
     test('should render a condense header when specified', async ({ page }) => {
       await page.setContent(`
-        <ion-datetime size="cover" presentation="time-date" prefer-wheel="true" value="2019-05-30T16:30:00"><div slot="title">My Custom Title</div></ion-datetime>
+        <ion-datetime size="cover" presentation="time-date" prefer-wheel="true" value="2019-05-30T16:30:00" max="2022"><div slot="title">My Custom Title</div></ion-datetime>
       `);
       await page.waitForSelector('.datetime-ready');
 
@@ -56,6 +56,7 @@ test.describe('datetime: prefer wheel', () => {
   test.describe('datetime: date wheel', () => {
     test.beforeEach(({ skip }) => {
       skip.rtl();
+      skip.mode('ios', 'date wheel functionality is the same across modes');
     });
     test('should respect the min bounds', async ({ page }) => {
       await page.setContent(`
@@ -130,6 +131,19 @@ test.describe('datetime: prefer wheel', () => {
           presentation="date"
           prefer-wheel="true"
         ></ion-datetime>
+
+        <script>
+          const mockToday = '2022-10-10T16:22';
+          Date = class extends Date {
+            constructor(...args) {
+              if (args.length === 0) {
+                super(mockToday)
+              } else {
+                super(...args);
+              }
+            }
+          }
+        </script>
       `);
 
       await page.waitForSelector('.datetime-ready');
@@ -214,8 +228,8 @@ test.describe('datetime: prefer wheel', () => {
         const monthValues = page.locator('.month-column .picker-item:not(.picker-item-empty)');
         const dayValues = page.locator('.day-column .picker-item:not(.picker-item-empty)');
 
-        expect(monthValues).toHaveText(['1月', '2月', '3月']);
-        expect(dayValues).toHaveText(['1日', '2日', '3日']);
+        await expect(monthValues).toHaveText(['1月', '2月', '3月']);
+        await expect(dayValues).toHaveText(['1日', '2日', '3日']);
       });
       test('should render the columns according to locale - en-US', async ({ page }) => {
         await page.setContent(`
@@ -258,6 +272,7 @@ test.describe('datetime: prefer wheel', () => {
   test.describe('datetime: date-time wheel', () => {
     test.beforeEach(({ skip }) => {
       skip.rtl();
+      skip.mode('ios', 'date-time wheel functionality is the same across modes');
     });
     test('should respect the min bounds', async ({ page }) => {
       await page.setContent(`
@@ -334,7 +349,7 @@ test.describe('datetime: prefer wheel', () => {
 
       const dateValues = page.locator('.date-column .picker-item:not(.picker-item-empty)');
 
-      expect(dateValues).toHaveText(['2月1日(火)', '2月2日(水)', '2月3日(木)']);
+      await expect(dateValues).toHaveText(['2月1日(火)', '2月2日(水)', '2月3日(木)']);
     });
     test('should respect min and max bounds even across years', async ({ page }) => {
       await page.setContent(`
@@ -419,6 +434,7 @@ test.describe('datetime: prefer wheel', () => {
   test.describe('datetime: time-date wheel', () => {
     test.beforeEach(({ skip }) => {
       skip.rtl();
+      skip.mode('ios', 'time-date wheel functionality is the same across modes');
     });
     test('should respect the min bounds', async ({ page }) => {
       await page.setContent(`
@@ -495,7 +511,7 @@ test.describe('datetime: prefer wheel', () => {
 
       const dateValues = page.locator('.date-column .picker-item:not(.picker-item-empty)');
 
-      expect(dateValues).toHaveText(['2月1日(火)', '2月2日(水)', '2月3日(木)']);
+      await expect(dateValues).toHaveText(['2月1日(火)', '2月2日(水)', '2月3日(木)']);
     });
     test('should respect min and max bounds even across years', async ({ page }) => {
       await page.setContent(`

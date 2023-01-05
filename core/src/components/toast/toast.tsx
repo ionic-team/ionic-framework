@@ -1,6 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Method, Prop, h } from '@stencil/core';
+import { Component, Element, Event, h, Host, Method, Prop } from '@stencil/core';
 
+import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import type {
   AnimationBuilder,
@@ -19,7 +20,7 @@ import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
-import type { ToastAttributes } from './toast-interface';
+import type { ToastAttributes, ToastPosition } from './toast-interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -77,7 +78,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
    * How many milliseconds to wait before hiding the toast. By default, it will show
    * until `dismiss()` is called.
    */
-  @Prop() duration = 0;
+  @Prop() duration = config.getNumber('toastDuration', 0);
 
   /**
    * Header to be shown in the toast.
@@ -97,7 +98,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
   /**
    * The position of the toast on the screen.
    */
-  @Prop() position: 'top' | 'bottom' | 'middle' = 'bottom';
+  @Prop() position: ToastPosition = 'bottom';
 
   /**
    * An array of buttons for the toast.
@@ -156,7 +157,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async present(): Promise<void> {
-    await present(this, 'toastEnter', iosEnterAnimation, mdEnterAnimation, this.position);
+    await present<ToastPresentOptions>(this, 'toastEnter', iosEnterAnimation, mdEnterAnimation, this.position);
 
     if (this.duration > 0) {
       this.durationTimeout = setTimeout(() => this.dismiss(undefined, 'timeout'), this.duration);
@@ -177,7 +178,15 @@ export class Toast implements ComponentInterface, OverlayInterface {
     if (this.durationTimeout) {
       clearTimeout(this.durationTimeout);
     }
-    return dismiss(this, data, role, 'toastLeave', iosLeaveAnimation, mdLeaveAnimation, this.position);
+    return dismiss<ToastDismissOptions>(
+      this,
+      data,
+      role,
+      'toastLeave',
+      iosLeaveAnimation,
+      mdLeaveAnimation,
+      this.position
+    );
   }
 
   /**
@@ -344,3 +353,6 @@ const buttonClass = (button: ToastButton): CssClassMap => {
     ...getClassMap(button.cssClass),
   };
 };
+
+type ToastPresentOptions = ToastPosition;
+type ToastDismissOptions = ToastPosition;

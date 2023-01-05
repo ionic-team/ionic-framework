@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.4.1](https://github.com/ionic-team/ionic-framework/compare/v6.4.0...v6.4.1) (2022-12-14)
+
+
+### Bug Fixes
+
+* **breadcrumbs:** breadcrumbs are reactive ([#26427](https://github.com/ionic-team/ionic-framework/issues/26427)) ([0d8625b](https://github.com/ionic-team/ionic-framework/commit/0d8625b95537208c188b32a1707fa66050953281)), closes [#24041](https://github.com/ionic-team/ionic-framework/issues/24041)
+* **datetime:** keyboard can select hour 00 ([#26423](https://github.com/ionic-team/ionic-framework/issues/26423)) ([2fc96b7](https://github.com/ionic-team/ionic-framework/commit/2fc96b771412d2deac6d19883bfc5abc74d0bdbd)), closes [#26409](https://github.com/ionic-team/ionic-framework/issues/26409)
+* **modal:** compatibility with stencil libraries/apps ([#26448](https://github.com/ionic-team/ionic-framework/issues/26448)) ([1aa1068](https://github.com/ionic-team/ionic-framework/commit/1aa1068df7867a8b8a203052635da018014f5f1c))
+* **normalize:** remove normalize styles for outdated browsers ([#26465](https://github.com/ionic-team/ionic-framework/issues/26465)) ([82d1d94](https://github.com/ionic-team/ionic-framework/commit/82d1d948ecd7725772eb1ffee495e7a5dcadb30b)), closes [#26464](https://github.com/ionic-team/ionic-framework/issues/26464)
+
+
+
+
+
+# [6.4.0](https://github.com/ionic-team/ionic-framework/compare/v6.3.10...v6.4.0) (2022-12-07)
+
+
+### Features
+
+* **modal:** data and role are passed to canDismiss ([#26384](https://github.com/ionic-team/ionic-framework/issues/26384)) ([1b30fc9](https://github.com/ionic-team/ionic-framework/commit/1b30fc97d33e761866b4bcf7518efcdeb753032d)), closes [#26292](https://github.com/ionic-team/ionic-framework/issues/26292)
+* **toast:** add global config toastDuration ([#26425](https://github.com/ionic-team/ionic-framework/issues/26425)) ([a67a827](https://github.com/ionic-team/ionic-framework/commit/a67a827fedc8adf44a35c786f615871facca60fc))
+* **toggle:** add toggleOnOffLabels global config option ([#26087](https://github.com/ionic-team/ionic-framework/issues/26087)) ([43e2b39](https://github.com/ionic-team/ionic-framework/commit/43e2b3975d003e29b8060e5f5484bfb3daf457a2))
+
+
+
+
+
+## [6.3.10](https://github.com/ionic-team/ionic-framework/compare/v6.3.9...v6.3.10) (2022-12-07)
+
+
+### Bug Fixes
+
+* **datetime:** add flipRTL to monthAndYear dropdown icon ([#26378](https://github.com/ionic-team/ionic-framework/issues/26378)) ([13fe669](https://github.com/ionic-team/ionic-framework/commit/13fe669dc14eb4c9feda8ee956fec42b994b0f96))
+* **datetime:** md highlight does not clip at start or end of month ([#26366](https://github.com/ionic-team/ionic-framework/issues/26366)) ([fcfbcdb](https://github.com/ionic-team/ionic-framework/commit/fcfbcdbc200b1354b9128a691fbd9b68d50d8668)), closes [#24891](https://github.com/ionic-team/ionic-framework/issues/24891)
+* **segment:** scrolling button into view is more consistent ([#26369](https://github.com/ionic-team/ionic-framework/issues/26369)) ([a2d570b](https://github.com/ionic-team/ionic-framework/commit/a2d570b7ad8b799b072ba6eb79d8fe4c6dd77cf0)), closes [#26368](https://github.com/ionic-team/ionic-framework/issues/26368)
+
+
+
+
+
 ## [6.3.9](https://github.com/ionic-team/ionic-framework/compare/v6.3.8...v6.3.9) (2022-11-30)
 
 

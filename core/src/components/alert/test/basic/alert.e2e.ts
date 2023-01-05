@@ -51,7 +51,7 @@ test.describe('alert: basic', () => {
     await page.goto(`/src/components/alert/test/basic`);
 
     const alert = await openAlert(page, 'basic');
-    expect(alert).toHaveAttribute('data-testid', 'basic-alert');
+    await expect(alert).toHaveAttribute('data-testid', 'basic-alert');
   });
 
   test('should dismiss when async handler resolves', async ({ page, skip }) => {

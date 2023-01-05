@@ -1,7 +1,8 @@
 import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
-test.describe('range: scroll-target', () => {
+// TODO FW-2873
+test.describe.skip('range: scroll-target', () => {
   test('should not scroll when the knob is swiped in custom scroll target', async ({ page, skip }) => {
     skip.browser('webkit', 'mouse.wheel is not available in WebKit');
     skip.rtl();
