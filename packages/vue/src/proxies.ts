@@ -716,6 +716,7 @@ export const IonSegmentButton = /*@__PURE__*/ defineContainer<JSX.IonSegmentButt
 
 export const IonSelect = /*@__PURE__*/ defineContainer<JSX.IonSelect>('ion-select', defineIonSelect, [
   'cancelText',
+  'color',
   'compareWith',
   'disabled',
   'fill',

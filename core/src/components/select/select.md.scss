@@ -1,8 +1,15 @@
 @import "./select";
 @import "./select.md.vars";
+@import "./select.md.solid.scss";
+@import "./select.md.outline.scss";
 
 // Material Design Select
 // --------------------------------------------------
+
+:host {
+  --border-width: 1px;
+  --border-color: #{$item-md-border-color};
+}
 
 :host(.legacy-select) {
   --padding-top: #{$select-md-padding-top};
@@ -18,8 +25,81 @@
 .select-icon {
   transition: transform .15s cubic-bezier(.4, 0, .2, 1);
 
-  opacity: .55;
+  color: #{$text-color-step-500};
+}
 
+// Select Label
+// ----------------------------------------------------------------
+
+/**
+ * When the select is focused the label should
+ * take on the highlight color.
+ */
+:host(.select-expanded) .label-text-wrapper,
+:host(.ion-focused) .label-text-wrapper {
+  color: var(--highlight-color);
+}
+
+:host(.ion-touched.ion-valid) .label-text-wrapper,
+:host(.ion-touched.ion-invalid) .label-text-wrapper {
+  color: var(--highlight-color);
+}
+
+// Select Highlight
+// ----------------------------------------------------------------
+
+.select-highlight {
+  @include position(null, null, -1px, 0);
+
+  position: absolute;
+
+  width: 100%;
+  height: 2px;
+
+  transform: scale(0);
+
+  transition: transform 200ms;
+
+  background: var(--highlight-color);
+}
+
+:host(.select-expanded) .select-highlight,
+:host(.ion-focused) .select-highlight {
+  transform: scale(1);
+}
+
+/**
+ * Adjust the highlight up by 1px
+ * so it is not cut off by the
+ * the item's line (if one is present).
+ */
+:host(.in-item) .select-highlight {
+  @include position(null, null, 0, 0);
+}
+
+// Select Icon
+// ----------------------------------------------------------------
+
+/**
+ * This rotates the chevron icon
+ * when the select is activated.
+ * This should only happen on MD.
+ */
+:host(.select-expanded:not(.legacy-select)) .select-icon {
+  @include transform(rotate(180deg));
+}
+
+/**
+ * When the select is focused the icon should
+ * take on the highlight color.
+ * The icon should also take on the highlight
+ * color if there is a validation state.
+ */
+:host(.select-expanded) .select-wrapper .select-icon,
+:host(.ion-touched.ion-valid) .select-wrapper .select-icon,
+:host(.ion-touched.ion-invalid) .select-wrapper .select-icon,
+:host(.ion-focused) .select-wrapper .select-icon {
+  color: var(--highlight-color);
 }
 
 /**
@@ -47,9 +127,9 @@
   @include transform(rotate(180deg), translate3d(0, -9px, 0));
 }
 
-:host-context(ion-item.ion-focused) .select-icon,
-:host-context(.item-has-focus) .select-icon {
-  color: var(--highlight-color-focused);
+// Select Shape Rounded
+// ----------------------------------------------------------------
 
-  opacity: 1;
+:host(.select-shape-round) {
+  --border-radius: 16px;
 }

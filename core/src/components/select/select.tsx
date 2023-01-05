@@ -12,6 +12,7 @@ import type {
   ActionSheetOptions,
   AlertInput,
   AlertOptions,
+  Color,
   CssClassMap,
   OverlaySelect,
   PopoverOptions,
@@ -23,7 +24,7 @@ import type {
 import { findItemLabel, focusElement, getAriaLabel, renderHiddenInput, inheritAttributes } from '../../utils/helpers';
 import type { Attributes } from '../../utils/helpers';
 import { actionSheetController, alertController, popoverController } from '../../utils/overlays';
-import { hostContext } from '../../utils/theme';
+import { createColorClasses, hostContext } from '../../utils/theme';
 import { watchForOptions } from '../../utils/watch-options';
 
 import type { SelectCompareFn } from './select-interface';
@@ -62,6 +63,15 @@ export class Select implements ComponentInterface {
    * The text to display on the cancel button.
    */
   @Prop() cancelText = 'Cancel';
+
+  /**
+   * The color to use from your application's color palette.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
+   *
+   * This property is only available when using the modern select syntax.
+   */
+  @Prop({ reflect: true }) color?: Color;
 
   /**
    * A property name or function used to compare object values
@@ -121,6 +131,7 @@ export class Select implements ComponentInterface {
    * `'floating'`: The label will appear smaller and above the select when the select is focused or it has a value. Otherwise it will appear on top of the select.
    * `'stacked'`: The label will appear smaller and above the select regardless even when the select is blurred or has no value.
    * `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+   * When using `'floating'` or `'stacked'` we recommend initializing the select with either a `value` or a `placeholder`.
    */
   @Prop() labelPlacement?: 'start' | 'end' | 'floating' | 'stacked' | 'fixed' = 'start';
 
@@ -667,33 +678,37 @@ export class Select implements ComponentInterface {
   }
 
   private renderSelect() {
-    const { disabled, el, isExpanded, labelPlacement, justify, placeholder } = this;
+    const { disabled, el, isExpanded, labelPlacement, justify, placeholder, fill, shape } = this;
     const mode = getIonMode(this);
     const hasFloatingOrStackedLabel = labelPlacement === 'floating' || labelPlacement === 'stacked';
     const justifyEnabled = !hasFloatingOrStackedLabel;
     const rtl = isRTL(el) ? 'rtl' : 'ltr';
+    const shouldRenderHighlight = mode === 'md' && fill !== 'outline';
 
     return (
       <Host
         onClick={this.onClick}
-        class={{
+        class={createColorClasses(this.color, {
           [mode]: true,
           'in-item': hostContext('ion-item', el),
           'select-disabled': disabled,
           'select-expanded': isExpanded,
           'has-value': this.hasValue(),
           'has-placeholder': placeholder !== undefined,
+          'ion-focusable': true,
           [`select-${rtl}`]: true,
+          [`select-fill-${fill}`]: fill !== undefined,
           [`select-justify-${justify}`]: justifyEnabled,
+          [`select-shape-${shape}`]: shape !== undefined,
           [`select-label-placement-${labelPlacement}`]: true,
-        }}
+        })}
       >
         <label class="select-wrapper" id="select-label">
           {this.renderLabelContainer()}
           <div class="native-wrapper">
             {this.renderSelectText()}
             {!hasFloatingOrStackedLabel && this.renderSelectIcon()}
-            {this.renderListbox(this.label !== undefined ? 'select-label' : undefined)}
+            {this.renderListbox()}
           </div>
           {/**
            * The icon in a floating/stacked select
@@ -703,6 +718,7 @@ export class Select implements ComponentInterface {
            * the native wrapper.
            */}
           {hasFloatingOrStackedLabel && this.renderSelectIcon()}
+          {shouldRenderHighlight && <div class="select-highlight"></div>}
         </label>
       </Host>
     );
@@ -760,6 +776,7 @@ For inputs that do not have a visible label, developers should use "aria-label" 
         class={{
           [mode]: true,
           'in-item': hostContext('ion-item', el),
+          'in-item-color': hostContext('ion-item.ion-color', el),
           'select-disabled': disabled,
           'select-expanded': isExpanded,
           'legacy-select': true,
@@ -768,7 +785,7 @@ For inputs that do not have a visible label, developers should use "aria-label" 
         {this.renderSelectText()}
         {this.renderSelectIcon()}
         <label id={labelId}>{displayLabel}</label>
-        {this.renderListbox(labelId)}
+        {this.renderListbox()}
       </Host>
     );
   }
@@ -812,15 +829,44 @@ For inputs that do not have a visible label, developers should use "aria-label" 
     return <ion-icon class="select-icon" part="icon" aria-hidden="true" icon={caretDownSharp}></ion-icon>;
   }
 
-  private renderListbox(labelId?: string) {
-    const { disabled, inputId, isExpanded, inheritedAttributes } = this;
+  private get ariaLabel() {
+    const { placeholder, label, el, inputId, inheritedAttributes } = this;
+    const displayValue = this.getText();
+    const { labelText } = getAriaLabel(el, inputId);
+    const definedLabel = label ?? inheritedAttributes['aria-label'] ?? labelText;
+
+    /**
+     * If developer has specified a placeholder
+     * and there is nothing selected, the selectText
+     * should have the placeholder value.
+     */
+    let renderedLabel = displayValue;
+    if (renderedLabel === '' && placeholder !== undefined) {
+      renderedLabel = placeholder;
+    }
+
+    /**
+     * If there is a developer-defined label,
+     * then we need to concatenate the developer label
+     * string with the current current value.
+     * The label for the control should be read
+     * before the values of the control.
+     */
+    if (definedLabel !== undefined) {
+      renderedLabel = renderedLabel === '' ? definedLabel : `${definedLabel}, ${renderedLabel}`;
+    }
+
+    return renderedLabel;
+  }
+
+  private renderListbox() {
+    const { disabled, inputId, isExpanded } = this;
 
     return (
       <button
         disabled={disabled}
         id={inputId}
-        aria-label={labelId === undefined ? inheritedAttributes['aria-label'] : null}
-        aria-labelledby={labelId !== undefined ? labelId : null}
+        aria-label={this.ariaLabel}
         aria-haspopup="listbox"
         aria-expanded={`${isExpanded}`}
         onFocus={this.onFocus}

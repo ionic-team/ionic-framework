@@ -2572,6 +2572,10 @@ export namespace Components {
          */
         "cancelText": string;
         /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).  This property is only available when using the modern select syntax.
+         */
+        "color"?: Color;
+        /**
           * A property name or function used to compare object values
          */
         "compareWith"?: string | SelectCompareFn | null;
@@ -2600,7 +2604,7 @@ export namespace Components {
          */
         "label"?: string;
         /**
-          * Where to place the label relative to the select. `'start'`: The label will appear to the left of the select in LTR and to the right in RTL. `'end'`: The label will appear to the right of the select in LTR and to the left in RTL. `'floating'`: The label will appear smaller and above the select when the select is focused or it has a value. Otherwise it will appear on top of the select. `'stacked'`: The label will appear smaller and above the select regardless even when the select is blurred or has no value. `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+          * Where to place the label relative to the select. `'start'`: The label will appear to the left of the select in LTR and to the right in RTL. `'end'`: The label will appear to the right of the select in LTR and to the left in RTL. `'floating'`: The label will appear smaller and above the select when the select is focused or it has a value. Otherwise it will appear on top of the select. `'stacked'`: The label will appear smaller and above the select regardless even when the select is blurred or has no value. `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("..."). When using `'floating'` or `'stacked'` we recommend initializing the select with either a `value` or a `placeholder`.
          */
         "labelPlacement"?: 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
         /**
@@ -6566,6 +6570,10 @@ declare namespace LocalJSX {
          */
         "cancelText"?: string;
         /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).  This property is only available when using the modern select syntax.
+         */
+        "color"?: Color;
+        /**
           * A property name or function used to compare object values
          */
         "compareWith"?: string | SelectCompareFn | null;
@@ -6594,7 +6602,7 @@ declare namespace LocalJSX {
          */
         "label"?: string;
         /**
-          * Where to place the label relative to the select. `'start'`: The label will appear to the left of the select in LTR and to the right in RTL. `'end'`: The label will appear to the right of the select in LTR and to the left in RTL. `'floating'`: The label will appear smaller and above the select when the select is focused or it has a value. Otherwise it will appear on top of the select. `'stacked'`: The label will appear smaller and above the select regardless even when the select is blurred or has no value. `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+          * Where to place the label relative to the select. `'start'`: The label will appear to the left of the select in LTR and to the right in RTL. `'end'`: The label will appear to the right of the select in LTR and to the left in RTL. `'floating'`: The label will appear smaller and above the select when the select is focused or it has a value. Otherwise it will appear on top of the select. `'stacked'`: The label will appear smaller and above the select regardless even when the select is blurred or has no value. `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("..."). When using `'floating'` or `'stacked'` we recommend initializing the select with either a `value` or a `placeholder`.
          */
         "labelPlacement"?: 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
         /**

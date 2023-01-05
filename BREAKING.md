@@ -224,7 +224,6 @@ Ionic now listens on the `keydown` event instead of the `keyup` event when deter
 | ----------------------- | -------------- | --------- |
 | `--placeholder-opacity` | `0.33`         | `0.6`     |
 
-
 <h4 id="version-7x-slides">Slides</h4>
 
 `ion-slides`, `ion-slide`, and the `IonicSwiper` plugin have been removed from Ionic.
