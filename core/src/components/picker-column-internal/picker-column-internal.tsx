@@ -279,6 +279,7 @@ export class PickerColumnInternal implements ComponentInterface {
          */
         if (activeElement !== activeEl) {
           hapticSelectionChanged();
+
           if (this.canExitInputMode) {
             /**
              * The native iOS wheel picker
@@ -314,6 +315,14 @@ export class PickerColumnInternal implements ComponentInterface {
             this.scrollEndCallback = undefined;
           }
 
+          /**
+           * Reset this flag as the
+           * next scroll interaction could
+           * be a scroll from the user. In this
+           * case, we should exit input mode.
+           */
+          this.canExitInputMode = true;
+
           const dataIndex = activeElement.getAttribute('data-index');
 
           /**
@@ -330,14 +339,6 @@ export class PickerColumnInternal implements ComponentInterface {
 
           if (selectedItem.value !== this.value) {
             this.setValue(selectedItem.value);
-
-            /**
-             * Reset this flag as the
-             * next scroll interaction could
-             * be a scroll from the user. In this
-             * case, we should exit input mode.
-             */
-            this.canExitInputMode = true;
           }
         }, 250);
       });
