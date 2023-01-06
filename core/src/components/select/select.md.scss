@@ -33,15 +33,20 @@
 
 /**
  * When the select is focused the label should
- * take on the highlight color.
+ * take on the highlight color. This should
+ * only apply to floating or stacked labels.
  */
-:host(.select-expanded) .label-text-wrapper,
-:host(.ion-focused) .label-text-wrapper {
+:host(.select-label-placement-floating.select-expanded) .label-text-wrapper,
+:host(.select-label-placement-floating.ion-focused) .label-text-wrapper,
+:host(.select-label-placement-stacked.select-expanded) .label-text-wrapper,
+:host(.select-label-placement-stacked.ion-focused) .label-text-wrapper {
   color: var(--highlight-color);
 }
 
-:host(.ion-touched.ion-valid) .label-text-wrapper,
-:host(.ion-touched.ion-invalid) .label-text-wrapper {
+:host(.select-label-placement-floating.ion-touched.ion-valid) .label-text-wrapper,
+:host(.select-label-placement-floating.ion-touched.ion-invalid) .label-text-wrapper,
+:host(.select-label-placement-stacked.ion-touched.ion-valid) .label-text-wrapper,
+:host(.select-label-placement-stacked.ion-touched.ion-invalid) .label-text-wrapper {
   color: var(--highlight-color);
 }
 
