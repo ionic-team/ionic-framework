@@ -2483,6 +2483,7 @@ export namespace Components {
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
+        "setFocus": () => Promise<void>;
         /**
           * The type of the button.
          */
