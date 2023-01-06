@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.4.2-nightly.20230106](https://github.com/ionic-team/ionic-framework/compare/v6.4.1...v6.4.2-nightly.20230106) (2023-01-06)
+
+
+### Bug Fixes
+
+* **modal:** canDismiss type with data and role ([#26547](https://github.com/ionic-team/ionic-framework/issues/26547)) ([32c2622](https://github.com/ionic-team/ionic-framework/commit/32c2622ab04a70d00684e9a813d9bcef698d7551)), closes [#26544](https://github.com/ionic-team/ionic-framework/issues/26544)
+* **picker-column-internal:** blurring picker does not throw error ([#26560](https://github.com/ionic-team/ionic-framework/issues/26560)) ([3e671b9](https://github.com/ionic-team/ionic-framework/commit/3e671b9c8ff62945a12eff431839ddae37d9d1a7)), closes [#26559](https://github.com/ionic-team/ionic-framework/issues/26559)
+* **vue:** unmount teleported user component ([#26543](https://github.com/ionic-team/ionic-framework/issues/26543)) ([c996384](https://github.com/ionic-team/ionic-framework/commit/c996384786257524842cc1dca8d0fb940699719b)), closes [#26542](https://github.com/ionic-team/ionic-framework/issues/26542)
+
+
+
+
+
 ## [6.4.1](https://github.com/ionic-team/ionic-framework/compare/v6.4.0...v6.4.1) (2022-12-14)
 
 
