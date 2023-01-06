@@ -2,6 +2,8 @@ import { config } from '../global/config';
 
 export type Platforms = keyof typeof PLATFORMS_MAP;
 
+// TODO(FW-2832): types
+
 interface IsPlatformSignature {
   (plt: Platforms): boolean;
   (win: Window, plt: Platforms): boolean;

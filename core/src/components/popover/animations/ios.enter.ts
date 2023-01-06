@@ -14,6 +14,7 @@ const POPOVER_IOS_BODY_PADDING = 5;
 /**
  * iOS Popover Enter Animation
  */
+// TODO(FW-2832): types
 export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation => {
   const { event: ev, size, trigger, reference, side, align } = opts;
   const doc = baseEl.ownerDocument as any;

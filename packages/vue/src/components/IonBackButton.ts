@@ -4,6 +4,7 @@ import { defineCustomElement } from '@ionic/core/components/ion-back-button.js';
 export const IonBackButton = /*@__PURE__*/ defineComponent((_, { attrs, slots }) => {
   defineCustomElement();
 
+  // TODO(FW-2969): type
   const ionRouter: any = inject('navManager');
 
   const onClick = () => {
