@@ -4,7 +4,8 @@ import { Component, Element, Host, Prop, Method, State, forceUpdate, h } from '@
 import { getIonMode } from '../../global/ionic-global';
 import type { SegmentButtonLayout } from '../../interface';
 import type { ButtonInterface } from '../../utils/element-interface';
-import { addEventListener, removeEventListener } from '../../utils/helpers';
+import type { Attributes } from '../../utils/helpers';
+import { addEventListener, removeEventListener, inheritAttributes } from '../../utils/helpers';
 import { hostContext } from '../../utils/theme';
 
 let ids = 0;
@@ -27,6 +28,7 @@ let ids = 0;
 export class SegmentButton implements ComponentInterface, ButtonInterface {
   private segmentEl: HTMLIonSegmentElement | null = null;
   private nativeEl: HTMLButtonElement | undefined;
+  private inheritedAttributes: Attributes = {};
 
   @Element() el!: HTMLElement;
 
@@ -68,6 +70,12 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
       removeEventListener(segmentEl, 'ionStyle', this.updateStyle);
       this.segmentEl = null;
     }
+  }
+
+  componentWillLoad() {
+    this.inheritedAttributes = {
+      ...inheritAttributes(this.el, ['aria-label']),
+    };
   }
 
   private get hasLabel() {
@@ -134,6 +142,7 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
           class="button-native"
           part="native"
           disabled={disabled}
+          {...this.inheritedAttributes}
         >
           <span class="button-inner">
             <slot></slot>
