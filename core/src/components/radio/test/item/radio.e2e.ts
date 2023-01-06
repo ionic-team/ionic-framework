@@ -5,11 +5,11 @@ test.describe('radio: item', () => {
   test('should render correctly in list', async ({ page }) => {
     await page.setContent(`
       <ion-list>
-        <ion-item>
-          <ion-radio-group>
+        <ion-radio-group>
+          <ion-item>
             <ion-radio>Enable Notifications</ion-radio>
-          </ion-radio-group>
-        </ion-item>
+          </ion-item>
+        </ion-radio-group>
       </ion-list>
     `);
     const list = page.locator('ion-list');
@@ -18,11 +18,11 @@ test.describe('radio: item', () => {
   test('should render correctly in inset list', async ({ page }) => {
     await page.setContent(`
       <ion-list inset="true">
-        <ion-item>
-          <ion-radio-group>
+        <ion-radio-group>
+          <ion-item>
             <ion-radio>Enable Notifications</ion-radio>
-          </ion-radio-group>
-        </ion-item>
+          </ion-item>
+        </ion-radio-group>
       </ion-list>
     `);
     const list = page.locator('ion-list');
