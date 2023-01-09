@@ -1515,13 +1515,13 @@ export declare interface IonRadio extends Components.IonRadio {
 
 @ProxyCmp({
   defineCustomElementFn: undefined,
-  inputs: ['color', 'disabled', 'justify', 'labelPlacement', 'mode', 'name', 'value']
+  inputs: ['color', 'disabled', 'justify', 'labelPlacement', 'legacy', 'mode', 'name', 'value']
 })
 @Component({
   selector: 'ion-radio',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['color', 'disabled', 'justify', 'labelPlacement', 'mode', 'name', 'value']
+  inputs: ['color', 'disabled', 'justify', 'labelPlacement', 'legacy', 'mode', 'name', 'value']
 })
 export class IonRadio {
   protected el: HTMLElement;

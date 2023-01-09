@@ -66,4 +66,4 @@ const hasLabelSlot = (controlEl: HTMLElement) => {
 };
 
 const NAMED_LABEL_SLOT_COMPONENTS = ['ION-RANGE'];
-const UNNAMED_LABEL_SLOT_COMPONENTS = ['ION-TOGGLE'];
+const UNNAMED_LABEL_SLOT_COMPONENTS = ['ION-TOGGLE', 'ION-RADIO'];
