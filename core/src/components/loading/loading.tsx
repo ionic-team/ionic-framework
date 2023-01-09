@@ -190,6 +190,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
     const mode = getIonMode(this);
     return (
       <Host
+        role="dialog"
         tabindex="-1"
         {...(htmlAttributes as any)}
         style={{
@@ -207,7 +208,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
 
         <div tabindex="0"></div>
 
-        <div class="loading-wrapper ion-overlay-wrapper" role="dialog">
+        <div class="loading-wrapper ion-overlay-wrapper">
           {spinner && (
             <div class="loading-spinner">
               <ion-spinner name={spinner} aria-hidden="true" />
