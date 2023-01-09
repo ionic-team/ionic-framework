@@ -5,6 +5,8 @@ import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import type { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from '../../interface';
 import type { AnchorInterface } from '../../utils/element-interface';
+import type { Attributes } from '../../utils/helpers';
+import { inheritAttributes } from '../../utils/helpers';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -20,6 +22,8 @@ import type { AnchorInterface } from '../../utils/element-interface';
   shadow: true,
 })
 export class TabButton implements ComponentInterface, AnchorInterface {
+  private inheritedAttributes: Attributes = {};
+
   @Element() el!: HTMLElement;
 
   /**
@@ -88,6 +92,10 @@ export class TabButton implements ComponentInterface, AnchorInterface {
   }
 
   componentWillLoad() {
+    this.inheritedAttributes = {
+      ...inheritAttributes(this.el, ['aria-label']),
+    };
+
     if (this.layout === undefined) {
       this.layout = config.get('tabButtonLayout', 'icon-top');
     }
@@ -114,20 +122,6 @@ export class TabButton implements ComponentInterface, AnchorInterface {
     return !!this.el.querySelector('ion-icon');
   }
 
-  private get tabIndex() {
-    if (this.disabled) {
-      return -1;
-    }
-
-    const hasTabIndex = this.el.hasAttribute('tabindex');
-
-    if (hasTabIndex) {
-      return this.el.getAttribute('tabindex');
-    }
-
-    return 0;
-  }
-
   private onKeyUp = (ev: KeyboardEvent) => {
     if (ev.key === 'Enter' || ev.key === ' ') {
       this.selectTab(ev);
@@ -139,7 +133,7 @@ export class TabButton implements ComponentInterface, AnchorInterface {
   };
 
   render() {
-    const { disabled, hasIcon, hasLabel, tabIndex, href, rel, target, layout, selected, tab } = this;
+    const { disabled, hasIcon, hasLabel, href, rel, target, layout, selected, tab, inheritedAttributes } = this;
     const mode = getIonMode(this);
     const attrs = {
       download: this.download,
@@ -152,9 +146,6 @@ export class TabButton implements ComponentInterface, AnchorInterface {
       <Host
         onClick={this.onClick}
         onKeyup={this.onKeyUp}
-        role="tab"
-        tabindex={tabIndex}
-        aria-selected={selected ? 'true' : null}
         id={tab !== undefined ? `tab-button-${tab}` : null}
         class={{
           [mode]: true,
@@ -170,7 +161,16 @@ export class TabButton implements ComponentInterface, AnchorInterface {
           'ion-focusable': true,
         }}
       >
-        <a {...attrs} tabIndex={-1} class="button-native" part="native">
+        <a
+          {...attrs}
+          class="button-native"
+          part="native"
+          role="tab"
+          aria-selected={selected ? 'true' : null}
+          aria-disabled={disabled ? 'true' : null}
+          tabindex={disabled ? '-1' : undefined}
+          {...inheritedAttributes}
+        >
           <span class="button-inner">
             <slot></slot>
           </span>
