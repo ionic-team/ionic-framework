@@ -69,10 +69,6 @@
   overflow: hidden;
 }
 
-:host(:not(.legacy-select)) {
-  min-height: 44px;
-}
-
 // Select Used in ion-item
 // --------------------------------------------------
 :host(.in-item.legacy-select) {
