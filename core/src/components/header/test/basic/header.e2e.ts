@@ -37,7 +37,6 @@ test.describe('header: basic', () => {
 
     test('should not have visual regressions with translucent header', async ({ page, skip }) => {
       skip.mode('md', 'Translucent effect is only available in iOS mode.');
-      skip.browser('firefox', 'Firefox has some issues rendering translucent effects on Linux.');
 
       await page.setContent(`
         <ion-header translucent="true">
@@ -56,7 +55,6 @@ test.describe('header: basic', () => {
 
     test('should not have visual regressions with translucent header with color', async ({ page, skip }) => {
       skip.mode('md', 'Translucent effect is only available in iOS mode.');
-      skip.browser('firefox', 'Firefox has some issues rendering translucent effects on Linux.');
 
       await page.setContent(`
         <ion-header translucent="true">

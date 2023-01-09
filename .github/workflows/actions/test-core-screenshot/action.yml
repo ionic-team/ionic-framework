@@ -18,11 +18,6 @@ runs:
         name: ionic-core
         path: ./core
         filename: CoreBuild.zip
-    - uses: ./.github/workflows/actions/download-archive
-      with:
-        name: ionic-core-src
-        path: ./core
-        filename: CoreSrc.zip
     - name: Install Playwright Dependencies
       run: npm install && npx playwright install && npx playwright install-deps
       shell: bash

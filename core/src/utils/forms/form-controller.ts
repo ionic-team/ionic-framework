@@ -1,4 +1,4 @@
-type HTMLLegacyFormControlElement = HTMLElement & { label?: string };
+type HTMLLegacyFormControlElement = HTMLElement & { label?: string; legacy?: boolean };
 
 /**
  * Creates a controller that tracks whether a form control is using the legacy or modern syntax. This should be removed when the legacy form control syntax is removed.
@@ -66,5 +66,5 @@ const hasLabelSlot = (controlEl: HTMLElement) => {
   return false;
 };
 
-const NAMED_LABEL_SLOT_COMPONENTS: string[] = [];
-const UNNAMED_LABEL_SLOT_COMPONENTS = ['ION-TOGGLE'];
+const NAMED_LABEL_SLOT_COMPONENTS = ['ION-RANGE'];
+const UNNAMED_LABEL_SLOT_COMPONENTS = ['ION-TOGGLE', 'ION-CHECKBOX'];

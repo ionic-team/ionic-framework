@@ -1,5 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import { caretDownSharp } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
 import type {
@@ -591,9 +592,7 @@ export class Select implements ComponentInterface {
         <div aria-hidden="true" class={selectTextClasses} part={textPart}>
           {selectText}
         </div>
-        <div class="select-icon" role="presentation" part="icon">
-          <div class="select-icon-inner"></div>
-        </div>
+        <ion-icon class="select-icon" part="icon" aria-hidden="true" icon={caretDownSharp}></ion-icon>
         <label id={labelId}>{displayLabel}</label>
         <button
           type="button"

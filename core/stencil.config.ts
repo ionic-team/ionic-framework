@@ -56,9 +56,7 @@ export const config: Config = {
     { components: ['ion-breadcrumb', 'ion-breadcrumbs'] },
   ],
   plugins: [
-    sass({
-      injectGlobalPaths: ['src/themes/ionic.skip-warns.scss']
-    })
+    sass(),
   ],
   outputTargets: [
     reactOutputTarget({
@@ -203,11 +201,6 @@ export const config: Config = {
     }),
   ],
   buildEs5: 'prod',
-  extras: {
-    dynamicImportShim: true,
-    initializeNextTick: true,
-    scriptDataOpts: true
-  },
   testing: {
     moduleNameMapper: {
       "@utils/test": ["<rootDir>/src/utils/test/utils"],

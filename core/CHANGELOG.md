@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.4.1](https://github.com/ionic-team/ionic/compare/v6.4.0...v6.4.1) (2022-12-14)
+
+
+### Bug Fixes
+
+* **breadcrumbs:** breadcrumbs are reactive ([#26427](https://github.com/ionic-team/ionic/issues/26427)) ([0d8625b](https://github.com/ionic-team/ionic/commit/0d8625b95537208c188b32a1707fa66050953281)), closes [#24041](https://github.com/ionic-team/ionic/issues/24041)
+* **datetime:** keyboard can select hour 00 ([#26423](https://github.com/ionic-team/ionic/issues/26423)) ([2fc96b7](https://github.com/ionic-team/ionic/commit/2fc96b771412d2deac6d19883bfc5abc74d0bdbd)), closes [#26409](https://github.com/ionic-team/ionic/issues/26409)
+* **modal:** compatibility with stencil libraries/apps ([#26448](https://github.com/ionic-team/ionic/issues/26448)) ([1aa1068](https://github.com/ionic-team/ionic/commit/1aa1068df7867a8b8a203052635da018014f5f1c))
+* **normalize:** remove normalize styles for outdated browsers ([#26465](https://github.com/ionic-team/ionic/issues/26465)) ([82d1d94](https://github.com/ionic-team/ionic/commit/82d1d948ecd7725772eb1ffee495e7a5dcadb30b)), closes [#26464](https://github.com/ionic-team/ionic/issues/26464)
+
+
+
+
+
 # [6.4.0](https://github.com/ionic-team/ionic/compare/v6.3.10...v6.4.0) (2022-12-07)
 
 
