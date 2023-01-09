@@ -81,19 +81,18 @@ export const initialize = (userConfig: IonicConfig = {}) => {
   const isAllowedIonicModeValue = (elmMode: string) => ['ios', 'md'].includes(elmMode);
 
   setMode((elm: any) => {
-    const check = elm.hasAttribute('liam');
     while (elm) {
       const elmMode = (elm as any).mode || elm.getAttribute('mode');
       if (elmMode) {
         if (isAllowedIonicModeValue(elmMode)) {
-          return check === true ? 'none' : elmMode;
+          return elmMode;
         } else if (isIonicElement(elm)) {
           console.warn('Invalid ionic mode: "' + elmMode + '", expected: "ios" or "md"');
         }
       }
       elm = elm.parentElement;
     }
-    return check === true ? 'none' : defaultMode;
+    return defaultMode;
   });
 };
 
