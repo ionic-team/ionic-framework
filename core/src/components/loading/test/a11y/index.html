@@ -18,16 +18,20 @@
   <body>
     <main>
       <h1>Loading - a11y</h1>
-      <button id="open-loading" onclick="openLoading()">Present Loading</button>
+      <button id="open-message-loading" onclick="openLoading({
+        message: 'Loading'
+      })">Present Loading with Message</button>
+
+      <button id="open-label-loading" onclick="openLoading({
+        spinner: 'bubbles',
+        htmlAttributes: {
+          'aria-label': 'Loading'
+        }
+      })">Present Loading with Label</button>
 
       <script>
-        async function openLoading() {
-          const loading = await loadingController.create({
-            message: 'Loading',
-            htmlAttributes: {
-              'aria-label': 'Loading content',
-            },
-          });
+        async function openLoading(opts) {
+          const loading = await loadingController.create(opts);
           await loading.present();
         }
       </script>
