@@ -48,12 +48,14 @@
         <div class="grid">
           <div class="grid-item">
             <h2>No Fill</h2>
-            <ion-select class="no-fill" label="Fruit"></ion-select>
+            <ion-select class="no-fill" label="Fruit"value="apple"></ion-select>
           </div>
 
           <div class="grid-item">
             <h2>Shaped No Fill</h2>
-            <ion-select shape="round" class="no-fill" label="Fruit"></ion-select>
+            <ion-select shape="round" class="no-fill" label="Fruit"value="apple">
+              <ion-select-option value="apple">Apple</ion-select-option>
+            </ion-select>
           </div>
 
           <div class="grid-item">
@@ -72,12 +74,16 @@
 
           <div class="grid-item">
             <h2>Solid, Floating Label</h2>
-            <ion-select fill="solid" label="Fruit" label-placement="floating" value="apple"></ion-select>
+            <ion-select fill="solid" label="Fruit" label-placement="floating" value="apple">
+              <ion-select-option value="apple">Apple</ion-select-option>
+            </ion-select>
           </div>
 
           <div class="grid-item">
             <h2>Solid, Fixed Label</h2>
-            <ion-select fill="solid" label="Fruit" label-placement="fixed" value="apple"></ion-select>
+            <ion-select fill="solid" label="Fruit" label-placement="fixed" value="apple">
+              <ion-select-option value="apple">Apple</ion-select-option>
+            </ion-select>
           </div>
 
           <div class="grid-item">
@@ -87,17 +93,24 @@
               label="Fruit"
               label-placement="stacked"
               placeholder="example@ionic.io"
-            ></ion-select>
+              value="apple"
+            >
+              <ion-select-option value="apple">Apple</ion-select-option>
+            </ion-select>
           </div>
 
           <div class="grid-item">
             <h2>Outline</h2>
-            <ion-select fill="outline" label="Fruit" value="apple"></ion-select>
+            <ion-select fill="outline" label="Fruit" value="apple">
+              <ion-select-option value="apple">Apple</ion-select-option>
+            </ion-select>
           </div>
 
           <div class="grid-item">
             <h2>Shaped Outline</h2>
-            <ion-select shape="round" fill="outline" label="Fruit" value="apple"></ion-select>
+            <ion-select shape="round" fill="outline" label="Fruit" value="apple">
+              <ion-select-option value="apple">Apple</ion-select-option>
+            </ion-select>
           </div>
 
           <div class="grid-item">
@@ -121,7 +134,10 @@
               label="Fruit"
               label-placement="stacked"
               placeholder="Select a Fruit"
-            ></ion-select>
+              value="apple"
+            >
+              <ion-select-option value="apple">Apple</ion-select-option>
+            </ion-select>
           </div>
 
           <div class="grid-item">
