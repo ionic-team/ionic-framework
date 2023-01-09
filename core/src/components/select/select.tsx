@@ -51,6 +51,7 @@ export class Select implements ComponentInterface {
   private mutationO?: MutationObserver;
   private legacyFormController!: LegacyFormController;
   private inheritedAttributes: Attributes = {};
+  private nativeWrapperEl: HTMLElement | undefined;
 
   // This flag ensures we log the deprecation warning at most once.
   private hasLoggedDeprecationWarning = false;
@@ -452,12 +453,27 @@ export class Select implements ComponentInterface {
         };
       }
       size = 'cover';
+    } else {
       /**
        * The popover should take up the full width
        * when using a fill in MD mode.
        */
-    } else if (mode === 'md' && fill !== undefined) {
-      size = 'cover';
+      if (mode === 'md' && fill !== undefined) {
+        size = 'cover';
+
+      /**
+       * Otherwise the popover
+       * should be positioned relative
+       * to the native element.
+       */
+      } else {
+        event = {
+          ...ev,
+          detail: {
+            ionShadowTarget: this.nativeWrapperEl,
+          },
+        };
+      }
     }
 
     const popoverOpts: PopoverOptions = {
@@ -714,7 +730,7 @@ export class Select implements ComponentInterface {
       >
         <label class="select-wrapper" id="select-label">
           {this.renderLabelContainer()}
-          <div class="native-wrapper">
+          <div class="native-wrapper" ref={(el) => (this.nativeWrapperEl = el)}>
             {this.renderSelectText()}
             {!hasFloatingOrStackedLabel && this.renderSelectIcon()}
             {this.renderListbox()}
