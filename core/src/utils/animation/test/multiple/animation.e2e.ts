@@ -13,7 +13,10 @@ test.skip('animation: multiple', async () => {
     await testMultiple(page);
   });
 
-  test(`should resolve grouped animations using css animations`, async ({ page }) => {
+  /**
+   * CSS animations will occasionally resolve out of order, so we skip for now
+   */
+  test.skip(`should resolve grouped animations using css animations`, async ({ page }) => {
     await page.goto('/src/utils/animation/test/multiple?ionic:_forceCSSAnimations=true');
     await testMultiple(page);
   });

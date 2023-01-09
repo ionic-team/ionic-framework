@@ -34,12 +34,12 @@
   --placeholder-color: initial;
   --placeholder-font-style: initial;
   --placeholder-font-weight: initial;
-  --placeholder-opacity: 0.5;
-  --padding-top: 0px;
-  --padding-end: 0px;
-  --padding-bottom: 0px;
-  --padding-start: 0px;
-  --border-radius: 0px;
+  --placeholder-opacity: #{$placeholder-opacity};
+  --padding-top: 0;
+  --padding-end: 0;
+  --padding-bottom: 0;
+  --padding-start: 0;
+  --border-radius: 0;
   --border-style: solid;
   --highlight-color-focused: #{ion-color(primary, base)};
   --highlight-color-valid: #{ion-color(success, base)};

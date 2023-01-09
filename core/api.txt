@@ -295,19 +295,22 @@ ion-checkbox,prop,checked,boolean,false,false,false
 ion-checkbox,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-checkbox,prop,disabled,boolean,false,false,false
 ion-checkbox,prop,indeterminate,boolean,false,false,false
+ion-checkbox,prop,justify,"end" | "space-between" | "start",'space-between',false,false
+ion-checkbox,prop,labelPlacement,"end" | "fixed" | "start",'start',false,false
+ion-checkbox,prop,legacy,boolean | undefined,undefined,false,false
 ion-checkbox,prop,mode,"ios" | "md",undefined,false,false
 ion-checkbox,prop,name,string,this.inputId,false,false
 ion-checkbox,prop,value,any,'on',false,false
 ion-checkbox,event,ionBlur,void,true
 ion-checkbox,event,ionChange,CheckboxChangeEventDetail<any>,true
 ion-checkbox,event,ionFocus,void,true
-ion-checkbox,css-prop,--background
-ion-checkbox,css-prop,--background-checked
 ion-checkbox,css-prop,--border-color
 ion-checkbox,css-prop,--border-color-checked
 ion-checkbox,css-prop,--border-radius
 ion-checkbox,css-prop,--border-style
 ion-checkbox,css-prop,--border-width
+ion-checkbox,css-prop,--checkbox-background
+ion-checkbox,css-prop,--checkbox-background-checked
 ion-checkbox,css-prop,--checkmark-color
 ion-checkbox,css-prop,--checkmark-width
 ion-checkbox,css-prop,--size
@@ -1025,6 +1028,8 @@ ion-range,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secon
 ion-range,prop,debounce,number | undefined,undefined,false,false
 ion-range,prop,disabled,boolean,false,false,false
 ion-range,prop,dualKnobs,boolean,false,false,false
+ion-range,prop,labelPlacement,"end" | "fixed" | "start",'start',false,false
+ion-range,prop,legacy,boolean | undefined,undefined,false,false
 ion-range,prop,max,number,100,false,false
 ion-range,prop,min,number,0,false,false
 ion-range,prop,mode,"ios" | "md",undefined,false,false
