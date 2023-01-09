@@ -6,7 +6,7 @@ test.describe('loading: a11y', () => {
   test.beforeEach(({ skip }) => {
     skip.mode('md');
     skip.rtl();
-  })
+  });
   test('should set aria-labelledby with a message', async ({ page }) => {
     await page.goto('/src/components/loading/test/a11y');
 

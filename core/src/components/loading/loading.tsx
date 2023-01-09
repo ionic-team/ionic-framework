@@ -193,7 +193,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
      * If the message is defined, use that as the label.
      * Otherwise, don't set aria-labelledby.
      */
-    const ariaLabelledBy = message ? msgId : null;
+    const ariaLabelledBy = message !== undefined ? msgId : null;
 
     return (
       <Host
@@ -223,7 +223,9 @@ export class Loading implements ComponentInterface, OverlayInterface {
             </div>
           )}
 
-          {message !== undefined && <div class="loading-content" id={msgId} innerHTML={sanitizeDOMString(message)}></div>}
+          {message !== undefined && (
+            <div class="loading-content" id={msgId} innerHTML={sanitizeDOMString(message)}></div>
+          )}
         </div>
 
         <div tabindex="0"></div>

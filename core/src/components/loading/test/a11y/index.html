@@ -18,16 +18,26 @@
   <body>
     <main>
       <h1>Loading - a11y</h1>
-      <button id="open-message-loading" onclick="openLoading({
+      <button
+        id="open-message-loading"
+        onclick="openLoading({
         message: 'Loading'
-      })">Present Loading with Message</button>
+      })"
+      >
+        Present Loading with Message
+      </button>
 
-      <button id="open-label-loading" onclick="openLoading({
+      <button
+        id="open-label-loading"
+        onclick="openLoading({
         spinner: 'bubbles',
         htmlAttributes: {
           'aria-label': 'Loading'
         }
-      })">Present Loading with Label</button>
+      })"
+      >
+        Present Loading with Label
+      </button>
 
       <script>
         async function openLoading(opts) {
