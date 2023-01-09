@@ -427,6 +427,7 @@ export class Select implements ComponentInterface {
   }
 
   private async openPopover(ev: UIEvent) {
+    const { fill } = this;
     const interfaceOptions = this.interfaceOptions;
     const mode = getIonMode(this);
     const showBackdrop = mode === 'md' ? false : true;
@@ -436,18 +437,26 @@ export class Select implements ComponentInterface {
     let event: Event | CustomEvent = ev;
     let size = 'auto';
 
-    const item = this.el.closest('ion-item');
+    if (this.legacyFormController.hasLegacyControl()) {
+      const item = this.el.closest('ion-item');
 
-    // If the select is inside of an item containing a floating
-    // or stacked label then the popover should take up the
-    // full width of the item when it presents
-    if (item && (item.classList.contains('item-label-floating') || item.classList.contains('item-label-stacked'))) {
-      event = {
-        ...ev,
-        detail: {
-          ionShadowTarget: item,
-        },
-      };
+      // If the select is inside of an item containing a floating
+      // or stacked label then the popover should take up the
+      // full width of the item when it presents
+      if (item && (item.classList.contains('item-label-floating') || item.classList.contains('item-label-stacked'))) {
+        event = {
+          ...ev,
+          detail: {
+            ionShadowTarget: item,
+          },
+        };
+      }
+      size = 'cover';
+      /**
+       * The popover should take up the full width
+       * when using a fill in MD mode.
+       */
+    } else if (mode === 'md' && fill !== undefined) {
       size = 'cover';
     }
 
