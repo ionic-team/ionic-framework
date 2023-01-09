@@ -461,11 +461,11 @@ export class Select implements ComponentInterface {
       if (mode === 'md' && fill !== undefined) {
         size = 'cover';
 
-      /**
-       * Otherwise the popover
-       * should be positioned relative
-       * to the native element.
-       */
+        /**
+         * Otherwise the popover
+         * should be positioned relative
+         * to the native element.
+         */
       } else {
         event = {
           ...ev,
