@@ -451,8 +451,8 @@ export class Select implements ComponentInterface {
             ionShadowTarget: item,
           },
         };
+        size = 'cover';
       }
-      size = 'cover';
     } else {
       /**
        * The popover should take up the full width
