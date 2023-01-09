@@ -198,6 +198,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
     return (
       <Host
         role="dialog"
+        aria-modal="true"
         aria-labelledby={ariaLabelledBy}
         tabindex="-1"
         {...(htmlAttributes as any)}
