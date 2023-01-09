@@ -23,10 +23,389 @@
       </ion-header>
 
       <ion-content class="outer-content test-content">
-        <ion-select placeholder="Select a value" label="my label">
-          <ion-select-option value="abc">abc</ion-select-option>
-        </ion-select>
+        <ion-list>
+          <ion-list-header>
+            <ion-label> Single Value Select </ion-label>
+          </ion-list-header>
+
+          <ion-item>
+            <ion-select label="Gender" id="gender" placeholder="Select One" class="custom-select">
+              <ion-select-option value="fn">Female</ion-select-option>
+              <ion-select-option value="ml">Male</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-select label="Hair Color" id="hairColor" value="brown" ok-text="Okay" cancel-text="Dismiss">
+              <ion-select-option value="brown">Brown</ion-select-option>
+              <ion-select-option value="blonde">Blonde</ion-select-option>
+              <ion-select-option value="black">Black</ion-select-option>
+              <ion-select-option value="red">Red</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-select label="Skittles" id="skittles" interface="action-sheet" name="skittles">
+              <ion-select-option value="red">Red</ion-select-option>
+              <ion-select-option value="purple">Purple</ion-select-option>
+              <ion-select-option value="yellow">Yellow</ion-select-option>
+              <ion-select-option value="orange">Orange</ion-select-option>
+              <ion-select-option value="green">Green</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
+
+        <ion-list>
+          <ion-list-header>
+            <ion-label> Object Values with trackBy </ion-label>
+          </ion-list-header>
+
+          <ion-item>
+            <ion-select label="Users" id="objectSelectCompareWith"></ion-select>
+          </ion-item>
+        </ion-list>
+
+        <ion-list>
+          <ion-list-header>
+            <ion-label> Select - Custom Interface Options </ion-label>
+          </ion-list-header>
+
+          <ion-item color="danger">
+            <ion-select
+              label="Alert"
+              id="customAlertSelect"
+              value="bacon"
+              interface="alert"
+              multiple="true"
+              placeholder="Select One"
+            >
+              <ion-select-option value="bacon">Bacon</ion-select-option>
+              <ion-select-option value="olives">Black Olives</ion-select-option>
+              <ion-select-option value="xcheese">Extra Cheese</ion-select-option>
+              <ion-select-option value="peppers">Green Peppers</ion-select-option>
+              <ion-select-option value="mushrooms">Mushrooms</ion-select-option>
+              <ion-select-option value="onions">Onions</ion-select-option>
+              <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
+              <ion-select-option value="pineapple">Pineapple</ion-select-option>
+              <ion-select-option value="sausage">Sausage</ion-select-option>
+              <ion-select-option value="Spinach">Spinach</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item color="dark">
+            <ion-select label="Popover" id="customPopoverSelect" interface="popover" placeholder="Select One">
+              <ion-select-option value="brown">Brown</ion-select-option>
+              <ion-select-option value="blonde">Blonde</ion-select-option>
+              <ion-select-option value="black">Black</ion-select-option>
+              <ion-select-option value="red">Red</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item color="primary">
+            <ion-select
+              label="Action Sheet"
+              id="customActionSheetSelect"
+              interface="action-sheet"
+              placeholder="Select One"
+            >
+              <ion-select-option value="red">Red</ion-select-option>
+              <ion-select-option value="purple">Purple</ion-select-option>
+              <ion-select-option value="yellow">Yellow</ion-select-option>
+              <ion-select-option value="orange">Orange</ion-select-option>
+              <ion-select-option value="green">Green</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
+
+        <ion-list>
+          <ion-list-header>
+            <ion-label> Popover Interface Select </ion-label>
+          </ion-list-header>
+
+          <ion-item>
+            <ion-select label="Gender" name="gender" interface="popover">
+              <ion-select-option value="f">Female</ion-select-option>
+              <ion-select-option value="m">Male</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-select label="Favorite Food" name="food" interface="popover" value="steak">
+              <ion-select-option value="steak">Steak</ion-select-option>
+              <ion-select-option value="pizza">Pizza</ion-select-option>
+              <ion-select-option value="tacos">Tacos</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-select label="Month" placeholder="Month" value="03" interface="popover">
+              <ion-select-option value="01">January</ion-select-option>
+              <ion-select-option value="02">February</ion-select-option>
+              <ion-select-option value="03">March</ion-select-option>
+              <ion-select-option value="04">April</ion-select-option>
+              <ion-select-option value="05">May</ion-select-option>
+              <ion-select-option value="06">June</ion-select-option>
+              <ion-select-option value="07">July</ion-select-option>
+              <ion-select-option value="08">August</ion-select-option>
+              <ion-select-option value="09">September</ion-select-option>
+              <ion-select-option value="10">October</ion-select-option>
+              <ion-select-option value="11">November</ion-select-option>
+              <ion-select-option value="12">December</ion-select-option>
+            </ion-select>
+            <ion-select placeholder="Year" value="94" interface="popover">
+              <ion-select-option value="89">1989</ion-select-option>
+              <ion-select-option value="90">1990</ion-select-option>
+              <ion-select-option value="91">1991</ion-select-option>
+              <ion-select-option value="92">1992</ion-select-option>
+              <ion-select-option value="93">1993</ion-select-option>
+              <ion-select-option value="94">1994</ion-select-option>
+              <ion-select-option value="95">1995</ion-select-option>
+              <ion-select-option value="96">1996</ion-select-option>
+              <ion-select-option value="97">1997</ion-select-option>
+              <ion-select-option value="98">1998</ion-select-option>
+              <ion-select-option value="99">1999</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-select label="Numbers" interface="popover" id="numberPopover">
+              <ion-select-option>0</ion-select-option>
+              <ion-select-option>1</ion-select-option>
+              <ion-select-option>2</ion-select-option>
+              <ion-select-option>3</ion-select-option>
+              <ion-select-option>4</ion-select-option>
+              <ion-select-option>5</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
+
+        <ion-list>
+          <ion-list-header>
+            <ion-label> Action Sheet Interface Select </ion-label>
+          </ion-list-header>
+
+          <ion-item>
+            <ion-select label="Mute Notifications" name="notifications" interface="action-sheet">
+              <ion-select-option value="mute_15">For 15 Minutes</ion-select-option>
+              <ion-select-option value="mute_1">For 1 Hour</ion-select-option>
+              <ion-select-option value="mute_23">For 24 Hours</ion-select-option>
+              <ion-select-option value="mute_inf">Until I turn it back on</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-select label="Rating" name="rating" interface="action-sheet">
+              <ion-select-option value="1">1 Star</ion-select-option>
+              <ion-select-option value="2">2 Stars</ion-select-option>
+              <ion-select-option value="3">3 Stars</ion-select-option>
+              <ion-select-option value="4">4 Stars</ion-select-option>
+              <ion-select-option value="5">5 Stars</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
+
+        <ion-list>
+          <ion-list-header>
+            <ion-label> Multiple Value Select </ion-label>
+          </ion-list-header>
+
+          <ion-item>
+            <ion-select label="Toppings" name="toppings" multiple="true" cancel-text="Nah" ok-text="Okay!">
+              <ion-select-option value="bacon">Bacon</ion-select-option>
+              <ion-select-option value="olives">Black Olives</ion-select-option>
+              <ion-select-option value="xcheese">Extra Cheese</ion-select-option>
+              <ion-select-option value="peppers">Green Peppers</ion-select-option>
+              <ion-select-option value="mushrooms">Mushrooms</ion-select-option>
+              <ion-select-option value="onions">Onions</ion-select-option>
+              <ion-select-option value="pepperoni">Pepperoni</ion-select-option>
+              <ion-select-option value="pineapple">Pineapple</ion-select-option>
+              <ion-select-option value="sausage">Sausage</ion-select-option>
+              <ion-select-option value="Spinach">Spinach</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-select label="Pets" id="pets" name="pets" multiple="true">
+              <ion-select-option value="bird">Bird</ion-select-option>
+              <ion-select-option value="cat">Cat</ion-select-option>
+              <ion-select-option value="dog">Dog</ion-select-option>
+              <ion-select-option value="honeybadger">Honey Badger</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-select label="Numbers" id="numberSelect" multiple interface="popover">
+              <ion-select-option>0</ion-select-option>
+              <ion-select-option>1</ion-select-option>
+              <ion-select-option>2</ion-select-option>
+              <ion-select-option>3</ion-select-option>
+              <ion-select-option>4</ion-select-option>
+              <ion-select-option>5</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-select label="Toppings" multiple interface="popover">
+              <ion-select-option>Extra cheese</ion-select-option>
+              <ion-select-option>Mushroom</ion-select-option>
+              <ion-select-option>Onion</ion-select-option>
+              <ion-select-option>Pepperoni</ion-select-option>
+              <ion-select-option>Sausage</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-select label="Disabled" multiple value="text" disabled="true">
+              <ion-select-option value="text">Selected Text</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-select label="Stacked" label-placement="stacked">
+              <ion-select-option>Default</ion-select-option>
+              <ion-select-option>Other</ion-select-option>
+              <ion-select-option>N/A</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-select label="Stacked: selected" label-placement="stacked" value="other">
+              <ion-select-option value="default">Default</ion-select-option>
+              <ion-select-option value="other">Other</ion-select-option>
+              <ion-select-option value="na">N/A</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-select label="Floating" label-placement="floating">
+              <ion-select-option>Default</ion-select-option>
+              <ion-select-option>Other</ion-select-option>
+              <ion-select-option>N/A</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-select label="Floating: selected" label-placement="floating" value="default">
+              <ion-select-option value="default">Default</ion-select-option>
+              <ion-select-option value="other">Other</ion-select-option>
+              <ion-select-option value="na">N/A</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
+
+        <div class="ion-text-center">
+          <ion-button onclick="toggleBoolean('dynamicDisabled', 'disabled')"> Toggle Disabled </ion-button>
+        </div>
       </ion-content>
+
+      <style>
+        .outer-content {
+          --background: #f2f2f2;
+        }
+        .custom-select {
+          --placeholder-opacity: 0.5;
+        }
+      </style>
+
+      <script>
+        let objectOptions = [
+          {
+            id: 1,
+            first: 'Alice',
+            last: 'Smith',
+          },
+          {
+            id: 2,
+            first: 'Bob',
+            last: 'Davis',
+          },
+          {
+            id: 3,
+            first: 'Charlie',
+            last: 'Rosenburg',
+          },
+        ];
+
+        let compareWithFn = (o1, o2) => {
+          return o1 && o2 ? o1.id === o2.id : o1 === o2;
+        };
+
+        let objectSelectElement = document.getElementById('objectSelectCompareWith');
+        objectSelectElement.compareWith = compareWithFn; // 'id';
+
+        objectOptions.forEach((option, i) => {
+          let selectOption = document.createElement('ion-select-option');
+          selectOption.value = option;
+          selectOption.textContent = option.first + ' ' + option.last;
+
+          objectSelectElement.appendChild(selectOption);
+        });
+
+        objectSelectElement.value = {
+          id: 1,
+          first: 'Alice',
+          last: 'Smith',
+        };
+
+        setTimeout(() => {
+          objectSelectElement.value = {
+            id: 1,
+            first: 'Alice',
+            last: 'Smith',
+          };
+        }, 3000);
+
+        var pets = document.getElementById('pets');
+        pets.value = ['bird', 'dog'];
+
+        const numberSelect = document.getElementById('numberSelect');
+
+        numberSelect.addEventListener('ionChange', (event) => {
+          console.log(event.detail, event.detail.value);
+        });
+
+        const options = numberSelect.getElementsByTagName('ion-select-option');
+        Array.from(options).forEach((option, index) => {
+          option.value = index;
+        });
+
+        const numberPopoverOptions = document.querySelectorAll('#numberPopover ion-select-option');
+        Array.from(numberPopoverOptions).forEach((option, index) => {
+          option.value = index;
+        });
+
+        var customAlertSelect = document.getElementById('customAlertSelect');
+        var customAlertOptions = {
+          header: 'Pizza Toppings',
+          subHeader: 'Select your toppings',
+          message: '$1.00 per topping',
+          translucent: true,
+        };
+        customAlertSelect.interfaceOptions = customAlertOptions;
+
+        var customPopoverSelect = document.getElementById('customPopoverSelect');
+        var customPopoverOptions = {
+          header: 'Pizza Toppings',
+          subHeader: 'Select your toppings',
+          message: '$1.50 charge for every topping',
+        };
+        customPopoverSelect.interfaceOptions = customPopoverOptions;
+
+        var customActionSheetSelect = document.getElementById('customActionSheetSelect');
+        var customActionSheetOptions = {
+          header: 'Pizza Toppings',
+          subHeader: 'Select your toppings',
+          message: '$1.50 charge for every topping',
+        };
+        customActionSheetSelect.interfaceOptions = customActionSheetOptions;
+
+        function toggleBoolean(id, prop) {
+          var el = document.getElementById(id);
+
+          var isTrue = el[prop] ? false : true;
+          el[prop] = isTrue;
+        }
+      </script>
     </ion-app>
   </body>
 </html>
