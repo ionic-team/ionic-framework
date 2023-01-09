@@ -86,10 +86,6 @@
   height: 100%;
 }
 
-:host(.in-item) .native-wrapper {
-  width: 100%;
-}
-
 :host(.select-disabled) {
   opacity: .4;
   pointer-events: none;
