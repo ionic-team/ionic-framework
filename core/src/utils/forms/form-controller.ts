@@ -1,11 +1,13 @@
+type HTMLLegacyFormControlElement = HTMLElement & { label?: string; legacy?: boolean };
+
 /**
  * Creates a controller that tracks whether a form control is using the legacy or modern syntax. This should be removed when the legacy form control syntax is removed.
  *
  * @internal
  * @prop el: The Ionic form component to reference
  */
-export const createLegacyFormController = (el: HTMLIonInputElement): LegacyFormController => {
-  const controlEl: HTMLIonInputElement = el;
+export const createLegacyFormController = (el: HTMLLegacyFormControlElement): LegacyFormController => {
+  const controlEl: HTMLLegacyFormControlElement = el;
   let legacyControl = true;
 
   /**
@@ -13,11 +15,18 @@ export const createLegacyFormController = (el: HTMLIonInputElement): LegacyFormC
    * so a deprecation warning is logged. This warning can be disabled
    * by either using the new `label` property or setting `aria-label`
    * on the control.
+   * Alternatively, components that use a slot for the label
+   * can check to see if the component has slotted text
+   * in the light DOM.
    */
-  const hasLabelProp = controlEl.label !== undefined;
+  const hasLabelProp = (controlEl as any).label !== undefined || hasLabelSlot(controlEl);
   const hasAriaLabelAttribute = controlEl.hasAttribute('aria-label');
 
-  legacyControl = !hasLabelProp && !hasAriaLabelAttribute;
+  /**
+   * Developers can manually opt-out of the modern form markup
+   * by setting `legacy="true"` on components.
+   */
+  legacyControl = controlEl.legacy === true || (!hasLabelProp && !hasAriaLabelAttribute);
 
   const hasLegacyControl = () => {
     return legacyControl;
@@ -29,3 +38,33 @@ export const createLegacyFormController = (el: HTMLIonInputElement): LegacyFormC
 export type LegacyFormController = {
   hasLegacyControl: () => boolean;
 };
+
+const hasLabelSlot = (controlEl: HTMLElement) => {
+  const root = controlEl.shadowRoot;
+  if (root === null) {
+    return false;
+  }
+
+  /**
+   * Components that have a named label slot
+   * also have other slots, so we need to query for
+   * anything that is explicitly passed to slot="label"
+   */
+  if (NAMED_LABEL_SLOT_COMPONENTS.includes(controlEl.tagName) && controlEl.querySelector('[slot="label"]') !== null) {
+    return true;
+  }
+
+  /**
+   * Components that have an unnamed slot for the label
+   * have no other slots, so we can check the textContent
+   * of the element.
+   */
+  if (UNNAMED_LABEL_SLOT_COMPONENTS.includes(controlEl.tagName) && controlEl.textContent !== '') {
+    return true;
+  }
+
+  return false;
+};
+
+const NAMED_LABEL_SLOT_COMPONENTS = ['ION-RANGE'];
+const UNNAMED_LABEL_SLOT_COMPONENTS = ['ION-TOGGLE', 'ION-CHECKBOX'];

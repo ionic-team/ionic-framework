@@ -23,19 +23,15 @@
   --padding-start: 0px;
 }
 
-.input-clear-icon {
-  @include svg-background-image($input-ios-input-clear-icon-svg);
-
-  width: $input-ios-input-clear-icon-width;
-  height: $input-ios-input-clear-icon-width;
-
-  background-size: $input-ios-input-clear-icon-size;
+.input-clear-icon ion-icon {
+  width: 18px;
+  height: 18px;
 }
 
 // Input Wrapper
 // ----------------------------------------------------------------
 
-.input-wrapper {
+:host(:not(.legacy-input)) {
   min-height: 44px;
 }
 
@@ -44,7 +40,7 @@
  * the component needs to be taller otherwise the
  * label will appear too close to the input text.
  */
-:host(.input-label-placement-floating) .input-wrapper,
-:host(.input-label-placement-stacked) .input-wrapper {
+:host(.input-label-placement-floating),
+:host(.input-label-placement-stacked) {
   min-height: 56px;
 }

@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react",
-  "version": "6.3.6",
+  "version": "6.4.1",
   "description": "React specific wrapper for @ionic/core",
   "keywords": [
     "ionic",
@@ -20,7 +20,6 @@
     "url": "https://github.com/ionic-team/ionic.git"
   },
   "scripts": {
-    "prepublishOnly": "npm run build",
     "build": "npm run clean && npm run copy && npm run compile",
     "clean": "rimraf dist && rimraf dist-transpiled && rimraf routing",
     "compile": "npm run tsc && rollup -c",
@@ -40,7 +39,7 @@
     "css/"
   ],
   "dependencies": {
-    "@ionic/core": "^6.3.6",
+    "@ionic/core": "^6.4.1",
     "ionicons": "^6.0.2",
     "tslib": "*"
   },

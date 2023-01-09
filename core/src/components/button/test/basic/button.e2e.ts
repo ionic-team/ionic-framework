@@ -9,6 +9,25 @@ test.describe('button: basic', () => {
 
     expect(await page.screenshot()).toMatchSnapshot(`button-diff-${page.getSnapshotSettings()}.png`);
   });
+  test('should correctly set fill to undefined', async ({ page, skip }) => {
+    test.info().annotations.push({
+      type: 'issue',
+      description: 'https://github.com/ionic-team/ionic-framework/issues/25886',
+    });
+    skip.rtl();
+    skip.mode('ios', 'This behavior does not differ across modes');
+    await page.setContent(`
+      <ion-button fill="outline"></ion-button>
+    `);
+
+    const button = page.locator('ion-button');
+    await expect(button).toHaveClass(/button-outline/);
+
+    await button.evaluate((el: HTMLIonButtonElement) => (el.fill = undefined));
+    await page.waitForChanges();
+
+    await expect(button).toHaveClass(/button-solid/);
+  });
 });
 
 test.describe('button: ripple effect', () => {

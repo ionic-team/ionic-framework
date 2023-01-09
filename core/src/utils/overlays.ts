@@ -402,12 +402,12 @@ export const setRootAriaHidden = (hidden = false) => {
   }
 };
 
-export const present = async (
+export const present = async <OverlayPresentOptions>(
   overlay: OverlayInterface,
   name: keyof IonicConfig,
   iosEnterAnimation: AnimationBuilder,
   mdEnterAnimation: AnimationBuilder,
-  opts?: any
+  opts?: OverlayPresentOptions
 ) => {
   if (overlay.presented) {
     return;
@@ -480,14 +480,14 @@ const focusPreviousElementOnDismiss = async (overlayEl: any) => {
   previousElement.focus();
 };
 
-export const dismiss = async (
+export const dismiss = async <OverlayDismissOptions>(
   overlay: OverlayInterface,
   data: any | undefined,
   role: string | undefined,
   name: keyof IonicConfig,
   iosLeaveAnimation: AnimationBuilder,
   mdLeaveAnimation: AnimationBuilder,
-  opts?: any
+  opts?: OverlayDismissOptions
 ): Promise<boolean> => {
   if (!overlay.presented) {
     return false;
@@ -509,7 +509,7 @@ export const dismiss = async (
       : config.get(name, mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
 
     // If dismissed via gesture, no need to play leaving animation again
-    if (role !== 'gesture') {
+    if (role !== GESTURE) {
       await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
     }
     overlay.didDismiss.emit({ data, role });
@@ -614,6 +614,7 @@ export const safeCall = (handler: any, arg?: any) => {
 };
 
 export const BACKDROP = 'backdrop';
+export const GESTURE = 'gesture';
 
 /**
  * Creates a delegate controller.
@@ -636,11 +637,7 @@ export const createDelegateController = (ref: {
   const coreDelegate: FrameworkDelegate = CoreDelegate();
 
   /**
-<<<<<<< HEAD
-   *  * Determines whether or not an overlay is being used
-=======
    * Determines whether or not an overlay is being used
->>>>>>> FW-2334
    * inline or via a controller/JS and returns the correct delegate.
    * By default, subsequent calls to getDelegate will use
    * a cached version of the delegate.

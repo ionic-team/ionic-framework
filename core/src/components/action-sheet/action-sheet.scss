@@ -43,7 +43,7 @@
   --width: #{$action-sheet-width};
   --max-width: #{$action-sheet-max-width};
   --min-height: auto;
-  --height: 100%;
+  --height: auto;
   --max-height: calc(100% - (var(--ion-safe-area-top) + var(--ion-safe-area-bottom)));
 
   @include font-smoothing();
@@ -126,7 +126,7 @@
   justify-content: flex-end;
 
   height: 100%;
-  max-height: 100%;
+  max-height: 100vh;
 }
 
 .action-sheet-group {

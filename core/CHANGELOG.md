@@ -3,6 +3,103 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.4.1](https://github.com/ionic-team/ionic/compare/v6.4.0...v6.4.1) (2022-12-14)
+
+
+### Bug Fixes
+
+* **breadcrumbs:** breadcrumbs are reactive ([#26427](https://github.com/ionic-team/ionic/issues/26427)) ([0d8625b](https://github.com/ionic-team/ionic/commit/0d8625b95537208c188b32a1707fa66050953281)), closes [#24041](https://github.com/ionic-team/ionic/issues/24041)
+* **datetime:** keyboard can select hour 00 ([#26423](https://github.com/ionic-team/ionic/issues/26423)) ([2fc96b7](https://github.com/ionic-team/ionic/commit/2fc96b771412d2deac6d19883bfc5abc74d0bdbd)), closes [#26409](https://github.com/ionic-team/ionic/issues/26409)
+* **modal:** compatibility with stencil libraries/apps ([#26448](https://github.com/ionic-team/ionic/issues/26448)) ([1aa1068](https://github.com/ionic-team/ionic/commit/1aa1068df7867a8b8a203052635da018014f5f1c))
+* **normalize:** remove normalize styles for outdated browsers ([#26465](https://github.com/ionic-team/ionic/issues/26465)) ([82d1d94](https://github.com/ionic-team/ionic/commit/82d1d948ecd7725772eb1ffee495e7a5dcadb30b)), closes [#26464](https://github.com/ionic-team/ionic/issues/26464)
+
+
+
+
+
+# [6.4.0](https://github.com/ionic-team/ionic/compare/v6.3.10...v6.4.0) (2022-12-07)
+
+
+### Features
+
+* **modal:** data and role are passed to canDismiss ([#26384](https://github.com/ionic-team/ionic/issues/26384)) ([1b30fc9](https://github.com/ionic-team/ionic/commit/1b30fc97d33e761866b4bcf7518efcdeb753032d)), closes [#26292](https://github.com/ionic-team/ionic/issues/26292)
+* **toast:** add global config toastDuration ([#26425](https://github.com/ionic-team/ionic/issues/26425)) ([a67a827](https://github.com/ionic-team/ionic/commit/a67a827fedc8adf44a35c786f615871facca60fc))
+* **toggle:** add toggleOnOffLabels global config option ([#26087](https://github.com/ionic-team/ionic/issues/26087)) ([43e2b39](https://github.com/ionic-team/ionic/commit/43e2b3975d003e29b8060e5f5484bfb3daf457a2))
+
+
+
+
+
+## [6.3.10](https://github.com/ionic-team/ionic/compare/v6.3.9...v6.3.10) (2022-12-07)
+
+
+### Bug Fixes
+
+* **datetime:** add flipRTL to monthAndYear dropdown icon ([#26378](https://github.com/ionic-team/ionic/issues/26378)) ([13fe669](https://github.com/ionic-team/ionic/commit/13fe669dc14eb4c9feda8ee956fec42b994b0f96))
+* **datetime:** md highlight does not clip at start or end of month ([#26366](https://github.com/ionic-team/ionic/issues/26366)) ([fcfbcdb](https://github.com/ionic-team/ionic/commit/fcfbcdbc200b1354b9128a691fbd9b68d50d8668)), closes [#24891](https://github.com/ionic-team/ionic/issues/24891)
+* **segment:** scrolling button into view is more consistent ([#26369](https://github.com/ionic-team/ionic/issues/26369)) ([a2d570b](https://github.com/ionic-team/ionic/commit/a2d570b7ad8b799b072ba6eb79d8fe4c6dd77cf0)), closes [#26368](https://github.com/ionic-team/ionic/issues/26368)
+
+
+### Features
+
+* **toast:** add global config toastDuration ([#26401](https://github.com/ionic-team/ionic/issues/26401)) ([e375e9a](https://github.com/ionic-team/ionic/commit/e375e9a1e7d30c481772e84c0ae34f39a019aad3))
+
+
+### Reverts
+
+* Revert "feat(toast): add global config toastDuration (#26401)" (#26424) ([b6c0019](https://github.com/ionic-team/ionic/commit/b6c001935b4e51a04aa94b0bd6d849e783c8f607)), closes [#26401](https://github.com/ionic-team/ionic/issues/26401) [#26424](https://github.com/ionic-team/ionic/issues/26424)
+
+
+
+
+
+## [6.3.9](https://github.com/ionic-team/ionic/compare/v6.3.8...v6.3.9) (2022-11-30)
+
+
+### Bug Fixes
+
+* **button:** fill can be set to undefined ([#26339](https://github.com/ionic-team/ionic/issues/26339)) ([2fe23d9](https://github.com/ionic-team/ionic/commit/2fe23d9d46c3593843c781c57340332e5a86fd64)), closes [#25886](https://github.com/ionic-team/ionic/issues/25886)
+* **input:** clear icon can be styled ([#26354](https://github.com/ionic-team/ionic/issues/26354)) ([ccaff8d](https://github.com/ionic-team/ionic/commit/ccaff8d0dc66f8adc9cde838c084629391e4200d)), closes [#19178](https://github.com/ionic-team/ionic/issues/19178) [#17168](https://github.com/ionic-team/ionic/issues/17168)
+* **reorder:** items animate once in firefox ([#26326](https://github.com/ionic-team/ionic/issues/26326)) ([7ae8117](https://github.com/ionic-team/ionic/commit/7ae81172844659d7f4581956ce17e5324f73beef)), closes [#21182](https://github.com/ionic-team/ionic/issues/21182)
+* **segment:** segment in toolbar uses correct contrast ([#26353](https://github.com/ionic-team/ionic/issues/26353)) ([5a243cc](https://github.com/ionic-team/ionic/commit/5a243ccebc8e27bef6eb1ed2f797a0c1166199bf)), closes [#26350](https://github.com/ionic-team/ionic/issues/26350)
+
+
+
+
+
+## [6.3.8](https://github.com/ionic-team/ionic/compare/v6.3.7...v6.3.8) (2022-11-22)
+
+
+### Bug Fixes
+
+* **modal:** status bar style defaults to app settings ([#26291](https://github.com/ionic-team/ionic/issues/26291)) ([a6c9e55](https://github.com/ionic-team/ionic/commit/a6c9e55adcaa963f4829d6963b9b1a7b246cef4e)), closes [#26173](https://github.com/ionic-team/ionic/issues/26173)
+* **normalize:** normalize css resets button padding ([#26214](https://github.com/ionic-team/ionic/issues/26214)) ([e14c947](https://github.com/ionic-team/ionic/commit/e14c94722c2c8ec145d680f911b708a34f095cd3)), closes [#23928](https://github.com/ionic-team/ionic/issues/23928)
+* **popover:** popover positions correctly on all frameworks ([#26306](https://github.com/ionic-team/ionic/issues/26306)) ([be9a399](https://github.com/ionic-team/ionic/commit/be9a399eeed37ae4a67add78ac1283ba0c5e4b14)), closes [#25337](https://github.com/ionic-team/ionic/issues/25337)
+* **reorder-group:** support custom components ([#26289](https://github.com/ionic-team/ionic/issues/26289)) ([8425734](https://github.com/ionic-team/ionic/commit/842573477b1b498f2280badc8c7411832c1650a5)), closes [#19447](https://github.com/ionic-team/ionic/issues/19447)
+* **segment:** scrollable segments center button on click ([#26285](https://github.com/ionic-team/ionic/issues/26285)) ([73ea64c](https://github.com/ionic-team/ionic/commit/73ea64c02fff1d63651f6c98f03b43265ba5227a)), closes [#25367](https://github.com/ionic-team/ionic/issues/25367)
+* **toggle:** rtl layout renders correctly in safari ([#26315](https://github.com/ionic-team/ionic/issues/26315)) ([0932f89](https://github.com/ionic-team/ionic/commit/0932f89f5db63a1e6149f2f45de798d7485d72ee))
+
+
+
+
+
+## [6.3.7](https://github.com/ionic-team/ionic/compare/v6.3.6...v6.3.7) (2022-11-16)
+
+
+### Bug Fixes
+
+* **action-sheet:** icons are aligned on MD mode ([#26256](https://github.com/ionic-team/ionic/issues/26256)) ([627d654](https://github.com/ionic-team/ionic/commit/627d654d24f97e340e4004a03f07467619e60149)), closes [#26249](https://github.com/ionic-team/ionic/issues/26249)
+* **datetime:** clear button clears the selected date ([#26264](https://github.com/ionic-team/ionic/issues/26264)) ([9216744](https://github.com/ionic-team/ionic/commit/9216744205c1ecc0c3dd51490a25be102f27a91a)), closes [#26258](https://github.com/ionic-team/ionic/issues/26258)
+* **datetime:** fonts now render consistently ([#26281](https://github.com/ionic-team/ionic/issues/26281)) ([f13ddca](https://github.com/ionic-team/ionic/commit/f13ddcaf470fb3d070298819675812cebf5f5ceb))
+* **datetime:** max and min works with showDefaultButtons ([#26257](https://github.com/ionic-team/ionic/issues/26257)) ([e5cff9e](https://github.com/ionic-team/ionic/commit/e5cff9ecf39c13912cf6e062e4a084fadc59c399)), closes [#26146](https://github.com/ionic-team/ionic/issues/26146)
+* **popover:** inline popover positioning with fit-content or auto width ([#26230](https://github.com/ionic-team/ionic/issues/26230)) ([0a8a958](https://github.com/ionic-team/ionic/commit/0a8a958cba02994ea0fefa265b17edddffe62e98)), closes [#24716](https://github.com/ionic-team/ionic/issues/24716)
+* **popover:** popover positioning for controller and inline ([#26274](https://github.com/ionic-team/ionic/issues/26274)) ([31ab10d](https://github.com/ionic-team/ionic/commit/31ab10de4e1c8e38582b985f19414f73337a63c8)), closes [#24716](https://github.com/ionic-team/ionic/issues/24716)
+* **textarea:** scrollbars are visible with overflow ([#26284](https://github.com/ionic-team/ionic/issues/26284)) ([7a990ff](https://github.com/ionic-team/ionic/commit/7a990ff403d7b7b80541c5d8f9cd05463c4fb593)), closes [#26278](https://github.com/ionic-team/ionic/issues/26278)
+
+
+
+
+
 ## [6.3.6](https://github.com/ionic-team/ionic/compare/v6.3.5...v6.3.6) (2022-11-10)
 
 

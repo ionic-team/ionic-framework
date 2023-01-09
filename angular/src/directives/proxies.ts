@@ -59,6 +59,128 @@ export class IonAccordionGroup {
   }
 }
 
+import type { OverlayEventDetail as IActionSheetOverlayEventDetail } from '@ionic/core';
+export declare interface IonActionSheet extends Components.IonActionSheet {
+  /**
+   * Emitted after the action sheet has presented. 
+   */
+  ionActionSheetDidPresent: EventEmitter<CustomEvent<void>>;
+  /**
+   * Emitted before the action sheet has presented. 
+   */
+  ionActionSheetWillPresent: EventEmitter<CustomEvent<void>>;
+  /**
+   * Emitted before the action sheet has dismissed. 
+   */
+  ionActionSheetWillDismiss: EventEmitter<CustomEvent<IActionSheetOverlayEventDetail>>;
+  /**
+   * Emitted after the action sheet has dismissed. 
+   */
+  ionActionSheetDidDismiss: EventEmitter<CustomEvent<IActionSheetOverlayEventDetail>>;
+  /**
+   * Emitted after the action sheet has presented.
+Shorthand for ionActionSheetWillDismiss. 
+   */
+  didPresent: EventEmitter<CustomEvent<void>>;
+  /**
+   * Emitted before the action sheet has presented.
+Shorthand for ionActionSheetWillPresent. 
+   */
+  willPresent: EventEmitter<CustomEvent<void>>;
+  /**
+   * Emitted before the action sheet has dismissed.
+Shorthand for ionActionSheetWillDismiss. 
+   */
+  willDismiss: EventEmitter<CustomEvent<IActionSheetOverlayEventDetail>>;
+  /**
+   * Emitted after the action sheet has dismissed.
+Shorthand for ionActionSheetDidDismiss. 
+   */
+  didDismiss: EventEmitter<CustomEvent<IActionSheetOverlayEventDetail>>;
+
+}
+
+@ProxyCmp({
+  defineCustomElementFn: undefined,
+  inputs: ['animated', 'backdropDismiss', 'buttons', 'cssClass', 'enterAnimation', 'header', 'htmlAttributes', 'isOpen', 'keyboardClose', 'leaveAnimation', 'mode', 'subHeader', 'translucent', 'trigger'],
+  methods: ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss']
+})
+@Component({
+  selector: 'ion-action-sheet',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  inputs: ['animated', 'backdropDismiss', 'buttons', 'cssClass', 'enterAnimation', 'header', 'htmlAttributes', 'isOpen', 'keyboardClose', 'leaveAnimation', 'mode', 'subHeader', 'translucent', 'trigger']
+})
+export class IonActionSheet {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionActionSheetDidPresent', 'ionActionSheetWillPresent', 'ionActionSheetWillDismiss', 'ionActionSheetDidDismiss', 'didPresent', 'willPresent', 'willDismiss', 'didDismiss']);
+  }
+}
+
+import type { OverlayEventDetail as IAlertOverlayEventDetail } from '@ionic/core';
+export declare interface IonAlert extends Components.IonAlert {
+  /**
+   * Emitted after the alert has presented. 
+   */
+  ionAlertDidPresent: EventEmitter<CustomEvent<void>>;
+  /**
+   * Emitted before the alert has presented. 
+   */
+  ionAlertWillPresent: EventEmitter<CustomEvent<void>>;
+  /**
+   * Emitted before the alert has dismissed. 
+   */
+  ionAlertWillDismiss: EventEmitter<CustomEvent<IAlertOverlayEventDetail>>;
+  /**
+   * Emitted after the alert has dismissed. 
+   */
+  ionAlertDidDismiss: EventEmitter<CustomEvent<IAlertOverlayEventDetail>>;
+  /**
+   * Emitted after the alert has presented.
+Shorthand for ionAlertWillDismiss. 
+   */
+  didPresent: EventEmitter<CustomEvent<void>>;
+  /**
+   * Emitted before the alert has presented.
+Shorthand for ionAlertWillPresent. 
+   */
+  willPresent: EventEmitter<CustomEvent<void>>;
+  /**
+   * Emitted before the alert has dismissed.
+Shorthand for ionAlertWillDismiss. 
+   */
+  willDismiss: EventEmitter<CustomEvent<IAlertOverlayEventDetail>>;
+  /**
+   * Emitted after the alert has dismissed.
+Shorthand for ionAlertDidDismiss. 
+   */
+  didDismiss: EventEmitter<CustomEvent<IAlertOverlayEventDetail>>;
+
+}
+
+@ProxyCmp({
+  defineCustomElementFn: undefined,
+  inputs: ['animated', 'backdropDismiss', 'buttons', 'cssClass', 'enterAnimation', 'header', 'htmlAttributes', 'inputs', 'isOpen', 'keyboardClose', 'leaveAnimation', 'message', 'mode', 'subHeader', 'translucent', 'trigger'],
+  methods: ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss']
+})
+@Component({
+  selector: 'ion-alert',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  inputs: ['animated', 'backdropDismiss', 'buttons', 'cssClass', 'enterAnimation', 'header', 'htmlAttributes', 'inputs', 'isOpen', 'keyboardClose', 'leaveAnimation', 'message', 'mode', 'subHeader', 'translucent', 'trigger']
+})
+export class IonAlert {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionAlertDidPresent', 'ionAlertWillPresent', 'ionAlertWillDismiss', 'ionAlertDidDismiss', 'didPresent', 'willPresent', 'willDismiss', 'didDismiss']);
+  }
+}
+
 
 export declare interface IonApp extends Components.IonApp {}
 
@@ -407,13 +529,13 @@ setting the checked property.
 
 @ProxyCmp({
   defineCustomElementFn: undefined,
-  inputs: ['checked', 'color', 'disabled', 'indeterminate', 'mode', 'name', 'value']
+  inputs: ['checked', 'color', 'disabled', 'indeterminate', 'justify', 'labelPlacement', 'legacy', 'mode', 'name', 'value']
 })
 @Component({
   selector: 'ion-checkbox',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['checked', 'color', 'disabled', 'indeterminate', 'mode', 'name', 'value']
+  inputs: ['checked', 'color', 'disabled', 'indeterminate', 'justify', 'labelPlacement', 'legacy', 'mode', 'name', 'value']
 })
 export class IonCheckbox {
   protected el: HTMLElement;
@@ -856,14 +978,14 @@ where the user's interaction is typing.
 
 @ProxyCmp({
   defineCustomElementFn: undefined,
-  inputs: ['accept', 'autocapitalize', 'autocomplete', 'autocorrect', 'autofocus', 'clearInput', 'clearOnEdit', 'color', 'counter', 'counterFormatter', 'debounce', 'disabled', 'enterkeyhint', 'errorText', 'fill', 'helperText', 'inputmode', 'label', 'labelPlacement', 'max', 'maxlength', 'min', 'minlength', 'mode', 'multiple', 'name', 'pattern', 'placeholder', 'readonly', 'required', 'shape', 'size', 'spellcheck', 'step', 'type', 'value'],
+  inputs: ['accept', 'autocapitalize', 'autocomplete', 'autocorrect', 'autofocus', 'clearInput', 'clearOnEdit', 'color', 'counter', 'counterFormatter', 'debounce', 'disabled', 'enterkeyhint', 'errorText', 'fill', 'helperText', 'inputmode', 'label', 'labelPlacement', 'legacy', 'max', 'maxlength', 'min', 'minlength', 'mode', 'multiple', 'name', 'pattern', 'placeholder', 'readonly', 'required', 'shape', 'size', 'spellcheck', 'step', 'type', 'value'],
   methods: ['setFocus', 'getInputElement']
 })
 @Component({
   selector: 'ion-input',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['accept', 'autocapitalize', 'autocomplete', 'autocorrect', 'autofocus', 'clearInput', 'clearOnEdit', 'color', 'counter', 'counterFormatter', 'debounce', 'disabled', 'enterkeyhint', 'errorText', 'fill', 'helperText', 'inputmode', 'label', 'labelPlacement', 'max', 'maxlength', 'min', 'minlength', 'mode', 'multiple', 'name', 'pattern', 'placeholder', 'readonly', 'required', 'shape', 'size', 'spellcheck', 'step', 'type', 'value']
+  inputs: ['accept', 'autocapitalize', 'autocomplete', 'autocorrect', 'autofocus', 'clearInput', 'clearOnEdit', 'color', 'counter', 'counterFormatter', 'debounce', 'disabled', 'enterkeyhint', 'errorText', 'fill', 'helperText', 'inputmode', 'label', 'labelPlacement', 'legacy', 'max', 'maxlength', 'min', 'minlength', 'mode', 'multiple', 'name', 'pattern', 'placeholder', 'readonly', 'required', 'shape', 'size', 'spellcheck', 'step', 'type', 'value']
 })
 export class IonInput {
   protected el: HTMLElement;
@@ -1077,6 +1199,67 @@ export class IonListHeader {
   }
 }
 
+import type { OverlayEventDetail as ILoadingOverlayEventDetail } from '@ionic/core';
+export declare interface IonLoading extends Components.IonLoading {
+  /**
+   * Emitted after the loading has presented. 
+   */
+  ionLoadingDidPresent: EventEmitter<CustomEvent<void>>;
+  /**
+   * Emitted before the loading has presented. 
+   */
+  ionLoadingWillPresent: EventEmitter<CustomEvent<void>>;
+  /**
+   * Emitted before the loading has dismissed. 
+   */
+  ionLoadingWillDismiss: EventEmitter<CustomEvent<ILoadingOverlayEventDetail>>;
+  /**
+   * Emitted after the loading has dismissed. 
+   */
+  ionLoadingDidDismiss: EventEmitter<CustomEvent<ILoadingOverlayEventDetail>>;
+  /**
+   * Emitted after the loading indicator has presented.
+Shorthand for ionLoadingWillDismiss. 
+   */
+  didPresent: EventEmitter<CustomEvent<void>>;
+  /**
+   * Emitted before the loading indicator has presented.
+Shorthand for ionLoadingWillPresent. 
+   */
+  willPresent: EventEmitter<CustomEvent<void>>;
+  /**
+   * Emitted before the loading indicator has dismissed.
+Shorthand for ionLoadingWillDismiss. 
+   */
+  willDismiss: EventEmitter<CustomEvent<ILoadingOverlayEventDetail>>;
+  /**
+   * Emitted after the loading indicator has dismissed.
+Shorthand for ionLoadingDidDismiss. 
+   */
+  didDismiss: EventEmitter<CustomEvent<ILoadingOverlayEventDetail>>;
+
+}
+
+@ProxyCmp({
+  defineCustomElementFn: undefined,
+  inputs: ['animated', 'backdropDismiss', 'cssClass', 'duration', 'enterAnimation', 'htmlAttributes', 'isOpen', 'keyboardClose', 'leaveAnimation', 'message', 'mode', 'showBackdrop', 'spinner', 'translucent', 'trigger'],
+  methods: ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss']
+})
+@Component({
+  selector: 'ion-loading',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  inputs: ['animated', 'backdropDismiss', 'cssClass', 'duration', 'enterAnimation', 'htmlAttributes', 'isOpen', 'keyboardClose', 'leaveAnimation', 'message', 'mode', 'showBackdrop', 'spinner', 'translucent', 'trigger']
+})
+export class IonLoading {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionLoadingDidPresent', 'ionLoadingWillPresent', 'ionLoadingWillDismiss', 'ionLoadingDidDismiss', 'didPresent', 'willPresent', 'willDismiss', 'didDismiss']);
+  }
+}
+
 
 export declare interface IonMenu extends Components.IonMenu {
   /**
@@ -1235,6 +1418,67 @@ export class IonNote {
   }
 }
 
+import type { OverlayEventDetail as IPickerOverlayEventDetail } from '@ionic/core';
+export declare interface IonPicker extends Components.IonPicker {
+  /**
+   * Emitted after the picker has presented. 
+   */
+  ionPickerDidPresent: EventEmitter<CustomEvent<void>>;
+  /**
+   * Emitted before the picker has presented. 
+   */
+  ionPickerWillPresent: EventEmitter<CustomEvent<void>>;
+  /**
+   * Emitted before the picker has dismissed. 
+   */
+  ionPickerWillDismiss: EventEmitter<CustomEvent<IPickerOverlayEventDetail>>;
+  /**
+   * Emitted after the picker has dismissed. 
+   */
+  ionPickerDidDismiss: EventEmitter<CustomEvent<IPickerOverlayEventDetail>>;
+  /**
+   * Emitted after the picker has presented.
+Shorthand for ionPickerWillDismiss. 
+   */
+  didPresent: EventEmitter<CustomEvent<void>>;
+  /**
+   * Emitted before the picker has presented.
+Shorthand for ionPickerWillPresent. 
+   */
+  willPresent: EventEmitter<CustomEvent<void>>;
+  /**
+   * Emitted before the picker has dismissed.
+Shorthand for ionPickerWillDismiss. 
+   */
+  willDismiss: EventEmitter<CustomEvent<IPickerOverlayEventDetail>>;
+  /**
+   * Emitted after the picker has dismissed.
+Shorthand for ionPickerDidDismiss. 
+   */
+  didDismiss: EventEmitter<CustomEvent<IPickerOverlayEventDetail>>;
+
+}
+
+@ProxyCmp({
+  defineCustomElementFn: undefined,
+  inputs: ['animated', 'backdropDismiss', 'buttons', 'columns', 'cssClass', 'duration', 'enterAnimation', 'htmlAttributes', 'isOpen', 'keyboardClose', 'leaveAnimation', 'mode', 'showBackdrop', 'trigger'],
+  methods: ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss', 'getColumn']
+})
+@Component({
+  selector: 'ion-picker',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  inputs: ['animated', 'backdropDismiss', 'buttons', 'columns', 'cssClass', 'duration', 'enterAnimation', 'htmlAttributes', 'isOpen', 'keyboardClose', 'leaveAnimation', 'mode', 'showBackdrop', 'trigger']
+})
+export class IonPicker {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionPickerDidPresent', 'ionPickerWillPresent', 'ionPickerWillDismiss', 'ionPickerDidDismiss', 'didPresent', 'willPresent', 'willDismiss', 'didDismiss']);
+  }
+}
+
 
 export declare interface IonProgressBar extends Components.IonProgressBar {}
 
@@ -1358,13 +1602,13 @@ mouse drag, touch gesture, or keyboard interaction.
 
 @ProxyCmp({
   defineCustomElementFn: undefined,
-  inputs: ['activeBarStart', 'color', 'debounce', 'disabled', 'dualKnobs', 'max', 'min', 'mode', 'name', 'pin', 'pinFormatter', 'snaps', 'step', 'ticks', 'value']
+  inputs: ['activeBarStart', 'color', 'debounce', 'disabled', 'dualKnobs', 'labelPlacement', 'legacy', 'max', 'min', 'mode', 'name', 'pin', 'pinFormatter', 'snaps', 'step', 'ticks', 'value']
 })
 @Component({
   selector: 'ion-range',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['activeBarStart', 'color', 'debounce', 'disabled', 'dualKnobs', 'max', 'min', 'mode', 'name', 'pin', 'pinFormatter', 'snaps', 'step', 'ticks', 'value']
+  inputs: ['activeBarStart', 'color', 'debounce', 'disabled', 'dualKnobs', 'labelPlacement', 'legacy', 'max', 'min', 'mode', 'name', 'pin', 'pinFormatter', 'snaps', 'step', 'ticks', 'value']
 })
 export class IonRange {
   protected el: HTMLElement;
@@ -1922,6 +2166,67 @@ export class IonTitle {
   }
 }
 
+import type { OverlayEventDetail as IToastOverlayEventDetail } from '@ionic/core';
+export declare interface IonToast extends Components.IonToast {
+  /**
+   * Emitted after the toast has presented. 
+   */
+  ionToastDidPresent: EventEmitter<CustomEvent<void>>;
+  /**
+   * Emitted before the toast has presented. 
+   */
+  ionToastWillPresent: EventEmitter<CustomEvent<void>>;
+  /**
+   * Emitted before the toast has dismissed. 
+   */
+  ionToastWillDismiss: EventEmitter<CustomEvent<IToastOverlayEventDetail>>;
+  /**
+   * Emitted after the toast has dismissed. 
+   */
+  ionToastDidDismiss: EventEmitter<CustomEvent<IToastOverlayEventDetail>>;
+  /**
+   * Emitted after the toast has presented.
+Shorthand for ionToastWillDismiss. 
+   */
+  didPresent: EventEmitter<CustomEvent<void>>;
+  /**
+   * Emitted before the toast has presented.
+Shorthand for ionToastWillPresent. 
+   */
+  willPresent: EventEmitter<CustomEvent<void>>;
+  /**
+   * Emitted before the toast has dismissed.
+Shorthand for ionToastWillDismiss. 
+   */
+  willDismiss: EventEmitter<CustomEvent<IToastOverlayEventDetail>>;
+  /**
+   * Emitted after the toast has dismissed.
+Shorthand for ionToastDidDismiss. 
+   */
+  didDismiss: EventEmitter<CustomEvent<IToastOverlayEventDetail>>;
+
+}
+
+@ProxyCmp({
+  defineCustomElementFn: undefined,
+  inputs: ['animated', 'buttons', 'color', 'cssClass', 'duration', 'enterAnimation', 'header', 'htmlAttributes', 'icon', 'isOpen', 'keyboardClose', 'leaveAnimation', 'message', 'mode', 'position', 'translucent', 'trigger'],
+  methods: ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss']
+})
+@Component({
+  selector: 'ion-toast',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  inputs: ['animated', 'buttons', 'color', 'cssClass', 'duration', 'enterAnimation', 'header', 'htmlAttributes', 'icon', 'isOpen', 'keyboardClose', 'leaveAnimation', 'message', 'mode', 'position', 'translucent', 'trigger']
+})
+export class IonToast {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionToastDidPresent', 'ionToastWillPresent', 'ionToastWillDismiss', 'ionToastDidDismiss', 'didPresent', 'willPresent', 'willDismiss', 'didDismiss']);
+  }
+}
+
 import type { ToggleChangeEventDetail as IToggleToggleChangeEventDetail } from '@ionic/core';
 export declare interface IonToggle extends Components.IonToggle {
   /**
@@ -1942,13 +2247,13 @@ when programmatically changing the value of the `checked` property.
 
 @ProxyCmp({
   defineCustomElementFn: undefined,
-  inputs: ['checked', 'color', 'disabled', 'enableOnOffLabels', 'mode', 'name', 'value']
+  inputs: ['checked', 'color', 'disabled', 'enableOnOffLabels', 'justify', 'labelPlacement', 'legacy', 'mode', 'name', 'value']
 })
 @Component({
   selector: 'ion-toggle',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['checked', 'color', 'disabled', 'enableOnOffLabels', 'mode', 'name', 'value']
+  inputs: ['checked', 'color', 'disabled', 'enableOnOffLabels', 'justify', 'labelPlacement', 'legacy', 'mode', 'name', 'value']
 })
 export class IonToggle {
   protected el: HTMLElement;

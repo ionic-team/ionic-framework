@@ -30,30 +30,16 @@ strong {
   font-weight: bold;
 }
 
-
 // Embedded content
 // ==========================================================================
 
-// Remove border when inside `a` element in IE 8/9/10.
+// Makes it so the img does not flow outside container
 img {
   max-width: 100%;
-
-  border: 0;
 }
-
-// Correct overflow not hidden in IE 9/10/11.
-svg:not(:root) {
-  overflow: hidden;
-}
-
 
 // Grouping content
 // ==========================================================================
-
-// Address margin not present in IE 8/9 and Safari.
-figure {
-  margin: 1em 40px;
-}
 
 hr {
   height: 1px;
@@ -162,6 +148,7 @@ button ion-label {
 }
 
 button {
+  padding: 0;
   border: 0;
   border-radius: 0;
   font-family: inherit;
@@ -191,16 +178,6 @@ input::-moz-focus-inner {
   padding: 0;
 
   border: 0;
-}
-
-// Firefox's implementation doesn't respect box-sizing, padding, or width.
-// 1. Address box sizing set to `content-box` in IE 8/9/10.
-// 2. Remove excess padding in IE 8/9/10.
-input[type="checkbox"],
-input[type="radio"] {
-  padding: 0; // 2
-
-  box-sizing: border-box; // 1
 }
 
 // Fix the cursor style for Chrome's increment/decrement buttons. For certain

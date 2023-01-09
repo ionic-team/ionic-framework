@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Reorder - Nested</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Reorder - Nested</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content id="content">
+        <ion-list>
+          <ion-reorder-group disabled="false">
+            <app-reorder item="1"></app-reorder>
+            <app-reorder item="2" parent="true"></app-reorder>
+            <app-reorder item="3"></app-reorder>
+            <app-reorder item="4" parent="true"></app-reorder>
+          </ion-reorder-group>
+        </ion-list>
+      </ion-content>
+
+      <script>
+        class AppReorder extends HTMLElement {
+          constructor() {
+            super();
+
+            if (this.getAttribute('parent') === 'true') {
+              this.innerHTML = `
+                <ion-reorder>
+                  <ion-item>
+                    <ion-label>Item ${this.getItem()}</ion-label>
+                  </ion-item>
+                </ion-reorder>
+                `;
+            } else {
+              this.innerHTML = `
+                <ion-item>
+                  <ion-label>Item ${this.getItem()}</ion-label>
+                  <ion-reorder slot="end"></ion-reorder>
+                </ion-item>
+              `;
+            }
+          }
+          getItem() {
+            return this.getAttribute('item');
+          }
+        }
+        customElements.define('app-reorder', AppReorder);
+
+        const group = document.querySelector('ion-reorder-group');
+        group.addEventListener('ionItemReorder', (ev) => {
+          ev.detail.complete();
+          window.dispatchEvent(new CustomEvent('ionItemReorderComplete'));
+        });
+      </script>
+    </ion-app>
+  </body>
+</html>

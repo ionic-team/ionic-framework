@@ -25,13 +25,13 @@
    *
    * @prop --border-color: Color of the border below the input when using helper text, error text, or counter
    * @prop --border-radius: Radius of the input
-   * @prop --border-style: Color of the border below the input when using helper text, error text, or counter
-   * @prop --border-width: Color of the border below the input when using helper text, error text, or counter
+   * @prop --border-style: Style of the border below the input when using helper text, error text, or counter
+   * @prop --border-width: Width of the border below the input when using helper text, error text, or counter
    */
   --placeholder-color: initial;
   --placeholder-font-style: initial;
   --placeholder-font-weight: initial;
-  --placeholder-opacity: .5;
+  --placeholder-opacity: #{$placeholder-opacity};
   --padding-top: 0px;
   --padding-end: 0px;
   --padding-bottom: 0px;
@@ -202,6 +202,14 @@
   @include padding(0);
   @include background-position(center);
 
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 30px;
+  height: 30px;
+
   border: 0;
 
   outline: none;
@@ -211,6 +219,10 @@
 
   visibility: hidden;
   appearance: none;
+}
+
+.input-clear-icon ion-icon {
+  color: $text-color-step-400;
 }
 
 /**
@@ -275,6 +287,8 @@
 
   height: 100%;
 
+  min-height: inherit;
+
   transition: background-color 15ms linear;
 
   background: var(--background);
@@ -329,11 +343,6 @@
 :host(.ion-touched.ion-valid) .input-bottom,
 :host(.ion-touched.ion-invalid) .input-bottom {
   --border-color: var(--highlight-color);
-}
-
-:host(.ion-touched.ion-valid) label,
-:host(.ion-touched.ion-invalid) label {
-  color: var(--highlight-color);
 }
 
 // Input Hint Text
@@ -590,7 +599,7 @@
 :host(.input-label-placement-stacked) .label-text-wrapper,
 :host(.has-focus.input-label-placement-floating) .label-text-wrapper,
 :host(.has-value.input-label-placement-floating) .label-text-wrapper {
-  @include transform(translateY(50%), scale(.75));
+  @include transform(translateY(50%), scale(#{$input-floating-label-scale}));
 
   /**
    * Label text should not extend

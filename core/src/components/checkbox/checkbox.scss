@@ -7,8 +7,8 @@
   /**
    * @prop --size: Size of the checkbox icon
    *
-   * @prop --background: Background of the checkbox icon
-   * @prop --background-checked: Background of the checkbox icon when checked
+   * @prop --checkbox-background: Background of the checkbox icon
+   * @prop --checkbox-background-checked: Background of the checkbox icon when checked
    *
    * @prop --border-color: Border color of the checkbox icon
    * @prop --border-radius: Border radius of the checkbox icon
@@ -21,26 +21,41 @@
    * @prop --checkmark-color: Color of the checkbox checkmark when checked
    * @prop --checkmark-width: Stroke width of the checkbox checkmark
    */
-  --background-checked: #{ion-color(primary, base)};
+  --checkbox-background-checked: #{ion-color(primary, base)};
   --border-color-checked: #{ion-color(primary, base)};
   --checkmark-color: #{ion-color(primary, contrast)};
   --checkmark-width: 1;
   --transition: none;
 
   display: inline-block;
+
   position: relative;
+  
+  cursor: pointer;
 
   user-select: none;
   z-index: $z-index-item-input;
 }
 
+:host(.in-item) {
+  width: 100%;
+  height: 100%;
+}
+
+// TODO(FW-3100): remove this
+:host(.legacy-checkbox) {
+  width: var(--size);
+  height: var(--size);
+}
+
 :host(.ion-color) {
-  --background-checked: #{current-color(base)};
+  --checkbox-background-checked: #{current-color(base)};
   --border-color-checked: #{current-color(base)};
   --checkmark-color: #{current-color(contrast)};
 }
 
-label {
+// TODO(FW-3100): remove this
+:host(.legacy-checkbox) label {
   @include input-cover();
 
   display: flex;
@@ -50,18 +65,56 @@ label {
   opacity: 0;
 }
 
+.checkbox-wrapper {
+  display: flex;
+
+  flex-grow: 1;
+
+  align-items: center;
+
+  height: 100%;
+  
+  cursor: inherit;
+}
+
+.label-text-wrapper {
+  /**
+   * This ensures that double tapping this text
+   * clicks the <label> and focuses the checkbox
+   * when a screen reader is enabled.
+   */
+  pointer-events: none;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+}
+
+/**
+ * If no label text is placed into the slot
+ * then the element should be hidden otherwise
+ * there will be additional margins added.
+ */
+.label-text-wrapper-hidden {
+  display: none;
+}
+
 input {
   @include visually-hidden();
+}
+
+.native-wrapper {
+  display: flex;
+
+  align-items: center;
 }
 
 .checkbox-icon {
   @include border-radius(var(--border-radius));
 
-  display: block;
   position: relative;
-
-  width: 100%;
-  height: 100%;
 
   transition: var(--transition);
 
@@ -69,9 +122,23 @@ input {
   border-style: var(--border-style);
   border-color: var(--border-color);
 
-  background: var(--background);
+  background: var(--checkbox-background);
 
   box-sizing: border-box;
+}
+
+// TODO(FW-3100): remove this
+:host(.legacy-checkbox) .checkbox-icon {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+}
+
+// TODO(FW-3100): merge this with other .checkbox-icon styles above
+:host(:not(.legacy-checkbox)) .checkbox-icon {
+  width: var(--size);
+  height: var(--size);
 }
 
 .checkbox-icon path {
@@ -83,6 +150,89 @@ input {
 }
 
 
+// Justify Content
+// ---------------------------------------------
+
+:host(.checkbox-justify-space-between) .checkbox-wrapper {
+  justify-content: space-between;
+}
+
+:host(.checkbox-justify-start) .checkbox-wrapper {
+  justify-content: start;
+}
+
+:host(.checkbox-justify-end) .checkbox-wrapper {
+  justify-content: end;
+}
+
+
+// Label Placement - Start
+// ----------------------------------------------------------------
+
+/**
+ * Label is on the left of the checkbox in LTR and
+ * on the right in RTL.
+ */
+:host(.checkbox-label-placement-start) .checkbox-wrapper {
+  flex-direction: row;
+}
+
+:host(.checkbox-label-placement-start) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the checkbox should be on the end
+   * when the label sits at the start.
+   */
+  @include margin(0, 8px, 0, 0);
+}
+
+
+// Label Placement - End
+// ----------------------------------------------------------------
+
+/**
+ * Label is on the right of the checkbox in LTR and
+ * on the left in RTL.
+ */
+:host(.checkbox-label-placement-end) .checkbox-wrapper {
+  flex-direction: row-reverse;
+}
+
+/**
+ * The margin between the label and
+ * the checkbox should be on the start
+ * when the label sits at the end.
+ */
+:host(.checkbox-label-placement-end) .label-text-wrapper {
+  @include margin(0, 0, 0, 8px);
+}
+
+
+// Label Placement - Fixed
+// ----------------------------------------------------------------
+
+:host(.checkbox-label-placement-fixed) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the checkbox should be on the end
+   * when the label sits at the start.
+   */
+  @include margin(0, 8px, 0, 0);
+}
+
+/**
+ * Label is on the left of the checkbox in LTR and
+ * on the right in RTL. Label also has a fixed width.
+ */
+:host(.checkbox-label-placement-fixed) .label-text-wrapper {
+  flex: 0 0 100px;
+
+  width: 100px;
+  min-width: 100px;
+  max-width: 200px;
+}
+
+
 // Checked / Indeterminate Checkbox
 // ---------------------------------------------
 
@@ -90,7 +240,7 @@ input {
 :host(.checkbox-indeterminate) .checkbox-icon {
   border-color: var(--border-color-checked);
 
-  background: var(--background-checked);
+  background: var(--checkbox-background-checked);
 }
 
 :host(.checkbox-checked) .checkbox-icon path,

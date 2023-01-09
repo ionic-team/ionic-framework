@@ -9,6 +9,8 @@ test.describe('item: reorder', () => {
 
     await page.click('text=Edit');
 
+    await page.waitForChanges();
+
     expect(await page.screenshot()).toMatchSnapshot(`item-reorder-diff-${page.getSnapshotSettings()}.png`);
   });
 });

@@ -81,10 +81,10 @@ export const setCardStatusBarDark = () => {
   StatusBar.setStyle({ style: Style.Dark });
 };
 
-export const setCardStatusBarDefault = () => {
+export const setCardStatusBarDefault = (defaultStyle = Style.Default) => {
   if (!win || win.innerWidth >= 768 || !StatusBar.supportsDefaultStatusBarStyle()) {
     return;
   }
 
-  StatusBar.setStyle({ style: Style.Default });
+  StatusBar.setStyle({ style: defaultStyle });
 };

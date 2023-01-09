@@ -31,6 +31,27 @@ test.describe('segment: toolbar', () => {
               <ion-segment-button value="c" disabled="true">Third</ion-segment-button>
             </ion-segment>
           </ion-toolbar>
+          <ion-toolbar color="light">
+            <ion-segment value="a">
+              <ion-segment-button value="a">First</ion-segment-button>
+              <ion-segment-button value="b">Second</ion-segment-button>
+              <ion-segment-button value="c" disabled="true">Third</ion-segment-button>
+            </ion-segment>
+          </ion-toolbar>
+          <ion-toolbar color="medium">
+            <ion-segment value="a">
+              <ion-segment-button value="a">First</ion-segment-button>
+              <ion-segment-button value="b">Second</ion-segment-button>
+              <ion-segment-button value="c" disabled="true">Third</ion-segment-button>
+            </ion-segment>
+          </ion-toolbar>
+          <ion-toolbar color="dark">
+            <ion-segment value="a">
+              <ion-segment-button value="a">First</ion-segment-button>
+              <ion-segment-button value="b">Second</ion-segment-button>
+              <ion-segment-button value="c" disabled="true">Third</ion-segment-button>
+            </ion-segment>
+          </ion-toolbar>
         </ion-header>
       `);
 

@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react-router",
-  "version": "6.3.6",
+  "version": "6.4.1",
   "description": "React Router wrapper for @ionic/react",
   "keywords": [
     "ionic",
@@ -20,7 +20,6 @@
     "url": "https://github.com/ionic-team/ionic.git"
   },
   "scripts": {
-    "prepublishOnly": "npm run build",
     "build": "npm run clean && npm run compile",
     "clean": "rimraf dist dist-transpiled",
     "compile": "npm run tsc && rollup -c",
@@ -36,7 +35,7 @@
     "dist/"
   ],
   "dependencies": {
-    "@ionic/react": "^6.3.6",
+    "@ionic/react": "^6.4.1",
     "tslib": "*"
   },
   "peerDependencies": {

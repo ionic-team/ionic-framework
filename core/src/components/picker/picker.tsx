@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Method, Prop, State, h } from '@stencil/core';
+import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import type {
@@ -9,8 +9,19 @@ import type {
   OverlayInterface,
   PickerButton,
   PickerColumn,
+  FrameworkDelegate,
 } from '../../interface';
-import { BACKDROP, dismiss, eventMethod, isCancel, prepareOverlay, present, safeCall } from '../../utils/overlays';
+import {
+  createDelegateController,
+  createTriggerController,
+  BACKDROP,
+  dismiss,
+  eventMethod,
+  isCancel,
+  prepareOverlay,
+  present,
+  safeCall,
+} from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
@@ -28,7 +39,11 @@ import { iosLeaveAnimation } from './animations/ios.leave';
   scoped: true,
 })
 export class Picker implements ComponentInterface, OverlayInterface {
+  private readonly delegateController = createDelegateController(this);
+  private readonly triggerController = createTriggerController();
+
   private durationTimeout: any;
+  private currentTransition?: Promise<any>;
   lastFocus?: HTMLElement;
 
   @Element() el!: HTMLIonPickerElement;
@@ -37,6 +52,12 @@ export class Picker implements ComponentInterface, OverlayInterface {
 
   /** @internal */
   @Prop() overlayIndex!: number;
+
+  /** @internal */
+  @Prop() delegate?: FrameworkDelegate;
+
+  /** @internal */
+  @Prop() hasController = false;
 
   /**
    * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
@@ -95,6 +116,36 @@ export class Picker implements ComponentInterface, OverlayInterface {
   @Prop() htmlAttributes?: { [key: string]: any };
 
   /**
+   * If `true`, the picker will open. If `false`, the picker will close.
+   * Use this if you need finer grained control over presentation, otherwise
+   * just use the pickerController or the `trigger` property.
+   * Note: `isOpen` will not automatically be set back to `false` when
+   * the picker dismisses. You will need to do that in your code.
+   */
+  @Prop() isOpen = false;
+  @Watch('isOpen')
+  onIsOpenChange(newValue: boolean, oldValue: boolean) {
+    if (newValue === true && oldValue === false) {
+      this.present();
+    } else if (newValue === false && oldValue === true) {
+      this.dismiss();
+    }
+  }
+
+  /**
+   * An ID corresponding to the trigger element that
+   * causes the picker to open when clicked.
+   */
+  @Prop() trigger: string | undefined;
+  @Watch('trigger')
+  triggerChanged() {
+    const { trigger, el, triggerController } = this;
+    if (trigger) {
+      triggerController.addClickListener(el, trigger);
+    }
+  }
+
+  /**
    * Emitted after the picker has presented.
    */
   @Event({ eventName: 'ionPickerDidPresent' }) didPresent!: EventEmitter<void>;
@@ -114,8 +165,37 @@ export class Picker implements ComponentInterface, OverlayInterface {
    */
   @Event({ eventName: 'ionPickerDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
 
+  /**
+   * Emitted after the picker has presented.
+   * Shorthand for ionPickerWillDismiss.
+   */
+  @Event({ eventName: 'didPresent' }) didPresentShorthand!: EventEmitter<void>;
+
+  /**
+   * Emitted before the picker has presented.
+   * Shorthand for ionPickerWillPresent.
+   */
+  @Event({ eventName: 'willPresent' }) willPresentShorthand!: EventEmitter<void>;
+
+  /**
+   * Emitted before the picker has dismissed.
+   * Shorthand for ionPickerWillDismiss.
+   */
+  @Event({ eventName: 'willDismiss' }) willDismissShorthand!: EventEmitter<OverlayEventDetail>;
+
+  /**
+   * Emitted after the picker has dismissed.
+   * Shorthand for ionPickerDidDismiss.
+   */
+  @Event({ eventName: 'didDismiss' }) didDismissShorthand!: EventEmitter<OverlayEventDetail>;
+
   connectedCallback() {
     prepareOverlay(this.el);
+    this.triggerChanged();
+  }
+
+  disconnectedCallback() {
+    this.triggerController.removeClickListener();
   }
 
   /**
@@ -123,7 +203,25 @@ export class Picker implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async present(): Promise<void> {
-    await present(this, 'pickerEnter', iosEnterAnimation, iosEnterAnimation, undefined);
+    /**
+     * When using an inline picker
+     * and dismissing an picker it is possible to
+     * quickly present the picker while it is
+     * dismissing. We need to await any current
+     * transition to allow the dismiss to finish
+     * before presenting again.
+     */
+    if (this.currentTransition !== undefined) {
+      await this.currentTransition;
+    }
+
+    await this.delegateController.attachViewToDom();
+
+    this.currentTransition = present(this, 'pickerEnter', iosEnterAnimation, iosEnterAnimation, undefined);
+
+    await this.currentTransition;
+
+    this.currentTransition = undefined;
 
     if (this.duration > 0) {
       this.durationTimeout = setTimeout(() => this.dismiss(), this.duration);
@@ -140,11 +238,18 @@ export class Picker implements ComponentInterface, OverlayInterface {
    * Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
    */
   @Method()
-  dismiss(data?: any, role?: string): Promise<boolean> {
+  async dismiss(data?: any, role?: string): Promise<boolean> {
     if (this.durationTimeout) {
       clearTimeout(this.durationTimeout);
     }
-    return dismiss(this, data, role, 'pickerLeave', iosLeaveAnimation, iosLeaveAnimation);
+    this.currentTransition = dismiss(this, data, role, 'pickerLeave', iosLeaveAnimation, iosLeaveAnimation);
+    const dismissed = await this.currentTransition;
+
+    if (dismissed) {
+      this.delegateController.removeViewFromDom();
+    }
+
+    return dismissed;
   }
 
   /**

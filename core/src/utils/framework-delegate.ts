@@ -86,7 +86,14 @@ export const CoreDelegate = () => {
       BaseComponent.appendChild(el);
 
       await new Promise((resolve) => componentOnReady(el, resolve));
-    } else if (BaseComponent.children.length > 0) {
+    } else if (
+      BaseComponent.children.length > 0 &&
+      (BaseComponent.tagName === 'ION-MODAL' || BaseComponent.tagName === 'ION-POPOVER')
+    ) {
+      /**
+       * The delegate host wrapper el is only needed for modals and popovers
+       * because they allow the dev to provide custom content to the overlay.
+       */
       const root = BaseComponent.children[0] as HTMLElement;
       if (!root.classList.contains('ion-delegate-host')) {
         /**

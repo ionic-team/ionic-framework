@@ -5,8 +5,8 @@
 
 :host {
   /**
-   * @prop --background: Background of the toggle
-   * @prop --background-checked: Background of the toggle when checked
+   * @prop --track-background: Background of the toggle track
+   * @prop --track-background-checked: Background of the toggle track when checked
    * @prop --border-radius: Border radius of the toggle track
    *
    * @prop --handle-background: Background of the toggle handle
@@ -28,13 +28,23 @@
 
   position: relative;
 
+  max-width: 100%;
+
   outline: none;
 
-  contain: content;
   cursor: pointer;
   touch-action: none;
   user-select: none;
   z-index: $z-index-item-input;
+}
+
+:host(.in-item:not(.legacy-toggle)) {
+  width: 100%;
+  height: 100%;
+}
+
+:host(.legacy-toggle) {
+  contain: content;
 }
 
 :host(.ion-focused) input {
@@ -45,7 +55,7 @@
   pointer-events: none;
 }
 
-label {
+:host(.legacy-toggle) label {
   @include input-cover();
 
   display: flex;
@@ -59,6 +69,140 @@ label {
 
 input {
   @include visually-hidden();
+}
+
+// Toggle Wrapper
+// --------------------------------------------------
+
+.toggle-wrapper {
+  display: flex;
+
+  position: relative;
+
+  flex-grow: 1;
+
+  align-items: center;
+
+  height: 100%;
+
+  transition: background-color 15ms linear;
+
+  cursor: inherit;
+}
+
+// Input Label
+// ----------------------------------------------------------------
+
+.label-text-wrapper {
+  /**
+   * This ensures that double tapping this text
+   * clicks the <label> and focuses the input
+   * when a screen reader is enabled.
+   */
+  pointer-events: none;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+}
+
+/**
+ * If no label text is placed into the slot
+ * then the element should be hidden otherwise
+ * there will be additional margins added.
+ */
+.label-text-wrapper-hidden {
+  display: none;
+}
+
+// Toggle Native Wrapper
+// ----------------------------------------------------------------
+
+.native-wrapper {
+  display: flex;
+
+  align-items: center;
+}
+
+// Toggle Justify
+// --------------------------------------------------
+
+:host(.toggle-justify-space-between) .toggle-wrapper {
+  justify-content: space-between;
+}
+
+:host(.toggle-justify-start) .toggle-wrapper {
+  justify-content: start;
+}
+
+:host(.toggle-justify-end) .toggle-wrapper {
+  justify-content: end;
+}
+
+// Toggle Label Placement - Start
+// ----------------------------------------------------------------
+
+/**
+ * Label is on the left of the input in LTR and
+ * on the right in RTL.
+ */
+:host(.toggle-label-placement-start) .toggle-wrapper {
+  flex-direction: row;
+}
+
+:host(.toggle-label-placement-start) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the input should be on the end
+   * when the label sits at the start.
+   */
+  @include margin(0, 8px, 0, 0);
+}
+
+// Toggle Label Placement - End
+// ----------------------------------------------------------------
+
+/**
+ * Label is on the right of the input in LTR and
+ * on the left in RTL.
+ */
+:host(.toggle-label-placement-end) .toggle-wrapper {
+  flex-direction: row-reverse;
+}
+
+/**
+ * The margin between the label and
+ * the input should be on the start
+ * when the label sits at the end.
+ */
+:host(.toggle-label-placement-end) .label-text-wrapper {
+  @include margin(0, 0, 0, 8px);
+}
+
+// Input Label Placement - Fixed
+// ----------------------------------------------------------------
+
+:host(.toggle-label-placement-fixed) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the input should be on the end
+   * when the label sits at the start.
+   */
+  @include margin(0, 8px, 0, 0);
+}
+
+/**
+ * Label is on the left of the input in LTR and
+ * on the right in RTL. Label also has a fixed width.
+ */
+:host(.toggle-label-placement-fixed) .label-text-wrapper {
+  flex: 0 0 100px;
+
+  width: 100px;
+  min-width: 100px;
+  max-width: 200px;
 }
 
 // Toggle Background Track: Unchecked
@@ -89,7 +233,7 @@ input {
   width: 100%;
   height: 100%;
 
-  background: var(--background);
+  background: var(--track-background);
 
   pointer-events: none;
 
@@ -100,17 +244,19 @@ input {
 // ----------------------------------------------------------
 
 :host(.toggle-checked) .toggle-icon {
-  background: var(--background-checked);
+  background: var(--track-background-checked);
 }
 
 // Toggle Inner Knob: Unchecked
 // --------------------------------------------------
 
 .toggle-inner {
-  @include position(null, null, null, var(--handle-spacing));
   @include border-radius(var(--handle-border-radius));
 
   position: absolute;
+
+  // stylelint-disable-next-line property-disallowed-list
+  left: var(--handle-spacing);
 
   width: var(--handle-width);
   height: var(--handle-height);
@@ -126,31 +272,44 @@ input {
   contain: strict;
 }
 
+/**
+ * We do not use the @ltr and @rtl mixins
+ * here because ion-toggle uses the Shadow DOM
+ * and WebKit does not support :host-context.
+ */
+:host(.toggle-ltr) .toggle-inner {
+  // stylelint-disable-next-line property-disallowed-list
+  left: var(--handle-spacing);
+}
+
+:host(.toggle-rtl) .toggle-inner {
+  // stylelint-disable-next-line property-disallowed-list
+  right: var(--handle-spacing);
+}
+
 // Toggle Inner Knob: Checked
 // ----------------------------------------------------------
 
-:host(.toggle-checked) .toggle-icon-wrapper {
-  @include ltr() {
-    // transform by 100% - handle width
-    transform: translate3d(calc(100% - var(--handle-width)), 0, 0);
-  }
+:host(.toggle-ltr.toggle-checked) .toggle-icon-wrapper {
+  // transform by 100% - handle width
+  transform: translate3d(calc(100% - var(--handle-width)), 0, 0)
+}
 
-  @include rtl() {
-    // transform by -100% + handle width
-    transform: translate3d(calc(-100% + var(--handle-width)), 0, 0);
-  }
+:host(.toggle-rtl.toggle-checked) .toggle-icon-wrapper {
+  // transform by -100% + handle width
+  transform: translate3d(calc(-100% + var(--handle-width)), 0, 0);
 }
 
 :host(.toggle-checked) .toggle-inner {
-  @include ltr() {
-    // transform by handle spacing amount
-    transform: translate3d(calc(var(--handle-spacing) * -2), 0, 0);
-  }
-
-  @include rtl() {
-    // transform by handle spacing amount
-    transform: translate3d(calc(var(--handle-spacing) * 2), 0, 0);
-  }
-
   background: var(--handle-background-checked);
+}
+
+:host(.toggle-ltr.toggle-checked) .toggle-inner {
+  // transform by handle spacing amount
+  transform: translate3d(calc(var(--handle-spacing) * -2), 0, 0);
+}
+
+:host(.toggle-rtl.toggle-checked) .toggle-inner {
+  // transform by handle spacing amount
+  transform: translate3d(calc(var(--handle-spacing) * 2), 0, 0);
 }

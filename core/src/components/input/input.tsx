@@ -3,6 +3,7 @@ import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, h }
 import { createLegacyFormController } from '@utils/forms';
 import type { LegacyFormController } from '@utils/forms';
 import { printIonWarning } from '@utils/logging';
+import { closeCircle, closeSharp } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
 import type {
@@ -182,6 +183,17 @@ export class Input implements ComponentInterface {
    * `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
    */
   @Prop() labelPlacement: 'start' | 'end' | 'floating' | 'stacked' | 'fixed' = 'start';
+
+  /**
+   * Set the `legacy` property to `true` to forcibly use the legacy form control markup.
+   * Ionic will only opt components in to the modern form markup when they are
+   * using either the `aria-label` attribute or the `label` property. As a result,
+   * the `legacy` property should only be used as an escape hatch when you want to
+   * avoid this automatic opt-in behavior.
+   * Note that this property will be removed in an upcoming major release
+   * of Ionic, and all form components will be opted-in to using the modern form markup.
+   */
+  @Prop() legacy?: boolean;
 
   /**
    * The maximum value, which must not be less than its minimum (min attribute) value.
@@ -389,6 +401,9 @@ export class Input implements ComponentInterface {
   /**
    * Sets focus on the native `input` in `ion-input`. Use this method instead of the global
    * `input.focus()`.
+   *
+   * Developers who wish to focus an input when a page enters
+   * should call `setFocus()` in the `ionViewDidEnter()` lifecycle method.
    */
   @Method()
   async setFocus() {
@@ -514,7 +529,7 @@ export class Input implements ComponentInterface {
     this.isComposing = false;
   };
 
-  private onClearButtonClick = (ev?: Event) => {
+  private clearTextInput = (ev?: Event) => {
     if (this.clearInput && !this.readonly && !this.disabled && ev) {
       ev.preventDefault();
       ev.stopPropagation();
@@ -635,7 +650,7 @@ export class Input implements ComponentInterface {
           [`input-fill-${fill}`]: fill !== undefined,
           [`input-shape-${shape}`]: shape !== undefined,
           [`input-label-placement-${labelPlacement}`]: true,
-          'in-full-item': hostContext('ion-item:not(.item-lines-inset)', this.el),
+          'in-item': hostContext('ion-item', this.el),
         })}
       >
         <label class="input-wrapper">
@@ -688,8 +703,10 @@ export class Input implements ComponentInterface {
                    */
                   ev.preventDefault();
                 }}
-                onClick={this.onClearButtonClick}
-              />
+                onClick={this.clearTextInput}
+              >
+                <ion-icon aria-hidden="true" icon={mode === 'ios' ? closeCircle : closeSharp}></ion-icon>
+              </button>
             )}
           </div>
           {shouldRenderHighlight && <div class="input-highlight"></div>}
@@ -705,9 +722,21 @@ export class Input implements ComponentInterface {
       printIonWarning(
         `Using ion-input with an ion-label has been deprecated. To migrate, remove the ion-label and use the "label" property on ion-input instead.
 
+Example: <ion-input label="Email"></ion-input>
+
 For inputs that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the input.`,
         this.el
       );
+
+      if (this.legacy) {
+        printIonWarning(
+          `ion-input is being used with the "legacy" property enabled which will forcibly enable the legacy form markup. This property will be removed in an upcoming major release of Ionic where this form control will use the modern form markup.
+
+Developers can dismiss this warning by removing their usage of the "legacy" property and using the new input syntax.`,
+          this.el
+        );
+      }
+
       this.hasLoggedDeprecationWarning = true;
     }
 
@@ -776,8 +805,10 @@ For inputs that do not have a visible label, developers should use "aria-label" 
                */
               ev.preventDefault();
             }}
-            onClick={this.onClearButtonClick}
-          />
+            onClick={this.clearTextInput}
+          >
+            <ion-icon aria-hidden="true" icon={mode === 'ios' ? closeCircle : closeSharp}></ion-icon>
+          </button>
         )}
       </Host>
     );

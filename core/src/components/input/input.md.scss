@@ -29,23 +29,9 @@
   --padding-start: 0;
 }
 
-.input-clear-icon {
-  @include svg-background-image($input-md-input-clear-icon-svg);
-
-  width: $input-md-input-clear-icon-width;
-  height: $input-md-input-clear-icon-width;
-
-  background-size: $input-md-input-clear-icon-size;
-}
-
-/**
- * The input with no fill in item should
- * have start padding applied on the input
- * not the item.
- */
-:host(.in-full-item:not(.input-fill-outline)),
-:host(.in-full-item:not(.input-fill-solid)) {
-  --padding-start: #{$item-md-padding-start};
+.input-clear-icon ion-icon {
+  width: 22px;
+  height: 22px;
 }
 
 // Input Bottom
@@ -66,7 +52,7 @@
 // Input Wrapper
 // ----------------------------------------------------------------
 
-.input-wrapper {
+:host(:not(.legacy-input)) {
   min-height: 56px;
 }
 
@@ -75,14 +61,18 @@
 
 /**
  * When the input is focused the label should
- * take on the highlight color.
+ * take on the highlight color. This should
+ * only apply to floating or stacked labels.
  */
-:host(.has-focus) .label-text-wrapper {
+:host(.input-label-placement-floating.has-focus) .label-text-wrapper,
+:host(.input-label-placement-stacked.has-focus) .label-text-wrapper {
   color: var(--highlight-color);
 }
 
-:host(.ion-touched.ion-valid) .label-text-wrapper,
-:host(.ion-touched.ion-invalid) .label-text-wrapper {
+:host(.input-label-placement-floating.ion-touched.ion-valid) .label-text-wrapper,
+:host(.input-label-placement-floating.ion-touched.ion-invalid) .label-text-wrapper,
+:host(.input-label-placement-stacked.ion-touched.ion-valid) .label-text-wrapper,
+:host(.input-label-placement-stacked.ion-touched.ion-invalid) .label-text-wrapper {
   color: var(--highlight-color);
 }
 
@@ -106,6 +96,15 @@
 
 :host(.has-focus) .input-highlight {
   transform: scale(1);
+}
+
+/**
+ * Adjust the highlight up by 1px
+ * so it is not cut off by the
+ * the item's line (if one is present).
+ */
+:host(.in-item) .input-highlight {
+  @include position(null, null, 0, 0);
 }
 
 // Input Shape Rounded

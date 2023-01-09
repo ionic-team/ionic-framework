@@ -201,9 +201,15 @@
 // Segment Button: Toolbar w/ Color
 // --------------------------------------------------
 
-// Do not use the global or local CSS variable if the toolbar has a color
+// Toolbar with Color, Checked
+/**
+ * Use the contrast color as background since
+ * since the text color is the base color. Otherwise
+ * we will have contrast issues when using light/medium/dark
+ * palettes across light and dark mode.
+ */
 :host(.in-toolbar-color) .segment-button-indicator-background {
-  background: #fff;
+  background: #{current-color(contrast)};
 }
 
 // Toolbar with Color, Default Segment

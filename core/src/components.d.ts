@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AccordionGroupChangeEventDetail, ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DatetimePresentation, FrameworkDelegate, InputChangeEventDetail, InputInputEventDetail, ItemReorderEventDetail, MenuChangeEventDetail, ModalBreakpointChangeEventDetail, ModalHandleBehavior, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerButton, PickerColumn, PopoverSize, PositionAlign, PositionReference, PositionSide, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextareaInputEventDetail, TextFieldTypes, TitleSelectedDatesFormatter, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, TriggerAction, ViewController } from "./interface";
+import { AccordionGroupChangeEventDetail, ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DatetimePresentation, FrameworkDelegate, InputChangeEventDetail, InputInputEventDetail, ItemReorderEventDetail, MenuChangeEventDetail, ModalBreakpointChangeEventDetail, ModalHandleBehavior, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerButton, PickerColumn, PopoverSize, PositionAlign, PositionReference, PositionSide, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextareaInputEventDetail, TextFieldTypes, TitleSelectedDatesFormatter, ToastButton, ToastPosition, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, TriggerAction, ViewController } from "./interface";
 import { IonicSafeString } from "./utils/sanitization";
 import { CounterFormatter } from "./components/item/item-interface";
 import { PickerColumnItem } from "./components/picker-column-internal/picker-column-internal-interfaces";
@@ -171,6 +171,7 @@ export namespace Components {
           * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
          */
         "cssClass"?: string | string[];
+        "delegate"?: FrameworkDelegate;
         /**
           * Dismiss the alert overlay after it has been presented.
           * @param data Any data to emit in the dismiss events.
@@ -181,6 +182,7 @@ export namespace Components {
           * Animation to use when the alert is presented.
          */
         "enterAnimation"?: AnimationBuilder;
+        "hasController": boolean;
         /**
           * The main title in the heading of the alert.
          */
@@ -193,6 +195,10 @@ export namespace Components {
           * Array of input to show in the alert.
          */
         "inputs": AlertInput[];
+        /**
+          * If `true`, the alert will open. If `false`, the alert will close. Use this if you need finer grained control over presentation, otherwise just use the alertController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the alert dismisses. You will need to do that in your code.
+         */
+        "isOpen": boolean;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -230,6 +236,10 @@ export namespace Components {
           * If `true`, the alert will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent": boolean;
+        /**
+          * An ID corresponding to the trigger element that causes the alert to open when clicked.
+         */
+        "trigger": string | undefined;
     }
     interface IonApp {
         "setFocus": (elements: HTMLElement[]) => Promise<void>;
@@ -544,6 +554,18 @@ export namespace Components {
           * If `true`, the checkbox will visually appear as indeterminate.
          */
         "indeterminate": boolean;
+        /**
+          * How to pack the label and checkbox within a line. `'start'`: The label and checkbox will appear on the left in LTR and on the right in RTL. `'end'`: The label and checkbox will appear on the right in LTR and on the left in RTL. `'space-between'`: The label and checkbox will appear on opposite ends of the line with space between the two elements.
+         */
+        "justify": 'start' | 'end' | 'space-between';
+        /**
+          * Where to place the label relative to the checkbox. `'start'`: The label will appear to the left of the checkbox in LTR and to the right in RTL. `'end'`: The label will appear to the right of the checkbox in LTR and to the left in RTL. `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+         */
+        "labelPlacement": 'start' | 'end' | 'fixed';
+        /**
+          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt checkboxes in to the modern form markup when they are using either the `aria-label` attribute or have text in the default slot. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior.  Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
+         */
+        "legacy"?: boolean;
         /**
           * The mode determines which platform styles to use.
          */
@@ -1132,6 +1154,10 @@ export namespace Components {
          */
         "labelPlacement": 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
         /**
+          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the `label` property. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
+         */
+        "legacy"?: boolean;
+        /**
           * The maximum value, which must not be less than its minimum (min attribute) value.
          */
         "max"?: string | number;
@@ -1176,7 +1202,7 @@ export namespace Components {
          */
         "required": boolean;
         /**
-          * Sets focus on the native `input` in `ion-input`. Use this method instead of the global `input.focus()`.
+          * Sets focus on the native `input` in `ion-input`. Use this method instead of the global `input.focus()`.  Developers who wish to focus an input when a page enters should call `setFocus()` in the `ionViewDidEnter()` lifecycle method.
          */
         "setFocus": () => Promise<void>;
         /**
@@ -1607,7 +1633,7 @@ export namespace Components {
         /**
           * Determines whether or not a modal can dismiss when calling the `dismiss` method.  If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss. If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.
          */
-        "canDismiss": boolean | (() => Promise<boolean>);
+        "canDismiss": boolean | ((data?: any, role?: string) => Promise<boolean>);
         /**
           * The component to display inside of the modal.
          */
@@ -1873,6 +1899,7 @@ export namespace Components {
           * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
          */
         "cssClass"?: string | string[];
+        "delegate"?: FrameworkDelegate;
         /**
           * Dismiss the picker overlay after it has been presented.
           * @param data Any data to emit in the dismiss events.
@@ -1892,10 +1919,15 @@ export namespace Components {
           * @param name The name of the column.
          */
         "getColumn": (name: string) => Promise<PickerColumn | undefined>;
+        "hasController": boolean;
         /**
           * Additional attributes to pass to the picker.
          */
         "htmlAttributes"?: { [key: string]: any };
+        /**
+          * If `true`, the picker will open. If `false`, the picker will close. Use this if you need finer grained control over presentation, otherwise just use the pickerController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the picker dismisses. You will need to do that in your code.
+         */
+        "isOpen": boolean;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -1925,6 +1957,10 @@ export namespace Components {
           * If `true`, a backdrop will be displayed behind the picker.
          */
         "showBackdrop": boolean;
+        /**
+          * An ID corresponding to the trigger element that causes the picker to open when clicked.
+         */
+        "trigger": string | undefined;
     }
     interface IonPickerColumn {
         /**
@@ -2172,6 +2208,14 @@ export namespace Components {
           * Show two knobs.
          */
         "dualKnobs": boolean;
+        /**
+          * Where to place the label relative to the range. `'start'`: The label will appear to the left of the range in LTR and to the right in RTL. `'end'`: The label will appear to the right of the range in LTR and to the left in RTL. `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+         */
+        "labelPlacement": 'start' | 'end' | 'fixed';
+        /**
+          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the `label` property. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
+         */
+        "legacy"?: boolean;
         /**
           * Maximum integer value of the range.
          */
@@ -2943,7 +2987,7 @@ export namespace Components {
         /**
           * The position of the toast on the screen.
          */
-        "position": 'top' | 'bottom' | 'middle';
+        "position": ToastPosition;
         /**
           * Present the toast overlay after it has been created.
          */
@@ -2974,6 +3018,18 @@ export namespace Components {
           * Enables the on/off accessibility switch labels within the toggle.
          */
         "enableOnOffLabels": boolean | undefined;
+        /**
+          * How to pack the label and toggle within a line. `'start'`: The label and toggle will appear on the left in LTR and on the right in RTL. `'end'`: The label and toggle will appear on the right in LTR and on the left in RTL. `'space-between'`: The label and toggle will appear on opposite ends of the line with space between the two elements.
+         */
+        "justify": 'start' | 'end' | 'space-between';
+        /**
+          * Where to place the label relative to the input. `'start'`: The label will appear to the left of the toggle in LTR and to the right in RTL. `'end'`: The label will appear to the right of the toggle in LTR and to the left in RTL. `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+         */
+        "labelPlacement": 'start' | 'end' | 'fixed';
+        /**
+          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the default slot that contains the label text. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
+         */
+        "legacy"?: boolean;
         /**
           * The mode determines which platform styles to use.
          */
@@ -3998,10 +4054,12 @@ declare namespace LocalJSX {
           * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
          */
         "cssClass"?: string | string[];
+        "delegate"?: FrameworkDelegate;
         /**
           * Animation to use when the alert is presented.
          */
         "enterAnimation"?: AnimationBuilder;
+        "hasController"?: boolean;
         /**
           * The main title in the heading of the alert.
          */
@@ -4014,6 +4072,10 @@ declare namespace LocalJSX {
           * Array of input to show in the alert.
          */
         "inputs"?: AlertInput[];
+        /**
+          * If `true`, the alert will open. If `false`, the alert will close. Use this if you need finer grained control over presentation, otherwise just use the alertController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the alert dismisses. You will need to do that in your code.
+         */
+        "isOpen"?: boolean;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -4031,6 +4093,14 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
+          * Emitted after the alert has dismissed. Shorthand for ionAlertDidDismiss.
+         */
+        "onDidDismiss"?: (event: IonAlertCustomEvent<OverlayEventDetail>) => void;
+        /**
+          * Emitted after the alert has presented. Shorthand for ionAlertWillDismiss.
+         */
+        "onDidPresent"?: (event: IonAlertCustomEvent<void>) => void;
+        /**
           * Emitted after the alert has dismissed.
          */
         "onIonAlertDidDismiss"?: (event: IonAlertCustomEvent<OverlayEventDetail>) => void;
@@ -4046,6 +4116,14 @@ declare namespace LocalJSX {
           * Emitted before the alert has presented.
          */
         "onIonAlertWillPresent"?: (event: IonAlertCustomEvent<void>) => void;
+        /**
+          * Emitted before the alert has dismissed. Shorthand for ionAlertWillDismiss.
+         */
+        "onWillDismiss"?: (event: IonAlertCustomEvent<OverlayEventDetail>) => void;
+        /**
+          * Emitted before the alert has presented. Shorthand for ionAlertWillPresent.
+         */
+        "onWillPresent"?: (event: IonAlertCustomEvent<void>) => void;
         "overlayIndex": number;
         /**
           * The subtitle in the heading of the alert. Displayed under the title.
@@ -4055,6 +4133,10 @@ declare namespace LocalJSX {
           * If `true`, the alert will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent"?: boolean;
+        /**
+          * An ID corresponding to the trigger element that causes the alert to open when clicked.
+         */
+        "trigger"?: string | undefined;
     }
     interface IonApp {
     }
@@ -4396,6 +4478,18 @@ declare namespace LocalJSX {
           * If `true`, the checkbox will visually appear as indeterminate.
          */
         "indeterminate"?: boolean;
+        /**
+          * How to pack the label and checkbox within a line. `'start'`: The label and checkbox will appear on the left in LTR and on the right in RTL. `'end'`: The label and checkbox will appear on the right in LTR and on the left in RTL. `'space-between'`: The label and checkbox will appear on opposite ends of the line with space between the two elements.
+         */
+        "justify"?: 'start' | 'end' | 'space-between';
+        /**
+          * Where to place the label relative to the checkbox. `'start'`: The label will appear to the left of the checkbox in LTR and to the right in RTL. `'end'`: The label will appear to the right of the checkbox in LTR and to the left in RTL. `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+         */
+        "labelPlacement"?: 'start' | 'end' | 'fixed';
+        /**
+          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt checkboxes in to the modern form markup when they are using either the `aria-label` attribute or have text in the default slot. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior.  Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
+         */
+        "legacy"?: boolean;
         /**
           * The mode determines which platform styles to use.
          */
@@ -5004,6 +5098,10 @@ declare namespace LocalJSX {
          */
         "labelPlacement"?: 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
         /**
+          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the `label` property. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
+         */
+        "legacy"?: boolean;
+        /**
           * The maximum value, which must not be less than its minimum (min attribute) value.
          */
         "max"?: string | number;
@@ -5495,7 +5593,7 @@ declare namespace LocalJSX {
         /**
           * Determines whether or not a modal can dismiss when calling the `dismiss` method.  If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss. If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.
          */
-        "canDismiss"?: boolean | (() => Promise<boolean>);
+        "canDismiss"?: boolean | ((data?: any, role?: string) => Promise<boolean>);
         /**
           * The component to display inside of the modal.
          */
@@ -5684,6 +5782,7 @@ declare namespace LocalJSX {
           * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
          */
         "cssClass"?: string | string[];
+        "delegate"?: FrameworkDelegate;
         /**
           * Number of milliseconds to wait before dismissing the picker.
          */
@@ -5692,10 +5791,15 @@ declare namespace LocalJSX {
           * Animation to use when the picker is presented.
          */
         "enterAnimation"?: AnimationBuilder;
+        "hasController"?: boolean;
         /**
           * Additional attributes to pass to the picker.
          */
         "htmlAttributes"?: { [key: string]: any };
+        /**
+          * If `true`, the picker will open. If `false`, the picker will close. Use this if you need finer grained control over presentation, otherwise just use the pickerController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the picker dismisses. You will need to do that in your code.
+         */
+        "isOpen"?: boolean;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -5708,6 +5812,14 @@ declare namespace LocalJSX {
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
+        /**
+          * Emitted after the picker has dismissed. Shorthand for ionPickerDidDismiss.
+         */
+        "onDidDismiss"?: (event: IonPickerCustomEvent<OverlayEventDetail>) => void;
+        /**
+          * Emitted after the picker has presented. Shorthand for ionPickerWillDismiss.
+         */
+        "onDidPresent"?: (event: IonPickerCustomEvent<void>) => void;
         /**
           * Emitted after the picker has dismissed.
          */
@@ -5724,11 +5836,23 @@ declare namespace LocalJSX {
           * Emitted before the picker has presented.
          */
         "onIonPickerWillPresent"?: (event: IonPickerCustomEvent<void>) => void;
+        /**
+          * Emitted before the picker has dismissed. Shorthand for ionPickerWillDismiss.
+         */
+        "onWillDismiss"?: (event: IonPickerCustomEvent<OverlayEventDetail>) => void;
+        /**
+          * Emitted before the picker has presented. Shorthand for ionPickerWillPresent.
+         */
+        "onWillPresent"?: (event: IonPickerCustomEvent<void>) => void;
         "overlayIndex": number;
         /**
           * If `true`, a backdrop will be displayed behind the picker.
          */
         "showBackdrop"?: boolean;
+        /**
+          * An ID corresponding to the trigger element that causes the picker to open when clicked.
+         */
+        "trigger"?: string | undefined;
     }
     interface IonPickerColumn {
         /**
@@ -6010,6 +6134,14 @@ declare namespace LocalJSX {
           * Show two knobs.
          */
         "dualKnobs"?: boolean;
+        /**
+          * Where to place the label relative to the range. `'start'`: The label will appear to the left of the range in LTR and to the right in RTL. `'end'`: The label will appear to the right of the range in LTR and to the left in RTL. `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+         */
+        "labelPlacement"?: 'start' | 'end' | 'fixed';
+        /**
+          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the `label` property. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
+         */
+        "legacy"?: boolean;
         /**
           * Maximum integer value of the range.
          */
@@ -6891,7 +7023,7 @@ declare namespace LocalJSX {
         /**
           * The position of the toast on the screen.
          */
-        "position"?: 'top' | 'bottom' | 'middle';
+        "position"?: ToastPosition;
         /**
           * If `true`, the toast will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
@@ -6918,6 +7050,18 @@ declare namespace LocalJSX {
           * Enables the on/off accessibility switch labels within the toggle.
          */
         "enableOnOffLabels"?: boolean | undefined;
+        /**
+          * How to pack the label and toggle within a line. `'start'`: The label and toggle will appear on the left in LTR and on the right in RTL. `'end'`: The label and toggle will appear on the right in LTR and on the left in RTL. `'space-between'`: The label and toggle will appear on opposite ends of the line with space between the two elements.
+         */
+        "justify"?: 'start' | 'end' | 'space-between';
+        /**
+          * Where to place the label relative to the input. `'start'`: The label will appear to the left of the toggle in LTR and to the right in RTL. `'end'`: The label will appear to the right of the toggle in LTR and to the left in RTL. `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+         */
+        "labelPlacement"?: 'start' | 'end' | 'fixed';
+        /**
+          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the default slot that contains the label text. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
+         */
+        "legacy"?: boolean;
         /**
           * The mode determines which platform styles to use.
          */

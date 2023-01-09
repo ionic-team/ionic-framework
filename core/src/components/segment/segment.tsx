@@ -84,6 +84,31 @@ export class Segment implements ComponentInterface {
      * Used by `ion-segment-button` to determine if the button should be checked.
      */
     this.ionSelect.emit({ value });
+
+    if (this.scrollable) {
+      const buttons = this.getButtons();
+      const activeButton = buttons.find((button) => button.value === value);
+      if (activeButton !== undefined) {
+        /**
+         * Scrollable segment buttons should be
+         * centered within the view including
+         * buttons that are partially offscreen.
+         */
+        activeButton.scrollIntoView({
+          behavior: 'smooth',
+          inline: 'center',
+
+          /**
+           * Segment should scroll on the
+           * horizontal axis. `block: 'nearest'`
+           * ensures that the vertical axis
+           * does not scroll if the segment
+           * as a whole is already in view.
+           */
+          block: 'nearest',
+        });
+      }
+    }
   }
 
   /**

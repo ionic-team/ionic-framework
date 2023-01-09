@@ -37,12 +37,6 @@ export interface PickerColumn {
   prefixWidth?: string;
   suffixWidth?: string;
   optionsWidth?: string;
-
-  /**
-   * @deprecated - Use the `columns` property on `ion-picker`
-   * to refresh the component view instead.
-   */
-  refresh?: () => void;
 }
 
 export interface PickerColumnOption {

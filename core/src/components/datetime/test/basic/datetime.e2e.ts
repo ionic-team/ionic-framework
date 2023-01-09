@@ -27,7 +27,7 @@ test.describe('datetime: closing time popover', () => {
     await ionPopoverDidDismiss.next();
     await page.waitForChanges();
 
-    await expect(calendarMonthYear).toHaveText(currentMonthAndYear);
+    await expect(calendarMonthYear).toHaveText(currentMonthAndYear, { useInnerText: true });
   });
 });
 
@@ -145,7 +145,7 @@ test.describe('datetime: confirm date', () => {
 
     await ionChange.next();
 
-    expect(datetime).toHaveJSProperty('value', '2021-12-25T12:40:00');
+    await expect(datetime).toHaveJSProperty('value', '2021-12-25T12:40:00');
   });
 });
 
@@ -300,9 +300,12 @@ test.describe('datetime: visibility', () => {
 
     await datetime.evaluate((el: HTMLIonDatetimeElement) => el.style.setProperty('display', 'none'));
     await expect(datetime).toBeHidden();
+    await expect(datetime).not.toHaveClass(/datetime-ready/);
 
     await datetime.evaluate((el: HTMLIonDatetimeElement) => el.style.removeProperty('display'));
     await expect(datetime).toBeVisible();
+
+    await page.waitForSelector('.datetime-ready');
 
     // month/year interface should be reset
     await expect(monthYearInterface).toBeHidden();
@@ -387,4 +390,31 @@ test.describe('datetime: ionChange', () => {
     await datetime.evaluate((el: HTMLIonDatetimeElement) => (el.value = '2022-01-01'));
     await expect(ionChange).not.toHaveReceivedEvent();
   });
+});
+
+test('datetime: md highlight should not clip at start or end of month', async ({ page, skip }, testInfo) => {
+  skip.mode('ios', 'Highlight does not render on iOS');
+  skip.rtl('Highlight does not render differently for RTL.');
+
+  testInfo.annotations.push({
+    type: 'issue',
+    description: 'https://github.com/ionic-team/ionic-framework/issues/24891',
+  });
+
+  await page.setContent(`
+    <ion-datetime value="2021-01-01"></ion-datetime>
+  `);
+
+  const datetime = page.locator('ion-datetime');
+
+  await page.waitForSelector('.datetime-ready');
+
+  expect(await datetime.screenshot()).toMatchSnapshot(
+    `date-highlight-start-of-month-${page.getSnapshotSettings()}.png`
+  );
+
+  await datetime.evaluate((el: HTMLIonDatetimeElement) => (el.value = '2021-01-31'));
+  await page.waitForChanges();
+
+  expect(await datetime.screenshot()).toMatchSnapshot(`date-highlight-end-of-month-${page.getSnapshotSettings()}.png`);
 });

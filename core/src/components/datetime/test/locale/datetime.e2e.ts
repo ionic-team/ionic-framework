@@ -1,4 +1,5 @@
 import { expect } from '@playwright/test';
+import type { Locator } from '@playwright/test';
 import type { E2EPage } from '@utils/test/playwright';
 import { test } from '@utils/test/playwright';
 
@@ -7,68 +8,60 @@ test.describe('datetime: locale', () => {
 
   test.beforeEach(async ({ page }) => {
     datetimeFixture = new DatetimeLocaleFixture(page);
-    await datetimeFixture.goto();
   });
 
   test.describe('en-US', () => {
-    test.beforeEach(async () => {
-      await datetimeFixture.setLocale('en-US');
-    });
-
     test('should not have visual regressions', async () => {
+      await datetimeFixture.goto('en-US', 'date');
       await datetimeFixture.expectLocalizedDatePicker();
     });
 
     test('month/year picker should not have visual regressions', async () => {
+      await datetimeFixture.goto('en-US', 'month-year');
       await datetimeFixture.expectLocalizedMonthYearPicker();
     });
 
     test('time picker should not have visual regressions', async () => {
+      await datetimeFixture.goto('en-US', 'time');
       await datetimeFixture.expectLocalizedTimePicker();
     });
   });
 
   test.describe('ta-IN', () => {
-    test.beforeEach(async () => {
-      await datetimeFixture.setLocale('ta-IN');
-    });
-
     test('should not have visual regressions', async () => {
+      await datetimeFixture.goto('ta-IN', 'date');
       await datetimeFixture.expectLocalizedDatePicker();
     });
 
     test('month/year picker should not have visual regressions', async () => {
+      await datetimeFixture.goto('ta-IN', 'month-year');
       await datetimeFixture.expectLocalizedMonthYearPicker();
     });
 
     test('time picker should not have visual regressions', async () => {
+      await datetimeFixture.goto('ta-IN', 'time');
       await datetimeFixture.expectLocalizedTimePicker();
     });
   });
 
   test.describe('ja-JP', () => {
-    test.beforeEach(async () => {
-      await datetimeFixture.setLocale('ja-JP');
-    });
-
     test('should not have visual regressions', async () => {
+      await datetimeFixture.goto('ja-JP', 'date');
       await datetimeFixture.expectLocalizedDatePicker();
     });
 
     test('month/year picker should not have visual regressions', async () => {
+      await datetimeFixture.goto('ja-JP', 'month-year');
       await datetimeFixture.expectLocalizedMonthYearPicker();
     });
 
     test('time picker should not have visual regressions', async () => {
+      await datetimeFixture.goto('ja-JP', 'time');
       await datetimeFixture.expectLocalizedTimePicker();
     });
 
     test('should correctly localize calendar day buttons without literal', async ({ page }) => {
-      await page.setContent(`
-        <ion-datetime locale="ja-JP" presentation="date" value="2022-01-01"></ion-datetime>
-      `);
-
-      await page.waitForSelector('.datetime-ready');
+      await datetimeFixture.goto('ja-JP', 'date');
 
       const datetimeButtons = page.locator('ion-datetime .calendar-day:not([disabled])');
 
@@ -85,19 +78,18 @@ test.describe('datetime: locale', () => {
   });
 
   test.describe('es-ES', () => {
-    test.beforeEach(async () => {
-      await datetimeFixture.setLocale('es-ES');
-    });
-
     test('should not have visual regressions', async () => {
+      await datetimeFixture.goto('es-ES', 'date');
       await datetimeFixture.expectLocalizedDatePicker();
     });
 
     test('month/year picker should not have visual regressions', async () => {
+      await datetimeFixture.goto('es-ES', 'month-year');
       await datetimeFixture.expectLocalizedMonthYearPicker();
     });
 
     test('time picker should not have visual regressions', async () => {
+      await datetimeFixture.goto('es-ES', 'time');
       await datetimeFixture.expectLocalizedTimePicker();
     });
   });
@@ -129,72 +121,55 @@ test.describe('ar-EG', () => {
     `);
     await page.waitForSelector('.datetime-ready');
 
-    const datetimeYears = page.locator('ion-datetime .year-column .picker-item:not(.picker-item-empty)');
+    const datetimeYear = page.locator('ion-datetime .year-column .picker-item[data-value="2022"]');
 
-    await expect(datetimeYears.nth(0)).toHaveText('٢٠٢٢');
-    await expect(datetimeYears.nth(1)).toHaveText('٢٠٢١');
-    await expect(datetimeYears.nth(2)).toHaveText('٢٠٢٠');
+    await expect(datetimeYear).toHaveText('٢٠٢٢');
   });
 });
 
 class DatetimeLocaleFixture {
   readonly page: E2EPage;
   locale = 'en-US';
+  datetime!: Locator;
 
   constructor(page: E2EPage) {
     this.page = page;
   }
 
-  async goto() {
-    await this.page.goto(`/src/components/datetime/test/locale`);
-  }
-
-  async setLocale(locale: string) {
+  async goto(locale = 'en-US', presentation = 'date') {
     this.locale = locale;
-    await this.page.locator('select').selectOption(locale);
-    await this.page.waitForChanges();
+    await this.page.setContent(`
+      <ion-datetime
+        show-default-title="true"
+        show-default-buttons="true"
+        locale="${this.locale}"
+        presentation="${presentation}"
+        value="2022-04-19T04:20:00"
+        max="2022"
+      ></ion-datetime>
+    `);
+
+    this.datetime = this.page.locator('ion-datetime');
+
+    await this.page.waitForSelector('.datetime-ready');
   }
 
   async expectLocalizedDatePicker() {
-    await this.waitForDatetime();
-
-    await this.page.setIonViewport();
-    // Captures a screenshot of the datepicker with localized am/pm labels
-    expect(await this.page.screenshot()).toMatchSnapshot(
-      `datetime-locale-${this.locale}-diff-${this.page.getSnapshotSettings()}.png`
-    );
+    await this.expectLocalizedPicker();
   }
 
   async expectLocalizedMonthYearPicker() {
-    await this.waitForDatetime();
-    await this.page.setIonViewport();
-    // Opens the month/year picker
-    const monthYearButton = this.page.locator('#am .calendar-month-year ion-item');
-    await monthYearButton.click();
-    await this.page.waitForChanges();
-    // Capture a screenshot of the month/year picker with localized month labels.
-    expect(await this.page.screenshot()).toMatchSnapshot(
-      `datetime-locale-${this.locale}-month-year-diff-${this.page.getSnapshotSettings()}.png`
-    );
+    await this.expectLocalizedPicker('month-year');
   }
 
   async expectLocalizedTimePicker() {
-    await this.waitForDatetime();
-    await this.page.setIonViewport();
-    // Opens the timepicker
-    const timePickerButton = this.page.locator('#am .time-body');
-    const timePickerPopoverPresentSpy = await this.page.spyOnEvent('ionPopoverDidPresent');
-    await timePickerButton.click();
-    await timePickerPopoverPresentSpy.next();
-    // Capture a screenshot of the time picker with localized am/pm labels
-    expect(await this.page.screenshot()).toMatchSnapshot(
-      `datetime-locale-${this.locale}-time-diff-${this.page.getSnapshotSettings()}.png`
-    );
+    await this.expectLocalizedPicker('time');
   }
 
-  private async waitForDatetime() {
-    await this.page.locator('#am.datetime-ready').waitFor({ state: 'attached' });
-    await this.page.locator('#pm').scrollIntoViewIfNeeded();
-    await this.page.locator('#pm.datetime-ready').waitFor({ state: 'attached' });
+  async expectLocalizedPicker(modifier?: string) {
+    const modifierString = modifier === undefined ? '' : `-${modifier}`;
+    expect(await this.datetime.screenshot()).toMatchSnapshot(
+      `datetime-locale-${this.locale}${modifierString}-diff-${this.page.getSnapshotSettings()}.png`
+    );
   }
 }

@@ -26,12 +26,7 @@ import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
-import {
-  configureDismissInteraction,
-  configureKeyboardInteraction,
-  configureTriggerInteraction,
-  waitOneFrame,
-} from './utils';
+import { configureDismissInteraction, configureKeyboardInteraction, configureTriggerInteraction } from './utils';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -465,40 +460,54 @@ export class Popover implements ComponentInterface, PopoverInterface {
     }
     this.configureDismissInteraction();
 
-    // TODO: FW-2773: Apply this to only the lazy build.
-    /**
-     * ionMount only needs to be emitted if the popover is inline.
-     */
     this.ionMount.emit();
-    /**
-     * Wait one raf before presenting the popover.
-     * This allows the lazy build enough time to
-     * calculate the popover dimensions for the animation.
-     */
-    await waitOneFrame();
 
-    this.currentTransition = present(this, 'popoverEnter', iosEnterAnimation, mdEnterAnimation, {
-      event: event || this.event,
-      size: this.size,
-      trigger: this.triggerEl,
-      reference: this.reference,
-      side: this.side,
-      align: this.alignment,
+    return new Promise((resolve) => {
+      /**
+       * Wait two request animation frame loops before presenting the popover.
+       * This allows the framework implementations enough time to mount
+       * the popover contents, so the bounding box is set when the popover
+       * transition starts.
+       *
+       * On Angular and React, a single raf is enough time, but for Vue
+       * we need to wait two rafs. As a result we are using two rafs for
+       * all frameworks to ensure the popover is presented correctly.
+       */
+      raf(() => {
+        raf(async () => {
+          this.currentTransition = present<PopoverPresentOptions>(
+            this,
+            'popoverEnter',
+            iosEnterAnimation,
+            mdEnterAnimation,
+            {
+              event: event || this.event,
+              size: this.size,
+              trigger: this.triggerEl,
+              reference: this.reference,
+              side: this.side,
+              align: this.alignment,
+            }
+          );
+
+          await this.currentTransition;
+
+          this.currentTransition = undefined;
+
+          /**
+           * If popover is nested and was
+           * presented using the "Right" arrow key,
+           * we need to move focus to the first
+           * descendant inside of the popover.
+           */
+          if (this.focusDescendantOnPresent) {
+            focusFirstDescendant(this.el, this.el);
+          }
+
+          resolve();
+        });
+      });
     });
-
-    await this.currentTransition;
-
-    this.currentTransition = undefined;
-
-    /**
-     * If popover is nested and was
-     * presented using the "Right" arrow key,
-     * we need to move focus to the first
-     * descendant inside of the popover.
-     */
-    if (this.focusDescendantOnPresent) {
-      focusFirstDescendant(this.el, this.el);
-    }
   }
 
   /**
@@ -528,7 +537,15 @@ export class Popover implements ComponentInterface, PopoverInterface {
       this.parentPopover.dismiss(data, role, dismissParentPopover);
     }
 
-    this.currentTransition = dismiss(this, data, role, 'popoverLeave', iosLeaveAnimation, mdLeaveAnimation, this.event);
+    this.currentTransition = dismiss<PopoverDismissOptions>(
+      this,
+      data,
+      role,
+      'popoverLeave',
+      iosLeaveAnimation,
+      mdLeaveAnimation,
+      this.event
+    );
     const shouldDismiss = await this.currentTransition;
     if (shouldDismiss) {
       if (destroyKeyboardInteraction) {
@@ -686,3 +703,32 @@ const LIFECYCLE_MAP: any = {
 };
 
 let popoverIds = 0;
+
+interface PopoverPresentOptions {
+  /**
+   * The original target event that presented the popover.
+   */
+  event: Event;
+  /**
+   * Describes how to calculate the popover width.
+   */
+  size: PopoverSize;
+  /**
+   * The element that causes the popover to open.
+   */
+  trigger?: HTMLElement | null;
+  /**
+   * Describes what to position the popover relative to.
+   */
+  reference: PositionReference;
+  /**
+   * Side of the `reference` point to position the popover on.
+   */
+  side: PositionSide;
+  /**
+   * Describes how to align the popover content with the `reference` point.
+   */
+  align?: PositionAlign;
+}
+
+type PopoverDismissOptions = Event;

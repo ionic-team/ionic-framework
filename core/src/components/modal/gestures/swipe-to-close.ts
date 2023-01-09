@@ -9,6 +9,7 @@ import {
 import type { GestureDetail } from '../../../utils/gesture';
 import { createGesture } from '../../../utils/gesture';
 import { clamp, getElementRoot } from '../../../utils/helpers';
+import type { Style as StatusBarStyle } from '../../../utils/native/status-bar';
 import { setCardStatusBarDark, setCardStatusBarDefault } from '../utils';
 
 import { calculateSpringStep, handleCanDismiss } from './utils';
@@ -18,7 +19,12 @@ export const SwipeToCloseDefaults = {
   MIN_PRESENTING_SCALE: 0.93,
 };
 
-export const createSwipeToCloseGesture = (el: HTMLIonModalElement, animation: Animation, onDismiss: () => void) => {
+export const createSwipeToCloseGesture = (
+  el: HTMLIonModalElement,
+  animation: Animation,
+  statusBarStyle: StatusBarStyle,
+  onDismiss: () => void
+) => {
   /**
    * The step value at which a card modal
    * is eligible for dismissing via gesture.
@@ -173,14 +179,14 @@ export const createSwipeToCloseGesture = (el: HTMLIonModalElement, animation: An
      * should block the gesture from
      * proceeding,
      */
-    const isAttempingDismissWithCanDismiss = step >= 0 && canDismissBlocksGesture;
+    const isAttemptingDismissWithCanDismiss = step >= 0 && canDismissBlocksGesture;
 
     /**
      * If we are blocking the gesture from dismissing,
      * set the max step value so that the sheet cannot be
      * completely hidden.
      */
-    const maxStep = isAttempingDismissWithCanDismiss ? canDismissMaxStep : 0.9999;
+    const maxStep = isAttemptingDismissWithCanDismiss ? canDismissMaxStep : 0.9999;
 
     /**
      * If we are blocking the gesture from
@@ -190,7 +196,7 @@ export const createSwipeToCloseGesture = (el: HTMLIonModalElement, animation: An
      * Note that the starting breakpoint is always 0,
      * so we omit adding 0 to the result.
      */
-    const processedStep = isAttempingDismissWithCanDismiss ? calculateSpringStep(step / maxStep) : step;
+    const processedStep = isAttemptingDismissWithCanDismiss ? calculateSpringStep(step / maxStep) : step;
 
     const clampedStep = clamp(0.0001, processedStep, maxStep);
 
@@ -205,7 +211,7 @@ export const createSwipeToCloseGesture = (el: HTMLIonModalElement, animation: An
      * crossed a certain threshold.
      */
     if (clampedStep >= DISMISS_THRESHOLD && lastStep < DISMISS_THRESHOLD) {
-      setCardStatusBarDefault();
+      setCardStatusBarDefault(statusBarStyle);
 
       /**
        * However, if we swipe back up, then the
@@ -223,10 +229,10 @@ export const createSwipeToCloseGesture = (el: HTMLIonModalElement, animation: An
     const velocity = detail.velocityY;
     const step = detail.deltaY / height;
 
-    const isAttempingDismissWithCanDismiss = step >= 0 && canDismissBlocksGesture;
-    const maxStep = isAttempingDismissWithCanDismiss ? canDismissMaxStep : 0.9999;
+    const isAttemptingDismissWithCanDismiss = step >= 0 && canDismissBlocksGesture;
+    const maxStep = isAttemptingDismissWithCanDismiss ? canDismissMaxStep : 0.9999;
 
-    const processedStep = isAttempingDismissWithCanDismiss ? calculateSpringStep(step / maxStep) : step;
+    const processedStep = isAttemptingDismissWithCanDismiss ? calculateSpringStep(step / maxStep) : step;
 
     const clampedStep = clamp(0.0001, processedStep, maxStep);
 
@@ -238,7 +244,7 @@ export const createSwipeToCloseGesture = (el: HTMLIonModalElement, animation: An
      * animation can never complete until
      * canDismiss is checked.
      */
-    const shouldComplete = !isAttempingDismissWithCanDismiss && threshold >= DISMISS_THRESHOLD;
+    const shouldComplete = !isAttemptingDismissWithCanDismiss && threshold >= DISMISS_THRESHOLD;
     let newStepValue = shouldComplete ? -0.001 : 0.001;
 
     if (!shouldComplete) {
@@ -280,7 +286,7 @@ export const createSwipeToCloseGesture = (el: HTMLIonModalElement, animation: An
      * check canDismiss. 25% was chosen
      * to avoid accidental swipes.
      */
-    if (isAttempingDismissWithCanDismiss && clampedStep > maxStep / 4) {
+    if (isAttemptingDismissWithCanDismiss && clampedStep > maxStep / 4) {
       handleCanDismiss(el, animation);
     } else if (shouldComplete) {
       onDismiss();

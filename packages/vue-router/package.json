@@ -1,9 +1,8 @@
 {
   "name": "@ionic/vue-router",
-  "version": "6.3.6",
+  "version": "6.4.1",
   "description": "Vue Router integration for @ionic/vue",
   "scripts": {
-    "prepublishOnly": "npm run build",
     "test.spec": "jest",
     "lint": "echo add linter",
     "bundle": "rollup --config rollup.config.js",
@@ -43,7 +42,7 @@
   },
   "homepage": "https://github.com/ionic-team/ionic#readme",
   "dependencies": {
-    "@ionic/vue": "^6.3.6"
+    "@ionic/vue": "^6.4.1"
   },
   "devDependencies": {
     "@types/jest": "^28.1.1",

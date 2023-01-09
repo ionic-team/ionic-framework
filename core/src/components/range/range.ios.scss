@@ -14,7 +14,11 @@
   --bar-background-active: #{ion-color(primary, base)};
   --bar-border-radius: #{$range-ios-bar-border-radius};
   --height: #{$range-ios-slider-height};
+  --margin: 16px;
+}
 
+// TODO FW-2997 remove this
+:host(.legacy-range) {
   @include padding($range-ios-padding-vertical, $range-ios-padding-horizontal);
 }
 
@@ -24,11 +28,11 @@
 }
 
 ::slotted([slot="start"]) {
-  @include margin(0, 16px, 0, 0);
+  @include margin(0, var(--margin), 0, 0);
 }
 
 ::slotted([slot="end"]) {
-  @include margin(0, 0, 0, 16px);
+  @include margin(0, 0, 0, var(--margin));
 }
 
 :host(.range-has-pin) {

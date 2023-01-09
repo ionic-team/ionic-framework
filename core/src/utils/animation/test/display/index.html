@@ -43,7 +43,7 @@
         ])
         .onFinish(() => {
           const ev = new CustomEvent('ionAnimationFinished', { detail: 'AnimationAFinished' });
-          squareA.dispatchEvent(ev);
+          window.dispatchEvent(ev);
         });
 
       animationB
@@ -58,12 +58,12 @@
         ])
         .onFinish(() => {
           const ev = new CustomEvent('ionAnimationFinished', { detail: 'AnimationBFinished' });
-          squareA.dispatchEvent(ev);
+          window.dispatchEvent(ev);
         });
 
       rootAnimation.addAnimation([animationA, animationB]).onFinish(() => {
         const ev = new CustomEvent('ionAnimationFinished', { detail: 'AnimationRootFinished' });
-        squareA.dispatchEvent(ev);
+        window.dispatchEvent(ev);
       });
 
       document.querySelector('.play').addEventListener('click', () => {

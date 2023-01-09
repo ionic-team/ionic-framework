@@ -9,7 +9,6 @@ function generateOverlays() {
     },
     {
       tag: 'ion-alert',
-      controller: 'alertController',
       name: 'IonAlert'
     },
     {
@@ -18,7 +17,6 @@ function generateOverlays() {
     },
     {
       tag: 'ion-picker',
-      controller: 'pickerController',
       name: 'IonPicker'
     },
     {
@@ -35,7 +33,6 @@ function generateOverlays() {
     }
   ]
 
-  let controllerImports = [];
   let componentImports = [];
   let componentDefinitions = [];
 
@@ -47,14 +44,8 @@ function generateOverlays() {
 
     componentImports.push(`import { defineCustomElement as ${defineCustomElementFn} } from '@ionic/core/components/${component.tag}.js'`);
 
-    if (component.controller) {
-      controllerImports.push(component.controller);
-    }
-
-    const controllerParam = (component.controller) ? `, ${component.controller}` : '';
-
     componentDefinitions.push(`
-export const ${component.name} = /*@__PURE__*/ defineOverlayContainer<JSX.${component.name}>('${component.tag}', ${defineCustomElementFn}, [${props.join(', ')}]${controllerParam});
+export const ${component.name} = /*@__PURE__*/ defineOverlayContainer<JSX.${component.name}>('${component.tag}', ${defineCustomElementFn}, [${props.join(', ')}]);
     `);
   });
 
@@ -65,7 +56,6 @@ export const ${component.name} = /*@__PURE__*/ defineOverlayContainer<JSX.${comp
 
 import {
   JSX,
-  ${controllerImports.join(',\n  ')},
 } from '@ionic/core/components';
 
 ${componentImports.join('\n')}

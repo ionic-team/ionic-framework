@@ -1171,7 +1171,7 @@ export class Datetime implements ComponentInterface {
   }
 
   private processValue = (value?: string | string[] | null) => {
-    const hasValue = value !== '' && value !== null && value !== undefined;
+    const hasValue = value !== null && value !== undefined;
     const valueToProcess = hasValue ? parseDate(value) : this.defaultParts;
 
     const { minParts, maxParts } = this;
@@ -1283,7 +1283,7 @@ export class Datetime implements ComponentInterface {
   };
 
   private hasValue = () => {
-    return this.value != null && this.value !== '';
+    return this.value != null;
   };
 
   private nextMonth = () => {
@@ -1893,11 +1893,12 @@ export class Datetime implements ComponentInterface {
           <div class="calendar-month-year">
             <ion-item button detail={false} lines="none" onClick={() => this.toggleMonthAndYearView()}>
               <ion-label>
-                {getMonthAndYear(this.locale, this.workingParts)}{' '}
+                {getMonthAndYear(this.locale, this.workingParts)}
                 <ion-icon
                   aria-hidden="true"
                   icon={this.showMonthAndYear ? expandedIcon : collapsedIcon}
                   lazy={false}
+                  flipRtl={true}
                 ></ion-icon>
               </ion-label>
             </ion-item>
