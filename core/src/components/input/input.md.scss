@@ -61,14 +61,18 @@
 
 /**
  * When the input is focused the label should
- * take on the highlight color.
+ * take on the highlight color. This should
+ * only apply to floating or stacked labels.
  */
-:host(.has-focus) .label-text-wrapper {
+:host(.input-label-placement-floating.has-focus) .label-text-wrapper,
+:host(.input-label-placement-stacked.has-focus) .label-text-wrapper {
   color: var(--highlight-color);
 }
 
-:host(.ion-touched.ion-valid) .label-text-wrapper,
-:host(.ion-touched.ion-invalid) .label-text-wrapper {
+:host(.input-label-placement-floating.ion-touched.ion-valid) .label-text-wrapper,
+:host(.input-label-placement-floating.ion-touched.ion-invalid) .label-text-wrapper,
+:host(.input-label-placement-stacked.ion-touched.ion-valid) .label-text-wrapper,
+:host(.input-label-placement-stacked.ion-touched.ion-invalid) .label-text-wrapper {
   color: var(--highlight-color);
 }
 
