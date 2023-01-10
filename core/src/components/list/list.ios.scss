@@ -33,48 +33,27 @@
 // iOS No Lines List
 // --------------------------------------------------
 
-.list-ios-lines-none .item {
-  --border-width: 0;
-  --inner-border-width: 0;
+.list-ios-lines-none ion-item.item-lines-default {
+  --inner-border-width: 0px;
+  --border-width: 0px;
 }
 
 // iOS Full Lines List
 // --------------------------------------------------
 
-.list-ios-lines-full .item,
-.list-ios .item-lines-full {
+.list-ios-lines-full ion-item.item-lines-default {
+  --inner-border-width: 0px;
   --border-width: #{0 0 $list-ios-item-border-bottom-width 0};
-}
-
-.list-ios-lines-full .item {
-  --inner-border-width: 0;
 }
 
 
 // iOS Inset Lines List
 // --------------------------------------------------
 
-.list-ios-lines-inset .item,
-.list-ios .item-lines-inset {
+.list-ios-lines-inset ion-item.item-lines-default {
   --inner-border-width: #{0 0 $list-ios-item-border-bottom-width 0};
+  --border-width: 0px;
 }
-
-// Remove the border from items in lists
-// if they are explicitly styled by the item
-// to be different than the list
-.list-ios .item-lines-inset {
-  --border-width: 0;
-}
-
-.list-ios .item-lines-full {
-  --inner-border-width: 0;
-}
-
-.list-ios .item-lines-none {
-  --border-width: 0;
-  --inner-border-width: 0;
-}
-
 
 // iOS List Inside A Card
 // --------------------------------------------------

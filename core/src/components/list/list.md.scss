@@ -41,59 +41,25 @@
 // Material Design No Lines List
 // --------------------------------------------------
 
-.list-md-lines-none .item {
-  --border-width: 0;
-  --inner-border-width: 0;
+.list-md-lines-none ion-item.item-lines-default {
+  --inner-border-width: 0px;
+  --border-width: 0px;
 }
 
 // Material Design Full Lines List
 // --------------------------------------------------
 
-.list-md-lines-full .item,
-.list-md .item-lines-full {
+.list-md-lines-full ion-item.item-lines-default {
+  --inner-border-width: 0px;
   --border-width: #{0 0 $list-md-item-border-bottom-width 0};
 }
-
-.list-md-lines-full .item {
-  --inner-border-width: 0;
-}
-
 
 // Material Design Inset Lines List
 // --------------------------------------------------
 
-/**
- * We remove the full lines below, but developers
- * should still be able to override the lines on
- * a per-item basis. As a result, we this selector
- * to exclude a) items with full lines, b) items with
- * no lines, and c) the last item in an inset list.
- */
-.list-md-lines-inset .item:not(.item-lines-full):not(.item-lines-none):not(:last-child),
-.list-md .item-lines-inset {
+.list-md-lines-inset ion-item.item-lines-default {
   --inner-border-width: #{0 0 $list-md-item-border-bottom-width 0};
-
-  /**
-   * Items in MD have full lines by default, so
-   * we need to remove them when using inset lists.
-   */
   --border-width: 0px;
-}
-
-// Remove the border from items in lists
-// if they are explicitly styled by the item
-// to be different than the list
-.list-md .item-lines-inset {
-  --border-width: 0;
-}
-
-.list-md .item-lines-full {
-  --inner-border-width: 0;
-}
-
-.list-md .item-lines-none {
-  --border-width: 0;
-  --inner-border-width: 0;
 }
 
 
