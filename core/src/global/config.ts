@@ -82,7 +82,7 @@ export const validateConfig = (config: IonicConfig) => {
   if (typeof baseComponents === 'object') {
     if (baseComponents.includeComponents !== undefined && baseComponents.excludeComponents !== undefined) {
       printIonWarning(
-        'The `baseComponents` configuration in your Ionic config is invalid. `includeComponents` and `excludeComponent` cannot be used at the same time.',
+        'The `baseComponents` configuration in your Ionic config is invalid. `includeComponents` and `excludeComponents` cannot be used at the same time.',
         baseComponents
       );
       return false;
