@@ -41,7 +41,7 @@
 // Material Design No Lines List
 // --------------------------------------------------
 
-.list-md-lines-none ion-item.item-lines-default {
+.list-md-lines-none .item-lines-default {
   --inner-border-width: 0px;
   --border-width: 0px;
 }
@@ -49,7 +49,7 @@
 // Material Design Full Lines List
 // --------------------------------------------------
 
-.list-md-lines-full ion-item.item-lines-default {
+.list-md-lines-full .item-lines-default {
   --inner-border-width: 0px;
   --border-width: #{0 0 $list-md-item-border-bottom-width 0};
 }
@@ -57,7 +57,7 @@
 // Material Design Inset Lines List
 // --------------------------------------------------
 
-.list-md-lines-inset ion-item.item-lines-default {
+.list-md-lines-inset .item-lines-default {
   --inner-border-width: #{0 0 $list-md-item-border-bottom-width 0};
   --border-width: 0px;
 }

@@ -33,7 +33,7 @@
 // iOS No Lines List
 // --------------------------------------------------
 
-.list-ios-lines-none ion-item.item-lines-default {
+.list-ios-lines-none .item-lines-default {
   --inner-border-width: 0px;
   --border-width: 0px;
 }
@@ -41,7 +41,7 @@
 // iOS Full Lines List
 // --------------------------------------------------
 
-.list-ios-lines-full ion-item.item-lines-default {
+.list-ios-lines-full .item-lines-default {
   --inner-border-width: 0px;
   --border-width: #{0 0 $list-ios-item-border-bottom-width 0};
 }
@@ -49,7 +49,7 @@
 // iOS Inset Lines List
 // --------------------------------------------------
 
-.list-ios-lines-inset ion-item.item-lines-default {
+.list-ios-lines-inset .item-lines-default {
   --inner-border-width: #{0 0 $list-ios-item-border-bottom-width 0};
   --border-width: 0px;
 }
