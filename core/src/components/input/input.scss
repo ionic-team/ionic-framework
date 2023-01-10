@@ -291,7 +291,17 @@
 
   transition: background-color 15ms linear;
 
+  border-bottom: var(--border-width) var(--border-style) var(--border-color);
+
   background: var(--background);
+}
+
+/**
+ * This border should be hidden in `ion-item`
+ * as the item's border will take priority.
+ */
+:host(.in-item:not(.has-auxiliary-text)) .input-wrapper {
+  border-bottom: none;
 }
 
 // Input Native Wrapper
@@ -330,8 +340,6 @@
   display: flex;
 
   justify-content: space-between;
-
-  border-top: var(--border-width) var(--border-style) var(--border-color);
 
   font-size: 12px;
 }

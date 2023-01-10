@@ -562,17 +562,21 @@ export class Input implements ComponentInterface {
     return <div class="counter">{getCounterText(value, maxlength, counterFormatter)}</div>;
   }
 
+  private get hasAuxiliaryText() {
+    const { counter, helperText, errorText, maxlength } = this;
+    const hasHintText = helperText !== undefined || errorText !== undefined;
+    const hasCounter = counter === true && maxlength !== undefined;
+
+    return hasHintText || hasCounter;
+  }
+
   /**
    * Responsible for rendering helper text,
    * error text, and counter. This element should only
    * be rendered if hint text is set or counter is enabled.
    */
   private renderBottomContent() {
-    const { counter, helperText, errorText, maxlength } = this;
-
-    const hasHintText = helperText !== undefined || errorText !== undefined;
-    const hasCounter = counter === true && maxlength !== undefined;
-    if (!hasHintText && !hasCounter) {
+    if (!this.hasAuxiliaryText) {
       return;
     }
 
@@ -651,6 +655,7 @@ export class Input implements ComponentInterface {
           [`input-fill-${fill}`]: fill !== undefined,
           [`input-shape-${shape}`]: shape !== undefined,
           [`input-label-placement-${labelPlacement}`]: true,
+          'has-auxiliary-text': this.hasAuxiliaryText,
           'in-item': inItem,
         })}
       >
