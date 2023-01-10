@@ -15,7 +15,6 @@
   @include position-horizontal(0, null);
 }
 
-
 // Material Design Inset List
 // --------------------------------------------------
 
@@ -63,9 +62,22 @@
 // Material Design Inset Lines List
 // --------------------------------------------------
 
-.list-md-lines-inset .item,
+/**
+ * We remove the full lines below, but developers
+ * should still be able to override the lines on
+ * a per-item basis. As a result, we this selector
+ * to exclude a) items with full lines, b) items with
+ * no lines, and c) the last item in an inset list.
+ */
+.list-md-lines-inset .item:not(.item-lines-full):not(.item-lines-none):not(:last-child),
 .list-md .item-lines-inset {
   --inner-border-width: #{0 0 $list-md-item-border-bottom-width 0};
+
+  /**
+   * Items in MD have full lines by default, so
+   * we need to remove them when using inset lists.
+   */
+  --border-width: 0px;
 }
 
 // Remove the border from items in lists
