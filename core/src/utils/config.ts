@@ -16,7 +16,7 @@ export interface BaseComponentsConfig {
    * If provided, the specified components
    * will not be opted-in to base components. All
    * other components will be opted in.
-   * Developers should use either `includeComponent`
+   * Developers should use either `includeComponents`
    * or `excludeComponents` but not both.
    */
   excludeComponents?: string[];
