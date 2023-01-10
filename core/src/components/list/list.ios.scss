@@ -19,11 +19,6 @@
   @include border-radius($list-inset-ios-border-radius);
 }
 
-.list-ios.list-inset ion-item {
-  --border-width: 0 0 1px 0;
-  --inner-border-width: 0;
-}
-
 .list-ios.list-inset ion-item:last-child {
   --border-width: 0;
   --inner-border-width: 0;
