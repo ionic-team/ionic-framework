@@ -25,6 +25,7 @@
   z-index: $z-index-item-input;
 }
 
+// TODO FW-3125: Remove :not selector and move styles to host
 :host(:not(.legacy-radio)) {
   cursor: pointer;
 }
@@ -50,6 +51,7 @@
   box-sizing: border-box;
 }
 
+// TODO FW-3125: Remove this style
 :host(.legacy-radio) label {
   @include input-cover();
 

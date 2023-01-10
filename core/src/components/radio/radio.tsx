@@ -79,6 +79,7 @@ export class Radio implements ComponentInterface {
    */
   @Prop() labelPlacement: 'start' | 'end' | 'fixed' = 'start';
 
+  // TODO FW-3125: Remove the legacy property and implementation
   /**
    * Set the `legacy` property to `true` to forcibly use the legacy form control markup.
    * Ionic will only opt components in to the modern form markup when they are

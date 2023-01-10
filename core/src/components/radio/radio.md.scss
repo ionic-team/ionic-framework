@@ -12,11 +12,13 @@
   --border-radius: #{$radio-md-icon-border-radius};
 }
 
+// TODO FW-3125: Remove this style
 :host(.legacy-radio) {
   width: $radio-md-icon-width;
   height: $radio-md-icon-height;
 }
 
+// TODO FW-3125: Move styles to :host selector
 :host(:not(.legacy-radio)) {
   min-height: 46px;
 }

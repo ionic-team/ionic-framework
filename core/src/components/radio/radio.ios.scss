@@ -8,11 +8,13 @@
   --color-checked: #{ion-color(primary, base)};
 }
 
+// TODO FW-3125: Remove styles
 :host(.legacy-radio) {
   width: $radio-ios-icon-width;
   height: $radio-ios-icon-height;
 }
 
+// TODO FW-3125: Move styles to :host selector
 :host(:not(.legacy-radio)) {
   min-height: 42px;
 }
@@ -24,7 +26,6 @@
 .item-radio.item-ios ion-label {
   @include margin-horizontal(0, null);
 }
-
 
 // iOS Radio Checkmark: Checked
 // -----------------------------------------
@@ -44,14 +45,12 @@
   border-color: var(--color-checked);
 }
 
-
 // iOS Radio: Disabled
 // -----------------------------------------
 
 :host(.radio-disabled) {
   opacity: $radio-ios-disabled-opacity;
 }
-
 
 // iOS Radio: Keyboard Focus
 // -----------------------------------------
@@ -69,22 +68,31 @@
   background: $radio-ios-background-color-focused;
 
   content: "";
-  opacity: .2;
+  opacity: 0.2;
 }
-
 
 // iOS Radio Within An Item
 // -----------------------------------------
 
 :host(.in-item.legacy-radio) {
-  @include margin($radio-ios-item-end-margin-top, $radio-ios-item-end-margin-end, $radio-ios-item-end-margin-bottom, $radio-ios-item-end-margin-start);
+  @include margin(
+    $radio-ios-item-end-margin-top,
+    $radio-ios-item-end-margin-end,
+    $radio-ios-item-end-margin-bottom,
+    $radio-ios-item-end-margin-start
+  );
 
   display: block;
   position: static;
 }
 
 :host(.in-item.legacy-radio[slot="start"]) {
-  @include margin($radio-ios-item-start-margin-top, $radio-ios-item-start-margin-end, $radio-ios-item-start-margin-bottom, $radio-ios-item-start-margin-start);
+  @include margin(
+    $radio-ios-item-start-margin-top,
+    $radio-ios-item-start-margin-end,
+    $radio-ios-item-start-margin-bottom,
+    $radio-ios-item-start-margin-start
+  );
 }
 
 // Radio Native Wrapper
