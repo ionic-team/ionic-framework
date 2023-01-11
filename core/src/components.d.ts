@@ -1145,7 +1145,7 @@ export namespace Components {
          */
         "setBlur": () => Promise<void>;
         /**
-          * Sets focus on the native `input` in `ion-input`. Use this method instead of the global `input.focus()`.
+          * Sets focus on the native `input` in `ion-input`. Use this method instead of the global `input.focus()`.  Developers who wish to focus an input when a page enters should call `setFocus()` in the `ionViewDidEnter()` lifecycle method.
          */
         "setFocus": () => Promise<void>;
         /**
@@ -1918,6 +1918,7 @@ export namespace Components {
         "value"?: string | number;
     }
     interface IonPickerInternal {
+        "exitInputMode": () => Promise<void>;
         /**
           * The mode determines which platform styles to use.
          */
@@ -2483,6 +2484,7 @@ export namespace Components {
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
+        "setFocus": () => Promise<void>;
         /**
           * The type of the button.
          */

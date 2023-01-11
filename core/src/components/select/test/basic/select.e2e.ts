@@ -72,7 +72,10 @@ test.describe('select: basic', () => {
   });
 
   test.describe('select: popover', () => {
-    test('it should open a popover select', async ({ page, browserName }) => {
+    test('it should open a popover select', async ({ page, browserName, skip }) => {
+      // TODO (FW-2979)
+      skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
+
       const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
       const ionDismiss = await page.spyOnEvent('ionDismiss');
 
@@ -80,7 +83,7 @@ test.describe('select: basic', () => {
 
       await ionPopoverDidPresent.next();
 
-      const popover = await page.locator('ion-popover');
+      const popover = page.locator('ion-popover');
 
       // TODO(FW-1436)
       if (browserName !== 'firefox') {

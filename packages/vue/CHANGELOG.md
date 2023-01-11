@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.4.2](https://github.com/ionic-team/ionic/compare/v6.4.1...v6.4.2) (2023-01-11)
+
+
+### Bug Fixes
+
+* **vue:** unmount teleported user component ([#26543](https://github.com/ionic-team/ionic/issues/26543)) ([c996384](https://github.com/ionic-team/ionic/commit/c996384786257524842cc1dca8d0fb940699719b)), closes [#26542](https://github.com/ionic-team/ionic/issues/26542)
+
+
+
+
+
 ## [6.4.1](https://github.com/ionic-team/ionic/compare/v6.4.0...v6.4.1) (2022-12-14)
 
 **Note:** Version bump only for package @ionic/vue

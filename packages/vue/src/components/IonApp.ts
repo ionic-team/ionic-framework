@@ -33,5 +33,14 @@ export const addTeleportedUserComponent = (component: VNode) => {
 }
 
 export const removeTeleportedUserComponent = (component: VNode) => {
-  userComponents.value = userComponents.value.filter(cmp => cmp !== component);
+  /**
+   * Finds the index of the component in the array and removes it.
+   * Previously we were using a filter to remove the component from the array,
+   * but this was causing a bug where dismissing an overlay and then presenting
+   * a new overlay, would cause the new overlay to be removed.
+   */
+  const index = userComponents.value.findIndex(cmp => cmp === component);
+  if (index !== -1) {
+    userComponents.value.splice(index, 1);
+  }
 }
