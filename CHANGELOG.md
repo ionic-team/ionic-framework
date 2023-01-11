@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.4.2-nightly.20230111](https://github.com/ionic-team/ionic-framework/compare/v6.4.1...v6.4.2-nightly.20230111) (2023-01-11)
+
+
+### Bug Fixes
+
+* **datetime:** time wheel input mode is dismissed on user scroll ([#26567](https://github.com/ionic-team/ionic-framework/issues/26567)) ([d13a146](https://github.com/ionic-team/ionic-framework/commit/d13a14658df2723aff908a94181cb563cb1f5b43))
+* **loading:** support custom aria-label ([#26581](https://github.com/ionic-team/ionic-framework/issues/26581)) ([2450a1e](https://github.com/ionic-team/ionic-framework/commit/2450a1e821d3901c8efb57ec256a10a951d22c8f)), closes [#24486](https://github.com/ionic-team/ionic-framework/issues/24486)
+* **modal:** canDismiss type with data and role ([#26547](https://github.com/ionic-team/ionic-framework/issues/26547)) ([32c2622](https://github.com/ionic-team/ionic-framework/commit/32c2622ab04a70d00684e9a813d9bcef698d7551)), closes [#26544](https://github.com/ionic-team/ionic-framework/issues/26544)
+* **picker-column-internal:** blurring picker does not throw error ([#26560](https://github.com/ionic-team/ionic-framework/issues/26560)) ([3e671b9](https://github.com/ionic-team/ionic-framework/commit/3e671b9c8ff62945a12eff431839ddae37d9d1a7)), closes [#26559](https://github.com/ionic-team/ionic-framework/issues/26559)
+* **segment:** nested interactive is not rendered ([#26575](https://github.com/ionic-team/ionic-framework/issues/26575)) ([77ce9e0](https://github.com/ionic-team/ionic-framework/commit/77ce9e066e1ee71438ceac35479ea04e8df021f5))
+* **tab-button:** nested interactives are not rendered ([#26576](https://github.com/ionic-team/ionic-framework/issues/26576)) ([df4882d](https://github.com/ionic-team/ionic-framework/commit/df4882d4d1c516038badfa647db484e070fbd099)), closes [#23332](https://github.com/ionic-team/ionic-framework/issues/23332)
+* **vue:** unmount teleported user component ([#26543](https://github.com/ionic-team/ionic-framework/issues/26543)) ([c996384](https://github.com/ionic-team/ionic-framework/commit/c996384786257524842cc1dca8d0fb940699719b)), closes [#26542](https://github.com/ionic-team/ionic-framework/issues/26542)
+
+
+
+
+
 ## [6.4.1](https://github.com/ionic-team/ionic-framework/compare/v6.4.0...v6.4.1) (2022-12-14)
 
 
