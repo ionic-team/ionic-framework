@@ -1,0 +1,78 @@
+@import "./select.vars";
+
+// Select Fill: Solid
+// ----------------------------------------------------------------
+
+:host(.select-fill-solid) {
+  --background: #{$background-color-step-50};
+  --border-color: #{$background-color-step-500};
+  --border-radius: 4px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+}
+
+/**
+ * The solid fill style has a border
+ * at the bottom of the select wrapper.
+ * As a result, the border on the "bottom
+ * content" is not needed.
+ */
+:host(.select-fill-solid) .select-wrapper {
+  border-bottom: var(--border-width) var(--border-style) var(--border-color);
+}
+
+/**
+ * If the select has a validity state, the
+ * border should reflect that as a color.
+ */
+:host(.select-fill-solid.ion-touched.ion-valid) .select-wrapper,
+:host(.select-fill-solid.ion-touched.ion-invalid) .select-wrapper {
+  --border-color: var(--highlight-color);
+}
+
+:host(.select-fill-solid) .select-bottom {
+  border-top: none;
+}
+
+/**
+ * Background and border should be
+ * slightly darker on hover.
+ */
+@media (any-hover: hover) {
+  :host(.select-fill-solid:hover) {
+    --background: #{$background-color-step-100};
+    --border-color: #{$background-color-step-750};
+  }
+}
+
+/**
+ * Background and border should be
+ * much darker on focus.
+ */
+:host(.select-fill-solid.select-expanded),
+:host(.select-fill-solid.ion-focused) {
+  --background: #{$background-color-step-150};
+  --border-color: #{$background-color-step-750};
+}
+
+:host(.select-fill-solid) .select-wrapper {
+  /**
+   * Only the top left and top right borders should.
+   * have a radius when using a solid fill.
+   */
+  @include border-radius(var(--border-radius), var(--border-radius), 0px, 0px);
+}
+
+// Select Label
+// ----------------------------------------------------------------
+
+:host(.select-fill-solid.select-label-placement-stacked) .label-text-wrapper,
+:host(.select-expanded.select-fill-solid.select-label-placement-floating) .label-text-wrapper,
+:host(.ion-focused.select-fill-solid.select-label-placement-floating) .label-text-wrapper,
+:host(.has-value.select-fill-solid.select-label-placement-floating) .label-text-wrapper {
+  /**
+   * Label text should not extend
+   * beyond the bounds of the select.
+   */
+  max-width: calc(100% / #{$select-floating-label-scale});
+}
