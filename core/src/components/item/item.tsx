@@ -405,6 +405,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
           ...createColorClasses(this.color, {
             item: true,
             [mode]: true,
+            'item-lines-default': lines === undefined,
             [`item-lines-${lines}`]: lines !== undefined,
             [`item-fill-${fillValue}`]: true,
             [`item-shape-${shape}`]: shape !== undefined,
