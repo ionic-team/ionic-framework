@@ -569,7 +569,7 @@ For textareas that do not have a visible label, developers should use "aria-labe
   }
 
   private renderTextarea() {
-    const { inputId, disabled } = this;
+    const { inputId, disabled, labelPlacement } = this;
     const mode = getIonMode(this);
     const value = this.getValue();
 
@@ -580,6 +580,7 @@ For textareas that do not have a visible label, developers should use "aria-labe
           [mode]: true,
           'has-value': this.hasValue(),
           'has-focus': this.hasFocus,
+          [`textarea-label-placement-${labelPlacement}`]: true,
         })}
       >
         <label class="textarea-wrapper">

@@ -5,14 +5,17 @@
 // --------------------------------------------------
 
 :host {
-  --padding-top: #{$textarea-ios-padding-top};
-  --padding-end: #{$textarea-ios-padding-end};
-  --padding-bottom: #{$textarea-ios-padding-bottom};
-  --padding-start: #{$textarea-ios-padding-start};
   --border-width: #{$hairlines-width};
   --border-color: #{$item-ios-border-color};
 
   font-size: $textarea-ios-font-size;
+}
+
+:host(.legacy-textarea) {
+  --padding-top: #{$textarea-ios-padding-top};
+  --padding-end: #{$textarea-ios-padding-end};
+  --padding-bottom: #{$textarea-ios-padding-bottom};
+  --padding-start: #{$textarea-ios-padding-start};
 }
 
 :host-context(.item-label-stacked),

@@ -109,8 +109,8 @@
   }
 }
 
-.native-textarea,
-.textarea-legacy-wrapper::after {
+:host(.legacy-textarea) .native-textarea,
+:host(.legacy-textarea) .textarea-legacy-wrapper::after {
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
   @include text-inherit();
 
@@ -120,10 +120,16 @@
 }
 
 .native-textarea {
-  @include border-radius(var(--border-radius));
+  // Browsers may add a default margin to the textarea
   @include margin(0);
+  @include padding(0, 0, 0, 0);
+  @include border-radius(var(--border-radius));
 
   display: block;
+
+  position: relative;
+
+  flex: 1;
 
   width: 100%;
   max-width: 100%;
@@ -190,6 +196,10 @@
   height: 100%;
 }
 
+:host([auto-grow="true"]) .native-textarea {
+  overflow: hidden;
+}
+
 // Item Floating: Placeholder
 // ----------------------------------------------------------------
 // When used with a floating item the placeholder should hide
@@ -204,32 +214,49 @@
   opacity: 1;
 }
 
-:host([auto-grow="true"]) .native-textarea {
-  overflow: hidden;
-}
-
 // Textarea Wrapper
 // ----------------------------------------------------------------
 .textarea-wrapper {
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+
   display: flex;
+
+  position: relative;
 
   flex-grow: 1;
 
-  align-items: center;
+  align-items: stretch;
+
+  height: 100%;
+
+  min-height: 56px;
+
+  background: inherit;
 }
 
-// Native Wrapper
+// Textarea Native Wrapper
 // ----------------------------------------------------------------
 
 .native-wrapper {
-  flex: 1;
+  display: flex;
+
+  position: relative;
+
+  flex-grow: 1;
+
+  width: 100%;
 }
 
 // Textarea Bottom Content
 // ----------------------------------------------------------------
 
 .textarea-bottom {
-  @include padding(5px, 0, 0, 0);
+  /**
+   * The bottom content should take on the start and end
+   * padding so it is always aligned with either the label
+   * or the start of the textarea.
+   */
+  @include padding(5px, var(--padding-end), 0, var(--padding-start));
 
   display: flex;
 
@@ -282,4 +309,226 @@
   white-space: nowrap;
 
   padding-inline-start: 16px;
+}
+
+// Textarea Label
+// ----------------------------------------------------------------
+
+.label-text-wrapper {
+  /**
+   * This causes the label to take up
+   * the entire height of its container
+   * while still keeping the text centered.
+   */
+  display: flex;
+
+  /**
+   * Label text should not extend
+   * beyond the bounds of the textarea.
+   * However, we do not set the max
+   * width to 100% because then
+   * only the label would show and users
+   * would not be able to see what they are typing.
+   */
+  max-width: 200px;
+
+  transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1), transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /**
+   * This ensures that double tapping this text
+   * clicks the <label> and focuses the textarea
+   * when a screen reader is enabled.
+   */
+  pointer-events: none;
+}
+
+/**
+ * We need to use two elements instead of
+ * one. The .label-text-wrapper is responsible
+ * for centering the label text vertically regardless
+ * of the textarea height using flexbox.
+ *
+ * The .label-text element is responsible for controlling
+ * overflow when label-placement="fixed".
+ * We want the ellipses to show up when the
+ * fixed label overflows, but text-overflow: ellipsis only
+ * works on block-level elements. A flex item is
+ * considered blockified (https://www.w3.org/TR/css-display-3/#blockify).
+ */
+.label-text {
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+}
+
+.label-text-wrapper,
+.textarea-wrapper textarea {
+  line-height: 18px;
+}
+
+.textarea-wrapper textarea {
+  @include padding(8px, 0, 8px, 0);
+  /**
+   * When the floating label appears on top of the
+   * textarea, we need to fade the textarea out so that the
+   * label does not overlap with the placeholder.
+   */
+  transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+// Textarea Label Placement - Start
+// ----------------------------------------------------------------
+
+/**
+ * Label is on the left of the textarea in LTR and
+ * on the right in RTL.
+ */
+:host(.textarea-label-placement-start) .textarea-wrapper {
+  flex-direction: row;
+}
+
+:host(.textarea-label-placement-start) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the textarea should be on the end
+   * when the label sits at the start.
+   */
+  @include margin(0, 8px, 0, 0);
+}
+
+// Textarea Label Placement - End
+// ----------------------------------------------------------------
+
+/**
+ * Label is on the right of the textarea in LTR and
+ * on the left in RTL.
+ */
+:host(.textarea-label-placement-end) .textarea-wrapper {
+  flex-direction: row-reverse;
+}
+
+/**
+ * The margin between the label and
+ * the textarea should be on the start
+ * when the label sits at the end.
+ */
+:host(.textarea-label-placement-end) .label-text-wrapper {
+  @include margin(0, 0, 0, 8px);
+}
+
+// Textarea Label Placement - Fixed
+// ----------------------------------------------------------------
+
+:host(.textarea-label-placement-fixed) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the textarea should be on the end
+   * when the label sits at the start.
+   */
+  @include margin(0, 8px, 0, 0);
+}
+
+/**
+ * Label is on the left of the textarea in LTR and
+ * on the right in RTL. Label also has a fixed width.
+ */
+:host(.textarea-label-placement-fixed) .label-text {
+  flex: 0 0 100px;
+
+  width: 100px;
+  min-width: 100px;
+  max-width: 200px;
+}
+
+// Textarea Label Placement - Stacked and Floating
+// ----------------------------------------------------------------
+
+/**
+ * Stacked: Label sits above the textarea and is scaled down.
+ * Floating: Label sits over the textarea when the textarea has no
+ * value and is blurred. Label sits above the textarea and is scaled
+ * down when the textarea is focused or has a value.
+ *
+ */
+:host(.textarea-label-placement-stacked) .textarea-wrapper,
+:host(.textarea-label-placement-floating) .textarea-wrapper {
+  flex-direction: column;
+  align-items: start;
+}
+
+/**
+ * Ensures that the label animates
+ * up and to the left in LTR or
+ * up and to the right in RTL.
+ */
+:host(.textarea-label-placement-stacked) .label-text-wrapper,
+:host(.textarea-label-placement-floating) .label-text-wrapper {
+  @include transform-origin(start, top);
+
+  max-width: 100%;
+}
+
+/**
+ * Ensures the textarea does not
+ * overlap the label.
+ */
+:host(.textarea-label-placement-stacked) textarea,
+:host(.textarea-label-placement-floating) textarea {
+  @include margin(1px, 0, 0, 0);
+}
+
+/**
+ * This makes the label sit over the textarea
+ * when the textarea is blurred and has no value.
+ */
+:host(.textarea-label-placement-floating) .label-text-wrapper {
+  @include transform(translateY(100%), scale(1));
+}
+
+/**
+ * The textarea should be hidden when the label
+ * is on top of the textarea. This prevents the label
+ * from overlapping any placeholder value.
+ */
+:host(.textarea-label-placement-floating) textarea {
+  opacity: 0;
+}
+
+:host(.has-focus.textarea-label-placement-floating) textarea,
+:host(.has-value.textarea-label-placement-floating) textarea {
+  opacity: 1;
+}
+
+:host(.textarea-label-placement-floating) .label-text-wrapper {
+  /**
+   * Increases the padding between the label and the textarea contents
+   * for the floating label.
+   */
+  @include padding(null, null, 2px, null);
+}
+
+// Textarea Label Placement - Stacked and Fixed
+// ----------------------------------------------------------------
+
+:host(.textarea-label-placement-start) .label-text,
+:host(.textarea-label-placement-end) .label-text,
+:host(.textarea-label-placement-fixed) .label-text {
+  @include margin(8px, 0);
+}
+
+/**
+ * This makes the label sit above the textarea.
+ */
+:host(.textarea-label-placement-stacked) .label-text-wrapper,
+:host(.has-focus.textarea-label-placement-floating) .label-text-wrapper,
+:host(.has-value.textarea-label-placement-floating) .label-text-wrapper {
+  @include transform(translateY(6px), scale(#{$textarea-floating-label-scale}));
+
+  /**
+     * Label text should not extend
+     * beyond the bounds of the textarea.
+     */
+  max-width: calc(100% / #{$textarea-floating-label-scale});
 }
