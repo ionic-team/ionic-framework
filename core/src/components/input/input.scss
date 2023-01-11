@@ -158,12 +158,19 @@
   background-color: transparent;
   background-repeat: no-repeat;
 
+  // TODO FW-3138 Set the color on .input-clear-icon directly
+  color: inherit;
+
   visibility: hidden;
   appearance: none;
 }
 
 .input-clear-icon ion-icon {
   color: $text-color-step-400;
+}
+
+:host(.in-item-color) .input-clear-icon ion-icon {
+  color: inherit;
 }
 
 /**
