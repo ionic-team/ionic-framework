@@ -3,7 +3,8 @@ import { getMode, setMode, setPlatformHelpers } from '@stencil/core';
 import type { IonicConfig, Mode } from '../interface';
 import { isPlatform, setupPlatforms } from '../utils/platform';
 
-import { config, configFromSession, configFromURL, saveConfig } from './config';
+import { isIonicElement, resetBaseComponentsCache } from './base-components';
+import { config, configFromSession, configFromURL, saveConfig, validateConfig } from './config';
 
 declare const Context: any;
 
@@ -37,13 +38,21 @@ export const initialize = (userConfig: IonicConfig = {}) => {
 
   // create the Ionic.config from raw config object (if it exists)
   // and convert Ionic.config into a ConfigApi that has a get() fn
-  const configObj = {
+  const configObj: IonicConfig = {
     ...configFromSession(win),
     persistConfig: false,
     ...Ionic.config,
     ...configFromURL(win),
     ...userConfig,
   };
+
+  validateConfig(configObj);
+
+  /**
+   * Reset the base component look up table.
+   * This will be re-created when needed in setMode.
+   */
+  resetBaseComponentsCache();
 
   config.reset(configObj);
   if (config.getBoolean('persistConfig')) {
@@ -68,8 +77,6 @@ export const initialize = (userConfig: IonicConfig = {}) => {
   if (config.getBoolean('_testing')) {
     config.set('animated', false);
   }
-
-  const isIonicElement = (elm: any) => elm.tagName?.startsWith('ION-');
 
   const isAllowedIonicModeValue = (elmMode: string) => ['ios', 'md'].includes(elmMode);
 

@@ -1,4 +1,4 @@
-import { Config } from '../config';
+import { Config, validateConfig } from '../config';
 
 describe('Config', () => {
   it('should get a value from the config', () => {
@@ -80,5 +80,16 @@ describe('Config', () => {
     expect(config.get('text0', 'HEY')).toEqual('HEY');
     config.set('text0', 'hola');
     expect(config.get('text0', 'HEY')).toEqual('hola');
+  });
+});
+
+describe('validateConfig()', () => {
+  it('should return true when base components is used correctly', () => {
+    expect(validateConfig({ baseComponents: true })).toEqual(true);
+    expect(validateConfig({ baseComponents: { includeComponents: [] } })).toEqual(true);
+    expect(validateConfig({ baseComponents: { excludeComponents: [] } })).toEqual(true);
+  });
+  it('should return false when base components is used correctly', () => {
+    expect(validateConfig({ baseComponents: { includeComponents: [], excludeComponents: [] } })).toEqual(false);
   });
 });
