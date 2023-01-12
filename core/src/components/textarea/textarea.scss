@@ -45,12 +45,19 @@
   --highlight-color-valid: #{ion-color(success, base)};
   --highlight-color-invalid: #{ion-color(danger, base)};
 
+  /**
+   * This is a private API that is used to switch
+   * out the highlight color based on the state
+   * of the component without having to write
+   * different selectors for different fill variants.
+   */
+  --highlight-color: var(--highlight-color-focused);
+
   display: block;
   position: relative;
 
   width: 100%;
 
-  background: var(--background);
   color: var(--color);
 
   font-family: $font-family-base;
@@ -62,6 +69,8 @@
 
 :host(.legacy-textarea) {
   flex: 1;
+
+  background: var(--background);
 
   white-space: pre-wrap;
 }
@@ -113,6 +122,7 @@
 :host(.legacy-textarea) .textarea-legacy-wrapper::after {
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
   @include text-inherit();
+  @include border-radius(var(--border-radius));
 
   grid-area: 1 / 1 / 2 / 2;
 
@@ -143,6 +153,17 @@
   box-sizing: border-box;
   resize: none;
   appearance: none;
+
+  /**
+   * This ensures the textarea
+   * remains on top of any decoration
+   * that we render (particularly the
+   * outline border when fill="outline").
+   * If we did not do this then Axe would
+   * be unable to determine the color
+   * contrast of the textarea.
+   */
+  z-index: 1;
 
   &::placeholder {
     @include padding(0);
@@ -231,7 +252,7 @@
 
   min-height: 56px;
 
-  background: inherit;
+  background: var(--background);
 }
 
 // Textarea Native Wrapper
@@ -245,6 +266,17 @@
   flex-grow: 1;
 
   width: 100%;
+}
+
+// Textarea Highlight
+// ----------------------------------------------------------------
+
+:host(.ion-touched.ion-invalid) {
+  --highlight-color: var(--highlight-color-invalid);
+}
+
+:host(.ion-touched.ion-valid) {
+  --highlight-color: var(--highlight-color-valid);
 }
 
 // Textarea Bottom Content

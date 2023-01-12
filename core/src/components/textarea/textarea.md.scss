@@ -1,5 +1,7 @@
 @import "./textarea";
 @import "./textarea.md.vars";
+@import "./textarea.md.solid";
+@import "./textarea.md.outline";
 
 // Material Design Textarea
 // --------------------------------------------------
@@ -31,4 +33,11 @@
 // ----------------------------------------------------------------
 .textarea-bottom .counter {
   letter-spacing: 0.0333333333em;
+}
+
+// Textarea Shape Rounded
+// ----------------------------------------------------------------
+
+:host(.textarea-shape-round) {
+  --border-radius: 16px;
 }
