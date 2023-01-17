@@ -5,6 +5,7 @@
 
 :host {
   /**
+   * @prop --background: Background of the select
    * @prop --padding-top: Top padding of the select
    * @prop --padding-end: Right padding if direction is left-to-right, and left padding if direction is right-to-left of the select
    * @prop --padding-bottom: Bottom padding of the select
@@ -12,27 +13,73 @@
    *
    * @prop --placeholder-color: Color of the select placeholder text
    * @prop --placeholder-opacity: Opacity of the select placeholder text
+   *
+   * @prop --highlight-color-focused	The color of the highlight on the select when focused
+   * @prop --highlight-color-invalid	The color of the highlight on the select when invalid
+   * @prop --highlight-color-valid	The color of the highlight on the select when valid
+   *
+   * @prop --border-color	Color of the select border
+   * @prop --border-radius	Radius of the select border
+   * @prop --border-style	Style of the select border
+   * @prop --border-width	Width of the select border
+   *
+   * @prop --ripple-color: The color of the ripple effect on MD mode.
    */
+  --padding-top: 0px;
+  --padding-end: 0px;
+  --padding-bottom: 0px;
+  --padding-start: 0px;
   --placeholder-color: currentColor;
   --placeholder-opacity: #{$placeholder-opacity};
+  --background: transparent;
+  --border-style: solid;
+  --highlight-color-focused: #{ion-color(primary, base)};
+  --highlight-color-valid: #{ion-color(success, base)};
+  --highlight-color-invalid: #{ion-color(danger, base)};
 
-  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+  /**
+   * This is a private API that is used to switch
+   * out the highlight color based on the state
+   * of the component without having to write
+   * different selectors for different fill variants.
+   */
+  --highlight-color: var(--highlight-color-focused);
 
-  display: flex;
+  display: block;
   position: relative;
-
-  align-items: center;
 
   font-family: $font-family-base;
 
-  overflow: hidden;
+  cursor: pointer;
+
   z-index: $z-index-item-input;
 }
 
-:host(.in-item) {
+:host(.ion-color) {
+  --highlight-color-focused: #{current-color(base)};
+}
+
+:host(.legacy-select) {
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+
+  display: flex;
+
+  align-items: center;
+
+  overflow: hidden;
+}
+
+// Select Used in ion-item
+// --------------------------------------------------
+:host(.in-item.legacy-select) {
   position: static;
 
   max-width: 45%;
+}
+
+:host(.in-item:not(.legacy-select)) {
+  width: 100%;
+  height: 100%;
 }
 
 :host(.select-disabled) {
@@ -50,7 +97,7 @@
   opacity: var(--placeholder-opacity);
 }
 
-label {
+:host(.legacy-select) label {
   @include input-cover();
 
   display: flex;
@@ -64,6 +111,9 @@ button {
   @include visually-hidden();
 }
 
+// Select Icon
+// --------------------------------------------------
+
 .select-icon {
   @include margin(0, 0, 0, 4px);
 
@@ -72,6 +122,47 @@ button {
   width: 13px;
 }
 
+/**
+ * Ensure that the select icon has
+ * the correct color contrast when
+ * used inside of an item.
+ */
+:host(.in-item-color) .select-icon {
+  color: inherit;
+}
+
+/**
+ * The select icon should be centered with
+ * the entire container not just the control
+ * with floating/stacked labels.
+ */
+:host(.select-label-placement-stacked) .select-icon,
+:host(.select-label-placement-floating) .select-icon {
+  position: absolute;
+
+  height: 100%;
+}
+
+/**
+ * This positions the icon at the correct
+ * edge of the component with LTR and RTL
+ * text directions. The position mixin cannot be
+ * used here because the icon is in the Shadow DOM.
+ */
+:host(.select-ltr.select-label-placement-stacked) .select-icon,
+:host(.select-ltr.select-label-placement-floating) .select-icon {
+  // stylelint-disable-next-line property-disallowed-list
+  right: var(--padding-end, 0);
+}
+
+:host(.select-rtl.select-label-placement-stacked) .select-icon,
+:host(.select-rtl.select-label-placement-floating) .select-icon {
+  // stylelint-disable-next-line property-disallowed-list
+  left: var(--padding-start, 0);
+}
+
+// Select Text
+// --------------------------------------------------
 .select-text {
   flex: 1;
 
@@ -84,4 +175,303 @@ button {
   white-space: nowrap;
 
   overflow: hidden;
+}
+
+// Select Wrapper
+// --------------------------------------------------
+
+.select-wrapper {
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+
+  display: flex;
+
+  position: relative;
+
+  flex-grow: 1;
+
+  align-items: center;
+
+  height: 100%;
+
+  /**
+   * This allows developers to set the height
+   * on the host of the element but still have
+   * the label take up the full height
+   * of the parent.
+   */
+  min-height: inherit;
+
+  transition: background-color 15ms linear;
+
+  background: var(--background);
+
+  cursor: inherit;
+
+  box-sizing: border-box;
+}
+
+// Select Highlight
+// ----------------------------------------------------------------
+
+:host(.ion-touched.ion-invalid) {
+  --highlight-color: var(--highlight-color-invalid);
+}
+
+:host(.ion-touched.ion-valid) {
+  --highlight-color: var(--highlight-color-valid);
+}
+
+// Select Label
+// ----------------------------------------------------------------
+
+.label-text-wrapper {
+  /**
+   * This causes the label to take up
+   * the entire height of its container
+   * while still keeping the text centered.
+   */
+  display: flex;
+
+  align-items: center;
+
+  /**
+   * Label text should not extend
+   * beyond the bounds of the select.
+   * However, we do not set the max
+   * width to 100% because then
+   * only the label would show and users
+   * would not be able to see what they are typing.
+   */
+  max-width: 200px;
+
+  transition: color 150ms cubic-bezier(.4, 0, .2, 1), transform 150ms cubic-bezier(.4, 0, .2, 1);
+
+  /**
+   * This ensures that double tapping this text
+   * clicks the <label> and focuses the input
+   * when a screen reader is enabled.
+   */
+  pointer-events: none;
+}
+
+/**
+ * We need to use two elements instead of
+ * one. The .label-text-wrapper is responsible
+ * for centering the label text vertically regardless
+ * of the input height using flexbox.
+ *
+ * The .label-text element is responsible for controlling
+ * overflow when label-placement="fixed".
+ * We want the ellipses to show up when the
+ * fixed label overflows, but text-overflow: ellipsis only
+ * works on block-level elements. A flex item is
+ * considered blockified (https://www.w3.org/TR/css-display-3/#blockify).
+ */
+.label-text {
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+}
+
+// Select Native Wrapper
+// ----------------------------------------------------------------
+
+.native-wrapper {
+  display: flex;
+
+  align-items: center;
+
+  /**
+   * When the floating label appears on top of the
+   * input, we need to fade the input out so that the
+   * label does not overlap with the placeholder.
+   */
+  transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /**
+   * This ensures that the .select-text gets
+   * truncated with ellipses when the text is
+   * too long for the screen.
+   */
+  overflow: hidden;
+}
+
+// Select Justify
+// --------------------------------------------------
+
+:host(.select-justify-space-between) .select-wrapper {
+  justify-content: space-between;
+}
+
+:host(.select-justify-start) .select-wrapper {
+  justify-content: start;
+}
+
+:host(.select-justify-end) .select-wrapper {
+  justify-content: end;
+}
+
+// Select Label Placement - Start
+// ----------------------------------------------------------------
+
+/**
+ * Label is on the left of the input in LTR and
+ * on the right in RTL.
+ */
+:host(.select-label-placement-start) .select-wrapper {
+  flex-direction: row;
+}
+
+:host(.select-label-placement-start) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the select should be on the end
+   * when the label sits at the start.
+   */
+  @include margin(0, 8px, 0, 0);
+}
+
+// Select Label Placement - End
+// ----------------------------------------------------------------
+
+/**
+ * Label is on the right of the select in LTR and
+ * on the left in RTL.
+ */
+:host(.select-label-placement-end) .select-wrapper {
+  flex-direction: row-reverse;
+}
+
+/**
+ * The margin between the label and
+ * the select should be on the start
+ * when the label sits at the end.
+ */
+:host(.select-label-placement-end) .label-text-wrapper {
+  @include margin(0, 0, 0, 8px);
+}
+
+// Select Label Placement - Fixed
+// ----------------------------------------------------------------
+
+:host(.select-label-placement-fixed) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the select should be on the end
+   * when the label sits at the start.
+   */
+  @include margin(0, 8px, 0, 0);
+}
+
+/**
+ * Label is on the left of the select in LTR and
+ * on the right in RTL. Label also has a fixed width.
+ */
+:host(.select-label-placement-fixed) .label-text-wrapper {
+  flex: 0 0 100px;
+
+  width: 100px;
+  min-width: 100px;
+  max-width: 200px;
+}
+
+// Select Label Placement - Stacked and Floating
+// ----------------------------------------------------------------
+
+/**
+ * Stacked: Label sits above the select and is scaled down.
+ * Floating: Label sits over the select when the select has no
+ * value and is blurred. Label sits above the input and is scaled
+ * down when the select is focused or has a value.
+ *
+ */
+:host(.select-label-placement-stacked) .select-wrapper,
+:host(.select-label-placement-floating) .select-wrapper {
+  flex-direction: column;
+  align-items: start;
+}
+
+/**
+ * Ensures that the label animates
+ * up and to the left in LTR or
+ * up and to the right in RTL.
+ */
+:host(.select-label-placement-stacked) .label-text-wrapper,
+:host(.select-label-placement-floating) .label-text-wrapper {
+  max-width: 100%;
+}
+
+:host(.select-ltr.select-label-placement-stacked) .label-text-wrapper,
+:host(.select-ltr.select-label-placement-floating) .label-text-wrapper {
+  // stylelint-disable-next-line property-disallowed-list
+  transform-origin: left top;
+}
+
+:host(.select-rtl.select-label-placement-stacked) .label-text-wrapper,
+:host(.select-rtl.select-label-placement-floating) .label-text-wrapper {
+  // stylelint-disable-next-line property-disallowed-list
+  transform-origin: right top;
+}
+
+/**
+ * Ensures the select does not
+ * overlap the label.
+ * Also ensure that the native wrapper
+ * takes up the remaining available height and width.
+ */
+:host(.select-label-placement-stacked) .native-wrapper,
+:host(.select-label-placement-floating) .native-wrapper {
+  @include margin(1px, 0, 0, 0);
+
+  flex-grow: 1;
+
+  width: 100%;
+}
+
+/**
+ * This makes the label sit over the select
+ * when the select is blurred and has no value.
+ * The label should not sit over the select if the
+ * select has a placeholder.
+ * Note: This is different from what ion-input does
+ * because the activating the select causes an overlay
+ * to appear. This makes it hard to read the placeholder.
+ * With ion-input, the input just focuses and the placeholder
+ * is still easy to read.
+ */
+:host(.select-label-placement-floating) .label-text-wrapper {
+  @include transform(translateY(100%), scale(1));
+}
+
+/**
+ * The select should be hidden when the label
+ * is on top of the select. This prevents the label
+ * from overlapping any placeholder value.
+ */
+:host(.select-label-placement-floating:not(.has-placeholder)) .native-wrapper .select-text {
+  opacity: 0;
+}
+
+:host(.select-expanded.select-label-placement-floating) .native-wrapper .select-text,
+:host(.has-value.select-label-placement-floating) .native-wrapper .select-text {
+  opacity: 1;
+}
+
+/**
+ * This makes the label sit above the input.
+ */
+:host(.select-label-placement-stacked) .label-text-wrapper,
+:host(.select-expanded.select-label-placement-floating) .label-text-wrapper,
+:host(.ion-focused.select-label-placement-floating) .label-text-wrapper,
+:host(.has-value.select-label-placement-floating) .label-text-wrapper,
+:host(.has-placeholder.select-label-placement-floating) .label-text-wrapper {
+  @include transform(translateY(50%), scale(#{$select-floating-label-scale}));
+
+  /**
+   * Label text should not extend
+   * beyond the bounds of the input.
+   */
+  max-width: calc(100% / #{$select-floating-label-scale});
 }
