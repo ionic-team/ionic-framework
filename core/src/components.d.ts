@@ -1918,6 +1918,7 @@ export namespace Components {
         "value"?: string | number;
     }
     interface IonPickerInternal {
+        "exitInputMode": () => Promise<void>;
         /**
           * The mode determines which platform styles to use.
          */
@@ -2483,6 +2484,7 @@ export namespace Components {
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
+        "setFocus": () => Promise<void>;
         /**
           * The type of the button.
          */
