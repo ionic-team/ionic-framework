@@ -729,7 +729,15 @@ export class Refresher implements ComponentInterface {
         scrollStyle.transform = backgroundStyle.transform = y > 0 ? `translateY(${y}px) translateZ(0px)` : '';
         scrollStyle.transitionDuration = backgroundStyle.transitionDuration = duration;
         scrollStyle.transitionDelay = backgroundStyle.transitionDelay = delay;
-        scrollStyle.overflow = overflowVisible ? 'hidden' : '';
+        /**
+         * The goal is to avoid overriding the settings of certain virtual scroll
+         * libraries that already set the overflow style on the scroll container.
+         */
+        if (overflowVisible) {
+          scrollStyle.overflow = 'hidden';
+        } else if (scrollStyle.overflow === 'hidden') {
+          scrollStyle.overflow = '';
+        }
       }
     });
   }
