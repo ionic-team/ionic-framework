@@ -191,7 +191,13 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
           onClick={(ev: Event) => openURL(href, ev, this.routerDirection, this.routerAnimation)}
           {...inheritedAttributes}
         >
-          <ion-icon aria-hidden="true" icon={this.closeIcon} part="close-icon" class="close-icon" lazy={false}></ion-icon>
+          <ion-icon
+            aria-hidden="true"
+            icon={this.closeIcon}
+            part="close-icon"
+            class="close-icon"
+            lazy={false}
+          ></ion-icon>
           <span class="button-inner">
             <slot></slot>
           </span>
