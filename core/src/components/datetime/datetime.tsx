@@ -2251,11 +2251,11 @@ export class Datetime implements ComponentInterface {
           this.renderFooter(),
         ];
       case 'time':
-        return [this.renderTime(), this.renderFooter()];
+        return [this.renderCalendarViewHeader(false), this.renderTime(), this.renderFooter()];
       case 'month':
       case 'month-year':
       case 'year':
-        return [this.renderWheelView(), this.renderFooter()];
+        return [this.renderCalendarViewHeader(false), this.renderWheelView(), this.renderFooter()];
       default:
         return [
           this.renderCalendarViewHeader(),
