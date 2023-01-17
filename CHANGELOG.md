@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.4.3-nightly.20230117](https://github.com/ionic-team/ionic-framework/compare/v6.4.2...v6.4.3-nightly.20230117) (2023-01-17)
+
+
+### Bug Fixes
+
+* **list:** inset lists render correctly ([#26586](https://github.com/ionic-team/ionic-framework/issues/26586)) ([911b1d4](https://github.com/ionic-team/ionic-framework/commit/911b1d496efe595ddbf8e980f052e505ce9716c2)), closes [#20819](https://github.com/ionic-team/ionic-framework/issues/20819)
+
+
+
+
+
 ## [6.4.2](https://github.com/ionic-team/ionic-framework/compare/v6.4.1...v6.4.2) (2023-01-11)
 
 

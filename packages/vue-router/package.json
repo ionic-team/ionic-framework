@@ -1,6 +1,6 @@
 {
   "name": "@ionic/vue-router",
-  "version": "6.4.2",
+  "version": "6.4.3-nightly.20230117",
   "description": "Vue Router integration for @ionic/vue",
   "scripts": {
     "test.spec": "jest",
@@ -43,7 +43,7 @@
   },
   "homepage": "https://github.com/ionic-team/ionic#readme",
   "dependencies": {
-    "@ionic/vue": "^6.4.2"
+    "@ionic/vue": "^6.4.3-nightly.20230117"
   },
   "devDependencies": {
     "@types/jest": "^28.1.1",
