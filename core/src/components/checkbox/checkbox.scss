@@ -30,7 +30,7 @@
   display: inline-block;
 
   position: relative;
-  
+
   cursor: pointer;
 
   user-select: none;
@@ -59,7 +59,7 @@
   @include input-cover();
 
   display: flex;
-  
+
   align-items: center;
 
   opacity: 0;
@@ -72,8 +72,8 @@
 
   align-items: center;
 
-  height: 100%;
-  
+  height: inherit;
+
   cursor: inherit;
 }
 
