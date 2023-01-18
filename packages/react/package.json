@@ -23,9 +23,11 @@
     "build": "npm run clean && npm run copy && npm run compile",
     "clean": "rimraf dist && rimraf dist-transpiled && rimraf routing",
     "compile": "npm run tsc && rollup -c",
+    "eslint": "eslint src",
+    "prettier": "prettier \"./src/**/*.{html,ts,tsx,js,jsx}\"",
     "release": "np --any-branch --yolo --no-release-draft",
-    "lint": "eslint src",
-    "lint.fix": "eslint src --fix",
+    "lint": "npm run eslint && npm run prettier -- --write --cache",
+    "lint.fix": "npm run eslint -- --fix && npm run prettier -- --write --cache",
     "tsc": "tsc -p .",
     "copy": "node scripts/copy.js",
     "test.spec": "jest --ci",
@@ -50,6 +52,7 @@
   },
   "devDependencies": {
     "@ionic/eslint-config": "^0.3.0",
+    "@ionic/prettier-config": "^2.0.0",
     "@rollup/plugin-node-resolve": "^8.1.0",
     "@rollup/plugin-virtual": "^2.0.3",
     "@testing-library/jest-dom": "^5.11.6",
@@ -89,5 +92,6 @@
     "modulePaths": [
       "<rootDir>"
     ]
-  }
+  },
+  "prettier": "@ionic/prettier-config"
 }
