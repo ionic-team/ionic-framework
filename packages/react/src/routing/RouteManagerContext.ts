@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { RouteInfo } from '../models/RouteInfo';
+import type { RouteInfo } from '../models/RouteInfo';
 
-import { ViewItem } from './ViewItem';
+import type { ViewItem } from './ViewItem';
 
 export interface RouteManagerContextState {
   addViewItem: (viewItem: ViewItem) => void;

@@ -10,6 +10,7 @@ export interface IonRouteProps {
   disableIonPageManagement?: boolean;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface IonRouteState {}
 
 export class IonRoute extends React.PureComponent<IonRouteProps, IonRouteState> {
@@ -19,9 +20,7 @@ export class IonRoute extends React.PureComponent<IonRouteProps, IonRouteState> 
     const IonRouteInner = this.context.getIonRoute();
 
     if (!this.context.hasIonicRouter() || !IonRoute) {
-      console.error(
-        'You either do not have an Ionic Router package, or your router does not support using <IonRoute>'
-      );
+      console.error('You either do not have an Ionic Router package, or your router does not support using <IonRoute>');
       return null;
     }
 
