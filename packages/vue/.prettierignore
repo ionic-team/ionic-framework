@@ -1,3 +1,4 @@
 vue-component-lib
 proxies.ts
 components.d.ts
+components/Overlays.ts
