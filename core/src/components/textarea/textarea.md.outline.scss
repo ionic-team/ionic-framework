@@ -114,6 +114,14 @@
   @include margin(6px, 0, 6px, 0);
 }
 
+/**
+ * This reflects the same styles as the textarea to the auto grow pseudo element.
+ */
+:host(.textarea-fill-outline.textarea-label-placement-stacked[auto-grow="true"]) .native-wrapper::after,
+:host(.textarea-fill-outline.textarea-label-placement-floating[auto-grow="true"]) .native-wrapper::after {
+  @include margin(6px, 0, 6px, 0);
+}
+
 // Textarea Fill: Outline Outline Container
 // ----------------------------------------------------------------
 

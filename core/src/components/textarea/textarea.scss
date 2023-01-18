@@ -65,14 +65,14 @@
   z-index: $z-index-item-input;
 
   box-sizing: border-box;
+
+  white-space: pre-wrap;
 }
 
 :host(.legacy-textarea) {
   flex: 1;
 
   background: var(--background);
-
-  white-space: pre-wrap;
 }
 
 :host(.ion-color) {
@@ -97,28 +97,7 @@
 // Native Textarea
 // --------------------------------------------------
 
-.textarea-legacy-wrapper {
-  display: grid;
-
-  min-width: inherit;
-  max-width: inherit;
-  min-height: inherit;
-  max-height: inherit;
-
-  &::after {
-    // This technique is used for an auto-resizing textarea.
-    // The text contents are reflected as a pseudo-element that is visually hidden.
-    // This causes the textarea container to grow as needed to fit the contents.
-
-    white-space: pre-wrap;
-
-    content: attr(data-replicated-value) " ";
-
-    visibility: hidden;
-  }
-}
-
-:host(.legacy-textarea) .native-textarea,
+.native-textarea,
 :host(.legacy-textarea) .textarea-legacy-wrapper::after {
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
   @include text-inherit();
@@ -266,6 +245,38 @@
   flex-grow: 1;
 
   width: 100%;
+}
+
+.native-wrapper,
+.textarea-legacy-wrapper {
+  display: grid;
+
+  min-width: inherit;
+  max-width: inherit;
+  min-height: inherit;
+  max-height: inherit;
+
+  &::after {
+    // This technique is used for an auto-resizing textarea.
+    // The text contents are reflected as a pseudo-element that is visually hidden.
+    // This causes the textarea container to grow as needed to fit the contents.
+
+    white-space: pre-wrap;
+
+    content: attr(data-replicated-value) " ";
+
+    visibility: hidden;
+  }
+}
+
+.native-wrapper::after {
+  @include padding(8px, 0, 8px, 0);
+  @include text-inherit();
+  @include border-radius(var(--border-radius));
+
+  grid-area: 1 / 1 / 2 / 2;
+
+  word-break: break-word;
 }
 
 // Textarea Highlight
