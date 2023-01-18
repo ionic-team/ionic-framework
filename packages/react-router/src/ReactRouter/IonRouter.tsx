@@ -4,17 +4,12 @@ import type {
   RouteInfo,
   RouteManagerContextState,
   RouterDirection,
-  ViewItem} from '@ionic/react';
-import {
-  LocationHistory,
-  NavManager,
-  RouteManagerContext,
-  generateId,
-  getConfig,
+  ViewItem,
 } from '@ionic/react';
+import { LocationHistory, NavManager, RouteManagerContext, generateId, getConfig } from '@ionic/react';
 import type { Action as HistoryAction, Location as HistoryLocation } from 'history';
 import React from 'react';
-import type { RouteComponentProps} from 'react-router-dom';
+import type { RouteComponentProps } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 
 import { IonRouteInner } from './IonRouteInner';
@@ -27,9 +22,7 @@ export interface LocationState {
 }
 
 interface IonRouteProps extends RouteComponentProps<{}, {}, LocationState> {
-  registerHistoryListener: (
-    cb: (location: HistoryLocation<any>, action: HistoryAction) => void
-  ) => void;
+  registerHistoryListener: (cb: (location: HistoryLocation<any>, action: HistoryAction) => void) => void;
 }
 
 interface IonRouteState {
@@ -79,7 +72,9 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
   }
 
   handleChangeTab(tab: string, path?: string, routeOptions?: any) {
-    if (!path) { return; }
+    if (!path) {
+      return;
+    }
 
     const routeInfo = this.locationHistory.getCurrentRouteInfoForTab(tab);
     const [pathname, search] = path.split('?');
@@ -154,8 +149,7 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
         this.locationHistory.add(routeInfo);
       } else {
         const isPushed =
-          this.incomingRouteParams.routeAction === 'push' &&
-          this.incomingRouteParams.routeDirection === 'forward';
+          this.incomingRouteParams.routeAction === 'push' && this.incomingRouteParams.routeDirection === 'forward';
         routeInfo = {
           id: generateId('routeInfo'),
           ...this.incomingRouteParams,
@@ -185,7 +179,10 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
            * say that /home was pushed by /home which is not correct.
            */
           const currentPushedBy = currentRouteInfo?.pushedByRoute;
-          const pushedByRoute = (currentPushedBy !== undefined && currentPushedBy !== routeInfo.pathname) ? currentPushedBy : routeInfo.pushedByRoute;
+          const pushedByRoute =
+            currentPushedBy !== undefined && currentPushedBy !== routeInfo.pathname
+              ? currentPushedBy
+              : routeInfo.pushedByRoute;
 
           routeInfo.lastPathname = currentRouteInfo?.pathname || routeInfo.lastPathname;
           routeInfo.prevRouteLastPathname = currentRouteInfo?.lastPathname;
@@ -255,16 +252,13 @@ class IonRouterInner extends React.PureComponent<IonRouteProps, IonRouteState> {
         };
         if (
           routeInfo.lastPathname === routeInfo.pushedByRoute ||
-          (
-            /**
-             * We need to exclude tab switches/tab
-             * context changes here because tabbed
-             * navigation is not linear, but router.back()
-             * will go back in a linear fashion.
-             */
-            prevInfo.pathname === routeInfo.pushedByRoute &&
-            routeInfo.tab === '' && prevInfo.tab === ''
-          )
+          /**
+           * We need to exclude tab switches/tab
+           * context changes here because tabbed
+           * navigation is not linear, but router.back()
+           * will go back in a linear fashion.
+           */
+          (prevInfo.pathname === routeInfo.pushedByRoute && routeInfo.tab === '' && prevInfo.tab === '')
         ) {
           /**
            * history@4.x uses goBack(), history@5.x uses back()

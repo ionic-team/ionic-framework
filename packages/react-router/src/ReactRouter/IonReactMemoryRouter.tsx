@@ -1,6 +1,6 @@
 import type { Action as HistoryAction, Location as HistoryLocation, MemoryHistory } from 'history';
 import React from 'react';
-import type { MemoryRouterProps} from 'react-router';
+import type { MemoryRouterProps } from 'react-router';
 import { Router } from 'react-router';
 
 import { IonRouter } from './IonRouter';

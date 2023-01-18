@@ -1,12 +1,5 @@
-import type {
-  RouteInfo,
-  ViewItem} from '@ionic/react';
-import {
-  IonRoute,
-  ViewLifeCycleManager,
-  ViewStacks,
-  generateId,
-} from '@ionic/react';
+import type { RouteInfo, ViewItem } from '@ionic/react';
+import { IonRoute, ViewLifeCycleManager, ViewStacks, generateId } from '@ionic/react';
 import React from 'react';
 import { matchPath } from 'react-router';
 
@@ -20,12 +13,7 @@ export class ReactRouterViewStack extends ViewStacks {
     this.findViewItemByPathname = this.findViewItemByPathname.bind(this);
   }
 
-  createViewItem(
-    outletId: string,
-    reactElement: React.ReactElement,
-    routeInfo: RouteInfo,
-    page?: HTMLElement
-  ) {
+  createViewItem(outletId: string, reactElement: React.ReactElement, routeInfo: RouteInfo, page?: HTMLElement) {
     const viewItem: ViewItem = {
       id: generateId('viewItem'),
       outletId,
@@ -118,12 +106,7 @@ export class ReactRouterViewStack extends ViewStacks {
   }
 
   findLeavingViewItemByRouteInfo(routeInfo: RouteInfo, outletId?: string, mustBeIonRoute = true) {
-    const { viewItem } = this.findViewItemByPath(
-      routeInfo.lastPathname!,
-      outletId,
-      false,
-      mustBeIonRoute
-    );
+    const { viewItem } = this.findViewItemByPath(routeInfo.lastPathname!, outletId, false, mustBeIonRoute);
     return viewItem;
   }
 
@@ -132,12 +115,7 @@ export class ReactRouterViewStack extends ViewStacks {
     return viewItem;
   }
 
-  private findViewItemByPath(
-    pathname: string,
-    outletId?: string,
-    forceExact?: boolean,
-    mustBeIonRoute?: boolean
-  ) {
+  private findViewItemByPath(pathname: string, outletId?: string, forceExact?: boolean, mustBeIonRoute?: boolean) {
     let viewItem: ViewItem | undefined;
     let match: ReturnType<typeof matchPath> | undefined;
     let viewStack: ViewItem[];
