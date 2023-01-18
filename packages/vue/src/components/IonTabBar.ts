@@ -33,8 +33,10 @@ const getTabs = (nodes: VNode[]) => {
 export const IonTabBar = defineComponent({
   name: 'IonTabBar',
   props: {
+    /* eslint-disable @typescript-eslint/no-empty-function */
     _tabsWillChange: { type: Function, default: () => {} },
     _tabsDidChange: { type: Function, default: () => {} }
+    /* eslint-enable @typescript-eslint/no-empty-function */
   },
   data() {
     return {
