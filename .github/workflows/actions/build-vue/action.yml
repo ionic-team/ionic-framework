@@ -12,7 +12,7 @@ runs:
         path: ./core
         filename: CoreBuild.zip
     - name: Install Vue Dependencies
-      run: npm install --legacy-peer-deps
+      run: npm ci
       shell: bash
       working-directory: ./packages/vue
     - name: Sync
