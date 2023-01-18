@@ -4,7 +4,9 @@
   "description": "Vue Router integration for @ionic/vue",
   "scripts": {
     "test.spec": "jest",
-    "lint": "echo add linter",
+    "eslint": "eslint src",
+    "lint": "npm run eslint",
+    "lint.fix": "npm run eslint -- --fix",
     "bundle": "rollup --config rollup.config.js",
     "build": "npm run clean && npm run compile && npm run bundle",
     "clean": "rimraf dist",
@@ -46,8 +48,12 @@
     "@ionic/vue": "^6.5.0"
   },
   "devDependencies": {
+    "@ionic/eslint-config": "^0.3.0",
     "@types/jest": "^28.1.1",
     "@types/node": "^14.10.1",
+    "@typescript-eslint/eslint-plugin": "^5.48.2",
+    "@typescript-eslint/parser": "^5.48.2",
+    "eslint": "^7.32.0",
     "jest": "^28.1.1",
     "jest-environment-jsdom": "^28.1.1",
     "rimraf": "^3.0.2",
