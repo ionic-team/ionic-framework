@@ -3,7 +3,7 @@ import { test } from '@utils/test/playwright';
 
 test.describe('textarea: autogrow', () => {
   test('should not have visual regressions', async ({ page }) => {
-    await page.goto(`/src/components/textarea/test/legacy/autogrow`);
+    await page.goto(`/src/components/textarea/test/autogrow`);
 
     await page.setIonViewport();
 
@@ -16,9 +16,7 @@ test.describe('textarea: autogrow', () => {
       <ion-app>
         <ion-content>
           <ion-list>
-            <ion-item>
-              <ion-textarea auto-grow="true" legacy="true"></ion-textarea>
-            </ion-item>
+            <ion-textarea auto-grow="true"></ion-textarea>
           </ion-list>
         </ion-content>
       </ion-app>`
@@ -58,7 +56,6 @@ test.describe('textarea: autogrow', () => {
       `<ion-app>
         <ion-content>
           <ion-textarea
-            legacy="true"
             auto-grow="true"
             value="abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz">
           </ion-textarea>
