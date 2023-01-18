@@ -1,12 +1,11 @@
-import { inject } from 'vue';
+import { inject } from "vue";
 
-import type { AnimationBuilder } from '../';
+import type { AnimationBuilder } from "../";
 
-export type RouteAction = 'push' | 'pop' | 'replace';
-export type RouteDirection = 'forward' | 'back' | 'root' | 'none';
+export type RouteAction = "push" | "pop" | "replace";
+export type RouteDirection = "forward" | "back" | "root" | "none";
 
 export interface UseIonRouterResult {
-
   /**
    * The location parameter is really of type 'RouteLocationRaw'
    * imported from vue-router, but the @ionic/vue package should
@@ -30,7 +29,9 @@ export interface UseIonRouterResult {
  * while controlling the animation.
  */
 export const useIonRouter = (): UseIonRouterResult => {
-  const { canGoBack, goBack, goForward, handleNavigate } = inject('navManager') as any;
+  const { canGoBack, goBack, goForward, handleNavigate } = inject(
+    "navManager"
+  ) as any;
 
   const navigate = (
     location: any,
@@ -39,23 +40,16 @@ export const useIonRouter = (): UseIonRouterResult => {
     routerAnimation?: AnimationBuilder
   ) => handleNavigate(location, routerAction, routerDirection, routerAnimation);
 
-  const push = (
-    location: any,
-    routerAnimation?: AnimationBuilder
-  ) => navigate(location, 'forward', 'push', routerAnimation);
+  const push = (location: any, routerAnimation?: AnimationBuilder) =>
+    navigate(location, "forward", "push", routerAnimation);
 
-  const replace = (
-    location: any,
-    routerAnimation?: AnimationBuilder
-  ) => navigate(location, 'root', 'replace', routerAnimation);
+  const replace = (location: any, routerAnimation?: AnimationBuilder) =>
+    navigate(location, "root", "replace", routerAnimation);
 
-  const back = (
-    routerAnimation?: AnimationBuilder
-  ) => goBack(routerAnimation);
+  const back = (routerAnimation?: AnimationBuilder) => goBack(routerAnimation);
 
-  const forward = (
-    routerAnimation?: AnimationBuilder
-  ) => goForward(routerAnimation);
+  const forward = (routerAnimation?: AnimationBuilder) =>
+    goForward(routerAnimation);
 
   return {
     canGoBack,
@@ -63,8 +57,6 @@ export const useIonRouter = (): UseIonRouterResult => {
     replace,
     back,
     forward,
-    navigate
-  } as UseIonRouterResult
-}
-
-
+    navigate,
+  } as UseIonRouterResult;
+};

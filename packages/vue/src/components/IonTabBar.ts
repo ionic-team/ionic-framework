@@ -1,6 +1,6 @@
-import { defineCustomElement } from '@ionic/core/components/ion-tab-bar.js';
-import type { VNode } from 'vue';
-import { h, defineComponent, getCurrentInstance, inject } from 'vue';
+import { defineCustomElement } from "@ionic/core/components/ion-tab-bar.js";
+import type { VNode } from "vue";
+import { h, defineComponent, getCurrentInstance, inject } from "vue";
 
 // TODO(FW-2969): types
 
@@ -11,11 +11,11 @@ interface TabState {
 
 interface Tab {
   originalHref: string;
-  currentHref: string,
-  ref: VNode
+  currentHref: string;
+  ref: VNode;
 }
 
-const isTabButton = (child: any) => child.type?.name === 'IonTabButton';
+const isTabButton = (child: any) => child.type?.name === "IonTabButton";
 
 const getTabs = (nodes: VNode[]) => {
   let tabs: VNode[] = [];
@@ -29,27 +29,27 @@ const getTabs = (nodes: VNode[]) => {
   });
 
   return tabs;
-}
+};
 
 export const IonTabBar = defineComponent({
-  name: 'IonTabBar',
+  name: "IonTabBar",
   props: {
     /* eslint-disable @typescript-eslint/no-empty-function */
     _tabsWillChange: { type: Function, default: () => {} },
-    _tabsDidChange: { type: Function, default: () => {} }
+    _tabsDidChange: { type: Function, default: () => {} },
     /* eslint-enable @typescript-eslint/no-empty-function */
   },
   data() {
     return {
       tabState: {
         activeTab: undefined,
-        tabs: {}
+        tabs: {},
       },
-      tabVnodes: []
-    }
+      tabVnodes: [],
+    };
   },
   updated() {
-    this.setupTabState(inject('navManager'));
+    this.setupTabState(inject("navManager"));
   },
   methods: {
     setupTabState(ionRouter: any) {
@@ -62,13 +62,15 @@ export const IonTabBar = defineComponent({
        */
       const tabState: TabState = this.$data.tabState;
       const currentInstance = getCurrentInstance();
-      const tabs = this.$data.tabVnodes = getTabs((currentInstance.subTree.children || []) as VNode[]);
-      tabs.forEach(child => {
+      const tabs = (this.$data.tabVnodes = getTabs(
+        (currentInstance.subTree.children || []) as VNode[]
+      ));
+      tabs.forEach((child) => {
         tabState.tabs[child.props.tab] = {
           originalHref: child.props.href,
           currentHref: child.props.href,
-          ref: child
-        }
+          ref: child,
+        };
 
         /**
          * Passing this prop to each tab button
@@ -86,11 +88,10 @@ export const IonTabBar = defineComponent({
       const { tabs, activeTab: prevActiveTab } = this.$data.tabState;
       const tabState = this.$data.tabState;
       const tabKeys = Object.keys(tabs);
-      const activeTab = tabKeys
-        .find(key => {
-          const href = tabs[key].originalHref;
-          return currentRoute.pathname.startsWith(href);
-        });
+      const activeTab = tabKeys.find((key) => {
+        const href = tabs[key].originalHref;
+        return currentRoute.pathname.startsWith(href);
+      });
 
       /**
        * For each tab, check to see if the
@@ -99,13 +100,12 @@ export const IonTabBar = defineComponent({
        */
       childNodes.forEach((child: VNode) => {
         const tab = tabs[child.props.tab];
-        if (!tab || (tab.originalHref !== child.props.href)) {
-
+        if (!tab || tab.originalHref !== child.props.href) {
           tabs[child.props.tab] = {
             originalHref: child.props.href,
             currentHref: child.props.href,
-            ref: child
-          }
+            ref: child,
+          };
         }
       });
 
@@ -118,34 +118,38 @@ export const IonTabBar = defineComponent({
          * If we went to tab2 then back to tab1, we should
          * land on /tabs/tab1/child instead of /tabs/tab1.
          */
-        if (activeTab !== prevActiveTab || (prevHref !== currentRoute.pathname)) {
-
+        if (activeTab !== prevActiveTab || prevHref !== currentRoute.pathname) {
           /**
            * By default the search is `undefined` in Ionic Vue,
            * but Vue Router can set the search to the empty string.
            * We check for truthy here because empty string is falsy
            * and currentRoute.search cannot ever be a boolean.
            */
-          const search = (currentRoute.search) ? `?${currentRoute.search}` : '';
+          const search = currentRoute.search ? `?${currentRoute.search}` : "";
           tabs[activeTab] = {
             ...tabs[activeTab],
-            currentHref: currentRoute.pathname + search
-          }
+            currentHref: currentRoute.pathname + search,
+          };
         }
 
         /**
          * If navigating back and the tabs change,
          * set the previous tab back to its original href.
          */
-        if (currentRoute.routerAction === 'pop' && (activeTab !== prevActiveTab)) {
+        if (
+          currentRoute.routerAction === "pop" &&
+          activeTab !== prevActiveTab
+        ) {
           tabs[prevActiveTab] = {
             ...tabs[prevActiveTab],
-            currentHref: tabs[prevActiveTab].originalHref
-          }
+            currentHref: tabs[prevActiveTab].originalHref,
+          };
         }
       }
 
-      const activeChild = childNodes.find((child: VNode) => isTabButton(child) && child.props?.tab === activeTab);
+      const activeChild = childNodes.find(
+        (child: VNode) => isTabButton(child) && child.props?.tab === activeTab
+      );
       const tabBar = this.$refs.ionTabBar;
       const tabDidChange = activeTab !== prevActiveTab;
       if (tabBar) {
@@ -156,34 +160,36 @@ export const IonTabBar = defineComponent({
           tabBar.selectedTab = tabState.activeTab = activeTab;
 
           tabDidChange && this.$props._tabsDidChange(activeTab);
-        /**
-         * When going to a tab that does
-         * not have an associated ion-tab-button
-         * we need to remove the selected state from
-        * the old tab.
-         */
+          /**
+           * When going to a tab that does
+           * not have an associated ion-tab-button
+           * we need to remove the selected state from
+           * the old tab.
+           */
         } else {
-          tabBar.selectedTab = tabState.activeTab = '';
+          tabBar.selectedTab = tabState.activeTab = "";
         }
       }
-    }
+    },
   },
   mounted() {
-    const ionRouter: any = inject('navManager');
+    const ionRouter: any = inject("navManager");
 
     this.setupTabState(ionRouter);
 
-    ionRouter.registerHistoryChangeListener(() => this.checkActiveTab(ionRouter));
+    ionRouter.registerHistoryChangeListener(() =>
+      this.checkActiveTab(ionRouter)
+    );
   },
   setup(_, { slots }) {
     defineCustomElement();
 
     return () => {
       return h(
-        'ion-tab-bar',
-        { ref: 'ionTabBar' },
+        "ion-tab-bar",
+        { ref: "ionTabBar" },
         slots.default && slots.default()
-      )
-    }
-  }
+      );
+    };
+  },
 });

@@ -1,33 +1,46 @@
-import type { Config as CoreConfig} from '@ionic/core/components';
-import { LIFECYCLE_DID_ENTER, LIFECYCLE_DID_LEAVE, LIFECYCLE_WILL_ENTER, LIFECYCLE_WILL_LEAVE } from '@ionic/core/components';
-import type { Ref, ComponentPublicInstance } from 'vue';
+import type { Config as CoreConfig } from "@ionic/core/components";
+import {
+  LIFECYCLE_DID_ENTER,
+  LIFECYCLE_DID_LEAVE,
+  LIFECYCLE_WILL_ENTER,
+  LIFECYCLE_WILL_LEAVE,
+} from "@ionic/core/components";
+import type { Ref, ComponentPublicInstance } from "vue";
 
-type LIFECYCLE_EVENTS = typeof LIFECYCLE_WILL_ENTER | typeof LIFECYCLE_DID_ENTER | typeof LIFECYCLE_WILL_LEAVE | typeof LIFECYCLE_DID_LEAVE;
+type LIFECYCLE_EVENTS =
+  | typeof LIFECYCLE_WILL_ENTER
+  | typeof LIFECYCLE_DID_ENTER
+  | typeof LIFECYCLE_WILL_LEAVE
+  | typeof LIFECYCLE_DID_LEAVE;
 
 // TODO(FW-2969): types
 
 export enum LifecycleHooks {
-  WillEnter = 'onIonViewWillEnter',
-  DidEnter = 'onIonViewDidEnter',
-  WillLeave = 'onIonViewWillLeave',
-  DidLeave = 'onIonViewDidLeave'
+  WillEnter = "onIonViewWillEnter",
+  DidEnter = "onIonViewDidEnter",
+  WillLeave = "onIonViewWillLeave",
+  DidLeave = "onIonViewDidLeave",
 }
 const hookNames = {
   [LIFECYCLE_WILL_ENTER]: LifecycleHooks.WillEnter,
   [LIFECYCLE_DID_ENTER]: LifecycleHooks.DidEnter,
   [LIFECYCLE_WILL_LEAVE]: LifecycleHooks.WillLeave,
-  [LIFECYCLE_DID_LEAVE]: LifecycleHooks.DidLeave
-}
+  [LIFECYCLE_DID_LEAVE]: LifecycleHooks.DidLeave,
+};
 
 const ids: { [k: string]: number } = { main: 0 };
 
-export const generateId = (type = 'main') => {
+export const generateId = (type = "main") => {
   const id = (ids[type] ?? 0) + 1;
   ids[type] = id;
-  return (id).toString();
+  return id.toString();
 };
 
-export const fireLifecycle = (vueComponent: any, vueInstance: Ref<ComponentPublicInstance>, lifecycle: LIFECYCLE_EVENTS) => {
+export const fireLifecycle = (
+  vueComponent: any,
+  vueInstance: Ref<ComponentPublicInstance>,
+  lifecycle: LIFECYCLE_EVENTS
+) => {
   if (vueComponent?.[lifecycle]) {
     vueComponent[lifecycle].bind(vueInstance?.value)();
   }
@@ -48,10 +61,10 @@ export const fireLifecycle = (vueComponent: any, vueInstance: Ref<ComponentPubli
       hooks.forEach((hook: Function) => hook());
     }
   }
-}
+};
 
 export const getConfig = (): CoreConfig | null => {
-  if (typeof (window as any) !== 'undefined') {
+  if (typeof (window as any) !== "undefined") {
     const Ionic = (window as any).Ionic;
     if (Ionic && Ionic.config) {
       return Ionic.config;

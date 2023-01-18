@@ -1,10 +1,15 @@
-import { defineCustomElement } from '@ionic/core/components/ion-tab-button.js';
-import { h, defineComponent, inject } from 'vue';
+import { defineCustomElement } from "@ionic/core/components/ion-tab-button.js";
+import { h, defineComponent, inject } from "vue";
 
 export const IonTabButton = /*@__PURE__*/ defineComponent({
-  name: 'IonTabButton',
+  name: "IonTabButton",
   props: {
-    _getTabState: { type: Function, default: () => { return {} } },
+    _getTabState: {
+      type: Function,
+      default: () => {
+        return {};
+      },
+    },
     disabled: Boolean,
     download: String,
     href: String,
@@ -12,13 +17,13 @@ export const IonTabButton = /*@__PURE__*/ defineComponent({
     layout: String,
     selected: Boolean,
     tab: String,
-    target: String
+    target: String,
   },
   setup(props, { slots }) {
     defineCustomElement();
 
     // TODO(FW-2969): type
-    const ionRouter: any = inject('navManager');
+    const ionRouter: any = inject("navManager");
     const onClick = (ev: Event) => {
       if (ev.cancelable) {
         ev.preventDefault();
@@ -50,18 +55,18 @@ export const IonTabButton = /*@__PURE__*/ defineComponent({
           ionRouter.resetTab(tab);
         }
       } else {
-        ionRouter.changeTab(tab, currentHref)
+        ionRouter.changeTab(tab, currentHref);
       }
     };
     return () => {
       return h(
-        'ion-tab-button',
+        "ion-tab-button",
         {
           onClick,
-          ...props
+          ...props,
         },
         slots.default && slots.default()
-      )
-    }
-  }
+      );
+    };
+  },
 });

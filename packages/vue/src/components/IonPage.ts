@@ -1,10 +1,10 @@
-import { h, defineComponent } from 'vue';
+import { h, defineComponent } from "vue";
 
 export const IonPage = /*@__PURE__*/ defineComponent({
-  name: 'IonPage',
+  name: "IonPage",
   props: {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    registerIonPage: { type: Function, default: () => {} }
+    registerIonPage: { type: Function, default: () => {} },
   },
   mounted() {
     this.$props.registerIonPage(this.$refs.ionPage);
@@ -12,14 +12,14 @@ export const IonPage = /*@__PURE__*/ defineComponent({
   setup(_, { attrs, slots }) {
     return () => {
       return h(
-        'div',
+        "div",
         {
           ...attrs,
-          ['class']: 'ion-page',
-          ref: 'ionPage'
+          ["class"]: "ion-page",
+          ref: "ionPage",
         },
         slots.default && slots.default()
-      )
-    }
-  }
+      );
+    };
+  },
 });
