@@ -64,7 +64,7 @@ export class LocationHistory {
   }
 
   private _areRoutesEqual(route1?: RouteInfo, route2?: RouteInfo) {
-    if(!route1 || !route2) {
+    if (!route1 || !route2) {
       return false;
     }
     return route1.pathname === route2.pathname && route1.search === route2.search;
@@ -153,8 +153,7 @@ export class LocationHistory {
 
   previous() {
     return (
-      this.locationHistory[this.locationHistory.length - 2] ||
-      this.locationHistory[this.locationHistory.length - 1]
+      this.locationHistory[this.locationHistory.length - 2] || this.locationHistory[this.locationHistory.length - 1]
     );
   }
 

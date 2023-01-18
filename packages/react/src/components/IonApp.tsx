@@ -27,11 +27,7 @@ export const IonApp = /*@__PURE__*/ (() =>
       Wire up methods to call into IonOverlayManager
     */
     ionContext: IonContextInterface = {
-      addOverlay: (
-        id: string,
-        overlay: ReactComponentOrElement,
-        containerElement: HTMLDivElement
-      ) => {
+      addOverlay: (id: string, overlay: ReactComponentOrElement, containerElement: HTMLDivElement) => {
         if (this.addOverlayCallback) {
           this.addOverlayCallback(id, overlay, containerElement);
         }

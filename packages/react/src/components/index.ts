@@ -1,4 +1,4 @@
-import type { IonicConfig} from '@ionic/core/components';
+import type { IonicConfig } from '@ionic/core/components';
 import { initialize } from '@ionic/core/components';
 
 export {
@@ -23,95 +23,64 @@ export {
   GestureConfig,
   GestureDetail,
   NavComponentWithProps,
-
   SpinnerTypes,
-
   AccordionGroupCustomEvent,
   AccordionGroupChangeEventDetail,
-
   BreadcrumbCustomEvent,
   BreadcrumbCollapsedClickEventDetail,
-
   ActionSheetOptions,
   ActionSheetButton,
-
   AlertOptions,
   AlertInput,
   AlertTextareaAttributes,
   AlertInputAttributes,
   AlertButton,
-
   BackButtonEvent,
-
   CheckboxCustomEvent,
   CheckboxChangeEventDetail,
-
   DatetimeCustomEvent,
   DatetimeChangeEventDetail,
-
   InfiniteScrollCustomEvent,
-
   InputCustomEvent,
   InputChangeEventDetail,
-
   ItemReorderEventDetail,
   ItemReorderCustomEvent,
-
   ItemSlidingCustomEvent,
-
   IonicSafeString,
-
   LoadingOptions,
-
   MenuCustomEvent,
-
   ModalOptions,
-
   NavCustomEvent,
-
   PickerOptions,
   PickerButton,
   PickerColumn,
   PickerColumnOption,
-
   PopoverOptions,
-
   RadioGroupCustomEvent,
   RadioGroupChangeEventDetail,
-
   RangeCustomEvent,
   RangeChangeEventDetail,
   RangeKnobMoveStartEventDetail,
   RangeKnobMoveEndEventDetail,
-
   RefresherCustomEvent,
   RefresherEventDetail,
-
   RouterEventDetail,
   RouterCustomEvent,
-
   ScrollBaseCustomEvent,
   ScrollBaseDetail,
   ScrollDetail,
   ScrollCustomEvent,
-
   SearchbarCustomEvent,
   SearchbarChangeEventDetail,
-
   SegmentChangeEventDetail,
   SegmentCustomEvent,
-
   SelectChangeEventDetail,
   SelectCustomEvent,
-
   TabsCustomEvent,
-
   TextareaChangeEventDetail,
   TextareaCustomEvent,
-
   ToastOptions,
   ToastButton,
-
   ToggleChangeEventDetail,
   ToggleCustomEvent,
 } from '@ionic/core/components';
@@ -174,6 +143,6 @@ export const setupIonicReact = (config: IonicConfig = {}) => {
   }
 
   initialize({
-    ...config
+    ...config,
   });
-}
+};

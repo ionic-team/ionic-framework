@@ -110,8 +110,8 @@ export const IonTabs = /*@__PURE__*/ (() =>
         }
 
         let childProps: any = {
-          ref: this.tabBarRef
-        }
+          ref: this.tabBarRef,
+        };
 
         /**
          * Only pass these props
@@ -123,15 +123,15 @@ export const IonTabs = /*@__PURE__*/ (() =>
         if (onIonTabsDidChange !== undefined) {
           childProps = {
             ...childProps,
-            onIonTabsDidChange
-          }
+            onIonTabsDidChange,
+          };
         }
 
         if (onIonTabsWillChange !== undefined) {
           childProps = {
             ...childProps,
-            onIonTabsWillChange
-          }
+            onIonTabsWillChange,
+          };
         }
 
         if (child.type === IonTabBar || child.type.isTabBar) {
@@ -154,11 +154,7 @@ export const IonTabs = /*@__PURE__*/ (() =>
       return (
         <IonTabsContext.Provider value={this.ionTabContextState}>
           {this.context.hasIonicRouter() ? (
-            <PageManager
-              className={className ? `${className}` : ''}
-              routeInfo={this.context.routeInfo}
-              {...props}
-            >
+            <PageManager className={className ? `${className}` : ''} routeInfo={this.context.routeInfo} {...props}>
               <ion-tabs className="ion-tabs" style={hostStyles}>
                 {tabBar.props.slot === 'top' ? tabBar : null}
                 <div style={tabsInner} className="tabs-inner">

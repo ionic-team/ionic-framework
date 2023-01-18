@@ -34,11 +34,7 @@ class IonRouterOutletContainer extends React.Component<InternalProps, InternalSt
 
     return this.context.hasIonicRouter() ? (
       props.ionPage ? (
-        <OutletPageManager
-          StackManager={StackManager}
-          routeInfo={this.context.routeInfo}
-          {...props}
-        >
+        <OutletPageManager StackManager={StackManager} routeInfo={this.context.routeInfo} {...props}>
           {children}
         </OutletPageManager>
       ) : (
@@ -60,7 +56,7 @@ class IonRouterOutletContainer extends React.Component<InternalProps, InternalSt
   }
 }
 
-export const IonRouterOutlet = createForwardRef<
-  Props & IonicReactProps,
-  HTMLIonRouterOutletElement
->(IonRouterOutletContainer, 'IonRouterOutlet');
+export const IonRouterOutlet = createForwardRef<Props & IonicReactProps, HTMLIonRouterOutletElement>(
+  IonRouterOutletContainer,
+  'IonRouterOutlet'
+);

@@ -1,11 +1,7 @@
-import type { SerializeDocumentOptions} from '@ionic/core/hydrate';
+import type { SerializeDocumentOptions } from '@ionic/core/hydrate';
 import { renderToString } from '@ionic/core/hydrate';
 
-export async function ionRenderToString(
-  html: string,
-  userAgent: string,
-  options: SerializeDocumentOptions = {}
-) {
+export async function ionRenderToString(html: string, userAgent: string, options: SerializeDocumentOptions = {}) {
   const renderToStringOptions = Object.assign(
     {},
     {

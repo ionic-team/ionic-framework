@@ -1,4 +1,4 @@
-import type { AlertButton, AlertOptions} from '@ionic/core/components';
+import type { AlertButton, AlertOptions } from '@ionic/core/components';
 import { alertController } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-alert.js';
 import { useCallback } from 'react';

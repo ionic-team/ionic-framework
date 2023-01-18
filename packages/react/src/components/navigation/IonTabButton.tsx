@@ -41,12 +41,7 @@ export const IonTabButton = /*@__PURE__*/ (() =>
        */
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { onClick, ...rest } = this.props;
-      return (
-        <IonTabButtonInner
-          onIonTabButtonClick={this.handleIonTabButtonClick}
-          {...rest}
-        ></IonTabButtonInner>
-      );
+      return <IonTabButtonInner onIonTabButtonClick={this.handleIonTabButtonClick} {...rest}></IonTabButtonInner>;
     }
 
     static get displayName() {

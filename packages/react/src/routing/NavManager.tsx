@@ -137,9 +137,7 @@ export class NavManager extends React.PureComponent<NavManagerProps, NavContextS
   render() {
     return (
       <NavContext.Provider value={{ ...this.state, routeInfo: this.props.routeInfo }}>
-        <IonRouterContext.Provider
-          value={{ ...this.ionRouterContextValue, routeInfo: this.props.routeInfo }}
-        >
+        <IonRouterContext.Provider value={{ ...this.ionRouterContextValue, routeInfo: this.props.routeInfo }}>
           {this.props.children}
         </IonRouterContext.Provider>
       </NavContext.Provider>

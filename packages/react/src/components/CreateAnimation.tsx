@@ -4,10 +4,9 @@ import type {
   AnimationDirection,
   AnimationFill,
   AnimationKeyFrames,
-  AnimationLifecycle} from '@ionic/core/components';
-import {
-  createAnimation,
+  AnimationLifecycle,
 } from '@ionic/core/components';
+import { createAnimation } from '@ionic/core/components';
 import type { PropsWithChildren } from 'react';
 import React from 'react';
 

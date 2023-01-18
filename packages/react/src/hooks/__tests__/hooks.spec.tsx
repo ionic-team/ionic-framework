@@ -5,8 +5,8 @@ describe('test', () => {
   it('should pass', () => {
     // This is to get CI to pass!
     // We need to figure out an ESM solution for tests
-  })
-})
+  });
+});
 
 /*import { alertController, modalController } from '@ionic/core';
 

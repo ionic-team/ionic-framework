@@ -39,43 +39,19 @@ export class OutletPageManager extends React.Component<OutletPageManagerProps> {
         });
       }
 
-      this.ionRouterOutlet.addEventListener(
-        'ionViewWillEnter',
-        this.ionViewWillEnterHandler.bind(this)
-      );
-      this.ionRouterOutlet.addEventListener(
-        'ionViewDidEnter',
-        this.ionViewDidEnterHandler.bind(this)
-      );
-      this.ionRouterOutlet.addEventListener(
-        'ionViewWillLeave',
-        this.ionViewWillLeaveHandler.bind(this)
-      );
-      this.ionRouterOutlet.addEventListener(
-        'ionViewDidLeave',
-        this.ionViewDidLeaveHandler.bind(this)
-      );
+      this.ionRouterOutlet.addEventListener('ionViewWillEnter', this.ionViewWillEnterHandler.bind(this));
+      this.ionRouterOutlet.addEventListener('ionViewDidEnter', this.ionViewDidEnterHandler.bind(this));
+      this.ionRouterOutlet.addEventListener('ionViewWillLeave', this.ionViewWillLeaveHandler.bind(this));
+      this.ionRouterOutlet.addEventListener('ionViewDidLeave', this.ionViewDidLeaveHandler.bind(this));
     }
   }
 
   componentWillUnmount() {
     if (this.ionRouterOutlet) {
-      this.ionRouterOutlet.removeEventListener(
-        'ionViewWillEnter',
-        this.ionViewWillEnterHandler.bind(this)
-      );
-      this.ionRouterOutlet.removeEventListener(
-        'ionViewDidEnter',
-        this.ionViewDidEnterHandler.bind(this)
-      );
-      this.ionRouterOutlet.removeEventListener(
-        'ionViewWillLeave',
-        this.ionViewWillLeaveHandler.bind(this)
-      );
-      this.ionRouterOutlet.removeEventListener(
-        'ionViewDidLeave',
-        this.ionViewDidLeaveHandler.bind(this)
-      );
+      this.ionRouterOutlet.removeEventListener('ionViewWillEnter', this.ionViewWillEnterHandler.bind(this));
+      this.ionRouterOutlet.removeEventListener('ionViewDidEnter', this.ionViewDidEnterHandler.bind(this));
+      this.ionRouterOutlet.removeEventListener('ionViewWillLeave', this.ionViewWillLeaveHandler.bind(this));
+      this.ionRouterOutlet.removeEventListener('ionViewDidLeave', this.ionViewDidLeaveHandler.bind(this));
     }
   }
 

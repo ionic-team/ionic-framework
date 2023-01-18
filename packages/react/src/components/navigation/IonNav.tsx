@@ -6,10 +6,12 @@ import { ReactDelegate } from '../../framework-delegate';
 import { createReactComponent } from '../react-component-lib';
 import { createForwardRef } from '../utils';
 
-const IonNavInner = createReactComponent<
-  JSX.IonNav & { delegate: FrameworkDelegate },
-  HTMLIonNavElement
->('ion-nav', undefined, undefined, defineCustomElement);
+const IonNavInner = createReactComponent<JSX.IonNav & { delegate: FrameworkDelegate }, HTMLIonNavElement>(
+  'ion-nav',
+  undefined,
+  undefined,
+  defineCustomElement
+);
 
 type IonNavProps = JSX.IonNav & {
   forwardedRef?: React.ForwardedRef<HTMLIonNavElement>;

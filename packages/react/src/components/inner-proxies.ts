@@ -13,10 +13,12 @@ export const IonTabButtonInner = /*@__PURE__*/ createReactComponent<
   JSX.IonTabButton & { onIonTabButtonClick?: (e: CustomEvent) => void },
   HTMLIonTabButtonElement
 >('ion-tab-button', undefined, undefined, defineIonTabButton);
-export const IonTabBarInner = /*@__PURE__*/ createReactComponent<
-  JSX.IonTabBar,
-  HTMLIonTabBarElement
->('ion-tab-bar', undefined, undefined, defineIonTabBar);
+export const IonTabBarInner = /*@__PURE__*/ createReactComponent<JSX.IonTabBar, HTMLIonTabBarElement>(
+  'ion-tab-bar',
+  undefined,
+  undefined,
+  defineIonTabBar
+);
 export const IonBackButtonInner = /*@__PURE__*/ createReactComponent<
   Omit<JSX.IonBackButton, 'icon'>,
   HTMLIonBackButtonElement
@@ -37,7 +39,9 @@ export const IonAppInner = /*@__PURE__*/ createReactComponent<JSX.IonApp, HTMLIo
 );
 
 // ionicons
-export const IonIconInner = /*@__PURE__*/ createReactComponent<
-  IoniconsJSX.IonIcon,
-  HTMLIonIconElement
->('ion-icon', undefined, undefined, defineIonIcon);
+export const IonIconInner = /*@__PURE__*/ createReactComponent<IoniconsJSX.IonIcon, HTMLIonIconElement>(
+  'ion-icon',
+  undefined,
+  undefined,
+  defineIonIcon
+);

@@ -1,10 +1,5 @@
-import type {
-  PickerButton,
-  PickerColumn,
-  PickerOptions} from '@ionic/core/components';
-import {
-  pickerController,
-} from '@ionic/core/components';
+import type { PickerButton, PickerColumn, PickerOptions } from '@ionic/core/components';
+import { pickerController } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-picker.js';
 import { useCallback } from 'react';
 
@@ -22,19 +17,19 @@ export function useIonPicker(): UseIonPickerResult {
     defineCustomElement
   );
 
-  const present = useCallback((
-    columnsOrOptions: PickerColumn[] | (PickerOptions & HookOverlayOptions),
-    buttons?: PickerButton[]
-  ) => {
-    if (Array.isArray(columnsOrOptions)) {
-      return controller.present({
-        columns: columnsOrOptions,
-        buttons: buttons ?? [{ text: 'Ok' }],
-      });
-    } else {
-      return controller.present(columnsOrOptions);
-    }
-  }, [controller.present]);
+  const present = useCallback(
+    (columnsOrOptions: PickerColumn[] | (PickerOptions & HookOverlayOptions), buttons?: PickerButton[]) => {
+      if (Array.isArray(columnsOrOptions)) {
+        return controller.present({
+          columns: columnsOrOptions,
+          buttons: buttons ?? [{ text: 'Ok' }],
+        });
+      } else {
+        return controller.present(columnsOrOptions);
+      }
+    },
+    [controller.present]
+  );
 
   return [present, controller.dismiss];
 }

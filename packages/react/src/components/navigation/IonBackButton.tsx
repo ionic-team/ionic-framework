@@ -26,7 +26,9 @@ export const IonBackButton = /*@__PURE__*/ (() =>
        * of ion-nav then we should not interact with
        * the router.
        */
-      if (e.target && (e.target as HTMLElement).closest('ion-nav') !== null) { return; }
+      if (e.target && (e.target as HTMLElement).closest('ion-nav') !== null) {
+        return;
+      }
 
       const { defaultHref, routerAnimation } = this.props;
 

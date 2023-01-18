@@ -1,4 +1,4 @@
-import type { ToastOptions} from '@ionic/core/components';
+import type { ToastOptions } from '@ionic/core/components';
 import { toastController } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-toast.js';
 import { useCallback } from 'react';
@@ -11,27 +11,23 @@ import { useController } from './useController';
  * @returns Returns the present and dismiss methods in an array
  */
 export function useIonToast(): UseIonToastResult {
-  const controller = useController<ToastOptions, HTMLIonToastElement>(
-    'IonToast',
-    toastController,
-    defineCustomElement
+  const controller = useController<ToastOptions, HTMLIonToastElement>('IonToast', toastController, defineCustomElement);
+
+  const present = useCallback(
+    (messageOrOptions: string | (ToastOptions & HookOverlayOptions), duration?: number) => {
+      if (typeof messageOrOptions === 'string') {
+        return controller.present({
+          message: messageOrOptions,
+          duration,
+        });
+      } else {
+        return controller.present(messageOrOptions);
+      }
+    },
+    [controller.present]
   );
 
-  const present = useCallback((messageOrOptions: string | ToastOptions & HookOverlayOptions, duration?: number) => {
-    if (typeof messageOrOptions === 'string') {
-      return controller.present({
-        message: messageOrOptions,
-        duration
-      });
-    } else {
-      return controller.present(messageOrOptions);
-    }
-  }, [controller.present]);
-
-  return [
-    present,
-    controller.dismiss
-  ];
+  return [present, controller.dismiss];
 }
 
 export type UseIonToastResult = [

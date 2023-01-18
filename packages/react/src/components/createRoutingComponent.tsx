@@ -27,24 +27,21 @@ interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<Elem
   routerAnimation?: AnimationBuilder;
 }
 
-export const createRoutingComponent = <PropType, ElementType>(
-  tagName: string,
-  customElement?: any
-) => {
+export const createRoutingComponent = <PropType, ElementType>(tagName: string, customElement?: any) => {
   defineCustomElement(tagName, customElement);
 
   const displayName = dashToPascalCase(tagName);
   const ReactComponent = class extends React.Component<IonicReactInternalProps<PropType>> {
     context!: React.ContextType<typeof NavContext>;
     ref: React.RefObject<HTMLElement>;
-    stableMergedRefs: React.RefCallback<HTMLElement>
+    stableMergedRefs: React.RefCallback<HTMLElement>;
 
     constructor(props: IonicReactInternalProps<PropType>) {
       super(props);
       // Create a local ref to to attach props to the wrapped element.
       this.ref = React.createRef();
       // React refs must be stable (not created inline).
-      this.stableMergedRefs = mergeRefs(this.ref, this.props.forwardedRef)
+      this.stableMergedRefs = mergeRefs(this.ref, this.props.forwardedRef);
     }
 
     componentDidMount() {
@@ -60,13 +57,7 @@ export const createRoutingComponent = <PropType, ElementType>(
       const { routerLink, routerDirection, routerOptions, routerAnimation } = this.props;
       if (routerLink !== undefined) {
         e.preventDefault();
-        this.context.navigate(
-          routerLink,
-          routerDirection,
-          undefined,
-          routerAnimation,
-          routerOptions
-        );
+        this.context.navigate(routerLink, routerDirection, undefined, routerAnimation, routerOptions);
       }
     };
 
