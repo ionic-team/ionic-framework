@@ -6,8 +6,7 @@ test.describe('segment: a11y', () => {
   test('should not have any axe violations', async ({ page }) => {
     await page.goto('/src/components/segment/test/a11y');
 
-    // TODO(FW-403): Re-enable rule once segment button is updated to avoid nested-interactive
-    const results = await new AxeBuilder({ page }).disableRules('nested-interactive').analyze();
+    const results = await new AxeBuilder({ page }).analyze();
     expect(results.violations).toEqual([]);
   });
 

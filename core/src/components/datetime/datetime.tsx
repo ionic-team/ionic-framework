@@ -2173,7 +2173,7 @@ export class Datetime implements ComponentInterface {
     return headerText;
   }
 
-  private renderCalendarViewHeader(showExpandedHeader = true) {
+  private renderHeader(showExpandedHeader = true) {
     const hasSlottedTitle = this.el.querySelector('[slot="title"]') !== null;
     if (!hasSlottedTitle && !this.showDefaultTitle) {
       return;
@@ -2231,13 +2231,13 @@ export class Datetime implements ComponentInterface {
      */
     const hasWheelVariant = presentation === 'date' || presentation === 'date-time' || presentation === 'time-date';
     if (preferWheel && hasWheelVariant) {
-      return [this.renderCalendarViewHeader(false), this.renderWheelView(), this.renderFooter()];
+      return [this.renderHeader(false), this.renderWheelView(), this.renderFooter()];
     }
 
     switch (presentation) {
       case 'date-time':
         return [
-          this.renderCalendarViewHeader(),
+          this.renderHeader(),
           this.renderCalendar(mode),
           this.renderCalendarViewMonthYearPicker(),
           this.renderTime(),
@@ -2245,21 +2245,21 @@ export class Datetime implements ComponentInterface {
         ];
       case 'time-date':
         return [
-          this.renderCalendarViewHeader(),
+          this.renderHeader(),
           this.renderTime(),
           this.renderCalendar(mode),
           this.renderCalendarViewMonthYearPicker(),
           this.renderFooter(),
         ];
       case 'time':
-        return [this.renderTime(), this.renderFooter()];
+        return [this.renderHeader(false), this.renderTime(), this.renderFooter()];
       case 'month':
       case 'month-year':
       case 'year':
-        return [this.renderWheelView(), this.renderFooter()];
+        return [this.renderHeader(false), this.renderWheelView(), this.renderFooter()];
       default:
         return [
-          this.renderCalendarViewHeader(),
+          this.renderHeader(),
           this.renderCalendar(mode),
           this.renderCalendarViewMonthYearPicker(),
           this.renderFooter(),

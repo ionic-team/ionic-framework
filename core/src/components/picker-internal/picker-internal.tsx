@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Listen, Host, h } from '@stencil/core';
+import { Component, Element, Event, Listen, Method, Host, h } from '@stencil/core';
 
 import { getElementRoot } from '../../utils/helpers';
 
@@ -275,7 +275,14 @@ export class PickerInternal implements ComponentInterface {
     this.emitInputModeChange();
   };
 
-  private exitInputMode = () => {
+  /**
+   * @internal
+   * Exits text entry mode for the picker
+   * This method blurs the hidden input
+   * and cause the keyboard to dismiss.
+   */
+  @Method()
+  async exitInputMode() {
     const { inputEl, useInputMode } = this;
     if (!useInputMode || !inputEl) {
       return;
@@ -292,7 +299,7 @@ export class PickerInternal implements ComponentInterface {
     }
 
     this.emitInputModeChange();
-  };
+  }
 
   private onKeyPress = (ev: KeyboardEvent) => {
     const { inputEl } = this;
