@@ -1,13 +1,14 @@
-import {
+import type {
   Animation,
   AnimationCallbackOptions,
   AnimationDirection,
   AnimationFill,
   AnimationKeyFrames,
   AnimationLifecycle,
-  createAnimation,
 } from '@ionic/core/components';
-import React, { PropsWithChildren } from 'react';
+import { createAnimation } from '@ionic/core/components';
+import type { PropsWithChildren } from 'react';
+import React from 'react';
 
 // TODO(FW-2959): types
 
@@ -126,6 +127,7 @@ const checkConfig = (animation: Animation, currentProps: any = {}, prevProps: an
   ];
   for (const key in currentProps) {
     if (
+      // eslint-disable-next-line no-prototype-builtins
       currentProps.hasOwnProperty(key) &&
       !reservedProps.includes(key) &&
       currentProps[key] !== prevProps[key]
