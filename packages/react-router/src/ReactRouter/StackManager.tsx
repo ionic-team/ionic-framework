@@ -1,9 +1,10 @@
-import {
+import type {
   RouteInfo,
+  StackContextState,
+  ViewItem} from '@ionic/react';
+import {
   RouteManagerContext,
   StackContext,
-  StackContextState,
-  ViewItem,
   generateId,
   getConfig,
 } from '@ionic/react';

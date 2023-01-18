@@ -1,7 +1,8 @@
+import type {
+  RouteInfo,
+  ViewItem} from '@ionic/react';
 import {
   IonRoute,
-  RouteInfo,
-  ViewItem,
   ViewLifeCycleManager,
   ViewStacks,
   generateId,

@@ -1,11 +1,13 @@
-import {
+import type {
   Action as HistoryAction,
   History,
-  Location as HistoryLocation,
+  Location as HistoryLocation} from 'history';
+import {
   createHashHistory as createHistory,
 } from 'history';
 import React from 'react';
-import { BrowserRouterProps, Router } from 'react-router-dom';
+import type { BrowserRouterProps} from 'react-router-dom';
+import { Router } from 'react-router-dom';
 
 import { IonRouter } from './IonRouter';
 

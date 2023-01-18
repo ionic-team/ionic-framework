@@ -1,19 +1,21 @@
-import {
+import type {
   AnimationBuilder,
-  LocationHistory,
-  NavManager,
   RouteAction,
   RouteInfo,
-  RouteManagerContext,
   RouteManagerContextState,
   RouterDirection,
-  ViewItem,
+  ViewItem} from '@ionic/react';
+import {
+  LocationHistory,
+  NavManager,
+  RouteManagerContext,
   generateId,
   getConfig,
 } from '@ionic/react';
-import { Action as HistoryAction, Location as HistoryLocation } from 'history';
+import type { Action as HistoryAction, Location as HistoryLocation } from 'history';
 import React from 'react';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import type { RouteComponentProps} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 import { IonRouteInner } from './IonRouteInner';
 import { ReactRouterViewStack } from './ReactRouterViewStack';
