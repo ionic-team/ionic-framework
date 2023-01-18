@@ -18,6 +18,7 @@ interface StackManagerProps {
   routeInfo: RouteInfo;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface StackManagerState {}
 
 const isViewVisible = (el: HTMLElement) =>
