@@ -4,10 +4,6 @@
 // --------------------------------------------------
 
 :host {
-  /**
-   * @prop --background: Background of the breadcrumbs
-   * @prop --color: Text color of the breadcrumbs
-   */
   @include font-smoothing();
 
   display: flex;
