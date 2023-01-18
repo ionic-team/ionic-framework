@@ -127,7 +127,7 @@ const checkConfig = (animation: Animation, currentProps: any = {}, prevProps: an
   ];
   for (const key in currentProps) {
     if (
-      // eslint-disable-next-line  no-prototype-builtins
+      // eslint-disable-next-line no-prototype-builtins
       currentProps.hasOwnProperty(key) &&
       !reservedProps.includes(key) &&
       currentProps[key] !== prevProps[key]
