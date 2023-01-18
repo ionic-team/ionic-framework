@@ -17,7 +17,7 @@ runs:
         path: ./packages/react
         filename: ReactBuild.zip
     - name: Install Dependencies
-      run: npm install
+      run: npm ci
       shell: bash
       working-directory: ./packages/react-router
     - name: Sync
