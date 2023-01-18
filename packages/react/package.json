@@ -64,7 +64,7 @@
     "@types/react-dom": "^16.9.0",
     "@typescript-eslint/eslint-plugin": "^5.48.2",
     "@typescript-eslint/parser": "^5.48.2",
-    "eslint": "^8.32.0",
+    "eslint": "^7.32.0",
     "fs-extra": "^9.0.1",
     "jest": "^26.6.3",
     "np": "^6.4.0",
