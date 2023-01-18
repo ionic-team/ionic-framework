@@ -20,7 +20,7 @@ export class TextValueAccessorDirective extends ValueAccessor {
   }
 
   @HostListener('ionChange', ['$event.target'])
-  _handleInputEvent(el: any): void {
+  _handleInputEvent(el: HTMLIonInputElement | HTMLIonTextareaElement | HTMLIonSearchbarElement): void {
     this.handleChangeEvent(el, el.value);
   }
 }

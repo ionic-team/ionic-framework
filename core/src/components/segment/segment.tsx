@@ -26,7 +26,7 @@ export class Segment implements ComponentInterface {
   private checked?: HTMLIonSegmentButtonElement;
 
   // Value to be emitted when gesture ends
-  private valueAfterGesture?: any;
+  private valueAfterGesture?: string;
 
   @Element() el!: HTMLIonSegmentElement;
 

@@ -38,8 +38,8 @@ const convertCamelCaseToHypen = (str: string) => {
 
 export const getAnimationPrefix = (el: HTMLElement): string => {
   if (animationPrefix === undefined) {
-    const supportsUnprefixed = (el.style as any).animationName !== undefined;
-    const supportsWebkitPrefix = (el.style as any).webkitAnimationName !== undefined;
+    const supportsUnprefixed = el.style.animationName !== undefined;
+    const supportsWebkitPrefix = el.style.webkitAnimationName !== undefined;
     animationPrefix = !supportsUnprefixed && supportsWebkitPrefix ? '-webkit-' : '';
   }
   return animationPrefix;
@@ -57,7 +57,7 @@ export const removeStyleProperty = (element: HTMLElement, propertyName: string) 
 
 export const animationEnd = (el: HTMLElement | null, callback: (ev?: TransitionEvent) => void) => {
   let unRegTrans: (() => void) | undefined;
-  const opts: any = { passive: true };
+  const opts: AddEventListenerOptions = { passive: true };
 
   const unregister = () => {
     if (unRegTrans) {
@@ -85,6 +85,7 @@ export const animationEnd = (el: HTMLElement | null, callback: (ev?: TransitionE
   return unregister;
 };
 
+// TODO(FW-2832): type
 export const generateKeyframeRules = (keyframes: any[] = []) => {
   return keyframes
     .map((keyframe) => {
@@ -115,6 +116,7 @@ export const generateKeyframeName = (keyframeRules: string) => {
 
 export const getStyleContainer = (element: HTMLElement) => {
   // getRootNode is not always available in SSR environments.
+  // TODO(FW-2832): types
   const rootNode = element.getRootNode !== undefined ? (element.getRootNode() as any) : element;
   return rootNode.head || rootNode;
 };

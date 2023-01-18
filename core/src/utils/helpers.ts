@@ -2,6 +2,8 @@ import type { EventEmitter } from '@stencil/core';
 
 import type { Side } from '../interface';
 
+// TODO(FW-2832): types
+
 declare const __zone_symbol__requestAnimationFrame: any;
 declare const requestAnimationFrame: any;
 

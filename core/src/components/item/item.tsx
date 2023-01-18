@@ -177,7 +177,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
 
     const tagName = (ev.target as HTMLElement).tagName;
     const updatedStyles = ev.detail;
-    const newStyles = {} as any;
+    const newStyles = {} as CssClassMap;
     const childStyles = this.itemStyles.get(tagName) || {};
 
     let hasStyleChange = false;
@@ -367,7 +367,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
       routerDirection,
       inheritedAriaAttributes,
     } = this;
-    const childStyles = {} as any;
+    const childStyles = {} as StyleEventDetail;
     const mode = getIonMode(this);
     const clickable = this.isClickable();
     const canActivate = this.canActivate();
