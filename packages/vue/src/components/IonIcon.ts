@@ -1,6 +1,6 @@
-import { h, defineComponent } from 'vue';
 import { isPlatform } from '@ionic/core/components';
 import { defineCustomElement } from 'ionicons/components/ion-icon.js';
+import { h, defineComponent } from 'vue';
 
 export const IonIcon = /*@__PURE__*/ defineComponent({
   name: 'IonIcon',

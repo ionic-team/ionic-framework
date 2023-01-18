@@ -1,4 +1,4 @@
-import { BackButtonEvent } from '@ionic/core/components';
+import type { BackButtonEvent } from '@ionic/core/components';
 
 type Handler = (processNextHandler: () => void) => Promise<any> | void | null;
 export interface UseBackButtonResult {

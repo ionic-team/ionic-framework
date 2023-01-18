@@ -1,5 +1,7 @@
+import type { ComponentInternalInstance} from 'vue';
+import { getCurrentInstance } from 'vue';
+
 import { LifecycleHooks } from '../utils';
-import { ComponentInternalInstance, getCurrentInstance } from 'vue';
 
 /**
  * Creates an returns a function that

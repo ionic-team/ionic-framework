@@ -1,5 +1,5 @@
-import { h, defineComponent, inject } from 'vue';
 import { defineCustomElement } from '@ionic/core/components/ion-tab-button.js';
+import { h, defineComponent, inject } from 'vue';
 
 export const IonTabButton = /*@__PURE__*/ defineComponent({
   name: 'IonTabButton',

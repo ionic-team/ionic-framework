@@ -1,5 +1,6 @@
-import { h, defineComponent, getCurrentInstance, inject, VNode } from 'vue';
 import { defineCustomElement } from '@ionic/core/components/ion-tab-bar.js';
+import type { VNode } from 'vue';
+import { h, defineComponent, getCurrentInstance, inject } from 'vue';
 
 // TODO(FW-2969): types
 

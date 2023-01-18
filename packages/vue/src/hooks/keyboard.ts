@@ -1,4 +1,5 @@
-import { ref, Ref } from 'vue';
+import type { Ref } from 'vue';
+import { ref } from 'vue';
 
 export interface UseKeyboardResult {
   isOpen: Ref<boolean>;
@@ -7,8 +8,8 @@ export interface UseKeyboardResult {
 }
 
 export const useKeyboard = (): UseKeyboardResult => {
-  let isOpen = ref(false);
-  let keyboardHeight = ref(0);
+  const isOpen = ref(false);
+  const keyboardHeight = ref(0);
 
   const showCallback = (ev: CustomEvent) => {
     isOpen.value = true;

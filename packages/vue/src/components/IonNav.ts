@@ -1,6 +1,9 @@
-import { defineComponent, h, shallowRef, VNode } from 'vue';
-import { VueDelegate } from '../framework-delegate';
 import { defineCustomElement } from '@ionic/core/components/ion-nav.js';
+import type { VNode } from 'vue';
+import { defineComponent, h, shallowRef } from 'vue';
+
+import { VueDelegate } from '../framework-delegate';
+
 
 export const IonNav = /*@__PURE__*/ defineComponent(() => {
   defineCustomElement();

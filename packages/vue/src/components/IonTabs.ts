@@ -1,4 +1,5 @@
-import { h, defineComponent, VNode } from 'vue';
+import type { VNode } from 'vue';
+import { h, defineComponent } from 'vue';
 
 const WILL_CHANGE = 'ionTabsWillChange';
 const DID_CHANGE = 'ionTabsDidChange';

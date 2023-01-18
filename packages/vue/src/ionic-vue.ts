@@ -1,5 +1,6 @@
-import { App, Plugin } from 'vue';
-import { IonicConfig, initialize } from '@ionic/core/components';
+import type { IonicConfig} from '@ionic/core/components';
+import { initialize } from '@ionic/core/components';
+import type { App, Plugin } from 'vue';
 
 // TODO(FW-2969): types
 

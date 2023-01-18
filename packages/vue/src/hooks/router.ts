@@ -1,5 +1,6 @@
 import { inject } from 'vue';
-import { AnimationBuilder } from '../';
+
+import type { AnimationBuilder } from '../';
 
 export type RouteAction = 'push' | 'pop' | 'replace';
 export type RouteDirection = 'forward' | 'back' | 'root' | 'none';

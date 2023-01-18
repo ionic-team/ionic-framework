@@ -1,3 +1,6 @@
+import type { AnimationBuilder} from '@ionic/core/components';
+import { LIFECYCLE_DID_ENTER, LIFECYCLE_DID_LEAVE, LIFECYCLE_WILL_ENTER, LIFECYCLE_WILL_LEAVE } from '@ionic/core/components';
+import { defineCustomElement } from '@ionic/core/components/ion-router-outlet.js';
 import {
   h,
   defineComponent,
@@ -7,13 +10,14 @@ import {
   provide,
   watch,
   shallowRef,
+  onUnmounted
+} from 'vue';
+import type {
   InjectionKey,
-  onUnmounted,
   Ref
 } from 'vue';
-import { AnimationBuilder, LIFECYCLE_DID_ENTER, LIFECYCLE_DID_LEAVE, LIFECYCLE_WILL_ENTER, LIFECYCLE_WILL_LEAVE } from '@ionic/core/components';
-import { defineCustomElement } from '@ionic/core/components/ion-router-outlet.js';
 import { matchedRouteKey, routeLocationKey, useRoute } from 'vue-router';
+
 import { fireLifecycle, generateId, getConfig } from '../utils';
 
 // TODO(FW-2969): types
@@ -22,7 +26,7 @@ const isViewVisible = (enteringEl: HTMLElement) => {
   return !enteringEl.classList.contains('ion-page-hidden') && !enteringEl.classList.contains('ion-page-invisible');
 }
 
-let viewDepthKey: InjectionKey<0> = Symbol(0);
+const viewDepthKey: InjectionKey<0> = Symbol(0);
 export const IonRouterOutlet = /*@__PURE__*/ defineComponent({
   name: 'IonRouterOutlet',
   setup() {

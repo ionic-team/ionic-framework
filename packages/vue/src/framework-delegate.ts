@@ -1,5 +1,6 @@
-import { h, Teleport, VNode } from 'vue';
 import type { FrameworkDelegate } from '@ionic/core/components';
+import type { VNode } from 'vue';
+import { h, Teleport } from 'vue';
 
 import { addTeleportedUserComponent, removeTeleportedUserComponent } from './components/IonApp';
 

@@ -1,21 +1,21 @@
 /* auto-generated vue overlay proxies */
 
+import type {
+  JSX} from '@ionic/core/components';
 import {
-  JSX,
   actionSheetController,
   alertController,
   loadingController,
   pickerController,
   toastController,
 } from '@ionic/core/components';
-
 import { defineCustomElement as defineIonActionSheetCustomElement } from '@ionic/core/components/ion-action-sheet.js'
 import { defineCustomElement as defineIonAlertCustomElement } from '@ionic/core/components/ion-alert.js'
 import { defineCustomElement as defineIonLoadingCustomElement } from '@ionic/core/components/ion-loading.js'
-import { defineCustomElement as defineIonPickerCustomElement } from '@ionic/core/components/ion-picker.js'
-import { defineCustomElement as defineIonToastCustomElement } from '@ionic/core/components/ion-toast.js'
 import { defineCustomElement as defineIonModalCustomElement } from '@ionic/core/components/ion-modal.js'
+import { defineCustomElement as defineIonPickerCustomElement } from '@ionic/core/components/ion-picker.js'
 import { defineCustomElement as defineIonPopoverCustomElement } from '@ionic/core/components/ion-popover.js'
+import { defineCustomElement as defineIonToastCustomElement } from '@ionic/core/components/ion-toast.js'
 
 import { defineOverlayContainer } from '../vue-component-lib/overlays';
 
