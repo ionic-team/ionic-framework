@@ -15,6 +15,8 @@ class IonTabsElement extends HTMLElementSSR {
   }
 }
 
+// TODO(FW-2959): types
+
 if (typeof (window as any) !== 'undefined' && window.customElements) {
   const element = window.customElements.get('ion-tabs');
   if (!element) {

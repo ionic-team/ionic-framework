@@ -11,7 +11,7 @@ interface OutletPageManagerProps {
   className?: string;
   forwardedRef?: React.ForwardedRef<HTMLIonRouterOutletElement>;
   routeInfo?: RouteInfo;
-  StackManager: any;
+  StackManager: any; // TODO(FW-2959): type
 }
 
 export class OutletPageManager extends React.Component<OutletPageManagerProps> {

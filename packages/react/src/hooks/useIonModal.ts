@@ -7,6 +7,8 @@ import { ReactComponentOrElement } from '../models/ReactComponentOrElement';
 import { HookOverlayOptions } from './HookOverlayOptions';
 import { useOverlay } from './useOverlay';
 
+// TODO(FW-2959): types
+
 /**
  * A hook for presenting/dismissing an IonModal component
  * @param component The component that the modal will show. Can be a React Component, a functional component, or a JSX Element

@@ -11,6 +11,8 @@ import { RouterOptions } from '../models/RouterOptions';
 import { LocationHistory } from './LocationHistory';
 import PageManager from './PageManager';
 
+// TODO(FW-2959): types
+
 interface NavManagerProps {
   routeInfo: RouteInfo;
   onNativeBack: () => void;

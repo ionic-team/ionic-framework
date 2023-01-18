@@ -3,6 +3,8 @@ import React from 'react';
 
 import { RouteInfo } from '../models';
 
+// TODO(FW-2959): types
+
 export interface NavContextState {
   getIonRoute: () => any;
   getIonRedirect: () => any;
