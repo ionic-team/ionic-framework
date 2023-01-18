@@ -1,6 +1,6 @@
-import { AnimationBuilder } from '@ionic/vue';
-import { RouteLocationMatched, RouterOptions } from 'vue-router';
-import { Ref } from 'vue';
+import type { AnimationBuilder } from '@ionic/vue';
+import type { Ref } from 'vue';
+import type { RouteLocationMatched, RouterOptions } from 'vue-router';
 
 // TODO(FW-2969): types
 

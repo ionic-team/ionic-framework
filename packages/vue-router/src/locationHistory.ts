@@ -1,4 +1,4 @@
-import { RouteInfo } from './types';
+import type { RouteInfo } from './types';
 
 export const createLocationHistory = () => {
   const locationHistory: RouteInfo[] = [];
@@ -177,7 +177,7 @@ export const createLocationHistory = () => {
    * the length of locationHistory, but that only worked since we were pruning
    * the array.
    */
-  const canGoBack = (deep: number = 1, initialHistory: number, currentHistory: number) => {
+  const canGoBack = (deep = 1, initialHistory: number, currentHistory: number) => {
     return currentHistory - deep >= initialHistory;
   }
 
@@ -207,7 +207,7 @@ export const createLocationHistory = () => {
    * do not modify the locationHistory stack so we would
    * not update pushedByRoute anyways.
    */
-  const findLastLocation = (routeInfo: RouteInfo, delta: number = -1): RouteInfo | undefined => {
+  const findLastLocation = (routeInfo: RouteInfo, delta = -1): RouteInfo | undefined => {
     const routeInfos = getTabsHistory(routeInfo.tab);
     if (routeInfos) {
       if (delta < -1) {

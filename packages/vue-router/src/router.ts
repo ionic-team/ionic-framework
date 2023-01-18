@@ -1,13 +1,16 @@
-import {
-  parseQuery,
+import type { AnimationBuilder } from '@ionic/vue';
+import type {
   Router,
   RouteLocationNormalized,
   NavigationFailure,
   RouteLocationRaw
 } from 'vue-router';
-import { createLocationHistory } from './locationHistory';
-import { generateId } from './utils';
 import {
+  parseQuery
+} from 'vue-router';
+
+import { createLocationHistory } from './locationHistory';
+import type {
   ExternalNavigationOptions,
   RouteInfo,
   RouteParams,
@@ -16,7 +19,7 @@ import {
   IonicVueRouterOptions,
   NavigationInformation
 } from './types';
-import { AnimationBuilder } from '@ionic/vue';
+import { generateId } from './utils';
 
 // TODO(FW-2969): types
 
@@ -68,7 +71,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
   let currentRouteInfo: RouteInfo;
   let incomingRouteParams: RouteParams;
 
-  let historyChangeListeners: any[] = [];
+  const historyChangeListeners: any[] = [];
 
   if (typeof (document as any) !== 'undefined') {
     document.addEventListener('ionBackButton', (ev: Event) => {
@@ -427,7 +430,7 @@ export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => 
 
   const getCurrentRouteInfo = () => currentRouteInfo;
 
-  const canGoBack = (deep: number = 1) => locationHistory.canGoBack(deep, initialHistoryPosition, currentHistoryPosition);
+  const canGoBack = (deep = 1) => locationHistory.canGoBack(deep, initialHistoryPosition, currentHistoryPosition);
 
   const navigate = (navigationOptions: ExternalNavigationOptions) => {
     const { routerAnimation, routerDirection, routerLink } = navigationOptions;

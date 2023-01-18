@@ -1,13 +1,14 @@
-import { generateId } from './utils';
-import {  RouteInfo,
+import { shallowRef } from 'vue';
+import type { RouteLocationMatched, Router } from 'vue-router';
+
+import type {  RouteInfo,
   ViewItem,
   ViewStacks,
 } from './types';
-import { RouteLocationMatched, Router } from 'vue-router';
-import { shallowRef } from 'vue';
+import { generateId } from './utils';
 
 export const createViewStacks = (router: Router) => {
-  let viewStacks: ViewStacks = {};
+  const viewStacks: ViewStacks = {};
 
   /**
    * Returns the number of active stacks.
@@ -43,7 +44,7 @@ export const createViewStacks = (router: Router) => {
     return findViewItemByPath(routeInfo.pathname, outletId, false);
   }
 
-  const findLeavingViewItemByRouteInfo = (routeInfo: RouteInfo, outletId?: number, mustBeIonRoute: boolean = true) => {
+  const findLeavingViewItemByRouteInfo = (routeInfo: RouteInfo, outletId?: number, mustBeIonRoute = true) => {
     return findViewItemByPath(routeInfo.lastPathname, outletId, mustBeIonRoute);
   }
 
@@ -61,7 +62,7 @@ export const createViewStacks = (router: Router) => {
     })
   }
 
-  const findViewItemByPath = (path: string, outletId?: number, mustBeIonRoute: boolean = false): ViewItem | undefined => {
+  const findViewItemByPath = (path: string, outletId?: number, mustBeIonRoute = false): ViewItem | undefined => {
     const matchView = (viewItem: ViewItem) => {
       if (
         (mustBeIonRoute && !viewItem.ionRoute) ||
@@ -101,7 +102,7 @@ export const createViewStacks = (router: Router) => {
       const match = (router) ? stack.find(matchView) : findViewItemInStack(path, stack)
       if (match) return match;
     } else {
-      for (let outletId in viewStacks) {
+      for (const outletId in viewStacks) {
         const stack = viewStacks[outletId];
         const viewItem = findViewItemInStack(path, stack);
         if (viewItem) {
@@ -165,7 +166,7 @@ export const createViewStacks = (router: Router) => {
    * important when using router.go and stepping back
    * multiple pages at a time.
    */
-  const unmountLeavingViews = (outletId: number, viewItem: ViewItem, delta: number = 1) => {
+  const unmountLeavingViews = (outletId: number, viewItem: ViewItem, delta = 1) => {
     const viewStack = viewStacks[outletId];
     if (!viewStack) return;
 
@@ -198,7 +199,7 @@ export const createViewStacks = (router: Router) => {
    * to go back to /page2 and /home, so we need both pages mounted
    * in the DOM.
    */
-  const mountIntermediaryViews = (outletId: number, viewItem: ViewItem, delta: number = 1) => {
+  const mountIntermediaryViews = (outletId: number, viewItem: ViewItem, delta = 1) => {
     const viewStack = viewStacks[outletId];
     if (!viewStack) return;
 

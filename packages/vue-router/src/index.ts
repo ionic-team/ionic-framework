@@ -1,13 +1,14 @@
-import { App } from 'vue';
+import type { App } from 'vue';
 import {
   createRouter as createVueRouter,
   createWebHistory as createVueWebHistory,
   createWebHashHistory as createVueWebHashHistory,
   createMemoryHistory as createVueMemoryHistory
 } from 'vue-router';
+
 import { createIonRouter } from './router';
+import type { IonicVueRouterOptions } from './types';
 import { createViewStacks } from './viewStacks';
-import { IonicVueRouterOptions } from './types';
 
 export const createRouter = (opts: IonicVueRouterOptions) => {
   const routerOptions = { ...opts };
