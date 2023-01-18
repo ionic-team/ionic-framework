@@ -6,6 +6,7 @@ import PageManager from '../routing/PageManager';
 import { IonicReactProps } from './IonicReactProps';
 import { createForwardRef } from './utils';
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface IonPageProps extends IonicReactProps {}
 
 interface IonPageInternalProps extends IonPageProps {

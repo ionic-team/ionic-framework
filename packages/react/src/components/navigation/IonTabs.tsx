@@ -25,6 +25,7 @@ if (typeof (window as any) !== 'undefined' && window.customElements) {
 }
 
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace JSX {
     interface IntrinsicElements {
       'ion-tabs': any;
@@ -97,6 +98,7 @@ export const IonTabs = /*@__PURE__*/ (() =>
           : this.props.children;
 
       React.Children.forEach(children, (child: any) => {
+        // eslint-disable-next-line no-prototype-builtins
         if (child == null || typeof child !== 'object' || !child.hasOwnProperty('type')) {
           return;
         }
