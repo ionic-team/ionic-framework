@@ -6,17 +6,16 @@ import {
   loadingController as loadingCtrl,
   pickerController as pickerCtrl,
   toastController as toastCtrl,
-} from '@ionic/core/components';
+} from "@ionic/core/components";
+import { defineCustomElement as defineIonActionSheetCustomElement } from "@ionic/core/components/ion-action-sheet.js";
+import { defineCustomElement as defineIonAlertCustomElement } from "@ionic/core/components/ion-alert.js";
+import { defineCustomElement as defineIonLoadingCustomElement } from "@ionic/core/components/ion-loading.js";
+import { defineCustomElement as defineIonModalCustomElement } from "@ionic/core/components/ion-modal.js";
+import { defineCustomElement as defineIonPickerCustomElement } from "@ionic/core/components/ion-picker.js";
+import { defineCustomElement as defineIonPopoverCustomElement } from "@ionic/core/components/ion-popover.js";
+import { defineCustomElement as defineIonToastCustomElement } from "@ionic/core/components/ion-toast.js";
 
-import { VueDelegate } from './framework-delegate';
-
-import { defineCustomElement as defineIonActionSheetCustomElement } from '@ionic/core/components/ion-action-sheet.js'
-import { defineCustomElement as defineIonAlertCustomElement } from '@ionic/core/components/ion-alert.js'
-import { defineCustomElement as defineIonLoadingCustomElement } from '@ionic/core/components/ion-loading.js'
-import { defineCustomElement as defineIonPickerCustomElement } from '@ionic/core/components/ion-picker.js'
-import { defineCustomElement as defineIonToastCustomElement } from '@ionic/core/components/ion-toast.js'
-import { defineCustomElement as defineIonModalCustomElement } from '@ionic/core/components/ion-modal.js'
-import { defineCustomElement as defineIonPopoverCustomElement } from '@ionic/core/components/ion-popover.js'
+import { VueDelegate } from "./framework-delegate";
 
 // TODO(FW-2969): types
 
@@ -26,8 +25,16 @@ import { defineCustomElement as defineIonPopoverCustomElement } from '@ionic/cor
  * (optionally) provide a framework delegate.
  */
 const createController: {
-  <T>(defineCustomElement: () => void, oldController: T, useDelegate?: boolean): T
-} = (defineCustomElement: () => void, oldController: any, useDelegate = false) => {
+  <T>(
+    defineCustomElement: () => void,
+    oldController: T,
+    useDelegate?: boolean
+  ): T;
+} = (
+  defineCustomElement: () => void,
+  oldController: any,
+  useDelegate = false
+) => {
   const delegate = useDelegate ? VueDelegate() : undefined;
   const oldCreate = oldController.create.bind(oldController);
   oldController.create = (options: any) => {
@@ -35,20 +42,43 @@ const createController: {
 
     return oldCreate({
       ...options,
-      delegate
-    })
-  }
+      delegate,
+    });
+  };
 
   return oldController;
-}
+};
 
-const modalController = /*@__PURE__*/ createController(defineIonModalCustomElement, modalCtrl, true);
-const popoverController = /*@__PURE__*/ createController(defineIonPopoverCustomElement, popoverCtrl, true);
-const alertController = /*@__PURE__*/ createController(defineIonAlertCustomElement, alertCtrl);
-const actionSheetController = /*@__PURE__*/ createController(defineIonActionSheetCustomElement, actionSheetCtrl);
-const loadingController = /*@__PURE__*/ createController(defineIonLoadingCustomElement, loadingCtrl);
-const pickerController = /*@__PURE__*/ createController(defineIonPickerCustomElement, pickerCtrl);
-const toastController = /*@__PURE__*/ createController(defineIonToastCustomElement, toastCtrl);
+const modalController = /*@__PURE__*/ createController(
+  defineIonModalCustomElement,
+  modalCtrl,
+  true
+);
+const popoverController = /*@__PURE__*/ createController(
+  defineIonPopoverCustomElement,
+  popoverCtrl,
+  true
+);
+const alertController = /*@__PURE__*/ createController(
+  defineIonAlertCustomElement,
+  alertCtrl
+);
+const actionSheetController = /*@__PURE__*/ createController(
+  defineIonActionSheetCustomElement,
+  actionSheetCtrl
+);
+const loadingController = /*@__PURE__*/ createController(
+  defineIonLoadingCustomElement,
+  loadingCtrl
+);
+const pickerController = /*@__PURE__*/ createController(
+  defineIonPickerCustomElement,
+  pickerCtrl
+);
+const toastController = /*@__PURE__*/ createController(
+  defineIonToastCustomElement,
+  toastCtrl
+);
 
 export {
   modalController,
@@ -57,5 +87,5 @@ export {
   actionSheetController,
   loadingController,
   pickerController,
-  toastController
-}
+  toastController,
+};
