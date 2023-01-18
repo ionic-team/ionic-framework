@@ -22,6 +22,8 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 
 import type { PinFormatter } from './range-interface';
 
+// TODO(FW-2832): types
+
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *

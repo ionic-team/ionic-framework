@@ -1,6 +1,8 @@
 import { App, Plugin } from 'vue';
 import { IonicConfig, initialize } from '@ionic/core/components';
 
+// TODO(FW-2969): types
+
 /**
 * We need to make sure that the web component fires an event
 * that will not conflict with the user's @ionChange binding,

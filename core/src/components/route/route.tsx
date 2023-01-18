@@ -3,6 +3,8 @@ import { Component, Event, Prop, Watch } from '@stencil/core';
 
 import type { NavigationHookCallback } from './route-interface';
 
+// TODO(FW-2832): types
+
 @Component({
   tag: 'ion-route',
 })

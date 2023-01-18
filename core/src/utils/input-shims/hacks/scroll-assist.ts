@@ -12,7 +12,7 @@ export const enableScrollAssist = (
   keyboardHeight: number,
   disableClonedInput = false
 ) => {
-  let coord: any;
+  let coord: { x: number; y: number } | undefined;
   const touchStart = (ev: Event) => {
     coord = pointerCoord(ev);
   };
@@ -75,7 +75,7 @@ const jsSetFocus = async (
   raf(() => componentEl.click());
 
   if (typeof window !== 'undefined') {
-    let scrollContentTimeout: any;
+    let scrollContentTimeout: ReturnType<typeof setTimeout>;
     const scrollContent = async () => {
       // clean up listeners and timeouts
       if (scrollContentTimeout !== undefined) {

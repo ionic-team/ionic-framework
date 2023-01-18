@@ -15,7 +15,7 @@ type Props = LocalJSX.IonApp &
 
 export const IonApp = /*@__PURE__*/ (() =>
   class extends React.Component<Props> {
-    addOverlayCallback?: (id: string, overlay: any, containerElement: HTMLDivElement) => void;
+    addOverlayCallback?: (id: string, overlay: ReactComponentOrElement, containerElement: HTMLDivElement) => void;
     removeOverlayCallback?: (id: string) => void;
 
     constructor(props: Props) {
