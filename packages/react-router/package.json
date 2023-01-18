@@ -25,8 +25,9 @@
     "compile": "npm run tsc && rollup -c",
     "release": "np --any-branch --no-cleanup",
     "eslint": "eslint src",
-    "lint": "npm run eslint",
-    "lint.fix": "npm run eslint -- --fix",
+    "prettier": "prettier \"./src/**/*.{html,ts,tsx,js,jsx}\"",
+    "lint": "npm run eslint && npm run prettier -- --write --cache",
+    "lint.fix": "npm run eslint -- --fix && npm run prettier -- --write --cache",
     "tsc": "tsc -p .",
     "sync": "sh ./scripts/sync.sh"
   },
@@ -48,6 +49,7 @@
   },
   "devDependencies": {
     "@ionic/eslint-config": "^0.3.0",
+    "@ionic/prettier-config": "^2.0.0",
     "@rollup/plugin-node-resolve": "^8.1.0",
     "@types/node": "^14.0.14",
     "@types/react": "16.14.0",
@@ -57,7 +59,7 @@
     "@typescript-eslint/eslint-plugin": "^5.48.2",
     "@typescript-eslint/parser": "^5.48.2",
     "eslint": "^7.32.0",
-    "prettier": "^2.2.0",
+    "prettier": "^2.8.3",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-router": "^5.0.1",
@@ -66,5 +68,6 @@
     "rollup": "^2.26.4",
     "rollup-plugin-sourcemaps": "^0.6.2",
     "typescript": "^3.9.5"
-  }
+  },
+  "prettier": "@ionic/prettier-config"
 }
