@@ -1,8 +1,8 @@
-import { JSX as LocalJSX } from '@ionic/core/components';
+import type { JSX as LocalJSX } from '@ionic/core/components';
 import React from 'react';
 
 import { NavContext } from '../../contexts/NavContext';
-import { IonicReactProps } from '../IonicReactProps';
+import type { IonicReactProps } from '../IonicReactProps';
 import { IonBackButtonInner } from '../inner-proxies';
 
 type Props = Omit<LocalJSX.IonBackButton, 'icon'> &

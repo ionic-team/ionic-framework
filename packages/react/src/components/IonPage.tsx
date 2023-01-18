@@ -3,7 +3,7 @@ import React from 'react';
 import { NavContext } from '../contexts/NavContext';
 import PageManager from '../routing/PageManager';
 
-import { IonicReactProps } from './IonicReactProps';
+import type { IonicReactProps } from './IonicReactProps';
 import { createForwardRef } from './utils';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface

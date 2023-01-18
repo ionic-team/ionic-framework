@@ -1,4 +1,5 @@
-import { PickerOptions, pickerController } from '@ionic/core/components';
+import type { PickerOptions} from '@ionic/core/components';
+import { pickerController } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-picker.js';
 
 import { createControllerComponent } from './createControllerComponent';

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { NavContext } from '../contexts/NavContext';
 
-import { IonicReactProps } from './IonicReactProps';
+import type { IonicReactProps } from './IonicReactProps';
 import { IonIconInner } from './inner-proxies';
 import { createForwardRef, isPlatform } from './utils';
 

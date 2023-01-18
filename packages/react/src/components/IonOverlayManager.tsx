@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 
-import { ReactComponentOrElement } from '../models';
+import type { ReactComponentOrElement } from '../models';
 
 interface IonOverlayManagerProps {
   onAddOverlay: (

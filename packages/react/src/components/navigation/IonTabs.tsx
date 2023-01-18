@@ -1,4 +1,4 @@
-import { JSX as LocalJSX } from '@ionic/core/components';
+import type { JSX as LocalJSX } from '@ionic/core/components';
 import React, { Fragment } from 'react';
 
 import { NavContext } from '../../contexts/NavContext';
@@ -7,7 +7,8 @@ import { HTMLElementSSR } from '../../utils/HTMLElementSSR';
 import { IonRouterOutlet } from '../IonRouterOutlet';
 
 import { IonTabBar } from './IonTabBar';
-import { IonTabsContext, IonTabsContextState } from './IonTabsContext';
+import type { IonTabsContextState } from './IonTabsContext';
+import { IonTabsContext } from './IonTabsContext';
 
 class IonTabsElement extends HTMLElementSSR {
   constructor() {

@@ -1,13 +1,15 @@
-import {
+import type {
   Animation,
   AnimationCallbackOptions,
   AnimationDirection,
   AnimationFill,
   AnimationKeyFrames,
-  AnimationLifecycle,
+  AnimationLifecycle} from '@ionic/core/components';
+import {
   createAnimation,
 } from '@ionic/core/components';
-import React, { PropsWithChildren } from 'react';
+import type { PropsWithChildren } from 'react';
+import React from 'react';
 
 // TODO(FW-2959): types
 

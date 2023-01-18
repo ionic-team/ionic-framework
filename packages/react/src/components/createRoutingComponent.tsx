@@ -1,9 +1,9 @@
-import { AnimationBuilder } from '@ionic/core/components';
+import type { AnimationBuilder } from '@ionic/core/components';
 import React, { createElement } from 'react';
 
 import { NavContext } from '../contexts/NavContext';
-import { RouterOptions } from '../models';
-import { RouterDirection } from '../models/RouterDirection';
+import type { RouterOptions } from '../models';
+import type { RouterDirection } from '../models/RouterDirection';
 
 import {
   attachProps,

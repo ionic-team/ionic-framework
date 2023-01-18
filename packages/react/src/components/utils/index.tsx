@@ -1,12 +1,13 @@
-import {
+import type {
   Config as CoreConfig,
-  Platforms,
+  Platforms} from '@ionic/core/components';
+import {
   getPlatforms as getPlatformsCore,
   isPlatform as isPlatformCore,
 } from '@ionic/core/components';
 import React from 'react';
 
-import { IonicReactProps } from '../IonicReactProps';
+import type { IonicReactProps } from '../IonicReactProps';
 
 export type IonicReactExternalProps<PropType, ElementType> = PropType &
   Omit<React.HTMLAttributes<ElementType>, 'style'> &

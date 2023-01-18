@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ReactComponentOrElement } from '../models';
+import type { ReactComponentOrElement } from '../models';
 
 export interface IonContextInterface {
   addOverlay: (

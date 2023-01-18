@@ -3,7 +3,7 @@ import React from 'react';
 
 import { IonRouterOutletInner } from '../components/inner-proxies';
 import { IonLifeCycleContext } from '../contexts/IonLifeCycleContext';
-import { RouteInfo } from '../models';
+import type { RouteInfo } from '../models';
 
 import { StackContext } from './StackContext';
 

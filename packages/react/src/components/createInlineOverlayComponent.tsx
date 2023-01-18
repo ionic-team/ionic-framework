@@ -1,4 +1,4 @@
-import { OverlayEventDetail } from '@ionic/core/components';
+import type { OverlayEventDetail } from '@ionic/core/components';
 import React, { createElement } from 'react';
 
 import {
