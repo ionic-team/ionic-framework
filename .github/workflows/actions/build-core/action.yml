@@ -11,7 +11,7 @@ runs:
       with:
         node-version: 16.x
     - name: Install Dependencies
-      run: npm install
+      run: npm ci
       working-directory: ./core
       shell: bash
     - name: Build Core

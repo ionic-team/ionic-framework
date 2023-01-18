@@ -29,7 +29,7 @@ runs:
       shell: bash
       working-directory: ./packages/vue/test
     - name: Install Dependencies
-      run: npm install
+      run: npm ci
       shell: bash
       working-directory: ./packages/vue/test/build/${{ inputs.app }}
     - name: Sync
