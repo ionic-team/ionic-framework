@@ -15,6 +15,7 @@ type IonNavProps = JSX.IonNav & {
   forwardedRef?: React.ForwardedRef<HTMLIonNavElement>;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const IonNavInternal: React.FC<IonNavProps> = ({ children, forwardedRef, ...restOfProps }) => {
   const [views, setViews] = useState<React.ReactElement[]>([]);
 

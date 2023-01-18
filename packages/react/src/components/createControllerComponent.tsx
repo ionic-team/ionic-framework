@@ -95,6 +95,7 @@ export const createControllerComponent = <
     }
 
     async present(prevProps?: Props) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { isOpen, onDidDismiss, onDidPresent, onWillDismiss, onWillPresent, ...cProps } =
         this.props;
 

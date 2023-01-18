@@ -107,6 +107,7 @@ export const createOverlayComponent = <
     }
 
     async present(prevProps?: Props) {
+      /* eslint-disable @typescript-eslint/no-unused-vars */
       const {
         children,
         isOpen,
@@ -127,6 +128,7 @@ export const createOverlayComponent = <
         [willPresentEventName]: (e: CustomEvent) =>
           this.props.onWillPresent && this.props.onWillPresent(e),
       };
+      /* eslint-enable @typescript-eslint/no-unused-vars */
 
       this.overlay = await controller.create({
         ...elementProps,

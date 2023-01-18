@@ -119,6 +119,7 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
     }
 
     render() {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { children, forwardedRef, style, className, ref, ...cProps } = this.props;
 
       const propsToPass = Object.keys(cProps).reduce((acc, name) => {

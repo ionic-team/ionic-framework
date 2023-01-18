@@ -88,6 +88,7 @@ export class PageManager extends React.PureComponent<PageManagerProps> {
   }
 
   render() {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { className, children, routeInfo, forwardedRef, ...props } = this.props;
 
     return (

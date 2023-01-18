@@ -96,7 +96,7 @@ class IonTabBarUnwrapped extends React.PureComponent<InternalProps, IonTabBarSta
     }
   }
 
-  // eslint-disable-next-line  @typescript-eslint/no-empty-function
+  // eslint-disable-next-line
   setActiveTabOnContext = (_tab: string) => {};
 
   selectTab(tab: string) {
