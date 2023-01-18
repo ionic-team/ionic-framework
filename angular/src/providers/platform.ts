@@ -3,6 +3,8 @@ import { NgZone, Inject, Injectable } from '@angular/core';
 import { BackButtonEventDetail, KeyboardEventDetail, Platforms, getPlatforms, isPlatform } from '@ionic/core';
 import { Subscription, Subject } from 'rxjs';
 
+// TODO(FW-2827): types
+
 export interface BackButtonEmitter extends Subject<BackButtonEventDetail> {
   subscribeWithPriority(
     priority: number,

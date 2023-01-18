@@ -2,6 +2,8 @@ import { AnimationBuilder } from '@ionic/vue';
 import { RouteLocationMatched, RouterOptions } from 'vue-router';
 import { Ref } from 'vue';
 
+// TODO(FW-2969): types
+
 export interface VueComponentData {
   /**
    * The cached result of the props

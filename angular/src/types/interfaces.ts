@@ -1,5 +1,5 @@
 export interface IonicGlobal {
-  config?: any;
+  config?: any; // TODO(FW-2827): type
   asyncQueue?: boolean;
 }
 

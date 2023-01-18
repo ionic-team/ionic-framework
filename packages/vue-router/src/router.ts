@@ -18,6 +18,8 @@ import {
 } from './types';
 import { AnimationBuilder } from '@ionic/vue';
 
+// TODO(FW-2969): types
+
 export const createIonRouter = (opts: IonicVueRouterOptions, router: Router) => {
   let currentNavigationInfo: NavigationInformation = { direction: undefined, action: undefined, delta: undefined };
 
