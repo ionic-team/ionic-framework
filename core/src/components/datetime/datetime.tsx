@@ -844,7 +844,8 @@ export class Datetime implements ComponentInterface {
     const workingMonth = months[1] as HTMLElement;
     const endMonth = months[2] as HTMLElement;
     const platform = getIonPlatform(this);
-    const needsiOSRubberBandFix = platform === 'ios' && typeof navigator !== 'undefined' && navigator.maxTouchPoints > 1;
+    const needsiOSRubberBandFix =
+      platform === 'ios' && typeof navigator !== 'undefined' && navigator.maxTouchPoints > 1;
 
     /**
      * Before setting up the scroll listener,
