@@ -1,7 +1,7 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, State, h } from '@stencil/core';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonMode, getIonPlatform } from '../../global/ionic-global';
 import { findIonContent, getScrollElement, printIonContentErrorMsg } from '../../utils/content';
 import type { KeyboardController } from '../../utils/keyboard/keyboard-controller';
 import { createKeyboardController } from '../../utils/keyboard/keyboard-controller';
@@ -64,7 +64,7 @@ export class Footer implements ComponentInterface {
   }
 
   private checkCollapsibleFooter = () => {
-    const mode = getIonMode(this);
+    const mode = getIonPlatform(this);
     if (mode !== 'ios') {
       return;
     }
@@ -130,7 +130,7 @@ export class Footer implements ComponentInterface {
           [`footer-collapse-${collapse}`]: collapse !== undefined,
         }}
       >
-        {mode === 'ios' && translucent && <div class="footer-background"></div>}
+        {getIonPlatform(this) === 'ios' && translucent && <div class="footer-background"></div>}
         <slot></slot>
       </Host>
     );

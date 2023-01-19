@@ -2,7 +2,7 @@ import type { EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Method, Prop, Watch, h } from '@stencil/core';
 
 import { config } from '../../global/config';
-import { getIonMode } from '../../global/ionic-global';
+import { getIonMode, getIonPlatform } from '../../global/ionic-global';
 import type {
   Animation,
   AnimationBuilder,
@@ -111,7 +111,7 @@ export class Nav implements NavOutlet {
     this.useRouter = document.querySelector('ion-router') !== null && this.el.closest('[no-router]') === null;
 
     if (this.swipeGesture === undefined) {
-      const mode = getIonMode(this);
+      const mode = getIonPlatform(this);
       this.swipeGesture = config.getBoolean('swipeBackEnabled', mode === 'ios');
     }
 

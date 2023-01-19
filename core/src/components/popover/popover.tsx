@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonMode, getIonPlatform } from '../../global/ionic-global';
 import type {
   AnimationBuilder,
   ComponentProps,
@@ -347,7 +347,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
     this.parentPopover = this.el.closest(`ion-popover:not(#${this.popoverId})`) as HTMLIonPopoverElement | null;
 
     if (this.alignment === undefined) {
-      this.alignment = getIonMode(this) === 'ios' ? 'center' : 'start';
+      this.alignment = getIonPlatform(this) === 'ios' ? 'center' : 'start';
     }
   }
 

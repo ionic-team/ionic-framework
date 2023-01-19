@@ -2,7 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
 import { caretDownSharp, caretUpSharp, chevronBack, chevronDown, chevronForward } from 'ionicons/icons';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonMode, getIonPlatform } from '../../global/ionic-global';
 import type {
   Color,
   DatetimePresentation,
@@ -843,7 +843,7 @@ export class Datetime implements ComponentInterface {
     const startMonth = months[0] as HTMLElement;
     const workingMonth = months[1] as HTMLElement;
     const endMonth = months[2] as HTMLElement;
-    const mode = getIonMode(this);
+    const mode = getIonPlatform(this);
     const needsiOSRubberBandFix = mode === 'ios' && typeof navigator !== 'undefined' && navigator.maxTouchPoints > 1;
 
     /**

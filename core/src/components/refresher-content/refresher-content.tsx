@@ -3,7 +3,7 @@ import { Component, Element, Host, Prop, h } from '@stencil/core';
 import { arrowDown, caretBackSharp } from 'ionicons/icons';
 
 import { config } from '../../global/config';
-import { getIonMode } from '../../global/ionic-global';
+import { getIonMode, getIonPlatform } from '../../global/ionic-global';
 import type { SpinnerTypes } from '../../interface';
 import { isPlatform } from '../../utils/platform';
 import type { IonicSafeString } from '../../utils/sanitization';
@@ -52,7 +52,7 @@ export class RefresherContent implements ComponentInterface {
 
   componentWillLoad() {
     if (this.pullingIcon === undefined) {
-      const mode = getIonMode(this);
+      const mode = getIonPlatform(this);
       const overflowRefresher = (this.el.style as any).webkitOverflowScrolling !== undefined ? 'lines' : arrowDown;
       this.pullingIcon = config.get(
         'refreshingIcon',
@@ -60,7 +60,7 @@ export class RefresherContent implements ComponentInterface {
       );
     }
     if (this.refreshingSpinner === undefined) {
-      const mode = getIonMode(this);
+      const mode = getIonPlatform(this);
       this.refreshingSpinner = config.get(
         'refreshingSpinner',
         config.get('spinner', mode === 'ios' ? 'lines' : 'circular')
