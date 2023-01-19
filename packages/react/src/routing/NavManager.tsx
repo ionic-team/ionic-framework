@@ -37,8 +37,6 @@ interface NavManagerProps {
 }
 
 export class NavManager extends React.PureComponent<NavManagerProps, NavContextState> {
-  _isMounted = false;
-
   ionRouterContextValue: IonRouterContextState = {
     push: (
       pathname: string,
@@ -72,30 +70,25 @@ export class NavManager extends React.PureComponent<NavManagerProps, NavContextS
       changeTab: this.props.onChangeTab,
       resetTab: this.props.onResetTab,
     };
+  }
 
+  componentDidMount() {
     if (typeof document !== 'undefined') {
       this.handleHardwareBackButton = this.handleHardwareBackButton.bind(this);
       document.addEventListener('ionBackButton', this.handleHardwareBackButton);
     }
   }
 
-  componentDidMount() {
-    this._isMounted = true;
-  }
-
   componentWillUnmount() {
     if (typeof document !== 'undefined') {
       document.removeEventListener('ionBackButton', this.handleHardwareBackButton);
-      this._isMounted = false;
     }
   }
 
   handleHardwareBackButton(e: any) {
     e.detail.register(0, (processNextHandler: () => void) => {
-      if (this._isMounted) {
-        this.nativeGoBack();
-        processNextHandler();
-      }
+      this.nativeGoBack();
+      processNextHandler();
     });
   }
 
