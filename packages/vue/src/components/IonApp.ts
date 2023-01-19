@@ -31,5 +31,7 @@ export const addTeleportedUserComponent = (component: VNode) => {
 };
 
 export const removeTeleportedUserComponent = (component: VNode) => {
-  userComponents.value = userComponents.value.filter((cmp) => cmp !== component);
+  userComponents.value = userComponents.value.filter(
+    (cmp) => cmp !== component
+  );
 };

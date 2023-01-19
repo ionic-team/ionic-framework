@@ -34,7 +34,11 @@ export const VueDelegate = (
     classes && div.classList.add(...classes);
     parentElement.appendChild(div);
 
-    const hostComponent = h(Teleport, { to: div }, h(component, { ...componentProps }));
+    const hostComponent = h(
+      Teleport,
+      { to: div },
+      h(component, { ...componentProps })
+    );
 
     refMap.set(component, hostComponent);
 
