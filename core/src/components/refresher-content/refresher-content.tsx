@@ -52,18 +52,18 @@ export class RefresherContent implements ComponentInterface {
 
   componentWillLoad() {
     if (this.pullingIcon === undefined) {
-      const mode = getIonPlatform(this);
+      const platform = getIonPlatform(this);
       const overflowRefresher = (this.el.style as any).webkitOverflowScrolling !== undefined ? 'lines' : arrowDown;
       this.pullingIcon = config.get(
         'refreshingIcon',
-        mode === 'ios' && isPlatform('mobile') ? config.get('spinner', overflowRefresher) : 'circular'
+        platform === 'ios' && isPlatform('mobile') ? config.get('spinner', overflowRefresher) : 'circular'
       );
     }
     if (this.refreshingSpinner === undefined) {
-      const mode = getIonPlatform(this);
+      const platform = getIonPlatform(this);
       this.refreshingSpinner = config.get(
         'refreshingSpinner',
-        config.get('spinner', mode === 'ios' ? 'lines' : 'circular')
+        config.get('spinner', platform === 'ios' ? 'lines' : 'circular')
       );
     }
   }

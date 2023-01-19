@@ -28,8 +28,8 @@ export const menuOverlayAnimation = (menu: MenuI): Animation => {
 
   menuAnimation.addElement(menu.menuInnerEl!).fromTo('transform', `translateX(${closedX})`, `translateX(${openedX})`);
 
-  const mode = getIonPlatform(menu);
-  const isIos = mode === 'ios';
+  const platform = getIonPlatform(menu);
+  const isIos = platform === 'ios';
   const opacity = isIos ? 0.2 : 0.25;
 
   backdropAnimation.addElement(menu.backdropEl!).fromTo('opacity', 0.01, opacity);

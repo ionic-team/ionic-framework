@@ -204,8 +204,8 @@ export class Loading implements ComponentInterface, OverlayInterface {
 
   componentWillLoad() {
     if (this.spinner === undefined) {
-      const mode = getIonPlatform(this);
-      this.spinner = config.get('loadingSpinner', config.get('spinner', mode === 'ios' ? 'lines' : 'crescent'));
+      const platform = getIonPlatform(this);
+      this.spinner = config.get('loadingSpinner', config.get('spinner', platform === 'ios' ? 'lines' : 'crescent'));
     }
   }
 

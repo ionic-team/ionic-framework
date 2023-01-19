@@ -419,11 +419,11 @@ export const present = async <OverlayPresentOptions>(
   overlay.willPresent.emit();
   overlay.willPresentShorthand?.emit();
 
-  const mode = getIonPlatform(overlay);
+  const platform = getIonPlatform(overlay);
   // get the user's animation fn if one was provided
   const animationBuilder = overlay.enterAnimation
     ? overlay.enterAnimation
-    : config.get(name, mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
+    : config.get(name, platform === 'ios' ? iosEnterAnimation : mdEnterAnimation);
 
   const completed = await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
   if (completed) {
@@ -503,10 +503,10 @@ export const dismiss = async <OverlayDismissOptions>(
     overlay.willDismiss.emit({ data, role });
     overlay.willDismissShorthand?.emit({ data, role });
 
-    const mode = getIonPlatform(overlay);
+    const platform = getIonPlatform(overlay);
     const animationBuilder = overlay.leaveAnimation
       ? overlay.leaveAnimation
-      : config.get(name, mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
+      : config.get(name, platform === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
 
     // If dismissed via gesture, no need to play leaving animation again
     if (role !== GESTURE) {

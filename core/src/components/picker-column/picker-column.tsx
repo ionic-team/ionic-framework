@@ -51,9 +51,9 @@ export class PickerColumnCmp implements ComponentInterface {
     let pickerRotateFactor = 0;
     let pickerScaleFactor = 0.81;
 
-    const mode = getIonPlatform(this);
+    const platform = getIonPlatform(this);
 
-    if (mode === 'ios') {
+    if (platform === 'ios') {
       pickerRotateFactor = -0.46;
       pickerScaleFactor = 1;
     }

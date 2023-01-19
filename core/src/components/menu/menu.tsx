@@ -430,9 +430,9 @@ export class Menu implements ComponentInterface, MenuI {
 
   private async startAnimation(shouldOpen: boolean, animated: boolean): Promise<void> {
     const isReversed = !shouldOpen;
-    const mode = getIonPlatform(this);
-    const easing = mode === 'ios' ? iosEasing : mdEasing;
-    const easingReverse = mode === 'ios' ? iosEasingReverse : mdEasingReverse;
+    const platform = getIonPlatform(this);
+    const easing = platform === 'ios' ? iosEasing : mdEasing;
+    const easingReverse = platform === 'ios' ? iosEasingReverse : mdEasingReverse;
     const ani = (this.animation as Animation)!
       .direction(isReversed ? 'reverse' : 'normal')
       .easing(isReversed ? easingReverse : easing)

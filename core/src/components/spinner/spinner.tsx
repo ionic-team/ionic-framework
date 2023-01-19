@@ -39,11 +39,11 @@ export class Spinner implements ComponentInterface {
 
   private getName(): SpinnerTypes {
     const spinnerName = this.name || config.get('spinner');
-    const mode = getIonPlatform(this);
+    const platform = getIonPlatform(this);
     if (spinnerName) {
       return spinnerName;
     }
-    return mode === 'ios' ? 'lines' : 'circular';
+    return platform === 'ios' ? 'lines' : 'circular';
   }
 
   render() {

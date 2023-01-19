@@ -10,11 +10,11 @@ import { baseAnimation } from './base';
  * The menu itself, which is under the content, does not move.
  */
 export const menuRevealAnimation = (menu: MenuI): Animation => {
-  const mode = getIonPlatform(menu);
+  const platform = getIonPlatform(menu);
   const openedX = menu.width * (menu.isEndSide ? -1 : 1) + 'px';
   const contentOpen = createAnimation()
     .addElement(menu.contentEl!) // REVIEW
     .fromTo('transform', 'translateX(0px)', `translateX(${openedX})`);
 
-  return baseAnimation(mode === 'ios').addAnimation(contentOpen);
+  return baseAnimation(platform === 'ios').addAnimation(contentOpen);
 };

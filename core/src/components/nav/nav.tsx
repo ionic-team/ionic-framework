@@ -111,8 +111,8 @@ export class Nav implements NavOutlet {
     this.useRouter = document.querySelector('ion-router') !== null && this.el.closest('[no-router]') === null;
 
     if (this.swipeGesture === undefined) {
-      const mode = getIonPlatform(this);
-      this.swipeGesture = config.getBoolean('swipeBackEnabled', mode === 'ios');
+      const platform = getIonPlatform(this);
+      this.swipeGesture = config.getBoolean('swipeBackEnabled', platform === 'ios');
     }
 
     this.ionNavWillLoad.emit();

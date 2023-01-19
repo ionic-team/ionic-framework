@@ -602,8 +602,8 @@ export class Input implements ComponentInterface {
    * when fill="outline".
    */
   private renderLabelContainer() {
-    const mode = getIonPlatform(this);
-    const hasOutlineFill = mode === 'md' && this.fill === 'outline';
+    const platform = getIonPlatform(this);
+    const hasOutlineFill = platform === 'md' && this.fill === 'outline';
 
     if (hasOutlineFill) {
       /**
