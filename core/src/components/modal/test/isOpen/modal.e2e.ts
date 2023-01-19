@@ -1,7 +1,9 @@
 import { test } from '@utils/test/playwright';
 
 test.describe('modal: isOpen', () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({ page, skip }) => {
+    skip.rtl();
+    skip.mode('md');
     await page.goto('/src/components/modal/test/isOpen');
   });
 

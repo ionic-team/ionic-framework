@@ -58,9 +58,7 @@ export const config: Config = {
     { components: ['ion-breadcrumb', 'ion-breadcrumbs'] },
   ],
   plugins: [
-    sass({
-      injectGlobalPaths: ['src/themes/ionic.skip-warns.scss']
-    })
+    sass(),
   ],
   outputTargets: [
     reactOutputTarget({

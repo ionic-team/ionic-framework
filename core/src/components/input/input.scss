@@ -158,12 +158,14 @@
   background-color: transparent;
   background-repeat: no-repeat;
 
+  color: $text-color-step-400;
+
   visibility: hidden;
   appearance: none;
 }
 
-.input-clear-icon ion-icon {
-  color: $text-color-step-400;
+:host(.in-item-color) .input-clear-icon {
+  color: inherit;
 }
 
 /**

@@ -48,7 +48,6 @@ test.describe('card: basic', () => {
 
     test('should not have visual regressions with translucent cards', async ({ page, skip }) => {
       skip.mode('md', 'Translucent effect is only available in iOS mode.');
-      skip.browser('firefox', 'Firefox has some issues rendering translucent effects on Linux.');
 
       await page.setContent(`
         <ion-card>

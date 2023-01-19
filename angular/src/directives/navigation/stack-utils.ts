@@ -86,6 +86,7 @@ export interface StackEvent {
   tabSwitch: boolean;
 }
 
+// TODO(FW-2827): types
 export interface RouteView {
   id: number;
   url: string;

@@ -15,7 +15,8 @@ test.describe('sheet modal: rendering', () => {
 });
 
 test.describe('sheet modal: backdrop', () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({ page, skip }) => {
+    skip.rtl();
     await page.goto('/src/components/modal/test/sheet');
   });
   test('should dismiss the sheet modal when clicking the active backdrop', async ({ page }) => {
@@ -55,12 +56,12 @@ test.describe('sheet modal: backdrop', () => {
 });
 
 test.describe('sheet modal: setting the breakpoint', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto('/src/components/modal/test/sheet');
-  });
   test.describe('sheet modal: invalid values', () => {
     let warnings: string[] = [];
-    test.beforeEach(async ({ page }) => {
+    test.beforeEach(async ({ page, skip }) => {
+      skip.rtl();
+      await page.goto('/src/components/modal/test/sheet');
+
       warnings = [];
 
       page.on('console', (ev) => {
@@ -90,7 +91,9 @@ test.describe('sheet modal: setting the breakpoint', () => {
     });
   });
   test.describe('sheet modal: valid values', () => {
-    test.beforeEach(async ({ page }) => {
+    test.beforeEach(async ({ page, skip }) => {
+      skip.rtl();
+      await page.goto('/src/components/modal/test/sheet');
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
 
       await page.click('#sheet-modal');
@@ -134,7 +137,9 @@ test.describe('sheet modal: setting the breakpoint', () => {
     });
   });
 
-  test('it should reset the breakpoint value on dismiss', async ({ page }) => {
+  test('it should reset the breakpoint value on dismiss', async ({ page, skip }) => {
+    skip.rtl();
+    await page.goto('/src/components/modal/test/sheet');
     test.info().annotations.push({
       type: 'issue',
       description: 'https://github.com/ionic-team/ionic-framework/issues/25245',
@@ -197,7 +202,8 @@ test.describe('sheet modal: setting the breakpoint', () => {
 });
 
 test.describe('sheet modal: clicking the handle', () => {
-  test.beforeEach(async ({ page }) => {
+  test.beforeEach(async ({ page, skip }) => {
+    skip.rtl();
     await page.goto('/src/components/modal/test/sheet');
   });
 

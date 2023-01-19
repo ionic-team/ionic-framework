@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Breadcrumbs - Reactive</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Breadcrumbs - Reactive</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <ion-breadcrumbs max-items="4" items-before-collapse="0" items-after-collapse="4">
+          <ion-breadcrumb href="#"> Home </ion-breadcrumb>
+          <ion-breadcrumb href="#"> Trips </ion-breadcrumb>
+          <ion-breadcrumb href="#"> Tokyo 2021 </ion-breadcrumb>
+          <ion-breadcrumb href="#"> Photos </ion-breadcrumb>
+        </ion-breadcrumbs>
+
+        <ion-button id="add-btn" onclick="addItem()">Add Item</ion-button>
+        <ion-button id="remove-btn" onclick="removeItem()">Remove Item</ion-button>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      const breadcrumbs = document.querySelector('ion-breadcrumbs');
+
+      const addItem = () => {
+        const breadcrumb = document.createElement('ion-breadcrumb');
+        const count = breadcrumbs.querySelectorAll('ion-breadcrumb').length;
+        breadcrumb.href = '#';
+        breadcrumb.textContent = `Item ${count}`;
+        breadcrumbs.appendChild(breadcrumb);
+      };
+
+      const removeItem = () => {
+        const breadcrumb = breadcrumbs.querySelector('ion-breadcrumb:last-child');
+        breadcrumbs.removeChild(breadcrumb);
+      };
+    </script>
+  </body>
+</html>

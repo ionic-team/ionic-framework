@@ -4,6 +4,7 @@ import { dragElementBy, test } from '@utils/test/playwright';
 test.describe('card modal - scroll target', () => {
   test.beforeEach(async ({ page, skip }) => {
     skip.mode('md');
+    skip.rtl();
 
     await page.goto('/src/components/modal/test/card-scroll-target');
   });

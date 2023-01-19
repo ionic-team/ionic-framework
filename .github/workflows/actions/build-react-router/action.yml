@@ -6,15 +6,6 @@ runs:
     - uses: actions/setup-node@v3
       with:
         node-version: 16.x
-    - name: Install Dependencies
-      run: npm install --legacy-peer-deps
-      shell: bash
-      working-directory: ./packages/react-router
-    - uses: ./.github/workflows/actions/download-archive
-      with:
-        name: ionic-react
-        path: ./packages/react
-        filename: ReactBuild.zip
     - uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-core
@@ -26,7 +17,7 @@ runs:
         path: ./packages/react
         filename: ReactBuild.zip
     - name: Install Dependencies
-      run: npm install --legacy-peer-deps
+      run: npm ci
       shell: bash
       working-directory: ./packages/react-router
     - name: Sync

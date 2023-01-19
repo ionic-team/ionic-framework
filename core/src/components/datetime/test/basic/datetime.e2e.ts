@@ -27,7 +27,7 @@ test.describe('datetime: closing time popover', () => {
     await ionPopoverDidDismiss.next();
     await page.waitForChanges();
 
-    await expect(calendarMonthYear).toHaveText(currentMonthAndYear);
+    await expect(calendarMonthYear).toHaveText(currentMonthAndYear, { useInnerText: true });
   });
 });
 
