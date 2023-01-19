@@ -17,7 +17,7 @@ runs:
         path: ./packages/vue
         filename: VueBuild.zip
     - name: Install Vue Router Dependencies
-      run: npm install
+      run: npm ci
       shell: bash
       working-directory: ./packages/vue-router
     - name: Sync

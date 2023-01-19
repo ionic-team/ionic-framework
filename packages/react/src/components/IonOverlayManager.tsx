@@ -1,15 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 
-import { ReactComponentOrElement } from '../models';
+import type { ReactComponentOrElement } from '../models';
 
 interface IonOverlayManagerProps {
   onAddOverlay: (
-    callback: (
-      id: string,
-      component: ReactComponentOrElement,
-      containerElement: HTMLDivElement
-    ) => void
+    callback: (id: string, component: ReactComponentOrElement, containerElement: HTMLDivElement) => void
   ) => void;
   onRemoveOverlay: (callback: (id: string) => void) => void;
 }
@@ -21,10 +17,7 @@ interface IonOverlayManagerProps {
  * that is set up in <IonApp />, so we register callbacks so when overlays are added to IonContext,
  * they ultimately added here.
  */
-export const IonOverlayManager: React.FC<IonOverlayManagerProps> = ({
-  onAddOverlay,
-  onRemoveOverlay,
-}) => {
+export const IonOverlayManager: React.FC<IonOverlayManagerProps> = ({ onAddOverlay, onRemoveOverlay }) => {
   type OverlaysList = {
     [key: string]: {
       component: any; // TODO(FW-2959): type
@@ -55,11 +48,7 @@ export const IonOverlayManager: React.FC<IonOverlayManagerProps> = ({
     onRemoveOverlay(removeOverlay);
   }, []);
 
-  const addOverlay = (
-    id: string,
-    component: ReactComponentOrElement,
-    containerElement: HTMLDivElement
-  ) => {
+  const addOverlay = (id: string, component: ReactComponentOrElement, containerElement: HTMLDivElement) => {
     const newOverlays = { ...overlaysRef.current };
     newOverlays[id] = { component, containerElement };
     setOverlays(newOverlays);
