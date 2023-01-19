@@ -23,6 +23,8 @@ import {
   setStyleProperty,
 } from './animation-utils';
 
+// TODO(FW-2832): types
+
 interface AnimationOnFinishCallback {
   c: AnimationLifecycle;
   o?: AnimationCallbackOptions;

@@ -2,6 +2,8 @@ import React from 'react';
 
 import { IonLifeCycleContext } from '../contexts/IonLifeCycleContext';
 
+// TODO(FW-2959): types
+
 export const withIonLifeCycle = (WrappedComponent: React.ComponentType<any>) => {
   return class IonLifeCycle extends React.Component<any, any> {
     context!: React.ContextType<typeof IonLifeCycleContext>;

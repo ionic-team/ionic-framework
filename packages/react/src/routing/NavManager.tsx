@@ -1,15 +1,19 @@
-import { AnimationBuilder } from '@ionic/core/components';
+import type { AnimationBuilder } from '@ionic/core/components';
 import React from 'react';
 
-import { IonRouterContext, IonRouterContextState } from '../components/IonRouterContext';
-import { NavContext, NavContextState } from '../contexts/NavContext';
-import { RouteAction } from '../models/RouteAction';
-import { RouteInfo } from '../models/RouteInfo';
-import { RouterDirection } from '../models/RouterDirection';
-import { RouterOptions } from '../models/RouterOptions';
+import type { IonRouterContextState } from '../components/IonRouterContext';
+import { IonRouterContext } from '../components/IonRouterContext';
+import type { NavContextState } from '../contexts/NavContext';
+import { NavContext } from '../contexts/NavContext';
+import type { RouteAction } from '../models/RouteAction';
+import type { RouteInfo } from '../models/RouteInfo';
+import type { RouterDirection } from '../models/RouterDirection';
+import type { RouterOptions } from '../models/RouterOptions';
 
-import { LocationHistory } from './LocationHistory';
+import type { LocationHistory } from './LocationHistory';
 import PageManager from './PageManager';
+
+// TODO(FW-2959): types
 
 interface NavManagerProps {
   routeInfo: RouteInfo;
@@ -126,9 +130,7 @@ export class NavManager extends React.PureComponent<NavManagerProps, NavContextS
   render() {
     return (
       <NavContext.Provider value={{ ...this.state, routeInfo: this.props.routeInfo }}>
-        <IonRouterContext.Provider
-          value={{ ...this.ionRouterContextValue, routeInfo: this.props.routeInfo }}
-        >
+        <IonRouterContext.Provider value={{ ...this.ionRouterContextValue, routeInfo: this.props.routeInfo }}>
           {this.props.children}
         </IonRouterContext.Provider>
       </NavContext.Provider>

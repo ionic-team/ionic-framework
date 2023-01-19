@@ -6,6 +6,8 @@ import type { SelectPopoverOption } from '../../interface';
 import { safeCall } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 
+// TODO(FW-2832): types
+
 /**
  * @internal
  */

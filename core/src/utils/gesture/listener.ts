@@ -1,5 +1,5 @@
 export const addEventListener = (
-  el: any,
+  el: any, // TODO(FW-2832): type
   eventName: string,
   callback: EventListenerOrEventListenerObject,
   opts: {

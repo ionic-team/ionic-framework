@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.5.0](https://github.com/ionic-team/ionic-framework/compare/v6.4.3...v6.5.0) (2023-01-18)
+
+
+### Features
+
+* **deps:** update ionicons to 6.1.0 ([#26617](https://github.com/ionic-team/ionic-framework/issues/26617)) ([ccd2a92](https://github.com/ionic-team/ionic-framework/commit/ccd2a9224e018ad0d67903d44ec312934c3b35ec))
+* **deps:** update ionicons to 6.1.1 ([#26626](https://github.com/ionic-team/ionic-framework/issues/26626)) ([90405eb](https://github.com/ionic-team/ionic-framework/commit/90405eb0af69ce04faf5855189449d0b7518288c))
+* **router:** export hook interfaces ([#26551](https://github.com/ionic-team/ionic-framework/issues/26551)) ([2752702](https://github.com/ionic-team/ionic-framework/commit/27527025e4588f43f9f79640f0929e7c7d0618ee))
+
+
+
+
+
+## [6.4.3](https://github.com/ionic-team/ionic-framework/compare/v6.4.2...v6.4.3) (2023-01-18)
+
+
+### Bug Fixes
+
+* **datetime:** allow header to render in all wheel picker presentations ([#26616](https://github.com/ionic-team/ionic-framework/issues/26616)) ([7b947b5](https://github.com/ionic-team/ionic-framework/commit/7b947b5d58ff51a3a6ac360fef6d4df073e1bfec))
+* **input:** clear button uses contrast when setting color on item ([#26592](https://github.com/ionic-team/ionic-framework/issues/26592)) ([a31e1e5](https://github.com/ionic-team/ionic-framework/commit/a31e1e594d4ed7bbcf690b27eee143da232f2bdc)), closes [#26337](https://github.com/ionic-team/ionic-framework/issues/26337)
+* **list:** inset lists render correctly ([#26586](https://github.com/ionic-team/ionic-framework/issues/26586)) ([911b1d4](https://github.com/ionic-team/ionic-framework/commit/911b1d496efe595ddbf8e980f052e505ce9716c2)), closes [#20819](https://github.com/ionic-team/ionic-framework/issues/20819)
+
+
+
+
+
 ## [6.4.2](https://github.com/ionic-team/ionic-framework/compare/v6.4.1...v6.4.2) (2023-01-11)
 
 

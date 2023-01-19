@@ -22,6 +22,7 @@ export * from './components/picker/picker-interface';
 export * from './components/popover/popover-interface';
 export * from './components/radio-group/radio-group-interface';
 export * from './components/range/range-interface';
+export * from './components/route/route-interface';
 export * from './components/router/utils/interface';
 export * from './components/refresher/refresher-interface';
 export * from './components/reorder-group/reorder-group-interface';

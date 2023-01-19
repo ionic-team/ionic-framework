@@ -26,6 +26,7 @@ export const createPullingAnimation = (
 };
 
 const createBaseAnimation = (pullingRefresherIcon: HTMLElement) => {
+  // TODO(FW-2832): add types/re-evaluate asserting so many things
   const spinner = pullingRefresherIcon.querySelector('ion-spinner') as HTMLElement;
   const circle = spinner!.shadowRoot!.querySelector('circle') as any;
   const spinnerArrowContainer = pullingRefresherIcon.querySelector('.spinner-arrow-container') as HTMLElement;

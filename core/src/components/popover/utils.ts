@@ -3,7 +3,7 @@ import { getElementRoot, raf } from '../../utils/helpers';
 
 interface InteractionCallback {
   eventName: string;
-  callback: (ev: any) => void;
+  callback: (ev: any) => void; // TODO(FW-2832): type
 }
 
 export interface ReferenceCoordinates {
@@ -169,7 +169,7 @@ export const configureTriggerInteraction = (
    */
   switch (triggerAction) {
     case 'hover':
-      let hoverTimeout: any;
+      let hoverTimeout: ReturnType<typeof setTimeout> | undefined;
 
       triggerCallbacks = [
         {
