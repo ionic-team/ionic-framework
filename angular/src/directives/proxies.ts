@@ -1903,14 +1903,14 @@ export declare interface IonSelect extends Components.IonSelect {
 
 @ProxyCmp({
   defineCustomElementFn: undefined,
-  inputs: ['cancelText', 'compareWith', 'disabled', 'interface', 'interfaceOptions', 'mode', 'multiple', 'name', 'okText', 'placeholder', 'selectedText', 'value'],
+  inputs: ['cancelText', 'color', 'compareWith', 'disabled', 'fill', 'interface', 'interfaceOptions', 'justify', 'label', 'labelPlacement', 'legacy', 'mode', 'multiple', 'name', 'okText', 'placeholder', 'selectedText', 'shape', 'value'],
   methods: ['open']
 })
 @Component({
   selector: 'ion-select',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['cancelText', 'compareWith', 'disabled', 'interface', 'interfaceOptions', 'mode', 'multiple', 'name', 'okText', 'placeholder', 'selectedText', 'value']
+  inputs: ['cancelText', 'color', 'compareWith', 'disabled', 'fill', 'interface', 'interfaceOptions', 'justify', 'label', 'labelPlacement', 'legacy', 'mode', 'multiple', 'name', 'okText', 'placeholder', 'selectedText', 'shape', 'value']
 })
 export class IonSelect {
   protected el: HTMLElement;

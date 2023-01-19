@@ -1,5 +1,9 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import { createLegacyFormController } from '@utils/forms';
+import type { LegacyFormController } from '@utils/forms';
+import { printIonWarning } from '@utils/logging';
+import { isRTL } from '@utils/rtl';
 import { caretDownSharp } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -8,6 +12,7 @@ import type {
   ActionSheetOptions,
   AlertInput,
   AlertOptions,
+  Color,
   CssClassMap,
   OverlaySelect,
   PopoverOptions,
@@ -16,9 +21,10 @@ import type {
   SelectPopoverOption,
   StyleEventDetail,
 } from '../../interface';
-import { findItemLabel, focusElement, getAriaLabel, renderHiddenInput } from '../../utils/helpers';
+import { findItemLabel, focusElement, getAriaLabel, renderHiddenInput, inheritAttributes } from '../../utils/helpers';
+import type { Attributes } from '../../utils/helpers';
 import { actionSheetController, alertController, popoverController } from '../../utils/overlays';
-import { hostContext } from '../../utils/theme';
+import { createColorClasses, hostContext } from '../../utils/theme';
 import { watchForOptions } from '../../utils/watch-options';
 
 import type { SelectCompareFn } from './select-interface';
@@ -43,15 +49,16 @@ export class Select implements ComponentInterface {
   private overlay?: OverlaySelect;
   private focusEl?: HTMLButtonElement;
   private mutationO?: MutationObserver;
+  private legacyFormController!: LegacyFormController;
+  private inheritedAttributes: Attributes = {};
+  private nativeWrapperEl: HTMLElement | undefined;
+
+  // This flag ensures we log the deprecation warning at most once.
+  private hasLoggedDeprecationWarning = false;
 
   @Element() el!: HTMLIonSelectElement;
 
   @State() isExpanded = false;
-
-  /**
-   * If `true`, the user cannot interact with the select.
-   */
-  @Prop() disabled = false;
 
   /**
    * The text to display on the cancel button.
@@ -59,29 +66,29 @@ export class Select implements ComponentInterface {
   @Prop() cancelText = 'Cancel';
 
   /**
-   * The text to display on the ok button.
+   * The color to use from your application's color palette.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
+   *
+   * This property is only available when using the modern select syntax.
    */
-  @Prop() okText = 'OK';
+  @Prop({ reflect: true }) color?: Color;
 
   /**
-   * The text to display when the select is empty.
+   * A property name or function used to compare object values
    */
-  @Prop() placeholder?: string;
+  @Prop() compareWith?: string | SelectCompareFn | null;
 
   /**
-   * The name of the control, which is submitted with the form data.
+   * If `true`, the user cannot interact with the select.
    */
-  @Prop() name: string = this.inputId;
+  @Prop() disabled = false;
 
   /**
-   * The text to display instead of the selected option's value.
+   * The fill for the item. If `'solid'` the item will have a background. If
+   * `'outline'` the item will be transparent with a border. Only available in `md` mode.
    */
-  @Prop() selectedText?: string | null;
-
-  /**
-   * If `true`, the select can accept multiple values.
-   */
-  @Prop() multiple = false;
+  @Prop() fill?: 'outline' | 'solid';
 
   /**
    * The interface the select should use: `action-sheet`, `popover` or `alert`.
@@ -100,9 +107,75 @@ export class Select implements ComponentInterface {
   @Prop() interfaceOptions: any = {};
 
   /**
-   * A property name or function used to compare object values
+   * How to pack the label and select within a line.
+   * `justify` does not apply when the label and select
+   * are on different lines when `labelPlacement` is set to
+   * `'floating'` or `'stacked'`.
+   * `'start'`: The label and select will appear on the left in LTR and
+   * on the right in RTL.
+   * `'end'`: The label and select will appear on the right in LTR and
+   * on the left in RTL.
+   * `'space-between'`: The label and select will appear on opposite
+   * ends of the line with space between the two elements.
    */
-  @Prop() compareWith?: string | SelectCompareFn | null;
+  @Prop() justify: 'start' | 'end' | 'space-between' = 'space-between';
+
+  /**
+   * The visible label associated with the select.
+   */
+  @Prop() label?: string;
+
+  /**
+   * Where to place the label relative to the select.
+   * `'start'`: The label will appear to the left of the select in LTR and to the right in RTL.
+   * `'end'`: The label will appear to the right of the select in LTR and to the left in RTL.
+   * `'floating'`: The label will appear smaller and above the select when the select is focused or it has a value. Otherwise it will appear on top of the select.
+   * `'stacked'`: The label will appear smaller and above the select regardless even when the select is blurred or has no value.
+   * `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+   * When using `'floating'` or `'stacked'` we recommend initializing the select with either a `value` or a `placeholder`.
+   */
+  @Prop() labelPlacement?: 'start' | 'end' | 'floating' | 'stacked' | 'fixed' = 'start';
+
+  /**
+   * Set the `legacy` property to `true` to forcibly use the legacy form control markup.
+   * Ionic will only opt components in to the modern form markup when they are
+   * using either the `aria-label` attribute or the `label` property. As a result,
+   * the `legacy` property should only be used as an escape hatch when you want to
+   * avoid this automatic opt-in behavior.
+   * Note that this property will be removed in an upcoming major release
+   * of Ionic, and all form components will be opted-in to using the modern form markup.
+   */
+  @Prop() legacy?: boolean;
+
+  /**
+   * If `true`, the select can accept multiple values.
+   */
+  @Prop() multiple = false;
+
+  /**
+   * The name of the control, which is submitted with the form data.
+   */
+  @Prop() name: string = this.inputId;
+
+  /**
+   * The text to display on the ok button.
+   */
+  @Prop() okText = 'OK';
+
+  /**
+   * The text to display when the select is empty.
+   */
+  @Prop() placeholder?: string;
+
+  /**
+   * The text to display instead of the selected option's value.
+   */
+  @Prop() selectedText?: string | null;
+
+  /**
+   * The shape of the select. If "round" it will have an increased border radius.
+   */
+  @Prop() shape?: 'round';
 
   /**
    * the value of the select.
@@ -157,7 +230,15 @@ export class Select implements ComponentInterface {
     this.ionChange.emit({ value });
   }
 
+  componentWillLoad() {
+    this.inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
+  }
+
   async connectedCallback() {
+    const { el } = this;
+
+    this.legacyFormController = createLegacyFormController(el);
+
     this.updateOverlayOptions();
     this.emitStyle();
 
@@ -347,6 +428,7 @@ export class Select implements ComponentInterface {
   }
 
   private async openPopover(ev: UIEvent) {
+    const { fill } = this;
     const interfaceOptions = this.interfaceOptions;
     const mode = getIonMode(this);
     const showBackdrop = mode === 'md' ? false : true;
@@ -356,19 +438,42 @@ export class Select implements ComponentInterface {
     let event: Event | CustomEvent = ev;
     let size = 'auto';
 
-    const item = this.el.closest('ion-item');
+    if (this.legacyFormController.hasLegacyControl()) {
+      const item = this.el.closest('ion-item');
 
-    // If the select is inside of an item containing a floating
-    // or stacked label then the popover should take up the
-    // full width of the item when it presents
-    if (item && (item.classList.contains('item-label-floating') || item.classList.contains('item-label-stacked'))) {
-      event = {
-        ...ev,
-        detail: {
-          ionShadowTarget: item,
-        },
-      };
-      size = 'cover';
+      // If the select is inside of an item containing a floating
+      // or stacked label then the popover should take up the
+      // full width of the item when it presents
+      if (item && (item.classList.contains('item-label-floating') || item.classList.contains('item-label-stacked'))) {
+        event = {
+          ...ev,
+          detail: {
+            ionShadowTarget: item,
+          },
+        };
+        size = 'cover';
+      }
+    } else {
+      /**
+       * The popover should take up the full width
+       * when using a fill in MD mode.
+       */
+      if (mode === 'md' && fill !== undefined) {
+        size = 'cover';
+
+        /**
+         * Otherwise the popover
+         * should be positioned relative
+         * to the native element.
+         */
+      } else {
+        event = {
+          ...ev,
+          detail: {
+            ionShadowTarget: this.nativeWrapperEl,
+          },
+        };
+      }
     }
 
     const popoverOpts: PopoverOptions = {
@@ -521,15 +626,17 @@ export class Select implements ComponentInterface {
   }
 
   private emitStyle() {
-    this.ionStyle.emit({
-      interactive: true,
-      'interactive-disabled': this.disabled,
-      select: true,
-      'select-disabled': this.disabled,
-      'has-placeholder': this.placeholder !== undefined,
-      'has-value': this.hasValue(),
-      'has-focus': this.isExpanded,
-    });
+    if (this.legacyFormController.hasLegacyControl()) {
+      this.ionStyle.emit({
+        interactive: true,
+        'interactive-disabled': this.disabled,
+        select: true,
+        'select-disabled': this.disabled,
+        'has-placeholder': this.placeholder !== undefined,
+        'has-value': this.hasValue(),
+        'has-focus': this.isExpanded,
+      });
+    }
   }
 
   private onClick = (ev: UIEvent) => {
@@ -545,7 +652,125 @@ export class Select implements ComponentInterface {
     this.ionBlur.emit();
   };
 
-  render() {
+  private renderLabel() {
+    const { label } = this;
+    if (label === undefined) {
+      return;
+    }
+
+    return (
+      <div class="label-text-wrapper">
+        <div class="label-text">{this.label}</div>
+      </div>
+    );
+  }
+
+  /**
+   * Renders the border container
+   * when fill="outline".
+   */
+  private renderLabelContainer() {
+    const mode = getIonMode(this);
+    const hasOutlineFill = mode === 'md' && this.fill === 'outline';
+
+    if (hasOutlineFill) {
+      /**
+       * The outline fill has a special outline
+       * that appears around the select and the label.
+       * Certain stacked and floating label placements cause the
+       * label to translate up and create a "cut out"
+       * inside of that border by using the notch-spacer element.
+       */
+      return [
+        <div class="select-outline-container">
+          <div class="select-outline-start"></div>
+          <div class="select-outline-notch">
+            <div class="notch-spacer" aria-hidden="true">
+              {this.label}
+            </div>
+          </div>
+          <div class="select-outline-end"></div>
+        </div>,
+        this.renderLabel(),
+      ];
+    }
+
+    /**
+     * If not using the outline style,
+     * we can render just the label.
+     */
+    return this.renderLabel();
+  }
+
+  private renderSelect() {
+    const { disabled, el, isExpanded, labelPlacement, justify, placeholder, fill, shape } = this;
+    const mode = getIonMode(this);
+    const hasFloatingOrStackedLabel = labelPlacement === 'floating' || labelPlacement === 'stacked';
+    const justifyEnabled = !hasFloatingOrStackedLabel;
+    const rtl = isRTL(el) ? 'rtl' : 'ltr';
+    const shouldRenderHighlight = mode === 'md' && fill !== 'outline';
+
+    return (
+      <Host
+        onClick={this.onClick}
+        class={createColorClasses(this.color, {
+          [mode]: true,
+          'in-item': hostContext('ion-item', el),
+          'select-disabled': disabled,
+          'select-expanded': isExpanded,
+          'has-value': this.hasValue(),
+          'has-placeholder': placeholder !== undefined,
+          'ion-focusable': true,
+          [`select-${rtl}`]: true,
+          [`select-fill-${fill}`]: fill !== undefined,
+          [`select-justify-${justify}`]: justifyEnabled,
+          [`select-shape-${shape}`]: shape !== undefined,
+          [`select-label-placement-${labelPlacement}`]: true,
+        })}
+      >
+        <label class="select-wrapper" id="select-label">
+          {this.renderLabelContainer()}
+          <div class="native-wrapper" ref={(el) => (this.nativeWrapperEl = el)}>
+            {this.renderSelectText()}
+            {!hasFloatingOrStackedLabel && this.renderSelectIcon()}
+            {this.renderListbox()}
+          </div>
+          {/**
+           * The icon in a floating/stacked select
+           * must be centered with the entire select,
+           * not just the native control. As a result,
+           * we need to render the icon outside of
+           * the native wrapper.
+           */}
+          {hasFloatingOrStackedLabel && this.renderSelectIcon()}
+          {shouldRenderHighlight && <div class="select-highlight"></div>}
+        </label>
+      </Host>
+    );
+  }
+
+  private renderLegacySelect() {
+    if (!this.hasLoggedDeprecationWarning) {
+      printIonWarning(
+        `Using ion-select with an ion-label has been deprecated. To migrate, remove the ion-label and use the "label" property on ion-select instead.
+
+Example: <ion-select label="Favorite Color">...</ion-select>
+
+For inputs that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the select.
+  `,
+        this.el
+      );
+
+      if (this.legacy) {
+        printIonWarning(
+          `ion-select is being used with the "legacy" property enabled which will forcibly enable the legacy form markup. This property will be removed in an upcoming major release of Ionic where this form control will use the modern form markup.
+    Developers can dismiss this warning by removing their usage of the "legacy" property and using the new select syntax.`,
+          this.el
+        );
+      }
+      this.hasLoggedDeprecationWarning = true;
+    }
+
     const { disabled, el, inputId, isExpanded, name, placeholder, value } = this;
     const mode = getIonMode(this);
     const { labelText, labelId } = getAriaLabel(el, inputId);
@@ -554,19 +779,10 @@ export class Select implements ComponentInterface {
 
     const displayValue = this.getText();
 
-    let addPlaceholderClass = false;
     let selectText = displayValue;
     if (selectText === '' && placeholder !== undefined) {
       selectText = placeholder;
-      addPlaceholderClass = true;
     }
-
-    const selectTextClasses: CssClassMap = {
-      'select-text': true,
-      'select-placeholder': addPlaceholderClass,
-    };
-
-    const textPart = addPlaceholderClass ? 'placeholder' : 'text';
 
     // If there is a label then we need to concatenate it with the
     // current value (or placeholder) and a comma so it separates
@@ -585,28 +801,110 @@ export class Select implements ComponentInterface {
         class={{
           [mode]: true,
           'in-item': hostContext('ion-item', el),
+          'in-item-color': hostContext('ion-item.ion-color', el),
           'select-disabled': disabled,
           'select-expanded': isExpanded,
+          'legacy-select': true,
         }}
       >
-        <div aria-hidden="true" class={selectTextClasses} part={textPart}>
-          {selectText}
-        </div>
-        <ion-icon class="select-icon" part="icon" aria-hidden="true" icon={caretDownSharp}></ion-icon>
+        {this.renderSelectText()}
+        {this.renderSelectIcon()}
         <label id={labelId}>{displayLabel}</label>
-        <button
-          type="button"
-          disabled={disabled}
-          id={inputId}
-          aria-labelledby={labelId}
-          aria-haspopup="listbox"
-          aria-expanded={`${isExpanded}`}
-          onFocus={this.onFocus}
-          onBlur={this.onBlur}
-          ref={(focusEl) => (this.focusEl = focusEl)}
-        ></button>
+        {this.renderListbox()}
       </Host>
     );
+  }
+
+  /**
+   * Renders either the placeholder
+   * or the selected values based on
+   * the state of the select.
+   */
+  private renderSelectText() {
+    const { placeholder } = this;
+
+    const displayValue = this.getText();
+
+    let addPlaceholderClass = false;
+    let selectText = displayValue;
+    if (selectText === '' && placeholder !== undefined) {
+      selectText = placeholder;
+      addPlaceholderClass = true;
+    }
+
+    const selectTextClasses: CssClassMap = {
+      'select-text': true,
+      'select-placeholder': addPlaceholderClass,
+    };
+
+    const textPart = addPlaceholderClass ? 'placeholder' : 'text';
+
+    return (
+      <div aria-hidden="true" class={selectTextClasses} part={textPart}>
+        {selectText}
+      </div>
+    );
+  }
+
+  /**
+   * Renders the chevron icon
+   * next to the select text.
+   */
+  private renderSelectIcon() {
+    return <ion-icon class="select-icon" part="icon" aria-hidden="true" icon={caretDownSharp}></ion-icon>;
+  }
+
+  private get ariaLabel() {
+    const { placeholder, label, el, inputId, inheritedAttributes } = this;
+    const displayValue = this.getText();
+    const { labelText } = getAriaLabel(el, inputId);
+    const definedLabel = label ?? inheritedAttributes['aria-label'] ?? labelText;
+
+    /**
+     * If developer has specified a placeholder
+     * and there is nothing selected, the selectText
+     * should have the placeholder value.
+     */
+    let renderedLabel = displayValue;
+    if (renderedLabel === '' && placeholder !== undefined) {
+      renderedLabel = placeholder;
+    }
+
+    /**
+     * If there is a developer-defined label,
+     * then we need to concatenate the developer label
+     * string with the current current value.
+     * The label for the control should be read
+     * before the values of the control.
+     */
+    if (definedLabel !== undefined) {
+      renderedLabel = renderedLabel === '' ? definedLabel : `${definedLabel}, ${renderedLabel}`;
+    }
+
+    return renderedLabel;
+  }
+
+  private renderListbox() {
+    const { disabled, inputId, isExpanded } = this;
+
+    return (
+      <button
+        disabled={disabled}
+        id={inputId}
+        aria-label={this.ariaLabel}
+        aria-haspopup="listbox"
+        aria-expanded={`${isExpanded}`}
+        onFocus={this.onFocus}
+        onBlur={this.onBlur}
+        ref={(focusEl) => (this.focusEl = focusEl)}
+      ></button>
+    );
+  }
+
+  render() {
+    const { legacyFormController } = this;
+
+    return legacyFormController.hasLegacyControl() ? this.renderLegacySelect() : this.renderSelect();
   }
 }
 

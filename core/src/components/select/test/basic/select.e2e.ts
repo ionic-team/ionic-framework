@@ -111,7 +111,7 @@ test.describe('select: ionChange', () => {
 
   test('should fire ionChange when confirming a value from an alert', async ({ page }) => {
     await page.setContent(`
-      <ion-select interface="alert">
+      <ion-select aria-label="Fruit" interface="alert">
         <ion-select-option value="apple">Apple</ion-select-option>
         <ion-select-option value="banana">Banana</ion-select-option>
       </ion-select>
@@ -137,7 +137,7 @@ test.describe('select: ionChange', () => {
 
   test('should fire ionChange when confirming a value from a popover', async ({ page }) => {
     await page.setContent(`
-      <ion-select interface="popover">
+      <ion-select aria-label="Fruit" interface="popover">
         <ion-select-option value="apple">Apple</ion-select-option>
         <ion-select-option value="banana">Banana</ion-select-option>
       </ion-select>
@@ -161,7 +161,7 @@ test.describe('select: ionChange', () => {
 
   test('should fire ionChange when confirming a value from an action sheet', async ({ page }) => {
     await page.setContent(`
-      <ion-select interface="action-sheet">
+      <ion-select aria-label="Fruit" interface="action-sheet">
         <ion-select-option value="apple">Apple</ion-select-option>
         <ion-select-option value="banana">Banana</ion-select-option>
       </ion-select>
@@ -185,7 +185,7 @@ test.describe('select: ionChange', () => {
 
   test('should not fire when programmatically setting a valid value', async ({ page }) => {
     await page.setContent(`
-      <ion-select>
+      <ion-select aria-label="Fruit">
         <ion-select-option value="apple">Apple</ion-select-option>
         <ion-select-option value="banana">Banana</ion-select-option>
       </ion-select>
