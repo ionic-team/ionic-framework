@@ -14,11 +14,10 @@ type Platform = 'ios' | 'md';
 
 /**
  * Given a Stencil component class, return the visual
- * styles associated with this instance. This
- * can be set using the "mode" global config or
- * property on the component. It can be further customized
- * using the "baseComponents" global config or the "useBase"
- * property on the component.
+ * styles associated with this instance. By default, the visual
+ * styles are inherited from the platform. This can be further
+ * customized using the "baseComponents" global config or the
+ * "useBase" property on the component.
  */
 export const getIonMode = (ref?: any): Mode => {
   return (ref && getMode(ref)) || defaultMode;
