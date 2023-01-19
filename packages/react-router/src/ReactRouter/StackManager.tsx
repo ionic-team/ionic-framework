@@ -93,6 +93,22 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       let enteringViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id);
       let leavingViewItem = this.context.findLeavingViewItemByRouteInfo(routeInfo, this.id);
 
+      let recreateEnteringView = false;
+
+      if (routeInfo.prevRouteLastPathname) {
+        let prevRouteViewItem = this.context.findViewItemByPathname(routeInfo.prevRouteLastPathname, this.id);
+        if (prevRouteViewItem) {
+          if (prevRouteViewItem === enteringViewItem && prevRouteViewItem.routeData.match.url !== routeInfo.pathname) {
+            recreateEnteringView = true;
+          }
+        }
+      }
+
+      const match = this.context.findRouteMatchByRouteInfo(routeInfo, this.id);
+      if (enteringViewItem && match) {
+        enteringViewItem.routeData.match = match;
+      }
+
       if (!leavingViewItem && routeInfo.prevRouteLastPathname) {
         leavingViewItem = this.context.findViewItemByPathname(routeInfo.prevRouteLastPathname, this.id);
       }
@@ -113,6 +129,23 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       const enteringRoute = matchRoute(this.ionRouterOutlet?.props.children, routeInfo) as React.ReactElement;
 
       if (enteringViewItem) {
+        const match = this.context.findRouteMatchByRouteInfo(routeInfo, this.id);
+
+        if (match) {
+          enteringViewItem.routeData.match = match;
+        }
+        /**
+         * If we are re-entering a view item, then we need to validate that the
+         * view item is valid for the current route. For example, if the user navigates
+         * to a parametrized route: /foo/:id, then navigates to /example, then navigates
+         * back to /foo/:id, we only want to re-use the view item if the id param is the same.
+         * Otherwise we need to construct a new view item.
+         */
+        if (recreateEnteringView) {
+          enteringViewItem = this.context.createViewItem(this.id, enteringRoute, routeInfo);
+          this.context.addViewItem(enteringViewItem);
+        }
+
         enteringViewItem.reactElement = enteringRoute;
       } else if (enteringRoute) {
         enteringViewItem = this.context.createViewItem(this.id, enteringRoute, routeInfo);
@@ -223,7 +256,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
         this.prevProps && this.prevProps.routeInfo.pathname === routeInfo.pushedByRoute
           ? this.prevProps.routeInfo
           : ({ pathname: routeInfo.pushedByRoute || '' } as any);
-      const enteringViewItem = this.context.findViewItemByRouteInfo(propsToUse, this.id, false);
+      const enteringViewItem = this.context.findViewItemByRouteInfo(propsToUse, this.id);
 
       return (
         !!enteringViewItem &&
@@ -253,8 +286,8 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
         this.prevProps && this.prevProps.routeInfo.pathname === routeInfo.pushedByRoute
           ? this.prevProps.routeInfo
           : ({ pathname: routeInfo.pushedByRoute || '' } as any);
-      const enteringViewItem = this.context.findViewItemByRouteInfo(propsToUse, this.id, false);
-      const leavingViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id, false);
+      const enteringViewItem = this.context.findViewItemByRouteInfo(propsToUse, this.id);
+      const leavingViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id);
 
       /**
        * When the gesture starts, kick off
@@ -284,8 +317,8 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
           this.prevProps && this.prevProps.routeInfo.pathname === routeInfo.pushedByRoute
             ? this.prevProps.routeInfo
             : ({ pathname: routeInfo.pushedByRoute || '' } as any);
-        const enteringViewItem = this.context.findViewItemByRouteInfo(propsToUse, this.id, false);
-        const leavingViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id, false);
+        const enteringViewItem = this.context.findViewItemByRouteInfo(propsToUse, this.id);
+        const leavingViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id);
 
         /**
          * Ionic React has a design defect where it

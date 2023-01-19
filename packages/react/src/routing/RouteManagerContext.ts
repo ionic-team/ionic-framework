@@ -16,7 +16,8 @@ export interface RouteManagerContextState {
   ) => ViewItem;
   findViewItemByPathname(pathname: string, outletId?: string): ViewItem | undefined;
   findLeavingViewItemByRouteInfo: (routeInfo: RouteInfo, outletId?: string) => ViewItem | undefined;
-  findViewItemByRouteInfo: (routeInfo: RouteInfo, outletId?: string, updateMatch?: boolean) => ViewItem | undefined;
+  findViewItemByRouteInfo: (routeInfo: RouteInfo, outletId?: string) => ViewItem | undefined;
+  findRouteMatchByRouteInfo: (routeInfo: RouteInfo, outletId?: string) => any | undefined;
   getChildrenToRender: (
     outletId: string,
     ionRouterOutlet: React.ReactElement,
@@ -36,6 +37,7 @@ export const RouteManagerContext = /*@__PURE__*/ React.createContext<RouteManage
   findViewItemByPathname: () => undefined,
   findLeavingViewItemByRouteInfo: () => undefined,
   findViewItemByRouteInfo: () => undefined,
+  findRouteMatchByRouteInfo: () => undefined,
   getChildrenToRender: () => undefined as any,
   goBack: () => undefined,
   unMountViewItem: () => undefined,

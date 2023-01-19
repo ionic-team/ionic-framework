@@ -11,6 +11,7 @@ export class ReactRouterViewStack extends ViewStacks {
     this.findLeavingViewItemByRouteInfo = this.findLeavingViewItemByRouteInfo.bind(this);
     this.getChildrenToRender = this.getChildrenToRender.bind(this);
     this.findViewItemByPathname = this.findViewItemByPathname.bind(this);
+    this.findRouteMatchByRouteInfo = this.findRouteMatchByRouteInfo.bind(this);
   }
 
   createViewItem(outletId: string, reactElement: React.ReactElement, routeInfo: RouteInfo, page?: HTMLElement) {
@@ -96,12 +97,8 @@ export class ReactRouterViewStack extends ViewStacks {
     return children;
   }
 
-  findViewItemByRouteInfo(routeInfo: RouteInfo, outletId?: string, updateMatch?: boolean) {
-    const { viewItem, match } = this.findViewItemByPath(routeInfo.pathname, outletId);
-    const shouldUpdateMatch = updateMatch === undefined || updateMatch === true;
-    if (shouldUpdateMatch && viewItem && match) {
-      viewItem.routeData.match = match;
-    }
+  findViewItemByRouteInfo(routeInfo: RouteInfo, outletId?: string) {
+    const { viewItem } = this.findViewItemByPath(routeInfo.pathname, outletId);
     return viewItem;
   }
 
@@ -113,6 +110,11 @@ export class ReactRouterViewStack extends ViewStacks {
   findViewItemByPathname(pathname: string, outletId?: string) {
     const { viewItem } = this.findViewItemByPath(pathname, outletId);
     return viewItem;
+  }
+
+  findRouteMatchByRouteInfo(routeInfo: RouteInfo, outletId?: string) {
+    const { match } = this.findViewItemByPath(routeInfo.pathname, outletId);
+    return match;
   }
 
   private findViewItemByPath(pathname: string, outletId?: string, forceExact?: boolean, mustBeIonRoute?: boolean) {
