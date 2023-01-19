@@ -34,7 +34,7 @@ export const getIonMode = (ref?: any): Mode => {
  * using the mode.
  */
 export const getIonPlatform = (ref?: any): Platform => {
-  return ref.el.platform || getIonMode(ref);
+  return (ref?.el?.platform) ?? getIonMode(ref);
 };
 
 export const initialize = (userConfig: IonicConfig = {}) => {
