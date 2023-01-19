@@ -117,7 +117,7 @@ export const initialize = (userConfig: IonicConfig = {}) => {
     let useBase = false;
     if (isIonicElement(baseEl)) {
       useBase = isBaseComponent(baseEl, config);
-      baseEl.useBase = false;
+      baseEl.useBase = useBase;
     }
 
     while (elm) {
