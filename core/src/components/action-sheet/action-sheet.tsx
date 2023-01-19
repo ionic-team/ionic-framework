@@ -287,7 +287,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
               {buttons.map((b) => (
                 <button type="button" id={b.id} class={buttonClass(b)} onClick={() => this.buttonClick(b)}>
                   <span class="action-sheet-button-inner">
-                    {b.icon && <ion-icon icon={b.icon} aria-hidden={true} lazy={false} class="action-sheet-icon" />}
+                    {b.icon && <ion-icon icon={b.icon} aria-hidden="true" lazy={false} class="action-sheet-icon" />}
                     {b.text}
                   </span>
                   {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
@@ -300,7 +300,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
                 <button type="button" class={buttonClass(cancelButton)} onClick={() => this.buttonClick(cancelButton)}>
                   <span class="action-sheet-button-inner">
                     {cancelButton.icon && (
-                      <ion-icon icon={cancelButton.icon} aria-hidden={true} lazy={false} class="action-sheet-icon" />
+                      <ion-icon icon={cancelButton.icon} aria-hidden="true" lazy={false} class="action-sheet-icon" />
                     )}
                     {cancelButton.text}
                   </span>
