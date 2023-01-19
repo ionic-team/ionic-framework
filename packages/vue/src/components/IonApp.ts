@@ -40,5 +40,6 @@ export const removeTeleportedUserComponent = (component: VNode) => {
   const index = userComponents.value.findIndex((cmp) => cmp === component);
   if (index !== -1) {
     userComponents.value.splice(index, 1);
+    userComponents.value = [...userComponents.value];
   }
 };
