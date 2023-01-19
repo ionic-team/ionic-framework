@@ -1,4 +1,4 @@
-import { JSX as LocalJSX } from '@ionic/core/components';
+import type { JSX as LocalJSX } from '@ionic/core/components';
 import React, { Fragment } from 'react';
 
 import { NavContext } from '../../contexts/NavContext';
@@ -7,7 +7,8 @@ import { HTMLElementSSR } from '../../utils/HTMLElementSSR';
 import { IonRouterOutlet } from '../IonRouterOutlet';
 
 import { IonTabBar } from './IonTabBar';
-import { IonTabsContext, IonTabsContextState } from './IonTabsContext';
+import type { IonTabsContextState } from './IonTabsContext';
+import { IonTabsContext } from './IonTabsContext';
 
 class IonTabsElement extends HTMLElementSSR {
   constructor() {
@@ -25,6 +26,7 @@ if (typeof (window as any) !== 'undefined' && window.customElements) {
 }
 
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace JSX {
     interface IntrinsicElements {
       'ion-tabs': any;
@@ -97,6 +99,7 @@ export const IonTabs = /*@__PURE__*/ (() =>
           : this.props.children;
 
       React.Children.forEach(children, (child: any) => {
+        // eslint-disable-next-line no-prototype-builtins
         if (child == null || typeof child !== 'object' || !child.hasOwnProperty('type')) {
           return;
         }
@@ -107,8 +110,8 @@ export const IonTabs = /*@__PURE__*/ (() =>
         }
 
         let childProps: any = {
-          ref: this.tabBarRef
-        }
+          ref: this.tabBarRef,
+        };
 
         /**
          * Only pass these props
@@ -120,15 +123,15 @@ export const IonTabs = /*@__PURE__*/ (() =>
         if (onIonTabsDidChange !== undefined) {
           childProps = {
             ...childProps,
-            onIonTabsDidChange
-          }
+            onIonTabsDidChange,
+          };
         }
 
         if (onIonTabsWillChange !== undefined) {
           childProps = {
             ...childProps,
-            onIonTabsWillChange
-          }
+            onIonTabsWillChange,
+          };
         }
 
         if (child.type === IonTabBar || child.type.isTabBar) {
@@ -151,11 +154,7 @@ export const IonTabs = /*@__PURE__*/ (() =>
       return (
         <IonTabsContext.Provider value={this.ionTabContextState}>
           {this.context.hasIonicRouter() ? (
-            <PageManager
-              className={className ? `${className}` : ''}
-              routeInfo={this.context.routeInfo}
-              {...props}
-            >
+            <PageManager className={className ? `${className}` : ''} routeInfo={this.context.routeInfo} {...props}>
               <ion-tabs className="ion-tabs" style={hostStyles}>
                 {tabBar.props.slot === 'top' ? tabBar : null}
                 <div style={tabsInner} className="tabs-inner">
