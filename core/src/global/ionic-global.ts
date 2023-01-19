@@ -3,15 +3,37 @@ import { getMode, setMode, setPlatformHelpers } from '@stencil/core';
 import type { IonicConfig, Mode } from '../interface';
 import { isPlatform, setupPlatforms } from '../utils/platform';
 
-import { isIonicElement, resetBaseComponentsCache } from './base-components';
+import { isBaseComponent, isIonicElement, resetBaseComponentsCache } from './base-components';
 import { config, configFromSession, configFromURL, saveConfig, validateConfig } from './config';
 
 declare const Context: any;
 
 let defaultMode: Mode;
 
+type Platform = 'ios' | 'md';
+
+/**
+ * Given a Stencil component class, return the visual
+ * styles associated with this instance. This
+ * can be set using the "mode" global config or
+ * property on the component. It can be further customized
+ * using the "baseComponents" global config or the "useBase"
+ * property on the component.
+ */
 export const getIonMode = (ref?: any): Mode => {
   return (ref && getMode(ref)) || defaultMode;
+};
+
+/**
+ * Given a Stencil component class, return the
+ * platform associated with this instance. The platform
+ * is used to determine a component's capabilities
+ * and does not impact the visual styles associated with
+ * this instance. The capabilities can be set using the "mode"
+ * global config or property on the component.
+ */
+export const getIonPlatform = (ref?: any): Platform => {
+  return ref.el.platform;
 };
 
 export const initialize = (userConfig: IonicConfig = {}) => {
@@ -81,18 +103,36 @@ export const initialize = (userConfig: IonicConfig = {}) => {
   const isAllowedIonicModeValue = (elmMode: string) => ['ios', 'md'].includes(elmMode);
 
   setMode((elm: any) => {
+    const baseEl = elm;
     while (elm) {
       const elmMode = (elm as any).mode || elm.getAttribute('mode');
       if (elmMode) {
         if (isAllowedIonicModeValue(elmMode)) {
-          return elmMode;
+          /**
+           * The visual styles can deviate from the platform
+           * capabilities if base components are enabled, so we keep
+           * track of the platform separately.
+           */
+          const useBase = isBaseComponent(baseEl, config);
+          baseEl.platform = elmMode;
+          baseEl.useBase = useBase;
+          return useBase ? 'base' : elmMode;
         } else if (isIonicElement(elm)) {
           console.warn('Invalid ionic mode: "' + elmMode + '", expected: "ios" or "md"');
         }
       }
       elm = elm.parentElement;
     }
-    return defaultMode;
+
+    /**
+     * The visual styles can deviate from the platform
+     * capabilities if base components are enabled, so we keep
+     * track of the platform separately.
+     */
+    const useBase = isBaseComponent(baseEl, config);
+    baseEl.platform = defaultMode;
+    baseEl.useBase = useBase;
+    return useBase ? 'base' : defaultMode;
   });
 };
 

@@ -55,7 +55,25 @@ export const isBaseComponent = (elm: HTMLElement, config: Config) => {
     return false;
   }
 
-  // TODO check if useBase property is set on element also add tests
+  /**
+   * If a component has already been initialized
+   * then it will have the useBase property set.
+   * This lets us check the component instance and
+   * avoid the global look up.
+   */
+  const useBase = (elm as any).useBase;
+  if (useBase !== undefined) {
+    return useBase;
+  }
+
+  /**
+   * If the component is not already initialized
+   * then we need to see if the developer has
+   * set use-base as an attribute on the element.
+   */
+  if (elm.hasAttribute('use-base')) {
+    return elm.getAttribute('use-base') === 'true';
+  }
 
   const baseComponents = config.get('baseComponents');
 
