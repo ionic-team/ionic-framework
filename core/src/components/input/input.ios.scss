@@ -8,6 +8,15 @@
   font-size: $input-ios-font-size;
 }
 
+/**
+ * The no-fill inputs have a bottom border,
+ * so we only need to round the top left and
+ * top right edges.
+ */
+:host .input-wrapper {
+  @include border-radius(var(--border-radius), var(--border-radius), 0, 0);
+}
+
 // TODO FW-2764 Remove this
 :host(.legacy-input) {
   --padding-top: #{$input-ios-padding-top};
