@@ -1,8 +1,8 @@
-import { JSX as LocalJSX } from '@ionic/core/components';
+import type { JSX as LocalJSX } from '@ionic/core/components';
 import React from 'react';
 
 import { NavContext } from '../../contexts/NavContext';
-import { IonicReactProps } from '../IonicReactProps';
+import type { IonicReactProps } from '../IonicReactProps';
 import { IonBackButtonInner } from '../inner-proxies';
 
 type Props = Omit<LocalJSX.IonBackButton, 'icon'> &
@@ -26,7 +26,9 @@ export const IonBackButton = /*@__PURE__*/ (() =>
        * of ion-nav then we should not interact with
        * the router.
        */
-      if (e.target && (e.target as HTMLElement).closest('ion-nav') !== null) { return; }
+      if (e.target && (e.target as HTMLElement).closest('ion-nav') !== null) {
+        return;
+      }
 
       const { defaultHref, routerAnimation } = this.props;
 

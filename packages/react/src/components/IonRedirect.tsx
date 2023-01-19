@@ -9,6 +9,7 @@ export interface IonRedirectProps {
   routerOptions?: unknown;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface IonRedirectState {}
 
 export class IonRedirect extends React.PureComponent<IonRedirectProps, IonRedirectState> {

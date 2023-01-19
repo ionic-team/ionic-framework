@@ -8,6 +8,7 @@ const POPOVER_MD_BODY_PADDING = 12;
 /**
  * Md Popover Enter Animation
  */
+// TODO(FW-2832): types
 export const mdEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation => {
   const { event: ev, size, trigger, reference, side, align } = opts;
   const doc = baseEl.ownerDocument as any;

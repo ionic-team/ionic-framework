@@ -113,6 +113,7 @@ export class PickerColumnInternal implements ComponentInterface {
 
     const parentEl = (this.parentEl = this.el.closest('ion-picker-internal') as HTMLIonPickerInternalElement | null);
     if (parentEl !== null) {
+      // TODO(FW-2832): type
       parentEl.addEventListener('ionInputModeChange', (ev: any) => this.inputModeChange(ev));
     }
   }
@@ -241,7 +242,7 @@ export class PickerColumnInternal implements ComponentInterface {
   private initializeScrollListener = () => {
     const { el } = this;
 
-    let timeout: any;
+    let timeout: ReturnType<typeof setTimeout> | undefined;
     let activeEl: HTMLElement | null = this.activeItem;
 
     const scrollCallback = () => {

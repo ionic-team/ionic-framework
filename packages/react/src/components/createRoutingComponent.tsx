@@ -1,9 +1,9 @@
-import { AnimationBuilder } from '@ionic/core/components';
+import type { AnimationBuilder } from '@ionic/core/components';
 import React, { createElement } from 'react';
 
 import { NavContext } from '../contexts/NavContext';
-import { RouterOptions } from '../models';
-import { RouterDirection } from '../models/RouterDirection';
+import type { RouterOptions } from '../models';
+import type { RouterDirection } from '../models/RouterDirection';
 
 import {
   attachProps,
@@ -15,6 +15,8 @@ import {
 } from './react-component-lib/utils';
 import { createForwardRef } from './utils';
 
+// TODO(FW-2959): types
+
 interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<ElementType> {
   forwardedRef?: React.ForwardedRef<ElementType>;
   href?: string;
@@ -25,24 +27,21 @@ interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<Elem
   routerAnimation?: AnimationBuilder;
 }
 
-export const createRoutingComponent = <PropType, ElementType>(
-  tagName: string,
-  customElement?: any
-) => {
+export const createRoutingComponent = <PropType, ElementType>(tagName: string, customElement?: any) => {
   defineCustomElement(tagName, customElement);
 
   const displayName = dashToPascalCase(tagName);
   const ReactComponent = class extends React.Component<IonicReactInternalProps<PropType>> {
     context!: React.ContextType<typeof NavContext>;
     ref: React.RefObject<HTMLElement>;
-    stableMergedRefs: React.RefCallback<HTMLElement>
+    stableMergedRefs: React.RefCallback<HTMLElement>;
 
     constructor(props: IonicReactInternalProps<PropType>) {
       super(props);
       // Create a local ref to to attach props to the wrapped element.
       this.ref = React.createRef();
       // React refs must be stable (not created inline).
-      this.stableMergedRefs = mergeRefs(this.ref, this.props.forwardedRef)
+      this.stableMergedRefs = mergeRefs(this.ref, this.props.forwardedRef);
     }
 
     componentDidMount() {
@@ -58,17 +57,12 @@ export const createRoutingComponent = <PropType, ElementType>(
       const { routerLink, routerDirection, routerOptions, routerAnimation } = this.props;
       if (routerLink !== undefined) {
         e.preventDefault();
-        this.context.navigate(
-          routerLink,
-          routerDirection,
-          undefined,
-          routerAnimation,
-          routerOptions
-        );
+        this.context.navigate(routerLink, routerDirection, undefined, routerAnimation, routerOptions);
       }
     };
 
     render() {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { children, forwardedRef, style, className, ref, ...cProps } = this.props;
 
       const propsToPass = Object.keys(cProps).reduce((acc, name) => {

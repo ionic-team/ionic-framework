@@ -60,7 +60,7 @@ export class Toolbar implements ComponentInterface {
 
     const tagName = (ev.target as HTMLElement).tagName;
     const updatedStyles = ev.detail;
-    const newStyles = {} as any;
+    const newStyles = {} as CssClassMap;
     const childStyles = this.childrenStyles.get(tagName) || {};
 
     let hasStyleChange = false;
