@@ -43,8 +43,9 @@ const initializeBaseComponentsCache = (includeCmp?: string[], excludeCmp?: strin
 };
 
 /**
- * Determines if a component is
- * using base components.
+ * Determines if a component is using base components.
+ * This should be used when the component is created
+ * for the first time.
  */
 export const isBaseComponent = (elm: HTMLElement, config: Config) => {
   /**
@@ -53,17 +54,6 @@ export const isBaseComponent = (elm: HTMLElement, config: Config) => {
    */
   if (!isIonicElement(elm)) {
     return false;
-  }
-
-  /**
-   * If a component has already been initialized
-   * then it will have the useBase property set.
-   * This lets us check the component instance and
-   * avoid the global look up.
-   */
-  const useBase = (elm as any).useBase;
-  if (useBase !== undefined) {
-    return useBase;
   }
 
   /**

@@ -30,8 +30,10 @@ export const getIonMode = (ref?: any): Mode => {
  * and does not impact the visual styles associated with
  * this instance. The capabilities can be set using the "mode"
  * global config or property on the component.
+ *
  * If no platform is specified then we fallback to
- * using the mode.
+ * using getIonMode. This can happen when a component
+ * has no per-mode stylesheets (such as ion-spinner).
  */
 export const getIonPlatform = (ref?: any): Platform => {
   return ref?.el?.platform ?? getIonMode(ref);
@@ -105,6 +107,19 @@ export const initialize = (userConfig: IonicConfig = {}) => {
 
   setMode((elm: any) => {
     const baseEl = elm;
+
+    /**
+     * The useBase virtualProp only
+     * exists on Ionic components, so
+     * we do not need to track useBase
+     * on non-Ionic components.
+     */
+    let useBase = false;
+    if (isIonicElement(baseEl)) {
+      useBase = isBaseComponent(baseEl, config);
+      baseEl.useBase = false;
+    }
+
     while (elm) {
       const elmMode = (elm as any).mode || elm.getAttribute('mode');
       if (elmMode) {
@@ -114,9 +129,7 @@ export const initialize = (userConfig: IonicConfig = {}) => {
            * capabilities if base components are enabled, so we keep
            * track of the platform separately.
            */
-          const useBase = isBaseComponent(baseEl, config);
           baseEl.platform = elmMode;
-          baseEl.useBase = useBase;
           return useBase ? 'base' : elmMode;
         } else if (isIonicElement(elm)) {
           console.warn('Invalid ionic mode: "' + elmMode + '", expected: "ios" or "md"');
@@ -130,9 +143,7 @@ export const initialize = (userConfig: IonicConfig = {}) => {
      * capabilities if base components are enabled, so we keep
      * track of the platform separately.
      */
-    const useBase = isBaseComponent(baseEl, config);
     baseEl.platform = defaultMode;
-    baseEl.useBase = useBase;
     return useBase ? 'base' : defaultMode;
   });
 };

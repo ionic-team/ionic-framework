@@ -57,24 +57,6 @@ describe('isBaseComponent()', () => {
     });
   });
   describe('component instance', () => {
-    it('should return true when useBase property is set to true on the component instance', () => {
-      const config = new Config();
-      config.reset({});
-
-      const el = document.createElement('ion-badge');
-      el.useBase = true;
-
-      expect(isBaseComponent(el, config)).toBe(true);
-    });
-    it('should return false when useBase property is set to false on the component instance', () => {
-      const config = new Config();
-      config.reset({});
-
-      const el = document.createElement('ion-badge');
-      el.useBase = false;
-
-      expect(isBaseComponent(el, config)).toBe(false);
-    });
     it('should return true when use-base attribute is set to "true" on the component instance', () => {
       const config = new Config();
       config.reset({});
