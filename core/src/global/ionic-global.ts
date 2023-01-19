@@ -30,9 +30,11 @@ export const getIonMode = (ref?: any): Mode => {
  * and does not impact the visual styles associated with
  * this instance. The capabilities can be set using the "mode"
  * global config or property on the component.
+ * If no platform is specified then we fallback to
+ * using the mode.
  */
 export const getIonPlatform = (ref?: any): Platform => {
-  return ref.el.platform;
+  return ref.el.platform || getIonMode(ref);
 };
 
 export const initialize = (userConfig: IonicConfig = {}) => {
