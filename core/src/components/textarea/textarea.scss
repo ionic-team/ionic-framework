@@ -137,7 +137,6 @@
   // Browsers may add a default margin to the textarea
   @include margin(0);
   @include padding(0, 0, 0, 0);
-  @include border-radius(var(--border-radius));
 
   display: block;
 
@@ -404,6 +403,8 @@
 }
 
 .textarea-wrapper textarea {
+  @include margin(18px, 0px, 18px, 0px);
+
   /**
    * When the floating label appears on top of the
    * textarea, we need to fade the textarea out so that the
