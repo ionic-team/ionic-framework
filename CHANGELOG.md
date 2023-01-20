@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.5.1-nightly.20230120](https://github.com/ionic-team/ionic-framework/compare/v6.5.0...v6.5.1-nightly.20230120) (2023-01-20)
+
+
+### Bug Fixes
+
+* **action-sheet:** button icons are not announced by screen readers ([#26640](https://github.com/ionic-team/ionic-framework/issues/26640)) ([22e9ff8](https://github.com/ionic-team/ionic-framework/commit/22e9ff866f8bd7e2e4ca82eae70969ea4f2658df))
+* **fab-button:** icon is not announced by screen readers ([#26619](https://github.com/ionic-team/ionic-framework/issues/26619)) ([dd7cd8c](https://github.com/ionic-team/ionic-framework/commit/dd7cd8c0bfe652d293dc2c2b1bd2a36fd9cf0a0b)), closes [#22296](https://github.com/ionic-team/ionic-framework/issues/22296)
+* **react:** hardware back button works in dev mode ([#26614](https://github.com/ionic-team/ionic-framework/issues/26614)) ([abcfe9f](https://github.com/ionic-team/ionic-framework/commit/abcfe9fe867730f29b9379c3736f86b3d20c5b0a)), closes [#26599](https://github.com/ionic-team/ionic-framework/issues/26599)
+* **toggle:** on-off icon is not announced by screen readers ([#26641](https://github.com/ionic-team/ionic-framework/issues/26641)) ([77ccac0](https://github.com/ionic-team/ionic-framework/commit/77ccac059091d5d9f7daf9c7fb01a9e855b86ce3))
+
+
+
+
+
 # [6.5.0](https://github.com/ionic-team/ionic-framework/compare/v6.4.3...v6.5.0) (2023-01-18)
 
 
