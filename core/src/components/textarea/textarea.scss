@@ -403,7 +403,7 @@
 }
 
 .textarea-wrapper textarea {
-  @include margin(18px, 0px, 18px, 0px);
+  @include padding(18px, 0px, 18px, 0px);
 
   /**
    * When the floating label appears on top of the
@@ -511,7 +511,8 @@
  */
 :host(.textarea-label-placement-stacked) textarea,
 :host(.textarea-label-placement-floating) textarea {
-  @include margin(8px, 0, 0, 0);
+  @include padding(0px, 0px, 18px, 0px);
+  @include margin(8px, 0px, 0px, 0px);
 }
 
 /**
