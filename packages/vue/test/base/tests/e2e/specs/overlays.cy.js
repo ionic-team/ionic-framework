@@ -196,6 +196,25 @@ describe('Overlays', () => {
     });
   });
 
+  it('should unmount modal via component', () => {
+    cy.get('ion-radio#ion-modal').click();
+    cy.get('ion-radio#component').click();
+
+    cy.get('ion-button#present-overlay').click();
+    cy.get('ion-modal').should('exist');
+
+    cy.get('ion-modal ion-input').should('have.value', '');
+    cy.get('ion-modal ion-input').type('1');
+
+    cy.get('ion-modal #dismiss').click();
+
+    cy.get('ion-button#present-overlay').click();
+    cy.get('ion-modal').should('exist');
+
+    cy.get('ion-modal ion-input').should('have.value', '');
+  });
+
+
   it('should unmount modal via controller', () => {
     cy.get('ion-radio#ion-modal').click();
     cy.get('ion-radio#controller').click();
