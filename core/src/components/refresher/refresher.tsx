@@ -410,6 +410,8 @@ export class Refresher implements ComponentInterface {
       return;
     }
 
+    this.memoizeOverflowStyle();
+
     /**
      * If using non-native refresher before make sure
      * we clean up any old CSS. This can happen when
