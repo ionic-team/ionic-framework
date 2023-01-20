@@ -402,10 +402,12 @@ export class Modal implements ComponentInterface, OverlayInterface {
       destroyTriggerInteraction();
     }
 
+    if (trigger === undefined) { return; }
+
     const triggerEl = trigger !== undefined ? document.getElementById(trigger) : null;
     if (!triggerEl) {
       printIonWarning(
-        `A trigger element with the ID ${trigger} was not found in the DOM. The trigger element must be in the DOM when the "trigger" property is set on ion-modal.`,
+        `A trigger element with the ID "${trigger}" was not found in the DOM. The trigger element must be in the DOM when the "trigger" property is set on ion-modal.`,
         this.el
       );
       return;
