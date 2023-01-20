@@ -39,7 +39,7 @@ export class Refresher implements ComponentInterface {
   private backgroundContentEl?: HTMLElement;
   private scrollListenerCallback?: any;
   private gesture?: Gesture;
-  private overflowStyle?: string;
+  private overflowStyles?: { [key: string]: string };
 
   private pointerDown = false;
   private needsCompletion = false;
@@ -410,8 +410,6 @@ export class Refresher implements ComponentInterface {
       return;
     }
 
-    this.memoizeOverflowStyle();
-
     /**
      * If using non-native refresher before make sure
      * we clean up any old CSS. This can happen when
@@ -743,12 +741,22 @@ export class Refresher implements ComponentInterface {
   }
 
   private memoizeOverflowStyle() {
-    this.overflowStyle = this.scrollEl?.style.overflow ?? '';
+    if (this.scrollEl) {
+      const { overflow, overflowX, overflowY } = this.scrollEl.style;
+      this.overflowStyles = {
+        overflow: overflow ?? '',
+        overflowX: overflowX ?? '',
+        overflowY: overflowY ?? '',
+      };
+    }
   }
 
   private restoreOverflowStyle() {
-    if (this.overflowStyle !== undefined && this.scrollEl !== undefined) {
-      this.scrollEl.style.overflow = this.overflowStyle;
+    if (this.overflowStyles !== undefined && this.scrollEl !== undefined) {
+      const { overflow, overflowX, overflowY } = this.overflowStyles;
+      this.scrollEl.style.overflow = overflow;
+      this.scrollEl.style.overflowX = overflowX;
+      this.scrollEl.style.overflowY = overflowY;
     }
   }
 
