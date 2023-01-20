@@ -30,6 +30,7 @@ import {
   eventMethod,
   prepareOverlay,
   present,
+  createTriggerController,
 } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 import { deepReady } from '../../utils/transition';
@@ -61,13 +62,13 @@ import { setCardStatusBarDark, setCardStatusBarDefault } from './utils';
   shadow: true,
 })
 export class Modal implements ComponentInterface, OverlayInterface {
+  private readonly triggerController = createTriggerController();
   private gesture?: Gesture;
   private modalIndex = modalIds++;
   private modalId?: string;
   private coreDelegate: FrameworkDelegate = CoreDelegate();
   private currentTransition?: Promise<any>;
   private sheetTransition?: Promise<any>;
-  private destroyTriggerInteraction?: () => void;
   private isSheetModal = false;
   private currentBreakpoint?: number;
   private wrapperEl?: HTMLElement;
@@ -236,8 +237,11 @@ export class Modal implements ComponentInterface, OverlayInterface {
    */
   @Prop() trigger: string | undefined;
   @Watch('trigger')
-  onTriggerChange() {
-    this.configureTriggerInteraction();
+  triggerChanged() {
+    const { trigger, el, triggerController } = this;
+    if (trigger) {
+      triggerController.addClickListener(el, trigger);
+    }
   }
 
   /**
@@ -318,17 +322,12 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   connectedCallback() {
-    const { configureTriggerInteraction, el } = this;
+    const { el } = this;
     prepareOverlay(el);
-    configureTriggerInteraction();
   }
 
   disconnectedCallback() {
-    const { destroyTriggerInteraction } = this;
-
-    if (destroyTriggerInteraction) {
-      destroyTriggerInteraction();
-    }
+    this.triggerController.removeClickListener();
   }
 
   componentWillLoad() {
@@ -362,32 +361,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
     this.breakpointsChanged(this.breakpoints);
   }
-
-  private configureTriggerInteraction = () => {
-    const { trigger, el, destroyTriggerInteraction } = this;
-
-    if (destroyTriggerInteraction) {
-      destroyTriggerInteraction();
-    }
-
-    const triggerEl = trigger !== undefined ? document.getElementById(trigger) : null;
-    if (!triggerEl) {
-      return;
-    }
-
-    const configureTriggerInteraction = (trigEl: HTMLElement, modalEl: HTMLIonModalElement) => {
-      const openModal = () => {
-        modalEl.present();
-      };
-      trigEl.addEventListener('click', openModal);
-
-      return () => {
-        trigEl.removeEventListener('click', openModal);
-      };
-    };
-
-    this.destroyTriggerInteraction = configureTriggerInteraction(triggerEl, el);
-  };
 
   /**
    * Determines whether or not an overlay
