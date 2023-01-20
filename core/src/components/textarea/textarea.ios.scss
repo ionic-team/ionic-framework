@@ -32,6 +32,10 @@
   min-height: 44px;
 }
 
+.label-text-wrapper {
+  max-height: 56px;
+}
+
 /**
  * Since the label sits on top of the element,
  * the component needs to be taller otherwise the
@@ -40,4 +44,14 @@
 :host(.textarea-label-placement-floating),
 :host(.textarea-label-placement-stacked) {
   min-height: 56px;
+}
+
+/**
+ * The label should stay fixed to the top
+ * of the textarea container even as the
+ * textarea resizes.
+ */
+:host(.textarea-label-placement-floating) .label-text-wrapper,
+:host(.textarea-label-placement-stacked) .label-text-wrapper {
+  max-height: 56px;
 }

@@ -42,6 +42,15 @@
   min-height: 56px;
 }
 
+/**
+ * The label should stay fixed to the top
+ * of the textarea container even as the
+ * textarea resizes.
+ */
+.label-text-wrapper {
+  max-height: 56px;
+}
+
 // Textarea Shape Rounded
 // ----------------------------------------------------------------
 
