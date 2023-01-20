@@ -35,6 +35,13 @@
   letter-spacing: 0.0333333333em;
 }
 
+// Textarea Wrapper
+// ----------------------------------------------------------------
+
+:host(:not(.legacy-textarea)) {
+  min-height: 56px;
+}
+
 // Textarea Shape Rounded
 // ----------------------------------------------------------------
 

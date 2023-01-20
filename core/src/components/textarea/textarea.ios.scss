@@ -24,3 +24,20 @@
   --padding-bottom: 8px;
   --padding-start: 0px;
 }
+
+// Textarea Wrapper
+// ----------------------------------------------------------------
+
+:host(:not(.legacy-textarea)) {
+  min-height: 44px;
+}
+
+/**
+ * Since the label sits on top of the element,
+ * the component needs to be taller otherwise the
+ * label will appear too close to the textarea text.
+ */
+:host(.textarea-label-placement-floating),
+:host(.textarea-label-placement-stacked) {
+  min-height: 56px;
+}

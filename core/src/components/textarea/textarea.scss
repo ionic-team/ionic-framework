@@ -237,8 +237,10 @@
 
 // Textarea Wrapper
 // ----------------------------------------------------------------
+
 .textarea-wrapper {
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+  @include border-radius(var(--border-radius));
 
   display: flex;
 
@@ -250,7 +252,9 @@
 
   height: 100%;
 
-  min-height: 56px;
+  min-height: inherit;
+
+  transition: background-color 15ms linear;
 
   background: var(--background);
 }
@@ -260,8 +264,6 @@
 
 .native-wrapper {
   display: flex;
-
-  position: relative;
 
   flex-grow: 1;
 
@@ -354,6 +356,8 @@
    */
   display: flex;
 
+  align-items: center;
+
   /**
    * Label text should not extend
    * beyond the bounds of the textarea.
@@ -364,7 +368,7 @@
    */
   max-width: 200px;
 
-  transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1), transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: color 150ms cubic-bezier(.4, 0, .2, 1), transform 150ms cubic-bezier(.4, 0, .2, 1);
 
   /**
    * This ensures that double tapping this text
@@ -395,13 +399,7 @@
   overflow: hidden;
 }
 
-.label-text-wrapper,
 .textarea-wrapper textarea {
-  line-height: 18px;
-}
-
-.textarea-wrapper textarea {
-  @include padding(8px, 0, 8px, 0);
   /**
    * When the floating label appears on top of the
    * textarea, we need to fade the textarea out so that the
@@ -533,34 +531,17 @@
   opacity: 1;
 }
 
-:host(.textarea-label-placement-floating) .label-text-wrapper {
-  /**
-   * Increases the padding between the label and the textarea contents
-   * for the floating label.
-   */
-  @include padding(null, null, 2px, null);
-}
-
-// Textarea Label Placement - Stacked and Fixed
-// ----------------------------------------------------------------
-
-:host(.textarea-label-placement-start) .label-text,
-:host(.textarea-label-placement-end) .label-text,
-:host(.textarea-label-placement-fixed) .label-text {
-  @include margin(8px, 0);
-}
-
 /**
  * This makes the label sit above the textarea.
  */
 :host(.textarea-label-placement-stacked) .label-text-wrapper,
 :host(.has-focus.textarea-label-placement-floating) .label-text-wrapper,
 :host(.has-value.textarea-label-placement-floating) .label-text-wrapper {
-  @include transform(translateY(6px), scale(#{$textarea-floating-label-scale}));
+  @include transform(translateY(50%), scale(#{$textarea-floating-label-scale}));
 
   /**
-     * Label text should not extend
-     * beyond the bounds of the textarea.
-     */
+   * Label text should not extend
+   * beyond the bounds of the textarea.
+   */
   max-width: calc(100% / #{$textarea-floating-label-scale});
 }
