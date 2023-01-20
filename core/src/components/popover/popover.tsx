@@ -621,7 +621,9 @@ export class Popover implements ComponentInterface, PopoverInterface {
       destroyTriggerInteraction();
     }
 
-    if (trigger === undefined) { return; }
+    if (trigger === undefined) {
+      return;
+    }
 
     const triggerEl = (this.triggerEl = trigger !== undefined ? document.getElementById(trigger) : null);
     if (!triggerEl) {

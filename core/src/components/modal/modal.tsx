@@ -402,7 +402,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
       destroyTriggerInteraction();
     }
 
-    if (trigger === undefined) { return; }
+    if (trigger === undefined) {
+      return;
+    }
 
     const triggerEl = trigger !== undefined ? document.getElementById(trigger) : null;
     if (!triggerEl) {
