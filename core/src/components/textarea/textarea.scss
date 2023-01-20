@@ -67,10 +67,6 @@
   box-sizing: border-box;
 }
 
-:host(:not(.legacy-textarea)) {
-  height: 100px;
-}
-
 :host(.legacy-textarea) {
   flex: 1;
 
