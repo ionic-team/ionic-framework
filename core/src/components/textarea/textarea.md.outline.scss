@@ -111,7 +111,7 @@
  */
 :host(.textarea-fill-outline.textarea-label-placement-stacked) textarea,
 :host(.textarea-fill-outline.textarea-label-placement-floating) textarea {
-  @include margin(6px, 0, 6px, 0);
+  @include margin(12px, 0, 12px, 0);
 }
 
 // Textarea Fill: Outline Outline Container

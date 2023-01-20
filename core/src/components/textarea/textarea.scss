@@ -67,6 +67,10 @@
   box-sizing: border-box;
 }
 
+:host(:not(.legacy-textarea)) {
+  height: 100px;
+}
+
 :host(.legacy-textarea) {
   flex: 1;
 
@@ -506,7 +510,7 @@
  */
 :host(.textarea-label-placement-stacked) textarea,
 :host(.textarea-label-placement-floating) textarea {
-  @include margin(1px, 0, 0, 0);
+  @include margin(8px, 0, 0, 0);
 }
 
 /**
