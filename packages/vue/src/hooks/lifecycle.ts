@@ -1,16 +1,22 @@
-import { LifecycleHooks } from '../utils';
-import { ComponentInternalInstance, getCurrentInstance } from 'vue';
+import type { ComponentInternalInstance } from "vue";
+import { getCurrentInstance } from "vue";
+
+import { LifecycleHooks } from "../utils";
 
 /**
  * Creates an returns a function that
  * can be used to provide a lifecycle hook.
  */
-const injectHook = (lifecycleType: LifecycleHooks, hook: Function, component: ComponentInternalInstance | null): Function | undefined => {
+const injectHook = (
+  lifecycleType: LifecycleHooks,
+  hook: Function,
+  component: ComponentInternalInstance | null
+): Function | undefined => {
   if (component) {
-
     // Add to public instance so it is accessible to IonRouterOutlet
     const target = component as any;
-    const hooks = target.proxy[lifecycleType] || (target.proxy[lifecycleType] = []);
+    const hooks =
+      target.proxy[lifecycleType] || (target.proxy[lifecycleType] = []);
     /**
      * Define property on public instances using `setup` syntax in Vue 3.x
      */
@@ -29,13 +35,20 @@ const injectHook = (lifecycleType: LifecycleHooks, hook: Function, component: Co
 
     return wrappedHook;
   } else {
-    console.warn('[@ionic/vue]: Ionic Lifecycle Hooks can only be used during execution of setup().');
+    console.warn(
+      "[@ionic/vue]: Ionic Lifecycle Hooks can only be used during execution of setup()."
+    );
   }
-}
+};
 
-const createHook = <T extends Function = () => any>(lifecycle: LifecycleHooks) => {
-  return (hook: T, target: ComponentInternalInstance | null = getCurrentInstance()) => injectHook(lifecycle, hook, target);
-}
+const createHook = <T extends Function = () => any>(
+  lifecycle: LifecycleHooks
+) => {
+  return (
+    hook: T,
+    target: ComponentInternalInstance | null = getCurrentInstance()
+  ) => injectHook(lifecycle, hook, target);
+};
 
 export const onIonViewWillEnter = createHook(LifecycleHooks.WillEnter);
 export const onIonViewDidEnter = createHook(LifecycleHooks.DidEnter);

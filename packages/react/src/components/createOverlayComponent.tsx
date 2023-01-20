@@ -1,4 +1,4 @@
-import { OverlayEventDetail } from '@ionic/core/components';
+import type { OverlayEventDetail } from '@ionic/core/components';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -18,10 +18,7 @@ export interface ReactOverlayProps {
   onWillPresent?: (event: CustomEvent<OverlayEventDetail>) => void;
 }
 
-export const createOverlayComponent = <
-  OverlayComponent extends object,
-  OverlayType extends OverlayElement
->(
+export const createOverlayComponent = <OverlayComponent extends object, OverlayType extends OverlayElement>(
   tagName: string,
   controller: { create: (options: any) => Promise<OverlayType> },
   defineCustomElement?: () => void
@@ -73,7 +70,7 @@ export const createOverlayComponent = <
       if (this.props.onDidDismiss) {
         this.props.onDidDismiss(event);
       }
-      setRef(this.props.forwardedRef, null)
+      setRef(this.props.forwardedRef, null);
     }
 
     shouldComponentUpdate(nextProps: Props) {
@@ -107,26 +104,17 @@ export const createOverlayComponent = <
     }
 
     async present(prevProps?: Props) {
-      const {
-        children,
-        isOpen,
-        onDidDismiss,
-        onDidPresent,
-        onWillDismiss,
-        onWillPresent,
-        ...cProps
-      } = this.props;
+      /* eslint-disable @typescript-eslint/no-unused-vars */
+      const { children, isOpen, onDidDismiss, onDidPresent, onWillDismiss, onWillPresent, ...cProps } = this.props;
       const elementProps = {
         ...cProps,
         ref: this.props.forwardedRef,
         [didDismissEventName]: this.handleDismiss,
-        [didPresentEventName]: (e: CustomEvent) =>
-          this.props.onDidPresent && this.props.onDidPresent(e),
-        [willDismissEventName]: (e: CustomEvent) =>
-          this.props.onWillDismiss && this.props.onWillDismiss(e),
-        [willPresentEventName]: (e: CustomEvent) =>
-          this.props.onWillPresent && this.props.onWillPresent(e),
+        [didPresentEventName]: (e: CustomEvent) => this.props.onDidPresent && this.props.onDidPresent(e),
+        [willDismissEventName]: (e: CustomEvent) => this.props.onWillDismiss && this.props.onWillDismiss(e),
+        [willPresentEventName]: (e: CustomEvent) => this.props.onWillPresent && this.props.onWillPresent(e),
       };
+      /* eslint-enable @typescript-eslint/no-unused-vars */
 
       this.overlay = await controller.create({
         ...elementProps,

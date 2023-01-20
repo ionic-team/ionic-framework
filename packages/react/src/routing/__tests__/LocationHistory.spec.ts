@@ -198,12 +198,7 @@ describe('LocationHistory', () => {
   }
 });
 
-function createRoute(
-  pathname: string = '',
-  prevRoute?: RouteInfo,
-  tab?: string,
-  routeAction = 'push'
-) {
+function createRoute(pathname: string = '', prevRoute?: RouteInfo, tab?: string, routeAction = 'push') {
   const routeInfo: RouteInfo = {
     id: generateId(),
     lastPathname: prevRoute?.pathname,
