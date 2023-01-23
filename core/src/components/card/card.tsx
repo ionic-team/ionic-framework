@@ -17,6 +17,7 @@ import { createColorClasses, openURL } from '../../utils/theme';
 @Component({
   tag: 'ion-card',
   styleUrls: {
+    base: 'card.scss',
     ios: 'card.ios.scss',
     md: 'card.md.scss',
   },

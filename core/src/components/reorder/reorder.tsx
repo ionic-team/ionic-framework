@@ -10,6 +10,7 @@ import { getIonStylesheet } from '../../global/ionic-global';
 @Component({
   tag: 'ion-reorder',
   styleUrls: {
+    base: 'reorder.scss',
     ios: 'reorder.ios.scss',
     md: 'reorder.md.scss',
   },

@@ -15,6 +15,7 @@ import { handleFooterFade } from './footer.utils';
 @Component({
   tag: 'ion-footer',
   styleUrls: {
+    base: 'footer.scss',
     ios: 'footer.ios.scss',
     md: 'footer.md.scss',
   },

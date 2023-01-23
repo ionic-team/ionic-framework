@@ -22,6 +22,7 @@ import { updateVisibility } from '../menu-toggle/menu-toggle-util';
 @Component({
   tag: 'ion-menu-button',
   styleUrls: {
+    base: 'menu-button.scss',
     ios: 'menu-button.ios.scss',
     md: 'menu-button.md.scss',
   },

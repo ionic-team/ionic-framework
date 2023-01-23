@@ -18,6 +18,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 @Component({
   tag: 'ion-toolbar',
   styleUrls: {
+    base: 'toolbar.scss',
     ios: 'toolbar.ios.scss',
     md: 'toolbar.md.scss',
   },

@@ -22,6 +22,7 @@ import { createColorClasses } from '../../utils/theme';
 @Component({
   tag: 'ion-item-option',
   styleUrls: {
+    base: 'item-option.scss',
     ios: 'item-option.ios.scss',
     md: 'item-option.md.scss',
   },

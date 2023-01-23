@@ -41,6 +41,7 @@ import { configureDismissInteraction, configureKeyboardInteraction, configureTri
 @Component({
   tag: 'ion-popover',
   styleUrls: {
+    base: 'popover.scss',
     ios: 'popover.ios.scss',
     md: 'popover.md.scss',
   },

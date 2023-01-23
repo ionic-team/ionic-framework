@@ -10,6 +10,7 @@ import { getIonStylesheet } from '../../global/ionic-global';
 @Component({
   tag: 'ion-card-content',
   styleUrls: {
+    base: 'card-content.scss',
     ios: 'card-content.ios.scss',
     md: 'card-content.md.scss',
   },

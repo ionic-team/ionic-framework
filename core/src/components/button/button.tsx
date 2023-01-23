@@ -23,6 +23,7 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 @Component({
   tag: 'ion-button',
   styleUrls: {
+    base: 'button.scss',
     ios: 'button.ios.scss',
     md: 'button.md.scss',
   },

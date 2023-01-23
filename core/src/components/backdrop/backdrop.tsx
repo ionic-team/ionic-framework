@@ -7,6 +7,7 @@ import { GESTURE_CONTROLLER } from '../../utils/gesture';
 @Component({
   tag: 'ion-backdrop',
   styleUrls: {
+    base: 'backdrop.scss',
     ios: 'backdrop.ios.scss',
     md: 'backdrop.md.scss',
   },

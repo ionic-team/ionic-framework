@@ -12,6 +12,7 @@ import { createColorClasses } from '../../utils/theme';
 @Component({
   tag: 'ion-note',
   styleUrls: {
+    base: 'note.scss',
     ios: 'note.ios.scss',
     md: 'note.md.scss',
   },

@@ -27,6 +27,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 @Component({
   tag: 'ion-toggle',
   styleUrls: {
+    base: 'toggle.scss',
     ios: 'toggle.ios.scss',
     md: 'toggle.md.scss',
   },

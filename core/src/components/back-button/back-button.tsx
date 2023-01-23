@@ -21,6 +21,7 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 @Component({
   tag: 'ion-back-button',
   styleUrls: {
+    base: 'back-button.scss',
     ios: 'back-button.ios.scss',
     md: 'back-button.md.scss',
   },

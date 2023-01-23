@@ -16,6 +16,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 @Component({
   tag: 'ion-radio',
   styleUrls: {
+    base: 'radio.scss',
     ios: 'radio.ios.scss',
     md: 'radio.md.scss',
   },

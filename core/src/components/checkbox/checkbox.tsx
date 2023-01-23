@@ -23,6 +23,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 @Component({
   tag: 'ion-checkbox',
   styleUrls: {
+    base: 'checkbox.scss',
     ios: 'checkbox.ios.scss',
     md: 'checkbox.md.scss',
   },

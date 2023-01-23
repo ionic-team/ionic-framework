@@ -14,6 +14,7 @@ import { createColorClasses } from '../../utils/theme';
 @Component({
   tag: 'ion-textarea',
   styleUrls: {
+    base: 'textarea.scss',
     ios: 'textarea.ios.scss',
     md: 'textarea.md.scss',
   },

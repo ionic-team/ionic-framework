@@ -19,6 +19,7 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 @Component({
   tag: 'ion-fab-button',
   styleUrls: {
+    base: 'fab-button.scss',
     ios: 'fab-button.ios.scss',
     md: 'fab-button.md.scss',
   },

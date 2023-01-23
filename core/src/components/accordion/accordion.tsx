@@ -30,6 +30,7 @@ const enum AccordionState {
 @Component({
   tag: 'ion-accordion',
   styleUrls: {
+    base: 'accordion.scss',
     ios: 'accordion.ios.scss',
     md: 'accordion.md.scss',
   },

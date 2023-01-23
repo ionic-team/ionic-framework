@@ -40,6 +40,7 @@ import { mdLeaveAnimation } from './animations/md.leave';
 @Component({
   tag: 'ion-alert',
   styleUrls: {
+    base: 'alert.scss',
     ios: 'alert.ios.scss',
     md: 'alert.md.scss',
   },

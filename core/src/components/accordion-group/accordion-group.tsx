@@ -12,6 +12,7 @@ import { printIonWarning } from '../../utils/logging';
 @Component({
   tag: 'ion-accordion-group',
   styleUrls: {
+    base: 'accordion-group.scss',
     ios: 'accordion-group.ios.scss',
     md: 'accordion-group.md.scss',
   },

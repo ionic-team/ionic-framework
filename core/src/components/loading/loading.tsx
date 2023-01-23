@@ -36,6 +36,7 @@ import { mdLeaveAnimation } from './animations/md.leave';
 @Component({
   tag: 'ion-loading',
   styleUrls: {
+    base: 'loading.scss',
     ios: 'loading.ios.scss',
     md: 'loading.md.scss',
   },

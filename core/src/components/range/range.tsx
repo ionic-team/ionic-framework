@@ -42,6 +42,7 @@ import type { PinFormatter } from './range-interface';
 @Component({
   tag: 'ion-range',
   styleUrls: {
+    base: 'range.scss',
     ios: 'range.ios.scss',
     md: 'range.md.scss',
   },

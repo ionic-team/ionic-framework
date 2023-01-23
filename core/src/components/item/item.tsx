@@ -29,6 +29,7 @@ import type { CounterFormatter } from './item-interface';
 @Component({
   tag: 'ion-item',
   styleUrls: {
+    base: 'item.scss',
     ios: 'item.ios.scss',
     md: 'item.md.scss',
   },

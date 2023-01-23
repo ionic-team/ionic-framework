@@ -19,6 +19,7 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 @Component({
   tag: 'ion-breadcrumb',
   styleUrls: {
+    base: 'breadcrumb.scss',
     ios: 'breadcrumb.ios.scss',
     md: 'breadcrumb.md.scss',
   },

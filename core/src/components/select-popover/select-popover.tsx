@@ -12,6 +12,7 @@ import { getClassMap } from '../../utils/theme';
 @Component({
   tag: 'ion-select-popover',
   styleUrls: {
+    base: 'select-popover.scss',
     ios: 'select-popover.ios.scss',
     md: 'select-popover.md.scss',
   },

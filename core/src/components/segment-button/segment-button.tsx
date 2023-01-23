@@ -20,6 +20,7 @@ let ids = 0;
 @Component({
   tag: 'ion-segment-button',
   styleUrls: {
+    base: 'segment-button.scss',
     ios: 'segment-button.ios.scss',
     md: 'segment-button.md.scss',
   },

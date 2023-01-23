@@ -12,6 +12,7 @@ import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from
 @Component({
   tag: 'ion-picker-column',
   styleUrls: {
+    base: 'picker-column.scss',
     ios: 'picker-column.ios.scss',
     md: 'picker-column.md.scss',
   },

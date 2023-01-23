@@ -16,6 +16,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 @Component({
   tag: 'ion-segment',
   styleUrls: {
+    base: 'segment.scss',
     ios: 'segment.ios.scss',
     md: 'segment.md.scss',
   },

@@ -6,6 +6,7 @@ import { getIonStylesheet } from '../../global/ionic-global';
 @Component({
   tag: 'ion-item-group',
   styleUrls: {
+    base: 'item-group.scss',
     ios: 'item-group.ios.scss',
     md: 'item-group.md.scss',
   },

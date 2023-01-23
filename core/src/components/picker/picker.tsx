@@ -34,6 +34,7 @@ import { iosLeaveAnimation } from './animations/ios.leave';
 @Component({
   tag: 'ion-picker',
   styleUrls: {
+    base: 'picker.scss',
     ios: 'picker.ios.scss',
     md: 'picker.md.scss',
   },

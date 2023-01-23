@@ -6,6 +6,7 @@ import { getIonStylesheet } from '../../global/ionic-global';
 @Component({
   tag: 'ion-avatar',
   styleUrls: {
+    base: 'avatar.scss',
     ios: 'avatar.ios.scss',
     md: 'avatar.md.scss',
   },

@@ -19,6 +19,7 @@ import type { PickerColumnItem } from './picker-column-internal-interfaces';
 @Component({
   tag: 'ion-picker-column-internal',
   styleUrls: {
+    base: 'picker-column-internal.scss',
     ios: 'picker-column-internal.ios.scss',
     md: 'picker-column-internal.md.scss',
   },

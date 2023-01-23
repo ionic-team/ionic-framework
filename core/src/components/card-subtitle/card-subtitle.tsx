@@ -12,6 +12,7 @@ import { createColorClasses } from '../../utils/theme';
 @Component({
   tag: 'ion-card-subtitle',
   styleUrls: {
+    base: 'card-subtitle.scss',
     ios: 'card-subtitle.ios.scss',
     md: 'card-subtitle.md.scss',
   },

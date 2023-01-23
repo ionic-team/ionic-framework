@@ -10,6 +10,7 @@ import { sanitizeDOMString } from '../../utils/sanitization';
 @Component({
   tag: 'ion-infinite-scroll-content',
   styleUrls: {
+    base: 'infinite-scroll-content.scss',
     ios: 'infinite-scroll-content.ios.scss',
     md: 'infinite-scroll-content.md.scss',
   },

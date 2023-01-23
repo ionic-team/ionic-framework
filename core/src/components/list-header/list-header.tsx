@@ -12,6 +12,7 @@ import { createColorClasses } from '../../utils/theme';
 @Component({
   tag: 'ion-list-header',
   styleUrls: {
+    base: 'list-header.scss',
     ios: 'list-header.ios.scss',
     md: 'list-header.md.scss',
   },

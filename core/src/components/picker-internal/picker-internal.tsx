@@ -13,6 +13,7 @@ import type { PickerInternalChangeEventDetail } from './picker-internal-interfac
 @Component({
   tag: 'ion-picker-internal',
   styleUrls: {
+    base: 'picker-internal.scss',
     ios: 'picker-internal.ios.scss',
     md: 'picker-internal.md.scss',
   },

@@ -10,6 +10,7 @@ import { getIonStylesheet } from '../../global/ionic-global';
 @Component({
   tag: 'ion-list',
   styleUrls: {
+    base: 'list.scss',
     ios: 'list.ios.scss',
     md: 'list.md.scss',
   },

@@ -77,6 +77,7 @@ import {
 @Component({
   tag: 'ion-datetime',
   styleUrls: {
+    base: 'datetime.scss',
     ios: 'datetime.ios.scss',
     md: 'datetime.md.scss',
   },

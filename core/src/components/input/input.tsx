@@ -27,6 +27,7 @@ import { getCounterText } from './input.utils';
 @Component({
   tag: 'ion-input',
   styleUrls: {
+    base: 'input.scss',
     ios: 'input.ios.scss',
     md: 'input.md.scss',
   },

@@ -6,6 +6,7 @@ import { getIonStylesheet } from '../../global/ionic-global';
 @Component({
   tag: 'ion-buttons',
   styleUrls: {
+    base: 'buttons.scss',
     ios: 'buttons.ios.scss',
     md: 'buttons.md.scss',
   },

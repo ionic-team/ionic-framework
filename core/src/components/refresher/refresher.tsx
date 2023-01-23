@@ -27,6 +27,7 @@ import {
 @Component({
   tag: 'ion-refresher',
   styleUrls: {
+    base: 'refresher.scss',
     ios: 'refresher.ios.scss',
     md: 'refresher.md.scss',
   },

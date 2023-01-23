@@ -16,6 +16,7 @@ import { createColorClasses } from '../../utils/theme';
 @Component({
   tag: 'ion-searchbar',
   styleUrls: {
+    base: 'searchbar.scss',
     ios: 'searchbar.ios.scss',
     md: 'searchbar.md.scss',
   },

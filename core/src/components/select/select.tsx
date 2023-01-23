@@ -34,6 +34,7 @@ import type { SelectCompareFn } from './select-interface';
 @Component({
   tag: 'ion-select',
   styleUrls: {
+    base: 'select.scss',
     ios: 'select.ios.scss',
     md: 'select.md.scss',
   },

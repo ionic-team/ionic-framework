@@ -19,6 +19,7 @@ import { createColorClasses } from '../../utils/theme';
 @Component({
   tag: 'ion-progress-bar',
   styleUrls: {
+    base: 'progress-bar.scss',
     ios: 'progress-bar.ios.scss',
     md: 'progress-bar.md.scss',
   },

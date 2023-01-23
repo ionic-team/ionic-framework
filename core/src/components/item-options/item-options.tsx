@@ -8,6 +8,7 @@ import { isEndSide } from '../../utils/helpers';
 @Component({
   tag: 'ion-item-options',
   styleUrls: {
+    base: 'item-options.scss',
     ios: 'item-options.ios.scss',
     md: 'item-options.md.scss',
   },

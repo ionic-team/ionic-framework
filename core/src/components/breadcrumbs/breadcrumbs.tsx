@@ -13,6 +13,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 @Component({
   tag: 'ion-breadcrumbs',
   styleUrls: {
+    base: 'breadcrumbs.scss',
     ios: 'breadcrumbs.ios.scss',
     md: 'breadcrumbs.md.scss',
   },

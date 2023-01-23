@@ -12,6 +12,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 @Component({
   tag: 'ion-label',
   styleUrls: {
+    base: 'label.scss',
     ios: 'label.ios.scss',
     md: 'label.md.scss',
   },

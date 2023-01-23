@@ -17,6 +17,7 @@ const QUERY: { [key: string]: string } = {
 @Component({
   tag: 'ion-split-pane',
   styleUrls: {
+    base: 'split-pane.scss',
     ios: 'split-pane.ios.scss',
     md: 'split-pane.md.scss',
   },

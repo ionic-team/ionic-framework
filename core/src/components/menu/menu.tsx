@@ -25,6 +25,7 @@ const focusableQueryString =
 @Component({
   tag: 'ion-menu',
   styleUrls: {
+    base: 'menu.scss',
     ios: 'menu.ios.scss',
     md: 'menu.md.scss',
   },

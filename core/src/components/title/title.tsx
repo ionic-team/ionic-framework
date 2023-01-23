@@ -8,6 +8,7 @@ import { createColorClasses } from '../../utils/theme';
 @Component({
   tag: 'ion-title',
   styleUrls: {
+    base: 'title.scss',
     ios: 'title.ios.scss',
     md: 'title.md.scss',
   },

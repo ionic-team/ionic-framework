@@ -16,6 +16,7 @@ import { createColorClasses } from '../../utils/theme';
 @Component({
   tag: 'ion-item-divider',
   styleUrls: {
+    base: 'item-divider.scss',
     ios: 'item-divider.ios.scss',
     md: 'item-divider.md.scss',
   },

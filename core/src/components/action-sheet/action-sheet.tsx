@@ -37,6 +37,7 @@ import { mdLeaveAnimation } from './animations/md.leave';
 @Component({
   tag: 'ion-action-sheet',
   styleUrls: {
+    base: 'action-sheet.scss',
     ios: 'action-sheet.ios.scss',
     md: 'action-sheet.md.scss',
   },

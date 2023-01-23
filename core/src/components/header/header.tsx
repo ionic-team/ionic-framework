@@ -24,6 +24,7 @@ import {
 @Component({
   tag: 'ion-header',
   styleUrls: {
+    base: 'header.scss',
     ios: 'header.ios.scss',
     md: 'header.md.scss',
   },

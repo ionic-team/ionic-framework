@@ -14,6 +14,7 @@ import { createColorClasses } from '../../utils/theme';
 @Component({
   tag: 'ion-tab-bar',
   styleUrls: {
+    base: 'tab-bar.scss',
     ios: 'tab-bar.ios.scss',
     md: 'tab-bar.md.scss',
   },

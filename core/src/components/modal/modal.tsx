@@ -56,6 +56,7 @@ import { setCardStatusBarDark, setCardStatusBarDefault } from './utils';
 @Component({
   tag: 'ion-modal',
   styleUrls: {
+    base: 'modal.scss',
     ios: 'modal.ios.scss',
     md: 'modal.md.scss',
   },

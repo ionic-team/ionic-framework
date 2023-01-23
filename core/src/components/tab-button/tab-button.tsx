@@ -15,6 +15,7 @@ import type { AnchorInterface } from '../../utils/element-interface';
 @Component({
   tag: 'ion-tab-button',
   styleUrls: {
+    base: 'tab-button.scss',
     ios: 'tab-button.ios.scss',
     md: 'tab-button.md.scss',
   },
