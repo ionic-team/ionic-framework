@@ -5,6 +5,7 @@ import { getIonMode } from '../../global/ionic-global';
 import type { Gesture, GestureDetail, PickerColumn } from '../../interface';
 import { clamp } from '../../utils/helpers';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/native/haptic';
+import { getClassMap } from '../../utils/theme';
 
 /**
  * @internal
@@ -28,8 +29,8 @@ export class PickerColumnCmp implements ComponentInterface {
   private y = 0;
   private optsEl?: HTMLElement;
   private gesture?: Gesture;
-  private rafId: any;
-  private tmrId: any;
+  private rafId?: ReturnType<typeof requestAnimationFrame>;
+  private tmrId?: ReturnType<typeof setTimeout>;
   private noAnimate = true;
 
   @Element() el!: HTMLElement;
@@ -90,8 +91,8 @@ export class PickerColumnCmp implements ComponentInterface {
   }
 
   disconnectedCallback() {
-    cancelAnimationFrame(this.rafId);
-    clearTimeout(this.tmrId);
+    if (this.rafId !== undefined) cancelAnimationFrame(this.rafId);
+    if (this.tmrId) clearTimeout(this.tmrId);
     if (this.gesture) {
       this.gesture.destroy();
       this.gesture = undefined;
@@ -110,7 +111,7 @@ export class PickerColumnCmp implements ComponentInterface {
     this.velocity = 0;
 
     // set what y position we're at
-    cancelAnimationFrame(this.rafId);
+    if (this.rafId !== undefined) cancelAnimationFrame(this.rafId);
     this.update(y, duration, true);
 
     this.emitColChange();
@@ -253,7 +254,7 @@ export class PickerColumnCmp implements ComponentInterface {
     hapticSelectionStart();
 
     // reset everything
-    cancelAnimationFrame(this.rafId);
+    if (this.rafId !== undefined) cancelAnimationFrame(this.rafId);
     const options = this.col.options;
     let minY = options.length - 1;
     let maxY = 0;
@@ -370,6 +371,7 @@ export class PickerColumnCmp implements ComponentInterface {
           'picker-col': true,
           'picker-opts-left': this.col.align === 'left',
           'picker-opts-right': this.col.align === 'right',
+          ...getClassMap(col.cssClass),
         }}
         style={{
           'max-width': this.col.columnWidth,

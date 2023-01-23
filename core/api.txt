@@ -205,8 +205,6 @@ ion-breadcrumbs,prop,itemsBeforeCollapse,number,1,false,false
 ion-breadcrumbs,prop,maxItems,number | undefined,undefined,false,false
 ion-breadcrumbs,prop,mode,"ios" | "md",undefined,false,false
 ion-breadcrumbs,event,ionCollapsedClick,BreadcrumbCollapsedClickEventDetail,true
-ion-breadcrumbs,css-prop,--background
-ion-breadcrumbs,css-prop,--color
 
 ion-button,shadow
 ion-button,prop,buttonType,string,'button',false,false

@@ -167,7 +167,7 @@ const createMenuController = () => {
   };
 
   const _createAnimation = (type: string, menuCmp: MenuI) => {
-    const animationBuilder = menuAnimations.get(type) as any;
+    const animationBuilder = menuAnimations.get(type) as any; // TODO(FW-2832): type
     if (!animationBuilder) {
       throw new Error('animation not registered');
     }
@@ -210,6 +210,7 @@ const createMenuController = () => {
 
   if (typeof document !== 'undefined') {
     document.addEventListener('ionBackButton', (ev: any) => {
+      // TODO(FW-2832): type
       const openMenu = _getOpenSync();
       if (openMenu) {
         (ev as BackButtonEvent).detail.register(MENU_BACK_BUTTON_PRIORITY, () => {

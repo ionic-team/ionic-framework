@@ -115,6 +115,8 @@ export const startInputShims = async (config: Config, platform: 'ios' | 'android
     registerInput(input);
   }
 
+  // TODO(FW-2832): types
+
   doc.addEventListener('ionInputDidLoad', ((ev: InputEvent) => {
     registerInput(ev.detail);
   }) as any);

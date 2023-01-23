@@ -7,7 +7,7 @@ export const startTapClick = (config: Config) => {
 
   let activatableEle: HTMLElement | undefined;
   let activeRipple: Promise<() => void> | undefined;
-  let activeDefer: any;
+  let activeDefer: ReturnType<typeof setTimeout> | undefined;
 
   const useRippleEffect = config.getBoolean('animated', true) && config.getBoolean('rippleEffect', true);
   const clearDefers = new WeakMap<HTMLElement, any>();
@@ -43,7 +43,7 @@ export const startTapClick = (config: Config) => {
   };
 
   const cancelActive = () => {
-    clearTimeout(activeDefer);
+    if (activeDefer) clearTimeout(activeDefer);
     activeDefer = undefined;
     if (activatableEle) {
       removeActivated(false);
@@ -67,7 +67,7 @@ export const startTapClick = (config: Config) => {
     if (el && el === activatableEle) {
       return;
     }
-    clearTimeout(activeDefer);
+    if (activeDefer) clearTimeout(activeDefer);
     activeDefer = undefined;
 
     const { x, y } = pointerCoord(ev);
@@ -163,6 +163,7 @@ export const startTapClick = (config: Config) => {
   doc.addEventListener('mouseup', onMouseUp, true);
 };
 
+// TODO(FW-2832): type
 const getActivatableTarget = (ev: UIEvent): any => {
   if (ev.composedPath !== undefined) {
     /**

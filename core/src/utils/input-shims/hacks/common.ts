@@ -18,6 +18,7 @@ export const relocateInput = (
   }
 };
 
+// TODO(FW-2832): type
 export const isFocused = (input: HTMLInputElement | HTMLTextAreaElement): boolean => {
   return input === (input as any).getRootNode().activeElement;
 };

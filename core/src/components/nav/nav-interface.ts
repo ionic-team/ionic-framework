@@ -7,6 +7,8 @@ import type {
 } from '../../interface';
 import { ViewController } from './view-controller';
 
+// TODO(FW-2832): types
+
 export type NavDirection = 'back' | 'forward';
 
 export type NavComponent = ComponentRef | ViewController;

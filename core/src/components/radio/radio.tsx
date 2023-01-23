@@ -121,6 +121,7 @@ export class Radio implements ComponentInterface {
   /** @internal */
   @Method()
   async setFocus(ev: any) {
+    // TODO(FW-2832): type (using Event triggers a build error due to conflict with Stencil Event import)
     ev.stopPropagation();
     ev.preventDefault();
 
