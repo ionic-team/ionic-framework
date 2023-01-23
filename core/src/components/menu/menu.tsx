@@ -2,7 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Listen, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { config } from '../../global/config';
-import { getIonMode, getIonPlatform } from '../../global/ionic-global';
+import { getIonStylesheet, getIonPlatform } from '../../global/ionic-global';
 import type { Animation, Gesture, GestureDetail, MenuChangeEventDetail, MenuI, Side } from '../../interface';
 import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
@@ -697,7 +697,7 @@ export class Menu implements ComponentInterface, MenuI {
 
   render() {
     const { isEndSide, type, disabled, isPaneVisible, inheritedAttributes } = this;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
 
     return (
       <Host

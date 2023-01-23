@@ -2,7 +2,7 @@ import type { EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Method, Prop, Watch, h } from '@stencil/core';
 
 import { config } from '../../global/config';
-import { getIonMode, getIonPlatform } from '../../global/ionic-global';
+import { getIonStylesheet, getIonPlatform } from '../../global/ionic-global';
 import type {
   Animation,
   AnimationBuilder,
@@ -859,7 +859,7 @@ export class Nav implements NavOutlet {
     const opts = ti.opts!;
 
     const progressCallback = opts.progressAnimation ? (ani: Animation | undefined) => (this.sbAni = ani) : undefined;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const enteringEl = enteringView.element!;
     const leavingEl = leavingView && leavingView.element!;
     const animationOpts: TransitionOptions = {

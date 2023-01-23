@@ -2,7 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, h } from '@stencil/core';
 import { chevronForwardOutline, ellipsisHorizontal } from 'ionicons/icons';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet } from '../../global/ionic-global';
 import type { AnimationBuilder, BreadcrumbCollapsedClickEventDetail, Color, RouterDirection } from '../../interface';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes } from '../../utils/helpers';
@@ -165,7 +165,7 @@ export class Breadcrumb implements ComponentInterface {
     // Links can still be tabbed to when set to disabled if they have an href
     // in order to truly disable them we can keep it as an anchor but remove the href
     const href = disabled ? undefined : this.href;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const attrs =
       TagType === 'span'
         ? {}

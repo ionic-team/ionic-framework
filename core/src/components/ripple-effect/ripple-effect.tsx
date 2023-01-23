@@ -1,7 +1,7 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Method, Prop, h, readTask, writeTask } from '@stencil/core';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet } from '../../global/ionic-global';
 
 @Component({
   tag: 'ion-ripple-effect',
@@ -78,7 +78,7 @@ export class RippleEffect implements ComponentInterface {
   }
 
   render() {
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     return (
       <Host
         role="presentation"

@@ -2,7 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, Watch, h } from '@stencil/core';
 
 // TODO(FW-2845) - Use @utils/forms and @utils/logging when https://github.com/ionic-team/stencil/issues/3826 is resolved
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet } from '../../global/ionic-global';
 import type { CheckboxChangeEventDetail, Color, Mode, StyleEventDetail } from '../../interface';
 import type { LegacyFormController } from '../../utils/forms';
 import { createLegacyFormController } from '../../utils/forms';
@@ -225,7 +225,7 @@ export class Checkbox implements ComponentInterface {
       name,
       value,
     } = this;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const path = getSVGPath(mode, indeterminate);
 
     renderHiddenInput(true, el, name, checked ? value : '', disabled);
@@ -296,7 +296,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
     }
 
     const { color, checked, disabled, el, getSVGPath, indeterminate, inputId, name, value } = this;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const { label, labelId, labelText } = getAriaLabel(el, inputId);
     const path = getSVGPath(mode, indeterminate);
 

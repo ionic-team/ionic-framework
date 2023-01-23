@@ -1,7 +1,7 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, State, h } from '@stencil/core';
 
-import { getIonMode, getIonPlatform } from '../../global/ionic-global';
+import { getIonStylesheet, getIonPlatform } from '../../global/ionic-global';
 import { findIonContent, getScrollElement, printIonContentErrorMsg } from '../../utils/content';
 import type { KeyboardController } from '../../utils/keyboard/keyboard-controller';
 import { createKeyboardController } from '../../utils/keyboard/keyboard-controller';
@@ -110,7 +110,7 @@ export class Footer implements ComponentInterface {
 
   render() {
     const { translucent, collapse } = this;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const tabs = this.el.closest('ion-tabs');
     const tabBar = tabs?.querySelector(':scope > ion-tab-bar');
 

@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, Watch, h } from '@stencil/core';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet } from '../../global/ionic-global';
 import type { Color, StyleEventDetail } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
@@ -56,7 +56,7 @@ export class ToolbarTitle implements ComponentInterface {
   }
 
   render() {
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const size = this.getSize();
 
     return (

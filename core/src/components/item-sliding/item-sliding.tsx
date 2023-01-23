@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet } from '../../global/ionic-global';
 import type { Gesture, GestureDetail, Side } from '../../interface';
 import { findClosestIonContent, disableContentScrollY, resetContentScrollY } from '../../utils/content';
 import { isEndSide } from '../../utils/helpers';
@@ -442,7 +442,7 @@ export class ItemSliding implements ComponentInterface {
   }
 
   render() {
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     return (
       <Host
         class={{

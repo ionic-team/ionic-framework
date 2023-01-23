@@ -2,7 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Watch, Component, Element, Event, Host, Method, Prop, h } from '@stencil/core';
 
 import { config } from '../../global/config';
-import { getIonMode, getIonPlatform } from '../../global/ionic-global';
+import { getIonStylesheet, getIonPlatform } from '../../global/ionic-global';
 import type {
   AnimationBuilder,
   FrameworkDelegate,
@@ -300,7 +300,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
 
   render() {
     const { message, spinner, htmlAttributes } = this;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     return (
       <Host
         tabindex="-1"

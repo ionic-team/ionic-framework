@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet } from '../../global/ionic-global';
 import type { Color, StyleEventDetail } from '../../interface';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
@@ -97,7 +97,7 @@ export class Label implements ComponentInterface {
 
   render() {
     const position = this.position;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     return (
       <Host
         class={createColorClasses(this.color, {

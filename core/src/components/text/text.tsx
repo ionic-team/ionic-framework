@@ -1,7 +1,7 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Host, Prop, h } from '@stencil/core';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
@@ -22,7 +22,7 @@ export class Text implements ComponentInterface {
   @Prop({ reflect: true }) color?: Color;
 
   render() {
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     return (
       <Host
         class={createColorClasses(this.color, {

@@ -2,7 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
 import { caretDownSharp, caretUpSharp, chevronBack, chevronDown, chevronForward } from 'ionicons/icons';
 
-import { getIonMode, getIonPlatform } from '../../global/ionic-global';
+import { getIonStylesheet, getIonPlatform } from '../../global/ionic-global';
 import type {
   Color,
   DatetimePresentation,
@@ -2286,7 +2286,7 @@ export class Datetime implements ComponentInterface {
       presentation,
       size,
     } = this;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const isMonthAndYearPresentation =
       presentation === 'year' || presentation === 'month' || presentation === 'month-year';
     const shouldShowMonthAndYear = showMonthAndYear || isMonthAndYearPresentation;

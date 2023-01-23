@@ -3,7 +3,7 @@ import { Component, Element, Host, Prop, h } from '@stencil/core';
 import { arrowBackSharp, chevronBack } from 'ionicons/icons';
 
 import { config } from '../../global/config';
-import { getIonMode, getIonPlatform } from '../../global/ionic-global';
+import { getIonStylesheet, getIonPlatform } from '../../global/ionic-global';
 import type { AnimationBuilder, Color } from '../../interface';
 import type { ButtonInterface } from '../../utils/element-interface';
 import type { Attributes } from '../../utils/helpers';
@@ -135,7 +135,7 @@ export class BackButton implements ComponentInterface, ButtonInterface {
       inheritedAttributes,
     } = this;
     const showBackButton = defaultHref !== undefined;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const ariaLabel = inheritedAttributes['aria-label'] || backButtonText || 'back';
 
     return (

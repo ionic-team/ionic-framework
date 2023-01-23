@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Watch, Component, Element, Event, Host, Method, Prop, h, readTask } from '@stencil/core';
 
-import { getIonMode, getIonPlatform } from '../../global/ionic-global';
+import { getIonStylesheet, getIonPlatform } from '../../global/ionic-global';
 import type {
   ActionSheetButton,
   AnimationBuilder,
@@ -341,7 +341,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
 
   render() {
     const { header, htmlAttributes, overlayIndex } = this;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const allButtons = this.getButtons();
     const cancelButton = allButtons.find((b) => b.role === 'cancel');
     const buttons = allButtons.filter((b) => b.role !== 'cancel');

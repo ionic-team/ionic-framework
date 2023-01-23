@@ -3,7 +3,7 @@ import { Component, Element, Host, Prop, h } from '@stencil/core';
 import { arrowDown, caretBackSharp } from 'ionicons/icons';
 
 import { config } from '../../global/config';
-import { getIonMode, getIonPlatform } from '../../global/ionic-global';
+import { getIonStylesheet, getIonPlatform } from '../../global/ionic-global';
 import type { SpinnerTypes } from '../../interface';
 import { isPlatform } from '../../utils/platform';
 import type { IonicSafeString } from '../../utils/sanitization';
@@ -71,7 +71,7 @@ export class RefresherContent implements ComponentInterface {
   render() {
     const pullingIcon = this.pullingIcon;
     const hasSpinner = pullingIcon != null && (SPINNERS[pullingIcon] as any) !== undefined;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
 
     return (
       <Host class={mode}>

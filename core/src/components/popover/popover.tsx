@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
-import { getIonMode, getIonPlatform } from '../../global/ionic-global';
+import { getIonStylesheet, getIonPlatform } from '../../global/ionic-global';
 import type {
   AnimationBuilder,
   ComponentProps,
@@ -652,7 +652,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
   };
 
   render() {
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const { onLifecycle, popoverId, parentPopover, dismissOnSelect, side, arrow, htmlAttributes } = this;
     const desktop = isPlatform('desktop');
     const enableArrow = arrow && !parentPopover;

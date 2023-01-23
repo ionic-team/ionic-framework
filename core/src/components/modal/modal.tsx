@@ -2,7 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
 
 import { config } from '../../global/config';
-import { getIonMode, getIonPlatform } from '../../global/ionic-global';
+import { getIonStylesheet, getIonPlatform } from '../../global/ionic-global';
 import type {
   Animation,
   AnimationBuilder,
@@ -848,7 +848,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     const { handle, isSheetModal, presentingElement, htmlAttributes, handleBehavior, inheritedAttributes } = this;
 
     const showHandle = handle !== false && isSheetModal;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const { modalId } = this;
     const isCardModal = presentingElement !== undefined && mode === 'ios';
     const isHandleCycle = handleBehavior === 'cycle';

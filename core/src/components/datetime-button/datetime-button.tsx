@@ -1,7 +1,7 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, State, h } from '@stencil/core';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet } from '../../global/ionic-global';
 import type { Color, DatetimePresentation } from '../../interface';
 import { componentOnReady, addEventListener } from '../../utils/helpers';
 import { printIonError } from '../../utils/logging';
@@ -396,7 +396,7 @@ export class DatetimeButton implements ComponentInterface {
   render() {
     const { color, dateText, timeText, selectedButton, datetimeActive, disabled } = this;
 
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
 
     return (
       <Host

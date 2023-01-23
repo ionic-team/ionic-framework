@@ -1,7 +1,7 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Host, Prop, h } from '@stencil/core';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet } from '../../global/ionic-global';
 
 @Component({
   tag: 'ion-buttons',
@@ -27,7 +27,7 @@ export class Buttons implements ComponentInterface {
   @Prop() collapse = false;
 
   render() {
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     return (
       <Host
         class={{

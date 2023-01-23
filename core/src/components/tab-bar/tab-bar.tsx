@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet } from '../../global/ionic-global';
 import type { Color, TabBarChangedEventDetail } from '../../interface';
 import type { KeyboardController } from '../../utils/keyboard/keyboard-controller';
 import { createKeyboardController } from '../../utils/keyboard/keyboard-controller';
@@ -73,7 +73,7 @@ export class TabBar implements ComponentInterface {
 
   render() {
     const { color, translucent, keyboardVisible } = this;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const shouldHide = keyboardVisible && this.el.getAttribute('slot') !== 'top';
 
     return (
