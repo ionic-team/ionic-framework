@@ -3,7 +3,8 @@ import { Component, Element, Event, Host, Prop, h } from '@stencil/core';
 import { chevronForwardOutline, ellipsisHorizontal } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { AnimationBuilder, BreadcrumbCollapsedClickEventDetail, Color, RouterDirection } from '../../interface';
+import type { AnimationBuilder, Color, RouterDirection } from '../../interface';
+import type { BreadcrumbCollapsedClickEventDetail } from './breadcrumb-interface';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes } from '../../utils/helpers';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';

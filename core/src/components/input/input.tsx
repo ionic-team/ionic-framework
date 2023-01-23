@@ -9,11 +9,10 @@ import { getIonMode } from '../../global/ionic-global';
 import type {
   AutocompleteTypes,
   Color,
-  InputChangeEventDetail,
-  InputInputEventDetail,
   StyleEventDetail,
   TextFieldTypes,
 } from '../../interface';
+import { InputChangeEventDetail, InputInputEventDetail, } from './input-interface';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes, debounceEvent, findItemLabel, inheritAttributes } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';

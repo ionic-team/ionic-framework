@@ -5,13 +5,10 @@ import { caretDownSharp, caretUpSharp, chevronBack, chevronDown, chevronForward 
 import { getIonMode } from '../../global/ionic-global';
 import type {
   Color,
-  DatetimePresentation,
-  DatetimeChangeEventDetail,
-  DatetimeParts,
   Mode,
   StyleEventDetail,
-  TitleSelectedDatesFormatter,
 } from '../../interface';
+import type { TitleSelectedDatesFormatter, DatetimePresentation, DatetimeChangeEventDetail, DatetimeParts } from './datetime-interface';
 import { startFocusVisible } from '../../utils/focus-visible';
 import { getElementRoot, raf, renderHiddenInput } from '../../utils/helpers';
 import { printIonError, printIonWarning } from '../../utils/logging';

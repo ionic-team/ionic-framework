@@ -5,22 +5,44 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AccordionGroupChangeEventDetail, ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DatetimePresentation, FrameworkDelegate, InputChangeEventDetail, InputInputEventDetail, ItemReorderEventDetail, MenuChangeEventDetail, ModalBreakpointChangeEventDetail, ModalHandleBehavior, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerButton, PickerColumn, PopoverSize, PositionAlign, PositionReference, PositionSide, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextareaInputEventDetail, TextFieldTypes, TitleSelectedDatesFormatter, ToastButton, ToastPosition, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, TriggerAction, ViewController } from "./interface";
+import { AccordionGroupChangeEventDetail } from "./components/accordion-group/accordion-group-interface";
+import { AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail as BreadcrumbCollapsedClickEventDetail1, Color, ComponentProps, ComponentRef, FrameworkDelegate, ModalBreakpointChangeEventDetail, ModalHandleBehavior, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerButton, PickerColumn, PopoverSize, PositionAlign, PositionReference, PositionSide, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextareaInputEventDetail, TextFieldTypes, TransitionDoneFn, TransitionInstruction, TriggerAction, ViewController } from "./interface";
+import { ActionSheetButton } from "./components/action-sheet/action-sheet-interface";
 import { IonicSafeString } from "./utils/sanitization";
+import { AlertButton, AlertInput } from "./components/alert/alert-interface";
+import { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
+import { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
+import { DatetimeChangeEventDetail, DatetimePresentation, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
+import { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
 import { CounterFormatter } from "./components/item/item-interface";
+import { MenuChangeEventDetail, Side as Side1 } from "./components/menu/menu-interface";
 import { PickerColumnItem } from "./components/picker-column-internal/picker-column-internal-interfaces";
 import { PickerInternalChangeEventDetail } from "./components/picker-internal/picker-internal-interfaces";
 import { PinFormatter } from "./components/range/range-interface";
+import { ItemReorderEventDetail } from "./components/reorder-group/reorder-group-interface";
 import { NavigationHookCallback } from "./components/route/route-interface";
 import { SelectCompareFn } from "./components/select/select-interface";
-export { AccordionGroupChangeEventDetail, ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DatetimePresentation, FrameworkDelegate, InputChangeEventDetail, InputInputEventDetail, ItemReorderEventDetail, MenuChangeEventDetail, ModalBreakpointChangeEventDetail, ModalHandleBehavior, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerButton, PickerColumn, PopoverSize, PositionAlign, PositionReference, PositionSide, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextareaInputEventDetail, TextFieldTypes, TitleSelectedDatesFormatter, ToastButton, ToastPosition, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, TriggerAction, ViewController } from "./interface";
+import { ToastButton, ToastPosition } from "./components/toast/toast-interface";
+import { ToggleChangeEventDetail } from "./components/toggle/toggle-interface";
+export { AccordionGroupChangeEventDetail } from "./components/accordion-group/accordion-group-interface";
+export { AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail as BreadcrumbCollapsedClickEventDetail1, Color, ComponentProps, ComponentRef, FrameworkDelegate, ModalBreakpointChangeEventDetail, ModalHandleBehavior, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerButton, PickerColumn, PopoverSize, PositionAlign, PositionReference, PositionSide, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextareaInputEventDetail, TextFieldTypes, TransitionDoneFn, TransitionInstruction, TriggerAction, ViewController } from "./interface";
+export { ActionSheetButton } from "./components/action-sheet/action-sheet-interface";
 export { IonicSafeString } from "./utils/sanitization";
+export { AlertButton, AlertInput } from "./components/alert/alert-interface";
+export { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
+export { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
+export { DatetimeChangeEventDetail, DatetimePresentation, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
+export { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
 export { CounterFormatter } from "./components/item/item-interface";
+export { MenuChangeEventDetail, Side as Side1 } from "./components/menu/menu-interface";
 export { PickerColumnItem } from "./components/picker-column-internal/picker-column-internal-interfaces";
 export { PickerInternalChangeEventDetail } from "./components/picker-internal/picker-internal-interfaces";
 export { PinFormatter } from "./components/range/range-interface";
+export { ItemReorderEventDetail } from "./components/reorder-group/reorder-group-interface";
 export { NavigationHookCallback } from "./components/route/route-interface";
 export { SelectCompareFn } from "./components/select/select-interface";
+export { ToastButton, ToastPosition } from "./components/toast/toast-interface";
+export { ToggleChangeEventDetail } from "./components/toggle/toggle-interface";
 export namespace Components {
     interface IonAccordion {
         /**
@@ -1571,7 +1593,7 @@ export namespace Components {
         /**
           * Which side of the view the menu should be placed.
          */
-        "side": Side;
+        "side": Side1;
         /**
           * If `true`, swiping the menu is enabled.
          */
@@ -4339,7 +4361,7 @@ declare namespace LocalJSX {
         /**
           * Emitted when the collapsed indicator is clicked on.
          */
-        "onIonCollapsedClick"?: (event: IonBreadcrumbsCustomEvent<BreadcrumbCollapsedClickEventDetail>) => void;
+        "onIonCollapsedClick"?: (event: IonBreadcrumbsCustomEvent<BreadcrumbCollapsedClickEventDetail1>) => void;
     }
     interface IonButton {
         /**
@@ -5577,7 +5599,7 @@ declare namespace LocalJSX {
         /**
           * Which side of the view the menu should be placed.
          */
-        "side"?: Side;
+        "side"?: Side1;
         /**
           * If `true`, swiping the menu is enabled.
          */

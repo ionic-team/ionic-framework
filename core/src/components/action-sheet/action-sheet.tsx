@@ -3,13 +3,13 @@ import { Watch, Component, Element, Event, Host, Method, Prop, h, readTask } fro
 
 import { getIonMode } from '../../global/ionic-global';
 import type {
-  ActionSheetButton,
   AnimationBuilder,
   CssClassMap,
   FrameworkDelegate,
   OverlayEventDetail,
   OverlayInterface,
 } from '../../interface';
+import type { ActionSheetButton } from './action-sheet-interface';
 import type { Gesture } from '../../utils/gesture';
 import { createButtonActiveGesture } from '../../utils/gesture/button-active';
 import {

@@ -9,10 +9,9 @@ import type {
   CssClassMap,
   OverlayEventDetail,
   OverlayInterface,
-  ToastButton,
   FrameworkDelegate,
-  ToastPosition,
 } from '../../interface';
+import type { ToastButton, ToastPosition } from './toast-interface';
 import {
   createDelegateController,
   createTriggerController,

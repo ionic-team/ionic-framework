@@ -3,14 +3,13 @@ import { Component, Element, Event, Host, Listen, Method, Prop, Watch, forceUpda
 
 import { getIonMode } from '../../global/ionic-global';
 import type {
-  AlertButton,
-  AlertInput,
   AnimationBuilder,
   CssClassMap,
   OverlayEventDetail,
   OverlayInterface,
   FrameworkDelegate,
 } from '../../interface';
+import type { AlertButton, AlertInput } from './alert-interface';
 import type { Gesture } from '../../utils/gesture';
 import { createButtonActiveGesture } from '../../utils/gesture/button-active';
 import {

@@ -121,7 +121,6 @@ export type TextFieldTypes =
   | 'week'
   | 'month'
   | 'datetime-local';
-export type Side = 'start' | 'end';
 export type PredefinedColors =
   | 'primary'
   | 'secondary'
