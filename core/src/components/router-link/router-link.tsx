@@ -1,8 +1,9 @@
+import type { RouterDirection } from '@components/router/utils/interface';
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { AnimationBuilder, Color, RouterDirection } from '../../interface';
+import type { AnimationBuilder, Color } from '../../interface';
 import { createColorClasses, openURL } from '../../utils/theme';
 
 @Component({

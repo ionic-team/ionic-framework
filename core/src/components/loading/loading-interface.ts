@@ -1,4 +1,6 @@
-import type { AnimationBuilder, Mode, SpinnerTypes } from '../../interface';
+import type { SpinnerTypes } from '@components/spinner/spinner-configs';
+
+import type { AnimationBuilder, Mode } from '../../interface';
 import type { IonicSafeString } from '../../utils/sanitization';
 
 export interface LoadingOptions {

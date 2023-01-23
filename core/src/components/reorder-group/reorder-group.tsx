@@ -3,10 +3,11 @@ import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Gesture, GestureDetail } from '../../interface';
-import type { ItemReorderEventDetail } from './reorder-group-interface';
 import { findClosestIonContent, getScrollElement } from '../../utils/content';
 import { raf } from '../../utils/helpers';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/native/haptic';
+
+import type { ItemReorderEventDetail } from './reorder-group-interface';
 
 // TODO(FW-2832): types
 

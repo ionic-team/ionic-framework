@@ -6,41 +6,85 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { AccordionGroupChangeEventDetail } from "./components/accordion-group/accordion-group-interface";
-import { AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail as BreadcrumbCollapsedClickEventDetail1, Color, ComponentProps, ComponentRef, FrameworkDelegate, ModalBreakpointChangeEventDetail, ModalHandleBehavior, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerButton, PickerColumn, PopoverSize, PositionAlign, PositionReference, PositionSide, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextareaInputEventDetail, TextFieldTypes, TransitionDoneFn, TransitionInstruction, TriggerAction, ViewController } from "./interface";
+import { AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail as BreadcrumbCollapsedClickEventDetail1, Color, ComponentProps, ComponentRef, FrameworkDelegate, NavComponent as NavComponent1, PickerColumn as PickerColumn1, StyleEventDetail, TextFieldTypes } from "./interface";
 import { ActionSheetButton } from "./components/action-sheet/action-sheet-interface";
+import { OverlayEventDetail } from "@utils/overlays-interface";
 import { IonicSafeString } from "./utils/sanitization";
 import { AlertButton, AlertInput } from "./components/alert/alert-interface";
+import { RouteID, RouterDirection, RouteWrite } from "@components/router/utils/interface";
 import { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
 import { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
+import { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
 import { DatetimeChangeEventDetail, DatetimePresentation, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
+import { SpinnerTypes } from "@components/spinner/spinner-configs";
 import { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
 import { CounterFormatter } from "./components/item/item-interface";
+import { Side } from "@components/menu/menu-interface";
 import { MenuChangeEventDetail, Side as Side1 } from "./components/menu/menu-interface";
+import { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
+import { NavComponent, NavComponentWithProps, NavOptions, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
+import { ViewController } from "./components/nav/view-controller";
+import { PickerButton, PickerColumn } from "./components/picker/picker-interface";
 import { PickerColumnItem } from "./components/picker-column-internal/picker-column-internal-interfaces";
 import { PickerInternalChangeEventDetail } from "./components/picker-internal/picker-internal-interfaces";
-import { PinFormatter } from "./components/range/range-interface";
+import { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from "./components/popover/popover-interface";
+import { RadioGroupChangeEventDetail } from "./components/radio-group/radio-group-interface";
+import { PinFormatter, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue } from "./components/range/range-interface";
+import { RefresherEventDetail } from "./components/refresher/refresher-interface";
 import { ItemReorderEventDetail } from "./components/reorder-group/reorder-group-interface";
 import { NavigationHookCallback } from "./components/route/route-interface";
-import { SelectCompareFn } from "./components/select/select-interface";
+import { RouterDirection as RouterDirection1, RouterEventDetail } from "./components/router/utils/interface";
+import { RouterOutletOptions, SwipeGestureHandler } from "@components/nav/nav-interface";
+import { SearchbarChangeEventDetail } from "./components/searchbar/searchbar-interface";
+import { SegmentChangeEventDetail } from "./components/segment/segment-interface";
+import { SegmentButtonLayout } from "./components/segment-button/segment-button-interface";
+import { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./components/select/select-interface";
+import { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
+import { SpinnerTypes as SpinnerTypes1 } from "./components/spinner/spinner-configs";
+import { TabBarChangedEventDetail } from "./components/tab-bar/tab-bar-interface";
+import { TabButtonClickEventDetail, TabButtonLayout } from "@components/tab-bar/tab-bar-interface";
+import { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
 import { ToastButton, ToastPosition } from "./components/toast/toast-interface";
 import { ToggleChangeEventDetail } from "./components/toggle/toggle-interface";
 export { AccordionGroupChangeEventDetail } from "./components/accordion-group/accordion-group-interface";
-export { AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail as BreadcrumbCollapsedClickEventDetail1, Color, ComponentProps, ComponentRef, FrameworkDelegate, ModalBreakpointChangeEventDetail, ModalHandleBehavior, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerButton, PickerColumn, PopoverSize, PositionAlign, PositionReference, PositionSide, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextareaInputEventDetail, TextFieldTypes, TransitionDoneFn, TransitionInstruction, TriggerAction, ViewController } from "./interface";
+export { AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail as BreadcrumbCollapsedClickEventDetail1, Color, ComponentProps, ComponentRef, FrameworkDelegate, NavComponent as NavComponent1, PickerColumn as PickerColumn1, StyleEventDetail, TextFieldTypes } from "./interface";
 export { ActionSheetButton } from "./components/action-sheet/action-sheet-interface";
+export { OverlayEventDetail } from "@utils/overlays-interface";
 export { IonicSafeString } from "./utils/sanitization";
 export { AlertButton, AlertInput } from "./components/alert/alert-interface";
+export { RouteID, RouterDirection, RouteWrite } from "@components/router/utils/interface";
 export { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
 export { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
+export { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
 export { DatetimeChangeEventDetail, DatetimePresentation, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
+export { SpinnerTypes } from "@components/spinner/spinner-configs";
 export { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
 export { CounterFormatter } from "./components/item/item-interface";
+export { Side } from "@components/menu/menu-interface";
 export { MenuChangeEventDetail, Side as Side1 } from "./components/menu/menu-interface";
+export { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
+export { NavComponent, NavComponentWithProps, NavOptions, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
+export { ViewController } from "./components/nav/view-controller";
+export { PickerButton, PickerColumn } from "./components/picker/picker-interface";
 export { PickerColumnItem } from "./components/picker-column-internal/picker-column-internal-interfaces";
 export { PickerInternalChangeEventDetail } from "./components/picker-internal/picker-internal-interfaces";
-export { PinFormatter } from "./components/range/range-interface";
+export { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from "./components/popover/popover-interface";
+export { RadioGroupChangeEventDetail } from "./components/radio-group/radio-group-interface";
+export { PinFormatter, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue } from "./components/range/range-interface";
+export { RefresherEventDetail } from "./components/refresher/refresher-interface";
 export { ItemReorderEventDetail } from "./components/reorder-group/reorder-group-interface";
 export { NavigationHookCallback } from "./components/route/route-interface";
-export { SelectCompareFn } from "./components/select/select-interface";
+export { RouterDirection as RouterDirection1, RouterEventDetail } from "./components/router/utils/interface";
+export { RouterOutletOptions, SwipeGestureHandler } from "@components/nav/nav-interface";
+export { SearchbarChangeEventDetail } from "./components/searchbar/searchbar-interface";
+export { SegmentChangeEventDetail } from "./components/segment/segment-interface";
+export { SegmentButtonLayout } from "./components/segment-button/segment-button-interface";
+export { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./components/select/select-interface";
+export { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
+export { SpinnerTypes as SpinnerTypes1 } from "./components/spinner/spinner-configs";
+export { TabBarChangedEventDetail } from "./components/tab-bar/tab-bar-interface";
+export { TabButtonClickEventDetail, TabButtonLayout } from "@components/tab-bar/tab-bar-interface";
+export { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
 export { ToastButton, ToastPosition } from "./components/toast/toast-interface";
 export { ToggleChangeEventDetail } from "./components/toggle/toggle-interface";
 export namespace Components {
@@ -1771,7 +1815,7 @@ export namespace Components {
           * Returns `true` if the current view can go back.
           * @param view The view to check.
          */
-        "canGoBack": (view?: any) => Promise<boolean>;
+        "canGoBack": (view?: ViewController) => Promise<boolean>;
         "delegate"?: FrameworkDelegate;
         /**
           * Get the active view.
@@ -1786,7 +1830,7 @@ export namespace Components {
           * Get the previous view.
           * @param view The view to get.
          */
-        "getPrevious": (view?: any) => Promise<ViewController | undefined>;
+        "getPrevious": (view?: ViewController) => Promise<ViewController | undefined>;
         /**
           * Called by <ion-router> to retrieve the current component.
          */
@@ -1799,7 +1843,7 @@ export namespace Components {
           * @param opts The navigation options.
           * @param done The transition complete function.
          */
-        "insert": <T extends NavComponent>(insertIndex: number, component: T, componentProps?: ComponentProps<T> | null, opts?: NavOptions | null, done?: any) => Promise<boolean>;
+        "insert": <T extends NavComponent>(insertIndex: number, component: T, componentProps?: ComponentProps<T> | null, opts?: NavOptions | null, done?: TransitionDoneFn) => Promise<boolean>;
         /**
           * Inserts an array of components into the navigation stack at the specified index. The last component in the array will become instantiated as a view, and animate in to become the active view.
           * @param insertIndex The index to insert the components at in the stack.
@@ -1807,26 +1851,26 @@ export namespace Components {
           * @param opts The navigation options.
           * @param done The transition complete function.
          */
-        "insertPages": (insertIndex: number, insertComponents: NavComponent[] | NavComponentWithProps[], opts?: NavOptions | null, done?: any) => Promise<boolean>;
+        "insertPages": (insertIndex: number, insertComponents: NavComponent[] | NavComponentWithProps[], opts?: NavOptions | null, done?: TransitionDoneFn) => Promise<boolean>;
         /**
           * Pop a component off of the navigation stack. Navigates back from the current component.
           * @param opts The navigation options.
           * @param done The transition complete function.
          */
-        "pop": (opts?: NavOptions | null, done?: any) => Promise<boolean>;
+        "pop": (opts?: NavOptions | null, done?: TransitionDoneFn) => Promise<boolean>;
         /**
           * Pop to a specific index in the navigation stack.
           * @param indexOrViewCtrl The index or view controller to pop to.
           * @param opts The navigation options.
           * @param done The transition complete function.
          */
-        "popTo": (indexOrViewCtrl: number | ViewController, opts?: NavOptions | null, done?: any) => Promise<boolean>;
+        "popTo": (indexOrViewCtrl: number | ViewController, opts?: NavOptions | null, done?: TransitionDoneFn) => Promise<boolean>;
         /**
           * Navigate back to the root of the stack, no matter how far back that is.
           * @param opts The navigation options.
           * @param done The transition complete function.
          */
-        "popToRoot": (opts?: NavOptions | null, done?: any) => Promise<boolean>;
+        "popToRoot": (opts?: NavOptions | null, done?: TransitionDoneFn) => Promise<boolean>;
         /**
           * Push a new component onto the current navigation stack. Pass any additional information along as an object. This additional information is accessible through NavParams.
           * @param component The component to push onto the navigation stack.
@@ -1834,7 +1878,7 @@ export namespace Components {
           * @param opts The navigation options.
           * @param done The transition complete function.
          */
-        "push": <T extends NavComponent>(component: T, componentProps?: ComponentProps<T> | null, opts?: NavOptions | null, done?: any) => Promise<boolean>;
+        "push": <T extends NavComponent>(component: T, componentProps?: ComponentProps<T> | null, opts?: NavOptions | null, done?: TransitionDoneFn) => Promise<boolean>;
         /**
           * Removes a component from the navigation stack at the specified index.
           * @param startIndex The number to begin removal at.
@@ -1842,7 +1886,7 @@ export namespace Components {
           * @param opts The navigation options.
           * @param done The transition complete function.
          */
-        "removeIndex": (startIndex: number, removeCount?: number, opts?: NavOptions | null, done?: any) => Promise<boolean>;
+        "removeIndex": (startIndex: number, removeCount?: number, opts?: NavOptions | null, done?: TransitionDoneFn) => Promise<boolean>;
         /**
           * Root NavComponent to load
          */
@@ -1857,7 +1901,7 @@ export namespace Components {
           * @param opts The navigation options.
           * @param done The transition complete function.
          */
-        "setPages": (views: NavComponent[] | NavComponentWithProps[], opts?: NavOptions | null, done?: any) => Promise<boolean>;
+        "setPages": (views: NavComponent[] | NavComponentWithProps[], opts?: NavOptions | null, done?: TransitionDoneFn) => Promise<boolean>;
         /**
           * Set the root for the current navigation stack to a component.
           * @param component The component to set as the root of the navigation stack.
@@ -1865,7 +1909,7 @@ export namespace Components {
           * @param opts The navigation options.
           * @param done The transition complete function.
          */
-        "setRoot": <T extends NavComponent>(component: T, componentProps?: ComponentProps<T> | null, opts?: NavOptions | null, done?: any) => Promise<boolean>;
+        "setRoot": <T extends NavComponent>(component: T, componentProps?: ComponentProps<T> | null, opts?: NavOptions | null, done?: TransitionDoneFn) => Promise<boolean>;
         /**
           * Called by the router to update the view.
           * @param id The component tag.
@@ -1884,7 +1928,7 @@ export namespace Components {
         /**
           * Component to navigate to. Only used if the `routerDirection` is `"forward"` or `"root"`.
          */
-        "component"?: NavComponent;
+        "component"?: NavComponent1;
         /**
           * Data you want to pass to the component as props. Only used if the `"routerDirection"` is `"forward"` or `"root"`.
          */
@@ -1996,7 +2040,7 @@ export namespace Components {
         /**
           * Picker column data
          */
-        "col": PickerColumn;
+        "col": PickerColumn1;
     }
     interface IonPickerColumnInternal {
         /**
@@ -2419,14 +2463,14 @@ export namespace Components {
          */
         "back": () => Promise<void>;
         "canTransition": () => Promise<string | boolean>;
-        "navChanged": (direction: RouterDirection) => Promise<boolean>;
+        "navChanged": (direction: RouterDirection1) => Promise<boolean>;
         "printDebug": () => Promise<void>;
         /**
           * Navigate to the specified path.
           * @param path The path to navigate to.
           * @param direction The direction of the animation. Defaults to `"forward"`.
          */
-        "push": (path: string, direction?: RouterDirection, animation?: AnimationBuilder) => Promise<boolean>;
+        "push": (path: string, direction?: RouterDirection1, animation?: AnimationBuilder) => Promise<boolean>;
         /**
           * The root path to use when matching URLs. By default, this is set to "/", but you can specify an alternate prefix for all URL paths.
          */
@@ -2471,7 +2515,7 @@ export namespace Components {
           * This property allows to create custom transition using AnimationBuilder functions.
          */
         "animation"?: AnimationBuilder;
-        "commit": (enteringEl: HTMLElement, leavingEl: HTMLElement | undefined, opts?: any) => Promise<boolean>;
+        "commit": (enteringEl: HTMLElement, leavingEl: HTMLElement | undefined, opts?: RouterOutletOptions) => Promise<boolean>;
         "delegate"?: FrameworkDelegate;
         "getRouteId": () => Promise<RouteID | undefined>;
         /**
@@ -2755,7 +2799,7 @@ export namespace Components {
         /**
           * The name of the SVG spinner to use. If a name is not provided, the platform's default spinner will be used.
          */
-        "name"?: SpinnerTypes;
+        "name"?: SpinnerTypes1;
         /**
           * If `true`, the spinner's animation will be paused.
          */
@@ -5809,7 +5853,7 @@ declare namespace LocalJSX {
         /**
           * Component to navigate to. Only used if the `routerDirection` is `"forward"` or `"root"`.
          */
-        "component"?: NavComponent;
+        "component"?: NavComponent1;
         /**
           * Data you want to pass to the component as props. Only used if the `"routerDirection"` is `"forward"` or `"root"`.
          */
@@ -5930,11 +5974,11 @@ declare namespace LocalJSX {
         /**
           * Picker column data
          */
-        "col": PickerColumn;
+        "col": PickerColumn1;
         /**
           * Emitted when the selected value has changed
          */
-        "onIonPickerColChange"?: (event: IonPickerColumnCustomEvent<PickerColumn>) => void;
+        "onIonPickerColChange"?: (event: IonPickerColumnCustomEvent<PickerColumn1>) => void;
     }
     interface IonPickerColumnInternal {
         /**
@@ -6796,7 +6840,7 @@ declare namespace LocalJSX {
         /**
           * The name of the SVG spinner to use. If a name is not provided, the platform's default spinner will be used.
          */
-        "name"?: SpinnerTypes;
+        "name"?: SpinnerTypes1;
         /**
           * If `true`, the spinner's animation will be paused.
          */

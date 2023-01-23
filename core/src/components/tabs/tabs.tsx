@@ -1,7 +1,7 @@
+import type { NavOutlet, RouteID, RouteWrite } from '@components/router/utils/interface';
+import type { TabButtonClickEventDetail } from '@components/tab-bar/tab-bar-interface';
 import type { EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, h } from '@stencil/core';
-
-import type { NavOutlet, RouteID, RouteWrite, TabButtonClickEventDetail } from '../../interface';
 
 /**
  * @slot - Content is placed between the named slots if provided without a slot.

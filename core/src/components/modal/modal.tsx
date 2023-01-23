@@ -1,5 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
+import type { OverlayEventDetail } from '@utils/overlays-interface';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
@@ -10,9 +11,6 @@ import type {
   ComponentRef,
   FrameworkDelegate,
   Gesture,
-  ModalBreakpointChangeEventDetail,
-  ModalHandleBehavior,
-  OverlayEventDetail,
   OverlayInterface,
 } from '../../interface';
 import { findIonContent, printIonContentErrorMsg } from '../../utils/content';
@@ -42,6 +40,7 @@ import { mdLeaveAnimation } from './animations/md.leave';
 import type { MoveSheetToBreakpointOptions } from './gestures/sheet';
 import { createSheetGesture } from './gestures/sheet';
 import { createSwipeToCloseGesture } from './gestures/swipe-to-close';
+import type { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from './modal-interface';
 import { setCardStatusBarDark, setCardStatusBarDefault } from './utils';
 
 // TODO(FW-2832): types

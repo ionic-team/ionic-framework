@@ -1,7 +1,8 @@
-import type { AnimationBuilder, NavOutletElement, RouteChain, RouteID, RouterDirection } from '../../../interface';
+import type { AnimationBuilder } from '../../../interface';
 import { componentOnReady } from '../../../utils/helpers';
 
 import { ROUTER_INTENT_NONE } from './constants';
+import type { NavOutletElement, RouteChain, RouteID, RouterDirection } from './interface';
 
 /**
  * Activates the passed route chain.

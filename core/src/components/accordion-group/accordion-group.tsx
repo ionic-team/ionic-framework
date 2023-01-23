@@ -2,8 +2,9 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Listen, Method, Prop, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { AccordionGroupChangeEventDetail } from './accordion-group-interface';
 import { printIonWarning } from '../../utils/logging';
+
+import type { AccordionGroupChangeEventDetail } from './accordion-group-interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.

@@ -1,3 +1,5 @@
+import type { RouterOutletOptions, SwipeGestureHandler } from '@components/nav/nav-interface';
+import type { RouteID, RouterDirection, RouteWrite, NavOutlet } from '@components/router/utils/interface';
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Method, Prop, Watch, h } from '@stencil/core';
 
@@ -10,12 +12,6 @@ import type {
   ComponentRef,
   FrameworkDelegate,
   Gesture,
-  NavOutlet,
-  RouteID,
-  RouteWrite,
-  RouterDirection,
-  RouterOutletOptions,
-  SwipeGestureHandler,
 } from '../../interface';
 import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';

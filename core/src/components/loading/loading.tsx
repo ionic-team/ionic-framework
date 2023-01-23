@@ -1,15 +1,11 @@
+import type { SpinnerTypes } from '@components/spinner/spinner-configs';
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Watch, Component, Element, Event, Host, Method, Prop, h } from '@stencil/core';
+import type { OverlayEventDetail } from '@utils/overlays-interface';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import type {
-  AnimationBuilder,
-  FrameworkDelegate,
-  OverlayEventDetail,
-  OverlayInterface,
-  SpinnerTypes,
-} from '../../interface';
+import type { AnimationBuilder, FrameworkDelegate, OverlayInterface } from '../../interface';
 import { raf } from '../../utils/helpers';
 import {
   BACKDROP,

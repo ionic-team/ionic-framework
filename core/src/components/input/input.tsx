@@ -6,17 +6,12 @@ import { printIonWarning } from '@utils/logging';
 import { closeCircle, closeSharp } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
-import type {
-  AutocompleteTypes,
-  Color,
-  StyleEventDetail,
-  TextFieldTypes,
-} from '../../interface';
-import { InputChangeEventDetail, InputInputEventDetail, } from './input-interface';
+import type { AutocompleteTypes, Color, StyleEventDetail, TextFieldTypes } from '../../interface';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes, debounceEvent, findItemLabel, inheritAttributes } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
+import type { InputChangeEventDetail, InputInputEventDetail } from './input-interface';
 import { getCounterText } from './input.utils';
 
 /**

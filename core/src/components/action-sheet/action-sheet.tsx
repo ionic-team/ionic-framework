@@ -1,15 +1,9 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Watch, Component, Element, Event, Host, Method, Prop, h, readTask } from '@stencil/core';
+import type { OverlayEventDetail } from '@utils/overlays-interface';
 
 import { getIonMode } from '../../global/ionic-global';
-import type {
-  AnimationBuilder,
-  CssClassMap,
-  FrameworkDelegate,
-  OverlayEventDetail,
-  OverlayInterface,
-} from '../../interface';
-import type { ActionSheetButton } from './action-sheet-interface';
+import type { AnimationBuilder, CssClassMap, FrameworkDelegate, OverlayInterface } from '../../interface';
 import type { Gesture } from '../../utils/gesture';
 import { createButtonActiveGesture } from '../../utils/gesture/button-active';
 import {
@@ -25,6 +19,7 @@ import {
 } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 
+import type { ActionSheetButton } from './action-sheet-interface';
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';

@@ -1,8 +1,10 @@
+import type { SelectPopoverOption } from '@components/select-popover/select-popover-interface';
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 import { createLegacyFormController } from '@utils/forms';
 import type { LegacyFormController } from '@utils/forms';
 import { printIonWarning } from '@utils/logging';
+import type { OverlaySelect } from '@utils/overlays-interface';
 import { isRTL } from '@utils/rtl';
 import { caretDownSharp } from 'ionicons/icons';
 
@@ -14,11 +16,7 @@ import type {
   AlertOptions,
   Color,
   CssClassMap,
-  OverlaySelect,
   PopoverOptions,
-  SelectChangeEventDetail,
-  SelectInterface,
-  SelectPopoverOption,
   StyleEventDetail,
 } from '../../interface';
 import { findItemLabel, focusElement, getAriaLabel, renderHiddenInput, inheritAttributes } from '../../utils/helpers';
@@ -27,7 +25,7 @@ import { actionSheetController, alertController, popoverController } from '../..
 import { createColorClasses, hostContext } from '../../utils/theme';
 import { watchForOptions } from '../../utils/watch-options';
 
-import type { SelectCompareFn } from './select-interface';
+import type { SelectChangeEventDetail, SelectInterface, SelectCompareFn } from './select-interface';
 
 // TODO(FW-2832): types
 

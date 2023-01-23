@@ -1,10 +1,10 @@
+import type { SpinnerTypes } from '@components/spinner/spinner-configs';
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, h } from '@stencil/core';
 import { arrowDown, caretBackSharp } from 'ionicons/icons';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import type { SpinnerTypes } from '../../interface';
 import { isPlatform } from '../../utils/platform';
 import type { IonicSafeString } from '../../utils/sanitization';
 import { sanitizeDOMString } from '../../utils/sanitization';

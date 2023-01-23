@@ -1,17 +1,10 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Watch, Component, Element, Event, h, Host, Method, Prop } from '@stencil/core';
+import type { OverlayEventDetail } from '@utils/overlays-interface';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import type {
-  AnimationBuilder,
-  Color,
-  CssClassMap,
-  OverlayEventDetail,
-  OverlayInterface,
-  FrameworkDelegate,
-} from '../../interface';
-import type { ToastButton, ToastPosition } from './toast-interface';
+import type { AnimationBuilder, Color, CssClassMap, OverlayInterface, FrameworkDelegate } from '../../interface';
 import {
   createDelegateController,
   createTriggerController,
@@ -30,6 +23,7 @@ import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
+import type { ToastButton, ToastPosition } from './toast-interface';
 
 // TODO(FW-2832): types
 

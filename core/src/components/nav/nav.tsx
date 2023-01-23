@@ -1,32 +1,25 @@
+import type { NavOutlet, RouteID, RouteWrite, RouterDirection } from '@components/router/utils/interface';
 import type { EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Method, Prop, Watch, h } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import type {
-  Animation,
-  AnimationBuilder,
-  ComponentProps,
-  FrameworkDelegate,
-  Gesture,
-  NavComponent,
-  NavComponentWithProps,
-  NavOptions,
-  NavOutlet,
-  NavResult,
-  RouteID,
-  RouteWrite,
-  RouterDirection,
-  TransitionDoneFn,
-  TransitionInstruction,
-  ViewController,
-} from '../../interface';
+import type { Animation, AnimationBuilder, ComponentProps, FrameworkDelegate, Gesture } from '../../interface';
 import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { assert } from '../../utils/helpers';
 import type { TransitionOptions } from '../../utils/transition';
 import { lifecycle, setPageHidden, transition } from '../../utils/transition';
 
 import { LIFECYCLE_DID_LEAVE, LIFECYCLE_WILL_LEAVE, LIFECYCLE_WILL_UNLOAD } from './constants';
+import type {
+  NavComponent,
+  NavComponentWithProps,
+  NavOptions,
+  NavResult,
+  TransitionDoneFn,
+  TransitionInstruction,
+} from './nav-interface';
+import type { ViewController } from './view-controller';
 import { VIEW_STATE_ATTACHED, VIEW_STATE_DESTROYED, VIEW_STATE_NEW, convertToViews, matches } from './view-controller';
 
 @Component({

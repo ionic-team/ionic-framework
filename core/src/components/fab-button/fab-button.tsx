@@ -1,9 +1,10 @@
+import type { RouterDirection } from '@components/router/utils/interface';
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, h } from '@stencil/core';
 import { close } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { AnimationBuilder, Color, RouterDirection } from '../../interface';
+import type { AnimationBuilder, Color } from '../../interface';
 import type { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import { inheritAriaAttributes } from '../../utils/helpers';
 import type { Attributes } from '../../utils/helpers';

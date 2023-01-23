@@ -1,5 +1,5 @@
-import type { Animation } from '@utils/animation/animation-interface';
 import { createAnimation } from '@utils/animation/animation';
+import type { Animation } from '@utils/animation/animation-interface';
 
 /**
  * baseAnimation

@@ -4,13 +4,14 @@ import { Build, Component, Element, Event, Host, Listen, Method, Prop, State, Wa
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import type { Animation, Gesture, GestureDetail } from '../../interface';
-import type { MenuChangeEventDetail, MenuI, Side } from './menu-interface';
 import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes, assert, clamp, isEndSide as isEnd } from '../../utils/helpers';
 import { menuController } from '../../utils/menu-controller';
 import { getOverlay } from '../../utils/overlays';
+
+import type { MenuChangeEventDetail, MenuI, Side } from './menu-interface';
 
 const iosEasing = 'cubic-bezier(0.32,0.72,0,1)';
 const mdEasing = 'cubic-bezier(0.0,0.0,0.2,1)';

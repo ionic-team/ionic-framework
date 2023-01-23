@@ -3,7 +3,6 @@ import { Component, Element, Event, Host, Prop, Watch, h } from '@stencil/core';
 
 // TODO(FW-2845) - Use @utils/forms and @utils/logging when https://github.com/ionic-team/stencil/issues/3826 is resolved
 import { getIonMode } from '../../global/ionic-global';
-import type { CheckboxChangeEventDetail } from './checkbox-interface';
 import type { Color, Mode, StyleEventDetail } from '../../interface';
 import type { LegacyFormController } from '../../utils/forms';
 import { createLegacyFormController } from '../../utils/forms';
@@ -11,6 +10,8 @@ import type { Attributes } from '../../utils/helpers';
 import { getAriaLabel, inheritAriaAttributes, renderHiddenInput } from '../../utils/helpers';
 import { printIonWarning } from '../../utils/logging';
 import { createColorClasses, hostContext } from '../../utils/theme';
+
+import type { CheckboxChangeEventDetail } from './checkbox-interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.

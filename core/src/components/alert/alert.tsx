@@ -1,15 +1,9 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Listen, Method, Prop, Watch, forceUpdate, h } from '@stencil/core';
+import type { OverlayEventDetail } from '@utils/overlays-interface';
 
 import { getIonMode } from '../../global/ionic-global';
-import type {
-  AnimationBuilder,
-  CssClassMap,
-  OverlayEventDetail,
-  OverlayInterface,
-  FrameworkDelegate,
-} from '../../interface';
-import type { AlertButton, AlertInput } from './alert-interface';
+import type { AnimationBuilder, CssClassMap, OverlayInterface, FrameworkDelegate } from '../../interface';
 import type { Gesture } from '../../utils/gesture';
 import { createButtonActiveGesture } from '../../utils/gesture/button-active';
 import {
@@ -27,6 +21,7 @@ import type { IonicSafeString } from '../../utils/sanitization';
 import { sanitizeDOMString } from '../../utils/sanitization';
 import { getClassMap } from '../../utils/theme';
 
+import type { AlertButton, AlertInput } from './alert-interface';
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
