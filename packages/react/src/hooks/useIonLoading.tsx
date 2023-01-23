@@ -1,8 +1,9 @@
-import { LoadingOptions, SpinnerTypes, loadingController } from '@ionic/core/components';
+import type { LoadingOptions, SpinnerTypes } from '@ionic/core/components';
+import { loadingController } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-loading.js';
 import { useCallback } from 'react';
 
-import { HookOverlayOptions } from './HookOverlayOptions';
+import type { HookOverlayOptions } from './HookOverlayOptions';
 import { useController } from './useController';
 
 /**

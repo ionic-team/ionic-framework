@@ -756,6 +756,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
           'has-value': this.hasValue(),
           'has-focus': this.hasFocus,
           'legacy-input': true,
+          'in-item-color': hostContext('ion-item.ion-color', this.el),
         })}
       >
         <input

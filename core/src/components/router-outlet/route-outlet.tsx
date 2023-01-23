@@ -29,6 +29,7 @@ import { transition } from '../../utils/transition';
 })
 export class RouterOutlet implements ComponentInterface, NavOutlet {
   private activeEl: HTMLElement | undefined;
+  // TODO(FW-2832): types
   private activeComponent: any;
   private activeParams: any;
   private waitPromise?: Promise<void>;
