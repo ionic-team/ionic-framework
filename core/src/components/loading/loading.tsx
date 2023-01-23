@@ -2,7 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Watch, Component, Element, Event, Host, Method, Prop, h } from '@stencil/core';
 
 import { config } from '../../global/config';
-import { getIonStylesheet, getIonPlatform } from '../../global/ionic-global';
+import { getIonStylesheet, getIonBehavior } from '../../global/ionic-global';
 import type {
   AnimationBuilder,
   FrameworkDelegate,
@@ -204,7 +204,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
 
   componentWillLoad() {
     if (this.spinner === undefined) {
-      const platform = getIonPlatform(this);
+      const platform = getIonBehavior(this);
       this.spinner = config.get('loadingSpinner', config.get('spinner', platform === 'ios' ? 'lines' : 'crescent'));
     }
   }

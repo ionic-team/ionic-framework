@@ -5,7 +5,7 @@ import type { LegacyFormController } from '@utils/forms';
 import { printIonWarning } from '@utils/logging';
 import { closeCircle, closeSharp } from 'ionicons/icons';
 
-import { getIonStylesheet, getIonPlatform } from '../../global/ionic-global';
+import { getIonStylesheet, getIonBehavior } from '../../global/ionic-global';
 import type {
   AutocompleteTypes,
   Color,
@@ -602,7 +602,7 @@ export class Input implements ComponentInterface {
    * when fill="outline".
    */
   private renderLabelContainer() {
-    const platform = getIonPlatform(this);
+    const platform = getIonBehavior(this);
     const hasOutlineFill = platform === 'md' && this.fill === 'outline';
 
     if (hasOutlineFill) {

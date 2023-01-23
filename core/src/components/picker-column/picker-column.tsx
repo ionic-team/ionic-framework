@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, Watch, h } from '@stencil/core';
 
-import { getIonStylesheet, getIonPlatform } from '../../global/ionic-global';
+import { getIonStylesheet, getIonBehavior } from '../../global/ionic-global';
 import type { Gesture, GestureDetail, PickerColumn } from '../../interface';
 import { clamp } from '../../utils/helpers';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/native/haptic';
@@ -51,7 +51,7 @@ export class PickerColumnCmp implements ComponentInterface {
     let pickerRotateFactor = 0;
     let pickerScaleFactor = 0.81;
 
-    const platform = getIonPlatform(this);
+    const platform = getIonBehavior(this);
 
     if (platform === 'ios') {
       pickerRotateFactor = -0.46;

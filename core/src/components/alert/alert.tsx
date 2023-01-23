@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Listen, Method, Prop, Watch, forceUpdate, h } from '@stencil/core';
 
-import { getIonStylesheet, getIonPlatform } from '../../global/ionic-global';
+import { getIonStylesheet, getIonBehavior } from '../../global/ionic-global';
 import type {
   AlertButton,
   AlertInput,
@@ -346,7 +346,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
      * 2. App is running in MD mode
      * 3. A wrapper ref does not exist
      */
-    if (this.gesture || getIonPlatform(this) === 'md' || !this.wrapperEl) {
+    if (this.gesture || getIonBehavior(this) === 'md' || !this.wrapperEl) {
       return;
     }
 

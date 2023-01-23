@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Watch, Component, Element, Event, Host, Method, Prop, h, readTask } from '@stencil/core';
 
-import { getIonStylesheet, getIonPlatform } from '../../global/ionic-global';
+import { getIonStylesheet, getIonBehavior } from '../../global/ionic-global';
 import type {
   ActionSheetButton,
   AnimationBuilder,
@@ -324,7 +324,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
      * 3. A wrapper ref does not exist
      */
     const { groupEl, wrapperEl } = this;
-    if (this.gesture || getIonPlatform(this) === 'md' || !wrapperEl || !groupEl) {
+    if (this.gesture || getIonBehavior(this) === 'md' || !wrapperEl || !groupEl) {
       return;
     }
 

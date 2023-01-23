@@ -3,7 +3,7 @@ import { Component, Element, Host, Prop, h } from '@stencil/core';
 import { arrowBackSharp, chevronBack } from 'ionicons/icons';
 
 import { config } from '../../global/config';
-import { getIonStylesheet, getIonPlatform } from '../../global/ionic-global';
+import { getIonStylesheet, getIonBehavior } from '../../global/ionic-global';
 import type { AnimationBuilder, Color } from '../../interface';
 import type { ButtonInterface } from '../../utils/element-interface';
 import type { Attributes } from '../../utils/helpers';
@@ -84,7 +84,7 @@ export class BackButton implements ComponentInterface, ButtonInterface {
       return icon;
     }
 
-    if (getIonPlatform(this) === 'ios') {
+    if (getIonBehavior(this) === 'ios') {
       // default ios back button icon
       return config.get('backButtonIcon', chevronBack);
     }
@@ -94,7 +94,7 @@ export class BackButton implements ComponentInterface, ButtonInterface {
   }
 
   get backButtonText() {
-    const defaultBackButtonText = getIonPlatform(this) === 'ios' ? 'Back' : null;
+    const defaultBackButtonText = getIonBehavior(this) === 'ios' ? 'Back' : null;
     return this.text != null ? this.text : config.get('backButtonText', defaultBackButtonText);
   }
 

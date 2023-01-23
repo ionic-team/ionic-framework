@@ -1,7 +1,7 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, h, writeTask } from '@stencil/core';
 
-import { getIonStylesheet, getIonPlatform } from '../../global/ionic-global';
+import { getIonStylesheet, getIonBehavior } from '../../global/ionic-global';
 import { findIonContent, getScrollElement, printIonContentErrorMsg } from '../../utils/content';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes } from '../../utils/helpers';
@@ -71,7 +71,7 @@ export class Header implements ComponentInterface {
   }
 
   private async checkCollapsibleHeader() {
-    const platform = getIonPlatform(this);
+    const platform = getIonBehavior(this);
 
     if (platform !== 'ios') {
       return;

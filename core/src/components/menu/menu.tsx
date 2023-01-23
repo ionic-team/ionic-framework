@@ -2,7 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Listen, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { config } from '../../global/config';
-import { getIonStylesheet, getIonPlatform } from '../../global/ionic-global';
+import { getIonStylesheet, getIonBehavior } from '../../global/ionic-global';
 import type { Animation, Gesture, GestureDetail, MenuChangeEventDetail, MenuI, Side } from '../../interface';
 import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
@@ -430,7 +430,7 @@ export class Menu implements ComponentInterface, MenuI {
 
   private async startAnimation(shouldOpen: boolean, animated: boolean): Promise<void> {
     const isReversed = !shouldOpen;
-    const platform = getIonPlatform(this);
+    const platform = getIonBehavior(this);
     const easing = platform === 'ios' ? iosEasing : mdEasing;
     const easingReverse = platform === 'ios' ? iosEasingReverse : mdEasingReverse;
     const ani = (this.animation as Animation)!

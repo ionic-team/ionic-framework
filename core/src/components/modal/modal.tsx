@@ -2,7 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
 
 import { config } from '../../global/config';
-import { getIonStylesheet, getIonPlatform } from '../../global/ionic-global';
+import { getIonStylesheet, getIonBehavior } from '../../global/ionic-global';
 import type {
   Animation,
   AnimationBuilder,
@@ -490,7 +490,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
      * start of the animation so that it completes
      * by the time the card animation is done.
      */
-    if (hasCardModal && getIonPlatform(this) === 'ios') {
+    if (hasCardModal && getIonBehavior(this) === 'ios') {
       // Cache the original status bar color before the modal is presented
       this.statusBarStyle = await StatusBar.getStyle();
       setCardStatusBarDark();
@@ -532,7 +532,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   private initSwipeToClose() {
-    if (getIonPlatform(this) !== 'ios') {
+    if (getIonBehavior(this) !== 'ios') {
       return;
     }
 
@@ -661,7 +661,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
      * finishes when the dismiss animation does.
      */
     const hasCardModal = presentingElement !== undefined;
-    if (hasCardModal && getIonPlatform(this) === 'ios') {
+    if (hasCardModal && getIonBehavior(this) === 'ios') {
       setCardStatusBarDefault(this.statusBarStyle);
     }
 

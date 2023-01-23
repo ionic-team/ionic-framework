@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, readTask, writeTask } from '@stencil/core';
 
-import { getIonStylesheet, getIonPlatform } from '../../global/ionic-global';
+import { getIonStylesheet, getIonBehavior } from '../../global/ionic-global';
 import type { Animation, Gesture, GestureDetail, RefresherEventDetail } from '../../interface';
 import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import {
@@ -161,7 +161,7 @@ export class Refresher implements ComponentInterface {
   private async resetNativeRefresher(el: HTMLElement | undefined, state: RefresherState) {
     this.state = state;
 
-    if (getIonPlatform(this) === 'ios') {
+    if (getIonBehavior(this) === 'ios') {
       await translateElement(el, undefined, 300);
     } else {
       await transitionEndAsync(this.el.querySelector('.refresher-refreshing-icon'), 200);
@@ -466,7 +466,7 @@ export class Refresher implements ComponentInterface {
        */
       this.backgroundContentEl = await contentEl.getBackgroundElement();
 
-      if (await shouldUseNativeRefresher(this.el, getIonPlatform(this))) {
+      if (await shouldUseNativeRefresher(this.el, getIonBehavior(this))) {
         this.setupNativeRefresher(contentEl);
       } else {
         this.gesture = (await import('../../utils/gesture')).createGesture({
