@@ -1,15 +1,15 @@
-import { getIonPlatform } from '../ionic-global';
+import { getIonBehavior } from '../ionic-global';
 
-describe('getIonPlatform()', () => {
+describe('getIonBehavior()', () => {
   it('should return the component platform', () => {
     const iosEl = document.createElement('ion-badge');
     iosEl.platform = 'ios';
 
-    expect(getIonPlatform({ el: iosEl })).toBe('ios');
+    expect(getIonBehavior({ el: iosEl })).toBe('ios');
 
     const androidEl = document.createElement('ion-badge');
     androidEl.platform = 'android';
 
-    expect(getIonPlatform({ el: androidEl })).toBe('android');
+    expect(getIonBehavior({ el: androidEl })).toBe('android');
   });
 });

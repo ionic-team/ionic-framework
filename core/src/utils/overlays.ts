@@ -1,5 +1,5 @@
 import { config } from '../global/config';
-import { getIonPlatform } from '../global/ionic-global';
+import { getIonBehavior } from '../global/ionic-global';
 import type {
   ActionSheetOptions,
   AlertOptions,
@@ -419,7 +419,7 @@ export const present = async <OverlayPresentOptions>(
   overlay.willPresent.emit();
   overlay.willPresentShorthand?.emit();
 
-  const platform = getIonPlatform(overlay);
+  const platform = getIonBehavior(overlay);
   // get the user's animation fn if one was provided
   const animationBuilder = overlay.enterAnimation
     ? overlay.enterAnimation
@@ -503,7 +503,7 @@ export const dismiss = async <OverlayDismissOptions>(
     overlay.willDismiss.emit({ data, role });
     overlay.willDismissShorthand?.emit({ data, role });
 
-    const platform = getIonPlatform(overlay);
+    const platform = getIonBehavior(overlay);
     const animationBuilder = overlay.leaveAnimation
       ? overlay.leaveAnimation
       : config.get(name, platform === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);

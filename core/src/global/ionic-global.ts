@@ -19,7 +19,7 @@ type Platform = 'ios' | 'md';
  * customized using the "baseComponents" global config or the
  * "useBase" property on the component.
  */
-export const getIonMode = (ref?: any): Mode => {
+export const getIonStylesheet = (ref?: any): Mode => {
   return (ref && getMode(ref)) || defaultMode;
 };
 
@@ -32,11 +32,11 @@ export const getIonMode = (ref?: any): Mode => {
  * global config or property on the component.
  *
  * If no platform is specified then we fallback to
- * using getIonMode. This can happen when a component
+ * using getIonStylesheet. This can happen when a component
  * has no per-mode stylesheets (such as ion-spinner).
  */
-export const getIonPlatform = (ref?: any): Platform => {
-  return ref?.el?.platform ?? getIonMode(ref);
+export const getIonBehavior = (ref?: any): Platform => {
+  return ref?.el?.platform ?? getIonStylesheet(ref);
 };
 
 export const initialize = (userConfig: IonicConfig = {}) => {
