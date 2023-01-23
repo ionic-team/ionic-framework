@@ -1,12 +1,10 @@
 import type {
-  Animation,
   AnimationBuilder,
   ComponentProps,
   ComponentRef,
   FrameworkDelegate,
   Mode,
 } from '../../interface';
-
 import { ViewController } from './view-controller';
 
 export type NavDirection = 'back' | 'forward';
@@ -52,18 +50,6 @@ export interface NavOptions extends RouterOutletOptions {
   viewIsReady?: (enteringEl: HTMLElement) => Promise<any>;
 }
 
-export type Page = new (...args: any[]) => any;
-
-export type TransitionResolveFn = (
-  hasCompleted: boolean,
-  requiresTransition: boolean,
-  enteringName?: string,
-  leavingName?: string,
-  direction?: string
-) => void;
-
-export type TransitionRejectFn = (rejectReason: any, transition?: Animation) => void;
-
 export type TransitionDoneFn = (
   hasCompleted: boolean,
   requiresTransition: boolean,
@@ -92,5 +78,3 @@ export interface TransitionInstruction {
 export interface NavCustomEvent extends CustomEvent {
   target: HTMLIonNavElement;
 }
-
-export { ViewController };

@@ -17,14 +17,14 @@ export { ItemSlidingCustomEvent } from './components/item-sliding/item-sliding-i
 export { LoadingOptions } from './components/loading/loading-interface';
 export { MenuCustomEvent } from './components/menu/menu-interface';
 export { ModalOptions, ModalCustomEvent } from './components/modal/modal-interface';
-export * from './components/nav/nav-interface';
+export { NavCustomEvent } from './components/nav/nav-interface';
 // TODO review picker column option export
 export { PickerOptions, PickerColumnOption } from './components/picker/picker-interface';
 export { PopoverOptions } from './components/popover/popover-interface';
 export { RadioGroupCustomEvent } from './components/radio-group/radio-group-interface';
 // TODO review PinFormatter
 export { RangeCustomEvent, PinFormatter } from './components/range/range-interface';
-export * from './components/router/utils/interface';
+export { HTMLStencilElement, RouterCustomEvent } from './components/router/utils/interface';
 export { RefresherCustomEvent } from './components/refresher/refresher-interface';
 export { ItemReorderCustomEvent } from './components/reorder-group/reorder-group-interface';
 export { SearchbarCustomEvent } from './components/searchbar/searchbar-interface';
@@ -46,7 +46,7 @@ export {
   AnimationKeyFrames,
   AnimationLifecycle,
 } from './utils/animation/animation-interface';
-export * from './utils/overlays-interface';
+export { HTMLIonOverlayElement, OverlayController, OverlayInterface } from './utils/overlays-interface';
 export * from './global/config';
 export { Gesture, GestureConfig, GestureDetail } from './utils/gesture';
 
