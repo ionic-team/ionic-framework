@@ -212,13 +212,14 @@ export class Breadcrumb implements ComponentInterface {
         {showCollapsedIndicator && (
           <button
             part="collapsed-indicator"
+            aria-label="Show more breadcrumbs"
             onClick={() => this.collapsedIndicatorClick()}
             ref={(collapsedEl) => (this.collapsedRef = collapsedEl)}
             class={{
               'breadcrumbs-collapsed-indicator': true,
             }}
           >
-            <ion-icon icon={ellipsisHorizontal} lazy={false}></ion-icon>
+            <ion-icon aria-hidden="true" icon={ellipsisHorizontal} lazy={false}></ion-icon>
           </button>
         )}
         {showSeparator && (
