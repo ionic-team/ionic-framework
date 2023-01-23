@@ -13,6 +13,14 @@ import { PickerInternalChangeEventDetail } from "./components/picker-internal/pi
 import { PinFormatter } from "./components/range/range-interface";
 import { NavigationHookCallback } from "./components/route/route-interface";
 import { SelectCompareFn } from "./components/select/select-interface";
+export { AccordionGroupChangeEventDetail, ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DatetimePresentation, FrameworkDelegate, InputChangeEventDetail, InputInputEventDetail, ItemReorderEventDetail, MenuChangeEventDetail, ModalBreakpointChangeEventDetail, ModalHandleBehavior, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerButton, PickerColumn, PopoverSize, PositionAlign, PositionReference, PositionSide, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextareaInputEventDetail, TextFieldTypes, TitleSelectedDatesFormatter, ToastButton, ToastPosition, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, TriggerAction, ViewController } from "./interface";
+export { IonicSafeString } from "./utils/sanitization";
+export { CounterFormatter } from "./components/item/item-interface";
+export { PickerColumnItem } from "./components/picker-column-internal/picker-column-internal-interfaces";
+export { PickerInternalChangeEventDetail } from "./components/picker-internal/picker-internal-interfaces";
+export { PinFormatter } from "./components/range/range-interface";
+export { NavigationHookCallback } from "./components/route/route-interface";
+export { SelectCompareFn } from "./components/select/select-interface";
 export namespace Components {
     interface IonAccordion {
         /**
@@ -2185,6 +2193,12 @@ export namespace Components {
          */
         "value"?: any | null;
     }
+    /**
+     * The Radio Group component mandates that only one radio button
+     * within the group can be selected at any given time. Since `ion-radio`
+     * is a shadow DOM component, it cannot natively perform this behavior
+     * using the `name` attribute.
+     */
     interface IonRadioGroup {
         /**
           * If `true`, the radios can be deselected.
@@ -3627,6 +3641,12 @@ declare global {
         prototype: HTMLIonRadioElement;
         new (): HTMLIonRadioElement;
     };
+    /**
+     * The Radio Group component mandates that only one radio button
+     * within the group can be selected at any given time. Since `ion-radio`
+     * is a shadow DOM component, it cannot natively perform this behavior
+     * using the `name` attribute.
+     */
     interface HTMLIonRadioGroupElement extends Components.IonRadioGroup, HTMLStencilElement {
     }
     var HTMLIonRadioGroupElement: {
@@ -6143,6 +6163,12 @@ declare namespace LocalJSX {
          */
         "value"?: any | null;
     }
+    /**
+     * The Radio Group component mandates that only one radio button
+     * within the group can be selected at any given time. Since `ion-radio`
+     * is a shadow DOM component, it cannot natively perform this behavior
+     * using the `name` attribute.
+     */
     interface IonRadioGroup {
         /**
           * If `true`, the radios can be deselected.
@@ -7337,6 +7363,12 @@ declare module "@stencil/core" {
             "ion-popover": LocalJSX.IonPopover & JSXBase.HTMLAttributes<HTMLIonPopoverElement>;
             "ion-progress-bar": LocalJSX.IonProgressBar & JSXBase.HTMLAttributes<HTMLIonProgressBarElement>;
             "ion-radio": LocalJSX.IonRadio & JSXBase.HTMLAttributes<HTMLIonRadioElement>;
+            /**
+             * The Radio Group component mandates that only one radio button
+             * within the group can be selected at any given time. Since `ion-radio`
+             * is a shadow DOM component, it cannot natively perform this behavior
+             * using the `name` attribute.
+             */
             "ion-radio-group": LocalJSX.IonRadioGroup & JSXBase.HTMLAttributes<HTMLIonRadioGroupElement>;
             "ion-range": LocalJSX.IonRange & JSXBase.HTMLAttributes<HTMLIonRangeElement>;
             "ion-refresher": LocalJSX.IonRefresher & JSXBase.HTMLAttributes<HTMLIonRefresherElement>;
