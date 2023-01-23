@@ -57,6 +57,7 @@
   position: relative;
 
   width: 100%;
+  height: 80px;
 
   color: var(--color);
 
@@ -73,6 +74,8 @@
   background: var(--background);
 
   white-space: pre-wrap;
+
+  height: initial;
 }
 
 :host(.ion-color) {
