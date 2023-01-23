@@ -47,7 +47,7 @@ export {
   AnimationLifecycle,
 } from './utils/animation/animation-interface';
 export { HTMLIonOverlayElement, OverlayController, OverlayInterface } from './utils/overlays-interface';
-export * from './global/config';
+export { Config, config } from './global/config';
 export { Gesture, GestureConfig, GestureDetail } from './utils/gesture';
 
 // From: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete
