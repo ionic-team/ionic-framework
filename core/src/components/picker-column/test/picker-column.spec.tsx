@@ -8,11 +8,10 @@ describe('picker-column', () => {
 
     const page = await newSpecPage({
       components: [PickerColumnCmp],
-      template: () => (<ion-picker-column col={col}></ion-picker-column>)
+      template: () => <ion-picker-column col={col}></ion-picker-column>,
     });
 
     const pickerCol = page.body.querySelector('ion-picker-column');
-    expect(pickerCol.classList.contains('test-class')).toBe(true)
+    expect(pickerCol.classList.contains('test-class')).toBe(true);
   });
 });
-
