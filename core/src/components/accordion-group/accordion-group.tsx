@@ -6,6 +6,7 @@ import type { AccordionGroupChangeEventDetail } from '../../interface';
 import { printIonWarning } from '../../utils/logging';
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
 @Component({

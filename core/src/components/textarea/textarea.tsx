@@ -8,6 +8,7 @@ import { inheritAriaAttributes, debounceEvent, findItemLabel, inheritAttributes 
 import { createColorClasses } from '../../utils/theme';
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
 @Component({

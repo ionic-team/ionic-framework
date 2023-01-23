@@ -4,6 +4,7 @@ import { Component, Element, Host, Method, Prop, h } from '@stencil/core';
 import { getIonStylesheet } from '../../global/ionic-global';
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
 @Component({

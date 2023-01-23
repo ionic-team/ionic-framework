@@ -6,6 +6,7 @@ import { getElementRoot } from '../../utils/helpers';
 import type { PickerInternalChangeEventDetail } from './picker-internal-interfaces';
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  * @internal
  */

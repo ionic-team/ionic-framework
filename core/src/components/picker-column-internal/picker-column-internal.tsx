@@ -12,6 +12,7 @@ import type { PickerInternalCustomEvent } from '../picker-internal/picker-intern
 import type { PickerColumnItem } from './picker-column-internal-interfaces';
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  * @internal
  */

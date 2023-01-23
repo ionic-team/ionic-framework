@@ -44,6 +44,7 @@ import { createSwipeToCloseGesture } from './gestures/swipe-to-close';
 import { setCardStatusBarDark, setCardStatusBarDefault } from './utils';
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @slot - Content is placed inside of the `.modal-content` element.
