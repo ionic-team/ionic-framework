@@ -4,6 +4,8 @@ import { Subscription } from 'rxjs';
 
 import { raf } from '../../util/util';
 
+// TODO(FW-2827): types
+
 @Directive()
 export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDestroy {
   private onChange: (value: any) => void = () => {

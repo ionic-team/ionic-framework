@@ -32,6 +32,8 @@ import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
 
+// TODO(FW-2832): types
+
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
@@ -53,7 +55,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
   private readonly delegateController = createDelegateController(this);
   private readonly triggerController = createTriggerController();
   private currentTransition?: Promise<any>;
-  private durationTimeout: any;
+  private durationTimeout?: ReturnType<typeof setTimeout>;
 
   presented = false;
 

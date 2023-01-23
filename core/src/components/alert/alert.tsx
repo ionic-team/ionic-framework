@@ -33,6 +33,8 @@ import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
 
+// TODO(FW-2832): types
+
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */

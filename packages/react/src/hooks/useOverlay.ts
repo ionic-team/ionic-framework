@@ -1,12 +1,14 @@
-import { OverlayEventDetail } from '@ionic/core/components';
+import type { OverlayEventDetail } from '@ionic/core/components';
 import React, { createElement, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 
 import { attachProps } from '../components/react-component-lib/utils';
 import { IonContext } from '../contexts/IonContext';
-import { ReactComponentOrElement } from '../models/ReactComponentOrElement';
+import type { ReactComponentOrElement } from '../models/ReactComponentOrElement';
 import { generateId } from '../utils/generateId';
 
-import { HookOverlayOptions } from './HookOverlayOptions';
+import type { HookOverlayOptions } from './HookOverlayOptions';
+
+// TODO(FW-2959): types
 
 interface OverlayBase extends HTMLElement {
   present: () => Promise<void>;

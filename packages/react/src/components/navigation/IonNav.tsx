@@ -6,15 +6,18 @@ import { ReactDelegate } from '../../framework-delegate';
 import { createReactComponent } from '../react-component-lib';
 import { createForwardRef } from '../utils';
 
-const IonNavInner = createReactComponent<
-  JSX.IonNav & { delegate: FrameworkDelegate },
-  HTMLIonNavElement
->('ion-nav', undefined, undefined, defineCustomElement);
+const IonNavInner = createReactComponent<JSX.IonNav & { delegate: FrameworkDelegate }, HTMLIonNavElement>(
+  'ion-nav',
+  undefined,
+  undefined,
+  defineCustomElement
+);
 
 type IonNavProps = JSX.IonNav & {
   forwardedRef?: React.ForwardedRef<HTMLIonNavElement>;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const IonNavInternal: React.FC<IonNavProps> = ({ children, forwardedRef, ...restOfProps }) => {
   const [views, setViews] = useState<React.ReactElement[]>([]);
 

@@ -29,6 +29,8 @@ import { watchForOptions } from '../../utils/watch-options';
 
 import type { SelectCompareFn } from './select-interface';
 
+// TODO(FW-2832): types
+
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *

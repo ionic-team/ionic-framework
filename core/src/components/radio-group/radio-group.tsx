@@ -4,12 +4,6 @@ import { Component, Element, Event, Host, Listen, Prop, Watch, h } from '@stenci
 import { getIonMode } from '../../global/ionic-global';
 import type { RadioGroupChangeEventDetail } from '../../interface';
 
-/**
- * The Radio Group component mandates that only one radio button
- * within the group can be selected at any given time. Since `ion-radio`
- * is a shadow DOM component, it cannot natively perform this behavior
- * using the `name` attribute.
- */
 @Component({
   tag: 'ion-radio-group',
 })
@@ -110,6 +104,12 @@ export class RadioGroup implements ComponentInterface {
   private onClick = (ev: Event) => {
     ev.preventDefault();
 
+    /**
+     * The Radio Group component mandates that only one radio button
+     * within the group can be selected at any given time. Since `ion-radio`
+     * is a shadow DOM component, it cannot natively perform this behavior
+     * using the `name` attribute.
+     */
     const selectedRadio = ev.target && (ev.target as HTMLElement).closest('ion-radio');
     if (selectedRadio) {
       const currentValue = this.value;

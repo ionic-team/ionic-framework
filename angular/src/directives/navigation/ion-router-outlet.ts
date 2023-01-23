@@ -30,6 +30,8 @@ import { isComponentFactoryResolver } from '../../util/util';
 import { StackController } from './stack-controller';
 import { RouteView, getUrl } from './stack-utils';
 
+// TODO(FW-2827): types
+
 @Directive({
   selector: 'ion-router-outlet',
   exportAs: 'outlet',
