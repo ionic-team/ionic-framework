@@ -25,6 +25,6 @@ export class BooleanValueAccessorDirective extends ValueAccessor {
 
   @HostListener('ionChange', ['$event.target'])
   _handleIonChange(el: HTMLIonCheckboxElement | HTMLIonToggleElement): void {
-    this.handleChangeEvent(el, el.checked);
+    this.handleValueChange(el, el.checked);
   }
 }

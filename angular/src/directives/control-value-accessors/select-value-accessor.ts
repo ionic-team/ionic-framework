@@ -28,6 +28,6 @@ export class SelectValueAccessorDirective extends ValueAccessor {
       | HTMLIonSegmentElement
       | HTMLIonDatetimeElement
   ): void {
-    this.handleChangeEvent(el, el.value);
+    this.handleValueChange(el, el.value);
   }
 }
