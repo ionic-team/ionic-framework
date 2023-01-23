@@ -9,6 +9,7 @@ import { apiSpecGenerator } from './scripts/api-spec-generator';
 
 export const config: Config = {
   autoprefixCss: true,
+  sourceMap: false,
   namespace: 'Ionic',
   bundles: [
     { components: ['ion-action-sheet'] },
