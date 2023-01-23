@@ -247,7 +247,7 @@
 
   flex-grow: 1;
 
-  align-items: stretch;
+  align-items: start;
 
   height: 100%;
 
@@ -348,15 +348,6 @@
 // ----------------------------------------------------------------
 
 .label-text-wrapper {
-  /**
-   * This causes the label to take up
-   * the entire height of its container
-   * while still keeping the text centered.
-   */
-  display: flex;
-
-  align-items: center;
-
   /**
    * Label text should not extend
    * beyond the bounds of the textarea.
