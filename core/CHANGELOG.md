@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.5.1-nightly.20230123](https://github.com/ionic-team/ionic/compare/v6.5.0...v6.5.1-nightly.20230123) (2023-01-23)
+
+
+### Bug Fixes
+
+* **action-sheet:** button icons are not announced by screen readers ([#26640](https://github.com/ionic-team/ionic/issues/26640)) ([22e9ff8](https://github.com/ionic-team/ionic/commit/22e9ff866f8bd7e2e4ca82eae70969ea4f2658df))
+* **fab-button:** icon is not announced by screen readers ([#26619](https://github.com/ionic-team/ionic/issues/26619)) ([dd7cd8c](https://github.com/ionic-team/ionic/commit/dd7cd8c0bfe652d293dc2c2b1bd2a36fd9cf0a0b)), closes [#22296](https://github.com/ionic-team/ionic/issues/22296)
+* **modal, popover:** warn if trigger element was not found ([#26650](https://github.com/ionic-team/ionic/issues/26650)) ([1115203](https://github.com/ionic-team/ionic/commit/11152031202a513121861486e50ea7942b9118d3))
+* **toggle:** on-off icon is not announced by screen readers ([#26641](https://github.com/ionic-team/ionic/issues/26641)) ([77ccac0](https://github.com/ionic-team/ionic/commit/77ccac059091d5d9f7daf9c7fb01a9e855b86ce3))
+
+
+
+
+
 # [6.5.0](https://github.com/ionic-team/ionic/compare/v6.4.3...v6.5.0) (2023-01-18)
 
 
