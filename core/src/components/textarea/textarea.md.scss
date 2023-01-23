@@ -9,6 +9,10 @@
 :host {
   --border-width: 1px;
   --border-color: #{$item-md-border-color};
+  --padding-top: 18px;
+  --padding-end: 0px;
+  --padding-bottom: #{$textarea-md-padding-bottom};
+  --padding-start: 0px;
 
   font-size: $textarea-md-font-size;
 }
@@ -41,6 +45,17 @@
 :host(:not(.legacy-textarea)) {
   min-height: 56px;
 }
+
+/**
+ * Floating and stacked labels should not
+ * push the label down since it it
+ * sits on top of the textarea.
+ */
+:host(.textarea-label-placement-floating),
+:host(.textarea-label-placement-stacked) {
+  --padding-top: 0px;
+}
+
 
 // Textarea Shape Rounded
 // ----------------------------------------------------------------
