@@ -116,6 +116,8 @@ ion-alert,css-prop,--width
 ion-app,none
 
 ion-avatar,shadow
+ion-avatar,prop,mode,"ios" | "md",undefined,false,false
+ion-avatar,prop,useBase,true | false,undefined,false,false
 ion-avatar,css-prop,--border-radius
 
 ion-back-button,shadow
@@ -165,8 +167,10 @@ ion-back-button,part,native
 ion-back-button,part,text
 
 ion-backdrop,shadow
+ion-backdrop,prop,mode,"ios" | "md",undefined,false,false
 ion-backdrop,prop,stopPropagation,boolean,true,false,false
 ion-backdrop,prop,tappable,boolean,true,false,false
+ion-backdrop,prop,useBase,true | false,undefined,false,false
 ion-backdrop,prop,visible,boolean,true,false,false
 ion-backdrop,event,ionBackdropTap,void,true
 
@@ -264,6 +268,8 @@ ion-button,part,native
 
 ion-buttons,scoped
 ion-buttons,prop,collapse,boolean,false,false,false
+ion-buttons,prop,mode,"ios" | "md",undefined,false,false
+ion-buttons,prop,useBase,true | false,undefined,false,false
 
 ion-card,shadow
 ion-card,prop,button,boolean,false,false,false
@@ -553,6 +559,8 @@ ion-infinite-scroll,event,ionInfinite,void,true
 ion-infinite-scroll-content,none
 ion-infinite-scroll-content,prop,loadingSpinner,"bubbles" | "circles" | "circular" | "crescent" | "dots" | "lines" | "lines-sharp" | "lines-sharp-small" | "lines-small" | null | undefined,undefined,false,false
 ion-infinite-scroll-content,prop,loadingText,IonicSafeString | string | undefined,undefined,false,false
+ion-infinite-scroll-content,prop,mode,"ios" | "md",undefined,false,false
+ion-infinite-scroll-content,prop,useBase,true | false,undefined,false,false
 
 ion-input,scoped
 ion-input,prop,accept,string | undefined,undefined,false,false
@@ -692,6 +700,8 @@ ion-item-divider,css-prop,--padding-start
 ion-item-divider,css-prop,--padding-top
 
 ion-item-group,none
+ion-item-group,prop,mode,"ios" | "md",undefined,false,false
+ion-item-group,prop,useBase,true | false,undefined,false,false
 
 ion-item-option,shadow
 ion-item-option,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
@@ -709,7 +719,9 @@ ion-item-option,css-prop,--color
 ion-item-option,part,native
 
 ion-item-options,none
+ion-item-options,prop,mode,"ios" | "md",undefined,false,false
 ion-item-options,prop,side,"end" | "start",'end',false,false
+ion-item-options,prop,useBase,true | false,undefined,false,false
 ion-item-options,event,ionSwipe,any,true
 
 ion-item-sliding,none
@@ -1104,10 +1116,12 @@ ion-range,part,tick-active
 ion-refresher,none
 ion-refresher,prop,closeDuration,string,'280ms',false,false
 ion-refresher,prop,disabled,boolean,false,false,false
+ion-refresher,prop,mode,"ios" | "md",undefined,false,false
 ion-refresher,prop,pullFactor,number,1,false,false
 ion-refresher,prop,pullMax,number,this.pullMin + 60,false,false
 ion-refresher,prop,pullMin,number,60,false,false
 ion-refresher,prop,snapbackDuration,string,'280ms',false,false
+ion-refresher,prop,useBase,true | false,undefined,false,false
 ion-refresher,method,cancel,cancel() => Promise<void>
 ion-refresher,method,complete,complete() => Promise<void>
 ion-refresher,method,getProgress,getProgress() => Promise<number>
@@ -1122,6 +1136,8 @@ ion-refresher-content,prop,refreshingSpinner,"bubbles" | "circles" | "circular" 
 ion-refresher-content,prop,refreshingText,IonicSafeString | string | undefined,undefined,false,false
 
 ion-reorder,shadow
+ion-reorder,prop,mode,"ios" | "md",undefined,false,false
+ion-reorder,prop,useBase,true | false,undefined,false,false
 ion-reorder,part,icon
 
 ion-reorder-group,none
@@ -1313,6 +1329,8 @@ ion-spinner,css-prop,--color
 ion-split-pane,shadow
 ion-split-pane,prop,contentId,string | undefined,undefined,false,true
 ion-split-pane,prop,disabled,boolean,false,false,false
+ion-split-pane,prop,mode,"ios" | "md",undefined,false,false
+ion-split-pane,prop,useBase,true | false,undefined,false,false
 ion-split-pane,prop,when,boolean | string,QUERY['lg'],false,false
 ion-split-pane,event,ionSplitPaneVisible,{ visible: boolean; },true
 ion-split-pane,css-prop,--border
@@ -1418,7 +1436,9 @@ ion-thumbnail,css-prop,--size
 
 ion-title,shadow
 ion-title,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
+ion-title,prop,mode,"ios" | "md",undefined,false,false
 ion-title,prop,size,"large" | "small" | undefined,undefined,false,false
+ion-title,prop,useBase,true | false,undefined,false,false
 ion-title,css-prop,--color
 
 ion-toast,shadow

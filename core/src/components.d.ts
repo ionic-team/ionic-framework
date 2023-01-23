@@ -261,6 +261,14 @@ export namespace Components {
         "setFocus": (elements: HTMLElement[]) => Promise<void>;
     }
     interface IonAvatar {
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        /**
+          * useBase determines if base components is enabled.
+         */
+        "useBase"?: true | false;
     }
     interface IonBackButton {
         /**
@@ -302,6 +310,10 @@ export namespace Components {
     }
     interface IonBackdrop {
         /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        /**
           * If `true`, the backdrop will stop propagation on tap.
          */
         "stopPropagation": boolean;
@@ -309,6 +321,10 @@ export namespace Components {
           * If `true`, the backdrop will can be clicked and will emit the `ionBackdropTap` event.
          */
         "tappable": boolean;
+        /**
+          * useBase determines if base components is enabled.
+         */
+        "useBase"?: true | false;
         /**
           * If `true`, the backdrop will be visible.
          */
@@ -486,6 +502,14 @@ export namespace Components {
           * If true, buttons will disappear when its parent toolbar has fully collapsed if the toolbar is not the first toolbar. If the toolbar is the first toolbar, the buttons will be hidden and will only be shown once all toolbars have fully collapsed.  Only applies in `ios` mode with `collapse` set to `true` on `ion-header`.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
          */
         "collapse": boolean;
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        /**
+          * useBase determines if base components is enabled.
+         */
+        "useBase"?: true | false;
     }
     interface IonCard {
         /**
@@ -1154,6 +1178,14 @@ export namespace Components {
           * Optional text to display while loading. `loadingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
          */
         "loadingText"?: string | IonicSafeString;
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        /**
+          * useBase determines if base components is enabled.
+         */
+        "useBase"?: true | false;
     }
     interface IonInput {
         /**
@@ -1417,6 +1449,14 @@ export namespace Components {
         "useBase"?: true | false;
     }
     interface IonItemGroup {
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        /**
+          * useBase determines if base components is enabled.
+         */
+        "useBase"?: true | false;
     }
     interface IonItemOption {
         /**
@@ -1463,9 +1503,17 @@ export namespace Components {
     interface IonItemOptions {
         "fireSwipeEvent": () => Promise<void>;
         /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        /**
           * The side the option button should be on. Possible values: `"start"` and `"end"`. If you have multiple `ion-item-options`, a side must be provided for each.
          */
         "side": Side;
+        /**
+          * useBase determines if base components is enabled.
+         */
+        "useBase"?: true | false;
     }
     interface IonItemSliding {
         /**
@@ -2099,6 +2147,14 @@ export namespace Components {
           * Picker column data
          */
         "col": PickerColumn;
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        /**
+          * useBase determines if base components is enabled.
+         */
+        "useBase"?: true | false;
     }
     interface IonPickerColumnInternal {
         /**
@@ -2435,6 +2491,10 @@ export namespace Components {
          */
         "getProgress": () => Promise<number>;
         /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        /**
           * How much to multiply the pull speed by. To slow the pull animation down, pass a number less than `1`. To speed up the pull, pass a number greater than `1`. The default value is `1` which is equal to the speed of the cursor. If a negative value is passed in, the factor will be `1` instead.  For example: If the value passed is `1.2` and the content is dragged by `10` pixels, instead of `10` pixels the content will be pulled by `12` pixels (an increase of 20 percent). If the value passed is `0.8`, the dragged amount will be `8` pixels, less than the amount the cursor has moved.  Does not apply when the refresher content uses a spinner, enabling the native refresher.
          */
         "pullFactor": number;
@@ -2450,6 +2510,10 @@ export namespace Components {
           * Time it takes the refresher to snap back to the `refreshing` state. Does not apply when the refresher content uses a spinner, enabling the native refresher.
          */
         "snapbackDuration": string;
+        /**
+          * useBase determines if base components is enabled.
+         */
+        "useBase"?: true | false;
     }
     interface IonRefresherContent {
         /**
@@ -2470,6 +2534,14 @@ export namespace Components {
         "refreshingText"?: string | IonicSafeString;
     }
     interface IonReorder {
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        /**
+          * useBase determines if base components is enabled.
+         */
+        "useBase"?: true | false;
     }
     interface IonReorderGroup {
         /**
@@ -2825,6 +2897,10 @@ export namespace Components {
          */
         "message"?: string;
         /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        /**
           * If true, the select accepts multiple values
          */
         "multiple"?: boolean;
@@ -2836,6 +2912,10 @@ export namespace Components {
           * The subheader text of the popover
          */
         "subHeader"?: string;
+        /**
+          * useBase determines if base components is enabled.
+         */
+        "useBase"?: true | false;
     }
     interface IonSkeletonText {
         /**
@@ -2870,6 +2950,14 @@ export namespace Components {
           * If `true`, the split pane will be hidden.
          */
         "disabled": boolean;
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        /**
+          * useBase determines if base components is enabled.
+         */
+        "useBase"?: true | false;
         /**
           * When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.
          */
@@ -3094,9 +3182,17 @@ export namespace Components {
          */
         "color"?: Color;
         /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        /**
           * The size of the toolbar title.
          */
         "size"?: 'large' | 'small';
+        /**
+          * useBase determines if base components is enabled.
+         */
+        "useBase"?: true | false;
     }
     interface IonToast {
         /**
@@ -4357,6 +4453,14 @@ declare namespace LocalJSX {
     interface IonApp {
     }
     interface IonAvatar {
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        /**
+          * useBase determines if base components is enabled.
+         */
+        "useBase"?: true | false;
     }
     interface IonBackButton {
         /**
@@ -4398,6 +4502,10 @@ declare namespace LocalJSX {
     }
     interface IonBackdrop {
         /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        /**
           * Emitted when the backdrop is tapped.
          */
         "onIonBackdropTap"?: (event: IonBackdropCustomEvent<void>) => void;
@@ -4409,6 +4517,10 @@ declare namespace LocalJSX {
           * If `true`, the backdrop will can be clicked and will emit the `ionBackdropTap` event.
          */
         "tappable"?: boolean;
+        /**
+          * useBase determines if base components is enabled.
+         */
+        "useBase"?: true | false;
         /**
           * If `true`, the backdrop will be visible.
          */
@@ -4610,6 +4722,14 @@ declare namespace LocalJSX {
           * If true, buttons will disappear when its parent toolbar has fully collapsed if the toolbar is not the first toolbar. If the toolbar is the first toolbar, the buttons will be hidden and will only be shown once all toolbars have fully collapsed.  Only applies in `ios` mode with `collapse` set to `true` on `ion-header`.  Typically used for [Collapsible Large Titles](https://ionicframework.com/docs/api/title#collapsible-large-titles)
          */
         "collapse"?: boolean;
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        /**
+          * useBase determines if base components is enabled.
+         */
+        "useBase"?: true | false;
     }
     interface IonCard {
         /**
@@ -5302,6 +5422,14 @@ declare namespace LocalJSX {
           * Optional text to display while loading. `loadingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
          */
         "loadingText"?: string | IonicSafeString;
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        /**
+          * useBase determines if base components is enabled.
+         */
+        "useBase"?: true | false;
     }
     interface IonInput {
         /**
@@ -5577,6 +5705,14 @@ declare namespace LocalJSX {
         "useBase"?: true | false;
     }
     interface IonItemGroup {
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        /**
+          * useBase determines if base components is enabled.
+         */
+        "useBase"?: true | false;
     }
     interface IonItemOption {
         /**
@@ -5622,6 +5758,10 @@ declare namespace LocalJSX {
     }
     interface IonItemOptions {
         /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        /**
           * Emitted when the item has been fully swiped.
          */
         "onIonSwipe"?: (event: IonItemOptionsCustomEvent<any>) => void;
@@ -5629,6 +5769,10 @@ declare namespace LocalJSX {
           * The side the option button should be on. Possible values: `"start"` and `"end"`. If you have multiple `ion-item-options`, a side must be provided for each.
          */
         "side"?: Side;
+        /**
+          * useBase determines if base components is enabled.
+         */
+        "useBase"?: true | false;
     }
     interface IonItemSliding {
         /**
@@ -6192,9 +6336,17 @@ declare namespace LocalJSX {
          */
         "col": PickerColumn;
         /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        /**
           * Emitted when the selected value has changed
          */
         "onIonPickerColChange"?: (event: IonPickerColumnCustomEvent<PickerColumn>) => void;
+        /**
+          * useBase determines if base components is enabled.
+         */
+        "useBase"?: true | false;
     }
     interface IonPickerColumnInternal {
         /**
@@ -6577,6 +6729,10 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        /**
           * Emitted while the user is pulling down the content and exposing the refresher.
          */
         "onIonPull"?: (event: IonRefresherCustomEvent<void>) => void;
@@ -6604,6 +6760,10 @@ declare namespace LocalJSX {
           * Time it takes the refresher to snap back to the `refreshing` state. Does not apply when the refresher content uses a spinner, enabling the native refresher.
          */
         "snapbackDuration"?: string;
+        /**
+          * useBase determines if base components is enabled.
+         */
+        "useBase"?: true | false;
     }
     interface IonRefresherContent {
         /**
@@ -6624,6 +6784,14 @@ declare namespace LocalJSX {
         "refreshingText"?: string | IonicSafeString;
     }
     interface IonReorder {
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        /**
+          * useBase determines if base components is enabled.
+         */
+        "useBase"?: true | false;
     }
     interface IonReorderGroup {
         /**
@@ -7026,6 +7194,10 @@ declare namespace LocalJSX {
          */
         "message"?: string;
         /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        /**
           * If true, the select accepts multiple values
          */
         "multiple"?: boolean;
@@ -7037,6 +7209,10 @@ declare namespace LocalJSX {
           * The subheader text of the popover
          */
         "subHeader"?: string;
+        /**
+          * useBase determines if base components is enabled.
+         */
+        "useBase"?: true | false;
     }
     interface IonSkeletonText {
         /**
@@ -7072,9 +7248,17 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        /**
           * Expression to be called when the split-pane visibility has changed
          */
         "onIonSplitPaneVisible"?: (event: IonSplitPaneCustomEvent<{ visible: boolean }>) => void;
+        /**
+          * useBase determines if base components is enabled.
+         */
+        "useBase"?: true | false;
         /**
           * When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.
          */
@@ -7308,6 +7492,10 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        /**
           * Emitted when the styles change.
          */
         "onIonStyle"?: (event: IonTitleCustomEvent<StyleEventDetail>) => void;
@@ -7315,6 +7503,10 @@ declare namespace LocalJSX {
           * The size of the toolbar title.
          */
         "size"?: 'large' | 'small';
+        /**
+          * useBase determines if base components is enabled.
+         */
+        "useBase"?: true | false;
     }
     interface IonToast {
         /**

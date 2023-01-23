@@ -204,12 +204,14 @@ export class IonApp {
 export declare interface IonAvatar extends Components.IonAvatar {}
 
 @ProxyCmp({
-  defineCustomElementFn: undefined
+  defineCustomElementFn: undefined,
+  inputs: ['mode', 'useBase']
 })
 @Component({
   selector: 'ion-avatar',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>'
+  template: '<ng-content></ng-content>',
+  inputs: ['mode', 'useBase']
 })
 export class IonAvatar {
   protected el: HTMLElement;
@@ -251,13 +253,13 @@ export declare interface IonBackdrop extends Components.IonBackdrop {
 
 @ProxyCmp({
   defineCustomElementFn: undefined,
-  inputs: ['stopPropagation', 'tappable', 'visible']
+  inputs: ['mode', 'stopPropagation', 'tappable', 'useBase', 'visible']
 })
 @Component({
   selector: 'ion-backdrop',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['stopPropagation', 'tappable', 'visible']
+  inputs: ['mode', 'stopPropagation', 'tappable', 'useBase', 'visible']
 })
 export class IonBackdrop {
   protected el: HTMLElement;
@@ -386,13 +388,13 @@ export declare interface IonButtons extends Components.IonButtons {}
 
 @ProxyCmp({
   defineCustomElementFn: undefined,
-  inputs: ['collapse']
+  inputs: ['collapse', 'mode', 'useBase']
 })
 @Component({
   selector: 'ion-buttons',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['collapse']
+  inputs: ['collapse', 'mode', 'useBase']
 })
 export class IonButtons {
   protected el: HTMLElement;
@@ -923,13 +925,13 @@ export declare interface IonInfiniteScrollContent extends Components.IonInfinite
 
 @ProxyCmp({
   defineCustomElementFn: undefined,
-  inputs: ['loadingSpinner', 'loadingText']
+  inputs: ['loadingSpinner', 'loadingText', 'mode', 'useBase']
 })
 @Component({
   selector: 'ion-infinite-scroll-content',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['loadingSpinner', 'loadingText']
+  inputs: ['loadingSpinner', 'loadingText', 'mode', 'useBase']
 })
 export class IonInfiniteScrollContent {
   protected el: HTMLElement;
@@ -1042,12 +1044,14 @@ export class IonItemDivider {
 export declare interface IonItemGroup extends Components.IonItemGroup {}
 
 @ProxyCmp({
-  defineCustomElementFn: undefined
+  defineCustomElementFn: undefined,
+  inputs: ['mode', 'useBase']
 })
 @Component({
   selector: 'ion-item-group',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>'
+  template: '<ng-content></ng-content>',
+  inputs: ['mode', 'useBase']
 })
 export class IonItemGroup {
   protected el: HTMLElement;
@@ -1089,13 +1093,13 @@ export declare interface IonItemOptions extends Components.IonItemOptions {
 
 @ProxyCmp({
   defineCustomElementFn: undefined,
-  inputs: ['side']
+  inputs: ['mode', 'side', 'useBase']
 })
 @Component({
   selector: 'ion-item-options',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['side']
+  inputs: ['mode', 'side', 'useBase']
 })
 export class IonItemOptions {
   protected el: HTMLElement;
@@ -1641,14 +1645,14 @@ called when the async operation has completed.
 
 @ProxyCmp({
   defineCustomElementFn: undefined,
-  inputs: ['closeDuration', 'disabled', 'pullFactor', 'pullMax', 'pullMin', 'snapbackDuration'],
+  inputs: ['closeDuration', 'disabled', 'mode', 'pullFactor', 'pullMax', 'pullMin', 'snapbackDuration', 'useBase'],
   methods: ['complete', 'cancel', 'getProgress']
 })
 @Component({
   selector: 'ion-refresher',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['closeDuration', 'disabled', 'pullFactor', 'pullMax', 'pullMin', 'snapbackDuration']
+  inputs: ['closeDuration', 'disabled', 'mode', 'pullFactor', 'pullMax', 'pullMin', 'snapbackDuration', 'useBase']
 })
 export class IonRefresher {
   protected el: HTMLElement;
@@ -1684,12 +1688,14 @@ export class IonRefresherContent {
 export declare interface IonReorder extends Components.IonReorder {}
 
 @ProxyCmp({
-  defineCustomElementFn: undefined
+  defineCustomElementFn: undefined,
+  inputs: ['mode', 'useBase']
 })
 @Component({
   selector: 'ion-reorder',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>'
+  template: '<ng-content></ng-content>',
+  inputs: ['mode', 'useBase']
 })
 export class IonReorder {
   protected el: HTMLElement;
@@ -1995,13 +2001,13 @@ export declare interface IonSplitPane extends Components.IonSplitPane {
 
 @ProxyCmp({
   defineCustomElementFn: undefined,
-  inputs: ['contentId', 'disabled', 'when']
+  inputs: ['contentId', 'disabled', 'mode', 'useBase', 'when']
 })
 @Component({
   selector: 'ion-split-pane',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['contentId', 'disabled', 'when']
+  inputs: ['contentId', 'disabled', 'mode', 'useBase', 'when']
 })
 export class IonSplitPane {
   protected el: HTMLElement;
@@ -2150,13 +2156,13 @@ export declare interface IonTitle extends Components.IonTitle {}
 
 @ProxyCmp({
   defineCustomElementFn: undefined,
-  inputs: ['color', 'size']
+  inputs: ['color', 'mode', 'size', 'useBase']
 })
 @Component({
   selector: 'ion-title',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['color', 'size']
+  inputs: ['color', 'mode', 'size', 'useBase']
 })
 export class IonTitle {
   protected el: HTMLElement;

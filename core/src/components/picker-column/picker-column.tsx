@@ -8,6 +8,9 @@ import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from
 
 /**
  * @internal
+ *
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
 @Component({
   tag: 'ion-picker-column',
