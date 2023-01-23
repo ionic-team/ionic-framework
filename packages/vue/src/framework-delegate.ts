@@ -11,7 +11,9 @@ export const VueDelegate = (
   addFn = addTeleportedUserComponent,
   removeFn = removeTeleportedUserComponent
 ): FrameworkDelegate => {
-  let Component: VNode | undefined;
+  // `h` doesn't provide a type for the component argument
+  const refMap = new WeakMap<any, VNode>();
+
   // TODO(FW-2969): types
   const attachViewToDom = (
     parentElement: HTMLElement,
@@ -32,15 +34,23 @@ export const VueDelegate = (
     classes && div.classList.add(...classes);
     parentElement.appendChild(div);
 
-    Component = h(Teleport, { to: div }, h(component, { ...componentProps }));
+    const hostComponent = h(
+      Teleport,
+      { to: div },
+      h(component, { ...componentProps })
+    );
 
-    addFn(Component);
+    refMap.set(component, hostComponent);
+
+    addFn(hostComponent);
 
     return Promise.resolve(div);
   };
 
-  const removeViewFromDom = () => {
-    Component && removeFn(Component);
+  const removeViewFromDom = (_container: any, component: any) => {
+    const hostComponent = refMap.get(component);
+    hostComponent && removeFn(hostComponent);
+
     return Promise.resolve();
   };
 
