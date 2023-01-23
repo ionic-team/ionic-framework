@@ -100,7 +100,7 @@ test.describe('input: clear button', () => {
   test('should inherit color when used in item with color property', async ({ page }) => {
     await page.setContent(`
       <ion-item color="primary">
-        <ion-input value="Text" clear-input="true"></ion-input>
+        <ion-input aria-label="my label" value="Text" clear-input="true"></ion-input>
       </ion-item>
     `);
 
