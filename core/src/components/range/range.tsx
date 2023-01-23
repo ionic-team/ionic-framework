@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet } from '../../global/ionic-global';
 import type {
   Color,
   Gesture,
@@ -576,7 +576,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
 
     const { el, pressedKnob, disabled, pin, rangeId } = this;
 
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
 
     renderHiddenInput(true, el, this.name, JSON.stringify(this.getValue()), disabled);
 
@@ -604,7 +604,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
   private renderRange() {
     const { disabled, el, rangeId, pin, pressedKnob, labelPlacement } = this;
 
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
 
     renderHiddenInput(true, el, this.name, JSON.stringify(this.getValue()), disabled);
 

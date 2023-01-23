@@ -3,7 +3,7 @@ import { Component, Element, Host, Prop, State, h } from '@stencil/core';
 import { chevronDown } from 'ionicons/icons';
 
 import { config } from '../../global/config';
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet } from '../../global/ionic-global';
 import { addEventListener, getElementRoot, raf, removeEventListener, transitionEndAsync } from '../../utils/helpers';
 
 const enum AccordionState {
@@ -395,7 +395,7 @@ export class Accordion implements ComponentInterface {
 
   render() {
     const { disabled, readonly } = this;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const expanded = this.state === AccordionState.Expanded || this.state === AccordionState.Expanding;
     const headerPart = expanded ? 'header expanded' : 'header';
     const contentPart = expanded ? 'content expanded' : 'content';

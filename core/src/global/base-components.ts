@@ -43,8 +43,9 @@ const initializeBaseComponentsCache = (includeCmp?: string[], excludeCmp?: strin
 };
 
 /**
- * Determines if a component is
- * using base components.
+ * Determines if a component is using base components.
+ * This should be used when the component is created
+ * for the first time.
  */
 export const isBaseComponent = (elm: HTMLElement, config: Config) => {
   /**
@@ -55,7 +56,14 @@ export const isBaseComponent = (elm: HTMLElement, config: Config) => {
     return false;
   }
 
-  // TODO check if useBase property is set on element also add tests
+  /**
+   * If the component is not already initialized
+   * then we need to see if the developer has
+   * set use-base as an attribute on the element.
+   */
+  if (elm.hasAttribute('use-base')) {
+    return elm.getAttribute('use-base') === 'true';
+  }
 
   const baseComponents = config.get('baseComponents');
 

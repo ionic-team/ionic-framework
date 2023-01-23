@@ -3,7 +3,7 @@ import { Component, Element, Host, Listen, Prop, State, Watch, forceUpdate, h } 
 import { printIonError, printIonWarning } from '@utils/logging';
 import { chevronForward } from 'ionicons/icons';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet } from '../../global/ionic-global';
 import type { AnimationBuilder, Color, CssClassMap, RouterDirection, StyleEventDetail } from '../../interface';
 import type { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import type { Attributes } from '../../utils/helpers';
@@ -365,7 +365,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
       inheritedAriaAttributes,
     } = this;
     const childStyles = {} as any;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const clickable = this.isClickable();
     const canActivate = this.canActivate();
     const TagType = clickable ? (href === undefined ? 'button' : 'a') : ('div' as any);

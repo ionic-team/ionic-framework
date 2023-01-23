@@ -1,7 +1,7 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Host, Listen, Prop, h } from '@stencil/core';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet } from '../../global/ionic-global';
 import type { SelectPopoverOption } from '../../interface';
 import { safeCall } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
@@ -148,7 +148,7 @@ export class SelectPopover implements ComponentInterface {
     const hasSubHeaderOrMessage = subHeader !== undefined || message !== undefined;
 
     return (
-      <Host class={getIonMode(this)}>
+      <Host class={getIonStylesheet(this)}>
         <ion-list>
           {header !== undefined && <ion-list-header>{header}</ion-list-header>}
           {hasSubHeaderOrMessage && (

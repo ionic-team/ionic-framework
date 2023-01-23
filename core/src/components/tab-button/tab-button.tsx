@@ -2,7 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Listen, Prop, h } from '@stencil/core';
 
 import { config } from '../../global/config';
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet } from '../../global/ionic-global';
 import type { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from '../../interface';
 import type { AnchorInterface } from '../../utils/element-interface';
 
@@ -140,7 +140,7 @@ export class TabButton implements ComponentInterface, AnchorInterface {
 
   render() {
     const { disabled, hasIcon, hasLabel, tabIndex, href, rel, target, layout, selected, tab } = this;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const attrs = {
       download: this.download,
       href,

@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Listen, Method, Prop, Watch, h } from '@stencil/core';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet } from '../../global/ionic-global';
 import type { AccordionGroupChangeEventDetail } from '../../interface';
 import { printIonWarning } from '../../utils/logging';
 
@@ -268,7 +268,7 @@ export class AccordionGroup implements ComponentInterface {
 
   render() {
     const { disabled, readonly, expand } = this;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
 
     return (
       <Host

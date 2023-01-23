@@ -3,7 +3,7 @@ import { Component, Element, Host, Listen, Prop, State, h } from '@stencil/core'
 import { menuOutline, menuSharp } from 'ionicons/icons';
 
 import { config } from '../../global/config';
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 import type { ButtonInterface } from '../../utils/element-interface';
 import type { Attributes } from '../../utils/helpers';
@@ -80,7 +80,7 @@ export class MenuButton implements ComponentInterface, ButtonInterface {
 
   render() {
     const { color, disabled, inheritedAttributes } = this;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const menuIcon = config.get('menuIcon', mode === 'ios' ? menuOutline : menuSharp);
     const hidden = this.autoHide && !this.visible;
 

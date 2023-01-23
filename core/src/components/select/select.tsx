@@ -2,7 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 import { caretDownSharp } from 'ionicons/icons';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet } from '../../global/ionic-global';
 import type {
   ActionSheetButton,
   ActionSheetOptions,
@@ -348,7 +348,7 @@ export class Select implements ComponentInterface {
 
   private async openPopover(ev: UIEvent) {
     const interfaceOptions = this.interfaceOptions;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const showBackdrop = mode === 'md' ? false : true;
     const multiple = this.multiple;
     const value = this.value;
@@ -408,7 +408,7 @@ export class Select implements ComponentInterface {
   }
 
   private async openActionSheet() {
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const interfaceOptions = this.interfaceOptions;
     const actionSheetOpts: ActionSheetOptions = {
       mode,
@@ -439,7 +439,7 @@ export class Select implements ComponentInterface {
 
     const interfaceOptions = this.interfaceOptions;
     const inputType = this.multiple ? 'checkbox' : 'radio';
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
 
     const alertOpts: AlertOptions = {
       mode,
@@ -547,7 +547,7 @@ export class Select implements ComponentInterface {
 
   render() {
     const { disabled, el, inputId, isExpanded, name, placeholder, value } = this;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const { labelText, labelId } = getAriaLabel(el, inputId);
 
     renderHiddenInput(true, el, name, parseValue(value), disabled);

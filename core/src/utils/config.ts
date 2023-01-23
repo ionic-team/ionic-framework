@@ -213,6 +213,9 @@ export interface IonicConfig {
   platform?: PlatformConfig;
 
   /**
+   * EXPERIMENTAL: Base Components is in developer preview.
+   * Breaking changes may happen at any time.
+   *
    * When `true`, all components will be rendered without
    * iOS or MD styles, providing only the structural styles.
    * When `false`, all components will be rendered with iOS or

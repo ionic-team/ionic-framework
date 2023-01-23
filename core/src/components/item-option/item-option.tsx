@@ -1,7 +1,7 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, h } from '@stencil/core';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 import type { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import { createColorClasses } from '../../utils/theme';
@@ -88,7 +88,7 @@ export class ItemOption implements ComponentInterface, AnchorInterface, ButtonIn
   render() {
     const { disabled, expandable, href } = this;
     const TagType = href === undefined ? 'button' : ('a' as any);
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const attrs =
       TagType === 'button'
         ? { type: this.type }

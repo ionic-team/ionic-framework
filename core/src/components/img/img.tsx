@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet } from '../../global/ionic-global';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAttributes } from '../../utils/helpers';
 
@@ -111,7 +111,7 @@ export class Img implements ComponentInterface {
     const { loadSrc, alt, onLoad, loadError, inheritedAttributes } = this;
     const { draggable } = inheritedAttributes;
     return (
-      <Host class={getIonMode(this)}>
+      <Host class={getIonStylesheet(this)}>
         <img
           decoding="async"
           src={loadSrc}

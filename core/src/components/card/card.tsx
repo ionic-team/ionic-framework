@@ -1,7 +1,7 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Element, Component, Host, Prop, h } from '@stencil/core';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet } from '../../global/ionic-global';
 import type { AnimationBuilder, Color, Mode, RouterDirection } from '../../interface';
 import type { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import type { Attributes } from '../../utils/helpers';
@@ -128,7 +128,7 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
   }
 
   render() {
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     return (
       <Host
         class={createColorClasses(this.color, {

@@ -4,7 +4,7 @@ import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil
 import { checkmarkOutline, removeOutline, ellipseOutline } from 'ionicons/icons';
 
 import { config } from '../../global/config';
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet } from '../../global/ionic-global';
 import type { Color, Gesture, GestureDetail, Mode, StyleEventDetail, ToggleChangeEventDetail } from '../../interface';
 import type { LegacyFormController } from '../../utils/forms';
 import { createLegacyFormController } from '../../utils/forms';
@@ -266,7 +266,7 @@ export class Toggle implements ComponentInterface {
   }
 
   private renderToggleControl() {
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
 
     const { enableOnOffLabels, checked } = this;
     return (
@@ -298,7 +298,7 @@ export class Toggle implements ComponentInterface {
   private renderToggle() {
     const { activated, color, checked, disabled, el, justify, labelPlacement, inputId, name } = this;
 
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const value = this.getValue();
     const rtl = isRTL(el) ? 'rtl' : 'ltr';
     renderHiddenInput(true, el, name, checked ? value : '', disabled);
@@ -368,7 +368,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
     }
 
     const { activated, color, checked, disabled, el, inputId, name } = this;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const { label, labelId, labelText } = getAriaLabel(el, inputId);
     const value = this.getValue();
     const rtl = isRTL(el) ? 'rtl' : 'ltr';

@@ -1,7 +1,7 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Host, Listen, Prop, forceUpdate, h } from '@stencil/core';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet } from '../../global/ionic-global';
 import { matchBreakpoint } from '../../utils/media';
 
 const win = typeof (window as any) !== 'undefined' ? (window as any) : undefined;
@@ -249,7 +249,7 @@ export class Col implements ComponentInterface {
 
   render() {
     const isRTL = document.dir === 'rtl';
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     return (
       <Host
         class={{
