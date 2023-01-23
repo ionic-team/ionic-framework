@@ -600,6 +600,7 @@ For textareas that do not have a visible label, developers should use "aria-labe
     const { inputId, disabled, fill, shape, labelPlacement } = this;
     const mode = getIonMode(this);
     const value = this.getValue();
+    const shouldRenderHighlight = mode === 'md' && fill !== 'outline';
 
     return (
       <Host
@@ -645,6 +646,7 @@ For textareas that do not have a visible label, developers should use "aria-labe
               {value}
             </textarea>
           </div>
+          {shouldRenderHighlight && <div class="textarea-highlight"></div>}
         </label>
         {this.renderBottomContent()}
       </Host>
