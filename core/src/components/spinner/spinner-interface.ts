@@ -1,5 +1,3 @@
-export { SpinnerTypes } from './spinner-configs';
-
 export interface SpinnerConfigs {
   [spinnerName: string]: SpinnerConfig;
 }
