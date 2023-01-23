@@ -241,7 +241,7 @@
 // ----------------------------------------------------------------
 
 .textarea-wrapper {
-  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+  @include padding(0px, var(--padding-end), 0px, var(--padding-start));
   @include border-radius(var(--border-radius));
 
   display: flex;
@@ -250,7 +250,7 @@
 
   flex-grow: 1;
 
-  align-items: start;
+  align-items: flex-start;
 
   height: 100%;
 
@@ -272,6 +272,10 @@
   width: 100%;
 
   height: 100%;
+}
+
+.native-wrapper textarea {
+  @include padding(var(--padding-top), 0px, var(--padding-bottom), 0px);
 }
 
 // Textarea Highlight
@@ -353,6 +357,8 @@
 // ----------------------------------------------------------------
 
 .label-text-wrapper {
+  @include padding(var(--padding-top), 0px, var(--padding-bottom), 0px);
+
   /**
    * Label text should not extend
    * beyond the bounds of the textarea.
