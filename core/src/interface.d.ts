@@ -18,18 +18,15 @@ export { LoadingOptions } from './components/loading/loading-interface';
 export { MenuCustomEvent } from './components/menu/menu-interface';
 export { ModalOptions, ModalCustomEvent } from './components/modal/modal-interface';
 export { NavCustomEvent } from './components/nav/nav-interface';
-// TODO review picker column option export
 export { PickerOptions, PickerColumnOption } from './components/picker/picker-interface';
 export { PopoverOptions } from './components/popover/popover-interface';
 export { RadioGroupCustomEvent } from './components/radio-group/radio-group-interface';
-// TODO review PinFormatter
 export { RangeCustomEvent, PinFormatter } from './components/range/range-interface';
 export { HTMLStencilElement, RouterCustomEvent } from './components/router/utils/interface';
 export { RefresherCustomEvent } from './components/refresher/refresher-interface';
 export { ItemReorderCustomEvent } from './components/reorder-group/reorder-group-interface';
 export { SearchbarCustomEvent } from './components/searchbar/searchbar-interface';
 export { SegmentCustomEvent } from './components/segment/segment-interface';
-// TODO review SelectCompareFn
 export { SelectCustomEvent, SelectCompareFn } from './components/select/select-interface';
 export { TabsCustomEvent } from './components/tabs/tabs-interface';
 export { TextareaCustomEvent } from './components/textarea/textarea-interface';
