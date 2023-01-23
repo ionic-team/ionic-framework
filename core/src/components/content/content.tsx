@@ -125,8 +125,8 @@ export class Content implements ComponentInterface {
 
   private shouldForceOverscroll() {
     const { forceOverscroll } = this;
-    const mode = getIonPlatform(this);
-    return forceOverscroll === undefined ? mode === 'ios' && isPlatform('ios') : forceOverscroll;
+    const platform = getIonPlatform(this);
+    return forceOverscroll === undefined ? platform === 'ios' && isPlatform('ios') : forceOverscroll;
   }
 
   private resize() {

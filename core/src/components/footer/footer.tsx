@@ -64,8 +64,8 @@ export class Footer implements ComponentInterface {
   }
 
   private checkCollapsibleFooter = () => {
-    const mode = getIonPlatform(this);
-    if (mode !== 'ios') {
+    const platform = getIonPlatform(this);
+    if (platform !== 'ios') {
       return;
     }
 

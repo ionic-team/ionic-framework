@@ -71,9 +71,9 @@ export class Header implements ComponentInterface {
   }
 
   private async checkCollapsibleHeader() {
-    const mode = getIonPlatform(this);
+    const platform = getIonPlatform(this);
 
-    if (mode !== 'ios') {
+    if (platform !== 'ios') {
       return;
     }
 
