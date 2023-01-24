@@ -222,7 +222,7 @@
 // ----------------------------------------------------------------
 
 .textarea-wrapper {
-  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+  @include padding(0px, var(--padding-end), 0px, var(--padding-start));
   @include border-radius(var(--border-radius));
 
   display: flex;
@@ -231,7 +231,7 @@
 
   flex-grow: 1;
 
-  align-items: stretch;
+  align-items: flex-start;
 
   height: 100%;
 
@@ -251,6 +251,23 @@
   flex-grow: 1;
 
   width: 100%;
+
+  height: 100%;
+}
+
+.native-wrapper textarea {
+  @include padding(var(--padding-top), 0px, var(--padding-bottom), 0px);
+}
+
+// Textarea Highlight
+// ----------------------------------------------------------------
+
+:host(.ion-touched.ion-invalid) {
+  --highlight-color: var(--highlight-color-invalid);
+}
+
+:host(.ion-touched.ion-valid) {
+  --highlight-color: var(--highlight-color-valid);
 }
 
 .native-wrapper,
@@ -365,12 +382,7 @@
 // ----------------------------------------------------------------
 
 .label-text-wrapper {
-  /**
-   * This causes the label to take up
-   * the entire height of its container
-   * while still keeping the text centered.
-   */
-  display: flex;
+  @include padding(var(--padding-top), 0px, var(--padding-bottom), 0px);
 
   align-items: center;
 

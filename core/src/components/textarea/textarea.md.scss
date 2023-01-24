@@ -9,6 +9,10 @@
 :host {
   --border-width: 1px;
   --border-color: #{$item-md-border-color};
+  --padding-top: 18px;
+  --padding-end: 0px;
+  --padding-bottom: 0px;
+  --padding-start: 0px;
 
   font-size: $textarea-md-font-size;
 }
@@ -43,12 +47,13 @@
 }
 
 /**
- * The label should stay fixed to the top
- * of the textarea container even as the
- * textarea resizes.
+ * Floating and stacked labels should not
+ * push the label down since it it
+ * sits on top of the textarea.
  */
-.label-text-wrapper {
-  max-height: 56px;
+:host(.textarea-label-placement-floating),
+:host(.textarea-label-placement-stacked) {
+  --padding-top: 0px;
 }
 
 // Textarea Shape Rounded

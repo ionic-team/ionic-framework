@@ -7,6 +7,10 @@
 :host {
   --border-width: #{$hairlines-width};
   --border-color: #{$item-ios-border-color};
+  --padding-top: #{$textarea-ios-padding-top};
+  --padding-end: 0px;
+  --padding-bottom: 0px;
+  --padding-start: 0px;
 
   font-size: $textarea-ios-font-size;
 }
@@ -32,26 +36,17 @@
   min-height: 44px;
 }
 
-.label-text-wrapper {
-  max-height: 56px;
-}
-
 /**
  * Since the label sits on top of the element,
  * the component needs to be taller otherwise the
  * label will appear too close to the textarea text.
+ * Also, floating and stacked labels should not
+ * push the label down since it it
+ * sits on top of the textarea.
  */
 :host(.textarea-label-placement-floating),
 :host(.textarea-label-placement-stacked) {
-  min-height: 56px;
-}
+  --padding-top: 0px;
 
-/**
- * The label should stay fixed to the top
- * of the textarea container even as the
- * textarea resizes.
- */
-:host(.textarea-label-placement-floating) .label-text-wrapper,
-:host(.textarea-label-placement-stacked) .label-text-wrapper {
-  max-height: 56px;
+  min-height: 56px;
 }
