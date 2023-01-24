@@ -449,7 +449,14 @@ export class Popover implements ComponentInterface, PopoverInterface {
     }
 
     const { inline, delegate } = this.getDelegate(true);
-    this.usersElement = await attachComponent(delegate, this.el, this.component, ['popover-viewport'], this.componentProps, inline);
+    this.usersElement = await attachComponent(
+      delegate,
+      this.el,
+      this.component,
+      ['popover-viewport'],
+      this.componentProps,
+      inline
+    );
     await deepReady(this.usersElement);
 
     if (!this.keyboardEvents) {
