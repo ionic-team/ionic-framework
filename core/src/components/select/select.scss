@@ -48,13 +48,15 @@
   display: block;
   position: relative;
 
-  width: 100%;
-
   font-family: $font-family-base;
 
   cursor: pointer;
 
   z-index: $z-index-item-input;
+}
+
+:host(:not(.legacy-select)) {
+  width: 100%;
 }
 
 :host(.ion-color) {
