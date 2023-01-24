@@ -48,6 +48,8 @@
   display: block;
   position: relative;
 
+  width: 100%;
+
   font-family: $font-family-base;
 
   cursor: pointer;
@@ -75,11 +77,6 @@
   position: static;
 
   max-width: 45%;
-}
-
-:host(.in-item:not(.legacy-select)) {
-  width: 100%;
-  height: 100%;
 }
 
 :host(.select-disabled) {
