@@ -21,7 +21,6 @@ export const VueDelegate = (
     componentProps: any = {},
     classes?: string[]
   ) => {
-
     const div = document.createElement("div");
     classes && div.classList.add(...classes);
     parentElement.appendChild(div);
