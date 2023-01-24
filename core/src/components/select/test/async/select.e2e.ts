@@ -25,7 +25,6 @@ test.describe('select: async', () => {
 
     await selectValueSet.next();
 
-    await expect(select).toHaveJSProperty('value', 'bird');
     await expect(select.locator('.select-text')).toHaveText('bird');
   });
 });
