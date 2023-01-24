@@ -273,6 +273,13 @@
   height: 100%;
 }
 
+// Textarea Native
+// ----------------------------------------------------------------
+
+:host(.has-focus) textarea {
+  caret-color: var(--highlight-color);
+}
+
 .native-wrapper textarea {
   @include padding(var(--padding-top), 0px, var(--padding-bottom), 0px);
 }
