@@ -523,6 +523,11 @@
   align-items: start;
 }
 
+:host(.textarea-label-placement-stacked),
+:host(.textarea-label-placement-floating) {
+  --padding-bottom: 8px;
+}
+
 /**
  * Ensures that the label animates
  * up and to the left in LTR or
@@ -540,7 +545,9 @@
  * overlap the label.
  */
 :host(.textarea-label-placement-stacked) textarea,
-:host(.textarea-label-placement-floating) textarea {
+:host(.textarea-label-placement-floating) textarea,
+:host(.textarea-label-placement-stacked[auto-grow]) .native-wrapper::after,
+:host(.textarea-label-placement-floating[auto-grow]) .native-wrapper::after {
   @include margin(8px, 0px, 0px, 0px);
 }
 
