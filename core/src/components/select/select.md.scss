@@ -11,6 +11,7 @@
   --border-color: #{$item-md-border-color};
 }
 
+// TODO FW-3194 - Remove this
 :host(.legacy-select) {
   --padding-top: #{$select-md-padding-top};
   --padding-end: #{$select-md-padding-end};
@@ -18,6 +19,7 @@
   --padding-start: #{$select-md-padding-start};
 }
 
+// TODO FW-3194 - Move this to host
 :host(:not(.legacy-select)) {
   min-height: 56px;
 }
