@@ -2196,6 +2196,7 @@ export namespace Components {
         "value"?: string | number;
     }
     interface IonPickerInternal {
+        "exitInputMode": () => Promise<void>;
         /**
           * The mode determines which platform styles to use.
          */
@@ -2370,6 +2371,18 @@ export namespace Components {
           * If `true`, the user cannot interact with the radio.
          */
         "disabled": boolean;
+        /**
+          * How to pack the label and radio within a line. `'start'`: The label and radio will appear on the left in LTR and on the right in RTL. `'end'`: The label and radio will appear on the right in LTR and on the left in RTL. `'space-between'`: The label and radio will appear on opposite ends of the line with space between the two elements.
+         */
+        "justify": 'start' | 'end' | 'space-between';
+        /**
+          * Where to place the label relative to the radio. `'start'`: The label will appear to the left of the radio in LTR and to the right in RTL. `'end'`: The label will appear to the right of the radio in LTR and to the left in RTL. `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+         */
+        "labelPlacement": 'start' | 'end' | 'fixed';
+        /**
+          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the default slot that contains the label text. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
+         */
+        "legacy"?: boolean;
         /**
           * The mode determines which platform styles to use.
          */
@@ -2813,6 +2826,7 @@ export namespace Components {
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
+        "setFocus": () => Promise<void>;
         /**
           * The type of the button.
          */
@@ -2832,6 +2846,10 @@ export namespace Components {
          */
         "cancelText": string;
         /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).  This property is only available when using the modern select syntax.
+         */
+        "color"?: Color;
+        /**
           * A property name or function used to compare object values
          */
         "compareWith"?: string | SelectCompareFn | null;
@@ -2840,6 +2858,10 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * The fill for the item. If `'solid'` the item will have a background. If `'outline'` the item will be transparent with a border. Only available in `md` mode.
+         */
+        "fill"?: 'outline' | 'solid';
+        /**
           * The interface the select should use: `action-sheet`, `popover` or `alert`.
          */
         "interface": SelectInterface;
@@ -2847,6 +2869,22 @@ export namespace Components {
           * Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [ion-alert docs](./alert), the [ion-action-sheet docs](./action-sheet) and the [ion-popover docs](./popover) for the create options for each interface.  Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert` interface.
          */
         "interfaceOptions": any;
+        /**
+          * How to pack the label and select within a line. `justify` does not apply when the label and select are on different lines when `labelPlacement` is set to `'floating'` or `'stacked'`. `'start'`: The label and select will appear on the left in LTR and on the right in RTL. `'end'`: The label and select will appear on the right in LTR and on the left in RTL. `'space-between'`: The label and select will appear on opposite ends of the line with space between the two elements.
+         */
+        "justify": 'start' | 'end' | 'space-between';
+        /**
+          * The visible label associated with the select.
+         */
+        "label"?: string;
+        /**
+          * Where to place the label relative to the select. `'start'`: The label will appear to the left of the select in LTR and to the right in RTL. `'end'`: The label will appear to the right of the select in LTR and to the left in RTL. `'floating'`: The label will appear smaller and above the select when the select is focused or it has a value. Otherwise it will appear on top of the select. `'stacked'`: The label will appear smaller and above the select regardless even when the select is blurred or has no value. `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("..."). When using `'floating'` or `'stacked'` we recommend initializing the select with either a `value` or a `placeholder`.
+         */
+        "labelPlacement"?: 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
+        /**
+          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the `label` property. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
+         */
+        "legacy"?: boolean;
         /**
           * The mode determines which platform styles to use.
          */
@@ -2876,6 +2914,10 @@ export namespace Components {
           * The text to display instead of the selected option's value.
          */
         "selectedText"?: string | null;
+        /**
+          * The shape of the select. If "round" it will have an increased border radius.
+         */
+        "shape"?: 'round';
         /**
           * useBase determines if base components is enabled.
          */
@@ -6583,6 +6625,18 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * How to pack the label and radio within a line. `'start'`: The label and radio will appear on the left in LTR and on the right in RTL. `'end'`: The label and radio will appear on the right in LTR and on the left in RTL. `'space-between'`: The label and radio will appear on opposite ends of the line with space between the two elements.
+         */
+        "justify"?: 'start' | 'end' | 'space-between';
+        /**
+          * Where to place the label relative to the radio. `'start'`: The label will appear to the left of the radio in LTR and to the right in RTL. `'end'`: The label will appear to the right of the radio in LTR and to the left in RTL. `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+         */
+        "labelPlacement"?: 'start' | 'end' | 'fixed';
+        /**
+          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the default slot that contains the label text. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
+         */
+        "legacy"?: boolean;
+        /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
@@ -7118,6 +7172,10 @@ declare namespace LocalJSX {
          */
         "cancelText"?: string;
         /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).  This property is only available when using the modern select syntax.
+         */
+        "color"?: Color;
+        /**
           * A property name or function used to compare object values
          */
         "compareWith"?: string | SelectCompareFn | null;
@@ -7126,6 +7184,10 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * The fill for the item. If `'solid'` the item will have a background. If `'outline'` the item will be transparent with a border. Only available in `md` mode.
+         */
+        "fill"?: 'outline' | 'solid';
+        /**
           * The interface the select should use: `action-sheet`, `popover` or `alert`.
          */
         "interface"?: SelectInterface;
@@ -7133,6 +7195,22 @@ declare namespace LocalJSX {
           * Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [ion-alert docs](./alert), the [ion-action-sheet docs](./action-sheet) and the [ion-popover docs](./popover) for the create options for each interface.  Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert` interface.
          */
         "interfaceOptions"?: any;
+        /**
+          * How to pack the label and select within a line. `justify` does not apply when the label and select are on different lines when `labelPlacement` is set to `'floating'` or `'stacked'`. `'start'`: The label and select will appear on the left in LTR and on the right in RTL. `'end'`: The label and select will appear on the right in LTR and on the left in RTL. `'space-between'`: The label and select will appear on opposite ends of the line with space between the two elements.
+         */
+        "justify"?: 'start' | 'end' | 'space-between';
+        /**
+          * The visible label associated with the select.
+         */
+        "label"?: string;
+        /**
+          * Where to place the label relative to the select. `'start'`: The label will appear to the left of the select in LTR and to the right in RTL. `'end'`: The label will appear to the right of the select in LTR and to the left in RTL. `'floating'`: The label will appear smaller and above the select when the select is focused or it has a value. Otherwise it will appear on top of the select. `'stacked'`: The label will appear smaller and above the select regardless even when the select is blurred or has no value. `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("..."). When using `'floating'` or `'stacked'` we recommend initializing the select with either a `value` or a `placeholder`.
+         */
+        "labelPlacement"?: 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
+        /**
+          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the `label` property. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
+         */
+        "legacy"?: boolean;
         /**
           * The mode determines which platform styles to use.
          */
@@ -7181,6 +7259,10 @@ declare namespace LocalJSX {
           * The text to display instead of the selected option's value.
          */
         "selectedText"?: string | null;
+        /**
+          * The shape of the select. If "round" it will have an increased border radius.
+         */
+        "shape"?: 'round';
         /**
           * useBase determines if base components is enabled.
          */

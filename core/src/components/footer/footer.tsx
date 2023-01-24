@@ -22,7 +22,7 @@ import { handleFooterFade } from './footer.utils';
 })
 export class Footer implements ComponentInterface {
   private scrollEl?: HTMLElement;
-  private contentScrollCallback: any;
+  private contentScrollCallback?: () => void;
   private keyboardCtrl: KeyboardController | null = null;
 
   @State() private keyboardVisible = false;

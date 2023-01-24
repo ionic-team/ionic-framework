@@ -81,7 +81,7 @@ test.describe('input: clear button', () => {
    */
   test('should keep the input focused when the clear button is pressed', async ({ page }) => {
     await page.setContent(`
-      <ion-input label="my label" value="abc" clear-input="true"></ion-searchbar>
+      <ion-input label="my label" value="abc" clear-input="true"></ion-input>
     `);
 
     const input = page.locator('ion-input');
@@ -95,5 +95,18 @@ test.describe('input: clear button', () => {
     await page.waitForChanges();
 
     await expect(nativeInput).toBeFocused();
+  });
+
+  test('should inherit color when used in item with color property', async ({ page }) => {
+    await page.setContent(`
+      <ion-item color="primary">
+        <ion-input aria-label="my label" value="Text" clear-input="true"></ion-input>
+      </ion-item>
+    `);
+
+    const item = page.locator('ion-item');
+    expect(await item.screenshot()).toMatchSnapshot(
+      `input-with-clear-button-item-color-${page.getSnapshotSettings()}.png`
+    );
   });
 });

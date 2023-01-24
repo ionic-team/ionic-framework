@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Listen, Host, h } from '@stencil/core';
+import { Component, Element, Event, Listen, Method, Host, h } from '@stencil/core';
 
 import { getElementRoot } from '../../utils/helpers';
 
@@ -26,7 +26,7 @@ export class PickerInternal implements ComponentInterface {
   private highlightEl?: HTMLElement;
   private actionOnClick?: () => void;
   private destroyKeypressListener?: () => void;
-  private singleColumnSearchTimeout?: any;
+  private singleColumnSearchTimeout?: ReturnType<typeof setTimeout>;
 
   @Element() el!: HTMLIonPickerInternalElement;
 
@@ -78,6 +78,7 @@ export class PickerInternal implements ComponentInterface {
    * that focused means we are still in input mode.
    */
   private onFocusOut = (ev: any) => {
+    // TODO(FW-2832): type
     const { relatedTarget } = ev;
 
     if (!relatedTarget || (relatedTarget.tagName !== 'ION-PICKER-COLUMN-INTERNAL' && relatedTarget !== this.inputEl)) {
@@ -91,6 +92,7 @@ export class PickerInternal implements ComponentInterface {
    * whether to enter/exit input mode.
    */
   private onFocusIn = (ev: any) => {
+    // TODO(FW-2832): type
     const { target } = ev;
 
     /**
@@ -275,7 +277,14 @@ export class PickerInternal implements ComponentInterface {
     this.emitInputModeChange();
   };
 
-  private exitInputMode = () => {
+  /**
+   * @internal
+   * Exits text entry mode for the picker
+   * This method blurs the hidden input
+   * and cause the keyboard to dismiss.
+   */
+  @Method()
+  async exitInputMode() {
     const { inputEl, useInputMode } = this;
     if (!useInputMode || !inputEl) {
       return;
@@ -292,7 +301,7 @@ export class PickerInternal implements ComponentInterface {
     }
 
     this.emitInputModeChange();
-  };
+  }
 
   private onKeyPress = (ev: KeyboardEvent) => {
     const { inputEl } = this;

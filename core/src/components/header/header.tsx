@@ -31,8 +31,8 @@ import {
 })
 export class Header implements ComponentInterface {
   private scrollEl?: HTMLElement;
-  private contentScrollCallback?: any;
-  private intersectionObserver?: any;
+  private contentScrollCallback?: () => void;
+  private intersectionObserver?: IntersectionObserver;
   private collapsibleMainHeader?: HTMLElement;
   private inheritedAttributes: Attributes = {};
 
@@ -155,9 +155,9 @@ export class Header implements ComponentInterface {
     this.scrollEl = await getScrollElement(contentEl);
 
     const headers = pageEl.querySelectorAll('ion-header');
-    this.collapsibleMainHeader = Array.from(headers).find((header: any) => header.collapse !== 'condense') as
-      | HTMLElement
-      | undefined;
+    this.collapsibleMainHeader = Array.from(headers).find(
+      (header: HTMLIonHeaderElement) => header.collapse !== 'condense'
+    ) as HTMLElement | undefined;
 
     if (!this.collapsibleMainHeader) {
       return;
@@ -179,7 +179,7 @@ export class Header implements ComponentInterface {
      * as well as progressively showing/hiding the main header
      * border as the top-most toolbar collapses or expands.
      */
-    const toolbarIntersection = (ev: any) => {
+    const toolbarIntersection = (ev: IntersectionObserverEntry[]) => {
       handleToolbarIntersection(ev, mainHeaderIndex, scrollHeaderIndex, this.scrollEl!);
     };
 

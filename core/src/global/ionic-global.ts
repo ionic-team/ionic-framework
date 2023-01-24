@@ -6,6 +6,8 @@ import { isPlatform, setupPlatforms } from '../utils/platform';
 import { isBaseComponent, isIonicElement, resetBaseComponentsCache } from './base-components';
 import { config, configFromSession, configFromURL, saveConfig, validateConfig } from './config';
 
+// TODO(FW-2832): types
+
 declare const Context: any;
 
 let defaultMode: Mode;

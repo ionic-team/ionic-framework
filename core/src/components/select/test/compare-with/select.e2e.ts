@@ -31,7 +31,7 @@ test.describe('select: compare-with', () => {
     });
 
     await page.setContent(`
-      <ion-select value="3" placeholder="Please select"></ion-select>
+      <ion-select label="Select a value" value="3" placeholder="Please select"></ion-select>
 
       <script>
         const data = [

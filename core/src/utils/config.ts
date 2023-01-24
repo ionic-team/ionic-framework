@@ -235,6 +235,7 @@ export interface IonicConfig {
   hideCaretOnScroll?: boolean;
 
   // INTERNAL configs
+  // TODO(FW-2832): types
   persistConfig?: boolean;
   _forceStatusbarPadding?: boolean;
   _testing?: boolean;

@@ -1519,13 +1519,13 @@ export declare interface IonRadio extends Components.IonRadio {
 
 @ProxyCmp({
   defineCustomElementFn: undefined,
-  inputs: ['color', 'disabled', 'mode', 'name', 'useBase', 'value']
+  inputs: ['color', 'disabled', 'justify', 'labelPlacement', 'legacy', 'mode', 'name', 'useBase', 'value']
 })
 @Component({
   selector: 'ion-radio',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['color', 'disabled', 'mode', 'name', 'useBase', 'value']
+  inputs: ['color', 'disabled', 'justify', 'labelPlacement', 'legacy', 'mode', 'name', 'useBase', 'value']
 })
 export class IonRadio {
   protected el: HTMLElement;
@@ -1909,14 +1909,14 @@ export declare interface IonSelect extends Components.IonSelect {
 
 @ProxyCmp({
   defineCustomElementFn: undefined,
-  inputs: ['cancelText', 'compareWith', 'disabled', 'interface', 'interfaceOptions', 'mode', 'multiple', 'name', 'okText', 'placeholder', 'selectedText', 'useBase', 'value'],
+  inputs: ['cancelText', 'color', 'compareWith', 'disabled', 'fill', 'interface', 'interfaceOptions', 'justify', 'label', 'labelPlacement', 'legacy', 'mode', 'multiple', 'name', 'okText', 'placeholder', 'selectedText', 'shape', 'useBase', 'value'],
   methods: ['open']
 })
 @Component({
   selector: 'ion-select',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['cancelText', 'compareWith', 'disabled', 'interface', 'interfaceOptions', 'mode', 'multiple', 'name', 'okText', 'placeholder', 'selectedText', 'useBase', 'value']
+  inputs: ['cancelText', 'color', 'compareWith', 'disabled', 'fill', 'interface', 'interfaceOptions', 'justify', 'label', 'labelPlacement', 'legacy', 'mode', 'multiple', 'name', 'okText', 'placeholder', 'selectedText', 'shape', 'useBase', 'value']
 })
 export class IonSelect {
   protected el: HTMLElement;

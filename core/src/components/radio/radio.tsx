@@ -3,12 +3,18 @@ import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '
 
 import { getIonStylesheet } from '../../global/ionic-global';
 import type { Color, StyleEventDetail } from '../../interface';
-import { addEventListener, getAriaLabel, removeEventListener } from '../../utils/helpers';
+import type { LegacyFormController } from '../../utils/forms';
+import { createLegacyFormController } from '../../utils/forms';
+import type { Attributes } from '../../utils/helpers';
+import { addEventListener, getAriaLabel, inheritAriaAttributes, removeEventListener } from '../../utils/helpers';
+import { printIonWarning } from '../../utils/logging';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
  * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
+ * @slot - The label text to associate with the radio. Use the "labelPlacement" property to control where the label is placed relative to the radio.
  *
  * @part container - The container for the radio mark.
  * @part mark - The checkmark or dot used to indicate the checked state.
@@ -26,6 +32,11 @@ export class Radio implements ComponentInterface {
   private inputId = `ion-rb-${radioButtonIds++}`;
   private radioGroup: HTMLIonRadioGroupElement | null = null;
   private nativeInput!: HTMLInputElement;
+  private legacyFormController!: LegacyFormController;
+  private inheritedAttributes: Attributes = {};
+
+  // This flag ensures we log the deprecation warning at most once.
+  private hasLoggedDeprecationWarning = false;
 
   @Element() el!: HTMLIonRadioElement;
 
@@ -63,6 +74,37 @@ export class Radio implements ComponentInterface {
   @Prop() value?: any | null;
 
   /**
+   * Where to place the label relative to the radio.
+   * `'start'`: The label will appear to the left of the radio in LTR and to the right in RTL.
+   * `'end'`: The label will appear to the right of the radio in LTR and to the left in RTL.
+   * `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+   */
+  @Prop() labelPlacement: 'start' | 'end' | 'fixed' = 'start';
+
+  // TODO FW-3125: Remove the legacy property and implementation
+  /**
+   * Set the `legacy` property to `true` to forcibly use the legacy form control markup.
+   * Ionic will only opt components in to the modern form markup when they are
+   * using either the `aria-label` attribute or the default slot that contains
+   * the label text. As a result, the `legacy` property should only be used as
+   * an escape hatch when you want to avoid this automatic opt-in behavior.
+   * Note that this property will be removed in an upcoming major release
+   * of Ionic, and all form components will be opted-in to using the modern form markup.
+   */
+  @Prop() legacy?: boolean;
+
+  /**
+   * How to pack the label and radio within a line.
+   * `'start'`: The label and radio will appear on the left in LTR and
+   * on the right in RTL.
+   * `'end'`: The label and radio will appear on the right in LTR and
+   * on the left in RTL.
+   * `'space-between'`: The label and radio will appear on opposite
+   * ends of the line with space between the two elements.
+   */
+  @Prop() justify: 'start' | 'end' | 'space-between' = 'space-between';
+
+  /**
    * Emitted when the styles change.
    * @internal
    */
@@ -81,6 +123,7 @@ export class Radio implements ComponentInterface {
   /** @internal */
   @Method()
   async setFocus(ev: any) {
+    // TODO(FW-2832): type (using Event triggers a build error due to conflict with Stencil Event import)
     ev.stopPropagation();
     ev.preventDefault();
 
@@ -94,6 +137,7 @@ export class Radio implements ComponentInterface {
   }
 
   connectedCallback() {
+    this.legacyFormController = createLegacyFormController(this.el);
     if (this.value === undefined) {
       this.value = this.inputId;
     }
@@ -114,16 +158,24 @@ export class Radio implements ComponentInterface {
 
   componentWillLoad() {
     this.emitStyle();
+
+    if (!this.legacyFormController.hasLegacyControl()) {
+      this.inheritedAttributes = {
+        ...inheritAriaAttributes(this.el),
+      };
+    }
   }
 
   @Watch('color')
   @Watch('checked')
   @Watch('disabled')
   emitStyle() {
-    this.ionStyle.emit({
-      'radio-checked': this.checked,
-      'interactive-disabled': this.disabled,
-    });
+    if (this.legacyFormController.hasLegacyControl()) {
+      this.ionStyle.emit({
+        'radio-checked': this.checked,
+        'interactive-disabled': this.disabled,
+      });
+    }
   }
 
   private updateState = () => {
@@ -144,7 +196,89 @@ export class Radio implements ComponentInterface {
     this.ionBlur.emit();
   };
 
+  private get hasLabel() {
+    return this.el.textContent !== '';
+  }
+
+  private renderRadioControl() {
+    return (
+      <div class="radio-icon" part="container">
+        <div class="radio-inner" part="mark" />
+        <div class="radio-ripple"></div>
+      </div>
+    );
+  }
+
   render() {
+    const { legacyFormController } = this;
+
+    return legacyFormController.hasLegacyControl() ? this.renderLegacyRadio() : this.renderRadio();
+  }
+
+  private renderRadio() {
+    const { checked, disabled, inputId, color, el, justify, labelPlacement, inheritedAttributes, hasLabel } = this;
+    const mode = getIonMode(this);
+    const inItem = hostContext('ion-item', el);
+
+    return (
+      <Host
+        onClick={this.onClick}
+        class={createColorClasses(color, {
+          [mode]: true,
+          'in-item': inItem,
+          'radio-checked': checked,
+          'radio-disabled': disabled,
+          [`radio-justify-${justify}`]: true,
+          [`radio-label-placement-${labelPlacement}`]: true,
+          // Focus and active styling should not apply when the radio is in an item
+          'ion-activatable': !inItem,
+          'ion-focusable': !inItem,
+        })}
+      >
+        <label class="radio-wrapper">
+          <div
+            class={{
+              'label-text-wrapper': true,
+              'label-text-wrapper-hidden': !hasLabel,
+            }}
+          >
+            <slot></slot>
+          </div>
+          <div class="native-wrapper">{this.renderRadioControl()}</div>
+          <input
+            type="radio"
+            checked={checked}
+            disabled={disabled}
+            id={inputId}
+            ref={(nativeEl) => (this.nativeInput = nativeEl as HTMLInputElement)}
+            {...inheritedAttributes}
+          />
+        </label>
+      </Host>
+    );
+  }
+
+  private renderLegacyRadio() {
+    if (!this.hasLoggedDeprecationWarning) {
+      printIonWarning(
+        `Using ion-radio with an ion-label has been deprecated. To migrate, remove the ion-label and pass your label directly into ion-radio instead.
+Example: <ion-radio>Option Label:</ion-radio>
+For radios that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the radio.`,
+        this.el
+      );
+
+      if (this.legacy) {
+        printIonWarning(
+          `ion-radio is being used with the "legacy" property enabled which will forcibly enable the legacy form markup. This property will be removed in an upcoming major release of Ionic where this form control will use the modern form markup.
+
+Developers can dismiss this warning by removing their usage of the "legacy" property and using the new radio syntax.`,
+          this.el
+        );
+      }
+
+      this.hasLoggedDeprecationWarning = true;
+    }
+
     const { inputId, disabled, checked, color, el, buttonTabindex } = this;
     const mode = getIonStylesheet(this);
     const { label, labelId, labelText } = getAriaLabel(el, inputId);
@@ -165,12 +299,10 @@ export class Radio implements ComponentInterface {
           interactive: true,
           'radio-checked': checked,
           'radio-disabled': disabled,
+          'legacy-radio': true,
         })}
       >
-        <div class="radio-icon" part="container">
-          <div class="radio-inner" part="mark" />
-          <div class="radio-ripple"></div>
-        </div>
+        {this.renderRadioControl()}
         <label htmlFor={inputId}>{labelText}</label>
         <input
           type="radio"

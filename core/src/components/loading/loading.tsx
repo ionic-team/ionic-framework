@@ -29,6 +29,8 @@ import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
 
+// TODO(FW-2832): types
+
 /**
  * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -45,7 +47,7 @@ import { mdLeaveAnimation } from './animations/md.leave';
 export class Loading implements ComponentInterface, OverlayInterface {
   private readonly delegateController = createDelegateController(this);
   private readonly triggerController = createTriggerController();
-  private durationTimeout: any;
+  private durationTimeout?: ReturnType<typeof setTimeout>;
   private currentTransition?: Promise<any>;
 
   presented = false;
@@ -301,10 +303,19 @@ export class Loading implements ComponentInterface, OverlayInterface {
   };
 
   render() {
-    const { message, spinner, htmlAttributes } = this;
+    const { message, spinner, htmlAttributes, overlayIndex } = this;
     const mode = getIonStylesheet(this);
+    const msgId = `loading-${overlayIndex}-msg`;
+    /**
+     * If the message is defined, use that as the label.
+     * Otherwise, don't set aria-labelledby.
+     */
+    const ariaLabelledBy = message !== undefined ? msgId : null;
     return (
       <Host
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={ariaLabelledBy}
         tabindex="-1"
         {...(htmlAttributes as any)}
         style={{
@@ -322,14 +333,16 @@ export class Loading implements ComponentInterface, OverlayInterface {
 
         <div tabindex="0"></div>
 
-        <div class="loading-wrapper ion-overlay-wrapper" role="dialog">
+        <div class="loading-wrapper ion-overlay-wrapper">
           {spinner && (
             <div class="loading-spinner">
               <ion-spinner name={spinner} aria-hidden="true" />
             </div>
           )}
 
-          {message !== undefined && <div class="loading-content" innerHTML={sanitizeDOMString(message)}></div>}
+          {message !== undefined && (
+            <div class="loading-content" id={msgId} innerHTML={sanitizeDOMString(message)}></div>
+          )}
         </div>
 
         <div tabindex="0"></div>

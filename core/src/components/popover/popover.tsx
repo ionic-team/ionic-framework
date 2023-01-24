@@ -1,5 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import { printIonWarning } from '@utils/logging';
 
 import { getIonStylesheet, getIonBehavior } from '../../global/ionic-global';
 import type {
@@ -27,6 +28,8 @@ import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
 import { configureDismissInteraction, configureKeyboardInteraction, configureTriggerInteraction } from './utils';
+
+// TODO(FW-2832): types
 
 /**
  * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
@@ -621,8 +624,16 @@ export class Popover implements ComponentInterface, PopoverInterface {
       destroyTriggerInteraction();
     }
 
+    if (trigger === undefined) {
+      return;
+    }
+
     const triggerEl = (this.triggerEl = trigger !== undefined ? document.getElementById(trigger) : null);
     if (!triggerEl) {
+      printIonWarning(
+        `A trigger element with the ID "${trigger}" was not found in the DOM. The trigger element must be in the DOM when the "trigger" property is set on ion-popover.`,
+        this.el
+      );
       return;
     }
 

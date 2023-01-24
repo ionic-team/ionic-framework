@@ -40,7 +40,7 @@ export const createHeaderIndex = (headerEl: HTMLElement | undefined): HeaderInde
 
   return {
     el: headerEl,
-    toolbars: Array.from(toolbars).map((toolbar: any) => {
+    toolbars: Array.from(toolbars).map((toolbar: HTMLIonToolbarElement) => {
       const ionTitleEl = toolbar.querySelector('ion-title');
       return {
         el: toolbar,
@@ -86,7 +86,11 @@ export const setToolbarBackgroundOpacity = (headerEl: HTMLIonHeaderElement, opac
   }
 };
 
-const handleToolbarBorderIntersection = (ev: any, mainHeaderIndex: HeaderIndex, scrollTop: number) => {
+const handleToolbarBorderIntersection = (
+  ev: IntersectionObserverEntry[],
+  mainHeaderIndex: HeaderIndex,
+  scrollTop: number
+) => {
   if (!ev[0].isIntersecting) {
     return;
   }
@@ -113,7 +117,7 @@ const handleToolbarBorderIntersection = (ev: any, mainHeaderIndex: HeaderIndex, 
  * hide the primary toolbar content and show the scrollable toolbar content
  */
 export const handleToolbarIntersection = (
-  ev: any,
+  ev: any, // TODO(FW-2832): type (IntersectionObserverEntry[] triggers errors which should be sorted)
   mainHeaderIndex: HeaderIndex,
   scrollHeaderIndex: HeaderIndex,
   scrollEl: HTMLElement

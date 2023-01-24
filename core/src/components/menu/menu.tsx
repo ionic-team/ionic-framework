@@ -35,7 +35,7 @@ const focusableQueryString =
   shadow: true,
 })
 export class Menu implements ComponentInterface, MenuI {
-  private animation?: any;
+  private animation?: any; // TODO(FW-2832): type
   private lastOnEnd = 0;
   private gesture?: Gesture;
   private blocker = GESTURE_CONTROLLER.createBlocker({ disableScroll: true });
@@ -261,6 +261,7 @@ export class Menu implements ComponentInterface, MenuI {
 
   @Listen('click', { capture: true })
   onBackdropClick(ev: any) {
+    // TODO(FW-2832): type (CustomEvent triggers errors which should be sorted)
     if (this._isOpen && this.lastOnEnd < ev.timeStamp - 100) {
       const shouldClose = ev.composedPath ? !ev.composedPath().includes(this.menuInnerEl) : false;
 

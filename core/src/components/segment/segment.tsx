@@ -165,7 +165,6 @@ export class Segment implements ComponentInterface {
 
   async componentDidLoad() {
     this.setCheckedClasses();
-    this.ensureFocusable();
 
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.el,
@@ -539,19 +538,7 @@ export class Segment implements ComponentInterface {
         this.emitValueChange();
       }
     }
-    current.focus();
-  }
-
-  /* By default, focus is delegated to the selected `ion-segment-button`.
-   * If there is no selected button, focus will instead pass to the first child button.
-   **/
-  private ensureFocusable() {
-    if (this.value !== undefined) {
-      return;
-    }
-
-    const buttons = this.getButtons();
-    buttons[0]?.setAttribute('tabindex', '0');
+    current.setFocus();
   }
 
   render() {

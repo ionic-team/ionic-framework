@@ -3,6 +3,8 @@ import { Build, Component, Element, Event, Host, Prop, State, Watch, h } from '@
 
 import { getIonStylesheet } from '../../global/ionic-global';
 
+// TODO(FW-2832): types
+
 const SPLIT_PANE_MAIN = 'split-pane-main';
 const SPLIT_PANE_SIDE = 'split-pane-side';
 const QUERY: { [key: string]: string } = {

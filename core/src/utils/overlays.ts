@@ -1,3 +1,5 @@
+import { printIonWarning } from '@utils/logging';
+
 import { config } from '../global/config';
 import { getIonBehavior } from '../global/ionic-global';
 import type {
@@ -737,6 +739,10 @@ export const createTriggerController = () => {
 
     const triggerEl = trigger !== undefined ? document.getElementById(trigger) : null;
     if (!triggerEl) {
+      printIonWarning(
+        `A trigger element with the ID "${trigger}" was not found in the DOM. The trigger element must be in the DOM when the "trigger" property is set on an overlay component.`,
+        el
+      );
       return;
     }
 

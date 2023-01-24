@@ -1,10 +1,11 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Element, Host, Prop, State, forceUpdate, h } from '@stencil/core';
+import { Component, Element, Host, Prop, Method, State, forceUpdate, h } from '@stencil/core';
 
 import { getIonStylesheet } from '../../global/ionic-global';
 import type { SegmentButtonLayout } from '../../interface';
 import type { ButtonInterface } from '../../utils/element-interface';
-import { addEventListener, removeEventListener } from '../../utils/helpers';
+import type { Attributes } from '../../utils/helpers';
+import { addEventListener, removeEventListener, inheritAttributes } from '../../utils/helpers';
 import { hostContext } from '../../utils/theme';
 
 let ids = 0;
@@ -28,6 +29,8 @@ let ids = 0;
 })
 export class SegmentButton implements ComponentInterface, ButtonInterface {
   private segmentEl: HTMLIonSegmentElement | null = null;
+  private nativeEl: HTMLButtonElement | undefined;
+  private inheritedAttributes: Attributes = {};
 
   @Element() el!: HTMLElement;
 
@@ -71,6 +74,12 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
     }
   }
 
+  componentWillLoad() {
+    this.inheritedAttributes = {
+      ...inheritAttributes(this.el, ['aria-label']),
+    };
+  }
+
   private get hasLabel() {
     return !!this.el.querySelector('ion-label');
   }
@@ -89,20 +98,26 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
     }
   };
 
-  private get tabIndex() {
-    return this.checked && !this.disabled ? 0 : -1;
+  /**
+   * @internal
+   * Focuses the native <button> element
+   * inside of ion-segment-button.
+   */
+  @Method()
+  async setFocus() {
+    const { nativeEl } = this;
+
+    if (nativeEl !== undefined) {
+      nativeEl.focus();
+    }
   }
 
   render() {
-    const { checked, type, disabled, hasIcon, hasLabel, layout, segmentEl, tabIndex } = this;
+    const { checked, type, disabled, hasIcon, hasLabel, layout, segmentEl } = this;
     const mode = getIonStylesheet(this);
     const hasSegmentColor = () => segmentEl?.color !== undefined;
     return (
       <Host
-        role="tab"
-        aria-selected={checked ? 'true' : 'false'}
-        aria-disabled={disabled ? 'true' : null}
-        tabIndex={tabIndex}
         class={{
           [mode]: true,
           'in-toolbar': hostContext('ion-toolbar', this.el),
@@ -121,7 +136,16 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
           'ion-focusable': true,
         }}
       >
-        <button type={type} tabIndex={-1} class="button-native" part="native" disabled={disabled}>
+        <button
+          aria-selected={checked ? 'true' : 'false'}
+          role="tab"
+          ref={(el) => (this.nativeEl = el)}
+          type={type}
+          class="button-native"
+          part="native"
+          disabled={disabled}
+          {...this.inheritedAttributes}
+        >
           <span class="button-inner">
             <slot></slot>
           </span>

@@ -1,6 +1,8 @@
 import type { IonicConfig } from '../interface';
 import { printIonWarning } from '../utils/logging';
 
+// TODO(FW-2832): types
+
 export class Config {
   private m = new Map<keyof IonicConfig, any>();
 

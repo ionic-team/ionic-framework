@@ -12,6 +12,8 @@ import { raf } from '../helpers';
 const iosTransitionAnimation = () => import('./ios.transition');
 const mdTransitionAnimation = () => import('./md.transition');
 
+// TODO(FW-2832): types
+
 export const transition = (opts: TransitionOptions): Promise<TransitionResult> => {
   return new Promise((resolve, reject) => {
     writeTask(() => {

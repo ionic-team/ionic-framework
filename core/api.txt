@@ -217,8 +217,6 @@ ion-breadcrumbs,prop,maxItems,number | undefined,undefined,false,false
 ion-breadcrumbs,prop,mode,"ios" | "md",undefined,false,false
 ion-breadcrumbs,prop,useBase,true | false,undefined,false,false
 ion-breadcrumbs,event,ionCollapsedClick,BreadcrumbCollapsedClickEventDetail,true
-ion-breadcrumbs,css-prop,--background
-ion-breadcrumbs,css-prop,--color
 
 ion-button,shadow
 ion-button,prop,buttonType,string,'button',false,false
@@ -1053,6 +1051,9 @@ ion-progress-bar,part,track
 ion-radio,shadow
 ion-radio,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-radio,prop,disabled,boolean,false,false,false
+ion-radio,prop,justify,"end" | "space-between" | "start",'space-between',false,false
+ion-radio,prop,labelPlacement,"end" | "fixed" | "start",'start',false,false
+ion-radio,prop,legacy,boolean | undefined,undefined,false,false
 ion-radio,prop,mode,"ios" | "md",undefined,false,false
 ion-radio,prop,name,string,this.inputId,false,false
 ion-radio,prop,useBase,true | false,undefined,false,false
@@ -1283,16 +1284,23 @@ ion-segment-button,part,native
 
 ion-select,shadow
 ion-select,prop,cancelText,string,'Cancel',false,false
+ion-select,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-select,prop,compareWith,((currentValue: any, compareValue: any) => boolean) | null | string | undefined,undefined,false,false
 ion-select,prop,disabled,boolean,false,false,false
+ion-select,prop,fill,"outline" | "solid" | undefined,undefined,false,false
 ion-select,prop,interface,"action-sheet" | "alert" | "popover",'alert',false,false
 ion-select,prop,interfaceOptions,any,{},false,false
+ion-select,prop,justify,"end" | "space-between" | "start",'space-between',false,false
+ion-select,prop,label,string | undefined,undefined,false,false
+ion-select,prop,labelPlacement,"end" | "fixed" | "floating" | "stacked" | "start" | undefined,'start',false,false
+ion-select,prop,legacy,boolean | undefined,undefined,false,false
 ion-select,prop,mode,"ios" | "md",undefined,false,false
 ion-select,prop,multiple,boolean,false,false,false
 ion-select,prop,name,string,this.inputId,false,false
 ion-select,prop,okText,string,'OK',false,false
 ion-select,prop,placeholder,string | undefined,undefined,false,false
 ion-select,prop,selectedText,null | string | undefined,undefined,false,false
+ion-select,prop,shape,"round" | undefined,undefined,false,false
 ion-select,prop,useBase,true | false,undefined,false,false
 ion-select,prop,value,any,undefined,false,false
 ion-select,method,open,open(event?: UIEvent) => Promise<any>
@@ -1301,12 +1309,21 @@ ion-select,event,ionCancel,void,true
 ion-select,event,ionChange,SelectChangeEventDetail<any>,true
 ion-select,event,ionDismiss,void,true
 ion-select,event,ionFocus,void,true
+ion-select,css-prop,--background
+ion-select,css-prop,--border-color Color of the select border
+ion-select,css-prop,--border-radius Radius of the select border
+ion-select,css-prop,--border-style Style of the select border
+ion-select,css-prop,--border-width Width of the select border
+ion-select,css-prop,--highlight-color-focused The color of the highlight on the select when focused
+ion-select,css-prop,--highlight-color-invalid The color of the highlight on the select when invalid
+ion-select,css-prop,--highlight-color-valid The color of the highlight on the select when valid
 ion-select,css-prop,--padding-bottom
 ion-select,css-prop,--padding-end
 ion-select,css-prop,--padding-start
 ion-select,css-prop,--padding-top
 ion-select,css-prop,--placeholder-color
 ion-select,css-prop,--placeholder-opacity
+ion-select,css-prop,--ripple-color
 ion-select,part,icon
 ion-select,part,placeholder
 ion-select,part,text

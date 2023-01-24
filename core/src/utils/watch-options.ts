@@ -1,3 +1,5 @@
+// TODO(FW-2832): types
+
 export const watchForOptions = <T extends HTMLElement>(
   containerEl: HTMLElement,
   tagName: string,

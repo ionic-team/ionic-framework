@@ -2,7 +2,7 @@ import React from 'react';
 
 import { mergeRefs } from '../components/react-component-lib/utils';
 import { IonLifeCycleContext } from '../contexts/IonLifeCycleContext';
-import { RouteInfo } from '../models';
+import type { RouteInfo } from '../models';
 
 import { StackContext } from './StackContext';
 
@@ -16,13 +16,13 @@ export class PageManager extends React.PureComponent<PageManagerProps> {
   ionLifeCycleContext!: React.ContextType<typeof IonLifeCycleContext>;
   context!: React.ContextType<typeof StackContext>;
   ionPageElementRef: React.RefObject<HTMLDivElement>;
-  stableMergedRefs: React.RefCallback<HTMLDivElement>
+  stableMergedRefs: React.RefCallback<HTMLDivElement>;
 
   constructor(props: PageManagerProps) {
     super(props);
     this.ionPageElementRef = React.createRef();
     // React refs must be stable (not created inline).
-    this.stableMergedRefs = mergeRefs(this.ionPageElementRef, this.props.forwardedRef)
+    this.stableMergedRefs = mergeRefs(this.ionPageElementRef, this.props.forwardedRef);
   }
 
   componentDidMount() {
@@ -31,43 +31,19 @@ export class PageManager extends React.PureComponent<PageManagerProps> {
         this.ionPageElementRef.current.classList.add('ion-page-invisible');
       }
       this.context.registerIonPage(this.ionPageElementRef.current, this.props.routeInfo!);
-      this.ionPageElementRef.current.addEventListener(
-        'ionViewWillEnter',
-        this.ionViewWillEnterHandler.bind(this)
-      );
-      this.ionPageElementRef.current.addEventListener(
-        'ionViewDidEnter',
-        this.ionViewDidEnterHandler.bind(this)
-      );
-      this.ionPageElementRef.current.addEventListener(
-        'ionViewWillLeave',
-        this.ionViewWillLeaveHandler.bind(this)
-      );
-      this.ionPageElementRef.current.addEventListener(
-        'ionViewDidLeave',
-        this.ionViewDidLeaveHandler.bind(this)
-      );
+      this.ionPageElementRef.current.addEventListener('ionViewWillEnter', this.ionViewWillEnterHandler.bind(this));
+      this.ionPageElementRef.current.addEventListener('ionViewDidEnter', this.ionViewDidEnterHandler.bind(this));
+      this.ionPageElementRef.current.addEventListener('ionViewWillLeave', this.ionViewWillLeaveHandler.bind(this));
+      this.ionPageElementRef.current.addEventListener('ionViewDidLeave', this.ionViewDidLeaveHandler.bind(this));
     }
   }
 
   componentWillUnmount() {
     if (this.ionPageElementRef.current) {
-      this.ionPageElementRef.current.removeEventListener(
-        'ionViewWillEnter',
-        this.ionViewWillEnterHandler.bind(this)
-      );
-      this.ionPageElementRef.current.removeEventListener(
-        'ionViewDidEnter',
-        this.ionViewDidEnterHandler.bind(this)
-      );
-      this.ionPageElementRef.current.removeEventListener(
-        'ionViewWillLeave',
-        this.ionViewWillLeaveHandler.bind(this)
-      );
-      this.ionPageElementRef.current.removeEventListener(
-        'ionViewDidLeave',
-        this.ionViewDidLeaveHandler.bind(this)
-      );
+      this.ionPageElementRef.current.removeEventListener('ionViewWillEnter', this.ionViewWillEnterHandler.bind(this));
+      this.ionPageElementRef.current.removeEventListener('ionViewDidEnter', this.ionViewDidEnterHandler.bind(this));
+      this.ionPageElementRef.current.removeEventListener('ionViewWillLeave', this.ionViewWillLeaveHandler.bind(this));
+      this.ionPageElementRef.current.removeEventListener('ionViewDidLeave', this.ionViewDidLeaveHandler.bind(this));
     }
   }
 
@@ -88,6 +64,7 @@ export class PageManager extends React.PureComponent<PageManagerProps> {
   }
 
   render() {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { className, children, routeInfo, forwardedRef, ...props } = this.props;
 
     return (
@@ -95,13 +72,7 @@ export class PageManager extends React.PureComponent<PageManagerProps> {
         {(context) => {
           this.ionLifeCycleContext = context;
           return (
-            <div
-              className={
-                className ? `${className} ion-page` : `ion-page`
-              }
-              ref={this.stableMergedRefs}
-              {...props}
-            >
+            <div className={className ? `${className} ion-page` : `ion-page`} ref={this.stableMergedRefs} {...props}>
               {children}
             </div>
           );

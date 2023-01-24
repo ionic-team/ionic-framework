@@ -9,7 +9,8 @@
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
-      {{ title }}
+      <ion-label id="title">{{ title }}</ion-label>
+      <ion-input></ion-input>
     </ion-content>
   </ion-page>
 </template>
@@ -23,6 +24,7 @@ import {
   IonHeader,
   IonTitle,
   IonToolbar,
+  IonInput,
   modalController
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
@@ -38,7 +40,8 @@ export default defineComponent({
     IonContent,
     IonHeader,
     IonTitle,
-    IonToolbar
+    IonToolbar,
+    IonInput
   },
   setup() {
     const dismiss = async () => {

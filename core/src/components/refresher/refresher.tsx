@@ -42,7 +42,7 @@ export class Refresher implements ComponentInterface {
   private progress = 0;
   private scrollEl?: HTMLElement;
   private backgroundContentEl?: HTMLElement;
-  private scrollListenerCallback?: any;
+  private scrollListenerCallback?: () => void;
   private gesture?: Gesture;
 
   private pointerDown = false;

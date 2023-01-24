@@ -10,7 +10,7 @@ import { isPlatform } from '../../utils/platform';
   styleUrl: 'app.scss',
 })
 export class App implements ComponentInterface {
-  private focusVisible?: any;
+  private focusVisible?: any; // TODO(FW-2832): type
 
   @Element() el!: HTMLElement;
 

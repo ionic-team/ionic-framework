@@ -2,6 +2,7 @@ import { addEventListener } from './listener';
 
 const MOUSE_WAIT = 2000;
 
+// TODO(FW-2832): types
 export const createPointerEvents = (
   el: Node,
   pointerDown: any,

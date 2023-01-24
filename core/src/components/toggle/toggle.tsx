@@ -263,6 +263,7 @@ export class Toggle implements ComponentInterface {
           'toggle-switch-icon-checked': checked,
         }}
         icon={icon}
+        aria-hidden="true"
       ></ion-icon>
     );
   }
