@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.5.1-nightly.20230124](https://github.com/ionic-team/ionic/compare/v6.5.0...v6.5.1-nightly.20230124) (2023-01-24)
+
+
+### Bug Fixes
+
+* **react:** hardware back button works in dev mode ([#26614](https://github.com/ionic-team/ionic/issues/26614)) ([abcfe9f](https://github.com/ionic-team/ionic/commit/abcfe9fe867730f29b9379c3736f86b3d20c5b0a)), closes [#26599](https://github.com/ionic-team/ionic/issues/26599)
+
+
+
+
+
 # [6.5.0](https://github.com/ionic-team/ionic/compare/v6.4.3...v6.5.0) (2023-01-18)
 
 
