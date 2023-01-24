@@ -6,7 +6,7 @@ import { printIonWarning } from '@utils/logging';
 import { isRTL } from '@utils/rtl';
 import { caretDownSharp } from 'ionicons/icons';
 
-import { getIonStylesheet } from '../../global/ionic-global';
+import { getIonStylesheet, getIonBehavior } from '../../global/ionic-global';
 import type {
   ActionSheetButton,
   ActionSheetOptions,
@@ -434,7 +434,8 @@ export class Select implements ComponentInterface {
   private async openPopover(ev: UIEvent) {
     const { fill } = this;
     const interfaceOptions = this.interfaceOptions;
-    const mode = getIonStylesheet(this);
+    const style = getIonStylesheet(this);
+    const mode = getIonBehavior(this);
     const showBackdrop = mode === 'md' ? false : true;
     const multiple = this.multiple;
     const value = this.value;
@@ -460,9 +461,9 @@ export class Select implements ComponentInterface {
     } else {
       /**
        * The popover should take up the full width
-       * when using a fill in MD mode.
+       * when using a fill in MD style.
        */
-      if (mode === 'md' && fill !== undefined) {
+      if (style === 'md' && fill !== undefined) {
         size = 'cover';
 
         /**
@@ -517,7 +518,7 @@ export class Select implements ComponentInterface {
   }
 
   private async openActionSheet() {
-    const mode = getIonStylesheet(this);
+    const mode = getIonBehavior(this);
     const interfaceOptions = this.interfaceOptions;
     const actionSheetOpts: ActionSheetOptions = {
       mode,
@@ -548,7 +549,7 @@ export class Select implements ComponentInterface {
 
     const interfaceOptions = this.interfaceOptions;
     const inputType = this.multiple ? 'checkbox' : 'radio';
-    const mode = getIonStylesheet(this);
+    const mode = getIonBehavior(this);
 
     const alertOpts: AlertOptions = {
       mode,
