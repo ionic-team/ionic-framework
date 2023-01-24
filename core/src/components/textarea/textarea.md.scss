@@ -1,4 +1,5 @@
 @import "./textarea";
+@import "./textarea.vars";
 @import "./textarea.md.vars";
 @import "./textarea.md.solid";
 @import "./textarea.md.outline";
@@ -11,12 +12,13 @@
   --border-color: #{$item-md-border-color};
   --padding-top: 18px;
   --padding-end: 0px;
-  --padding-bottom: 0px;
+  --padding-bottom: #{$textarea-padding-bottom};
   --padding-start: 0px;
 
   font-size: $textarea-md-font-size;
 }
 
+// TODO: FW-2876 - Remove this selector
 :host(.legacy-textarea) {
   --padding-top: #{$textarea-md-padding-top};
   --padding-end: #{$textarea-md-padding-end};
@@ -26,6 +28,7 @@
   @include margin(8px, 0, 0, 0);
 }
 
+// TODO: FW-2876 - Re-evaluate this selector, it may not be needed
 :host-context(.item-label-stacked),
 :host-context(.item-label-floating) {
   --padding-top: 8px;
@@ -42,6 +45,7 @@
 // Textarea Wrapper
 // ----------------------------------------------------------------
 
+// TODO: FW-2876 - Make this a style on :host, remove :not selector
 :host(:not(.legacy-textarea)) {
   min-height: 56px;
 }

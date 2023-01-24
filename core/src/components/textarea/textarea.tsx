@@ -448,6 +448,7 @@ export class Textarea implements ComponentInterface {
     this.checkClearOnEdit(ev);
   };
 
+  // TODO: FW-2876 - Remove this render function
   private renderLegacyTextarea() {
     if (!this.hasLoggedDeprecationWarning) {
       printIonWarning(

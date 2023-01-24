@@ -17,7 +17,7 @@ test.describe('textarea: autogrow', () => {
         <ion-content>
           <ion-list>
             <ion-item>
-              <ion-textarea auto-grow="true"></ion-textarea>
+              <ion-textarea auto-grow="true" legacy="true"></ion-textarea>
             </ion-item>
           </ion-list>
         </ion-content>
@@ -58,6 +58,7 @@ test.describe('textarea: autogrow', () => {
       `<ion-app>
         <ion-content>
           <ion-textarea
+            legacy="true"
             auto-grow="true"
             value="abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz">
           </ion-textarea>

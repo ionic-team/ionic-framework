@@ -37,7 +37,7 @@
   --placeholder-opacity: #{$placeholder-opacity};
   --padding-top: 0;
   --padding-end: 0;
-  --padding-bottom: 0;
+  --padding-bottom: #{$textarea-padding-bottom};
   --padding-start: 0;
   --border-radius: 0;
   --border-style: solid;
@@ -62,19 +62,21 @@
 
   font-family: $font-family-base;
 
+  white-space: pre-wrap;
+
   z-index: $z-index-item-input;
 
   box-sizing: border-box;
 }
 
+// TODO: FW-2876 - Remove this selector
 :host(.legacy-textarea) {
   flex: 1;
 
   background: var(--background);
-
-  white-space: pre-wrap;
 }
 
+// TODO: FW-2876 - Remove this selector
 :host(.legacy-textarea.ion-color) {
   color: current-color(base);
 }
@@ -98,38 +100,6 @@
 
 // Native Textarea
 // --------------------------------------------------
-
-.textarea-legacy-wrapper {
-  display: grid;
-
-  min-width: inherit;
-  max-width: inherit;
-  min-height: inherit;
-  max-height: inherit;
-
-  &::after {
-    // This technique is used for an auto-resizing textarea.
-    // The text contents are reflected as a pseudo-element that is visually hidden.
-    // This causes the textarea container to grow as needed to fit the contents.
-
-    white-space: pre-wrap;
-
-    content: attr(data-replicated-value) " ";
-
-    visibility: hidden;
-  }
-}
-
-:host(.legacy-textarea) .native-textarea,
-:host(.legacy-textarea) .textarea-legacy-wrapper::after {
-  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
-  @include text-inherit();
-  @include border-radius(var(--border-radius));
-
-  grid-area: 1 / 1 / 2 / 2;
-
-  word-break: break-word;
-}
 
 .native-textarea {
   // Browsers may add a default margin to the textarea
@@ -179,6 +149,22 @@
   }
 }
 
+// TODO: FW-2876 - Remove this selector
+:host(.legacy-textarea) .textarea-legacy-wrapper::after {
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+  @include border-radius(var(--border-radius));
+}
+
+.native-textarea,
+// TODO: FW-2876 - Remove this selector, keep .native-textarea
+:host(.legacy-textarea) .textarea-legacy-wrapper::after {
+  @include text-inherit();
+
+  grid-area: 1 / 1 / 2 / 2;
+
+  word-break: break-word;
+}
+
 .native-textarea[disabled]:not(.cloned-input) {
   opacity: 0.4;
 }
@@ -208,7 +194,12 @@
   opacity: 1;
 }
 
-:host([auto-grow="true"]) .cloned-input {
+// TODO: FW-2876 - Remove this selector
+:host(.legacy-textarea[auto-grow]) .cloned-input {
+  @include margin(0, 0, 0, 0);
+}
+
+:host([auto-grow]) .cloned-input {
   // Workaround for webkit rendering issue with scroll assist.
   // When cloning the textarea and scrolling into view,
   // a white box is rendered from the difference in height
@@ -218,7 +209,7 @@
   height: 100%;
 }
 
-:host([auto-grow="true"]) .native-textarea {
+:host([auto-grow]) .native-textarea {
   overflow: hidden;
 }
 
@@ -282,6 +273,51 @@
 
 .native-wrapper textarea {
   @include padding(var(--padding-top), 0px, var(--padding-bottom), 0px);
+}
+
+// Textarea Highlight
+// ----------------------------------------------------------------
+
+:host(.ion-touched.ion-invalid) {
+  --highlight-color: var(--highlight-color-invalid);
+}
+
+:host(.ion-touched.ion-valid) {
+  --highlight-color: var(--highlight-color-valid);
+}
+
+.native-wrapper,
+// TODO: FW-2876 - Remove this selector, keep .native-wrapper
+.textarea-legacy-wrapper {
+  display: grid;
+
+  min-width: inherit;
+  max-width: inherit;
+  min-height: inherit;
+  max-height: inherit;
+
+  &::after {
+    // This technique is used for an auto-resizing textarea.
+    // The text contents are reflected as a pseudo-element that is visually hidden.
+    // This causes the textarea container to grow as needed to fit the contents.
+
+    white-space: pre-wrap;
+
+    content: attr(data-replicated-value) " ";
+
+    visibility: hidden;
+  }
+}
+
+.native-wrapper::after {
+  @include padding(var(--padding-top), 0, var(--padding-bottom), 0);
+  @include margin(0, 0, 0, 0);
+  @include text-inherit();
+  @include border-radius(var(--border-radius));
+
+  grid-area: 1 / 1 / 2 / 2;
+
+  word-break: break-word;
 }
 
 // Textarea Highlight
@@ -375,7 +411,7 @@
    */
   max-width: 200px;
 
-  transition: color 150ms cubic-bezier(.4, 0, .2, 1), transform 150ms cubic-bezier(.4, 0, .2, 1);
+  transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1), transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
 
   /**
    * This ensures that double tapping this text
@@ -503,6 +539,7 @@
 :host(.textarea-label-placement-stacked) .label-text-wrapper,
 :host(.textarea-label-placement-floating) .label-text-wrapper {
   @include transform-origin(start, top);
+  @include padding(0px);
 
   max-width: 100%;
 }
@@ -512,7 +549,9 @@
  * overlap the label.
  */
 :host(.textarea-label-placement-stacked) textarea,
-:host(.textarea-label-placement-floating) textarea {
+:host(.textarea-label-placement-floating) textarea,
+:host(.textarea-label-placement-stacked[auto-grow]) .native-wrapper::after,
+:host(.textarea-label-placement-floating[auto-grow]) .native-wrapper::after {
   @include margin(8px, 0px, 0px, 0px);
 }
 
