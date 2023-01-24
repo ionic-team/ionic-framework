@@ -340,9 +340,7 @@ ion-checkbox,part,mark
 ion-chip,shadow
 ion-chip,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-chip,prop,disabled,boolean,false,false,false
-ion-chip,prop,mode,"ios" | "md",undefined,false,false
 ion-chip,prop,outline,boolean,false,false,false
-ion-chip,prop,useBase,true | false,undefined,false,false
 ion-chip,css-prop,--background
 ion-chip,css-prop,--color
 
