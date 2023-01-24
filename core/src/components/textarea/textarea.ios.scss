@@ -16,6 +16,7 @@
   font-size: $textarea-ios-font-size;
 }
 
+// TODO: FW-2876 - Remove this selector
 :host(.legacy-textarea) {
   --padding-top: #{$textarea-ios-padding-top};
   --padding-end: #{$textarea-ios-padding-end};
@@ -33,6 +34,7 @@
 // Textarea Wrapper
 // ----------------------------------------------------------------
 
+// TODO: FW-2876 - Make this style a :host style, remove :not selector
 :host(:not(.legacy-textarea)) {
   min-height: 44px;
 }
