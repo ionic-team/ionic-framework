@@ -3,7 +3,7 @@ import type { Config } from './config';
 let includeComponents: Map<string, boolean> | undefined;
 let excludeComponents: Map<string, boolean> | undefined;
 
-export const isIonicElement = (elm: any) => elm.tagName?.startsWith('ION-');
+export const isIonicElement = (elm: Element) => elm.tagName?.startsWith('ION-');
 
 export const resetBaseComponentsCache = () => {
   includeComponents = excludeComponents = undefined;
