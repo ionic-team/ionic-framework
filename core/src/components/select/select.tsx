@@ -219,6 +219,10 @@ export class Select implements ComponentInterface {
          * focusing an element with delegatesFocus.
          * We work around this by manually focusing
          * the interactive element.
+         * ion-radio and ion-checkbox are the only
+         * elements that ion-select-popover uses, so
+         * we only need to worry about those two components
+         * when focusing.
          */
         const interactiveEl = selectedItem.querySelector<HTMLElement>('ion-radio, ion-checkbox');
         if (interactiveEl) {
