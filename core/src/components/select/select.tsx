@@ -1,4 +1,4 @@
-import type { SelectPopoverOption } from '@components/select-popover/select-popover-interface';
+import type { SelectPopoverOption } from '../select-popover/select-popover-interface';
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 import { createLegacyFormController } from '@utils/forms';

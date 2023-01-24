@@ -1,4 +1,4 @@
-import type { Side } from '@components/menu/menu-interface';
+import type { Side } from '../components/menu/menu-interface';
 import type { EventEmitter } from '@stencil/core';
 
 // TODO(FW-2832): types
