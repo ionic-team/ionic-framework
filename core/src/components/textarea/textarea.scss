@@ -375,7 +375,7 @@
    */
   max-width: 200px;
 
-  transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1), transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: color 150ms cubic-bezier(.4, 0, .2, 1), transform 150ms cubic-bezier(.4, 0, .2, 1);
 
   /**
    * This ensures that double tapping this text
