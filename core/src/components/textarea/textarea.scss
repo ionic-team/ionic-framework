@@ -302,7 +302,7 @@
 }
 
 .native-wrapper::after {
-  @include padding(18px, 0px, 18px, 0px);
+  @include padding(var(--padding-top), 0, var(--padding-bottom), 0);
   @include margin(0, 0, 0, 0);
   @include text-inherit();
   @include border-radius(var(--border-radius));
@@ -393,8 +393,6 @@
 .label-text-wrapper {
   @include padding(var(--padding-top), 0px, var(--padding-bottom), 0px);
 
-  align-items: center;
-
   /**
    * Label text should not extend
    * beyond the bounds of the textarea.
@@ -437,8 +435,6 @@
 }
 
 .textarea-wrapper textarea {
-  @include padding(18px, 0px, 18px, 0px);
-
   /**
    * When the floating label appears on top of the
    * textarea, we need to fade the textarea out so that the
@@ -545,7 +541,6 @@
  */
 :host(.textarea-label-placement-stacked) textarea,
 :host(.textarea-label-placement-floating) textarea {
-  @include padding(0px, 0px, 18px, 0px);
   @include margin(8px, 0px, 0px, 0px);
 }
 

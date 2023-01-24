@@ -110,17 +110,10 @@
  * remaining visually centered.
  */
 :host(.textarea-fill-outline.textarea-label-placement-stacked) textarea,
-:host(.textarea-fill-outline.textarea-label-placement-floating) textarea {
-  @include margin(12px, 0px, 0px, 0px);
-}
-
-/**
- * This reflects the same styles as the textarea to the auto grow pseudo element.
- */
+:host(.textarea-fill-outline.textarea-label-placement-floating) textarea,
 :host(.textarea-fill-outline.textarea-label-placement-stacked[auto-grow]) .native-wrapper::after,
 :host(.textarea-fill-outline.textarea-label-placement-floating[auto-grow]) .native-wrapper::after {
   @include margin(12px, 0px, 0px, 0px);
-  @include padding(0px, 0px, 18px, 0px);
 }
 
 // Textarea Fill: Outline Outline Container
