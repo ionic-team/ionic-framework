@@ -217,7 +217,7 @@ export class Radio implements ComponentInterface {
 
   private renderRadio() {
     const { checked, disabled, inputId, color, el, justify, labelPlacement, inheritedAttributes, hasLabel } = this;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const inItem = hostContext('ion-item', el);
 
     return (

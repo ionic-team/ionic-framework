@@ -674,7 +674,7 @@ export class Select implements ComponentInterface {
    * when fill="outline".
    */
   private renderLabelContainer() {
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const hasOutlineFill = mode === 'md' && this.fill === 'outline';
 
     if (hasOutlineFill) {
@@ -708,7 +708,7 @@ export class Select implements ComponentInterface {
 
   private renderSelect() {
     const { disabled, el, isExpanded, labelPlacement, justify, placeholder, fill, shape } = this;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const hasFloatingOrStackedLabel = labelPlacement === 'floating' || labelPlacement === 'stacked';
     const justifyEnabled = !hasFloatingOrStackedLabel;
     const rtl = isRTL(el) ? 'rtl' : 'ltr';
