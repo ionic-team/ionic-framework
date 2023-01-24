@@ -30,9 +30,10 @@ export class AngularDelegate {
   create(
     resolverOrInjector: ComponentFactoryResolver,
     injector: Injector,
-    location?: ViewContainerRef
+    location?: ViewContainerRef,
+    elementReferenceKey?: string
   ): AngularFrameworkDelegate {
-    return new AngularFrameworkDelegate(resolverOrInjector, injector, location, this.appRef, this.zone);
+    return new AngularFrameworkDelegate(resolverOrInjector, injector, location, this.appRef, this.zone, elementReferenceKey);
   }
 }
 
@@ -45,12 +46,29 @@ export class AngularFrameworkDelegate implements FrameworkDelegate {
     private injector: Injector,
     private location: ViewContainerRef | undefined,
     private appRef: ApplicationRef,
-    private zone: NgZone
+    private zone: NgZone,
+    private elementReferenceKey?: string
   ) {}
 
   attachViewToDom(container: any, component: any, params?: any, cssClasses?: string[]): Promise<any> {
     return this.zone.run(() => {
       return new Promise((resolve) => {
+        const componentProps = {
+          ...params
+        };
+
+        /**
+         * Ionic Angular passes a reference to a modal
+         * or popover that can be accessed using a
+         * variable in the overlay component. If
+         * elementReferenceKey is defined, then we should
+         * pass a reference to the component using
+         * elementReferenceKey as the key.
+         */
+        if (this.elementReferenceKey !== undefined) {
+          componentProps[this.elementReferenceKey] = container;
+        }
+
         const el = attachView(
           this.zone,
           this.resolverOrInjector,
@@ -61,7 +79,7 @@ export class AngularFrameworkDelegate implements FrameworkDelegate {
           this.elEventsMap,
           container,
           component,
-          params,
+          componentProps,
           cssClasses
         );
         resolve(el);
