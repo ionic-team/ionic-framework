@@ -99,6 +99,12 @@ export class Textarea implements ComponentInterface {
   }
 
   /**
+   * The fill for the item. If `'solid'` the item will have a background. If
+   * `'outline'` the item will be transparent with a border. Only available in `md` mode.
+   */
+  @Prop() fill?: 'outline' | 'solid';
+
+  /**
    * A hint to the browser for which keyboard to display.
    * Possible values: `"none"`, `"text"`, `"tel"`, `"url"`,
    * `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
@@ -189,12 +195,6 @@ export class Textarea implements ComponentInterface {
    * Text that is placed under the textarea and displayed when an error is detected.
    */
   @Prop() errorText?: string;
-
-  /**
-   * The fill for the item. If `'solid'` the item will have a background. If
-   * `'outline'` the item will be transparent with a border. Only available in `md` mode.
-   */
-  @Prop() fill?: 'outline' | 'solid';
 
   /**
    * Text that is placed under the textarea and displayed when no error is detected.
@@ -525,6 +525,34 @@ For textareas that do not have a visible label, developers should use "aria-labe
    * Renders the border container when fill="outline".
    */
   private renderLabelContainer() {
+    const mode = getIonMode(this);
+    const hasOutlineFill = mode === 'md' && this.fill === 'outline';
+
+    if (hasOutlineFill) {
+      /**
+       * The outline fill has a special outline
+       * that appears around the textarea and the label.
+       * Certain stacked and floating label placements cause the
+       * label to translate up and create a "cut out"
+       * inside of that border by using the notch-spacer element.
+       */
+      return [
+        <div class="textarea-outline-container">
+          <div class="textarea-outline-start"></div>
+          <div class="textarea-outline-notch">
+            <div class="notch-spacer" aria-hidden="true">
+              {this.label}
+            </div>
+          </div>
+          <div class="textarea-outline-end"></div>
+        </div>,
+        this.renderLabel(),
+      ];
+    }
+    /**
+     * If not using the outline style,
+     * we can render just the label.
+     */
     return this.renderLabel();
   }
 
@@ -569,7 +597,7 @@ For textareas that do not have a visible label, developers should use "aria-labe
   }
 
   private renderTextarea() {
-    const { inputId, disabled, labelPlacement } = this;
+    const { inputId, disabled, fill, shape, labelPlacement } = this;
     const mode = getIonMode(this);
     const value = this.getValue();
 
@@ -580,6 +608,8 @@ For textareas that do not have a visible label, developers should use "aria-labe
           [mode]: true,
           'has-value': this.hasValue(),
           'has-focus': this.hasFocus,
+          [`textarea-fill-${fill}`]: fill !== undefined,
+          [`textarea-shape-${shape}`]: shape !== undefined,
           [`textarea-label-placement-${labelPlacement}`]: true,
         })}
       >

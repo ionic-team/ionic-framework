@@ -45,12 +45,19 @@
   --highlight-color-valid: #{ion-color(success, base)};
   --highlight-color-invalid: #{ion-color(danger, base)};
 
+  /**
+   * This is a private API that is used to switch
+   * out the highlight color based on the state
+   * of the component without having to write
+   * different selectors for different fill variants.
+   */
+  --highlight-color: var(--highlight-color-focused);
+
   display: block;
   position: relative;
 
   width: 100%;
 
-  background: var(--background);
   color: var(--color);
 
   font-family: $font-family-base;
@@ -62,6 +69,8 @@
 
 :host(.legacy-textarea) {
   flex: 1;
+
+  background: var(--background);
 
   white-space: pre-wrap;
 }
@@ -113,6 +122,7 @@
 :host(.legacy-textarea) .textarea-legacy-wrapper::after {
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
   @include text-inherit();
+  @include border-radius(var(--border-radius));
 
   grid-area: 1 / 1 / 2 / 2;
 
@@ -123,7 +133,6 @@
   // Browsers may add a default margin to the textarea
   @include margin(0);
   @include padding(0, 0, 0, 0);
-  @include border-radius(var(--border-radius));
 
   display: block;
 
@@ -143,6 +152,17 @@
   box-sizing: border-box;
   resize: none;
   appearance: none;
+
+  /**
+   * This ensures the textarea
+   * remains on top of any decoration
+   * that we render (particularly the
+   * outline border when fill="outline").
+   * If we did not do this then Axe would
+   * be unable to determine the color
+   * contrast of the textarea.
+   */
+  z-index: 1;
 
   &::placeholder {
     @include padding(0);
@@ -216,8 +236,10 @@
 
 // Textarea Wrapper
 // ----------------------------------------------------------------
+
 .textarea-wrapper {
-  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+  @include padding(0px, var(--padding-end), 0px, var(--padding-start));
+  @include border-radius(var(--border-radius));
 
   display: flex;
 
@@ -225,13 +247,15 @@
 
   flex-grow: 1;
 
-  align-items: stretch;
+  align-items: flex-start;
 
   height: 100%;
 
-  min-height: 56px;
+  min-height: inherit;
 
-  background: inherit;
+  transition: background-color 15ms linear;
+
+  background: var(--background);
 }
 
 // Textarea Native Wrapper
@@ -240,11 +264,26 @@
 .native-wrapper {
   display: flex;
 
-  position: relative;
-
   flex-grow: 1;
 
   width: 100%;
+
+  height: 100%;
+}
+
+.native-wrapper textarea {
+  @include padding(var(--padding-top), 0px, var(--padding-bottom), 0px);
+}
+
+// Textarea Highlight
+// ----------------------------------------------------------------
+
+:host(.ion-touched.ion-invalid) {
+  --highlight-color: var(--highlight-color-invalid);
+}
+
+:host(.ion-touched.ion-valid) {
+  --highlight-color: var(--highlight-color-valid);
 }
 
 // Textarea Bottom Content
@@ -315,12 +354,7 @@
 // ----------------------------------------------------------------
 
 .label-text-wrapper {
-  /**
-   * This causes the label to take up
-   * the entire height of its container
-   * while still keeping the text centered.
-   */
-  display: flex;
+  @include padding(var(--padding-top), 0px, var(--padding-bottom), 0px);
 
   /**
    * Label text should not extend
@@ -332,7 +366,7 @@
    */
   max-width: 200px;
 
-  transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1), transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: color 150ms cubic-bezier(.4, 0, .2, 1), transform 150ms cubic-bezier(.4, 0, .2, 1);
 
   /**
    * This ensures that double tapping this text
@@ -363,13 +397,7 @@
   overflow: hidden;
 }
 
-.label-text-wrapper,
 .textarea-wrapper textarea {
-  line-height: 18px;
-}
-
-.textarea-wrapper textarea {
-  @include padding(8px, 0, 8px, 0);
   /**
    * When the floating label appears on top of the
    * textarea, we need to fade the textarea out so that the
@@ -476,7 +504,7 @@
  */
 :host(.textarea-label-placement-stacked) textarea,
 :host(.textarea-label-placement-floating) textarea {
-  @include margin(1px, 0, 0, 0);
+  @include margin(8px, 0px, 0px, 0px);
 }
 
 /**
@@ -501,34 +529,17 @@
   opacity: 1;
 }
 
-:host(.textarea-label-placement-floating) .label-text-wrapper {
-  /**
-   * Increases the padding between the label and the textarea contents
-   * for the floating label.
-   */
-  @include padding(null, null, 2px, null);
-}
-
-// Textarea Label Placement - Stacked and Fixed
-// ----------------------------------------------------------------
-
-:host(.textarea-label-placement-start) .label-text,
-:host(.textarea-label-placement-end) .label-text,
-:host(.textarea-label-placement-fixed) .label-text {
-  @include margin(8px, 0);
-}
-
 /**
  * This makes the label sit above the textarea.
  */
 :host(.textarea-label-placement-stacked) .label-text-wrapper,
 :host(.has-focus.textarea-label-placement-floating) .label-text-wrapper,
 :host(.has-value.textarea-label-placement-floating) .label-text-wrapper {
-  @include transform(translateY(6px), scale(#{$textarea-floating-label-scale}));
+  @include transform(translateY(50%), scale(#{$textarea-floating-label-scale}));
 
   /**
-     * Label text should not extend
-     * beyond the bounds of the textarea.
-     */
+   * Label text should not extend
+   * beyond the bounds of the textarea.
+   */
   max-width: calc(100% / #{$textarea-floating-label-scale});
 }
