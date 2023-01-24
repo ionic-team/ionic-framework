@@ -33,7 +33,14 @@ export class AngularDelegate {
     location?: ViewContainerRef,
     elementReferenceKey?: string
   ): AngularFrameworkDelegate {
-    return new AngularFrameworkDelegate(resolverOrInjector, injector, location, this.appRef, this.zone, elementReferenceKey);
+    return new AngularFrameworkDelegate(
+      resolverOrInjector,
+      injector,
+      location,
+      this.appRef,
+      this.zone,
+      elementReferenceKey
+    );
   }
 }
 
@@ -54,7 +61,7 @@ export class AngularFrameworkDelegate implements FrameworkDelegate {
     return this.zone.run(() => {
       return new Promise((resolve) => {
         const componentProps = {
-          ...params
+          ...params,
         };
 
         /**

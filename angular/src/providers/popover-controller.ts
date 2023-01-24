@@ -21,7 +21,12 @@ export class PopoverController extends OverlayBaseController<PopoverOptions, HTM
   create(opts: PopoverOptions): Promise<HTMLIonPopoverElement> {
     return super.create({
       ...opts,
-      delegate: this.angularDelegate.create(this.resolver ?? this.environmentInjector, this.injector, undefined, 'popover'),
+      delegate: this.angularDelegate.create(
+        this.resolver ?? this.environmentInjector,
+        this.injector,
+        undefined,
+        'popover'
+      ),
     });
   }
 }
