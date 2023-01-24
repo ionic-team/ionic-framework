@@ -30,6 +30,7 @@
   --max-width: #{$picker-max-width};
   --min-height: auto;
   --max-height: auto;
+  --backdrop-opacity: 0;
 
   @include font-smoothing();
   @include position(0, null, null, 0);
