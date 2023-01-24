@@ -4,9 +4,14 @@ import { Component, Event, Host, Listen, Prop, h } from '@stencil/core';
 import { getIonStylesheet } from '../../global/ionic-global';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
 
+/**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-backdrop',
   styleUrls: {
+    base: 'backdrop.scss',
     ios: 'backdrop.ios.scss',
     md: 'backdrop.md.scss',
   },

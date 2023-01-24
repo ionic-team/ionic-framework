@@ -12,6 +12,7 @@ import { printIonWarning } from '../../utils/logging';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @slot - The label text to associate with the checkbox. Use the "labelPlacement" property to control where the label is placed relative to the checkbox.
@@ -22,6 +23,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 @Component({
   tag: 'ion-checkbox',
   styleUrls: {
+    base: 'checkbox.scss',
     ios: 'checkbox.ios.scss',
     md: 'checkbox.md.scss',
   },

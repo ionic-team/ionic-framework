@@ -19,12 +19,16 @@ const focusableQueryString =
   '[tabindex]:not([tabindex^="-"]), input:not([type=hidden]):not([tabindex^="-"]), textarea:not([tabindex^="-"]), button:not([tabindex^="-"]), select:not([tabindex^="-"]), .ion-focusable:not([tabindex^="-"])';
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
  * @part container - The container for the menu content.
  * @part backdrop - The backdrop that appears over the main content when the menu is open.
  */
 @Component({
   tag: 'ion-menu',
   styleUrls: {
+    base: 'menu.scss',
     ios: 'menu.ios.scss',
     md: 'menu.md.scss',
   },

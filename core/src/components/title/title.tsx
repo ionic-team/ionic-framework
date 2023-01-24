@@ -5,9 +5,14 @@ import { getIonStylesheet } from '../../global/ionic-global';
 import type { Color, StyleEventDetail } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
+/**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-title',
   styleUrls: {
+    base: 'title.scss',
     ios: 'title.ios.scss',
     md: 'title.md.scss',
   },

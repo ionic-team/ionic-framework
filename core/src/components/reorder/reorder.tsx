@@ -5,11 +5,15 @@ import { reorderThreeOutline, reorderTwoSharp } from 'ionicons/icons';
 import { getIonStylesheet } from '../../global/ionic-global';
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
  * @part icon - The icon of the reorder handle (uses ion-icon).
  */
 @Component({
   tag: 'ion-reorder',
   styleUrls: {
+    base: 'reorder.scss',
     ios: 'reorder.ios.scss',
     md: 'reorder.md.scss',
   },

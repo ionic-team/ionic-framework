@@ -5,9 +5,14 @@ import { getIonStylesheet } from '../../global/ionic-global';
 import type { Side } from '../../interface';
 import { isEndSide } from '../../utils/helpers';
 
+/**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-item-options',
   styleUrls: {
+    base: 'item-options.scss',
     ios: 'item-options.ios.scss',
     md: 'item-options.md.scss',
   },

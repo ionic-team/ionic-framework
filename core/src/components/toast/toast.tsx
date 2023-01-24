@@ -33,6 +33,7 @@ import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @part button - Any button element that is displayed inside of the toast.
@@ -44,6 +45,7 @@ import { mdLeaveAnimation } from './animations/md.leave';
 @Component({
   tag: 'ion-toast',
   styleUrls: {
+    base: 'toast.scss',
     ios: 'toast.ios.scss',
     md: 'toast.md.scss',
   },

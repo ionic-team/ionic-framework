@@ -6,11 +6,13 @@ import type { Color, StyleEventDetail } from '../../interface';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
 @Component({
   tag: 'ion-label',
   styleUrls: {
+    base: 'label.scss',
     ios: 'label.ios.scss',
     md: 'label.md.scss',
   },

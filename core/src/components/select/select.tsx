@@ -24,6 +24,7 @@ import { watchForOptions } from '../../utils/watch-options';
 import type { SelectCompareFn } from './select-interface';
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @part placeholder - The text displayed in the select when there is no value.
@@ -33,6 +34,7 @@ import type { SelectCompareFn } from './select-interface';
 @Component({
   tag: 'ion-select',
   styleUrls: {
+    base: 'select.scss',
     ios: 'select.ios.scss',
     md: 'select.md.scss',
   },

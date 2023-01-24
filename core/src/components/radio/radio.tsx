@@ -7,6 +7,7 @@ import { addEventListener, getAriaLabel, removeEventListener } from '../../utils
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @part container - The container for the radio mark.
@@ -15,6 +16,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 @Component({
   tag: 'ion-radio',
   styleUrls: {
+    base: 'radio.scss',
     ios: 'radio.ios.scss',
     md: 'radio.md.scss',
   },

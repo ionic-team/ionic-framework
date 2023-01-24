@@ -9,11 +9,13 @@ import { createKeyboardController } from '../../utils/keyboard/keyboard-controll
 import { handleFooterFade } from './footer.utils';
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
 @Component({
   tag: 'ion-footer',
   styleUrls: {
+    base: 'footer.scss',
     ios: 'footer.ios.scss',
     md: 'footer.md.scss',
   },

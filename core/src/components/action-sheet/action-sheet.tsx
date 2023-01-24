@@ -31,11 +31,13 @@ import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
 @Component({
   tag: 'ion-action-sheet',
   styleUrls: {
+    base: 'action-sheet.scss',
     ios: 'action-sheet.ios.scss',
     md: 'action-sheet.md.scss',
   },

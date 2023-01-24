@@ -10,6 +10,7 @@ import { printIonWarning } from '../../utils/logging';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @slot - Content is placed between the named slots if provided without a slot.
@@ -22,6 +23,7 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 @Component({
   tag: 'ion-button',
   styleUrls: {
+    base: 'button.scss',
     ios: 'button.ios.scss',
     md: 'button.md.scss',
   },

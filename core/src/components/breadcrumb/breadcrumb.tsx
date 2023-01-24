@@ -9,6 +9,7 @@ import { inheritAriaAttributes } from '../../utils/helpers';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @part native - The native HTML anchor or div element that wraps all child elements.
@@ -18,6 +19,7 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 @Component({
   tag: 'ion-breadcrumb',
   styleUrls: {
+    base: 'breadcrumb.scss',
     ios: 'breadcrumb.ios.scss',
     md: 'breadcrumb.md.scss',
   },

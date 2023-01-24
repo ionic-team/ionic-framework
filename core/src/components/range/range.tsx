@@ -25,6 +25,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 import type { PinFormatter } from './range-interface';
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @slot label - The label text to associate with the range. Use the "labelPlacement" property to control where the label is placed relative to the range.
@@ -41,6 +42,7 @@ import type { PinFormatter } from './range-interface';
 @Component({
   tag: 'ion-range',
   styleUrls: {
+    base: 'range.scss',
     ios: 'range.ios.scss',
     md: 'range.md.scss',
   },

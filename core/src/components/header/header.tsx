@@ -18,11 +18,13 @@ import {
 } from './header.utils';
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
 @Component({
   tag: 'ion-header',
   styleUrls: {
+    base: 'header.scss',
     ios: 'header.ios.scss',
     md: 'header.md.scss',
   },

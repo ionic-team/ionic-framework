@@ -10,11 +10,13 @@ import { isRTL } from '../../utils/rtl';
 import { createColorClasses } from '../../utils/theme';
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
 @Component({
   tag: 'ion-searchbar',
   styleUrls: {
+    base: 'searchbar.scss',
     ios: 'searchbar.ios.scss',
     md: 'searchbar.md.scss',
   },

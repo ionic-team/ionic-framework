@@ -9,6 +9,7 @@ import { inheritAttributes } from '../../utils/helpers';
 import { createColorClasses, openURL } from '../../utils/theme';
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @part native - The native HTML button, anchor, or div element that wraps all child elements.
@@ -16,6 +17,7 @@ import { createColorClasses, openURL } from '../../utils/theme';
 @Component({
   tag: 'ion-card',
   styleUrls: {
+    base: 'card.scss',
     ios: 'card.ios.scss',
     md: 'card.md.scss',
   },

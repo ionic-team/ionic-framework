@@ -21,11 +21,13 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 import { getCounterText } from './input.utils';
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
 @Component({
   tag: 'ion-input',
   styleUrls: {
+    base: 'input.scss',
     ios: 'input.ios.scss',
     md: 'input.md.scss',
   },

@@ -12,12 +12,14 @@ import type { PickerInternalCustomEvent } from '../picker-internal/picker-intern
 import type { PickerColumnItem } from './picker-column-internal-interfaces';
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  * @internal
  */
 @Component({
   tag: 'ion-picker-column-internal',
   styleUrls: {
+    base: 'picker-column-internal.scss',
     ios: 'picker-column-internal.ios.scss',
     md: 'picker-column-internal.md.scss',
   },

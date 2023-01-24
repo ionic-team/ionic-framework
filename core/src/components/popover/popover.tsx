@@ -29,6 +29,7 @@ import { mdLeaveAnimation } from './animations/md.leave';
 import { configureDismissInteraction, configureKeyboardInteraction, configureTriggerInteraction } from './utils';
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @slot - Content is placed inside of the `.popover-content` element.
@@ -40,6 +41,7 @@ import { configureDismissInteraction, configureKeyboardInteraction, configureTri
 @Component({
   tag: 'ion-popover',
   styleUrls: {
+    base: 'popover.scss',
     ios: 'popover.ios.scss',
     md: 'popover.md.scss',
   },

@@ -11,6 +11,7 @@ import { getMonthAndYear, getMonthDayAndYear, getLocalizedDateTime, getLocalized
 import { is24Hour } from '../datetime/utils/helpers';
 import { parseDate } from '../datetime/utils/parse';
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @slot date-target - Content displayed inside of the date button.

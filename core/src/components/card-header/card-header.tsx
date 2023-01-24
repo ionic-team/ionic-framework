@@ -6,11 +6,13 @@ import type { Color } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
 @Component({
   tag: 'ion-card-header',
   styleUrls: {
+    base: 'card-header.scss',
     ios: 'card-header.ios.scss',
     md: 'card-header.md.scss',
   },

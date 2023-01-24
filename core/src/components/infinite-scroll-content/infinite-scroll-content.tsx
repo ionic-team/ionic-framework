@@ -7,9 +7,14 @@ import type { SpinnerTypes } from '../../interface';
 import type { IonicSafeString } from '../../utils/sanitization';
 import { sanitizeDOMString } from '../../utils/sanitization';
 
+/**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-infinite-scroll-content',
   styleUrls: {
+    base: 'infinite-scroll-content.scss',
     ios: 'infinite-scroll-content.ios.scss',
     md: 'infinite-scroll-content.md.scss',
   },
