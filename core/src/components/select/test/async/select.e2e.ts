@@ -24,6 +24,7 @@ test.describe('select: async', () => {
     const select = await page.locator('#with-value');
 
     await selectValueSet.next();
+    await page.waitForChanges();
 
     await expect(select.locator('.select-text')).toHaveText('bird');
   });
