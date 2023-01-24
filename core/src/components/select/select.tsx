@@ -751,6 +751,7 @@ export class Select implements ComponentInterface {
     );
   }
 
+  // TODO FW-3194 - Remove this
   private renderLegacySelect() {
     if (!this.hasLoggedDeprecationWarning) {
       printIonWarning(
