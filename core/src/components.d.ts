@@ -1717,6 +1717,10 @@ export namespace Components {
          */
         "menuId"?: string;
         /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        /**
           * Opens the menu. If the menu is already open or it can't be opened, it returns `false`.
          */
         "open": (animated?: boolean) => Promise<boolean>;
@@ -1740,6 +1744,10 @@ export namespace Components {
           * The display type of the menu. Available options: `"overlay"`, `"reveal"`, `"push"`.
          */
         "type"?: string;
+        /**
+          * useBase determines if base components is enabled.
+         */
+        "useBase"?: true | false;
     }
     interface IonMenuButton {
         /**
@@ -5965,6 +5973,10 @@ declare namespace LocalJSX {
          */
         "menuId"?: string;
         /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        /**
           * Emitted when the menu is closed.
          */
         "onIonDidClose"?: (event: IonMenuCustomEvent<void>) => void;
@@ -5996,6 +6008,10 @@ declare namespace LocalJSX {
           * The display type of the menu. Available options: `"overlay"`, `"reveal"`, `"push"`.
          */
         "type"?: string;
+        /**
+          * useBase determines if base components is enabled.
+         */
+        "useBase"?: true | false;
     }
     interface IonMenuButton {
         /**
