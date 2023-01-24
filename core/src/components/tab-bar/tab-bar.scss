@@ -1,4 +1,5 @@
 @import "../../themes/ionic.globals";
+@import "./tab-bar.vars.scss";
 
 :host {
   /**
@@ -15,6 +16,7 @@
   justify-content: center;
 
   width: auto;
+  height: $tab-bar-base-height;
 
   padding-bottom: var(--ion-safe-area-bottom, 0);
 
