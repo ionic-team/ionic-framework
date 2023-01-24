@@ -673,17 +673,9 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * The mode determines which platform styles to use.
-         */
-        "mode"?: "ios" | "md";
-        /**
           * Display an outline style button.
          */
         "outline": boolean;
-        /**
-          * useBase determines if base components is enabled.
-         */
-        "useBase"?: true | false;
     }
     interface IonCol {
         /**
@@ -4959,17 +4951,9 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
-          * The mode determines which platform styles to use.
-         */
-        "mode"?: "ios" | "md";
-        /**
           * Display an outline style button.
          */
         "outline"?: boolean;
-        /**
-          * useBase determines if base components is enabled.
-         */
-        "useBase"?: true | false;
     }
     interface IonCol {
         /**
