@@ -1,4 +1,4 @@
-import { OverlayEventDetail } from '@ionic/core/components';
+import type { OverlayEventDetail } from '@ionic/core/components';
 import React, { createElement } from 'react';
 
 import {
@@ -9,6 +9,8 @@ import {
   mergeRefs,
 } from './react-component-lib/utils';
 import { createForwardRef } from './utils';
+
+// TODO(FW-2959): types
 
 type InlineOverlayState = {
   isOpen: boolean;
@@ -32,10 +34,7 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
     defineCustomElement();
   }
   const displayName = dashToPascalCase(tagName);
-  const ReactComponent = class extends React.Component<
-    IonicReactInternalProps<PropType>,
-    InlineOverlayState
-  > {
+  const ReactComponent = class extends React.Component<IonicReactInternalProps<PropType>, InlineOverlayState> {
     ref: React.RefObject<HTMLElement>;
     wrapperRef: React.RefObject<HTMLElement>;
     stableMergedRefs: React.RefCallback<HTMLElement>;
@@ -117,6 +116,7 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
     }
 
     render() {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { children, forwardedRef, style, className, ref, ...cProps } = this.props;
 
       const propsToPass = Object.keys(cProps).reduce((acc, name) => {

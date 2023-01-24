@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.5.0](https://github.com/ionic-team/ionic/compare/v6.4.3...v6.5.0) (2023-01-18)
+
+
+### Features
+
+* **deps:** update ionicons to 6.1.0 ([#26617](https://github.com/ionic-team/ionic/issues/26617)) ([ccd2a92](https://github.com/ionic-team/ionic/commit/ccd2a9224e018ad0d67903d44ec312934c3b35ec))
+* **deps:** update ionicons to 6.1.1 ([#26626](https://github.com/ionic-team/ionic/issues/26626)) ([90405eb](https://github.com/ionic-team/ionic/commit/90405eb0af69ce04faf5855189449d0b7518288c))
+
+
+
+
+
+## [6.4.3](https://github.com/ionic-team/ionic/compare/v6.4.2...v6.4.3) (2023-01-18)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [6.4.2](https://github.com/ionic-team/ionic/compare/v6.4.1...v6.4.2) (2023-01-11)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
 ## [6.4.1](https://github.com/ionic-team/ionic/compare/v6.4.0...v6.4.1) (2022-12-14)
 
 **Note:** Version bump only for package @ionic/angular

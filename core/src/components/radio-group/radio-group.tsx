@@ -1,15 +1,9 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Listen, Prop, Watch, h } from '@stencil/core';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet } from '../../global/ionic-global';
 import type { RadioGroupChangeEventDetail } from '../../interface';
 
-/**
- * The Radio Group component mandates that only one radio button
- * within the group can be selected at any given time. Since `ion-radio`
- * is a shadow DOM component, it cannot natively perform this behavior
- * using the `name` attribute.
- */
 @Component({
   tag: 'ion-radio-group',
 })
@@ -110,6 +104,12 @@ export class RadioGroup implements ComponentInterface {
   private onClick = (ev: Event) => {
     ev.preventDefault();
 
+    /**
+     * The Radio Group component mandates that only one radio button
+     * within the group can be selected at any given time. Since `ion-radio`
+     * is a shadow DOM component, it cannot natively perform this behavior
+     * using the `name` attribute.
+     */
     const selectedRadio = ev.target && (ev.target as HTMLElement).closest('ion-radio');
     if (selectedRadio) {
       const currentValue = this.value;
@@ -188,7 +188,7 @@ export class RadioGroup implements ComponentInterface {
 
   render() {
     const { label, labelId } = this;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
 
     return <Host role="radiogroup" aria-labelledby={label ? labelId : null} onClick={this.onClick} class={mode}></Host>;
   }

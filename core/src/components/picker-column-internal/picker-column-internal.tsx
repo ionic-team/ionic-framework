@@ -2,7 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 import { isPlatform } from '@utils/platform';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 import { getElementRoot, raf } from '../../utils/helpers';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/native/haptic';
@@ -12,12 +12,14 @@ import type { PickerInternalCustomEvent } from '../picker-internal/picker-intern
 import type { PickerColumnItem } from './picker-column-internal-interfaces';
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  * @internal
  */
 @Component({
   tag: 'ion-picker-column-internal',
   styleUrls: {
+    base: 'picker-column-internal.scss',
     ios: 'picker-column-internal.ios.scss',
     md: 'picker-column-internal.md.scss',
   },
@@ -28,6 +30,8 @@ export class PickerColumnInternal implements ComponentInterface {
   private isScrolling = false;
   private scrollEndCallback?: () => void;
   private isColumnVisible = false;
+  private parentEl?: HTMLIonPickerInternalElement | null;
+  private canExitInputMode = true;
 
   @State() isActive = false;
 
@@ -110,8 +114,9 @@ export class PickerColumnInternal implements ComponentInterface {
     };
     new IntersectionObserver(visibleCallback, { threshold: 0.001 }).observe(this.el);
 
-    const parentEl = this.el.closest('ion-picker-internal') as HTMLIonPickerInternalElement | null;
+    const parentEl = (this.parentEl = this.el.closest('ion-picker-internal') as HTMLIonPickerInternalElement | null);
     if (parentEl !== null) {
+      // TODO(FW-2832): type
       parentEl.addEventListener('ionInputModeChange', (ev: any) => this.inputModeChange(ev));
     }
   }
@@ -141,7 +146,7 @@ export class PickerColumnInternal implements ComponentInterface {
     const activeEl = this.activeItem;
 
     if (activeEl) {
-      this.centerPickerItemInView(activeEl, false);
+      this.centerPickerItemInView(activeEl, false, false);
     }
   }
 
@@ -162,13 +167,21 @@ export class PickerColumnInternal implements ComponentInterface {
     }
   }
 
-  private centerPickerItemInView = (target: HTMLElement, smooth = true) => {
+  private centerPickerItemInView = (target: HTMLElement, smooth = true, canExitInputMode = true) => {
     const { el, isColumnVisible } = this;
     if (isColumnVisible) {
       // (Vertical offset from parent) - (three empty picker rows) + (half the height of the target to ensure the scroll triggers)
       const top = target.offsetTop - 3 * target.clientHeight + target.clientHeight / 2;
 
       if (el.scrollTop !== top) {
+        /**
+         * Setting this flag prevents input
+         * mode from exiting in the picker column's
+         * scroll callback. This is useful when the user manually
+         * taps an item or types on the keyboard as both
+         * of these can cause a scroll to occur.
+         */
+        this.canExitInputMode = canExitInputMode;
         el.scroll({
           top,
           left: 0,
@@ -238,7 +251,7 @@ export class PickerColumnInternal implements ComponentInterface {
     const enableHaptics = isPlatform('ios');
     const { el } = this;
 
-    let timeout: any;
+    let timeout: ReturnType<typeof setTimeout> | undefined;
     let activeEl: HTMLElement | null = this.activeItem;
 
     const scrollCallback = () => {
@@ -261,12 +274,13 @@ export class PickerColumnInternal implements ComponentInterface {
         const centerX = bbox.x + bbox.width / 2;
         const centerY = bbox.y + bbox.height / 2;
 
-        const activeElement = el.shadowRoot!.elementFromPoint(centerX, centerY) as HTMLButtonElement;
+        const activeElement = el.shadowRoot!.elementFromPoint(centerX, centerY) as HTMLButtonElement | null;
+
         if (activeEl !== null) {
           activeEl.classList.remove(PICKER_COL_ACTIVE);
         }
 
-        if (activeElement.disabled) {
+        if (activeElement === null || activeElement.disabled) {
           return;
         }
 
@@ -276,6 +290,21 @@ export class PickerColumnInternal implements ComponentInterface {
          */
         if (activeElement !== activeEl) {
           enableHaptics && hapticSelectionChanged();
+
+          if (this.canExitInputMode) {
+            /**
+             * The native iOS wheel picker
+             * only dismisses the keyboard
+             * once the selected item has changed
+             * as a result of a swipe
+             * from the user. If `canExitInputMode` is
+             * `false` then this means that the
+             * scroll is happening as a result of
+             * the `value` property programmatically changing
+             * either by an application or by the user via the keyboard.
+             */
+            this.exitInputMode();
+          }
         }
 
         activeEl = activeElement;
@@ -296,6 +325,14 @@ export class PickerColumnInternal implements ComponentInterface {
             scrollEndCallback();
             this.scrollEndCallback = undefined;
           }
+
+          /**
+           * Reset this flag as the
+           * next scroll interaction could
+           * be a scroll from the user. In this
+           * case, we should exit input mode.
+           */
+          this.canExitInputMode = true;
 
           const dataIndex = activeElement.getAttribute('data-index');
 
@@ -331,6 +368,31 @@ export class PickerColumnInternal implements ComponentInterface {
     });
   };
 
+  /**
+   * Tells the parent picker to
+   * exit text entry mode. This is only called
+   * when the selected item changes during scroll, so
+   * we know that the user likely wants to scroll
+   * instead of type.
+   */
+  private exitInputMode = () => {
+    const { parentEl } = this;
+
+    if (parentEl == null) return;
+
+    parentEl.exitInputMode();
+
+    /**
+     * setInputModeActive only takes
+     * effect once scrolling stops to avoid
+     * a component re-render while scrolling.
+     * However, we want the visual active
+     * indicator to go away immediately, so
+     * we call classList.remove here.
+     */
+    this.el.classList.remove('picker-column-active');
+  };
+
   get activeItem() {
     return getElementRoot(this.el).querySelector(
       `.picker-item[data-value="${this.value}"]:not([disabled])`
@@ -339,7 +401,7 @@ export class PickerColumnInternal implements ComponentInterface {
 
   render() {
     const { items, color, isActive, numericInput } = this;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
 
     return (
       <Host
@@ -374,7 +436,7 @@ export class PickerColumnInternal implements ComponentInterface {
               data-value={item.value}
               data-index={index}
               onClick={(ev: Event) => {
-                this.centerPickerItemInView(ev.target as HTMLElement);
+                this.centerPickerItemInView(ev.target as HTMLElement, true);
               }}
               disabled={item.disabled}
             >

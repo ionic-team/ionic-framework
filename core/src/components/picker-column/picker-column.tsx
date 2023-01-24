@@ -1,17 +1,22 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, Watch, h } from '@stencil/core';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet, getIonBehavior } from '../../global/ionic-global';
 import type { Gesture, GestureDetail, PickerColumn } from '../../interface';
 import { clamp } from '../../utils/helpers';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/native/haptic';
+import { getClassMap } from '../../utils/theme';
 
 /**
  * @internal
+ *
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
 @Component({
   tag: 'ion-picker-column',
   styleUrls: {
+    base: 'picker-column.scss',
     ios: 'picker-column.ios.scss',
     md: 'picker-column.md.scss',
   },
@@ -28,8 +33,8 @@ export class PickerColumnCmp implements ComponentInterface {
   private y = 0;
   private optsEl?: HTMLElement;
   private gesture?: Gesture;
-  private rafId: any;
-  private tmrId: any;
+  private rafId?: ReturnType<typeof requestAnimationFrame>;
+  private tmrId?: ReturnType<typeof setTimeout>;
   private noAnimate = true;
 
   @Element() el!: HTMLElement;
@@ -51,9 +56,9 @@ export class PickerColumnCmp implements ComponentInterface {
     let pickerRotateFactor = 0;
     let pickerScaleFactor = 0.81;
 
-    const mode = getIonMode(this);
+    const platform = getIonBehavior(this);
 
-    if (mode === 'ios') {
+    if (platform === 'ios') {
       pickerRotateFactor = -0.46;
       pickerScaleFactor = 1;
     }
@@ -90,8 +95,8 @@ export class PickerColumnCmp implements ComponentInterface {
   }
 
   disconnectedCallback() {
-    cancelAnimationFrame(this.rafId);
-    clearTimeout(this.tmrId);
+    if (this.rafId !== undefined) cancelAnimationFrame(this.rafId);
+    if (this.tmrId) clearTimeout(this.tmrId);
     if (this.gesture) {
       this.gesture.destroy();
       this.gesture = undefined;
@@ -110,7 +115,7 @@ export class PickerColumnCmp implements ComponentInterface {
     this.velocity = 0;
 
     // set what y position we're at
-    cancelAnimationFrame(this.rafId);
+    if (this.rafId !== undefined) cancelAnimationFrame(this.rafId);
     this.update(y, duration, true);
 
     this.emitColChange();
@@ -253,7 +258,7 @@ export class PickerColumnCmp implements ComponentInterface {
     hapticSelectionStart();
 
     // reset everything
-    cancelAnimationFrame(this.rafId);
+    if (this.rafId !== undefined) cancelAnimationFrame(this.rafId);
     const options = this.col.options;
     let minY = options.length - 1;
     let maxY = 0;
@@ -362,7 +367,7 @@ export class PickerColumnCmp implements ComponentInterface {
   render() {
     const col = this.col;
     const Button = 'button' as any;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     return (
       <Host
         class={{
@@ -370,6 +375,7 @@ export class PickerColumnCmp implements ComponentInterface {
           'picker-col': true,
           'picker-opts-left': this.col.align === 'left',
           'picker-opts-right': this.col.align === 'right',
+          ...getClassMap(col.cssClass),
         }}
         style={{
           'max-width': this.col.columnWidth,

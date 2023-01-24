@@ -2,7 +2,7 @@ import type { ComponentInterface } from '@stencil/core';
 import { Build, Component, Element, Host, Method, h } from '@stencil/core';
 
 import { config } from '../../global/config';
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet } from '../../global/ionic-global';
 import { isPlatform } from '../../utils/platform';
 
 @Component({
@@ -10,7 +10,7 @@ import { isPlatform } from '../../utils/platform';
   styleUrl: 'app.scss',
 })
 export class App implements ComponentInterface {
-  private focusVisible?: any;
+  private focusVisible?: any; // TODO(FW-2832): type
 
   @Element() el!: HTMLElement;
 
@@ -64,7 +64,7 @@ export class App implements ComponentInterface {
   }
 
   render() {
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     return (
       <Host
         class={{

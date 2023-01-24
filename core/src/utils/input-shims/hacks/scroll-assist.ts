@@ -108,7 +108,7 @@ const jsSetFocus = async (
   }
 
   if (typeof window !== 'undefined') {
-    let scrollContentTimeout: any;
+    let scrollContentTimeout: ReturnType<typeof setTimeout>;
     const scrollContent = async () => {
       // clean up listeners and timeouts
       if (scrollContentTimeout !== undefined) {

@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Watch, Component, Element, Event, Host, Method, Prop, h, readTask } from '@stencil/core';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet, getIonBehavior } from '../../global/ionic-global';
 import type {
   ActionSheetButton,
   AnimationBuilder,
@@ -31,11 +31,13 @@ import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
 @Component({
   tag: 'ion-action-sheet',
   styleUrls: {
+    base: 'action-sheet.scss',
     ios: 'action-sheet.ios.scss',
     md: 'action-sheet.md.scss',
   },
@@ -324,7 +326,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
      * 3. A wrapper ref does not exist
      */
     const { groupEl, wrapperEl } = this;
-    if (this.gesture || getIonMode(this) === 'md' || !wrapperEl || !groupEl) {
+    if (this.gesture || getIonBehavior(this) === 'md' || !wrapperEl || !groupEl) {
       return;
     }
 
@@ -341,7 +343,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
 
   render() {
     const { header, htmlAttributes, overlayIndex } = this;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const allButtons = this.getButtons();
     const cancelButton = allButtons.find((b) => b.role === 'cancel');
     const buttons = allButtons.filter((b) => b.role !== 'cancel');
@@ -388,7 +390,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
               {buttons.map((b) => (
                 <button type="button" id={b.id} class={buttonClass(b)} onClick={() => this.buttonClick(b)}>
                   <span class="action-sheet-button-inner">
-                    {b.icon && <ion-icon icon={b.icon} lazy={false} class="action-sheet-icon" />}
+                    {b.icon && <ion-icon icon={b.icon} aria-hidden="true" lazy={false} class="action-sheet-icon" />}
                     {b.text}
                   </span>
                   {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
@@ -400,7 +402,9 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
               <div class="action-sheet-group action-sheet-group-cancel">
                 <button type="button" class={buttonClass(cancelButton)} onClick={() => this.buttonClick(cancelButton)}>
                   <span class="action-sheet-button-inner">
-                    {cancelButton.icon && <ion-icon icon={cancelButton.icon} lazy={false} class="action-sheet-icon" />}
+                    {cancelButton.icon && (
+                      <ion-icon icon={cancelButton.icon} aria-hidden="true" lazy={false} class="action-sheet-icon" />
+                    )}
                     {cancelButton.text}
                   </span>
                   {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}

@@ -1,5 +1,7 @@
+import { printIonWarning } from '@utils/logging';
+
 import { config } from '../global/config';
-import { getIonMode } from '../global/ionic-global';
+import { getIonBehavior } from '../global/ionic-global';
 import type {
   ActionSheetOptions,
   AlertOptions,
@@ -419,11 +421,11 @@ export const present = async <OverlayPresentOptions>(
   overlay.willPresent.emit();
   overlay.willPresentShorthand?.emit();
 
-  const mode = getIonMode(overlay);
+  const platform = getIonBehavior(overlay);
   // get the user's animation fn if one was provided
   const animationBuilder = overlay.enterAnimation
     ? overlay.enterAnimation
-    : config.get(name, mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
+    : config.get(name, platform === 'ios' ? iosEnterAnimation : mdEnterAnimation);
 
   const completed = await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
   if (completed) {
@@ -503,10 +505,10 @@ export const dismiss = async <OverlayDismissOptions>(
     overlay.willDismiss.emit({ data, role });
     overlay.willDismissShorthand?.emit({ data, role });
 
-    const mode = getIonMode(overlay);
+    const platform = getIonBehavior(overlay);
     const animationBuilder = overlay.leaveAnimation
       ? overlay.leaveAnimation
-      : config.get(name, mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
+      : config.get(name, platform === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
 
     // If dismissed via gesture, no need to play leaving animation again
     if (role !== GESTURE) {
@@ -737,6 +739,10 @@ export const createTriggerController = () => {
 
     const triggerEl = trigger !== undefined ? document.getElementById(trigger) : null;
     if (!triggerEl) {
+      printIonWarning(
+        `A trigger element with the ID "${trigger}" was not found in the DOM. The trigger element must be in the DOM when the "trigger" property is set on an overlay component.`,
+        el
+      );
       return;
     }
 

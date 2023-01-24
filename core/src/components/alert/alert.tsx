@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Listen, Method, Prop, Watch, forceUpdate, h } from '@stencil/core';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet, getIonBehavior } from '../../global/ionic-global';
 import type {
   AlertButton,
   AlertInput,
@@ -33,12 +33,16 @@ import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
 
+// TODO(FW-2832): types
+
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
 @Component({
   tag: 'ion-alert',
   styleUrls: {
+    base: 'alert.scss',
     ios: 'alert.ios.scss',
     md: 'alert.md.scss',
   },
@@ -346,7 +350,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
      * 2. App is running in MD mode
      * 3. A wrapper ref does not exist
      */
-    if (this.gesture || getIonMode(this) === 'md' || !this.wrapperEl) {
+    if (this.gesture || getIonBehavior(this) === 'md' || !this.wrapperEl) {
       return;
     }
 
@@ -503,7 +507,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
   private renderCheckbox() {
     const inputs = this.processedInputs;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
 
     if (inputs.length === 0) {
       return null;
@@ -652,7 +656,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
   private renderAlertButtons() {
     const buttons = this.processedButtons;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const alertButtonGroupClass = {
       'alert-button-group': true,
       'alert-button-group-vertical': buttons.length > 2,
@@ -677,7 +681,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
   render() {
     const { overlayIndex, header, subHeader, message, htmlAttributes } = this;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const hdrId = `alert-${overlayIndex}-hdr`;
     const subHdrId = `alert-${overlayIndex}-sub-hdr`;
     const msgId = `alert-${overlayIndex}-msg`;

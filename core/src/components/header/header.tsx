@@ -1,7 +1,7 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, h, writeTask } from '@stencil/core';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet, getIonBehavior } from '../../global/ionic-global';
 import { findIonContent, getScrollElement, printIonContentErrorMsg } from '../../utils/content';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes } from '../../utils/helpers';
@@ -18,19 +18,21 @@ import {
 } from './header.utils';
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
 @Component({
   tag: 'ion-header',
   styleUrls: {
+    base: 'header.scss',
     ios: 'header.ios.scss',
     md: 'header.md.scss',
   },
 })
 export class Header implements ComponentInterface {
   private scrollEl?: HTMLElement;
-  private contentScrollCallback?: any;
-  private intersectionObserver?: any;
+  private contentScrollCallback?: () => void;
+  private intersectionObserver?: IntersectionObserver;
   private collapsibleMainHeader?: HTMLElement;
   private inheritedAttributes: Attributes = {};
 
@@ -71,9 +73,9 @@ export class Header implements ComponentInterface {
   }
 
   private async checkCollapsibleHeader() {
-    const mode = getIonMode(this);
+    const platform = getIonBehavior(this);
 
-    if (mode !== 'ios') {
+    if (platform !== 'ios') {
       return;
     }
 
@@ -153,9 +155,9 @@ export class Header implements ComponentInterface {
     this.scrollEl = await getScrollElement(contentEl);
 
     const headers = pageEl.querySelectorAll('ion-header');
-    this.collapsibleMainHeader = Array.from(headers).find((header: any) => header.collapse !== 'condense') as
-      | HTMLElement
-      | undefined;
+    this.collapsibleMainHeader = Array.from(headers).find(
+      (header: HTMLIonHeaderElement) => header.collapse !== 'condense'
+    ) as HTMLElement | undefined;
 
     if (!this.collapsibleMainHeader) {
       return;
@@ -177,7 +179,7 @@ export class Header implements ComponentInterface {
      * as well as progressively showing/hiding the main header
      * border as the top-most toolbar collapses or expands.
      */
-    const toolbarIntersection = (ev: any) => {
+    const toolbarIntersection = (ev: IntersectionObserverEntry[]) => {
       handleToolbarIntersection(ev, mainHeaderIndex, scrollHeaderIndex, this.scrollEl!);
     };
 
@@ -206,7 +208,7 @@ export class Header implements ComponentInterface {
 
   render() {
     const { translucent, inheritedAttributes } = this;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const collapse = this.collapse || 'none';
 
     // banner role must be at top level, so remove role if inside a menu

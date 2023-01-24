@@ -2,13 +2,14 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, h } from '@stencil/core';
 import { chevronForwardOutline, ellipsisHorizontal } from 'ionicons/icons';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet } from '../../global/ionic-global';
 import type { AnimationBuilder, BreadcrumbCollapsedClickEventDetail, Color, RouterDirection } from '../../interface';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes } from '../../utils/helpers';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @part native - The native HTML anchor or div element that wraps all child elements.
@@ -18,6 +19,7 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 @Component({
   tag: 'ion-breadcrumb',
   styleUrls: {
+    base: 'breadcrumb.scss',
     ios: 'breadcrumb.ios.scss',
     md: 'breadcrumb.md.scss',
   },
@@ -165,7 +167,7 @@ export class Breadcrumb implements ComponentInterface {
     // Links can still be tabbed to when set to disabled if they have an href
     // in order to truly disable them we can keep it as an anchor but remove the href
     const href = disabled ? undefined : this.href;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const attrs =
       TagType === 'span'
         ? {}
@@ -212,13 +214,14 @@ export class Breadcrumb implements ComponentInterface {
         {showCollapsedIndicator && (
           <button
             part="collapsed-indicator"
+            aria-label="Show more breadcrumbs"
             onClick={() => this.collapsedIndicatorClick()}
             ref={(collapsedEl) => (this.collapsedRef = collapsedEl)}
             class={{
               'breadcrumbs-collapsed-indicator': true,
             }}
           >
-            <ion-icon icon={ellipsisHorizontal} lazy={false}></ion-icon>
+            <ion-icon aria-hidden="true" icon={ellipsisHorizontal} lazy={false}></ion-icon>
           </button>
         )}
         {showSeparator && (

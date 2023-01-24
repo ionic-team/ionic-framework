@@ -4,13 +4,29 @@
 // iOS Select
 // --------------------------------------------------
 
-:host {
+// TODO FW-3194 - Remove this
+:host(.legacy-select) {
   --padding-top: #{$select-ios-padding-top};
   --padding-end: #{$select-ios-padding-end};
   --padding-bottom: #{$select-ios-padding-bottom};
   --padding-start: #{$select-ios-padding-start};
 }
 
+// TODO FW-3194 - Move this to host
+:host(:not(.legacy-select)) {
+  min-height: 44px;
+}
+
+/**
+ * Since the label sits on top of the element,
+ * the component needs to be taller otherwise the
+ * label will appear too close to the select text.
+ */
+:host(.select-label-placement-floating),
+:host(.select-label-placement-stacked) {
+  min-height: 56px;
+}
+
 .select-icon {
-  opacity: .33;
+  color: #{$text-color-step-700};
 }

@@ -3,7 +3,7 @@ import { Component, Element, Host, Listen, Prop, State, Watch, forceUpdate, h } 
 import { printIonError, printIonWarning } from '@utils/logging';
 import { chevronForward } from 'ionicons/icons';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet } from '../../global/ionic-global';
 import type { AnimationBuilder, Color, CssClassMap, RouterDirection, StyleEventDetail } from '../../interface';
 import type { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import type { Attributes } from '../../utils/helpers';
@@ -14,6 +14,7 @@ import type { InputInputEventDetail } from '../input/input-interface';
 import type { CounterFormatter } from './item-interface';
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @slot - Content is placed between the named slots if provided without a slot.
@@ -28,6 +29,7 @@ import type { CounterFormatter } from './item-interface';
 @Component({
   tag: 'ion-item',
   styleUrls: {
+    base: 'item.scss',
     ios: 'item.ios.scss',
     md: 'item.md.scss',
   },
@@ -178,7 +180,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
 
     const tagName = (ev.target as HTMLElement).tagName;
     const updatedStyles = ev.detail;
-    const newStyles = {} as any;
+    const newStyles = {} as CssClassMap;
     const childStyles = this.itemStyles.get(tagName) || {};
 
     let hasStyleChange = false;
@@ -364,8 +366,8 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
       routerDirection,
       inheritedAriaAttributes,
     } = this;
-    const childStyles = {} as any;
-    const mode = getIonMode(this);
+    const childStyles = {} as StyleEventDetail;
+    const mode = getIonStylesheet(this);
     const clickable = this.isClickable();
     const canActivate = this.canActivate();
     const TagType = clickable ? (href === undefined ? 'button' : 'a') : ('div' as any);
@@ -405,6 +407,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
           ...createColorClasses(this.color, {
             item: true,
             [mode]: true,
+            'item-lines-default': lines === undefined,
             [`item-lines-${lines}`]: lines !== undefined,
             [`item-fill-${fillValue}`]: true,
             [`item-shape-${shape}`]: shape !== undefined,

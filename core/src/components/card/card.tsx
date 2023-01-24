@@ -1,7 +1,7 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Element, Component, Host, Prop, h } from '@stencil/core';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet } from '../../global/ionic-global';
 import type { AnimationBuilder, Color, Mode, RouterDirection } from '../../interface';
 import type { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import type { Attributes } from '../../utils/helpers';
@@ -9,6 +9,7 @@ import { inheritAttributes } from '../../utils/helpers';
 import { createColorClasses, openURL } from '../../utils/theme';
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @part native - The native HTML button, anchor, or div element that wraps all child elements.
@@ -16,6 +17,7 @@ import { createColorClasses, openURL } from '../../utils/theme';
 @Component({
   tag: 'ion-card',
   styleUrls: {
+    base: 'card.scss',
     ios: 'card.ios.scss',
     md: 'card.md.scss',
   },
@@ -128,7 +130,7 @@ export class Card implements ComponentInterface, AnchorInterface, ButtonInterfac
   }
 
   render() {
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     return (
       <Host
         class={createColorClasses(this.color, {

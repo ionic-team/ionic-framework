@@ -2,7 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
 
 import { config } from '../../global/config';
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet, getIonBehavior } from '../../global/ionic-global';
 import type {
   Animation,
   AnimationBuilder,
@@ -30,6 +30,7 @@ import {
   eventMethod,
   prepareOverlay,
   present,
+  createTriggerController,
 } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 import { deepReady } from '../../utils/transition';
@@ -43,7 +44,10 @@ import { createSheetGesture } from './gestures/sheet';
 import { createSwipeToCloseGesture } from './gestures/swipe-to-close';
 import { setCardStatusBarDark, setCardStatusBarDefault } from './utils';
 
+// TODO(FW-2832): types
+
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @slot - Content is placed inside of the `.modal-content` element.
@@ -55,19 +59,20 @@ import { setCardStatusBarDark, setCardStatusBarDefault } from './utils';
 @Component({
   tag: 'ion-modal',
   styleUrls: {
+    base: 'modal.scss',
     ios: 'modal.ios.scss',
     md: 'modal.md.scss',
   },
   shadow: true,
 })
 export class Modal implements ComponentInterface, OverlayInterface {
+  private readonly triggerController = createTriggerController();
   private gesture?: Gesture;
   private modalIndex = modalIds++;
   private modalId?: string;
   private coreDelegate: FrameworkDelegate = CoreDelegate();
   private currentTransition?: Promise<any>;
   private sheetTransition?: Promise<any>;
-  private destroyTriggerInteraction?: () => void;
   private isSheetModal = false;
   private currentBreakpoint?: number;
   private wrapperEl?: HTMLElement;
@@ -236,8 +241,11 @@ export class Modal implements ComponentInterface, OverlayInterface {
    */
   @Prop() trigger: string | undefined;
   @Watch('trigger')
-  onTriggerChange() {
-    this.configureTriggerInteraction();
+  triggerChanged() {
+    const { trigger, el, triggerController } = this;
+    if (trigger) {
+      triggerController.addClickListener(el, trigger);
+    }
   }
 
   /**
@@ -318,17 +326,13 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   connectedCallback() {
-    const { configureTriggerInteraction, el } = this;
+    const { el } = this;
     prepareOverlay(el);
-    configureTriggerInteraction();
+    this.triggerChanged();
   }
 
   disconnectedCallback() {
-    const { destroyTriggerInteraction } = this;
-
-    if (destroyTriggerInteraction) {
-      destroyTriggerInteraction();
-    }
+    this.triggerController.removeClickListener();
   }
 
   componentWillLoad() {
@@ -362,32 +366,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
     this.breakpointsChanged(this.breakpoints);
   }
-
-  private configureTriggerInteraction = () => {
-    const { trigger, el, destroyTriggerInteraction } = this;
-
-    if (destroyTriggerInteraction) {
-      destroyTriggerInteraction();
-    }
-
-    const triggerEl = trigger !== undefined ? document.getElementById(trigger) : null;
-    if (!triggerEl) {
-      return;
-    }
-
-    const configureTriggerInteraction = (trigEl: HTMLElement, modalEl: HTMLIonModalElement) => {
-      const openModal = () => {
-        modalEl.present();
-      };
-      trigEl.addEventListener('click', openModal);
-
-      return () => {
-        trigEl.removeEventListener('click', openModal);
-      };
-    };
-
-    this.destroyTriggerInteraction = configureTriggerInteraction(triggerEl, el);
-  };
 
   /**
    * Determines whether or not an overlay
@@ -490,7 +468,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
      * start of the animation so that it completes
      * by the time the card animation is done.
      */
-    if (hasCardModal && getIonMode(this) === 'ios') {
+    if (hasCardModal && getIonBehavior(this) === 'ios') {
       // Cache the original status bar color before the modal is presented
       this.statusBarStyle = await StatusBar.getStyle();
       setCardStatusBarDark();
@@ -532,7 +510,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   private initSwipeToClose() {
-    if (getIonMode(this) !== 'ios') {
+    if (getIonBehavior(this) !== 'ios') {
       return;
     }
 
@@ -661,7 +639,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
      * finishes when the dismiss animation does.
      */
     const hasCardModal = presentingElement !== undefined;
-    if (hasCardModal && getIonMode(this) === 'ios') {
+    if (hasCardModal && getIonBehavior(this) === 'ios') {
       setCardStatusBarDefault(this.statusBarStyle);
     }
 
@@ -848,7 +826,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     const { handle, isSheetModal, presentingElement, htmlAttributes, handleBehavior, inheritedAttributes } = this;
 
     const showHandle = handle !== false && isSheetModal;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const { modalId } = this;
     const isCardModal = presentingElement !== undefined && mode === 'ios';
     const isHandleCycle = handleBehavior === 'cycle';

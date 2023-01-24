@@ -1,11 +1,13 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet } from '../../global/ionic-global';
 import type { Gesture, GestureDetail, ItemReorderEventDetail } from '../../interface';
 import { findClosestIonContent, getScrollElement } from '../../utils/content';
 import { raf } from '../../utils/helpers';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/native/haptic';
+
+// TODO(FW-2832): types
 
 const enum ReorderGroupState {
   Idle = 0,
@@ -297,7 +299,7 @@ export class ReorderGroup implements ComponentInterface {
   }
 
   render() {
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     return (
       <Host
         class={{

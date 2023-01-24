@@ -28,6 +28,7 @@
   --height: auto;
   --offset-x: 0px;
   --offset-y: 0px;
+  --backdrop-opacity: 0;
 
   @include position(0, 0, 0, 0);
 
