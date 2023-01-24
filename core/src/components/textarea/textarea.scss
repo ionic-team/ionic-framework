@@ -147,11 +147,14 @@
   }
 }
 
-.native-textarea,
 :host(.legacy-textarea) .textarea-legacy-wrapper::after {
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
-  @include text-inherit();
   @include border-radius(var(--border-radius));
+}
+
+.native-textarea,
+:host(.legacy-textarea) .textarea-legacy-wrapper::after {
+  @include text-inherit();
 
   grid-area: 1 / 1 / 2 / 2;
 
