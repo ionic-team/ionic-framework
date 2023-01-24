@@ -119,8 +119,8 @@
  */
 :host(.textarea-fill-outline.textarea-label-placement-stacked[auto-grow]) .native-wrapper::after,
 :host(.textarea-fill-outline.textarea-label-placement-floating[auto-grow]) .native-wrapper::after {
-  @include margin(12px, 0, 12px, 0);
-  @include padding(0, 0, 18px, 0);
+  @include margin(12px, 0px, 0px, 0px);
+  @include padding(0px, 0px, 18px, 0px);
 }
 
 // Textarea Fill: Outline Outline Container
