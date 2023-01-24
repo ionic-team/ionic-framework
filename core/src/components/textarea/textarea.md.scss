@@ -1,4 +1,5 @@
 @import "./textarea";
+@import "./textarea.vars";
 @import "./textarea.md.vars";
 @import "./textarea.md.solid";
 @import "./textarea.md.outline";
@@ -11,7 +12,7 @@
   --border-color: #{$item-md-border-color};
   --padding-top: 18px;
   --padding-end: 0px;
-  --padding-bottom: 0px;
+  --padding-bottom: #{$textarea-padding-bottom};
   --padding-start: 0px;
 
   font-size: $textarea-md-font-size;
