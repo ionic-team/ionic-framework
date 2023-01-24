@@ -75,12 +75,14 @@
   background: var(--background);
 }
 
-:host(.ion-color) {
-  background: initial;
+:host(.legacy-textarea.ion-color) {
+  color: current-color(base);
 }
 
 :host(.ion-color) {
-  color: current-color(base);
+  --highlight-color-focused: #{current-color(base)};
+
+  background: initial;
 }
 
 // Textarea Within An Item
@@ -253,6 +255,13 @@
   width: 100%;
 
   height: 100%;
+}
+
+// Textarea Native
+// ----------------------------------------------------------------
+
+:host(.has-focus) textarea {
+  caret-color: var(--highlight-color);
 }
 
 .native-wrapper textarea {
