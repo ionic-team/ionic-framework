@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, Watch, h } from '@stencil/core';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet, getIonBehavior } from '../../global/ionic-global';
 import type { Gesture, GestureDetail, PickerColumn } from '../../interface';
 import { clamp } from '../../utils/helpers';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/native/haptic';
@@ -9,10 +9,14 @@ import { getClassMap } from '../../utils/theme';
 
 /**
  * @internal
+ *
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
 @Component({
   tag: 'ion-picker-column',
   styleUrls: {
+    base: 'picker-column.scss',
     ios: 'picker-column.ios.scss',
     md: 'picker-column.md.scss',
   },
@@ -52,9 +56,9 @@ export class PickerColumnCmp implements ComponentInterface {
     let pickerRotateFactor = 0;
     let pickerScaleFactor = 0.81;
 
-    const mode = getIonMode(this);
+    const platform = getIonBehavior(this);
 
-    if (mode === 'ios') {
+    if (platform === 'ios') {
       pickerRotateFactor = -0.46;
       pickerScaleFactor = 1;
     }
@@ -363,7 +367,7 @@ export class PickerColumnCmp implements ComponentInterface {
   render() {
     const col = this.col;
     const Button = 'button' as any;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     return (
       <Host
         class={{

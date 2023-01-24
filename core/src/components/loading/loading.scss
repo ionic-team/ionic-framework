@@ -23,6 +23,7 @@
   --width: auto;
   --min-height: auto;
   --height: auto;
+  --backdrop-opacity: 0;
 
   @include font-smoothing();
   @include position(0, 0, 0, 0);

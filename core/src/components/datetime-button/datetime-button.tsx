@@ -1,7 +1,7 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, State, h } from '@stencil/core';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet } from '../../global/ionic-global';
 import type { Color, DatetimePresentation } from '../../interface';
 import { componentOnReady, addEventListener } from '../../utils/helpers';
 import { printIonError } from '../../utils/logging';
@@ -11,6 +11,7 @@ import { getMonthAndYear, getMonthDayAndYear, getLocalizedDateTime, getLocalized
 import { is24Hour } from '../datetime/utils/helpers';
 import { parseDate } from '../datetime/utils/parse';
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @slot date-target - Content displayed inside of the date button.
@@ -396,7 +397,7 @@ export class DatetimeButton implements ComponentInterface {
   render() {
     const { color, dateText, timeText, selectedButton, datetimeActive, disabled } = this;
 
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
 
     return (
       <Host

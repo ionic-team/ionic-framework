@@ -2,7 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, h } from '@stencil/core';
 import { close } from 'ionicons/icons';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet } from '../../global/ionic-global';
 import type { AnimationBuilder, Color, RouterDirection } from '../../interface';
 import type { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import { inheritAriaAttributes } from '../../utils/helpers';
@@ -10,6 +10,7 @@ import type { Attributes } from '../../utils/helpers';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @part native - The native HTML button or anchor element that wraps all child elements.
@@ -18,6 +19,7 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 @Component({
   tag: 'ion-fab-button',
   styleUrls: {
+    base: 'fab-button.scss',
     ios: 'fab-button.ios.scss',
     md: 'fab-button.md.scss',
   },
@@ -152,7 +154,7 @@ export class FabButton implements ComponentInterface, AnchorInterface, ButtonInt
   render() {
     const { el, disabled, color, href, activated, show, translucent, size, inheritedAttributes } = this;
     const inList = hostContext('ion-fab-list', el);
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const TagType = href === undefined ? 'button' : ('a' as any);
     const attrs =
       TagType === 'button'

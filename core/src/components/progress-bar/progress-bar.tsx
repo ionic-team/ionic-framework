@@ -2,12 +2,13 @@ import type { ComponentInterface } from '@stencil/core';
 import { Component, Host, Prop, h } from '@stencil/core';
 
 import { config } from '../../global/config';
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 import { clamp } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @part progress - The progress bar that shows the current value when `type` is `"determinate"` and slides back and forth when `type` is `"indeterminate"`.
@@ -18,6 +19,7 @@ import { createColorClasses } from '../../utils/theme';
 @Component({
   tag: 'ion-progress-bar',
   styleUrls: {
+    base: 'progress-bar.scss',
     ios: 'progress-bar.ios.scss',
     md: 'progress-bar.md.scss',
   },
@@ -58,7 +60,7 @@ export class ProgressBar implements ComponentInterface {
   render() {
     const { color, type, reversed, value, buffer } = this;
     const paused = config.getBoolean('_testing');
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     return (
       <Host
         role="progressbar"

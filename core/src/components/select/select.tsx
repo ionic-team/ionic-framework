@@ -6,7 +6,7 @@ import { printIonWarning } from '@utils/logging';
 import { isRTL } from '@utils/rtl';
 import { caretDownSharp } from 'ionicons/icons';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet, getIonBehavior } from '../../global/ionic-global';
 import type {
   ActionSheetButton,
   ActionSheetOptions,
@@ -32,6 +32,7 @@ import type { SelectCompareFn } from './select-interface';
 // TODO(FW-2832): types
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @part placeholder - The text displayed in the select when there is no value.
@@ -41,6 +42,7 @@ import type { SelectCompareFn } from './select-interface';
 @Component({
   tag: 'ion-select',
   styleUrls: {
+    base: 'select.scss',
     ios: 'select.ios.scss',
     md: 'select.md.scss',
   },
@@ -432,7 +434,8 @@ export class Select implements ComponentInterface {
   private async openPopover(ev: UIEvent) {
     const { fill } = this;
     const interfaceOptions = this.interfaceOptions;
-    const mode = getIonMode(this);
+    const style = getIonStylesheet(this);
+    const mode = getIonBehavior(this);
     const showBackdrop = mode === 'md' ? false : true;
     const multiple = this.multiple;
     const value = this.value;
@@ -458,9 +461,9 @@ export class Select implements ComponentInterface {
     } else {
       /**
        * The popover should take up the full width
-       * when using a fill in MD mode.
+       * when using a fill in MD style.
        */
-      if (mode === 'md' && fill !== undefined) {
+      if (style === 'md' && fill !== undefined) {
         size = 'cover';
 
         /**
@@ -515,7 +518,7 @@ export class Select implements ComponentInterface {
   }
 
   private async openActionSheet() {
-    const mode = getIonMode(this);
+    const mode = getIonBehavior(this);
     const interfaceOptions = this.interfaceOptions;
     const actionSheetOpts: ActionSheetOptions = {
       mode,
@@ -546,7 +549,7 @@ export class Select implements ComponentInterface {
 
     const interfaceOptions = this.interfaceOptions;
     const inputType = this.multiple ? 'checkbox' : 'radio';
-    const mode = getIonMode(this);
+    const mode = getIonBehavior(this);
 
     const alertOpts: AlertOptions = {
       mode,
@@ -672,7 +675,7 @@ export class Select implements ComponentInterface {
    * when fill="outline".
    */
   private renderLabelContainer() {
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const hasOutlineFill = mode === 'md' && this.fill === 'outline';
 
     if (hasOutlineFill) {
@@ -706,7 +709,7 @@ export class Select implements ComponentInterface {
 
   private renderSelect() {
     const { disabled, el, isExpanded, labelPlacement, justify, placeholder, fill, shape } = this;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const hasFloatingOrStackedLabel = labelPlacement === 'floating' || labelPlacement === 'stacked';
     const justifyEnabled = !hasFloatingOrStackedLabel;
     const rtl = isRTL(el) ? 'rtl' : 'ltr';
@@ -775,7 +778,7 @@ For inputs that do not have a visible label, developers should use "aria-label" 
     }
 
     const { disabled, el, inputId, isExpanded, name, placeholder, value } = this;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const { labelText, labelId } = getAriaLabel(el, inputId);
 
     renderHiddenInput(true, el, name, parseValue(value), disabled);

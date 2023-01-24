@@ -2,7 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 import { isPlatform } from '@utils/platform';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 import { getElementRoot, raf } from '../../utils/helpers';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/native/haptic';
@@ -12,12 +12,14 @@ import type { PickerInternalCustomEvent } from '../picker-internal/picker-intern
 import type { PickerColumnItem } from './picker-column-internal-interfaces';
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  * @internal
  */
 @Component({
   tag: 'ion-picker-column-internal',
   styleUrls: {
+    base: 'picker-column-internal.scss',
     ios: 'picker-column-internal.ios.scss',
     md: 'picker-column-internal.md.scss',
   },
@@ -399,7 +401,7 @@ export class PickerColumnInternal implements ComponentInterface {
 
   render() {
     const { items, color, isActive, numericInput } = this;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
 
     return (
       <Host
