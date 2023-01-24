@@ -536,6 +536,7 @@
 :host(.textarea-label-placement-stacked) .label-text-wrapper,
 :host(.textarea-label-placement-floating) .label-text-wrapper {
   @include transform-origin(start, top);
+  @include padding(0px);
 
   max-width: 100%;
 }
