@@ -6,10 +6,10 @@ set -e
 npm pack ../../../../core
 
 # Pack @ionic/angular
-npm pack ../../../
+npm pack ../../../dist
 
 # Pack @ionic/angular-server
-npm pack ../../../../packages/angular-server
+npm pack ../../../../packages/angular-server/dist
 
 # Install Dependencies
 npm install *.tgz --no-save
