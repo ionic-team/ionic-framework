@@ -1,8 +1,7 @@
-import type { MenuI } from '@components/menu/menu-interface';
-import type { Animation } from '@utils/animation/animation-interface';
-
+import type { MenuI } from '../../../components/menu/menu-interface';
 import { getIonMode } from '../../../global/ionic-global';
 import { createAnimation } from '../../animation/animation';
+import type { Animation } from '../../animation/animation-interface';
 
 import { baseAnimation } from './base';
 

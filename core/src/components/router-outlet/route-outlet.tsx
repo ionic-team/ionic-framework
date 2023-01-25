@@ -1,5 +1,3 @@
-import type { RouterOutletOptions, SwipeGestureHandler } from '@components/nav/nav-interface';
-import type { RouteID, RouterDirection, RouteWrite, NavOutlet } from '@components/router/utils/interface';
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Method, Prop, Watch, h } from '@stencil/core';
 
@@ -17,6 +15,8 @@ import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { shallowEqualStringMap, hasLazyBuild } from '../../utils/helpers';
 import { transition } from '../../utils/transition';
+import type { RouterOutletOptions, SwipeGestureHandler } from '../nav/nav-interface';
+import type { RouteID, RouterDirection, RouteWrite, NavOutlet } from '../router/utils/interface';
 
 @Component({
   tag: 'ion-router-outlet',

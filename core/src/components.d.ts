@@ -11,18 +11,17 @@ import { ActionSheetButton } from "./components/action-sheet/action-sheet-interf
 import { OverlayEventDetail } from "@utils/overlays-interface";
 import { IonicSafeString } from "./utils/sanitization";
 import { AlertButton, AlertInput } from "./components/alert/alert-interface";
-import { RouteID, RouterDirection, RouteWrite } from "@components/router/utils/interface";
+import { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./components/router/utils/interface";
 import { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
 import { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
 import { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
 import { DatetimeChangeEventDetail, DatetimePresentation, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
-import { SpinnerTypes } from "@components/spinner/spinner-configs";
+import { SpinnerTypes } from "./components/spinner/spinner-configs";
 import { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
 import { CounterFormatter } from "./components/item/item-interface";
-import { Side } from "@components/menu/menu-interface";
-import { MenuChangeEventDetail, Side as Side1 } from "./components/menu/menu-interface";
+import { MenuChangeEventDetail, Side } from "./components/menu/menu-interface";
 import { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
-import { NavComponent, NavComponentWithProps, NavOptions, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
+import { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
 import { ViewController } from "./components/nav/view-controller";
 import { PickerButton, PickerColumn } from "./components/picker/picker-interface";
 import { PickerColumnItem } from "./components/picker-column-internal/picker-column-internal-interfaces";
@@ -33,16 +32,12 @@ import { PinFormatter, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, Rang
 import { RefresherEventDetail } from "./components/refresher/refresher-interface";
 import { ItemReorderEventDetail } from "./components/reorder-group/reorder-group-interface";
 import { NavigationHookCallback } from "./components/route/route-interface";
-import { RouterDirection as RouterDirection1, RouterEventDetail } from "./components/router/utils/interface";
-import { RouterOutletOptions, SwipeGestureHandler } from "@components/nav/nav-interface";
 import { SearchbarChangeEventDetail } from "./components/searchbar/searchbar-interface";
 import { SegmentChangeEventDetail } from "./components/segment/segment-interface";
 import { SegmentButtonLayout } from "./components/segment-button/segment-button-interface";
 import { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./components/select/select-interface";
 import { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
-import { SpinnerTypes as SpinnerTypes1 } from "./components/spinner/spinner-configs";
-import { TabBarChangedEventDetail } from "./components/tab-bar/tab-bar-interface";
-import { TabButtonClickEventDetail, TabButtonLayout } from "@components/tab-bar/tab-bar-interface";
+import { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
 import { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
 import { ToastButton, ToastPosition } from "./components/toast/toast-interface";
 import { ToggleChangeEventDetail } from "./components/toggle/toggle-interface";
@@ -52,18 +47,17 @@ export { ActionSheetButton } from "./components/action-sheet/action-sheet-interf
 export { OverlayEventDetail } from "@utils/overlays-interface";
 export { IonicSafeString } from "./utils/sanitization";
 export { AlertButton, AlertInput } from "./components/alert/alert-interface";
-export { RouteID, RouterDirection, RouteWrite } from "@components/router/utils/interface";
+export { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./components/router/utils/interface";
 export { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
 export { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
 export { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
 export { DatetimeChangeEventDetail, DatetimePresentation, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
-export { SpinnerTypes } from "@components/spinner/spinner-configs";
+export { SpinnerTypes } from "./components/spinner/spinner-configs";
 export { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
 export { CounterFormatter } from "./components/item/item-interface";
-export { Side } from "@components/menu/menu-interface";
-export { MenuChangeEventDetail, Side as Side1 } from "./components/menu/menu-interface";
+export { MenuChangeEventDetail, Side } from "./components/menu/menu-interface";
 export { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
-export { NavComponent, NavComponentWithProps, NavOptions, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
+export { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
 export { ViewController } from "./components/nav/view-controller";
 export { PickerButton, PickerColumn } from "./components/picker/picker-interface";
 export { PickerColumnItem } from "./components/picker-column-internal/picker-column-internal-interfaces";
@@ -74,16 +68,12 @@ export { PinFormatter, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, Rang
 export { RefresherEventDetail } from "./components/refresher/refresher-interface";
 export { ItemReorderEventDetail } from "./components/reorder-group/reorder-group-interface";
 export { NavigationHookCallback } from "./components/route/route-interface";
-export { RouterDirection as RouterDirection1, RouterEventDetail } from "./components/router/utils/interface";
-export { RouterOutletOptions, SwipeGestureHandler } from "@components/nav/nav-interface";
 export { SearchbarChangeEventDetail } from "./components/searchbar/searchbar-interface";
 export { SegmentChangeEventDetail } from "./components/segment/segment-interface";
 export { SegmentButtonLayout } from "./components/segment-button/segment-button-interface";
 export { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./components/select/select-interface";
 export { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
-export { SpinnerTypes as SpinnerTypes1 } from "./components/spinner/spinner-configs";
-export { TabBarChangedEventDetail } from "./components/tab-bar/tab-bar-interface";
-export { TabButtonClickEventDetail, TabButtonLayout } from "@components/tab-bar/tab-bar-interface";
+export { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
 export { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
 export { ToastButton, ToastPosition } from "./components/toast/toast-interface";
 export { ToggleChangeEventDetail } from "./components/toggle/toggle-interface";
@@ -1637,7 +1627,7 @@ export namespace Components {
         /**
           * Which side of the view the menu should be placed.
          */
-        "side": Side1;
+        "side": Side;
         /**
           * If `true`, swiping the menu is enabled.
          */
@@ -2463,14 +2453,14 @@ export namespace Components {
          */
         "back": () => Promise<void>;
         "canTransition": () => Promise<string | boolean>;
-        "navChanged": (direction: RouterDirection1) => Promise<boolean>;
+        "navChanged": (direction: RouterDirection) => Promise<boolean>;
         "printDebug": () => Promise<void>;
         /**
           * Navigate to the specified path.
           * @param path The path to navigate to.
           * @param direction The direction of the animation. Defaults to `"forward"`.
          */
-        "push": (path: string, direction?: RouterDirection1, animation?: AnimationBuilder) => Promise<boolean>;
+        "push": (path: string, direction?: RouterDirection, animation?: AnimationBuilder) => Promise<boolean>;
         /**
           * The root path to use when matching URLs. By default, this is set to "/", but you can specify an alternate prefix for all URL paths.
          */
@@ -2799,7 +2789,7 @@ export namespace Components {
         /**
           * The name of the SVG spinner to use. If a name is not provided, the platform's default spinner will be used.
          */
-        "name"?: SpinnerTypes1;
+        "name"?: SpinnerTypes;
         /**
           * If `true`, the spinner's animation will be paused.
          */
@@ -5643,7 +5633,7 @@ declare namespace LocalJSX {
         /**
           * Which side of the view the menu should be placed.
          */
-        "side"?: Side1;
+        "side"?: Side;
         /**
           * If `true`, swiping the menu is enabled.
          */
@@ -6840,7 +6830,7 @@ declare namespace LocalJSX {
         /**
           * The name of the SVG spinner to use. If a name is not provided, the platform's default spinner will be used.
          */
-        "name"?: SpinnerTypes1;
+        "name"?: SpinnerTypes;
         /**
           * If `true`, the spinner's animation will be paused.
          */

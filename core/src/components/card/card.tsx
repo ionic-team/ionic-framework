@@ -1,4 +1,3 @@
-import type { RouterDirection } from '@components/router/utils/interface';
 import type { ComponentInterface } from '@stencil/core';
 import { Element, Component, Host, Prop, h } from '@stencil/core';
 
@@ -8,6 +7,7 @@ import type { AnchorInterface, ButtonInterface } from '../../utils/element-inter
 import type { Attributes } from '../../utils/helpers';
 import { inheritAttributes } from '../../utils/helpers';
 import { createColorClasses, openURL } from '../../utils/theme';
+import type { RouterDirection } from '../router/utils/interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.

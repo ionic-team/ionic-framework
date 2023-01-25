@@ -1,4 +1,3 @@
-import type { SelectPopoverOption } from '../select-popover/select-popover-interface';
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 import { createLegacyFormController } from '@utils/forms';
@@ -24,6 +23,7 @@ import type { Attributes } from '../../utils/helpers';
 import { actionSheetController, alertController, popoverController } from '../../utils/overlays';
 import { createColorClasses, hostContext } from '../../utils/theme';
 import { watchForOptions } from '../../utils/watch-options';
+import type { SelectPopoverOption } from '../select-popover/select-popover-interface';
 
 import type { SelectChangeEventDetail, SelectInterface, SelectCompareFn } from './select-interface';
 

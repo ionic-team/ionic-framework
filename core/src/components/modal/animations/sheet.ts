@@ -1,6 +1,5 @@
-import type { ModalAnimationOptions } from '@components/modal/modal-interface';
-
 import { createAnimation } from '../../../utils/animation/animation';
+import type { ModalAnimationOptions } from '../modal-interface';
 import { getBackdropValueForSheet } from '../utils';
 
 export const createSheetEnterAnimation = (opts: ModalAnimationOptions) => {

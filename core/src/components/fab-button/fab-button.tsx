@@ -1,4 +1,3 @@
-import type { RouterDirection } from '@components/router/utils/interface';
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, h } from '@stencil/core';
 import { close } from 'ionicons/icons';
@@ -9,6 +8,7 @@ import type { AnchorInterface, ButtonInterface } from '../../utils/element-inter
 import { inheritAriaAttributes } from '../../utils/helpers';
 import type { Attributes } from '../../utils/helpers';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
+import type { RouterDirection } from '../router/utils/interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.

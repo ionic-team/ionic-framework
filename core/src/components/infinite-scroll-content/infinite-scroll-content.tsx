@@ -1,4 +1,3 @@
-import type { SpinnerTypes } from '@components/spinner/spinner-configs';
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Host, Prop, h } from '@stencil/core';
 
@@ -6,6 +5,7 @@ import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import type { IonicSafeString } from '../../utils/sanitization';
 import { sanitizeDOMString } from '../../utils/sanitization';
+import type { SpinnerTypes } from '../spinner/spinner-configs';
 
 @Component({
   tag: 'ion-infinite-scroll-content',

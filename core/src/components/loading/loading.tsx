@@ -1,4 +1,3 @@
-import type { SpinnerTypes } from '@components/spinner/spinner-configs';
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Watch, Component, Element, Event, Host, Method, Prop, h } from '@stencil/core';
 import type { OverlayEventDetail } from '@utils/overlays-interface';
@@ -19,6 +18,7 @@ import {
 import type { IonicSafeString } from '../../utils/sanitization';
 import { sanitizeDOMString } from '../../utils/sanitization';
 import { getClassMap } from '../../utils/theme';
+import type { SpinnerTypes } from '../spinner/spinner-configs';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
