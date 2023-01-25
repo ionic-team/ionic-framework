@@ -215,7 +215,3 @@
 :host(.textarea-fill-outline.textarea-label-placement-stacked) .textarea-outline-notch {
   border-top: none;
 }
-
-:host(.textarea-fill-outline) .native-textarea {
-  @include border-radius(0);
-}
