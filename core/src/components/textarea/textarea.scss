@@ -37,7 +37,7 @@
   --placeholder-opacity: #{$placeholder-opacity};
   --padding-top: 0;
   --padding-end: 0;
-  --padding-bottom: #{$textarea-padding-bottom};
+  --padding-bottom: 0;
   --padding-start: 0;
   --border-radius: 0;
   --border-style: solid;
@@ -79,6 +79,11 @@
 // TODO: FW-2876 - Remove this selector
 :host(.legacy-textarea.ion-color) {
   color: current-color(base);
+}
+
+// TODO: FW-2876 - Remove this selector, move styles to :host
+:host(:not(.legacy-textarea)) {
+  --padding-bottom: #{$textarea-padding-bottom};
 }
 
 :host(.ion-color) {
