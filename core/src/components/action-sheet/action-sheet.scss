@@ -45,6 +45,7 @@
   --min-height: auto;
   --height: auto;
   --max-height: calc(100% - (var(--ion-safe-area-top) + var(--ion-safe-area-bottom)));
+  --backdrop-opacity: 0;
 
   @include font-smoothing();
   @include position(0, 0, 0, 0);

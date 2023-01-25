@@ -3,7 +3,7 @@ import { Watch, Component, Element, Event, h, Host, Method, Prop } from '@stenci
 import type { OverlayEventDetail } from '@utils/overlays-interface';
 
 import { config } from '../../global/config';
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet } from '../../global/ionic-global';
 import type { AnimationBuilder, Color, CssClassMap, OverlayInterface, FrameworkDelegate } from '../../interface';
 import {
   createDelegateController,
@@ -28,6 +28,7 @@ import type { ToastButton, ToastPosition } from './toast-interface';
 // TODO(FW-2832): types
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @part button - Any button element that is displayed inside of the toast.
@@ -39,6 +40,7 @@ import type { ToastButton, ToastPosition } from './toast-interface';
 @Component({
   tag: 'ion-toast',
   styleUrls: {
+    base: 'toast.scss',
     ios: 'toast.ios.scss',
     md: 'toast.md.scss',
   },
@@ -360,7 +362,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
       return;
     }
 
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const buttonGroupsClasses = {
       'toast-button-group': true,
       [`toast-button-group-${side}`]: true,
@@ -394,7 +396,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
     const allButtons = this.getButtons();
     const startButtons = allButtons.filter((b) => b.side === 'start');
     const endButtons = allButtons.filter((b) => b.side !== 'start');
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const wrapperClass = {
       'toast-wrapper': true,
       [`toast-${this.position}`]: true,

@@ -1,13 +1,18 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, h } from '@stencil/core';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet } from '../../global/ionic-global';
 import { isEndSide } from '../../utils/helpers';
 import type { Side } from '../menu/menu-interface';
 
+/**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
+ * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ */
 @Component({
   tag: 'ion-item-options',
   styleUrls: {
+    base: 'item-options.scss',
     ios: 'item-options.ios.scss',
     md: 'item-options.md.scss',
   },
@@ -35,7 +40,7 @@ export class ItemOptions implements ComponentInterface {
   }
 
   render() {
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const isEnd = isEndSide(this.side);
     return (
       <Host

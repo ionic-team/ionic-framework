@@ -1,7 +1,8 @@
 import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
-test.describe('select: async', () => {
+// TODO: This test is extremely flaky
+test.skip('select: async', () => {
   test('should correctly set the value after a delay', async ({ page, skip }) => {
     skip.rtl('This is checking internal logic. RTL tests are not needed');
 

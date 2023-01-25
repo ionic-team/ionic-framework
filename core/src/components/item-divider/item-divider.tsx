@@ -1,11 +1,12 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, h } from '@stencil/core';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @slot - Content is placed between the named slots if provided without a slot.
@@ -15,6 +16,7 @@ import { createColorClasses } from '../../utils/theme';
 @Component({
   tag: 'ion-item-divider',
   styleUrls: {
+    base: 'item-divider.scss',
     ios: 'item-divider.ios.scss',
     md: 'item-divider.md.scss',
   },
@@ -40,7 +42,7 @@ export class ItemDivider implements ComponentInterface {
   @Prop() sticky = false;
 
   render() {
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     return (
       <Host
         class={createColorClasses(this.color, {

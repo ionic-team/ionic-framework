@@ -2,7 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, h } from '@stencil/core';
 import { chevronForwardOutline, ellipsisHorizontal } from 'ionicons/icons';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet } from '../../global/ionic-global';
 import type { AnimationBuilder, Color } from '../../interface';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes } from '../../utils/helpers';
@@ -12,6 +12,7 @@ import type { RouterDirection } from '../router/utils/interface';
 import type { BreadcrumbCollapsedClickEventDetail } from './breadcrumb-interface';
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @part native - The native HTML anchor or div element that wraps all child elements.
@@ -21,6 +22,7 @@ import type { BreadcrumbCollapsedClickEventDetail } from './breadcrumb-interface
 @Component({
   tag: 'ion-breadcrumb',
   styleUrls: {
+    base: 'breadcrumb.scss',
     ios: 'breadcrumb.ios.scss',
     md: 'breadcrumb.md.scss',
   },
@@ -168,7 +170,7 @@ export class Breadcrumb implements ComponentInterface {
     // Links can still be tabbed to when set to disabled if they have an href
     // in order to truly disable them we can keep it as an anchor but remove the href
     const href = disabled ? undefined : this.href;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const attrs =
       TagType === 'span'
         ? {}

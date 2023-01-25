@@ -12,6 +12,12 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      ion-list ion-textarea {
+        margin: 20px 0 0 0;
+      }
+    </style>
   </head>
 
   <body>
@@ -24,20 +30,21 @@
 
       <ion-content id="content">
         <ion-list>
-          <ion-item>
-            <ion-label color="primary">Autogrow</ion-label>
-            <ion-textarea auto-grow="true"></ion-textarea>
-          </ion-item>
+          <ion-textarea auto-grow="true" label="Autogrow"></ion-textarea>
 
-          <ion-item fill="outline">
-            <ion-label color="primary" position="stacked">Autogrow w/ stacked label</ion-label>
-            <ion-textarea auto-grow="true" value=""></ion-textarea>
-          </ion-item>
+          <ion-textarea
+            fill="outline"
+            label-placement="stacked"
+            auto-grow="true"
+            label="Autogrow w/ stacked label"
+          ></ion-textarea>
 
-          <ion-item fill="outline">
-            <ion-label color="primary" position="floating">Autogrow w/ floating label</ion-label>
-            <ion-textarea auto-grow="true" value=""></ion-textarea>
-          </ion-item>
+          <ion-textarea
+            fill="outline"
+            label-placement="floating"
+            auto-grow="true"
+            label="Autogrow w/ floating label"
+          ></ion-textarea>
         </ion-list>
       </ion-content>
     </ion-app>

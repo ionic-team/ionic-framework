@@ -1,20 +1,26 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet, getIonBehavior } from '../../global/ionic-global';
 import type { Color, StyleEventDetail } from '../../interface';
+import type { LegacyFormController } from '../../utils/forms';
+import { createLegacyFormController } from '../../utils/forms';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes, debounceEvent, findItemLabel, inheritAttributes } from '../../utils/helpers';
+import { printIonWarning } from '../../utils/logging';
 import { createColorClasses } from '../../utils/theme';
+import { getCounterText } from '../input/input.utils';
 
 import type { TextareaChangeEventDetail, TextareaInputEventDetail } from './textarea-interface';
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
 @Component({
   tag: 'ion-textarea',
   styleUrls: {
+    base: 'textarea.scss',
     ios: 'textarea.ios.scss',
     md: 'textarea.md.scss',
   },
@@ -33,13 +39,17 @@ export class Textarea implements ComponentInterface {
   private textareaWrapper?: HTMLElement;
   private inheritedAttributes: Attributes = {};
   private originalIonInput?: EventEmitter<TextareaInputEventDetail>;
+  private legacyFormController!: LegacyFormController;
+
+  // This flag ensures we log the deprecation warning at most once.
+  private hasLoggedDeprecationWarning = false;
 
   /**
    * The value of the textarea when the textarea is focused.
    */
   private focusedValue?: string | null;
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonTextareaElement;
 
   @State() hasFocus = false;
 
@@ -91,6 +101,12 @@ export class Textarea implements ComponentInterface {
   protected disabledChanged() {
     this.emitStyle();
   }
+
+  /**
+   * The fill for the item. If `'solid'` the item will have a background. If
+   * `'outline'` the item will be transparent with a border. Only available in `md` mode.
+   */
+  @Prop() fill?: 'outline' | 'solid';
 
   /**
    * A hint to the browser for which keyboard to display.
@@ -168,6 +184,48 @@ export class Textarea implements ComponentInterface {
   @Prop({ mutable: true }) value?: string | null = '';
 
   /**
+   * If `true`, a character counter will display the ratio of characters used and the total character limit.
+   * Developers must also set the `maxlength` property for the counter to be calculated correctly.
+   */
+  @Prop() counter = false;
+
+  /**
+   * A callback used to format the counter text.
+   * By default the counter text is set to "itemLength / maxLength".
+   */
+  @Prop() counterFormatter?: (inputLength: number, maxLength: number) => string;
+
+  /**
+   * Text that is placed under the textarea and displayed when an error is detected.
+   */
+  @Prop() errorText?: string;
+
+  /**
+   * Text that is placed under the textarea and displayed when no error is detected.
+   */
+  @Prop() helperText?: string;
+
+  /**
+   * The visible label associated with the textarea.
+   */
+  @Prop() label?: string;
+
+  /**
+   * Where to place the label relative to the textarea.
+   * `'start'`: The label will appear to the left of the textarea in LTR and to the right in RTL.
+   * `'end'`: The label will appear to the right of the textarea in LTR and to the left in RTL.
+   * `'floating'`: The label will appear smaller and above the textarea when the textarea is focused or it has a value. Otherwise it will appear on top of the textarea.
+   * `'stacked'`: The label will appear smaller and above the textarea regardless even when the textarea is blurred or has no value.
+   * `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+   */
+  @Prop() labelPlacement: 'start' | 'end' | 'floating' | 'stacked' | 'fixed' = 'start';
+
+  /**
+   * The shape of the textarea. If "round" it will have an increased border radius.
+   */
+  @Prop() shape?: 'round';
+
+  /**
    * Update the native input element when the value changes
    */
   @Watch('value')
@@ -217,12 +275,14 @@ export class Textarea implements ComponentInterface {
   @Event() ionFocus!: EventEmitter<FocusEvent>;
 
   connectedCallback() {
+    const { el } = this;
+    this.legacyFormController = createLegacyFormController(el);
     this.emitStyle();
     this.debounceChanged();
     if (Build.isBrowser) {
       document.dispatchEvent(
         new CustomEvent('ionInputDidLoad', {
-          detail: this.el,
+          detail: el,
         })
       );
     }
@@ -270,15 +330,17 @@ export class Textarea implements ComponentInterface {
   }
 
   private emitStyle() {
-    this.ionStyle.emit({
-      interactive: true,
-      textarea: true,
-      input: true,
-      'interactive-disabled': this.disabled,
-      'has-placeholder': this.placeholder !== undefined,
-      'has-value': this.hasValue(),
-      'has-focus': this.hasFocus,
-    });
+    if (this.legacyFormController.hasLegacyControl()) {
+      this.ionStyle.emit({
+        interactive: true,
+        textarea: true,
+        input: true,
+        'interactive-disabled': this.disabled,
+        'has-placeholder': this.placeholder !== undefined,
+        'has-value': this.hasValue(),
+        'has-focus': this.hasFocus,
+      });
+    }
   }
 
   /**
@@ -390,8 +452,18 @@ export class Textarea implements ComponentInterface {
     this.checkClearOnEdit(ev);
   };
 
-  render() {
-    const mode = getIonMode(this);
+  // TODO: FW-2876 - Remove this render function
+  private renderLegacyTextarea() {
+    if (!this.hasLoggedDeprecationWarning) {
+      printIonWarning(
+        `Using ion-textarea with an ion-label has been deprecated. To migrate, remove the ion-label and use the "label" property on ion-textarea instead.
+For textareas that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the textarea.`,
+        this.el
+      );
+      this.hasLoggedDeprecationWarning = true;
+    }
+
+    const mode = getIonStylesheet(this);
     const value = this.getValue();
     const labelId = this.inputId + '-lbl';
     const label = findItemLabel(this.el);
@@ -404,12 +476,13 @@ export class Textarea implements ComponentInterface {
         aria-disabled={this.disabled ? 'true' : null}
         class={createColorClasses(this.color, {
           [mode]: true,
+          'legacy-textarea': true,
         })}
       >
-        <div class="textarea-wrapper" ref={(el) => (this.textareaWrapper = el)}>
+        <div class="textarea-legacy-wrapper" ref={(el) => (this.textareaWrapper = el)}>
           <textarea
             class="native-textarea"
-            aria-labelledby={label ? labelId : null}
+            aria-labelledby={label ? label.id : null}
             ref={(el) => (this.nativeInput = el)}
             autoCapitalize={this.autocapitalize}
             autoFocus={this.autofocus}
@@ -438,6 +511,157 @@ export class Textarea implements ComponentInterface {
         </div>
       </Host>
     );
+  }
+
+  private renderLabel() {
+    const { label } = this;
+    if (label === undefined) {
+      return;
+    }
+
+    return (
+      <div class="label-text-wrapper">
+        <div class="label-text">{this.label}</div>
+      </div>
+    );
+  }
+
+  /**
+   * Renders the border container when fill="outline".
+   */
+  private renderLabelContainer() {
+    const platform = getIonBehavior(this);
+    const hasOutlineFill = platform === 'md' && this.fill === 'outline';
+
+    if (hasOutlineFill) {
+      /**
+       * The outline fill has a special outline
+       * that appears around the textarea and the label.
+       * Certain stacked and floating label placements cause the
+       * label to translate up and create a "cut out"
+       * inside of that border by using the notch-spacer element.
+       */
+      return [
+        <div class="textarea-outline-container">
+          <div class="textarea-outline-start"></div>
+          <div class="textarea-outline-notch">
+            <div class="notch-spacer" aria-hidden="true">
+              {this.label}
+            </div>
+          </div>
+          <div class="textarea-outline-end"></div>
+        </div>,
+        this.renderLabel(),
+      ];
+    }
+    /**
+     * If not using the outline style,
+     * we can render just the label.
+     */
+    return this.renderLabel();
+  }
+
+  /**
+   * Renders the helper text or error text values
+   */
+  private renderHintText() {
+    const { helperText, errorText } = this;
+
+    return [<div class="helper-text">{helperText}</div>, <div class="error-text">{errorText}</div>];
+  }
+
+  private renderCounter() {
+    const { counter, maxlength, counterFormatter, value } = this;
+    if (counter !== true || maxlength === undefined) {
+      return;
+    }
+
+    return <div class="counter">{getCounterText(value, maxlength, counterFormatter)}</div>;
+  }
+
+  /**
+   * Responsible for rendering helper text,
+   * error text, and counter. This element should only
+   * be rendered if hint text is set or counter is enabled.
+   */
+  private renderBottomContent() {
+    const { counter, helperText, errorText, maxlength } = this;
+
+    const hasHintText = helperText !== undefined || errorText !== undefined;
+    const hasCounter = counter === true && maxlength !== undefined;
+    if (!hasHintText && !hasCounter) {
+      return;
+    }
+
+    return (
+      <div class="textarea-bottom">
+        {this.renderHintText()}
+        {this.renderCounter()}
+      </div>
+    );
+  }
+
+  private renderTextarea() {
+    const { inputId, disabled, fill, shape, labelPlacement } = this;
+    const mode = getIonStylesheet(this);
+    const value = this.getValue();
+    const shouldRenderHighlight = mode === 'md' && fill !== 'outline';
+
+    return (
+      <Host
+        aria-disabled={disabled ? 'true' : null}
+        class={createColorClasses(this.color, {
+          [mode]: true,
+          'has-value': this.hasValue(),
+          'has-focus': this.hasFocus,
+          [`textarea-fill-${fill}`]: fill !== undefined,
+          [`textarea-shape-${shape}`]: shape !== undefined,
+          [`textarea-label-placement-${labelPlacement}`]: true,
+        })}
+      >
+        <label class="textarea-wrapper">
+          {this.renderLabelContainer()}
+          <div class="native-wrapper" ref={(el) => (this.textareaWrapper = el)}>
+            <textarea
+              class="native-textarea"
+              ref={(el) => (this.nativeInput = el)}
+              id={inputId}
+              disabled={disabled}
+              autoCapitalize={this.autocapitalize}
+              autoFocus={this.autofocus}
+              enterKeyHint={this.enterkeyhint}
+              inputMode={this.inputmode}
+              minLength={this.minlength}
+              maxLength={this.maxlength}
+              name={this.name}
+              placeholder={this.placeholder || ''}
+              readOnly={this.readonly}
+              required={this.required}
+              spellcheck={this.spellcheck}
+              cols={this.cols}
+              rows={this.rows}
+              wrap={this.wrap}
+              onInput={this.onInput}
+              onChange={this.onChange}
+              onBlur={this.onBlur}
+              onFocus={this.onFocus}
+              onKeyDown={this.onKeyDown}
+              {...this.inheritedAttributes}
+            >
+              {value}
+            </textarea>
+          </div>
+          {shouldRenderHighlight && <div class="textarea-highlight"></div>}
+        </label>
+        {this.renderBottomContent()}
+      </Host>
+    );
+  }
+
+  render() {
+    const { legacyFormController } = this;
+
+    return legacyFormController.hasLegacyControl() ? this.renderLegacyTextarea() : this.renderTextarea();
   }
 }
 

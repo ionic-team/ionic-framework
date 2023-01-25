@@ -2,7 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Watch, Component, Element, Event, Host, Method, Prop, h, readTask } from '@stencil/core';
 import type { OverlayEventDetail } from '@utils/overlays-interface';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet, getIonBehavior } from '../../global/ionic-global';
 import type { AnimationBuilder, CssClassMap, FrameworkDelegate, OverlayInterface } from '../../interface';
 import type { Gesture } from '../../utils/gesture';
 import { createButtonActiveGesture } from '../../utils/gesture/button-active';
@@ -26,11 +26,13 @@ import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
 @Component({
   tag: 'ion-action-sheet',
   styleUrls: {
+    base: 'action-sheet.scss',
     ios: 'action-sheet.ios.scss',
     md: 'action-sheet.md.scss',
   },
@@ -319,7 +321,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
      * 3. A wrapper ref does not exist
      */
     const { groupEl, wrapperEl } = this;
-    if (this.gesture || getIonMode(this) === 'md' || !wrapperEl || !groupEl) {
+    if (this.gesture || getIonBehavior(this) === 'md' || !wrapperEl || !groupEl) {
       return;
     }
 
@@ -336,7 +338,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
 
   render() {
     const { header, htmlAttributes, overlayIndex } = this;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const allButtons = this.getButtons();
     const cancelButton = allButtons.find((b) => b.role === 'cancel');
     const buttons = allButtons.filter((b) => b.role !== 'cancel');

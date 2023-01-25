@@ -3,7 +3,7 @@ import { Component, Element, Event, Host, Method, Prop, State, Watch, forceUpdat
 import { arrowBackSharp, closeCircle, closeSharp, searchOutline, searchSharp } from 'ionicons/icons';
 
 import { config } from '../../global/config';
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet } from '../../global/ionic-global';
 import type { AutocompleteTypes, Color, StyleEventDetail } from '../../interface';
 import { debounceEvent, raf } from '../../utils/helpers';
 import { isRTL } from '../../utils/rtl';
@@ -12,11 +12,13 @@ import { createColorClasses } from '../../utils/theme';
 import type { SearchbarChangeEventDetail } from './searchbar-interface';
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
 @Component({
   tag: 'ion-searchbar',
   styleUrls: {
+    base: 'searchbar.scss',
     ios: 'searchbar.ios.scss',
     md: 'searchbar.md.scss',
   },
@@ -393,7 +395,7 @@ export class Searchbar implements ComponentInterface {
   private positionElements() {
     const value = this.getValue();
     const prevAlignLeft = this.shouldAlignLeft;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const shouldAlignLeft = !this.animated || value.trim() !== '' || !!this.focused;
     this.shouldAlignLeft = shouldAlignLeft;
 
@@ -523,7 +525,7 @@ export class Searchbar implements ComponentInterface {
   render() {
     const { cancelButtonText } = this;
     const animated = this.animated && config.getBoolean('animated', true);
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const clearIcon = this.clearIcon || (mode === 'ios' ? closeCircle : closeSharp);
     const searchIcon = this.searchIcon || (mode === 'ios' ? searchOutline : searchSharp);
     const shouldShowCancelButton = this.shouldShowCancelButton();

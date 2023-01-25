@@ -1,16 +1,18 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Host, Prop, h } from '@stencil/core';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
 @Component({
   tag: 'ion-list-header',
   styleUrls: {
+    base: 'list-header.scss',
     ios: 'list-header.ios.scss',
     md: 'list-header.md.scss',
   },
@@ -31,7 +33,7 @@ export class ListHeader implements ComponentInterface {
 
   render() {
     const { lines } = this;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
 
     return (
       <Host

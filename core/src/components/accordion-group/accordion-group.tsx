@@ -1,17 +1,19 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Listen, Method, Prop, Watch, h } from '@stencil/core';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet } from '../../global/ionic-global';
 import { printIonWarning } from '../../utils/logging';
 
 import type { AccordionGroupChangeEventDetail } from './accordion-group-interface';
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
 @Component({
   tag: 'ion-accordion-group',
   styleUrls: {
+    base: 'accordion-group.scss',
     ios: 'accordion-group.ios.scss',
     md: 'accordion-group.md.scss',
   },
@@ -269,7 +271,7 @@ export class AccordionGroup implements ComponentInterface {
 
   render() {
     const { disabled, readonly, expand } = this;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
 
     return (
       <Host

@@ -3,7 +3,7 @@ import { Component, Element, Host, Listen, Prop, State, Watch, forceUpdate, h } 
 import { printIonError, printIonWarning } from '@utils/logging';
 import { chevronForward } from 'ionicons/icons';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet } from '../../global/ionic-global';
 import type { AnimationBuilder, Color, CssClassMap, StyleEventDetail } from '../../interface';
 import type { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import type { Attributes } from '../../utils/helpers';
@@ -15,6 +15,7 @@ import type { RouterDirection } from '../router/utils/interface';
 import type { CounterFormatter } from './item-interface';
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @slot - Content is placed between the named slots if provided without a slot.
@@ -29,6 +30,7 @@ import type { CounterFormatter } from './item-interface';
 @Component({
   tag: 'ion-item',
   styleUrls: {
+    base: 'item.scss',
     ios: 'item.ios.scss',
     md: 'item.md.scss',
   },
@@ -366,7 +368,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
       inheritedAriaAttributes,
     } = this;
     const childStyles = {} as StyleEventDetail;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const clickable = this.isClickable();
     const canActivate = this.canActivate();
     const TagType = clickable ? (href === undefined ? 'button' : 'a') : ('div' as any);

@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Listen, Method, Prop, forceUpdate, h, readTask } from '@stencil/core';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet, getIonBehavior } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 import { componentOnReady } from '../../utils/helpers';
 import { isPlatform } from '../../utils/platform';
@@ -127,8 +127,8 @@ export class Content implements ComponentInterface {
 
   private shouldForceOverscroll() {
     const { forceOverscroll } = this;
-    const mode = getIonMode(this);
-    return forceOverscroll === undefined ? mode === 'ios' && isPlatform('ios') : forceOverscroll;
+    const platform = getIonBehavior(this);
+    return forceOverscroll === undefined ? platform === 'ios' && isPlatform('ios') : forceOverscroll;
   }
 
   private resize() {
@@ -326,7 +326,7 @@ export class Content implements ComponentInterface {
   render() {
     const { isMainContent, scrollX, scrollY, el } = this;
     const rtl = isRTL(el) ? 'rtl' : 'ltr';
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const forceOverscroll = this.shouldForceOverscroll();
     const transitionShadow = mode === 'ios';
     const TagType = isMainContent ? 'main' : ('div' as any);

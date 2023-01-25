@@ -55,10 +55,16 @@
   z-index: $z-index-item-input;
 }
 
+// TODO FW-3194 - Move this to host
+:host(:not(.legacy-select)) {
+  width: 100%;
+}
+
 :host(.ion-color) {
   --highlight-color-focused: #{current-color(base)};
 }
 
+// TODO FW-3194 - Remove this
 :host(.legacy-select) {
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
@@ -71,15 +77,11 @@
 
 // Select Used in ion-item
 // --------------------------------------------------
+// TODO FW-3194 - Remove this
 :host(.in-item.legacy-select) {
   position: static;
 
   max-width: 45%;
-}
-
-:host(.in-item:not(.legacy-select)) {
-  width: 100%;
-  height: 100%;
 }
 
 :host(.select-disabled) {
@@ -97,6 +99,7 @@
   opacity: var(--placeholder-opacity);
 }
 
+// TODO FW-3194 - Remove this
 :host(.legacy-select) label {
   @include input-cover();
 

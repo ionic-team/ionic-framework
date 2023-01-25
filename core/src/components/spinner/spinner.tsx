@@ -2,7 +2,7 @@ import type { ComponentInterface } from '@stencil/core';
 import { Component, Host, Prop, h } from '@stencil/core';
 
 import { config } from '../../global/config';
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet, getIonBehavior } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
@@ -41,16 +41,16 @@ export class Spinner implements ComponentInterface {
 
   private getName(): SpinnerTypes {
     const spinnerName = this.name || config.get('spinner');
-    const mode = getIonMode(this);
+    const platform = getIonBehavior(this);
     if (spinnerName) {
       return spinnerName;
     }
-    return mode === 'ios' ? 'lines' : 'circular';
+    return platform === 'ios' ? 'lines' : 'circular';
   }
 
   render() {
     const self = this;
-    const mode = getIonMode(self);
+    const mode = getIonStylesheet(self);
     const spinnerName = self.getName();
     const spinner = SPINNERS[spinnerName] ?? SPINNERS['lines'];
     const duration = typeof self.duration === 'number' && self.duration > 10 ? self.duration : spinner.dur;

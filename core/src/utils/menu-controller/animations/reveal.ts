@@ -1,5 +1,5 @@
 import type { MenuI } from '../../../components/menu/menu-interface';
-import { getIonMode } from '../../../global/ionic-global';
+import { getIonBehavior } from '../../../global/ionic-global';
 import { createAnimation } from '../../animation/animation';
 import type { Animation } from '../../animation/animation-interface';
 
@@ -11,11 +11,11 @@ import { baseAnimation } from './base';
  * The menu itself, which is under the content, does not move.
  */
 export const menuRevealAnimation = (menu: MenuI): Animation => {
-  const mode = getIonMode(menu);
+  const platform = getIonBehavior(menu);
   const openedX = menu.width * (menu.isEndSide ? -1 : 1) + 'px';
   const contentOpen = createAnimation()
     .addElement(menu.contentEl!) // REVIEW
     .fromTo('transform', 'translateX(0px)', `translateX(${openedX})`);
 
-  return baseAnimation(mode === 'ios').addAnimation(contentOpen);
+  return baseAnimation(platform === 'ios').addAnimation(contentOpen);
 };

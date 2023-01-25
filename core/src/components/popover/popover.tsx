@@ -3,7 +3,7 @@ import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '
 import { printIonWarning } from '@utils/logging';
 import type { OverlayEventDetail } from '@utils/overlays-interface';
 
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet, getIonBehavior } from '../../global/ionic-global';
 import type { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate } from '../../interface';
 import { CoreDelegate, attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { addEventListener, raf, hasLazyBuild } from '../../utils/helpers';
@@ -29,6 +29,7 @@ import { configureDismissInteraction, configureKeyboardInteraction, configureTri
 // TODO(FW-2832): types
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @slot - Content is placed inside of the `.popover-content` element.
@@ -40,6 +41,7 @@ import { configureDismissInteraction, configureKeyboardInteraction, configureTri
 @Component({
   tag: 'ion-popover',
   styleUrls: {
+    base: 'popover.scss',
     ios: 'popover.ios.scss',
     md: 'popover.md.scss',
   },
@@ -347,7 +349,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
     this.parentPopover = this.el.closest(`ion-popover:not(#${this.popoverId})`) as HTMLIonPopoverElement | null;
 
     if (this.alignment === undefined) {
-      this.alignment = getIonMode(this) === 'ios' ? 'center' : 'start';
+      this.alignment = getIonBehavior(this) === 'ios' ? 'center' : 'start';
     }
   }
 
@@ -660,7 +662,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
   };
 
   render() {
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const { onLifecycle, popoverId, parentPopover, dismissOnSelect, side, arrow, htmlAttributes } = this;
     const desktop = isPlatform('desktop');
     const enableArrow = arrow && !parentPopover;

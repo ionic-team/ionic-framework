@@ -2,7 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Listen, Prop, h } from '@stencil/core';
 
 import { config } from '../../global/config';
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet } from '../../global/ionic-global';
 import type { AnchorInterface } from '../../utils/element-interface';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAttributes } from '../../utils/helpers';
@@ -13,6 +13,7 @@ import type {
 } from '../tab-bar/tab-bar-interface';
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @part native - The native HTML anchor element that wraps all child elements.
@@ -20,6 +21,7 @@ import type {
 @Component({
   tag: 'ion-tab-button',
   styleUrls: {
+    base: 'tab-button.scss',
     ios: 'tab-button.ios.scss',
     md: 'tab-button.md.scss',
   },
@@ -138,7 +140,7 @@ export class TabButton implements ComponentInterface, AnchorInterface {
 
   render() {
     const { disabled, hasIcon, hasLabel, href, rel, target, layout, selected, tab, inheritedAttributes } = this;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const attrs = {
       download: this.download,
       href,

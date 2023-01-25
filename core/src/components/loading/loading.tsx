@@ -3,7 +3,7 @@ import { Watch, Component, Element, Event, Host, Method, Prop, h } from '@stenci
 import type { OverlayEventDetail } from '@utils/overlays-interface';
 
 import { config } from '../../global/config';
-import { getIonMode } from '../../global/ionic-global';
+import { getIonStylesheet, getIonBehavior } from '../../global/ionic-global';
 import type { AnimationBuilder, FrameworkDelegate, OverlayInterface } from '../../interface';
 import { raf } from '../../utils/helpers';
 import {
@@ -28,11 +28,13 @@ import { mdLeaveAnimation } from './animations/md.leave';
 // TODO(FW-2832): types
 
 /**
+ * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
 @Component({
   tag: 'ion-loading',
   styleUrls: {
+    base: 'loading.scss',
     ios: 'loading.ios.scss',
     md: 'loading.md.scss',
   },
@@ -202,8 +204,8 @@ export class Loading implements ComponentInterface, OverlayInterface {
 
   componentWillLoad() {
     if (this.spinner === undefined) {
-      const mode = getIonMode(this);
-      this.spinner = config.get('loadingSpinner', config.get('spinner', mode === 'ios' ? 'lines' : 'crescent'));
+      const platform = getIonBehavior(this);
+      this.spinner = config.get('loadingSpinner', config.get('spinner', platform === 'ios' ? 'lines' : 'crescent'));
     }
   }
 
@@ -298,14 +300,13 @@ export class Loading implements ComponentInterface, OverlayInterface {
 
   render() {
     const { message, spinner, htmlAttributes, overlayIndex } = this;
-    const mode = getIonMode(this);
+    const mode = getIonStylesheet(this);
     const msgId = `loading-${overlayIndex}-msg`;
     /**
      * If the message is defined, use that as the label.
      * Otherwise, don't set aria-labelledby.
      */
     const ariaLabelledBy = message !== undefined ? msgId : null;
-
     return (
       <Host
         role="dialog"

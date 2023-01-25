@@ -4,6 +4,7 @@
 // iOS Select
 // --------------------------------------------------
 
+// TODO FW-3194 - Remove this
 :host(.legacy-select) {
   --padding-top: #{$select-ios-padding-top};
   --padding-end: #{$select-ios-padding-end};
@@ -11,6 +12,7 @@
   --padding-start: #{$select-ios-padding-start};
 }
 
+// TODO FW-3194 - Move this to host
 :host(:not(.legacy-select)) {
   min-height: 44px;
 }

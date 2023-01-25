@@ -2,7 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Method, Prop, Watch, h } from '@stencil/core';
 
 import { config } from '../../global/config';
-import { getIonMode } from '../../global/ionic-global';
+import { getIonBehavior } from '../../global/ionic-global';
 import type {
   Animation,
   AnimationBuilder,
@@ -38,7 +38,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   /**
    * The mode determines which platform styles to use.
    */
-  @Prop({ mutable: true }) mode = getIonMode(this);
+  @Prop({ mutable: true }) mode = getIonBehavior(this);
 
   /** @internal */
   @Prop() delegate?: FrameworkDelegate;
