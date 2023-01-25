@@ -1,40 +1,58 @@
-import { h, Teleport, VNode } from 'vue';
-import type { FrameworkDelegate } from '@ionic/core/components';
+import type { FrameworkDelegate } from "@ionic/core/components";
+import type { VNode } from "vue";
+import { h, Teleport } from "vue";
 
-import { addTeleportedUserComponent, removeTeleportedUserComponent } from './components/IonApp';
+import {
+  addTeleportedUserComponent,
+  removeTeleportedUserComponent,
+} from "./components/IonApp";
 
-export const VueDelegate = (addFn = addTeleportedUserComponent, removeFn = removeTeleportedUserComponent): FrameworkDelegate => {
-  let Component: VNode | undefined;
+export const VueDelegate = (
+  addFn = addTeleportedUserComponent,
+  removeFn = removeTeleportedUserComponent
+): FrameworkDelegate => {
+  // `h` doesn't provide a type for the component argument
+  const refMap = new WeakMap<any, VNode>();
+
   // TODO(FW-2969): types
-  const attachViewToDom = (parentElement: HTMLElement, component: any, componentProps: any = {}, classes?: string[]) => {
+  const attachViewToDom = (
+    parentElement: HTMLElement,
+    component: any,
+    componentProps: any = {},
+    classes?: string[]
+  ) => {
     /**
      * Ionic Framework passes in modal and popover element
      * refs as props, but if these are not defined
      * on the Vue component instance as props, Vue will
      * warn the user.
      */
-    delete componentProps['modal'];
-    delete componentProps['popover'];
+    delete componentProps["modal"];
+    delete componentProps["popover"];
 
-    const div = document.createElement('div');
+    const div = document.createElement("div");
     classes && div.classList.add(...classes);
     parentElement.appendChild(div);
 
-    Component = h(
+    const hostComponent = h(
       Teleport,
       { to: div },
       h(component, { ...componentProps })
     );
 
-    addFn(Component);
+    refMap.set(component, hostComponent);
+
+    addFn(hostComponent);
 
     return Promise.resolve(div);
-  }
+  };
 
-  const removeViewFromDom = () => {
-    Component && removeFn(Component);
+  const removeViewFromDom = (_container: any, component: any) => {
+    const hostComponent = refMap.get(component);
+    hostComponent && removeFn(hostComponent);
+
     return Promise.resolve();
-  }
+  };
 
-  return { attachViewToDom, removeViewFromDom }
-}
+  return { attachViewToDom, removeViewFromDom };
+};

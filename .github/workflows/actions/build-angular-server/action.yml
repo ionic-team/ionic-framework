@@ -8,7 +8,7 @@ runs:
         node-version: 16.x
 
     - name: Install Angular Server Dependencies
-      run: npm install --legacy-peer-deps
+      run: npm ci
       shell: bash
       working-directory: ./packages/angular-server
     - name: Build

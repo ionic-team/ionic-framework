@@ -1,11 +1,7 @@
-import { OverlayEventDetail } from '@ionic/core/components';
+import type { OverlayEventDetail } from '@ionic/core/components';
 import React from 'react';
 
-import {
-  attachProps,
-  dashToPascalCase,
-  setRef,
-} from './react-component-lib/utils';
+import { attachProps, dashToPascalCase, setRef } from './react-component-lib/utils';
 
 interface OverlayBase extends HTMLElement {
   present: () => Promise<void>;
@@ -20,10 +16,7 @@ export interface ReactControllerProps {
   onWillPresent?: (event: CustomEvent<OverlayEventDetail>) => void;
 }
 
-export const createControllerComponent = <
-  OptionsType extends object,
-  OverlayType extends OverlayBase
->(
+export const createControllerComponent = <OptionsType extends object, OverlayType extends OverlayBase>(
   tagName: string,
   controller: { create: (options: OptionsType) => Promise<OverlayType> },
   defineCustomElement?: () => void
@@ -95,8 +88,8 @@ export const createControllerComponent = <
     }
 
     async present(prevProps?: Props) {
-      const { isOpen, onDidDismiss, onDidPresent, onWillDismiss, onWillPresent, ...cProps } =
-        this.props;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { isOpen, onDidDismiss, onDidPresent, onWillDismiss, onWillPresent, ...cProps } = this.props;
 
       if (this.overlay) {
         this.overlay.remove();
@@ -109,12 +102,9 @@ export const createControllerComponent = <
         this.overlay,
         {
           [didDismissEventName]: this.handleDismiss,
-          [didPresentEventName]: (e: CustomEvent) =>
-            this.props.onDidPresent && this.props.onDidPresent(e),
-          [willDismissEventName]: (e: CustomEvent) =>
-            this.props.onWillDismiss && this.props.onWillDismiss(e),
-          [willPresentEventName]: (e: CustomEvent) =>
-            this.props.onWillPresent && this.props.onWillPresent(e),
+          [didPresentEventName]: (e: CustomEvent) => this.props.onDidPresent && this.props.onDidPresent(e),
+          [willDismissEventName]: (e: CustomEvent) => this.props.onWillDismiss && this.props.onWillDismiss(e),
+          [willPresentEventName]: (e: CustomEvent) => this.props.onWillPresent && this.props.onWillPresent(e),
         },
         prevProps
       );

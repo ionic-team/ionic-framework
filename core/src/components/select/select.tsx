@@ -206,11 +206,28 @@ export class Select implements ComponentInterface {
     if (this.interface === 'popover') {
       let indexOfSelected = this.childOpts.map((o) => o.value).indexOf(this.value);
       indexOfSelected = indexOfSelected > -1 ? indexOfSelected : 0; // default to first option if nothing selected
-      const selectedEl = overlay.querySelector<HTMLElement>(
+      const selectedItem = overlay.querySelector<HTMLElement>(
         `.select-interface-option:nth-child(${indexOfSelected + 1})`
       );
-      if (selectedEl) {
-        focusElement(selectedEl);
+
+      if (selectedItem) {
+        focusElement(selectedItem);
+
+        /**
+         * Browsers such as Firefox do not
+         * correctly delegate focus when manually
+         * focusing an element with delegatesFocus.
+         * We work around this by manually focusing
+         * the interactive element.
+         * ion-radio and ion-checkbox are the only
+         * elements that ion-select-popover uses, so
+         * we only need to worry about those two components
+         * when focusing.
+         */
+        const interactiveEl = selectedItem.querySelector<HTMLElement>('ion-radio, ion-checkbox');
+        if (interactiveEl) {
+          interactiveEl.focus();
+        }
       }
     }
 

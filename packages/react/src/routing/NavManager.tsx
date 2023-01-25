@@ -1,14 +1,16 @@
-import { AnimationBuilder } from '@ionic/core/components';
+import type { AnimationBuilder } from '@ionic/core/components';
 import React from 'react';
 
-import { IonRouterContext, IonRouterContextState } from '../components/IonRouterContext';
-import { NavContext, NavContextState } from '../contexts/NavContext';
-import { RouteAction } from '../models/RouteAction';
-import { RouteInfo } from '../models/RouteInfo';
-import { RouterDirection } from '../models/RouterDirection';
-import { RouterOptions } from '../models/RouterOptions';
+import type { IonRouterContextState } from '../components/IonRouterContext';
+import { IonRouterContext } from '../components/IonRouterContext';
+import type { NavContextState } from '../contexts/NavContext';
+import { NavContext } from '../contexts/NavContext';
+import type { RouteAction } from '../models/RouteAction';
+import type { RouteInfo } from '../models/RouteInfo';
+import type { RouterDirection } from '../models/RouterDirection';
+import type { RouterOptions } from '../models/RouterOptions';
 
-import { LocationHistory } from './LocationHistory';
+import type { LocationHistory } from './LocationHistory';
 import PageManager from './PageManager';
 
 // TODO(FW-2959): types
@@ -35,8 +37,6 @@ interface NavManagerProps {
 }
 
 export class NavManager extends React.PureComponent<NavManagerProps, NavContextState> {
-  _isMounted = false;
-
   ionRouterContextValue: IonRouterContextState = {
     push: (
       pathname: string,
@@ -70,30 +70,25 @@ export class NavManager extends React.PureComponent<NavManagerProps, NavContextS
       changeTab: this.props.onChangeTab,
       resetTab: this.props.onResetTab,
     };
+  }
 
+  componentDidMount() {
     if (typeof document !== 'undefined') {
       this.handleHardwareBackButton = this.handleHardwareBackButton.bind(this);
       document.addEventListener('ionBackButton', this.handleHardwareBackButton);
     }
   }
 
-  componentDidMount() {
-    this._isMounted = true;
-  }
-
   componentWillUnmount() {
     if (typeof document !== 'undefined') {
       document.removeEventListener('ionBackButton', this.handleHardwareBackButton);
-      this._isMounted = false;
     }
   }
 
   handleHardwareBackButton(e: any) {
     e.detail.register(0, (processNextHandler: () => void) => {
-      if (this._isMounted) {
-        this.nativeGoBack();
-        processNextHandler();
-      }
+      this.nativeGoBack();
+      processNextHandler();
     });
   }
 
@@ -135,9 +130,7 @@ export class NavManager extends React.PureComponent<NavManagerProps, NavContextS
   render() {
     return (
       <NavContext.Provider value={{ ...this.state, routeInfo: this.props.routeInfo }}>
-        <IonRouterContext.Provider
-          value={{ ...this.ionRouterContextValue, routeInfo: this.props.routeInfo }}
-        >
+        <IonRouterContext.Provider value={{ ...this.ionRouterContextValue, routeInfo: this.props.routeInfo }}>
           {this.props.children}
         </IonRouterContext.Provider>
       </NavContext.Provider>
