@@ -170,12 +170,8 @@
   word-break: break-word;
 }
 
-<<<<<<< HEAD
 :host(.legacy-textarea) .native-textarea[disabled],
 :host([disabled]) {
-=======
-.native-textarea[disabled]:not(.cloned-input) {
->>>>>>> origin/feature-7.0
   opacity: 0.4;
 }
 
