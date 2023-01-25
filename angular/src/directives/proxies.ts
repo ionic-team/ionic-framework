@@ -553,13 +553,13 @@ export declare interface IonChip extends Components.IonChip {}
 
 @ProxyCmp({
   defineCustomElementFn: undefined,
-  inputs: ['color', 'disabled', 'mode', 'outline', 'useBase']
+  inputs: ['color', 'disabled', 'outline']
 })
 @Component({
   selector: 'ion-chip',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
-  inputs: ['color', 'disabled', 'mode', 'outline', 'useBase']
+  inputs: ['color', 'disabled', 'outline']
 })
 export class IonChip {
   protected el: HTMLElement;
