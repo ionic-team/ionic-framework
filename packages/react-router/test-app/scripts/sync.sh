@@ -12,4 +12,4 @@ npm pack ../../react
 npm pack ../
 
 # Install Dependencies
-npm install *.tgz
+npm install *.tgz --no-save
