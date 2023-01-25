@@ -3,7 +3,7 @@ import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '
 import { createLegacyFormController } from '@utils/forms';
 import type { LegacyFormController } from '@utils/forms';
 import { printIonWarning } from '@utils/logging';
-import type { OverlaySelect } from '@utils/overlays-interface';
+import type { OverlaySelect } from '../../utils/overlays-interface';
 import { isRTL } from '@utils/rtl';
 import { caretDownSharp } from 'ionicons/icons';
 

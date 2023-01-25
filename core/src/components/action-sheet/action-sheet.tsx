@@ -1,6 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Watch, Component, Element, Event, Host, Method, Prop, h, readTask } from '@stencil/core';
-import type { OverlayEventDetail } from '@utils/overlays-interface';
+import type { OverlayEventDetail } from '../../utils/overlays-interface';
 
 import { getIonStylesheet, getIonBehavior } from '../../global/ionic-global';
 import type { AnimationBuilder, CssClassMap, FrameworkDelegate, OverlayInterface } from '../../interface';
