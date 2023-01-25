@@ -21,6 +21,7 @@ body:
         - label: v4.x
         - label: v5.x
         - label: v6.x
+        - label: v7 beta
         - label: Nightly
   - type: textarea
     attributes:
