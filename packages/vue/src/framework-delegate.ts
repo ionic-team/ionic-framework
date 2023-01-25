@@ -3,9 +3,20 @@ import type { FrameworkDelegate } from '@ionic/core/components';
 
 import { addTeleportedUserComponent, removeTeleportedUserComponent } from './components/IonApp';
 
-export const VueDelegate = (addFn = addTeleportedUserComponent, removeFn = removeTeleportedUserComponent): FrameworkDelegate => {
-  let Component: VNode | undefined;
-  const attachViewToDom = (parentElement: HTMLElement, component: any, componentProps: any = {}, classes?: string[]) => {
+export const VueDelegate = (
+  addFn = addTeleportedUserComponent,
+  removeFn = removeTeleportedUserComponent
+): FrameworkDelegate => {
+  // `h` doesn't provide a type for the component argument
+  const refMap = new WeakMap<any, VNode>();
+
+  // TODO(FW-2969): types
+  const attachViewToDom = (
+    parentElement: HTMLElement,
+    component: any,
+    componentProps: any = {},
+    classes?: string[]
+  ) => {
     /**
      * Ionic Framework passes in modal and popover element
      * refs as props, but if these are not defined
@@ -19,19 +30,23 @@ export const VueDelegate = (addFn = addTeleportedUserComponent, removeFn = remov
     classes && div.classList.add(...classes);
     parentElement.appendChild(div);
 
-    Component = h(
+    const hostComponent = h(
       Teleport,
       { to: div },
       h(component, { ...componentProps })
     );
 
-    addFn(Component);
+    refMap.set(component, hostComponent);
+
+    addFn(hostComponent);
 
     return Promise.resolve(div);
   }
 
-  const removeViewFromDom = () => {
-    Component && removeFn(Component);
+  const removeViewFromDom = (_container: any, component: any) => {
+    const hostComponent = refMap.get(component);
+    hostComponent && removeFn(hostComponent);
+
     return Promise.resolve();
   }
 

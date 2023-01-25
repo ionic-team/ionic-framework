@@ -114,7 +114,7 @@ describe('Overlays', () => {
     cy.get('ion-button#present-overlay').click();
     cy.get('ion-modal').should('exist');
 
-    cy.get('ion-modal ion-content').should('have.text', 'Custom Title');
+    cy.get('ion-modal ion-content #title').should('have.text', 'Custom Title');
   });
 
   it('should pass props to modal via component', () => {
@@ -124,7 +124,7 @@ describe('Overlays', () => {
     cy.get('ion-button#present-overlay').click();
     cy.get('ion-modal').should('exist');
 
-    cy.get('ion-modal ion-content').should('have.text', 'Custom Title');
+    cy.get('ion-modal ion-content #title').should('have.text', 'Custom Title');
   });
 
   it('should pass props to popover via controller', () => {
@@ -195,6 +195,44 @@ describe('Overlays', () => {
       didDismiss: 2
     });
   });
+
+  it('should unmount modal via component', () => {
+    cy.get('ion-radio#ion-modal').click();
+    cy.get('ion-radio#component').click();
+
+    cy.get('ion-button#present-overlay').click();
+    cy.get('ion-modal').should('exist');
+
+    cy.get('ion-modal ion-input').should('have.value', '');
+    cy.get('ion-modal ion-input').type('1');
+
+    cy.get('ion-modal #dismiss').click();
+
+    cy.get('ion-button#present-overlay').click();
+    cy.get('ion-modal').should('exist');
+
+    cy.get('ion-modal ion-input').should('have.value', '');
+  });
+
+
+  it('should unmount modal via controller', () => {
+    cy.get('ion-radio#ion-modal').click();
+    cy.get('ion-radio#controller').click();
+
+    cy.get('ion-button#present-overlay').click();
+    cy.get('ion-modal').should('exist');
+
+    cy.get('ion-modal ion-input').should('have.value', '');
+    cy.get('ion-modal ion-input').type('1');
+
+    cy.get('ion-modal #dismiss').click();
+
+    cy.get('ion-button#present-overlay').click();
+    cy.get('ion-modal').should('exist');
+
+    cy.get('ion-modal ion-input').should('have.value', '');
+  });
+
 })
 
 const testLifecycle = (selector, expected = {}) => {
