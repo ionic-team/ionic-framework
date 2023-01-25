@@ -11,6 +11,9 @@ on:
         description: 'The tag to publish to on NPM.'
         type: string
         required: true
+      preid:
+        description: 'The prerelease identifier used when doing a prerelease.'
+        type: string
     secrets:
       NPM_TOKEN:
         required: true
@@ -25,6 +28,7 @@ jobs:
         scope: '@ionic/core'
         tag: ${{ inputs.tag }}
         version: ${{ inputs.version }}
+        preid: ${{ inputs.preid }}
         working-directory: 'core'
         token: ${{ secrets.NPM_TOKEN }}
     - name: Cache Built @ionic/core
@@ -56,6 +60,7 @@ jobs:
         scope: '@ionic/docs'
         tag: ${{ inputs.tag }}
         version: ${{ inputs.version }}
+        preid: ${{ inputs.preid }}
         working-directory: 'docs'
         token: ${{ secrets.NPM_TOKEN }}
 
@@ -75,6 +80,7 @@ jobs:
         scope: '@ionic/angular'
         tag: ${{ inputs.tag }}
         version: ${{ inputs.version }}
+        preid: ${{ inputs.preid }}
         working-directory: 'angular'
         folder: './dist'
         token: ${{ secrets.NPM_TOKEN }}
@@ -101,6 +107,7 @@ jobs:
         scope: '@ionic/react'
         tag: ${{ inputs.tag }}
         version: ${{ inputs.version }}
+        preid: ${{ inputs.preid }}
         working-directory: 'packages/react'
         token: ${{ secrets.NPM_TOKEN }}
     - name: Cache Built @ionic/react
@@ -126,6 +133,7 @@ jobs:
         scope: '@ionic/vue'
         tag: ${{ inputs.tag }}
         version: ${{ inputs.version }}
+        preid: ${{ inputs.preid }}
         working-directory: 'packages/vue'
         token: ${{ secrets.NPM_TOKEN }}
     - name: Cache Built @ionic/vue
@@ -157,6 +165,7 @@ jobs:
         scope: '@ionic/angular-server'
         tag: ${{ inputs.tag }}
         version: ${{ inputs.version }}
+        preid: ${{ inputs.preid }}
         working-directory: 'packages/angular-server'
         folder: './dist'
         token: ${{ secrets.NPM_TOKEN }}
@@ -183,6 +192,7 @@ jobs:
         scope: '@ionic/react-router'
         tag: ${{ inputs.tag }}
         version: ${{ inputs.version }}
+        preid: ${{ inputs.preid }}
         working-directory: 'packages/react-router'
         token: ${{ secrets.NPM_TOKEN }}
 
@@ -208,5 +218,6 @@ jobs:
         scope: '@ionic/vue-router'
         tag: ${{ inputs.tag }}
         version: ${{ inputs.version }}
+        preid: ${{ inputs.preid }}
         working-directory: 'packages/vue-router'
         token: ${{ secrets.NPM_TOKEN }}

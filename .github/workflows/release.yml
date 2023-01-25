@@ -38,6 +38,7 @@ jobs:
     with:
       tag: ${{ inputs.tag }}
       version: ${{ inputs.version }}
+      preid: ${{ inputs.preid }}
     secrets:
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
