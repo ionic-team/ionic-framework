@@ -23,6 +23,14 @@ on:
           - next
           - v5-lts
           - v4-lts
+      preid:
+        type: choice
+        description: Which prerelease identifier should be used? This is only needed when version is "prepatch", "preminor", or "premajor".
+        options:
+          - alpha
+          - beta
+          - rc
+          - next
 
 jobs:
   release-ionic:
@@ -52,7 +60,7 @@ jobs:
         git config user.email hi@ionicframework.com
       shell: bash
     - name: Create GitHub Release
-      run: lerna version ${{ inputs.version }} --yes --force-publish='*' --conventional-commits --create-release github
+      run: lerna version ${{ inputs.version }} --yes --force-publish='*' --conventional-commits --create-release github --preid=${{ inputs.preid }}
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       shell: bash
