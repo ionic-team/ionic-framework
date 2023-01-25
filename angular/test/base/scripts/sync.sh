@@ -2,19 +2,14 @@
 
 set -e
 
-# Copy angular dist
-rm -rf node_modules/@ionic/angular
-cp -a ../../../dist node_modules/@ionic/angular
+# Pack @ionic/core
+npm pack ../../../../core
 
-# Copy angular server
-rm -rf node_modules/@ionic/angular-server
-cp -a ../../../../packages/angular-server/dist node_modules/@ionic/angular-server
+# Pack @ionic/angular
+npm pack ../../../
 
-# # Copy core dist
-rm -rf node_modules/@ionic/core
-mkdir node_modules/@ionic/core
-cp -a ../../../../core/css node_modules/@ionic/core/css
-cp -a ../../../../core/dist node_modules/@ionic/core/dist
-cp -a ../../../../core/hydrate node_modules/@ionic/core/hydrate
-cp -a ../../../../core/loader node_modules/@ionic/core/loader
-cp -a ../../../../core/package.json node_modules/@ionic/core/package.json
+# Pack @ionic/angular-server
+npm pack ../../../../packages/angular-server
+
+# Install Dependencies
+npm install *.tgz
