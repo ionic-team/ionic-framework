@@ -1,6 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Watch, Component, Element, Event, h, Host, Method, Prop } from '@stencil/core';
-import type { OverlayEventDetail } from '../../utils/overlays-interface';
 
 import { config } from '../../global/config';
 import { getIonStylesheet } from '../../global/ionic-global';
@@ -15,6 +14,7 @@ import {
   present,
   safeCall,
 } from '../../utils/overlays';
+import type { OverlayEventDetail } from '../../utils/overlays-interface';
 import type { IonicSafeString } from '../../utils/sanitization';
 import { sanitizeDOMString } from '../../utils/sanitization';
 import { createColorClasses, getClassMap } from '../../utils/theme';

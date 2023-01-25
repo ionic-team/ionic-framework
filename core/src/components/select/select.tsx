@@ -3,7 +3,6 @@ import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '
 import { createLegacyFormController } from '@utils/forms';
 import type { LegacyFormController } from '@utils/forms';
 import { printIonWarning } from '@utils/logging';
-import type { OverlaySelect } from '../../utils/overlays-interface';
 import { isRTL } from '@utils/rtl';
 import { caretDownSharp } from 'ionicons/icons';
 
@@ -21,6 +20,7 @@ import type {
 import { findItemLabel, focusElement, getAriaLabel, renderHiddenInput, inheritAttributes } from '../../utils/helpers';
 import type { Attributes } from '../../utils/helpers';
 import { actionSheetController, alertController, popoverController } from '../../utils/overlays';
+import type { OverlaySelect } from '../../utils/overlays-interface';
 import { createColorClasses, hostContext } from '../../utils/theme';
 import { watchForOptions } from '../../utils/watch-options';
 import type { SelectPopoverOption } from '../select-popover/select-popover-interface';
