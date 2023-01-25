@@ -12,4 +12,4 @@ npm pack ../vue
 npm pack ./
 
 # Install Dependencies
-npm install *.tgz
+npm install *.tgz --no-save

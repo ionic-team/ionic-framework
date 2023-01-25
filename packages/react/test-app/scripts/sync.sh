@@ -12,4 +12,4 @@ npm pack ../
 npm pack ../../react-router
 
 # Install Dependencies
-npm install *.tgz
+npm install *.tgz --no-save

@@ -12,4 +12,4 @@ npm pack ../../../
 npm pack ../../../../packages/angular-server
 
 # Install Dependencies
-npm install *.tgz
+npm install *.tgz --no-save
