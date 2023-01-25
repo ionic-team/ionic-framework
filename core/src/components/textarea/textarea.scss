@@ -170,7 +170,8 @@
   word-break: break-word;
 }
 
-.native-textarea[disabled]:not(.cloned-input) {
+:host(.legacy-textarea) .native-textarea[disabled],
+:host([disabled]) {
   opacity: 0.4;
 }
 
@@ -354,6 +355,15 @@
   border-top: var(--border-width) var(--border-style) var(--border-color);
 
   font-size: 12px;
+}
+
+/**
+ * If the textarea has a validity state, the
+ * border and label should reflect that as a color.
+ */
+:host(.ion-touched.ion-valid) .textarea-bottom,
+:host(.ion-touched.ion-invalid) .textarea-bottom {
+  --border-color: var(--highlight-color);
 }
 
 // Textarea Hint Text
