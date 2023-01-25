@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.4.4](https://github.com/ionic-team/ionic/compare/v6.4.3...v6.4.4) (2023-01-25)
+
+
+### Bug Fixes
+
+* **vue:** unmount teleported components ([#26647](https://github.com/ionic-team/ionic/issues/26647)) ([e75f050](https://github.com/ionic-team/ionic/commit/e75f050be5cd487874ad00f2536c109bf7c7233d)), closes [#26644](https://github.com/ionic-team/ionic/issues/26644)
+
+
+
+## [6.0.16](https://github.com/ionic-team/ionic/compare/v6.0.15...v6.0.16) (2022-04-08)
+
+
+
+## [6.0.15](https://github.com/ionic-team/ionic/compare/v6.0.14...v6.0.15) (2022-04-06)
+
+
+
+
+
 ## [6.4.3](https://github.com/ionic-team/ionic/compare/v6.4.2...v6.4.3) (2023-01-18)
 
 **Note:** Version bump only for package @ionic/vue
