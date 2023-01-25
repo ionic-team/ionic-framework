@@ -7,6 +7,8 @@ inputs:
     description: 'The type of version to release.'
   tag:
     description: 'The tag to publish to on NPM.'
+  preid:
+    description: 'The prerelease identifier used when doing a prerelease.'
   working-directory:
     description: 'The directory of the package.'
   folder:
@@ -25,7 +27,7 @@ runs:
       shell: bash
       working-directory: ${{ inputs.working-directory }}
     - name: Update Version
-      run: lerna version ${{ inputs.version }} --yes --exact --no-changelog --no-push --no-git-tag-version
+      run: lerna version ${{ inputs.version }} --yes --exact --no-changelog --no-push --no-git-tag-version --preid=${{ inputs.preid }}
       shell: bash
       working-directory: ${{ inputs.working-directory }}
     - name: Run Build

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.0.0-beta.0](https://github.com/ionic-team/ionic/compare/v6.5.1...v7.0.0-beta.0) (2023-01-25)
+
+
+### Features
+
+* **virtual-scroll:** remove virtual scroll component ([#25808](https://github.com/ionic-team/ionic/issues/25808)) ([1eb6fd0](https://github.com/ionic-team/ionic/commit/1eb6fd04d7f8c7ccd7dac08d085dc90d9f6283cc))
+
+
+
+
+
 ## [6.5.1](https://github.com/ionic-team/ionic/compare/v6.5.0...v6.5.1) (2023-01-25)
 
 **Note:** Version bump only for package @ionic/angular-server
