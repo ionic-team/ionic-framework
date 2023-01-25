@@ -11,12 +11,16 @@ on:
           - patch
           - minor
           - major
+          - prepatch
+          - preminor
+          - premajor
       tag:
         required: true
         type: choice
         description: Which npm tag should this be published to?
         options:
           - latest
+          - next
           - v5-lts
           - v4-lts
 
