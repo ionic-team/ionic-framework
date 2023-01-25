@@ -2,7 +2,7 @@ import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 import type { E2EPage } from '@utils/test/playwright';
 
-test('animation: multiple', async () => {
+test.describe('animation: multiple', async () => {
   test.beforeEach(({ skip }) => {
     skip.rtl();
     skip.mode('ios');
