@@ -3144,6 +3144,14 @@ export namespace Components {
          */
         "cols"?: number;
         /**
+          * If `true`, a character counter will display the ratio of characters used and the total character limit. Developers must also set the `maxlength` property for the counter to be calculated correctly.
+         */
+        "counter": boolean;
+        /**
+          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".
+         */
+        "counterFormatter"?: (inputLength: number, maxLength: number) => string;
+        /**
           * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
          */
         "debounce"?: number;
@@ -3156,13 +3164,33 @@ export namespace Components {
          */
         "enterkeyhint"?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
         /**
+          * Text that is placed under the textarea and displayed when an error is detected.
+         */
+        "errorText"?: string;
+        /**
+          * The fill for the item. If `'solid'` the item will have a background. If `'outline'` the item will be transparent with a border. Only available in `md` mode.
+         */
+        "fill"?: 'outline' | 'solid';
+        /**
           * Returns the native `<textarea>` element used under the hood.
          */
         "getInputElement": () => Promise<HTMLTextAreaElement>;
         /**
+          * Text that is placed under the textarea and displayed when no error is detected.
+         */
+        "helperText"?: string;
+        /**
           * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
          */
         "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
+        /**
+          * The visible label associated with the textarea.
+         */
+        "label"?: string;
+        /**
+          * Where to place the label relative to the textarea. `'start'`: The label will appear to the left of the textarea in LTR and to the right in RTL. `'end'`: The label will appear to the right of the textarea in LTR and to the left in RTL. `'floating'`: The label will appear smaller and above the textarea when the textarea is focused or it has a value. Otherwise it will appear on top of the textarea. `'stacked'`: The label will appear smaller and above the textarea regardless even when the textarea is blurred or has no value. `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+         */
+        "labelPlacement": 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
         /**
           * This attribute specifies the maximum number of characters that the user can enter.
          */
@@ -3199,6 +3227,10 @@ export namespace Components {
           * Sets focus on the native `textarea` in `ion-textarea`. Use this method instead of the global `textarea.focus()`.
          */
         "setFocus": () => Promise<void>;
+        /**
+          * The shape of the textarea. If "round" it will have an increased border radius.
+         */
+        "shape"?: 'round';
         /**
           * If `true`, the element will have its spelling and grammar checked.
          */
@@ -7482,6 +7514,14 @@ declare namespace LocalJSX {
          */
         "cols"?: number;
         /**
+          * If `true`, a character counter will display the ratio of characters used and the total character limit. Developers must also set the `maxlength` property for the counter to be calculated correctly.
+         */
+        "counter"?: boolean;
+        /**
+          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".
+         */
+        "counterFormatter"?: (inputLength: number, maxLength: number) => string;
+        /**
           * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
          */
         "debounce"?: number;
@@ -7494,9 +7534,29 @@ declare namespace LocalJSX {
          */
         "enterkeyhint"?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
         /**
+          * Text that is placed under the textarea and displayed when an error is detected.
+         */
+        "errorText"?: string;
+        /**
+          * The fill for the item. If `'solid'` the item will have a background. If `'outline'` the item will be transparent with a border. Only available in `md` mode.
+         */
+        "fill"?: 'outline' | 'solid';
+        /**
+          * Text that is placed under the textarea and displayed when no error is detected.
+         */
+        "helperText"?: string;
+        /**
           * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
          */
         "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
+        /**
+          * The visible label associated with the textarea.
+         */
+        "label"?: string;
+        /**
+          * Where to place the label relative to the textarea. `'start'`: The label will appear to the left of the textarea in LTR and to the right in RTL. `'end'`: The label will appear to the right of the textarea in LTR and to the left in RTL. `'floating'`: The label will appear smaller and above the textarea when the textarea is focused or it has a value. Otherwise it will appear on top of the textarea. `'stacked'`: The label will appear smaller and above the textarea regardless even when the textarea is blurred or has no value. `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+         */
+        "labelPlacement"?: 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
         /**
           * This attribute specifies the maximum number of characters that the user can enter.
          */
@@ -7549,6 +7609,10 @@ declare namespace LocalJSX {
           * The number of visible text lines for the control.
          */
         "rows"?: number;
+        /**
+          * The shape of the textarea. If "round" it will have an increased border radius.
+         */
+        "shape"?: 'round';
         /**
           * If `true`, the element will have its spelling and grammar checked.
          */

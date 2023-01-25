@@ -1413,10 +1413,17 @@ ion-textarea,prop,autofocus,boolean,false,false,false
 ion-textarea,prop,clearOnEdit,boolean,false,false,false
 ion-textarea,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-textarea,prop,cols,number | undefined,undefined,false,false
+ion-textarea,prop,counter,boolean,false,false,false
+ion-textarea,prop,counterFormatter,((inputLength: number, maxLength: number) => string) | undefined,undefined,false,false
 ion-textarea,prop,debounce,number | undefined,undefined,false,false
 ion-textarea,prop,disabled,boolean,false,false,false
 ion-textarea,prop,enterkeyhint,"done" | "enter" | "go" | "next" | "previous" | "search" | "send" | undefined,undefined,false,false
+ion-textarea,prop,errorText,string | undefined,undefined,false,false
+ion-textarea,prop,fill,"outline" | "solid" | undefined,undefined,false,false
+ion-textarea,prop,helperText,string | undefined,undefined,false,false
 ion-textarea,prop,inputmode,"decimal" | "email" | "none" | "numeric" | "search" | "tel" | "text" | "url" | undefined,undefined,false,false
+ion-textarea,prop,label,string | undefined,undefined,false,false
+ion-textarea,prop,labelPlacement,"end" | "fixed" | "floating" | "stacked" | "start",'start',false,false
 ion-textarea,prop,maxlength,number | undefined,undefined,false,false
 ion-textarea,prop,minlength,number | undefined,undefined,false,false
 ion-textarea,prop,mode,"ios" | "md",undefined,false,false
@@ -1425,6 +1432,7 @@ ion-textarea,prop,placeholder,string | undefined,undefined,false,false
 ion-textarea,prop,readonly,boolean,false,false,false
 ion-textarea,prop,required,boolean,false,false,false
 ion-textarea,prop,rows,number | undefined,undefined,false,false
+ion-textarea,prop,shape,"round" | undefined,undefined,false,false
 ion-textarea,prop,spellcheck,boolean,false,false,false
 ion-textarea,prop,useBase,true | false,undefined,false,false
 ion-textarea,prop,value,null | string | undefined,'',false,false
@@ -1436,8 +1444,14 @@ ion-textarea,event,ionChange,TextareaChangeEventDetail,true
 ion-textarea,event,ionFocus,FocusEvent,true
 ion-textarea,event,ionInput,TextareaInputEventDetail,true
 ion-textarea,css-prop,--background
+ion-textarea,css-prop,--border-color
 ion-textarea,css-prop,--border-radius
+ion-textarea,css-prop,--border-style
+ion-textarea,css-prop,--border-width
 ion-textarea,css-prop,--color
+ion-textarea,css-prop,--highlight-color-focused
+ion-textarea,css-prop,--highlight-color-invalid
+ion-textarea,css-prop,--highlight-color-valid
 ion-textarea,css-prop,--padding-bottom
 ion-textarea,css-prop,--padding-end
 ion-textarea,css-prop,--padding-start
