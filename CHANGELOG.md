@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.5.1-nightly.20230125](https://github.com/ionic-team/ionic-framework/compare/v6.5.0...v6.5.1-nightly.20230125) (2023-01-25)
+
+
+### Bug Fixes
+
+* **action-sheet:** button icons are not announced by screen readers ([#26640](https://github.com/ionic-team/ionic-framework/issues/26640)) ([22e9ff8](https://github.com/ionic-team/ionic-framework/commit/22e9ff866f8bd7e2e4ca82eae70969ea4f2658df))
+* **fab-button:** icon is not announced by screen readers ([#26619](https://github.com/ionic-team/ionic-framework/issues/26619)) ([dd7cd8c](https://github.com/ionic-team/ionic-framework/commit/dd7cd8c0bfe652d293dc2c2b1bd2a36fd9cf0a0b)), closes [#22296](https://github.com/ionic-team/ionic-framework/issues/22296)
+* **modal, popover:** warn if trigger element was not found ([#26650](https://github.com/ionic-team/ionic-framework/issues/26650)) ([1115203](https://github.com/ionic-team/ionic-framework/commit/11152031202a513121861486e50ea7942b9118d3))
+* **picker-column:** cssClass is set on column ([#26658](https://github.com/ionic-team/ionic-framework/issues/26658)) ([c6620c7](https://github.com/ionic-team/ionic-framework/commit/c6620c7c74abe04c3041e8b256441af72ea12131)), closes [#26653](https://github.com/ionic-team/ionic-framework/issues/26653)
+* **react:** hardware back button works in dev mode ([#26614](https://github.com/ionic-team/ionic-framework/issues/26614)) ([abcfe9f](https://github.com/ionic-team/ionic-framework/commit/abcfe9fe867730f29b9379c3736f86b3d20c5b0a)), closes [#26599](https://github.com/ionic-team/ionic-framework/issues/26599)
+* **select:** focusing item works in firefox ([#26668](https://github.com/ionic-team/ionic-framework/issues/26668)) ([946807d](https://github.com/ionic-team/ionic-framework/commit/946807d67b972c41b52c23c8f00feca4c705b224))
+* **toggle:** on-off icon is not announced by screen readers ([#26641](https://github.com/ionic-team/ionic-framework/issues/26641)) ([77ccac0](https://github.com/ionic-team/ionic-framework/commit/77ccac059091d5d9f7daf9c7fb01a9e855b86ce3))
+* **vue:** unmount teleported components ([#26647](https://github.com/ionic-team/ionic-framework/issues/26647)) ([6b16a0c](https://github.com/ionic-team/ionic-framework/commit/6b16a0c020fc6afb6a5a6e6fa6f0758384f026b9)), closes [#26644](https://github.com/ionic-team/ionic-framework/issues/26644)
+
+
+
+
+
 # [6.5.0](https://github.com/ionic-team/ionic-framework/compare/v6.4.3...v6.5.0) (2023-01-18)
 
 
