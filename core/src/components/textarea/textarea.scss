@@ -170,7 +170,8 @@
   word-break: break-word;
 }
 
-.native-textarea[disabled]:not(.cloned-input) {
+:host(.legacy-textarea) .native-textarea[disabled],
+:host([disabled]) {
   opacity: 0.4;
 }
 
