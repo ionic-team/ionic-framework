@@ -8,7 +8,7 @@ import { createLegacyFormController } from '../../utils/forms';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes, debounceEvent, findItemLabel, inheritAttributes } from '../../utils/helpers';
 import { printIonWarning } from '../../utils/logging';
-import { createColorClasses } from '../../utils/theme';
+import { createColorClasses, hostContext } from '../../utils/theme';
 import { getCounterText } from '../input/input.utils';
 
 /**
@@ -603,7 +603,8 @@ For textareas that do not have a visible label, developers should use "aria-labe
     const { inputId, disabled, fill, shape, labelPlacement } = this;
     const mode = getIonStylesheet(this);
     const value = this.getValue();
-    const shouldRenderHighlight = mode === 'md' && fill !== 'outline';
+    const inItem = hostContext('ion-item', this.el);
+    const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;
 
     return (
       <Host

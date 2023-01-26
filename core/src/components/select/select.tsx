@@ -730,14 +730,15 @@ export class Select implements ComponentInterface {
     const hasFloatingOrStackedLabel = labelPlacement === 'floating' || labelPlacement === 'stacked';
     const justifyEnabled = !hasFloatingOrStackedLabel;
     const rtl = isRTL(el) ? 'rtl' : 'ltr';
-    const shouldRenderHighlight = mode === 'md' && fill !== 'outline';
+    const inItem = hostContext('ion-item', this.el);
+    const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;
 
     return (
       <Host
         onClick={this.onClick}
         class={createColorClasses(this.color, {
           [mode]: true,
-          'in-item': hostContext('ion-item', el),
+          'in-item': inItem,
           'select-disabled': disabled,
           'select-expanded': isExpanded,
           'has-value': this.hasValue(),
