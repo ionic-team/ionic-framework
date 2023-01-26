@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.5.2-nightly.20230126](https://github.com/ionic-team/ionic/compare/v6.5.1...v6.5.2-nightly.20230126) (2023-01-26)
+
+
+### Bug Fixes
+
+* **select:** setting options async updates rendered text ([#26667](https://github.com/ionic-team/ionic/issues/26667)) ([a687457](https://github.com/ionic-team/ionic/commit/a6874579361db548d961fdee83299d664dd6541b)), closes [#19324](https://github.com/ionic-team/ionic/issues/19324)
+
+
+
+
+
 ## [6.5.1](https://github.com/ionic-team/ionic/compare/v6.5.0...v6.5.1) (2023-01-25)
 
 
