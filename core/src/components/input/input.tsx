@@ -640,7 +640,8 @@ export class Input implements ComponentInterface {
     const { disabled, fill, readonly, shape, inputId, labelPlacement } = this;
     const mode = getIonStylesheet(this);
     const value = this.getValue();
-    const shouldRenderHighlight = mode === 'md' && fill !== 'outline';
+    const inItem = hostContext('ion-item', this.el);
+    const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;
 
     return (
       <Host
@@ -652,7 +653,7 @@ export class Input implements ComponentInterface {
           [`input-fill-${fill}`]: fill !== undefined,
           [`input-shape-${shape}`]: shape !== undefined,
           [`input-label-placement-${labelPlacement}`]: true,
-          'in-item': hostContext('ion-item', this.el),
+          'in-item': inItem,
           'in-item-color': hostContext('ion-item.ion-color', this.el),
         })}
       >
