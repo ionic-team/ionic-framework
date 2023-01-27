@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import { Component, Element, Event, Host, Method, Prop, State, Watch, h, forceUpdate } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import type {
@@ -166,6 +166,14 @@ export class Select implements ComponentInterface {
 
     this.mutationO = watchForOptions<HTMLIonSelectOptionElement>(this.el, 'ion-select-option', async () => {
       this.updateOverlayOptions();
+
+      /**
+       * We need to re-render the component
+       * because one of the new ion-select-option
+       * elements may match the value. In this case,
+       * the rendered selected text should be updated.
+       */
+      forceUpdate(this);
     });
   }
 
@@ -206,11 +214,28 @@ export class Select implements ComponentInterface {
     if (this.interface === 'popover') {
       let indexOfSelected = this.childOpts.map((o) => o.value).indexOf(this.value);
       indexOfSelected = indexOfSelected > -1 ? indexOfSelected : 0; // default to first option if nothing selected
-      const selectedEl = overlay.querySelector<HTMLElement>(
+      const selectedItem = overlay.querySelector<HTMLElement>(
         `.select-interface-option:nth-child(${indexOfSelected + 1})`
       );
-      if (selectedEl) {
-        focusElement(selectedEl);
+
+      if (selectedItem) {
+        focusElement(selectedItem);
+
+        /**
+         * Browsers such as Firefox do not
+         * correctly delegate focus when manually
+         * focusing an element with delegatesFocus.
+         * We work around this by manually focusing
+         * the interactive element.
+         * ion-radio and ion-checkbox are the only
+         * elements that ion-select-popover uses, so
+         * we only need to worry about those two components
+         * when focusing.
+         */
+        const interactiveEl = selectedItem.querySelector<HTMLElement>('ion-radio, ion-checkbox');
+        if (interactiveEl) {
+          interactiveEl.focus();
+        }
       }
     }
 
