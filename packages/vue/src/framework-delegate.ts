@@ -17,7 +17,7 @@ export const VueDelegate = (
   // TODO(FW-2969): types
   const attachViewToDom = (
     parentElement: HTMLElement,
-    component: any,
+    componentOrTagName: any | string,
     componentProps: any = {},
     classes?: string[]
   ) => {
@@ -37,10 +37,17 @@ export const VueDelegate = (
     const hostComponent = h(
       Teleport,
       { to: div },
-      h(component, { ...componentProps })
+      h(componentOrTagName, { ...componentProps })
     );
 
-    refMap.set(component, hostComponent);
+    /**
+     * Ionic Framework will use what is returned from `attachViewToDom`
+     * as the `component` argument in `removeViewFromDom`.
+     *
+     * We will store a reference to the div element and the host component,
+     * so we can later look-up and unmount the correct instance.
+     */
+    refMap.set(div, hostComponent);
 
     addFn(hostComponent);
 
