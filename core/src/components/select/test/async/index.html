@@ -43,11 +43,15 @@
       ></ion-select>
     </ion-item>
 
+    <ion-select id="with-value" placeholder="With Value" value="bird"></ion-select>
+
+    <button id="set-contents" onclick="setContents()">Set Contents</button>
+
     <script>
       let selects = document.querySelectorAll('ion-select');
       const options = ['bird', 'dog', 'shark', 'lizard'];
 
-      setTimeout(() => {
+      const setContents = () => {
         selects.forEach((select) => {
           options.forEach((option) => {
             let o = document.createElement('ion-select-option');
@@ -58,10 +62,8 @@
           });
 
           select.value = options[0];
-
-          window.dispatchEvent(new CustomEvent('selectValueSet'));
         });
-      }, 1000);
+      };
     </script>
   </body>
 </html>
