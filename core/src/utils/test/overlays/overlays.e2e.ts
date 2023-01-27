@@ -108,8 +108,8 @@ test.describe('overlays: focus', () => {
   test.beforeEach(({ skip }) => {
     skip.rtl();
   });
-  // TODO FW-3080
-  test.skip('should not select a hidden focusable element', async ({ page, browserName }) => {
+
+  test('should not select a hidden focusable element', async ({ page, browserName }) => {
     await page.setContent(`
       <style>
         [hidden] {
