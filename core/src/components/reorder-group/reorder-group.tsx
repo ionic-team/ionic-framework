@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
-import { getIonStylesheet } from '../../global/ionic-global';
+import { getIonMode } from '../../global/ionic-global';
 import type { Gesture, GestureDetail, ItemReorderEventDetail } from '../../interface';
 import { findClosestIonContent, getScrollElement } from '../../utils/content';
 import { raf } from '../../utils/helpers';
@@ -299,7 +299,7 @@ export class ReorderGroup implements ComponentInterface {
   }
 
   render() {
-    const mode = getIonStylesheet(this);
+    const mode = getIonMode(this);
     return (
       <Host
         class={{

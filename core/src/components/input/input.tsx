@@ -5,7 +5,7 @@ import type { LegacyFormController } from '@utils/forms';
 import { printIonWarning } from '@utils/logging';
 import { closeCircle, closeSharp } from 'ionicons/icons';
 
-import { getIonStylesheet, getIonBehavior } from '../../global/ionic-global';
+import { getIonMode } from '../../global/ionic-global';
 import type {
   AutocompleteTypes,
   Color,
@@ -21,13 +21,11 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 import { getCounterText } from './input.utils';
 
 /**
- * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
 @Component({
   tag: 'ion-input',
   styleUrls: {
-    base: 'input.scss',
     ios: 'input.ios.scss',
     md: 'input.md.scss',
   },
@@ -604,8 +602,8 @@ export class Input implements ComponentInterface {
    * when fill="outline".
    */
   private renderLabelContainer() {
-    const platform = getIonBehavior(this);
-    const hasOutlineFill = platform === 'md' && this.fill === 'outline';
+    const mode = getIonMode(this);
+    const hasOutlineFill = mode === 'md' && this.fill === 'outline';
 
     if (hasOutlineFill) {
       /**
@@ -638,7 +636,7 @@ export class Input implements ComponentInterface {
 
   private renderInput() {
     const { disabled, fill, readonly, shape, inputId, labelPlacement } = this;
-    const mode = getIonStylesheet(this);
+    const mode = getIonMode(this);
     const value = this.getValue();
     const inItem = hostContext('ion-item', this.el);
     const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;
@@ -744,7 +742,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
       this.hasLoggedDeprecationWarning = true;
     }
 
-    const mode = getIonStylesheet(this);
+    const mode = getIonMode(this);
     const value = this.getValue();
     const labelId = this.inputId + '-lbl';
     const label = findItemLabel(this.el);

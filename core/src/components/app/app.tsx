@@ -2,7 +2,7 @@ import type { ComponentInterface } from '@stencil/core';
 import { Build, Component, Element, Host, Method, h } from '@stencil/core';
 
 import { config } from '../../global/config';
-import { getIonStylesheet } from '../../global/ionic-global';
+import { getIonMode } from '../../global/ionic-global';
 import { isPlatform } from '../../utils/platform';
 
 @Component({
@@ -64,7 +64,7 @@ export class App implements ComponentInterface {
   }
 
   render() {
-    const mode = getIonStylesheet(this);
+    const mode = getIonMode(this);
     return (
       <Host
         class={{

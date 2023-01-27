@@ -19,12 +19,6 @@
   position: relative;
 
   width: 100%;
-  /**
-   * This is set so the progress bar
-   * is still visible when using base components.
-   * The iOS/MD styles override this.
-   */
-  height: 4px;
 
   contain: strict;
 

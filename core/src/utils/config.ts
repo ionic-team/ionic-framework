@@ -2,26 +2,6 @@ import type { AnimationBuilder, Mode, SpinnerTypes, TabButtonLayout } from '../i
 
 import type { PlatformConfig } from './platform';
 
-export interface BaseComponentsConfig {
-  /**
-   * If provided, the specified components
-   * will be opted-in to base components. All
-   * other components will not be opted in.
-   * Developers should use either `includeComponents`
-   * or `excludeComponents` but not both.
-   */
-  includeComponents?: string[];
-
-  /**
-   * If provided, the specified components
-   * will not be opted-in to base components. All
-   * other components will be opted in.
-   * Developers should use either `includeComponents`
-   * or `excludeComponents` but not both.
-   */
-  excludeComponents?: string[];
-}
-
 export interface IonicConfig {
   /**
    * When it's set to `false`, disables all animation and transition across the app.
@@ -211,20 +191,6 @@ export interface IonicConfig {
    * Overrides the default platform detection methods.
    */
   platform?: PlatformConfig;
-
-  /**
-   * EXPERIMENTAL: Base Components is in developer preview.
-   * Breaking changes may happen at any time.
-   *
-   * When `true`, all components will be rendered without
-   * iOS or MD styles, providing only the structural styles.
-   * When `false`, all components will be rendered with iOS or
-   * MD styles.
-   * Developers can provide a BaseComponentsConfig object for more
-   * granularity.
-   * Defaults to `undefined` which has the same behavior as `false`.
-   */
-  baseComponents?: boolean | BaseComponentsConfig;
 
   // PRIVATE configs
   keyboardHeight?: number;

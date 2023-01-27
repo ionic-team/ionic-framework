@@ -3,7 +3,7 @@ import { Component, Element, Host, Prop, h } from '@stencil/core';
 import { arrowBackSharp, chevronBack } from 'ionicons/icons';
 
 import { config } from '../../global/config';
-import { getIonStylesheet, getIonBehavior } from '../../global/ionic-global';
+import { getIonMode } from '../../global/ionic-global';
 import type { AnimationBuilder, Color } from '../../interface';
 import type { ButtonInterface } from '../../utils/element-interface';
 import type { Attributes } from '../../utils/helpers';
@@ -11,7 +11,6 @@ import { inheritAriaAttributes } from '../../utils/helpers';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**
- * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @part native - The native HTML button element that wraps all child elements.
@@ -21,7 +20,6 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 @Component({
   tag: 'ion-back-button',
   styleUrls: {
-    base: 'back-button.scss',
     ios: 'back-button.ios.scss',
     md: 'back-button.md.scss',
   },
@@ -86,7 +84,7 @@ export class BackButton implements ComponentInterface, ButtonInterface {
       return icon;
     }
 
-    if (getIonBehavior(this) === 'ios') {
+    if (getIonMode(this) === 'ios') {
       // default ios back button icon
       return config.get('backButtonIcon', chevronBack);
     }
@@ -96,7 +94,7 @@ export class BackButton implements ComponentInterface, ButtonInterface {
   }
 
   get backButtonText() {
-    const defaultBackButtonText = getIonBehavior(this) === 'ios' ? 'Back' : null;
+    const defaultBackButtonText = getIonMode(this) === 'ios' ? 'Back' : null;
     return this.text != null ? this.text : config.get('backButtonText', defaultBackButtonText);
   }
 
@@ -137,7 +135,7 @@ export class BackButton implements ComponentInterface, ButtonInterface {
       inheritedAttributes,
     } = this;
     const showBackButton = defaultHref !== undefined;
-    const mode = getIonStylesheet(this);
+    const mode = getIonMode(this);
     const ariaLabel = inheritedAttributes['aria-label'] || backButtonText || 'back';
 
     return (

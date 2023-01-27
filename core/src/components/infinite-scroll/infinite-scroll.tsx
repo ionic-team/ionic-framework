@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, readTask, writeTask } from '@stencil/core';
 
-import { getIonStylesheet } from '../../global/ionic-global';
+import { getIonMode } from '../../global/ionic-global';
 import { findClosestIonContent, getScrollElement, printIonContentErrorMsg } from '../../utils/content';
 
 @Component({
@@ -212,7 +212,7 @@ export class InfiniteScroll implements ComponentInterface {
   }
 
   render() {
-    const mode = getIonStylesheet(this);
+    const mode = getIonMode(this);
     const disabled = this.disabled;
     return (
       <Host

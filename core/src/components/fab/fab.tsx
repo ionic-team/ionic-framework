@@ -1,7 +1,7 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Method, Prop, Watch, h } from '@stencil/core';
 
-import { getIonStylesheet } from '../../global/ionic-global';
+import { getIonMode } from '../../global/ionic-global';
 
 @Component({
   tag: 'ion-fab',
@@ -76,7 +76,7 @@ export class Fab implements ComponentInterface {
 
   render() {
     const { horizontal, vertical, edge } = this;
-    const mode = getIonStylesheet(this);
+    const mode = getIonMode(this);
     return (
       <Host
         class={{

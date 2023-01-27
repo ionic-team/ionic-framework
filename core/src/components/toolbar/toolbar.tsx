@@ -1,12 +1,11 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Listen, Prop, forceUpdate, h } from '@stencil/core';
 
-import { getIonStylesheet } from '../../global/ionic-global';
+import { getIonMode } from '../../global/ionic-global';
 import type { Color, CssClassMap, StyleEventDetail } from '../../interface';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
- * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @slot - Content is placed between the named slots if provided without a slot.
@@ -18,7 +17,6 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 @Component({
   tag: 'ion-toolbar',
   styleUrls: {
-    base: 'toolbar.scss',
     ios: 'toolbar.ios.scss',
     md: 'toolbar.md.scss',
   },
@@ -84,7 +82,7 @@ export class Toolbar implements ComponentInterface {
   }
 
   render() {
-    const mode = getIonStylesheet(this);
+    const mode = getIonMode(this);
     const childStyles = {};
     this.childrenStyles.forEach((value) => {
       Object.assign(childStyles, value);
