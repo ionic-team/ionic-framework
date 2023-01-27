@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="safe-area">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Action Sheet Test</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      std-action-sheet-content {
+        margin-bottom: var(--ion-safe-area-bottom);
+      }
+    </style>
+  </head>
+
+  <body>
+    <button id="open-sheet">Open Action Sheet</button>
+
+    <std-action-sheet trigger="open-sheet">
+      <ion-backdrop></ion-backdrop>
+      <std-action-sheet-content class="w-full px-4 max-w-sm">
+        <div class="rounded-lg overflow-hidden mb-4 bg-white divide-y">
+          <h1 class="text-center w-full py-3 text-slate-500 text-sm">Action Sheet</h1>
+          <std-action-sheet-button role="confirm" data="action-1-data">
+            <button class="h-12 px-6 bg-white w-full py-2 focus-visible:bg-slate-200 active:bg-slate-150">Action 1</button>
+          </std-action-sheet-button>
+
+          <std-action-sheet-button role="confirm" data="action-2-data">
+            <button class="h-12 px-6 bg-white w-full py-2 focus-visible:bg-slate-200 active:bg-slate-150">Action 2</button>
+          </std-action-sheet-button>
+
+          <std-action-sheet-button role="destructive">
+            <button class="h-12 px-6 bg-white w-full py-2 focus-visible:bg-slate-200 active:bg-slate-150 text-red-500">Delete</button>
+          </std-action-sheet-button>
+        </div>
+        <div class="rounded-lg overflow-hidden">
+          <std-action-sheet-button role="cancel">
+            <button class="h-12 px-6 bg-white w-full py-2 focus-visible:bg-slate-200 active:bg-slate-150 text-blue-500">Cancel</button>
+          </std-action-sheet-button>
+        </div>
+      </std-action-sheet-content>
+    </std-action-sheet>
+
+    <div id="response"></div>
+
+    <script>
+      const actionSheet = document.querySelector('std-action-sheet');
+      const response = document.querySelector('#response');
+      actionSheet.addEventListener('didDismiss', (ev) => {
+        response.innerHTML = JSON.stringify(ev.detail)
+      });
+
+
+    </script>
+  </body>
+</html>

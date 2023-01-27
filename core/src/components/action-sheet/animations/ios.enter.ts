@@ -18,7 +18,7 @@ export const iosEnterAnimation = (baseEl: HTMLElement): Animation => {
     .afterClearStyles(['pointer-events']);
 
   wrapperAnimation
-    .addElement(baseEl.querySelector('.action-sheet-wrapper')!)
+    .addElement(baseEl.querySelector('.action-sheet-wrapper, std-action-sheet-content')!)
     .fromTo('transform', 'translateY(100%)', 'translateY(0%)');
 
   return baseAnimation

@@ -12,7 +12,7 @@ export const iosLeaveAnimation = (baseEl: HTMLElement): Animation => {
   backdropAnimation.addElement(baseEl.querySelector('ion-backdrop')!).fromTo('opacity', 'var(--backdrop-opacity)', 0);
 
   wrapperAnimation
-    .addElement(baseEl.querySelector('.action-sheet-wrapper')!)
+    .addElement(baseEl.querySelector('.action-sheet-wrapper, std-action-sheet-content')!)
     .fromTo('transform', 'translateY(0%)', 'translateY(100%)');
 
   return baseAnimation

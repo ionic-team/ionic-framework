@@ -3423,6 +3423,85 @@ export namespace Components {
          */
         "useBase"?: true | false;
     }
+    interface StdActionSheet {
+        /**
+          * If `true`, the action sheet will animate.
+         */
+        "animated": boolean;
+        /**
+          * If `true`, the action sheet will be dismissed when the backdrop is clicked.
+         */
+        "backdropDismiss": boolean;
+        /**
+          * An array of buttons for the action sheet.
+         */
+        "buttons": (ActionSheetButton | string)[];
+        /**
+          * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
+         */
+        "cssClass"?: string | string[];
+        "delegate"?: FrameworkDelegate;
+        /**
+          * Dismiss the action sheet overlay after it has been presented.
+          * @param data Any data to emit in the dismiss events.
+          * @param role The role of the element that is dismissing the action sheet. This can be useful in a button handler for determining which button was clicked to dismiss the action sheet. Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
+         */
+        "dismiss": (data?: any, role?: string) => Promise<boolean>;
+        /**
+          * Animation to use when the action sheet is presented.
+         */
+        "enterAnimation"?: AnimationBuilder;
+        "hasController": boolean;
+        /**
+          * Title for the action sheet.
+         */
+        "header"?: string;
+        /**
+          * Additional attributes to pass to the action sheet.
+         */
+        "htmlAttributes"?: { [key: string]: any };
+        /**
+          * If `true`, the action sheet will open. If `false`, the action sheet will close. Use this if you need finer grained control over presentation, otherwise just use the actionSheetController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the action sheet dismisses. You will need to do that in your code.
+         */
+        "isOpen": boolean;
+        /**
+          * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
+         */
+        "keyboardClose": boolean;
+        /**
+          * Animation to use when the action sheet is dismissed.
+         */
+        "leaveAnimation"?: AnimationBuilder;
+        /**
+          * Returns a promise that resolves when the action sheet did dismiss.
+         */
+        "onDidDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
+        /**
+          * Returns a promise that resolves when the action sheet will dismiss.
+         */
+        "onWillDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
+        "overlayIndex": number;
+        /**
+          * Present the action sheet overlay after it has been created.
+         */
+        "present": () => Promise<void>;
+        /**
+          * Subtitle for the action sheet.
+         */
+        "subHeader"?: string;
+        /**
+          * If `true`, the action sheet will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
+         */
+        "translucent": boolean;
+        /**
+          * An ID corresponding to the trigger element that causes the action sheet to open when clicked.
+         */
+        "trigger": string | undefined;
+    }
+    interface StdActionSheetButton {
+        "data"?: any;
+        "role"?: 'cancel' | 'destructive';
+    }
 }
 export interface IonAccordionGroupCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -3607,6 +3686,10 @@ export interface IonToastCustomEvent<T> extends CustomEvent<T> {
 export interface IonToggleCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIonToggleElement;
+}
+export interface StdActionSheetCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLStdActionSheetElement;
 }
 declare global {
     interface HTMLIonAccordionElement extends Components.IonAccordion, HTMLStencilElement {
@@ -4155,6 +4238,18 @@ declare global {
         prototype: HTMLIonToolbarElement;
         new (): HTMLIonToolbarElement;
     };
+    interface HTMLStdActionSheetElement extends Components.StdActionSheet, HTMLStencilElement {
+    }
+    var HTMLStdActionSheetElement: {
+        prototype: HTMLStdActionSheetElement;
+        new (): HTMLStdActionSheetElement;
+    };
+    interface HTMLStdActionSheetButtonElement extends Components.StdActionSheetButton, HTMLStencilElement {
+    }
+    var HTMLStdActionSheetButtonElement: {
+        prototype: HTMLStdActionSheetButtonElement;
+        new (): HTMLStdActionSheetButtonElement;
+    };
     interface HTMLElementTagNameMap {
         "ion-accordion": HTMLIonAccordionElement;
         "ion-accordion-group": HTMLIonAccordionGroupElement;
@@ -4247,6 +4342,8 @@ declare global {
         "ion-toast": HTMLIonToastElement;
         "ion-toggle": HTMLIonToggleElement;
         "ion-toolbar": HTMLIonToolbarElement;
+        "std-action-sheet": HTMLStdActionSheetElement;
+        "std-action-sheet-button": HTMLStdActionSheetButtonElement;
     }
 }
 declare namespace LocalJSX {
@@ -7839,6 +7936,99 @@ declare namespace LocalJSX {
          */
         "useBase"?: true | false;
     }
+    interface StdActionSheet {
+        /**
+          * If `true`, the action sheet will animate.
+         */
+        "animated"?: boolean;
+        /**
+          * If `true`, the action sheet will be dismissed when the backdrop is clicked.
+         */
+        "backdropDismiss"?: boolean;
+        /**
+          * An array of buttons for the action sheet.
+         */
+        "buttons"?: (ActionSheetButton | string)[];
+        /**
+          * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
+         */
+        "cssClass"?: string | string[];
+        "delegate"?: FrameworkDelegate;
+        /**
+          * Animation to use when the action sheet is presented.
+         */
+        "enterAnimation"?: AnimationBuilder;
+        "hasController"?: boolean;
+        /**
+          * Title for the action sheet.
+         */
+        "header"?: string;
+        /**
+          * Additional attributes to pass to the action sheet.
+         */
+        "htmlAttributes"?: { [key: string]: any };
+        /**
+          * If `true`, the action sheet will open. If `false`, the action sheet will close. Use this if you need finer grained control over presentation, otherwise just use the actionSheetController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the action sheet dismisses. You will need to do that in your code.
+         */
+        "isOpen"?: boolean;
+        /**
+          * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
+         */
+        "keyboardClose"?: boolean;
+        /**
+          * Animation to use when the action sheet is dismissed.
+         */
+        "leaveAnimation"?: AnimationBuilder;
+        /**
+          * Emitted after the action sheet has dismissed. Shorthand for ionActionSheetDidDismiss.
+         */
+        "onDidDismiss"?: (event: StdActionSheetCustomEvent<OverlayEventDetail>) => void;
+        /**
+          * Emitted after the action sheet has presented. Shorthand for ionActionSheetWillDismiss.
+         */
+        "onDidPresent"?: (event: StdActionSheetCustomEvent<void>) => void;
+        /**
+          * Emitted after the action sheet has dismissed.
+         */
+        "onIonActionSheetDidDismiss"?: (event: StdActionSheetCustomEvent<OverlayEventDetail>) => void;
+        /**
+          * Emitted after the action sheet has presented.
+         */
+        "onIonActionSheetDidPresent"?: (event: StdActionSheetCustomEvent<void>) => void;
+        /**
+          * Emitted before the action sheet has dismissed.
+         */
+        "onIonActionSheetWillDismiss"?: (event: StdActionSheetCustomEvent<OverlayEventDetail>) => void;
+        /**
+          * Emitted before the action sheet has presented.
+         */
+        "onIonActionSheetWillPresent"?: (event: StdActionSheetCustomEvent<void>) => void;
+        /**
+          * Emitted before the action sheet has dismissed. Shorthand for ionActionSheetWillDismiss.
+         */
+        "onWillDismiss"?: (event: StdActionSheetCustomEvent<OverlayEventDetail>) => void;
+        /**
+          * Emitted before the action sheet has presented. Shorthand for ionActionSheetWillPresent.
+         */
+        "onWillPresent"?: (event: StdActionSheetCustomEvent<void>) => void;
+        "overlayIndex": number;
+        /**
+          * Subtitle for the action sheet.
+         */
+        "subHeader"?: string;
+        /**
+          * If `true`, the action sheet will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
+         */
+        "translucent"?: boolean;
+        /**
+          * An ID corresponding to the trigger element that causes the action sheet to open when clicked.
+         */
+        "trigger"?: string | undefined;
+    }
+    interface StdActionSheetButton {
+        "data"?: any;
+        "role"?: 'cancel' | 'destructive';
+    }
     interface IntrinsicElements {
         "ion-accordion": IonAccordion;
         "ion-accordion-group": IonAccordionGroup;
@@ -7931,6 +8121,8 @@ declare namespace LocalJSX {
         "ion-toast": IonToast;
         "ion-toggle": IonToggle;
         "ion-toolbar": IonToolbar;
+        "std-action-sheet": StdActionSheet;
+        "std-action-sheet-button": StdActionSheetButton;
     }
 }
 export { LocalJSX as JSX };
@@ -8028,6 +8220,8 @@ declare module "@stencil/core" {
             "ion-toast": LocalJSX.IonToast & JSXBase.HTMLAttributes<HTMLIonToastElement>;
             "ion-toggle": LocalJSX.IonToggle & JSXBase.HTMLAttributes<HTMLIonToggleElement>;
             "ion-toolbar": LocalJSX.IonToolbar & JSXBase.HTMLAttributes<HTMLIonToolbarElement>;
+            "std-action-sheet": LocalJSX.StdActionSheet & JSXBase.HTMLAttributes<HTMLStdActionSheetElement>;
+            "std-action-sheet-button": LocalJSX.StdActionSheetButton & JSXBase.HTMLAttributes<HTMLStdActionSheetButtonElement>;
         }
     }
 }

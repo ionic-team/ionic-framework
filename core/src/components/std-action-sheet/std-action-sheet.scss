@@ -1,0 +1,25 @@
+:host {
+  display: flex;
+
+  justify-content: center;
+  align-items: end;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  --backdrop-opacity: 0.4;
+}
+
+:host(.overlay-hidden) {
+  display: none;
+}
+
+
+::slotted(std-action-sheet-content) {
+  position: relative;
+
+  z-index: 10;
+}
