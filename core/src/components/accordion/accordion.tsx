@@ -3,7 +3,7 @@ import { Component, Element, Host, Prop, State, h } from '@stencil/core';
 import { chevronDown } from 'ionicons/icons';
 
 import { config } from '../../global/config';
-import { getIonStylesheet } from '../../global/ionic-global';
+import { getIonMode } from '../../global/ionic-global';
 import { addEventListener, getElementRoot, raf, removeEventListener, transitionEndAsync } from '../../utils/helpers';
 
 const enum AccordionState {
@@ -14,7 +14,6 @@ const enum AccordionState {
 }
 
 /**
- * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @slot header - Content is placed at the top and is used to
@@ -30,7 +29,6 @@ const enum AccordionState {
 @Component({
   tag: 'ion-accordion',
   styleUrls: {
-    base: 'accordion.scss',
     ios: 'accordion.ios.scss',
     md: 'accordion.md.scss',
   },
@@ -397,7 +395,7 @@ export class Accordion implements ComponentInterface {
 
   render() {
     const { disabled, readonly } = this;
-    const mode = getIonStylesheet(this);
+    const mode = getIonMode(this);
     const expanded = this.state === AccordionState.Expanded || this.state === AccordionState.Expanding;
     const headerPart = expanded ? 'header expanded' : 'header';
     const contentPart = expanded ? 'content expanded' : 'content';

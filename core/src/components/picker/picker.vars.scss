@@ -8,17 +8,3 @@ $picker-width:                             100% !default;
 
 /// @prop - Max width of the picker
 $picker-max-width:                         500px !default;
-
-/// @prop - Height of the picker
-/**
- * We choose an explicit height otherwise the picker will
- * appear to be hidden when using base components.
- */
-$picker-height: 200px !default;
-
-/// @prop - Height of the picker button toolbar
-/**
- * We choose an explicit height otherwise the toolbar will
- * appear to be hidden when using base components.
- */
-$picker-toolbar-height: 50px !default;

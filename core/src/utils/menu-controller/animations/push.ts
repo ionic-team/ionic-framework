@@ -1,4 +1,4 @@
-import { getIonBehavior } from '../../../global/ionic-global';
+import { getIonMode } from '../../../global/ionic-global';
 import type { Animation, MenuI } from '../../../interface';
 import { createAnimation } from '../../animation/animation';
 
@@ -13,7 +13,7 @@ export const menuPushAnimation = (menu: MenuI): Animation => {
   let contentOpenedX: string;
   let menuClosedX: string;
 
-  const platform = getIonBehavior(menu);
+  const mode = getIonMode(menu);
   const width = menu.width;
 
   if (menu.isEndSide) {
@@ -34,5 +34,5 @@ export const menuPushAnimation = (menu: MenuI): Animation => {
 
   const backdropAnimation = createAnimation().addElement(menu.backdropEl!).fromTo('opacity', 0.01, 0.32);
 
-  return baseAnimation(platform === 'ios').addAnimation([menuAnimation, contentAnimation, backdropAnimation]);
+  return baseAnimation(mode === 'ios').addAnimation([menuAnimation, contentAnimation, backdropAnimation]);
 };

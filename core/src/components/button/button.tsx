@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, h } from '@stencil/core';
 
-import { getIonStylesheet } from '../../global/ionic-global';
+import { getIonMode } from '../../global/ionic-global';
 import type { AnimationBuilder, Color, RouterDirection } from '../../interface';
 import type { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import type { Attributes } from '../../utils/helpers';
@@ -10,7 +10,6 @@ import { printIonWarning } from '../../utils/logging';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**
- * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @slot - Content is placed between the named slots if provided without a slot.
@@ -23,7 +22,6 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 @Component({
   tag: 'ion-button',
   styleUrls: {
-    base: 'button.scss',
     ios: 'button.ios.scss',
     md: 'button.md.scss',
   },
@@ -246,7 +244,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   };
 
   render() {
-    const mode = getIonStylesheet(this);
+    const mode = getIonMode(this);
     const {
       buttonType,
       type,

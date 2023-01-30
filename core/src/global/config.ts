@@ -1,5 +1,4 @@
 import type { IonicConfig } from '../interface';
-import { printIonWarning } from '../utils/logging';
 
 // TODO(FW-2832): types
 
@@ -73,25 +72,6 @@ export const configFromURL = (win: Window) => {
 
 const startsWith = (input: string, search: string): boolean => {
   return input.substr(0, search.length) === search;
-};
-
-/**
- * Validates if the IonicConfig is
- * set correctly.
- */
-export const validateConfig = (config: IonicConfig) => {
-  const { baseComponents } = config;
-  if (typeof baseComponents === 'object') {
-    if (baseComponents.includeComponents !== undefined && baseComponents.excludeComponents !== undefined) {
-      printIonWarning(
-        'The `baseComponents` configuration in your Ionic config is invalid. `includeComponents` and `excludeComponents` cannot be used at the same time.',
-        baseComponents
-      );
-      return false;
-    }
-  }
-
-  return true;
 };
 
 const IONIC_PREFIX = 'ionic:';
