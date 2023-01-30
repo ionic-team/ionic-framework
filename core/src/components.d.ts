@@ -6,7 +6,7 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { AccordionGroupChangeEventDetail } from "./components/accordion-group/accordion-group-interface";
-import { AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail as BreadcrumbCollapsedClickEventDetail1, Color, ComponentProps, ComponentRef, FrameworkDelegate, NavComponent as NavComponent1, StyleEventDetail, TextFieldTypes } from "./interface";
+import { AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail as BreadcrumbCollapsedClickEventDetail1, Color, ComponentProps, ComponentRef, FrameworkDelegate, StyleEventDetail, TextFieldTypes } from "./interface";
 import { ActionSheetButton } from "./components/action-sheet/action-sheet-interface";
 import { OverlayEventDetail } from "./utils/overlays-interface";
 import { IonicSafeString } from "./utils/sanitization";
@@ -42,7 +42,7 @@ import { TextareaChangeEventDetail, TextareaInputEventDetail } from "./component
 import { ToastButton, ToastPosition } from "./components/toast/toast-interface";
 import { ToggleChangeEventDetail } from "./components/toggle/toggle-interface";
 export { AccordionGroupChangeEventDetail } from "./components/accordion-group/accordion-group-interface";
-export { AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail as BreadcrumbCollapsedClickEventDetail1, Color, ComponentProps, ComponentRef, FrameworkDelegate, NavComponent as NavComponent1, StyleEventDetail, TextFieldTypes } from "./interface";
+export { AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail as BreadcrumbCollapsedClickEventDetail1, Color, ComponentProps, ComponentRef, FrameworkDelegate, StyleEventDetail, TextFieldTypes } from "./interface";
 export { ActionSheetButton } from "./components/action-sheet/action-sheet-interface";
 export { OverlayEventDetail } from "./utils/overlays-interface";
 export { IonicSafeString } from "./utils/sanitization";
@@ -1918,7 +1918,7 @@ export namespace Components {
         /**
           * Component to navigate to. Only used if the `routerDirection` is `"forward"` or `"root"`.
          */
-        "component"?: NavComponent1;
+        "component"?: NavComponent;
         /**
           * Data you want to pass to the component as props. Only used if the `"routerDirection"` is `"forward"` or `"root"`.
          */
@@ -5875,7 +5875,7 @@ declare namespace LocalJSX {
         /**
           * Component to navigate to. Only used if the `routerDirection` is `"forward"` or `"root"`.
          */
-        "component"?: NavComponent1;
+        "component"?: NavComponent;
         /**
           * Data you want to pass to the component as props. Only used if the `"routerDirection"` is `"forward"` or `"root"`.
          */
