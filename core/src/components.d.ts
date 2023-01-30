@@ -6,7 +6,7 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { AccordionGroupChangeEventDetail } from "./components/accordion-group/accordion-group-interface";
-import { AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail as BreadcrumbCollapsedClickEventDetail1, Color, ComponentProps, ComponentRef, FrameworkDelegate, NavComponent as NavComponent1, PickerColumn as PickerColumn1, StyleEventDetail, TextFieldTypes } from "./interface";
+import { AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail as BreadcrumbCollapsedClickEventDetail1, Color, ComponentProps, ComponentRef, FrameworkDelegate, NavComponent as NavComponent1, StyleEventDetail, TextFieldTypes } from "./interface";
 import { ActionSheetButton } from "./components/action-sheet/action-sheet-interface";
 import { OverlayEventDetail } from "./utils/overlays-interface";
 import { IonicSafeString } from "./utils/sanitization";
@@ -42,7 +42,7 @@ import { TextareaChangeEventDetail, TextareaInputEventDetail } from "./component
 import { ToastButton, ToastPosition } from "./components/toast/toast-interface";
 import { ToggleChangeEventDetail } from "./components/toggle/toggle-interface";
 export { AccordionGroupChangeEventDetail } from "./components/accordion-group/accordion-group-interface";
-export { AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail as BreadcrumbCollapsedClickEventDetail1, Color, ComponentProps, ComponentRef, FrameworkDelegate, NavComponent as NavComponent1, PickerColumn as PickerColumn1, StyleEventDetail, TextFieldTypes } from "./interface";
+export { AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail as BreadcrumbCollapsedClickEventDetail1, Color, ComponentProps, ComponentRef, FrameworkDelegate, NavComponent as NavComponent1, StyleEventDetail, TextFieldTypes } from "./interface";
 export { ActionSheetButton } from "./components/action-sheet/action-sheet-interface";
 export { OverlayEventDetail } from "./utils/overlays-interface";
 export { IonicSafeString } from "./utils/sanitization";
@@ -2030,7 +2030,7 @@ export namespace Components {
         /**
           * Picker column data
          */
-        "col": PickerColumn1;
+        "col": PickerColumn;
     }
     interface IonPickerColumnInternal {
         /**
@@ -5996,11 +5996,11 @@ declare namespace LocalJSX {
         /**
           * Picker column data
          */
-        "col": PickerColumn1;
+        "col": PickerColumn;
         /**
           * Emitted when the selected value has changed
          */
-        "onIonPickerColChange"?: (event: IonPickerColumnCustomEvent<PickerColumn1>) => void;
+        "onIonPickerColChange"?: (event: IonPickerColumnCustomEvent<PickerColumn>) => void;
     }
     interface IonPickerColumnInternal {
         /**
