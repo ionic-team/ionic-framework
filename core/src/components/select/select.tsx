@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import { Component, Element, Event, Host, Method, Prop, State, Watch, h, forceUpdate } from '@stencil/core';
 import { createLegacyFormController } from '@utils/forms';
 import type { LegacyFormController } from '@utils/forms';
 import { printIonWarning } from '@utils/logging';
@@ -246,6 +246,14 @@ export class Select implements ComponentInterface {
 
     this.mutationO = watchForOptions<HTMLIonSelectOptionElement>(this.el, 'ion-select-option', async () => {
       this.updateOverlayOptions();
+
+      /**
+       * We need to re-render the component
+       * because one of the new ion-select-option
+       * elements may match the value. In this case,
+       * the rendered selected text should be updated.
+       */
+      forceUpdate(this);
     });
   }
 
