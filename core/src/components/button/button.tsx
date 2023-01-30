@@ -10,8 +10,6 @@ import { printIonWarning } from '../../utils/logging';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 import type { RouterDirection } from '../router/utils/interface';
 
-0;
-
 /**
  * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
