@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.5.2-nightly.20230130](https://github.com/ionic-team/ionic-framework/compare/v6.5.1...v6.5.2-nightly.20230130) (2023-01-30)
+
+
+### Bug Fixes
+
+* **item:** inherit aria attributes before render ([#26546](https://github.com/ionic-team/ionic-framework/issues/26546)) ([95a3c69](https://github.com/ionic-team/ionic-framework/commit/95a3c69bbbe415cb5f14ac8e1faed287e91b4b40)), closes [#26538](https://github.com/ionic-team/ionic-framework/issues/26538)
+* **select:** setting options async updates rendered text ([#26667](https://github.com/ionic-team/ionic-framework/issues/26667)) ([a687457](https://github.com/ionic-team/ionic-framework/commit/a6874579361db548d961fdee83299d664dd6541b)), closes [#19324](https://github.com/ionic-team/ionic-framework/issues/19324)
+
+
+
+
+
 ## [6.5.1](https://github.com/ionic-team/ionic-framework/compare/v6.5.0...v6.5.1) (2023-01-25)
 
 

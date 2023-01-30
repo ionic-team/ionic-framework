@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.5.2-nightly.20230130](https://github.com/ionic-team/ionic/compare/v6.5.1...v6.5.2-nightly.20230130) (2023-01-30)
+
+
+### Bug Fixes
+
+* **item:** inherit aria attributes before render ([#26546](https://github.com/ionic-team/ionic/issues/26546)) ([95a3c69](https://github.com/ionic-team/ionic/commit/95a3c69bbbe415cb5f14ac8e1faed287e91b4b40)), closes [#26538](https://github.com/ionic-team/ionic/issues/26538)
+
+
+
+
+
 ## [6.5.1](https://github.com/ionic-team/ionic/compare/v6.5.0...v6.5.1) (2023-01-25)
 
 
