@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
 
-import { getIonStylesheet } from '../../global/ionic-global';
+import { getIonMode } from '../../global/ionic-global';
 import type {
   Color,
   Gesture,
@@ -27,7 +27,6 @@ import type { PinFormatter } from './range-interface';
 // TODO(FW-2832): types
 
 /**
- * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @slot label - The label text to associate with the range. Use the "labelPlacement" property to control where the label is placed relative to the range.
@@ -44,7 +43,6 @@ import type { PinFormatter } from './range-interface';
 @Component({
   tag: 'ion-range',
   styleUrls: {
-    base: 'range.scss',
     ios: 'range.ios.scss',
     md: 'range.md.scss',
   },
@@ -582,7 +580,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
 
     const { el, pressedKnob, disabled, pin, rangeId } = this;
 
-    const mode = getIonStylesheet(this);
+    const mode = getIonMode(this);
 
     renderHiddenInput(true, el, this.name, JSON.stringify(this.getValue()), disabled);
 
@@ -610,7 +608,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
   private renderRange() {
     const { disabled, el, rangeId, pin, pressedKnob, labelPlacement } = this;
 
-    const mode = getIonStylesheet(this);
+    const mode = getIonMode(this);
 
     renderHiddenInput(true, el, this.name, JSON.stringify(this.getValue()), disabled);
 

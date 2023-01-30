@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
 
-import { getIonStylesheet } from '../../global/ionic-global';
+import { getIonMode } from '../../global/ionic-global';
 
 // TODO(FW-2832): types
 
@@ -16,14 +16,9 @@ const QUERY: { [key: string]: string } = {
   never: '',
 };
 
-/**
- * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
- */
 @Component({
   tag: 'ion-split-pane',
   styleUrls: {
-    base: 'split-pane.scss',
     ios: 'split-pane.ios.scss',
     md: 'split-pane.md.scss',
   },
@@ -163,7 +158,7 @@ export class SplitPane implements ComponentInterface {
   }
 
   render() {
-    const mode = getIonStylesheet(this);
+    const mode = getIonMode(this);
     return (
       <Host
         class={{

@@ -30,8 +30,6 @@
   --max-width: #{$picker-max-width};
   --min-height: auto;
   --max-height: auto;
-  --backdrop-opacity: 0;
-  --height: #{$picker-height};
 
   @include font-smoothing();
   @include position(0, null, null, 0);
@@ -90,7 +88,6 @@
 
 .picker-toolbar {
   width: 100%;
-  height: $picker-toolbar-height;
 
   background: transparent;
 
@@ -119,8 +116,6 @@
   position: relative;
 
   justify-content: center;
-
-  height: $picker-height - $picker-toolbar-height;
 
   margin-bottom: var(--ion-safe-area-bottom, 0);
 

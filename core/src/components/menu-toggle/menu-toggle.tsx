@@ -1,7 +1,7 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Host, Listen, Prop, State, h } from '@stencil/core';
 
-import { getIonStylesheet } from '../../global/ionic-global';
+import { getIonMode } from '../../global/ionic-global';
 import { menuController } from '../../utils/menu-controller';
 
 import { updateVisibility } from './menu-toggle-util';
@@ -50,7 +50,7 @@ export class MenuToggle implements ComponentInterface {
   };
 
   render() {
-    const mode = getIonStylesheet(this);
+    const mode = getIonMode(this);
     const hidden = this.autoHide && !this.visible;
 
     return (

@@ -1,16 +1,11 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Host, Prop, h } from '@stencil/core';
 
-import { getIonStylesheet } from '../../global/ionic-global';
+import { getIonMode } from '../../global/ionic-global';
 
-/**
- * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
- */
 @Component({
   tag: 'ion-buttons',
   styleUrls: {
-    base: 'buttons.scss',
     ios: 'buttons.ios.scss',
     md: 'buttons.md.scss',
   },
@@ -32,7 +27,7 @@ export class Buttons implements ComponentInterface {
   @Prop() collapse = false;
 
   render() {
-    const mode = getIonStylesheet(this);
+    const mode = getIonMode(this);
     return (
       <Host
         class={{

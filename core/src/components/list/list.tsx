@@ -1,16 +1,14 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Method, Prop, h } from '@stencil/core';
 
-import { getIonStylesheet } from '../../global/ionic-global';
+import { getIonMode } from '../../global/ionic-global';
 
 /**
- * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
 @Component({
   tag: 'ion-list',
   styleUrls: {
-    base: 'list.scss',
     ios: 'list.ios.scss',
     md: 'list.md.scss',
   },
@@ -44,7 +42,7 @@ export class List implements ComponentInterface {
   }
 
   render() {
-    const mode = getIonStylesheet(this);
+    const mode = getIonMode(this);
     const { lines, inset } = this;
     return (
       <Host
