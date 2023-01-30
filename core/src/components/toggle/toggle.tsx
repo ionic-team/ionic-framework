@@ -354,7 +354,9 @@ export class Toggle implements ComponentInterface {
 
 Example: <ion-toggle>Email:</ion-toggle>
 
-For toggles that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the toggle.`,
+For toggles that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the toggle.
+
+For toggles that do not render the label immediately next to the toggle, developers may continue to use "ion-label" but must manually associate the label with the toggle by using "aria-labelledby".`,
         this.el
       );
 

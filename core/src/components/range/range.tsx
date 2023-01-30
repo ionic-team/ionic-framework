@@ -562,7 +562,9 @@ export class Range implements ComponentInterface {
 
 Example: <ion-range>Volume:</ion-toggle>
 
-For ranges that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the range.`,
+For ranges that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the range.
+
+For ranges that do not render the label immediately next to the range, developers may continue to use "ion-label" but must manually associate the label with the range by using "aria-labelledby".`,
         this.el
       );
 

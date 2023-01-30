@@ -788,8 +788,9 @@ export class Select implements ComponentInterface {
 
 Example: <ion-select label="Favorite Color">...</ion-select>
 
-For inputs that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the select.
-  `,
+For selects that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the select.
+
+For selects that do not render the label immediately next to the select, developers may continue to use "ion-label" but must manually associate the label with the select by using "aria-labelledby".`,
         this.el
       );
 
