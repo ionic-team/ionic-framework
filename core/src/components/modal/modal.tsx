@@ -512,13 +512,15 @@ export class Modal implements ComponentInterface, OverlayInterface {
      */
     this.currentBreakpoint = this.initialBreakpoint;
 
-    const data = {
-      ...this.componentProps,
-      modal: this.el,
-    };
-
     const { inline, delegate } = this.getDelegate(true);
-    this.usersElement = await attachComponent(delegate, this.el, this.component, ['ion-page'], data, inline);
+    this.usersElement = await attachComponent(
+      delegate,
+      this.el,
+      this.component,
+      ['ion-page'],
+      this.componentProps,
+      inline
+    );
 
     await deepReady(this.usersElement);
 
