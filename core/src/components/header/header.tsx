@@ -1,7 +1,7 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, h, writeTask } from '@stencil/core';
 
-import { getIonStylesheet, getIonBehavior } from '../../global/ionic-global';
+import { getIonMode } from '../../global/ionic-global';
 import { findIonContent, getScrollElement, printIonContentErrorMsg } from '../../utils/content';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes } from '../../utils/helpers';
@@ -18,13 +18,11 @@ import {
 } from './header.utils';
 
 /**
- * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
 @Component({
   tag: 'ion-header',
   styleUrls: {
-    base: 'header.scss',
     ios: 'header.ios.scss',
     md: 'header.md.scss',
   },
@@ -73,9 +71,9 @@ export class Header implements ComponentInterface {
   }
 
   private async checkCollapsibleHeader() {
-    const platform = getIonBehavior(this);
+    const mode = getIonMode(this);
 
-    if (platform !== 'ios') {
+    if (mode !== 'ios') {
       return;
     }
 
@@ -208,7 +206,7 @@ export class Header implements ComponentInterface {
 
   render() {
     const { translucent, inheritedAttributes } = this;
-    const mode = getIonStylesheet(this);
+    const mode = getIonMode(this);
     const collapse = this.collapse || 'none';
 
     // banner role must be at top level, so remove role if inside a menu

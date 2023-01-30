@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
 
-import { getIonStylesheet, getIonBehavior } from '../../global/ionic-global';
+import { getIonMode } from '../../global/ionic-global';
 import type { Color, StyleEventDetail } from '../../interface';
 import type { LegacyFormController } from '../../utils/forms';
 import { createLegacyFormController } from '../../utils/forms';
@@ -14,13 +14,11 @@ import { getCounterText } from '../input/input.utils';
 import type { TextareaChangeEventDetail, TextareaInputEventDetail } from './textarea-interface';
 
 /**
- * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
 @Component({
   tag: 'ion-textarea',
   styleUrls: {
-    base: 'textarea.scss',
     ios: 'textarea.ios.scss',
     md: 'textarea.md.scss',
   },
@@ -463,7 +461,7 @@ For textareas that do not have a visible label, developers should use "aria-labe
       this.hasLoggedDeprecationWarning = true;
     }
 
-    const mode = getIonStylesheet(this);
+    const mode = getIonMode(this);
     const value = this.getValue();
     const labelId = this.inputId + '-lbl';
     const label = findItemLabel(this.el);
@@ -530,8 +528,8 @@ For textareas that do not have a visible label, developers should use "aria-labe
    * Renders the border container when fill="outline".
    */
   private renderLabelContainer() {
-    const platform = getIonBehavior(this);
-    const hasOutlineFill = platform === 'md' && this.fill === 'outline';
+    const mode = getIonMode(this);
+    const hasOutlineFill = mode === 'md' && this.fill === 'outline';
 
     if (hasOutlineFill) {
       /**
@@ -603,7 +601,7 @@ For textareas that do not have a visible label, developers should use "aria-labe
 
   private renderTextarea() {
     const { inputId, disabled, fill, shape, labelPlacement } = this;
-    const mode = getIonStylesheet(this);
+    const mode = getIonMode(this);
     const value = this.getValue();
     const inItem = hostContext('ion-item', this.el);
     const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;

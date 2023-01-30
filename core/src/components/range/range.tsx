@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
 
-import { getIonStylesheet } from '../../global/ionic-global';
+import { getIonMode } from '../../global/ionic-global';
 import type { Color, Gesture, GestureDetail, StyleEventDetail } from '../../interface';
 import { findClosestIonContent, disableContentScrollY, resetContentScrollY } from '../../utils/content';
 import type { LegacyFormController } from '../../utils/forms';
@@ -24,7 +24,6 @@ import type {
 // TODO(FW-2832): types
 
 /**
- * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @slot label - The label text to associate with the range. Use the "labelPlacement" property to control where the label is placed relative to the range.
@@ -41,7 +40,6 @@ import type {
 @Component({
   tag: 'ion-range',
   styleUrls: {
-    base: 'range.scss',
     ios: 'range.ios.scss',
     md: 'range.md.scss',
   },
@@ -559,7 +557,9 @@ export class Range implements ComponentInterface {
 
 Example: <ion-range>Volume:</ion-toggle>
 
-For ranges that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the range.`,
+For ranges that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the range.
+
+For ranges that do not render the label immediately next to the range, developers may continue to use "ion-label" but must manually associate the label with the range by using "aria-labelledby".`,
         this.el
       );
 
@@ -577,7 +577,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
 
     const { el, pressedKnob, disabled, pin, rangeId } = this;
 
-    const mode = getIonStylesheet(this);
+    const mode = getIonMode(this);
 
     renderHiddenInput(true, el, this.name, JSON.stringify(this.getValue()), disabled);
 
@@ -605,7 +605,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
   private renderRange() {
     const { disabled, el, rangeId, pin, pressedKnob, labelPlacement } = this;
 
-    const mode = getIonStylesheet(this);
+    const mode = getIonMode(this);
 
     renderHiddenInput(true, el, this.name, JSON.stringify(this.getValue()), disabled);
 

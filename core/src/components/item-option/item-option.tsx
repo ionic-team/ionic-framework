@@ -1,13 +1,12 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, h } from '@stencil/core';
 
-import { getIonStylesheet } from '../../global/ionic-global';
+import { getIonMode } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 import type { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import { createColorClasses } from '../../utils/theme';
 
 /**
- * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @slot - Content is placed between the named slots if provided without a slot.
@@ -22,7 +21,6 @@ import { createColorClasses } from '../../utils/theme';
 @Component({
   tag: 'ion-item-option',
   styleUrls: {
-    base: 'item-option.scss',
     ios: 'item-option.ios.scss',
     md: 'item-option.md.scss',
   },
@@ -90,7 +88,7 @@ export class ItemOption implements ComponentInterface, AnchorInterface, ButtonIn
   render() {
     const { disabled, expandable, href } = this;
     const TagType = href === undefined ? 'button' : ('a' as any);
-    const mode = getIonStylesheet(this);
+    const mode = getIonMode(this);
     const attrs =
       TagType === 'button'
         ? { type: this.type }

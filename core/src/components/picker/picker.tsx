@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
-import { getIonStylesheet } from '../../global/ionic-global';
+import { getIonMode } from '../../global/ionic-global';
 import type { AnimationBuilder, CssClassMap, OverlayInterface, FrameworkDelegate } from '../../interface';
 import {
   createDelegateController,
@@ -24,13 +24,11 @@ import type { PickerButton, PickerColumn } from './picker-interface';
 // TODO(FW-2832): types
 
 /**
- * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
 @Component({
   tag: 'ion-picker',
   styleUrls: {
-    base: 'picker.scss',
     ios: 'picker.ios.scss',
     md: 'picker.md.scss',
   },
@@ -328,7 +326,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
 
   render() {
     const { htmlAttributes } = this;
-    const mode = getIonStylesheet(this);
+    const mode = getIonMode(this);
     return (
       <Host
         aria-modal="true"

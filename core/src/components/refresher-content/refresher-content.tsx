@@ -3,7 +3,7 @@ import { Component, Element, Host, Prop, h } from '@stencil/core';
 import { arrowDown, caretBackSharp } from 'ionicons/icons';
 
 import { config } from '../../global/config';
-import { getIonStylesheet, getIonBehavior } from '../../global/ionic-global';
+import { getIonMode } from '../../global/ionic-global';
 import { isPlatform } from '../../utils/platform';
 import type { IonicSafeString } from '../../utils/sanitization';
 import { sanitizeDOMString } from '../../utils/sanitization';
@@ -52,18 +52,18 @@ export class RefresherContent implements ComponentInterface {
 
   componentWillLoad() {
     if (this.pullingIcon === undefined) {
-      const platform = getIonBehavior(this);
+      const mode = getIonMode(this);
       const overflowRefresher = (this.el.style as any).webkitOverflowScrolling !== undefined ? 'lines' : arrowDown;
       this.pullingIcon = config.get(
         'refreshingIcon',
-        platform === 'ios' && isPlatform('mobile') ? config.get('spinner', overflowRefresher) : 'circular'
+        mode === 'ios' && isPlatform('mobile') ? config.get('spinner', overflowRefresher) : 'circular'
       );
     }
     if (this.refreshingSpinner === undefined) {
-      const platform = getIonBehavior(this);
+      const mode = getIonMode(this);
       this.refreshingSpinner = config.get(
         'refreshingSpinner',
-        config.get('spinner', platform === 'ios' ? 'lines' : 'circular')
+        config.get('spinner', mode === 'ios' ? 'lines' : 'circular')
       );
     }
   }
@@ -71,7 +71,7 @@ export class RefresherContent implements ComponentInterface {
   render() {
     const pullingIcon = this.pullingIcon;
     const hasSpinner = pullingIcon != null && (SPINNERS[pullingIcon] as any) !== undefined;
-    const mode = getIonStylesheet(this);
+    const mode = getIonMode(this);
 
     return (
       <Host class={mode}>

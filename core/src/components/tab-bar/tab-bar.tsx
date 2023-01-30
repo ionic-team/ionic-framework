@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
 
-import { getIonStylesheet } from '../../global/ionic-global';
+import { getIonMode } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 import type { KeyboardController } from '../../utils/keyboard/keyboard-controller';
 import { createKeyboardController } from '../../utils/keyboard/keyboard-controller';
@@ -10,13 +10,11 @@ import { createColorClasses } from '../../utils/theme';
 import type { TabBarChangedEventDetail } from './tab-bar-interface';
 
 /**
- * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
 @Component({
   tag: 'ion-tab-bar',
   styleUrls: {
-    base: 'tab-bar.scss',
     ios: 'tab-bar.ios.scss',
     md: 'tab-bar.md.scss',
   },
@@ -77,7 +75,7 @@ export class TabBar implements ComponentInterface {
 
   render() {
     const { color, translucent, keyboardVisible } = this;
-    const mode = getIonStylesheet(this);
+    const mode = getIonMode(this);
     const shouldHide = keyboardVisible && this.el.getAttribute('slot') !== 'top';
 
     return (

@@ -2,7 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Listen, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { config } from '../../global/config';
-import { getIonStylesheet, getIonBehavior } from '../../global/ionic-global';
+import { getIonMode } from '../../global/ionic-global';
 import type { Animation, Gesture, GestureDetail } from '../../interface';
 import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
@@ -21,16 +21,12 @@ const focusableQueryString =
   '[tabindex]:not([tabindex^="-"]), input:not([type=hidden]):not([tabindex^="-"]), textarea:not([tabindex^="-"]), button:not([tabindex^="-"]), select:not([tabindex^="-"]), .ion-focusable:not([tabindex^="-"])';
 
 /**
- * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
- *
  * @part container - The container for the menu content.
  * @part backdrop - The backdrop that appears over the main content when the menu is open.
  */
 @Component({
   tag: 'ion-menu',
   styleUrls: {
-    base: 'menu.scss',
     ios: 'menu.ios.scss',
     md: 'menu.md.scss',
   },
@@ -437,9 +433,9 @@ export class Menu implements ComponentInterface, MenuI {
 
   private async startAnimation(shouldOpen: boolean, animated: boolean): Promise<void> {
     const isReversed = !shouldOpen;
-    const platform = getIonBehavior(this);
-    const easing = platform === 'ios' ? iosEasing : mdEasing;
-    const easingReverse = platform === 'ios' ? iosEasingReverse : mdEasingReverse;
+    const mode = getIonMode(this);
+    const easing = mode === 'ios' ? iosEasing : mdEasing;
+    const easingReverse = mode === 'ios' ? iosEasingReverse : mdEasingReverse;
     const ani = (this.animation as Animation)!
       .direction(isReversed ? 'reverse' : 'normal')
       .easing(isReversed ? easingReverse : easing)
@@ -704,7 +700,7 @@ export class Menu implements ComponentInterface, MenuI {
 
   render() {
     const { isEndSide, type, disabled, isPaneVisible, inheritedAttributes } = this;
-    const mode = getIonStylesheet(this);
+    const mode = getIonMode(this);
 
     return (
       <Host

@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
-import { getIonStylesheet } from '../../global/ionic-global';
+import { getIonMode } from '../../global/ionic-global';
 import type { Color, StyleEventDetail } from '../../interface';
 import type { LegacyFormController } from '../../utils/forms';
 import { createLegacyFormController } from '../../utils/forms';
@@ -11,7 +11,6 @@ import { printIonWarning } from '../../utils/logging';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
- * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @slot - The label text to associate with the radio. Use the "labelPlacement" property to control where the label is placed relative to the radio.
@@ -22,7 +21,6 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 @Component({
   tag: 'ion-radio',
   styleUrls: {
-    base: 'radio.scss',
     ios: 'radio.ios.scss',
     md: 'radio.md.scss',
   },
@@ -217,7 +215,7 @@ export class Radio implements ComponentInterface {
 
   private renderRadio() {
     const { checked, disabled, inputId, color, el, justify, labelPlacement, inheritedAttributes, hasLabel } = this;
-    const mode = getIonStylesheet(this);
+    const mode = getIonMode(this);
     const inItem = hostContext('ion-item', el);
 
     return (
@@ -263,7 +261,10 @@ export class Radio implements ComponentInterface {
       printIonWarning(
         `Using ion-radio with an ion-label has been deprecated. To migrate, remove the ion-label and pass your label directly into ion-radio instead.
 Example: <ion-radio>Option Label:</ion-radio>
-For radios that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the radio.`,
+
+For radios that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the radio.
+
+For radios that do not render the label immediately next to the radio, developers may continue to use "ion-label" but must manually associate the label with the radio by using "aria-labelledby".`,
         this.el
       );
 
@@ -280,7 +281,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
     }
 
     const { inputId, disabled, checked, color, el, buttonTabindex } = this;
-    const mode = getIonStylesheet(this);
+    const mode = getIonMode(this);
     const { label, labelId, labelText } = getAriaLabel(el, inputId);
 
     return (

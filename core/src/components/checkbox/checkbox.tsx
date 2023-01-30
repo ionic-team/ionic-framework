@@ -2,7 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, Watch, h } from '@stencil/core';
 
 // TODO(FW-2845) - Use @utils/forms and @utils/logging when https://github.com/ionic-team/stencil/issues/3826 is resolved
-import { getIonStylesheet } from '../../global/ionic-global';
+import { getIonMode } from '../../global/ionic-global';
 import type { Color, Mode, StyleEventDetail } from '../../interface';
 import type { LegacyFormController } from '../../utils/forms';
 import { createLegacyFormController } from '../../utils/forms';
@@ -14,7 +14,6 @@ import { createColorClasses, hostContext } from '../../utils/theme';
 import type { CheckboxChangeEventDetail } from './checkbox-interface';
 
 /**
- * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @slot - The label text to associate with the checkbox. Use the "labelPlacement" property to control where the label is placed relative to the checkbox.
@@ -25,7 +24,6 @@ import type { CheckboxChangeEventDetail } from './checkbox-interface';
 @Component({
   tag: 'ion-checkbox',
   styleUrls: {
-    base: 'checkbox.scss',
     ios: 'checkbox.ios.scss',
     md: 'checkbox.md.scss',
   },
@@ -229,7 +227,7 @@ export class Checkbox implements ComponentInterface {
       name,
       value,
     } = this;
-    const mode = getIonStylesheet(this);
+    const mode = getIonMode(this);
     const path = getSVGPath(mode, indeterminate);
 
     renderHiddenInput(true, el, name, checked ? value : '', disabled);
@@ -284,7 +282,10 @@ export class Checkbox implements ComponentInterface {
       printIonWarning(
         `Using ion-checkbox with an ion-label has been deprecated. To migrate, remove the ion-label and pass your label directly into ion-checkbox instead.
 Example: <ion-checkbox>Label</ion-checkbox>
-For checkboxes that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the checkbox.`,
+
+For checkboxes that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the checkbox.
+
+For checkboxes that do not render the label immediately next to the checkbox, developers may continue to use "ion-label" but must manually associate the label with the checkbox by using "aria-labelledby".`,
         this.el
       );
 
@@ -300,7 +301,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
     }
 
     const { color, checked, disabled, el, getSVGPath, indeterminate, inputId, name, value } = this;
-    const mode = getIonStylesheet(this);
+    const mode = getIonMode(this);
     const { label, labelId, labelText } = getAriaLabel(el, inputId);
     const path = getSVGPath(mode, indeterminate);
 

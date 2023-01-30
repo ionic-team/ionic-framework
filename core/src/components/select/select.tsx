@@ -6,7 +6,7 @@ import { printIonWarning } from '@utils/logging';
 import { isRTL } from '@utils/rtl';
 import { caretDownSharp } from 'ionicons/icons';
 
-import { getIonStylesheet, getIonBehavior } from '../../global/ionic-global';
+import { getIonMode } from '../../global/ionic-global';
 import type {
   ActionSheetButton,
   ActionSheetOptions,
@@ -30,7 +30,6 @@ import type { SelectChangeEventDetail, SelectInterface, SelectCompareFn } from '
 // TODO(FW-2832): types
 
 /**
- * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @part placeholder - The text displayed in the select when there is no value.
@@ -40,7 +39,6 @@ import type { SelectChangeEventDetail, SelectInterface, SelectCompareFn } from '
 @Component({
   tag: 'ion-select',
   styleUrls: {
-    base: 'select.scss',
     ios: 'select.ios.scss',
     md: 'select.md.scss',
   },
@@ -457,8 +455,7 @@ export class Select implements ComponentInterface {
   private async openPopover(ev: UIEvent) {
     const { fill } = this;
     const interfaceOptions = this.interfaceOptions;
-    const style = getIonStylesheet(this);
-    const mode = getIonBehavior(this);
+    const mode = getIonMode(this);
     const showBackdrop = mode === 'md' ? false : true;
     const multiple = this.multiple;
     const value = this.value;
@@ -484,9 +481,9 @@ export class Select implements ComponentInterface {
     } else {
       /**
        * The popover should take up the full width
-       * when using a fill in MD style.
+       * when using a fill in MD mode.
        */
-      if (style === 'md' && fill !== undefined) {
+      if (mode === 'md' && fill !== undefined) {
         size = 'cover';
 
         /**
@@ -541,7 +538,7 @@ export class Select implements ComponentInterface {
   }
 
   private async openActionSheet() {
-    const mode = getIonBehavior(this);
+    const mode = getIonMode(this);
     const interfaceOptions = this.interfaceOptions;
     const actionSheetOpts: ActionSheetOptions = {
       mode,
@@ -572,7 +569,7 @@ export class Select implements ComponentInterface {
 
     const interfaceOptions = this.interfaceOptions;
     const inputType = this.multiple ? 'checkbox' : 'radio';
-    const mode = getIonBehavior(this);
+    const mode = getIonMode(this);
 
     const alertOpts: AlertOptions = {
       mode,
@@ -698,7 +695,7 @@ export class Select implements ComponentInterface {
    * when fill="outline".
    */
   private renderLabelContainer() {
-    const mode = getIonStylesheet(this);
+    const mode = getIonMode(this);
     const hasOutlineFill = mode === 'md' && this.fill === 'outline';
 
     if (hasOutlineFill) {
@@ -732,7 +729,7 @@ export class Select implements ComponentInterface {
 
   private renderSelect() {
     const { disabled, el, isExpanded, labelPlacement, justify, placeholder, fill, shape } = this;
-    const mode = getIonStylesheet(this);
+    const mode = getIonMode(this);
     const hasFloatingOrStackedLabel = labelPlacement === 'floating' || labelPlacement === 'stacked';
     const justifyEnabled = !hasFloatingOrStackedLabel;
     const rtl = isRTL(el) ? 'rtl' : 'ltr';
@@ -786,8 +783,9 @@ export class Select implements ComponentInterface {
 
 Example: <ion-select label="Favorite Color">...</ion-select>
 
-For inputs that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the select.
-  `,
+For selects that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the select.
+
+For selects that do not render the label immediately next to the select, developers may continue to use "ion-label" but must manually associate the label with the select by using "aria-labelledby".`,
         this.el
       );
 
@@ -802,7 +800,7 @@ For inputs that do not have a visible label, developers should use "aria-label" 
     }
 
     const { disabled, el, inputId, isExpanded, name, placeholder, value } = this;
-    const mode = getIonStylesheet(this);
+    const mode = getIonMode(this);
     const { labelText, labelId } = getAriaLabel(el, inputId);
 
     renderHiddenInput(true, el, name, parseValue(value), disabled);

@@ -1,7 +1,7 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, Method, State, forceUpdate, h } from '@stencil/core';
 
-import { getIonStylesheet } from '../../global/ionic-global';
+import { getIonMode } from '../../global/ionic-global';
 import type { ButtonInterface } from '../../utils/element-interface';
 import type { Attributes } from '../../utils/helpers';
 import { addEventListener, removeEventListener, inheritAttributes } from '../../utils/helpers';
@@ -12,7 +12,6 @@ import type { SegmentButtonLayout } from './segment-button-interface';
 let ids = 0;
 
 /**
- * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @part native - The native HTML button element that wraps all child elements.
@@ -22,7 +21,6 @@ let ids = 0;
 @Component({
   tag: 'ion-segment-button',
   styleUrls: {
-    base: 'segment-button.scss',
     ios: 'segment-button.ios.scss',
     md: 'segment-button.md.scss',
   },
@@ -115,7 +113,7 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
 
   render() {
     const { checked, type, disabled, hasIcon, hasLabel, layout, segmentEl } = this;
-    const mode = getIonStylesheet(this);
+    const mode = getIonMode(this);
     const hasSegmentColor = () => segmentEl?.color !== undefined;
     return (
       <Host

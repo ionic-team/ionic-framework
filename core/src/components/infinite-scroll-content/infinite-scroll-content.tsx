@@ -2,19 +2,14 @@ import type { ComponentInterface } from '@stencil/core';
 import { Component, Host, Prop, h } from '@stencil/core';
 
 import { config } from '../../global/config';
-import { getIonStylesheet, getIonBehavior } from '../../global/ionic-global';
+import { getIonMode } from '../../global/ionic-global';
 import type { IonicSafeString } from '../../utils/sanitization';
 import { sanitizeDOMString } from '../../utils/sanitization';
 import type { SpinnerTypes } from '../spinner/spinner-configs';
 
-/**
- * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
- */
 @Component({
   tag: 'ion-infinite-scroll-content',
   styleUrls: {
-    base: 'infinite-scroll-content.scss',
     ios: 'infinite-scroll-content.ios.scss',
     md: 'infinite-scroll-content.md.scss',
   },
@@ -38,16 +33,16 @@ export class InfiniteScrollContent implements ComponentInterface {
 
   componentDidLoad() {
     if (this.loadingSpinner === undefined) {
-      const platform = getIonBehavior(this);
+      const mode = getIonMode(this);
       this.loadingSpinner = config.get(
         'infiniteLoadingSpinner',
-        config.get('spinner', platform === 'ios' ? 'lines' : 'crescent')
+        config.get('spinner', mode === 'ios' ? 'lines' : 'crescent')
       );
     }
   }
 
   render() {
-    const mode = getIonStylesheet(this);
+    const mode = getIonMode(this);
     return (
       <Host
         class={{

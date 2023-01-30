@@ -2,7 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
 
 import { config } from '../../global/config';
-import { getIonStylesheet, getIonBehavior } from '../../global/ionic-global';
+import { getIonMode } from '../../global/ionic-global';
 import type {
   Animation,
   AnimationBuilder,
@@ -46,7 +46,6 @@ import { setCardStatusBarDark, setCardStatusBarDefault } from './utils';
 // TODO(FW-2832): types
 
 /**
- * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @slot - Content is placed inside of the `.modal-content` element.
@@ -58,7 +57,6 @@ import { setCardStatusBarDark, setCardStatusBarDefault } from './utils';
 @Component({
   tag: 'ion-modal',
   styleUrls: {
-    base: 'modal.scss',
     ios: 'modal.ios.scss',
     md: 'modal.md.scss',
   },
@@ -467,7 +465,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
      * start of the animation so that it completes
      * by the time the card animation is done.
      */
-    if (hasCardModal && getIonBehavior(this) === 'ios') {
+    if (hasCardModal && getIonMode(this) === 'ios') {
       // Cache the original status bar color before the modal is presented
       this.statusBarStyle = await StatusBar.getStyle();
       setCardStatusBarDark();
@@ -509,7 +507,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   }
 
   private initSwipeToClose() {
-    if (getIonBehavior(this) !== 'ios') {
+    if (getIonMode(this) !== 'ios') {
       return;
     }
 
@@ -638,7 +636,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
      * finishes when the dismiss animation does.
      */
     const hasCardModal = presentingElement !== undefined;
-    if (hasCardModal && getIonBehavior(this) === 'ios') {
+    if (hasCardModal && getIonMode(this) === 'ios') {
       setCardStatusBarDefault(this.statusBarStyle);
     }
 
@@ -825,7 +823,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     const { handle, isSheetModal, presentingElement, htmlAttributes, handleBehavior, inheritedAttributes } = this;
 
     const showHandle = handle !== false && isSheetModal;
-    const mode = getIonStylesheet(this);
+    const mode = getIonMode(this);
     const { modalId } = this;
     const isCardModal = presentingElement !== undefined && mode === 'ios';
     const isHandleCycle = handleBehavior === 'cycle';

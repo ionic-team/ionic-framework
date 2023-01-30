@@ -1,18 +1,16 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Host, Prop, h } from '@stencil/core';
 
-import { getIonStylesheet } from '../../global/ionic-global';
+import { getIonMode } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 /**
- * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
 @Component({
   tag: 'ion-card-subtitle',
   styleUrls: {
-    base: 'card-subtitle.scss',
     ios: 'card-subtitle.ios.scss',
     md: 'card-subtitle.md.scss',
   },
@@ -27,7 +25,7 @@ export class CardSubtitle implements ComponentInterface {
   @Prop({ reflect: true }) color?: Color;
 
   render() {
-    const mode = getIonStylesheet(this);
+    const mode = getIonMode(this);
     return (
       <Host
         role="heading"

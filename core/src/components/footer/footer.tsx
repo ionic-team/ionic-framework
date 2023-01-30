@@ -1,7 +1,7 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, State, h } from '@stencil/core';
 
-import { getIonStylesheet, getIonBehavior } from '../../global/ionic-global';
+import { getIonMode } from '../../global/ionic-global';
 import { findIonContent, getScrollElement, printIonContentErrorMsg } from '../../utils/content';
 import type { KeyboardController } from '../../utils/keyboard/keyboard-controller';
 import { createKeyboardController } from '../../utils/keyboard/keyboard-controller';
@@ -9,13 +9,11 @@ import { createKeyboardController } from '../../utils/keyboard/keyboard-controll
 import { handleFooterFade } from './footer.utils';
 
 /**
- * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
 @Component({
   tag: 'ion-footer',
   styleUrls: {
-    base: 'footer.scss',
     ios: 'footer.ios.scss',
     md: 'footer.md.scss',
   },
@@ -66,8 +64,8 @@ export class Footer implements ComponentInterface {
   }
 
   private checkCollapsibleFooter = () => {
-    const platform = getIonBehavior(this);
-    if (platform !== 'ios') {
+    const mode = getIonMode(this);
+    if (mode !== 'ios') {
       return;
     }
 
@@ -112,7 +110,7 @@ export class Footer implements ComponentInterface {
 
   render() {
     const { translucent, collapse } = this;
-    const mode = getIonStylesheet(this);
+    const mode = getIonMode(this);
     const tabs = this.el.closest('ion-tabs');
     const tabBar = tabs?.querySelector(':scope > ion-tab-bar');
 
@@ -132,7 +130,7 @@ export class Footer implements ComponentInterface {
           [`footer-collapse-${collapse}`]: collapse !== undefined,
         }}
       >
-        {getIonBehavior(this) === 'ios' && translucent && <div class="footer-background"></div>}
+        {mode === 'ios' && translucent && <div class="footer-background"></div>}
         <slot></slot>
       </Host>
     );

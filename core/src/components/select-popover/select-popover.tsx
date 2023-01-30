@@ -1,7 +1,7 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Host, Listen, Prop, h } from '@stencil/core';
 
-import { getIonStylesheet } from '../../global/ionic-global';
+import { getIonMode } from '../../global/ionic-global';
 import { safeCall } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 
@@ -11,13 +11,10 @@ import type { SelectPopoverOption } from './select-popover-interface';
 
 /**
  * @internal
- * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
- * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
 @Component({
   tag: 'ion-select-popover',
   styleUrls: {
-    base: 'select-popover.scss',
     ios: 'select-popover.ios.scss',
     md: 'select-popover.md.scss',
   },
@@ -154,7 +151,7 @@ export class SelectPopover implements ComponentInterface {
     const hasSubHeaderOrMessage = subHeader !== undefined || message !== undefined;
 
     return (
-      <Host class={getIonStylesheet(this)}>
+      <Host class={getIonMode(this)}>
         <ion-list>
           {header !== undefined && <ion-list-header>{header}</ion-list-header>}
           {hasSubHeaderOrMessage && (

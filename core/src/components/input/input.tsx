@@ -5,7 +5,7 @@ import type { LegacyFormController } from '@utils/forms';
 import { printIonWarning } from '@utils/logging';
 import { closeCircle, closeSharp } from 'ionicons/icons';
 
-import { getIonStylesheet, getIonBehavior } from '../../global/ionic-global';
+import { getIonMode } from '../../global/ionic-global';
 import type { AutocompleteTypes, Color, StyleEventDetail, TextFieldTypes } from '../../interface';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes, debounceEvent, findItemLabel, inheritAttributes } from '../../utils/helpers';
@@ -15,13 +15,11 @@ import type { InputChangeEventDetail, InputInputEventDetail } from './input-inte
 import { getCounterText } from './input.utils';
 
 /**
- * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
 @Component({
   tag: 'ion-input',
   styleUrls: {
-    base: 'input.scss',
     ios: 'input.ios.scss',
     md: 'input.md.scss',
   },
@@ -598,8 +596,8 @@ export class Input implements ComponentInterface {
    * when fill="outline".
    */
   private renderLabelContainer() {
-    const platform = getIonBehavior(this);
-    const hasOutlineFill = platform === 'md' && this.fill === 'outline';
+    const mode = getIonMode(this);
+    const hasOutlineFill = mode === 'md' && this.fill === 'outline';
 
     if (hasOutlineFill) {
       /**
@@ -632,7 +630,7 @@ export class Input implements ComponentInterface {
 
   private renderInput() {
     const { disabled, fill, readonly, shape, inputId, labelPlacement } = this;
-    const mode = getIonStylesheet(this);
+    const mode = getIonMode(this);
     const value = this.getValue();
     const inItem = hostContext('ion-item', this.el);
     const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;
@@ -722,7 +720,9 @@ export class Input implements ComponentInterface {
 
 Example: <ion-input label="Email"></ion-input>
 
-For inputs that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the input.`,
+For inputs that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the input.
+
+For inputs that do not render the label immediately next to the input, developers may continue to use "ion-label" but must manually associate the label with the input by using "aria-labelledby".`,
         this.el
       );
 
@@ -738,7 +738,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
       this.hasLoggedDeprecationWarning = true;
     }
 
-    const mode = getIonStylesheet(this);
+    const mode = getIonMode(this);
     const value = this.getValue();
     const labelId = this.inputId + '-lbl';
     const label = findItemLabel(this.el);

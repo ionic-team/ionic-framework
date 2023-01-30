@@ -2,7 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
 import { caretDownSharp, caretUpSharp, chevronBack, chevronDown, chevronForward } from 'ionicons/icons';
 
-import { getIonStylesheet, getIonBehavior } from '../../global/ionic-global';
+import { getIonMode } from '../../global/ionic-global';
 import type { Color, Mode, StyleEventDetail } from '../../interface';
 import { startFocusVisible } from '../../utils/focus-visible';
 import { getElementRoot, raf, renderHiddenInput } from '../../utils/helpers';
@@ -65,7 +65,6 @@ import {
 } from './utils/state';
 
 /**
- * @virtualProp {true | false} useBase - useBase determines if base components is enabled.
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @slot title - The title of the datetime.
@@ -75,7 +74,6 @@ import {
 @Component({
   tag: 'ion-datetime',
   styleUrls: {
-    base: 'datetime.scss',
     ios: 'datetime.ios.scss',
     md: 'datetime.md.scss',
   },
@@ -844,9 +842,8 @@ export class Datetime implements ComponentInterface {
     const startMonth = months[0] as HTMLElement;
     const workingMonth = months[1] as HTMLElement;
     const endMonth = months[2] as HTMLElement;
-    const platform = getIonBehavior(this);
-    const needsiOSRubberBandFix =
-      platform === 'ios' && typeof navigator !== 'undefined' && navigator.maxTouchPoints > 1;
+    const mode = getIonMode(this);
+    const needsiOSRubberBandFix = mode === 'ios' && typeof navigator !== 'undefined' && navigator.maxTouchPoints > 1;
 
     /**
      * Before setting up the scroll listener,
@@ -2287,7 +2284,7 @@ export class Datetime implements ComponentInterface {
       presentation,
       size,
     } = this;
-    const mode = getIonStylesheet(this);
+    const mode = getIonMode(this);
     const isMonthAndYearPresentation =
       presentation === 'year' || presentation === 'month' || presentation === 'month-year';
     const shouldShowMonthAndYear = showMonthAndYear || isMonthAndYearPresentation;
