@@ -20,7 +20,7 @@ export const createLegacyFormController = (el: HTMLLegacyFormControlElement): Le
    * in the light DOM.
    */
   const hasLabelProp = (controlEl as any).label !== undefined || hasLabelSlot(controlEl);
-  const hasAriaLabelAttribute = controlEl.hasAttribute('aria-label');
+  const hasAriaLabelAttribute = controlEl.hasAttribute('aria-label') || controlEl.hasAttribute('aria-labelledby');
 
   /**
    * Developers can manually opt-out of the modern form markup
