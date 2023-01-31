@@ -3,10 +3,14 @@ import { Component, Element, Event, Host, Listen, Prop, h } from '@stencil/core'
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import type { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from '../../interface';
 import type { AnchorInterface } from '../../utils/element-interface';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAttributes } from '../../utils/helpers';
+import type {
+  TabBarChangedEventDetail,
+  TabButtonClickEventDetail,
+  TabButtonLayout,
+} from '../tab-bar/tab-bar-interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.

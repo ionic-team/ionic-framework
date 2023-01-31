@@ -14,20 +14,18 @@ import type {
   AlertOptions,
   Color,
   CssClassMap,
-  OverlaySelect,
   PopoverOptions,
-  SelectChangeEventDetail,
-  SelectInterface,
-  SelectPopoverOption,
   StyleEventDetail,
 } from '../../interface';
 import { findItemLabel, focusElement, getAriaLabel, renderHiddenInput, inheritAttributes } from '../../utils/helpers';
 import type { Attributes } from '../../utils/helpers';
 import { actionSheetController, alertController, popoverController } from '../../utils/overlays';
+import type { OverlaySelect } from '../../utils/overlays-interface';
 import { createColorClasses, hostContext } from '../../utils/theme';
 import { watchForOptions } from '../../utils/watch-options';
+import type { SelectPopoverOption } from '../select-popover/select-popover-interface';
 
-import type { SelectCompareFn } from './select-interface';
+import type { SelectChangeEventDetail, SelectInterface, SelectCompareFn } from './select-interface';
 
 // TODO(FW-2832): types
 

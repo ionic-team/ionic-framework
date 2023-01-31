@@ -3,22 +3,11 @@ import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '
 import { printIonWarning } from '@utils/logging';
 
 import { getIonMode } from '../../global/ionic-global';
-import type {
-  AnimationBuilder,
-  ComponentProps,
-  ComponentRef,
-  FrameworkDelegate,
-  OverlayEventDetail,
-  PopoverInterface,
-  PopoverSize,
-  PositionAlign,
-  PositionReference,
-  PositionSide,
-  TriggerAction,
-} from '../../interface';
+import type { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate } from '../../interface';
 import { CoreDelegate, attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { addEventListener, raf, hasLazyBuild } from '../../utils/helpers';
 import { BACKDROP, dismiss, eventMethod, focusFirstDescendant, prepareOverlay, present } from '../../utils/overlays';
+import type { OverlayEventDetail } from '../../utils/overlays-interface';
 import { isPlatform } from '../../utils/platform';
 import { getClassMap } from '../../utils/theme';
 import { deepReady } from '../../utils/transition';
@@ -27,6 +16,14 @@ import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
+import type {
+  PopoverInterface,
+  PopoverSize,
+  PositionAlign,
+  PositionReference,
+  PositionSide,
+  TriggerAction,
+} from './popover-interface';
 import { configureDismissInteraction, configureKeyboardInteraction, configureTriggerInteraction } from './utils';
 
 // TODO(FW-2832): types

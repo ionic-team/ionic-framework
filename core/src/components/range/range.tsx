@@ -2,17 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import type {
-  Color,
-  Gesture,
-  GestureDetail,
-  KnobName,
-  RangeChangeEventDetail,
-  RangeKnobMoveEndEventDetail,
-  RangeKnobMoveStartEventDetail,
-  RangeValue,
-  StyleEventDetail,
-} from '../../interface';
+import type { Color, Gesture, GestureDetail, StyleEventDetail } from '../../interface';
 import { findClosestIonContent, disableContentScrollY, resetContentScrollY } from '../../utils/content';
 import type { LegacyFormController } from '../../utils/forms';
 import { createLegacyFormController } from '../../utils/forms';
@@ -22,7 +12,14 @@ import { printIonWarning } from '../../utils/logging';
 import { isRTL } from '../../utils/rtl';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
-import type { PinFormatter } from './range-interface';
+import type {
+  KnobName,
+  RangeChangeEventDetail,
+  RangeKnobMoveEndEventDetail,
+  RangeKnobMoveStartEventDetail,
+  RangeValue,
+  PinFormatter,
+} from './range-interface';
 
 // TODO(FW-2832): types
 
