@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.0.0-beta.1](https://github.com/ionic-team/ionic-framework/compare/v7.0.0-beta.0...v7.0.0-beta.1) (2023-02-01)
+
+
+### Bug Fixes
+
+* **input, textarea, select:** do not show highlight in item ([#26689](https://github.com/ionic-team/ionic-framework/issues/26689)) ([16b60a6](https://github.com/ionic-team/ionic-framework/commit/16b60a612c1c8053cec3509749ad9e9b185b93be)), closes [#26687](https://github.com/ionic-team/ionic-framework/issues/26687)
+* **many:** legacy form control does not warn when using aria-labelledby ([#26699](https://github.com/ionic-team/ionic-framework/issues/26699)) ([63f8525](https://github.com/ionic-team/ionic-framework/commit/63f8525284abf2792305aebb27b9b439a8921bcf)), closes [#26698](https://github.com/ionic-team/ionic-framework/issues/26698)
+* **textarea:** textarea wrapper inherits height ([#26707](https://github.com/ionic-team/ionic-framework/issues/26707)) ([e6c7c57](https://github.com/ionic-team/ionic-framework/commit/e6c7c574665897d8fd2184797bc4017f688a2b0e))
+
+
+### Reverts
+
+* revert base components feature ([#26692](https://github.com/ionic-team/ionic-framework/issues/26692)) ([b78b454](https://github.com/ionic-team/ionic-framework/commit/b78b454e089462afa866972b97bb06faa84bd319))
+
+
+
+
 ## [6.5.2](https://github.com/ionic-team/ionic-framework/compare/v6.5.1...v6.5.2) (2023-02-01)
 
 ### Bug Fixes
