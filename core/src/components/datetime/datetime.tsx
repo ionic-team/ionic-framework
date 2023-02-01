@@ -1879,6 +1879,7 @@ export class Datetime implements ComponentInterface {
    */
 
   private renderCalendarHeader(mode: Mode) {
+    const { showMonthAndYear } = this;
     const expandedIcon = mode === 'ios' ? chevronDown : caretUpSharp;
     const collapsedIcon = mode === 'ios' ? chevronForward : caretDownSharp;
 
@@ -1888,26 +1889,33 @@ export class Datetime implements ComponentInterface {
     // don't use the inheritAttributes util because it removes dir from the host, and we still need that
     const hostDir = this.el.getAttribute('dir') || undefined;
 
+    const monthYearText = getMonthAndYear(this.locale, this.workingParts);
+    const toggleAriaLabel = showMonthAndYear
+      ? `Hide year picker - ${monthYearText}`
+      : `Show year picker - ${monthYearText}`;
+
     return (
       <div class="calendar-header">
         <div class="calendar-action-buttons">
           <div class="calendar-month-year">
-            <ion-item button detail={false} lines="none" onClick={() => this.toggleMonthAndYearView()}>
-              <ion-label>
-                {getMonthAndYear(this.locale, this.workingParts)}
-                <ion-icon
-                  aria-hidden="true"
-                  icon={this.showMonthAndYear ? expandedIcon : collapsedIcon}
-                  lazy={false}
-                  flipRtl={true}
-                ></ion-icon>
-              </ion-label>
-            </ion-item>
+            <button
+              class="calendar-month-year-toggle"
+              aria-label={toggleAriaLabel}
+              onClick={() => this.toggleMonthAndYearView()}
+            >
+              <ion-label>{monthYearText}</ion-label>
+              <ion-icon
+                aria-hidden="true"
+                icon={showMonthAndYear ? expandedIcon : collapsedIcon}
+                lazy={false}
+                flipRtl={true}
+              ></ion-icon>
+            </button>
           </div>
 
           <div class="calendar-next-prev">
             <ion-buttons>
-              <ion-button aria-label="previous month" disabled={prevMonthDisabled} onClick={() => this.prevMonth()}>
+              <ion-button aria-label="Previous month" disabled={prevMonthDisabled} onClick={() => this.prevMonth()}>
                 <ion-icon
                   dir={hostDir}
                   aria-hidden="true"
@@ -1917,7 +1925,7 @@ export class Datetime implements ComponentInterface {
                   flipRtl
                 ></ion-icon>
               </ion-button>
-              <ion-button aria-label="next month" disabled={nextMonthDisabled} onClick={() => this.nextMonth()}>
+              <ion-button aria-label="Next month" disabled={nextMonthDisabled} onClick={() => this.nextMonth()}>
                 <ion-icon
                   dir={hostDir}
                   aria-hidden="true"

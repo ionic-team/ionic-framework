@@ -84,9 +84,9 @@ ion-picker-column-internal {
  * the text alignment too.
  */
 :host .wheel-order-year-first .day-column {
- order: 3;
+  order: 3;
 
- text-align: end;
+  text-align: end;
 }
 
 :host .wheel-order-year-first .month-column {
@@ -201,6 +201,36 @@ ion-picker-column-internal {
   overflow: hidden;
 }
 
+// Calendar / Header / Toggle
+// -----------------------------------
+.calendar-month-year-toggle {
+  @include font-smoothing();
+  @include margin(0);
+  @include text-inherit();
+
+  display: flex;
+
+  align-items: center;
+
+  width: 100%;
+  height: 100%;
+
+  border: none;
+
+  outline: none;
+
+  background: transparent;
+
+  cursor: pointer;
+  user-select: none;
+
+  -webkit-user-drag: none;
+}
+
+.calendar-month-year-toggle ion-icon {
+  @include margin(null, null, null, 4px);
+}
+
 // Calendar / Header / Action Buttons
 // -----------------------------------
 
@@ -252,7 +282,6 @@ ion-picker-column-internal {
 // Calendar / Body
 // -----------------------------------
 :host .calendar-body {
-
   /**
    * Show all calendar months inline
    * and allow them to take up 100% of
