@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.4.5](https://github.com/ionic-team/ionic-framework/compare/v6.4.4...v6.4.5) (2023-02-01)
+
+
+### Bug Fixes
+
+* **vue:** cache attached view reference ([#26694](https://github.com/ionic-team/ionic-framework/issues/26694)) ([a930c43](https://github.com/ionic-team/ionic-framework/commit/a930c43581155d262af42e0f16d26a4b1a65fe51)), closes [#26695](https://github.com/ionic-team/ionic-framework/issues/26695)
+
+
+
+
+
 ## [6.4.4](https://github.com/ionic-team/ionic-framework/compare/v6.4.3...v6.4.4) (2023-01-25)
 
 
