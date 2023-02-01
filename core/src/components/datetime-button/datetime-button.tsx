@@ -2,10 +2,11 @@ import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, State, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { Color, DatetimePresentation } from '../../interface';
+import type { Color } from '../../interface';
 import { componentOnReady, addEventListener } from '../../utils/helpers';
 import { printIonError } from '../../utils/logging';
 import { createColorClasses } from '../../utils/theme';
+import type { DatetimePresentation } from '../datetime/datetime-interface';
 import { getToday } from '../datetime/utils/data';
 import { getMonthAndYear, getMonthDayAndYear, getLocalizedDateTime, getLocalizedTime } from '../datetime/utils/format';
 import { is24Hour } from '../datetime/utils/helpers';

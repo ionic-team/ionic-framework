@@ -1,4 +1,6 @@
-import type { AnimationBuilder, Color, CssClassMap, RouterDirection } from '../interface';
+
+import type { RouterDirection } from '../components/router/utils/interface';
+import type { AnimationBuilder, Color, CssClassMap } from '../interface';
 
 export const hostContext = (selector: string, el: HTMLElement): boolean => {
   return el.closest(selector) !== null;
@@ -10,10 +12,10 @@ export const hostContext = (selector: string, el: HTMLElement): boolean => {
 export const createColorClasses = (color: Color | undefined | null, cssClassMap: CssClassMap): CssClassMap => {
   return typeof color === 'string' && color.length > 0
     ? {
-        'ion-color': true,
-        [`ion-color-${color}`]: true,
-        ...cssClassMap,
-      }
+      'ion-color': true,
+      [`ion-color-${color}`]: true,
+      ...cssClassMap,
+    }
     : cssClassMap;
 };
 

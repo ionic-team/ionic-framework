@@ -1,5 +1,6 @@
-import type { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from '../../interface';
 import { getElementRoot, raf } from '../../utils/helpers';
+
+import type { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from './popover-interface';
 
 interface InteractionCallback {
   eventName: string;
@@ -361,7 +362,7 @@ export const configureKeyboardInteraction = (popoverEl: HTMLIonPopoverElement) =
         ) as NodeListOf<HTMLIonItemElement>
       );
       /* eslint-disable-next-line */
-    } catch {}
+    } catch { }
 
     switch (ev.key) {
       /**
