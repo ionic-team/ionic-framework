@@ -63,6 +63,14 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/Navigation.vue')
   },
   {
+    path: '/components',
+    component: () => import('@/views/Components.vue'),
+  },
+  {
+    path: '/components/select',
+    component: () => import('@/views/Select.vue')
+  },
+  {
     path: '/nested',
     component: () => import('@/views/RouterOutlet.vue'),
     children: [
@@ -136,7 +144,7 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/Tab3Secondary.vue')
       }
     ]
-  }
+  },
 ]
 
 const router = createRouter({

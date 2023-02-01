@@ -209,6 +209,10 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     this.hasStartEl();
   }
 
+  componentWillLoad() {
+    this.inheritedAriaAttributes = inheritAttributes(this.el, ['aria-label']);
+  }
+
   componentDidLoad() {
     const { el, counter, counterFormatter, fill, shape } = this;
     const hasHelperSlot = el.querySelector('[slot="helper"]') !== null;
@@ -256,7 +260,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     }
 
     raf(() => {
-      this.inheritedAriaAttributes = inheritAttributes(el, ['aria-label']);
       this.setMultipleInputs();
       this.focusable = this.isFocusable();
     });
