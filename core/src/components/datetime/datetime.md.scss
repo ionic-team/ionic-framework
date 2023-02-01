@@ -10,7 +10,12 @@
 // Header
 // -----------------------------------
 :host .datetime-header {
-  @include padding($datetime-md-header-padding, $datetime-md-header-padding, $datetime-md-header-padding, $datetime-md-header-padding);
+  @include padding(
+    $datetime-md-header-padding,
+    $datetime-md-header-padding,
+    $datetime-md-header-padding,
+    $datetime-md-header-padding
+  );
 
   background: current-color(base);
   color: var(--title-color);
@@ -30,11 +35,8 @@
 
 // Calendar / Header / Action Buttons
 // -----------------------------------
-:host .datetime-calendar .calendar-action-buttons ion-item {
-  --padding-start: #{$datetime-md-header-padding};
-}
 
-:host .calendar-action-buttons ion-item,
+:host .calendar-action-buttons .calendar-month-year-toggle,
 :host .calendar-action-buttons ion-button {
   color: #{$text-color-step-350};
 }
@@ -64,7 +66,6 @@
    * if necessary.
    */
   grid-template-rows: repeat(6, 1fr);
-
 }
 
 // Individual day button in month
