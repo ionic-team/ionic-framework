@@ -362,7 +362,7 @@ export const configureKeyboardInteraction = (popoverEl: HTMLIonPopoverElement) =
         ) as NodeListOf<HTMLIonItemElement>
       );
       /* eslint-disable-next-line */
-    } catch { }
+    } catch {}
 
     switch (ev.key) {
       /**
