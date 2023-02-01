@@ -50,15 +50,28 @@
         <ion-item button router-link="/delayed-redirect" id="delayed-redirect">
           <ion-label>Delayed Redirect</ion-label>
         </ion-item>
+        <ion-item button router-link="/components">
+          <ion-label>Components</ion-label>
+        </ion-item>
       </ion-list>
-
     </ion-content>
   </ion-page>
 </template>
 
 <script lang="ts">
-import { IonButtons, IonBackButton, IonContent, IonHeader, IonItem, IonLabel, IonList, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
-import { defineComponent } from 'vue';
+import {
+  IonButtons,
+  IonBackButton,
+  IonContent,
+  IonHeader,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+} from "@ionic/vue";
+import { defineComponent } from "vue";
 
 export default defineComponent({
   components: {
@@ -71,7 +84,7 @@ export default defineComponent({
     IonList,
     IonPage,
     IonTitle,
-    IonToolbar
-  }
+    IonToolbar,
+  },
 });
 </script>

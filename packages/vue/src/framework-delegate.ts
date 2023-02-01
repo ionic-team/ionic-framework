@@ -17,19 +17,10 @@ export const VueDelegate = (
   // TODO(FW-2969): types
   const attachViewToDom = (
     parentElement: HTMLElement,
-    component: any,
+    componentOrTagName: any | string,
     componentProps: any = {},
     classes?: string[]
   ) => {
-    /**
-     * Ionic Framework passes in modal and popover element
-     * refs as props, but if these are not defined
-     * on the Vue component instance as props, Vue will
-     * warn the user.
-     */
-    delete componentProps["modal"];
-    delete componentProps["popover"];
-
     const div = document.createElement("div");
     classes && div.classList.add(...classes);
     parentElement.appendChild(div);
@@ -37,10 +28,17 @@ export const VueDelegate = (
     const hostComponent = h(
       Teleport,
       { to: div },
-      h(component, { ...componentProps })
+      h(componentOrTagName, { ...componentProps })
     );
 
-    refMap.set(component, hostComponent);
+    /**
+     * Ionic Framework will use what is returned from `attachViewToDom`
+     * as the `component` argument in `removeViewFromDom`.
+     *
+     * We will store a reference to the div element and the host component,
+     * so we can later look-up and unmount the correct instance.
+     */
+    refMap.set(div, hostComponent);
 
     addFn(hostComponent);
 

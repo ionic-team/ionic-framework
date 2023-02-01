@@ -1,4 +1,6 @@
-import type { AnimationBuilder, Mode, SpinnerTypes, TabButtonLayout } from '../interface';
+import type { SpinnerTypes } from '../components/spinner/spinner-configs';
+import type { TabButtonLayout } from '../components/tab-bar/tab-bar-interface';
+import type { AnimationBuilder, Mode } from '../interface';
 
 import type { PlatformConfig } from './platform';
 

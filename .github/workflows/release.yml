@@ -14,6 +14,7 @@ on:
           - prepatch
           - preminor
           - premajor
+          - prerelease
       tag:
         required: true
         type: choice

@@ -4,12 +4,13 @@ import { printIonError, printIonWarning } from '@utils/logging';
 import { chevronForward } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { AnimationBuilder, Color, CssClassMap, RouterDirection, StyleEventDetail } from '../../interface';
+import type { AnimationBuilder, Color, CssClassMap, StyleEventDetail } from '../../interface';
 import type { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAttributes, raf } from '../../utils/helpers';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 import type { InputInputEventDetail } from '../input/input-interface';
+import type { RouterDirection } from '../router/utils/interface';
 
 import type { CounterFormatter } from './item-interface';
 
@@ -208,6 +209,10 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     this.hasStartEl();
   }
 
+  componentWillLoad() {
+    this.inheritedAriaAttributes = inheritAttributes(this.el, ['aria-label']);
+  }
+
   componentDidLoad() {
     const { el, counter, counterFormatter, fill, shape } = this;
     const hasHelperSlot = el.querySelector('[slot="helper"]') !== null;
@@ -255,7 +260,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     }
 
     raf(() => {
-      this.inheritedAriaAttributes = inheritAttributes(el, ['aria-label']);
       this.setMultipleInputs();
       this.focusable = this.isFocusable();
     });

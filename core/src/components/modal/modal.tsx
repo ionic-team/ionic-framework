@@ -10,9 +10,6 @@ import type {
   ComponentRef,
   FrameworkDelegate,
   Gesture,
-  ModalBreakpointChangeEventDetail,
-  ModalHandleBehavior,
-  OverlayEventDetail,
   OverlayInterface,
 } from '../../interface';
 import { findIonContent, printIonContentErrorMsg } from '../../utils/content';
@@ -32,6 +29,7 @@ import {
   present,
   createTriggerController,
 } from '../../utils/overlays';
+import type { OverlayEventDetail } from '../../utils/overlays-interface';
 import { getClassMap } from '../../utils/theme';
 import { deepReady } from '../../utils/transition';
 
@@ -42,6 +40,7 @@ import { mdLeaveAnimation } from './animations/md.leave';
 import type { MoveSheetToBreakpointOptions } from './gestures/sheet';
 import { createSheetGesture } from './gestures/sheet';
 import { createSwipeToCloseGesture } from './gestures/swipe-to-close';
+import type { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from './modal-interface';
 import { setCardStatusBarDark, setCardStatusBarDefault } from './utils';
 
 // TODO(FW-2832): types
@@ -442,13 +441,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
      */
     this.currentBreakpoint = this.initialBreakpoint;
 
-    const data = {
-      ...this.componentProps,
-      modal: this.el,
-    };
-
     const { inline, delegate } = this.getDelegate(true);
-    this.usersElement = await attachComponent(delegate, el, this.component, ['ion-page'], data, inline);
+    this.usersElement = await attachComponent(delegate, el, this.component, ['ion-page'], this.componentProps, inline);
     hasLazyBuild(el) && (await deepReady(this.usersElement));
 
     writeTask(() => this.el.classList.add('show-modal'));

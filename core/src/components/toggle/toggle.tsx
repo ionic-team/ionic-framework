@@ -5,7 +5,7 @@ import { checkmarkOutline, removeOutline, ellipseOutline } from 'ionicons/icons'
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import type { Color, Gesture, GestureDetail, Mode, StyleEventDetail, ToggleChangeEventDetail } from '../../interface';
+import type { Color, Gesture, GestureDetail, Mode, StyleEventDetail } from '../../interface';
 import type { LegacyFormController } from '../../utils/forms';
 import { createLegacyFormController } from '../../utils/forms';
 import { getAriaLabel, renderHiddenInput, inheritAriaAttributes } from '../../utils/helpers';
@@ -14,6 +14,8 @@ import { printIonWarning } from '../../utils/logging';
 import { hapticSelection } from '../../utils/native/haptic';
 import { isRTL } from '../../utils/rtl';
 import { createColorClasses, hostContext } from '../../utils/theme';
+
+import type { ToggleChangeEventDetail } from './toggle-interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.

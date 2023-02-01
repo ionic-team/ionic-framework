@@ -3,13 +3,7 @@ import { Watch, Component, Element, Event, Host, Method, Prop, h } from '@stenci
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import type {
-  AnimationBuilder,
-  FrameworkDelegate,
-  OverlayEventDetail,
-  OverlayInterface,
-  SpinnerTypes,
-} from '../../interface';
+import type { AnimationBuilder, FrameworkDelegate, OverlayInterface } from '../../interface';
 import { raf } from '../../utils/helpers';
 import {
   BACKDROP,
@@ -20,9 +14,11 @@ import {
   createDelegateController,
   createTriggerController,
 } from '../../utils/overlays';
+import type { OverlayEventDetail } from '../../utils/overlays-interface';
 import type { IonicSafeString } from '../../utils/sanitization';
 import { sanitizeDOMString } from '../../utils/sanitization';
 import { getClassMap } from '../../utils/theme';
+import type { SpinnerTypes } from '../spinner/spinner-configs';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';

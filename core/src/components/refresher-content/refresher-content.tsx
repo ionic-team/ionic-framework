@@ -4,10 +4,10 @@ import { arrowDown, caretBackSharp } from 'ionicons/icons';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import type { SpinnerTypes } from '../../interface';
 import { isPlatform } from '../../utils/platform';
 import type { IonicSafeString } from '../../utils/sanitization';
 import { sanitizeDOMString } from '../../utils/sanitization';
+import type { SpinnerTypes } from '../spinner/spinner-configs';
 import { SPINNERS } from '../spinner/spinner-configs';
 
 @Component({
