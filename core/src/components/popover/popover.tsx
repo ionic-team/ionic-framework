@@ -1,6 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
-import { printIonWarning } from '@utils/logging';
 
 import { getIonMode } from '../../global/ionic-global';
 import type {
@@ -19,6 +18,7 @@ import type {
 } from '../../interface';
 import { CoreDelegate, attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { addEventListener, raf } from '../../utils/helpers';
+import { printIonWarning } from '../../utils/logging';
 import { BACKDROP, dismiss, eventMethod, focusFirstDescendant, prepareOverlay, present } from '../../utils/overlays';
 import { isPlatform } from '../../utils/platform';
 import { getClassMap } from '../../utils/theme';
@@ -448,13 +448,15 @@ export class Popover implements ComponentInterface, PopoverInterface {
       await this.currentTransition;
     }
 
-    const data = {
-      ...this.componentProps,
-      popover: this.el,
-    };
-
     const { inline, delegate } = this.getDelegate(true);
-    this.usersElement = await attachComponent(delegate, this.el, this.component, ['popover-viewport'], data, inline);
+    this.usersElement = await attachComponent(
+      delegate,
+      this.el,
+      this.component,
+      ['popover-viewport'],
+      this.componentProps,
+      inline
+    );
     await deepReady(this.usersElement);
 
     if (!this.keyboardEvents) {
