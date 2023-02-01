@@ -7,7 +7,7 @@
 log.txt
 *.sublime-project
 *.sublime-workspace
-*.tgz
+# *.tgz
 
 .idea/
 .vscode/
