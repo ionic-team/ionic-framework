@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.5.2-nightly.20230201](https://github.com/ionic-team/ionic/compare/v6.5.1...v6.5.2-nightly.20230201) (2023-02-01)
+
+
+### Bug Fixes
+
+* **item:** inherit aria attributes before render ([#26546](https://github.com/ionic-team/ionic/issues/26546)) ([95a3c69](https://github.com/ionic-team/ionic/commit/95a3c69bbbe415cb5f14ac8e1faed287e91b4b40)), closes [#26538](https://github.com/ionic-team/ionic/issues/26538)
+* **popover:** popover opens on chrome 109 ([#26672](https://github.com/ionic-team/ionic/issues/26672)) ([69d89ea](https://github.com/ionic-team/ionic/commit/69d89eae940ccd8b0cca379a961166c4592f34c7)), closes [#26643](https://github.com/ionic-team/ionic/issues/26643)
+* **popover:** resolve import warning in stencil apps ([#26705](https://github.com/ionic-team/ionic/issues/26705)) ([95f65a5](https://github.com/ionic-team/ionic/commit/95f65a5a390eb600de8998c8be9dfd7c023d1eeb)), closes [#26704](https://github.com/ionic-team/ionic/issues/26704)
+* **select:** setting options async updates rendered text ([#26667](https://github.com/ionic-team/ionic/issues/26667)) ([a687457](https://github.com/ionic-team/ionic/commit/a6874579361db548d961fdee83299d664dd6541b)), closes [#19324](https://github.com/ionic-team/ionic/issues/19324)
+
+
+
+
+
 ## [6.5.1](https://github.com/ionic-team/ionic/compare/v6.5.0...v6.5.1) (2023-01-25)
 
 
