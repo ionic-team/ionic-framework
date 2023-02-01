@@ -57,7 +57,7 @@ jobs:
     # so we do that here.
     - name: Bump Package Lock
       run: |
-        lerna exec "npm install --package-lock-only"
+        lerna exec "npm install --package-lock-only --legacy-peer-deps"
         git add .
         git commit -m "chore(): update package lock files"
         git push
