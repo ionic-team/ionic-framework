@@ -18,11 +18,6 @@
   height: $radio-md-icon-height;
 }
 
-// TODO FW-3125: Move styles to :host selector
-:host(:not(.legacy-radio)) {
-  min-height: 46px;
-}
-
 :host(.ion-color) .radio-inner {
   background: current-color(base);
 }
