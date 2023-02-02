@@ -34,6 +34,13 @@
   height: 22px;
 }
 
+// Input - Disabled
+// ----------------------------------------------------------------
+:host(.legacy-input) .native-input[disabled],
+:host([disabled]) {
+  opacity: #{$input-md-disabled-opacity};
+}
+
 // Input Bottom
 // ----------------------------------------------------------------
 /**
