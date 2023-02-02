@@ -757,6 +757,8 @@ export class Refresher implements ComponentInterface {
       this.scrollEl.style.overflow = overflow;
       this.scrollEl.style.overflowX = overflowX;
       this.scrollEl.style.overflowY = overflowY;
+
+      this.overflowStyles = undefined;
     }
   }
 
