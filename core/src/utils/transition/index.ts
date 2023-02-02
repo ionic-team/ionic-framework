@@ -6,11 +6,14 @@ import {
   LIFECYCLE_WILL_ENTER,
   LIFECYCLE_WILL_LEAVE,
 } from '../../components/nav/constants';
-import type { Animation, AnimationBuilder, NavDirection, NavOptions } from '../../interface';
+import type { NavOptions, NavDirection } from '../../components/nav/nav-interface';
+import type { Animation, AnimationBuilder } from '../animation/animation-interface';
 import { raf } from '../helpers';
 
 const iosTransitionAnimation = () => import('./ios.transition');
 const mdTransitionAnimation = () => import('./md.transition');
+
+// TODO(FW-2832): types
 
 export const transition = (opts: TransitionOptions): Promise<TransitionResult> => {
   return new Promise((resolve, reject) => {

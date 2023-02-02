@@ -1,11 +1,12 @@
-import { JSX as LocalJSX } from '@ionic/core/components';
+import type { JSX as LocalJSX } from '@ionic/core/components';
 import React from 'react';
 
-import { IonContext, IonContextInterface } from '../contexts/IonContext';
-import { ReactComponentOrElement } from '../models';
+import type { IonContextInterface } from '../contexts/IonContext';
+import { IonContext } from '../contexts/IonContext';
+import type { ReactComponentOrElement } from '../models';
 
 import { IonOverlayManager } from './IonOverlayManager';
-import { IonicReactProps } from './IonicReactProps';
+import type { IonicReactProps } from './IonicReactProps';
 import { IonAppInner } from './inner-proxies';
 
 type Props = LocalJSX.IonApp &
@@ -15,7 +16,7 @@ type Props = LocalJSX.IonApp &
 
 export const IonApp = /*@__PURE__*/ (() =>
   class extends React.Component<Props> {
-    addOverlayCallback?: (id: string, overlay: any, containerElement: HTMLDivElement) => void;
+    addOverlayCallback?: (id: string, overlay: ReactComponentOrElement, containerElement: HTMLDivElement) => void;
     removeOverlayCallback?: (id: string) => void;
 
     constructor(props: Props) {
@@ -26,11 +27,7 @@ export const IonApp = /*@__PURE__*/ (() =>
       Wire up methods to call into IonOverlayManager
     */
     ionContext: IonContextInterface = {
-      addOverlay: (
-        id: string,
-        overlay: ReactComponentOrElement,
-        containerElement: HTMLDivElement
-      ) => {
+      addOverlay: (id: string, overlay: ReactComponentOrElement, containerElement: HTMLDivElement) => {
         if (this.addOverlayCallback) {
           this.addOverlayCallback(id, overlay, containerElement);
         }

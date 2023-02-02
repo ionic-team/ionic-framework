@@ -1,39 +1,56 @@
-import { h, Teleport, VNode } from 'vue';
-import type { FrameworkDelegate } from '@ionic/core/components';
+import type { FrameworkDelegate } from "@ionic/core/components";
+import type { VNode } from "vue";
+import { h, Teleport } from "vue";
 
-import { addTeleportedUserComponent, removeTeleportedUserComponent } from './components/IonApp';
+import {
+  addTeleportedUserComponent,
+  removeTeleportedUserComponent,
+} from "./components/IonApp";
 
-export const VueDelegate = (addFn = addTeleportedUserComponent, removeFn = removeTeleportedUserComponent): FrameworkDelegate => {
-  let Component: VNode | undefined;
-  const attachViewToDom = (parentElement: HTMLElement, component: any, componentProps: any = {}, classes?: string[]) => {
-    /**
-     * Ionic Framework passes in modal and popover element
-     * refs as props, but if these are not defined
-     * on the Vue component instance as props, Vue will
-     * warn the user.
-     */
-    delete componentProps['modal'];
-    delete componentProps['popover'];
+export const VueDelegate = (
+  addFn = addTeleportedUserComponent,
+  removeFn = removeTeleportedUserComponent
+): FrameworkDelegate => {
+  // `h` doesn't provide a type for the component argument
+  const refMap = new WeakMap<any, VNode>();
 
-    const div = document.createElement('div');
+  // TODO(FW-2969): types
+  const attachViewToDom = (
+    parentElement: HTMLElement,
+    componentOrTagName: any | string,
+    componentProps: any = {},
+    classes?: string[]
+  ) => {
+    const div = document.createElement("div");
     classes && div.classList.add(...classes);
     parentElement.appendChild(div);
 
-    Component = h(
+    const hostComponent = h(
       Teleport,
       { to: div },
-      h(component, { ...componentProps })
+      h(componentOrTagName, { ...componentProps })
     );
 
-    addFn(Component);
+    /**
+     * Ionic Framework will use what is returned from `attachViewToDom`
+     * as the `component` argument in `removeViewFromDom`.
+     *
+     * We will store a reference to the div element and the host component,
+     * so we can later look-up and unmount the correct instance.
+     */
+    refMap.set(div, hostComponent);
+
+    addFn(hostComponent);
 
     return Promise.resolve(div);
-  }
+  };
 
-  const removeViewFromDom = () => {
-    Component && removeFn(Component);
+  const removeViewFromDom = (_container: any, component: any) => {
+    const hostComponent = refMap.get(component);
+    hostComponent && removeFn(hostComponent);
+
     return Promise.resolve();
-  }
+  };
 
-  return { attachViewToDom, removeViewFromDom }
-}
+  return { attachViewToDom, removeViewFromDom };
+};

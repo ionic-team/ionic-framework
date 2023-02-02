@@ -3,11 +3,13 @@ import { Component, Element, Event, Host, Listen, Prop, State, Watch, h, writeTa
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import type { Color, SegmentChangeEventDetail, StyleEventDetail } from '../../interface';
+import type { Color, StyleEventDetail } from '../../interface';
 import type { Gesture, GestureDetail } from '../../utils/gesture';
 import { pointerCoord } from '../../utils/helpers';
 import { isRTL } from '../../utils/rtl';
 import { createColorClasses, hostContext } from '../../utils/theme';
+
+import type { SegmentChangeEventDetail } from './segment-interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -163,7 +165,6 @@ export class Segment implements ComponentInterface {
 
   async componentDidLoad() {
     this.setCheckedClasses();
-    this.ensureFocusable();
 
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.el,
@@ -537,19 +538,7 @@ export class Segment implements ComponentInterface {
         this.emitValueChange();
       }
     }
-    current.focus();
-  }
-
-  /* By default, focus is delegated to the selected `ion-segment-button`.
-   * If there is no selected button, focus will instead pass to the first child button.
-   **/
-  private ensureFocusable() {
-    if (this.value !== undefined) {
-      return;
-    }
-
-    const buttons = this.getButtons();
-    buttons[0]?.setAttribute('tabindex', '0');
+    current.setFocus();
   }
 
   render() {

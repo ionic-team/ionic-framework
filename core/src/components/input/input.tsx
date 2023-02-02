@@ -6,18 +6,12 @@ import { printIonWarning } from '@utils/logging';
 import { closeCircle, closeSharp } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
-import type {
-  AutocompleteTypes,
-  Color,
-  InputChangeEventDetail,
-  InputInputEventDetail,
-  StyleEventDetail,
-  TextFieldTypes,
-} from '../../interface';
+import type { AutocompleteTypes, Color, StyleEventDetail, TextFieldTypes } from '../../interface';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes, debounceEvent, findItemLabel, inheritAttributes } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
+import type { InputChangeEventDetail, InputInputEventDetail } from './input-interface';
 import { getCounterText } from './input.utils';
 
 /**
@@ -638,7 +632,8 @@ export class Input implements ComponentInterface {
     const { disabled, fill, readonly, shape, inputId, labelPlacement } = this;
     const mode = getIonMode(this);
     const value = this.getValue();
-    const shouldRenderHighlight = mode === 'md' && fill !== 'outline';
+    const inItem = hostContext('ion-item', this.el);
+    const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;
 
     return (
       <Host
@@ -650,7 +645,8 @@ export class Input implements ComponentInterface {
           [`input-fill-${fill}`]: fill !== undefined,
           [`input-shape-${shape}`]: shape !== undefined,
           [`input-label-placement-${labelPlacement}`]: true,
-          'in-item': hostContext('ion-item', this.el),
+          'in-item': inItem,
+          'in-item-color': hostContext('ion-item.ion-color', this.el),
         })}
       >
         <label class="input-wrapper">
@@ -724,7 +720,9 @@ export class Input implements ComponentInterface {
 
 Example: <ion-input label="Email"></ion-input>
 
-For inputs that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the input.`,
+For inputs that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the input.
+
+For inputs that do not render the label immediately next to the input, developers may continue to use "ion-label" but must manually associate the label with the input by using "aria-labelledby".`,
         this.el
       );
 
@@ -756,6 +754,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
           'has-value': this.hasValue(),
           'has-focus': this.hasFocus,
           'legacy-input': true,
+          'in-item-color': hostContext('ion-item.ion-color', this.el),
         })}
       >
         <input

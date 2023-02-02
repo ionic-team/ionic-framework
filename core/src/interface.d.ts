@@ -3,38 +3,35 @@ import type { Components as IoniconsComponents, JSX as IoniconsJSX } from 'ionic
 
 export * from './components';
 export * from './index';
-export * from './components/accordion-group/accordion-group-interface';
-export * from './components/alert/alert-interface';
-export * from './components/action-sheet/action-sheet-interface';
-export * from './components/breadcrumb/breadcrumb-interface';
-export * from './components/content/content-interface';
-export * from './components/checkbox/checkbox-interface';
-export * from './components/datetime/datetime-interface';
-export * from './components/infinite-scroll/infinite-scroll-interface';
-export * from './components/input/input-interface';
-export * from './components/item/item-interface';
-export * from './components/item-sliding/item-sliding-interface';
-export * from './components/loading/loading-interface';
-export * from './components/menu/menu-interface';
-export * from './components/modal/modal-interface';
-export * from './components/nav/nav-interface';
-export * from './components/picker/picker-interface';
-export * from './components/popover/popover-interface';
-export * from './components/radio-group/radio-group-interface';
-export * from './components/range/range-interface';
-export * from './components/router/utils/interface';
-export * from './components/refresher/refresher-interface';
-export * from './components/reorder-group/reorder-group-interface';
-export * from './components/searchbar/searchbar-interface';
-export * from './components/segment/segment-interface';
-export * from './components/select/select-interface';
-export * from './components/select-popover/select-popover-interface';
-export * from './components/spinner/spinner-interface';
-export * from './components/tabs/tabs-interface';
-export * from './components/tab-bar/tab-bar-interface';
-export * from './components/textarea/textarea-interface';
-export * from './components/toast/toast-interface';
-export * from './components/toggle/toggle-interface';
+export { AccordionGroupCustomEvent } from './components/accordion-group/accordion-group-interface';
+export { AlertOptions } from './components/alert/alert-interface';
+export { ActionSheetOptions } from './components/action-sheet/action-sheet-interface';
+export { BreadcrumbCustomEvent } from './components/breadcrumb/breadcrumb-interface';
+export { ScrollBaseCustomEvent, ScrollCallback, ScrollCustomEvent } from './components/content/content-interface';
+export { CheckboxCustomEvent } from './components/checkbox/checkbox-interface';
+export { DatetimeCustomEvent } from './components/datetime/datetime-interface';
+export { InfiniteScrollCustomEvent } from './components/infinite-scroll/infinite-scroll-interface';
+export { InputCustomEvent } from './components/input/input-interface';
+export { CounterFormatter } from './components/item/item-interface';
+export { ItemSlidingCustomEvent } from './components/item-sliding/item-sliding-interface';
+export { LoadingOptions } from './components/loading/loading-interface';
+export { MenuCustomEvent } from './components/menu/menu-interface';
+export { ModalOptions, ModalCustomEvent } from './components/modal/modal-interface';
+export { NavDirection, NavCustomEvent } from './components/nav/nav-interface';
+export { PickerOptions, PickerColumnOption } from './components/picker/picker-interface';
+export { PopoverOptions } from './components/popover/popover-interface';
+export { RadioGroupCustomEvent } from './components/radio-group/radio-group-interface';
+export { RangeCustomEvent, PinFormatter } from './components/range/range-interface';
+export { HTMLStencilElement, RouterCustomEvent } from './components/router/utils/interface';
+export { RefresherCustomEvent } from './components/refresher/refresher-interface';
+export { ItemReorderCustomEvent } from './components/reorder-group/reorder-group-interface';
+export { SearchbarCustomEvent } from './components/searchbar/searchbar-interface';
+export { SegmentCustomEvent } from './components/segment/segment-interface';
+export { SelectCustomEvent, SelectCompareFn } from './components/select/select-interface';
+export { TabsCustomEvent } from './components/tabs/tabs-interface';
+export { TextareaCustomEvent } from './components/textarea/textarea-interface';
+export { ToastOptions } from './components/toast/toast-interface';
+export { ToggleCustomEvent } from './components/toggle/toggle-interface';
 
 // Types from utils
 export {
@@ -46,8 +43,8 @@ export {
   AnimationKeyFrames,
   AnimationLifecycle,
 } from './utils/animation/animation-interface';
-export * from './utils/overlays-interface';
-export * from './global/config';
+export { HTMLIonOverlayElement, OverlayController, OverlayInterface } from './utils/overlays-interface';
+export { Config, config } from './global/config';
 export { Gesture, GestureConfig, GestureDetail } from './utils/gesture';
 
 // From: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete
@@ -121,7 +118,6 @@ export type TextFieldTypes =
   | 'week'
   | 'month'
   | 'datetime-local';
-export type Side = 'start' | 'end';
 export type PredefinedColors =
   | 'primary'
   | 'secondary'

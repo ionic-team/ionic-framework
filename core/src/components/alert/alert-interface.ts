@@ -25,7 +25,7 @@ export interface AlertInput {
   type?: TextFieldTypes | 'checkbox' | 'radio' | 'textarea';
   name?: string;
   placeholder?: string;
-  value?: any;
+  value?: any; // TODO(FW-2832): type
   label?: string;
   checked?: boolean;
   disabled?: boolean;
@@ -45,5 +45,6 @@ export interface AlertButton {
   role?: 'cancel' | 'destructive' | string;
   cssClass?: string | string[];
   id?: string;
+  // TODO(FW-2832): type
   handler?: (value: any) => AlertButtonOverlayHandler | Promise<AlertButtonOverlayHandler>;
 }

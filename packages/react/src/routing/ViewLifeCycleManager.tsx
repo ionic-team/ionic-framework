@@ -11,10 +11,7 @@ interface ViewTransitionManagerState {
   show: boolean;
 }
 
-export class ViewLifeCycleManager extends React.Component<
-  ViewTransitionManagerProps,
-  ViewTransitionManagerState
-> {
+export class ViewLifeCycleManager extends React.Component<ViewTransitionManagerProps, ViewTransitionManagerState> {
   ionLifeCycleContext = new DefaultIonLifeCycleContext();
   private _isMounted = false;
 

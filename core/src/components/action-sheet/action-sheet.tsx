@@ -2,14 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Watch, Component, Element, Event, Host, Method, Prop, h, readTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import type {
-  ActionSheetButton,
-  AnimationBuilder,
-  CssClassMap,
-  FrameworkDelegate,
-  OverlayEventDetail,
-  OverlayInterface,
-} from '../../interface';
+import type { AnimationBuilder, CssClassMap, FrameworkDelegate, OverlayInterface } from '../../interface';
 import type { Gesture } from '../../utils/gesture';
 import { createButtonActiveGesture } from '../../utils/gesture/button-active';
 import {
@@ -23,8 +16,10 @@ import {
   present,
   safeCall,
 } from '../../utils/overlays';
+import type { OverlayEventDetail } from '../../utils/overlays-interface';
 import { getClassMap } from '../../utils/theme';
 
+import type { ActionSheetButton } from './action-sheet-interface';
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
@@ -388,7 +383,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
               {buttons.map((b) => (
                 <button type="button" id={b.id} class={buttonClass(b)} onClick={() => this.buttonClick(b)}>
                   <span class="action-sheet-button-inner">
-                    {b.icon && <ion-icon icon={b.icon} lazy={false} class="action-sheet-icon" />}
+                    {b.icon && <ion-icon icon={b.icon} aria-hidden="true" lazy={false} class="action-sheet-icon" />}
                     {b.text}
                   </span>
                   {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
@@ -400,7 +395,9 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
               <div class="action-sheet-group action-sheet-group-cancel">
                 <button type="button" class={buttonClass(cancelButton)} onClick={() => this.buttonClick(cancelButton)}>
                   <span class="action-sheet-button-inner">
-                    {cancelButton.icon && <ion-icon icon={cancelButton.icon} lazy={false} class="action-sheet-icon" />}
+                    {cancelButton.icon && (
+                      <ion-icon icon={cancelButton.icon} aria-hidden="true" lazy={false} class="action-sheet-icon" />
+                    )}
                     {cancelButton.text}
                   </span>
                   {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}

@@ -4,10 +4,12 @@ import { arrowBackSharp, closeCircle, closeSharp, searchOutline, searchSharp } f
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import type { AutocompleteTypes, Color, SearchbarChangeEventDetail, StyleEventDetail } from '../../interface';
+import type { AutocompleteTypes, Color, StyleEventDetail } from '../../interface';
 import { debounceEvent, raf } from '../../utils/helpers';
 import { isRTL } from '../../utils/rtl';
 import { createColorClasses } from '../../utils/theme';
+
+import type { SearchbarChangeEventDetail } from './searchbar-interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.

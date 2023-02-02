@@ -1,5 +1,3 @@
-export { SpinnerTypes } from './spinner-configs';
-
 export interface SpinnerConfigs {
   [spinnerName: string]: SpinnerConfig;
 }
@@ -18,7 +16,7 @@ export interface SpinnerData {
   y2?: number;
   cx?: number;
   cy?: number;
-  style: any;
+  style: any; // TODO(FW-2832): type
   viewBox?: string;
   transform?: string;
 }

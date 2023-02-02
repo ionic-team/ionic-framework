@@ -2,9 +2,10 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { Gesture, GestureDetail, Side } from '../../interface';
+import type { Gesture, GestureDetail } from '../../interface';
 import { findClosestIonContent, disableContentScrollY, resetContentScrollY } from '../../utils/content';
 import { isEndSide } from '../../utils/helpers';
+import type { Side } from '../menu/menu-interface';
 
 const SWIPE_MARGIN = 30;
 const ELASTIC_FACTOR = 0.55;
@@ -39,7 +40,7 @@ export class ItemSliding implements ComponentInterface {
   private optsWidthRightSide = 0;
   private optsWidthLeftSide = 0;
   private sides = ItemSide.None;
-  private tmr: number | undefined;
+  private tmr?: ReturnType<typeof setTimeout>;
   private leftOptions?: HTMLIonItemOptionsElement;
   private rightOptions?: HTMLIonItemOptionsElement;
   private optsDirty = true;
@@ -418,7 +419,7 @@ export class ItemSliding implements ComponentInterface {
         if (this.gesture) {
           this.gesture.enable(!this.disabled);
         }
-      }, 600) as any;
+      }, 600);
 
       openSlidingItem = undefined;
       style.transform = '';

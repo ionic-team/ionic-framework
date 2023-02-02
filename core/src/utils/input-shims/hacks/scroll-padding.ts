@@ -20,6 +20,7 @@ const PADDING_TIMER_KEY = '$ionPaddingTimer';
  */
 export const setScrollPadding = (contentEl: HTMLElement, paddingAmount: number, clearCallback?: () => void) => {
   const timer = (contentEl as any)[PADDING_TIMER_KEY];
+
   if (timer) {
     clearTimeout(timer);
   }

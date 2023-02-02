@@ -3,15 +3,7 @@ import { Component, Element, Event, Host, Method, Prop, State, Watch, h, writeTa
 import { caretDownSharp, caretUpSharp, chevronBack, chevronDown, chevronForward } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
-import type {
-  Color,
-  DatetimePresentation,
-  DatetimeChangeEventDetail,
-  DatetimeParts,
-  Mode,
-  StyleEventDetail,
-  TitleSelectedDatesFormatter,
-} from '../../interface';
+import type { Color, Mode, StyleEventDetail } from '../../interface';
 import { startFocusVisible } from '../../utils/focus-visible';
 import { getElementRoot, raf, renderHiddenInput } from '../../utils/helpers';
 import { printIonError, printIonWarning } from '../../utils/logging';
@@ -19,6 +11,12 @@ import { isRTL } from '../../utils/rtl';
 import { createColorClasses } from '../../utils/theme';
 import type { PickerColumnItem } from '../picker-column-internal/picker-column-internal-interfaces';
 
+import type {
+  TitleSelectedDatesFormatter,
+  DatetimePresentation,
+  DatetimeChangeEventDetail,
+  DatetimeParts,
+} from './datetime-interface';
 import { isSameDay, warnIfValueOutOfBounds, isBefore, isAfter } from './utils/comparison';
 import {
   generateMonths,
@@ -95,6 +93,7 @@ export class Datetime implements ComponentInterface {
   private destroyCalendarListener?: () => void;
   private destroyKeyboardMO?: () => void;
 
+  // TODO(FW-2832): types (DatetimeParts causes some errors that need untangling)
   private minParts?: any;
   private maxParts?: any;
   private todayParts!: DatetimeParts;
@@ -2177,7 +2176,7 @@ export class Datetime implements ComponentInterface {
     return headerText;
   }
 
-  private renderCalendarViewHeader(showExpandedHeader = true) {
+  private renderHeader(showExpandedHeader = true) {
     const hasSlottedTitle = this.el.querySelector('[slot="title"]') !== null;
     if (!hasSlottedTitle && !this.showDefaultTitle) {
       return;
@@ -2235,13 +2234,13 @@ export class Datetime implements ComponentInterface {
      */
     const hasWheelVariant = presentation === 'date' || presentation === 'date-time' || presentation === 'time-date';
     if (preferWheel && hasWheelVariant) {
-      return [this.renderCalendarViewHeader(false), this.renderWheelView(), this.renderFooter()];
+      return [this.renderHeader(false), this.renderWheelView(), this.renderFooter()];
     }
 
     switch (presentation) {
       case 'date-time':
         return [
-          this.renderCalendarViewHeader(),
+          this.renderHeader(),
           this.renderCalendar(mode),
           this.renderCalendarViewMonthYearPicker(),
           this.renderTime(),
@@ -2249,21 +2248,21 @@ export class Datetime implements ComponentInterface {
         ];
       case 'time-date':
         return [
-          this.renderCalendarViewHeader(),
+          this.renderHeader(),
           this.renderTime(),
           this.renderCalendar(mode),
           this.renderCalendarViewMonthYearPicker(),
           this.renderFooter(),
         ];
       case 'time':
-        return [this.renderTime(), this.renderFooter()];
+        return [this.renderHeader(false), this.renderTime(), this.renderFooter()];
       case 'month':
       case 'month-year':
       case 'year':
-        return [this.renderWheelView(), this.renderFooter()];
+        return [this.renderHeader(false), this.renderWheelView(), this.renderFooter()];
       default:
         return [
-          this.renderCalendarViewHeader(),
+          this.renderHeader(),
           this.renderCalendar(mode),
           this.renderCalendarViewMonthYearPicker(),
           this.renderFooter(),

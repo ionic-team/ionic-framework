@@ -1,0 +1,217 @@
+@import "./textarea.vars";
+
+// Textarea Fill: Outline
+// ----------------------------------------------------------------
+
+:host(.textarea-fill-outline) {
+  --border-color: #{$background-color-step-300};
+  --border-radius: 4px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+}
+
+:host(.textarea-fill-outline.textarea-shape-round) {
+  --border-radius: 28px;
+  --padding-start: 32px;
+  --padding-end: 32px;
+}
+
+/**
+ * If the textarea has a validity state, the
+ * border should reflect that as a color.
+ */
+:host(.textarea-fill-outline.ion-touched.ion-valid),
+:host(.textarea-fill-outline.ion-touched.ion-invalid) {
+  --border-color: var(--highlight-color);
+}
+
+/**
+ * Border should be
+ * slightly darker on hover.
+ */
+@media (any-hover: hover) {
+  :host(.textarea-fill-outline:hover) {
+    --border-color: #{$background-color-step-750};
+  }
+}
+
+/**
+ * The border should get thicker
+ * and take on component color when
+ * the textarea is focused.
+ */
+:host(.textarea-fill-outline.has-focus) {
+  --border-width: 2px;
+  --border-color: var(--highlight-color);
+}
+
+/**
+ * The bottom content should never have
+ * a border with the outline style.
+ */
+:host(.textarea-fill-outline) .textarea-bottom {
+  border-top: none;
+}
+
+/**
+ * Outline textarea do not have a bottom border.
+ * Instead, they have a border that wraps the
+ * textarea + label.
+ */
+:host(.textarea-fill-outline) .textarea-wrapper {
+  border-bottom: none;
+}
+
+:host(.textarea-fill-outline.textarea-label-placement-stacked) .label-text-wrapper,
+:host(.textarea-fill-outline.textarea-label-placement-floating) .label-text-wrapper {
+  @include transform-origin(start, top);
+
+  position: absolute;
+
+  /**
+   * Label text should not extend
+   * beyond the bounds of the textarea.
+   */
+  max-width: calc(100% - var(--padding-start) - var(--padding-end));
+}
+
+/**
+ * The label should appear on top of an outline
+ * container that overlaps it so it is always clickable.
+ */
+:host(.textarea-fill-outline) .label-text-wrapper,
+:host(.textarea-fill-outline) .label-text-wrapper {
+  position: relative;
+
+  z-index: 1;
+}
+
+/**
+ * This makes the label sit above the textarea.
+ */
+:host(.has-focus.textarea-fill-outline.textarea-label-placement-floating) .label-text-wrapper,
+:host(.has-value.textarea-fill-outline.textarea-label-placement-floating) .label-text-wrapper,
+:host(.textarea-fill-outline.textarea-label-placement-stacked) .label-text-wrapper {
+  @include transform(translateY(-32%), scale(#{$textarea-floating-label-scale}));
+  @include margin(0);
+
+  /**
+   * Label text should not extend
+   * beyond the bounds of the textarea.
+   */
+  max-width: calc(
+    (100% - var(--padding-start) - var(--padding-end) - #{$textarea-md-floating-label-padding * 2}) / #{$textarea-floating-label-scale}
+  );
+}
+
+/**
+ * This ensures that the textarea does not
+ * overlap the floating label while still
+ * remaining visually centered.
+ */
+:host(.textarea-fill-outline.textarea-label-placement-stacked) textarea,
+:host(.textarea-fill-outline.textarea-label-placement-floating) textarea,
+:host(.textarea-fill-outline.textarea-label-placement-stacked[auto-grow]) .native-wrapper::after,
+:host(.textarea-fill-outline.textarea-label-placement-floating[auto-grow]) .native-wrapper::after {
+  @include margin(12px, 0px, 0px, 0px);
+}
+
+// Textarea Fill: Outline Outline Container
+// ----------------------------------------------------------------
+
+:host(.textarea-fill-outline) .textarea-outline-container {
+  @include position(0, 0, 0, 0);
+
+  display: flex;
+
+  position: absolute;
+
+  width: 100%;
+  height: 100%;
+}
+
+:host(.textarea-fill-outline) .textarea-outline-start,
+:host(.textarea-fill-outline) .textarea-outline-end {
+  pointer-events: none;
+}
+
+/**
+ * By default, each piece of the container should have
+ * a top and bottom border. This gives the appearance
+ * of a unified container with a border.
+ */
+:host(.textarea-fill-outline) .textarea-outline-start,
+:host(.textarea-fill-outline) .textarea-outline-notch,
+:host(.textarea-fill-outline) .textarea-outline-end {
+  border-top: var(--border-width) var(--border-style) var(--border-color);
+  border-bottom: var(--border-width) var(--border-style) var(--border-color);
+}
+
+/**
+ * Ensures long labels do not cause the notch to flow
+ * out of bounds.
+ */
+:host(.textarea-fill-outline) .textarea-outline-notch {
+  max-width: calc(100% - var(--padding-start) - var(--padding-end));
+}
+
+/**
+ * This element ensures that the notch used
+ * the size of the scaled text so that the
+ * border cut out is the correct width.
+ * The text in this element should not
+ * be interactive.
+ */
+:host(.textarea-fill-outline) .notch-spacer {
+  /**
+   * We need $textarea-md-floating-label-padding of padding on the right.
+   * However, we also subtracted $textarea-md-floating-label-padding from
+   * the width of .textarea-outline-start
+   * to create space, so we need to take
+   * that into consideration here.
+   */
+  @include padding(null, #{$textarea-md-floating-label-padding * 2}, null, null);
+
+  font-size: calc(1em * #{$textarea-floating-label-scale});
+
+  opacity: 0;
+  pointer-events: none;
+}
+
+:host(.textarea-fill-outline) .textarea-outline-start {
+  @include border-radius(var(--border-radius), 0px, 0px, var(--border-radius));
+  @include border(null, null, null, var(--border-width) var(--border-style) var(--border-color));
+
+  /**
+   * There should be spacing between the translated text
+   * and .textarea-outline-start. However, we can't add this
+   * spacing onto the notch because it would cause the
+   * label to look like it is not aligned with the
+   * text textarea. Instead, we subtract a few pixels from
+   * this element.
+   */
+  width: calc(var(--padding-start) - #{$textarea-md-floating-label-padding});
+}
+
+:host(.textarea-fill-outline) .textarea-outline-end {
+  @include border(null, var(--border-width) var(--border-style) var(--border-color), null, null);
+  @include border-radius(0px, var(--border-radius), var(--border-radius), 0px);
+
+  /**
+   * The ending outline fragment
+   * should take up the remaining free space.
+   */
+  flex-grow: 1;
+}
+
+/**
+ * When the textarea either has focus or a value,
+ * there should be a "cut out" at the top for
+ * the floating/stacked label. We simulate this "cut out"
+ * by removing the top border from the notch fragment.
+ */
+:host(.has-focus.textarea-fill-outline.textarea-label-placement-floating) .textarea-outline-notch,
+:host(.has-value.textarea-fill-outline.textarea-label-placement-floating) .textarea-outline-notch,
+:host(.textarea-fill-outline.textarea-label-placement-stacked) .textarea-outline-notch {
+  border-top: none;
+}

@@ -4,6 +4,8 @@ import { parse } from 'jsonc-parser';
 
 const CONFIG_PATH = 'angular.json';
 
+// TODO(FW-2827): types
+
 export function readConfig(host: Tree): any {
   const sourceText = host.read(CONFIG_PATH)?.toString('utf-8');
   return JSON.parse(sourceText);

@@ -10,17 +10,13 @@ import type {
   ComponentRef,
   FrameworkDelegate,
   Gesture,
-  NavOutlet,
-  RouteID,
-  RouteWrite,
-  RouterDirection,
-  RouterOutletOptions,
-  SwipeGestureHandler,
 } from '../../interface';
 import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { shallowEqualStringMap, hasLazyBuild } from '../../utils/helpers';
 import { transition } from '../../utils/transition';
+import type { RouterOutletOptions, SwipeGestureHandler } from '../nav/nav-interface';
+import type { RouteID, RouterDirection, RouteWrite, NavOutlet } from '../router/utils/interface';
 
 @Component({
   tag: 'ion-router-outlet',
@@ -29,6 +25,7 @@ import { transition } from '../../utils/transition';
 })
 export class RouterOutlet implements ComponentInterface, NavOutlet {
   private activeEl: HTMLElement | undefined;
+  // TODO(FW-2832): types
   private activeComponent: any;
   private activeParams: any;
   private waitPromise?: Promise<void>;

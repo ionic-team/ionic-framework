@@ -2,7 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, readTask, writeTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { Animation, Gesture, GestureDetail, RefresherEventDetail } from '../../interface';
+import type { Animation, Gesture, GestureDetail } from '../../interface';
 import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import {
   getScrollElement,
@@ -13,6 +13,7 @@ import {
 import { clamp, componentOnReady, getElementRoot, raf, transitionEndAsync } from '../../utils/helpers';
 import { hapticImpact } from '../../utils/native/haptic';
 
+import type { RefresherEventDetail } from './refresher-interface';
 import {
   createPullingAnimation,
   createSnapBackAnimation,
@@ -37,7 +38,7 @@ export class Refresher implements ComponentInterface {
   private progress = 0;
   private scrollEl?: HTMLElement;
   private backgroundContentEl?: HTMLElement;
-  private scrollListenerCallback?: any;
+  private scrollListenerCallback?: () => void;
   private gesture?: Gesture;
 
   private pointerDown = false;

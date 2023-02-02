@@ -2,8 +2,8 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { Side } from '../../interface';
 import { isEndSide } from '../../utils/helpers';
+import type { Side } from '../menu/menu-interface';
 
 @Component({
   tag: 'ion-item-options',
@@ -24,7 +24,7 @@ export class ItemOptions implements ComponentInterface {
   /**
    * Emitted when the item has been fully swiped.
    */
-  @Event() ionSwipe!: EventEmitter<any>;
+  @Event() ionSwipe!: EventEmitter<any>; // TODO(FW-2832): type
 
   /** @internal */
   @Method()

@@ -2,15 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Listen, Method, Prop, Watch, forceUpdate, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import type {
-  AlertButton,
-  AlertInput,
-  AnimationBuilder,
-  CssClassMap,
-  OverlayEventDetail,
-  OverlayInterface,
-  FrameworkDelegate,
-} from '../../interface';
+import type { AnimationBuilder, CssClassMap, OverlayInterface, FrameworkDelegate } from '../../interface';
 import type { Gesture } from '../../utils/gesture';
 import { createButtonActiveGesture } from '../../utils/gesture/button-active';
 import {
@@ -24,14 +16,18 @@ import {
   present,
   safeCall,
 } from '../../utils/overlays';
+import type { OverlayEventDetail } from '../../utils/overlays-interface';
 import type { IonicSafeString } from '../../utils/sanitization';
 import { sanitizeDOMString } from '../../utils/sanitization';
 import { getClassMap } from '../../utils/theme';
 
+import type { AlertButton, AlertInput } from './alert-interface';
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
+
+// TODO(FW-2832): types
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.

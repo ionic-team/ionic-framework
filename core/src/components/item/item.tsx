@@ -4,12 +4,13 @@ import { printIonError, printIonWarning } from '@utils/logging';
 import { chevronForward } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { AnimationBuilder, Color, CssClassMap, RouterDirection, StyleEventDetail } from '../../interface';
+import type { AnimationBuilder, Color, CssClassMap, StyleEventDetail } from '../../interface';
 import type { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAttributes, raf } from '../../utils/helpers';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 import type { InputInputEventDetail } from '../input/input-interface';
+import type { RouterDirection } from '../router/utils/interface';
 
 import type { CounterFormatter } from './item-interface';
 
@@ -178,7 +179,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
 
     const tagName = (ev.target as HTMLElement).tagName;
     const updatedStyles = ev.detail;
-    const newStyles = {} as any;
+    const newStyles = {} as CssClassMap;
     const childStyles = this.itemStyles.get(tagName) || {};
 
     let hasStyleChange = false;
@@ -206,6 +207,10 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     }
 
     this.hasStartEl();
+  }
+
+  componentWillLoad() {
+    this.inheritedAriaAttributes = inheritAttributes(this.el, ['aria-label']);
   }
 
   componentDidLoad() {
@@ -255,7 +260,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     }
 
     raf(() => {
-      this.inheritedAriaAttributes = inheritAttributes(el, ['aria-label']);
       this.setMultipleInputs();
       this.focusable = this.isFocusable();
     });
@@ -364,7 +368,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
       routerDirection,
       inheritedAriaAttributes,
     } = this;
-    const childStyles = {} as any;
+    const childStyles = {} as StyleEventDetail;
     const mode = getIonMode(this);
     const clickable = this.isClickable();
     const canActivate = this.canActivate();
@@ -405,6 +409,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
           ...createColorClasses(this.color, {
             item: true,
             [mode]: true,
+            'item-lines-default': lines === undefined,
             [`item-lines-${lines}`]: lines !== undefined,
             [`item-fill-${fillValue}`]: true,
             [`item-shape-${shape}`]: shape !== undefined,

@@ -3,10 +3,12 @@ import { Component, Host, Prop, h } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import type { Color, SpinnerConfig, SpinnerTypes } from '../../interface';
+import type { Color } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
+import type { SpinnerTypes } from './spinner-configs';
 import { SPINNERS } from './spinner-configs';
+import type { SpinnerConfig } from './spinner-interface';
 
 @Component({
   tag: 'ion-spinner',
@@ -52,7 +54,7 @@ export class Spinner implements ComponentInterface {
     const spinnerName = self.getName();
     const spinner = SPINNERS[spinnerName] ?? SPINNERS['lines'];
     const duration = typeof self.duration === 'number' && self.duration > 10 ? self.duration : spinner.dur;
-    const svgs: any[] = [];
+    const svgs: any[] = []; // TODO(FW-2832): type
 
     if (spinner.circles !== undefined) {
       for (let i = 0; i < spinner.circles; i++) {

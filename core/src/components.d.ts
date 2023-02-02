@@ -5,14 +5,78 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AccordionGroupChangeEventDetail, ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DatetimeChangeEventDetail, DatetimePresentation, FrameworkDelegate, InputChangeEventDetail, InputInputEventDetail, ItemReorderEventDetail, MenuChangeEventDetail, ModalBreakpointChangeEventDetail, ModalHandleBehavior, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerButton, PickerColumn, PopoverSize, PositionAlign, PositionReference, PositionSide, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextareaInputEventDetail, TextFieldTypes, TitleSelectedDatesFormatter, ToastButton, ToastPosition, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, TriggerAction, ViewController } from "./interface";
+import { AccordionGroupChangeEventDetail } from "./components/accordion-group/accordion-group-interface";
+import { AnimationBuilder, AutocompleteTypes, Color, ComponentProps, ComponentRef, FrameworkDelegate, StyleEventDetail, TextFieldTypes } from "./interface";
+import { ActionSheetButton } from "./components/action-sheet/action-sheet-interface";
+import { OverlayEventDetail } from "./utils/overlays-interface";
 import { IonicSafeString } from "./utils/sanitization";
+import { AlertButton, AlertInput } from "./components/alert/alert-interface";
+import { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./components/router/utils/interface";
+import { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
+import { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
+import { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
+import { DatetimeChangeEventDetail, DatetimePresentation, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
+import { SpinnerTypes } from "./components/spinner/spinner-configs";
+import { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
 import { CounterFormatter } from "./components/item/item-interface";
+import { MenuChangeEventDetail, Side } from "./components/menu/menu-interface";
+import { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
+import { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
+import { ViewController } from "./components/nav/view-controller";
+import { PickerButton, PickerColumn } from "./components/picker/picker-interface";
 import { PickerColumnItem } from "./components/picker-column-internal/picker-column-internal-interfaces";
 import { PickerInternalChangeEventDetail } from "./components/picker-internal/picker-internal-interfaces";
-import { PinFormatter } from "./components/range/range-interface";
+import { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from "./components/popover/popover-interface";
+import { RadioGroupChangeEventDetail } from "./components/radio-group/radio-group-interface";
+import { PinFormatter, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue } from "./components/range/range-interface";
+import { RefresherEventDetail } from "./components/refresher/refresher-interface";
+import { ItemReorderEventDetail } from "./components/reorder-group/reorder-group-interface";
 import { NavigationHookCallback } from "./components/route/route-interface";
-import { SelectCompareFn } from "./components/select/select-interface";
+import { SearchbarChangeEventDetail } from "./components/searchbar/searchbar-interface";
+import { SegmentChangeEventDetail } from "./components/segment/segment-interface";
+import { SegmentButtonLayout } from "./components/segment-button/segment-button-interface";
+import { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./components/select/select-interface";
+import { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
+import { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
+import { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
+import { ToastButton, ToastPosition } from "./components/toast/toast-interface";
+import { ToggleChangeEventDetail } from "./components/toggle/toggle-interface";
+export { AccordionGroupChangeEventDetail } from "./components/accordion-group/accordion-group-interface";
+export { AnimationBuilder, AutocompleteTypes, Color, ComponentProps, ComponentRef, FrameworkDelegate, StyleEventDetail, TextFieldTypes } from "./interface";
+export { ActionSheetButton } from "./components/action-sheet/action-sheet-interface";
+export { OverlayEventDetail } from "./utils/overlays-interface";
+export { IonicSafeString } from "./utils/sanitization";
+export { AlertButton, AlertInput } from "./components/alert/alert-interface";
+export { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./components/router/utils/interface";
+export { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
+export { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
+export { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
+export { DatetimeChangeEventDetail, DatetimePresentation, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
+export { SpinnerTypes } from "./components/spinner/spinner-configs";
+export { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
+export { CounterFormatter } from "./components/item/item-interface";
+export { MenuChangeEventDetail, Side } from "./components/menu/menu-interface";
+export { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
+export { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
+export { ViewController } from "./components/nav/view-controller";
+export { PickerButton, PickerColumn } from "./components/picker/picker-interface";
+export { PickerColumnItem } from "./components/picker-column-internal/picker-column-internal-interfaces";
+export { PickerInternalChangeEventDetail } from "./components/picker-internal/picker-internal-interfaces";
+export { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from "./components/popover/popover-interface";
+export { RadioGroupChangeEventDetail } from "./components/radio-group/radio-group-interface";
+export { PinFormatter, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue } from "./components/range/range-interface";
+export { RefresherEventDetail } from "./components/refresher/refresher-interface";
+export { ItemReorderEventDetail } from "./components/reorder-group/reorder-group-interface";
+export { NavigationHookCallback } from "./components/route/route-interface";
+export { SearchbarChangeEventDetail } from "./components/searchbar/searchbar-interface";
+export { SegmentChangeEventDetail } from "./components/segment/segment-interface";
+export { SegmentButtonLayout } from "./components/segment-button/segment-button-interface";
+export { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./components/select/select-interface";
+export { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
+export { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
+export { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
+export { ToastButton, ToastPosition } from "./components/toast/toast-interface";
+export { ToggleChangeEventDetail } from "./components/toggle/toggle-interface";
 export namespace Components {
     interface IonAccordion {
         /**
@@ -1996,6 +2060,7 @@ export namespace Components {
         "value"?: string | number;
     }
     interface IonPickerInternal {
+        "exitInputMode": () => Promise<void>;
         /**
           * The mode determines which platform styles to use.
          */
@@ -2581,6 +2646,7 @@ export namespace Components {
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
+        "setFocus": () => Promise<void>;
         /**
           * The type of the button.
          */
@@ -2870,6 +2936,14 @@ export namespace Components {
          */
         "cols"?: number;
         /**
+          * If `true`, a character counter will display the ratio of characters used and the total character limit. Developers must also set the `maxlength` property for the counter to be calculated correctly.
+         */
+        "counter": boolean;
+        /**
+          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".
+         */
+        "counterFormatter"?: (inputLength: number, maxLength: number) => string;
+        /**
           * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
          */
         "debounce"?: number;
@@ -2882,13 +2956,33 @@ export namespace Components {
          */
         "enterkeyhint"?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
         /**
+          * Text that is placed under the textarea and displayed when an error is detected.
+         */
+        "errorText"?: string;
+        /**
+          * The fill for the item. If `'solid'` the item will have a background. If `'outline'` the item will be transparent with a border. Only available in `md` mode.
+         */
+        "fill"?: 'outline' | 'solid';
+        /**
           * Returns the native `<textarea>` element used under the hood.
          */
         "getInputElement": () => Promise<HTMLTextAreaElement>;
         /**
+          * Text that is placed under the textarea and displayed when no error is detected.
+         */
+        "helperText"?: string;
+        /**
           * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
          */
         "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
+        /**
+          * The visible label associated with the textarea.
+         */
+        "label"?: string;
+        /**
+          * Where to place the label relative to the textarea. `'start'`: The label will appear to the left of the textarea in LTR and to the right in RTL. `'end'`: The label will appear to the right of the textarea in LTR and to the left in RTL. `'floating'`: The label will appear smaller and above the textarea when the textarea is focused or it has a value. Otherwise it will appear on top of the textarea. `'stacked'`: The label will appear smaller and above the textarea regardless even when the textarea is blurred or has no value. `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+         */
+        "labelPlacement": 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
         /**
           * This attribute specifies the maximum number of characters that the user can enter.
          */
@@ -2925,6 +3019,10 @@ export namespace Components {
           * Sets focus on the native `textarea` in `ion-textarea`. Use this method instead of the global `textarea.focus()`.
          */
         "setFocus": () => Promise<void>;
+        /**
+          * The shape of the textarea. If "round" it will have an increased border radius.
+         */
+        "shape"?: 'round';
         /**
           * If `true`, the element will have its spelling and grammar checked.
          */
@@ -6912,6 +7010,14 @@ declare namespace LocalJSX {
          */
         "cols"?: number;
         /**
+          * If `true`, a character counter will display the ratio of characters used and the total character limit. Developers must also set the `maxlength` property for the counter to be calculated correctly.
+         */
+        "counter"?: boolean;
+        /**
+          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".
+         */
+        "counterFormatter"?: (inputLength: number, maxLength: number) => string;
+        /**
           * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
          */
         "debounce"?: number;
@@ -6924,9 +7030,29 @@ declare namespace LocalJSX {
          */
         "enterkeyhint"?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
         /**
+          * Text that is placed under the textarea and displayed when an error is detected.
+         */
+        "errorText"?: string;
+        /**
+          * The fill for the item. If `'solid'` the item will have a background. If `'outline'` the item will be transparent with a border. Only available in `md` mode.
+         */
+        "fill"?: 'outline' | 'solid';
+        /**
+          * Text that is placed under the textarea and displayed when no error is detected.
+         */
+        "helperText"?: string;
+        /**
           * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
          */
         "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
+        /**
+          * The visible label associated with the textarea.
+         */
+        "label"?: string;
+        /**
+          * Where to place the label relative to the textarea. `'start'`: The label will appear to the left of the textarea in LTR and to the right in RTL. `'end'`: The label will appear to the right of the textarea in LTR and to the left in RTL. `'floating'`: The label will appear smaller and above the textarea when the textarea is focused or it has a value. Otherwise it will appear on top of the textarea. `'stacked'`: The label will appear smaller and above the textarea regardless even when the textarea is blurred or has no value. `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+         */
+        "labelPlacement"?: 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
         /**
           * This attribute specifies the maximum number of characters that the user can enter.
          */
@@ -6979,6 +7105,10 @@ declare namespace LocalJSX {
           * The number of visible text lines for the control.
          */
         "rows"?: number;
+        /**
+          * The shape of the textarea. If "round" it will have an increased border radius.
+         */
+        "shape"?: 'round';
         /**
           * If `true`, the element will have its spelling and grammar checked.
          */

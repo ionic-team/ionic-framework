@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import { Component, Element, Event, Host, Method, Prop, State, Watch, h, forceUpdate } from '@stencil/core';
 import { createLegacyFormController } from '@utils/forms';
 import type { LegacyFormController } from '@utils/forms';
 import { printIonWarning } from '@utils/logging';
@@ -8,26 +8,26 @@ import { caretDownSharp } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
 import type {
-  ActionSheetButton,
   ActionSheetOptions,
-  AlertInput,
   AlertOptions,
   Color,
   CssClassMap,
-  OverlaySelect,
   PopoverOptions,
-  SelectChangeEventDetail,
-  SelectInterface,
-  SelectPopoverOption,
   StyleEventDetail,
 } from '../../interface';
 import { findItemLabel, focusElement, getAriaLabel, renderHiddenInput, inheritAttributes } from '../../utils/helpers';
 import type { Attributes } from '../../utils/helpers';
 import { actionSheetController, alertController, popoverController } from '../../utils/overlays';
+import type { OverlaySelect } from '../../utils/overlays-interface';
 import { createColorClasses, hostContext } from '../../utils/theme';
 import { watchForOptions } from '../../utils/watch-options';
+import type { ActionSheetButton } from '../action-sheet/action-sheet-interface';
+import type { AlertInput } from '../alert/alert-interface';
+import type { SelectPopoverOption } from '../select-popover/select-popover-interface';
 
-import type { SelectCompareFn } from './select-interface';
+import type { SelectChangeEventDetail, SelectInterface, SelectCompareFn } from './select-interface';
+
+// TODO(FW-2832): types
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -244,6 +244,14 @@ export class Select implements ComponentInterface {
 
     this.mutationO = watchForOptions<HTMLIonSelectOptionElement>(this.el, 'ion-select-option', async () => {
       this.updateOverlayOptions();
+
+      /**
+       * We need to re-render the component
+       * because one of the new ion-select-option
+       * elements may match the value. In this case,
+       * the rendered selected text should be updated.
+       */
+      forceUpdate(this);
     });
   }
 
@@ -280,11 +288,28 @@ export class Select implements ComponentInterface {
     if (this.interface === 'popover') {
       let indexOfSelected = this.childOpts.map((o) => o.value).indexOf(this.value);
       indexOfSelected = indexOfSelected > -1 ? indexOfSelected : 0; // default to first option if nothing selected
-      const selectedEl = overlay.querySelector<HTMLElement>(
+      const selectedItem = overlay.querySelector<HTMLElement>(
         `.select-interface-option:nth-child(${indexOfSelected + 1})`
       );
-      if (selectedEl) {
-        focusElement(selectedEl);
+
+      if (selectedItem) {
+        focusElement(selectedItem);
+
+        /**
+         * Browsers such as Firefox do not
+         * correctly delegate focus when manually
+         * focusing an element with delegatesFocus.
+         * We work around this by manually focusing
+         * the interactive element.
+         * ion-radio and ion-checkbox are the only
+         * elements that ion-select-popover uses, so
+         * we only need to worry about those two components
+         * when focusing.
+         */
+        const interactiveEl = selectedItem.querySelector<HTMLElement>('ion-radio, ion-checkbox');
+        if (interactiveEl) {
+          interactiveEl.focus();
+        }
       }
     }
 
@@ -708,14 +733,15 @@ export class Select implements ComponentInterface {
     const hasFloatingOrStackedLabel = labelPlacement === 'floating' || labelPlacement === 'stacked';
     const justifyEnabled = !hasFloatingOrStackedLabel;
     const rtl = isRTL(el) ? 'rtl' : 'ltr';
-    const shouldRenderHighlight = mode === 'md' && fill !== 'outline';
+    const inItem = hostContext('ion-item', this.el);
+    const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;
 
     return (
       <Host
         onClick={this.onClick}
         class={createColorClasses(this.color, {
           [mode]: true,
-          'in-item': hostContext('ion-item', el),
+          'in-item': inItem,
           'select-disabled': disabled,
           'select-expanded': isExpanded,
           'has-value': this.hasValue(),
@@ -749,6 +775,7 @@ export class Select implements ComponentInterface {
     );
   }
 
+  // TODO FW-3194 - Remove this
   private renderLegacySelect() {
     if (!this.hasLoggedDeprecationWarning) {
       printIonWarning(
@@ -756,8 +783,9 @@ export class Select implements ComponentInterface {
 
 Example: <ion-select label="Favorite Color">...</ion-select>
 
-For inputs that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the select.
-  `,
+For selects that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the select.
+
+For selects that do not render the label immediately next to the select, developers may continue to use "ion-label" but must manually associate the label with the select by using "aria-labelledby".`,
         this.el
       );
 

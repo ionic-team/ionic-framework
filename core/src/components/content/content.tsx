@@ -2,11 +2,13 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Listen, Method, Prop, forceUpdate, h, readTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { Color, ScrollBaseDetail, ScrollDetail } from '../../interface';
+import type { Color } from '../../interface';
 import { componentOnReady } from '../../utils/helpers';
 import { isPlatform } from '../../utils/platform';
 import { isRTL } from '../../utils/rtl';
 import { createColorClasses, hostContext } from '../../utils/theme';
+
+import type { ScrollBaseDetail, ScrollDetail } from './content-interface';
 
 /**
  * @slot - Content is placed in the scrollable area if provided without a slot.
@@ -21,7 +23,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
   shadow: true,
 })
 export class Content implements ComponentInterface {
-  private watchDog: any;
+  private watchDog: ReturnType<typeof setInterval> | null = null;
   private isScrolling = false;
   private lastScroll = 0;
   private queued = false;
@@ -311,7 +313,7 @@ export class Content implements ComponentInterface {
   }
 
   private onScrollEnd() {
-    clearInterval(this.watchDog);
+    if (this.watchDog) clearInterval(this.watchDog);
     this.watchDog = null;
     if (this.isScrolling) {
       this.isScrolling = false;
