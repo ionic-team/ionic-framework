@@ -35,7 +35,9 @@
 // Calendar / Header / Action Buttons
 // -----------------------------------
 
-:host .calendar-action-buttons .calendar-month-year-toggle {
+.calendar-action-buttons .calendar-month-year-toggle {
+  @include padding(0px, 0px, 0px, 16px);
+
   font-size: 16px;
   font-weight: 600;
 }

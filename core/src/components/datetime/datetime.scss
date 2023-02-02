@@ -207,7 +207,7 @@ ion-picker-column-internal {
 .calendar-month-year-toggle {
   @include font-smoothing();
   @include margin(0);
-  @include padding(null, null, null, 16px);
+  @include padding(0px, 0px, 0px, 20px);
   @include text-inherit();
 
   display: flex;
