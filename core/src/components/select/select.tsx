@@ -8,9 +8,7 @@ import { caretDownSharp } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
 import type {
-  ActionSheetButton,
   ActionSheetOptions,
-  AlertInput,
   AlertOptions,
   Color,
   CssClassMap,
@@ -23,6 +21,8 @@ import { actionSheetController, alertController, popoverController } from '../..
 import type { OverlaySelect } from '../../utils/overlays-interface';
 import { createColorClasses, hostContext } from '../../utils/theme';
 import { watchForOptions } from '../../utils/watch-options';
+import type { ActionSheetButton } from '../action-sheet/action-sheet-interface';
+import type { AlertInput } from '../alert/alert-interface';
 import type { SelectPopoverOption } from '../select-popover/select-popover-interface';
 
 import type { SelectChangeEventDetail, SelectInterface, SelectCompareFn } from './select-interface';
