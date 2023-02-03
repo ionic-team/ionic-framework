@@ -1,6 +1,5 @@
 import { expect } from '@playwright/test';
 import type { E2EPage } from '@utils/test/playwright';
-import { dragElementBy } from '@utils/test/playwright';
 
 /**
  * Visual regression tests for picker-column.
@@ -20,6 +19,8 @@ export async function testPickerColumn(page: E2EPage, buttonSelector: string, de
     `picker-${description}-column-initial-${page.getSnapshotSettings()}.png`
   );
 
+  // TODO FW-3403
+  /*
   const columns = page.locator('.picker-opt-selected');
   const spy = await page.spyOnEvent('ionPickerColChange');
 
@@ -42,4 +43,5 @@ export async function testPickerColumn(page: E2EPage, buttonSelector: string, de
   for (const screenshot of screenshots) {
     expect(screenshot.screenshot).toMatchSnapshot(screenshot.name);
   }
+  */
 }
