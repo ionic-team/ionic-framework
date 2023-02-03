@@ -36,9 +36,21 @@
 // Calendar / Header / Action Buttons
 // -----------------------------------
 
-:host .calendar-action-buttons .calendar-month-year-toggle,
+.calendar-action-buttons .calendar-month-year-toggle,
 :host .calendar-action-buttons ion-button {
   color: #{$text-color-step-350};
+}
+
+.calendar-month-year-toggle.ion-focused {
+  background: #{$background-color-step-150};
+  color: currentColor;
+}
+
+@media (any-hover: hover) {
+  .calendar-month-year-toggle:hover {
+    background: #{$background-color-step-150};
+    color: currentColor;
+  }
 }
 
 // Calendar / Header / Days of Week

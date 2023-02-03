@@ -20,7 +20,7 @@
   @include padding($datetime-ios-padding, $datetime-ios-padding, $datetime-ios-padding, $datetime-ios-padding);
 
   border-bottom: $datetime-ios-border-color;
-  
+
   font-size: 14px;
 }
 
@@ -35,11 +35,31 @@
 // Calendar / Header / Action Buttons
 // -----------------------------------
 
-.calendar-action-buttons .calendar-month-year-toggle {
-  @include padding(0px, 0px, 0px, 16px);
+.calendar-month-year-toggle {
+  @include padding(0px, 16px, 0px, 16px);
+
+  position: relative;
+
+  min-height: 44px;
 
   font-size: 16px;
   font-weight: 600;
+
+  &::after {
+    @include button-state();
+
+    transition: background-color 200ms linear, opacity 200ms linear;
+  }
+
+  &.ion-focused::after {
+    background: #000;
+
+    opacity: 0.15;
+  }
+}
+
+.calendar-action-buttons .calendar-month-year-toggle ion-label {
+  @include margin(10px, 0px, 10px, 0px);
 }
 
 :host .calendar-action-buttons .calendar-month-year-toggle ion-icon,
@@ -74,7 +94,6 @@
 // Calendar / Body
 // -----------------------------------
 :host .calendar-body .calendar-month .calendar-month-grid {
-
   /**
    * We need to apply the padding to
    * each month grid item otherwise
@@ -82,7 +101,12 @@
    * this padding a snapping point if applied
    * on .calendar-month
    */
-  @include padding($datetime-ios-padding * 0.5, $datetime-ios-padding * 0.5, $datetime-ios-padding * 0.5, $datetime-ios-padding * 0.5);
+  @include padding(
+    $datetime-ios-padding * 0.5,
+    $datetime-ios-padding * 0.5,
+    $datetime-ios-padding * 0.5,
+    $datetime-ios-padding * 0.5
+  );
 
   height: calc(100% - #{$datetime-ios-padding});
 }
@@ -151,7 +175,12 @@
 // Footer
 // -----------------------------------
 :host .datetime-buttons {
-  @include padding($datetime-ios-padding * 0.5, $datetime-ios-padding * 0.5, $datetime-ios-padding * 0.5, $datetime-ios-padding * 0.5);
+  @include padding(
+    $datetime-ios-padding * 0.5,
+    $datetime-ios-padding * 0.5,
+    $datetime-ios-padding * 0.5,
+    $datetime-ios-padding * 0.5
+  );
 
   border-top: $datetime-ios-border-color;
 }
