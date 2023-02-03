@@ -27,5 +27,9 @@ test.describe('chip: rendering', () => {
         </ion-item>
       </ion-list>
     `);
+
+    const chip = page.locator('ion-chip');
+
+    expect(await chip.screenshot()).toMatchSnapshot(`chip-descender-${page.getSnapshotSettings()}.png`);
   });
 });
