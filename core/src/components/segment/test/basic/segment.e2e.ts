@@ -61,8 +61,9 @@ test.describe('segment: basic', () => {
       skip.rtl();
       await page.setContent(`
         <ion-segment value="a" style="width: 300px">
-          <ion-segment-button value="a">Long Long Long Long Long Long Text</ion-segment-button>
-          <ion-segment-button value="b">Label With Long Long Long Long Long Long Text</ion-segment-button>
+          <ion-segment-button value="a">
+            <ion-label>Long Long Long Long Long Long Text</ion-label>
+          </ion-segment-button>
         </ion-segment>
       `);
 
