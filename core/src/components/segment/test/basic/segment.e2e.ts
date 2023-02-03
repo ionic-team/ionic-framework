@@ -57,10 +57,10 @@ test.describe('segment: basic', () => {
 
       expect(await segment.screenshot()).toMatchSnapshot(`segment-color-${page.getSnapshotSettings()}.png`);
     });
-    test('should truncate long text with ellipses', async ({ page, skip }) => {
+    test.only('should truncate long text with ellipses', async ({ page, skip }) => {
       skip.rtl();
       await page.setContent(`
-        <ion-segment value="a" style="width: 300px">
+        <ion-segment value="a" style="width: 200px">
           <ion-segment-button value="a">
             <ion-label>Long Long Long Long Long Long Text</ion-label>
           </ion-segment-button>
