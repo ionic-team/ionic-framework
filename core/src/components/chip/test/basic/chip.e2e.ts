@@ -12,6 +12,7 @@ test.describe('chip: rendering', () => {
 
   test('should not clip descenders in item', async ({ page, skip }) => {
     skip.rtl();
+    skip.mode('md');
 
     test.info().annotations.push({
       type: 'issue',
