@@ -14,7 +14,7 @@ export async function testPickerColumn(page: E2EPage, buttonSelector: string, de
   await page.click(buttonSelector);
   await ionPickerDidPresentSpy.next();
 
-  await page.waitForTimeout(100);
+  await page.waitForChanges();
 
   expect(await page.screenshot()).toMatchSnapshot(
     `picker-${description}-column-initial-${page.getSnapshotSettings()}.png`
@@ -31,7 +31,7 @@ export async function testPickerColumn(page: E2EPage, buttonSelector: string, de
     await dragElementBy(column, page, 0, -100);
     await spy.next();
 
-    await page.waitForTimeout(100);
+    await page.waitForChanges();
 
     screenshots.push({
       name: `picker-${description}-column-diff-${i}-${page.getSnapshotSettings()}.png`,
