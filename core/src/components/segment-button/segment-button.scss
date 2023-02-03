@@ -210,6 +210,8 @@
 
   align-self: center;
 
+  width: 100%;
+
   line-height: 22px;
 
   text-overflow: ellipsis;
@@ -219,6 +221,8 @@
   box-sizing: border-box;
 
   pointer-events: none;
+
+  overflow: hidden;
 }
 
 
