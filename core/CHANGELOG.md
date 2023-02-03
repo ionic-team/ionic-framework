@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.5.3-nightly.20230203](https://github.com/ionic-team/ionic/compare/v6.5.2...v6.5.3-nightly.20230203) (2023-02-03)
+
+
+### Bug Fixes
+
+* **refresher:** prevent clearing virtual scroll overflow styling ([#26613](https://github.com/ionic-team/ionic/issues/26613)) ([9d6ec29](https://github.com/ionic-team/ionic/commit/9d6ec2925cb2314d5379b864aef467b34afbb318)), closes [#26553](https://github.com/ionic-team/ionic/issues/26553)
+
+
+
+
+
 ## [6.5.2](https://github.com/ionic-team/ionic/compare/v6.5.1...v6.5.2) (2023-02-01)
 
 
