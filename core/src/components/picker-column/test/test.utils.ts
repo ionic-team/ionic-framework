@@ -18,4 +18,30 @@ export async function testPickerColumn(page: E2EPage, buttonSelector: string, de
   expect(await page.screenshot()).toMatchSnapshot(
     `picker-${description}-column-initial-${page.getSnapshotSettings()}.png`
   );
+
+  // TODO FW-3403
+  /*
+  const columns = page.locator('.picker-opt-selected');
+  const spy = await page.spyOnEvent('ionPickerColChange');
+
+  const screenshots = [];
+
+  for (let i = 0; i < (await columns.count()); i++) {
+    const column = columns.nth(i);
+
+    await dragElementBy(column, page, 0, -100);
+    await spy.next();
+
+    await page.waitForChanges();
+
+    screenshots.push({
+      name: `picker-${description}-column-diff-${i}-${page.getSnapshotSettings()}.png`,
+      screenshot: await page.screenshot(),
+    });
+  }
+
+  for (const screenshot of screenshots) {
+    expect(screenshot.screenshot).toMatchSnapshot(screenshot.name);
+  }
+  */
 }
