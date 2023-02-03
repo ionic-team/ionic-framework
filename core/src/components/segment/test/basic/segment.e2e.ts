@@ -57,5 +57,18 @@ test.describe('segment: basic', () => {
 
       expect(await segment.screenshot()).toMatchSnapshot(`segment-color-${page.getSnapshotSettings()}.png`);
     });
+    test.only('should truncate long text with ellipses', async ({ page, skip }) => {
+      skip.rtl();
+      await page.setContent(`
+        <ion-segment value="a" style="width: 300px">
+          <ion-segment-button value="a">Long Long Long Long Long Long Text</ion-segment-button>
+          <ion-segment-button value="b">Label With Long Long Long Long Long Long Text</ion-segment-button>
+        </ion-segment>
+      `);
+
+      const segment = page.locator('ion-segment');
+
+      expect(await segment.screenshot()).toMatchSnapshot(`segment-truncate-${page.getSnapshotSettings()}.png`);
+    });
   });
 });
