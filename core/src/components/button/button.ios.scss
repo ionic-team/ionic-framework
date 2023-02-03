@@ -1,5 +1,6 @@
 @import "./button";
 @import "./button.ios.vars";
+@import "../toolbar/toolbar.ios.vars";
 
 
 // iOS Button
@@ -23,6 +24,19 @@
   letter-spacing: #{$button-ios-letter-spacing};
 }
 
+/**
+ * The default buttons in a toolbar
+ * have a different font size
+ * than buttons outside of a toolbar on iOS.
+ * However, we still want the "size" property
+ * to be usable in a toolbar, so we add
+ * the .in-buttons selector such that we
+ * can add the different font size in a toolbar
+ * but still let "size" override it.
+ */
+:host(.in-buttons) {
+  font-size: #{$toolbar-ios-button-font-size};
+}
 
 // iOS Solid Button
 // --------------------------------------------------
