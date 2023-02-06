@@ -1034,7 +1034,7 @@ ion-range,prop,legacy,boolean | undefined,undefined,false,false
 ion-range,prop,max,number,100,false,false
 ion-range,prop,min,number,0,false,false
 ion-range,prop,mode,"ios" | "md",undefined,false,false
-ion-range,prop,name,string,'',false,false
+ion-range,prop,name,string,this.rangeId,false,false
 ion-range,prop,pin,boolean,false,false,false
 ion-range,prop,pinFormatter,(value: number) => string | number,(value: number): number => Math.round(value),false,false
 ion-range,prop,snaps,boolean,false,false,false
