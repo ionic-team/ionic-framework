@@ -46,7 +46,7 @@ import type {
   shadow: true,
 })
 export class Range implements ComponentInterface {
-  private rangeId?: string;
+  private rangeId = `ion-r-${rangeIds++}`;
   private didLoad = false;
   private noUpdate = false;
   private rect!: ClientRect;
@@ -91,12 +91,10 @@ export class Range implements ComponentInterface {
     this.ionInput = debounce === undefined ? originalIonInput ?? ionInput : debounceEvent(ionInput, debounce);
   }
 
-  // TODO: In Ionic Framework v6 this should initialize to this.rangeId like the other form components do.
-
   /**
    * The name of the control, which is submitted with the form data.
    */
-  @Prop() name = '';
+  @Prop() name = this.rangeId;
 
   /**
    * Show two knobs.
@@ -302,7 +300,9 @@ export class Range implements ComponentInterface {
      * If user has custom ID set then we should
      * not assign the default incrementing ID.
      */
-    this.rangeId = this.el.hasAttribute('id') ? this.el.getAttribute('id')! : `ion-r-${rangeIds++}`;
+    if (this.el.hasAttribute('id')) {
+      this.rangeId = this.el.getAttribute('id')!;
+    }
 
     this.inheritedAttributes = inheritAriaAttributes(this.el);
   }
@@ -553,9 +553,9 @@ export class Range implements ComponentInterface {
   private renderLegacyRange() {
     if (!this.hasLoggedDeprecationWarning) {
       printIonWarning(
-        `Using ion-range with an ion-label has been deprecated. To migrate, remove the ion-label and pass your label directly into ion-toggle instead.
+        `Using ion-range with an ion-label has been deprecated. To migrate, remove the ion-label and pass your label directly into ion-range instead.
 
-Example: <ion-range>Volume:</ion-range>
+Example: <ion-range><div slot="label">Volume:</div></ion-range>
 
 For ranges that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the range.
 
