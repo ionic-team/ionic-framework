@@ -23,7 +23,7 @@ test.describe('button: size', () => {
 
     expect(await wrapper.screenshot()).toMatchSnapshot(`button-size-large-${page.getSnapshotSettings()}.png`);
   });
-  test.describe('in ion-button', () => {
+  test.describe('in ion-buttons', () => {
     test('should render small button', async ({ page }) => {
       await page.setContent(`
         <ion-buttons>
