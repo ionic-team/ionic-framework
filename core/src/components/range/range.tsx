@@ -46,7 +46,7 @@ import type {
   shadow: true,
 })
 export class Range implements ComponentInterface {
-  private rangeId?: string = `ion-r-${rangeIds++}`;
+  private rangeId: string = `ion-r-${rangeIds++}`;
   private didLoad = false;
   private noUpdate = false;
   private rect!: ClientRect;
@@ -94,7 +94,7 @@ export class Range implements ComponentInterface {
   /**
    * The name of the control, which is submitted with the form data.
    */
-  @Prop() name = '';
+  @Prop() name = this.rangeId;
 
   /**
    * Show two knobs.
