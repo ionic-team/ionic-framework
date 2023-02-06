@@ -10,7 +10,7 @@ runs:
       with:
         name: ionic-core
         path: ./core
-        filename: CoreBuild.zip
+        filename: CoreBuild.tar
     - name: Install Vue Dependencies
       run: npm ci
       shell: bash
@@ -34,5 +34,5 @@ runs:
     - uses: ./.github/workflows/actions/upload-archive
       with:
         name: ionic-vue
-        output: packages/vue/VueBuild.zip
+        output: packages/vue/VueBuild.tar
         paths: packages/vue/dist packages/vue/css

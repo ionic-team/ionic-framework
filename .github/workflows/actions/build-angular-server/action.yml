@@ -18,5 +18,5 @@ runs:
     - uses: ./.github/workflows/actions/upload-archive
       with:
         name: ionic-angular-server
-        output: packages/angular-server/AngularServerBuild.zip
+        output: packages/angular-server/AngularServerBuild.tar
         paths: packages/angular-server/dist

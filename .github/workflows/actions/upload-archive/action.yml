@@ -10,11 +10,8 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - name: Install Dependency
-      run: apt-get install zip
-      shell: bash
     - name: Create Archive
-      run: zip -q -r ${{ inputs.output }} ${{ inputs.paths }}
+      run: tar -cvf ${{ inputs.output }} ${{ inputs.paths }}
       shell: bash
     - uses: actions/upload-artifact@v3
       with:

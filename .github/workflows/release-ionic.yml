@@ -31,13 +31,13 @@ jobs:
       uses: ./.github/workflows/actions/upload-archive
       with:
         name: ionic-core
-        output: core/CoreBuild.zip
+        output: core/CoreBuild.tar
         paths: core/dist core/components core/css core/hydrate core/loader core/src/components.d.ts
     - name: Cache Built @ionic/docs
       uses: ./.github/workflows/actions/upload-archive
       with:
         name: ionic-docs
-        output: docs/DocsBuild.zip
+        output: docs/DocsBuild.tar
         paths: docs/core.json docs/core.d.ts
 
   release-docs:
@@ -50,7 +50,7 @@ jobs:
       with:
         name: ionic-docs
         path: ./docs
-        filename: DocsBuild.zip
+        filename: DocsBuild.tar
     - uses: ./.github/workflows/actions/publish-npm
       with:
         scope: '@ionic/docs'
@@ -69,7 +69,7 @@ jobs:
       with:
         name: ionic-core
         path: ./core
-        filename: CoreBuild.zip
+        filename: CoreBuild.tar
     - uses: ./.github/workflows/actions/publish-npm
       with:
         scope: '@ionic/angular'
@@ -82,7 +82,7 @@ jobs:
       uses: ./.github/workflows/actions/upload-archive
       with:
         name: ionic-angular
-        output: ./angular/AngularBuild.zip
+        output: ./angular/AngularBuild.tar
         paths: ./angular/dist
 
   release-react:
@@ -95,7 +95,7 @@ jobs:
       with:
         name: ionic-core
         path: ./core
-        filename: CoreBuild.zip
+        filename: CoreBuild.tar
     - uses: ./.github/workflows/actions/publish-npm
       with:
         scope: '@ionic/react'
@@ -107,7 +107,7 @@ jobs:
       uses: ./.github/workflows/actions/upload-archive
       with:
         name: ionic-react
-        output: packages/react/ReactBuild.zip
+        output: packages/react/ReactBuild.tar
         paths: packages/react/dist packages/react/css
 
   release-vue:
@@ -120,7 +120,7 @@ jobs:
       with:
         name: ionic-core
         path: ./core
-        filename: CoreBuild.zip
+        filename: CoreBuild.tar
     - uses: ./.github/workflows/actions/publish-npm
       with:
         scope: '@ionic/vue'
@@ -132,7 +132,7 @@ jobs:
       uses: ./.github/workflows/actions/upload-archive
       with:
         name: ionic-vue
-        output: packages/vue/VueBuild.zip
+        output: packages/vue/VueBuild.tar
         paths: packages/vue/dist packages/vue/css
 
   release-angular-server:
@@ -145,13 +145,13 @@ jobs:
       with:
         name: ionic-core
         path: ./core
-        filename: CoreBuild.zip
+        filename: CoreBuild.tar
     - name: Restore @ionic/angular built cache
       uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-angular
         path: ./angular
-        filename: AngularBuild.zip
+        filename: AngularBuild.tar
     - uses: ./.github/workflows/actions/publish-npm
       with:
         scope: '@ionic/angular-server'
@@ -171,13 +171,13 @@ jobs:
       with:
         name: ionic-core
         path: ./core
-        filename: CoreBuild.zip
+        filename: CoreBuild.tar
     - name: Restore @ionic/react built cache
       uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-react
         path: ./packages/react
-        filename: ReactBuild.zip
+        filename: ReactBuild.tar
     - uses: ./.github/workflows/actions/publish-npm
       with:
         scope: '@ionic/react-router'
@@ -196,13 +196,13 @@ jobs:
       with:
         name: ionic-core
         path: ./core
-        filename: CoreBuild.zip
+        filename: CoreBuild.tar
     - name: Restore @ionic/vue built cache
       uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-vue
         path: ./packages/vue
-        filename: VueBuild.zip
+        filename: VueBuild.tar
     - uses: ./.github/workflows/actions/publish-npm
       with:
         scope: '@ionic/vue-router'

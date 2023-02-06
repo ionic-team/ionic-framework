@@ -10,12 +10,12 @@ runs:
       with:
         name: ionic-core
         path: ./core
-        filename: CoreBuild.zip
+        filename: CoreBuild.tar
     - uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-react
         path: ./packages/react
-        filename: ReactBuild.zip
+        filename: ReactBuild.tar
     - name: Install Dependencies
       run: npm ci
       shell: bash
@@ -35,5 +35,5 @@ runs:
     - uses: ./.github/workflows/actions/upload-archive
       with:
         name: ionic-react-router
-        output: packages/react-router/ReactRouterBuild.zip
+        output: packages/react-router/ReactRouterBuild.tar
         paths: packages/react-router/dist

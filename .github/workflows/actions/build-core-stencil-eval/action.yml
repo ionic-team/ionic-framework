@@ -41,5 +41,5 @@ runs:
     - uses: ./.github/workflows/actions/upload-archive
       with:
         name: ionic-core
-        output: core/CoreBuild.zip
+        output: core/CoreBuild.tar
         paths: core/dist core/components core/css core/hydrate core/loader core/src/components.d.ts

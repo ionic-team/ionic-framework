@@ -14,7 +14,7 @@ runs:
       with:
         name: ionic-core
         path: ./core
-        filename: CoreBuild.zip
+        filename: CoreBuild.tar
     - name: Test
       run: npm run test.spec -- --ci
       shell: bash

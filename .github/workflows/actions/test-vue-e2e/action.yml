@@ -13,17 +13,17 @@ runs:
       with:
         name: ionic-core
         path: ./core
-        filename: CoreBuild.zip
+        filename: CoreBuild.tar
     - uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-vue
         path: ./packages/vue
-        filename: VueBuild.zip
+        filename: VueBuild.tar
     - uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-vue-router
         path: ./packages/vue-router
-        filename: VueRouterBuild.zip
+        filename: VueRouterBuild.tar
     - name: Create Test App
       run: ./build.sh ${{ inputs.app }}
       shell: bash

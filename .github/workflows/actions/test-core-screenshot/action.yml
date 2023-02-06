@@ -17,7 +17,7 @@ runs:
       with:
         name: ionic-core
         path: ./core
-        filename: CoreBuild.zip
+        filename: CoreBuild.tar
     - name: Install Playwright Dependencies
       run: npm install && npx playwright install && npx playwright install-deps
       shell: bash
@@ -41,7 +41,7 @@ runs:
       # unzip and move the changed files into place.
       # We have extra logic added so that job runners
       # that do not have any new screenshots do not create
-      # an unnecessary .zip.
+      # an unnecessary .tar.
       # Note that we need to unzip directory to be "core"
       # which is why we not using the upload-archive
       # composite step here.
@@ -74,5 +74,5 @@ runs:
       uses: ./.github/workflows/actions/upload-archive
       with:
         name: test-results-${{ inputs.shard }}-${{ inputs.totalShards }}
-        output: core/TestResults-${{ inputs.shard }}-${{ inputs.totalShards }}.zip
+        output: core/TestResults-${{ inputs.shard }}-${{ inputs.totalShards }}.tar
         paths: core/playwright-report

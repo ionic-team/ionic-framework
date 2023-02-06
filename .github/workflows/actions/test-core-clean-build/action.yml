@@ -11,7 +11,7 @@ runs:
       with:
         name: ionic-core
         path: ./core
-        filename: CoreBuild.zip
+        filename: CoreBuild.tar
     - name: Check Diff
       run: git diff --exit-code
       shell: bash

@@ -10,13 +10,10 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - name: Install Dependency
-      run: apt-get install unzip
-      shell: bash
     - uses: actions/download-artifact@v3
       with:
         name: ${{ inputs.name }}
         path: ${{ inputs.path }}
     - name: Exract Archive
-      run: unzip -q -o ${{ inputs.path }}/${{ inputs.filename }}
+      run: tar -xf ${{ inputs.path }}/${{ inputs.filename }}
       shell: bash

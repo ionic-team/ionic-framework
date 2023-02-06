@@ -10,12 +10,12 @@ runs:
       with:
         name: ionic-core
         path: ./core
-        filename: CoreBuild.zip
+        filename: CoreBuild.tar
     - uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-vue
         path: ./packages/vue
-        filename: VueBuild.zip
+        filename: VueBuild.tar
     - name: Install Vue Router Dependencies
       run: npm ci
       shell: bash
@@ -39,5 +39,5 @@ runs:
     - uses: ./.github/workflows/actions/upload-archive
       with:
         name: ionic-vue-router
-        output: ./packages/vue-router/VueRouterBuild.zip
+        output: ./packages/vue-router/VueRouterBuild.tar
         paths: packages/vue-router/dist

@@ -10,7 +10,7 @@ runs:
       with:
         name: ionic-core
         path: ./core
-        filename: CoreBuild.zip
+        filename: CoreBuild.tar
     - name: Install React Dependencies
       run: npm ci
       shell: bash
@@ -38,5 +38,5 @@ runs:
     - uses: ./.github/workflows/actions/upload-archive
       with:
         name: ionic-react
-        output: packages/react/ReactBuild.zip
+        output: packages/react/ReactBuild.tar
         paths: packages/react/dist packages/react/css
