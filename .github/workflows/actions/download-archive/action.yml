@@ -10,6 +10,9 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    - name: Install Dependency
+      run: sudo apt-get install unzip
+      shell: bash
     - uses: actions/download-artifact@v3
       with:
         name: ${{ inputs.name }}

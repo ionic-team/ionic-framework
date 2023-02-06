@@ -10,6 +10,9 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    - name: Install Dependency
+      run: sudo apt-get install zip
+      shell: bash
     - name: Create Archive
       run: zip -q -r ${{ inputs.output }} ${{ inputs.paths }}
       shell: bash
