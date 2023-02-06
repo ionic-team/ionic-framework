@@ -46,7 +46,7 @@ import type {
   shadow: true,
 })
 export class Range implements ComponentInterface {
-  private rangeId: string = `ion-r-${rangeIds++}`;
+  private rangeId = `ion-r-${rangeIds++}`;
   private didLoad = false;
   private noUpdate = false;
   private rect!: ClientRect;

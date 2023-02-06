@@ -75,4 +75,4 @@ describe('range id', () => {
     const range = page.body.querySelector('ion-range');
     expect(range.getAttribute('id')).toBe('my-custom-range');
   });
-})
+});
