@@ -56,7 +56,7 @@ jobs:
     needs: [build-core]
     runs-on: ubuntu-22.04
     container:
-      image: mcr.microsoft.com/playwright:v1.29.2-focal
+      image: mcr.microsoft.com/playwright:v1.29.2-jammy
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/workflows/actions/test-core-screenshot
