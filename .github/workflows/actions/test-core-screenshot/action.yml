@@ -19,12 +19,12 @@ runs:
         path: ./core
         filename: CoreBuild.tar
     - name: Install Playwright Dependencies
-      run: npm install && npx playwright install && npx playwright install-deps
+      run: npm install
       shell: bash
       working-directory: ./core
     - name: Test
       if: inputs.update != 'true'
-      run: npm run test.e2e -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }}
+      run: HOME=/root npm run test.e2e -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }}
       shell: bash
       working-directory: ./core
     - name: Test and Update
