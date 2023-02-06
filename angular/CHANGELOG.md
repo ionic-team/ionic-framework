@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.5.2](https://github.com/ionic-team/ionic/compare/v6.5.1...v6.5.2) (2023-02-01)
+
+
+### Bug Fixes
+
+* **popover:** popover opens on chrome 109 ([#26672](https://github.com/ionic-team/ionic/issues/26672)) ([69d89ea](https://github.com/ionic-team/ionic/commit/69d89eae940ccd8b0cca379a961166c4592f34c7)), closes [#26643](https://github.com/ionic-team/ionic/issues/26643)
+
+
+
+
+
+## [6.5.1](https://github.com/ionic-team/ionic/compare/v6.5.0...v6.5.1) (2023-01-25)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
 # [6.5.0](https://github.com/ionic-team/ionic/compare/v6.4.3...v6.5.0) (2023-01-18)
 
 

@@ -72,7 +72,7 @@ test.describe('select: basic', () => {
   });
 
   test.describe('select: popover', () => {
-    test('it should open a popover select', async ({ page, browserName, skip }) => {
+    test('it should open a popover select', async ({ page, skip }) => {
       // TODO (FW-2979)
       skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
 
@@ -85,12 +85,9 @@ test.describe('select: basic', () => {
 
       const popover = page.locator('ion-popover');
 
-      // TODO(FW-1436)
-      if (browserName !== 'firefox') {
-        // select has no value, so first option should be focused by default
-        const popoverOption1 = await popover.locator('.select-interface-option:first-of-type ion-radio');
-        await expect(popoverOption1).toBeFocused();
-      }
+      // select has no value, so first option should be focused by default
+      const popoverOption1 = popover.locator('.select-interface-option:first-of-type ion-radio');
+      await expect(popoverOption1).toBeFocused();
 
       expect(await page.screenshot({ animations: 'disabled' })).toMatchSnapshot(
         `select-popover-diff-${page.getSnapshotSettings()}.png`

@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.5.2](https://github.com/ionic-team/ionic/compare/v6.5.1...v6.5.2) (2023-02-01)
+
+
+### Bug Fixes
+
+* **item:** inherit aria attributes before render ([#26546](https://github.com/ionic-team/ionic/issues/26546)) ([95a3c69](https://github.com/ionic-team/ionic/commit/95a3c69bbbe415cb5f14ac8e1faed287e91b4b40)), closes [#26538](https://github.com/ionic-team/ionic/issues/26538)
+* **popover:** popover opens on chrome 109 ([#26672](https://github.com/ionic-team/ionic/issues/26672)) ([69d89ea](https://github.com/ionic-team/ionic/commit/69d89eae940ccd8b0cca379a961166c4592f34c7)), closes [#26643](https://github.com/ionic-team/ionic/issues/26643)
+* **popover:** resolve import warning in stencil apps ([#26705](https://github.com/ionic-team/ionic/issues/26705)) ([95f65a5](https://github.com/ionic-team/ionic/commit/95f65a5a390eb600de8998c8be9dfd7c023d1eeb)), closes [#26704](https://github.com/ionic-team/ionic/issues/26704)
+* **select:** setting options async updates rendered text ([#26667](https://github.com/ionic-team/ionic/issues/26667)) ([a687457](https://github.com/ionic-team/ionic/commit/a6874579361db548d961fdee83299d664dd6541b)), closes [#19324](https://github.com/ionic-team/ionic/issues/19324)
+
+
+
+
+
+## [6.5.1](https://github.com/ionic-team/ionic/compare/v6.5.0...v6.5.1) (2023-01-25)
+
+
+### Bug Fixes
+
+* **action-sheet:** button icons are not announced by screen readers ([#26640](https://github.com/ionic-team/ionic/issues/26640)) ([22e9ff8](https://github.com/ionic-team/ionic/commit/22e9ff866f8bd7e2e4ca82eae70969ea4f2658df))
+* **fab-button:** icon is not announced by screen readers ([#26619](https://github.com/ionic-team/ionic/issues/26619)) ([dd7cd8c](https://github.com/ionic-team/ionic/commit/dd7cd8c0bfe652d293dc2c2b1bd2a36fd9cf0a0b)), closes [#22296](https://github.com/ionic-team/ionic/issues/22296)
+* **modal, popover:** warn if trigger element was not found ([#26650](https://github.com/ionic-team/ionic/issues/26650)) ([1115203](https://github.com/ionic-team/ionic/commit/11152031202a513121861486e50ea7942b9118d3))
+* **picker-column:** cssClass is set on column ([#26658](https://github.com/ionic-team/ionic/issues/26658)) ([c6620c7](https://github.com/ionic-team/ionic/commit/c6620c7c74abe04c3041e8b256441af72ea12131)), closes [#26653](https://github.com/ionic-team/ionic/issues/26653)
+* **select:** focusing item works in firefox ([#26668](https://github.com/ionic-team/ionic/issues/26668)) ([946807d](https://github.com/ionic-team/ionic/commit/946807d67b972c41b52c23c8f00feca4c705b224))
+* **toggle:** on-off icon is not announced by screen readers ([#26641](https://github.com/ionic-team/ionic/issues/26641)) ([77ccac0](https://github.com/ionic-team/ionic/commit/77ccac059091d5d9f7daf9c7fb01a9e855b86ce3))
+
+
+
+
+
 # [6.5.0](https://github.com/ionic-team/ionic/compare/v6.4.3...v6.5.0) (2023-01-18)
 
 
