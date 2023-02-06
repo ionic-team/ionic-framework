@@ -40,7 +40,7 @@ test.describe('button: size', () => {
     test('should render large button', async ({ page }) => {
       await page.setContent(`
         <ion-buttons>
-          <ion-button size="large" fill="solid">Small Button</ion-button>
+          <ion-button size="large" fill="solid">Large Button</ion-button>
         </ion-buttons>
       `);
 
