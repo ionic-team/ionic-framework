@@ -1,3 +1,4 @@
+import { newSpecPage } from '@stencil/core/testing';
 import { Range } from '../range';
 
 let sharedRange;
@@ -61,3 +62,17 @@ describe('Range', () => {
     });
   });
 });
+
+describe('range id', () => {
+  it('should render custom id if passed', async () => {
+    const page = await newSpecPage({
+      components: [Range],
+      html: `<ion-range id="my-custom-range">
+        <div slot="label">Range</div>
+      </ion-range>`,
+    });
+
+    const range = page.body.querySelector('ion-range');
+    expect(range.getAttribute('id')).toBe('my-custom-range');
+  });
+})
