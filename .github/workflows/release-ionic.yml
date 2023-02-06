@@ -17,7 +17,7 @@ on:
 
 jobs:
   release-core:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
     - uses: ./.github/workflows/actions/publish-npm
@@ -42,7 +42,7 @@ jobs:
 
   release-docs:
     needs: [release-core]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
     - name: Restore @ionic/docs built cache
@@ -61,7 +61,7 @@ jobs:
 
   release-angular:
     needs: [release-core]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
     - name: Restore @ionic/core built cache
@@ -87,7 +87,7 @@ jobs:
 
   release-react:
     needs: [release-core]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
     - name: Restore @ionic/core built cache
@@ -112,7 +112,7 @@ jobs:
 
   release-vue:
     needs: [release-core]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
     - name: Restore @ionic/core built cache
@@ -137,7 +137,7 @@ jobs:
 
   release-angular-server:
     needs: [release-angular]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
     - name: Restore @ionic/core built cache
@@ -163,7 +163,7 @@ jobs:
 
   release-react-router:
     needs: [release-react]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
     - name: Restore @ionic/core built cache
@@ -188,7 +188,7 @@ jobs:
 
   release-vue-router:
     needs: [release-vue]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
     - name: Restore @ionic/core built cache

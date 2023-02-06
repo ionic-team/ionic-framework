@@ -5,7 +5,7 @@ on:
 
 jobs:
   create-dev-hash:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     outputs:
       dev-hash: ${{ steps.create-dev-hash.outputs.DEV_HASH }}
     steps:
@@ -33,7 +33,7 @@ jobs:
 
   get-build:
     name: Get your dev build!
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: [create-dev-hash, release-ionic]
     steps:
       - run: echo ${{ needs.create-dev-hash.outputs.dev-hash }}
