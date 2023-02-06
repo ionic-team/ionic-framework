@@ -55,6 +55,8 @@ jobs:
         totalShards: [20]
     needs: [build-core]
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.29.2-focal
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/workflows/actions/test-core-screenshot
