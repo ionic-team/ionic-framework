@@ -553,7 +553,7 @@ export class Range implements ComponentInterface {
   private renderLegacyRange() {
     if (!this.hasLoggedDeprecationWarning) {
       printIonWarning(
-        `Using ion-range with an ion-label has been deprecated. To migrate, remove the ion-label and pass your label directly into ion-toggle instead.
+        `Using ion-range with an ion-label has been deprecated. To migrate, remove the ion-label and pass your label directly into ion-range instead.
 
 Example: <ion-range><div slot="label">Volume:</div></ion-range>
 
