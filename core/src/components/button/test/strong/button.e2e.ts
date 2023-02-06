@@ -28,7 +28,7 @@ test.describe('button: strong', () => {
 
     expect(await wrapper.screenshot()).toMatchSnapshot(`button-clear-strong-${page.getSnapshotSettings()}.png`);
   });
-  test.describe('in ion-button', () => {
+  test.describe('in ion-buttons', () => {
     test('should render strong button', async ({ page }) => {
       await page.setContent(`
         <ion-buttons>
