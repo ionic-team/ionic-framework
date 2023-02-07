@@ -26,8 +26,8 @@
       </ion-header>
 
       <ion-content class="ion-padding">
-        <ion-button onclick="openToast({ message: 'This is an inline layout toast.', buttons: ['Button One', 'Button Two']})">Open Inline Layout Toast</ion-button>
-        <ion-button onclick="openToast({ message: 'This is a stacked layout toast.', buttons: ['Button One', 'Button Two'], layout: 'stacked' })">Open Stacked Layout Toast</ion-button>
+        <ion-button onclick="openToast(inlineConfig)">Open Inline Layout Toast</ion-button>
+        <ion-button onclick="openToast(stackedConfig)">Open Stacked Layout Toast</ion-button>
       </ion-content>
 
       <script>
@@ -35,6 +35,21 @@
           const toast = await toastController.create(opts);
           await toast.present();
         }
+
+        const inlineConfig = {
+          icon: 'globe',
+          message: 'This is an inline layout toast.',
+          buttons: [
+            { side: 'start', text: 'Start Button' },
+            { side: 'end', text: 'End Button' }
+          ]
+        };
+
+        const stackedConfig = {
+          ...inlineConfig,
+          message: 'This is a stacked layout toast.',
+          layout: 'stacked'
+        };
       </script>
   </body>
 </html>
