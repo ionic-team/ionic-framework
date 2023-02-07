@@ -192,6 +192,8 @@ Ionic now listens on the `keydown` event instead of the `keyup` event when deter
 
 - Range no longer clamps assigned values within bounds. Developers will need to validate the value they are assigning to `ion-range` is within the `min` and `max` bounds when programmatically assigning a value. 
 
+- The `name` property defaults to `ion-r-${rangeIds++}` where `rangeIds` is a number that is incremented for every instance of `ion-range`.
+
 <h4 id="version-7x-searchbar">Searchbar</h4>
 
 - `ionChange` is no longer emitted when the `value` of `ion-searchbar` is modified externally. `ionChange` is only emitted from user committed changes, such as typing in the searchbar and the searchbar losing focus.
