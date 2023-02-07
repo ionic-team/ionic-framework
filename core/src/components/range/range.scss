@@ -107,8 +107,6 @@
 
   width: 100%;
   height: var(--bar-height);
-
-  overflow: hidden;
 }
 
 .range-bar {
@@ -201,7 +199,6 @@
 }
 
 ::slotted([slot="label"]) {
-
   /**
    * Label text should not extend
    * beyond the bounds of the range.
@@ -225,7 +222,6 @@
 
   overflow: hidden;
 }
-
 
 /**
  * If no label text is placed into the slot
