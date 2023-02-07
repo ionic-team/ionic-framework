@@ -575,7 +575,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
       this.hasLoggedDeprecationWarning = true;
     }
 
-    const { el, pressedKnob, disabled, pin, rangeId } = this;
+    const { el, pressedKnob, disabled, pin, rangeId, ticks } = this;
 
     const mode = getIonMode(this);
 
@@ -592,6 +592,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
           'range-disabled': disabled,
           'range-pressed': pressedKnob !== undefined,
           'range-has-pin': pin,
+          'range-has-ticks': ticks,
           'legacy-range': true,
         })}
       >

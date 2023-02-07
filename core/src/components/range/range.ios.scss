@@ -39,9 +39,12 @@
   @include padding($range-ios-padding-vertical + $range-ios-pin-font-size, null, null, null);
 }
 
-.range-bar-active {
+:host(.range-has-ticks) .range-bar-active {
+  @include border-radius(0);
   @include margin(null, calc(-1 * $range-ios-tick-width * 0.5), null, calc(-1 * $range-ios-tick-width * 0.5));
+}
 
+.range-bar-active {
   bottom: 0;
 
   width: auto;
