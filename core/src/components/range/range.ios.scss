@@ -40,7 +40,6 @@
 }
 
 .range-bar-active {
-  @include border-radius(0);
   @include margin(null, calc(-1 * $range-ios-tick-width * 0.5), null, calc(-1 * $range-ios-tick-width * 0.5));
 
   bottom: 0;
