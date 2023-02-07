@@ -1890,17 +1890,19 @@ export class Datetime implements ComponentInterface {
       <div class="calendar-header">
         <div class="calendar-action-buttons">
           <div class="calendar-month-year">
-            <ion-item button detail={false} lines="none" onClick={() => this.toggleMonthAndYearView()}>
-              <ion-label>
-                {getMonthAndYear(this.locale, this.workingParts)}
-                <ion-icon
-                  aria-hidden="true"
-                  icon={this.showMonthAndYear ? expandedIcon : collapsedIcon}
-                  lazy={false}
-                  flipRtl={true}
-                ></ion-icon>
-              </ion-label>
-            </ion-item>
+            <button
+              class="calendar-month-year-button ion-activatable ion-focusable"
+              onClick={() => this.toggleMonthAndYearView()}
+            >
+              <ion-label>{getMonthAndYear(this.locale, this.workingParts)}</ion-label>
+              <ion-icon
+                aria-hidden="true"
+                icon={this.showMonthAndYear ? expandedIcon : collapsedIcon}
+                lazy={false}
+                flipRtl={true}
+              ></ion-icon>
+              {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+            </button>
           </div>
 
           <div class="calendar-next-prev">
