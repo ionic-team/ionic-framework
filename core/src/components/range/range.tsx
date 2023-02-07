@@ -575,7 +575,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
       this.hasLoggedDeprecationWarning = true;
     }
 
-    const { el, pressedKnob, disabled, pin, rangeId, ticks } = this;
+    const { el, pressedKnob, disabled, pin, rangeId } = this;
 
     const mode = getIonMode(this);
 
@@ -592,7 +592,6 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
           'range-disabled': disabled,
           'range-pressed': pressedKnob !== undefined,
           'range-has-pin': pin,
-          'range-has-ticks': ticks,
           'legacy-range': true,
         })}
       >
@@ -764,7 +763,16 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
 
         <div class="range-bar-container">
           <div class="range-bar" role="presentation" part="bar" />
-          <div class="range-bar range-bar-active" role="presentation" style={barStyle} part="bar-active" />
+          <div
+            class={{
+              'range-bar': true,
+              'range-bar-active': true,
+              'has-ticks': ticks.length > 0,
+            }}
+            role="presentation"
+            style={barStyle}
+            part="bar-active"
+          />
         </div>
 
         {renderKnob(rtl, {
