@@ -201,6 +201,6 @@ const getRippleEffect = (el: HTMLElement) => {
 };
 
 const ACTIVATED = 'ion-activated';
-const ADD_ACTIVATED_DEFERS = 200;
-const CLEAR_STATE_DEFERS = 200;
+const ADD_ACTIVATED_DEFERS = 100;
+const CLEAR_STATE_DEFERS = 150;
 const MOUSE_WAIT = 2500;
