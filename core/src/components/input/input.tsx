@@ -1,14 +1,14 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
-import { createLegacyFormController } from '@utils/forms';
-import type { LegacyFormController } from '@utils/forms';
-import { printIonWarning } from '@utils/logging';
 import { closeCircle, closeSharp } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { AutocompleteTypes, Color, StyleEventDetail, TextFieldTypes } from '../../interface';
+import type { LegacyFormController } from '../../utils/forms';
+import { createLegacyFormController } from '../../utils/forms';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes, debounceEvent, findItemLabel, inheritAttributes } from '../../utils/helpers';
+import { printIonWarning } from '../../utils/logging';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 import type { InputChangeEventDetail, InputInputEventDetail } from './input-interface';
@@ -564,7 +564,11 @@ export class Input implements ComponentInterface {
   private renderBottomContent() {
     const { counter, helperText, errorText, maxlength } = this;
 
-    const hasHintText = helperText !== undefined || errorText !== undefined;
+    /**
+     * undefined and empty string values should
+     * be treated as not having helper/error text.
+     */
+    const hasHintText = !!helperText || !!errorText;
     const hasCounter = counter === true && maxlength !== undefined;
     if (!hasHintText && !hasCounter) {
       return;

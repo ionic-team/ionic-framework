@@ -585,7 +585,11 @@ For textareas that do not have a visible label, developers should use "aria-labe
   private renderBottomContent() {
     const { counter, helperText, errorText, maxlength } = this;
 
-    const hasHintText = helperText !== undefined || errorText !== undefined;
+    /**
+     * undefined and empty string values should
+     * be treated as not having helper/error text.
+     */
+    const hasHintText = !!helperText || !!errorText;
     const hasCounter = counter === true && maxlength !== undefined;
     if (!hasHintText && !hasCounter) {
       return;
