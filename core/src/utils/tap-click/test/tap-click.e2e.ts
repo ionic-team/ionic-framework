@@ -1,8 +1,7 @@
 import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
-// TODO FW-3010
-test.describe.skip('tap click utility', () => {
+test.describe('tap click utility', () => {
   test.beforeEach(({ skip }) => {
     skip.rtl();
     skip.mode('ios');
@@ -10,7 +9,7 @@ test.describe.skip('tap click utility', () => {
   test('it should apply activated class when clicking element', async ({ page }) => {
     await page.setContent(`
       <ion-app>
-        <button class="ion-activatable">Click Me</button>
+        <button class="ion-activatable ion-activatable-instant">Click Me</button>
       </ion-app>
     `);
 
