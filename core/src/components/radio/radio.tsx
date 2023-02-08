@@ -234,6 +234,14 @@ export class Radio implements ComponentInterface {
         })}
       >
         <label class="radio-wrapper">
+          <input
+            type="radio"
+            checked={checked}
+            disabled={disabled}
+            id={inputId}
+            ref={(nativeEl) => (this.nativeInput = nativeEl as HTMLInputElement)}
+            {...inheritedAttributes}
+          />
           <div
             class={{
               'label-text-wrapper': true,
@@ -243,14 +251,6 @@ export class Radio implements ComponentInterface {
             <slot></slot>
           </div>
           <div class="native-wrapper">{this.renderRadioControl()}</div>
-          <input
-            type="radio"
-            checked={checked}
-            disabled={disabled}
-            id={inputId}
-            ref={(nativeEl) => (this.nativeInput = nativeEl as HTMLInputElement)}
-            {...inheritedAttributes}
-          />
         </label>
       </Host>
     );
