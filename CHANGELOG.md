@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.5.3-nightly.20230208](https://github.com/ionic-team/ionic-framework/compare/v6.5.2...v6.5.3-nightly.20230208) (2023-02-08)
+
+
+### Bug Fixes
+
+* **button:** size and strong are respected in ion-buttons ([#26726](https://github.com/ionic-team/ionic-framework/issues/26726)) ([3759125](https://github.com/ionic-team/ionic-framework/commit/37591255b4ab3dde5ece6950024a3b66e7224364))
+* **chip:** descenders are not clipped in label ([#26729](https://github.com/ionic-team/ionic-framework/issues/26729)) ([a9e000b](https://github.com/ionic-team/ionic-framework/commit/a9e000b4338f75c27e9284dbe9a6501ba3b213bc)), closes [#18313](https://github.com/ionic-team/ionic-framework/issues/18313)
+* **refresher:** prevent clearing virtual scroll overflow styling ([#26613](https://github.com/ionic-team/ionic-framework/issues/26613)) ([9d6ec29](https://github.com/ionic-team/ionic-framework/commit/9d6ec2925cb2314d5379b864aef467b34afbb318)), closes [#26553](https://github.com/ionic-team/ionic-framework/issues/26553)
+
+
+
+
+
 ## [6.5.2](https://github.com/ionic-team/ionic-framework/compare/v6.5.1...v6.5.2) (2023-02-01)
 
 
