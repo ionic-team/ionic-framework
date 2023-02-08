@@ -13,6 +13,7 @@ import type {
   TitleSelectedDatesFormatter,
   DatetimeEvent,
   DatetimeEventStyle,
+  DatetimeEventCallback,
 } from '../../interface';
 import { startFocusVisible } from '../../utils/focus-visible';
 import { getElementRoot, raf, renderHiddenInput } from '../../utils/helpers';
@@ -2005,11 +2006,17 @@ export class Datetime implements ComponentInterface {
             }
 
             // TODO: replace with actual prop later
-            const events: DatetimeEvent[] = [{
-              date: '2023-02-02',
-              color: 'purple',
-              backgroundColor: 'pink'
-            }];
+            const events: DatetimeEvent[] | DatetimeEventCallback = (dateIsoString) => {
+              const d = new Date(dateIsoString);
+              if(d.getDate() === 2) {
+                return {
+                  color: 'purple',
+                  backgroundColor: 'pink'
+                };
+              }
+
+              return undefined;
+            };
 
             let eventStyle: DatetimeEventStyle | undefined = undefined;
 
@@ -2027,7 +2034,18 @@ export class Datetime implements ComponentInterface {
                   };
                 }
               } else {
-                // TODO: handle callback
+                /**
+                 * Wrap in a try-catch to prevent exceptions in the user's function
+                 * from interrupting the calendar's rendering.
+                 */
+                try {
+                  eventStyle = events(dateIsoString);
+                } catch (e) {
+                  printIonError(
+                    'Exception thrown from provided `events` callback. Please check your function and try again.',
+                    e
+                  );
+                }
               }
             }
 
