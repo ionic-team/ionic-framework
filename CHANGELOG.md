@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.0.0-beta.2](https://github.com/ionic-team/ionic-framework/compare/v7.0.0-beta.1...v7.0.0-beta.2) (2023-02-08)
+
+
+### Bug Fixes
+
+* **input, textarea:** bottom content is rendered correctly ([#26739](https://github.com/ionic-team/ionic-framework/issues/26739)) ([39009ac](https://github.com/ionic-team/ionic-framework/commit/39009ac6eff0e51707efc3ef3981e1b7614eb2e3)), closes [#26737](https://github.com/ionic-team/ionic-framework/issues/26737)
+* **input:** update disabled opacity of md input ([#26514](https://github.com/ionic-team/ionic-framework/issues/26514)) ([90f4995](https://github.com/ionic-team/ionic-framework/commit/90f4995aa63c730d3feb1fc88582f034153c9b9c))
+* **radio:** remove radio min-height sizing ([#26719](https://github.com/ionic-team/ionic-framework/issues/26719)) ([2a6bba0](https://github.com/ionic-team/ionic-framework/commit/2a6bba0cb60666a4a97da427fa7d179aab49f148))
+* **range:** assign auto increment id by default ([#26740](https://github.com/ionic-team/ionic-framework/issues/26740)) ([92b06f2](https://github.com/ionic-team/ionic-framework/commit/92b06f2eb6f6980561c584193cb70157bedec12b))
+
+
+### Performance Improvements
+
+* **gesture:** reduce delay with adding and removing activated states ([#26741](https://github.com/ionic-team/ionic-framework/issues/26741)) ([4cff442](https://github.com/ionic-team/ionic-framework/commit/4cff442c4f25596e76a674f18e79d0531a464fbf)), closes [#23691](https://github.com/ionic-team/ionic-framework/issues/23691)
+
+
+### BREAKING CHANGES
+
+* **range:** The `name` property on `ion-range` defaults to `ion-r-${rangeIds++}` where `rangeIds` is a number that is incremented for every instance of the component.
+
+
+
+
+
 ## [6.5.3](https://github.com/ionic-team/ionic-framework/compare/v6.5.2...v6.5.3) (2023-02-08)
 
 
