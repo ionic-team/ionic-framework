@@ -3,7 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [7.0.0-beta.1](https://github.com/ionic-team/ionic/compare/v6.5.2...v7.0.0-beta.1) (2023-02-01)
+# [7.0.0-beta.2](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.1...v7.0.0-beta.2) (2023-02-08)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [6.5.3](https://github.com/ionic-team/ionic/compare/v6.5.2...v6.5.3) (2023-02-08)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+# [7.0.0-beta.1](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.0...v7.0.0-beta.1) (2023-02-01)
 
 
 ### Reverts
@@ -77,7 +93,6 @@ Angular:
 - The `canDismiss` property now defaults to `true` and can no longer be set to `undefined`.
 * **checkbox:** `ionChange` is no longer emitted when the `checked` property of `ion-checkbox` is modified externally. `ionChange` is only emitted from user committed changes, such as clicking or tapping the checkbox.
 * **accordion:** `ionChange` is no longer emitted when the `value` of `ion-accordion-group` is modified externally. `ionChange` is only emitted from user committed changes, such as clicking or tapping the accordion header.
-
 
 
 
