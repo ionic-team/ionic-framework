@@ -247,6 +247,17 @@ export class Checkbox implements ComponentInterface {
         })}
       >
         <label class="checkbox-wrapper">
+          <input
+            type="checkbox"
+            aria-checked={`${checked}`}
+            disabled={disabled}
+            id={inputId}
+            onChange={this.toggleChecked}
+            onFocus={() => this.onFocus()}
+            onBlur={() => this.onBlur()}
+            ref={(focusEl) => (this.focusEl = focusEl)}
+            {...inheritedAttributes}
+          />
           <div
             class={{
               'label-text-wrapper': true,
@@ -260,17 +271,6 @@ export class Checkbox implements ComponentInterface {
               {path}
             </svg>
           </div>
-          <input
-            type="checkbox"
-            aria-checked={`${checked}`}
-            disabled={disabled}
-            id={inputId}
-            onChange={this.toggleChecked}
-            onFocus={() => this.onFocus()}
-            onBlur={() => this.onBlur()}
-            ref={(focusEl) => (this.focusEl = focusEl)}
-            {...inheritedAttributes}
-          />
         </label>
       </Host>
     );
