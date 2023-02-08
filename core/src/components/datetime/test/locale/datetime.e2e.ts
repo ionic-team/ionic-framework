@@ -27,23 +27,6 @@ test.describe('datetime: locale', () => {
     });
   });
 
-  test.describe('ta-IN', () => {
-    test('should not have visual regressions', async () => {
-      await datetimeFixture.goto('ta-IN', 'date');
-      await datetimeFixture.expectLocalizedDatePicker();
-    });
-
-    test('month/year picker should not have visual regressions', async () => {
-      await datetimeFixture.goto('ta-IN', 'month-year');
-      await datetimeFixture.expectLocalizedMonthYearPicker();
-    });
-
-    test('time picker should not have visual regressions', async () => {
-      await datetimeFixture.goto('ta-IN', 'time');
-      await datetimeFixture.expectLocalizedTimePicker();
-    });
-  });
-
   test.describe('ja-JP', () => {
     test('should not have visual regressions', async () => {
       await datetimeFixture.goto('ja-JP', 'date');

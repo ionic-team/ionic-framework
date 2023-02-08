@@ -3,21 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.5.3](https://github.com/ionic-team/ionic/compare/v6.5.2...v6.5.3) (2023-02-08)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
 # [7.0.0-beta.1](https://github.com/ionic-team/ionic/compare/v6.5.2...v7.0.0-beta.1) (2023-02-01)
 
 
-
-# [7.0.0-beta.0](https://github.com/ionic-team/ionic/compare/v6.5.1...v7.0.0-beta.0) (2023-01-25)
-
-
-### Code Refactoring
-
-* **vue:** only ship es modules ([#26054](https://github.com/ionic-team/ionic/issues/26054)) ([86bbed0](https://github.com/ionic-team/ionic/commit/86bbed07fc51fa1e3771f0198211c5064606e5bb)), closes [#25104](https://github.com/ionic-team/ionic/issues/25104)
-
-
-### BREAKING CHANGES
-
-* **vue:** `@ionic/vue` and `@ionic/vue-router` no longer ship a CommonJS entry point. Instead, only an ES Module entry point is provided for improved compatibility with Vite.
+**Note:** Version bump only for package @ionic/vue-router
 
 
 

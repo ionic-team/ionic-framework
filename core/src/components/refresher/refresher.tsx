@@ -40,6 +40,7 @@ export class Refresher implements ComponentInterface {
   private backgroundContentEl?: HTMLElement;
   private scrollListenerCallback?: () => void;
   private gesture?: Gesture;
+  private overflowStyles?: { [key: string]: string };
 
   private pointerDown = false;
   private needsCompletion = false;
@@ -567,6 +568,7 @@ export class Refresher implements ComponentInterface {
   private onStart() {
     this.progress = 0;
     this.state = RefresherState.Inactive;
+    this.memoizeOverflowStyle();
   }
 
   private onMove(detail: GestureDetail) {
@@ -711,7 +713,7 @@ export class Refresher implements ComponentInterface {
       this.setCss(0, '0ms', false, '');
     }, 600);
 
-    // reset set the styles on the scroll element
+    // reset the styles on the scroll element
     // set that the refresh is actively cancelling/completing
     this.state = state;
     this.setCss(0, this.closeDuration, true, delay);
@@ -730,9 +732,35 @@ export class Refresher implements ComponentInterface {
         scrollStyle.transform = backgroundStyle.transform = y > 0 ? `translateY(${y}px) translateZ(0px)` : '';
         scrollStyle.transitionDuration = backgroundStyle.transitionDuration = duration;
         scrollStyle.transitionDelay = backgroundStyle.transitionDelay = delay;
-        scrollStyle.overflow = overflowVisible ? 'hidden' : '';
+        if (overflowVisible) {
+          scrollStyle.overflow = 'hidden';
+        } else {
+          this.restoreOverflowStyle();
+        }
       }
     });
+  }
+
+  private memoizeOverflowStyle() {
+    if (this.scrollEl) {
+      const { overflow, overflowX, overflowY } = this.scrollEl.style;
+      this.overflowStyles = {
+        overflow: overflow ?? '',
+        overflowX: overflowX ?? '',
+        overflowY: overflowY ?? '',
+      };
+    }
+  }
+
+  private restoreOverflowStyle() {
+    if (this.overflowStyles !== undefined && this.scrollEl !== undefined) {
+      const { overflow, overflowX, overflowY } = this.overflowStyles;
+      this.scrollEl.style.overflow = overflow;
+      this.scrollEl.style.overflowX = overflowX;
+      this.scrollEl.style.overflowY = overflowY;
+
+      this.overflowStyles = undefined;
+    }
   }
 
   render() {
