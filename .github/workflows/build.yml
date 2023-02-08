@@ -4,6 +4,7 @@ on:
   pull_request:
     branches: [ '**' ]
   merge_group:
+    types: [checks_requested]
 
 # When pushing a new commit we should
 # cancel the previous test run to not
