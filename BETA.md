@@ -1,3 +1,5 @@
+Test B
+
 # Ionic Framework v6 Beta
 
 Thanks for your interest in trying out the Framework v6 beta! We are looking for developers to help test our new changes and provide feedback so that we can make Framework v6 the best release yet! Follow this guide to get setup with the beta.
