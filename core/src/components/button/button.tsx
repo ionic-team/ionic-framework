@@ -294,6 +294,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
           [`${buttonType}-strong`]: strong,
           'in-toolbar': hostContext('ion-toolbar', this.el),
           'in-toolbar-color': hostContext('ion-toolbar[color]', this.el),
+          'in-buttons': hostContext('ion-buttons', this.el),
           'button-has-icon-only': hasIconOnly,
           'button-disabled': disabled,
           'ion-activatable': true,
