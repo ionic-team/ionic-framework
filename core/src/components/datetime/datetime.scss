@@ -357,6 +357,11 @@ ion-picker-column-internal {
 }
 
 :host .calendar-day:after {
+  content: " ";
+}
+
+:host .calendar-day:after,
+:host .calendar-day-event-highlight {
   @include border-radius(32px, 32px, 32px, 32px);
   @include padding(4px, 4px, 4px, 4px);
 
@@ -378,8 +383,6 @@ ion-picker-column-internal {
   height: 32px;
 
   transform: translate(-50%, -50%);
-
-  content: " ";
 
   z-index: -1;
 }

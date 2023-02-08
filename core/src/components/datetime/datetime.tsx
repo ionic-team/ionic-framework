@@ -1983,6 +1983,7 @@ export class Datetime implements ComponentInterface {
               this.parsedDayValues
             );
 
+            const dateIsoString = convertDataToISO(referenceParts);
             let isCalDayDisabled = isCalMonthDisabled || disabled;
 
             if (!isCalDayDisabled && isDateEnabled !== undefined) {
@@ -1992,7 +1993,7 @@ export class Datetime implements ComponentInterface {
                  * to prevent exceptions in the user's function from
                  * interrupting the calendar rendering.
                  */
-                isCalDayDisabled = !isDateEnabled(convertDataToISO(referenceParts));
+                isCalDayDisabled = !isDateEnabled(dateIsoString);
               } catch (e) {
                 printIonError(
                   'Exception thrown from provided `isDateEnabled` function. Please check your function and try again.',
@@ -2000,6 +2001,15 @@ export class Datetime implements ComponentInterface {
                 );
               }
             }
+
+            /**
+             * Event styles should not override the style for selected dates,
+             * nor apply to "filler days" at the start of the grid.
+             */
+            const eventStyle = (isActive || day === null) ? undefined : {
+              color: 'purple',
+              backgroundColor: 'pink'
+            };
 
             return (
               <button
@@ -2015,6 +2025,9 @@ export class Datetime implements ComponentInterface {
                   'calendar-day': true,
                   'calendar-day-active': isActive,
                   'calendar-day-today': isToday,
+                }}
+                style={eventStyle && {
+                  color: eventStyle.color
                 }}
                 aria-selected={ariaSelected}
                 aria-label={ariaLabel}
@@ -2050,6 +2063,9 @@ export class Datetime implements ComponentInterface {
                   }
                 }}
               >
+                {eventStyle && <div class="calendar-day-event-highlight" style={{
+                  backgroundColor: eventStyle.backgroundColor
+                }}></div>}
                 {text}
               </button>
             );
