@@ -1,5 +1,7 @@
 # Change Log
 
+Looking for the changelogs of older versions of Ionic? Check out the [Changelog Archive](./CHANGELOG_ARCHIVE).
+
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
