@@ -6,13 +6,6 @@ on:
   merge_group:
     types: [checks_requested]
 
-# When pushing a new commit we should
-# cancel the previous test run to not
-# consume more runners than we need to.
-concurrency:
-  group: ${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
   build-core:
     runs-on: ubuntu-latest
