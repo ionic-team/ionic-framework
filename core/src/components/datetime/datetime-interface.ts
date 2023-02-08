@@ -25,3 +25,20 @@ export interface DatetimeParts {
 export type DatetimePresentation = 'date-time' | 'time-date' | 'date' | 'time' | 'month' | 'year' | 'month-year';
 
 export type TitleSelectedDatesFormatter = (selectedDates: string[]) => string;
+
+export type DatetimeEventStyle = {
+  color: string,
+  backgroundColor?: string
+} | {
+  color?: string,
+  backgroundColor: string
+};
+
+// export interface DatetimeEventStyle {
+//   color?: string,
+//   backgroundColor?: string
+// }
+
+export type DatetimeEvent = { date: string } & DatetimeEventStyle;
+
+export type DatetimeEventCallback = (dateIsoString: string) => DatetimeEventStyle | undefined;

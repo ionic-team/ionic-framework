@@ -11,6 +11,8 @@ import type {
   Mode,
   StyleEventDetail,
   TitleSelectedDatesFormatter,
+  DatetimeEvent,
+  DatetimeEventStyle,
 } from '../../interface';
 import { startFocusVisible } from '../../utils/focus-visible';
 import { getElementRoot, raf, renderHiddenInput } from '../../utils/helpers';
@@ -2002,14 +2004,32 @@ export class Datetime implements ComponentInterface {
               }
             }
 
+            // TODO: replace with actual prop later
+            const events: DatetimeEvent[] = [{
+              date: '2023-02-02',
+              color: 'purple',
+              backgroundColor: 'pink'
+            }];
+
+            let eventStyle: DatetimeEventStyle | undefined = undefined;
+
             /**
              * Event styles should not override the style for selected dates,
              * nor apply to "filler days" at the start of the grid.
              */
-            const eventStyle = (isActive || day === null) ? undefined : {
-              color: 'purple',
-              backgroundColor: 'pink'
-            };
+            if(events !== undefined && !isActive && day !== null) {
+              if(Array.isArray(events)) {
+                const matchingEvent = events.find(event => event.date === dateIsoString);
+                if(matchingEvent) {
+                  eventStyle = {
+                    color: matchingEvent.color,
+                    backgroundColor: matchingEvent.backgroundColor
+                  };
+                }
+              } else {
+                // TODO: handle callback
+              }
+            }
 
             return (
               <button
