@@ -35,7 +35,6 @@
 
 // Calendar / Header / Action Buttons
 // -----------------------------------
-// .calendar-action-buttons .calendar-month-year-button,
 :host .calendar-action-buttons ion-button:not(.calendar-month-year-button) {
   color: #{$text-color-step-350};
 }
