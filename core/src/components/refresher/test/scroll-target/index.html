@@ -27,7 +27,6 @@
 
       #inner-scroll {
         height: 100%;
-        overflow-y: auto;
       }
     </style>
   </head>
@@ -45,7 +44,7 @@
           <ion-refresher-content></ion-refresher-content>
         </ion-refresher>
         <div id="content">
-          <div id="inner-scroll" class="ion-content-scroll-host">
+          <div id="inner-scroll" class="ion-content-scroll-host" style="overflow-y: auto">
             <ion-list id="list"></ion-list>
           </div>
         </div>

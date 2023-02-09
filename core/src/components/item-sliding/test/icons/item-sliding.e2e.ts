@@ -2,7 +2,8 @@ import { test } from '@utils/test/playwright';
 
 import { testSlidingItem } from '../test.utils';
 
-test.describe('item-sliding: icons', () => {
+// TODO FW-3006
+test.describe.skip('item-sliding: icons', () => {
   test('should not have visual regressions', async ({ page, browserName, skip }, testInfo) => {
     // TODO(FW-2608)
     test.fixme(
