@@ -247,6 +247,21 @@ export class Checkbox implements ComponentInterface {
         })}
       >
         <label class="checkbox-wrapper">
+          {/*
+            The native control must be rendered
+            before the visible label text due to https://bugs.webkit.org/show_bug.cgi?id=251951
+          */}
+          <input
+            type="checkbox"
+            aria-checked={`${checked}`}
+            disabled={disabled}
+            id={inputId}
+            onChange={this.toggleChecked}
+            onFocus={() => this.onFocus()}
+            onBlur={() => this.onBlur()}
+            ref={(focusEl) => (this.focusEl = focusEl)}
+            {...inheritedAttributes}
+          />
           <div
             class={{
               'label-text-wrapper': true,
@@ -260,17 +275,6 @@ export class Checkbox implements ComponentInterface {
               {path}
             </svg>
           </div>
-          <input
-            type="checkbox"
-            aria-checked={`${checked}`}
-            disabled={disabled}
-            id={inputId}
-            onChange={this.toggleChecked}
-            onFocus={() => this.onFocus()}
-            onBlur={() => this.onBlur()}
-            ref={(focusEl) => (this.focusEl = focusEl)}
-            {...inheritedAttributes}
-          />
         </label>
       </Host>
     );
