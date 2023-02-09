@@ -1249,7 +1249,7 @@ export class Datetime implements ComponentInterface {
   };
 
   componentWillLoad() {
-    const { el, multiple, presentation, preferWheel } = this;
+    const { el, highlightedDates, multiple, presentation, preferWheel } = this;
 
     if (multiple) {
       if (presentation !== 'date') {
@@ -1258,6 +1258,16 @@ export class Datetime implements ComponentInterface {
 
       if (preferWheel) {
         printIonWarning('Multiple date selection is not supported with preferWheel="true".', el);
+      }
+    }
+
+    if (highlightedDates) {
+      if (presentation !== 'date' && presentation !== 'date-time' && presentation !== 'time-date') {
+        printIonWarning('The highlightedDates property is only supported with the date, date-time, and time-date presentations.', el);
+      }
+
+      if (preferWheel) {
+        printIonWarning('The highlightedDates property is not supported with preferWheel="true".', el);
       }
     }
 
