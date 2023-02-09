@@ -376,6 +376,7 @@ ion-datetime,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "se
 ion-datetime,prop,dayValues,number | number[] | string | undefined,undefined,false,false
 ion-datetime,prop,disabled,boolean,false,false,false
 ion-datetime,prop,doneText,string,'Done',false,false
+ion-datetime,prop,events,((dateIsoString: string) => DatetimeEventStyle | undefined) | DatetimeEvent[] | undefined,undefined,false,false
 ion-datetime,prop,firstDayOfWeek,number,0,false,false
 ion-datetime,prop,hourCycle,"h12" | "h23" | undefined,undefined,false,false
 ion-datetime,prop,hourValues,number | number[] | string | undefined,undefined,false,false

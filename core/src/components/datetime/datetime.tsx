@@ -326,6 +326,17 @@ export class Datetime implements ComponentInterface {
   @Prop() multiple = false;
 
   /**
+   * Used to apply custom text and background colors to specific dates.
+   * 
+   * Can be either an array of objects containing ISO strings and colors,
+   * or a callback that receives an ISO string and returns the colors.
+   * 
+   * Only applies to the `date`, `date-time`, and `time-date` presentations,
+   * with `preferWheel="false"`.
+   */
+  @Prop() events?: DatetimeEvent[] | DatetimeEventCallback;
+
+  /**
    * The value of the datetime as a valid ISO 8601 datetime string.
    * Should be an array of strings if `multiple="true"`.
    */
@@ -1974,7 +1985,7 @@ export class Datetime implements ComponentInterface {
         <div class="calendar-month-grid">
           {getDaysOfMonth(month, year, this.firstDayOfWeek % 7).map((dateObject, index) => {
             const { day, dayOfWeek } = dateObject;
-            const { isDateEnabled, multiple } = this;
+            const { events, isDateEnabled, multiple } = this;
             const referenceParts = { month, day, year };
             const { isActive, isToday, ariaLabel, ariaSelected, disabled, text } = getCalendarDayState(
               this.locale,
@@ -2004,25 +2015,6 @@ export class Datetime implements ComponentInterface {
                 );
               }
             }
-
-            // TODO: replace with actual prop later
-            const events: DatetimeEvent[] | DatetimeEventCallback = (dateIsoString) => {
-              const d = new Date(dateIsoString);
-              if(d.getDate() === 2) {
-                return {
-                  color: 'purple',
-                  backgroundColor: 'pink'
-                };
-              }
-
-              return undefined;
-            };
-            
-            // const events: DatetimeEvent[] | DatetimeEventCallback = [{
-            //   date: '2023-02-02',
-            //   color: 'purple',
-            //   backgroundColor: 'pink'
-            // }];
 
             let eventStyle: DatetimeEventStyle | undefined = undefined;
 
