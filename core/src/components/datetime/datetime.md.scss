@@ -40,7 +40,17 @@
 }
 
 .calendar-month-year-button {
+  color: $text-color-step-400;
+}
+
+.calendar-month-year-button {
   --background-hover: currentColor;
+}
+
+@media (any-hover: hover) {
+  .calendar-month-year-button:hover {
+    color: initial;
+  }
 }
 
 // Calendar / Header / Days of Week
