@@ -11,9 +11,9 @@ import type {
   Mode,
   StyleEventDetail,
   TitleSelectedDatesFormatter,
-  DatetimeEvent,
-  DatetimeEventStyle,
-  DatetimeEventCallback,
+  DatetimeHighlight,
+  DatetimeHighlightStyle,
+  DatetimeHighlightCallback,
 } from '../../interface';
 import { startFocusVisible } from '../../utils/focus-visible';
 import { getElementRoot, raf, renderHiddenInput } from '../../utils/helpers';
@@ -334,7 +334,7 @@ export class Datetime implements ComponentInterface {
    * Only applies to the `date`, `date-time`, and `time-date` presentations,
    * with `preferWheel="false"`.
    */
-  @Prop() events?: DatetimeEvent[] | DatetimeEventCallback;
+  @Prop() highlightedDates?: DatetimeHighlight[] | DatetimeHighlightCallback;
 
   /**
    * The value of the datetime as a valid ISO 8601 datetime string.
@@ -1985,7 +1985,7 @@ export class Datetime implements ComponentInterface {
         <div class="calendar-month-grid">
           {getDaysOfMonth(month, year, this.firstDayOfWeek % 7).map((dateObject, index) => {
             const { day, dayOfWeek } = dateObject;
-            const { events, isDateEnabled, multiple } = this;
+            const { highlightedDates, isDateEnabled, multiple } = this;
             const referenceParts = { month, day, year };
             const { isActive, isToday, ariaLabel, ariaSelected, disabled, text } = getCalendarDayState(
               this.locale,
@@ -2016,20 +2016,20 @@ export class Datetime implements ComponentInterface {
               }
             }
 
-            let eventStyle: DatetimeEventStyle | undefined = undefined;
+            let dateStyle: DatetimeHighlightStyle | undefined = undefined;
 
             /**
-             * Event styles should not override the style for selected dates,
+             * Custom highlight styles should not override the style for selected dates,
              * nor apply to "filler days" at the start of the grid.
              */
-            if(events !== undefined && !isActive && day !== null) {
-              if(Array.isArray(events)) {
-                const matchingEvent = events.find(event => event.date === dateIsoString);
-                if(matchingEvent) {
-                  eventStyle = {
-                    color: matchingEvent.color,
-                    backgroundColor: matchingEvent.backgroundColor
-                  } as DatetimeEventStyle;
+            if (highlightedDates !== undefined && !isActive && day !== null) {
+              if (Array.isArray(highlightedDates)) {
+                const matchingHighlight = highlightedDates.find(hd => hd.date === dateIsoString);
+                if (matchingHighlight) {
+                  dateStyle = {
+                    color: matchingHighlight.color,
+                    backgroundColor: matchingHighlight.backgroundColor
+                  } as DatetimeHighlightStyle;
                 }
               } else {
                 /**
@@ -2037,10 +2037,10 @@ export class Datetime implements ComponentInterface {
                  * from interrupting the calendar's rendering.
                  */
                 try {
-                  eventStyle = events(dateIsoString);
+                  dateStyle = highlightedDates(dateIsoString);
                 } catch (e) {
                   printIonError(
-                    'Exception thrown from provided `events` callback. Please check your function and try again.',
+                    'Exception thrown from provided `highlightedDates` callback. Please check your function and try again.',
                     e
                   );
                 }
@@ -2062,8 +2062,8 @@ export class Datetime implements ComponentInterface {
                   'calendar-day-active': isActive,
                   'calendar-day-today': isToday,
                 }}
-                style={eventStyle && {
-                  color: eventStyle.color
+                style={dateStyle && {
+                  color: dateStyle.color
                 }}
                 aria-selected={ariaSelected}
                 aria-label={ariaLabel}
@@ -2099,8 +2099,8 @@ export class Datetime implements ComponentInterface {
                   }
                 }}
               >
-                {eventStyle && <div class="calendar-day-event-highlight" style={{
-                  backgroundColor: eventStyle.backgroundColor
+                {dateStyle && <div class="calendar-day-event-highlight" style={{
+                  backgroundColor: dateStyle.backgroundColor
                 }}></div>}
                 {text}
               </button>

@@ -26,7 +26,7 @@ export type DatetimePresentation = 'date-time' | 'time-date' | 'date' | 'time' |
 
 export type TitleSelectedDatesFormatter = (selectedDates: string[]) => string;
 
-export type DatetimeEventStyle = {
+export type DatetimeHighlightStyle = {
   color: string,
   backgroundColor?: string
 } | {
@@ -34,6 +34,6 @@ export type DatetimeEventStyle = {
   backgroundColor: string
 };
 
-export type DatetimeEvent = { date: string } & DatetimeEventStyle;
+export type DatetimeHighlight = { date: string } & DatetimeHighlightStyle;
 
-export type DatetimeEventCallback = (dateIsoString: string) => DatetimeEventStyle | undefined;
+export type DatetimeHighlightCallback = (dateIsoString: string) => DatetimeHighlightStyle | undefined;
