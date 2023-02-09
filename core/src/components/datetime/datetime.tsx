@@ -327,10 +327,10 @@ export class Datetime implements ComponentInterface {
 
   /**
    * Used to apply custom text and background colors to specific dates.
-   * 
+   *
    * Can be either an array of objects containing ISO strings and colors,
    * or a callback that receives an ISO string and returns the colors.
-   * 
+   *
    * Only applies to the `date`, `date-time`, and `time-date` presentations,
    * with `preferWheel="false"`.
    */
@@ -1263,7 +1263,10 @@ export class Datetime implements ComponentInterface {
 
     if (highlightedDates) {
       if (presentation !== 'date' && presentation !== 'date-time' && presentation !== 'time-date') {
-        printIonWarning('The highlightedDates property is only supported with the date, date-time, and time-date presentations.', el);
+        printIonWarning(
+          'The highlightedDates property is only supported with the date, date-time, and time-date presentations.',
+          el
+        );
       }
 
       if (preferWheel) {
@@ -2034,11 +2037,11 @@ export class Datetime implements ComponentInterface {
              */
             if (highlightedDates !== undefined && !isActive && day !== null) {
               if (Array.isArray(highlightedDates)) {
-                const matchingHighlight = highlightedDates.find(hd => hd.date === dateIsoString);
+                const matchingHighlight = highlightedDates.find((hd) => hd.date === dateIsoString);
                 if (matchingHighlight) {
                   dateStyle = {
                     color: matchingHighlight.color,
-                    backgroundColor: matchingHighlight.backgroundColor
+                    backgroundColor: matchingHighlight.backgroundColor,
                   } as DatetimeHighlightStyle;
                 }
               } else {
@@ -2072,9 +2075,11 @@ export class Datetime implements ComponentInterface {
                   'calendar-day-active': isActive,
                   'calendar-day-today': isToday,
                 }}
-                style={dateStyle && {
-                  color: dateStyle.color
-                }}
+                style={
+                  dateStyle && {
+                    color: dateStyle.color,
+                  }
+                }
                 aria-selected={ariaSelected}
                 aria-label={ariaLabel}
                 onClick={() => {
@@ -2109,9 +2114,14 @@ export class Datetime implements ComponentInterface {
                   }
                 }}
               >
-                {dateStyle && <div class="calendar-day-event-highlight" style={{
-                  backgroundColor: dateStyle.backgroundColor
-                }}></div>}
+                {dateStyle && (
+                  <div
+                    class="calendar-day-event-highlight"
+                    style={{
+                      backgroundColor: dateStyle.backgroundColor,
+                    }}
+                  ></div>
+                )}
                 {text}
               </button>
             );

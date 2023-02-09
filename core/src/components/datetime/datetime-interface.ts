@@ -26,13 +26,15 @@ export type DatetimePresentation = 'date-time' | 'time-date' | 'date' | 'time' |
 
 export type TitleSelectedDatesFormatter = (selectedDates: string[]) => string;
 
-export type DatetimeHighlightStyle = {
-  color: string,
-  backgroundColor?: string
-} | {
-  color?: string,
-  backgroundColor: string
-};
+export type DatetimeHighlightStyle =
+  | {
+      color: string;
+      backgroundColor?: string;
+    }
+  | {
+      color?: string;
+      backgroundColor: string;
+    };
 
 export type DatetimeHighlight = { date: string } & DatetimeHighlightStyle;
 
