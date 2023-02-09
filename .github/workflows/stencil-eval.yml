@@ -22,8 +22,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          # Checkout the latest commit in this branch
-          ref: ${{ github.event.pull_request.head.sha }}
+          ref: feature-7.0
       - uses: ./.github/workflows/actions/build-core-stencil-eval
 
   test-core-clean-build:
@@ -31,6 +30,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: feature-7.0
       - uses: ./.github/workflows/actions/test-core-clean-build
 
   test-core-lint:
@@ -38,6 +39,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: feature-7.0
       - uses: ./.github/workflows/actions/test-core-lint
 
   test-core-spec:
@@ -45,6 +48,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: feature-7.0
       - uses: ./.github/workflows/actions/test-core-spec
 
   test-core-screenshot:
@@ -66,6 +71,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: feature-7.0
       - uses: ./.github/workflows/actions/test-core-screenshot
         with:
           shard: ${{ matrix.shard }}
@@ -94,6 +101,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+      with:
+        ref: feature-7.0
     - uses: ./.github/workflows/actions/build-vue
 
   build-vue-router:
@@ -101,6 +110,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+      with:
+        ref: feature-7.0
     - uses: ./.github/workflows/actions/build-vue-router
 
   test-vue-e2e:
@@ -112,6 +123,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+      with:
+        ref: feature-7.0
     - uses: ./.github/workflows/actions/test-vue-e2e
       with:
         app: ${{ matrix.apps }}
@@ -130,6 +143,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+      with:
+        ref: feature-7.0
     - uses: ./.github/workflows/actions/build-angular
 
   build-angular-server:
@@ -137,6 +152,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+      with:
+        ref: feature-7.0
     - uses: ./.github/workflows/actions/build-angular-server
 
   test-angular-e2e:
@@ -148,6 +165,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+      with:
+        ref: feature-7.0
     - uses: ./.github/workflows/actions/test-angular-e2e
       with:
         app: ${{ matrix.apps }}
@@ -166,6 +185,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+      with:
+        ref: feature-7.0
     - uses: ./.github/workflows/actions/build-react
 
   build-react-router:
@@ -173,6 +194,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+      with:
+        ref: feature-7.0
     - uses: ./.github/workflows/actions/build-react-router
 
   test-react-router-e2e:
@@ -180,6 +203,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+      with:
+        ref: feature-7.0
     - uses: ./.github/workflows/actions/test-react-router-e2e
 
   test-react-e2e:
@@ -187,4 +212,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+      with:
+        ref: feature-7.0
     - uses: ./.github/workflows/actions/test-react-e2e
