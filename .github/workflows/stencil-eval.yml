@@ -7,7 +7,8 @@ on:
     # Run every Monday-Friday
     # at 6:00 UTC (6:00 am UTC)
     - cron: '00 06 * * 1-5'
-  workflow_dispatch
+  workflow_dispatch:
+    # test me!
 
 # When pushing a new commit we should
 # cancel the previous test run to not
