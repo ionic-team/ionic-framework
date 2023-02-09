@@ -2017,6 +2017,12 @@ export class Datetime implements ComponentInterface {
 
               return undefined;
             };
+            
+            // const events: DatetimeEvent[] | DatetimeEventCallback = [{
+            //   date: '2023-02-02',
+            //   color: 'purple',
+            //   backgroundColor: 'pink'
+            // }];
 
             let eventStyle: DatetimeEventStyle | undefined = undefined;
 
@@ -2031,7 +2037,7 @@ export class Datetime implements ComponentInterface {
                   eventStyle = {
                     color: matchingEvent.color,
                     backgroundColor: matchingEvent.backgroundColor
-                  };
+                  } as DatetimeEventStyle;
                 }
               } else {
                 /**
