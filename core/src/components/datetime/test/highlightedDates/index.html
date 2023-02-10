@@ -1,112 +1,110 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-
-<head>
-  <meta charset="UTF-8" />
-  <title>Datetime - highlightedDates</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
-  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
-  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
-  <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
-  <style>
-    .grid {
-      display: flex;
-      flex-wrap: wrap;
-    }
-
-    .grid-item {
-      margin-bottom: 20px;
-      margin-right: 20px;
-    }
-
-    h2 {
-      font-size: 12px;
-      font-weight: normal;
-
-      color: #6f7378;
-
-      margin-top: 10px;
-      margin-left: 5px;
-    }
-
-    ion-datetime {
-      box-shadow: 0px 8px 16px 0 rgba(0, 0, 0, 0.25);
-      border-radius: 8px;
-    }
-  </style>
-</head>
-
-<body>
-  <ion-app>
-    <ion-header translucent="true">
-      <ion-toolbar>
-        <ion-title>Datetime - highlightedDates</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content class="ion-padding">
-      <div class="grid">
-        <div class="grid-item">
-          <h2>With Array</h2>
-          <ion-datetime locale="en-US" id="withArray" presentation="date" value="2023-01-01"></ion-datetime>
-        </div>
-        <div class="grid-item">
-          <h2>With Callback</h2>
-          <ion-datetime locale="en-US" id="withCallback" presentation="date" value="2023-01-01"></ion-datetime>
-        </div>
-        <div class="grid-item">
-          <h2>Highlight Today</h2>
-          <ion-datetime locale="en-US" id="highlightToday" presentation="date"></ion-datetime>
-        </div>
-      </div>
-    </ion-content>
-  </ion-app>
-
-  <script>
-    document.querySelector('#withArray').highlightedDates = [
-      {
-        date: '2023-01-02',
-        color: 'purple',
-        backgroundColor: 'pink'
-      },
-      {
-        date: '2023-01-04',
-        color: 'firebrick',
-        backgroundColor: 'salmon'
-      },
-      {
-        date: '2023-01-06',
-        color: 'blue',
-        backgroundColor: 'lightblue'
+  <head>
+    <meta charset="UTF-8" />
+    <title>Datetime - highlightedDates</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .grid {
+        display: flex;
+        flex-wrap: wrap;
       }
-    ];
 
-    document.querySelector('#withCallback').highlightedDates = (isoString) => {
-      const date = new Date(isoString);
-      const utcDay = date.getUTCDate();
-      if (utcDay % 5 === 0) {
-        return {
+      .grid-item {
+        margin-bottom: 20px;
+        margin-right: 20px;
+      }
+
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+
+        color: #6f7378;
+
+        margin-top: 10px;
+        margin-left: 5px;
+      }
+
+      ion-datetime {
+        box-shadow: 0px 8px 16px 0 rgba(0, 0, 0, 0.25);
+        border-radius: 8px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header translucent="true">
+        <ion-toolbar>
+          <ion-title>Datetime - highlightedDates</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <div class="grid">
+          <div class="grid-item">
+            <h2>With Array</h2>
+            <ion-datetime locale="en-US" id="withArray" presentation="date" value="2023-01-01"></ion-datetime>
+          </div>
+          <div class="grid-item">
+            <h2>With Callback</h2>
+            <ion-datetime locale="en-US" id="withCallback" presentation="date" value="2023-01-01"></ion-datetime>
+          </div>
+          <div class="grid-item">
+            <h2>Highlight Today</h2>
+            <ion-datetime locale="en-US" id="highlightToday" presentation="date"></ion-datetime>
+          </div>
+        </div>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      document.querySelector('#withArray').highlightedDates = [
+        {
+          date: '2023-01-02',
           color: 'purple',
-          backgroundColor: 'pink'
-        };
-      }
-
-      if (utcDay % 3 === 0) {
-        return {
+          backgroundColor: 'pink',
+        },
+        {
+          date: '2023-01-04',
+          color: 'firebrick',
+          backgroundColor: 'salmon',
+        },
+        {
+          date: '2023-01-06',
           color: 'blue',
-          backgroundColor: 'lightblue'
-        };
-      }
-    }
+          backgroundColor: 'lightblue',
+        },
+      ];
 
-    document.querySelector('#highlightToday').highlightedDates = [
-      {
-        date: new Date().toISOString().split('T')[0],
-        color: 'purple',
-        backgroundColor: 'pink'
-      }
-    ];
-  </script>
-</body>
+      document.querySelector('#withCallback').highlightedDates = (isoString) => {
+        const date = new Date(isoString);
+        const utcDay = date.getUTCDate();
+        if (utcDay % 5 === 0) {
+          return {
+            color: 'purple',
+            backgroundColor: 'pink',
+          };
+        }
 
+        if (utcDay % 3 === 0) {
+          return {
+            color: 'blue',
+            backgroundColor: 'lightblue',
+          };
+        }
+      };
+
+      document.querySelector('#highlightToday').highlightedDates = [
+        {
+          date: new Date().toISOString().split('T')[0],
+          color: 'purple',
+          backgroundColor: 'pink',
+        },
+      ];
+    </script>
+  </body>
 </html>
