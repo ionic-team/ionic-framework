@@ -3,9 +3,7 @@ name: 'Ionic Framework Build'
 on:
   pull_request:
     branches: [ '**' ]
-  push:
-    branches:
-      - gh-readonly-queue/main/*
+  merge_group:
 
 jobs:
   build-core:
