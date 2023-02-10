@@ -70,29 +70,28 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
 
     componentWillUnmount() {
       const node = this.ref.current;
+      /**
+       * If the overlay is being unmounted, but is still
+       * open, this means the unmount was triggered outside
+       * of the overlay being dismissed.
+       *
+       * This can happen with:
+       * - The parent component being unmounted
+       * - The overlay being conditionally rendered
+       * - A route change (push/pop/replace)
+       *
+       * Unmounting the overlay at this stage should skip
+       * the dismiss lifecycle, including skipping the transition.
+       *
+       */
       if (node && this.state.isOpen) {
-        const overlayEventDetail = {
-          data: undefined,
-          role: undefined,
-        };
-        /**
-         * The component is presented, but the React component
-         * is unmounting. To avoid memory leaks we need to invoke
-         * the callback handlers for the overlays events before dismissing.
-         */
-        if (this.props.onWillDismiss) {
-          this.props.onWillDismiss(new CustomEvent('willDismiss', { detail: overlayEventDetail }));
-        }
-        if (this.props.onDidDismiss) {
-          this.props.onDidDismiss(new CustomEvent('didDismiss', { detail: overlayEventDetail }));
-        }
-
         /**
          * Detach the local event listener than performs the state updates,
-         * before dismissing the overlay.
+         * before dismissing the overlay, to prevent the callback handlers
+         * executing after the component has been unmounted. This is to
+         * avoid memory leaks.
          */
         node.removeEventListener('didDismiss', this.handleDidDismiss);
-        node.dismiss();
         detachProps(node, this.props);
       }
     }
