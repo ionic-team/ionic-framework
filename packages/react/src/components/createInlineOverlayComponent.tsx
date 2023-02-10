@@ -89,6 +89,7 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
          * avoid memory leaks.
          */
         node.removeEventListener('didDismiss', this.handleDidDismiss);
+        node.remove();
         detachProps(node, this.props);
       }
     }
