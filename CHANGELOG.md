@@ -1,9 +1,19 @@
 # Change Log
 
-Looking for the changelogs of older versions of Ionic? Check out the [Changelog Archive](./CHANGELOG_ARCHIVE).
-
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## [6.5.4-nightly.20230210](https://github.com/ionic-team/ionic-framework/compare/v6.5.3...v6.5.4-nightly.20230210) (2023-02-10)
+
+
+### Bug Fixes
+
+* **deps:** update ionicons usage to v6.1.2 ([#26752](https://github.com/ionic-team/ionic-framework/issues/26752)) ([c07933c](https://github.com/ionic-team/ionic-framework/commit/c07933cb69b0c31d3e44263769a7a26ee81223f8))
+* **tap-click:** instant activate does not use a setTimeout ([#26748](https://github.com/ionic-team/ionic-framework/issues/26748)) ([21c0806](https://github.com/ionic-team/ionic-framework/commit/21c0806bbd1417b1e6239bc56272e18b3ff38f2e))
+
+
+
+
 
 ## [6.5.3](https://github.com/ionic-team/ionic-framework/compare/v6.5.2...v6.5.3) (2023-02-08)
 
