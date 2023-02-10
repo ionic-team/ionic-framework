@@ -8,7 +8,7 @@ type HTMLLegacyFormControlElement = HTMLElement & { label?: string; legacy?: boo
  */
 export const createLegacyFormController = (el: HTMLLegacyFormControlElement): LegacyFormController => {
   const controlEl: HTMLLegacyFormControlElement = el;
-  let legacyControl;
+  let legacyControl: boolean | undefined;
 
   const hasLegacyControl = () => {
     if (legacyControl === undefined) {
