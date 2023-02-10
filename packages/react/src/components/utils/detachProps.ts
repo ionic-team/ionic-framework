@@ -23,9 +23,12 @@ export const detachProps = (node: HTMLElement, props: any) => {
       }
     });
   }
-}
+};
 
-const detachEvent = (node: Element & { __events?: { [key: string]: ((e: Event) => any) | undefined } }, eventName: string) => {
+const detachEvent = (
+  node: Element & { __events?: { [key: string]: ((e: Event) => any) | undefined } },
+  eventName: string
+) => {
   const eventStore = node.__events || (node.__events = {});
   /**
    * If the event listener was added by attachProps, it will
@@ -36,4 +39,4 @@ const detachEvent = (node: Element & { __events?: { [key: string]: ((e: Event) =
     node.removeEventListener(eventName, eventHandler);
     eventStore[eventName] = undefined;
   }
-}
+};

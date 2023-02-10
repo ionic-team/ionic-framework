@@ -35,10 +35,7 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
     defineCustomElement();
   }
   const displayName = dashToPascalCase(tagName);
-  const ReactComponent = class extends React.Component<
-    IonicReactInternalProps<PropType>,
-    InlineOverlayState
-  > {
+  const ReactComponent = class extends React.Component<IonicReactInternalProps<PropType>, InlineOverlayState> {
     ref: React.RefObject<HTMLIonOverlayElement>;
     wrapperRef: React.RefObject<HTMLElement>;
     stableMergedRefs: React.RefCallback<HTMLElement>;
