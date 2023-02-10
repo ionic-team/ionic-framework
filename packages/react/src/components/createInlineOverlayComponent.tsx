@@ -1,4 +1,4 @@
-import { HTMLIonOverlayElement, OverlayEventDetail } from '@ionic/core/components';
+import type { HTMLIonOverlayElement, OverlayEventDetail } from '@ionic/core/components';
 import React, { createElement } from 'react';
 
 import {
