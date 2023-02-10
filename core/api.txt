@@ -193,8 +193,6 @@ ion-breadcrumbs,prop,itemsBeforeCollapse,number,1,false,false
 ion-breadcrumbs,prop,maxItems,number | undefined,undefined,false,false
 ion-breadcrumbs,prop,mode,"ios" | "md",undefined,false,false
 ion-breadcrumbs,event,ionCollapsedClick,BreadcrumbCollapsedClickEventDetail,true
-ion-breadcrumbs,css-prop,--background
-ion-breadcrumbs,css-prop,--color
 
 ion-button,shadow
 ion-button,prop,buttonType,string,'button',false,false
@@ -780,7 +778,7 @@ ion-modal,prop,animated,boolean,true,false,false
 ion-modal,prop,backdropBreakpoint,number,0,false,false
 ion-modal,prop,backdropDismiss,boolean,true,false,false
 ion-modal,prop,breakpoints,number[] | undefined,undefined,false,false
-ion-modal,prop,canDismiss,(() => Promise<boolean>) | boolean | undefined,undefined,false,false
+ion-modal,prop,canDismiss,((data?: any, role?: string | undefined) => Promise<boolean>) | boolean | undefined,undefined,false,false
 ion-modal,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-modal,prop,handle,boolean | undefined,undefined,false,false
 ion-modal,prop,handleBehavior,"cycle" | "none" | undefined,'none',false,false
@@ -1382,7 +1380,7 @@ ion-toast,prop,animated,boolean,true,false,false
 ion-toast,prop,buttons,(string | ToastButton)[] | undefined,undefined,false,false
 ion-toast,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-toast,prop,cssClass,string | string[] | undefined,undefined,false,false
-ion-toast,prop,duration,number,0,false,false
+ion-toast,prop,duration,number,config.getNumber('toastDuration', 0),false,false
 ion-toast,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-toast,prop,header,string | undefined,undefined,false,false
 ion-toast,prop,htmlAttributes,undefined | { [key: string]: any; },undefined,false,false
@@ -1428,7 +1426,7 @@ ion-toggle,shadow
 ion-toggle,prop,checked,boolean,false,false,false
 ion-toggle,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-toggle,prop,disabled,boolean,false,false,false
-ion-toggle,prop,enableOnOffLabels,boolean | undefined,undefined,false,false
+ion-toggle,prop,enableOnOffLabels,boolean | undefined,config.get('toggleOnOffLabels'),false,false
 ion-toggle,prop,mode,"ios" | "md",undefined,false,false
 ion-toggle,prop,name,string,this.inputId,false,false
 ion-toggle,prop,value,null | string | undefined,'on',false,false

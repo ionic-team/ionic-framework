@@ -3,6 +3,93 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.5.3](https://github.com/ionic-team/ionic/compare/v6.5.2...v6.5.3) (2023-02-08)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [6.5.2](https://github.com/ionic-team/ionic/compare/v6.5.1...v6.5.2) (2023-02-01)
+
+
+### Bug Fixes
+
+* **item:** inherit aria attributes before render ([#26546](https://github.com/ionic-team/ionic/issues/26546)) ([95a3c69](https://github.com/ionic-team/ionic/commit/95a3c69bbbe415cb5f14ac8e1faed287e91b4b40)), closes [#26538](https://github.com/ionic-team/ionic/issues/26538)
+* **popover:** popover opens on chrome 109 ([#26672](https://github.com/ionic-team/ionic/issues/26672)) ([69d89ea](https://github.com/ionic-team/ionic/commit/69d89eae940ccd8b0cca379a961166c4592f34c7)), closes [#26643](https://github.com/ionic-team/ionic/issues/26643)
+* **vue:** cache attached view reference ([#26694](https://github.com/ionic-team/ionic/issues/26694)) ([7c00897](https://github.com/ionic-team/ionic/commit/7c0089718afbbe3e19fecee4abbea00a6e618d95)), closes [#26695](https://github.com/ionic-team/ionic/issues/26695)
+
+
+
+
+
+## [6.5.1](https://github.com/ionic-team/ionic/compare/v6.5.0...v6.5.1) (2023-01-25)
+
+
+### Bug Fixes
+
+* **vue:** unmount teleported components ([#26647](https://github.com/ionic-team/ionic/issues/26647)) ([6b16a0c](https://github.com/ionic-team/ionic/commit/6b16a0c020fc6afb6a5a6e6fa6f0758384f026b9)), closes [#26644](https://github.com/ionic-team/ionic/issues/26644)
+
+
+
+
+
+# [6.5.0](https://github.com/ionic-team/ionic/compare/v6.4.3...v6.5.0) (2023-01-18)
+
+
+### Features
+
+* **deps:** update ionicons to 6.1.0 ([#26617](https://github.com/ionic-team/ionic/issues/26617)) ([ccd2a92](https://github.com/ionic-team/ionic/commit/ccd2a9224e018ad0d67903d44ec312934c3b35ec))
+* **deps:** update ionicons to 6.1.1 ([#26626](https://github.com/ionic-team/ionic/issues/26626)) ([90405eb](https://github.com/ionic-team/ionic/commit/90405eb0af69ce04faf5855189449d0b7518288c))
+
+
+
+
+
+## [6.4.3](https://github.com/ionic-team/ionic/compare/v6.4.2...v6.4.3) (2023-01-18)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [6.4.2](https://github.com/ionic-team/ionic/compare/v6.4.1...v6.4.2) (2023-01-11)
+
+
+### Bug Fixes
+
+* **vue:** unmount teleported user component ([#26543](https://github.com/ionic-team/ionic/issues/26543)) ([c996384](https://github.com/ionic-team/ionic/commit/c996384786257524842cc1dca8d0fb940699719b)), closes [#26542](https://github.com/ionic-team/ionic/issues/26542)
+
+
+
+
+
+## [6.4.1](https://github.com/ionic-team/ionic/compare/v6.4.0...v6.4.1) (2022-12-14)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+# [6.4.0](https://github.com/ionic-team/ionic/compare/v6.3.10...v6.4.0) (2022-12-07)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [6.3.10](https://github.com/ionic-team/ionic/compare/v6.3.9...v6.3.10) (2022-12-07)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
 ## [6.3.9](https://github.com/ionic-team/ionic/compare/v6.3.8...v6.3.9) (2022-11-30)
 
 **Note:** Version bump only for package @ionic/vue

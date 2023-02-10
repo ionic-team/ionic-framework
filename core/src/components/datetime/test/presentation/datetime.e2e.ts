@@ -7,7 +7,9 @@ test.describe('datetime: presentation', () => {
   test('should not have visual regressions', async ({ page }) => {
     await page.goto(`/src/components/datetime/test/presentation`);
 
-    await page.setIonViewport();
+    await page.waitForSelector('.datetime-ready');
+
+    const datetime = page.locator('ion-datetime');
 
     const compares = [];
     const presentations = ['date-time', 'time-date', 'time', 'date', 'month-year', 'month', 'year'];
@@ -17,7 +19,7 @@ test.describe('datetime: presentation', () => {
       await page.waitForChanges();
       compares.push({
         presentation,
-        screenshot: await page.screenshot({ fullPage: true }),
+        screenshot: await datetime.screenshot(),
       });
     }
 
@@ -106,7 +108,8 @@ test.describe('datetime: presentation', () => {
   });
 });
 
-test.describe('datetime: presentation: time', () => {
+// TODO: FW-3018
+test.skip('datetime: presentation: time', () => {
   let timePickerFixture: TimePickerFixture;
 
   test.beforeEach(async ({ page }) => {
@@ -157,9 +160,10 @@ class TimePickerFixture {
   }
 
   async goto() {
-    await this.page.goto(`/src/components/datetime/test/presentation`);
-    await this.page.locator('select').selectOption('time');
-    await this.page.waitForSelector('.datetime-presentation-time');
+    await this.page.setContent(`
+      <ion-datetime presentation="time" value="2022-03-10T13:00:00"></ion-datetime>
+    `);
+    await this.page.waitForSelector('.datetime-ready');
     this.timePicker = this.page.locator('ion-datetime');
   }
 

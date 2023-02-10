@@ -162,6 +162,11 @@ export class Breadcrumbs implements ComponentInterface {
     return Array.from(this.el.querySelectorAll('ion-breadcrumb'));
   };
 
+  private slotChanged = () => {
+    this.resetActiveBreadcrumb();
+    this.breadcrumbsInit();
+  };
+
   render() {
     const { color, collapsed } = this;
     const mode = getIonMode(this);
@@ -175,7 +180,7 @@ export class Breadcrumbs implements ComponentInterface {
           'breadcrumbs-collapsed': collapsed,
         })}
       >
-        <slot></slot>
+        <slot onSlotchange={this.slotChanged}></slot>
       </Host>
     );
   }

@@ -14,7 +14,7 @@ import { PickerInternalChangeEventDetail } from "./components/picker-internal/pi
 import { PinFormatter } from "./components/range/range-interface";
 import { NavigationHookCallback } from "./components/route/route-interface";
 import { SelectCompareFn } from "./components/select/select-interface";
-import { ToastAttributes } from "./components/toast/toast-interface";
+import { ToastAttributes, ToastPosition } from "./components/toast/toast-interface";
 export namespace Components {
     interface IonAccordion {
         /**
@@ -1145,7 +1145,7 @@ export namespace Components {
          */
         "setBlur": () => Promise<void>;
         /**
-          * Sets focus on the native `input` in `ion-input`. Use this method instead of the global `input.focus()`.
+          * Sets focus on the native `input` in `ion-input`. Use this method instead of the global `input.focus()`.  Developers who wish to focus an input when a page enters should call `setFocus()` in the `ionViewDidEnter()` lifecycle method.
          */
         "setFocus": () => Promise<void>;
         /**
@@ -1560,7 +1560,7 @@ export namespace Components {
         /**
           * Determines whether or not a modal can dismiss when calling the `dismiss` method.  If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss. If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.
          */
-        "canDismiss"?: undefined | boolean | (() => Promise<boolean>);
+        "canDismiss"?: undefined | boolean | ((data?: any, role?: string) => Promise<boolean>);
         /**
           * The component to display inside of the modal.
          */
@@ -1918,6 +1918,7 @@ export namespace Components {
         "value"?: string | number;
     }
     interface IonPickerInternal {
+        "exitInputMode": () => Promise<void>;
         /**
           * The mode determines which platform styles to use.
          */
@@ -2483,6 +2484,7 @@ export namespace Components {
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
+        "setFocus": () => Promise<void>;
         /**
           * The type of the button.
          */
@@ -2998,7 +3000,7 @@ export namespace Components {
         /**
           * The position of the toast on the screen.
          */
-        "position": 'top' | 'bottom' | 'middle';
+        "position": ToastPosition;
         /**
           * Present the toast overlay after it has been created.
          */
@@ -5548,7 +5550,7 @@ declare namespace LocalJSX {
         /**
           * Determines whether or not a modal can dismiss when calling the `dismiss` method.  If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss. If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.
          */
-        "canDismiss"?: undefined | boolean | (() => Promise<boolean>);
+        "canDismiss"?: undefined | boolean | ((data?: any, role?: string) => Promise<boolean>);
         /**
           * The component to display inside of the modal.
          */
@@ -7007,7 +7009,7 @@ declare namespace LocalJSX {
         /**
           * The position of the toast on the screen.
          */
-        "position"?: 'top' | 'bottom' | 'middle';
+        "position"?: ToastPosition;
         /**
           * If `true`, the toast will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */

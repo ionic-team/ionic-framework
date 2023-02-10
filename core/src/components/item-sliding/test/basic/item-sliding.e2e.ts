@@ -8,7 +8,8 @@ test.describe('item-sliding: basic', () => {
     skip.mode('ios', "item-sliding doesn't have mode-specific styling");
   });
 
-  test('should not have visual regressions', async ({ page, browserName }, testInfo) => {
+  // TODO FW-3006
+  test.skip('should not have visual regressions', async ({ page, browserName }, testInfo) => {
     // TODO(FW-2608)
     test.fixme(
       testInfo.project.metadata.rtl === true && (browserName === 'firefox' || browserName === 'webkit'),
@@ -40,7 +41,8 @@ test.describe('item-sliding: basic', () => {
     expect(await item.screenshot()).toMatchSnapshot(`item-sliding-gesture-${page.getSnapshotSettings()}.png`);
   });
 
-  test('should not scroll when the item-sliding is swiped', async ({ page, skip }) => {
+  // TODO FW-3006
+  test.skip('should not scroll when the item-sliding is swiped', async ({ page, skip }) => {
     skip.browser('webkit', 'mouse.wheel is not available in WebKit');
     skip.rtl();
 

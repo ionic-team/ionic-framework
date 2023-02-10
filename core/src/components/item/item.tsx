@@ -177,7 +177,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
 
     const tagName = (ev.target as HTMLElement).tagName;
     const updatedStyles = ev.detail;
-    const newStyles = {} as any;
+    const newStyles = {} as CssClassMap;
     const childStyles = this.itemStyles.get(tagName) || {};
 
     let hasStyleChange = false;
@@ -226,9 +226,12 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     }
   }
 
+  componentWillLoad() {
+    this.inheritedAriaAttributes = inheritAttributes(this.el, ['aria-label']);
+  }
+
   componentDidLoad() {
     raf(() => {
-      this.inheritedAriaAttributes = inheritAttributes(this.el, ['aria-label']);
       this.setMultipleInputs();
       this.focusable = this.isFocusable();
     });
@@ -364,7 +367,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
       routerDirection,
       inheritedAriaAttributes,
     } = this;
-    const childStyles = {} as any;
+    const childStyles = {} as StyleEventDetail;
     const mode = getIonMode(this);
     const clickable = this.isClickable();
     const canActivate = this.canActivate();
@@ -405,6 +408,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
           ...createColorClasses(this.color, {
             item: true,
             [mode]: true,
+            'item-lines-default': lines === undefined,
             [`item-lines-${lines}`]: lines !== undefined,
             [`item-fill-${fillValue}`]: true,
             [`item-shape-${shape}`]: shape !== undefined,

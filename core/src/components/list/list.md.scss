@@ -15,7 +15,6 @@
   @include position-horizontal(0, null);
 }
 
-
 // Material Design Inset List
 // --------------------------------------------------
 
@@ -34,11 +33,6 @@
   --inner-border-width: 0;
 }
 
-.list-md.list-inset .item-interactive {
-  --padding-start: 0;
-  --padding-end: 0;
-}
-
 .list-md.list-inset + ion-list.list-inset {
   @include margin(0, null, null, null);
 }
@@ -47,48 +41,26 @@
 // Material Design No Lines List
 // --------------------------------------------------
 
-.list-md-lines-none .item {
-  --border-width: 0;
-  --inner-border-width: 0;
+.list-md-lines-none .item-lines-default {
+  --inner-border-width: 0px;
+  --border-width: 0px;
 }
 
 // Material Design Full Lines List
 // --------------------------------------------------
 
-.list-md-lines-full .item,
-.list-md .item-lines-full {
+.list-md-lines-full .item-lines-default {
+  --inner-border-width: 0px;
   --border-width: #{0 0 $list-md-item-border-bottom-width 0};
 }
-
-.list-md-lines-full .item {
-  --inner-border-width: 0;
-}
-
 
 // Material Design Inset Lines List
 // --------------------------------------------------
 
-.list-md-lines-inset .item,
-.list-md .item-lines-inset {
+.list-md-lines-inset .item-lines-default {
   --inner-border-width: #{0 0 $list-md-item-border-bottom-width 0};
+  --border-width: 0px;
 }
-
-// Remove the border from items in lists
-// if they are explicitly styled by the item
-// to be different than the list
-.list-md .item-lines-inset {
-  --border-width: 0;
-}
-
-.list-md .item-lines-full {
-  --inner-border-width: 0;
-}
-
-.list-md .item-lines-none {
-  --border-width: 0;
-  --inner-border-width: 0;
-}
-
 
 // Material Design List Inside A Card
 // --------------------------------------------------

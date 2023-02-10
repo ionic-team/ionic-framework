@@ -1,3 +1,5 @@
+// TODO(FW-2832): types
+
 export interface Animation {
   parentAnimation: Animation | undefined;
   elements: HTMLElement[];

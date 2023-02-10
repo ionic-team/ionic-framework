@@ -12,7 +12,7 @@ import type {
 } from '../../interface';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes, debounceEvent, findItemLabel, inheritAttributes } from '../../utils/helpers';
-import { createColorClasses } from '../../utils/theme';
+import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -305,6 +305,9 @@ export class Input implements ComponentInterface {
   /**
    * Sets focus on the native `input` in `ion-input`. Use this method instead of the global
    * `input.focus()`.
+   *
+   * Developers who wish to focus an input when a page enters
+   * should call `setFocus()` in the `ionViewDidEnter()` lifecycle method.
    */
   @Method()
   async setFocus() {
@@ -451,6 +454,7 @@ export class Input implements ComponentInterface {
           [mode]: true,
           'has-value': this.hasValue(),
           'has-focus': this.hasFocus,
+          'in-item-color': hostContext('ion-item.ion-color', this.el),
         })}
       >
         <input

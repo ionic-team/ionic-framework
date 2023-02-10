@@ -18,18 +18,13 @@ runs:
         name: ionic-core
         path: ./core
         filename: CoreBuild.zip
-    - uses: ./.github/workflows/actions/download-archive
-      with:
-        name: ionic-core-src
-        path: ./core
-        filename: CoreSrc.zip
     - name: Install Playwright Dependencies
       run: npm install && npx playwright install && npx playwright install-deps
       shell: bash
       working-directory: ./core
     - name: Test
       if: inputs.update != 'true'
-      run: npx playwright test --shard=${{ inputs.shard }}/${{ inputs.totalShards }}
+      run: npm run test.e2e -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }}
       shell: bash
       working-directory: ./core
     - name: Test and Update
@@ -51,7 +46,7 @@ runs:
       # which is why we not using the upload-archive
       # composite step here.
       run: |
-        npx playwright test --shard=${{ inputs.shard }}/${{ inputs.totalShards }} --update-snapshots
+        npm run test.e2e -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }} --update-snapshots
         git add src/\*.png --force
         mkdir updated-screenshots
         cd ../ && rsync -R --progress $(git diff --name-only --cached) core/updated-screenshots

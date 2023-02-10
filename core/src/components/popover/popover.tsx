@@ -18,6 +18,7 @@ import type {
 } from '../../interface';
 import { CoreDelegate, attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { addEventListener, raf } from '../../utils/helpers';
+import { printIonWarning } from '../../utils/logging';
 import { BACKDROP, dismiss, eventMethod, focusFirstDescendant, prepareOverlay, present } from '../../utils/overlays';
 import { isPlatform } from '../../utils/platform';
 import { getClassMap } from '../../utils/theme';
@@ -28,6 +29,8 @@ import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
 import { configureDismissInteraction, configureKeyboardInteraction, configureTriggerInteraction } from './utils';
+
+// TODO(FW-2832): types
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -445,13 +448,15 @@ export class Popover implements ComponentInterface, PopoverInterface {
       await this.currentTransition;
     }
 
-    const data = {
-      ...this.componentProps,
-      popover: this.el,
-    };
-
     const { inline, delegate } = this.getDelegate(true);
-    this.usersElement = await attachComponent(delegate, this.el, this.component, ['popover-viewport'], data, inline);
+    this.usersElement = await attachComponent(
+      delegate,
+      this.el,
+      this.component,
+      ['popover-viewport'],
+      this.componentProps,
+      inline
+    );
     await deepReady(this.usersElement);
 
     if (!this.keyboardEvents) {
@@ -474,14 +479,20 @@ export class Popover implements ComponentInterface, PopoverInterface {
        */
       raf(() => {
         raf(async () => {
-          this.currentTransition = present(this, 'popoverEnter', iosEnterAnimation, mdEnterAnimation, {
-            event: event || this.event,
-            size: this.size,
-            trigger: this.triggerEl,
-            reference: this.reference,
-            side: this.side,
-            align: this.alignment,
-          });
+          this.currentTransition = present<PopoverPresentOptions>(
+            this,
+            'popoverEnter',
+            iosEnterAnimation,
+            mdEnterAnimation,
+            {
+              event: event || this.event,
+              size: this.size,
+              trigger: this.triggerEl,
+              reference: this.reference,
+              side: this.side,
+              align: this.alignment,
+            }
+          );
 
           await this.currentTransition;
 
@@ -530,7 +541,15 @@ export class Popover implements ComponentInterface, PopoverInterface {
       this.parentPopover.dismiss(data, role, dismissParentPopover);
     }
 
-    this.currentTransition = dismiss(this, data, role, 'popoverLeave', iosLeaveAnimation, mdLeaveAnimation, this.event);
+    this.currentTransition = dismiss<PopoverDismissOptions>(
+      this,
+      data,
+      role,
+      'popoverLeave',
+      iosLeaveAnimation,
+      mdLeaveAnimation,
+      this.event
+    );
     const shouldDismiss = await this.currentTransition;
     if (shouldDismiss) {
       if (destroyKeyboardInteraction) {
@@ -604,8 +623,16 @@ export class Popover implements ComponentInterface, PopoverInterface {
       destroyTriggerInteraction();
     }
 
+    if (trigger === undefined) {
+      return;
+    }
+
     const triggerEl = (this.triggerEl = trigger !== undefined ? document.getElementById(trigger) : null);
     if (!triggerEl) {
+      printIonWarning(
+        `A trigger element with the ID "${trigger}" was not found in the DOM. The trigger element must be in the DOM when the "trigger" property is set on ion-popover.`,
+        this.el
+      );
       return;
     }
 
@@ -688,3 +715,32 @@ const LIFECYCLE_MAP: any = {
 };
 
 let popoverIds = 0;
+
+interface PopoverPresentOptions {
+  /**
+   * The original target event that presented the popover.
+   */
+  event: Event;
+  /**
+   * Describes how to calculate the popover width.
+   */
+  size: PopoverSize;
+  /**
+   * The element that causes the popover to open.
+   */
+  trigger?: HTMLElement | null;
+  /**
+   * Describes what to position the popover relative to.
+   */
+  reference: PositionReference;
+  /**
+   * Side of the `reference` point to position the popover on.
+   */
+  side: PositionSide;
+  /**
+   * Describes how to align the popover content with the `reference` point.
+   */
+  align?: PositionAlign;
+}
+
+type PopoverDismissOptions = Event;

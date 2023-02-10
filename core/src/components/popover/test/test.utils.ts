@@ -15,7 +15,7 @@ export const openPopover = async (page: E2EPage, buttonID: string, useEvalClick 
    * the click method on the button directly to avoid this behavior.
    */
   if (useEvalClick) {
-    trigger.evaluate((el: HTMLElement) => el.click());
+    await trigger.evaluate((el: HTMLElement) => el.click());
   } else {
     await trigger.click();
   }
@@ -33,8 +33,8 @@ export const closePopover = async (page: E2EPage, popover?: Locator) => {
 
 export const screenshotPopover = async (page: E2EPage, buttonID: string, testName: string) => {
   await page.goto(`src/components/popover/test/${testName}`);
+  await page.setIonViewport();
 
   await openPopover(page, buttonID);
-  await page.setIonViewport();
   expect(await page.screenshot()).toMatchSnapshot(`popover-${testName}-${buttonID}-${page.getSnapshotSettings()}.png`);
 };

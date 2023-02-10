@@ -23,7 +23,15 @@ import type { Attributes } from '../../utils/helpers';
 import { KEYBOARD_DID_OPEN } from '../../utils/keyboard/keyboard';
 import { printIonWarning } from '../../utils/logging';
 import { Style as StatusBarStyle, StatusBar } from '../../utils/native/status-bar';
-import { BACKDROP, activeAnimations, dismiss, eventMethod, prepareOverlay, present } from '../../utils/overlays';
+import {
+  GESTURE,
+  BACKDROP,
+  activeAnimations,
+  dismiss,
+  eventMethod,
+  prepareOverlay,
+  present,
+} from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 import { deepReady } from '../../utils/transition';
 
@@ -35,6 +43,8 @@ import type { MoveSheetToBreakpointOptions } from './gestures/sheet';
 import { createSheetGesture } from './gestures/sheet';
 import { createSwipeToCloseGesture } from './gestures/swipe-to-close';
 import { setCardStatusBarDark, setCardStatusBarDefault } from './utils';
+
+// TODO(FW-2832): types
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -267,7 +277,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
    * If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss.
    * If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.
    */
-  @Prop() canDismiss?: undefined | boolean | (() => Promise<boolean>);
+  @Prop() canDismiss?: undefined | boolean | ((data?: any, role?: string) => Promise<boolean>);
 
   /**
    * Emitted after the modal has presented.
@@ -392,8 +402,16 @@ export class Modal implements ComponentInterface, OverlayInterface {
       destroyTriggerInteraction();
     }
 
+    if (trigger === undefined) {
+      return;
+    }
+
     const triggerEl = trigger !== undefined ? document.getElementById(trigger) : null;
     if (!triggerEl) {
+      printIonWarning(
+        `A trigger element with the ID "${trigger}" was not found in the DOM. The trigger element must be in the DOM when the "trigger" property is set on ion-modal.`,
+        this.el
+      );
       return;
     }
 
@@ -449,7 +467,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
    * modal is allowed to dismiss based
    * on the state of the canDismiss prop.
    */
-  private async checkCanDismiss() {
+  private async checkCanDismiss(data?: any, role?: string) {
     const { canDismiss } = this;
 
     /**
@@ -461,7 +479,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
 
     if (typeof canDismiss === 'function') {
-      return canDismiss();
+      return canDismiss(data, role);
     }
 
     return canDismiss;
@@ -494,19 +512,21 @@ export class Modal implements ComponentInterface, OverlayInterface {
      */
     this.currentBreakpoint = this.initialBreakpoint;
 
-    const data = {
-      ...this.componentProps,
-      modal: this.el,
-    };
-
     const { inline, delegate } = this.getDelegate(true);
-    this.usersElement = await attachComponent(delegate, this.el, this.component, ['ion-page'], data, inline);
+    this.usersElement = await attachComponent(
+      delegate,
+      this.el,
+      this.component,
+      ['ion-page'],
+      this.componentProps,
+      inline
+    );
 
     await deepReady(this.usersElement);
 
     writeTask(() => this.el.classList.add('show-modal'));
 
-    this.currentTransition = present(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, {
+    this.currentTransition = present<ModalPresentOptions>(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, {
       presentingEl: this.presentingElement,
       currentBreakpoint: this.initialBreakpoint,
       backdropBreakpoint: this.backdropBreakpoint,
@@ -603,7 +623,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
        */
       this.gestureAnimationDismissing = true;
       this.animation!.onFinish(async () => {
-        await this.dismiss(undefined, 'gesture');
+        await this.dismiss(undefined, GESTURE);
         this.gestureAnimationDismissing = false;
       });
     });
@@ -665,7 +685,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     this.animation!.onFinish(async () => {
       this.currentBreakpoint = 0;
       this.ionBreakpointDidChange.emit({ breakpoint: this.currentBreakpoint });
-      await this.dismiss(undefined, 'gesture');
+      await this.dismiss(undefined, GESTURE);
       this.gestureAnimationDismissing = false;
     });
   }
@@ -678,7 +698,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async dismiss(data?: any, role?: string): Promise<boolean> {
-    if (this.gestureAnimationDismissing && role !== 'gesture') {
+    if (this.gestureAnimationDismissing && role !== GESTURE) {
       return false;
     }
 
@@ -687,7 +707,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
      * for calling the dismiss method, we should
      * not run the canDismiss check again.
      */
-    if (role !== 'handler' && !(await this.checkCanDismiss())) {
+    if (role !== 'handler' && !(await this.checkCanDismiss(data, role))) {
       return false;
     }
 
@@ -721,11 +741,19 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     const enteringAnimation = activeAnimations.get(this) || [];
 
-    this.currentTransition = dismiss(this, data, role, 'modalLeave', iosLeaveAnimation, mdLeaveAnimation, {
-      presentingEl: this.presentingElement,
-      currentBreakpoint: this.currentBreakpoint ?? this.initialBreakpoint,
-      backdropBreakpoint: this.backdropBreakpoint,
-    });
+    this.currentTransition = dismiss<ModalDismissOptions>(
+      this,
+      data,
+      role,
+      'modalLeave',
+      iosLeaveAnimation,
+      mdLeaveAnimation,
+      {
+        presentingEl: this.presentingElement,
+        currentBreakpoint: this.currentBreakpoint ?? this.initialBreakpoint,
+        backdropBreakpoint: this.backdropBreakpoint,
+      }
+    );
 
     const dismissed = await this.currentTransition;
 
@@ -953,3 +981,22 @@ const LIFECYCLE_MAP: any = {
 };
 
 let modalIds = 0;
+
+interface ModalOverlayOptions {
+  /**
+   * The element that presented the modal.
+   */
+  presentingEl?: HTMLElement;
+  /**
+   * The current breakpoint of the sheet modal.
+   */
+  currentBreakpoint?: number;
+  /**
+   * The point after which the backdrop will being
+   * to fade in when using a sheet modal.
+   */
+  backdropBreakpoint: number;
+}
+
+type ModalPresentOptions = ModalOverlayOptions;
+type ModalDismissOptions = ModalOverlayOptions;

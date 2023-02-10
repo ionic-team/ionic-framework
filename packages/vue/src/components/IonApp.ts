@@ -1,18 +1,19 @@
-import { h, defineComponent, shallowRef, VNode } from 'vue';
-import { defineCustomElement } from '@ionic/core/components/ion-app.js';
+import { defineCustomElement } from "@ionic/core/components/ion-app.js";
+import type { VNode } from "vue";
+import { h, defineComponent, shallowRef } from "vue";
 
 const userComponents = shallowRef([]);
 export const IonApp = /*@__PURE__*/ defineComponent((_, { attrs, slots }) => {
   defineCustomElement();
   return () => {
     return h(
-      'ion-app',
+      "ion-app",
       {
-        ...attrs
+        ...attrs,
       },
       [slots.default && slots.default(), ...userComponents.value]
-    )
-  }
+    );
+  };
 });
 
 /**
@@ -26,12 +27,11 @@ export const IonApp = /*@__PURE__*/ defineComponent((_, { attrs, slots }) => {
  * of `ion-app` within the current application context.
  */
 export const addTeleportedUserComponent = (component: VNode) => {
-  userComponents.value = [
-    ...userComponents.value,
-    component
-  ]
-}
+  userComponents.value = [...userComponents.value, component];
+};
 
 export const removeTeleportedUserComponent = (component: VNode) => {
-  userComponents.value = userComponents.value.filter(cmp => cmp !== component);
-}
+  userComponents.value = userComponents.value.filter(
+    (cmp) => cmp !== component
+  );
+};
