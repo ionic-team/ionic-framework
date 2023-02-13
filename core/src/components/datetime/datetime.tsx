@@ -2035,7 +2035,8 @@ export class Datetime implements ComponentInterface {
              */
             if (highlightedDates !== undefined && !isActive && day !== null) {
               if (Array.isArray(highlightedDates)) {
-                const matchingHighlight = highlightedDates.find((hd) => hd.date === dateIsoString);
+                const dateStringWithoutTime = dateIsoString.split('T')[0];
+                const matchingHighlight = highlightedDates.find((hd) => hd.date === dateStringWithoutTime);
                 if (matchingHighlight) {
                   dateStyle = {
                     color: matchingHighlight.color,
