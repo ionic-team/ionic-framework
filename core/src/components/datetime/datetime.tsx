@@ -1259,7 +1259,7 @@ export class Datetime implements ComponentInterface {
       }
     }
 
-    if (highlightedDates) {
+    if (highlightedDates !== undefined) {
       if (presentation !== 'date' && presentation !== 'date-time' && presentation !== 'time-date') {
         printIonWarning(
           'The highlightedDates property is only supported with the date, date-time, and time-date presentations.',
