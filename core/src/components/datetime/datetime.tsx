@@ -1998,7 +1998,7 @@ export class Datetime implements ComponentInterface {
         <div class="calendar-month-grid">
           {getDaysOfMonth(month, year, this.firstDayOfWeek % 7).map((dateObject, index) => {
             const { day, dayOfWeek } = dateObject;
-            const { highlightedDates, isDateEnabled, multiple } = this;
+            const { el, highlightedDates, isDateEnabled, multiple } = this;
             const referenceParts = { month, day, year };
             const { isActive, isToday, ariaLabel, ariaSelected, disabled, text } = getCalendarDayState(
               this.locale,
@@ -2024,7 +2024,7 @@ export class Datetime implements ComponentInterface {
               } catch (e) {
                 printIonError(
                   'Exception thrown from provided `isDateEnabled` function. Please check your function and try again.',
-                  e
+                  el, e
                 );
               }
             }
@@ -2054,7 +2054,7 @@ export class Datetime implements ComponentInterface {
                 } catch (e) {
                   printIonError(
                     'Exception thrown from provided `highlightedDates` callback. Please check your function and try again.',
-                    e
+                    el, e
                   );
                 }
               }
