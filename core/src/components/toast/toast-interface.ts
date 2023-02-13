@@ -12,7 +12,7 @@ export interface ToastOptions {
   animated?: boolean;
   icon?: string;
   htmlAttributes?: ToastAttributes;
-  layout: ToastLayout;
+  layout?: ToastLayout;
 
   color?: Color;
   mode?: Mode;
