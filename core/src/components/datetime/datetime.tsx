@@ -3,18 +3,7 @@ import { Component, Element, Event, Host, Method, Prop, State, Watch, h, writeTa
 import { caretDownSharp, caretUpSharp, chevronBack, chevronDown, chevronForward } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
-import type {
-  Color,
-  DatetimePresentation,
-  DatetimeChangeEventDetail,
-  DatetimeParts,
-  Mode,
-  StyleEventDetail,
-  TitleSelectedDatesFormatter,
-  DatetimeHighlight,
-  DatetimeHighlightStyle,
-  DatetimeHighlightCallback,
-} from '../../interface';
+import type { Color, Mode, StyleEventDetail } from '../../interface';
 import { startFocusVisible } from '../../utils/focus-visible';
 import { getElementRoot, raf, renderHiddenInput } from '../../utils/helpers';
 import { printIonError, printIonWarning } from '../../utils/logging';
@@ -22,6 +11,15 @@ import { isRTL } from '../../utils/rtl';
 import { createColorClasses } from '../../utils/theme';
 import type { PickerColumnItem } from '../picker-column-internal/picker-column-internal-interfaces';
 
+import type {
+  DatetimePresentation,
+  DatetimeChangeEventDetail,
+  DatetimeParts,
+  TitleSelectedDatesFormatter,
+  DatetimeHighlight,
+  DatetimeHighlightStyle,
+  DatetimeHighlightCallback,
+} from './datetime-interface';
 import { isSameDay, warnIfValueOutOfBounds, isBefore, isAfter } from './utils/comparison';
 import {
   generateMonths,
