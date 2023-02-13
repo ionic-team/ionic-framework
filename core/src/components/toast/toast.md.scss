@@ -54,7 +54,7 @@
 }
 
 .toast-layout-stacked .toast-button-group-start {
-  @include margin(8px, null, null, 8px);
+  @include margin(8px, 8px, null, null);
 }
 
 .toast-layout-inline .toast-button-group-end {
