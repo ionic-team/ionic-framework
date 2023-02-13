@@ -21,6 +21,7 @@ import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
 import type { ToastAttributes, ToastPosition, ToastLayout } from './toast-interface';
+import { printIonWarning } from '../../utils/logging';
 
 // TODO(FW-2832): types
 
@@ -299,6 +300,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
   }
 
   render() {
+    const { layout, el } = this;
     const allButtons = this.getButtons();
     const startButtons = allButtons.filter((b) => b.side === 'start');
     const endButtons = allButtons.filter((b) => b.side !== 'start');
@@ -306,9 +308,17 @@ export class Toast implements ComponentInterface, OverlayInterface {
     const wrapperClass = {
       'toast-wrapper': true,
       [`toast-${this.position}`]: true,
-      [`toast-layout-${this.layout}`]: true,
+      [`toast-layout-${layout}`]: true,
     };
     const role = allButtons.length > 0 ? 'dialog' : 'status';
+
+    /**
+     * Stacked buttons are only meant to be
+     *  used with one type of button.
+     */
+    if (layout === 'stacked' && startButtons.length > 0 && endButtons.length > 0) {
+      printIonWarning('This toast is using start and end buttons with the stacked toast layout. We recommend following the best practice of using either start or end buttons with the stacked toast layout.', el);
+    }
 
     return (
       <Host
