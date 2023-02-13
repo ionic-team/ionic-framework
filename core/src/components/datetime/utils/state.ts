@@ -1,4 +1,11 @@
-import type { DatetimeParts } from '../datetime-interface';
+import { printIonError } from '@utils/logging';
+
+import type {
+  DatetimeHighlight,
+  DatetimeHighlightCallback,
+  DatetimeHighlightStyle,
+  DatetimeParts,
+} from '../datetime-interface';
 
 import { isAfter, isBefore, isSameDay } from './comparison';
 import { generateDayAriaLabel, getDay } from './format';
@@ -181,4 +188,42 @@ export const isNextMonthDisabled = (refParts: DatetimeParts, maxParts?: Datetime
   return isMonthDisabled(nextMonth, {
     maxParts,
   });
+};
+
+/**
+ * Given the value of the highlightedDates property
+ * and an ISO string, return the styles to use for
+ * that date, or undefined if none are found.
+ */
+export const getHighlightStyles = (
+  highlightedDates: DatetimeHighlight[] | DatetimeHighlightCallback,
+  dateIsoString: string,
+  el: HTMLIonDatetimeElement
+): DatetimeHighlightStyle | undefined => {
+  if (Array.isArray(highlightedDates)) {
+    const dateStringWithoutTime = dateIsoString.split('T')[0];
+    const matchingHighlight = highlightedDates.find((hd) => hd.date === dateStringWithoutTime);
+    if (matchingHighlight) {
+      return {
+        color: matchingHighlight.color,
+        backgroundColor: matchingHighlight.backgroundColor,
+      } as DatetimeHighlightStyle;
+    }
+  } else {
+    /**
+     * Wrap in a try-catch to prevent exceptions in the user's function
+     * from interrupting the calendar's rendering.
+     */
+    try {
+      return highlightedDates(dateIsoString);
+    } catch (e) {
+      printIonError(
+        'Exception thrown from provided `highlightedDates` callback. Please check your function and try again.',
+        el,
+        e
+      );
+    }
+  }
+
+  return undefined;
 };

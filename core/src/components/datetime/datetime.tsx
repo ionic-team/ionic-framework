@@ -61,6 +61,7 @@ import {
 } from './utils/parse';
 import {
   getCalendarDayState,
+  getHighlightStyles,
   isDayDisabled,
   isMonthDisabled,
   isNextMonthDisabled,
@@ -2022,7 +2023,8 @@ export class Datetime implements ComponentInterface {
               } catch (e) {
                 printIonError(
                   'Exception thrown from provided `isDateEnabled` function. Please check your function and try again.',
-                  el, e
+                  el,
+                  e
                 );
               }
             }
@@ -2034,29 +2036,7 @@ export class Datetime implements ComponentInterface {
              * nor apply to "filler days" at the start of the grid.
              */
             if (highlightedDates !== undefined && !isActive && day !== null) {
-              if (Array.isArray(highlightedDates)) {
-                const dateStringWithoutTime = dateIsoString.split('T')[0];
-                const matchingHighlight = highlightedDates.find((hd) => hd.date === dateStringWithoutTime);
-                if (matchingHighlight) {
-                  dateStyle = {
-                    color: matchingHighlight.color,
-                    backgroundColor: matchingHighlight.backgroundColor,
-                  } as DatetimeHighlightStyle;
-                }
-              } else {
-                /**
-                 * Wrap in a try-catch to prevent exceptions in the user's function
-                 * from interrupting the calendar's rendering.
-                 */
-                try {
-                  dateStyle = highlightedDates(dateIsoString);
-                } catch (e) {
-                  printIonError(
-                    'Exception thrown from provided `highlightedDates` callback. Please check your function and try again.',
-                    el, e
-                  );
-                }
-              }
+              dateStyle = getHighlightStyles(highlightedDates, dateIsoString, el);
             }
 
             return (
