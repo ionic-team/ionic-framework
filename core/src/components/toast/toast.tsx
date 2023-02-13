@@ -11,6 +11,7 @@ import type {
   OverlayInterface,
   ToastButton,
 } from '../../interface';
+import { printIonWarning } from '../../utils/logging';
 import { dismiss, eventMethod, isCancel, prepareOverlay, present, safeCall } from '../../utils/overlays';
 import type { IonicSafeString } from '../../utils/sanitization';
 import { sanitizeDOMString } from '../../utils/sanitization';
@@ -21,7 +22,6 @@ import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
 import type { ToastAttributes, ToastPosition, ToastLayout } from './toast-interface';
-import { printIonWarning } from '../../utils/logging';
 
 // TODO(FW-2832): types
 
@@ -317,7 +317,10 @@ export class Toast implements ComponentInterface, OverlayInterface {
      *  used with one type of button.
      */
     if (layout === 'stacked' && startButtons.length > 0 && endButtons.length > 0) {
-      printIonWarning('This toast is using start and end buttons with the stacked toast layout. We recommend following the best practice of using either start or end buttons with the stacked toast layout.', el);
+      printIonWarning(
+        'This toast is using start and end buttons with the stacked toast layout. We recommend following the best practice of using either start or end buttons with the stacked toast layout.',
+        el
+      );
     }
 
     return (
