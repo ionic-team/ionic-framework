@@ -1,5 +1,3 @@
-import { printIonWarning } from '@utils/logging';
-
 import { config } from '../global/config';
 import { getIonMode } from '../global/ionic-global';
 import type {
@@ -22,6 +20,7 @@ import type {
 import { CoreDelegate } from './framework-delegate';
 import { OVERLAY_BACK_BUTTON_PRIORITY } from './hardware-back-button';
 import { addEventListener, componentOnReady, focusElement, getElementRoot, removeEventListener } from './helpers';
+import { printIonWarning } from './logging';
 
 let lastId = 0;
 
