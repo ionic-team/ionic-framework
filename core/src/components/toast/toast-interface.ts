@@ -28,7 +28,7 @@ export interface ToastOptions {
  */
 export type ToastAttributes = { [key: string]: any };
 
-export type ToastLayout = 'inline' | 'stacked';
+export type ToastLayout = 'baseline' | 'stacked';
 
 export interface ToastButton {
   text?: string;

@@ -49,7 +49,7 @@
 // --------------------------------------------------
 
 
-.toast-layout-inline .toast-button-group-start {
+.toast-layout-baseline .toast-button-group-start {
   @include margin(null, null, null, 8px);
 }
 
@@ -57,7 +57,7 @@
   @include margin(8px, 8px, null, null);
 }
 
-.toast-layout-inline .toast-button-group-end {
+.toast-layout-baseline .toast-button-group-end {
   @include margin(null, 8px, null, null);
 }
 

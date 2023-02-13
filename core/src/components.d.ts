@@ -2977,7 +2977,7 @@ export namespace Components {
          */
         "keyboardClose": boolean;
         /**
-          * Defines how the message and buttons are laid out in the toast. 'inline': The message and the buttons will appear on the same line. Message text may wrap within the message container. 'stacked': The buttons containers and message will stack on top of each other. Use this if you have long text in your buttons.
+          * Defines how the message and buttons are laid out in the toast. 'baseline': The message and the buttons will appear on the same line. Message text may wrap within the message container. 'stacked': The buttons containers and message will stack on top of each other. Use this if you have long text in your buttons.
          */
         "layout": ToastLayout;
         /**
@@ -6982,7 +6982,7 @@ declare namespace LocalJSX {
          */
         "keyboardClose"?: boolean;
         /**
-          * Defines how the message and buttons are laid out in the toast. 'inline': The message and the buttons will appear on the same line. Message text may wrap within the message container. 'stacked': The buttons containers and message will stack on top of each other. Use this if you have long text in your buttons.
+          * Defines how the message and buttons are laid out in the toast. 'baseline': The message and the buttons will appear on the same line. Message text may wrap within the message container. 'stacked': The buttons containers and message will stack on top of each other. Use this if you have long text in your buttons.
          */
         "layout"?: ToastLayout;
         /**
