@@ -5,19 +5,7 @@ import { PickerColumnCmp } from '../picker-column';
 /**
  * Stencil has an issue where having multiple spec tests in the same file,
  * will cause an exception to be thrown. This test is located in a separate file
- * to avoid this issue.
- *
- * Example exception:
- * ```
- * TypeError: Cannot read properties of undefined (reading '$instanceValues$')
-    at getValue (/Users/sean/Documents/ionic/framework-next/core/node_modules/@stencil/core/internal/testing/index.js:542:282)
-    at PickerColumnCmp.get (/Users/sean/Documents/ionic/framework-next/core/node_modules/@stencil/core/internal/testing/index.js:571:13)
-    at PickerColumnCmp.refresh (/Users/sean/Documents/ionic/framework-next/core/src/components/picker-column/picker-column.tsx:304:20)
-    at Timeout._onTimeout (/Users/sean/Documents/ionic/framework-next/core/src/components/picker-column/picker-column.tsx:73:12)
-    at listOnTimeout (node:internal/timers:559:17)
-    at processTimers (node:internal/timers:502:7)
-
- * ```
+ * to avoid this issue: https://github.com/ionic-team/stencil/issues/4053
  */
 describe('picker-column', () => {
   it('should add aria-label to the picker column option', async () => {
