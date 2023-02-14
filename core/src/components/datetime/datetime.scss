@@ -211,15 +211,7 @@ ion-picker-column-internal {
   @include text-inherit();
 }
 
-.calendar-month-year-button ion-label {
-  display: flex;
-
-  align-items: center;
-}
-
 .calendar-month-year-button ion-icon {
-  @include padding(0, 0, 0, 4px);
-
   font-size: inherit;
 }
 

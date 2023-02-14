@@ -1893,6 +1893,7 @@ export class Datetime implements ComponentInterface {
             <ion-button class="calendar-month-year-button" fill="clear" onClick={() => this.toggleMonthAndYearView()}>
               <ion-label>{getMonthAndYear(this.locale, this.workingParts)}</ion-label>
               <ion-icon
+                slot="end"
                 aria-hidden="true"
                 icon={this.showMonthAndYear ? expandedIcon : collapsedIcon}
                 lazy={false}
