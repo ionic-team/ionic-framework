@@ -159,6 +159,37 @@ test.describe('select: ionChange', () => {
     expect(ionChange).toHaveReceivedEventTimes(1);
   });
 
+  test('should fire ionChange when confirming multiple values from a popover', async ({ page }) => {
+    await page.setContent(`
+      <ion-select aria-label="Fruit" interface="popover" multiple="true">
+        <ion-select-option value="apple">Apple</ion-select-option>
+        <ion-select-option value="banana">Banana</ion-select-option>
+      </ion-select>
+    `);
+
+    const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
+    const select = page.locator('ion-select') as E2ELocator;
+    const ionChange = await select.spyOnEvent('ionChange');
+
+    await select.click();
+    await ionPopoverDidPresent.next();
+
+    const popover = page.locator('ion-popover');
+    const checkboxes = popover.locator('ion-checkbox');
+
+    await checkboxes.nth(0).click();
+    await ionChange.next();
+
+    expect(ionChange).toHaveReceivedEventDetail({ value: ['apple'] });
+    expect(ionChange).toHaveReceivedEventTimes(1);
+
+    await checkboxes.nth(1).click();
+    await ionChange.next();
+
+    expect(ionChange).toHaveReceivedEventDetail({ value: ['apple', 'banana'] });
+    expect(ionChange).toHaveReceivedEventTimes(2);
+  });
+
   test('should fire ionChange when confirming a value from an action sheet', async ({ page }) => {
     await page.setContent(`
       <ion-select aria-label="Fruit" interface="action-sheet">

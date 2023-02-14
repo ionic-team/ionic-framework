@@ -1,5 +1,5 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Host, Listen, Prop, h } from '@stencil/core';
+import { Component, Host, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import { safeCall } from '../../utils/overlays';
@@ -45,11 +45,6 @@ export class SelectPopover implements ComponentInterface {
    * An array of options for the popover
    */
   @Prop() options: SelectPopoverOption[] = [];
-
-  @Listen('ionChange')
-  onSelect(ev: any) {
-    this.setChecked(ev);
-  }
 
   private findOptionFromEvent(ev: any) {
     const { options } = this;
@@ -124,6 +119,10 @@ export class SelectPopover implements ComponentInterface {
           value={option.value}
           disabled={option.disabled}
           checked={option.checked}
+          onIonChange={(ev) => {
+            this.setChecked(ev);
+            this.callOptionHandler(ev);
+          }}
         ></ion-checkbox>
         <ion-label>{option.text}</ion-label>
       </ion-item>
