@@ -49,7 +49,6 @@ export class SelectPopover implements ComponentInterface {
   @Listen('ionChange')
   onSelect(ev: any) {
     this.setChecked(ev);
-    this.callOptionHandler(ev);
   }
 
   private findOptionFromEvent(ev: any) {

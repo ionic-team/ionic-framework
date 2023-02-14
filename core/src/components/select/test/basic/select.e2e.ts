@@ -1,5 +1,6 @@
 import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
+import type { E2ELocator } from '@utils/test/playwright';
 
 test.describe('select: basic', () => {
   test.beforeEach(async ({ page }) => {
@@ -130,6 +131,7 @@ test.describe('select: ionChange', () => {
 
     await ionChange.next();
     expect(ionChange).toHaveReceivedEventDetail({ value: 'apple' });
+    expect(ionChange).toHaveReceivedEventTimes(1);
   });
 
   test('should fire ionChange when confirming a value from a popover', async ({ page }) => {
@@ -141,8 +143,8 @@ test.describe('select: ionChange', () => {
     `);
 
     const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
-    const ionChange = await page.spyOnEvent('ionChange');
-    const select = page.locator('ion-select');
+    const select = page.locator('ion-select') as E2ELocator;
+    const ionChange = await select.spyOnEvent('ionChange');
 
     await select.click();
     await ionPopoverDidPresent.next();
@@ -153,7 +155,8 @@ test.describe('select: ionChange', () => {
     await radioButtons.nth(0).click();
 
     await ionChange.next();
-    expect(ionChange).toHaveReceivedEventDetail({ value: 'apple', event: { isTrusted: true } });
+    expect(ionChange).toHaveReceivedEventDetail({ value: 'apple' });
+    expect(ionChange).toHaveReceivedEventTimes(1);
   });
 
   test('should fire ionChange when confirming a value from an action sheet', async ({ page }) => {
@@ -178,6 +181,7 @@ test.describe('select: ionChange', () => {
 
     await ionChange.next();
     expect(ionChange).toHaveReceivedEventDetail({ value: 'apple' });
+    expect(ionChange).toHaveReceivedEventTimes(1);
   });
 
   test('should not fire when programmatically setting a valid value', async ({ page }) => {
