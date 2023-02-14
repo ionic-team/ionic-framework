@@ -92,12 +92,11 @@
   font-size: 20px;
 }
 
-:host .calendar-day:after {
-  opacity: 0.2;
-}
-
-:host .calendar-day:focus:after {
+.calendar-day:focus .calendar-day-highlight,
+.calendar-day.calendar-day-active .calendar-day-highlight {
   background: current-color(base);
+  
+  opacity: 0.2;
 }
 
 /**
@@ -119,10 +118,6 @@
   font-weight: 600;
 }
 
-:host .calendar-day.calendar-day-active:after {
-  background: current-color(base);
-}
-
 /**
  * Day that is selected and is today
  * should have white color.
@@ -131,7 +126,7 @@
   color: current-color(contrast);
 }
 
-:host .calendar-day.calendar-day-today.calendar-day-active:after {
+.calendar-day.calendar-day-today.calendar-day-active .calendar-day-highlight {
   background: current-color(base);
 
   opacity: 1;
