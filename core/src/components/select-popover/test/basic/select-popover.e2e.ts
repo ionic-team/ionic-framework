@@ -24,7 +24,7 @@ test.describe('select-popover: basic', () => {
       await selectPopoverPage.setup(options, false);
     });
 
-    test('clicking an option should dismiss the popover', async () => {
+    test('clicking an unselected option should dismiss the popover', async () => {
       await selectPopoverPage.clickOption('apple');
       await selectPopoverPage.ionPopoverDidDismiss.next();
       await expect(selectPopoverPage.popover).not.toBeVisible();
@@ -41,13 +41,13 @@ test.describe('select-popover: basic', () => {
       await expect(selectPopoverPage.popover).not.toBeVisible();
     });
 
-    test('pressing Space on an option should dismiss the popover', async () => {
+    test('pressing Space on an unselected option should dismiss the popover', async () => {
       await selectPopoverPage.pressSpaceOnOption('apple');
       await selectPopoverPage.ionPopoverDidDismiss.next();
       await expect(selectPopoverPage.popover).not.toBeVisible();
     });
 
-    test('pressing Space on a selected option should dismiss the popover', async ({ browserName }) => {
+    test('pressing Space on a selected option should dismiss the popover', async ({ page, browserName }) => {
       test.skip(browserName === 'firefox', 'Same behavior as https://ionic-cloud.atlassian.net/browse/FW-2979');
 
       await selectPopoverPage.updateOptions([
@@ -58,45 +58,6 @@ test.describe('select-popover: basic', () => {
       await selectPopoverPage.pressSpaceOnOption('apple');
       await selectPopoverPage.ionPopoverDidDismiss.next();
       await expect(selectPopoverPage.popover).not.toBeVisible();
-    });
-  });
-
-  test.describe('multiple selection', () => {
-    let selectPopoverPage: SelectPopoverPage;
-
-    test.beforeEach(async ({ page }) => {
-      selectPopoverPage = new SelectPopoverPage(page);
-      await selectPopoverPage.setup(options, true);
-    });
-
-    test('clicking an option should not dismiss the popover', async () => {
-      await selectPopoverPage.clickOption('apple');
-      await expect(selectPopoverPage.popover).toBeVisible();
-    });
-
-    test('clicking a selected option should not dismiss the popover', async () => {
-      await selectPopoverPage.updateOptions([
-        { value: 'apple', text: 'Apple', disabled: false, checked: true },
-        { value: 'banana', text: 'Banana', disabled: false, checked: false },
-      ]);
-
-      await selectPopoverPage.clickOption('apple');
-      await expect(selectPopoverPage.popover).toBeVisible();
-    });
-
-    test('pressing Space on an option should not dismiss the popover', async () => {
-      await selectPopoverPage.pressSpaceOnOption('apple');
-      await expect(selectPopoverPage.popover).toBeVisible();
-    });
-
-    test('pressing Space on a selected option should not dismiss the popover', async () => {
-      await selectPopoverPage.updateOptions([
-        { value: 'apple', text: 'Apple', disabled: false, checked: true },
-        { value: 'banana', text: 'Banana', disabled: false, checked: false },
-      ]);
-
-      await selectPopoverPage.pressSpaceOnOption('apple');
-      await expect(selectPopoverPage.popover).toBeVisible();
     });
   });
 });

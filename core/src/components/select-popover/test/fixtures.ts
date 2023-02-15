@@ -39,6 +39,8 @@ export class SelectPopoverPage {
       { options, multiple }
     );
 
+    await page.waitForChanges();
+
     this.popover = await page.locator('ion-popover');
     this.selectPopover = await page.locator('ion-select-popover');
     this.multiple = multiple;

@@ -122,6 +122,7 @@ export class SelectPopover implements ComponentInterface {
           value={option.value}
           disabled={option.disabled}
           checked={option.checked}
+          legacy={true}
           onIonChange={(ev) => {
             this.setChecked(ev);
             this.callOptionHandler(ev);
@@ -143,6 +144,7 @@ export class SelectPopover implements ComponentInterface {
             <ion-radio
               value={option.value}
               disabled={option.disabled}
+              legacy={true}
               onClick={() => this.dismissParentPopover()}
               onKeyUp={(ev) => {
                 if (ev.key === 'Enter' || ev.key === ' ') {
