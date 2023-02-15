@@ -25,6 +25,7 @@ test.describe('select-popover: basic', () => {
 
     test('clicking an option should dismiss the popover', async () => {
       await selectPopoverPage.clickOption('apple');
+      await selectPopoverPage.ionPopoverDidDismiss.next();
       await expect(selectPopoverPage.popover).not.toBeVisible();
     });
 
@@ -35,11 +36,13 @@ test.describe('select-popover: basic', () => {
       ]);
 
       await selectPopoverPage.clickOption('apple');
+      await selectPopoverPage.ionPopoverDidDismiss.next();
       await expect(selectPopoverPage.popover).not.toBeVisible();
     });
 
     test('pressing Enter on an option should dismiss the popover', async () => {
       await selectPopoverPage.pressEnterOnOption('apple');
+      await selectPopoverPage.ionPopoverDidDismiss.next();
       await expect(selectPopoverPage.popover).not.toBeVisible();
     });
 
@@ -50,11 +53,13 @@ test.describe('select-popover: basic', () => {
       ]);
 
       await selectPopoverPage.pressEnterOnOption('apple');
+      await selectPopoverPage.ionPopoverDidDismiss.next();
       await expect(selectPopoverPage.popover).not.toBeVisible();
     });
 
     test('pressing Space on an option should dismiss the popover', async () => {
       await selectPopoverPage.pressSpaceOnOption('apple');
+      await selectPopoverPage.ionPopoverDidDismiss.next();
       await expect(selectPopoverPage.popover).not.toBeVisible();
     });
 
@@ -65,6 +70,7 @@ test.describe('select-popover: basic', () => {
       ]);
 
       await selectPopoverPage.pressSpaceOnOption('apple');
+      await selectPopoverPage.ionPopoverDidDismiss.next();
       await expect(selectPopoverPage.popover).not.toBeVisible();
     });
   });

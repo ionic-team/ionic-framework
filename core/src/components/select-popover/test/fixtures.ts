@@ -1,4 +1,4 @@
-import type { E2EPage, E2ELocator } from '@utils/test/playwright';
+import type { E2EPage, E2ELocator, EventSpy } from '@utils/test/playwright';
 
 import type { SelectPopoverOption } from '../select-popover-interface';
 
@@ -7,8 +7,12 @@ export class SelectPopoverPage {
   private multiple?: boolean;
   private options: SelectPopoverOption[] = [];
 
+  // Locators
   popover!: E2ELocator;
   selectPopover!: E2ELocator;
+
+  // Event spies
+  ionPopoverDidDismiss!: EventSpy;
 
   constructor(page: E2EPage) {
     this.page = page;
@@ -24,6 +28,7 @@ export class SelectPopoverPage {
     `);
 
     const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
+    this.ionPopoverDidDismiss = await page.spyOnEvent('ionPopoverDidDismiss');
 
     await page.evaluate(
       ({ options, multiple }) => {
