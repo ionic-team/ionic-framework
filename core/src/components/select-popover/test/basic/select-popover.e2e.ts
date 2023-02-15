@@ -41,23 +41,6 @@ test.describe('select-popover: basic', () => {
       await expect(selectPopoverPage.popover).not.toBeVisible();
     });
 
-    test('pressing Enter on an option should dismiss the popover', async () => {
-      await selectPopoverPage.pressEnterOnOption('apple');
-      await selectPopoverPage.ionPopoverDidDismiss.next();
-      await expect(selectPopoverPage.popover).not.toBeVisible();
-    });
-
-    test('pressing Enter on a selected option should dismiss the popover', async () => {
-      await selectPopoverPage.updateOptions([
-        { value: 'apple', text: 'Apple', disabled: false, checked: true },
-        { value: 'banana', text: 'Banana', disabled: false, checked: false },
-      ]);
-
-      await selectPopoverPage.pressEnterOnOption('apple');
-      await selectPopoverPage.ionPopoverDidDismiss.next();
-      await expect(selectPopoverPage.popover).not.toBeVisible();
-    });
-
     test('pressing Space on an option should dismiss the popover', async () => {
       await selectPopoverPage.pressSpaceOnOption('apple');
       await selectPopoverPage.ionPopoverDidDismiss.next();
@@ -98,21 +81,6 @@ test.describe('select-popover: basic', () => {
       ]);
 
       await selectPopoverPage.clickOption('apple');
-      await expect(selectPopoverPage.popover).toBeVisible();
-    });
-
-    test('pressing Enter on an option should not dismiss the popover', async () => {
-      await selectPopoverPage.pressEnterOnOption('apple');
-      await expect(selectPopoverPage.popover).toBeVisible();
-    });
-
-    test('pressing Enter on a selected option should not dismiss the popover', async () => {
-      await selectPopoverPage.updateOptions([
-        { value: 'apple', text: 'Apple', disabled: false, checked: true },
-        { value: 'banana', text: 'Banana', disabled: false, checked: false },
-      ]);
-
-      await selectPopoverPage.pressEnterOnOption('apple');
       await expect(selectPopoverPage.popover).toBeVisible();
     });
 

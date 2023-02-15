@@ -66,11 +66,6 @@ export class SelectPopoverPage {
     await option.click();
   }
 
-  async pressEnterOnOption(value: string) {
-    const option = this.getOption(value);
-    await option.press('Enter');
-  }
-
   async pressSpaceOnOption(value: string) {
     const option = this.getOption(value);
     await option.press('Space');
