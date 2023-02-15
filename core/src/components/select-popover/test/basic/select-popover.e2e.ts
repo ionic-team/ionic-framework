@@ -5,9 +5,10 @@ import type { SelectPopoverOption } from '../../select-popover-interface';
 import { SelectPopoverPage } from '../fixtures';
 
 test.describe('select-popover: basic', () => {
-  test.beforeEach(({ skip }) => {
+  test.beforeEach(({ skip, browserName }) => {
     skip.rtl();
     skip.mode('ios', 'Consistent behavior across modes');
+    test.skip(browserName === 'webkit', 'https://ionic-cloud.atlassian.net/browse/FW-2979');
   });
 
   const options: SelectPopoverOption[] = [
@@ -63,7 +64,9 @@ test.describe('select-popover: basic', () => {
       await expect(selectPopoverPage.popover).not.toBeVisible();
     });
 
-    test('pressing Space on a selected option should dismiss the popover', async () => {
+    test('pressing Space on a selected option should dismiss the popover', async ({ browserName }) => {
+      test.skip(browserName === 'firefox', 'Same behavior as https://ionic-cloud.atlassian.net/browse/FW-2979');
+
       await selectPopoverPage.updateOptions([
         { value: 'apple', text: 'Apple', disabled: false, checked: true },
         { value: 'banana', text: 'Banana', disabled: false, checked: false },
