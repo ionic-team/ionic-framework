@@ -13,8 +13,9 @@ test.describe('header: condense', () => {
 
     await expect(smallTitleHeader).toHaveAttribute('aria-hidden', 'true');
 
-    await expect(await largeTitleHeader.screenshot()).toHaveScreenshot(
-      `header-condense-large-title-initial-diff-${page.getSnapshotSettings()}.png`,{ animations: 'disabled' }
+    await expect(largeTitleHeader).toHaveScreenshot(
+      `header-condense-large-title-initial-diff-${page.getSnapshotSettings()}.png`,
+      { animations: 'disabled' }
     );
 
     await content.evaluate(async (el: HTMLIonContentElement) => {
@@ -22,8 +23,9 @@ test.describe('header: condense', () => {
     });
     await page.waitForSelector('#largeTitleHeader.header-collapse-condense-inactive');
 
-    await expect(await smallTitleHeader.screenshot()).toHaveScreenshot(
-      `header-condense-large-title-collapsed-diff-${page.getSnapshotSettings()}.png`,{ animations: 'disabled' }
+    await expect(smallTitleHeader).toHaveScreenshot(
+      `header-condense-large-title-collapsed-diff-${page.getSnapshotSettings()}.png`,
+      { animations: 'disabled' }
     );
 
     /**

@@ -74,9 +74,9 @@ test.describe('input: basic', () => {
       // Verifies that the parent item receives .item-has-focus when the input is focused.
       await expect(item).toHaveClass(/item-has-focus/);
       // Validates the display of an input with an ion-item using lines="full" when focused.
-      await expect(await item.screenshot()).toHaveScreenshot(
-        `input-with-lines-full-focused-${page.getSnapshotSettings()}.png`,{ animations: 'disabled' }
-      );
+      await expect(item).toHaveScreenshot(`input-with-lines-full-focused-${page.getSnapshotSettings()}.png`, {
+        animations: 'disabled',
+      });
     });
   });
 
@@ -102,9 +102,9 @@ test.describe('input: basic', () => {
       await expect(item).toHaveClass(/item-has-focus/);
 
       // Validates the display of an input with an ion-item using lines="inset" when focused.
-      await expect(await item.screenshot()).toHaveScreenshot(
-        `input-with-lines-inset-focused-${page.getSnapshotSettings()}.png`,{ animations: 'disabled' }
-      );
+      await expect(item).toHaveScreenshot(`input-with-lines-inset-focused-${page.getSnapshotSettings()}.png`, {
+        animations: 'disabled',
+      });
     });
   });
 
@@ -130,9 +130,9 @@ test.describe('input: basic', () => {
       await expect(item).toHaveClass(/item-has-focus/);
 
       // Validates the display of an input with an ion-item using lines="none" when focused.
-      await expect(await item.screenshot()).toHaveScreenshot(
-        `input-with-lines-none-focused-${page.getSnapshotSettings()}.png`,{ animations: 'disabled' }
-      );
+      await expect(item).toHaveScreenshot(`input-with-lines-none-focused-${page.getSnapshotSettings()}.png`, {
+        animations: 'disabled',
+      });
     });
   });
 

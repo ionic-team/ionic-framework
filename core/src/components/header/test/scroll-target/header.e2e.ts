@@ -17,16 +17,16 @@ test.describe('header: scroll-target', () => {
     await page.goto('/src/components/header/test/scroll-target');
 
     const header = page.locator('ion-header');
-    await expect(await header.screenshot()).toHaveScreenshot(
-      `header-scroll-target-not-blurred-diff-${page.getSnapshotSettings()}.png`,{ animations: 'disabled' }
-    );
+    await expect(header).toHaveScreenshot(`header-scroll-target-not-blurred-diff-${page.getSnapshotSettings()}.png`, {
+      animations: 'disabled',
+    });
 
     const scrollTarget = page.locator('#scroll-target');
     await scrollTarget.evaluate((el: HTMLDivElement) => (el.scrollTop = el.scrollHeight));
     await page.waitForChanges();
 
-    await expect(await header.screenshot()).toHaveScreenshot(
-      `header-scroll-target-blurred-diff-${page.getSnapshotSettings()}.png`,{ animations: 'disabled' }
-    );
+    await expect(header).toHaveScreenshot(`header-scroll-target-blurred-diff-${page.getSnapshotSettings()}.png`, {
+      animations: 'disabled',
+    });
   });
 });

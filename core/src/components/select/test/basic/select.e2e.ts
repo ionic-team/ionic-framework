@@ -40,9 +40,9 @@ test.describe('select: basic', () => {
 
       await ionAlertDidPresent.next();
 
-      await expect(await page.screenshot()).toHaveScreenshot(
-        `select-alert-diff-${page.getSnapshotSettings()}.png`,{ animations: 'disabled' }
-      );
+      await expect(page).toHaveScreenshot(`select-alert-diff-${page.getSnapshotSettings()}.png`, {
+        animations: 'disabled',
+      });
 
       const alert = await page.locator('ion-alert');
       await alert.evaluate((el: HTMLIonAlertElement) => el.dismiss());
@@ -60,9 +60,9 @@ test.describe('select: basic', () => {
 
       await ionActionSheetDidPresent.next();
 
-      await expect(await page.screenshot()).toHaveScreenshot(
-        `select-action-sheet-diff-${page.getSnapshotSettings()}.png`,{ animations: 'disabled' }
-      );
+      await expect(page).toHaveScreenshot(`select-action-sheet-diff-${page.getSnapshotSettings()}.png`, {
+        animations: 'disabled',
+      });
 
       const actionSheet = await page.locator('ion-action-sheet');
       await actionSheet.evaluate((el: HTMLIonActionSheetElement) => el.dismiss());
@@ -89,9 +89,9 @@ test.describe('select: basic', () => {
       const popoverOption1 = popover.locator('.select-interface-option:first-of-type ion-radio');
       await expect(popoverOption1).toBeFocused();
 
-      await expect(await page.screenshot()).toHaveScreenshot(
-        `select-popover-diff-${page.getSnapshotSettings()}.png`,{ animations: 'disabled' }
-      );
+      await expect(page).toHaveScreenshot(`select-popover-diff-${page.getSnapshotSettings()}.png`, {
+        animations: 'disabled',
+      });
 
       await popover.evaluate((el: HTMLIonPopoverElement) => el.dismiss());
 

@@ -49,8 +49,8 @@ test.describe('button: ripple effect', () => {
 
     await page.waitForSelector('#default.ion-activated');
 
-    await expect(await button.screenshot()).toHaveScreenshot(
-      `button-ripple-effect-${page.getSnapshotSettings()}.png`,{ animations: 'disabled' }
-    );
+    await expect(button).toHaveScreenshot(`button-ripple-effect-${page.getSnapshotSettings()}.png`, {
+      animations: 'disabled',
+    });
   });
 });
