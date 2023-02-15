@@ -91,12 +91,17 @@ export const startTapClick = (config: Config) => {
         clearDefers.delete(el);
       }
 
-      const delay = isInstant(el) ? 0 : ADD_ACTIVATED_DEFERS;
       el.classList.remove(ACTIVATED);
-      activeDefer = setTimeout(() => {
+      const callback = () => {
         addActivated(el, x, y);
         activeDefer = undefined;
-      }, delay);
+      };
+
+      if (isInstant(el)) {
+        callback();
+      } else {
+        activeDefer = setTimeout(callback, ADD_ACTIVATED_DEFERS);
+      }
     }
     activatableEle = el;
   };
