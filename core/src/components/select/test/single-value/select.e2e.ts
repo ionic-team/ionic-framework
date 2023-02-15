@@ -11,8 +11,8 @@ test.describe('select: single-value', () => {
 
     await ionAlertDidPresent.next();
 
-    await expect(await page.screenshot({ animations: 'disabled' })).toHaveScreenshot(
-      `select-single-value-diff-${page.getSnapshotSettings()}.png`
+    await expect(await page.screenshot()).toHaveScreenshot(
+      `select-single-value-diff-${page.getSnapshotSettings()}.png`,{ animations: 'disabled' }
     );
   });
 });

@@ -20,7 +20,7 @@ test('should not have visual regressions', async ({ page, skip }) => {
     height: 310,
   });
 
-  await expect(await page.screenshot({ animations: 'disabled' })).toHaveScreenshot(
-    `fab-translucent-${page.getSnapshotSettings()}.png`
+  await expect(await page.screenshot()).toHaveScreenshot(
+    `fab-translucent-${page.getSnapshotSettings()}.png`,{ animations: 'disabled' }
   );
 });

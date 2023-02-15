@@ -8,8 +8,8 @@ test.describe('picker-internal', () => {
 
     await page.setIonViewport();
 
-    await expect(await page.screenshot({ fullPage: true })).toHaveScreenshot(
-      `picker-internal-inline-diff-${page.getSnapshotSettings()}.png`
+    await expect(await page.screenshot()).toHaveScreenshot(
+      `picker-internal-inline-diff-${page.getSnapshotSettings()}.png`,{ fullPage: true }
     );
   });
 
@@ -86,8 +86,8 @@ test.describe('picker-internal', () => {
       await page.spyOnEvent('ionPopoverDidPresent');
       await page.waitForChanges();
 
-      await expect(await page.screenshot({ fullPage: true })).toHaveScreenshot(
-        `picker-internal-popover-diff-${page.getSnapshotSettings()}.png`
+      await expect(await page.screenshot()).toHaveScreenshot(
+        `picker-internal-popover-diff-${page.getSnapshotSettings()}.png`,{ fullPage: true }
       );
     });
 
@@ -101,8 +101,8 @@ test.describe('picker-internal', () => {
       await page.spyOnEvent('ionModalDidPresent');
       await page.waitForChanges();
 
-      await expect(await page.screenshot({ fullPage: true })).toHaveScreenshot(
-        `picker-internal-modal-diff-${page.getSnapshotSettings()}.png`
+      await expect(await page.screenshot()).toHaveScreenshot(
+        `picker-internal-modal-diff-${page.getSnapshotSettings()}.png`,{ fullPage: true }
       );
     });
   });

@@ -6,8 +6,8 @@ test.describe('split-pane: basic', () => {
     await page.setViewportSize(Viewports.large);
     await page.goto(`/src/components/split-pane/test/basic`);
 
-    await expect(await page.screenshot({ animations: 'disabled' })).toHaveScreenshot(
-      `split-pane-${page.getSnapshotSettings()}.png`
+    await expect(await page.screenshot()).toHaveScreenshot(
+      `split-pane-${page.getSnapshotSettings()}.png`,{ animations: 'disabled' }
     );
   });
   test('should collapse on smaller viewports', async ({ page, skip }) => {

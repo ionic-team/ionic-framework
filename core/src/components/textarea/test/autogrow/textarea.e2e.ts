@@ -20,7 +20,7 @@ test.describe('textarea: autogrow', () => {
 
     await nativeTextarea.type('Now, this is a story all about how');
 
-    await expect(await ionTextarea.screenshot({})).toHaveScreenshot(
+    await expect(await ionTextarea.screenshot()).toHaveScreenshot(
       `textarea-autogrow-initial-${page.getSnapshotSettings()}.png`
     );
 

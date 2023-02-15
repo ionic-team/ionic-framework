@@ -40,8 +40,8 @@ test.describe('select: basic', () => {
 
       await ionAlertDidPresent.next();
 
-      await expect(await page.screenshot({ animations: 'disabled' })).toHaveScreenshot(
-        `select-alert-diff-${page.getSnapshotSettings()}.png`
+      await expect(await page.screenshot()).toHaveScreenshot(
+        `select-alert-diff-${page.getSnapshotSettings()}.png`,{ animations: 'disabled' }
       );
 
       const alert = await page.locator('ion-alert');
@@ -60,8 +60,8 @@ test.describe('select: basic', () => {
 
       await ionActionSheetDidPresent.next();
 
-      await expect(await page.screenshot({ animations: 'disabled' })).toHaveScreenshot(
-        `select-action-sheet-diff-${page.getSnapshotSettings()}.png`
+      await expect(await page.screenshot()).toHaveScreenshot(
+        `select-action-sheet-diff-${page.getSnapshotSettings()}.png`,{ animations: 'disabled' }
       );
 
       const actionSheet = await page.locator('ion-action-sheet');
@@ -89,8 +89,8 @@ test.describe('select: basic', () => {
       const popoverOption1 = popover.locator('.select-interface-option:first-of-type ion-radio');
       await expect(popoverOption1).toBeFocused();
 
-      await expect(await page.screenshot({ animations: 'disabled' })).toHaveScreenshot(
-        `select-popover-diff-${page.getSnapshotSettings()}.png`
+      await expect(await page.screenshot()).toHaveScreenshot(
+        `select-popover-diff-${page.getSnapshotSettings()}.png`,{ animations: 'disabled' }
       );
 
       await popover.evaluate((el: HTMLIonPopoverElement) => el.dismiss());
