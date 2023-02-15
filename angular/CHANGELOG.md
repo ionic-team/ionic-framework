@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.0.0-beta.3](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.2...v7.0.0-beta.3) (2023-02-15)
+
+
+### Features
+
+* **textarea:** add legacy prop ([#26783](https://github.com/ionic-team/ionic/issues/26783)) ([f7f6f1d](https://github.com/ionic-team/ionic/commit/f7f6f1d9f9ffd30afbdccfb558bd73f42b112715))
+
+
+
+
+
+## [6.5.4](https://github.com/ionic-team/ionic/compare/v6.5.3...v6.5.4) (2023-02-15)
+
+
+### Bug Fixes
+
+* **deps:** update ionicons usage to v6.1.2 ([#26752](https://github.com/ionic-team/ionic/issues/26752)) ([c07933c](https://github.com/ionic-team/ionic/commit/c07933cb69b0c31d3e44263769a7a26ee81223f8))
+* **deps:** update ionicons usage to v6.1.3 ([#26772](https://github.com/ionic-team/ionic/issues/26772)) ([1c71983](https://github.com/ionic-team/ionic/commit/1c719833292d4cfbdecadf9838d8c783785222ad))
+
+
+
+
+
 # [7.0.0-beta.2](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.1...v7.0.0-beta.2) (2023-02-08)
 
 **Note:** Version bump only for package @ionic/angular
