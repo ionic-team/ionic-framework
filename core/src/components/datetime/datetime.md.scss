@@ -74,16 +74,10 @@
   font-size: $datetime-md-calendar-item-font-size;
 }
 
-.calendar-day:focus .calendar-day-highlight:after {
-  @include padding(8px, 8px, 8px, 8px);
+.calendar-day:focus .calendar-day-highlight {
+  background: current-color(base, 0.2);
 
-  background: current-color(base);
-
-  opacity: 0.2;
-}
-
-.calendar-day:focus .calendar-day-highlight.calendar-day-highlight-event:after {
-  background: inherit;
+  box-shadow: 0px 0px 0px 4px current-color(base, 0.2);
 }
 
 /**

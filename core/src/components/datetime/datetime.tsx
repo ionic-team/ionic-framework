@@ -2094,10 +2094,7 @@ export class Datetime implements ComponentInterface {
                 }}
               >
                 <div
-                  class={{
-                    'calendar-day-highlight': true,
-                    'calendar-day-highlight-event': dateStyle !== undefined,
-                  }}
+                  class="calendar-day-highlight"
                   style={{
                     backgroundColor: dateStyle?.backgroundColor,
                   }}

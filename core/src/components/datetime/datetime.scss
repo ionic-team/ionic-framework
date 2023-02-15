@@ -356,8 +356,7 @@ ion-picker-column-internal {
   opacity: 0.4;
 }
 
-.calendar-day-highlight,
-.calendar-day-highlight:after {
+.calendar-day-highlight {
   @include border-radius(32px, 32px, 32px, 32px);
   @include padding(4px, 4px, 4px, 4px);
 
@@ -381,10 +380,6 @@ ion-picker-column-internal {
   transform: translate(-50%, -50%);
 
   z-index: -1;
-}
-
-.calendar-day-highlight:after {
-  content: " ";
 }
 
 // Time / Header

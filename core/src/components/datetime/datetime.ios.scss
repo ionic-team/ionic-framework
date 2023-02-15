@@ -94,7 +94,9 @@
 
 .calendar-day:focus .calendar-day-highlight,
 .calendar-day.calendar-day-active .calendar-day-highlight {
-  background: current-color(base);
+  // !important is needed to overwrite custom highlight background, which is inline.
+  /* stylelint-disable-next-line declaration-no-important */
+  background: current-color(base) !important;
   
   opacity: 0.2;
 }
