@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.0.0-beta.3](https://github.com/ionic-team/ionic/compare/v6.5.4...v7.0.0-beta.3) (2023-02-15)
+
+
+
+# [7.0.0-beta.2](https://github.com/ionic-team/ionic/compare/v6.5.3...v7.0.0-beta.2) (2023-02-08)
+
+
+
+# [7.0.0-beta.1](https://github.com/ionic-team/ionic/compare/v6.5.2...v7.0.0-beta.1) (2023-02-01)
+
+
+
+# [7.0.0-beta.0](https://github.com/ionic-team/ionic/compare/v6.5.1...v7.0.0-beta.0) (2023-01-25)
+
+
+### Code Refactoring
+
+* **react:** only ship es modules ([#26044](https://github.com/ionic-team/ionic/issues/26044)) ([c946af2](https://github.com/ionic-team/ionic/commit/c946af29d3d65e4e78c03f0bbcb2376fd9d8c469))
+
+
+### Performance Improvements
+
+* **many:** reduce delay when performing overlay or page transitions ([#26189](https://github.com/ionic-team/ionic/issues/26189)) ([30e3a14](https://github.com/ionic-team/ionic/commit/30e3a1485d9bc94b31c297bdd05fa847b4bcfb56)), closes [#24346](https://github.com/ionic-team/ionic/issues/24346)
+
+
+### BREAKING CHANGES
+
+* **react:** `@ionic/react` and `@ionic/react-router` no longer ship a CommonJS entry point. Instead, only an ES Module entry point is provided for improved compatibility with Vite.
+
+
+
+
+
 ## [6.5.4](https://github.com/ionic-team/ionic/compare/v6.5.3...v6.5.4) (2023-02-15)
 
 **Note:** Version bump only for package @ionic/react-router
