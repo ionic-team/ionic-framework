@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.0.0-beta.3](https://github.com/ionic-team/ionic-framework/compare/v7.0.0-beta.2..v7.0.0-beta.3) (2023-02-15)
+
+
+### Bug Fixes
+
+* **checkbox, radio:** label is announced once on ios ([#26770](https://github.com/ionic-team/ionic-framework/issues/26770)) ([87bc749](https://github.com/ionic-team/ionic-framework/commit/87bc7490404b0406b511833a85b686f1db791f66)), closes [#26769](https://github.com/ionic-team/ionic-framework/issues/26769)
+* **form:** legacy deprecation is logged correctly ([#26784](https://github.com/ionic-team/ionic-framework/issues/26784)) ([180ee63](https://github.com/ionic-team/ionic-framework/commit/180ee63ff7d93f8800756d732e565123a59bcd3a))
+* **many:** resolve import errors with stencil apps ([#26781](https://github.com/ionic-team/ionic-framework/issues/26781)) ([1eea054](https://github.com/ionic-team/ionic-framework/commit/1eea054c127146999302888180fd1585e1021783)), closes [#26778](https://github.com/ionic-team/ionic-framework/issues/26778)
+* **range:** allow overflow on range bar container ([#26751](https://github.com/ionic-team/ionic-framework/issues/26751)) ([edf696c](https://github.com/ionic-team/ionic-framework/commit/edf696cac9e4a35545750f99bcd49a87ec504905))
+
+
+### Features
+
+* **textarea:** add legacy prop ([#26783](https://github.com/ionic-team/ionic-framework/issues/26783)) ([f7f6f1d](https://github.com/ionic-team/ionic-framework/commit/f7f6f1d9f9ffd30afbdccfb558bd73f42b112715))
+
+
+
+
+
 ## [6.5.4](https://github.com/ionic-team/ionic-framework/compare/v6.5.3...v6.5.4) (2023-02-15)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.0.0-beta.3](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.2...v7.0.0-beta.3) (2023-02-15)
+
+
+### Features
+
+* **textarea:** add legacy prop ([#26783](https://github.com/ionic-team/ionic/issues/26783)) ([f7f6f1d](https://github.com/ionic-team/ionic/commit/f7f6f1d9f9ffd30afbdccfb558bd73f42b112715))
+
+
+
+
+
 ## [6.5.4](https://github.com/ionic-team/ionic/compare/v6.5.3...v6.5.4) (2023-02-15)
 
 
