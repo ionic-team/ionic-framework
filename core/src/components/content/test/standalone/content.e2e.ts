@@ -8,7 +8,7 @@ test.describe('content: standalone', () => {
 
     await page.goto(`/src/components/content/test/standalone`);
 
-    expect(await page.screenshot({ fullPage: true })).toMatchSnapshot(
+    await expect(await page.screenshot({ fullPage: true })).toHaveScreenshot(
       `content-standalone-${page.getSnapshotSettings()}.png`
     );
   });

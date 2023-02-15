@@ -17,7 +17,7 @@ test.describe('datetime-button: rendering', () => {
     await dateButton.click();
     await ionModalDidPresent.next();
 
-    expect(await page.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+    await expect(await page.screenshot({ animations: 'disabled' })).toHaveScreenshot(
       `datetime-overlay-modal-${page.getSnapshotSettings()}.png`
     );
   });
@@ -36,7 +36,7 @@ test.describe('datetime-button: rendering', () => {
     await dateButton.click();
     await ionPopoverDidPresent.next();
 
-    expect(await page.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+    await expect(await page.screenshot({ animations: 'disabled' })).toHaveScreenshot(
       `datetime-overlay-popover-${page.getSnapshotSettings()}.png`
     );
   });

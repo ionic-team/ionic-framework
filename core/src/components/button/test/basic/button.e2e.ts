@@ -7,7 +7,7 @@ test.describe('button: basic', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`button-diff-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`button-diff-${page.getSnapshotSettings()}.png`);
   });
   test('should correctly set fill to undefined', async ({ page, skip }) => {
     test.info().annotations.push({
@@ -49,7 +49,7 @@ test.describe('button: ripple effect', () => {
 
     await page.waitForSelector('#default.ion-activated');
 
-    expect(await button.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+    await expect(await button.screenshot({ animations: 'disabled' })).toHaveScreenshot(
       `button-ripple-effect-${page.getSnapshotSettings()}.png`
     );
   });

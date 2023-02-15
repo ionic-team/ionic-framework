@@ -9,7 +9,7 @@ test.describe('fab: basic (visual checks)', () => {
   test('should not have visual regressions', async ({ page }) => {
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`fab-basic-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`fab-basic-${page.getSnapshotSettings()}.png`);
   });
 
   test('should not have visual regressions when open', async ({ page }) => {
@@ -29,7 +29,7 @@ test.describe('fab: basic (visual checks)', () => {
       height: 415,
     });
 
-    expect(await page.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+    await expect(await page.screenshot({ animations: 'disabled' })).toHaveScreenshot(
       `fab-open-${page.getSnapshotSettings()}.png`
     );
   });

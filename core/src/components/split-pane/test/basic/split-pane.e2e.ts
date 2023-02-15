@@ -6,7 +6,7 @@ test.describe('split-pane: basic', () => {
     await page.setViewportSize(Viewports.large);
     await page.goto(`/src/components/split-pane/test/basic`);
 
-    expect(await page.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+    await expect(await page.screenshot({ animations: 'disabled' })).toHaveScreenshot(
       `split-pane-${page.getSnapshotSettings()}.png`
     );
   });

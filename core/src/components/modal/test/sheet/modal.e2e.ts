@@ -10,7 +10,7 @@ test.describe('sheet modal: rendering', () => {
 
     await ionModalDidPresent.next();
 
-    expect(await page.screenshot()).toMatchSnapshot(`modal-sheet-present-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`modal-sheet-present-${page.getSnapshotSettings()}.png`);
   });
 });
 

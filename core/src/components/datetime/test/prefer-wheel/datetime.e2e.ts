@@ -20,25 +20,21 @@ test.describe('datetime: prefer wheel', () => {
         <ion-datetime size="cover" presentation="date" prefer-wheel="true" value="2019-05-30" max="2022"></ion-datetime>
       `);
 
-      expect(await page.screenshot()).toMatchSnapshot(`datetime-wheel-date-diff-${page.getSnapshotSettings()}.png`);
+      await expect(page).toHaveScreenshot(`datetime-wheel-date-diff-${page.getSnapshotSettings()}.png`);
     });
     test('should not have visual regressions for date-time wheel', async ({ page }) => {
       await page.setContent(`
         <ion-datetime size="cover" presentation="date-time" prefer-wheel="true" value="2019-05-30T16:30:00" max="2022"></ion-datetime>
       `);
 
-      expect(await page.screenshot()).toMatchSnapshot(
-        `datetime-wheel-date-time-diff-${page.getSnapshotSettings()}.png`
-      );
+      await expect(page).toHaveScreenshot(`datetime-wheel-date-time-diff-${page.getSnapshotSettings()}.png`);
     });
     test('should not have visual regressions for time-date wheel', async ({ page }) => {
       await page.setContent(`
         <ion-datetime size="cover" presentation="time-date" prefer-wheel="true" value="2019-05-30T16:30:00" max="2022"></ion-datetime>
       `);
 
-      expect(await page.screenshot()).toMatchSnapshot(
-        `datetime-wheel-time-date-diff-${page.getSnapshotSettings()}.png`
-      );
+      await expect(page).toHaveScreenshot(`datetime-wheel-time-date-diff-${page.getSnapshotSettings()}.png`);
     });
     test('should render a condense header when specified', async ({ page }) => {
       await page.setContent(`
@@ -48,9 +44,7 @@ test.describe('datetime: prefer wheel', () => {
 
       const datetime = page.locator('ion-datetime');
 
-      expect(await datetime.screenshot()).toMatchSnapshot(
-        `datetime-wheel-header-diff-${page.getSnapshotSettings()}.png`
-      );
+      await expect(datetime).toHaveScreenshot(`datetime-wheel-header-diff-${page.getSnapshotSettings()}.png`);
     });
   });
   test.describe('datetime: date wheel', () => {

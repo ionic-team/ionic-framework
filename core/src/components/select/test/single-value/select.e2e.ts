@@ -11,7 +11,7 @@ test.describe('select: single-value', () => {
 
     await ionAlertDidPresent.next();
 
-    expect(await page.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+    await expect(await page.screenshot({ animations: 'disabled' })).toHaveScreenshot(
       `select-single-value-diff-${page.getSnapshotSettings()}.png`
     );
   });

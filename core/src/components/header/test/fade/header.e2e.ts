@@ -12,7 +12,7 @@ test.describe('header: fade', () => {
     await page.goto('/src/components/header/test/fade');
 
     const header = page.locator('ion-header');
-    expect(await header.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+    await expect(await header.screenshot({ animations: 'disabled' })).toHaveScreenshot(
       `header-fade-not-blurred-diff-${page.getSnapshotSettings()}.png`
     );
 
@@ -20,7 +20,7 @@ test.describe('header: fade', () => {
     await content.evaluate((el: HTMLIonContentElement) => el.scrollToBottom(0));
     await page.waitForChanges();
 
-    expect(await header.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+    await expect(await header.screenshot({ animations: 'disabled' })).toHaveScreenshot(
       `header-fade-blurred-diff-${page.getSnapshotSettings()}.png`
     );
   });

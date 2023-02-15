@@ -23,7 +23,7 @@ test.describe('radio: rendering', () => {
     `);
 
     const radioGroup = page.locator('ion-radio-group');
-    expect(await radioGroup.screenshot()).toMatchSnapshot(`radio-group-unchecked-${page.getSnapshotSettings()}.png`);
+    await expect(radioGroup).toHaveScreenshot(`radio-group-unchecked-${page.getSnapshotSettings()}.png`);
   });
   test('should correctly render a checked radio group', async ({ page }) => {
     await page.setContent(`
@@ -46,7 +46,7 @@ test.describe('radio: rendering', () => {
     `);
 
     const radioGroup = page.locator('ion-radio-group');
-    expect(await radioGroup.screenshot()).toMatchSnapshot(`radio-group-checked-${page.getSnapshotSettings()}.png`);
+    await expect(radioGroup).toHaveScreenshot(`radio-group-checked-${page.getSnapshotSettings()}.png`);
   });
   test('should allow shadow parts to be styled', async ({ page }) => {
     await page.setContent(`
@@ -80,7 +80,7 @@ test.describe('radio: rendering', () => {
     `);
 
     const radioGroup = page.locator('ion-radio-group');
-    expect(await radioGroup.screenshot()).toMatchSnapshot(`radio-group-part-${page.getSnapshotSettings()}.png`);
+    await expect(radioGroup).toHaveScreenshot(`radio-group-part-${page.getSnapshotSettings()}.png`);
   });
   test('should apply color correctly', async ({ page }) => {
     await page.setContent(`
@@ -90,7 +90,7 @@ test.describe('radio: rendering', () => {
     const radio = page.locator('ion-radio');
     await radio.click();
     await page.waitForChanges();
-    expect(await radio.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+    await expect(await radio.screenshot({ animations: 'disabled' })).toHaveScreenshot(
       `radio-color-${page.getSnapshotSettings()}.png`
     );
   });

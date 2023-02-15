@@ -7,6 +7,6 @@ test.describe('back-button: toolbar', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`back-button-toolbar-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`back-button-toolbar-${page.getSnapshotSettings()}.png`);
   });
 });

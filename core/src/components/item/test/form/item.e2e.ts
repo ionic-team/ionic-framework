@@ -7,6 +7,6 @@ test.describe('item: form', () => {
 
     await page.setIonViewport({ resizeViewportWidth: true });
 
-    expect(await page.screenshot()).toMatchSnapshot(`item-form-diff-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`item-form-diff-${page.getSnapshotSettings()}.png`);
   });
 });

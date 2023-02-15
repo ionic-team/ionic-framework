@@ -40,7 +40,7 @@ test.describe('select: basic', () => {
 
       await ionAlertDidPresent.next();
 
-      expect(await page.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+      await expect(await page.screenshot({ animations: 'disabled' })).toHaveScreenshot(
         `select-alert-diff-${page.getSnapshotSettings()}.png`
       );
 
@@ -60,7 +60,7 @@ test.describe('select: basic', () => {
 
       await ionActionSheetDidPresent.next();
 
-      expect(await page.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+      await expect(await page.screenshot({ animations: 'disabled' })).toHaveScreenshot(
         `select-action-sheet-diff-${page.getSnapshotSettings()}.png`
       );
 
@@ -89,7 +89,7 @@ test.describe('select: basic', () => {
       const popoverOption1 = popover.locator('.select-interface-option:first-of-type ion-radio');
       await expect(popoverOption1).toBeFocused();
 
-      expect(await page.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+      await expect(await page.screenshot({ animations: 'disabled' })).toHaveScreenshot(
         `select-popover-diff-${page.getSnapshotSettings()}.png`
       );
 

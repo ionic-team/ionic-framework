@@ -7,6 +7,6 @@ test.describe('range: activeBarStart', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`range-activeBarStart-diff-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`range-activeBarStart-diff-${page.getSnapshotSettings()}.png`);
   });
 });

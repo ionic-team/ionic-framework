@@ -164,9 +164,7 @@ test.describe('datetime: footer', () => {
     await expect(confirmButton).toHaveText('Done');
 
     const datetime = page.locator('ion-datetime');
-    expect(await datetime.screenshot()).toMatchSnapshot(
-      `datetime-footer-default-buttons-${page.getSnapshotSettings()}.png`
-    );
+    await expect(datetime).toHaveScreenshot(`datetime-footer-default-buttons-${page.getSnapshotSettings()}.png`);
   });
   test('should render clear button', async ({ page }) => {
     await page.setContent('<ion-datetime value="2022-05-03" show-clear-button="true"></ion-datetime>');
@@ -175,9 +173,7 @@ test.describe('datetime: footer', () => {
     await expect(clearButton).toHaveText('Clear');
 
     const datetime = page.locator('ion-datetime');
-    expect(await datetime.screenshot()).toMatchSnapshot(
-      `datetime-footer-clear-button-${page.getSnapshotSettings()}.png`
-    );
+    await expect(datetime).toHaveScreenshot(`datetime-footer-clear-button-${page.getSnapshotSettings()}.png`);
   });
   test('should render default and clear buttons', async ({ page }) => {
     await page.setContent(
@@ -194,9 +190,7 @@ test.describe('datetime: footer', () => {
     await expect(clearButton).toHaveText('Clear');
 
     const datetime = page.locator('ion-datetime');
-    expect(await datetime.screenshot()).toMatchSnapshot(
-      `datetime-footer-default-clear-buttons-${page.getSnapshotSettings()}.png`
-    );
+    await expect(datetime).toHaveScreenshot(`datetime-footer-default-clear-buttons-${page.getSnapshotSettings()}.png`);
   });
   test('should render custom buttons', async ({ page }) => {
     await page.setContent(`
@@ -211,9 +205,7 @@ test.describe('datetime: footer', () => {
     await expect(customButton).toBeVisible();
 
     const datetime = page.locator('ion-datetime');
-    expect(await datetime.screenshot()).toMatchSnapshot(
-      `datetime-footer-custom-buttons-${page.getSnapshotSettings()}.png`
-    );
+    await expect(datetime).toHaveScreenshot(`datetime-footer-custom-buttons-${page.getSnapshotSettings()}.png`);
   });
 });
 
@@ -376,12 +368,10 @@ test('datetime: md highlight should not clip at start or end of month', async ({
 
   await page.waitForSelector('.datetime-ready');
 
-  expect(await datetime.screenshot()).toMatchSnapshot(
-    `date-highlight-start-of-month-${page.getSnapshotSettings()}.png`
-  );
+  await expect(datetime).toHaveScreenshot(`date-highlight-start-of-month-${page.getSnapshotSettings()}.png`);
 
   await datetime.evaluate((el: HTMLIonDatetimeElement) => (el.value = '2021-01-31'));
   await page.waitForChanges();
 
-  expect(await datetime.screenshot()).toMatchSnapshot(`date-highlight-end-of-month-${page.getSnapshotSettings()}.png`);
+  await expect(datetime).toHaveScreenshot(`date-highlight-end-of-month-${page.getSnapshotSettings()}.png`);
 });

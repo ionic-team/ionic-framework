@@ -10,6 +10,6 @@ test.describe('content: fullscreen', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`content-fullscreen-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`content-fullscreen-${page.getSnapshotSettings()}.png`);
   });
 });

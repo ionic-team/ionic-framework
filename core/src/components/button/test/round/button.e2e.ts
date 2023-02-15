@@ -8,6 +8,6 @@ test.describe('button: round', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`button-round-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`button-round-${page.getSnapshotSettings()}.png`);
   });
 });

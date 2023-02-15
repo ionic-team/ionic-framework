@@ -7,7 +7,7 @@ test.describe('item: highlight', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+    await expect(await page.screenshot({ animations: 'disabled' })).toHaveScreenshot(
       `item-highlight-diff-${page.getSnapshotSettings()}.png`
     );
   });

@@ -7,6 +7,6 @@ test.describe('item: dividers', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`item-dividers-diff-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`item-dividers-diff-${page.getSnapshotSettings()}.png`);
   });
 });

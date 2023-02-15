@@ -12,7 +12,7 @@ test.describe('button: size', () => {
 
     const wrapper = page.locator('ion-button');
 
-    expect(await wrapper.screenshot()).toMatchSnapshot(`button-size-small-${page.getSnapshotSettings()}.png`);
+    await expect(wrapper).toHaveScreenshot(`button-size-small-${page.getSnapshotSettings()}.png`);
   });
   test('should render large buttons', async ({ page }) => {
     await page.setContent(`
@@ -21,7 +21,7 @@ test.describe('button: size', () => {
 
     const wrapper = page.locator('ion-button');
 
-    expect(await wrapper.screenshot()).toMatchSnapshot(`button-size-large-${page.getSnapshotSettings()}.png`);
+    await expect(wrapper).toHaveScreenshot(`button-size-large-${page.getSnapshotSettings()}.png`);
   });
   test.describe('in ion-buttons', () => {
     test('should render small button', async ({ page }) => {
@@ -33,9 +33,7 @@ test.describe('button: size', () => {
 
       const wrapper = page.locator('ion-button');
 
-      expect(await wrapper.screenshot()).toMatchSnapshot(
-        `button-size-small-in-buttons-${page.getSnapshotSettings()}.png`
-      );
+      await expect(wrapper).toHaveScreenshot(`button-size-small-in-buttons-${page.getSnapshotSettings()}.png`);
     });
     test('should render large button', async ({ page }) => {
       await page.setContent(`
@@ -46,9 +44,7 @@ test.describe('button: size', () => {
 
       const wrapper = page.locator('ion-button');
 
-      expect(await wrapper.screenshot()).toMatchSnapshot(
-        `button-size-large-in-buttons-${page.getSnapshotSettings()}.png`
-      );
+      await expect(wrapper).toHaveScreenshot(`button-size-large-in-buttons-${page.getSnapshotSettings()}.png`);
     });
   });
 });

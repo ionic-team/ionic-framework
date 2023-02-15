@@ -17,7 +17,7 @@ test.describe('header: scroll-target', () => {
     await page.goto('/src/components/header/test/scroll-target');
 
     const header = page.locator('ion-header');
-    expect(await header.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+    await expect(await header.screenshot({ animations: 'disabled' })).toHaveScreenshot(
       `header-scroll-target-not-blurred-diff-${page.getSnapshotSettings()}.png`
     );
 
@@ -25,7 +25,7 @@ test.describe('header: scroll-target', () => {
     await scrollTarget.evaluate((el: HTMLDivElement) => (el.scrollTop = el.scrollHeight));
     await page.waitForChanges();
 
-    expect(await header.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+    await expect(await header.screenshot({ animations: 'disabled' })).toHaveScreenshot(
       `header-scroll-target-blurred-diff-${page.getSnapshotSettings()}.png`
     );
   });

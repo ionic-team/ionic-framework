@@ -22,6 +22,6 @@ test.describe('segment: icons', () => {
 
     const segment = page.locator('ion-segment');
 
-    expect(await segment.screenshot()).toMatchSnapshot(`segment-icons-${page.getSnapshotSettings()}.png`);
+    await expect(segment).toHaveScreenshot(`segment-icons-${page.getSnapshotSettings()}.png`);
   });
 });
