@@ -1,6 +1,6 @@
 {
   "name": "@ionic/vue",
-  "version": "6.5.2",
+  "version": "6.5.4",
   "description": "Vue specific wrapper for @ionic/core",
   "scripts": {
     "eslint": "eslint src",
@@ -68,8 +68,8 @@
     "vue-router": "^4.0.16"
   },
   "dependencies": {
-    "@ionic/core": "^6.5.2",
-    "ionicons": "^6.1.1"
+    "@ionic/core": "^6.5.4",
+    "ionicons": "^6.1.3"
   },
   "vetur": {
     "tags": "dist/vetur/tags.json",

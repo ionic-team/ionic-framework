@@ -11,7 +11,7 @@ test.describe('thumbnail: basic', () => {
 
     const referenceEl = page.locator('#img');
 
-    expect(await referenceEl.screenshot()).toMatchSnapshot(`thumbnail-img-diff-${page.getSnapshotSettings()}.png`);
+    await expect(referenceEl).toHaveScreenshot(`thumbnail-img-diff-${page.getSnapshotSettings()}.png`);
   });
 
   /**
@@ -22,6 +22,6 @@ test.describe('thumbnail: basic', () => {
   test('should not have visual regressions when rendering inside of an <ion-item>', async ({ page }) => {
     const referenceEl = page.locator('#ion-item');
 
-    expect(await referenceEl.screenshot()).toMatchSnapshot(`thumbnail-ion-item-diff-${page.getSnapshotSettings()}.png`);
+    await expect(referenceEl).toHaveScreenshot(`thumbnail-ion-item-diff-${page.getSnapshotSettings()}.png`);
   });
 });

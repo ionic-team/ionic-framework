@@ -8,8 +8,6 @@ test.describe('content: standalone', () => {
 
     await page.goto(`/src/components/content/test/standalone`);
 
-    expect(await page.screenshot({ fullPage: true })).toMatchSnapshot(
-      `content-standalone-${page.getSnapshotSettings()}.png`
-    );
+    await expect(page).toHaveScreenshot(`content-standalone-${page.getSnapshotSettings()}.png`, { fullPage: true });
   });
 });

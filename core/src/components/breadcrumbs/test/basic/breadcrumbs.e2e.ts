@@ -7,6 +7,6 @@ test.describe('breadcrumbs: basic', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`breadcrumb-diff-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`breadcrumb-diff-${page.getSnapshotSettings()}.png`);
   });
 });

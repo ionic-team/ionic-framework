@@ -22,7 +22,7 @@ test.describe('item: inputs', () => {
 
   test('should not have visual regressions', async ({ page }) => {
     await page.setIonViewport();
-    expect(await page.screenshot()).toMatchSnapshot(`item-inputs-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`item-inputs-${page.getSnapshotSettings()}.png`);
   });
 
   test('disabled controls should not have visual regressions', async ({ page }) => {
@@ -37,7 +37,7 @@ test.describe('item: inputs', () => {
     await ionPopoverDidDismiss.next();
 
     await page.setIonViewport();
-    expect(await page.screenshot()).toMatchSnapshot(`item-inputs-disabled-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`item-inputs-disabled-${page.getSnapshotSettings()}.png`);
   });
 
   test.describe('form data', () => {

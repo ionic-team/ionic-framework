@@ -18,6 +18,6 @@ test.describe('popover: arrow rendering', async () => {
       await openPopover(page, `${side}-trigger`, true);
     }
 
-    expect(await page.screenshot()).toMatchSnapshot(`popover-arrow-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`popover-arrow-${page.getSnapshotSettings()}.png`);
   });
 });

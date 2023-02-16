@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.5.4](https://github.com/ionic-team/ionic/compare/v6.5.3...v6.5.4) (2023-02-15)
+
+
+### Bug Fixes
+
+* **content:** fullscreen works when rotating device ([#26782](https://github.com/ionic-team/ionic/issues/26782)) ([7b879fe](https://github.com/ionic-team/ionic/commit/7b879fec3d30b61c00faad035698ff643afaa78e)), closes [#26743](https://github.com/ionic-team/ionic/issues/26743)
+* **deps:** update ionicons usage to v6.1.2 ([#26752](https://github.com/ionic-team/ionic/issues/26752)) ([c07933c](https://github.com/ionic-team/ionic/commit/c07933cb69b0c31d3e44263769a7a26ee81223f8))
+* **deps:** update ionicons usage to v6.1.3 ([#26772](https://github.com/ionic-team/ionic/issues/26772)) ([1c71983](https://github.com/ionic-team/ionic/commit/1c719833292d4cfbdecadf9838d8c783785222ad))
+* **tap-click:** instant activate does not use a setTimeout ([#26748](https://github.com/ionic-team/ionic/issues/26748)) ([21c0806](https://github.com/ionic-team/ionic/commit/21c0806bbd1417b1e6239bc56272e18b3ff38f2e))
+
+
+
+
+
+## [6.5.3](https://github.com/ionic-team/ionic/compare/v6.5.2...v6.5.3) (2023-02-08)
+
+
+### Bug Fixes
+
+* **button:** size and strong are respected in ion-buttons ([#26726](https://github.com/ionic-team/ionic/issues/26726)) ([3759125](https://github.com/ionic-team/ionic/commit/37591255b4ab3dde5ece6950024a3b66e7224364))
+* **chip:** descenders are not clipped in label ([#26729](https://github.com/ionic-team/ionic/issues/26729)) ([a9e000b](https://github.com/ionic-team/ionic/commit/a9e000b4338f75c27e9284dbe9a6501ba3b213bc)), closes [#18313](https://github.com/ionic-team/ionic/issues/18313)
+* **refresher:** prevent clearing virtual scroll overflow styling ([#26613](https://github.com/ionic-team/ionic/issues/26613)) ([9d6ec29](https://github.com/ionic-team/ionic/commit/9d6ec2925cb2314d5379b864aef467b34afbb318)), closes [#26553](https://github.com/ionic-team/ionic/issues/26553)
+
+
+
+
+
 ## [6.5.2](https://github.com/ionic-team/ionic/compare/v6.5.1...v6.5.2) (2023-02-01)
 
 

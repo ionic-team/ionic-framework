@@ -85,7 +85,7 @@ async function testMenu(page: E2EPage, menu: Locator, menuId: string) {
 
   await expect(menu).toHaveClass(/show-menu/);
 
-  expect(await page.screenshot()).toMatchSnapshot(`menu-basic-${menuId}-${page.getSnapshotSettings()}.png`);
+  await expect(page).toHaveScreenshot(`menu-basic-${menuId}-${page.getSnapshotSettings()}.png`);
 
   await menu.evaluate(async (el: HTMLIonMenuElement) => {
     await el.close();

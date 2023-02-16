@@ -8,6 +8,6 @@ test.describe('button: expand', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`button-expand-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`button-expand-${page.getSnapshotSettings()}.png`);
   });
 });
