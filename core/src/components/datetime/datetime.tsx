@@ -1925,7 +1925,7 @@ export class Datetime implements ComponentInterface {
             </ion-buttons>
           </div>
         </div>
-        <div class="calendar-days-of-week">
+        <div class="calendar-days-of-week" aria-hidden="true">
           {getDaysOfWeek(this.locale, mode, this.firstDayOfWeek % 7).map((d) => {
             return <div class="day-of-week">{d}</div>;
           })}
