@@ -298,7 +298,7 @@ export class Input implements ComponentInterface {
     const nativeInput = this.nativeInput;
     if (nativeInput) {
       nativeInput.removeEventListener('compositionstart', this.onCompositionStart);
-      nativeInput.removeEventListener('compositionEnd', this.onCompositionEnd);
+      nativeInput.removeEventListener('compositionend', this.onCompositionEnd);
     }
   }
 
