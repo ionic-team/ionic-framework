@@ -24,7 +24,7 @@ test.describe('popover: nested', async () => {
     await expect(nestedPopover).not.toHaveClass(/overlay-hidden/);
 
     await page.setIonViewport();
-    expect(await page.screenshot()).toMatchSnapshot(`popover-nested-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`popover-nested-${page.getSnapshotSettings()}.png`);
   });
 
   test('should dismiss when clicking backdrop', async ({ page }) => {
@@ -60,7 +60,7 @@ test.describe('popover: nested', async () => {
     await expect(nestedPopover).not.toHaveClass(/overlay-hidden/);
 
     await page.setIonViewport();
-    expect(await page.screenshot()).toMatchSnapshot(`popover-nested-multiple-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`popover-nested-multiple-${page.getSnapshotSettings()}.png`);
   });
 
   test('clicking backdrop should dismiss multiple levels of popover', async ({ page }) => {

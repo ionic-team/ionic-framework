@@ -37,9 +37,7 @@ class ToastFixture {
     const { page } = this;
 
     const reference = el !== undefined ? el : page;
-    expect(await reference.screenshot()).toMatchSnapshot(
-      `toast-${screenshotModifier}-${page.getSnapshotSettings()}.png`
-    );
+    await expect(reference).toHaveScreenshot(`toast-${screenshotModifier}-${page.getSnapshotSettings()}.png`);
   }
 
   skipRTL(testRef: typeof test, reason = 'This functionality does not have RTL-specific behaviors.') {

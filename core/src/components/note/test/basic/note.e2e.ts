@@ -10,7 +10,7 @@ test.describe('note: rendering', () => {
       <ion-note>99</ion-note>
     `);
     const note = page.locator('ion-note');
-    expect(await note.screenshot()).toMatchSnapshot(`note-diff-${page.getSnapshotSettings()}.png`);
+    await expect(note).toHaveScreenshot(`note-diff-${page.getSnapshotSettings()}.png`);
   });
 
   test('should render color correctly', async ({ page }) => {
@@ -18,7 +18,7 @@ test.describe('note: rendering', () => {
       <ion-note color="danger">99</ion-note>
     `);
     const note = page.locator('ion-note');
-    expect(await note.screenshot()).toMatchSnapshot(`note-color-${page.getSnapshotSettings()}.png`);
+    await expect(note).toHaveScreenshot(`note-color-${page.getSnapshotSettings()}.png`);
   });
 });
 
@@ -34,7 +34,7 @@ test.describe('note: item', () => {
       </ion-item>
     `);
     const item = page.locator('ion-item');
-    expect(await item.screenshot()).toMatchSnapshot(`note-item-start-${page.getSnapshotSettings()}.png`);
+    await expect(item).toHaveScreenshot(`note-item-start-${page.getSnapshotSettings()}.png`);
   });
 
   test('should not have visual regressions when in the end slot of an item', async ({ page }) => {
@@ -45,7 +45,7 @@ test.describe('note: item', () => {
       </ion-item>
     `);
     const item = page.locator('ion-item');
-    expect(await item.screenshot()).toMatchSnapshot(`note-item-end-${page.getSnapshotSettings()}.png`);
+    await expect(item).toHaveScreenshot(`note-item-end-${page.getSnapshotSettings()}.png`);
   });
 });
 
@@ -60,7 +60,7 @@ test.describe('note: item-divider', () => {
       </ion-item-divider>
     `);
     const itemDivider = page.locator('ion-item-divider');
-    expect(await itemDivider.screenshot()).toMatchSnapshot(`note-item-divider-start-${page.getSnapshotSettings()}.png`);
+    await expect(itemDivider).toHaveScreenshot(`note-item-divider-start-${page.getSnapshotSettings()}.png`);
   });
 
   test('should not have visual regressions when in the end slot of an item-divider', async ({ page }) => {
@@ -70,6 +70,6 @@ test.describe('note: item-divider', () => {
       </ion-item-divider>
     `);
     const itemDivider = page.locator('ion-item-divider');
-    expect(await itemDivider.screenshot()).toMatchSnapshot(`note-item-divider-end-${page.getSnapshotSettings()}.png`);
+    await expect(itemDivider).toHaveScreenshot(`note-item-divider-end-${page.getSnapshotSettings()}.png`);
   });
 });

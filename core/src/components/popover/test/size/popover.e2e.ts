@@ -19,7 +19,7 @@ test.describe('popover: size', async () => {
       await openPopover(page, trigger, true);
     }
 
-    expect(await page.screenshot()).toMatchSnapshot(`popover-size-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`popover-size-${page.getSnapshotSettings()}.png`);
 
     // test this one separately since it would overlap others
     await screenshotPopover(page, 'no-event-trigger', 'size');

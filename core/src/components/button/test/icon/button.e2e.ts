@@ -7,6 +7,6 @@ test.describe('button: icon', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`button-icon-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`button-icon-${page.getSnapshotSettings()}.png`);
   });
 });

@@ -7,6 +7,6 @@ test.describe('list: basic', () => {
 
     const list = page.locator('ion-list');
 
-    expect(await list.screenshot()).toMatchSnapshot(`list-basic-diff-${page.getSnapshotSettings()}.png`);
+    await expect(list).toHaveScreenshot(`list-basic-diff-${page.getSnapshotSettings()}.png`);
   });
 });
