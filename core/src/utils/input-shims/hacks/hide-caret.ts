@@ -30,6 +30,6 @@ export const enableHideCaretOnScroll = (
   return () => {
     removeEventListener(scrollEl, 'ionScrollStart', hideCaret);
     removeEventListener(scrollEl, 'ionScrollEnd', showCaret);
-    inputEl.removeEventListener('ionBlur', onBlur);
+    inputEl.removeEventListener('blur', onBlur);
   };
 };
