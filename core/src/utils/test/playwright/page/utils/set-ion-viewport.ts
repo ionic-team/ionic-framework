@@ -14,6 +14,8 @@ import type { SetIonViewportOptions } from '../../playwright-declarations';
  *
  */
 export const setIonViewport = async (page: Page, options?: SetIonViewportOptions) => {
+  await page.waitForFunction(() => (window as any).testAppLoaded === true, { timeout: 4750 });
+
   const currentViewport = page.viewportSize();
   const ionContent = await page.$('ion-content');
 
