@@ -17,9 +17,9 @@ test.describe('datetime-button: rendering', () => {
     await dateButton.click();
     await ionModalDidPresent.next();
 
-    expect(await page.screenshot({ animations: 'disabled' })).toMatchSnapshot(
-      `datetime-overlay-modal-${page.getSnapshotSettings()}.png`
-    );
+    await expect(page).toHaveScreenshot(`datetime-overlay-modal-${page.getSnapshotSettings()}.png`, {
+      animations: 'disabled',
+    });
   });
 
   test('should size the popover correctly', async ({ page, skip }) => {
@@ -36,9 +36,9 @@ test.describe('datetime-button: rendering', () => {
     await dateButton.click();
     await ionPopoverDidPresent.next();
 
-    expect(await page.screenshot({ animations: 'disabled' })).toMatchSnapshot(
-      `datetime-overlay-popover-${page.getSnapshotSettings()}.png`
-    );
+    await expect(page).toHaveScreenshot(`datetime-overlay-popover-${page.getSnapshotSettings()}.png`, {
+      animations: 'disabled',
+    });
   });
 });
 

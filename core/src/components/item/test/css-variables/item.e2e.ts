@@ -7,6 +7,6 @@ test.describe('item: CSS variables', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`item-css-vars-diff-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`item-css-vars-diff-${page.getSnapshotSettings()}.png`);
   });
 });

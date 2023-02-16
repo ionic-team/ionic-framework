@@ -19,7 +19,7 @@ test.describe('card: basic', () => {
       `);
 
       const card = page.locator('ion-card');
-      expect(await card.screenshot()).toMatchSnapshot(`card-diff-${page.getSnapshotSettings()}.png`);
+      await expect(card).toHaveScreenshot(`card-diff-${page.getSnapshotSettings()}.png`);
     });
   });
 
@@ -43,7 +43,7 @@ test.describe('card: basic', () => {
       `);
 
       const card = page.locator('ion-card');
-      expect(await card.screenshot()).toMatchSnapshot(`card-button-${page.getSnapshotSettings()}.png`);
+      await expect(card).toHaveScreenshot(`card-button-${page.getSnapshotSettings()}.png`);
     });
 
     test('should not have visual regressions with translucent cards', async ({ page, skip }) => {
@@ -64,7 +64,7 @@ test.describe('card: basic', () => {
       `);
 
       const card = page.locator('ion-card');
-      expect(await card.screenshot()).toMatchSnapshot(`card-translucent-${page.getSnapshotSettings()}.png`);
+      await expect(card).toHaveScreenshot(`card-translucent-${page.getSnapshotSettings()}.png`);
     });
 
     test('should not have visual regressions with disabled card', async ({ page }) => {
@@ -83,7 +83,7 @@ test.describe('card: basic', () => {
       `);
 
       const card = page.locator('ion-card');
-      expect(await card.screenshot()).toMatchSnapshot(`card-disabled-${page.getSnapshotSettings()}.png`);
+      await expect(card).toHaveScreenshot(`card-disabled-${page.getSnapshotSettings()}.png`);
     });
     test('should not have visual regressions with color', async ({ page }) => {
       await page.setContent(`
@@ -101,7 +101,7 @@ test.describe('card: basic', () => {
       `);
 
       const card = page.locator('ion-card');
-      expect(await card.screenshot()).toMatchSnapshot(`card-color-${page.getSnapshotSettings()}.png`);
+      await expect(card).toHaveScreenshot(`card-color-${page.getSnapshotSettings()}.png`);
     });
     test('headings should have correct size in card', async ({ page }) => {
       await page.setContent(`
@@ -119,7 +119,7 @@ test.describe('card: basic', () => {
       `);
 
       const card = page.locator('ion-card');
-      expect(await card.screenshot()).toMatchSnapshot(`card-headings-${page.getSnapshotSettings()}.png`);
+      await expect(card).toHaveScreenshot(`card-headings-${page.getSnapshotSettings()}.png`);
     });
     test('should render even without header or content elements', async ({ page }) => {
       await page.setContent(`
@@ -153,7 +153,7 @@ test.describe('card: basic', () => {
       `);
 
       const card = page.locator('ion-card');
-      expect(await card.screenshot()).toMatchSnapshot(`card-no-content-or-header-${page.getSnapshotSettings()}.png`);
+      await expect(card).toHaveScreenshot(`card-no-content-or-header-${page.getSnapshotSettings()}.png`);
     });
   });
 });

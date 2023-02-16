@@ -9,7 +9,7 @@ test.describe('spinner: basic', () => {
     test('should not have visual regressions', async ({ page }) => {
       await page.setIonViewport();
 
-      expect(await page.screenshot()).toMatchSnapshot(`spinner-basic-diff-${page.getSnapshotSettings()}.png`);
+      await expect(page).toHaveScreenshot(`spinner-basic-diff-${page.getSnapshotSettings()}.png`);
     });
   });
 });

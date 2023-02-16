@@ -10,6 +10,6 @@ test.describe('tab-bar: custom', () => {
 
     const tabBar = page.locator('ion-tab-bar.custom-all');
 
-    expect(await tabBar.screenshot()).toMatchSnapshot(`tab-bar-custom-${page.getSnapshotSettings()}.png`);
+    await expect(tabBar).toHaveScreenshot(`tab-bar-custom-${page.getSnapshotSettings()}.png`);
   });
 });

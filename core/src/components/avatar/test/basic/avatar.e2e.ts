@@ -12,11 +12,9 @@ test.describe('avatar: basic', () => {
     const avatarItemStart = page.locator('#avatar-item-start');
     const avatarItemEnd = page.locator('#avatar-item-end');
 
-    expect(await avatar.screenshot()).toMatchSnapshot(`avatar-diff-${page.getSnapshotSettings()}.png`);
-    expect(await avatarChip.screenshot()).toMatchSnapshot(`avatar-chip-diff-${page.getSnapshotSettings()}.png`);
-    expect(await avatarItemStart.screenshot()).toMatchSnapshot(
-      `avatar-item-start-diff-${page.getSnapshotSettings()}.png`
-    );
-    expect(await avatarItemEnd.screenshot()).toMatchSnapshot(`avatar-item-end-diff-${page.getSnapshotSettings()}.png`);
+    await expect(avatar).toHaveScreenshot(`avatar-diff-${page.getSnapshotSettings()}.png`);
+    await expect(avatarChip).toHaveScreenshot(`avatar-chip-diff-${page.getSnapshotSettings()}.png`);
+    await expect(avatarItemStart).toHaveScreenshot(`avatar-item-start-diff-${page.getSnapshotSettings()}.png`);
+    await expect(avatarItemEnd).toHaveScreenshot(`avatar-item-end-diff-${page.getSnapshotSettings()}.png`);
   });
 });

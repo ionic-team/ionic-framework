@@ -9,6 +9,6 @@ test.describe('segment: custom', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`segment-custom-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`segment-custom-${page.getSnapshotSettings()}.png`);
   });
 });

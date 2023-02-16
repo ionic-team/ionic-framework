@@ -22,6 +22,6 @@ test.describe('popover: position', async () => {
       }
     }
 
-    expect(await page.screenshot()).toMatchSnapshot(`popover-position-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`popover-position-${page.getSnapshotSettings()}.png`);
   });
 });

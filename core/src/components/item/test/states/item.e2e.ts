@@ -7,6 +7,6 @@ test.describe('item: states', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`item-states-diff-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`item-states-diff-${page.getSnapshotSettings()}.png`);
   });
 });

@@ -7,6 +7,6 @@ test.describe('progress-bar: basic', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`progress-bar-basic-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`progress-bar-basic-${page.getSnapshotSettings()}.png`);
   });
 });
