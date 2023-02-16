@@ -36,8 +36,13 @@ class ToastFixture {
   async screenshot(screenshotModifier: string, el?: Locator) {
     const { page } = this;
 
-    const reference = el !== undefined ? el : page;
-    await expect(reference).toHaveScreenshot(`toast-${screenshotModifier}-${page.getSnapshotSettings()}.png`);
+    const screenshotString = `toast-${screenshotModifier}-${page.getSnapshotSettings()}.png`;
+
+    if (el === undefined) {
+      await expect(page).toHaveScreenshot(screenshotString);
+    } else {
+      await expect(el).toHaveScreenshot(screenshotString);
+    }
   }
 
   skipRTL(testRef: typeof test, reason = 'This functionality does not have RTL-specific behaviors.') {
@@ -151,7 +156,7 @@ test.describe('toast: duration config', () => {
       <ion-toast></ion-toast>
       <script>
         window.Ionic = {
-          config: { toastDuration: 5000 } 
+          config: { toastDuration: 5000 }
         }
       </script>
     `);
