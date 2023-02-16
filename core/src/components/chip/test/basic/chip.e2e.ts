@@ -7,7 +7,7 @@ test.describe('chip: rendering', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`chip-basic-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`chip-basic-${page.getSnapshotSettings()}.png`);
   });
 
   test('should not clip descenders in item', async ({ page, skip }) => {
@@ -31,6 +31,6 @@ test.describe('chip: rendering', () => {
 
     const chip = page.locator('ion-chip');
 
-    expect(await chip.screenshot()).toMatchSnapshot(`chip-descender-${page.getSnapshotSettings()}.png`);
+    await expect(chip).toHaveScreenshot(`chip-descender-${page.getSnapshotSettings()}.png`);
   });
 });

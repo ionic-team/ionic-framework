@@ -9,6 +9,6 @@ test.describe('item-divider: spec', () => {
   test('should not have visual regressions', async ({ page }) => {
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`list-item-divider-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`list-item-divider-${page.getSnapshotSettings()}.png`);
   });
 });

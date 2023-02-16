@@ -19,6 +19,6 @@ test.describe('segment: scrollable', () => {
 
     const segment = page.locator('ion-segment');
 
-    expect(await segment.screenshot()).toMatchSnapshot(`segment-scrollable-${page.getSnapshotSettings()}.png`);
+    await expect(segment).toHaveScreenshot(`segment-scrollable-${page.getSnapshotSettings()}.png`);
   });
 });

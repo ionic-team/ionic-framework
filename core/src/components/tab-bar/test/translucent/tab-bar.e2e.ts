@@ -32,6 +32,6 @@ test.describe('tab-bar: translucent', () => {
 
     const tabBar = page.locator('ion-tab-bar');
 
-    expect(await tabBar.screenshot()).toMatchSnapshot(`tab-bar-translucent-${page.getSnapshotSettings()}.png`);
+    await expect(tabBar).toHaveScreenshot(`tab-bar-translucent-${page.getSnapshotSettings()}.png`);
   });
 });

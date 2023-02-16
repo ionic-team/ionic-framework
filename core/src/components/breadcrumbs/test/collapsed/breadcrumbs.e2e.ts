@@ -7,6 +7,6 @@ test.describe('breadcrumbs: collapsed', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`breadcrumb-collapsed-diff-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`breadcrumb-collapsed-diff-${page.getSnapshotSettings()}.png`);
   });
 });

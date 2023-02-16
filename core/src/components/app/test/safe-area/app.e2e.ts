@@ -12,7 +12,7 @@ test.describe('app: safe-area', () => {
     // Sometimes the inner content takes a frame or two to render
     await page.waitForChanges();
 
-    expect(await page.screenshot()).toMatchSnapshot(`app-${screenshotModifier}-diff-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`app-${screenshotModifier}-diff-${page.getSnapshotSettings()}.png`);
   };
   test.beforeEach(async ({ page, skip }) => {
     skip.rtl('Safe area tests only check top and bottom edges. RTL checks are not required here.');

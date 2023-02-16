@@ -13,9 +13,7 @@ test.describe('modal: custom rendering', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(
-      `modal-custom-present-${screenshotModifier}${page.getSnapshotSettings()}.png`
-    );
+    await expect(page).toHaveScreenshot(`modal-custom-present-${screenshotModifier}${page.getSnapshotSettings()}.png`);
   };
   test('should not have visual regressions', async ({ page }) => {
     await runVisualTests(page);

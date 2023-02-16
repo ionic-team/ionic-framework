@@ -11,6 +11,6 @@ test.describe('alert: standalone', () => {
     await page.click('#basic');
     await didPresent.next();
 
-    expect(await alert.screenshot()).toMatchSnapshot(`alert-standalone-${page.getSnapshotSettings()}.png`);
+    await expect(alert).toHaveScreenshot(`alert-standalone-${page.getSnapshotSettings()}.png`);
   });
 });

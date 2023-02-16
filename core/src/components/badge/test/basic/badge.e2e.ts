@@ -7,6 +7,6 @@ test.describe('badge: rendering', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`badge-basic-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`badge-basic-${page.getSnapshotSettings()}.png`);
   });
 });
