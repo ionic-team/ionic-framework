@@ -36,10 +36,5 @@ export const goto = async (page: Page, url: string, options: any, testInfo: Test
     });
   }
 
-  const result = await Promise.all([
-    page.waitForFunction(() => (window as any).testAppLoaded === true, { timeout: 4750 }),
-    originalFn(formattedUrl, options),
-  ]);
-
-  return result[1];
+  return originalFn(formattedUrl, options);
 };
