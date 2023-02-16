@@ -2056,7 +2056,7 @@ export class Datetime implements ComponentInterface {
                 }}
                 style={
                   dateStyle && {
-                    color: dateStyle.color,
+                    color: dateStyle.textColor,
                   }
                 }
                 aria-selected={ariaSelected}

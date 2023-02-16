@@ -205,7 +205,7 @@ export const getHighlightStyles = (
     const matchingHighlight = highlightedDates.find((hd) => hd.date === dateStringWithoutTime);
     if (matchingHighlight) {
       return {
-        color: matchingHighlight.color,
+        textColor: matchingHighlight.textColor,
         backgroundColor: matchingHighlight.backgroundColor,
       } as DatetimeHighlightStyle;
     }

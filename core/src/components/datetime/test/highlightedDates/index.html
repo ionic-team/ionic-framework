@@ -65,17 +65,17 @@
       document.querySelector('#withArray').highlightedDates = [
         {
           date: '2023-01-02',
-          color: 'purple',
+          textColor: 'purple',
           backgroundColor: 'pink',
         },
         {
           date: '2023-01-04',
-          color: 'firebrick',
+          textColor: 'firebrick',
           backgroundColor: 'salmon',
         },
         {
           date: '2023-01-06',
-          color: 'blue',
+          textColor: 'blue',
           backgroundColor: 'lightblue',
         },
       ];
@@ -85,14 +85,14 @@
         const utcDay = date.getUTCDate();
         if (utcDay % 5 === 0) {
           return {
-            color: 'purple',
+            textColor: 'purple',
             backgroundColor: 'pink',
           };
         }
 
         if (utcDay % 3 === 0) {
           return {
-            color: 'blue',
+            textColor: 'blue',
             backgroundColor: 'lightblue',
           };
         }
@@ -101,7 +101,7 @@
       document.querySelector('#highlightToday').highlightedDates = [
         {
           date: new Date().toISOString().split('T')[0],
-          color: 'purple',
+          textColor: 'purple',
           backgroundColor: 'pink',
         },
       ];

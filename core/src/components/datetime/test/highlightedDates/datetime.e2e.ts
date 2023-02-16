@@ -17,17 +17,17 @@ test.describe('datetime: highlightedDates', () => {
       el.highlightedDates = [
         {
           date: '2023-01-01', // ensure selected date style overrides highlight
-          color: '#800080',
+          textColor: '#800080',
           backgroundColor: '#ffc0cb',
         },
         {
           date: '2023-01-02',
-          color: '#b22222',
+          textColor: '#b22222',
           backgroundColor: '#fa8072',
         },
         {
           date: '2023-01-03',
-          color: '#0000ff',
+          textColor: '#0000ff',
           backgroundColor: '#add8e6',
         },
       ];
@@ -50,21 +50,21 @@ test.describe('datetime: highlightedDates', () => {
         // ensure selected date style overrides highlight
         if (utcDay === 1) {
           return {
-            color: '#b22222',
+            textColor: '#b22222',
             backgroundColor: '#fa8072',
           };
         }
 
         if (utcDay % 5 === 0) {
           return {
-            color: '#800080',
+            textColor: '#800080',
             backgroundColor: '#ffc0cb',
           };
         }
 
         if (utcDay % 3 === 0) {
           return {
-            color: '#0000ff',
+            textColor: '#0000ff',
             backgroundColor: '#add8e6',
           };
         }
@@ -90,7 +90,7 @@ test.describe('datetime: highlightedDates', () => {
         },
         {
           date: '2023-01-03',
-          color: '#0000ff',
+          textColor: '#0000ff',
         },
       ];
     });

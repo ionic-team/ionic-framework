@@ -28,11 +28,11 @@ export type TitleSelectedDatesFormatter = (selectedDates: string[]) => string;
 
 export type DatetimeHighlightStyle =
   | {
-      color: string;
+      textColor: string;
       backgroundColor?: string;
     }
   | {
-      color?: string;
+      textColor?: string;
       backgroundColor: string;
     };
 
