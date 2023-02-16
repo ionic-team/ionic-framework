@@ -47,7 +47,7 @@ test.describe('select-popover: basic', () => {
       await expect(selectPopoverPage.popover).not.toBeVisible();
     });
 
-    test('pressing Space on a selected option should dismiss the popover', async ({ page, browserName }) => {
+    test('pressing Space on a selected option should dismiss the popover', async ({ browserName }) => {
       test.skip(browserName === 'firefox', 'Same behavior as https://ionic-cloud.atlassian.net/browse/FW-2979');
 
       await selectPopoverPage.updateOptions([
