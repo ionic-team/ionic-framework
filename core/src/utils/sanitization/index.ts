@@ -103,10 +103,21 @@ const sanitizeElement = (element: any) => {
     // that attempt to do any JS funny-business
     const attributeValue = attribute.value;
 
-    /* eslint-disable-next-line */
-    if (attributeValue != null && attributeValue.toLowerCase().includes('javascript:')) {
+    /**
+     * We also need to check the property value
+     * as javascript: can allow special characters
+     * such as &Tab; and still be valid (i.e. java&Tab;script)
+     */
+    const propertyValue = element[attributeName];
+
+    /* eslint-disable */
+    if (
+      (attributeValue != null && attributeValue.toLowerCase().includes('javascript:')) ||
+      (propertyValue != null && propertyValue.toLowerCase().includes('javascript:'))
+    ) {
       element.removeAttribute(attributeName);
     }
+    /* eslint-enable */
   }
 
   /**
