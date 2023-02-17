@@ -89,6 +89,17 @@ const sanitizeElement = (element: any) => {
     return;
   }
 
+  /**
+   * If attributes is not a NamedNodeMap
+   * then we should remove the element entirely.
+   * This helps avoid DOM Clobbering attacks where
+   * attributes is overridden.
+   */
+  if (typeof NamedNodeMap !== 'undefined' && !(element.attributes instanceof NamedNodeMap)) {
+    element.remove();
+    return;
+  }
+
   for (let i = element.attributes.length - 1; i >= 0; i--) {
     const attribute = element.attributes.item(i);
     const attributeName = attribute.name;
