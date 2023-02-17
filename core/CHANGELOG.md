@@ -3,6 +3,45 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.0.0-beta.3](https://github.com/ionic-team/ionic/compare/v6.5.4...v7.0.0-beta.3) (2023-02-15)
+
+
+### Bug Fixes
+
+* **checkbox, radio:** label is announced once on ios ([#26770](https://github.com/ionic-team/ionic/issues/26770)) ([87bc749](https://github.com/ionic-team/ionic/commit/87bc7490404b0406b511833a85b686f1db791f66)), closes [#26769](https://github.com/ionic-team/ionic/issues/26769)
+* **form:** legacy deprecation is logged correctly ([#26784](https://github.com/ionic-team/ionic/issues/26784)) ([180ee63](https://github.com/ionic-team/ionic/commit/180ee63ff7d93f8800756d732e565123a59bcd3a))
+* **many:** resolve import errors with stencil apps ([#26781](https://github.com/ionic-team/ionic/issues/26781)) ([1eea054](https://github.com/ionic-team/ionic/commit/1eea054c127146999302888180fd1585e1021783)), closes [#26778](https://github.com/ionic-team/ionic/issues/26778)
+* **range:** allow overflow on range bar container ([#26751](https://github.com/ionic-team/ionic/issues/26751)) ([edf696c](https://github.com/ionic-team/ionic/commit/edf696cac9e4a35545750f99bcd49a87ec504905))
+
+
+### Features
+
+* **textarea:** add legacy prop ([#26783](https://github.com/ionic-team/ionic/issues/26783)) ([f7f6f1d](https://github.com/ionic-team/ionic/commit/f7f6f1d9f9ffd30afbdccfb558bd73f42b112715))
+
+
+
+# [7.0.0-beta.2](https://github.com/ionic-team/ionic/compare/v6.5.3...v7.0.0-beta.2) (2023-02-08)
+
+
+### Bug Fixes
+
+* **input, textarea:** bottom content is rendered correctly ([#26739](https://github.com/ionic-team/ionic/issues/26739)) ([39009ac](https://github.com/ionic-team/ionic/commit/39009ac6eff0e51707efc3ef3981e1b7614eb2e3)), closes [#26737](https://github.com/ionic-team/ionic/issues/26737)
+* **input:** update disabled opacity of md input ([#26514](https://github.com/ionic-team/ionic/issues/26514)) ([90f4995](https://github.com/ionic-team/ionic/commit/90f4995aa63c730d3feb1fc88582f034153c9b9c))
+* **radio:** remove radio min-height sizing ([#26719](https://github.com/ionic-team/ionic/issues/26719)) ([2a6bba0](https://github.com/ionic-team/ionic/commit/2a6bba0cb60666a4a97da427fa7d179aab49f148))
+* **range:** assign auto increment id by default ([#26740](https://github.com/ionic-team/ionic/issues/26740)) ([92b06f2](https://github.com/ionic-team/ionic/commit/92b06f2eb6f6980561c584193cb70157bedec12b))
+
+
+### Performance Improvements
+
+* **gesture:** reduce delay with adding and removing activated states ([#26741](https://github.com/ionic-team/ionic/issues/26741)) ([4cff442](https://github.com/ionic-team/ionic/commit/4cff442c4f25596e76a674f18e79d0531a464fbf)), closes [#23691](https://github.com/ionic-team/ionic/issues/23691)
+
+
+### BREAKING CHANGES
+
+* **range:** The `name` property on `ion-range` defaults to `ion-r-${rangeIds++}` where `rangeIds` is a number that is incremented for every instance of the component.
+
+
+
 # [7.0.0-beta.1](https://github.com/ionic-team/ionic/compare/v6.5.2...v7.0.0-beta.1) (2023-02-01)
 
 
@@ -140,6 +179,69 @@ Developers can add the following CSS to their global stylesheet if they need the
 ```
 * **overlays:** Ionic now listens on the `keydown` event instead of the `keyup` event when determining when to dismiss overlays via the "Escape" key. Any applications that were listening on `keyup` to suppress this behavior should listen on `keydown` instead. 
 
+
+
+
+
+## [6.5.4](https://github.com/ionic-team/ionic/compare/v6.5.3...v6.5.4) (2023-02-15)
+
+
+### Bug Fixes
+
+* **content:** fullscreen works when rotating device ([#26782](https://github.com/ionic-team/ionic/issues/26782)) ([7b879fe](https://github.com/ionic-team/ionic/commit/7b879fec3d30b61c00faad035698ff643afaa78e)), closes [#26743](https://github.com/ionic-team/ionic/issues/26743)
+* **deps:** update ionicons usage to v6.1.2 ([#26752](https://github.com/ionic-team/ionic/issues/26752)) ([c07933c](https://github.com/ionic-team/ionic/commit/c07933cb69b0c31d3e44263769a7a26ee81223f8))
+* **deps:** update ionicons usage to v6.1.3 ([#26772](https://github.com/ionic-team/ionic/issues/26772)) ([1c71983](https://github.com/ionic-team/ionic/commit/1c719833292d4cfbdecadf9838d8c783785222ad))
+* **tap-click:** instant activate does not use a setTimeout ([#26748](https://github.com/ionic-team/ionic/issues/26748)) ([21c0806](https://github.com/ionic-team/ionic/commit/21c0806bbd1417b1e6239bc56272e18b3ff38f2e))
+
+
+
+
+
+# [7.0.0-beta.2](https://github.com/ionic-team/ionic/compare/v6.5.3...v7.0.0-beta.2) (2023-02-08)
+
+
+### Bug Fixes
+
+* **input, textarea:** bottom content is rendered correctly ([#26739](https://github.com/ionic-team/ionic/issues/26739)) ([39009ac](https://github.com/ionic-team/ionic/commit/39009ac6eff0e51707efc3ef3981e1b7614eb2e3)), closes [#26737](https://github.com/ionic-team/ionic/issues/26737)
+* **input:** update disabled opacity of md input ([#26514](https://github.com/ionic-team/ionic/issues/26514)) ([90f4995](https://github.com/ionic-team/ionic/commit/90f4995aa63c730d3feb1fc88582f034153c9b9c))
+* **radio:** remove radio min-height sizing ([#26719](https://github.com/ionic-team/ionic/issues/26719)) ([2a6bba0](https://github.com/ionic-team/ionic/commit/2a6bba0cb60666a4a97da427fa7d179aab49f148))
+* **range:** assign auto increment id by default ([#26740](https://github.com/ionic-team/ionic/issues/26740)) ([92b06f2](https://github.com/ionic-team/ionic/commit/92b06f2eb6f6980561c584193cb70157bedec12b))
+
+
+### Performance Improvements
+
+* **gesture:** reduce delay with adding and removing activated states ([#26741](https://github.com/ionic-team/ionic/issues/26741)) ([4cff442](https://github.com/ionic-team/ionic/commit/4cff442c4f25596e76a674f18e79d0531a464fbf)), closes [#23691](https://github.com/ionic-team/ionic/issues/23691)
+
+
+### BREAKING CHANGES
+
+* **range:** The `name` property on `ion-range` defaults to `ion-r-${rangeIds++}` where `rangeIds` is a number that is incremented for every instance of the component.
+
+
+
+
+
+## [6.5.3](https://github.com/ionic-team/ionic/compare/v6.5.2...v6.5.3) (2023-02-08)
+
+* **button:** size and strong are respected in ion-buttons ([#26726](https://github.com/ionic-team/ionic/issues/26726)) ([3759125](https://github.com/ionic-team/ionic/commit/37591255b4ab3dde5ece6950024a3b66e7224364))
+* **chip:** descenders are not clipped in label ([#26729](https://github.com/ionic-team/ionic/issues/26729)) ([a9e000b](https://github.com/ionic-team/ionic/commit/a9e000b4338f75c27e9284dbe9a6501ba3b213bc)), closes [#18313](https://github.com/ionic-team/ionic/issues/18313)
+* **refresher:** prevent clearing virtual scroll overflow styling ([#26613](https://github.com/ionic-team/ionic/issues/26613)) ([9d6ec29](https://github.com/ionic-team/ionic/commit/9d6ec2925cb2314d5379b864aef467b34afbb318)), closes [#26553](https://github.com/ionic-team/ionic/issues/26553)
+
+
+
+# [7.0.0-beta.1](https://github.com/ionic-team/ionic/compare/v6.5.2...v7.0.0-beta.1) (2023-02-01)
+
+
+### Bug Fixes
+
+* **input, textarea, select:** do not show highlight in item ([#26689](https://github.com/ionic-team/ionic/issues/26689)) ([16b60a6](https://github.com/ionic-team/ionic/commit/16b60a612c1c8053cec3509749ad9e9b185b93be)), closes [#26687](https://github.com/ionic-team/ionic/issues/26687)
+* **many:** legacy form control does not warn when using aria-labelledby ([#26699](https://github.com/ionic-team/ionic/issues/26699)) ([63f8525](https://github.com/ionic-team/ionic/commit/63f8525284abf2792305aebb27b9b439a8921bcf)), closes [#26698](https://github.com/ionic-team/ionic/issues/26698)
+* **textarea:** textarea wrapper inherits height ([#26707](https://github.com/ionic-team/ionic/issues/26707)) ([e6c7c57](https://github.com/ionic-team/ionic/commit/e6c7c574665897d8fd2184797bc4017f688a2b0e))
+
+
+### Reverts
+
+* revert base components feature ([#26692](https://github.com/ionic-team/ionic/issues/26692)) ([b78b454](https://github.com/ionic-team/ionic/commit/b78b454e089462afa866972b97bb06faa84bd319))
 
 
 

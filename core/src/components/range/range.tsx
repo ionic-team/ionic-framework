@@ -763,7 +763,16 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
 
         <div class="range-bar-container">
           <div class="range-bar" role="presentation" part="bar" />
-          <div class="range-bar range-bar-active" role="presentation" style={barStyle} part="bar-active" />
+          <div
+            class={{
+              'range-bar': true,
+              'range-bar-active': true,
+              'has-ticks': ticks.length > 0,
+            }}
+            role="presentation"
+            style={barStyle}
+            part="bar-active"
+          />
         </div>
 
         {renderKnob(rtl, {

@@ -3,6 +3,7 @@ name: 'Ionic Framework Build'
 on:
   pull_request:
     branches: [ '**' ]
+  merge_group:
 
 # When pushing a new commit we should
 # cancel the previous test run to not
@@ -44,10 +45,6 @@ jobs:
 
   test-core-screenshot:
     strategy:
-      # This ensures that all screenshot shard
-      # failures are reported so the dev can
-      # review everything at once.
-      fail-fast: false
       matrix:
         # Divide the tests into n buckets
         # and run those buckets in parallel.

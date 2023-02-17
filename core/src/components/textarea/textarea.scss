@@ -382,6 +382,8 @@
 
 .textarea-bottom .helper-text {
   display: block;
+
+  color: #{$background-color-step-550};
 }
 
 :host(.ion-invalid) .textarea-bottom .error-text {
