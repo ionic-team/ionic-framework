@@ -24,7 +24,6 @@ import { NavParams } from '../directives/navigation/nav-params';
 
 @Injectable()
 export class AngularDelegate {
-
   private zone = inject(NgZone);
   private appRef = inject(ApplicationRef);
 
@@ -56,7 +55,7 @@ export class AngularFrameworkDelegate implements FrameworkDelegate {
     private appRef: ApplicationRef,
     private zone: NgZone,
     private elementReferenceKey?: string
-  ) { }
+  ) {}
 
   attachViewToDom(container: any, component: any, params?: any, cssClasses?: string[]): Promise<any> {
     return this.zone.run(() => {

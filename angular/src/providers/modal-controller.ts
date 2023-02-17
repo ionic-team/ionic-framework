@@ -7,7 +7,6 @@ import { AngularDelegate } from './angular-delegate';
 
 @Injectable()
 export class ModalController extends OverlayBaseController<ModalOptions, HTMLIonModalElement> {
-
   private angularDelegate = inject(AngularDelegate);
   private injector = inject(Injector);
   private environmentInjector = inject(EnvironmentInjector);
@@ -19,12 +18,7 @@ export class ModalController extends OverlayBaseController<ModalOptions, HTMLIon
   create(opts: ModalOptions): Promise<HTMLIonModalElement> {
     return super.create({
       ...opts,
-      delegate: this.angularDelegate.create(
-        this.environmentInjector,
-        this.injector,
-        undefined,
-        'modal'
-      ),
+      delegate: this.angularDelegate.create(this.environmentInjector, this.injector, undefined, 'modal'),
     });
   }
 }
