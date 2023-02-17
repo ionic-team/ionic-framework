@@ -13,6 +13,16 @@ export const sanitizeDOMString = (untrustedString: IonicSafeString | string | un
     }
 
     /**
+     * onload is fired when appending to a document
+     * fragment in Chrome. If a string
+     * contains onload then we should not
+     * attempt to add this to the fragment.
+     */
+    if (untrustedString.includes('onload=')) {
+      return '';
+    }
+
+    /**
      * Create a document fragment
      * separate from the main DOM,
      * create a div to do our work in
