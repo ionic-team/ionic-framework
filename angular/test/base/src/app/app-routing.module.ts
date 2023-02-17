@@ -39,6 +39,7 @@ const routes: Routes = [
   { path: 'router-link-page', component: RouterLinkPageComponent },
   { path: 'router-link-page2/:id', component: RouterLinkPage2Component },
   { path: 'router-link-page3', component: RouterLinkPage3Component },
+  { path: 'standalone', loadComponent: () => import('./standalone/standalone.component').then(c => c.StandaloneComponent) },
   { path: 'tabs', redirectTo: '/tabs/account', pathMatch: 'full' },
   {
     path: 'navigation',
