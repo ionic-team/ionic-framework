@@ -7,7 +7,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 - [Version 6.x](#version-6x)
 - [Version 5.x](./BREAKING_ARCHIVE/v5.md)
 - [Version 4.x](./BREAKING_ARCHIVE/v4.md)
-- [Legacy](./BREAKING_ARCHIVE/legacy.md)
+- [Legacy](https://github.com/ionic-team/ionic-v3/blob/master/CHANGELOG.md)
 
 
 ## Version 6.x
