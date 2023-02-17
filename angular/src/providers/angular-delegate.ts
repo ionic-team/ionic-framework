@@ -1,12 +1,13 @@
 import {
   ApplicationRef,
-  ComponentFactoryResolver,
   NgZone,
   ViewContainerRef,
   Injectable,
   InjectionToken,
   Injector,
   ComponentRef,
+  EnvironmentInjector,
+  inject,
 } from '@angular/core';
 import {
   FrameworkDelegate,
@@ -17,24 +18,24 @@ import {
   LIFECYCLE_WILL_UNLOAD,
 } from '@ionic/core';
 
-import { EnvironmentInjector } from '../di/r3_injector';
 import { NavParams } from '../directives/navigation/nav-params';
-import { isComponentFactoryResolver } from '../util/util';
 
 // TODO(FW-2827): types
 
 @Injectable()
 export class AngularDelegate {
-  constructor(private zone: NgZone, private appRef: ApplicationRef) {}
+
+  private zone = inject(NgZone);
+  private appRef = inject(ApplicationRef);
 
   create(
-    resolverOrInjector: ComponentFactoryResolver,
+    environmentInjector: EnvironmentInjector,
     injector: Injector,
     location?: ViewContainerRef,
     elementReferenceKey?: string
   ): AngularFrameworkDelegate {
     return new AngularFrameworkDelegate(
-      resolverOrInjector,
+      environmentInjector,
       injector,
       location,
       this.appRef,
@@ -49,13 +50,13 @@ export class AngularFrameworkDelegate implements FrameworkDelegate {
   private elEventsMap = new WeakMap<HTMLElement, () => void>();
 
   constructor(
-    private resolverOrInjector: ComponentFactoryResolver | EnvironmentInjector,
+    private environmentInjector: EnvironmentInjector,
     private injector: Injector,
     private location: ViewContainerRef | undefined,
     private appRef: ApplicationRef,
     private zone: NgZone,
     private elementReferenceKey?: string
-  ) {}
+  ) { }
 
   attachViewToDom(container: any, component: any, params?: any, cssClasses?: string[]): Promise<any> {
     return this.zone.run(() => {
@@ -78,7 +79,7 @@ export class AngularFrameworkDelegate implements FrameworkDelegate {
 
         const el = attachView(
           this.zone,
-          this.resolverOrInjector,
+          this.environmentInjector,
           this.injector,
           this.location,
           this.appRef,
@@ -115,7 +116,7 @@ export class AngularFrameworkDelegate implements FrameworkDelegate {
 
 export const attachView = (
   zone: NgZone,
-  resolverOrInjector: ComponentFactoryResolver | EnvironmentInjector,
+  environmentInjector: EnvironmentInjector,
   injector: Injector,
   location: ViewContainerRef | undefined,
   appRef: ApplicationRef,
@@ -132,15 +133,8 @@ export const attachView = (
     parent: injector,
   });
 
-  if (resolverOrInjector && isComponentFactoryResolver(resolverOrInjector)) {
-    // Angular 13 and lower
-    const factory = resolverOrInjector.resolveComponentFactory(component);
-    componentRef = location
-      ? location.createComponent(factory, location.length, childInjector)
-      : factory.create(childInjector);
-  } else if (location) {
-    // Angular 14
-    const environmentInjector = resolverOrInjector;
+  if (location) {
+    // Angular 14+
     componentRef = location.createComponent(component, {
       index: location.indexOf,
       injector: childInjector,

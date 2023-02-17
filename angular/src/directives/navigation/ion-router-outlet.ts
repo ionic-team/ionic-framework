@@ -8,20 +8,20 @@ import {
   OnDestroy,
   OnInit,
   ViewContainerRef,
+  inject,
   Attribute,
   Directive,
   EventEmitter,
   Optional,
   Output,
   SkipSelf,
-  Input,
+  EnvironmentInjector,
 } from '@angular/core';
-import { OutletContext, Router, ActivatedRoute, ChildrenOutletContexts, PRIMARY_OUTLET } from '@angular/router';
+import { OutletContext, Router, ActivatedRoute, ChildrenOutletContexts, PRIMARY_OUTLET, Data } from '@angular/router';
 import { componentOnReady } from '@ionic/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
 
-import { EnvironmentInjector } from '../../di/r3_injector';
 import { AnimationBuilder } from '../../ionic-core';
 import { Config } from '../../providers/config';
 import { NavController } from '../../providers/nav-controller';
@@ -58,21 +58,19 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
 
   tabsPrefix: string | undefined;
 
-  /**
-   * @experimental
-   *
-   * The `EnvironmentInjector` provider instance from the parent component.
-   * Required for using standalone components with `ion-router-outlet`.
-   *
-   * Will be deprecated and removed when Angular 13 support is dropped.
-   */
-  @Input() environmentInjector: EnvironmentInjector;
-
   @Output() stackEvents = new EventEmitter<any>();
   // eslint-disable-next-line @angular-eslint/no-output-rename
   @Output('activate') activateEvents = new EventEmitter<any>();
   // eslint-disable-next-line @angular-eslint/no-output-rename
   @Output('deactivate') deactivateEvents = new EventEmitter<any>();
+
+  private parentContexts = inject(ChildrenOutletContexts);
+  private location = inject(ViewContainerRef);
+  private environmentInjector = inject(EnvironmentInjector);
+
+  // Ionic providers
+  private config = inject(Config);
+  private navCtrl = inject(NavController);
 
   set animation(animation: AnimationBuilder) {
     this.nativeEl.animation = animation;
@@ -95,13 +93,8 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
   }
 
   constructor(
-    private parentContexts: ChildrenOutletContexts,
-    private location: ViewContainerRef,
     @Attribute('name') name: string,
     @Optional() @Attribute('tabs') tabs: string,
-    private config: Config,
-    private navCtrl: NavController,
-    @Optional() private componentFactoryResolver: ComponentFactoryResolver,
     commonLocation: Location,
     elementRef: ElementRef,
     router: Router,
@@ -112,8 +105,8 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     this.nativeEl = elementRef.nativeElement;
     this.name = name || PRIMARY_OUTLET;
     this.tabsPrefix = tabs === 'true' ? getUrl(router, activatedRoute) : undefined;
-    this.stackCtrl = new StackController(this.tabsPrefix, this.nativeEl, router, navCtrl, zone, commonLocation);
-    parentContexts.onChildOutletCreated(this.name, this as any);
+    this.stackCtrl = new StackController(this.tabsPrefix, this.nativeEl, router, this.navCtrl, zone, commonLocation);
+    this.parentContexts.onChildOutletCreated(this.name, this as any);
   }
 
   ngOnDestroy(): void {
@@ -125,6 +118,10 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
+    this.initializeOutletWithName();
+  }
+
+  private initializeOutletWithName() {
     if (!this.activated) {
       // If the outlet was not instantiated at the time the route got activated we need to populate
       // the outlet when it is initialized (ie inside a NgIf)
@@ -159,7 +156,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     return this._activatedRoute as ActivatedRoute;
   }
 
-  get activatedRouteData(): any {
+  get activatedRouteData(): Data {
     if (this._activatedRoute) {
       return this._activatedRoute.snapshot.data;
     }
@@ -252,22 +249,6 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
        * We check for the presence of this property to determine if the route is
        * using standalone components.
        */
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      if (snapshot.routeConfig!.component == null && this.environmentInjector == null) {
-        console.warn(
-          '[Ionic Warning]: You must supply an environmentInjector to use standalone components with routing:\n\n' +
-            'In your component class, add:\n\n' +
-            `   import { EnvironmentInjector } from '@angular/core';\n` +
-            '   constructor(public environmentInjector: EnvironmentInjector) {}\n' +
-            '\n' +
-            'In your router outlet template, add:\n\n' +
-            '   <ion-router-outlet [environmentInjector]="environmentInjector"></ion-router-outlet>\n\n' +
-            'Alternatively, if you are routing within ion-tabs:\n\n' +
-            '   <ion-tabs [environmentInjector]="environmentInjector"></ion-tabs>'
-        );
-        return;
-      }
-
       const childContexts = this.parentContexts.getOrCreateContext(this.name).children;
 
       // We create an activated route proxy object that will maintain future updates for this component
@@ -277,42 +258,26 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
 
       const injector = new OutletInjector(activatedRouteProxy, childContexts, this.location.injector);
 
-      /**
-       * The resolver is not always provided and is required in Angular 12.
-       * Fallback to the class-level provider when the resolver is not set.
-       */
-      resolverOrInjector = resolverOrInjector || this.componentFactoryResolver;
-
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const component = snapshot.routeConfig!.component ?? snapshot.component;
 
       if (resolverOrInjector && isComponentFactoryResolver(resolverOrInjector)) {
-        // Backwards compatibility for Angular 13 and lower
+        /**
+         * Backwards compatibility for Angular 13 and lower.
+         * Angular still has references to this in their router-outlet implementation.
+         */
         const factory = resolverOrInjector.resolveComponentFactory(component);
         cmpRef = this.activated = this.location.createComponent(factory, this.location.length, injector);
       } else {
         /**
-         * Angular 14 and higher.
-         *
-         * TODO: FW-1641: Migrate once Angular 13 support is dropped.
-         *
-         * When we drop < Angular 14, we can replace the following code with:
-         * ```ts
-          const environmentInjector = resolverOrInjector ?? this.environmentInjector;
-            cmpRef = this.activated = location.createComponent(component, {
-              index: location.length,
-              injector,
-              environmentInjector,
-            });
-         * ```
-         * where `this.environmentInjector` is a provider of `EnvironmentInjector` from @angular/core.
+         * Angular 14+
          */
         const environmentInjector = resolverOrInjector ?? this.environmentInjector;
         cmpRef = this.activated = this.location.createComponent(component, {
           index: this.location.length,
           injector,
           environmentInjector,
-        } as any);
+        });
       }
       // Once the component is created we can push it to our local subject supplied to the proxy
       component$.next(cmpRef.instance);

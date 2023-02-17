@@ -1,4 +1,4 @@
-import { ComponentFactoryResolver, ElementRef, Injector, ViewContainerRef, Directive } from '@angular/core';
+import { ElementRef, Injector, ViewContainerRef, Directive, EnvironmentInjector } from '@angular/core';
 
 import { AngularDelegate } from '../../providers/angular-delegate';
 import { ProxyCmp, proxyOutputs } from '../angular-component-lib/utils';
@@ -29,13 +29,13 @@ export class NavDelegate {
   protected el: HTMLElement;
   constructor(
     ref: ElementRef,
-    resolver: ComponentFactoryResolver,
+    environmentInjector: EnvironmentInjector,
     injector: Injector,
     angularDelegate: AngularDelegate,
     location: ViewContainerRef
   ) {
     this.el = ref.nativeElement;
-    ref.nativeElement.delegate = angularDelegate.create(resolver, injector, location);
+    ref.nativeElement.delegate = angularDelegate.create(environmentInjector, injector, location);
     proxyOutputs(this, this.el, ['ionNavDidChange', 'ionNavWillChange']);
   }
 }
