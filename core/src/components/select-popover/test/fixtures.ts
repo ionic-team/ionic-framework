@@ -25,42 +25,24 @@ export class SelectPopoverPage {
     <ion-popover>
       <ion-select-popover></ion-select-popover>
     </ion-popover>
+    <script>
+      const selectPopover = document.querySelector('ion-select-popover');
+      selectPopover.options = ${JSON.stringify(options)};
+      selectPopover.multiple = ${multiple};
+    </script>
     `);
 
     const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
     this.ionPopoverDidDismiss = await page.spyOnEvent('ionPopoverDidDismiss');
 
-    await page.evaluate(
-      ({ options, multiple }) => {
-        const selectPopover = document.querySelector('ion-select-popover')!;
-        selectPopover.options = options;
-        selectPopover.multiple = multiple;
-      },
-      { options, multiple }
-    );
-
-    await page.waitForChanges();
-
-    this.popover = await page.locator('ion-popover');
-    this.selectPopover = await page.locator('ion-select-popover');
+    this.popover = page.locator('ion-popover');
+    this.selectPopover = page.locator('ion-select-popover');
     this.multiple = multiple;
     this.options = options;
 
     await this.popover.evaluate((popover: HTMLIonPopoverElement) => popover.present());
 
     await ionPopoverDidPresent.next();
-  }
-
-  async updateOptions(options: SelectPopoverOption[]) {
-    const { page } = this;
-    await page.evaluate((options) => {
-      const selectPopover = document.querySelector('ion-select-popover')!;
-      selectPopover.options = options;
-    }, options);
-
-    await page.waitForChanges();
-
-    this.options = options;
   }
 
   async clickOption(value: string) {
