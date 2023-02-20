@@ -7,6 +7,6 @@ test.describe('list-header: basic', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`list-header-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`list-header-${page.getSnapshotSettings()}.png`);
   });
 });

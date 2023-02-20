@@ -7,6 +7,6 @@ test.describe('item: colors', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`item-colors-diff-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`item-colors-diff-${page.getSnapshotSettings()}.png`);
   });
 });

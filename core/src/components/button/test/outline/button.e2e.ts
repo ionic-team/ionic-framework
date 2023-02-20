@@ -7,6 +7,6 @@ test.describe('button: outline', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`button-outline-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`button-outline-${page.getSnapshotSettings()}.png`);
   });
 });

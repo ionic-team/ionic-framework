@@ -22,7 +22,7 @@ test.describe('tabs: placement', () => {
     `);
 
     const tabs = page.locator('ion-tabs');
-    expect(await tabs.screenshot()).toMatchSnapshot(`tabs-tab-bar-top-${page.getSnapshotSettings()}.png`);
+    await expect(tabs).toHaveScreenshot(`tabs-tab-bar-top-${page.getSnapshotSettings()}.png`);
   });
   test('should show tab bar at the bottom of tabs', async ({ page }) => {
     await page.setContent(`
@@ -35,6 +35,6 @@ test.describe('tabs: placement', () => {
     `);
 
     const tabs = page.locator('ion-tabs');
-    expect(await tabs.screenshot()).toMatchSnapshot(`tabs-tab-bar-bottom-${page.getSnapshotSettings()}.png`);
+    await expect(tabs).toHaveScreenshot(`tabs-tab-bar-bottom-${page.getSnapshotSettings()}.png`);
   });
 });

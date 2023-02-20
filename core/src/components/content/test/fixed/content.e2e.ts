@@ -9,6 +9,6 @@ test.describe('content: fixed', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`content-fixed-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`content-fixed-${page.getSnapshotSettings()}.png`);
   });
 });
