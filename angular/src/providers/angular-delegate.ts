@@ -1,13 +1,13 @@
 import {
   ApplicationRef,
   NgZone,
-  ViewContainerRef,
   Injectable,
-  InjectionToken,
   Injector,
-  ComponentRef,
   EnvironmentInjector,
   inject,
+  createComponent,
+  InjectionToken,
+  ComponentRef,
 } from '@angular/core';
 import {
   FrameworkDelegate,
@@ -25,19 +25,17 @@ import { NavParams } from '../directives/navigation/nav-params';
 @Injectable()
 export class AngularDelegate {
   private zone = inject(NgZone);
-  private appRef = inject(ApplicationRef);
+  private applicationRef = inject(ApplicationRef);
 
   create(
     environmentInjector: EnvironmentInjector,
     injector: Injector,
-    location?: ViewContainerRef,
     elementReferenceKey?: string
   ): AngularFrameworkDelegate {
     return new AngularFrameworkDelegate(
       environmentInjector,
       injector,
-      location,
-      this.appRef,
+      this.applicationRef,
       this.zone,
       elementReferenceKey
     );
@@ -45,14 +43,13 @@ export class AngularDelegate {
 }
 
 export class AngularFrameworkDelegate implements FrameworkDelegate {
-  private elRefMap = new WeakMap<HTMLElement, any>();
+  private elRefMap = new WeakMap<HTMLElement, ComponentRef<any>>();
   private elEventsMap = new WeakMap<HTMLElement, () => void>();
 
   constructor(
     private environmentInjector: EnvironmentInjector,
     private injector: Injector,
-    private location: ViewContainerRef | undefined,
-    private appRef: ApplicationRef,
+    private applicationRef: ApplicationRef,
     private zone: NgZone,
     private elementReferenceKey?: string
   ) {}
@@ -80,8 +77,7 @@ export class AngularFrameworkDelegate implements FrameworkDelegate {
           this.zone,
           this.environmentInjector,
           this.injector,
-          this.location,
-          this.appRef,
+          this.applicationRef,
           this.elRefMap,
           this.elEventsMap,
           container,
@@ -117,31 +113,35 @@ export const attachView = (
   zone: NgZone,
   environmentInjector: EnvironmentInjector,
   injector: Injector,
-  location: ViewContainerRef | undefined,
-  appRef: ApplicationRef,
-  elRefMap: WeakMap<HTMLElement, any>,
+  applicationRef: ApplicationRef,
+  elRefMap: WeakMap<HTMLElement, ComponentRef<any>>,
   elEventsMap: WeakMap<HTMLElement, () => void>,
   container: any,
   component: any,
   params: any,
   cssClasses: string[] | undefined
 ): any => {
-  let componentRef: ComponentRef<any>;
+  /**
+   * Wraps the injector with a custom injector that
+   * provides NavParams to the component.
+   *
+   * NavParams is a legacy feature from Ionic v3 that allows
+   * Angular developers to provide data to a component
+   * and access it by providing NavParams as a dependency
+   * in the constructor.
+   *
+   * The modern approach is to access the data directly
+   * from the component's class instance.
+   */
   const childInjector = Injector.create({
     providers: getProviders(params),
     parent: injector,
   });
 
-  if (location) {
-    // Angular 14+
-    componentRef = location.createComponent(component, {
-      index: location.indexOf,
-      injector: childInjector,
-      environmentInjector,
-    } as any);
-  } else {
-    return null;
-  }
+  const componentRef = createComponent<any>(component, {
+    environmentInjector,
+    elementInjector: childInjector,
+  });
 
   const instance = componentRef.instance;
   const hostElement = componentRef.location.nativeElement;
@@ -149,17 +149,15 @@ export const attachView = (
     Object.assign(instance, params);
   }
   if (cssClasses) {
-    for (const clazz of cssClasses) {
-      hostElement.classList.add(clazz);
+    for (const cssClass of cssClasses) {
+      hostElement.classList.add(cssClass);
     }
   }
   const unbindEvents = bindLifecycleEvents(zone, instance, hostElement);
   container.appendChild(hostElement);
 
-  if (!location) {
-    appRef.attachView(componentRef.hostView);
-  }
-  componentRef.changeDetectorRef.reattach();
+  applicationRef.attachView(componentRef.hostView);
+
   elRefMap.set(hostElement, componentRef);
   elEventsMap.set(hostElement, unbindEvents);
   return hostElement;

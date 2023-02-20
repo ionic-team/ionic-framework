@@ -18,7 +18,7 @@ export class ModalController extends OverlayBaseController<ModalOptions, HTMLIon
   create(opts: ModalOptions): Promise<HTMLIonModalElement> {
     return super.create({
       ...opts,
-      delegate: this.angularDelegate.create(this.environmentInjector, this.injector, undefined, 'modal'),
+      delegate: this.angularDelegate.create(this.environmentInjector, this.injector, 'modal'),
     });
   }
 }
