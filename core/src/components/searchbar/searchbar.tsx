@@ -267,13 +267,21 @@ export class Searchbar implements ComponentInterface {
    * This API should be called for user committed changes.
    * This API should not be used for external value changes.
    */
-  private emitValueChange() {
+  private emitValueChange(event?: Event) {
     const { value } = this;
     // Checks for both null and undefined values
     const newValue = value == null ? value : value.toString();
     // Emitting a value change should update the internal state for tracking the focused value
     this.focusedValue = newValue;
-    this.ionChange.emit({ value: newValue });
+    this.ionChange.emit({ value: newValue, event });
+  }
+
+  /**
+   * Emits an `ionInput` event.
+   */
+  private emitInputChange(event?: Event) {
+    const { value } = this;
+    this.ionInput.emit({ value, event });
   }
 
   /**
@@ -289,7 +297,7 @@ export class Searchbar implements ComponentInterface {
         const value = this.getValue();
         if (value !== '') {
           this.value = '';
-          this.emitSearchbarInput();
+          this.emitInputChange();
 
           /**
            * When tapping clear button
@@ -339,7 +347,7 @@ export class Searchbar implements ComponentInterface {
      * manually fire ionChange.
      */
     if (value && !focused) {
-      this.emitValueChange();
+      this.emitValueChange(ev);
     }
 
     if (this.nativeInput) {
@@ -348,39 +356,31 @@ export class Searchbar implements ComponentInterface {
   };
 
   /**
-   * Emits an `ionInput` event.
-   */
-  private emitSearchbarInput(event?: Event) {
-    const { value } = this;
-    this.ionInput.emit({ value, event });
-  }
-
-  /**
    * Update the Searchbar input value when the input changes
    */
-  private onInput = (ev: Event) => {
+  private onInput = (ev: InputEvent | Event) => {
     const input = ev.target as HTMLInputElement | null;
     if (input) {
       this.value = input.value;
     }
-    this.emitSearchbarInput(ev);
+    this.emitInputChange(ev);
   };
 
-  private onChange = () => {
-    this.emitValueChange();
+  private onChange = (ev: Event) => {
+    this.emitValueChange(ev);
   };
 
   /**
    * Sets the Searchbar to not focused and checks if it should align left
    * based on whether there is a value in the searchbar or not.
    */
-  private onBlur = () => {
+  private onBlur = (ev: FocusEvent) => {
     this.focused = false;
     this.ionBlur.emit();
     this.positionElements();
 
     if (this.focusedValue !== this.value) {
-      this.emitValueChange();
+      this.emitValueChange(ev);
     }
     this.focusedValue = undefined;
   };

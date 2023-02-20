@@ -1,5 +1,6 @@
 export interface SearchbarChangeEventDetail {
   value?: string | null;
+  event?: Event;
 }
 
 export interface SearchbarInputEventDetail {
