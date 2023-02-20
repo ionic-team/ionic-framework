@@ -123,7 +123,7 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 
 <h4 id="version-7x-input">Input</h4>
 
-- `ionChange` is no longer emitted when the `value` of `ion-input` is modified externally. `ionChange` is only emitted from user committed changes, such as typing in the input and the input losing focus or from clicking the clear action within the input.
+- `ionChange` is no longer emitted when the `value` of `ion-input` is modified externally. `ionChange` is only emitted from user committed changes, such as typing in the input and the input losing focus, clicking the clear action within the input, or pressing the "Enter" key.
 
   - If your application requires immediate feedback based on the user typing actively in the input, consider migrating your event listeners to using `ionInput` instead.
 
@@ -196,7 +196,7 @@ Ionic now listens on the `keydown` event instead of the `keyup` event when deter
 
 <h4 id="version-7x-searchbar">Searchbar</h4>
 
-- `ionChange` is no longer emitted when the `value` of `ion-searchbar` is modified externally. `ionChange` is only emitted from user committed changes, such as typing in the searchbar and the searchbar losing focus.
+- `ionChange` is no longer emitted when the `value` of `ion-searchbar` is modified externally. `ionChange` is only emitted from user committed changes, such as typing in the searchbar and the searchbar losing focus or pressing the "Enter" key.
 
   - If your application requires immediate feedback based on the user typing actively in the searchbar, consider migrating your event listeners to using `ionInput` instead.
 
