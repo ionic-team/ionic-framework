@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.5.5](https://github.com/ionic-team/ionic-framework/compare/v6.5.4...v6.5.5) (2023-02-20)
+
+
+### Bug Fixes
+
+* **datetime:** days of week and spacing buttons are not announced by screen readers ([#26813](https://github.com/ionic-team/ionic-framework/issues/26813)) ([1a346b6](https://github.com/ionic-team/ionic-framework/commit/1a346b62068076d0b0cc6b2dea4136e0f06576b8)), closes [#26811](https://github.com/ionic-team/ionic-framework/issues/26811)
+* **hide-caret:** blur listener correctly removed ([#26808](https://github.com/ionic-team/ionic-framework/issues/26808)) ([fef634f](https://github.com/ionic-team/ionic-framework/commit/fef634f7f055f1672af50b56610f84c76e626814)), closes [#26807](https://github.com/ionic-team/ionic-framework/issues/26807)
+* **input:** compositionend event is removed on unmount ([#26806](https://github.com/ionic-team/ionic-framework/issues/26806)) ([caa8719](https://github.com/ionic-team/ionic-framework/commit/caa8719cea2f4b3b460551224a8c4a69bd29afeb)), closes [#26805](https://github.com/ionic-team/ionic-framework/issues/26805)
+* **sanitizer:** improve reliability of sanitizer ([#26820](https://github.com/ionic-team/ionic-framework/issues/26820)) ([5e41391](https://github.com/ionic-team/ionic-framework/commit/5e41391ed2585072095f42f7a6d40497f0e129d2))
+* **swipe-back:** gesture rtl setting is reactive ([#26795](https://github.com/ionic-team/ionic-framework/issues/26795)) ([3a64de4](https://github.com/ionic-team/ionic-framework/commit/3a64de49dbf470d470cb4516df2a5226ba751051)), closes [#26794](https://github.com/ionic-team/ionic-framework/issues/26794)
+
+
+
+
+
 ## [6.5.4](https://github.com/ionic-team/ionic-framework/compare/v6.5.3...v6.5.4) (2023-02-15)
 
 
