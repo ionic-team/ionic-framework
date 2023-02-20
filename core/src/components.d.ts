@@ -32,7 +32,7 @@ import { PinFormatter, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, Rang
 import { RefresherEventDetail } from "./components/refresher/refresher-interface";
 import { ItemReorderEventDetail } from "./components/reorder-group/reorder-group-interface";
 import { NavigationHookCallback } from "./components/route/route-interface";
-import { SearchbarChangeEventDetail } from "./components/searchbar/searchbar-interface";
+import { SearchbarChangeEventDetail, SearchbarInputEventDetail } from "./components/searchbar/searchbar-interface";
 import { SegmentChangeEventDetail } from "./components/segment/segment-interface";
 import { SegmentButtonLayout } from "./components/segment-button/segment-button-interface";
 import { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./components/select/select-interface";
@@ -68,7 +68,7 @@ export { PinFormatter, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, Rang
 export { RefresherEventDetail } from "./components/refresher/refresher-interface";
 export { ItemReorderEventDetail } from "./components/reorder-group/reorder-group-interface";
 export { NavigationHookCallback } from "./components/route/route-interface";
-export { SearchbarChangeEventDetail } from "./components/searchbar/searchbar-interface";
+export { SearchbarChangeEventDetail, SearchbarInputEventDetail } from "./components/searchbar/searchbar-interface";
 export { SegmentChangeEventDetail } from "./components/segment/segment-interface";
 export { SegmentButtonLayout } from "./components/segment-button/segment-button-interface";
 export { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./components/select/select-interface";
@@ -6616,7 +6616,7 @@ declare namespace LocalJSX {
         /**
           * Emitted when the `value` of the `ion-searchbar` element has changed.
          */
-        "onIonInput"?: (event: IonSearchbarCustomEvent<KeyboardEvent | null>) => void;
+        "onIonInput"?: (event: IonSearchbarCustomEvent<SearchbarInputEventDetail>) => void;
         /**
           * Emitted when the styles change.
          */

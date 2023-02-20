@@ -9,7 +9,7 @@ import { debounceEvent, raf } from '../../utils/helpers';
 import { isRTL } from '../../utils/rtl';
 import { createColorClasses } from '../../utils/theme';
 
-import type { SearchbarChangeEventDetail } from './searchbar-interface';
+import type { SearchbarChangeEventDetail, SearchbarInputEventDetail } from './searchbar-interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -26,7 +26,7 @@ export class Searchbar implements ComponentInterface {
   private nativeInput?: HTMLInputElement;
   private isCancelVisible = false;
   private shouldAlignLeft = true;
-  private originalIonInput?: EventEmitter<KeyboardEvent | null>;
+  private originalIonInput?: EventEmitter<SearchbarInputEventDetail>;
 
   /**
    * The value of the input when the textarea is focused.
@@ -165,7 +165,7 @@ export class Searchbar implements ComponentInterface {
   /**
    * Emitted when the `value` of the `ion-searchbar` element has changed.
    */
-  @Event() ionInput!: EventEmitter<KeyboardEvent | null>;
+  @Event() ionInput!: EventEmitter<SearchbarInputEventDetail>;
 
   /**
    * The `ionChange` event is fired for `<ion-searchbar>` elements when the user
@@ -289,7 +289,7 @@ export class Searchbar implements ComponentInterface {
         const value = this.getValue();
         if (value !== '') {
           this.value = '';
-          this.ionInput.emit(null);
+          this.emitSearchbarInput();
 
           /**
            * When tapping clear button
@@ -348,6 +348,14 @@ export class Searchbar implements ComponentInterface {
   };
 
   /**
+   * Emits an `ionInput` event.
+   */
+  private emitSearchbarInput(event?: Event) {
+    const { value } = this;
+    this.ionInput.emit({ value, event });
+  }
+
+  /**
    * Update the Searchbar input value when the input changes
    */
   private onInput = (ev: Event) => {
@@ -355,7 +363,7 @@ export class Searchbar implements ComponentInterface {
     if (input) {
       this.value = input.value;
     }
-    this.ionInput.emit(ev as KeyboardEvent);
+    this.emitSearchbarInput(ev);
   };
 
   private onChange = () => {

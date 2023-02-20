@@ -204,6 +204,8 @@ Ionic now listens on the `keydown` event instead of the `keyup` event when deter
 
 - The `debounce` property's default value has changed from 250 to `undefined`. If `debounce` is undefined, the `ionInput` event will fire immediately.
 
+- The `detail` payload for the `ionInput` event now contains an object with the current `value` as well as the native event that triggered `ionInput`.
+
 **Design tokens**
 
 | Token                   | Previous Value | New Value |
