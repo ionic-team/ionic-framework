@@ -1,6 +1,5 @@
 import { Location } from '@angular/common';
 import {
-  ComponentFactoryResolver,
   ComponentRef,
   ElementRef,
   Injector,
@@ -25,7 +24,6 @@ import { distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
 import { AnimationBuilder } from '../../ionic-core';
 import { Config } from '../../providers/config';
 import { NavController } from '../../providers/nav-controller';
-import { isComponentFactoryResolver } from '../../util/util';
 
 import { StackController } from './stack-controller';
 import { RouteView, getUrl } from './stack-utils';
@@ -121,13 +119,14 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     this.initializeOutletWithName();
   }
 
+  // Note: Ionic deviates from the Angular Router implementation here
   private initializeOutletWithName() {
     if (!this.activated) {
       // If the outlet was not instantiated at the time the route got activated we need to populate
       // the outlet when it is initialized (ie inside a NgIf)
       const context = this.getContext();
       if (context?.route) {
-        this.activateWith(context.route, context.resolver || null);
+        this.activateWith(context.route, context.injector);
       }
     }
 
@@ -218,10 +217,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     }
   }
 
-  activateWith(
-    activatedRoute: ActivatedRoute,
-    resolverOrInjector?: ComponentFactoryResolver | EnvironmentInjector | null
-  ): void {
+  activateWith(activatedRoute: ActivatedRoute, environmentInjector: EnvironmentInjector | null): void {
     if (this.isActivated) {
       throw new Error('Cannot activate an already activated outlet');
     }
@@ -261,24 +257,12 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const component = snapshot.routeConfig!.component ?? snapshot.component;
 
-      if (resolverOrInjector && isComponentFactoryResolver(resolverOrInjector)) {
-        /**
-         * Backwards compatibility for Angular 13 and lower.
-         * Angular still has references to this in their router-outlet implementation.
-         */
-        const factory = resolverOrInjector.resolveComponentFactory(component);
-        cmpRef = this.activated = this.location.createComponent(factory, this.location.length, injector);
-      } else {
-        /**
-         * Angular 14+
-         */
-        const environmentInjector = resolverOrInjector ?? this.environmentInjector;
-        cmpRef = this.activated = this.location.createComponent(component, {
-          index: this.location.length,
-          injector,
-          environmentInjector,
-        });
-      }
+      cmpRef = this.activated = this.location.createComponent(component, {
+        index: this.location.length,
+        injector,
+        environmentInjector: environmentInjector ?? this.environmentInjector,
+      });
+
       // Once the component is created we can push it to our local subject supplied to the proxy
       component$.next(cmpRef.instance);
 
