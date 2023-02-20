@@ -172,9 +172,10 @@ export class Searchbar implements ComponentInterface {
    * modifies the element's value. Unlike the `ionInput` event, the `ionChange`
    * event is not necessarily fired for each alteration to an element's value.
    *
-   * The `ionChange` event is fired when the element loses focus after its value
-   * has been modified. This includes modifications made when clicking the clear
-   * or cancel buttons.
+   * The `ionChange` event is fired when the value has been committed
+   * by the user. This can happen when the element loses focus or
+   * when the "Enter" key is pressed. `ionChange` can also fire
+   * when clicking the clear or cancel buttons.
    */
   @Event() ionChange!: EventEmitter<SearchbarChangeEventDetail>;
 
