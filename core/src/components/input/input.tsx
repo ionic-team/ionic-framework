@@ -725,7 +725,9 @@ export class Input implements ComponentInterface {
 Example: <ion-input label="Email"></ion-input>
 Example with aria-label: <ion-input aria-label="Email"></ion-input>
 
-For inputs that do not render the label immediately next to the input, developers may continue to use "ion-label" but must manually associate the label with the input by using "aria-labelledby".`,
+For inputs that do not render the label immediately next to the input, developers may continue to use "ion-label" but must manually associate the label with the input by using "aria-labelledby".
+
+Developers can use the "legacy" property to continue using the legacy form markup. This property will be removed in an upcoming major release of Ionic where this form control will use the modern form markup.`,
         this.el
       );
 
