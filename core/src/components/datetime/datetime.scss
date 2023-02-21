@@ -208,11 +208,15 @@ ion-picker-column-internal {
 .calendar-month-year-button {
   --background-focused: currentColor;
 
+  @include margin(0);
+
+  height: 48px;
+
   font-size: inherit;
   font-weight: inherit;
 
   letter-spacing: inherit;
-  
+
   text-transform: inherit;
 }
 
