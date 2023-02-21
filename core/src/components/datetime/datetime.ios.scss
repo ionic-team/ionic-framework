@@ -84,12 +84,7 @@
    * this padding a snapping point if applied
    * on .calendar-month
    */
-  @include padding(
-    $datetime-ios-padding * 0.5,
-    $datetime-ios-padding * 0.5,
-    $datetime-ios-padding * 0.5,
-    $datetime-ios-padding * 0.5
-  );
+  @include padding($datetime-ios-padding * 0.5, $datetime-ios-padding * 0.5, $datetime-ios-padding * 0.5, $datetime-ios-padding * 0.5);
 
   height: calc(100% - #{$datetime-ios-padding});
 }

@@ -10,12 +10,8 @@
 // Header
 // -----------------------------------
 :host .datetime-header {
-  @include padding(
-    $datetime-md-header-padding,
-    $datetime-md-header-padding,
-    $datetime-md-header-padding,
-    $datetime-md-header-padding
-  );
+  @include padding($datetime-md-header-padding, $datetime-md-header-padding, $datetime-md-header-padding,
+ $datetime-md-header-padding);
 
   background: current-color(base);
   color: var(--title-color);
@@ -35,12 +31,8 @@
 
 // Calendar / Header / Action Buttons
 // -----------------------------------
-:host .calendar-action-buttons ion-button:not(.calendar-month-year-button) {
-  color: #{$text-color-step-350};
-}
-
-.calendar-month-year-button {
-  color: #{$text-color-step-400};
+:host .calendar-action-buttons ion-button {
+  --color: #{$text-color-step-350};
 }
 
 .calendar-month-year-button {
@@ -49,7 +41,7 @@
 
 @media (any-hover: hover) {
   .calendar-month-year-button:hover {
-    color: initial;
+    --color: initial;
   }
 }
 
