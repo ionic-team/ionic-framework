@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Select - Popover</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Select Popover - Basic</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content>
+        <ion-popover class="select-popover" is-open="true">
+          <ion-select-popover multiple="false"></ion-select-popover>
+        </ion-popover>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      const selectPopover = document.querySelector('ion-select-popover');
+      selectPopover.options = [
+        { value: 'apple', text: 'Apple', disabled: false, checked: true },
+        { value: 'banana', text: 'Banana', disabled: false, checked: false },
+      ];
+    </script>
+  </body>
+</html>
