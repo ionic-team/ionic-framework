@@ -735,9 +735,7 @@ Developers can use the "legacy" property to continue using the legacy form marku
         printIonWarning(
           `ion-input is being used with the "legacy" property enabled which will forcibly enable the legacy form markup. This property will be removed in an upcoming major release of Ionic where this form control will use the modern form markup.
 
-Developers can dismiss this warning by removing their usage of the "legacy" property and using the new input syntax.
-
-Developers can use the "legacy" property to continue using the legacy form markup. This property will be removed in an upcoming major release of Ionic where this form control will use the modern form markup.`,
+Developers can dismiss this warning by removing their usage of the "legacy" property and using the new input syntax.`,
           this.el
         );
       }
