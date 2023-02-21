@@ -720,7 +720,7 @@ export class Input implements ComponentInterface {
   private renderLegacyInput() {
     if (!this.hasLoggedDeprecationWarning) {
       printIonWarning(
-        `ion-input now requires the use of either the "label" property or the "aria-label" attribute. To migrate, remove any usage of "ion-label" and pass the label text to either the "label" property or the "aria-label" attribute.
+        `ion-input now requires providing a label with either the "label" property or the "aria-label" attribute. To migrate, remove any usage of "ion-label" and pass the label text to either the "label" property or the "aria-label" attribute.
 
 Example: <ion-input label="Email"></ion-input>
 

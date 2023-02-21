@@ -465,7 +465,7 @@ export class Textarea implements ComponentInterface {
   private renderLegacyTextarea() {
     if (!this.hasLoggedDeprecationWarning) {
       printIonWarning(
-        `ion-textarea now requires the use of either the "label" property or the "aria-label" attribute. To migrate, remove any usage of "ion-label" and pass the label text to either the "label" property or the "aria-label" attribute.
+        `ion-textarea now requires providing a label with either the "label" property or the "aria-label" attribute. To migrate, remove any usage of "ion-label" and pass the label text to either the "label" property or the "aria-label" attribute.
 
 Example: <ion-textarea label="Comments"></ion-textarea>
 
