@@ -623,7 +623,6 @@ For textareas that do not have a visible label, developers should use "aria-labe
 
     return (
       <Host
-        aria-disabled={disabled ? 'true' : null}
         class={createColorClasses(this.color, {
           [mode]: true,
           'has-value': this.hasValue(),
