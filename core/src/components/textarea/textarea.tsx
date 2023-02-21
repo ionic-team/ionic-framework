@@ -468,6 +468,7 @@ export class Textarea implements ComponentInterface {
         `ion-textarea now requires providing a label with either the "label" property or the "aria-label" attribute. To migrate, remove any usage of "ion-label" and pass the label text to either the "label" property or the "aria-label" attribute.
 
 Example: <ion-textarea label="Comments"></ion-textarea>
+Example with aria-label: <ion-textarea aria-label="Comments"></ion-textarea>
 
 For textareas that do not render the label immediately next to the input, developers may continue to use "ion-label" but must manually associate the label with the textarea by using "aria-labelledby".
 
