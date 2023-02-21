@@ -553,13 +553,12 @@ export class Range implements ComponentInterface {
   private renderLegacyRange() {
     if (!this.hasLoggedDeprecationWarning) {
       printIonWarning(
-        `Using ion-range with an ion-label has been deprecated. To migrate, remove the ion-label and pass your label directly into ion-range instead.
+        `ion-range now requires providing a label with either the label slot or the "aria-label" attribute. To migrate, remove any usage of "ion-label" and pass the label text to either the component or the "aria-label" attribute.
 
-Example: <ion-range><div slot="label">Volume:</div></ion-range>
+Example: <ion-range><div slot="label">Volume</div></ion-range>
+Example with aria-label: <ion-range aria-label="Volume"></ion-range>
 
-For ranges that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the range.
-
-For ranges that do not render the label immediately next to the range, developers may continue to use "ion-label" but must manually associate the label with the range by using "aria-labelledby".`,
+Developers can use the "legacy" property to continue using the legacy form markup. This property will be removed in an upcoming major release of Ionic where this form control will use the modern form markup.`,
         this.el
       );
 
