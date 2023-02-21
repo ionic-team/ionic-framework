@@ -629,7 +629,6 @@ Developers can use the "legacy" property to continue using the legacy form marku
 
     return (
       <Host
-        aria-disabled={disabled ? 'true' : null}
         class={createColorClasses(this.color, {
           [mode]: true,
           'has-value': this.hasValue(),
