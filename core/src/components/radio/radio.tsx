@@ -263,12 +263,12 @@ export class Radio implements ComponentInterface {
   private renderLegacyRadio() {
     if (!this.hasLoggedDeprecationWarning) {
       printIonWarning(
-        `Using ion-radio with an ion-label has been deprecated. To migrate, remove the ion-label and pass your label directly into ion-radio instead.
-Example: <ion-radio>Option Label:</ion-radio>
+        `ion-radio now requires providing a label with either the default slot or the "aria-label" attribute. To migrate, remove any usage of "ion-label" and pass the label text to either the component or the "aria-label" attribute.
 
-For radios that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the radio.
+Example: <ion-radio>Option Label</ion-radio>
+Example with aria-label: <ion-radio aria-label="Option Label"></ion-radio>
 
-For radios that do not render the label immediately next to the radio, developers may continue to use "ion-label" but must manually associate the label with the radio by using "aria-labelledby".`,
+Developers can use the "legacy" property to continue using the legacy form markup. This property will be removed in an upcoming major release of Ionic where this form control will use the modern form markup.`,
         this.el
       );
 
