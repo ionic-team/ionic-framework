@@ -283,12 +283,10 @@ export class Checkbox implements ComponentInterface {
   private renderLegacyCheckbox() {
     if (!this.hasLoggedDeprecationWarning) {
       printIonWarning(
-        `Using ion-checkbox with an ion-label has been deprecated. To migrate, remove the ion-label and pass your label directly into ion-checkbox instead.
+        `ion-checkbox now requires providing a label with either the default slot or the "aria-label" attribute. To migrate, remove any usage of "ion-label" and pass the label text to either the component or the "aria-label" attribute.
+
 Example: <ion-checkbox>Label</ion-checkbox>
-
-For checkboxes that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the checkbox.
-
-For checkboxes that do not render the label immediately next to the checkbox, developers may continue to use "ion-label" but must manually associate the label with the checkbox by using "aria-labelledby".
+Example with aria-label: <ion-checkbox aria-label="Label"></ion-checkbox>
 
 Developers can use the "legacy" property to continue using the legacy form markup. This property will be removed in an upcoming major release of Ionic where this form control will use the modern form markup.`,
         this.el
