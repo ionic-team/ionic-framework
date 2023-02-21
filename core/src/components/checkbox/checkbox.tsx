@@ -234,7 +234,6 @@ export class Checkbox implements ComponentInterface {
 
     return (
       <Host
-        aria-hidden={disabled ? 'true' : null}
         class={createColorClasses(color, {
           [mode]: true,
           'in-item': hostContext('ion-item', el),
@@ -253,7 +252,7 @@ export class Checkbox implements ComponentInterface {
           */}
           <input
             type="checkbox"
-            aria-checked={`${checked}`}
+            checked={checked ? true : undefined}
             disabled={disabled}
             id={inputId}
             onChange={this.toggleChecked}
@@ -289,7 +288,9 @@ Example: <ion-checkbox>Label</ion-checkbox>
 
 For checkboxes that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the checkbox.
 
-For checkboxes that do not render the label immediately next to the checkbox, developers may continue to use "ion-label" but must manually associate the label with the checkbox by using "aria-labelledby".`,
+For checkboxes that do not render the label immediately next to the checkbox, developers may continue to use "ion-label" but must manually associate the label with the checkbox by using "aria-labelledby".
+
+Developers can use the "legacy" property to continue using the legacy form markup. This property will be removed in an upcoming major release of Ionic where this form control will use the modern form markup.`,
         this.el
       );
 
