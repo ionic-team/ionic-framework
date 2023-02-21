@@ -719,13 +719,14 @@ export class Input implements ComponentInterface {
   private renderLegacyInput() {
     if (!this.hasLoggedDeprecationWarning) {
       printIonWarning(
-        `Using ion-input with an ion-label has been deprecated. To migrate, remove the ion-label and use the "label" property on ion-input instead.
+        `ion-input now requires providing a label with either the "label" property or the "aria-label" attribute. To migrate, remove any usage of "ion-label" and pass the label text to either the "label" property or the "aria-label" attribute.
 
 Example: <ion-input label="Email"></ion-input>
+Example with aria-label: <ion-input aria-label="Email"></ion-input>
 
-For inputs that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the input.
+For inputs that do not render the label immediately next to the input, developers may continue to use "ion-label" but must manually associate the label with the input by using "aria-labelledby".
 
-For inputs that do not render the label immediately next to the input, developers may continue to use "ion-label" but must manually associate the label with the input by using "aria-labelledby".`,
+Developers can use the "legacy" property to continue using the legacy form markup. This property will be removed in an upcoming major release of Ionic where this form control will use the modern form markup.`,
         this.el
       );
 
