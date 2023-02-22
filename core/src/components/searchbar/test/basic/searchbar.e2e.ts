@@ -81,7 +81,7 @@ test.describe('searchbar: rendering', () => {
 
     const searchbar = page.locator('ion-searchbar');
 
-    expect(await searchbar.screenshot()).toMatchSnapshot(`searchbar-${page.getSnapshotSettings()}.png`);
+    await expect(searchbar).toHaveScreenshot(`searchbar-${page.getSnapshotSettings()}.png`);
   });
 
   test('should render cancel and clear buttons', async ({ page }) => {
@@ -91,7 +91,7 @@ test.describe('searchbar: rendering', () => {
 
     const searchbar = page.locator('ion-searchbar');
 
-    expect(await searchbar.screenshot()).toMatchSnapshot(`searchbar-buttons-${page.getSnapshotSettings()}.png`);
+    await expect(searchbar).toHaveScreenshot(`searchbar-buttons-${page.getSnapshotSettings()}.png`);
   });
 
   test('should render searchbar with color', async ({ page, skip }) => {
@@ -103,7 +103,7 @@ test.describe('searchbar: rendering', () => {
 
     const searchbar = page.locator('ion-searchbar');
 
-    expect(await searchbar.screenshot()).toMatchSnapshot(`searchbar-color-${page.getSnapshotSettings()}.png`);
+    await expect(searchbar).toHaveScreenshot(`searchbar-color-${page.getSnapshotSettings()}.png`);
   });
 
   test('should render disabled searchbar', async ({ page, skip }) => {
@@ -115,7 +115,7 @@ test.describe('searchbar: rendering', () => {
 
     const searchbar = page.locator('ion-searchbar');
 
-    expect(await searchbar.screenshot()).toMatchSnapshot(`searchbar-disabled-${page.getSnapshotSettings()}.png`);
+    await expect(searchbar).toHaveScreenshot(`searchbar-disabled-${page.getSnapshotSettings()}.png`);
   });
 
   test('should render custom search icon', async ({ page, skip }) => {
@@ -127,7 +127,7 @@ test.describe('searchbar: rendering', () => {
 
     const icon = page.locator('ion-searchbar ion-icon.searchbar-search-icon');
 
-    expect(await icon.screenshot()).toMatchSnapshot(`searchbar-search-icon-${page.getSnapshotSettings()}.png`);
+    await expect(icon).toHaveScreenshot(`searchbar-search-icon-${page.getSnapshotSettings()}.png`);
   });
 });
 

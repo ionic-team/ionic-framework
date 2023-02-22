@@ -12,13 +12,13 @@ test.describe('datetime: position', () => {
     await ionPopoverDidPresent.next();
     await page.waitForSelector('.datetime-ready');
 
-    expect(await page.screenshot()).toMatchSnapshot(`datetime-position-base-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`datetime-position-base-${page.getSnapshotSettings()}.png`);
 
     const timepickerBtn = page.locator('ion-datetime .time-body');
     await timepickerBtn.click();
 
     await ionPopoverDidPresent.next();
 
-    expect(await page.screenshot()).toMatchSnapshot(`datetime-position-popover-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`datetime-position-popover-${page.getSnapshotSettings()}.png`);
   });
 });

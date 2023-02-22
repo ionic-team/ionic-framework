@@ -14,6 +14,6 @@ test.describe('toast: standalone', () => {
 
     await ionToastDidPresent.next();
 
-    expect(await page.screenshot()).toMatchSnapshot(`toast-standalone-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`toast-standalone-${page.getSnapshotSettings()}.png`);
   });
 });

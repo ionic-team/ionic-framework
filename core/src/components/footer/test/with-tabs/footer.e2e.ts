@@ -8,6 +8,6 @@ test.describe('footer: with tabs', () => {
     await page.goto('/src/components/footer/test/with-tabs');
 
     const footer = page.locator('[tab="tab-one"] ion-footer');
-    expect(await footer.screenshot()).toMatchSnapshot(`footer-with-tabs-${page.getSnapshotSettings()}.png`);
+    await expect(footer).toHaveScreenshot(`footer-with-tabs-${page.getSnapshotSettings()}.png`);
   });
 });

@@ -38,7 +38,7 @@ test.describe('item-sliding: basic', () => {
     await page.waitForChanges();
 
     // item-sliding doesn't have an easy way to tell whether it's fully open so just screenshot it
-    expect(await item.screenshot()).toMatchSnapshot(`item-sliding-gesture-${page.getSnapshotSettings()}.png`);
+    await expect(item).toHaveScreenshot(`item-sliding-gesture-${page.getSnapshotSettings()}.png`);
   });
 
   // TODO FW-3006

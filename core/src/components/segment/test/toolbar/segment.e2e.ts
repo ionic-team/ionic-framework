@@ -18,7 +18,7 @@ test.describe('segment: toolbar', () => {
 
       const header = page.locator('ion-header');
 
-      expect(await header.screenshot()).toMatchSnapshot(`segment-toolbar-${page.getSnapshotSettings()}.png`);
+      await expect(header).toHaveScreenshot(`segment-toolbar-${page.getSnapshotSettings()}.png`);
     });
 
     test('should not have visual regressions when used in a toolbar with color', async ({ page }) => {
@@ -57,7 +57,7 @@ test.describe('segment: toolbar', () => {
 
       const header = page.locator('ion-header');
 
-      expect(await header.screenshot()).toMatchSnapshot(`segment-toolbar-color-${page.getSnapshotSettings()}.png`);
+      await expect(header).toHaveScreenshot(`segment-toolbar-color-${page.getSnapshotSettings()}.png`);
     });
 
     test('should not inherit height when segment is MD and toolbar is iOS', async ({ page, skip }) => {
@@ -83,9 +83,7 @@ test.describe('segment: toolbar', () => {
 
       const header = page.locator('ion-header');
 
-      expect(await header.screenshot()).toMatchSnapshot(
-        `segment-toolbar-height-inherit-${page.getSnapshotSettings()}.png`
-      );
+      await expect(header).toHaveScreenshot(`segment-toolbar-height-inherit-${page.getSnapshotSettings()}.png`);
     });
   });
 });
