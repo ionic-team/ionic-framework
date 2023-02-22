@@ -25,7 +25,7 @@ export const createLegacyFormController = (el: HTMLLegacyFormControlElement): Le
       const hasAriaLabelAttribute =
         controlEl.hasAttribute('aria-label') ||
         // Shadow DOM form controls cannot use aria-labelledby
-        (controlEl.hasAttribute('aria-labelledby') && ALLOWS_ARIA_LABELLEDBY_COMPONENTS.includes(controlEl.tagName));
+        (controlEl.hasAttribute('aria-labelledby') && controlEl.shadowRoot === null);
 
       /**
        * Developers can manually opt-out of the modern form markup
@@ -72,4 +72,3 @@ const hasLabelSlot = (controlEl: HTMLElement) => {
 
 const NAMED_LABEL_SLOT_COMPONENTS = ['ION-RANGE'];
 const UNNAMED_LABEL_SLOT_COMPONENTS = ['ION-TOGGLE', 'ION-CHECKBOX', 'ION-RADIO'];
-const ALLOWS_ARIA_LABELLEDBY_COMPONENTS = ['ION-INPUT', 'ION-TEXTAREA'];
