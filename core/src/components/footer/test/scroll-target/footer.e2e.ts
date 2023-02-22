@@ -17,15 +17,13 @@ test.describe('footer: scroll-target', () => {
     await page.goto('/src/components/footer/test/scroll-target');
 
     const footer = page.locator('ion-footer');
-    expect(await footer.screenshot()).toMatchSnapshot(
-      `footer-fade-scroll-target-blurred-diff-${page.getSnapshotSettings()}.png`
-    );
+    await expect(footer).toHaveScreenshot(`footer-fade-scroll-target-blurred-diff-${page.getSnapshotSettings()}.png`);
 
     const scrollTarget = page.locator('#scroll-target');
     await scrollTarget.evaluate((el: HTMLDivElement) => (el.scrollTop = el.scrollHeight));
     await page.waitForChanges();
 
-    expect(await footer.screenshot()).toMatchSnapshot(
+    await expect(footer).toHaveScreenshot(
       `footer-fade-scroll-target-not-blurred-diff-${page.getSnapshotSettings()}.png`
     );
   });

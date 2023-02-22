@@ -7,6 +7,6 @@ test.describe('item: icons', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`item-icons-diff-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`item-icons-diff-${page.getSnapshotSettings()}.png`);
   });
 });

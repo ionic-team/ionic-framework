@@ -27,6 +27,6 @@ test.describe('tab-bar: basic', () => {
 
     const tabBar = page.locator('ion-tab-bar');
 
-    expect(await tabBar.screenshot()).toMatchSnapshot(`tab-bar-basic-${page.getSnapshotSettings()}.png`);
+    await expect(tabBar).toHaveScreenshot(`tab-bar-basic-${page.getSnapshotSettings()}.png`);
   });
 });

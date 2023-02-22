@@ -11,7 +11,7 @@ test.describe('picker: basic', () => {
     await didPresent.next();
     await page.waitForChanges();
 
-    expect(await page.screenshot()).toMatchSnapshot(`picker-basic-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`picker-basic-${page.getSnapshotSettings()}.png`);
 
     await page.click('.picker-opt:nth-child(2)');
     await page.click('ion-picker .save-btn');
@@ -21,6 +21,6 @@ test.describe('picker: basic', () => {
     await didPresent.next();
     await page.waitForChanges();
 
-    expect(await page.screenshot()).toMatchSnapshot(`picker-value-selected-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`picker-value-selected-${page.getSnapshotSettings()}.png`);
   });
 });

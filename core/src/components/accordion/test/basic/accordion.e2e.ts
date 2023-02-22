@@ -7,7 +7,7 @@ test.describe('accordion: basic', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`accordion-basic-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`accordion-basic-${page.getSnapshotSettings()}.png`);
   });
 });
 

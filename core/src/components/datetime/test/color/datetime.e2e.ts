@@ -9,11 +9,11 @@ test.describe('datetime: color', () => {
 
     const datetime = page.locator('ion-datetime');
 
-    expect(await datetime.screenshot()).toMatchSnapshot(`datetime-color-${page.getSnapshotSettings()}.png`);
+    await expect(datetime).toHaveScreenshot(`datetime-color-${page.getSnapshotSettings()}.png`);
 
     await page.evaluate(() => document.body.classList.toggle('dark'));
     await page.waitForChanges();
 
-    expect(await datetime.screenshot()).toMatchSnapshot(`datetime-color-dark-${page.getSnapshotSettings()}.png`);
+    await expect(datetime).toHaveScreenshot(`datetime-color-dark-${page.getSnapshotSettings()}.png`);
   });
 });

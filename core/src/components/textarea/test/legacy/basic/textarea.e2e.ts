@@ -14,7 +14,7 @@ test.describe('textarea: basic', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`textarea-diff-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`textarea-diff-${page.getSnapshotSettings()}.png`);
   });
 
   test.describe('with floating labels', () => {
@@ -33,9 +33,7 @@ test.describe('textarea: basic', () => {
       const item = page.locator('ion-item');
       const textarea = page.locator('ion-textarea');
 
-      expect(await item.screenshot()).toMatchSnapshot(
-        `textarea-floating-label-initial-${page.getSnapshotSettings()}.png`
-      );
+      await expect(item).toHaveScreenshot(`textarea-floating-label-initial-${page.getSnapshotSettings()}.png`);
 
       await textarea.evaluate((el: HTMLIonTextareaElement) => {
         el.value = 'Updated value';
@@ -45,7 +43,7 @@ test.describe('textarea: basic', () => {
 
       await page.setIonViewport();
 
-      expect(await item.screenshot()).toMatchSnapshot(`textarea-floating-label-diff-${page.getSnapshotSettings()}.png`);
+      await expect(item).toHaveScreenshot(`textarea-floating-label-diff-${page.getSnapshotSettings()}.png`);
     });
   });
 });

@@ -9,7 +9,7 @@ test.describe('toggle: basic', () => {
   test('should not have visual regressions', async ({ page }) => {
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`toggle-diff-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`toggle-diff-${page.getSnapshotSettings()}.png`);
   });
 
   test('should have proper class and aria role when checked', async ({ page }) => {

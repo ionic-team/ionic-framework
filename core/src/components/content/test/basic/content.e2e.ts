@@ -10,6 +10,6 @@ test.describe('content: basic', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`content-diff-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`content-diff-${page.getSnapshotSettings()}.png`);
   });
 });

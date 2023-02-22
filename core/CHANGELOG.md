@@ -3,11 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+<<<<<<< HEAD
 # [7.0.0-beta.3](https://github.com/ionic-team/ionic/compare/v6.5.4...v7.0.0-beta.3) (2023-02-15)
+=======
+## [6.5.6](https://github.com/ionic-team/ionic/compare/v6.5.5...v6.5.6) (2023-02-22)
+>>>>>>> origin/main
 
 
 ### Bug Fixes
 
+<<<<<<< HEAD
 * **checkbox, radio:** label is announced once on ios ([#26770](https://github.com/ionic-team/ionic/issues/26770)) ([87bc749](https://github.com/ionic-team/ionic/commit/87bc7490404b0406b511833a85b686f1db791f66)), closes [#26769](https://github.com/ionic-team/ionic/issues/26769)
 * **form:** legacy deprecation is logged correctly ([#26784](https://github.com/ionic-team/ionic/issues/26784)) ([180ee63](https://github.com/ionic-team/ionic/commit/180ee63ff7d93f8800756d732e565123a59bcd3a))
 * **many:** resolve import errors with stencil apps ([#26781](https://github.com/ionic-team/ionic/issues/26781)) ([1eea054](https://github.com/ionic-team/ionic/commit/1eea054c127146999302888180fd1585e1021783)), closes [#26778](https://github.com/ionic-team/ionic/issues/26778)
@@ -21,10 +26,20 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 # [7.0.0-beta.2](https://github.com/ionic-team/ionic/compare/v6.5.3...v7.0.0-beta.2) (2023-02-08)
+=======
+* **card:** border radius does not overflow on paint in Safari ([#26539](https://github.com/ionic-team/ionic/issues/26539)) ([df5c8e2](https://github.com/ionic-team/ionic/commit/df5c8e231825b5e5b6923f322c94224a00d3b309)), closes [#26529](https://github.com/ionic-team/ionic/issues/26529)
+
+
+
+
+
+## [6.5.5](https://github.com/ionic-team/ionic/compare/v6.5.4...v6.5.5) (2023-02-20)
+>>>>>>> origin/main
 
 
 ### Bug Fixes
 
+<<<<<<< HEAD
 * **input, textarea:** bottom content is rendered correctly ([#26739](https://github.com/ionic-team/ionic/issues/26739)) ([39009ac](https://github.com/ionic-team/ionic/commit/39009ac6eff0e51707efc3ef3981e1b7614eb2e3)), closes [#26737](https://github.com/ionic-team/ionic/issues/26737)
 * **input:** update disabled opacity of md input ([#26514](https://github.com/ionic-team/ionic/issues/26514)) ([90f4995](https://github.com/ionic-team/ionic/commit/90f4995aa63c730d3feb1fc88582f034153c9b9c))
 * **radio:** remove radio min-height sizing ([#26719](https://github.com/ionic-team/ionic/issues/26719)) ([2a6bba0](https://github.com/ionic-team/ionic/commit/2a6bba0cb60666a4a97da427fa7d179aab49f148))
@@ -178,6 +193,13 @@ Developers can add the following CSS to their global stylesheet if they need the
 }
 ```
 * **overlays:** Ionic now listens on the `keydown` event instead of the `keyup` event when determining when to dismiss overlays via the "Escape" key. Any applications that were listening on `keyup` to suppress this behavior should listen on `keydown` instead. 
+=======
+* **datetime:** days of week and spacing buttons are not announced by screen readers ([#26813](https://github.com/ionic-team/ionic/issues/26813)) ([1a346b6](https://github.com/ionic-team/ionic/commit/1a346b62068076d0b0cc6b2dea4136e0f06576b8)), closes [#26811](https://github.com/ionic-team/ionic/issues/26811)
+* **hide-caret:** blur listener correctly removed ([#26808](https://github.com/ionic-team/ionic/issues/26808)) ([fef634f](https://github.com/ionic-team/ionic/commit/fef634f7f055f1672af50b56610f84c76e626814)), closes [#26807](https://github.com/ionic-team/ionic/issues/26807)
+* **input:** compositionend event is removed on unmount ([#26806](https://github.com/ionic-team/ionic/issues/26806)) ([caa8719](https://github.com/ionic-team/ionic/commit/caa8719cea2f4b3b460551224a8c4a69bd29afeb)), closes [#26805](https://github.com/ionic-team/ionic/issues/26805)
+* **sanitizer:** improve reliability of sanitizer ([#26820](https://github.com/ionic-team/ionic/issues/26820)) ([5e41391](https://github.com/ionic-team/ionic/commit/5e41391ed2585072095f42f7a6d40497f0e129d2))
+* **swipe-back:** gesture rtl setting is reactive ([#26795](https://github.com/ionic-team/ionic/issues/26795)) ([3a64de4](https://github.com/ionic-team/ionic/commit/3a64de49dbf470d470cb4516df2a5226ba751051)), closes [#26794](https://github.com/ionic-team/ionic/issues/26794)
+>>>>>>> origin/main
 
 
 
