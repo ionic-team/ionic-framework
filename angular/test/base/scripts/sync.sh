@@ -13,3 +13,6 @@ npm pack ../../../../packages/angular-server/dist
 
 # Install Dependencies
 npm install *.tgz --no-save
+
+# Delete Angular cache directory
+rm -rf .angular/

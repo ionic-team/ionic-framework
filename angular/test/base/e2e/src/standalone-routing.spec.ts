@@ -1,6 +1,6 @@
 describe('Routing with Standalone Components', () => {
   beforeEach(() => {
-    cy.visit('/version-test/standalone');
+    cy.visit('/standalone');
   });
 
   it('should render the component', () => {

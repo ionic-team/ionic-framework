@@ -59,7 +59,7 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 
 | Framework | Supported Version     |
 | --------- | --------------------- |
-| Angular   | 13+                   |
+| Angular   | 14+                   |
 | React     | 17+                   |
 | Vue       | 3.0.6+                |
 
@@ -74,7 +74,7 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 
 <h4 id="version-7x-accordion-group">Accordion Group</h4>
 
--`ionChange` is no longer emitted when the `value` of `ion-accordion-group` is modified externally. `ionChange` is only emitted from user committed changes, such as clicking or tapping the accordion header.
+- `ionChange` is no longer emitted when the `value` of `ion-accordion-group` is modified externally. `ionChange` is only emitted from user committed changes, such as clicking or tapping the accordion header.
 
 - Accordion Group no longer automatically adjusts the `value` property when passed an array and `multiple="false"`. Developers should update their apps to ensure they are using the API correctly.
 
@@ -291,7 +291,11 @@ Any references to the virtual scroll types from `@ionic/core` have been removed.
 
 <h4 id="version-7x-angular">Angular</h4>
 
+- Angular v14 is now required to use `@ionic/angular` and `@ionic/angular-server`. Upgrade your project to Angular v14 by following the [Angular v14 update guide](https://update.angular.io/?l=3&v=13.0-14.0).
+
 - `null` values on form components will no longer be converted to the empty string (`''`) or `false`. This impacts `ion-checkbox`, `ion-datetime`, `ion-input`, `ion-radio`, `ion-radio-group`, `ion-range`, `ion-searchbar`, `ion-segment`, `ion-select`, `ion-textarea`, and `ion-toggle`.
+
+- The dev-preview `environmentInjector` property has been removed from `ion-tabs` and `ion-router-outlet`. Standalone component routing is now available without additional custom configuration. Remove the `environmentInjector` property from your `ion-tabs` and `ion-router-outlet` components.
 
 <h4 id="version-7x-react">React</h4>
 
