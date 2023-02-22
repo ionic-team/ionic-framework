@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.5.6-nightly.20230222](https://github.com/ionic-team/ionic-framework/compare/v6.5.5...v6.5.6-nightly.20230222) (2023-02-22)
+
+
+### Bug Fixes
+
+* **card:** border radius does not overflow on paint in Safari ([#26539](https://github.com/ionic-team/ionic-framework/issues/26539)) ([df5c8e2](https://github.com/ionic-team/ionic-framework/commit/df5c8e231825b5e5b6923f322c94224a00d3b309)), closes [#26529](https://github.com/ionic-team/ionic-framework/issues/26529)
+
+
+
+
+
 ## [6.5.5](https://github.com/ionic-team/ionic-framework/compare/v6.5.4...v6.5.5) (2023-02-20)
 
 
