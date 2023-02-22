@@ -9,7 +9,7 @@ test.describe('input: basic', () => {
       `);
       const input = page.locator('ion-input');
       // Validates the display of an input where text extends off the edge of the component.
-      expect(await input.screenshot()).toMatchSnapshot(`input-with-text-overflow-${page.getSnapshotSettings()}.png`);
+      await expect(input).toHaveScreenshot(`input-with-text-overflow-${page.getSnapshotSettings()}.png`);
     });
   });
   test.describe('input with placeholder', () => {
@@ -19,7 +19,7 @@ test.describe('input: basic', () => {
       `);
       const input = page.locator('ion-input');
       // Validates the display of an input with a placeholder.
-      expect(await input.screenshot()).toMatchSnapshot(`input-with-placeholder-${page.getSnapshotSettings()}.png`);
+      await expect(input).toHaveScreenshot(`input-with-placeholder-${page.getSnapshotSettings()}.png`);
     });
   });
 
@@ -34,7 +34,7 @@ test.describe('input: basic', () => {
       `);
       const input = page.locator('ion-input');
       // Validates the display of an input with a clear button.
-      expect(await input.screenshot()).toMatchSnapshot(`input-with-clear-button-${page.getSnapshotSettings()}.png`);
+      await expect(input).toHaveScreenshot(`input-with-clear-button-${page.getSnapshotSettings()}.png`);
     });
     test('should not have visual regressions with stacked label', async ({ page }) => {
       await page.setContent(`
@@ -47,9 +47,7 @@ test.describe('input: basic', () => {
       `);
       const input = page.locator('ion-input');
       // Validates the display of an input with a clear button.
-      expect(await input.screenshot()).toMatchSnapshot(
-        `input-with-clear-button-stacked-${page.getSnapshotSettings()}.png`
-      );
+      await expect(input).toHaveScreenshot(`input-with-clear-button-stacked-${page.getSnapshotSettings()}.png`);
     });
   });
 });
@@ -105,8 +103,6 @@ test.describe('input: clear button', () => {
     `);
 
     const item = page.locator('ion-item');
-    expect(await item.screenshot()).toMatchSnapshot(
-      `input-with-clear-button-item-color-${page.getSnapshotSettings()}.png`
-    );
+    await expect(item).toHaveScreenshot(`input-with-clear-button-item-color-${page.getSnapshotSettings()}.png`);
   });
 });

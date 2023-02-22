@@ -23,8 +23,6 @@ test.describe('datetime-button: disabled buttons', () => {
     await page.waitForSelector('.datetime-ready');
 
     const datetimeButton = page.locator('ion-datetime-button');
-    expect(await datetimeButton.screenshot()).toMatchSnapshot(
-      `datetime-button-disabled-${page.getSnapshotSettings()}.png`
-    );
+    await expect(datetimeButton).toHaveScreenshot(`datetime-button-disabled-${page.getSnapshotSettings()}.png`);
   });
 });
