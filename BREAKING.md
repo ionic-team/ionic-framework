@@ -59,7 +59,7 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 
 | Framework | Supported Version     |
 | --------- | --------------------- |
-| Angular   | 13+                   |
+| Angular   | 14+                   |
 | React     | 17+                   |
 | Vue       | 3.0.6+                |
 
@@ -74,7 +74,7 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 
 <h4 id="version-7x-accordion-group">Accordion Group</h4>
 
--`ionChange` is no longer emitted when the `value` of `ion-accordion-group` is modified externally. `ionChange` is only emitted from user committed changes, such as clicking or tapping the accordion header.
+- `ionChange` is no longer emitted when the `value` of `ion-accordion-group` is modified externally. `ionChange` is only emitted from user committed changes, such as clicking or tapping the accordion header.
 
 - Accordion Group no longer automatically adjusts the `value` property when passed an array and `multiple="false"`. Developers should update their apps to ensure they are using the API correctly.
 
