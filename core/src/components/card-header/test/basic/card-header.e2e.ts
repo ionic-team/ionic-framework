@@ -7,6 +7,6 @@ test.describe('card-header: basic', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`card-header-diff-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`card-header-diff-${page.getSnapshotSettings()}.png`);
   });
 });

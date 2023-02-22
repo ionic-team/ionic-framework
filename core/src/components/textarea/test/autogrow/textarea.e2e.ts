@@ -7,10 +7,11 @@ test.describe('textarea: autogrow', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`textarea-autogrow-diff-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`textarea-autogrow-diff-${page.getSnapshotSettings()}.png`);
   });
 
   test('should grow when typing', async ({ page }) => {
+<<<<<<< HEAD
     await page.setContent(
       `
       <ion-app>
@@ -21,6 +22,18 @@ test.describe('textarea: autogrow', () => {
         </ion-content>
       </ion-app>`
     );
+=======
+    await page.setContent(`
+      <ion-textarea auto-grow="true"></ion-textarea>
+    `);
+
+    const ionTextarea = page.locator('ion-textarea');
+    const nativeTextarea = ionTextarea.locator('textarea');
+
+    await nativeTextarea.type('Now, this is a story all about how');
+
+    await expect(ionTextarea).toHaveScreenshot(`textarea-autogrow-initial-${page.getSnapshotSettings()}.png`);
+>>>>>>> origin/main
 
     const textarea = await page.waitForSelector('ion-textarea');
 
@@ -43,7 +56,11 @@ test.describe('textarea: autogrow', () => {
       ].join('\n')
     );
 
+<<<<<<< HEAD
     expect(await textarea.screenshot()).toMatchSnapshot(`textarea-autogrow-after-${page.getSnapshotSettings()}.png`);
+=======
+    await expect(ionTextarea).toHaveScreenshot(`textarea-autogrow-after-${page.getSnapshotSettings()}.png`);
+>>>>>>> origin/main
   });
 
   test('should break long lines without white space', async ({ page }) => {
@@ -65,8 +82,6 @@ test.describe('textarea: autogrow', () => {
 
     const textarea = await page.locator('ion-textarea');
 
-    expect(await textarea.screenshot()).toMatchSnapshot(
-      `textarea-autogrow-word-break-${page.getSnapshotSettings()}.png`
-    );
+    await expect(textarea).toHaveScreenshot(`textarea-autogrow-word-break-${page.getSnapshotSettings()}.png`);
   });
 });

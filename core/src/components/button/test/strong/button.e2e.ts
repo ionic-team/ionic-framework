@@ -17,7 +17,7 @@ test.describe('button: strong', () => {
 
     const wrapper = page.locator('ion-button');
 
-    expect(await wrapper.screenshot()).toMatchSnapshot(`button-strong-${page.getSnapshotSettings()}.png`);
+    await expect(wrapper).toHaveScreenshot(`button-strong-${page.getSnapshotSettings()}.png`);
   });
   test('should render strong clear button', async ({ page }) => {
     await page.setContent(`
@@ -26,7 +26,7 @@ test.describe('button: strong', () => {
 
     const wrapper = page.locator('ion-button');
 
-    expect(await wrapper.screenshot()).toMatchSnapshot(`button-clear-strong-${page.getSnapshotSettings()}.png`);
+    await expect(wrapper).toHaveScreenshot(`button-clear-strong-${page.getSnapshotSettings()}.png`);
   });
   test.describe('in ion-buttons', () => {
     test('should render strong button', async ({ page }) => {
@@ -38,7 +38,7 @@ test.describe('button: strong', () => {
 
       const wrapper = page.locator('ion-button');
 
-      expect(await wrapper.screenshot()).toMatchSnapshot(`button-strong-in-buttons-${page.getSnapshotSettings()}.png`);
+      await expect(wrapper).toHaveScreenshot(`button-strong-in-buttons-${page.getSnapshotSettings()}.png`);
     });
     test('should render strong clear button', async ({ page }) => {
       await page.setContent(`
@@ -49,9 +49,7 @@ test.describe('button: strong', () => {
 
       const wrapper = page.locator('ion-button');
 
-      expect(await wrapper.screenshot()).toMatchSnapshot(
-        `button-clear-strong-in-buttons-${page.getSnapshotSettings()}.png`
-      );
+      await expect(wrapper).toHaveScreenshot(`button-clear-strong-in-buttons-${page.getSnapshotSettings()}.png`);
     });
   });
 });

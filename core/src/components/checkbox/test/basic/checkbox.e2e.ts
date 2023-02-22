@@ -11,6 +11,7 @@ test.describe('checkbox: basic visual tests', () => {
     expect(await checkbox.screenshot()).toMatchSnapshot(`checkbox-unchecked-${page.getSnapshotSettings()}.png`);
   });
 
+<<<<<<< HEAD
   test('should render checked checkbox correctly', async ({ page }) => {
     await page.setContent(`
       <ion-checkbox checked>Checked</ion-checkbox>
@@ -96,5 +97,8 @@ test.describe('checkbox: ionChange', () => {
 
     await checkbox.evaluate((el: HTMLIonCheckboxElement) => (el.checked = true));
     expect(ionChange).not.toHaveReceivedEvent();
+=======
+    await expect(page).toHaveScreenshot(`checkbox-basic-${page.getSnapshotSettings()}.png`);
+>>>>>>> origin/main
   });
 });

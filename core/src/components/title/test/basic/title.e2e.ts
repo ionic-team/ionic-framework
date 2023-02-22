@@ -7,6 +7,6 @@ test.describe('title: basic', () => {
     const wrapper = page.locator('#header-wrapper');
 
     // only screenshot the headers to avoid unnecessary blank space from ion-content
-    expect(await wrapper.screenshot()).toMatchSnapshot(`title-basic-${page.getSnapshotSettings()}.png`);
+    await expect(wrapper).toHaveScreenshot(`title-basic-${page.getSnapshotSettings()}.png`);
   });
 });

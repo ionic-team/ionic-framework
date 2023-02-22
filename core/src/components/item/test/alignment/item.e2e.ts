@@ -7,6 +7,6 @@ test.describe('item: alignment', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`item-alignment-diff-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`item-alignment-diff-${page.getSnapshotSettings()}.png`);
   });
 });

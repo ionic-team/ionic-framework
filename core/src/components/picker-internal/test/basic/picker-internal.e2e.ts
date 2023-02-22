@@ -8,9 +8,9 @@ test.describe('picker-internal', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot({ fullPage: true })).toMatchSnapshot(
-      `picker-internal-inline-diff-${page.getSnapshotSettings()}.png`
-    );
+    await expect(page).toHaveScreenshot(`picker-internal-inline-diff-${page.getSnapshotSettings()}.png`, {
+      fullPage: true,
+    });
   });
 
   test.describe('picker-internal: focus', () => {
@@ -86,9 +86,9 @@ test.describe('picker-internal', () => {
       await page.spyOnEvent('ionPopoverDidPresent');
       await page.waitForChanges();
 
-      expect(await page.screenshot({ fullPage: true })).toMatchSnapshot(
-        `picker-internal-popover-diff-${page.getSnapshotSettings()}.png`
-      );
+      await expect(page).toHaveScreenshot(`picker-internal-popover-diff-${page.getSnapshotSettings()}.png`, {
+        fullPage: true,
+      });
     });
 
     test('modal: should not have visual regression', async ({ page }) => {
@@ -101,9 +101,9 @@ test.describe('picker-internal', () => {
       await page.spyOnEvent('ionModalDidPresent');
       await page.waitForChanges();
 
-      expect(await page.screenshot({ fullPage: true })).toMatchSnapshot(
-        `picker-internal-modal-diff-${page.getSnapshotSettings()}.png`
-      );
+      await expect(page).toHaveScreenshot(`picker-internal-modal-diff-${page.getSnapshotSettings()}.png`, {
+        fullPage: true,
+      });
     });
   });
 });
