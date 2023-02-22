@@ -75,7 +75,7 @@ const jsSetFocus = async (
      * see the page jump.
      */
     if (enableScrollPadding && contentEl !== null) {
-      currentPadding += scrollData.scrollAmount;
+      currentPadding += scrollData.scrollPadding;
       setScrollPadding(contentEl, currentPadding);
       setClearScrollPaddingListener(inputEl, contentEl, () => (currentPadding = 0));
     }
@@ -103,7 +103,7 @@ const jsSetFocus = async (
    * the keyboard.
    */
   if (enableScrollPadding && contentEl) {
-    currentPadding += scrollData.scrollAmount;
+    currentPadding += scrollData.scrollPadding;
     setScrollPadding(contentEl, currentPadding);
   }
 
