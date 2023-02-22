@@ -25,7 +25,7 @@ test.describe('tab-button: basic', () => {
 
     const tabBar = page.locator('ion-tab-bar');
 
-    expect(await tabBar.screenshot()).toMatchSnapshot(`tab-button-icon-left-${page.getSnapshotSettings()}.png`);
+    await expect(tabBar).toHaveScreenshot(`tab-button-icon-left-${page.getSnapshotSettings()}.png`);
   });
 
   test('should render tab button with icons right of text', async ({ page }) => {
@@ -51,7 +51,7 @@ test.describe('tab-button: basic', () => {
 
     const tabBar = page.locator('ion-tab-bar');
 
-    expect(await tabBar.screenshot()).toMatchSnapshot(`tab-button-icon-right-${page.getSnapshotSettings()}.png`);
+    await expect(tabBar).toHaveScreenshot(`tab-button-icon-right-${page.getSnapshotSettings()}.png`);
   });
 
   test('should render tab button with icons below text', async ({ page }) => {
@@ -77,7 +77,7 @@ test.describe('tab-button: basic', () => {
 
     const tabBar = page.locator('ion-tab-bar');
 
-    expect(await tabBar.screenshot()).toMatchSnapshot(`tab-button-icon-below-${page.getSnapshotSettings()}.png`);
+    await expect(tabBar).toHaveScreenshot(`tab-button-icon-below-${page.getSnapshotSettings()}.png`);
   });
 
   test('should render tab button with icons on top of text', async ({ page }) => {
@@ -102,7 +102,7 @@ test.describe('tab-button: basic', () => {
 
     const tabBar = page.locator('ion-tab-bar');
 
-    expect(await tabBar.screenshot()).toMatchSnapshot(`tab-button-icon-top-${page.getSnapshotSettings()}.png`);
+    await expect(tabBar).toHaveScreenshot(`tab-button-icon-top-${page.getSnapshotSettings()}.png`);
   });
 
   test('should render tab button with no icons', async ({ page }) => {
@@ -128,6 +128,6 @@ test.describe('tab-button: basic', () => {
 
     const tabBar = page.locator('ion-tab-bar');
 
-    expect(await tabBar.screenshot()).toMatchSnapshot(`tab-button-no-icon-${page.getSnapshotSettings()}.png`);
+    await expect(tabBar).toHaveScreenshot(`tab-button-no-icon-${page.getSnapshotSettings()}.png`);
   });
 });

@@ -7,7 +7,7 @@ test.describe('item: counter', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`item-counter-diff-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`item-counter-diff-${page.getSnapshotSettings()}.png`);
   });
 
   test.describe('custom formatter', () => {

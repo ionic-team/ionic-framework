@@ -9,7 +9,7 @@ test.describe('radio-group: basic', () => {
 
     const list = page.locator('ion-list');
 
-    expect(await list.screenshot()).toMatchSnapshot(`radio-group-diff-${page.getSnapshotSettings()}.png`);
+    await expect(list).toHaveScreenshot(`radio-group-diff-${page.getSnapshotSettings()}.png`);
   });
 });
 
