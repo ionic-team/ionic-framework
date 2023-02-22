@@ -1,11 +1,12 @@
 import {
   ApplicationRef,
-  ComponentFactoryResolver,
   NgZone,
-  ViewContainerRef,
   Injectable,
-  InjectionToken,
   Injector,
+  EnvironmentInjector,
+  inject,
+  createComponent,
+  InjectionToken,
   ComponentRef,
 } from '@angular/core';
 import {
@@ -17,27 +18,24 @@ import {
   LIFECYCLE_WILL_UNLOAD,
 } from '@ionic/core';
 
-import { EnvironmentInjector } from '../di/r3_injector';
 import { NavParams } from '../directives/navigation/nav-params';
-import { isComponentFactoryResolver } from '../util/util';
 
 // TODO(FW-2827): types
 
 @Injectable()
 export class AngularDelegate {
-  constructor(private zone: NgZone, private appRef: ApplicationRef) {}
+  private zone = inject(NgZone);
+  private applicationRef = inject(ApplicationRef);
 
   create(
-    resolverOrInjector: ComponentFactoryResolver,
+    environmentInjector: EnvironmentInjector,
     injector: Injector,
-    location?: ViewContainerRef,
     elementReferenceKey?: string
   ): AngularFrameworkDelegate {
     return new AngularFrameworkDelegate(
-      resolverOrInjector,
+      environmentInjector,
       injector,
-      location,
-      this.appRef,
+      this.applicationRef,
       this.zone,
       elementReferenceKey
     );
@@ -45,14 +43,13 @@ export class AngularDelegate {
 }
 
 export class AngularFrameworkDelegate implements FrameworkDelegate {
-  private elRefMap = new WeakMap<HTMLElement, any>();
+  private elRefMap = new WeakMap<HTMLElement, ComponentRef<any>>();
   private elEventsMap = new WeakMap<HTMLElement, () => void>();
 
   constructor(
-    private resolverOrInjector: ComponentFactoryResolver | EnvironmentInjector,
+    private environmentInjector: EnvironmentInjector,
     private injector: Injector,
-    private location: ViewContainerRef | undefined,
-    private appRef: ApplicationRef,
+    private applicationRef: ApplicationRef,
     private zone: NgZone,
     private elementReferenceKey?: string
   ) {}
@@ -78,10 +75,9 @@ export class AngularFrameworkDelegate implements FrameworkDelegate {
 
         const el = attachView(
           this.zone,
-          this.resolverOrInjector,
+          this.environmentInjector,
           this.injector,
-          this.location,
-          this.appRef,
+          this.applicationRef,
           this.elRefMap,
           this.elEventsMap,
           container,
@@ -115,40 +111,37 @@ export class AngularFrameworkDelegate implements FrameworkDelegate {
 
 export const attachView = (
   zone: NgZone,
-  resolverOrInjector: ComponentFactoryResolver | EnvironmentInjector,
+  environmentInjector: EnvironmentInjector,
   injector: Injector,
-  location: ViewContainerRef | undefined,
-  appRef: ApplicationRef,
-  elRefMap: WeakMap<HTMLElement, any>,
+  applicationRef: ApplicationRef,
+  elRefMap: WeakMap<HTMLElement, ComponentRef<any>>,
   elEventsMap: WeakMap<HTMLElement, () => void>,
   container: any,
   component: any,
   params: any,
   cssClasses: string[] | undefined
 ): any => {
-  let componentRef: ComponentRef<any>;
+  /**
+   * Wraps the injector with a custom injector that
+   * provides NavParams to the component.
+   *
+   * NavParams is a legacy feature from Ionic v3 that allows
+   * Angular developers to provide data to a component
+   * and access it by providing NavParams as a dependency
+   * in the constructor.
+   *
+   * The modern approach is to access the data directly
+   * from the component's class instance.
+   */
   const childInjector = Injector.create({
     providers: getProviders(params),
     parent: injector,
   });
 
-  if (resolverOrInjector && isComponentFactoryResolver(resolverOrInjector)) {
-    // Angular 13 and lower
-    const factory = resolverOrInjector.resolveComponentFactory(component);
-    componentRef = location
-      ? location.createComponent(factory, location.length, childInjector)
-      : factory.create(childInjector);
-  } else if (location) {
-    // Angular 14
-    const environmentInjector = resolverOrInjector;
-    componentRef = location.createComponent(component, {
-      index: location.indexOf,
-      injector: childInjector,
-      environmentInjector,
-    } as any);
-  } else {
-    return null;
-  }
+  const componentRef = createComponent<any>(component, {
+    environmentInjector,
+    elementInjector: childInjector,
+  });
 
   const instance = componentRef.instance;
   const hostElement = componentRef.location.nativeElement;
@@ -156,17 +149,15 @@ export const attachView = (
     Object.assign(instance, params);
   }
   if (cssClasses) {
-    for (const clazz of cssClasses) {
-      hostElement.classList.add(clazz);
+    for (const cssClass of cssClasses) {
+      hostElement.classList.add(cssClass);
     }
   }
   const unbindEvents = bindLifecycleEvents(zone, instance, hostElement);
   container.appendChild(hostElement);
 
-  if (!location) {
-    appRef.attachView(componentRef.hostView);
-  }
-  componentRef.changeDetectorRef.reattach();
+  applicationRef.attachView(componentRef.hostView);
+
   elRefMap.set(hostElement, componentRef);
   elEventsMap.set(hostElement, unbindEvents);
   return hostElement;
