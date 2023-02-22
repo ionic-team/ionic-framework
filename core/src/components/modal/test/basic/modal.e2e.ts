@@ -78,9 +78,7 @@ test.describe('modal: rendering', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(
-      `modal-basic-present-${screenshotModifier}${page.getSnapshotSettings()}.png`
-    );
+    await expect(page).toHaveScreenshot(`modal-basic-present-${screenshotModifier}${page.getSnapshotSettings()}.png`);
 
     await modal.evaluate((el: HTMLIonModalElement) => {
       el.dismiss();

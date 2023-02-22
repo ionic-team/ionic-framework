@@ -7,6 +7,6 @@ test.describe('skeleton-text: basic', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`skeleton-text-basic-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`skeleton-text-basic-${page.getSnapshotSettings()}.png`);
   });
 });

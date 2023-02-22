@@ -7,6 +7,6 @@ test.describe('skeleton-text: custom', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`skeleton-text-custom-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`skeleton-text-custom-${page.getSnapshotSettings()}.png`);
   });
 });

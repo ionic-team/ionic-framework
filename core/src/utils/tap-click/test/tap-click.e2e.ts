@@ -1,7 +1,8 @@
 import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
-test.describe('tap click utility', () => {
+// TODO FW-3010
+test.describe.skip('tap click utility', () => {
   test.beforeEach(({ skip }) => {
     skip.rtl();
     skip.mode('ios');

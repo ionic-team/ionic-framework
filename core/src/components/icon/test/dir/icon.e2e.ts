@@ -10,7 +10,7 @@ test.describe('icon: rtl', () => {
     `);
 
     const icon = page.locator('ion-icon');
-    expect(await icon.screenshot()).toMatchSnapshot(`icon-flip-${page.getSnapshotSettings()}.png`);
+    await expect(icon).toHaveScreenshot(`icon-flip-${page.getSnapshotSettings()}.png`);
   });
   test('should not flip icon when rtl is active', async ({ page, skip }) => {
     skip.mode('ios');
@@ -20,6 +20,6 @@ test.describe('icon: rtl', () => {
     `);
 
     const icon = page.locator('ion-icon');
-    expect(await icon.screenshot()).toMatchSnapshot(`icon-no-flip-${page.getSnapshotSettings()}.png`);
+    await expect(icon).toHaveScreenshot(`icon-no-flip-${page.getSnapshotSettings()}.png`);
   });
 });

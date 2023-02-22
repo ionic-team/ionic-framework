@@ -7,7 +7,7 @@ test.describe('range: basic', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`range-diff-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`range-diff-${page.getSnapshotSettings()}.png`);
   });
 
   /**

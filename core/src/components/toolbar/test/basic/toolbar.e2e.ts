@@ -7,6 +7,6 @@ test.describe('toolbar: basic', () => {
 
     // capture both header toolbars at once, but don't include all the white space in the ion-content
     const header = page.locator('ion-header');
-    expect(await header.screenshot()).toMatchSnapshot(`toolbar-basic-${page.getSnapshotSettings()}.png`);
+    await expect(header).toHaveScreenshot(`toolbar-basic-${page.getSnapshotSettings()}.png`);
   });
 });

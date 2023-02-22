@@ -7,6 +7,8 @@ on:
     # Run every Monday-Friday
     # at 6:00 UTC (6:00 am UTC)
     - cron: '00 06 * * 1-5'
+  workflow_dispatch:
+    # allows for manual invocations in the GitHub UI
 
 # When pushing a new commit we should
 # cancel the previous test run to not
@@ -16,7 +18,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build-core:
+  build-core-with-stencil-eval:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -25,7 +27,7 @@ jobs:
       - uses: ./.github/workflows/actions/build-core-stencil-eval
 
   test-core-clean-build:
-    needs: [build-core]
+    needs: [build-core-with-stencil-eval]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -34,7 +36,7 @@ jobs:
       - uses: ./.github/workflows/actions/test-core-clean-build
 
   test-core-lint:
-    needs: [build-core]
+    needs: [build-core-with-stencil-eval]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -43,7 +45,7 @@ jobs:
       - uses: ./.github/workflows/actions/test-core-lint
 
   test-core-spec:
-    needs: [build-core]
+    needs: [build-core-with-stencil-eval]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -66,7 +68,7 @@ jobs:
         # to be the length of the shard array.
         shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
         totalShards: [20]
-    needs: [build-core]
+    needs: [build-core-with-stencil-eval]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -96,7 +98,7 @@ jobs:
         run: exit 1
 
   build-vue:
-    needs: [build-core]
+    needs: [build-core-with-stencil-eval]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -138,7 +140,7 @@ jobs:
         run: exit 1
 
   build-angular:
-    needs: [build-core]
+    needs: [build-core-with-stencil-eval]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -180,7 +182,7 @@ jobs:
         run: exit 1
 
   build-react:
-    needs: [build-core]
+    needs: [build-core-with-stencil-eval]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3

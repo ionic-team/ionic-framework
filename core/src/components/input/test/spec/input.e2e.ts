@@ -9,6 +9,6 @@ test.describe('input: spec', () => {
   test('should not have visual regressions', async ({ page }) => {
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`input-spec-diff-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`input-spec-diff-${page.getSnapshotSettings()}.png`);
   });
 });
