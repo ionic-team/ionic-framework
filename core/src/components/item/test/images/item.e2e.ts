@@ -7,6 +7,6 @@ test.describe('item: images', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`item-images-diff-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`item-images-diff-${page.getSnapshotSettings()}.png`);
   });
 });

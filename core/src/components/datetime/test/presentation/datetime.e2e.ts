@@ -19,12 +19,12 @@ test.describe('datetime: presentation', () => {
       await page.waitForChanges();
       compares.push({
         presentation,
-        screenshot: await datetime.screenshot(),
+        screenshot: datetime,
       });
     }
 
     for (const compare of compares) {
-      expect(compare.screenshot).toMatchSnapshot(
+      await expect(compare.screenshot).toHaveScreenshot(
         `datetime-presentation-${compare.presentation}-diff-${page.getSnapshotSettings()}.png`
       );
     }

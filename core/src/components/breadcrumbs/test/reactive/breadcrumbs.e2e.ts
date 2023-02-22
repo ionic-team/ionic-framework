@@ -37,9 +37,7 @@ test.describe('breadcrumbs: reactive', () => {
       await page.click('#add-btn');
       await page.waitForChanges();
 
-      expect(await breadcrumbs.screenshot()).toMatchSnapshot(
-        `breadcrumbs-reactive-add-diff-${page.getSnapshotSettings()}.png`
-      );
+      await expect(breadcrumbs).toHaveScreenshot(`breadcrumbs-reactive-add-diff-${page.getSnapshotSettings()}.png`);
     });
   });
 
@@ -67,9 +65,7 @@ test.describe('breadcrumbs: reactive', () => {
       await page.click('#remove-btn');
       await page.waitForChanges();
 
-      expect(await breadcrumbs.screenshot()).toMatchSnapshot(
-        `breadcrumbs-reactive-remove-diff-${page.getSnapshotSettings()}.png`
-      );
+      await expect(breadcrumbs).toHaveScreenshot(`breadcrumbs-reactive-remove-diff-${page.getSnapshotSettings()}.png`);
     });
   });
 });

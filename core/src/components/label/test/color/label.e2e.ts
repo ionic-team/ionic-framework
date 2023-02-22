@@ -10,7 +10,7 @@ test.describe('label: rendering', () => {
 
     const item = page.locator('ion-item');
 
-    expect(await item.screenshot()).toMatchSnapshot(`item-color-inherit-${page.getSnapshotSettings()}.png`);
+    await expect(item).toHaveScreenshot(`item-color-inherit-${page.getSnapshotSettings()}.png`);
   });
   test('should set color directly', async ({ page }) => {
     await page.setContent(`
@@ -19,7 +19,7 @@ test.describe('label: rendering', () => {
 
     const labelEl = page.locator('ion-label');
 
-    expect(await labelEl.screenshot()).toMatchSnapshot(`label-color-${page.getSnapshotSettings()}.png`);
+    await expect(labelEl).toHaveScreenshot(`label-color-${page.getSnapshotSettings()}.png`);
   });
   test('should use contrast color when color is set on item', async ({ page }) => {
     await page.setContent(`
@@ -30,7 +30,7 @@ test.describe('label: rendering', () => {
 
     const labelEl = page.locator('ion-label');
 
-    expect(await labelEl.screenshot()).toMatchSnapshot(`label-color-contrast-${page.getSnapshotSettings()}.png`);
+    await expect(labelEl).toHaveScreenshot(`label-color-contrast-${page.getSnapshotSettings()}.png`);
   });
   test('should override color even if color set on item', async ({ page }) => {
     await page.setContent(`
@@ -41,6 +41,6 @@ test.describe('label: rendering', () => {
 
     const labelEl = page.locator('ion-label');
 
-    expect(await labelEl.screenshot()).toMatchSnapshot(`label-color-override-${page.getSnapshotSettings()}.png`);
+    await expect(labelEl).toHaveScreenshot(`label-color-override-${page.getSnapshotSettings()}.png`);
   });
 });

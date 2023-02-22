@@ -12,16 +12,16 @@ test.describe('header: fade', () => {
     await page.goto('/src/components/header/test/fade');
 
     const header = page.locator('ion-header');
-    expect(await header.screenshot({ animations: 'disabled' })).toMatchSnapshot(
-      `header-fade-not-blurred-diff-${page.getSnapshotSettings()}.png`
-    );
+    await expect(header).toHaveScreenshot(`header-fade-not-blurred-diff-${page.getSnapshotSettings()}.png`, {
+      animations: 'disabled',
+    });
 
     const content = page.locator('ion-content');
     await content.evaluate((el: HTMLIonContentElement) => el.scrollToBottom(0));
     await page.waitForChanges();
 
-    expect(await header.screenshot({ animations: 'disabled' })).toMatchSnapshot(
-      `header-fade-blurred-diff-${page.getSnapshotSettings()}.png`
-    );
+    await expect(header).toHaveScreenshot(`header-fade-blurred-diff-${page.getSnapshotSettings()}.png`, {
+      animations: 'disabled',
+    });
   });
 });

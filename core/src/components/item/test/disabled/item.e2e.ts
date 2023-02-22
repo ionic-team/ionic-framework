@@ -7,6 +7,6 @@ test.describe('item: disabled state', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`item-disabled-diff-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`item-disabled-diff-${page.getSnapshotSettings()}.png`);
   });
 });

@@ -7,6 +7,6 @@ test.describe('toggle: sizes', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`toggle-sizes-diff-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`toggle-sizes-diff-${page.getSnapshotSettings()}.png`);
   });
 });

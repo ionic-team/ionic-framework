@@ -7,6 +7,6 @@ test.describe('back-button: basic', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`back-button-basic-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`back-button-basic-${page.getSnapshotSettings()}.png`);
   });
 });

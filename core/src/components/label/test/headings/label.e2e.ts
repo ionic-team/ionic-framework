@@ -8,6 +8,6 @@ test.describe('label: rendering', () => {
   test('should inherit text overflow for headings', async ({ page }) => {
     await page.goto(`/src/components/label/test/headings`);
 
-    expect(await page.screenshot()).toMatchSnapshot(`item-headings-inherit-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`item-headings-inherit-${page.getSnapshotSettings()}.png`);
   });
 });

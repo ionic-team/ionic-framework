@@ -9,7 +9,7 @@ test.describe('label: rendering', () => {
 
     const labelEl = page.locator('ion-label');
 
-    expect(await labelEl.screenshot()).toMatchSnapshot(`label-basic-${page.getSnapshotSettings()}.png`);
+    await expect(labelEl).toHaveScreenshot(`label-basic-${page.getSnapshotSettings()}.png`);
   });
   test('should not have visual regressions with fixed label', async ({ page }) => {
     await page.setContent(`
@@ -20,7 +20,7 @@ test.describe('label: rendering', () => {
 
     const itemEl = page.locator('ion-item');
 
-    expect(await itemEl.screenshot()).toMatchSnapshot(`label-fixed-${page.getSnapshotSettings()}.png`);
+    await expect(itemEl).toHaveScreenshot(`label-fixed-${page.getSnapshotSettings()}.png`);
   });
   test('should not have visual regressions with stacked label', async ({ page }) => {
     await page.setContent(`
@@ -32,7 +32,7 @@ test.describe('label: rendering', () => {
 
     const itemEl = page.locator('ion-item');
 
-    expect(await itemEl.screenshot()).toMatchSnapshot(`label-stacked-${page.getSnapshotSettings()}.png`);
+    await expect(itemEl).toHaveScreenshot(`label-stacked-${page.getSnapshotSettings()}.png`);
   });
   test('should not have visual regressions with floating label', async ({ page }) => {
     await page.setContent(`
@@ -44,6 +44,6 @@ test.describe('label: rendering', () => {
 
     const itemEl = page.locator('ion-item');
 
-    expect(await itemEl.screenshot()).toMatchSnapshot(`label-floating-${page.getSnapshotSettings()}.png`);
+    await expect(itemEl).toHaveScreenshot(`label-floating-${page.getSnapshotSettings()}.png`);
   });
 });
