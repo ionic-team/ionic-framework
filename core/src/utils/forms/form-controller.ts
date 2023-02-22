@@ -22,7 +22,10 @@ export const createLegacyFormController = (el: HTMLLegacyFormControlElement): Le
        * in the light DOM.
        */
       const hasLabelProp = (controlEl as any).label !== undefined || hasLabelSlot(controlEl);
-      const hasAriaLabelAttribute = controlEl.hasAttribute('aria-label') || controlEl.hasAttribute('aria-labelledby');
+      const hasAriaLabelAttribute =
+        controlEl.hasAttribute('aria-label') ||
+        // Shadow DOM form controls cannot use aria-labelledby
+        (controlEl.hasAttribute('aria-labelledby') && controlEl.shadowRoot === null);
 
       /**
        * Developers can manually opt-out of the modern form markup
