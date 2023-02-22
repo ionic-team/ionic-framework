@@ -149,6 +149,16 @@ export class Content implements ComponentInterface {
     }
 
     this.resizeTimeout = setTimeout(() => {
+      /**
+       * Resize should only happen
+       * if the content is visible.
+       * When the content is hidden
+       * then offsetParent will be null.
+       */
+      if (this.el.offsetParent === null) {
+        return;
+      }
+
       this.resize();
     }, 100);
   }
