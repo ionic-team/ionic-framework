@@ -82,6 +82,7 @@ import {
 export class Datetime implements ComponentInterface {
   private inputId = `ion-dt-${datetimeIds++}`;
   private calendarBodyRef?: HTMLElement;
+  private monthYearToggleItemRef?: HTMLIonItemElement;
   private popoverRef?: HTMLIonPopoverElement;
   private clearFocusVisible?: () => void;
   private parsedMinuteValues?: number[];
@@ -1877,7 +1878,6 @@ export class Datetime implements ComponentInterface {
    */
 
   private renderCalendarHeader(mode: Mode) {
-    const { showMonthAndYear } = this;
     const expandedIcon = mode === 'ios' ? chevronDown : caretUpSharp;
     const collapsedIcon = mode === 'ios' ? chevronForward : caretDownSharp;
 
@@ -1887,25 +1887,40 @@ export class Datetime implements ComponentInterface {
     // don't use the inheritAttributes util because it removes dir from the host, and we still need that
     const hostDir = this.el.getAttribute('dir') || undefined;
 
-    const monthYearAriaLabel = showMonthAndYear ? 'Hide year picker' : 'Show year picker';
-
     return (
       <div class="calendar-header">
         <div class="calendar-action-buttons">
           <div class="calendar-month-year">
             <ion-item
+              ref={(el) => (this.monthYearToggleItemRef = el)}
               button
-              key={monthYearAriaLabel}
-              aria-label={monthYearAriaLabel}
+              aria-label="Show year picker"
               detail={false}
               lines="none"
-              onClick={() => this.toggleMonthAndYearView()}
+              onClick={() => {
+                this.toggleMonthAndYearView();
+                /**
+                 * TODO: FW-3547
+                 *
+                 * Currently there is not a way to set the aria-label on the inner button
+                 * on the `ion-item` and have it be reactive to changes. This is a workaround
+                 * until we either refactor `ion-item` to a button or Stencil adds a way to
+                 * have reactive props for built-in properties, such as `aria-label`.
+                 */
+                if (this.monthYearToggleItemRef) {
+                  const btn = this.monthYearToggleItemRef.shadowRoot?.querySelector('.item-native');
+                  if (btn) {
+                    const monthYearAriaLabel = this.showMonthAndYear ? 'Hide year picker' : 'Show year picker';
+                    btn.setAttribute('aria-label', monthYearAriaLabel);
+                  }
+                }
+              }}
             >
               <ion-label>
                 {getMonthAndYear(this.locale, this.workingParts)}
                 <ion-icon
                   aria-hidden="true"
-                  icon={showMonthAndYear ? expandedIcon : collapsedIcon}
+                  icon={this.showMonthAndYear ? expandedIcon : collapsedIcon}
                   lazy={false}
                   flipRtl={true}
                 ></ion-icon>
