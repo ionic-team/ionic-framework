@@ -18,7 +18,7 @@ const testAlert = async (page: E2EPage, buttonID: string) => {
   const alert = await openAlert(page, buttonID);
 
   await expect(alert).toBeVisible();
-  expect(await alert.screenshot()).toMatchSnapshot(`alert-${buttonID}-${page.getSnapshotSettings()}.png`);
+  await expect(alert).toHaveScreenshot(`alert-${buttonID}-${page.getSnapshotSettings()}.png`);
 
   await alert.evaluate((el: HTMLIonAlertElement) => el.dismiss());
   await didDismiss.next();

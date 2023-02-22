@@ -151,7 +151,7 @@ class DatetimeLocaleFixture {
 
   async expectLocalizedPicker(modifier?: string) {
     const modifierString = modifier === undefined ? '' : `-${modifier}`;
-    expect(await this.datetime.screenshot()).toMatchSnapshot(
+    await expect(this.datetime).toHaveScreenshot(
       `datetime-locale-${this.locale}${modifierString}-diff-${this.page.getSnapshotSettings()}.png`
     );
   }

@@ -11,6 +11,6 @@ test.describe('menu-button: basic', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`menu-button-diff-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`menu-button-diff-${page.getSnapshotSettings()}.png`);
   });
 });

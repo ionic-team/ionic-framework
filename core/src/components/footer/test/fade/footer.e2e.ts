@@ -12,12 +12,12 @@ test.describe('footer: fade', () => {
     await page.goto('/src/components/footer/test/fade');
 
     const footer = page.locator('ion-footer');
-    expect(await footer.screenshot()).toMatchSnapshot(`footer-fade-blurred-diff-${page.getSnapshotSettings()}.png`);
+    await expect(footer).toHaveScreenshot(`footer-fade-blurred-diff-${page.getSnapshotSettings()}.png`);
 
     const content = page.locator('ion-content');
     await content.evaluate((el: HTMLIonContentElement) => el.scrollToBottom(0));
     await page.waitForChanges();
 
-    expect(await footer.screenshot()).toMatchSnapshot(`footer-fade-not-blurred-diff-${page.getSnapshotSettings()}.png`);
+    await expect(footer).toHaveScreenshot(`footer-fade-not-blurred-diff-${page.getSnapshotSettings()}.png`);
   });
 });

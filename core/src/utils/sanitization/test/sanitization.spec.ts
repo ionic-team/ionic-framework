@@ -30,6 +30,9 @@ describe('sanitizeDOMString', () => {
     expect(sanitizeDOMString('<a href="javascript:alert(document.cookie)">harmless link</a>')).toEqual(
       '<a>harmless link</a>'
     );
+    expect(sanitizeDOMString('<a href="javascr&Tab;ipt:alert(document.cookie)">harmless link</a>')).toEqual(
+      '<a>harmless link</a>'
+    );
   });
 
   it('filter <a> href JS + class attribute', () => {

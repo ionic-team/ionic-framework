@@ -25,7 +25,7 @@ test.describe('list: inset', () => {
 
     const listWrapper = page.locator('.wrapper');
 
-    expect(await listWrapper.screenshot()).toMatchSnapshot(`list-inset-full-lines-${page.getSnapshotSettings()}.png`);
+    await expect(listWrapper).toHaveScreenshot(`list-inset-full-lines-${page.getSnapshotSettings()}.png`);
   });
   test('should render inset lines while allowing for overrides', async ({ page }) => {
     await page.setContent(`
@@ -47,7 +47,7 @@ test.describe('list: inset', () => {
 
     const listWrapper = page.locator('.wrapper');
 
-    expect(await listWrapper.screenshot()).toMatchSnapshot(`list-inset-inset-lines-${page.getSnapshotSettings()}.png`);
+    await expect(listWrapper).toHaveScreenshot(`list-inset-inset-lines-${page.getSnapshotSettings()}.png`);
   });
   test('should render no lines while allowing for overrides', async ({ page }) => {
     await page.setContent(`
@@ -69,6 +69,6 @@ test.describe('list: inset', () => {
 
     const listWrapper = page.locator('.wrapper');
 
-    expect(await listWrapper.screenshot()).toMatchSnapshot(`list-inset-no-lines-${page.getSnapshotSettings()}.png`);
+    await expect(listWrapper).toHaveScreenshot(`list-inset-no-lines-${page.getSnapshotSettings()}.png`);
   });
 });

@@ -9,7 +9,7 @@ test.describe('toggle: enableOnOffLabels', () => {
   test('should not have visual regressions', async ({ page }) => {
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`toggle-on-off-labels-diff-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`toggle-on-off-labels-diff-${page.getSnapshotSettings()}.png`);
   });
 
   test.describe('dark mode', () => {
@@ -32,9 +32,7 @@ test.describe('toggle: enableOnOffLabels', () => {
 
       await page.setIonViewport();
 
-      expect(await page.screenshot()).toMatchSnapshot(
-        `toggle-on-off-labels-dark-mode-diff-${page.getSnapshotSettings()}.png`
-      );
+      await expect(page).toHaveScreenshot(`toggle-on-off-labels-dark-mode-diff-${page.getSnapshotSettings()}.png`);
     });
   });
 });

@@ -13,7 +13,7 @@ test.describe('header: basic', () => {
       `);
 
       const header = page.locator('ion-header');
-      expect(await header.screenshot()).toMatchSnapshot(`header-diff-${page.getSnapshotSettings()}.png`);
+      await expect(header).toHaveScreenshot(`header-diff-${page.getSnapshotSettings()}.png`);
     });
   });
 
@@ -32,7 +32,7 @@ test.describe('header: basic', () => {
       `);
 
       const header = page.locator('ion-header');
-      expect(await header.screenshot()).toMatchSnapshot(`header-no-border-diff-${page.getSnapshotSettings()}.png`);
+      await expect(header).toHaveScreenshot(`header-no-border-diff-${page.getSnapshotSettings()}.png`);
     });
 
     test('should not have visual regressions with translucent header', async ({ page, skip }) => {
@@ -50,7 +50,7 @@ test.describe('header: basic', () => {
       `);
 
       const header = page.locator('ion-header');
-      expect(await header.screenshot()).toMatchSnapshot(`header-translucent-diff-${page.getSnapshotSettings()}.png`);
+      await expect(header).toHaveScreenshot(`header-translucent-diff-${page.getSnapshotSettings()}.png`);
     });
 
     test('should not have visual regressions with translucent header with color', async ({ page, skip }) => {
@@ -68,9 +68,7 @@ test.describe('header: basic', () => {
       `);
 
       const header = page.locator('ion-header');
-      expect(await header.screenshot()).toMatchSnapshot(
-        `header-translucent-color-diff-${page.getSnapshotSettings()}.png`
-      );
+      await expect(header).toHaveScreenshot(`header-translucent-color-diff-${page.getSnapshotSettings()}.png`);
     });
   });
 });
