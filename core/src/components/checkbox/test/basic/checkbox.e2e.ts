@@ -8,17 +8,16 @@ test.describe('checkbox: basic visual tests', () => {
     `);
 
     const checkbox = page.locator('ion-checkbox');
-    expect(await checkbox.screenshot()).toMatchSnapshot(`checkbox-unchecked-${page.getSnapshotSettings()}.png`);
+    await expect(checkbox).toHaveScreenshot(`checkbox-unchecked-${page.getSnapshotSettings()}.png`);
   });
 
-<<<<<<< HEAD
   test('should render checked checkbox correctly', async ({ page }) => {
     await page.setContent(`
       <ion-checkbox checked>Checked</ion-checkbox>
     `);
 
     const checkbox = page.locator('ion-checkbox');
-    expect(await checkbox.screenshot()).toMatchSnapshot(`checkbox-checked-${page.getSnapshotSettings()}.png`);
+    await expect(checkbox).toHaveScreenshot(`checkbox-checked-${page.getSnapshotSettings()}.png`);
   });
 
   test('should render disabled checkbox correctly', async ({ page }) => {
@@ -27,7 +26,7 @@ test.describe('checkbox: basic visual tests', () => {
     `);
 
     const checkbox = page.locator('ion-checkbox');
-    expect(await checkbox.screenshot()).toMatchSnapshot(`checkbox-disabled-${page.getSnapshotSettings()}.png`);
+    await expect(checkbox).toHaveScreenshot(`checkbox-disabled-${page.getSnapshotSettings()}.png`);
   });
 
   test('should render custom checkmark-width correctly', async ({ page }) => {
@@ -36,7 +35,7 @@ test.describe('checkbox: basic visual tests', () => {
     `);
 
     const checkbox = page.locator('ion-checkbox');
-    expect(await checkbox.screenshot()).toMatchSnapshot(`checkbox-checkmark-width-${page.getSnapshotSettings()}.png`);
+    await expect(checkbox).toHaveScreenshot(`checkbox-checkmark-width-${page.getSnapshotSettings()}.png`);
   });
 
   test('should render custom size correctly', async ({ page }) => {
@@ -45,7 +44,7 @@ test.describe('checkbox: basic visual tests', () => {
     `);
 
     const checkbox = page.locator('ion-checkbox');
-    expect(await checkbox.screenshot()).toMatchSnapshot(`checkbox-size-${page.getSnapshotSettings()}.png`);
+    await expect(checkbox).toHaveScreenshot(`checkbox-size-${page.getSnapshotSettings()}.png`);
   });
 });
 
@@ -97,8 +96,5 @@ test.describe('checkbox: ionChange', () => {
 
     await checkbox.evaluate((el: HTMLIonCheckboxElement) => (el.checked = true));
     expect(ionChange).not.toHaveReceivedEvent();
-=======
-    await expect(page).toHaveScreenshot(`checkbox-basic-${page.getSnapshotSettings()}.png`);
->>>>>>> origin/main
   });
 });

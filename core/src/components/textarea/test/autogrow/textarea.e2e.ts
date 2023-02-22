@@ -11,20 +11,8 @@ test.describe('textarea: autogrow', () => {
   });
 
   test('should grow when typing', async ({ page }) => {
-<<<<<<< HEAD
-    await page.setContent(
-      `
-      <ion-app>
-        <ion-content>
-          <ion-list>
-            <ion-textarea auto-grow="true"></ion-textarea>
-          </ion-list>
-        </ion-content>
-      </ion-app>`
-    );
-=======
     await page.setContent(`
-      <ion-textarea auto-grow="true"></ion-textarea>
+      <ion-textarea aria-label="Textarea" auto-grow="true"></ion-textarea>
     `);
 
     const ionTextarea = page.locator('ion-textarea');
@@ -33,21 +21,8 @@ test.describe('textarea: autogrow', () => {
     await nativeTextarea.type('Now, this is a story all about how');
 
     await expect(ionTextarea).toHaveScreenshot(`textarea-autogrow-initial-${page.getSnapshotSettings()}.png`);
->>>>>>> origin/main
 
-    const textarea = await page.waitForSelector('ion-textarea');
-
-    await textarea.click();
-
-    await page.waitForChanges();
-
-    await textarea.type('Now, this is a story all about how');
-
-    await page.setIonViewport();
-
-    expect(await textarea.screenshot()).toMatchSnapshot(`textarea-autogrow-initial-${page.getSnapshotSettings()}.png`);
-
-    await textarea.type(
+    await nativeTextarea.type(
       [
         `\nMy life got flipped-turned upside down`,
         `And I'd like to take a minute`,
@@ -56,11 +31,7 @@ test.describe('textarea: autogrow', () => {
       ].join('\n')
     );
 
-<<<<<<< HEAD
-    expect(await textarea.screenshot()).toMatchSnapshot(`textarea-autogrow-after-${page.getSnapshotSettings()}.png`);
-=======
     await expect(ionTextarea).toHaveScreenshot(`textarea-autogrow-after-${page.getSnapshotSettings()}.png`);
->>>>>>> origin/main
   });
 
   test('should break long lines without white space', async ({ page }) => {
@@ -73,6 +44,7 @@ test.describe('textarea: autogrow', () => {
       `<ion-app>
         <ion-content>
           <ion-textarea
+            aria-label="Textarea"
             auto-grow="true"
             value="abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz">
           </ion-textarea>

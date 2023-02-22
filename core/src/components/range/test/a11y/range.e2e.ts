@@ -3,11 +3,23 @@ import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
 test.describe('range: a11y', () => {
-  test.beforeEach(async ({ skip }) => {
+  test('should not have accessibility violations', async ({ page, skip }) => {
     skip.rtl();
-<<<<<<< HEAD
     skip.mode('md');
-=======
+
+    await page.goto(`/src/components/range/test/a11y`);
+
+    /**
+     * Axe does not take <slot> elements into account
+     * when checking color-contrast. As a result, it will
+     * incorrectly report color-contrast issues: https://github.com/dequelabs/axe-core/issues/3329
+     */
+    const results = await new AxeBuilder({ page }).disableRules('color-contrast').analyze();
+    expect(results.violations).toEqual([]);
+  });
+
+  test('should not have visual regressions', async ({ page, skip }) => {
+    skip.rtl();
     skip.mode('ios', 'iOS mode does not display hover/active/focus styles.');
 
     await page.setContent(
@@ -36,21 +48,12 @@ test.describe('range: a11y', () => {
     await page.waitForChanges();
 
     await expect(range).toHaveScreenshot(`range-active-${page.getSnapshotSettings()}.png`);
->>>>>>> origin/main
   });
 
-  test('should not have accessibility violations', async ({ page }) => {
-    await page.goto(`/src/components/range/test/a11y`);
+  test.describe('with pin', () => {
+    test('should not have visual regressions', async ({ page, skip }) => {
+      skip.rtl();
 
-<<<<<<< HEAD
-    /**
-     * Axe does not take <slot> elements into account
-     * when checking color-contrast. As a result, it will
-     * incorrectly report color-contrast issues: https://github.com/dequelabs/axe-core/issues/3329
-     */
-    const results = await new AxeBuilder({ page }).disableRules('color-contrast').analyze();
-    expect(results.violations).toEqual([]);
-=======
       await page.setContent(
         `<ion-app>
           <ion-content>
@@ -68,6 +71,5 @@ test.describe('range: a11y', () => {
 
       await expect(range).toHaveScreenshot(`range-focus-with-pin-${page.getSnapshotSettings()}.png`);
     });
->>>>>>> origin/main
   });
 });

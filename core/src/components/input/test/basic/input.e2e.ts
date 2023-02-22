@@ -9,11 +9,7 @@ test.describe('input: basic', () => {
       `);
       const input = page.locator('ion-input');
       // Validates the display of an input where text extends off the edge of the component.
-<<<<<<< HEAD
-      expect(await input.screenshot()).toMatchSnapshot(`input-with-text-overflow-${page.getSnapshotSettings()}.png`);
-=======
-      await expect(item).toHaveScreenshot(`input-with-text-overflow-${page.getSnapshotSettings()}.png`);
->>>>>>> origin/main
+      await expect(input).toHaveScreenshot(`input-with-text-overflow-${page.getSnapshotSettings()}.png`);
     });
   });
   test.describe('input with placeholder', () => {
@@ -23,111 +19,7 @@ test.describe('input: basic', () => {
       `);
       const input = page.locator('ion-input');
       // Validates the display of an input with a placeholder.
-<<<<<<< HEAD
-      expect(await input.screenshot()).toMatchSnapshot(`input-with-placeholder-${page.getSnapshotSettings()}.png`);
-=======
-      await expect(item).toHaveScreenshot(`input-with-placeholder-${page.getSnapshotSettings()}.png`);
-    });
-  });
-
-  test.describe('input disabled', () => {
-    test('should not have visual regressions', async ({ page }) => {
-      await page.setContent(`
-      <ion-content>
-        <ion-list>
-          <ion-item>
-            <ion-input value="Input disabled" disabled></ion-input>
-          </ion-item>
-        </ion-list>
-      </ion-content>
-      `);
-      const item = page.locator('ion-item');
-      // Validates the display of an input in a disabled state.
-      await expect(item).toHaveScreenshot(`input-disabled-${page.getSnapshotSettings()}.png`);
-    });
-  });
-
-  test.describe('input with lines="full"', () => {
-    test('should not have visual regressions', async ({ page }) => {
-      await page.setContent(`
-      <ion-content>
-        <ion-list>
-          <ion-item lines="full">
-            <ion-input placeholder="Full"></ion-input>
-          </ion-item>
-        </ion-list>
-      </ion-content>
-      `);
-      const item = page.locator('ion-item');
-      const input = page.locator('ion-input');
-      // Validates the display of an input with an ion-item using lines="full".
-      await expect(item).toHaveScreenshot(`input-with-lines-full-${page.getSnapshotSettings()}.png`);
-
-      await input.click();
-
-      // Verifies that the parent item receives .item-has-focus when the input is focused.
-      await expect(item).toHaveClass(/item-has-focus/);
-      // Validates the display of an input with an ion-item using lines="full" when focused.
-      await expect(item).toHaveScreenshot(`input-with-lines-full-focused-${page.getSnapshotSettings()}.png`, {
-        animations: 'disabled',
-      });
-    });
-  });
-
-  test.describe('input with lines="inset"', () => {
-    test('should not have visual regressions', async ({ page }) => {
-      await page.setContent(`
-      <ion-content>
-        <ion-list>
-          <ion-item lines="inset">
-            <ion-input placeholder="Inset"></ion-input>
-          </ion-item>
-        </ion-list>
-      </ion-content>
-      `);
-      const item = page.locator('ion-item');
-      const input = page.locator('ion-input');
-      // Validates the display of an input with an ion-item using lines="inset".
-      await expect(item).toHaveScreenshot(`input-with-lines-inset-${page.getSnapshotSettings()}.png`);
-
-      await input.click();
-
-      // Verifies that the parent item receives .item-has-focus when the input is focused.
-      await expect(item).toHaveClass(/item-has-focus/);
-
-      // Validates the display of an input with an ion-item using lines="inset" when focused.
-      await expect(item).toHaveScreenshot(`input-with-lines-inset-focused-${page.getSnapshotSettings()}.png`, {
-        animations: 'disabled',
-      });
-    });
-  });
-
-  test.describe('input with lines="none"', () => {
-    test('should not have visual regressions', async ({ page }) => {
-      await page.setContent(`
-      <ion-content>
-        <ion-list>
-          <ion-item lines="none">
-            <ion-input placeholder="None"></ion-input>
-          </ion-item>
-        </ion-list>
-      </ion-content>
-      `);
-      const item = page.locator('ion-item');
-      const input = page.locator('ion-input');
-      // Validates the display of an input with an ion-item using lines="none".
-      await expect(item).toHaveScreenshot(`input-with-lines-none-${page.getSnapshotSettings()}.png`);
-
-      await input.click();
-
-      // Verifies that the parent item receives .item-has-focus when the input is focused.
-      await expect(item).toHaveClass(/item-has-focus/);
-
-      // Validates the display of an input with an ion-item using lines="none" when focused.
-      await expect(item).toHaveScreenshot(`input-with-lines-none-focused-${page.getSnapshotSettings()}.png`, {
-        animations: 'disabled',
-      });
->>>>>>> origin/main
+      await expect(input).toHaveScreenshot(`input-with-placeholder-${page.getSnapshotSettings()}.png`);
     });
   });
 
@@ -142,8 +34,7 @@ test.describe('input: basic', () => {
       `);
       const input = page.locator('ion-input');
       // Validates the display of an input with a clear button.
-<<<<<<< HEAD
-      expect(await input.screenshot()).toMatchSnapshot(`input-with-clear-button-${page.getSnapshotSettings()}.png`);
+      await expect(input).toHaveScreenshot(`input-with-clear-button-${page.getSnapshotSettings()}.png`);
     });
     test('should not have visual regressions with stacked label', async ({ page }) => {
       await page.setContent(`
@@ -156,12 +47,7 @@ test.describe('input: basic', () => {
       `);
       const input = page.locator('ion-input');
       // Validates the display of an input with a clear button.
-      expect(await input.screenshot()).toMatchSnapshot(
-        `input-with-clear-button-stacked-${page.getSnapshotSettings()}.png`
-      );
-=======
-      await expect(item).toHaveScreenshot(`input-with-clear-button-${page.getSnapshotSettings()}.png`);
->>>>>>> origin/main
+      await expect(input).toHaveScreenshot(`input-with-clear-button-stacked-${page.getSnapshotSettings()}.png`);
     });
   });
 });
