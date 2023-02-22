@@ -350,13 +350,12 @@ export class Toggle implements ComponentInterface {
   private renderLegacyToggle() {
     if (!this.hasLoggedDeprecationWarning) {
       printIonWarning(
-        `Using ion-toggle with an ion-label has been deprecated. To migrate, remove the ion-label and pass your label directly into ion-toggle instead.
+        `ion-toggle now requires providing a label with either the default slot or the "aria-label" attribute. To migrate, remove any usage of "ion-label" and pass the label text to either the component or the "aria-label" attribute.
 
-Example: <ion-toggle>Email:</ion-toggle>
+Example: <ion-toggle>Email</ion-toggle>
+Example with aria-label: <ion-toggle aria-label="Email"></ion-toggle>
 
-For toggles that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the toggle.
-
-For toggles that do not render the label immediately next to the toggle, developers may continue to use "ion-label" but must manually associate the label with the toggle by using "aria-labelledby".`,
+Developers can use the "legacy" property to continue using the legacy form markup. This property will be removed in an upcoming major release of Ionic where this form control will use the modern form markup.`,
         this.el
       );
 

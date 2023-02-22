@@ -465,8 +465,14 @@ export class Textarea implements ComponentInterface {
   private renderLegacyTextarea() {
     if (!this.hasLoggedDeprecationWarning) {
       printIonWarning(
-        `Using ion-textarea with an ion-label has been deprecated. To migrate, remove the ion-label and use the "label" property on ion-textarea instead.
-For textareas that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the textarea.`,
+        `ion-textarea now requires providing a label with either the "label" property or the "aria-label" attribute. To migrate, remove any usage of "ion-label" and pass the label text to either the "label" property or the "aria-label" attribute.
+
+Example: <ion-textarea label="Comments"></ion-textarea>
+Example with aria-label: <ion-textarea aria-label="Comments"></ion-textarea>
+
+For textareas that do not render the label immediately next to the input, developers may continue to use "ion-label" but must manually associate the label with the textarea by using "aria-labelledby".
+
+Developers can use the "legacy" property to continue using the legacy form markup. This property will be removed in an upcoming major release of Ionic where this form control will use the modern form markup.`,
         this.el
       );
       this.hasLoggedDeprecationWarning = true;
@@ -623,7 +629,6 @@ For textareas that do not have a visible label, developers should use "aria-labe
 
     return (
       <Host
-        aria-disabled={disabled ? 'true' : null}
         class={createColorClasses(this.color, {
           [mode]: true,
           'has-value': this.hasValue(),
