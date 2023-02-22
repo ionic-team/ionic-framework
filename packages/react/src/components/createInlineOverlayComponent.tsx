@@ -83,7 +83,7 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
        */
       if (node && this.state.isOpen) {
         /**
-         * Detach the local event listener than performs the state updates,
+         * Detach the local event listener that performs the state updates,
          * before dismissing the overlay, to prevent the callback handlers
          * executing after the component has been unmounted. This is to
          * avoid memory leaks.
