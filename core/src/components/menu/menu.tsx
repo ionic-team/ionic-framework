@@ -10,6 +10,7 @@ import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes, assert, clamp, isEndSide as isEnd } from '../../utils/helpers';
 import { menuController } from '../../utils/menu-controller';
 import { getOverlay } from '../../utils/overlays';
+import { win } from '../../utils/window';
 
 const iosEasing = 'cubic-bezier(0.32,0.72,0,1)';
 const mdEasing = 'cubic-bezier(0.0,0.0,0.2,1)';
@@ -173,8 +174,8 @@ export class Menu implements ComponentInterface, MenuI {
   async connectedCallback() {
     // TODO: connectedCallback is fired in CE build
     // before WC is defined. This needs to be fixed in Stencil.
-    if (typeof (customElements as any) !== 'undefined') {
-      await customElements.whenDefined('ion-menu');
+    if (win !== undefined && typeof (win.customElements as any) !== 'undefined') {
+      await win.customElements.whenDefined('ion-menu');
     }
 
     if (this.type === undefined) {

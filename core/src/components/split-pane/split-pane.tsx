@@ -2,6 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
+import { win } from '../../utils/window';
 
 // TODO(FW-2832): types
 
@@ -65,9 +66,10 @@ export class SplitPane implements ComponentInterface {
   async connectedCallback() {
     // TODO: connectedCallback is fired in CE build
     // before WC is defined. This needs to be fixed in Stencil.
-    if (typeof (customElements as any) !== 'undefined') {
-      await customElements.whenDefined('ion-split-pane');
+    if (win !== undefined && typeof (win.customElements as any) !== 'undefined') {
+      await win.customElements.whenDefined('ion-split-pane');
     }
+
     this.styleChildren();
     this.updateState();
   }
