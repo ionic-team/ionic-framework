@@ -291,10 +291,9 @@ export class Input implements ComponentInterface {
    * Depending on the way the users interacts with the element, the `ionChange`
    * event fires at a different moment:
    * - When the user commits the change explicitly (e.g. by selecting a date
-   * from a date picker for `<ion-input type="date">`, etc.).
+   * from a date picker for `<ion-input type="date">`, pressing the "Enter" key, etc.).
    * - When the element loses focus after its value has changed: for elements
    * where the user's interaction is typing.
-   *
    */
   @Event() ionChange!: EventEmitter<InputChangeEventDetail>;
 

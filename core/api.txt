@@ -1162,7 +1162,7 @@ ion-searchbar,event,ionCancel,void,true
 ion-searchbar,event,ionChange,SearchbarChangeEventDetail,true
 ion-searchbar,event,ionClear,void,true
 ion-searchbar,event,ionFocus,void,true
-ion-searchbar,event,ionInput,KeyboardEvent | null,true
+ion-searchbar,event,ionInput,SearchbarInputEventDetail,true
 ion-searchbar,css-prop,--background
 ion-searchbar,css-prop,--border-radius
 ion-searchbar,css-prop,--box-shadow

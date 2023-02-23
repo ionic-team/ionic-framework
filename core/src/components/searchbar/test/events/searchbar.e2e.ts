@@ -15,7 +15,7 @@ test.describe('searchbar: events (ionChange)', () => {
     await nativeInput.evaluate((e) => e.blur());
 
     await ionChange.next();
-    expect(ionChange).toHaveReceivedEventDetail({ value: 'new value' });
+    expect(ionChange).toHaveReceivedEventDetail({ value: 'new value', event: { isTrusted: true } });
     expect(ionChange).toHaveReceivedEventTimes(1);
   });
 
@@ -29,7 +29,7 @@ test.describe('searchbar: events (ionChange)', () => {
     await nativeInput.evaluate((e) => e.blur());
 
     await ionChange.next();
-    expect(ionChange).toHaveReceivedEventDetail({ value: '' });
+    expect(ionChange).toHaveReceivedEventDetail({ value: '', event: { isTrusted: true } });
     expect(ionChange).toHaveReceivedEventTimes(1);
   });
 
@@ -41,7 +41,7 @@ test.describe('searchbar: events (ionChange)', () => {
     await page.waitForChanges();
 
     await ionChange.next();
-    expect(ionChange).toHaveReceivedEventDetail({ value: '' });
+    expect(ionChange).toHaveReceivedEventDetail({ value: '', event: { isTrusted: true } });
     expect(ionChange).toHaveReceivedEventTimes(1);
   });
 
