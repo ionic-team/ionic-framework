@@ -532,6 +532,38 @@ export class Modal implements ComponentInterface, OverlayInterface {
       backdropBreakpoint: this.backdropBreakpoint,
     });
 
+    /* tslint:disable-next-line */
+    if (typeof window !== 'undefined') {
+      /**
+       * This needs to be setup before any
+       * non-transition async work so it can be dereferenced
+       * in the dismiss method. The dismiss method
+       * only waits for the entering transition
+       * to finish. It does not wait for all of the `present`
+       * method to resolve.
+       */
+      this.keyboardOpenCallback = () => {
+        if (this.gesture) {
+          /**
+           * When the native keyboard is opened and the webview
+           * is resized, the gesture implementation will become unresponsive
+           * and enter a free-scroll mode.
+           *
+           * When the keyboard is opened, we disable the gesture for
+           * a single frame and re-enable once the contents have repositioned
+           * from the keyboard placement.
+           */
+          this.gesture.enable(false);
+          raf(() => {
+            if (this.gesture) {
+              this.gesture.enable(true);
+            }
+          });
+        }
+      };
+      window.addEventListener(KEYBOARD_DID_OPEN, this.keyboardOpenCallback);
+    }
+
     /**
      * TODO (FW-937) - In the next major release of Ionic, all card modals
      * will be swipeable by default. canDismiss will be used to determine if the
@@ -560,30 +592,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
       this.initSheetGesture();
     } else if (hasCardModal) {
       this.initSwipeToClose();
-    }
-
-    /* tslint:disable-next-line */
-    if (typeof window !== 'undefined') {
-      this.keyboardOpenCallback = () => {
-        if (this.gesture) {
-          /**
-           * When the native keyboard is opened and the webview
-           * is resized, the gesture implementation will become unresponsive
-           * and enter a free-scroll mode.
-           *
-           * When the keyboard is opened, we disable the gesture for
-           * a single frame and re-enable once the contents have repositioned
-           * from the keyboard placement.
-           */
-          this.gesture.enable(false);
-          raf(() => {
-            if (this.gesture) {
-              this.gesture.enable(true);
-            }
-          });
-        }
-      };
-      window.addEventListener(KEYBOARD_DID_OPEN, this.keyboardOpenCallback);
     }
 
     this.currentTransition = undefined;
@@ -725,6 +733,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     /* tslint:disable-next-line */
     if (typeof window !== 'undefined' && this.keyboardOpenCallback) {
       window.removeEventListener(KEYBOARD_DID_OPEN, this.keyboardOpenCallback);
+      this.keyboardOpenCallback = undefined;
     }
 
     /**
