@@ -175,5 +175,6 @@ describe('getLocalizedTime', () => {
     };
 
     expect(getLocalizedTime('en-US', datetimeParts, false)).toEqual('10:40 PM');
+    expect(getLocalizedTime('en-US', datetimeParts, true)).toEqual('22:40');
   });
 });
