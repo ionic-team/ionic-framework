@@ -101,8 +101,8 @@ export class Textarea implements ComponentInterface {
   }
 
   /**
-   * The fill for the item. If `'solid'` the item will have a background. If
-   * `'outline'` the item will be transparent with a border. Only available in `md` mode.
+   * The fill for the item. If `"solid"` the item will have a background. If
+   * `"outline"` the item will be transparent with a border. Only available in `md` mode.
    */
   @Prop() fill?: 'outline' | 'solid';
 
@@ -210,11 +210,11 @@ export class Textarea implements ComponentInterface {
 
   /**
    * Where to place the label relative to the textarea.
-   * `'start'`: The label will appear to the left of the textarea in LTR and to the right in RTL.
-   * `'end'`: The label will appear to the right of the textarea in LTR and to the left in RTL.
-   * `'floating'`: The label will appear smaller and above the textarea when the textarea is focused or it has a value. Otherwise it will appear on top of the textarea.
-   * `'stacked'`: The label will appear smaller and above the textarea regardless even when the textarea is blurred or has no value.
-   * `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+   * `"start"`: The label will appear to the left of the textarea in LTR and to the right in RTL.
+   * `"end"`: The label will appear to the right of the textarea in LTR and to the left in RTL.
+   * `"floating"`: The label will appear smaller and above the textarea when the textarea is focused or it has a value. Otherwise it will appear on top of the textarea.
+   * `"stacked"`: The label will appear smaller and above the textarea regardless even when the textarea is blurred or has no value.
+   * `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
    */
   @Prop() labelPlacement: 'start' | 'end' | 'floating' | 'stacked' | 'fixed' = 'start';
 
