@@ -333,7 +333,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     if (this.gesture) {
       this.gesture.enable(enable);
     } else if (enable) {
-      await this.initSwipeToClose();
+      this.initSwipeToClose();
     }
   }
 
@@ -559,7 +559,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     if (this.isSheetModal) {
       this.initSheetGesture();
     } else if (hasCardModal) {
-      await this.initSwipeToClose();
+      this.initSwipeToClose();
     }
 
     /* tslint:disable-next-line */
