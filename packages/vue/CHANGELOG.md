@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.0.0-beta.5](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.4...v7.0.0-beta.5) (2023-02-27)
+
+
+### Features
+
+* **searchbar:** ionInput now emits value payload ([#26831](https://github.com/ionic-team/ionic/issues/26831)) ([865f8de](https://github.com/ionic-team/ionic/commit/865f8de9dc2d533b08730846f8d76bf165e8bc1d)), closes [#26828](https://github.com/ionic-team/ionic/issues/26828)
+
+
+### BREAKING CHANGES
+
+* **searchbar:** The `detail` payload for the `ionInput` event now on `ion-searchbar` contains an object with the current `value` as well as the native event that triggered `ionInput`.
+
+
+
+
+
 # [7.0.0-beta.4](https://github.com/ionic-team/ionic/compare/v6.5.6...v7.0.0-beta.4) (2023-02-22)
 
 

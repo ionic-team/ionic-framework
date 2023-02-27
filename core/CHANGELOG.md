@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.0.0-beta.5](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.4...v7.0.0-beta.5) (2023-02-27)
+
+
+### Bug Fixes
+
+* **content:** adjust transition shadow to match new iOS version ([#26839](https://github.com/ionic-team/ionic/issues/26839)) ([f006e4b](https://github.com/ionic-team/ionic/commit/f006e4bc09fcdcb5a34da4e17eb6037bf1e2445c))
+* **form:** shadow components using aria-labelledby do not use modern syntax ([#26836](https://github.com/ionic-team/ionic/issues/26836)) ([fcfdd9e](https://github.com/ionic-team/ionic/commit/fcfdd9e9ba9969947d8b9dfefbea4522d08753ed)), closes [#26829](https://github.com/ionic-team/ionic/issues/26829)
+* **scroll-padding:** correct padding is added ([#26810](https://github.com/ionic-team/ionic/issues/26810)) ([eefd17d](https://github.com/ionic-team/ionic/commit/eefd17d492f2fe24639cf20603fac04d6eb94e3f)), closes [#26803](https://github.com/ionic-team/ionic/issues/26803)
+
+
+### Features
+
+* **searchbar:** ionInput now emits value payload ([#26831](https://github.com/ionic-team/ionic/issues/26831)) ([865f8de](https://github.com/ionic-team/ionic/commit/865f8de9dc2d533b08730846f8d76bf165e8bc1d)), closes [#26828](https://github.com/ionic-team/ionic/issues/26828)
+
+
+### BREAKING CHANGES
+
+* **searchbar:** The `detail` payload for the `ionInput` event now on `ion-searchbar` contains an object with the current `value` as well as the native event that triggered `ionInput`.
+
+
+
+
+
 # [7.0.0-beta.4](https://github.com/ionic-team/ionic-framework/compare/v7.0.0-beta.3..v7.0.0-beta.4) (2023-02-22)
 
 
