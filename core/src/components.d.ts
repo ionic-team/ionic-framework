@@ -32,7 +32,7 @@ import { PinFormatter, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, Rang
 import { RefresherEventDetail } from "./components/refresher/refresher-interface";
 import { ItemReorderEventDetail } from "./components/reorder-group/reorder-group-interface";
 import { NavigationHookCallback } from "./components/route/route-interface";
-import { SearchbarChangeEventDetail } from "./components/searchbar/searchbar-interface";
+import { SearchbarChangeEventDetail, SearchbarInputEventDetail } from "./components/searchbar/searchbar-interface";
 import { SegmentChangeEventDetail } from "./components/segment/segment-interface";
 import { SegmentButtonLayout } from "./components/segment-button/segment-button-interface";
 import { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./components/select/select-interface";
@@ -68,7 +68,7 @@ export { PinFormatter, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, Rang
 export { RefresherEventDetail } from "./components/refresher/refresher-interface";
 export { ItemReorderEventDetail } from "./components/reorder-group/reorder-group-interface";
 export { NavigationHookCallback } from "./components/route/route-interface";
-export { SearchbarChangeEventDetail } from "./components/searchbar/searchbar-interface";
+export { SearchbarChangeEventDetail, SearchbarInputEventDetail } from "./components/searchbar/searchbar-interface";
 export { SegmentChangeEventDetail } from "./components/segment/segment-interface";
 export { SegmentButtonLayout } from "./components/segment-button/segment-button-interface";
 export { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./components/select/select-interface";
@@ -5276,7 +5276,7 @@ declare namespace LocalJSX {
          */
         "onIonBlur"?: (event: IonInputCustomEvent<FocusEvent>) => void;
         /**
-          * The `ionChange` event is fired for `<ion-input>` elements when the user modifies the element's value. Unlike the `ionInput` event, the `ionChange` event is not necessarily fired for each alteration to an element's value.  Depending on the way the users interacts with the element, the `ionChange` event fires at a different moment: - When the user commits the change explicitly (e.g. by selecting a date from a date picker for `<ion-input type="date">`, etc.). - When the element loses focus after its value has changed: for elements where the user's interaction is typing.
+          * The `ionChange` event is fired for `<ion-input>` elements when the user modifies the element's value. Unlike the `ionInput` event, the `ionChange` event is not necessarily fired for each alteration to an element's value.  Depending on the way the users interacts with the element, the `ionChange` event fires at a different moment: - When the user commits the change explicitly (e.g. by selecting a date from a date picker for `<ion-input type="date">`, pressing the "Enter" key, etc.). - When the element loses focus after its value has changed: for elements where the user's interaction is typing.
          */
         "onIonChange"?: (event: IonInputCustomEvent<InputChangeEventDetail>) => void;
         /**
@@ -6602,7 +6602,7 @@ declare namespace LocalJSX {
          */
         "onIonCancel"?: (event: IonSearchbarCustomEvent<void>) => void;
         /**
-          * The `ionChange` event is fired for `<ion-searchbar>` elements when the user modifies the element's value. Unlike the `ionInput` event, the `ionChange` event is not necessarily fired for each alteration to an element's value.  The `ionChange` event is fired when the element loses focus after its value has been modified. This includes modifications made when clicking the clear or cancel buttons.
+          * The `ionChange` event is fired for `<ion-searchbar>` elements when the user modifies the element's value. Unlike the `ionInput` event, the `ionChange` event is not necessarily fired for each alteration to an element's value.  The `ionChange` event is fired when the value has been committed by the user. This can happen when the element loses focus or when the "Enter" key is pressed. `ionChange` can also fire when clicking the clear or cancel buttons.
          */
         "onIonChange"?: (event: IonSearchbarCustomEvent<SearchbarChangeEventDetail>) => void;
         /**
@@ -6616,7 +6616,7 @@ declare namespace LocalJSX {
         /**
           * Emitted when the `value` of the `ion-searchbar` element has changed.
          */
-        "onIonInput"?: (event: IonSearchbarCustomEvent<KeyboardEvent | null>) => void;
+        "onIonInput"?: (event: IonSearchbarCustomEvent<SearchbarInputEventDetail>) => void;
         /**
           * Emitted when the styles change.
          */

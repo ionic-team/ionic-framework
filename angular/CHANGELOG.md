@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.0.0-beta.5](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.4...v7.0.0-beta.5) (2023-02-27)
+
+
+### Features
+
+* **angular,angular-server:** angular v14 minimum support ([#26822](https://github.com/ionic-team/ionic/issues/26822)) ([1dee16f](https://github.com/ionic-team/ionic/commit/1dee16f3a25dedf831afc09f9c400a42e861beea))
+* **searchbar:** ionInput now emits value payload ([#26831](https://github.com/ionic-team/ionic/issues/26831)) ([865f8de](https://github.com/ionic-team/ionic/commit/865f8de9dc2d533b08730846f8d76bf165e8bc1d)), closes [#26828](https://github.com/ionic-team/ionic/issues/26828)
+
+
+### BREAKING CHANGES
+
+* **searchbar:** The `detail` payload for the `ionInput` event now on `ion-searchbar` contains an object with the current `value` as well as the native event that triggered `ionInput`.
+* **angular,angular-server:** Angular v14 is now required to use `@ionic/angular` and `@ionic/angular-server`. Upgrade your project to Angular v14 by following the [Angular v14 update guide](https://update.angular.io/?l=3&v=13.0-14.0).
+
+The dev-preview `environmentInjector` property has been removed from `ion-tabs` and `ion-router-outlet`. Standalone component routing is now available without additional custom configuration. Remove the `environmentInjector` property from your `ion-tabs` and `ion-router-outlet` components.
+
+
+
+
+
 # [7.0.0-beta.4](https://github.com/ionic-team/ionic/compare/v6.5.6...v7.0.0-beta.4) (2023-02-22)
 
 

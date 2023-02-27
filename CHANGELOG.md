@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.0.0-beta.5](https://github.com/ionic-team/ionic-framework/compare/v7.0.0-beta.4...v7.0.0-beta.5) (2023-02-27)
+
+
+### Bug Fixes
+
+* **content:** adjust transition shadow to match new iOS version ([#26839](https://github.com/ionic-team/ionic-framework/issues/26839)) ([f006e4b](https://github.com/ionic-team/ionic-framework/commit/f006e4bc09fcdcb5a34da4e17eb6037bf1e2445c))
+* **form:** shadow components using aria-labelledby do not use modern syntax ([#26836](https://github.com/ionic-team/ionic-framework/issues/26836)) ([fcfdd9e](https://github.com/ionic-team/ionic-framework/commit/fcfdd9e9ba9969947d8b9dfefbea4522d08753ed)), closes [#26829](https://github.com/ionic-team/ionic-framework/issues/26829)
+* **scroll-padding:** correct padding is added ([#26810](https://github.com/ionic-team/ionic-framework/issues/26810)) ([eefd17d](https://github.com/ionic-team/ionic-framework/commit/eefd17d492f2fe24639cf20603fac04d6eb94e3f)), closes [#26803](https://github.com/ionic-team/ionic-framework/issues/26803)
+
+
+### Features
+
+* **angular,angular-server:** angular v14 minimum support ([#26822](https://github.com/ionic-team/ionic-framework/issues/26822)) ([1dee16f](https://github.com/ionic-team/ionic-framework/commit/1dee16f3a25dedf831afc09f9c400a42e861beea))
+* **searchbar:** ionInput now emits value payload ([#26831](https://github.com/ionic-team/ionic-framework/issues/26831)) ([865f8de](https://github.com/ionic-team/ionic-framework/commit/865f8de9dc2d533b08730846f8d76bf165e8bc1d)), closes [#26828](https://github.com/ionic-team/ionic-framework/issues/26828)
+
+
+### BREAKING CHANGES
+
+* **searchbar:** The `detail` payload for the `ionInput` event now on `ion-searchbar` contains an object with the current `value` as well as the native event that triggered `ionInput`.
+* **angular,angular-server:** Angular v14 is now required to use `@ionic/angular` and `@ionic/angular-server`. Upgrade your project to Angular v14 by following the [Angular v14 update guide](https://update.angular.io/?l=3&v=13.0-14.0).
+
+The dev-preview `environmentInjector` property has been removed from `ion-tabs` and `ion-router-outlet`. Standalone component routing is now available without additional custom configuration. Remove the `environmentInjector` property from your `ion-tabs` and `ion-router-outlet` components.
+
+
+
+
+
 # [7.0.0-beta.4](https://github.com/ionic-team/ionic-framework/compare/v6.5.6...v7.0.0-beta.4) (2023-02-22)
 
 

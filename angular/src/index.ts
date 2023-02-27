@@ -114,6 +114,7 @@ export {
   ScrollCustomEvent,
   SearchbarCustomEvent,
   SearchbarChangeEventDetail,
+  SearchbarInputEventDetail,
   SegmentChangeEventDetail,
   SegmentCustomEvent,
   SelectChangeEventDetail,
