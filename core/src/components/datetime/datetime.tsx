@@ -1907,8 +1907,9 @@ export class Datetime implements ComponentInterface {
                  * until we either refactor `ion-item` to a button or Stencil adds a way to
                  * have reactive props for built-in properties, such as `aria-label`.
                  */
-                if (this.monthYearToggleItemRef) {
-                  const btn = this.monthYearToggleItemRef.shadowRoot?.querySelector('.item-native');
+                const { monthYearToggleItemRef } = this;
+                if (monthYearToggleItemRef) {
+                  const btn = monthYearToggleItemRef.shadowRoot?.querySelector('.item-native');
                   if (btn) {
                     const monthYearAriaLabel = this.showMonthAndYear ? 'Hide year picker' : 'Show year picker';
                     btn.setAttribute('aria-label', monthYearAriaLabel);
