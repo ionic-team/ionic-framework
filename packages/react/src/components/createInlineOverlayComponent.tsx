@@ -180,8 +180,8 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
 
       /**
        * This component might be unmounted already, if the containing
-       * element was removed while the popover was still open. (For
-       * example, if an item contains an inline popover with a button
+       * element was removed while the overlay was still open. (For
+       * example, if an item contains an inline overlay with a button
        * that removes the item.)
        */
       if (wrapper && el) {
