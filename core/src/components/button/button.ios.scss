@@ -20,6 +20,8 @@
 
   font-size: #{$button-ios-font-size};
   font-weight: #{$button-ios-font-weight};
+
+  letter-spacing: #{$button-ios-letter-spacing};
 }
 
 /**
@@ -76,8 +78,6 @@
 
   font-size: #{$button-ios-clear-font-size};
   font-weight: #{$button-ios-clear-font-weight};
-
-  letter-spacing: #{$button-ios-clear-letter-spacing};
 }
 
 

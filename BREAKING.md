@@ -95,13 +95,14 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 
 **Design tokens**
 
-| Token                        | Previous Value | New Value |
-| ---------------------------- | -------------- | --------- |
-| `$button-ios-letter-spacing` | `-0.03em`      | Removed   |
-| `$button-ios-height`         | `2.8em`        | `3.1em`   |
-| `$button-ios-border-radius`  | `10px`         | `14px`    |
-| `$button-ios-large-height`   | `2.8em`        | `3.1em`   |
-| `$button-ios-large-border-radius`  | `12px`   | `16px`    |
+| Token                              | Previous Value | New Value |
+| ---------------------------------- | -------------- | --------- |
+| `$button-ios-letter-spacing`       | `-0.03em`      | `0`       |
+| `$button-ios-clear-letter-spacing` | `0`            | Removed   |
+| `$button-ios-height`               | `2.8em`        | `3.1em`   |
+| `$button-ios-border-radius`        | `10px`         | `14px`    |
+| `$button-ios-large-height`         | `2.8em`        | `3.1em`   |
+| `$button-ios-large-border-radius`  | `12px`         | `16px`    |
 
 <h4 id="version-7x-back-button">Back Button</h4>
 
