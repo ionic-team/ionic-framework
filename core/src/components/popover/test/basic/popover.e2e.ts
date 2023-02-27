@@ -1,5 +1,5 @@
+import type { Locator } from '@playwright/test';
 import { expect } from '@playwright/test';
-import type { E2EPage } from '@utils/test/playwright';
 import { test } from '@utils/test/playwright';
 
 import { openPopover, screenshotPopover } from '../test.utils';
@@ -38,145 +38,124 @@ test.describe('popover: focus trap', async () => {
   });
 
   test('should focus the first ion-item on ArrowDown', async ({ page }) => {
+    const item0 = page.locator('ion-popover ion-item:nth-of-type(1)');
+
     await openPopover(page, 'basic-popover');
 
     await page.keyboard.press('ArrowDown');
-    await expectActiveElementTextToEqual(page, 'Item 0');
+    await expect(item0).toBeFocused();
   });
 
   test('should trap focus', async ({ page, browserName }) => {
+    const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
+    const items = page.locator('ion-popover ion-item');
+
     await openPopover(page, 'basic-popover');
 
-    await page.keyboard.press('Tab');
+    await page.keyboard.press(tabKey);
+    await expect(items.nth(0)).toBeFocused();
 
-    await expectActiveElementTextToEqual(page, 'Item 0');
+    await page.keyboard.press(`Shift+${tabKey}`);
+    await expect(items.nth(3)).toBeFocused();
 
-    await page.keyboard.down('Shift');
-    if (browserName === 'webkit') {
-      await page.keyboard.down('Alt');
-    }
-    await page.keyboard.press('Tab');
-    await page.keyboard.up('Shift');
-    if (browserName === 'webkit') {
-      await page.keyboard.up('Alt');
-    }
-
-    await expectActiveElementTextToEqual(page, 'Item 3');
-
-    await page.keyboard.press('Tab');
-
-    await expectActiveElementTextToEqual(page, 'Item 0');
+    await page.keyboard.press(tabKey);
+    await expect(items.nth(0)).toBeFocused();
 
     await page.keyboard.press('ArrowDown');
-
-    await expectActiveElementTextToEqual(page, 'Item 1');
+    await expect(items.nth(1)).toBeFocused();
 
     await page.keyboard.press('ArrowDown');
-
-    await expectActiveElementTextToEqual(page, 'Item 2');
+    await expect(items.nth(2)).toBeFocused();
 
     await page.keyboard.press('Home');
-
-    await expectActiveElementTextToEqual(page, 'Item 0');
+    await expect(items.nth(0)).toBeFocused();
 
     await page.keyboard.press('End');
-
-    await expectActiveElementTextToEqual(page, 'Item 3');
+    await expect(items.nth(3)).toBeFocused();
   });
 
   test('should not override keyboard interactions for textarea elements', async ({ page, browserName }) => {
+    const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
+    const innerNativeTextarea = page.locator('ion-textarea textarea');
+    const vanillaTextarea = page.locator('ion-textarea + textarea');
+
     await openPopover(page, 'popover-with-textarea');
+
+    /**
+     * Focusing happens async inside of popover so we need
+     * to wait for the requestAnimationFrame to fire.
+     */
     await page.waitForFunction(() => document.activeElement?.tagName === 'ION-POPOVER');
 
-    await page.keyboard.press('Tab');
+    await page.keyboard.press(tabKey);
 
     // for Firefox, ion-textarea is focused first
     // need to tab again to get to native input
     if (browserName === 'firefox') {
-      await page.keyboard.press('Tab');
+      await page.keyboard.press(tabKey);
     }
 
-    let activeElementTagName = await page.evaluate(() => document.activeElement!.tagName);
     let scrollTop = null;
     let selectionStart = null;
     let previousSelectionStart = null;
 
-    // This is the native textarea within ion-textarea
-    expect(activeElementTagName).toBe('TEXTAREA');
+    await expect(innerNativeTextarea).toBeFocused();
 
-    selectionStart = await getActiveElementSelectionStart(page);
+    selectionStart = await getSelectionStart(innerNativeTextarea);
     expect(selectionStart).toBe(0);
 
     await page.keyboard.press('ArrowDown');
 
-    selectionStart = await getActiveElementSelectionStart(page);
+    selectionStart = await getSelectionStart(innerNativeTextarea);
     expect(selectionStart).toBeGreaterThan(0);
     previousSelectionStart = selectionStart;
 
     await page.keyboard.press('ArrowDown');
 
-    selectionStart = await getActiveElementSelectionStart(page);
-    expect(selectionStart).toBeGreaterThan(previousSelectionStart!);
+    selectionStart = await getSelectionStart(innerNativeTextarea);
+    expect(selectionStart).toBeGreaterThan(previousSelectionStart);
 
-    await page.keyboard.press('Tab');
+    await page.keyboard.press(tabKey);
     // Checking within HTML textarea
 
     // Reset tracking variables as the focus element has changed
-    scrollTop = null;
     selectionStart = null;
     previousSelectionStart = null;
 
-    activeElementTagName = await page.evaluate(() => document.activeElement!.tagName);
-    expect(activeElementTagName).toBe('TEXTAREA');
+    await expect(vanillaTextarea).toBeFocused();
 
-    selectionStart = await getActiveElementSelectionStart(page);
+    selectionStart = await getSelectionStart(vanillaTextarea);
     expect(selectionStart).toBe(0);
 
     await page.keyboard.press('ArrowDown');
 
-    selectionStart = await getActiveElementSelectionStart(page);
+    selectionStart = await getSelectionStart(vanillaTextarea);
     expect(selectionStart).toBeGreaterThan(0);
     previousSelectionStart = selectionStart;
 
     await page.keyboard.press('ArrowDown');
 
-    selectionStart = await getActiveElementSelectionStart(page);
+    selectionStart = await getSelectionStart(vanillaTextarea);
     expect(selectionStart).toBeGreaterThan(previousSelectionStart!);
 
     await page.keyboard.press('Home');
 
-    scrollTop = await getActiveElementScrollTop(page);
+    scrollTop = await getScrollTop(vanillaTextarea);
     expect(scrollTop).toBeGreaterThan(0);
 
     const previousScrollTop = scrollTop;
 
     await page.keyboard.press('End');
 
-    scrollTop = await getActiveElementScrollTop(page);
+    scrollTop = await getScrollTop(vanillaTextarea);
     expect(scrollTop).toBeGreaterThanOrEqual(previousScrollTop);
   });
 });
 
-// TODO(FW-1424): convert these to Playwright assertions where possible
-
-/**
- * Focusing happens async inside of popover so we need
- * to wait for the requestAnimationFrame to fire.
- */
-const expectActiveElementTextToEqual = async (page: E2EPage, textValue: string) => {
-  await page.evaluate((text) => document.activeElement!.textContent === text, textValue);
+const getSelectionStart = (el: Locator) => {
+  return el.evaluate((el) => (el as HTMLTextAreaElement).selectionStart);
 };
 
-const getActiveElementSelectionStart = (page: E2EPage) => {
-  return page.evaluate(() =>
-    document.activeElement instanceof HTMLTextAreaElement ? document.activeElement.selectionStart : null
-  );
-};
-
-const getActiveElementScrollTop = (page: E2EPage) => {
-  return page.evaluate(() => {
-    // Returns the closest ion-textarea or active element
-    const target = document.activeElement!.closest('ion-textarea') ?? document.activeElement;
-    return target!.scrollTop;
-  });
+const getScrollTop = (el: Locator) => {
+  return el.evaluate((el) => (el as HTMLTextAreaElement).scrollTop);
 };
