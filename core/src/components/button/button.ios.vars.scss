@@ -28,19 +28,16 @@ $button-ios-padding-bottom:                           $button-ios-padding-top !d
 $button-ios-padding-start:                            $button-ios-padding-end !default;
 
 /// @prop - Height of the button
-$button-ios-height:                                   2.8em !default;
+$button-ios-height:                                   3.1em !default;
 
 /// @prop - Border radius of the button
-$button-ios-border-radius:                            10px !default;
+$button-ios-border-radius:                            14px !default;
 
 /// @prop - Font size of the button text
 $button-ios-font-size:                                16px !default;
 
 /// @prop - Font weight of the button text
 $button-ios-font-weight:                              500 !default;
-
-/// @prop - Letter spacing of the button text
-$button-ios-letter-spacing:                           -.03em !default;
 
 /// @prop - Background color of the button
 $button-ios-background-color:                         ion-color(primary, base) !default;
@@ -80,10 +77,10 @@ $button-ios-large-padding-bottom:                     $button-ios-large-padding-
 $button-ios-large-padding-start:                      $button-ios-large-padding-end !default;
 
 /// @prop - Height of the large button
-$button-ios-large-height:                             2.8em !default;
+$button-ios-large-height:                             3.1em !default;
 
 /// @prop - Border radius of the large button
-$button-ios-large-border-radius:                      12px !default;
+$button-ios-large-border-radius:                      16px !default;
 
 /// @prop - Font size of the large button
 $button-ios-large-font-size:                          20px !default;
