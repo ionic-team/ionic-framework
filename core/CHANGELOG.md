@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.5.7-nightly.20230227](https://github.com/ionic-team/ionic/compare/v6.5.6...v6.5.7-nightly.20230227) (2023-02-27)
+
+
+### Bug Fixes
+
+* **content:** fullscreen values are recomputed on visible content ([#26847](https://github.com/ionic-team/ionic/issues/26847)) ([6dcd98b](https://github.com/ionic-team/ionic/commit/6dcd98b26ab8fd3bf0092416d613bf051fbdeacf)), closes [#26844](https://github.com/ionic-team/ionic/issues/26844)
+
+
+
+
+
 ## [6.5.6](https://github.com/ionic-team/ionic/compare/v6.5.5...v6.5.6) (2023-02-22)
 
 
