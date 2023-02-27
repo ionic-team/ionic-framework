@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.0.0-beta.5](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.4...v7.0.0-beta.5) (2023-02-27)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
 # [7.0.0-beta.4](https://github.com/ionic-team/ionic/compare/v6.5.6...v7.0.0-beta.4) (2023-02-22)
 
 
