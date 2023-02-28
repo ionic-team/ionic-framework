@@ -82,6 +82,7 @@ import {
 export class Datetime implements ComponentInterface {
   private inputId = `ion-dt-${datetimeIds++}`;
   private calendarBodyRef?: HTMLElement;
+  private monthYearToggleItemRef?: HTMLIonItemElement;
   private popoverRef?: HTMLIonPopoverElement;
   private clearFocusVisible?: () => void;
   private parsedMinuteValues?: number[];
@@ -1890,7 +1891,32 @@ export class Datetime implements ComponentInterface {
       <div class="calendar-header">
         <div class="calendar-action-buttons">
           <div class="calendar-month-year">
-            <ion-item button detail={false} lines="none" onClick={() => this.toggleMonthAndYearView()}>
+            <ion-item
+              ref={(el) => (this.monthYearToggleItemRef = el)}
+              button
+              aria-label="Show year picker"
+              detail={false}
+              lines="none"
+              onClick={() => {
+                this.toggleMonthAndYearView();
+                /**
+                 * TODO: FW-3547
+                 *
+                 * Currently there is not a way to set the aria-label on the inner button
+                 * on the `ion-item` and have it be reactive to changes. This is a workaround
+                 * until we either refactor `ion-item` to a button or Stencil adds a way to
+                 * have reactive props for built-in properties, such as `aria-label`.
+                 */
+                const { monthYearToggleItemRef } = this;
+                if (monthYearToggleItemRef) {
+                  const btn = monthYearToggleItemRef.shadowRoot?.querySelector('.item-native');
+                  if (btn) {
+                    const monthYearAriaLabel = this.showMonthAndYear ? 'Hide year picker' : 'Show year picker';
+                    btn.setAttribute('aria-label', monthYearAriaLabel);
+                  }
+                }
+              }}
+            >
               <ion-label>
                 {getMonthAndYear(this.locale, this.workingParts)}
                 <ion-icon
@@ -1905,7 +1931,7 @@ export class Datetime implements ComponentInterface {
 
           <div class="calendar-next-prev">
             <ion-buttons>
-              <ion-button aria-label="previous month" disabled={prevMonthDisabled} onClick={() => this.prevMonth()}>
+              <ion-button aria-label="Previous month" disabled={prevMonthDisabled} onClick={() => this.prevMonth()}>
                 <ion-icon
                   dir={hostDir}
                   aria-hidden="true"
@@ -1915,7 +1941,7 @@ export class Datetime implements ComponentInterface {
                   flipRtl
                 ></ion-icon>
               </ion-button>
-              <ion-button aria-label="next month" disabled={nextMonthDisabled} onClick={() => this.nextMonth()}>
+              <ion-button aria-label="Next month" disabled={nextMonthDisabled} onClick={() => this.nextMonth()}>
                 <ion-icon
                   dir={hostDir}
                   aria-hidden="true"
