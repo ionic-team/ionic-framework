@@ -31,7 +31,7 @@
     "loader/"
   ],
   "dependencies": {
-    "@stencil/core": "^3.0.0",
+    "@stencil/core": "^3.1.0",
     "ionicons": "^6.1.1",
     "tslib": "^2.1.0"
   },
@@ -45,7 +45,7 @@
     "@rollup/plugin-virtual": "^2.0.3",
     "@stencil/angular-output-target": "^0.5.0",
     "@stencil/react-output-target": "^0.4.0",
-    "@stencil/sass": "^3.0.0-dev.2023.2.16.0",
+    "@stencil/sass": "^3.0.0",
     "@stencil/vue-output-target": "^0.7.0",
     "@types/jest": "^27.5.2",
     "@types/node": "^14.6.0",
