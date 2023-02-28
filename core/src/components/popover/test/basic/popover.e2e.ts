@@ -76,6 +76,7 @@ test.describe('popover: focus trap', async () => {
 
   test('should not override keyboard interactions for textarea elements', async ({ page, browserName }) => {
     const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
+    const popover = page.locator('ion-popover');
     const innerNativeTextarea = page.locator('ion-textarea textarea');
     const vanillaTextarea = page.locator('ion-textarea + textarea');
 
@@ -85,7 +86,7 @@ test.describe('popover: focus trap', async () => {
      * Focusing happens async inside of popover so we need
      * to wait for the requestAnimationFrame to fire.
      */
-    await page.waitForFunction(() => document.activeElement?.tagName === 'ION-POPOVER');
+    await expect(popover).toBeFocused();
 
     await page.keyboard.press(tabKey);
 
