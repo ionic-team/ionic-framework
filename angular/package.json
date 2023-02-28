@@ -41,6 +41,9 @@
     "tsc": "tsc -p .",
     "validate": "npm i && npm run lint && npm run test && npm run build"
   },
+  "files": [
+    "css"
+  ],
   "dependencies": {
     "@ionic/core": "^7.0.0-beta.5",
     "ionicons": "^6.1.3",
