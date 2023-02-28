@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.5.7-nightly.20230228](https://github.com/ionic-team/ionic-framework/compare/v6.5.6...v6.5.7-nightly.20230228) (2023-02-28)
+
+
+### Bug Fixes
+
+* **content:** fullscreen values are recomputed on visible content ([#26847](https://github.com/ionic-team/ionic-framework/issues/26847)) ([6dcd98b](https://github.com/ionic-team/ionic-framework/commit/6dcd98b26ab8fd3bf0092416d613bf051fbdeacf)), closes [#26844](https://github.com/ionic-team/ionic-framework/issues/26844)
+* **modal:** keyboard listener removed on dismiss ([#26856](https://github.com/ionic-team/ionic-framework/issues/26856)) ([b4bcba3](https://github.com/ionic-team/ionic-framework/commit/b4bcba353386b4d5d8d396e61ece421a15d42ff0))
+* **overlays:** focus trap refs cleared on dismiss ([#26855](https://github.com/ionic-team/ionic-framework/issues/26855)) ([8d1d0fa](https://github.com/ionic-team/ionic-framework/commit/8d1d0fa0c7a42a3c21a471131ba454774b26c314))
+
+
+
+
+
 ## [6.5.6](https://github.com/ionic-team/ionic-framework/compare/v6.5.5...v6.5.6) (2023-02-22)
 
 

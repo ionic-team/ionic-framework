@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.5.7-nightly.20230228](https://github.com/ionic-team/ionic/compare/v6.5.6...v6.5.7-nightly.20230228) (2023-02-28)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
 ## [6.5.6](https://github.com/ionic-team/ionic/compare/v6.5.5...v6.5.6) (2023-02-22)
 
 **Note:** Version bump only for package @ionic/vue-router
