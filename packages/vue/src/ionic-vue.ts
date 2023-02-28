@@ -11,9 +11,10 @@ import type { App, Plugin } from "vue";
  * v-model values have been updated.
  */
 const toKebabCase = (eventName: string) => {
-  const kebabConvert = (name: string) => name.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, "$1-$2").toLowerCase();
+  const kebabConvert = (name: string) =>
+    name.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, "$1-$2").toLowerCase();
 
-  switch(eventName) {
+  switch (eventName) {
     case "ionInput":
       return "v-ion-input";
     case "ionChange":
@@ -21,7 +22,7 @@ const toKebabCase = (eventName: string) => {
     default:
       return kebabConvert(eventName);
   }
-}
+};
 
 const getHelperFunctions = () => {
   return {
