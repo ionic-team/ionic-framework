@@ -10,10 +10,18 @@ import type { App, Plugin } from "vue";
  * otherwise the binding's callback will fire before any
  * v-model values have been updated.
  */
-const toKebabCase = (eventName: string) =>
-  eventName === "ionChange"
-    ? "v-ion-change"
-    : eventName.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, "$1-$2").toLowerCase();
+const toKebabCase = (eventName: string) => {
+  const kebabConvert = (name: string) => name.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, "$1-$2").toLowerCase();
+
+  switch(eventName) {
+    case "ionInput":
+      return "v-ion-input";
+    case "ionChange":
+      return "v-ion-change";
+    default:
+      return kebabConvert(eventName);
+  }
+}
 
 const getHelperFunctions = () => {
   return {
