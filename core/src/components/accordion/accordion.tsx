@@ -77,7 +77,7 @@ export class Accordion implements ComponentInterface {
 
   /**
    * The slot inside of `ion-item` to
-   * place the toggle icon. Defaults to `'end'`.
+   * place the toggle icon. Defaults to `"end"`.
    */
   @Prop() toggleIconSlot: 'start' | 'end' = 'end';
 

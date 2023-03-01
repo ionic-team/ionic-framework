@@ -57,7 +57,7 @@ export class TabButton implements ComponentInterface, AnchorInterface {
 
   /**
    * Set the layout of the text and icon in the tab bar.
-   * It defaults to `'icon-top'`.
+   * It defaults to `"icon-top"`.
    */
   @Prop({ mutable: true }) layout?: TabButtonLayout;
 
