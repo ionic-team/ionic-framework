@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.0.0-rc.0](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.6...v7.0.0-rc.0) (2023-03-01)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
 # [7.0.0-beta.6](https://github.com/ionic-team/ionic/compare/v6.6.0...v7.0.0-beta.6) (2023-03-01)
 
 
