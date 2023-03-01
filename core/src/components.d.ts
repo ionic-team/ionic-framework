@@ -39,7 +39,6 @@ import { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./com
 import { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
 import { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
 import { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
-import { FrameworkDelegate as FrameworkDelegate1 } from "./utils/overlays";
 import { ToastButton, ToastLayout, ToastPosition } from "./components/toast/toast-interface";
 import { ToggleChangeEventDetail } from "./components/toggle/toggle-interface";
 export { AccordionGroupChangeEventDetail } from "./components/accordion-group/accordion-group-interface";
@@ -76,7 +75,6 @@ export { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./com
 export { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
 export { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
 export { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
-export { FrameworkDelegate as FrameworkDelegate1 } from "./utils/overlays";
 export { ToastButton, ToastLayout, ToastPosition } from "./components/toast/toast-interface";
 export { ToggleChangeEventDetail } from "./components/toggle/toggle-interface";
 export namespace Components {
@@ -3075,7 +3073,7 @@ export namespace Components {
           * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
          */
         "cssClass"?: string | string[];
-        "delegate"?: FrameworkDelegate1;
+        "delegate"?: FrameworkDelegate;
         /**
           * Dismiss the toast overlay after it has been presented.
           * @param data Any data to emit in the dismiss events.
@@ -7177,7 +7175,7 @@ declare namespace LocalJSX {
           * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
          */
         "cssClass"?: string | string[];
-        "delegate"?: FrameworkDelegate1;
+        "delegate"?: FrameworkDelegate;
         /**
           * How many milliseconds to wait before hiding the toast. By default, it will show until `dismiss()` is called.
          */
