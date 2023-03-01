@@ -36,6 +36,13 @@
   --padding-start: 0;
 }
 
+// Textarea - Disabled
+// ----------------------------------------------------------------
+:host(.legacy-textarea) .native-textarea[disabled],
+:host(.textarea-disabled) {
+  opacity: #{$textarea-md-disabled-opacity};
+}
+
 // Textarea Max Length Counter
 // ----------------------------------------------------------------
 .textarea-bottom .counter {

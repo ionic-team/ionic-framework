@@ -24,3 +24,8 @@ $textarea-md-placeholder-color: $placeholder-text-color !default;
 
 /// @prop - The amount of whitespace to display on either side of the floating label
 $textarea-md-floating-label-padding: 4px !default;
+
+/// @prop - The disabled opacity of the textarea text, the label, helper text, char counter and placeholder of a disabled textarea.
+/// This value comes from the Material Design spec:
+/// - https://github.com/material-components/material-web/pull/549
+$textarea-md-disabled-opacity: 0.37 !default;
