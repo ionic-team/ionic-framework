@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.0.0-beta.6](https://github.com/ionic-team/ionic-framework/compare/v6.6.0...v7.0.0-beta.6) (2023-03-01)
+
+
+### Bug Fixes
+
+* **angular:** devs can import ionic/angular styles in css ([#26875](https://github.com/ionic-team/ionic-framework/issues/26875)) ([0d2fac2](https://github.com/ionic-team/ionic-framework/commit/0d2fac2eefd610271fbbbecc36e844b6b289dfee))
+* **button:** update for ios spec ([#26864](https://github.com/ionic-team/ionic-framework/issues/26864)) ([df37357](https://github.com/ionic-team/ionic-framework/commit/df3735765a7639d200a85834d8c3d72546e29791))
+* **datetime:** aria-label for show/hide year picker ([#26848](https://github.com/ionic-team/ionic-framework/issues/26848)) ([ac66215](https://github.com/ionic-team/ionic-framework/commit/ac66215399954c972267b9d18bbd5aa5ef41a4c1))
+
+
+### BREAKING CHANGES
+
+* **button:** Button is updated to align with the design specification for iOS.
+
+**Design tokens**
+
+| Token                              | Previous Value | New Value |
+| ---------------------------------- | -------------- | --------- |
+| `$button-ios-letter-spacing`       | `-0.03em`      | `0`       |
+| `$button-ios-clear-letter-spacing` | `0`            | Removed   |
+| `$button-ios-height`               | `2.8em`        | `3.1em`   |
+| `$button-ios-border-radius`        | `10px`         | `14px`    |
+| `$button-ios-large-height`         | `2.8em`        | `3.1em`   |
+| `$button-ios-large-border-radius`  | `12px`         | `16px`    |
+ 
+
+
+
 
 # [6.6.0](https://github.com/ionic-team/ionic-framework/compare/v6.5.7...v6.6.0) (2023-03-01)
 

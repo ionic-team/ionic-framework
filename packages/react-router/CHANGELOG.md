@@ -3,8 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.0.0-beta.6](https://github.com/ionic-team/ionic/compare/v6.6.0...v7.0.0-beta.6) (2023-03-01)
+
+
+### Bug Fixes
+
+* **angular:** devs can import ionic/angular styles in css ([#26875](https://github.com/ionic-team/ionic/issues/26875)) ([0d2fac2](https://github.com/ionic-team/ionic/commit/0d2fac2eefd610271fbbbecc36e844b6b289dfee))
+
+
+
+
+
 # [6.6.0](https://github.com/ionic-team/ionic/compare/v6.5.7...v6.6.0) (2023-03-01)
-\
+
 **Note:** Version bump only for package @ionic/react-router
 
 
