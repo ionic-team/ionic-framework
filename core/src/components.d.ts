@@ -6,7 +6,7 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { AccordionGroupChangeEventDetail } from "./components/accordion-group/accordion-group-interface";
-import { AnimationBuilder, AutocompleteTypes, Color, ComponentProps, ComponentRef, FrameworkDelegate, OverlayEventDetail as OverlayEventDetail1, StyleEventDetail, TextFieldTypes, ToastButton } from "./interface";
+import { AnimationBuilder, AutocompleteTypes, Color, ComponentProps, ComponentRef, FrameworkDelegate, OverlayEventDetail as OverlayEventDetail1, StyleEventDetail, TextFieldTypes } from "./interface";
 import { ActionSheetButton } from "./components/action-sheet/action-sheet-interface";
 import { OverlayEventDetail } from "./utils/overlays-interface";
 import { IonicSafeString } from "./utils/sanitization";
@@ -39,10 +39,10 @@ import { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./com
 import { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
 import { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
 import { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
-import { ToastLayout, ToastPosition } from "./components/toast/toast-interface";
+import { ToastButton, ToastLayout, ToastPosition } from "./components/toast/toast-interface";
 import { ToggleChangeEventDetail } from "./components/toggle/toggle-interface";
 export { AccordionGroupChangeEventDetail } from "./components/accordion-group/accordion-group-interface";
-export { AnimationBuilder, AutocompleteTypes, Color, ComponentProps, ComponentRef, FrameworkDelegate, OverlayEventDetail as OverlayEventDetail1, StyleEventDetail, TextFieldTypes, ToastButton } from "./interface";
+export { AnimationBuilder, AutocompleteTypes, Color, ComponentProps, ComponentRef, FrameworkDelegate, OverlayEventDetail as OverlayEventDetail1, StyleEventDetail, TextFieldTypes } from "./interface";
 export { ActionSheetButton } from "./components/action-sheet/action-sheet-interface";
 export { OverlayEventDetail } from "./utils/overlays-interface";
 export { IonicSafeString } from "./utils/sanitization";
@@ -75,7 +75,7 @@ export { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./com
 export { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
 export { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
 export { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
-export { ToastLayout, ToastPosition } from "./components/toast/toast-interface";
+export { ToastButton, ToastLayout, ToastPosition } from "./components/toast/toast-interface";
 export { ToggleChangeEventDetail } from "./components/toggle/toggle-interface";
 export namespace Components {
     interface IonAccordion {

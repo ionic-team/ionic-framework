@@ -3,14 +3,7 @@ import { Watch, Component, Element, Event, h, Host, Method, Prop } from '@stenci
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import type {
-  AnimationBuilder,
-  Color,
-  CssClassMap,
-  OverlayEventDetail,
-  OverlayInterface,
-  ToastButton,
-} from '../../interface';
+import type { AnimationBuilder, Color, CssClassMap, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { printIonWarning } from '../../utils/logging';
 import {
   createDelegateController,
