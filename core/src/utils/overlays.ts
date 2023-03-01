@@ -525,6 +525,14 @@ export const dismiss = async <OverlayDismissOptions>(
      */
     overlay.el.classList.add('overlay-hidden');
     overlay.el.style.removeProperty('pointer-events');
+
+    /**
+     * Clear any focus trapping references
+     * when the overlay is dismissed.
+     */
+    if (overlay.el.lastFocus !== undefined) {
+      overlay.el.lastFocus = undefined;
+    }
   } catch (err) {
     console.error(err);
   }
