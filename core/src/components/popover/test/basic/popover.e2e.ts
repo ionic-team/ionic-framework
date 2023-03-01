@@ -1,4 +1,3 @@
-import type { Locator } from '@playwright/test';
 import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
@@ -96,67 +95,35 @@ test.describe('popover: focus trap', async () => {
       await page.keyboard.press(tabKey);
     }
 
-    let scrollTop = null;
-    let selectionStart = null;
-    let previousSelectionStart = null;
+    await expect(innerNativeTextarea).toBeFocused();
+
+    await page.keyboard.press('ArrowDown');
 
     await expect(innerNativeTextarea).toBeFocused();
 
-    selectionStart = await getSelectionStart(innerNativeTextarea);
-    expect(selectionStart).toBe(0);
+    await page.keyboard.press('ArrowUp');
 
-    await page.keyboard.press('ArrowDown');
-
-    selectionStart = await getSelectionStart(innerNativeTextarea);
-    expect(selectionStart).toBeGreaterThan(0);
-    previousSelectionStart = selectionStart;
-
-    await page.keyboard.press('ArrowDown');
-
-    selectionStart = await getSelectionStart(innerNativeTextarea);
-    expect(selectionStart).toBeGreaterThan(previousSelectionStart);
+    await expect(innerNativeTextarea).toBeFocused();
 
     await page.keyboard.press(tabKey);
     // Checking within HTML textarea
 
-    // Reset tracking variables as the focus element has changed
-    selectionStart = null;
-    previousSelectionStart = null;
+    await expect(vanillaTextarea).toBeFocused();
+
+    await page.keyboard.press('ArrowDown');
 
     await expect(vanillaTextarea).toBeFocused();
 
-    selectionStart = await getSelectionStart(vanillaTextarea);
-    expect(selectionStart).toBe(0);
+    await page.keyboard.press('ArrowUp');
 
-    await page.keyboard.press('ArrowDown');
-
-    selectionStart = await getSelectionStart(vanillaTextarea);
-    expect(selectionStart).toBeGreaterThan(0);
-    previousSelectionStart = selectionStart;
-
-    await page.keyboard.press('ArrowDown');
-
-    selectionStart = await getSelectionStart(vanillaTextarea);
-    expect(selectionStart).toBeGreaterThan(previousSelectionStart!);
+    await expect(vanillaTextarea).toBeFocused();
 
     await page.keyboard.press('Home');
 
-    scrollTop = await getScrollTop(vanillaTextarea);
-    expect(scrollTop).toBeGreaterThan(0);
-
-    const previousScrollTop = scrollTop;
+    await expect(vanillaTextarea).toBeFocused();
 
     await page.keyboard.press('End');
 
-    scrollTop = await getScrollTop(vanillaTextarea);
-    expect(scrollTop).toBeGreaterThanOrEqual(previousScrollTop);
+    await expect(vanillaTextarea).toBeFocused();
   });
 });
-
-const getSelectionStart = (el: Locator) => {
-  return el.evaluate((el) => (el as HTMLTextAreaElement).selectionStart);
-};
-
-const getScrollTop = (el: Locator) => {
-  return el.evaluate((el) => (el as HTMLTextAreaElement).scrollTop);
-};

@@ -12,6 +12,7 @@ export interface ToastOptions {
   animated?: boolean;
   icon?: string;
   htmlAttributes?: ToastAttributes;
+  layout?: ToastLayout;
 
   color?: Color;
   mode?: Mode;
@@ -26,6 +27,8 @@ export interface ToastOptions {
  * @deprecated - Use { [key: string]: any } directly instead.
  */
 export type ToastAttributes = { [key: string]: any };
+
+export type ToastLayout = 'baseline' | 'stacked';
 
 export interface ToastButton {
   text?: string;
