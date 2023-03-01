@@ -13,6 +13,6 @@ test.describe('item: buttons', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`item-buttons-diff-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`item-buttons-diff-${page.getSnapshotSettings()}.png`);
   });
 });

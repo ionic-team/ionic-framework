@@ -11,6 +11,6 @@ test.describe('icon: basic', () => {
     `);
 
     const icon = page.locator('ion-icon');
-    expect(await icon.screenshot()).toMatchSnapshot(`icon-${page.getSnapshotSettings()}.png`);
+    await expect(icon).toHaveScreenshot(`icon-${page.getSnapshotSettings()}.png`);
   });
 });

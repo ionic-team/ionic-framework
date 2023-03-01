@@ -7,6 +7,6 @@ test.describe('checkbox: indeterminate', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`checkbox-indeterminate-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`checkbox-indeterminate-${page.getSnapshotSettings()}.png`);
   });
 });

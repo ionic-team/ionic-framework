@@ -144,7 +144,7 @@ class ActionSheetFixture {
   }
 
   async screenshot(modifier: string) {
-    expect(await this.actionSheet.screenshot()).toMatchSnapshot(
+    await expect(this.actionSheet).toHaveScreenshot(
       `action-sheet-${modifier}-diff-${this.page.getSnapshotSettings()}.png`
     );
   }

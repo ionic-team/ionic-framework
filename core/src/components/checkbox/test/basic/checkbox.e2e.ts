@@ -7,6 +7,6 @@ test.describe('checkbox: basic', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`checkbox-basic-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`checkbox-basic-${page.getSnapshotSettings()}.png`);
   });
 });

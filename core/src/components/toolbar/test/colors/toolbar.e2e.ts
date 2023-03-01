@@ -7,6 +7,6 @@ test.describe('toolbar: colors', () => {
 
     // only capture the container to avoid extra white space
     const container = page.locator('#toolbars');
-    expect(await container.screenshot()).toMatchSnapshot(`toolbar-colors-${page.getSnapshotSettings()}.png`);
+    await expect(container).toHaveScreenshot(`toolbar-colors-${page.getSnapshotSettings()}.png`);
   });
 });

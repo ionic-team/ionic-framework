@@ -11,6 +11,6 @@ test.describe('item: reorder', () => {
 
     await page.waitForChanges();
 
-    expect(await page.screenshot()).toMatchSnapshot(`item-reorder-diff-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`item-reorder-diff-${page.getSnapshotSettings()}.png`);
   });
 });

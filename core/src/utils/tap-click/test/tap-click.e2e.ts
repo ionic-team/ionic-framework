@@ -10,7 +10,7 @@ test.describe.skip('tap click utility', () => {
   test('it should apply activated class when clicking element', async ({ page }) => {
     await page.setContent(`
       <ion-app>
-        <button class="ion-activatable">Click Me</button>
+        <button class="ion-activatable ion-activatable-instant">Click Me</button>
       </ion-app>
     `);
 

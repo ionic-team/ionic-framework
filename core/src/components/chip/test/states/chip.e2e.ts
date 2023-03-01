@@ -7,6 +7,6 @@ test.describe('chip: states', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`chip-states-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`chip-states-${page.getSnapshotSettings()}.png`);
   });
 });
