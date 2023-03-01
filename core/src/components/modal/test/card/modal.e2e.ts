@@ -16,26 +16,24 @@ test.describe('card modal', () => {
     test('should not have visual regressions', async ({ page }) => {
       await cardModalPage.openModalByTrigger('#card');
 
-      expect(await page.screenshot()).toMatchSnapshot(`modal-card-present-${page.getSnapshotSettings()}.png`);
+      await expect(page).toHaveScreenshot(`modal-card-present-${page.getSnapshotSettings()}.png`);
     });
     test('should not have visual regressions with custom modal', async ({ page }) => {
       await cardModalPage.openModalByTrigger('#card-custom');
 
-      expect(await page.screenshot()).toMatchSnapshot(`modal-card-custom-present-${page.getSnapshotSettings()}.png`);
+      await expect(page).toHaveScreenshot(`modal-card-custom-present-${page.getSnapshotSettings()}.png`);
     });
     test('should not have visual regressions with stacked cards', async ({ page }) => {
       await cardModalPage.openModalByTrigger('#card');
       await cardModalPage.openModalByTrigger('.add');
 
-      expect(await page.screenshot()).toMatchSnapshot(`modal-card-stacked-present-${page.getSnapshotSettings()}.png`);
+      await expect(page).toHaveScreenshot(`modal-card-stacked-present-${page.getSnapshotSettings()}.png`);
     });
     test('should not have visual regressions with stacked custom cards', async ({ page }) => {
       await cardModalPage.openModalByTrigger('#card-custom');
       await cardModalPage.openModalByTrigger('.add');
 
-      expect(await page.screenshot()).toMatchSnapshot(
-        `modal-card-custom-stacked-present-${page.getSnapshotSettings()}.png`
-      );
+      await expect(page).toHaveScreenshot(`modal-card-custom-stacked-present-${page.getSnapshotSettings()}.png`);
     });
   });
   test.describe('card modal: functionality', () => {
@@ -95,28 +93,24 @@ test.describe('card modal', () => {
       test('should not have visual regressions', async ({ page }) => {
         await cardModalPage.openModalByTrigger('#card');
 
-        expect(await page.screenshot()).toMatchSnapshot(`modal-card-present-tablet-${page.getSnapshotSettings()}.png`);
+        await expect(page).toHaveScreenshot(`modal-card-present-tablet-${page.getSnapshotSettings()}.png`);
       });
       test('should not have visual regressions with custom modal', async ({ page }) => {
         await cardModalPage.openModalByTrigger('#card-custom');
 
-        expect(await page.screenshot()).toMatchSnapshot(
-          `modal-card-custom-present-tablet-${page.getSnapshotSettings()}.png`
-        );
+        await expect(page).toHaveScreenshot(`modal-card-custom-present-tablet-${page.getSnapshotSettings()}.png`);
       });
       test('should not have visual regressions with stacked cards', async ({ page }) => {
         await cardModalPage.openModalByTrigger('#card');
         await cardModalPage.openModalByTrigger('.add');
 
-        expect(await page.screenshot()).toMatchSnapshot(
-          `modal-card-stacked-present-tablet-${page.getSnapshotSettings()}.png`
-        );
+        await expect(page).toHaveScreenshot(`modal-card-stacked-present-tablet-${page.getSnapshotSettings()}.png`);
       });
       test('should not have visual regressions with stacked custom cards', async ({ page }) => {
         await cardModalPage.openModalByTrigger('#card-custom');
         await cardModalPage.openModalByTrigger('.add');
 
-        expect(await page.screenshot()).toMatchSnapshot(
+        await expect(page).toHaveScreenshot(
           `modal-card-custom-stacked-present-tablet-${page.getSnapshotSettings()}.png`
         );
       });

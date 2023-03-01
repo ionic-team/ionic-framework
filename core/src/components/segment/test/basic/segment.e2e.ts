@@ -14,7 +14,7 @@ test.describe('segment: basic', () => {
 
       const segment = page.locator('ion-segment');
 
-      expect(await segment.screenshot()).toMatchSnapshot(`segment-no-value-${page.getSnapshotSettings()}.png`);
+      await expect(segment).toHaveScreenshot(`segment-no-value-${page.getSnapshotSettings()}.png`);
     });
     test('should not have visual regressions when a value is selected', async ({ page }) => {
       await page.setContent(`
@@ -27,7 +27,7 @@ test.describe('segment: basic', () => {
 
       const segment = page.locator('ion-segment');
 
-      expect(await segment.screenshot()).toMatchSnapshot(`segment-value-${page.getSnapshotSettings()}.png`);
+      await expect(segment).toHaveScreenshot(`segment-value-${page.getSnapshotSettings()}.png`);
     });
 
     test('should not have visual regressions when an item is disabled', async ({ page }) => {
@@ -41,7 +41,7 @@ test.describe('segment: basic', () => {
 
       const segment = page.locator('ion-segment');
 
-      expect(await segment.screenshot()).toMatchSnapshot(`segment-disabled-${page.getSnapshotSettings()}.png`);
+      await expect(segment).toHaveScreenshot(`segment-disabled-${page.getSnapshotSettings()}.png`);
     });
 
     test('should not have visual regressions with color', async ({ page }) => {
@@ -55,7 +55,7 @@ test.describe('segment: basic', () => {
 
       const segment = page.locator('ion-segment');
 
-      expect(await segment.screenshot()).toMatchSnapshot(`segment-color-${page.getSnapshotSettings()}.png`);
+      await expect(segment).toHaveScreenshot(`segment-color-${page.getSnapshotSettings()}.png`);
     });
   });
 });

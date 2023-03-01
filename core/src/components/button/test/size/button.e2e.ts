@@ -2,11 +2,49 @@ import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
 test.describe('button: size', () => {
-  test('should not have visual regressions', async ({ page }) => {
-    await page.goto(`/src/components/button/test/size`);
+  test.beforeEach(({ skip }) => {
+    skip.rtl();
+  });
+  test('should render small buttons', async ({ page }) => {
+    await page.setContent(`
+      <ion-button size="small" fill="solid">Small Button</ion-button>
+    `);
 
-    await page.setIonViewport();
+    const wrapper = page.locator('ion-button');
 
-    expect(await page.screenshot()).toMatchSnapshot(`button-size-${page.getSnapshotSettings()}.png`);
+    await expect(wrapper).toHaveScreenshot(`button-size-small-${page.getSnapshotSettings()}.png`);
+  });
+  test('should render large buttons', async ({ page }) => {
+    await page.setContent(`
+      <ion-button size="large" fill="solid">Large Button</ion-button>
+    `);
+
+    const wrapper = page.locator('ion-button');
+
+    await expect(wrapper).toHaveScreenshot(`button-size-large-${page.getSnapshotSettings()}.png`);
+  });
+  test.describe('in ion-buttons', () => {
+    test('should render small button', async ({ page }) => {
+      await page.setContent(`
+        <ion-buttons>
+          <ion-button size="small" fill="solid">Small Button</ion-button>
+        </ion-buttons>
+      `);
+
+      const wrapper = page.locator('ion-button');
+
+      await expect(wrapper).toHaveScreenshot(`button-size-small-in-buttons-${page.getSnapshotSettings()}.png`);
+    });
+    test('should render large button', async ({ page }) => {
+      await page.setContent(`
+        <ion-buttons>
+          <ion-button size="large" fill="solid">Large Button</ion-button>
+        </ion-buttons>
+      `);
+
+      const wrapper = page.locator('ion-button');
+
+      await expect(wrapper).toHaveScreenshot(`button-size-large-in-buttons-${page.getSnapshotSettings()}.png`);
+    });
   });
 });

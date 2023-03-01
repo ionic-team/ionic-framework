@@ -7,6 +7,6 @@ test.describe('item: fill', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`item-fill-diff-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`item-fill-diff-${page.getSnapshotSettings()}.png`);
   });
 });

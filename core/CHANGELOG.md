@@ -3,6 +3,72 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.5.7](https://github.com/ionic-team/ionic/compare/v6.5.6...v6.5.7) (2023-03-01)
+
+
+### Bug Fixes
+
+* **content:** fullscreen values are recomputed on visible content ([#26847](https://github.com/ionic-team/ionic/issues/26847)) ([6dcd98b](https://github.com/ionic-team/ionic/commit/6dcd98b26ab8fd3bf0092416d613bf051fbdeacf)), closes [#26844](https://github.com/ionic-team/ionic/issues/26844)
+* **modal:** keyboard listener removed on dismiss ([#26856](https://github.com/ionic-team/ionic/issues/26856)) ([b4bcba3](https://github.com/ionic-team/ionic/commit/b4bcba353386b4d5d8d396e61ece421a15d42ff0))
+* **overlays:** focus trap refs cleared on dismiss ([#26855](https://github.com/ionic-team/ionic/issues/26855)) ([8d1d0fa](https://github.com/ionic-team/ionic/commit/8d1d0fa0c7a42a3c21a471131ba454774b26c314))
+
+
+
+
+
+## [6.5.6](https://github.com/ionic-team/ionic/compare/v6.5.5...v6.5.6) (2023-02-22)
+
+
+### Bug Fixes
+
+* **card:** border radius does not overflow on paint in Safari ([#26539](https://github.com/ionic-team/ionic/issues/26539)) ([df5c8e2](https://github.com/ionic-team/ionic/commit/df5c8e231825b5e5b6923f322c94224a00d3b309)), closes [#26529](https://github.com/ionic-team/ionic/issues/26529)
+
+
+
+
+
+## [6.5.5](https://github.com/ionic-team/ionic/compare/v6.5.4...v6.5.5) (2023-02-20)
+
+
+### Bug Fixes
+
+* **datetime:** days of week and spacing buttons are not announced by screen readers ([#26813](https://github.com/ionic-team/ionic/issues/26813)) ([1a346b6](https://github.com/ionic-team/ionic/commit/1a346b62068076d0b0cc6b2dea4136e0f06576b8)), closes [#26811](https://github.com/ionic-team/ionic/issues/26811)
+* **hide-caret:** blur listener correctly removed ([#26808](https://github.com/ionic-team/ionic/issues/26808)) ([fef634f](https://github.com/ionic-team/ionic/commit/fef634f7f055f1672af50b56610f84c76e626814)), closes [#26807](https://github.com/ionic-team/ionic/issues/26807)
+* **input:** compositionend event is removed on unmount ([#26806](https://github.com/ionic-team/ionic/issues/26806)) ([caa8719](https://github.com/ionic-team/ionic/commit/caa8719cea2f4b3b460551224a8c4a69bd29afeb)), closes [#26805](https://github.com/ionic-team/ionic/issues/26805)
+* **sanitizer:** improve reliability of sanitizer ([#26820](https://github.com/ionic-team/ionic/issues/26820)) ([5e41391](https://github.com/ionic-team/ionic/commit/5e41391ed2585072095f42f7a6d40497f0e129d2))
+* **swipe-back:** gesture rtl setting is reactive ([#26795](https://github.com/ionic-team/ionic/issues/26795)) ([3a64de4](https://github.com/ionic-team/ionic/commit/3a64de49dbf470d470cb4516df2a5226ba751051)), closes [#26794](https://github.com/ionic-team/ionic/issues/26794)
+
+
+
+
+
+## [6.5.4](https://github.com/ionic-team/ionic/compare/v6.5.3...v6.5.4) (2023-02-15)
+
+
+### Bug Fixes
+
+* **content:** fullscreen works when rotating device ([#26782](https://github.com/ionic-team/ionic/issues/26782)) ([7b879fe](https://github.com/ionic-team/ionic/commit/7b879fec3d30b61c00faad035698ff643afaa78e)), closes [#26743](https://github.com/ionic-team/ionic/issues/26743)
+* **deps:** update ionicons usage to v6.1.2 ([#26752](https://github.com/ionic-team/ionic/issues/26752)) ([c07933c](https://github.com/ionic-team/ionic/commit/c07933cb69b0c31d3e44263769a7a26ee81223f8))
+* **deps:** update ionicons usage to v6.1.3 ([#26772](https://github.com/ionic-team/ionic/issues/26772)) ([1c71983](https://github.com/ionic-team/ionic/commit/1c719833292d4cfbdecadf9838d8c783785222ad))
+* **tap-click:** instant activate does not use a setTimeout ([#26748](https://github.com/ionic-team/ionic/issues/26748)) ([21c0806](https://github.com/ionic-team/ionic/commit/21c0806bbd1417b1e6239bc56272e18b3ff38f2e))
+
+
+
+
+
+## [6.5.3](https://github.com/ionic-team/ionic/compare/v6.5.2...v6.5.3) (2023-02-08)
+
+
+### Bug Fixes
+
+* **button:** size and strong are respected in ion-buttons ([#26726](https://github.com/ionic-team/ionic/issues/26726)) ([3759125](https://github.com/ionic-team/ionic/commit/37591255b4ab3dde5ece6950024a3b66e7224364))
+* **chip:** descenders are not clipped in label ([#26729](https://github.com/ionic-team/ionic/issues/26729)) ([a9e000b](https://github.com/ionic-team/ionic/commit/a9e000b4338f75c27e9284dbe9a6501ba3b213bc)), closes [#18313](https://github.com/ionic-team/ionic/issues/18313)
+* **refresher:** prevent clearing virtual scroll overflow styling ([#26613](https://github.com/ionic-team/ionic/issues/26613)) ([9d6ec29](https://github.com/ionic-team/ionic/commit/9d6ec2925cb2314d5379b864aef467b34afbb318)), closes [#26553](https://github.com/ionic-team/ionic/issues/26553)
+
+
+
+
+
 ## [6.5.2](https://github.com/ionic-team/ionic/compare/v6.5.1...v6.5.2) (2023-02-01)
 
 

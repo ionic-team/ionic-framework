@@ -8,7 +8,7 @@ export interface OverlayEventDetail<T = any> {
 }
 
 export interface OverlayInterface {
-  el: HTMLElement;
+  el: HTMLIonOverlayElement;
   animated: boolean;
   keyboardClose: boolean;
   overlayIndex: number;

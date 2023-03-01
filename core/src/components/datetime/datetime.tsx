@@ -1951,7 +1951,7 @@ export class Datetime implements ComponentInterface {
             </ion-buttons>
           </div>
         </div>
-        <div class="calendar-days-of-week">
+        <div class="calendar-days-of-week" aria-hidden="true">
           {getDaysOfWeek(this.locale, mode, this.firstDayOfWeek % 7).map((d) => {
             return <div class="day-of-week">{d}</div>;
           })}
@@ -1999,6 +1999,7 @@ export class Datetime implements ComponentInterface {
             const { day, dayOfWeek } = dateObject;
             const { el, highlightedDates, isDateEnabled, multiple } = this;
             const referenceParts = { month, day, year };
+            const isCalendarPadding = day === null;
             const { isActive, isToday, ariaLabel, ariaSelected, disabled, text } = getCalendarDayState(
               this.locale,
               referenceParts,
@@ -2049,7 +2050,7 @@ export class Datetime implements ComponentInterface {
                 data-day-of-week={dayOfWeek}
                 disabled={isCalDayDisabled}
                 class={{
-                  'calendar-day-padding': day === null,
+                  'calendar-day-padding': isCalendarPadding,
                   'calendar-day': true,
                   'calendar-day-active': isActive,
                   'calendar-day-today': isToday,
@@ -2059,10 +2060,11 @@ export class Datetime implements ComponentInterface {
                     color: dateStyle.textColor,
                   }
                 }
+                aria-hidden={isCalendarPadding ? 'true' : null}
                 aria-selected={ariaSelected}
                 aria-label={ariaLabel}
                 onClick={() => {
-                  if (day === null) {
+                  if (isCalendarPadding) {
                     return;
                   }
 

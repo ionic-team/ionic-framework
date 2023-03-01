@@ -7,5 +7,5 @@ test('should not have visual regressions', async ({ page, skip }) => {
 
   await page.setIonViewport();
 
-  expect(await page.screenshot()).toMatchSnapshot(`grid-sizes-${page.getSnapshotSettings()}.png`);
+  await expect(page).toHaveScreenshot(`grid-sizes-${page.getSnapshotSettings()}.png`);
 });
