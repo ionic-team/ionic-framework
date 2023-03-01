@@ -171,7 +171,7 @@
 }
 
 :host(.legacy-textarea) .native-textarea[disabled],
-:host([disabled]) {
+:host(.textarea-disabled) {
   opacity: 0.4;
 }
 

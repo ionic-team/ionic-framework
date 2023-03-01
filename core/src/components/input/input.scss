@@ -158,7 +158,7 @@
 
 
 :host(.legacy-input) .native-input[disabled],
-:host([disabled]) {
+:host(.input-disabled) {
   opacity: 0.4;
 }
 
