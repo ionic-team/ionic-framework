@@ -453,29 +453,16 @@ export class Modal implements ComponentInterface, OverlayInterface {
       backdropBreakpoint: this.backdropBreakpoint,
     });
 
-    const hasCardModal = presentingElement !== undefined;
-
-    /**
-     * We need to change the status bar at the
-     * start of the animation so that it completes
-     * by the time the card animation is done.
-     */
-    if (hasCardModal && getIonMode(this) === 'ios') {
-      // Cache the original status bar color before the modal is presented
-      this.statusBarStyle = await StatusBar.getStyle();
-      setCardStatusBarDark();
-    }
-
-    await this.currentTransition;
-
-    if (this.isSheetModal) {
-      this.initSheetGesture();
-    } else if (hasCardModal) {
-      await this.initSwipeToClose();
-    }
-
     /* tslint:disable-next-line */
     if (typeof window !== 'undefined') {
+      /**
+       * This needs to be setup before any
+       * non-transition async work so it can be dereferenced
+       * in the dismiss method. The dismiss method
+       * only waits for the entering transition
+       * to finish. It does not wait for all of the `present`
+       * method to resolve.
+       */
       this.keyboardOpenCallback = () => {
         if (this.gesture) {
           /**
@@ -496,6 +483,27 @@ export class Modal implements ComponentInterface, OverlayInterface {
         }
       };
       window.addEventListener(KEYBOARD_DID_OPEN, this.keyboardOpenCallback);
+    }
+
+    const hasCardModal = presentingElement !== undefined;
+
+    /**
+     * We need to change the status bar at the
+     * start of the animation so that it completes
+     * by the time the card animation is done.
+     */
+    if (hasCardModal && getIonMode(this) === 'ios') {
+      // Cache the original status bar color before the modal is presented
+      this.statusBarStyle = await StatusBar.getStyle();
+      setCardStatusBarDark();
+    }
+
+    await this.currentTransition;
+
+    if (this.isSheetModal) {
+      this.initSheetGesture();
+    } else if (hasCardModal) {
+      this.initSwipeToClose();
     }
 
     this.currentTransition = undefined;
@@ -638,6 +646,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     /* tslint:disable-next-line */
     if (typeof window !== 'undefined' && this.keyboardOpenCallback) {
       window.removeEventListener(KEYBOARD_DID_OPEN, this.keyboardOpenCallback);
+      this.keyboardOpenCallback = undefined;
     }
 
     /**

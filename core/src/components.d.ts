@@ -15,7 +15,7 @@ import { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./compo
 import { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
 import { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
 import { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
-import { DatetimeChangeEventDetail, DatetimePresentation, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
+import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimePresentation, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 import { SpinnerTypes } from "./components/spinner/spinner-configs";
 import { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
 import { CounterFormatter } from "./components/item/item-interface";
@@ -39,7 +39,7 @@ import { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./com
 import { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
 import { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
 import { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
-import { ToastButton, ToastPosition } from "./components/toast/toast-interface";
+import { ToastButton, ToastLayout, ToastPosition } from "./components/toast/toast-interface";
 import { ToggleChangeEventDetail } from "./components/toggle/toggle-interface";
 export { AccordionGroupChangeEventDetail } from "./components/accordion-group/accordion-group-interface";
 export { AnimationBuilder, AutocompleteTypes, Color, ComponentProps, ComponentRef, FrameworkDelegate, StyleEventDetail, TextFieldTypes } from "./interface";
@@ -51,7 +51,7 @@ export { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./compo
 export { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
 export { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
 export { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
-export { DatetimeChangeEventDetail, DatetimePresentation, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
+export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimePresentation, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 export { SpinnerTypes } from "./components/spinner/spinner-configs";
 export { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
 export { CounterFormatter } from "./components/item/item-interface";
@@ -75,7 +75,7 @@ export { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./com
 export { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
 export { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
 export { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
-export { ToastButton, ToastPosition } from "./components/toast/toast-interface";
+export { ToastButton, ToastLayout, ToastPosition } from "./components/toast/toast-interface";
 export { ToggleChangeEventDetail } from "./components/toggle/toggle-interface";
 export namespace Components {
     interface IonAccordion {
@@ -854,6 +854,10 @@ export namespace Components {
           * The first day of the week to use for `ion-datetime`. The default value is `0` and represents Sunday.
          */
         "firstDayOfWeek": number;
+        /**
+          * Used to apply custom text and background colors to specific dates.  Can be either an array of objects containing ISO strings and colors, or a callback that receives an ISO string and returns the colors.  Only applies to the `date`, `date-time`, and `time-date` presentations, with `preferWheel="false"`.
+         */
+        "highlightedDates"?: DatetimeHighlight[] | DatetimeHighlightCallback;
         /**
           * The hour cycle of the `ion-datetime`. If no value is set, this is specified by the current locale.
          */
@@ -3106,6 +3110,10 @@ export namespace Components {
          */
         "keyboardClose": boolean;
         /**
+          * Defines how the message and buttons are laid out in the toast. 'baseline': The message and the buttons will appear on the same line. Message text may wrap within the message container. 'stacked': The buttons containers and message will stack on top of each other. Use this if you have long text in your buttons.
+         */
+        "layout": ToastLayout;
+        /**
           * Animation to use when the toast is dismissed.
          */
         "leaveAnimation"?: AnimationBuilder;
@@ -4844,6 +4852,10 @@ declare namespace LocalJSX {
           * The first day of the week to use for `ion-datetime`. The default value is `0` and represents Sunday.
          */
         "firstDayOfWeek"?: number;
+        /**
+          * Used to apply custom text and background colors to specific dates.  Can be either an array of objects containing ISO strings and colors, or a callback that receives an ISO string and returns the colors.  Only applies to the `date`, `date-time`, and `time-date` presentations, with `preferWheel="false"`.
+         */
+        "highlightedDates"?: DatetimeHighlight[] | DatetimeHighlightCallback;
         /**
           * The hour cycle of the `ion-datetime`. If no value is set, this is specified by the current locale.
          */
@@ -7193,6 +7205,10 @@ declare namespace LocalJSX {
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
         "keyboardClose"?: boolean;
+        /**
+          * Defines how the message and buttons are laid out in the toast. 'baseline': The message and the buttons will appear on the same line. Message text may wrap within the message container. 'stacked': The buttons containers and message will stack on top of each other. Use this if you have long text in your buttons.
+         */
+        "layout"?: ToastLayout;
         /**
           * Animation to use when the toast is dismissed.
          */

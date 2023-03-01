@@ -46,4 +46,8 @@ export interface PickerColumnOption {
   duration?: number;
   transform?: string;
   selected?: boolean;
+  /**
+   * The optional text to assign as the aria-label on the picker column option.
+   */
+  ariaLabel?: string;
 }
