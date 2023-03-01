@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.6.0](https://github.com/ionic-team/ionic-framework/compare/v6.5.7...v6.6.0) (2023-03-01)
+
+
+### Bug Fixes
+
+* **modal:** dialog styles work on old chrome versions ([#26746](https://github.com/ionic-team/ionic-framework/issues/26746)) ([00d10f5](https://github.com/ionic-team/ionic-framework/commit/00d10f5f6ad53850505bdad94b659b8801a3309d)), closes [#26745](https://github.com/ionic-team/ionic-framework/issues/26745)
+
+
+### Features
+
+* **datetime:** add ability to specify custom colors for specific dates ([#26775](https://github.com/ionic-team/ionic-framework/issues/26775)) ([2a761af](https://github.com/ionic-team/ionic-framework/commit/2a761afd5a0e6d4e6f54096fdeb97b8bad1293de))
+* **picker-column:** assign custom aria-labels to column options ([#26749](https://github.com/ionic-team/ionic-framework/issues/26749)) ([daa89a2](https://github.com/ionic-team/ionic-framework/commit/daa89a26ac8fa655c56c9447a8635e7c436e4f63))
+* **toast:** add stacked buttons functionality ([#26790](https://github.com/ionic-team/ionic-framework/issues/26790)) ([fc5fcc0](https://github.com/ionic-team/ionic-framework/commit/fc5fcc064dec5256836e9622125b5e499ef00975))
+
+
+
+
+
 ## [6.5.7](https://github.com/ionic-team/ionic-framework/compare/v6.5.6...v6.5.7) (2023-03-01)
 
 
