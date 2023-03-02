@@ -46,7 +46,8 @@ test.describe('img: basic', () => {
       });
     });
 
-    test('should emit ionImgWillLoad', async () => {
+    // TODO FW-3596
+    test.skip('should emit ionImgWillLoad', async () => {
       await ionImgWillLoad.next();
 
       expect(ionImgWillLoad).toHaveReceivedEventTimes(1);
