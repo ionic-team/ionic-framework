@@ -164,7 +164,7 @@ html.ios ion-modal.modal-card .ion-page {
  * These changes allow certain dimension values
  * such as fit-content to work correctly.
  */
-ion-modal .ion-page:not(ion-nav .ion-page) {
+ion-modal > .ion-page {
   position: relative;
 
   contain: layout style;
