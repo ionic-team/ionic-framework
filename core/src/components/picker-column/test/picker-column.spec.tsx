@@ -1,5 +1,6 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
+
 import { PickerColumnCmp } from '../picker-column';
 
 describe('picker-column', () => {
