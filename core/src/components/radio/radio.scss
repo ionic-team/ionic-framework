@@ -74,6 +74,11 @@ input {
   width: 100%;
 }
 
+:host(.in-item[slot="start"]),
+:host(.in-item[slot="end"]) {
+  width: auto;
+}
+
 // Radio Wrapper
 // --------------------------------------------------
 .radio-wrapper {

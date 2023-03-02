@@ -93,6 +93,11 @@
   border: 2px solid #5e9ed6;
 }
 
+:host(.in-item[slot="start"]),
+:host(.in-item[slot="end"]) {
+  width: auto;
+}
+
 .select-placeholder {
   color: var(--placeholder-color);
 
