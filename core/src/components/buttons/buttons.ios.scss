@@ -57,12 +57,9 @@
 
 ::slotted(*) .button-clear,
 ::slotted(*) .button-outline {
+  --background-activated: transparent;
   --background-focused: currentColor;
   --background-hover: transparent;
-}
-
-::slotted(*) .button-clear {
-  --background-activated: transparent;
 }
 
 
