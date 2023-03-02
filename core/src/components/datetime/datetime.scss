@@ -356,30 +356,14 @@ ion-picker-column-internal {
   opacity: 0.4;
 }
 
-:host .calendar-day:after {
+.calendar-day-highlight {
   @include border-radius(32px, 32px, 32px, 32px);
   @include padding(4px, 4px, 4px, 4px);
 
   position: absolute;
 
-  /**
-   * Explicit position values are required here
-   * as pseudo element positioning is incorrect
-   * in older implementations of css grid.
-   *
-   * TODO: FW-1720: Remove top/left styles when deprecating iOS 13 support
-   */
-  /* stylelint-disable-next-line property-disallowed-list */
-  top: 50%;
-  /* stylelint-disable-next-line property-disallowed-list */
-  left: 50%;
-
   width: 32px;
   height: 32px;
-
-  transform: translate(-50%, -50%);
-
-  content: " ";
 
   z-index: -1;
 }
