@@ -42,8 +42,8 @@
   height: 100%;
 }
 
-:host(.in-item[slot="start"]),
-:host(.in-item[slot="end"]) {
+:host(.in-item[slot="start"]:not(.legacy-checkbox)),
+:host(.in-item[slot="end"]:not(.legacy-checkbox)) {
   width: auto;
 }
 

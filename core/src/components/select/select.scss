@@ -93,8 +93,9 @@
   border: 2px solid #5e9ed6;
 }
 
-:host(.in-item[slot="start"]),
-:host(.in-item[slot="end"]) {
+// TODO FW-3194 - Remove :not(.legacy-select) piece
+:host(.in-item[slot="start"]:not(.legacy-select)),
+:host(.in-item[slot="end"]:not(.legacy-select)) {
   width: auto;
 }
 
