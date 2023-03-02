@@ -137,11 +137,10 @@ export class Toggle implements ComponentInterface {
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
   @Watch('disabled')
-  protected disabledChanged() {
+  disabledChanged() {
     this.emitStyle();
-    const { gesture } = this;
-    if (gesture) {
-      gesture.enable(!this.disabled);
+    if (this.gesture) {
+      this.gesture.enable(!this.disabled);
     }
   }
 
@@ -193,9 +192,11 @@ export class Toggle implements ComponentInterface {
   }
 
   private emitStyle() {
-    this.ionStyle.emit({
-      'interactive-disabled': this.disabled,
-    });
+    if (this.legacyFormController.hasLegacyControl()) {
+      this.ionStyle.emit({
+        'interactive-disabled': this.disabled,
+      });
+    }
   }
 
   private onStart() {
