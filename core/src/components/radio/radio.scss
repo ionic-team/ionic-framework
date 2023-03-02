@@ -75,7 +75,7 @@ input {
 }
 
 :host(.in-item[slot="start"]:not(.legacy-radio)),
-:host(.in-item[slot="end"]:not(legacy-radio)) {
+:host(.in-item[slot="end"]:not(.legacy-radio)) {
   width: auto;
 }
 
