@@ -34,4 +34,15 @@ test.describe('checkbox: item', () => {
     const item = page.locator('ion-item');
     expect(await item.screenshot()).toMatchSnapshot(`checkbox-item-color-${page.getSnapshotSettings()}.png`);
   });
+  test('should not apply item hover styles', async ({ page, skip }) => {
+    skip.rtl();
+    await page.setContent(`
+      <ion-item>
+        <ion-checkbox>Enable Notifications</ion-checkbox>
+      </ion-item>
+    `);
+    const item = page.locator('ion-item');
+    await item.hover();
+    expect(await item.screenshot()).toMatchSnapshot(`checkbox-item-hover-${page.getSnapshotSettings()}.png`);
+  });
 });

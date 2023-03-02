@@ -37,4 +37,20 @@ test.describe('select: item', () => {
     const list = page.locator('ion-list');
     expect(await list.screenshot()).toMatchSnapshot(`select-inset-list-no-fill-${page.getSnapshotSettings()}.png`);
   });
+  test('should not apply item hover styles', async ({ page, skip }) => {
+    skip.rtl();
+    await page.setContent(`
+      <ion-item>
+        <ion-select
+          label="Fruit"
+          value="apple"
+        >
+          <ion-select-option value="apple">Apple</ion-select-option>
+        </ion-select>
+      </ion-item>
+    `);
+    const item = page.locator('ion-item');
+    await item.hover();
+    expect(await item.screenshot()).toMatchSnapshot(`select-item-hover-${page.getSnapshotSettings()}.png`);
+  });
 });
