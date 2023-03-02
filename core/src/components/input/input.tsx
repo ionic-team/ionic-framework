@@ -146,8 +146,8 @@ export class Input implements ComponentInterface {
   @Prop() errorText?: string;
 
   /**
-   * The fill for the item. If `'solid'` the item will have a background. If
-   * `'outline'` the item will be transparent with a border. Only available in `md` mode.
+   * The fill for the item. If `"solid"` the item will have a background. If
+   * `"outline"` the item will be transparent with a border. Only available in `md` mode.
    */
   @Prop() fill?: 'outline' | 'solid';
 
@@ -170,11 +170,11 @@ export class Input implements ComponentInterface {
 
   /**
    * Where to place the label relative to the input.
-   * `'start'`: The label will appear to the left of the input in LTR and to the right in RTL.
-   * `'end'`: The label will appear to the right of the input in LTR and to the left in RTL.
-   * `'floating'`: The label will appear smaller and above the input when the input is focused or it has a value. Otherwise it will appear on top of the input.
-   * `'stacked'`: The label will appear smaller and above the input regardless even when the input is blurred or has no value.
-   * `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+   * `"start"`: The label will appear to the left of the input in LTR and to the right in RTL.
+   * `"end"`: The label will appear to the right of the input in LTR and to the left in RTL.
+   * `"floating"`: The label will appear smaller and above the input when the input is focused or it has a value. Otherwise it will appear on top of the input.
+   * `"stacked"`: The label will appear smaller and above the input regardless even when the input is blurred or has no value.
+   * `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
    */
   @Prop() labelPlacement: 'start' | 'end' | 'floating' | 'stacked' | 'fixed' = 'start';
 

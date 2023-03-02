@@ -79,6 +79,7 @@ export {
   TextareaCustomEvent,
   ToastOptions,
   ToastButton,
+  ToastLayout,
   ToggleChangeEventDetail,
   ToggleCustomEvent,
 } from '@ionic/core/components';
