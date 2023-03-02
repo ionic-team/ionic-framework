@@ -214,22 +214,10 @@ export class Select implements ComponentInterface {
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
   @Watch('disabled')
-  protected disabledChanged() {
-    this.emitStyle();
-  }
-
-  @Watch('placeholder')
-  protected placeholderChanged() {
-    this.emitStyle();
-  }
-
   @Watch('isExpanded')
-  protected expandedChanged() {
-    this.emitStyle();
-  }
-
+  @Watch('placeholder')
   @Watch('value')
-  protected valueChanged() {
+  protected styleChanged() {
     this.emitStyle();
   }
 
