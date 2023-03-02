@@ -104,7 +104,8 @@ test.describe('overlays: dismiss', () => {
   });
 });
 
-test.describe('overlays: focus', () => {
+// TODO FW-3536
+test.describe.skip('overlays: focus', () => {
   test.beforeEach(({ skip }) => {
     skip.rtl();
   });

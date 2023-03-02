@@ -363,7 +363,6 @@ export class PickerColumnCmp implements ComponentInterface {
 
   render() {
     const col = this.col;
-    const Button = 'button' as any;
     const mode = getIonMode(this);
     return (
       <Host
@@ -385,9 +384,13 @@ export class PickerColumnCmp implements ComponentInterface {
         )}
         <div class="picker-opts" style={{ maxWidth: col.optionsWidth! }} ref={(el) => (this.optsEl = el)}>
           {col.options.map((o, index) => (
-            <Button type="button" class={{ 'picker-opt': true, 'picker-opt-disabled': !!o.disabled }} opt-index={index}>
+            <button
+              aria-label={o.ariaLabel}
+              class={{ 'picker-opt': true, 'picker-opt-disabled': !!o.disabled }}
+              opt-index={index}
+            >
               {o.text}
-            </Button>
+            </button>
           ))}
         </div>
         {col.suffix && (

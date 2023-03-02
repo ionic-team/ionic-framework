@@ -85,8 +85,8 @@ export class Select implements ComponentInterface {
   @Prop() disabled = false;
 
   /**
-   * The fill for the item. If `'solid'` the item will have a background. If
-   * `'outline'` the item will be transparent with a border. Only available in `md` mode.
+   * The fill for the item. If `"solid"` the item will have a background. If
+   * `"outline"` the item will be transparent with a border. Only available in `md` mode.
    */
   @Prop() fill?: 'outline' | 'solid';
 
@@ -110,12 +110,12 @@ export class Select implements ComponentInterface {
    * How to pack the label and select within a line.
    * `justify` does not apply when the label and select
    * are on different lines when `labelPlacement` is set to
-   * `'floating'` or `'stacked'`.
-   * `'start'`: The label and select will appear on the left in LTR and
+   * `"floating"` or `"stacked"`.
+   * `"start"`: The label and select will appear on the left in LTR and
    * on the right in RTL.
-   * `'end'`: The label and select will appear on the right in LTR and
+   * `"end"`: The label and select will appear on the right in LTR and
    * on the left in RTL.
-   * `'space-between'`: The label and select will appear on opposite
+   * `"space-between"`: The label and select will appear on opposite
    * ends of the line with space between the two elements.
    */
   @Prop() justify: 'start' | 'end' | 'space-between' = 'space-between';
@@ -127,12 +127,12 @@ export class Select implements ComponentInterface {
 
   /**
    * Where to place the label relative to the select.
-   * `'start'`: The label will appear to the left of the select in LTR and to the right in RTL.
-   * `'end'`: The label will appear to the right of the select in LTR and to the left in RTL.
-   * `'floating'`: The label will appear smaller and above the select when the select is focused or it has a value. Otherwise it will appear on top of the select.
-   * `'stacked'`: The label will appear smaller and above the select regardless even when the select is blurred or has no value.
-   * `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
-   * When using `'floating'` or `'stacked'` we recommend initializing the select with either a `value` or a `placeholder`.
+   * `"start"`: The label will appear to the left of the select in LTR and to the right in RTL.
+   * `"end"`: The label will appear to the right of the select in LTR and to the left in RTL.
+   * `"floating"`: The label will appear smaller and above the select when the select is focused or it has a value. Otherwise it will appear on top of the select.
+   * `"stacked"`: The label will appear smaller and above the select regardless even when the select is blurred or has no value.
+   * `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+   * When using `"floating"` or `"stacked"` we recommend initializing the select with either a `value` or a `placeholder`.
    */
   @Prop() labelPlacement?: 'start' | 'end' | 'floating' | 'stacked' | 'fixed' = 'start';
 
@@ -178,7 +178,7 @@ export class Select implements ComponentInterface {
   @Prop() shape?: 'round';
 
   /**
-   * the value of the select.
+   * The value of the select.
    */
   @Prop({ mutable: true }) value?: any | null;
 

@@ -73,9 +73,9 @@ export class Radio implements ComponentInterface {
 
   /**
    * Where to place the label relative to the radio.
-   * `'start'`: The label will appear to the left of the radio in LTR and to the right in RTL.
-   * `'end'`: The label will appear to the right of the radio in LTR and to the left in RTL.
-   * `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+   * `"start"`: The label will appear to the left of the radio in LTR and to the right in RTL.
+   * `"end"`: The label will appear to the right of the radio in LTR and to the left in RTL.
+   * `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
    */
   @Prop() labelPlacement: 'start' | 'end' | 'fixed' = 'start';
 
@@ -93,11 +93,11 @@ export class Radio implements ComponentInterface {
 
   /**
    * How to pack the label and radio within a line.
-   * `'start'`: The label and radio will appear on the left in LTR and
+   * `"start"`: The label and radio will appear on the left in LTR and
    * on the right in RTL.
-   * `'end'`: The label and radio will appear on the right in LTR and
+   * `"end"`: The label and radio will appear on the right in LTR and
    * on the left in RTL.
-   * `'space-between'`: The label and radio will appear on opposite
+   * `"space-between"`: The label and radio will appear on opposite
    * ends of the line with space between the two elements.
    */
   @Prop() justify: 'start' | 'end' | 'space-between' = 'space-between';

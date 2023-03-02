@@ -136,10 +136,16 @@ export const config: Config = {
           externalEvent: 'ionChange'
         },
         {
-          elements: ['ion-datetime', 'ion-input', 'ion-radio-group', 'ion-radio', 'ion-range', 'ion-searchbar', 'ion-segment', 'ion-segment-button', 'ion-select', 'ion-textarea', 'ion-accordion-group'],
+          elements: ['ion-datetime', 'ion-radio-group', 'ion-radio', 'ion-range', 'ion-segment', 'ion-segment-button', 'ion-select', 'ion-accordion-group'],
           targetAttr: 'value',
           event: 'v-ion-change',
           externalEvent: 'ionChange'
+        },
+        {
+          elements: ['ion-input', 'ion-searchbar', 'ion-textarea'],
+          targetAttr: 'value',
+          event: 'v-ion-input',
+          externalEvent: 'ionInput'
         }
       ],
     }),
@@ -211,4 +217,5 @@ export const config: Config = {
   preamble: '(C) Ionic http://ionicframework.com - MIT License',
   globalScript: 'src/global/ionic-global.ts',
   enableCache: true,
+  transformAliasedImportPaths: true,
 };

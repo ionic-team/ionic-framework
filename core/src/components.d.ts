@@ -15,7 +15,7 @@ import { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./compo
 import { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
 import { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
 import { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
-import { DatetimeChangeEventDetail, DatetimePresentation, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
+import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimePresentation, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 import { SpinnerTypes } from "./components/spinner/spinner-configs";
 import { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
 import { CounterFormatter } from "./components/item/item-interface";
@@ -39,7 +39,7 @@ import { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./com
 import { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
 import { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
 import { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
-import { ToastButton, ToastPosition } from "./components/toast/toast-interface";
+import { ToastButton, ToastLayout, ToastPosition } from "./components/toast/toast-interface";
 import { ToggleChangeEventDetail } from "./components/toggle/toggle-interface";
 export { AccordionGroupChangeEventDetail } from "./components/accordion-group/accordion-group-interface";
 export { AnimationBuilder, AutocompleteTypes, Color, ComponentProps, ComponentRef, FrameworkDelegate, StyleEventDetail, TextFieldTypes } from "./interface";
@@ -51,7 +51,7 @@ export { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./compo
 export { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
 export { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
 export { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
-export { DatetimeChangeEventDetail, DatetimePresentation, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
+export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimePresentation, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 export { SpinnerTypes } from "./components/spinner/spinner-configs";
 export { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
 export { CounterFormatter } from "./components/item/item-interface";
@@ -75,7 +75,7 @@ export { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./com
 export { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
 export { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
 export { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
-export { ToastButton, ToastPosition } from "./components/toast/toast-interface";
+export { ToastButton, ToastLayout, ToastPosition } from "./components/toast/toast-interface";
 export { ToggleChangeEventDetail } from "./components/toggle/toggle-interface";
 export namespace Components {
     interface IonAccordion {
@@ -96,7 +96,7 @@ export namespace Components {
          */
         "toggleIcon": string;
         /**
-          * The slot inside of `ion-item` to place the toggle icon. Defaults to `'end'`.
+          * The slot inside of `ion-item` to place the toggle icon. Defaults to `"end"`.
          */
         "toggleIconSlot": 'start' | 'end';
         /**
@@ -619,11 +619,11 @@ export namespace Components {
          */
         "indeterminate": boolean;
         /**
-          * How to pack the label and checkbox within a line. `'start'`: The label and checkbox will appear on the left in LTR and on the right in RTL. `'end'`: The label and checkbox will appear on the right in LTR and on the left in RTL. `'space-between'`: The label and checkbox will appear on opposite ends of the line with space between the two elements.
+          * How to pack the label and checkbox within a line. `"start"`: The label and checkbox will appear on the left in LTR and on the right in RTL. `"end"`: The label and checkbox will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and checkbox will appear on opposite ends of the line with space between the two elements.
          */
         "justify": 'start' | 'end' | 'space-between';
         /**
-          * Where to place the label relative to the checkbox. `'start'`: The label will appear to the left of the checkbox in LTR and to the right in RTL. `'end'`: The label will appear to the right of the checkbox in LTR and to the left in RTL. `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+          * Where to place the label relative to the checkbox. `"start"`: The label will appear to the left of the checkbox in LTR and to the right in RTL. `"end"`: The label will appear to the right of the checkbox in LTR and to the left in RTL. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
          */
         "labelPlacement": 'start' | 'end' | 'fixed';
         /**
@@ -855,6 +855,10 @@ export namespace Components {
          */
         "firstDayOfWeek": number;
         /**
+          * Used to apply custom text and background colors to specific dates.  Can be either an array of objects containing ISO strings and colors, or a callback that receives an ISO string and returns the colors.  Only applies to the `date`, `date-time`, and `time-date` presentations, with `preferWheel="false"`.
+         */
+        "highlightedDates"?: DatetimeHighlight[] | DatetimeHighlightCallback;
+        /**
           * The hour cycle of the `ion-datetime`. If no value is set, this is specified by the current locale.
          */
         "hourCycle"?: 'h23' | 'h12';
@@ -867,7 +871,7 @@ export namespace Components {
          */
         "isDateEnabled"?: (dateIsoString: string) => boolean;
         /**
-          * The locale to use for `ion-datetime`. This impacts month and day name formatting. The `'default'` value refers to the default locale set by your device.
+          * The locale to use for `ion-datetime`. This impacts month and day name formatting. The `"default"` value refers to the default locale set by your device.
          */
         "locale": string;
         /**
@@ -899,11 +903,11 @@ export namespace Components {
          */
         "name": string;
         /**
-          * If `true`, a wheel picker will be rendered instead of a calendar grid where possible. If `false`, a calendar grid will be rendered instead of a wheel picker where possible.  A wheel picker can be rendered instead of a grid when `presentation` is one of the following values: `'date'`, `'date-time'`, or `'time-date'`.  A wheel picker will always be rendered regardless of the `preferWheel` value when `presentation` is one of the following values: `'time'`, `'month'`, `'month-year'`, or `'year'`.
+          * If `true`, a wheel picker will be rendered instead of a calendar grid where possible. If `false`, a calendar grid will be rendered instead of a wheel picker where possible.  A wheel picker can be rendered instead of a grid when `presentation` is one of the following values: `"date"`, `"date-time"`, or `"time-date"`.  A wheel picker will always be rendered regardless of the `preferWheel` value when `presentation` is one of the following values: `"time"`, `"month"`, `"month-year"`, or `"year"`.
          */
         "preferWheel": boolean;
         /**
-          * Which values you want to select. `'date'` will show a calendar picker to select the month, day, and year. `'time'` will show a time picker to select the hour, minute, and (optionally) AM/PM. `'date-time'` will show the date picker first and time picker second. `'time-date'` will show the time picker first and date picker second.
+          * Which values you want to select. `"date"` will show a calendar picker to select the month, day, and year. `"time"` will show a time picker to select the hour, minute, and (optionally) AM/PM. `"date-time"` will show the date picker first and time picker second. `"time-date"` will show the time picker first and date picker second.
          */
         "presentation": DatetimePresentation;
         /**
@@ -1194,7 +1198,7 @@ export namespace Components {
          */
         "errorText"?: string;
         /**
-          * The fill for the item. If `'solid'` the item will have a background. If `'outline'` the item will be transparent with a border. Only available in `md` mode.
+          * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available in `md` mode.
          */
         "fill"?: 'outline' | 'solid';
         /**
@@ -1214,7 +1218,7 @@ export namespace Components {
          */
         "label"?: string;
         /**
-          * Where to place the label relative to the input. `'start'`: The label will appear to the left of the input in LTR and to the right in RTL. `'end'`: The label will appear to the right of the input in LTR and to the left in RTL. `'floating'`: The label will appear smaller and above the input when the input is focused or it has a value. Otherwise it will appear on top of the input. `'stacked'`: The label will appear smaller and above the input regardless even when the input is blurred or has no value. `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+          * Where to place the label relative to the input. `"start"`: The label will appear to the left of the input in LTR and to the right in RTL. `"end"`: The label will appear to the right of the input in LTR and to the left in RTL. `"floating"`: The label will appear smaller and above the input when the input is focused or it has a value. Otherwise it will appear on top of the input. `"stacked"`: The label will appear smaller and above the input regardless even when the input is blurred or has no value. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
          */
         "labelPlacement": 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
         /**
@@ -1330,7 +1334,7 @@ export namespace Components {
          */
         "download": string | undefined;
         /**
-          * The fill for the item. If `'solid'` the item will have a background. If `'outline'` the item will be transparent with a border. Only available in `md` mode.
+          * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available in `md` mode.
          */
         "fill"?: 'outline' | 'solid';
         /**
@@ -2068,7 +2072,7 @@ export namespace Components {
     }
     interface IonPopover {
         /**
-          * Describes how to align the popover content with the `reference` point. Defaults to `'center'` for `ios` mode, and `'start'` for `md` mode.
+          * Describes how to align the popover content with the `reference` point. Defaults to `"center"` for `ios` mode, and `"start"` for `md` mode.
          */
         "alignment"?: PositionAlign;
         /**
@@ -2160,7 +2164,7 @@ export namespace Components {
          */
         "presentFromTrigger": (event?: any, focusDescendant?: boolean) => Promise<void>;
         /**
-          * Describes what to position the popover relative to. If `'trigger'`, the popover will be positioned relative to the trigger button. If passing in an event, this is determined via event.target. If `'event'`, the popover will be positioned relative to the x/y coordinates of the trigger action. If passing in an event, this is determined via event.clientX and event.clientY.
+          * Describes what to position the popover relative to. If `"trigger"`, the popover will be positioned relative to the trigger button. If passing in an event, this is determined via event.target. If `"event"`, the popover will be positioned relative to the x/y coordinates of the trigger action. If passing in an event, this is determined via event.clientX and event.clientY.
          */
         "reference": PositionReference;
         /**
@@ -2168,11 +2172,11 @@ export namespace Components {
          */
         "showBackdrop": boolean;
         /**
-          * Describes which side of the `reference` point to position the popover on. The `'start'` and `'end'` values are RTL-aware, and the `'left'` and `'right'` values are not.
+          * Describes which side of the `reference` point to position the popover on. The `"start"` and `"end"` values are RTL-aware, and the `"left"` and `"right"` values are not.
          */
         "side": PositionSide;
         /**
-          * Describes how to calculate the popover width. If `'cover'`, the popover width will match the width of the trigger. If `'auto'`, the popover width will be determined by the content in the popover.
+          * Describes how to calculate the popover width. If `"cover"`, the popover width will match the width of the trigger. If `"auto"`, the popover width will be determined by the content in the popover.
          */
         "size": PopoverSize;
         /**
@@ -2184,7 +2188,7 @@ export namespace Components {
          */
         "trigger": string | undefined;
         /**
-          * Describes what kind of interaction with the trigger that should cause the popover to open. Does not apply when the `trigger` property is `undefined`. If `'click'`, the popover will be presented when the trigger is left clicked. If `'hover'`, the popover will be presented when a pointer hovers over the trigger. If `'context-menu'`, the popover will be presented when the trigger is right clicked on desktop and long pressed on mobile. This will also prevent your device's normal context menu from appearing.
+          * Describes what kind of interaction with the trigger that should cause the popover to open. Does not apply when the `trigger` property is `undefined`. If `"click"`, the popover will be presented when the trigger is left clicked. If `"hover"`, the popover will be presented when a pointer hovers over the trigger. If `"context-menu"`, the popover will be presented when the trigger is right clicked on desktop and long pressed on mobile. This will also prevent your device's normal context menu from appearing.
          */
         "triggerAction": TriggerAction;
     }
@@ -2224,11 +2228,11 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * How to pack the label and radio within a line. `'start'`: The label and radio will appear on the left in LTR and on the right in RTL. `'end'`: The label and radio will appear on the right in LTR and on the left in RTL. `'space-between'`: The label and radio will appear on opposite ends of the line with space between the two elements.
+          * How to pack the label and radio within a line. `"start"`: The label and radio will appear on the left in LTR and on the right in RTL. `"end"`: The label and radio will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and radio will appear on opposite ends of the line with space between the two elements.
          */
         "justify": 'start' | 'end' | 'space-between';
         /**
-          * Where to place the label relative to the radio. `'start'`: The label will appear to the left of the radio in LTR and to the right in RTL. `'end'`: The label will appear to the right of the radio in LTR and to the left in RTL. `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+          * Where to place the label relative to the radio. `"start"`: The label will appear to the left of the radio in LTR and to the right in RTL. `"end"`: The label will appear to the right of the radio in LTR and to the left in RTL. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
          */
         "labelPlacement": 'start' | 'end' | 'fixed';
         /**
@@ -2286,7 +2290,7 @@ export namespace Components {
          */
         "dualKnobs": boolean;
         /**
-          * Where to place the label relative to the range. `'start'`: The label will appear to the left of the range in LTR and to the right in RTL. `'end'`: The label will appear to the right of the range in LTR and to the left in RTL. `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+          * Where to place the label relative to the range. `"start"`: The label will appear to the left of the range in LTR and to the right in RTL. `"end"`: The label will appear to the right of the range in LTR and to the left in RTL. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
          */
         "labelPlacement": 'start' | 'end' | 'fixed';
         /**
@@ -2674,7 +2678,7 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * The fill for the item. If `'solid'` the item will have a background. If `'outline'` the item will be transparent with a border. Only available in `md` mode.
+          * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available in `md` mode.
          */
         "fill"?: 'outline' | 'solid';
         /**
@@ -2686,7 +2690,7 @@ export namespace Components {
          */
         "interfaceOptions": any;
         /**
-          * How to pack the label and select within a line. `justify` does not apply when the label and select are on different lines when `labelPlacement` is set to `'floating'` or `'stacked'`. `'start'`: The label and select will appear on the left in LTR and on the right in RTL. `'end'`: The label and select will appear on the right in LTR and on the left in RTL. `'space-between'`: The label and select will appear on opposite ends of the line with space between the two elements.
+          * How to pack the label and select within a line. `justify` does not apply when the label and select are on different lines when `labelPlacement` is set to `"floating"` or `"stacked"`. `"start"`: The label and select will appear on the left in LTR and on the right in RTL. `"end"`: The label and select will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and select will appear on opposite ends of the line with space between the two elements.
          */
         "justify": 'start' | 'end' | 'space-between';
         /**
@@ -2694,7 +2698,7 @@ export namespace Components {
          */
         "label"?: string;
         /**
-          * Where to place the label relative to the select. `'start'`: The label will appear to the left of the select in LTR and to the right in RTL. `'end'`: The label will appear to the right of the select in LTR and to the left in RTL. `'floating'`: The label will appear smaller and above the select when the select is focused or it has a value. Otherwise it will appear on top of the select. `'stacked'`: The label will appear smaller and above the select regardless even when the select is blurred or has no value. `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("..."). When using `'floating'` or `'stacked'` we recommend initializing the select with either a `value` or a `placeholder`.
+          * Where to place the label relative to the select. `"start"`: The label will appear to the left of the select in LTR and to the right in RTL. `"end"`: The label will appear to the right of the select in LTR and to the left in RTL. `"floating"`: The label will appear smaller and above the select when the select is focused or it has a value. Otherwise it will appear on top of the select. `"stacked"`: The label will appear smaller and above the select regardless even when the select is blurred or has no value. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("..."). When using `"floating"` or `"stacked"` we recommend initializing the select with either a `value` or a `placeholder`.
          */
         "labelPlacement"?: 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
         /**
@@ -2735,7 +2739,7 @@ export namespace Components {
          */
         "shape"?: 'round';
         /**
-          * the value of the select.
+          * The value of the select.
          */
         "value"?: any | null;
     }
@@ -2857,7 +2861,7 @@ export namespace Components {
          */
         "href": string | undefined;
         /**
-          * Set the layout of the text and icon in the tab bar. It defaults to `'icon-top'`.
+          * Set the layout of the text and icon in the tab bar. It defaults to `"icon-top"`.
          */
         "layout"?: TabButtonLayout;
         /**
@@ -2960,7 +2964,7 @@ export namespace Components {
          */
         "errorText"?: string;
         /**
-          * The fill for the item. If `'solid'` the item will have a background. If `'outline'` the item will be transparent with a border. Only available in `md` mode.
+          * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available in `md` mode.
          */
         "fill"?: 'outline' | 'solid';
         /**
@@ -2980,7 +2984,7 @@ export namespace Components {
          */
         "label"?: string;
         /**
-          * Where to place the label relative to the textarea. `'start'`: The label will appear to the left of the textarea in LTR and to the right in RTL. `'end'`: The label will appear to the right of the textarea in LTR and to the left in RTL. `'floating'`: The label will appear smaller and above the textarea when the textarea is focused or it has a value. Otherwise it will appear on top of the textarea. `'stacked'`: The label will appear smaller and above the textarea regardless even when the textarea is blurred or has no value. `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+          * Where to place the label relative to the textarea. `"start"`: The label will appear to the left of the textarea in LTR and to the right in RTL. `"end"`: The label will appear to the right of the textarea in LTR and to the left in RTL. `"floating"`: The label will appear smaller and above the textarea when the textarea is focused or it has a value. Otherwise it will appear on top of the textarea. `"stacked"`: The label will appear smaller and above the textarea regardless even when the textarea is blurred or has no value. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
          */
         "labelPlacement": 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
         /**
@@ -3106,6 +3110,10 @@ export namespace Components {
          */
         "keyboardClose": boolean;
         /**
+          * Defines how the message and buttons are laid out in the toast. 'baseline': The message and the buttons will appear on the same line. Message text may wrap within the message container. 'stacked': The buttons containers and message will stack on top of each other. Use this if you have long text in your buttons.
+         */
+        "layout": ToastLayout;
+        /**
           * Animation to use when the toast is dismissed.
          */
         "leaveAnimation"?: AnimationBuilder;
@@ -3161,11 +3169,11 @@ export namespace Components {
          */
         "enableOnOffLabels": boolean | undefined;
         /**
-          * How to pack the label and toggle within a line. `'start'`: The label and toggle will appear on the left in LTR and on the right in RTL. `'end'`: The label and toggle will appear on the right in LTR and on the left in RTL. `'space-between'`: The label and toggle will appear on opposite ends of the line with space between the two elements.
+          * How to pack the label and toggle within a line. `"start"`: The label and toggle will appear on the left in LTR and on the right in RTL. `"end"`: The label and toggle will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and toggle will appear on opposite ends of the line with space between the two elements.
          */
         "justify": 'start' | 'end' | 'space-between';
         /**
-          * Where to place the label relative to the input. `'start'`: The label will appear to the left of the toggle in LTR and to the right in RTL. `'end'`: The label will appear to the right of the toggle in LTR and to the left in RTL. `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+          * Where to place the label relative to the input. `"start"`: The label will appear to the left of the toggle in LTR and to the right in RTL. `"end"`: The label will appear to the right of the toggle in LTR and to the left in RTL. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
          */
         "labelPlacement": 'start' | 'end' | 'fixed';
         /**
@@ -4040,7 +4048,7 @@ declare namespace LocalJSX {
          */
         "toggleIcon"?: string;
         /**
-          * The slot inside of `ion-item` to place the toggle icon. Defaults to `'end'`.
+          * The slot inside of `ion-item` to place the toggle icon. Defaults to `"end"`.
          */
         "toggleIconSlot"?: 'start' | 'end';
         /**
@@ -4621,11 +4629,11 @@ declare namespace LocalJSX {
          */
         "indeterminate"?: boolean;
         /**
-          * How to pack the label and checkbox within a line. `'start'`: The label and checkbox will appear on the left in LTR and on the right in RTL. `'end'`: The label and checkbox will appear on the right in LTR and on the left in RTL. `'space-between'`: The label and checkbox will appear on opposite ends of the line with space between the two elements.
+          * How to pack the label and checkbox within a line. `"start"`: The label and checkbox will appear on the left in LTR and on the right in RTL. `"end"`: The label and checkbox will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and checkbox will appear on opposite ends of the line with space between the two elements.
          */
         "justify"?: 'start' | 'end' | 'space-between';
         /**
-          * Where to place the label relative to the checkbox. `'start'`: The label will appear to the left of the checkbox in LTR and to the right in RTL. `'end'`: The label will appear to the right of the checkbox in LTR and to the left in RTL. `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+          * Where to place the label relative to the checkbox. `"start"`: The label will appear to the left of the checkbox in LTR and to the right in RTL. `"end"`: The label will appear to the right of the checkbox in LTR and to the left in RTL. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
          */
         "labelPlacement"?: 'start' | 'end' | 'fixed';
         /**
@@ -4845,6 +4853,10 @@ declare namespace LocalJSX {
          */
         "firstDayOfWeek"?: number;
         /**
+          * Used to apply custom text and background colors to specific dates.  Can be either an array of objects containing ISO strings and colors, or a callback that receives an ISO string and returns the colors.  Only applies to the `date`, `date-time`, and `time-date` presentations, with `preferWheel="false"`.
+         */
+        "highlightedDates"?: DatetimeHighlight[] | DatetimeHighlightCallback;
+        /**
           * The hour cycle of the `ion-datetime`. If no value is set, this is specified by the current locale.
          */
         "hourCycle"?: 'h23' | 'h12';
@@ -4857,7 +4869,7 @@ declare namespace LocalJSX {
          */
         "isDateEnabled"?: (dateIsoString: string) => boolean;
         /**
-          * The locale to use for `ion-datetime`. This impacts month and day name formatting. The `'default'` value refers to the default locale set by your device.
+          * The locale to use for `ion-datetime`. This impacts month and day name formatting. The `"default"` value refers to the default locale set by your device.
          */
         "locale"?: string;
         /**
@@ -4917,11 +4929,11 @@ declare namespace LocalJSX {
          */
         "onIonValueChange"?: (event: IonDatetimeCustomEvent<DatetimeChangeEventDetail>) => void;
         /**
-          * If `true`, a wheel picker will be rendered instead of a calendar grid where possible. If `false`, a calendar grid will be rendered instead of a wheel picker where possible.  A wheel picker can be rendered instead of a grid when `presentation` is one of the following values: `'date'`, `'date-time'`, or `'time-date'`.  A wheel picker will always be rendered regardless of the `preferWheel` value when `presentation` is one of the following values: `'time'`, `'month'`, `'month-year'`, or `'year'`.
+          * If `true`, a wheel picker will be rendered instead of a calendar grid where possible. If `false`, a calendar grid will be rendered instead of a wheel picker where possible.  A wheel picker can be rendered instead of a grid when `presentation` is one of the following values: `"date"`, `"date-time"`, or `"time-date"`.  A wheel picker will always be rendered regardless of the `preferWheel` value when `presentation` is one of the following values: `"time"`, `"month"`, `"month-year"`, or `"year"`.
          */
         "preferWheel"?: boolean;
         /**
-          * Which values you want to select. `'date'` will show a calendar picker to select the month, day, and year. `'time'` will show a time picker to select the hour, minute, and (optionally) AM/PM. `'date-time'` will show the date picker first and time picker second. `'time-date'` will show the time picker first and date picker second.
+          * Which values you want to select. `"date"` will show a calendar picker to select the month, day, and year. `"time"` will show a time picker to select the hour, minute, and (optionally) AM/PM. `"date-time"` will show the date picker first and time picker second. `"time-date"` will show the time picker first and date picker second.
          */
         "presentation"?: DatetimePresentation;
         /**
@@ -5220,7 +5232,7 @@ declare namespace LocalJSX {
          */
         "errorText"?: string;
         /**
-          * The fill for the item. If `'solid'` the item will have a background. If `'outline'` the item will be transparent with a border. Only available in `md` mode.
+          * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available in `md` mode.
          */
         "fill"?: 'outline' | 'solid';
         /**
@@ -5236,7 +5248,7 @@ declare namespace LocalJSX {
          */
         "label"?: string;
         /**
-          * Where to place the label relative to the input. `'start'`: The label will appear to the left of the input in LTR and to the right in RTL. `'end'`: The label will appear to the right of the input in LTR and to the left in RTL. `'floating'`: The label will appear smaller and above the input when the input is focused or it has a value. Otherwise it will appear on top of the input. `'stacked'`: The label will appear smaller and above the input regardless even when the input is blurred or has no value. `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+          * Where to place the label relative to the input. `"start"`: The label will appear to the left of the input in LTR and to the right in RTL. `"end"`: The label will appear to the right of the input in LTR and to the left in RTL. `"floating"`: The label will appear smaller and above the input when the input is focused or it has a value. Otherwise it will appear on top of the input. `"stacked"`: The label will appear smaller and above the input regardless even when the input is blurred or has no value. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
          */
         "labelPlacement"?: 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
         /**
@@ -5368,7 +5380,7 @@ declare namespace LocalJSX {
          */
         "download"?: string | undefined;
         /**
-          * The fill for the item. If `'solid'` the item will have a background. If `'outline'` the item will be transparent with a border. Only available in `md` mode.
+          * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available in `md` mode.
          */
         "fill"?: 'outline' | 'solid';
         /**
@@ -6041,7 +6053,7 @@ declare namespace LocalJSX {
     }
     interface IonPopover {
         /**
-          * Describes how to align the popover content with the `reference` point. Defaults to `'center'` for `ios` mode, and `'start'` for `md` mode.
+          * Describes how to align the popover content with the `reference` point. Defaults to `"center"` for `ios` mode, and `"start"` for `md` mode.
          */
         "alignment"?: PositionAlign;
         /**
@@ -6145,7 +6157,7 @@ declare namespace LocalJSX {
         "onWillPresent"?: (event: IonPopoverCustomEvent<void>) => void;
         "overlayIndex": number;
         /**
-          * Describes what to position the popover relative to. If `'trigger'`, the popover will be positioned relative to the trigger button. If passing in an event, this is determined via event.target. If `'event'`, the popover will be positioned relative to the x/y coordinates of the trigger action. If passing in an event, this is determined via event.clientX and event.clientY.
+          * Describes what to position the popover relative to. If `"trigger"`, the popover will be positioned relative to the trigger button. If passing in an event, this is determined via event.target. If `"event"`, the popover will be positioned relative to the x/y coordinates of the trigger action. If passing in an event, this is determined via event.clientX and event.clientY.
          */
         "reference"?: PositionReference;
         /**
@@ -6153,11 +6165,11 @@ declare namespace LocalJSX {
          */
         "showBackdrop"?: boolean;
         /**
-          * Describes which side of the `reference` point to position the popover on. The `'start'` and `'end'` values are RTL-aware, and the `'left'` and `'right'` values are not.
+          * Describes which side of the `reference` point to position the popover on. The `"start"` and `"end"` values are RTL-aware, and the `"left"` and `"right"` values are not.
          */
         "side"?: PositionSide;
         /**
-          * Describes how to calculate the popover width. If `'cover'`, the popover width will match the width of the trigger. If `'auto'`, the popover width will be determined by the content in the popover.
+          * Describes how to calculate the popover width. If `"cover"`, the popover width will match the width of the trigger. If `"auto"`, the popover width will be determined by the content in the popover.
          */
         "size"?: PopoverSize;
         /**
@@ -6169,7 +6181,7 @@ declare namespace LocalJSX {
          */
         "trigger"?: string | undefined;
         /**
-          * Describes what kind of interaction with the trigger that should cause the popover to open. Does not apply when the `trigger` property is `undefined`. If `'click'`, the popover will be presented when the trigger is left clicked. If `'hover'`, the popover will be presented when a pointer hovers over the trigger. If `'context-menu'`, the popover will be presented when the trigger is right clicked on desktop and long pressed on mobile. This will also prevent your device's normal context menu from appearing.
+          * Describes what kind of interaction with the trigger that should cause the popover to open. Does not apply when the `trigger` property is `undefined`. If `"click"`, the popover will be presented when the trigger is left clicked. If `"hover"`, the popover will be presented when a pointer hovers over the trigger. If `"context-menu"`, the popover will be presented when the trigger is right clicked on desktop and long pressed on mobile. This will also prevent your device's normal context menu from appearing.
          */
         "triggerAction"?: TriggerAction;
     }
@@ -6209,11 +6221,11 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
-          * How to pack the label and radio within a line. `'start'`: The label and radio will appear on the left in LTR and on the right in RTL. `'end'`: The label and radio will appear on the right in LTR and on the left in RTL. `'space-between'`: The label and radio will appear on opposite ends of the line with space between the two elements.
+          * How to pack the label and radio within a line. `"start"`: The label and radio will appear on the left in LTR and on the right in RTL. `"end"`: The label and radio will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and radio will appear on opposite ends of the line with space between the two elements.
          */
         "justify"?: 'start' | 'end' | 'space-between';
         /**
-          * Where to place the label relative to the radio. `'start'`: The label will appear to the left of the radio in LTR and to the right in RTL. `'end'`: The label will appear to the right of the radio in LTR and to the left in RTL. `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+          * Where to place the label relative to the radio. `"start"`: The label will appear to the left of the radio in LTR and to the right in RTL. `"end"`: The label will appear to the right of the radio in LTR and to the left in RTL. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
          */
         "labelPlacement"?: 'start' | 'end' | 'fixed';
         /**
@@ -6289,7 +6301,7 @@ declare namespace LocalJSX {
          */
         "dualKnobs"?: boolean;
         /**
-          * Where to place the label relative to the range. `'start'`: The label will appear to the left of the range in LTR and to the right in RTL. `'end'`: The label will appear to the right of the range in LTR and to the left in RTL. `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+          * Where to place the label relative to the range. `"start"`: The label will appear to the left of the range in LTR and to the right in RTL. `"end"`: The label will appear to the right of the range in LTR and to the left in RTL. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
          */
         "labelPlacement"?: 'start' | 'end' | 'fixed';
         /**
@@ -6732,7 +6744,7 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
-          * The fill for the item. If `'solid'` the item will have a background. If `'outline'` the item will be transparent with a border. Only available in `md` mode.
+          * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available in `md` mode.
          */
         "fill"?: 'outline' | 'solid';
         /**
@@ -6744,7 +6756,7 @@ declare namespace LocalJSX {
          */
         "interfaceOptions"?: any;
         /**
-          * How to pack the label and select within a line. `justify` does not apply when the label and select are on different lines when `labelPlacement` is set to `'floating'` or `'stacked'`. `'start'`: The label and select will appear on the left in LTR and on the right in RTL. `'end'`: The label and select will appear on the right in LTR and on the left in RTL. `'space-between'`: The label and select will appear on opposite ends of the line with space between the two elements.
+          * How to pack the label and select within a line. `justify` does not apply when the label and select are on different lines when `labelPlacement` is set to `"floating"` or `"stacked"`. `"start"`: The label and select will appear on the left in LTR and on the right in RTL. `"end"`: The label and select will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and select will appear on opposite ends of the line with space between the two elements.
          */
         "justify"?: 'start' | 'end' | 'space-between';
         /**
@@ -6752,7 +6764,7 @@ declare namespace LocalJSX {
          */
         "label"?: string;
         /**
-          * Where to place the label relative to the select. `'start'`: The label will appear to the left of the select in LTR and to the right in RTL. `'end'`: The label will appear to the right of the select in LTR and to the left in RTL. `'floating'`: The label will appear smaller and above the select when the select is focused or it has a value. Otherwise it will appear on top of the select. `'stacked'`: The label will appear smaller and above the select regardless even when the select is blurred or has no value. `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("..."). When using `'floating'` or `'stacked'` we recommend initializing the select with either a `value` or a `placeholder`.
+          * Where to place the label relative to the select. `"start"`: The label will appear to the left of the select in LTR and to the right in RTL. `"end"`: The label will appear to the right of the select in LTR and to the left in RTL. `"floating"`: The label will appear smaller and above the select when the select is focused or it has a value. Otherwise it will appear on top of the select. `"stacked"`: The label will appear smaller and above the select regardless even when the select is blurred or has no value. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("..."). When using `"floating"` or `"stacked"` we recommend initializing the select with either a `value` or a `placeholder`.
          */
         "labelPlacement"?: 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
         /**
@@ -6812,7 +6824,7 @@ declare namespace LocalJSX {
          */
         "shape"?: 'round';
         /**
-          * the value of the select.
+          * The value of the select.
          */
         "value"?: any | null;
     }
@@ -6935,7 +6947,7 @@ declare namespace LocalJSX {
          */
         "href"?: string | undefined;
         /**
-          * Set the layout of the text and icon in the tab bar. It defaults to `'icon-top'`.
+          * Set the layout of the text and icon in the tab bar. It defaults to `"icon-top"`.
          */
         "layout"?: TabButtonLayout;
         /**
@@ -7038,7 +7050,7 @@ declare namespace LocalJSX {
          */
         "errorText"?: string;
         /**
-          * The fill for the item. If `'solid'` the item will have a background. If `'outline'` the item will be transparent with a border. Only available in `md` mode.
+          * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available in `md` mode.
          */
         "fill"?: 'outline' | 'solid';
         /**
@@ -7054,7 +7066,7 @@ declare namespace LocalJSX {
          */
         "label"?: string;
         /**
-          * Where to place the label relative to the textarea. `'start'`: The label will appear to the left of the textarea in LTR and to the right in RTL. `'end'`: The label will appear to the right of the textarea in LTR and to the left in RTL. `'floating'`: The label will appear smaller and above the textarea when the textarea is focused or it has a value. Otherwise it will appear on top of the textarea. `'stacked'`: The label will appear smaller and above the textarea regardless even when the textarea is blurred or has no value. `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+          * Where to place the label relative to the textarea. `"start"`: The label will appear to the left of the textarea in LTR and to the right in RTL. `"end"`: The label will appear to the right of the textarea in LTR and to the left in RTL. `"floating"`: The label will appear smaller and above the textarea when the textarea is focused or it has a value. Otherwise it will appear on top of the textarea. `"stacked"`: The label will appear smaller and above the textarea regardless even when the textarea is blurred or has no value. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
          */
         "labelPlacement"?: 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
         /**
@@ -7194,6 +7206,10 @@ declare namespace LocalJSX {
          */
         "keyboardClose"?: boolean;
         /**
+          * Defines how the message and buttons are laid out in the toast. 'baseline': The message and the buttons will appear on the same line. Message text may wrap within the message container. 'stacked': The buttons containers and message will stack on top of each other. Use this if you have long text in your buttons.
+         */
+        "layout"?: ToastLayout;
+        /**
           * Animation to use when the toast is dismissed.
          */
         "leaveAnimation"?: AnimationBuilder;
@@ -7269,11 +7285,11 @@ declare namespace LocalJSX {
          */
         "enableOnOffLabels"?: boolean | undefined;
         /**
-          * How to pack the label and toggle within a line. `'start'`: The label and toggle will appear on the left in LTR and on the right in RTL. `'end'`: The label and toggle will appear on the right in LTR and on the left in RTL. `'space-between'`: The label and toggle will appear on opposite ends of the line with space between the two elements.
+          * How to pack the label and toggle within a line. `"start"`: The label and toggle will appear on the left in LTR and on the right in RTL. `"end"`: The label and toggle will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and toggle will appear on opposite ends of the line with space between the two elements.
          */
         "justify"?: 'start' | 'end' | 'space-between';
         /**
-          * Where to place the label relative to the input. `'start'`: The label will appear to the left of the toggle in LTR and to the right in RTL. `'end'`: The label will appear to the right of the toggle in LTR and to the left in RTL. `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+          * Where to place the label relative to the input. `"start"`: The label will appear to the left of the toggle in LTR and to the right in RTL. `"end"`: The label will appear to the right of the toggle in LTR and to the left in RTL. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
          */
         "labelPlacement"?: 'start' | 'end' | 'fixed';
         /**
