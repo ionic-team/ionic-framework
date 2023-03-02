@@ -65,7 +65,7 @@ export class SplitPane implements ComponentInterface {
   async connectedCallback() {
     // TODO: connectedCallback is fired in CE build
     // before WC is defined. This needs to be fixed in Stencil.
-    if (typeof (customElements as any) !== 'undefined') {
+    if (typeof (customElements as any) !== 'undefined' && (customElements as any) != null) {
       await customElements.whenDefined('ion-split-pane');
     }
     this.styleChildren();
