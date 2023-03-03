@@ -19,6 +19,7 @@
         grid-row-gap: 20px;
         grid-column-gap: 20px;
       }
+
       h2 {
         font-size: 12px;
         font-weight: normal;
@@ -27,6 +28,7 @@
 
         margin-top: 10px;
       }
+
       @media screen and (max-width: 800px) {
         .grid {
           grid-template-columns: 1fr;
@@ -62,6 +64,17 @@
             <ion-list inset="true">
               <ion-item>
                 <ion-select label="Fruit" value="apple">
+                  <ion-select-option value="apple">Apple</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-list>
+          </div>
+
+          <div class="grid-item">
+            <h2>Disabled</h2>
+            <ion-list>
+              <ion-item>
+                <ion-select label="Fruit" value="apple" disabled="true">
                   <ion-select-option value="apple">Apple</ion-select-option>
                 </ion-select>
               </ion-item>
