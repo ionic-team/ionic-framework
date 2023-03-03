@@ -636,6 +636,7 @@ Developers can use the "legacy" property to continue using the legacy form marku
           [`textarea-fill-${fill}`]: fill !== undefined,
           [`textarea-shape-${shape}`]: shape !== undefined,
           [`textarea-label-placement-${labelPlacement}`]: true,
+          'textarea-disabled': disabled,
         })}
       >
         <label class="textarea-wrapper">
