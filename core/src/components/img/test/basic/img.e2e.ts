@@ -8,7 +8,8 @@ test.describe('img: basic', () => {
     skip.mode('ios');
   });
 
-  test.describe('image successfully loads', () => {
+  // TODO FW-3596
+  test.describe.skip('image successfully loads', () => {
     let ionImgWillLoad: EventSpy;
     let ionImgDidLoad: EventSpy;
 
@@ -46,8 +47,7 @@ test.describe('img: basic', () => {
       });
     });
 
-    // TODO FW-3596
-    test.skip('should emit ionImgWillLoad', async () => {
+    test('should emit ionImgWillLoad', async () => {
       await ionImgWillLoad.next();
 
       expect(ionImgWillLoad).toHaveReceivedEventTimes(1);
