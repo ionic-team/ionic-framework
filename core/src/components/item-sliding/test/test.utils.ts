@@ -23,9 +23,7 @@ export const testSlidingItem = async (
   // opening animation takes longer than waitForChanges accounts for
   await page.waitForTimeout(500);
 
-  expect(await item.screenshot()).toMatchSnapshot(
-    `item-sliding-${screenshotNameSuffix}-${page.getSnapshotSettings()}.png`
-  );
+  await expect(item).toHaveScreenshot(`item-sliding-${screenshotNameSuffix}-${page.getSnapshotSettings()}.png`);
 
   await item.evaluate(async (el: HTMLIonItemSlidingElement) => {
     await el.close();
