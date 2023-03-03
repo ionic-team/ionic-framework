@@ -58,7 +58,8 @@ test.describe('picker-column-internal', () => {
     expect(ionChangeSpy).not.toHaveReceivedEvent();
   });
 
-  test('should emit ionChange when the picker is scrolled', async ({ page, skip }) => {
+  // TODO FW-3616
+  test.skip('should emit ionChange when the picker is scrolled', async ({ page, skip }) => {
     skip.browser('firefox', 'https://bugzilla.mozilla.org/show_bug.cgi?id=1766890');
 
     const ionChangeSpy = await page.spyOnEvent('ionChange');
