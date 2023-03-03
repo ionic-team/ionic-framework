@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.6.1-nightly.20230303](https://github.com/ionic-team/ionic/compare/v6.6.0...v6.6.1-nightly.20230303) (2023-03-03)
+
+
+### Bug Fixes
+
+* **datetime-button:** time-only values are parsed ([#26852](https://github.com/ionic-team/ionic/issues/26852)) ([f54fc18](https://github.com/ionic-team/ionic/commit/f54fc188843af52e723e06402e01ef92717e541f)), closes [#26851](https://github.com/ionic-team/ionic/issues/26851)
+* **menu, split-pane:** ssr does not fail on null customElements check ([#26854](https://github.com/ionic-team/ionic/issues/26854)) ([451d220](https://github.com/ionic-team/ionic/commit/451d2204e79a4a10c1eb829ab0bd75c137b02475)), closes [#24714](https://github.com/ionic-team/ionic/issues/24714)
+
+
+
+
+
 # [6.6.0](https://github.com/ionic-team/ionic/compare/v6.5.7...v6.6.0) (2023-03-01)
 
 
