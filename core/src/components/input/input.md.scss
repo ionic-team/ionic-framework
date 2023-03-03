@@ -37,7 +37,7 @@
 // Input - Disabled
 // ----------------------------------------------------------------
 :host(.legacy-input) .native-input[disabled],
-:host([disabled]) {
+:host(.input-disabled) {
   opacity: #{$input-md-disabled-opacity};
 }
 
