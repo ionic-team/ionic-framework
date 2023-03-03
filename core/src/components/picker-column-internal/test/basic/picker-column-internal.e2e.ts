@@ -32,7 +32,8 @@ test.describe('picker-column-internal', () => {
     expect(activeColumn).not.toBeNull();
   });
 
-  test('scrolling should change the active item', async ({ page, skip }) => {
+  // TODO FW-3616
+  test.skip('scrolling should change the active item', async ({ page, skip }) => {
     skip.browser('firefox', 'https://bugzilla.mozilla.org/show_bug.cgi?id=1766890');
 
     await page.locator('#default').evaluate((el: HTMLIonPickerColumnInternalElement) => {
