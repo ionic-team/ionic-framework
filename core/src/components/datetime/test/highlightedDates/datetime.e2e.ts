@@ -34,9 +34,7 @@ test.describe('datetime: highlightedDates', () => {
     });
 
     await page.waitForChanges();
-    expect(await datetime.screenshot()).toMatchSnapshot(
-      `datetime-highlightedDates-array-${page.getSnapshotSettings()}.png`
-    );
+    await expect(datetime).toHaveScreenshot(`datetime-highlightedDates-array-${page.getSnapshotSettings()}.png`);
   });
 
   test('should render highlights correctly when using a callback', async ({ page }) => {
@@ -74,9 +72,7 @@ test.describe('datetime: highlightedDates', () => {
     });
 
     await page.waitForChanges();
-    expect(await datetime.screenshot()).toMatchSnapshot(
-      `datetime-highlightedDates-callback-${page.getSnapshotSettings()}.png`
-    );
+    await expect(datetime).toHaveScreenshot(`datetime-highlightedDates-callback-${page.getSnapshotSettings()}.png`);
   });
 
   test('should render highlights correctly when only using one color or the other', async ({ page }) => {
@@ -96,8 +92,6 @@ test.describe('datetime: highlightedDates', () => {
     });
 
     await page.waitForChanges();
-    expect(await datetime.screenshot()).toMatchSnapshot(
-      `datetime-highlightedDates-single-color-${page.getSnapshotSettings()}.png`
-    );
+    await expect(datetime).toHaveScreenshot(`datetime-highlightedDates-single-color-${page.getSnapshotSettings()}.png`);
   });
 });
