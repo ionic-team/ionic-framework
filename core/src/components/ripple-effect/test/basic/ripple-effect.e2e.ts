@@ -32,7 +32,7 @@ test.describe.skip('ripple-effect: basic', () => {
 
       const elHandle = await el.elementHandle();
       const classes = await elHandle?.evaluate((el) => el.classList.value);
-      expect(classes).toMatch('ion-activated');
+      expect(classes).toMatch(/ion-activated/);
     });
 
     test('should add .ion-activated when the button is pressed', async ({ page }) => {
@@ -60,5 +60,5 @@ const verifyRippleEffect = async (page: E2EPage, selector: string) => {
 
   const elHandle = await el.elementHandle();
   const classes = await elHandle?.evaluate((el) => el.classList.value);
-  expect(classes).toMatch('ion-activated');
+  expect(classes).toMatch(/ion-activated/);
 };

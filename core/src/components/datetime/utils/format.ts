@@ -11,7 +11,12 @@ const getFormattedDayPeriod = (dayPeriod?: string) => {
 };
 
 export const getLocalizedTime = (locale: string, refParts: DatetimeParts, use24Hour: boolean): string => {
-  if (refParts.hour === undefined || refParts.minute === undefined) {
+  const timeParts: Pick<DatetimeParts, 'hour' | 'minute'> = {
+    hour: refParts.hour,
+    minute: refParts.minute,
+  };
+
+  if (timeParts.hour === undefined || timeParts.minute === undefined) {
     return 'Invalid Time';
   }
 
@@ -36,7 +41,27 @@ export const getLocalizedTime = (locale: string, refParts: DatetimeParts, use24H
      * prevents new Date from adding the time zone
      * offset when getting the ISO string.
      */
-  }).format(new Date(convertDataToISO(refParts) + 'Z'));
+  }).format(
+    new Date(
+      convertDataToISO({
+        /**
+         * JS uses a simplified ISO 8601 format which allows for
+         * date-only formats and date-time formats, but not
+         * time-only formats: https://tc39.es/ecma262/#sec-date-time-string-format
+         * As a result, developers who only pass a time will get
+         * an "Invalid Date" error. To account for this, we make sure that
+         * year/day/month values are set when passing to new Date().
+         * The Intl.DateTimeFormat call above only uses the hour/minute
+         * values, so passing these date values should have no impact
+         * on the time output.
+         */
+        year: 2023,
+        day: 1,
+        month: 1,
+        ...timeParts,
+      }) + 'Z'
+    )
+  );
 };
 
 /**
