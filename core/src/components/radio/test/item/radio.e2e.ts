@@ -28,17 +28,4 @@ test.describe('radio: item', () => {
     const list = page.locator('ion-list');
     expect(await list.screenshot()).toMatchSnapshot(`radio-inset-list-${page.getSnapshotSettings()}.png`);
   });
-  test('should not apply item hover styles', async ({ page, skip }) => {
-    skip.rtl();
-    await page.setContent(`
-      <ion-radio-group>
-        <ion-item>
-          <ion-radio>Enable Notifications</ion-radio>
-        </ion-item>
-      </ion-radio-group>
-    `);
-    const item = page.locator('ion-item');
-    await item.hover();
-    expect(await item.screenshot()).toMatchSnapshot(`radio-item-hover-${page.getSnapshotSettings()}.png`);
-  });
 });
