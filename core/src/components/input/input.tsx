@@ -649,6 +649,7 @@ export class Input implements ComponentInterface {
           [`input-label-placement-${labelPlacement}`]: true,
           'in-item': inItem,
           'in-item-color': hostContext('ion-item.ion-color', this.el),
+          'input-disabled': disabled,
         })}
       >
         <label class="input-wrapper">
