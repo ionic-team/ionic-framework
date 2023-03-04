@@ -44,6 +44,10 @@
   border: 2px solid #5e9ed6;
 }
 
+:host(.ion-text-wrap) .select-text {
+  white-space: normal;
+}
+
 .select-placeholder {
   color: var(--placeholder-color);
 
