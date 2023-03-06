@@ -453,7 +453,7 @@ export class Select implements ComponentInterface {
   }
 
   private async openPopover(ev: UIEvent) {
-    const { fill } = this;
+    const { fill, labelPlacement } = this;
     const interfaceOptions = this.interfaceOptions;
     const mode = getIonMode(this);
     const showBackdrop = mode === 'md' ? false : true;
@@ -479,11 +479,13 @@ export class Select implements ComponentInterface {
         size = 'cover';
       }
     } else {
+      const hasFloatingOrStackedLabel = labelPlacement === 'floating' || labelPlacement === 'stacked';
       /**
        * The popover should take up the full width
-       * when using a fill in MD mode.
+       * when using a fill in MD mode or if the
+       * label is floating/stacked.
        */
-      if (mode === 'md' && fill !== undefined) {
+      if (hasFloatingOrStackedLabel || (mode === 'md' && fill !== undefined)) {
         size = 'cover';
 
         /**
