@@ -75,6 +75,7 @@ test.describe('modal: rendering', () => {
     await ionModalDidPresent.next();
 
     const modal = await page.locator('ion-modal');
+    await expect(modal).toHaveClass(/show-modal/);
 
     await page.setIonViewport();
 
@@ -87,6 +88,7 @@ test.describe('modal: rendering', () => {
     await ionModalWillDismiss.next();
     await ionModalDidDismiss.next();
 
+    await expect(modal).not.toHaveClass(/show-modal/);
     await expect(modal).toBeHidden();
   };
 
