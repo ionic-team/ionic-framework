@@ -2,14 +2,11 @@
 
 set -e
 
-# Copy ionic vue dist
-rm -rf node_modules/@ionic/vue/dist node_modules/@ionic/vue/css
-cp -a ../vue/dist node_modules/@ionic/vue/dist
-cp -a ../vue/css node_modules/@ionic/vue/css
-cp -a ../vue/package.json node_modules/@ionic/vue/package.json
+# Pack @ionic/core
+npm pack ../../core
 
-# Copy core dist
-rm -rf node_modules/@ionic/core/dist node_modules/@ionic/core/components
-cp -a ../../core/dist node_modules/@ionic/core/dist
-cp -a ../../core/components node_modules/@ionic/core/components
-cp -a ../../core/package.json node_modules/@ionic/core/package.json
+# Pack @ionic/vue
+npm pack ../vue
+
+# Install Dependencies
+npm install *.tgz --no-save

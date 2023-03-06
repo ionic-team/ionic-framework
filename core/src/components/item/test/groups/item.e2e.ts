@@ -10,6 +10,6 @@ test.describe('item: groups', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`item-groups-diff-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`item-groups-diff-${page.getSnapshotSettings()}.png`);
   });
 });

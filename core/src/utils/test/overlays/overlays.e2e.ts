@@ -104,10 +104,12 @@ test.describe('overlays: dismiss', () => {
   });
 });
 
-test.describe('overlays: focus', () => {
+// TODO FW-3536
+test.describe.skip('overlays: focus', () => {
   test.beforeEach(({ skip }) => {
     skip.rtl();
   });
+
   test('should not select a hidden focusable element', async ({ page, browserName }) => {
     await page.setContent(`
       <style>

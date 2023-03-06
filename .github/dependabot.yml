@@ -6,3 +6,4 @@ updates:
       interval: "daily"
     allow:
       - dependency-name: "@playwright/test"
+      - dependency-name: "@axe-core/playwright"

@@ -13,7 +13,7 @@ test.describe('footer: basic', () => {
       `);
 
       const footer = page.locator('ion-footer');
-      expect(await footer.screenshot()).toMatchSnapshot(`footer-diff-${page.getSnapshotSettings()}.png`);
+      await expect(footer).toHaveScreenshot(`footer-diff-${page.getSnapshotSettings()}.png`);
     });
   });
 
@@ -32,7 +32,7 @@ test.describe('footer: basic', () => {
       `);
 
       const footer = page.locator('ion-footer');
-      expect(await footer.screenshot()).toMatchSnapshot(`footer-no-border-diff-${page.getSnapshotSettings()}.png`);
+      await expect(footer).toHaveScreenshot(`footer-no-border-diff-${page.getSnapshotSettings()}.png`);
     });
 
     test('should not have visual regressions with translucent footer', async ({ page, skip }) => {
@@ -50,7 +50,7 @@ test.describe('footer: basic', () => {
       `);
 
       const footer = page.locator('ion-footer');
-      expect(await footer.screenshot()).toMatchSnapshot(`footer-translucent-diff-${page.getSnapshotSettings()}.png`);
+      await expect(footer).toHaveScreenshot(`footer-translucent-diff-${page.getSnapshotSettings()}.png`);
     });
   });
 });

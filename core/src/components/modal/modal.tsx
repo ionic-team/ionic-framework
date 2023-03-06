@@ -44,6 +44,8 @@ import { createSheetGesture } from './gestures/sheet';
 import { createSwipeToCloseGesture } from './gestures/swipe-to-close';
 import { setCardStatusBarDark, setCardStatusBarDefault } from './utils';
 
+// TODO(FW-2832): types
+
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
@@ -331,7 +333,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     if (this.gesture) {
       this.gesture.enable(enable);
     } else if (enable) {
-      await this.initSwipeToClose();
+      this.initSwipeToClose();
     }
   }
 
@@ -400,8 +402,16 @@ export class Modal implements ComponentInterface, OverlayInterface {
       destroyTriggerInteraction();
     }
 
+    if (trigger === undefined) {
+      return;
+    }
+
     const triggerEl = trigger !== undefined ? document.getElementById(trigger) : null;
     if (!triggerEl) {
+      printIonWarning(
+        `A trigger element with the ID "${trigger}" was not found in the DOM. The trigger element must be in the DOM when the "trigger" property is set on ion-modal.`,
+        this.el
+      );
       return;
     }
 
@@ -502,13 +512,15 @@ export class Modal implements ComponentInterface, OverlayInterface {
      */
     this.currentBreakpoint = this.initialBreakpoint;
 
-    const data = {
-      ...this.componentProps,
-      modal: this.el,
-    };
-
     const { inline, delegate } = this.getDelegate(true);
-    this.usersElement = await attachComponent(delegate, this.el, this.component, ['ion-page'], data, inline);
+    this.usersElement = await attachComponent(
+      delegate,
+      this.el,
+      this.component,
+      ['ion-page'],
+      this.componentProps,
+      inline
+    );
 
     await deepReady(this.usersElement);
 
@@ -519,6 +531,38 @@ export class Modal implements ComponentInterface, OverlayInterface {
       currentBreakpoint: this.initialBreakpoint,
       backdropBreakpoint: this.backdropBreakpoint,
     });
+
+    /* tslint:disable-next-line */
+    if (typeof window !== 'undefined') {
+      /**
+       * This needs to be setup before any
+       * non-transition async work so it can be dereferenced
+       * in the dismiss method. The dismiss method
+       * only waits for the entering transition
+       * to finish. It does not wait for all of the `present`
+       * method to resolve.
+       */
+      this.keyboardOpenCallback = () => {
+        if (this.gesture) {
+          /**
+           * When the native keyboard is opened and the webview
+           * is resized, the gesture implementation will become unresponsive
+           * and enter a free-scroll mode.
+           *
+           * When the keyboard is opened, we disable the gesture for
+           * a single frame and re-enable once the contents have repositioned
+           * from the keyboard placement.
+           */
+          this.gesture.enable(false);
+          raf(() => {
+            if (this.gesture) {
+              this.gesture.enable(true);
+            }
+          });
+        }
+      };
+      window.addEventListener(KEYBOARD_DID_OPEN, this.keyboardOpenCallback);
+    }
 
     /**
      * TODO (FW-937) - In the next major release of Ionic, all card modals
@@ -547,31 +591,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     if (this.isSheetModal) {
       this.initSheetGesture();
     } else if (hasCardModal) {
-      await this.initSwipeToClose();
-    }
-
-    /* tslint:disable-next-line */
-    if (typeof window !== 'undefined') {
-      this.keyboardOpenCallback = () => {
-        if (this.gesture) {
-          /**
-           * When the native keyboard is opened and the webview
-           * is resized, the gesture implementation will become unresponsive
-           * and enter a free-scroll mode.
-           *
-           * When the keyboard is opened, we disable the gesture for
-           * a single frame and re-enable once the contents have repositioned
-           * from the keyboard placement.
-           */
-          this.gesture.enable(false);
-          raf(() => {
-            if (this.gesture) {
-              this.gesture.enable(true);
-            }
-          });
-        }
-      };
-      window.addEventListener(KEYBOARD_DID_OPEN, this.keyboardOpenCallback);
+      this.initSwipeToClose();
     }
 
     this.currentTransition = undefined;
@@ -713,6 +733,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     /* tslint:disable-next-line */
     if (typeof window !== 'undefined' && this.keyboardOpenCallback) {
       window.removeEventListener(KEYBOARD_DID_OPEN, this.keyboardOpenCallback);
+      this.keyboardOpenCallback = undefined;
     }
 
     /**

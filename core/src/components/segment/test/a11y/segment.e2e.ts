@@ -6,12 +6,13 @@ test.describe('segment: a11y', () => {
   test('should not have any axe violations', async ({ page }) => {
     await page.goto('/src/components/segment/test/a11y');
 
-    // TODO(FW-403): Re-enable rule once segment button is updated to avoid nested-interactive
-    const results = await new AxeBuilder({ page }).disableRules('nested-interactive').analyze();
+    const results = await new AxeBuilder({ page }).analyze();
     expect(results.violations).toEqual([]);
   });
 
-  test('segment buttons should be keyboard navigable', async ({ page, browserName }, testInfo) => {
+  test('segment buttons should be keyboard navigable', async ({ page, browserName, skip }, testInfo) => {
+    // TODO (FW-2979)
+    skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
     const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
     const isRTL = testInfo.project.metadata.rtl === true;
     const nextKey = isRTL ? 'ArrowLeft' : 'ArrowRight';

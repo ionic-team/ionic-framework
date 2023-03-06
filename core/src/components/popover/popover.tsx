@@ -18,6 +18,7 @@ import type {
 } from '../../interface';
 import { CoreDelegate, attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { addEventListener, raf } from '../../utils/helpers';
+import { printIonWarning } from '../../utils/logging';
 import { BACKDROP, dismiss, eventMethod, focusFirstDescendant, prepareOverlay, present } from '../../utils/overlays';
 import { isPlatform } from '../../utils/platform';
 import { getClassMap } from '../../utils/theme';
@@ -28,6 +29,8 @@ import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
 import { configureDismissInteraction, configureKeyboardInteraction, configureTriggerInteraction } from './utils';
+
+// TODO(FW-2832): types
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -445,13 +448,15 @@ export class Popover implements ComponentInterface, PopoverInterface {
       await this.currentTransition;
     }
 
-    const data = {
-      ...this.componentProps,
-      popover: this.el,
-    };
-
     const { inline, delegate } = this.getDelegate(true);
-    this.usersElement = await attachComponent(delegate, this.el, this.component, ['popover-viewport'], data, inline);
+    this.usersElement = await attachComponent(
+      delegate,
+      this.el,
+      this.component,
+      ['popover-viewport'],
+      this.componentProps,
+      inline
+    );
     await deepReady(this.usersElement);
 
     if (!this.keyboardEvents) {
@@ -618,8 +623,16 @@ export class Popover implements ComponentInterface, PopoverInterface {
       destroyTriggerInteraction();
     }
 
+    if (trigger === undefined) {
+      return;
+    }
+
     const triggerEl = (this.triggerEl = trigger !== undefined ? document.getElementById(trigger) : null);
     if (!triggerEl) {
+      printIonWarning(
+        `A trigger element with the ID "${trigger}" was not found in the DOM. The trigger element must be in the DOM when the "trigger" property is set on ion-popover.`,
+        this.el
+      );
       return;
     }
 

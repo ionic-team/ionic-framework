@@ -1,5 +1,7 @@
-import { FrameworkDelegate } from '@ionic/core/components';
+import type { FrameworkDelegate } from '@ionic/core/components';
 import { createPortal } from 'react-dom';
+
+// TODO(FW-2959): types
 
 type ReactComponent = (props?: any) => JSX.Element;
 

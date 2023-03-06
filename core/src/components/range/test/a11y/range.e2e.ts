@@ -21,7 +21,7 @@ test.describe('range: a11y', () => {
     await rangeHandle.evaluate((el) => el.classList.add('ion-focused'));
     await page.waitForChanges();
 
-    expect(await range.screenshot()).toMatchSnapshot(`range-focus-${page.getSnapshotSettings()}.png`);
+    await expect(range).toHaveScreenshot(`range-focus-${page.getSnapshotSettings()}.png`);
 
     const box = (await rangeHandle.boundingBox())!;
     const centerX = box.x + box.width / 2;
@@ -31,7 +31,7 @@ test.describe('range: a11y', () => {
     await page.mouse.down();
     await page.waitForChanges();
 
-    expect(await range.screenshot()).toMatchSnapshot(`range-active-${page.getSnapshotSettings()}.png`);
+    await expect(range).toHaveScreenshot(`range-active-${page.getSnapshotSettings()}.png`);
   });
 
   test.describe('with pin', () => {
@@ -53,7 +53,7 @@ test.describe('range: a11y', () => {
       await rangeHandle.evaluate((el) => el.classList.add('ion-focused'));
       await page.waitForChanges();
 
-      expect(await range.screenshot()).toMatchSnapshot(`range-focus-with-pin-${page.getSnapshotSettings()}.png`);
+      await expect(range).toHaveScreenshot(`range-focus-with-pin-${page.getSnapshotSettings()}.png`);
     });
   });
 });

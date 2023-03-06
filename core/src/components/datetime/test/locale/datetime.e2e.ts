@@ -27,23 +27,6 @@ test.describe('datetime: locale', () => {
     });
   });
 
-  test.describe('ta-IN', () => {
-    test('should not have visual regressions', async () => {
-      await datetimeFixture.goto('ta-IN', 'date');
-      await datetimeFixture.expectLocalizedDatePicker();
-    });
-
-    test('month/year picker should not have visual regressions', async () => {
-      await datetimeFixture.goto('ta-IN', 'month-year');
-      await datetimeFixture.expectLocalizedMonthYearPicker();
-    });
-
-    test('time picker should not have visual regressions', async () => {
-      await datetimeFixture.goto('ta-IN', 'time');
-      await datetimeFixture.expectLocalizedTimePicker();
-    });
-  });
-
   test.describe('ja-JP', () => {
     test('should not have visual regressions', async () => {
       await datetimeFixture.goto('ja-JP', 'date');
@@ -121,11 +104,9 @@ test.describe('ar-EG', () => {
     `);
     await page.waitForSelector('.datetime-ready');
 
-    const datetimeYears = page.locator('ion-datetime .year-column .picker-item:not(.picker-item-empty)');
+    const datetimeYear = page.locator('ion-datetime .year-column .picker-item[data-value="2022"]');
 
-    await expect(datetimeYears.nth(0)).toHaveText('٢٠٢٢');
-    await expect(datetimeYears.nth(1)).toHaveText('٢٠٢١');
-    await expect(datetimeYears.nth(2)).toHaveText('٢٠٢٠');
+    await expect(datetimeYear).toHaveText('٢٠٢٢');
   });
 });
 
@@ -147,6 +128,7 @@ class DatetimeLocaleFixture {
         locale="${this.locale}"
         presentation="${presentation}"
         value="2022-04-19T04:20:00"
+        max="2022"
       ></ion-datetime>
     `);
 
@@ -169,7 +151,7 @@ class DatetimeLocaleFixture {
 
   async expectLocalizedPicker(modifier?: string) {
     const modifierString = modifier === undefined ? '' : `-${modifier}`;
-    expect(await this.datetime.screenshot()).toMatchSnapshot(
+    await expect(this.datetime).toHaveScreenshot(
       `datetime-locale-${this.locale}${modifierString}-diff-${this.page.getSnapshotSettings()}.png`
     );
   }

@@ -1,4 +1,4 @@
-import { IonRouteProps } from '@ionic/react';
+import type { IonRouteProps } from '@ionic/react';
 import React from 'react';
 import { Route } from 'react-router';
 

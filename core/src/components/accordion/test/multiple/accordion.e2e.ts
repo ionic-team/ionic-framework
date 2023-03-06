@@ -12,14 +12,14 @@ test.describe('accordion: multiple', () => {
 
     await expect(accordionGroup).toHaveJSProperty('value', 'attractions');
 
-    expect(await accordionGroup.screenshot()).toMatchSnapshot(`accordion-one-open-${page.getSnapshotSettings()}.png`);
+    await expect(accordionGroup).toHaveScreenshot(`accordion-one-open-${page.getSnapshotSettings()}.png`);
 
     await diningHeader.click();
     await page.waitForChanges();
 
     await expect(accordionGroup).toHaveJSProperty('value', ['attractions', 'dining']);
 
-    expect(await accordionGroup.screenshot()).toMatchSnapshot(`accordion-two-open-${page.getSnapshotSettings()}.png`);
+    await expect(accordionGroup).toHaveScreenshot(`accordion-two-open-${page.getSnapshotSettings()}.png`);
 
     await diningHeader.click();
     await attractionsHeader.click();
@@ -27,6 +27,6 @@ test.describe('accordion: multiple', () => {
 
     await expect(accordionGroup).toHaveJSProperty('value', []);
 
-    expect(await accordionGroup.screenshot()).toMatchSnapshot(`accordion-zero-open-${page.getSnapshotSettings()}.png`);
+    await expect(accordionGroup).toHaveScreenshot(`accordion-zero-open-${page.getSnapshotSettings()}.png`);
   });
 });

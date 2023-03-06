@@ -12,7 +12,7 @@ export const createSwipeBackGesture = (
   onEndHandler: (shouldComplete: boolean, step: number, dur: number) => void
 ): Gesture => {
   const win = el.ownerDocument!.defaultView!;
-  const rtl = isRTL(el);
+  let rtl = isRTL(el);
 
   /**
    * Determine if a gesture is near the edge
@@ -39,6 +39,13 @@ export const createSwipeBackGesture = (
   };
 
   const canStart = (detail: GestureDetail) => {
+    /**
+     * The user's locale can change mid-session,
+     * so we need to check text direction at
+     * the beginning of every gesture.
+     */
+    rtl = isRTL(el);
+
     return isAtEdge(detail) && canStartHandler();
   };
 

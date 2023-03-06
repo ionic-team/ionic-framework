@@ -1,15 +1,15 @@
-import { JSX as LocalJSX } from '@ionic/core/components';
+import type { JSX as LocalJSX } from '@ionic/core/components';
 import React from 'react';
 
-import { RouterOptions } from '../../models';
-import { IonicReactProps } from '../IonicReactProps';
+import type { RouterOptions } from '../../models';
+import type { IonicReactProps } from '../IonicReactProps';
 import { IonTabButtonInner } from '../inner-proxies';
 
 type Props = LocalJSX.IonTabButton &
   IonicReactProps & {
     routerOptions?: RouterOptions;
     ref?: React.Ref<HTMLIonTabButtonElement>;
-    onClick?: (e: any) => void;
+    onClick?: (e: Event) => void;
   };
 
 export const IonTabButton = /*@__PURE__*/ (() =>
@@ -39,13 +39,9 @@ export const IonTabButton = /*@__PURE__*/ (() =>
        * implementation within IonTabBar.tsx. Calling onClick within this
        * component would result in duplicate handler calls.
        */
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { onClick, ...rest } = this.props;
-      return (
-        <IonTabButtonInner
-          onIonTabButtonClick={this.handleIonTabButtonClick}
-          {...rest}
-        ></IonTabButtonInner>
-      );
+      return <IonTabButtonInner onIonTabButtonClick={this.handleIonTabButtonClick} {...rest}></IonTabButtonInner>;
     }
 
     static get displayName() {

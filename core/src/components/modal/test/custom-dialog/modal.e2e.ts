@@ -16,6 +16,6 @@ test.describe('modal: custom dialog', () => {
 
     await ionModalDidPresent.next();
 
-    expect(await page.screenshot()).toMatchSnapshot(`modal-custom-dialog-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`modal-custom-dialog-${page.getSnapshotSettings()}.png`);
   });
 });

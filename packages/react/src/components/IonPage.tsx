@@ -3,9 +3,10 @@ import React from 'react';
 import { NavContext } from '../contexts/NavContext';
 import PageManager from '../routing/PageManager';
 
-import { IonicReactProps } from './IonicReactProps';
+import type { IonicReactProps } from './IonicReactProps';
 import { createForwardRef } from './utils';
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface IonPageProps extends IonicReactProps {}
 
 interface IonPageInternalProps extends IonPageProps {
@@ -32,11 +33,7 @@ class IonPageInternal extends React.Component<IonPageInternalProps> {
         {children}
       </PageManager>
     ) : (
-      <div
-        className={className ? `ion-page ${className}` : 'ion-page'}
-        ref={forwardedRef}
-        {...props}
-      >
+      <div className={className ? `ion-page ${className}` : 'ion-page'} ref={forwardedRef} {...props}>
         {children}
       </div>
     );

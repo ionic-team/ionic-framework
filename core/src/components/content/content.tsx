@@ -21,7 +21,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
   shadow: true,
 })
 export class Content implements ComponentInterface {
-  private watchDog: any;
+  private watchDog: ReturnType<typeof setInterval> | null = null;
   private isScrolling = false;
   private lastScroll = 0;
   private queued = false;
@@ -30,6 +30,7 @@ export class Content implements ComponentInterface {
   private scrollEl?: HTMLElement;
   private backgroundContentEl?: HTMLElement;
   private isMainContent = true;
+  private resizeTimeout: ReturnType<typeof setTimeout> | null = null;
 
   // Detail is used in a hot loop in the scroll event, by allocating it here
   // V8 will be able to inline any read/write to it since it's a monomorphic class.
@@ -121,6 +122,45 @@ export class Content implements ComponentInterface {
   @Listen('appload', { target: 'window' })
   onAppLoad() {
     this.resize();
+  }
+
+  /**
+   * Rotating certain devices can update
+   * the safe area insets. As a result,
+   * the fullscreen feature on ion-content
+   * needs to be recalculated.
+   *
+   * We listen for "resize" because we
+   * do not care what the orientation of
+   * the device is. Other APIs
+   * such as ScreenOrientation or
+   * the deviceorientation event must have
+   * permission from the user first whereas
+   * the "resize" event does not.
+   *
+   * We also throttle the callback to minimize
+   * thrashing when quickly resizing a window.
+   */
+  @Listen('resize', { target: 'window' })
+  onResize() {
+    if (this.resizeTimeout) {
+      clearTimeout(this.resizeTimeout);
+      this.resizeTimeout = null;
+    }
+
+    this.resizeTimeout = setTimeout(() => {
+      /**
+       * Resize should only happen
+       * if the content is visible.
+       * When the content is hidden
+       * then offsetParent will be null.
+       */
+      if (this.el.offsetParent === null) {
+        return;
+      }
+
+      this.resize();
+    }, 100);
   }
 
   private shouldForceOverscroll() {
@@ -311,7 +351,7 @@ export class Content implements ComponentInterface {
   }
 
   private onScrollEnd() {
-    clearInterval(this.watchDog);
+    if (this.watchDog) clearInterval(this.watchDog);
     this.watchDog = null;
     if (this.isScrolling) {
       this.isScrolling = false;

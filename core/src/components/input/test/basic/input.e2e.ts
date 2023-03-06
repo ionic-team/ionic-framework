@@ -15,7 +15,7 @@ test.describe('input: basic', () => {
       `);
       const item = page.locator('ion-item');
       // Validates the display of an input where text extends off the edge of the component.
-      expect(await item.screenshot()).toMatchSnapshot(`input-with-text-overflow-${page.getSnapshotSettings()}.png`);
+      await expect(item).toHaveScreenshot(`input-with-text-overflow-${page.getSnapshotSettings()}.png`);
     });
   });
 
@@ -32,7 +32,7 @@ test.describe('input: basic', () => {
       `);
       const item = page.locator('ion-item');
       // Validates the display of an input with a placeholder.
-      expect(await item.screenshot()).toMatchSnapshot(`input-with-placeholder-${page.getSnapshotSettings()}.png`);
+      await expect(item).toHaveScreenshot(`input-with-placeholder-${page.getSnapshotSettings()}.png`);
     });
   });
 
@@ -49,7 +49,7 @@ test.describe('input: basic', () => {
       `);
       const item = page.locator('ion-item');
       // Validates the display of an input in a disabled state.
-      expect(await item.screenshot()).toMatchSnapshot(`input-disabled-${page.getSnapshotSettings()}.png`);
+      await expect(item).toHaveScreenshot(`input-disabled-${page.getSnapshotSettings()}.png`);
     });
   });
 
@@ -67,16 +67,16 @@ test.describe('input: basic', () => {
       const item = page.locator('ion-item');
       const input = page.locator('ion-input');
       // Validates the display of an input with an ion-item using lines="full".
-      expect(await item.screenshot()).toMatchSnapshot(`input-with-lines-full-${page.getSnapshotSettings()}.png`);
+      await expect(item).toHaveScreenshot(`input-with-lines-full-${page.getSnapshotSettings()}.png`);
 
       await input.click();
 
       // Verifies that the parent item receives .item-has-focus when the input is focused.
       await expect(item).toHaveClass(/item-has-focus/);
       // Validates the display of an input with an ion-item using lines="full" when focused.
-      expect(await item.screenshot({ animations: 'disabled' })).toMatchSnapshot(
-        `input-with-lines-full-focused-${page.getSnapshotSettings()}.png`
-      );
+      await expect(item).toHaveScreenshot(`input-with-lines-full-focused-${page.getSnapshotSettings()}.png`, {
+        animations: 'disabled',
+      });
     });
   });
 
@@ -94,7 +94,7 @@ test.describe('input: basic', () => {
       const item = page.locator('ion-item');
       const input = page.locator('ion-input');
       // Validates the display of an input with an ion-item using lines="inset".
-      expect(await item.screenshot()).toMatchSnapshot(`input-with-lines-inset-${page.getSnapshotSettings()}.png`);
+      await expect(item).toHaveScreenshot(`input-with-lines-inset-${page.getSnapshotSettings()}.png`);
 
       await input.click();
 
@@ -102,9 +102,9 @@ test.describe('input: basic', () => {
       await expect(item).toHaveClass(/item-has-focus/);
 
       // Validates the display of an input with an ion-item using lines="inset" when focused.
-      expect(await item.screenshot({ animations: 'disabled' })).toMatchSnapshot(
-        `input-with-lines-inset-focused-${page.getSnapshotSettings()}.png`
-      );
+      await expect(item).toHaveScreenshot(`input-with-lines-inset-focused-${page.getSnapshotSettings()}.png`, {
+        animations: 'disabled',
+      });
     });
   });
 
@@ -122,7 +122,7 @@ test.describe('input: basic', () => {
       const item = page.locator('ion-item');
       const input = page.locator('ion-input');
       // Validates the display of an input with an ion-item using lines="none".
-      expect(await item.screenshot()).toMatchSnapshot(`input-with-lines-none-${page.getSnapshotSettings()}.png`);
+      await expect(item).toHaveScreenshot(`input-with-lines-none-${page.getSnapshotSettings()}.png`);
 
       await input.click();
 
@@ -130,9 +130,9 @@ test.describe('input: basic', () => {
       await expect(item).toHaveClass(/item-has-focus/);
 
       // Validates the display of an input with an ion-item using lines="none" when focused.
-      expect(await item.screenshot({ animations: 'disabled' })).toMatchSnapshot(
-        `input-with-lines-none-focused-${page.getSnapshotSettings()}.png`
-      );
+      await expect(item).toHaveScreenshot(`input-with-lines-none-focused-${page.getSnapshotSettings()}.png`, {
+        animations: 'disabled',
+      });
     });
   });
 
@@ -153,7 +153,7 @@ test.describe('input: basic', () => {
       `);
       const item = page.locator('ion-item');
       // Validates the display of an input with a clear button.
-      expect(await item.screenshot()).toMatchSnapshot(`input-with-clear-button-${page.getSnapshotSettings()}.png`);
+      await expect(item).toHaveScreenshot(`input-with-clear-button-${page.getSnapshotSettings()}.png`);
     });
   });
 });
@@ -185,7 +185,7 @@ test.describe('input: clear button', () => {
    */
   test('should keep the input focused when the clear button is pressed', async ({ page }) => {
     await page.setContent(`
-      <ion-input value="abc" clear-input="true"></ion-searchbar>
+      <ion-input value="abc" clear-input="true"></ion-input>
     `);
 
     const input = page.locator('ion-input');
@@ -199,5 +199,16 @@ test.describe('input: clear button', () => {
     await page.waitForChanges();
 
     await expect(nativeInput).toBeFocused();
+  });
+
+  test('should inherit color when used in item with color property', async ({ page }) => {
+    await page.setContent(`
+      <ion-item color="primary">
+        <ion-input value="Text" clear-input="true"></ion-input>
+      </ion-item>
+    `);
+
+    const item = page.locator('ion-item');
+    await expect(item).toHaveScreenshot(`input-with-clear-button-item-color-${page.getSnapshotSettings()}.png`);
   });
 });

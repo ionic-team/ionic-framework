@@ -11,6 +11,7 @@ import type {
   OverlayInterface,
   ToastButton,
 } from '../../interface';
+import { printIonWarning } from '../../utils/logging';
 import { dismiss, eventMethod, isCancel, prepareOverlay, present, safeCall } from '../../utils/overlays';
 import type { IonicSafeString } from '../../utils/sanitization';
 import { sanitizeDOMString } from '../../utils/sanitization';
@@ -20,7 +21,9 @@ import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
-import type { ToastAttributes, ToastPosition } from './toast-interface';
+import type { ToastAttributes, ToastPosition, ToastLayout } from './toast-interface';
+
+// TODO(FW-2832): types
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -40,7 +43,7 @@ import type { ToastAttributes, ToastPosition } from './toast-interface';
   shadow: true,
 })
 export class Toast implements ComponentInterface, OverlayInterface {
-  private durationTimeout: any;
+  private durationTimeout?: ReturnType<typeof setTimeout>;
 
   presented = false;
 
@@ -84,6 +87,15 @@ export class Toast implements ComponentInterface, OverlayInterface {
    * Header to be shown in the toast.
    */
   @Prop() header?: string;
+
+  /**
+   * Defines how the message and buttons are laid out in the toast.
+   * 'baseline': The message and the buttons will appear on the same line.
+   * Message text may wrap within the message container.
+   * 'stacked': The buttons containers and message will stack on top
+   * of each other. Use this if you have long text in your buttons.
+   */
+  @Prop() layout: ToastLayout = 'baseline';
 
   /**
    * Message to be shown in the toast.
@@ -288,6 +300,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
   }
 
   render() {
+    const { layout, el } = this;
     const allButtons = this.getButtons();
     const startButtons = allButtons.filter((b) => b.side === 'start');
     const endButtons = allButtons.filter((b) => b.side !== 'start');
@@ -295,8 +308,20 @@ export class Toast implements ComponentInterface, OverlayInterface {
     const wrapperClass = {
       'toast-wrapper': true,
       [`toast-${this.position}`]: true,
+      [`toast-layout-${layout}`]: true,
     };
     const role = allButtons.length > 0 ? 'dialog' : 'status';
+
+    /**
+     * Stacked buttons are only meant to be
+     *  used with one type of button.
+     */
+    if (layout === 'stacked' && startButtons.length > 0 && endButtons.length > 0) {
+      printIonWarning(
+        'This toast is using start and end buttons with the stacked toast layout. We recommend following the best practice of using either start or end buttons with the stacked toast layout.',
+        el
+      );
+    }
 
     return (
       <Host

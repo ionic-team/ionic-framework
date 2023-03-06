@@ -3,6 +3,108 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.6.0](https://github.com/ionic-team/ionic/compare/v6.5.7...v6.6.0) (2023-03-01)
+
+
+### Features
+
+* **toast:** add stacked buttons functionality ([#26790](https://github.com/ionic-team/ionic/issues/26790)) ([fc5fcc0](https://github.com/ionic-team/ionic/commit/fc5fcc064dec5256836e9622125b5e499ef00975))
+
+
+
+
+
+## [6.5.7](https://github.com/ionic-team/ionic/compare/v6.5.6...v6.5.7) (2023-03-01)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [6.5.6](https://github.com/ionic-team/ionic/compare/v6.5.5...v6.5.6) (2023-02-22)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [6.5.5](https://github.com/ionic-team/ionic/compare/v6.5.4...v6.5.5) (2023-02-20)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [6.5.4](https://github.com/ionic-team/ionic/compare/v6.5.3...v6.5.4) (2023-02-15)
+
+
+### Bug Fixes
+
+* **deps:** update ionicons usage to v6.1.2 ([#26752](https://github.com/ionic-team/ionic/issues/26752)) ([c07933c](https://github.com/ionic-team/ionic/commit/c07933cb69b0c31d3e44263769a7a26ee81223f8))
+* **deps:** update ionicons usage to v6.1.3 ([#26772](https://github.com/ionic-team/ionic/issues/26772)) ([1c71983](https://github.com/ionic-team/ionic/commit/1c719833292d4cfbdecadf9838d8c783785222ad))
+
+
+
+
+
+## [6.5.3](https://github.com/ionic-team/ionic/compare/v6.5.2...v6.5.3) (2023-02-08)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [6.5.2](https://github.com/ionic-team/ionic/compare/v6.5.1...v6.5.2) (2023-02-01)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [6.5.1](https://github.com/ionic-team/ionic/compare/v6.5.0...v6.5.1) (2023-01-25)
+
+
+### Bug Fixes
+
+* **react:** hardware back button works in dev mode ([#26614](https://github.com/ionic-team/ionic/issues/26614)) ([abcfe9f](https://github.com/ionic-team/ionic/commit/abcfe9fe867730f29b9379c3736f86b3d20c5b0a)), closes [#26599](https://github.com/ionic-team/ionic/issues/26599)
+
+
+
+
+
+# [6.5.0](https://github.com/ionic-team/ionic/compare/v6.4.3...v6.5.0) (2023-01-18)
+
+
+### Features
+
+* **deps:** update ionicons to 6.1.0 ([#26617](https://github.com/ionic-team/ionic/issues/26617)) ([ccd2a92](https://github.com/ionic-team/ionic/commit/ccd2a9224e018ad0d67903d44ec312934c3b35ec))
+* **deps:** update ionicons to 6.1.1 ([#26626](https://github.com/ionic-team/ionic/issues/26626)) ([90405eb](https://github.com/ionic-team/ionic/commit/90405eb0af69ce04faf5855189449d0b7518288c))
+
+
+
+
+
+## [6.4.3](https://github.com/ionic-team/ionic/compare/v6.4.2...v6.4.3) (2023-01-18)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [6.4.2](https://github.com/ionic-team/ionic/compare/v6.4.1...v6.4.2) (2023-01-11)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
 ## [6.4.1](https://github.com/ionic-team/ionic/compare/v6.4.0...v6.4.1) (2022-12-14)
 
 **Note:** Version bump only for package @ionic/react

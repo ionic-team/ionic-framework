@@ -22,7 +22,7 @@ test.describe('tab-button: basic', () => {
 
     const tabBar = page.locator('ion-tab-bar');
 
-    expect(await tabBar.screenshot()).toMatchSnapshot(`tab-button-label-${page.getSnapshotSettings()}.png`);
+    await expect(tabBar).toHaveScreenshot(`tab-button-label-${page.getSnapshotSettings()}.png`);
   });
 
   test('should render tab button with badges', async ({ page }) => {
@@ -51,7 +51,7 @@ test.describe('tab-button: basic', () => {
 
     const tabBar = page.locator('ion-tab-bar');
 
-    expect(await tabBar.screenshot()).toMatchSnapshot(`tab-button-badge-${page.getSnapshotSettings()}.png`);
+    await expect(tabBar).toHaveScreenshot(`tab-button-badge-${page.getSnapshotSettings()}.png`);
   });
 
   test('should render tab button with icons', async ({ page }) => {
@@ -80,6 +80,6 @@ test.describe('tab-button: basic', () => {
 
     const tabBar = page.locator('ion-tab-bar');
 
-    expect(await tabBar.screenshot()).toMatchSnapshot(`tab-button-badge-${page.getSnapshotSettings()}.png`);
+    await expect(tabBar).toHaveScreenshot(`tab-button-badge-${page.getSnapshotSettings()}.png`);
   });
 });

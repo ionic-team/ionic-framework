@@ -13,6 +13,16 @@ export const sanitizeDOMString = (untrustedString: IonicSafeString | string | un
     }
 
     /**
+     * onload is fired when appending to a document
+     * fragment in Chrome. If a string
+     * contains onload then we should not
+     * attempt to add this to the fragment.
+     */
+    if (untrustedString.includes('onload=')) {
+      return '';
+    }
+
+    /**
      * Create a document fragment
      * separate from the main DOM,
      * create a div to do our work in
@@ -82,9 +92,21 @@ export const sanitizeDOMString = (untrustedString: IonicSafeString | string | un
  * and then recursively dig down into any child elements to
  * clean those up as well
  */
+// TODO(FW-2832): type (using Element triggers other type errors as well)
 const sanitizeElement = (element: any) => {
   // IE uses childNodes, so ignore nodes that are not elements
   if (element.nodeType && element.nodeType !== 1) {
+    return;
+  }
+
+  /**
+   * If attributes is not a NamedNodeMap
+   * then we should remove the element entirely.
+   * This helps avoid DOM Clobbering attacks where
+   * attributes is overridden.
+   */
+  if (typeof NamedNodeMap !== 'undefined' && !(element.attributes instanceof NamedNodeMap)) {
+    element.remove();
     return;
   }
 
@@ -102,10 +124,21 @@ const sanitizeElement = (element: any) => {
     // that attempt to do any JS funny-business
     const attributeValue = attribute.value;
 
-    /* eslint-disable-next-line */
-    if (attributeValue != null && attributeValue.toLowerCase().includes('javascript:')) {
+    /**
+     * We also need to check the property value
+     * as javascript: can allow special characters
+     * such as &Tab; and still be valid (i.e. java&Tab;script)
+     */
+    const propertyValue = element[attributeName];
+
+    /* eslint-disable */
+    if (
+      (attributeValue != null && attributeValue.toLowerCase().includes('javascript:')) ||
+      (propertyValue != null && propertyValue.toLowerCase().includes('javascript:'))
+    ) {
       element.removeAttribute(attributeName);
     }
+    /* eslint-enable */
   }
 
   /**
@@ -123,6 +156,7 @@ const sanitizeElement = (element: any) => {
  * IE doesn't always support .children
  * so we revert to .childNodes instead
  */
+// TODO(FW-2832): type
 const getElementChildren = (el: any) => {
   return el.children != null ? el.children : el.childNodes;
 };

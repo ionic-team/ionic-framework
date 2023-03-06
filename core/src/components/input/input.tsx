@@ -12,7 +12,7 @@ import type {
 } from '../../interface';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes, debounceEvent, findItemLabel, inheritAttributes } from '../../utils/helpers';
-import { createColorClasses } from '../../utils/theme';
+import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -298,7 +298,7 @@ export class Input implements ComponentInterface {
     const nativeInput = this.nativeInput;
     if (nativeInput) {
       nativeInput.removeEventListener('compositionstart', this.onCompositionStart);
-      nativeInput.removeEventListener('compositionEnd', this.onCompositionEnd);
+      nativeInput.removeEventListener('compositionend', this.onCompositionEnd);
     }
   }
 
@@ -454,6 +454,7 @@ export class Input implements ComponentInterface {
           [mode]: true,
           'has-value': this.hasValue(),
           'has-focus': this.hasFocus,
+          'in-item-color': hostContext('ion-item.ion-color', this.el),
         })}
       >
         <input

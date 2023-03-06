@@ -1,21 +1,17 @@
-import {
-  RouteInfo,
-  RouteManagerContext,
-  StackContext,
-  StackContextState,
-  ViewItem,
-  generateId,
-  getConfig,
-} from '@ionic/react';
+import type { RouteInfo, StackContextState, ViewItem } from '@ionic/react';
+import { RouteManagerContext, StackContext, generateId, getConfig } from '@ionic/react';
 import React from 'react';
 import { matchPath } from 'react-router-dom';
 
 import { clonePageElement } from './clonePageElement';
 
+// TODO(FW-2959): types
+
 interface StackManagerProps {
   routeInfo: RouteInfo;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface StackManagerState {}
 
 const isViewVisible = (el: HTMLElement) =>
@@ -98,10 +94,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       let leavingViewItem = this.context.findLeavingViewItemByRouteInfo(routeInfo, this.id);
 
       if (!leavingViewItem && routeInfo.prevRouteLastPathname) {
-        leavingViewItem = this.context.findViewItemByPathname(
-          routeInfo.prevRouteLastPathname,
-          this.id
-        );
+        leavingViewItem = this.context.findViewItemByPathname(routeInfo.prevRouteLastPathname, this.id);
       }
 
       // Check if leavingViewItem should be unmounted
@@ -117,10 +110,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
         }
       }
 
-      const enteringRoute = matchRoute(
-        this.ionRouterOutlet?.props.children,
-        routeInfo
-      ) as React.ReactElement;
+      const enteringRoute = matchRoute(this.ionRouterOutlet?.props.children, routeInfo) as React.ReactElement;
 
       if (enteringViewItem) {
         enteringViewItem.reactElement = enteringRoute;
@@ -154,10 +144,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
          * to find the leaving view item to transition between.
          */
         if (!leavingViewItem && this.props.routeInfo.prevRouteLastPathname) {
-          leavingViewItem = this.context.findViewItemByPathname(
-            this.props.routeInfo.prevRouteLastPathname,
-            this.id
-          );
+          leavingViewItem = this.context.findViewItemByPathname(this.props.routeInfo.prevRouteLastPathname, this.id);
         }
 
         /**
@@ -309,10 +296,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
          * As a result, we should not hide the view item here
          * as it will cause the current view to be hidden.
          */
-        if (
-          enteringViewItem !== leavingViewItem &&
-          enteringViewItem?.ionPageElement !== undefined
-        ) {
+        if (enteringViewItem !== leavingViewItem && enteringViewItem?.ionPageElement !== undefined) {
           const { ionPageElement } = enteringViewItem;
           ionPageElement.setAttribute('aria-hidden', 'true');
           ionPageElement.classList.add('ion-page-hidden');
@@ -377,17 +361,11 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
     const routerOutlet = this.routerOutletElement!;
 
     const routeInfoFallbackDirection =
-      routeInfo.routeDirection === 'none' || routeInfo.routeDirection === 'root'
-        ? undefined
-        : routeInfo.routeDirection;
+      routeInfo.routeDirection === 'none' || routeInfo.routeDirection === 'root' ? undefined : routeInfo.routeDirection;
     const directionToUse = direction ?? routeInfoFallbackDirection;
 
     if (enteringViewItem && enteringViewItem.ionPageElement && this.routerOutletElement) {
-      if (
-        leavingViewItem &&
-        leavingViewItem.ionPageElement &&
-        enteringViewItem === leavingViewItem
-      ) {
+      if (leavingViewItem && leavingViewItem.ionPageElement && enteringViewItem === leavingViewItem) {
         // If a page is transitioning to another version of itself
         // we clone it so we can have an animation to show
 
@@ -417,14 +395,9 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
     const ionRouterOutlet = React.Children.only(children) as React.ReactElement;
     this.ionRouterOutlet = ionRouterOutlet;
 
-    const components = this.context.getChildrenToRender(
-      this.id,
-      this.ionRouterOutlet,
-      this.props.routeInfo,
-      () => {
-        this.forceUpdate();
-      }
-    );
+    const components = this.context.getChildrenToRender(this.id, this.ionRouterOutlet, this.props.routeInfo, () => {
+      this.forceUpdate();
+    });
 
     return (
       <StackContext.Provider value={this.stackContextValue}>

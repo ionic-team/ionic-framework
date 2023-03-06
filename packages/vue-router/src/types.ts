@@ -1,6 +1,8 @@
-import { AnimationBuilder } from '@ionic/vue';
-import { RouteLocationMatched, RouterOptions } from 'vue-router';
-import { Ref } from 'vue';
+import type { AnimationBuilder } from "@ionic/vue";
+import type { Ref } from "vue";
+import type { RouteLocationMatched, RouterOptions } from "vue-router";
+
+// TODO(FW-2969): types
 
 export interface VueComponentData {
   /**
@@ -54,8 +56,8 @@ export interface RouteParams {
   id?: string;
 }
 
-export type RouteAction = 'push' | 'pop' | 'replace';
-export type RouteDirection = 'forward' | 'back' | 'root' | 'none';
+export type RouteAction = "push" | "pop" | "replace";
+export type RouteDirection = "forward" | "back" | "root" | "none";
 
 export interface ViewItem {
   id: string;

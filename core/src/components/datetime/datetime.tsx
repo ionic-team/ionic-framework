@@ -3,15 +3,7 @@ import { Component, Element, Event, Host, Method, Prop, State, Watch, h, writeTa
 import { caretDownSharp, caretUpSharp, chevronBack, chevronDown, chevronForward } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
-import type {
-  Color,
-  DatetimePresentation,
-  DatetimeChangeEventDetail,
-  DatetimeParts,
-  Mode,
-  StyleEventDetail,
-  TitleSelectedDatesFormatter,
-} from '../../interface';
+import type { Color, Mode, StyleEventDetail } from '../../interface';
 import { startFocusVisible } from '../../utils/focus-visible';
 import { getElementRoot, raf, renderHiddenInput } from '../../utils/helpers';
 import { printIonError, printIonWarning } from '../../utils/logging';
@@ -19,6 +11,15 @@ import { isRTL } from '../../utils/rtl';
 import { createColorClasses } from '../../utils/theme';
 import type { PickerColumnItem } from '../picker-column-internal/picker-column-internal-interfaces';
 
+import type {
+  DatetimePresentation,
+  DatetimeChangeEventDetail,
+  DatetimeParts,
+  TitleSelectedDatesFormatter,
+  DatetimeHighlight,
+  DatetimeHighlightStyle,
+  DatetimeHighlightCallback,
+} from './datetime-interface';
 import { isSameDay, warnIfValueOutOfBounds, isBefore, isAfter } from './utils/comparison';
 import {
   generateMonths,
@@ -60,6 +61,7 @@ import {
 } from './utils/parse';
 import {
   getCalendarDayState,
+  getHighlightStyles,
   isDayDisabled,
   isMonthDisabled,
   isNextMonthDisabled,
@@ -95,6 +97,7 @@ export class Datetime implements ComponentInterface {
   private destroyCalendarListener?: () => void;
   private destroyKeyboardMO?: () => void;
 
+  // TODO(FW-2832): types (DatetimeParts causes some errors that need untangling)
   private minParts?: any;
   private maxParts?: any;
   private todayParts!: DatetimeParts;
@@ -320,6 +323,17 @@ export class Datetime implements ComponentInterface {
    * applies to `presentation="date"` and `preferWheel="false"`.
    */
   @Prop() multiple = false;
+
+  /**
+   * Used to apply custom text and background colors to specific dates.
+   *
+   * Can be either an array of objects containing ISO strings and colors,
+   * or a callback that receives an ISO string and returns the colors.
+   *
+   * Only applies to the `date`, `date-time`, and `time-date` presentations,
+   * with `preferWheel="false"`.
+   */
+  @Prop() highlightedDates?: DatetimeHighlight[] | DatetimeHighlightCallback;
 
   /**
    * The value of the datetime as a valid ISO 8601 datetime string.
@@ -1234,7 +1248,7 @@ export class Datetime implements ComponentInterface {
   };
 
   componentWillLoad() {
-    const { el, multiple, presentation, preferWheel } = this;
+    const { el, highlightedDates, multiple, presentation, preferWheel } = this;
 
     if (multiple) {
       if (presentation !== 'date') {
@@ -1243,6 +1257,19 @@ export class Datetime implements ComponentInterface {
 
       if (preferWheel) {
         printIonWarning('Multiple date selection is not supported with preferWheel="true".', el);
+      }
+    }
+
+    if (highlightedDates !== undefined) {
+      if (presentation !== 'date' && presentation !== 'date-time' && presentation !== 'time-date') {
+        printIonWarning(
+          'The highlightedDates property is only supported with the date, date-time, and time-date presentations.',
+          el
+        );
+      }
+
+      if (preferWheel) {
+        printIonWarning('The highlightedDates property is not supported with preferWheel="true".', el);
       }
     }
 
@@ -1924,7 +1951,7 @@ export class Datetime implements ComponentInterface {
             </ion-buttons>
           </div>
         </div>
-        <div class="calendar-days-of-week">
+        <div class="calendar-days-of-week" aria-hidden="true">
           {getDaysOfWeek(this.locale, mode, this.firstDayOfWeek % 7).map((d) => {
             return <div class="day-of-week">{d}</div>;
           })}
@@ -1970,8 +1997,9 @@ export class Datetime implements ComponentInterface {
         <div class="calendar-month-grid">
           {getDaysOfMonth(month, year, this.firstDayOfWeek % 7).map((dateObject, index) => {
             const { day, dayOfWeek } = dateObject;
-            const { isDateEnabled, multiple } = this;
+            const { el, highlightedDates, isDateEnabled, multiple } = this;
             const referenceParts = { month, day, year };
+            const isCalendarPadding = day === null;
             const { isActive, isToday, ariaLabel, ariaSelected, disabled, text } = getCalendarDayState(
               this.locale,
               referenceParts,
@@ -1982,6 +2010,7 @@ export class Datetime implements ComponentInterface {
               this.parsedDayValues
             );
 
+            const dateIsoString = convertDataToISO(referenceParts);
             let isCalDayDisabled = isCalMonthDisabled || disabled;
 
             if (!isCalDayDisabled && isDateEnabled !== undefined) {
@@ -1991,13 +2020,24 @@ export class Datetime implements ComponentInterface {
                  * to prevent exceptions in the user's function from
                  * interrupting the calendar rendering.
                  */
-                isCalDayDisabled = !isDateEnabled(convertDataToISO(referenceParts));
+                isCalDayDisabled = !isDateEnabled(dateIsoString);
               } catch (e) {
                 printIonError(
                   'Exception thrown from provided `isDateEnabled` function. Please check your function and try again.',
+                  el,
                   e
                 );
               }
+            }
+
+            let dateStyle: DatetimeHighlightStyle | undefined = undefined;
+
+            /**
+             * Custom highlight styles should not override the style for selected dates,
+             * nor apply to "filler days" at the start of the grid.
+             */
+            if (highlightedDates !== undefined && !isActive && day !== null) {
+              dateStyle = getHighlightStyles(highlightedDates, dateIsoString, el);
             }
 
             return (
@@ -2010,15 +2050,21 @@ export class Datetime implements ComponentInterface {
                 data-day-of-week={dayOfWeek}
                 disabled={isCalDayDisabled}
                 class={{
-                  'calendar-day-padding': day === null,
+                  'calendar-day-padding': isCalendarPadding,
                   'calendar-day': true,
                   'calendar-day-active': isActive,
                   'calendar-day-today': isToday,
                 }}
+                style={
+                  dateStyle && {
+                    color: dateStyle.textColor,
+                  }
+                }
+                aria-hidden={isCalendarPadding ? 'true' : null}
                 aria-selected={ariaSelected}
                 aria-label={ariaLabel}
                 onClick={() => {
-                  if (day === null) {
+                  if (isCalendarPadding) {
                     return;
                   }
 
@@ -2049,6 +2095,12 @@ export class Datetime implements ComponentInterface {
                   }
                 }}
               >
+                <div
+                  class="calendar-day-highlight"
+                  style={{
+                    backgroundColor: dateStyle?.backgroundColor,
+                  }}
+                ></div>
                 {text}
               </button>
             );
@@ -2172,7 +2224,7 @@ export class Datetime implements ComponentInterface {
     return headerText;
   }
 
-  private renderCalendarViewHeader(showExpandedHeader = true) {
+  private renderHeader(showExpandedHeader = true) {
     const hasSlottedTitle = this.el.querySelector('[slot="title"]') !== null;
     if (!hasSlottedTitle && !this.showDefaultTitle) {
       return;
@@ -2230,13 +2282,13 @@ export class Datetime implements ComponentInterface {
      */
     const hasWheelVariant = presentation === 'date' || presentation === 'date-time' || presentation === 'time-date';
     if (preferWheel && hasWheelVariant) {
-      return [this.renderCalendarViewHeader(false), this.renderWheelView(), this.renderFooter()];
+      return [this.renderHeader(false), this.renderWheelView(), this.renderFooter()];
     }
 
     switch (presentation) {
       case 'date-time':
         return [
-          this.renderCalendarViewHeader(),
+          this.renderHeader(),
           this.renderCalendar(mode),
           this.renderCalendarViewMonthYearPicker(),
           this.renderTime(),
@@ -2244,21 +2296,21 @@ export class Datetime implements ComponentInterface {
         ];
       case 'time-date':
         return [
-          this.renderCalendarViewHeader(),
+          this.renderHeader(),
           this.renderTime(),
           this.renderCalendar(mode),
           this.renderCalendarViewMonthYearPicker(),
           this.renderFooter(),
         ];
       case 'time':
-        return [this.renderTime(), this.renderFooter()];
+        return [this.renderHeader(false), this.renderTime(), this.renderFooter()];
       case 'month':
       case 'month-year':
       case 'year':
-        return [this.renderWheelView(), this.renderFooter()];
+        return [this.renderHeader(false), this.renderWheelView(), this.renderFooter()];
       default:
         return [
-          this.renderCalendarViewHeader(),
+          this.renderHeader(),
           this.renderCalendar(mode),
           this.renderCalendarViewMonthYearPicker(),
           this.renderFooter(),

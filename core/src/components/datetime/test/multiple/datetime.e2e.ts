@@ -65,9 +65,7 @@ class DatetimeMultipleFixture {
   }
 
   async expectMultipleDatePicker(id: string) {
-    expect(await this.datetime.screenshot()).toMatchSnapshot(
-      `datetime-multiple-${id}-${this.page.getSnapshotSettings()}.png`
-    );
+    await expect(this.datetime).toHaveScreenshot(`datetime-multiple-${id}-${this.page.getSnapshotSettings()}.png`);
   }
 }
 
