@@ -1,8 +1,10 @@
 name: 🐛 Bug Report
 description: Create a report to help us improve Ionic Framework
 title: 'bug: '
+
 body:
   - type: checkboxes
+    id: prerequisites
     attributes:
       label: Prerequisites
       description: Please ensure you have completed all of the following.
@@ -13,46 +15,78 @@ body:
           required: true
         - label: I have searched for [existing issues](https://github.com/ionic-team/ionic-framework/issues) that already report this problem, without success.
           required: true
-  - type: checkboxes
+
+  - type: dropdown
+    id: affected-versions
     attributes:
       label: Ionic Framework Version
-      description: Please select which versions of Ionic Framework this issue impacts. For Ionic Framework 1.x issues, please use https://github.com/ionic-team/ionic-v1. For Ionic Framework 2.x and 3.x issues, please use https://github.com/ionic-team/ionic-v3.
+      description: Which version(s) of Ionic Framework does this issue impact? For Ionic Framework 1.x issues, please use https://github.com/ionic-team/ionic-v1. For Ionic Framework 2.x and 3.x issues, please use https://github.com/ionic-team/ionic-v3.
       options:
         - label: v4.x
         - label: v5.x
         - label: v6.x
         - label: v7.x
         - label: Nightly
+      multiple: true
+    validations:
+      required: true
+
+  - type: dropdown
+    id: affected-packages
+    attributes:
+      label: Which @ionic/* package(s) are the source of the bug?
+      options:
+        - core
+        - angular
+        - vue
+        - react
+      multiple: true
+
   - type: textarea
+  id: current-behavior
     attributes:
       label: Current Behavior
       description: A clear description of what the bug is and how it manifests.
     validations:
       required: true
+
   - type: textarea
+    id: expected-behavior
     attributes:
       label: Expected Behavior
       description: A clear description of what you expected to happen.
     validations:
       required: true
+
   - type: textarea
+    id: steps-to-reproduce
     attributes:
       label: Steps to Reproduce
       description: Please explain the steps required to duplicate this issue.
+      placeholder: |
+      1.
+      2.
+      3.
     validations:
       required: true
+
   - type: input
+    id: reproduction-url
     attributes:
       label: Code Reproduction URL
       description: Please reproduce this issue in a blank Ionic Framework starter application and provide a link to the repo. Try out our [Getting Started Wizard](https://ionicframework.com/start#basics) to quickly spin up an Ionic Framework starter app. This is the best way to ensure this issue is triaged quickly. Issues without a code reproduction may be closed if the Ionic Team cannot reproduce the issue you are reporting.
       placeholder: https://github.com/...
+
   - type: textarea
+    id: ionic-info
     attributes:
       label: Ionic Info
       description: Please run `ionic info` from within your Ionic Framework project directory and paste the output below.
     validations:
       required: true
+
   - type: textarea
+    id: additional-information
     attributes:
       label: Additional Information
       description: List any other information that is relevant to your issue. Stack traces, related issues, suggestions on how to fix, Stack Overflow links, forum links, etc.
