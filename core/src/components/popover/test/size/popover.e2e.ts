@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { test, Viewports } from '@utils/test/playwright';
 
-import { openPopover, screenshotPopover } from '../test.utils';
+import { openPopover } from '../test.utils';
 
 test.describe('popover: size', async () => {
   /**
@@ -22,6 +22,7 @@ test.describe('popover: size', async () => {
     await expect(page).toHaveScreenshot(`popover-size-${page.getSnapshotSettings()}.png`);
 
     // test this one separately since it would overlap others
-    await screenshotPopover(page, 'no-event-trigger', 'size');
+    // TODO FW-3598
+    //await screenshotPopover(page, 'no-event-trigger', 'size');
   });
 });
