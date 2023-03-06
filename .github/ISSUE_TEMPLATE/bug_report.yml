@@ -43,7 +43,7 @@ body:
       multiple: true
 
   - type: textarea
-  id: current-behavior
+    id: current-behavior
     attributes:
       label: Current Behavior
       description: A clear description of what the bug is and how it manifests.
@@ -64,9 +64,9 @@ body:
       label: Steps to Reproduce
       description: Please explain the steps required to duplicate this issue.
       placeholder: |
-      1.
-      2.
-      3.
+        1.
+        2.
+        3.
     validations:
       required: true
 
