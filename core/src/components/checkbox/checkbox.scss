@@ -42,6 +42,11 @@
   height: 100%;
 }
 
+:host(.in-item[slot="start"]:not(.legacy-checkbox)),
+:host(.in-item[slot="end"]:not(.legacy-checkbox)) {
+  width: auto;
+}
+
 // TODO(FW-3100): remove this
 :host(.legacy-checkbox) {
   width: var(--size);
