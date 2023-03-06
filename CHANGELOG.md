@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.6.1-nightly.20230306](https://github.com/ionic-team/ionic-framework/compare/v6.6.0...v6.6.1-nightly.20230306) (2023-03-06)
+
+
+### Bug Fixes
+
+* **datetime-button:** time-only values are parsed ([#26852](https://github.com/ionic-team/ionic-framework/issues/26852)) ([f54fc18](https://github.com/ionic-team/ionic-framework/commit/f54fc188843af52e723e06402e01ef92717e541f)), closes [#26851](https://github.com/ionic-team/ionic-framework/issues/26851)
+* **menu, split-pane:** ssr does not fail on null customElements check ([#26854](https://github.com/ionic-team/ionic-framework/issues/26854)) ([451d220](https://github.com/ionic-team/ionic-framework/commit/451d2204e79a4a10c1eb829ab0bd75c137b02475)), closes [#24714](https://github.com/ionic-team/ionic-framework/issues/24714)
+* **react:** inline overlays dismiss when parent component unmounts ([#26245](https://github.com/ionic-team/ionic-framework/issues/26245)) ([c0e1bf9](https://github.com/ionic-team/ionic-framework/commit/c0e1bf92c4487c2ec8a117957cf84a2ce00f5fd8)), closes [#25775](https://github.com/ionic-team/ionic-framework/issues/25775) [#26185](https://github.com/ionic-team/ionic-framework/issues/26185)
+
+
+
+
+
 # [6.6.0](https://github.com/ionic-team/ionic-framework/compare/v6.5.7...v6.6.0) (2023-03-01)
 
 

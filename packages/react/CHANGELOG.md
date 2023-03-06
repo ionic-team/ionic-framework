@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.6.1-nightly.20230306](https://github.com/ionic-team/ionic/compare/v6.6.0...v6.6.1-nightly.20230306) (2023-03-06)
+
+
+### Bug Fixes
+
+* **react:** inline overlays dismiss when parent component unmounts ([#26245](https://github.com/ionic-team/ionic/issues/26245)) ([c0e1bf9](https://github.com/ionic-team/ionic/commit/c0e1bf92c4487c2ec8a117957cf84a2ce00f5fd8)), closes [#25775](https://github.com/ionic-team/ionic/issues/25775) [#26185](https://github.com/ionic-team/ionic/issues/26185)
+
+
+
+
+
 # [6.6.0](https://github.com/ionic-team/ionic/compare/v6.5.7...v6.6.0) (2023-03-01)
 
 
