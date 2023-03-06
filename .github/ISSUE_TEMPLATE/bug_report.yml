@@ -31,17 +31,6 @@ body:
     validations:
       required: true
 
-  - type: dropdown
-    id: affected-packages
-    attributes:
-      label: Which @ionic/* package(s) are the source of the bug?
-      options:
-        - core
-        - angular
-        - vue
-        - react
-      multiple: true
-
   - type: textarea
     id: current-behavior
     attributes:

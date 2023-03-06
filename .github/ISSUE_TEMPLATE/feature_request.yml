@@ -16,17 +16,6 @@ body:
         - label: I have searched for [existing issues](https://github.com/ionic-team/ionic-framework/issues) that already include this feature request, without success.
           required: true
 
-  - type: dropdown
-    id: affected-packages
-    attributes:
-      label: Which @ionic/* package(s) are relevant to the feature request?
-      options:
-        - core
-        - angular
-        - vue
-        - react
-      multiple: true
-
   - type: textarea
     id: description
     attributes:
