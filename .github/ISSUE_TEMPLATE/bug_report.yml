@@ -22,11 +22,11 @@ body:
       label: Ionic Framework Version
       description: Which version(s) of Ionic Framework does this issue impact? For Ionic Framework 1.x issues, please use https://github.com/ionic-team/ionic-v1. For Ionic Framework 2.x and 3.x issues, please use https://github.com/ionic-team/ionic-v3.
       options:
-        - label: v4.x
-        - label: v5.x
-        - label: v6.x
-        - label: v7.x
-        - label: Nightly
+        - v4.x
+        - v5.x
+        - v6.x
+        - v7.x
+        - Nightly
       multiple: true
     validations:
       required: true
