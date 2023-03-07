@@ -1,5 +1,5 @@
-name: 'Build Ionic Core with Stencil Eval'
-description: 'Build Ionic Core with an Evaluation Copy of Stencil'
+name: 'Build Ionic Core with Stencil Nightly'
+description: 'Build Ionic Core with a Nightly Build of Stencil'
 runs:
   using: 'composite'
   steps:
