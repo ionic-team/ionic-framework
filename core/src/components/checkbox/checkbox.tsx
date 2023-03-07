@@ -150,12 +150,8 @@ export class Checkbox implements ComponentInterface {
   }
 
   @Watch('checked')
-  protected checkedChanged() {
-    this.emitStyle();
-  }
-
   @Watch('disabled')
-  protected disabledChanged() {
+  protected styleChanged() {
     this.emitStyle();
   }
 

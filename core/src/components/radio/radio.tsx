@@ -164,18 +164,10 @@ export class Radio implements ComponentInterface {
     }
   }
 
-  @Watch('color')
-  protected colorChanged() {
-    this.emitStyle();
-  }
-
   @Watch('checked')
-  protected checkedChanged() {
-    this.emitStyle();
-  }
-
+  @Watch('color')
   @Watch('disabled')
-  protected disabledChanged() {
+  protected styleChanged() {
     this.emitStyle();
   }
 
