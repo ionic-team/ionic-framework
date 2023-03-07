@@ -14,27 +14,9 @@ runs:
       run: npm ci
       working-directory: ./core
       shell: bash
-    - name: Retrieve Stencil Repository
-      run: git clone https://github.com/ionic-team/stencil.git stencil-repo-tmp
-      shell: bash
-    - name: Report Stencil SHA
-      run: git rev-parse HEAD
-      working-directory: ./stencil-repo-tmp
-      shell: bash
-    - name: Build Stencil
-      run: npm ci && npm run build && npm pack
-      working-directory: ./stencil-repo-tmp
-      shell: bash
-    - name: Move the Stencil Build Artifact
-      # there isn't a great way to get the output of `npm pack`, just grab the first and hope for the best
-      run: mv $(ls ./stencil-repo-tmp/*.tgz | head -1) ./core/stencil-eval.tgz
-      shell: bash
-    - name: Install Stencil Eval
+    - name: Install Stencil Nightly
       working-directory: ./core
-      run: npm i ./stencil-eval.tgz
-      shell: bash
-    - name: Clean Up Stencil Build
-      run: rm -rf stencil-repo-tmp
+      run: npm i @stencil/core@nightly
       shell: bash
     - name: Build Core
       run: npm run build -- --ci
