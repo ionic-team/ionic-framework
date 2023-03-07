@@ -23,13 +23,7 @@ test.describe('popover: dismissOnSelect', async () => {
     await expect(popover).toBeVisible();
   });
 
-  test('should not dismiss a popover when clicking a click trigger', async ({ page, skip }) => {
-    // TODO FW-1486
-    skip.browser(
-      'firefox',
-      'Parent popover disappears when click trigger is clicked. Cannot replicate locally. Needs further investigation.'
-    );
-
+  test('should not dismiss a popover when clicking a click trigger', async ({ page }) => {
     const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
 
     await openPopover(page, 'click-trigger');
