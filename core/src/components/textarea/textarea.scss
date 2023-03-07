@@ -103,6 +103,11 @@
   --padding-start: 0;
 }
 
+:host-context(ion-item)[slot="start"],
+:host-context(ion-item)[slot="end"] {
+  width: auto;
+}
+
 // Native Textarea
 // --------------------------------------------------
 

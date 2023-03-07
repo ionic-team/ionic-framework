@@ -43,6 +43,11 @@
   height: 100%;
 }
 
+:host(.in-item[slot="start"]:not(.legacy-toggle)),
+:host(.in-item[slot="end"]:not(.legacy-toggle)) {
+  width: auto;
+}
+
 :host(.legacy-toggle) {
   contain: content;
 }

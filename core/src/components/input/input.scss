@@ -87,6 +87,11 @@
   --padding-start: 0;
 }
 
+:host-context(ion-item)[slot="start"],
+:host-context(ion-item)[slot="end"] {
+  width: auto;
+}
+
 // TODO FW-2764 Remove this
 :host(.legacy-input.ion-color) {
   color: current-color(base);
