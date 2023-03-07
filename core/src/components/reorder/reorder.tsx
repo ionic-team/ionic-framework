@@ -37,7 +37,7 @@ export class Reorder implements ComponentInterface {
     return (
       <Host class={mode}>
         <slot>
-          <ion-icon icon={reorderIcon} lazy={false} class="reorder-icon" part="icon" />
+          <ion-icon icon={reorderIcon} lazy={false} class="reorder-icon" part="icon" aria-hidden="true" />
         </slot>
       </Host>
     );
