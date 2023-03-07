@@ -141,7 +141,7 @@ Style the `ion-activated` class based on the spec for that element:
 }
 ```
 
-> Order is important! Activated should be before the focused & hover states.
+> Order is important! Activated should be after the focused & hover states.
 
 
 #### User Customization
@@ -307,7 +307,7 @@ Style the `:hover` based on the spec for that element:
 }
 ```
 
-> Order is important! Hover should be after the activated and focused states.
+> Order is important! Hover should be before the activated state.
 
 
 #### User Customization
@@ -729,7 +729,7 @@ For example, if you wanted `transform-origin` to be RTL-aware, you would use the
 @include transform-origin(start, center);
 ```
 
-This would output `transform-origin: left center` in LTR mode and `transform-origin: right center` in RTL mode. 
+This would output `transform-origin: left center` in LTR mode and `transform-origin: right center` in RTL mode.
 
 These mixins depend on the `:host-context` pseudo-class when used inside of shadow components, which is not supported in WebKit. As a result, these mixins will not work in Safari for macOS and iOS when applied to shadow components.
 
