@@ -2,7 +2,9 @@ name: 💡 Feature Request
 description: Suggest an idea for Ionic Framework
 title: 'feat: '
 body:
+
   - type: checkboxes
+    id: prerequisites
     attributes:
       label: Prerequisites
       description: Please ensure you have completed all of the following.
@@ -13,31 +15,43 @@ body:
           required: true
         - label: I have searched for [existing issues](https://github.com/ionic-team/ionic-framework/issues) that already include this feature request, without success.
           required: true
+
   - type: textarea
+    id: description
     attributes:
       label: Describe the Feature Request
       description: A clear and concise description of what the feature does.
     validations:
       required: true
+
   - type: textarea
+    id: use-case
     attributes:
       label: Describe the Use Case
       description: A clear and concise use case for what problem this feature would solve.
     validations:
       required: true
+
   - type: textarea
+    id: proposed-solution
     attributes:
       label: Describe Preferred Solution
       description: A clear and concise description of what you how you want this feature to be added to Ionic Framework.
+
   - type: textarea
+    id: alternatives-considered
     attributes:
       label: Describe Alternatives
       description: A clear and concise description of any alternative solutions or features you have considered.
+
   - type: textarea
+    id: related-code
     attributes:
       label: Related Code
       description: If you are able to illustrate the feature request with an example, please provide a sample Ionic Framework application. Try out our [Getting Started Wizard](https://ionicframework.com/start#basics) to quickly spin up an Ionic Framework starter app.
+
   - type: textarea
+    id: additional-information
     attributes:
       label: Additional Information
       description: List any other information that is relevant to your issue. Stack traces, related issues, suggestions on how to implement, Stack Overflow links, forum links, etc.
