@@ -20,11 +20,16 @@
         <ion-item>
           <ion-icon slot="start" :icon="heart"></ion-icon>
           <ion-label>Static Icons</ion-label>
-          <ion-icon slot="end" :icon="personCircleOutline"></ion-icon>
-          <ion-icon slot="end" :icon="trash"></ion-icon>
+          <ion-icon slot="end" :icon="personCircleOutline" color="dark"></ion-icon>
+          <ion-icon slot="end" :icon="trash" color="danger"></ion-icon>
         </ion-item>
         <ion-item>
-          <ion-icon slot="start" :icon="dynamic"></ion-icon>
+          <ion-icon :icon="logoApple" slot="start"></ion-icon>
+          <ion-label>Logo Icons</ion-label>
+          <ion-icon :icon="logoTwitter" slot="end"></ion-icon>
+        </ion-item>
+        <ion-item>
+          <ion-icon slot="start" :icon="dynamic" color="warning"></ion-icon>
           <ion-label>Dynamic Icon</ion-label>
           <ion-button slot="end" fill="outline" @click="toggle">
             Toggle Icon
@@ -35,13 +40,6 @@
           <ion-label>
             <p>ios: heart circle</p>
             <p>md: person circle</p>
-          </ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-icon slot="start" :ios="starOutline" :md="star"></ion-icon>
-          <ion-label>
-            <p>ios: star outline</p>
-            <p>md: star</p>
           </ion-label>
         </ion-item>
         <ion-item>
@@ -90,7 +88,7 @@ import {
   IonToolbar
 } from '@ionic/vue';
 import { defineComponent, ref } from 'vue';
-import { heart, heartCircleOutline, personCircleOutline, star, starOutline, trash } from 'ionicons/icons';
+import { heart, heartCircleOutline, logoApple, logoTwitter, personCircleOutline, star, starOutline, trash } from 'ionicons/icons';
 
 export default defineComponent({
   components: {
@@ -120,6 +118,8 @@ export default defineComponent({
 
       heart,
       heartCircleOutline,
+      logoApple,
+      logoTwitter,
       personCircleOutline,
       star,
       starOutline,
