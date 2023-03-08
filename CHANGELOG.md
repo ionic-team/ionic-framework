@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.6.1](https://github.com/ionic-team/ionic-framework/compare/v6.6.0...v6.6.1) (2023-03-08)
+
+
+### Bug Fixes
+
+* **angular:** keepContentsMounted modal is sized correctly ([#26917](https://github.com/ionic-team/ionic-framework/issues/26917)) ([8d184c8](https://github.com/ionic-team/ionic-framework/commit/8d184c8c1b91dba9d6d5bbaf1b4a8480b75a3572)), closes [#26916](https://github.com/ionic-team/ionic-framework/issues/26916)
+* **button:** show correct activated state for ios ([#26900](https://github.com/ionic-team/ionic-framework/issues/26900)) ([67815cc](https://github.com/ionic-team/ionic-framework/commit/67815ccbf4650ecbbc6c79d5063ab5ba50cb358c)), closes [#22468](https://github.com/ionic-team/ionic-framework/issues/22468)
+* **datetime-button:** time-only values are parsed ([#26852](https://github.com/ionic-team/ionic-framework/issues/26852)) ([f54fc18](https://github.com/ionic-team/ionic-framework/commit/f54fc188843af52e723e06402e01ef92717e541f)), closes [#26851](https://github.com/ionic-team/ionic-framework/issues/26851)
+* **datetime:** resolve import error in stencil apps ([#26909](https://github.com/ionic-team/ionic-framework/issues/26909)) ([48c45af](https://github.com/ionic-team/ionic-framework/commit/48c45afdb6ca7dad0a1f2a6d3ece6df8ba23eb69)), closes [#26908](https://github.com/ionic-team/ionic-framework/issues/26908)
+* **menu, split-pane:** ssr does not fail on null customElements check ([#26854](https://github.com/ionic-team/ionic-framework/issues/26854)) ([451d220](https://github.com/ionic-team/ionic-framework/commit/451d2204e79a4a10c1eb829ab0bd75c137b02475)), closes [#24714](https://github.com/ionic-team/ionic-framework/issues/24714)
+* **modal:** avoid chrome memory leak bug ([#26911](https://github.com/ionic-team/ionic-framework/issues/26911)) ([a3f8e28](https://github.com/ionic-team/ionic-framework/commit/a3f8e281721f6ef8c9479f5870198b7a009daabd))
+* **react:** inline overlays dismiss when parent component unmounts ([#26245](https://github.com/ionic-team/ionic-framework/issues/26245)) ([c0e1bf9](https://github.com/ionic-team/ionic-framework/commit/c0e1bf92c4487c2ec8a117957cf84a2ce00f5fd8)), closes [#25775](https://github.com/ionic-team/ionic-framework/issues/25775) [#26185](https://github.com/ionic-team/ionic-framework/issues/26185)
+
+
+
+
+
 # [6.6.0](https://github.com/ionic-team/ionic-framework/compare/v6.5.7...v6.6.0) (2023-03-01)
 
 
