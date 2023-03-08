@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.0.0-rc.1](https://github.com/ionic-team/ionic/compare/v7.0.0-rc.0...v7.0.0-rc.1) (2023-03-08)
+
+
+### Bug Fixes
+
+* **many:** add aria-hidden to decorative icons ([#26922](https://github.com/ionic-team/ionic/issues/26922)) ([78303dc](https://github.com/ionic-team/ionic/commit/78303dccaa2b3e7e6fb107a5c0f0f213d8e39a7c))
+
+
+
+
+
 ## [6.6.1](https://github.com/ionic-team/ionic/compare/v6.6.0...v6.6.1) (2023-03-08)
 
 

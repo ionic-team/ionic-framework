@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.0.0-rc.1](https://github.com/ionic-team/ionic/compare/v7.0.0-rc.0...v7.0.0-rc.1) (2023-03-08)
+
+
+### Bug Fixes
+
+* **input, textarea:** disabled state is applied when true ([#26892](https://github.com/ionic-team/ionic/issues/26892)) ([569401b](https://github.com/ionic-team/ionic/commit/569401b1c8959f236ab6931e7c58063d4681402a)), closes [#26881](https://github.com/ionic-team/ionic/issues/26881)
+* **item:** prevent slotted form controls from taking whole width of item ([#26897](https://github.com/ionic-team/ionic/issues/26897)) ([78f5d96](https://github.com/ionic-team/ionic/commit/78f5d960cf4a056b52f65d4731a7ee0771031306))
+* **many:** add aria-hidden to decorative icons ([#26922](https://github.com/ionic-team/ionic/issues/26922)) ([78303dc](https://github.com/ionic-team/ionic/commit/78303dccaa2b3e7e6fb107a5c0f0f213d8e39a7c))
+* **select:** popover is full width when used with floating/stacked labels ([#26907](https://github.com/ionic-team/ionic/issues/26907)) ([7bc22f2](https://github.com/ionic-team/ionic/commit/7bc22f2bbfa1d170f05d66f44b53cd28c4038bc5)), closes [#26903](https://github.com/ionic-team/ionic/issues/26903)
+* **vue:** input components update refs on ionInput ([#26876](https://github.com/ionic-team/ionic/issues/26876)) ([7d9ce74](https://github.com/ionic-team/ionic/commit/7d9ce7420a4c041a6d21041c15680e809cd55e8d)), closes [#26700](https://github.com/ionic-team/ionic/issues/26700)
+
+
+
+
+
 ## [6.6.1](https://github.com/ionic-team/ionic/compare/v6.6.0...v6.6.1) (2023-03-08)
 
 
