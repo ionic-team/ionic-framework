@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [7.0.0-rc.1](https://github.com/ionic-team/ionic-framework/compare/v6.6.1...v7.0.0-rc.1) (2023-03-08)
+# [7.0.0-rc.1](https://github.com/ionic-team/ionic-framework/compare/v7.0.0-rc.0...v7.0.0-rc.1) (2023-03-08)
 
 
 ### Bug Fixes
