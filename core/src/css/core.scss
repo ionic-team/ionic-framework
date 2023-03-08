@@ -91,8 +91,12 @@ html.ios ion-modal ion-toolbar {
  * Note 2: This should only apply to non-card and
  * non-sheet modals. Card and sheet modals have their
  * own criteria for displaying backdrops/box shadows.
+ *
+ * Do not use :not(.overlay-hidden) in place of
+ * .show-modal because that triggers a memory
+ * leak in Blink: https://bugs.chromium.org/p/chromium/issues/detail?id=1418768
  */
-ion-modal.modal-default:not(.overlay-hidden) ~ ion-modal.modal-default {
+ion-modal.modal-default.show-modal ~ ion-modal.modal-default {
   --backdrop-opacity: 0;
   --box-shadow: none;
 }

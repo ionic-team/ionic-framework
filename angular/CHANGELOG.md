@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.6.1](https://github.com/ionic-team/ionic/compare/v6.6.0...v6.6.1) (2023-03-08)
+
+
+### Bug Fixes
+
+* **angular:** keepContentsMounted modal is sized correctly ([#26917](https://github.com/ionic-team/ionic/issues/26917)) ([8d184c8](https://github.com/ionic-team/ionic/commit/8d184c8c1b91dba9d6d5bbaf1b4a8480b75a3572)), closes [#26916](https://github.com/ionic-team/ionic/issues/26916)
+
+
+
+
+
+
 # [7.0.0-rc.0](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.6...v7.0.0-rc.0) (2023-03-01)
 
 **Note:** Version bump only for package @ionic/angular
@@ -11,7 +23,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-# [7.0.0-beta.6](https://github.com/ionic-team/ionic/compare/v6.6.0...v7.0.0-beta.6) (2023-03-01)
+# [7.0.0-beta.6](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.5...v7.0.0-beta.6) (2023-03-01)
 
 
 ### Bug Fixes
@@ -56,6 +68,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * **angular,angular-server:** Angular v14 is now required to use `@ionic/angular` and `@ionic/angular-server`. Upgrade your project to Angular v14 by following the [Angular v14 update guide](https://update.angular.io/?l=3&v=13.0-14.0).
 
 The dev-preview `environmentInjector` property has been removed from `ion-tabs` and `ion-router-outlet`. Standalone component routing is now available without additional custom configuration. Remove the `environmentInjector` property from your `ion-tabs` and `ion-router-outlet` components.
+
+
+
+
+
+# [7.0.0-beta.4](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.3...v7.0.0-beta.4) (2023-02-22)
+
+**Note:** Version bump only for package @ionic/angular
 
 
 
