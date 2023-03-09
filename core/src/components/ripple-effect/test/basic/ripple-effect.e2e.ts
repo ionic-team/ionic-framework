@@ -50,7 +50,7 @@ const verifyRippleEffect = async (page: E2EPage, selector: string) => {
 
   await el.scrollIntoViewIfNeeded();
 
-  const boundingBox = await el.boundingBox()!;
+  const boundingBox = await el.boundingBox();
 
   if (boundingBox) {
     await page.mouse.move(boundingBox.x + boundingBox.width / 2, boundingBox.y + boundingBox.height / 2);
