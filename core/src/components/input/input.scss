@@ -372,11 +372,11 @@
   color: #{$background-color-step-550};
 }
 
-:host(.ion-invalid) .input-bottom .error-text {
+:host(.ion-touched.ion-invalid) .input-bottom .error-text {
   display: block;
 }
 
-:host(.ion-invalid) .input-bottom .helper-text {
+:host(.ion-touched.ion-invalid) .input-bottom .helper-text {
   display: none;
 }
 

@@ -391,11 +391,11 @@
   color: #{$background-color-step-550};
 }
 
-:host(.ion-invalid) .textarea-bottom .error-text {
+:host(.ion-touched.ion-invalid) .textarea-bottom .error-text {
   display: block;
 }
 
-:host(.ion-invalid) .textarea-bottom .helper-text {
+:host(.ion-touched.ion-invalid) .textarea-bottom .helper-text {
   display: none;
 }
 
