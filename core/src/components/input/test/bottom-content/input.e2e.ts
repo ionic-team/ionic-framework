@@ -88,7 +88,9 @@ test.describe('input: hint text', () => {
         );
       });
       test('should not have visual regressions when rendering error text', async ({ page }) => {
-        await page.setContent(`<ion-input class="ion-invalid ion-touched" error-text="my helper" label="my input"></ion-input>`);
+        await page.setContent(
+          `<ion-input class="ion-invalid ion-touched" error-text="my helper" label="my input"></ion-input>`
+        );
 
         const bottomEl = page.locator('ion-input .input-bottom');
         expect(await bottomEl.screenshot()).toMatchSnapshot(
