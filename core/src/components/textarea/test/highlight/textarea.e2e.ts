@@ -10,7 +10,7 @@ test.describe('textarea: highlights', () => {
       await page.setContent(`
         <ion-textarea
           value="hi@ionic.io"
-          class="ion-touched ion-valid has-focus"
+          class="ion-valid has-focus"
           label="Email"
           error-text="Please enter a valid email"
           helper-text="Enter an email"
@@ -61,7 +61,7 @@ test.describe('textarea: highlights', () => {
         <ion-textarea
           fill="solid"
           value="hi@ionic.io"
-          class="ion-touched ion-valid has-focus"
+          class="ion-valid has-focus"
           label="Email"
           error-text="Please enter a valid email"
           helper-text="Enter an email"
@@ -114,7 +114,7 @@ test.describe('textarea: highlights', () => {
         <ion-textarea
           fill="outline"
           value="hi@ionic.io"
-          class="ion-touched ion-valid has-focus"
+          class="ion-valid has-focus"
           label="Email"
           error-text="Please enter a valid email"
           helper-text="Enter an email"
