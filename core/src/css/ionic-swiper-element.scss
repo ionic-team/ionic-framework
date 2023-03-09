@@ -9,7 +9,7 @@ swiper-container {
   --swiper-pagination-progressbar-bg-color: #{$slides-ios-progress-bar-background};
   // note: active progressbar color also uses --swiper-pagination-color
   --swiper-scrollbar-bg-color: #{$slides-ios-scroll-bar-background};
-  --swiper-scrollbar-drag-bg-color: #{$slides-ios-progress-bar-background-active};
+  --swiper-scrollbar-drag-bg-color: #{$slides-ios-scroll-bar-drag-background};
 }
 
 swiper-slide {
