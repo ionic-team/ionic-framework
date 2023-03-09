@@ -52,7 +52,7 @@ test.describe('input: hint text', () => {
     });
     test('error text should be visible when input is invalid', async ({ page }) => {
       await page.setContent(
-        `<ion-input class="ion-invalid" helper-text="my helper" error-text="my error" label="my input"></ion-input>`
+        `<ion-input class="ion-invalid ion-touched" helper-text="my helper" error-text="my error" label="my input"></ion-input>`
       );
 
       const helperText = page.locator('ion-input .helper-text');
@@ -68,7 +68,7 @@ test.describe('input: hint text', () => {
             --highlight-color-invalid: purple;
           }
         </style>
-        <ion-input class="ion-invalid custom-input" label="my label" error-text="my error"></ion-input>
+        <ion-input class="ion-invalid ion-touched custom-input" label="my label" error-text="my error"></ion-input>
       `);
 
       const errorText = page.locator('ion-input .error-text');
