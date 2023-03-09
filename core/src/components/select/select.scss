@@ -226,6 +226,16 @@ button {
   --highlight-color: var(--highlight-color-invalid);
 }
 
+/**
+ * The component highlight is only shown
+ * on focus, so we can safely set the valid
+ * color state when touched/valid. If we
+ * set it when .has-focus is present then
+ * the highlight color would change
+ * from the valid color to the component's
+ * color during the transition after the
+ * component loses focus.
+ */
 :host(.ion-touched.ion-valid) {
   --highlight-color: var(--highlight-color-valid);
 }

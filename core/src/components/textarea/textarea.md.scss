@@ -73,9 +73,9 @@
   color: var(--highlight-color);
 }
 
-:host(.textarea-label-placement-floating.ion-touched.ion-valid) .label-text-wrapper,
+:host(.has-focus.textarea-label-placement-floating.ion-touched.ion-valid) .label-text-wrapper,
 :host(.textarea-label-placement-floating.ion-touched.ion-invalid) .label-text-wrapper,
-:host(.textarea-label-placement-stacked.ion-touched.ion-valid) .label-text-wrapper,
+:host(.has-focus.textarea-label-placement-stacked.ion-touched.ion-valid) .label-text-wrapper,
 :host(.textarea-label-placement-stacked.ion-touched.ion-invalid) .label-text-wrapper {
   color: var(--highlight-color);
 }

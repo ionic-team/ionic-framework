@@ -286,17 +286,6 @@
   @include padding(var(--padding-top), 0px, var(--padding-bottom), 0px);
 }
 
-// Textarea Highlight
-// ----------------------------------------------------------------
-
-:host(.ion-touched.ion-invalid) {
-  --highlight-color: var(--highlight-color-invalid);
-}
-
-:host(.ion-touched.ion-valid) {
-  --highlight-color: var(--highlight-color-valid);
-}
-
 .native-wrapper,
 // TODO: FW-2876 - Remove this selector, keep .native-wrapper
 .textarea-legacy-wrapper {
@@ -338,6 +327,16 @@
   --highlight-color: var(--highlight-color-invalid);
 }
 
+/**
+ * The component highlight is only shown
+ * on focus, so we can safely set the valid
+ * color state when touched/valid. If we
+ * set it when .has-focus is present then
+ * the highlight color would change
+ * from the valid color to the component's
+ * color during the transition after the
+ * component loses focus.
+ */
 :host(.ion-touched.ion-valid) {
   --highlight-color: var(--highlight-color-valid);
 }
@@ -366,7 +365,7 @@
  * If the textarea has a validity state, the
  * border and label should reflect that as a color.
  */
-:host(.ion-touched.ion-valid) .textarea-bottom,
+:host(.has-focus.ion-touched.ion-valid) .textarea-bottom,
 :host(.ion-touched.ion-invalid) .textarea-bottom {
   --border-color: var(--highlight-color);
 }

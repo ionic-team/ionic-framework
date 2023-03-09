@@ -20,7 +20,7 @@
  * If the input has a validity state, the
  * border should reflect that as a color.
  */
-:host(.input-fill-outline.ion-touched.ion-valid),
+:host(.has-focus.input-fill-outline.ion-touched.ion-valid),
 :host(.input-fill-outline.ion-touched.ion-invalid) {
   --border-color: var(--highlight-color);
 }
