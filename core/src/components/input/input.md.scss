@@ -47,7 +47,7 @@
  * If the input has a validity state, the
  * border and label should reflect that as a color.
  */
-:host(.has-focus.ion-touched.ion-valid) .input-bottom,
+:host(.has-focus.ion-valid) .input-bottom,
 :host(.ion-touched.ion-invalid) .input-bottom {
   --border-color: var(--highlight-color);
 }
@@ -76,9 +76,9 @@
   color: var(--highlight-color);
 }
 
-:host(.has-focus.input-label-placement-floating.ion-touched.ion-valid) .label-text-wrapper,
+:host(.has-focus.input-label-placement-floating.ion-valid) .label-text-wrapper,
 :host(.input-label-placement-floating.ion-touched.ion-invalid) .label-text-wrapper,
-:host(.has-focus.input-label-placement-stacked.ion-touched.ion-valid) .label-text-wrapper,
+:host(.has-focus.input-label-placement-stacked.ion-valid) .label-text-wrapper,
 :host(.input-label-placement-stacked.ion-touched.ion-invalid) .label-text-wrapper {
   color: var(--highlight-color);
 }

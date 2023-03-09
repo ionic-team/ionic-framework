@@ -322,14 +322,14 @@
 /**
  * The component highlight is only shown
  * on focus, so we can safely set the valid
- * color state when touched/valid. If we
+ * color state when valid. If we
  * set it when .has-focus is present then
  * the highlight color would change
  * from the valid color to the component's
  * color during the transition after the
  * component loses focus.
  */
-:host(.ion-touched.ion-valid) {
+:host(.ion-valid) {
   --highlight-color: var(--highlight-color-valid);
 }
 
@@ -363,7 +363,7 @@
  * is currently focused. Do not show the valid
  * highlight when the input is blurred.
  */
-:host(.has-focus.ion-touched.ion-valid) .input-bottom,
+:host(.has-focus.ion-valid) .input-bottom,
 :host(.ion-touched.ion-invalid) .input-bottom {
   --border-color: var(--highlight-color);
 }
