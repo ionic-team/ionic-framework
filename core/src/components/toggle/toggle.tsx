@@ -321,15 +321,10 @@ export class Toggle implements ComponentInterface {
         })}
       >
         <label class="toggle-wrapper">
-          <div
-            class={{
-              'label-text-wrapper': true,
-              'label-text-wrapper-hidden': !this.hasLabel,
-            }}
-          >
-            <slot></slot>
-          </div>
-          <div class="native-wrapper">{this.renderToggleControl()}</div>
+          {/*
+            The native control must be rendered
+            before the visible label text due to https://bugs.webkit.org/show_bug.cgi?id=251951
+          */}
           <input
             type="checkbox"
             role="switch"
@@ -342,6 +337,15 @@ export class Toggle implements ComponentInterface {
             ref={(focusEl) => (this.focusEl = focusEl)}
             {...this.inheritedAttributes}
           />
+          <div
+            class={{
+              'label-text-wrapper': true,
+              'label-text-wrapper-hidden': !this.hasLabel,
+            }}
+          >
+            <slot></slot>
+          </div>
+          <div class="native-wrapper">{this.renderToggleControl()}</div>
         </label>
       </Host>
     );
