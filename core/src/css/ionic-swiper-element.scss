@@ -1,0 +1,38 @@
+@import "../components/slides/slides.ios.vars.scss";
+
+// These values are the same for iOS and MD
+// We just do not add a .md or .ios class beforehand
+// so the styles are easier to override by the user.
+swiper-container {
+  --swiper-pagination-bullet-inactive-color: #{$slides-ios-bullet-background};
+  --swiper-pagination-color: #{$slides-ios-bullet-background-active};
+  --swiper-pagination-progressbar-bg-color: #{$slides-ios-progress-bar-background};
+  // note: active progressbar color also uses --swiper-pagination-color
+  --swiper-scrollbar-bg-color: #{$slides-ios-scroll-bar-background};
+  --swiper-scrollbar-drag-bg-color: #{$slides-ios-progress-bar-background-active};
+}
+
+swiper-slide {
+  // Center slide text vertically
+  display: flex;
+  position: relative;
+
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  font-size: 18px;
+
+  text-align: center;
+  box-sizing: border-box;
+}
+
+swiper-slide img {
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 100%;
+}
