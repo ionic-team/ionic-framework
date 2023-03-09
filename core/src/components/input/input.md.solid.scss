@@ -25,8 +25,8 @@
  * If the input has a validity state, the
  * border should reflect that as a color.
  */
-:host(.input-fill-solid.ion-touched.ion-valid) .input-wrapper,
-:host(.input-fill-solid.ion-touched.ion-invalid) .input-wrapper {
+:host(.input-fill-solid.ion-touched.ion-valid),
+:host(.input-fill-solid.ion-touched.ion-invalid) {
   --border-color: var(--highlight-color);
 }
 
