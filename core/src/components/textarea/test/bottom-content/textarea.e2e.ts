@@ -70,7 +70,7 @@ test.describe('textarea: hint text', () => {
       });
       test('should not have visual regressions when rendering error text', async ({ page }) => {
         await page.setContent(
-          `<ion-textarea class="ion-invalid" error-text="my helper" label="my textarea"></ion-textarea>`
+          `<ion-textarea class="ion-invalid ion-touched" error-text="my helper" label="my textarea"></ion-textarea>`
         );
 
         const bottomEl = page.locator('ion-textarea .textarea-bottom');
