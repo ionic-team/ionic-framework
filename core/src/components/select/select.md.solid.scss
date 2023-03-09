@@ -25,7 +25,7 @@
  * If the select has a validity state, the
  * border should reflect that as a color.
  */
-:host(.has-focus.select-fill-solid.ion-touched.ion-valid) .select-wrapper,
+:host(.has-focus.select-fill-solid.ion-valid) .select-wrapper,
 :host(.select-fill-solid.ion-touched.ion-invalid) .select-wrapper {
   --border-color: var(--highlight-color);
 }

@@ -10,7 +10,7 @@ test.describe('input: highlights', () => {
   test.describe('input: no fill', () => {
     test('should render valid state correctly', async ({ page }) => {
       await page.setContent(`
-        <ion-select value="apple" class="ion-touched ion-valid ion-focused" label="Favorite Fruit">
+        <ion-select value="apple" class="ion-valid ion-focused" label="Favorite Fruit">
           <ion-select-option value="apple">Apple</ion-select-option>
         </ion-select>
       `);
@@ -42,7 +42,7 @@ test.describe('input: highlights', () => {
   test.describe('input: solid', () => {
     test('should render valid state correctly', async ({ page }) => {
       await page.setContent(`
-        <ion-select fill="solid" value="apple" class="ion-touched ion-valid ion-focused" label="Favorite Fruit">
+        <ion-select fill="solid" value="apple" class="ion-valid ion-focused" label="Favorite Fruit">
           <ion-select-option value="apple">Apple</ion-select-option>
         </ion-select>
       `);
@@ -74,7 +74,7 @@ test.describe('input: highlights', () => {
   test.describe('input: outline', () => {
     test('should render valid state correctly', async ({ page }) => {
       await page.setContent(`
-        <ion-select fill="outline" value="apple" class="ion-touched ion-valid ion-focused" label="Favorite Fruit">
+        <ion-select fill="outline" value="apple" class="ion-valid ion-focused" label="Favorite Fruit">
           <ion-select-option value="apple">Apple</ion-select-option>
         </ion-select>
       `);

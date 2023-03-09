@@ -236,7 +236,7 @@ button {
  * color during the transition after the
  * component loses focus.
  */
-:host(.ion-touched.ion-valid) {
+:host(.ion-valid) {
   --highlight-color: var(--highlight-color-valid);
 }
 
