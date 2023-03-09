@@ -98,7 +98,7 @@
   }
 }
 
-@media (any-hover: hover) {
+@media (pointer: fine) {
   a:hover {
     color: var(--color-selected);
   }

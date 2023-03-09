@@ -145,7 +145,7 @@
 }
 
 
-@media (any-hover: hover) {
+@media (pointer: fine) {
   :host(.button-solid.ion-color:hover) .button-native::after {
     background: #{current-color(contrast)};
   }

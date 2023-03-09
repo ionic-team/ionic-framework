@@ -33,7 +33,7 @@
   opacity: .4;
 }
 
-@media (any-hover: hover) {
+@media (pointer: fine) {
   :host(:hover) {
     opacity: .6;
   }

@@ -145,7 +145,7 @@
 // Chip: Hover
 // ---------------------------------------------
 
-@media (any-hover: hover) {
+@media (pointer: fine) {
   :host(:hover) {
     --background: #{rgba($text-color-rgb, .16)};
   }

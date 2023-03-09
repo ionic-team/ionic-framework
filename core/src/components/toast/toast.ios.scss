@@ -87,7 +87,7 @@
 // iOS Toast Button: Hover
 // --------------------------------------------------
 
-@media (any-hover: hover) {
+@media (pointer: fine) {
   .toast-button:hover {
     opacity: .6;
   }

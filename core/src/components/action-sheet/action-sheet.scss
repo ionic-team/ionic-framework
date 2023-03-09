@@ -202,7 +202,7 @@
 // Action Sheet: Hover
 // --------------------------------------------------
 
-@media (any-hover: hover) {
+@media (pointer: fine) {
   .action-sheet-button:hover {
     color: var(--button-color-hover);
 

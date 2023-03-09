@@ -157,7 +157,7 @@
   @include transform(translate3d(0, -24px, 0), scale(1));
 }
 
-@media (any-hover: hover) {
+@media (pointer: fine) {
   .range-knob-handle:hover .range-knob:before {
     transform: scale(2);
 

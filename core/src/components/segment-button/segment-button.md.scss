@@ -81,7 +81,7 @@
   background: #{current-color(base)};
 }
 
-@media (any-hover: hover) {
+@media (pointer: fine) {
   :host(.in-segment-color:hover) .button-native {
     color: $segment-button-md-text-color;
 
@@ -122,7 +122,7 @@
 }
 
 // Default Segment, In a Toolbar with Color, Hover
-@media (any-hover: hover) {
+@media (pointer: fine) {
   :host(.in-toolbar-color:not(.in-segment-color)) .button-native::after {
     background: #{current-color(contrast)};
   }

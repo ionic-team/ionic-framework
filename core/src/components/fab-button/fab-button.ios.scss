@@ -66,7 +66,7 @@
   }
 }
 
-@media (any-hover: hover) {
+@media (pointer: fine) {
   :host(.ion-color:hover) .button-native {
     color: #{current-color(contrast)};
 
@@ -99,7 +99,7 @@
 // --------------------------------------------------
 
 @supports (backdrop-filter: blur(0)) {
-  @media (any-hover: hover) {
+  @media (pointer: fine) {
     :host(.fab-button-translucent.ion-color:hover) .button-native {
       background: #{current-color(base, $fab-ios-translucent-background-alpha-hover)};
     }

@@ -148,7 +148,7 @@
   color: #{current-color(base)};
 }
 
-@media (any-hover: hover) {
+@media (pointer: fine) {
   :host(.ion-color) .searchbar-cancel-button:hover {
     color: #{current-color(tint)};
   }

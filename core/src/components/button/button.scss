@@ -258,7 +258,7 @@ ion-ripple-effect {
 }
 
 // Button Hover
-@media (any-hover: hover) {
+@media (pointer: fine) {
   :host(:hover) {
     color: var(--color-hover);
   }

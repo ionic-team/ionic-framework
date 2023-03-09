@@ -173,7 +173,7 @@
   color: $action-sheet-ios-button-destructive-text-color;
 }
 
-@media (any-hover: hover) {
+@media (pointer: fine) {
   .action-sheet-destructive:hover {
     color: $action-sheet-ios-button-destructive-text-color;
   }

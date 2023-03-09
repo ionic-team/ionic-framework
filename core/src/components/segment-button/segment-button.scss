@@ -173,7 +173,7 @@
 // Segment Button: Hover
 // --------------------------------------------------
 
-@media (any-hover: hover) {
+@media (pointer: fine) {
   :host(:hover) .button-native {
     color: var(--color-hover);
 

@@ -32,7 +32,7 @@
 // Menu Button Color: Hover
 // --------------------------------------------------
 
-@media (any-hover: hover) {
+@media (pointer: fine) {
   :host(.ion-color:hover) .button-native::after {
     background: #{current-color(base)};
   }

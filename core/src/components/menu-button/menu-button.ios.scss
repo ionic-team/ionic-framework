@@ -29,7 +29,7 @@
 // Menu Button: Hover
 // --------------------------------------------------
 
-@media (any-hover: hover) {
+@media (pointer: fine) {
   :host(:hover) {
     opacity: .6;
   }

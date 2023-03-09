@@ -212,7 +212,7 @@ ion-icon {
   @include button-state();
 }
 
-@media (any-hover: hover) {
+@media (pointer: fine) {
   :host(:hover) .button-native {
     color: var(--color-hover);
 
@@ -236,7 +236,7 @@ ion-icon {
 // Back Button Color: Hover
 // --------------------------------------------------
 
-@media (any-hover: hover) {
+@media (pointer: fine) {
   :host(.ion-color:hover) .button-native {
     color: #{current-color(base)};
   }

@@ -152,7 +152,7 @@
 // iOS Button Hover
 // --------------------------------------------------
 
-@media (any-hover: hover) {
+@media (pointer: fine) {
   // Clear and outline buttons use opacity so set
   // background to transparent, but this shouldn't
   // apply on top of activated

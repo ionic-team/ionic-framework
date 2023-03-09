@@ -417,7 +417,7 @@
   @include border-radius(16px, 16px, 0, 0);
 }
 
-@media (any-hover: hover) {
+@media (pointer: fine) {
   :host(.item-fill-solid:hover) .item-native {
     --background: var(--background-hover);
     --border-color: #{$item-md-input-fill-border-color-hover};
@@ -464,7 +464,7 @@
   transform: translateY(-14px);
 }
 
-@media (any-hover: hover) {
+@media (pointer: fine) {
   :host(.item-fill-outline:hover) .item-native {
     --border-color: #{$item-md-input-fill-border-color-hover};
   }

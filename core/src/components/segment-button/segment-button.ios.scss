@@ -148,7 +148,7 @@
   opacity: $segment-button-ios-opacity-focused;
 }
 
-@media (any-hover: hover) {
+@media (pointer: fine) {
   // Default Segment, Hover
   :host(:hover) .button-native {
     opacity: $segment-button-ios-opacity-hover;
@@ -175,7 +175,7 @@
   background: $segment-button-ios-indicator-color;
 }
 
-@media (any-hover: hover) {
+@media (pointer: fine) {
   // Toolbar with Color, Default Segment, Hover
   // Toolbar with Color, Default Segment, Checked, Hover
   :host(.in-segment-color:hover) .button-native,
@@ -222,7 +222,7 @@
   color: #{current-color(base)};
 }
 
-@media (any-hover: hover) {
+@media (pointer: fine) {
   // Toolbar with Color, Default Segment, Hover
   :host(.in-toolbar-color:not(.in-segment-color):hover) .button-native {
     color: #{current-color(contrast)};

@@ -100,7 +100,7 @@
 // Material Design Toast Button: Hover
 // --------------------------------------------------
 
-@media (any-hover: hover) {
+@media (pointer: fine) {
   .toast-button:hover {
     background-color: $toast-md-button-background-color-hover;
   }

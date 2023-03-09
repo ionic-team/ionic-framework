@@ -291,10 +291,10 @@ Components should be written to include the following hover variables for stylin
    */
 ```
 
-Style the `:hover` based on the spec for that element:
+Style the `:hover` based on the spec for that element (we use `pointer: fine` to avoid a bug on some Android devices):
 
 ```scss
-@media (any-hover: hover) {
+@media (pointer: fine) {
   :host(:hover) .button-native {
     color: var(--color-hover);
 

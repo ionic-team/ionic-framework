@@ -85,7 +85,7 @@
   color: current-color(base);
 }
 
-@media (any-hover: hover) {
+@media (pointer: fine) {
   :host(:focus) {
     outline: none;
 

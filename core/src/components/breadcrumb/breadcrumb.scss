@@ -71,7 +71,7 @@
 // Breadcrumb: Hover
 // ------------------------------------------
 
-@media (any-hover: hover) {
+@media (pointer: fine) {
   :host(.ion-activatable:hover) {
     color: var(--color-hover);
   }
