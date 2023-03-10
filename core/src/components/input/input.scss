@@ -319,7 +319,17 @@
   --highlight-color: var(--highlight-color-invalid);
 }
 
-:host(.ion-touched.ion-valid) {
+/**
+ * The component highlight is only shown
+ * on focus, so we can safely set the valid
+ * color state when valid. If we
+ * set it when .has-focus is present then
+ * the highlight color would change
+ * from the valid color to the component's
+ * color during the transition after the
+ * component loses focus.
+ */
+:host(.ion-valid) {
   --highlight-color: var(--highlight-color-valid);
 }
 
@@ -346,8 +356,14 @@
 /**
  * If the input has a validity state, the
  * border and label should reflect that as a color.
+ * The invalid state should show if the input is
+ * invalid and has already been touched.
+ * The valid state should show if the input
+ * is valid, has already been touched, and
+ * is currently focused. Do not show the valid
+ * highlight when the input is blurred.
  */
-:host(.ion-touched.ion-valid),
+:host(.has-focus.ion-valid),
 :host(.ion-touched.ion-invalid) {
   --border-color: var(--highlight-color);
 }
@@ -372,11 +388,11 @@
   color: #{$background-color-step-550};
 }
 
-:host(.ion-invalid) .input-bottom .error-text {
+:host(.ion-touched.ion-invalid) .input-bottom .error-text {
   display: block;
 }
 
-:host(.ion-invalid) .input-bottom .helper-text {
+:host(.ion-touched.ion-invalid) .input-bottom .helper-text {
   display: none;
 }
 
@@ -396,17 +412,6 @@
   white-space: nowrap;
 
   padding-inline-start: 16px;
-}
-
-// Input Highlight
-// ----------------------------------------------------------------
-
-:host(.ion-touched.ion-invalid) {
-  --highlight-color: var(--highlight-color-invalid);
-}
-
-:host(.ion-touched.ion-valid) {
-  --highlight-color: var(--highlight-color-valid);
 }
 
 // Input Native

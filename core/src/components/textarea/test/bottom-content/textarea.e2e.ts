@@ -33,7 +33,7 @@ test.describe('textarea: hint text', () => {
     });
     test('error text should be visible when textarea is invalid', async ({ page }) => {
       await page.setContent(
-        `<ion-textarea class="ion-invalid" helper-text="my helper" error-text="my error" label="my textarea"></ion-textarea>`
+        `<ion-textarea class="ion-invalid ion-touched" helper-text="my helper" error-text="my error" label="my textarea"></ion-textarea>`
       );
 
       const helperText = page.locator('ion-textarea .helper-text');
@@ -49,7 +49,7 @@ test.describe('textarea: hint text', () => {
             --highlight-color-invalid: purple;
           }
         </style>
-        <ion-textarea class="ion-invalid custom-textarea" label="my label" error-text="my error"></ion-textarea>
+        <ion-textarea class="ion-invalid ion-touched custom-textarea" label="my label" error-text="my error"></ion-textarea>
       `);
 
       const errorText = page.locator('ion-textarea .error-text');
@@ -70,7 +70,7 @@ test.describe('textarea: hint text', () => {
       });
       test('should not have visual regressions when rendering error text', async ({ page }) => {
         await page.setContent(
-          `<ion-textarea class="ion-invalid" error-text="my helper" label="my textarea"></ion-textarea>`
+          `<ion-textarea class="ion-invalid ion-touched" error-text="my helper" label="my textarea"></ion-textarea>`
         );
 
         const bottomEl = page.locator('ion-textarea .textarea-bottom');
@@ -150,7 +150,7 @@ test.describe('textarea: counter', () => {
 
       test('should not have visual regressions when rendering counter with error text', async ({ page }) => {
         await page.setContent(
-          `<ion-textarea class="ion-invalid" label="my textarea" counter="true" maxlength="20" error-text="my error"></ion-textarea>`
+          `<ion-textarea class="ion-invalid ion-touched" label="my textarea" counter="true" maxlength="20" error-text="my error"></ion-textarea>`
         );
 
         const bottomEl = page.locator('ion-textarea .textarea-bottom');
