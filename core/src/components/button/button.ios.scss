@@ -72,6 +72,7 @@
 
 :host(.button-clear) {
   --background-activated: transparent;
+  --background-activated-opacity: 0;
   --background-focused: #{ion-color(primary, base)};
   --background-hover: transparent;
   --background-focused-opacity: .1;
@@ -131,25 +132,6 @@
 }
 
 
-// iOS Button Activated
-// --------------------------------------------------
-
-:host(.button-clear.ion-activated) {
-  opacity: #{$button-ios-clear-opacity-activated};
-}
-
-:host(.button-outline.ion-activated.ion-color) .button-native {
-  color: current-color(contrast);
-
-  &::after {
-    background: current-color(base);
-  }
-}
-
-:host(.button-solid.ion-color.ion-activated) .button-native::after {
-  background: #{current-color(shade)};
-}
-
 // iOS Button Focused
 // --------------------------------------------------
 
@@ -166,14 +148,16 @@
   background: #{current-color(shade)};
 }
 
+
 // iOS Button Hover
 // --------------------------------------------------
 
 @media (any-hover: hover) {
   // Clear and outline buttons use opacity so set
-  // background to transparent
-  :host(.button-clear:hover),
-  :host(.button-outline:hover) {
+  // background to transparent, but this shouldn't
+  // apply on top of activated
+  :host(.button-clear:not(.ion-activated):hover),
+  :host(.button-outline:not(.ion-activated):hover) {
     opacity: #{$button-ios-clear-opacity-hover};
   }
 
@@ -192,10 +176,31 @@
   }
 
   // Solid buttons inside of a toolbar should use a tint of the current
-  // background so use white to tint it
-  :host(:hover.button-solid.in-toolbar:not(.ion-color):not(.in-toolbar-color)) .button-native::after {
+  // background so use white to tint it, but this should not apply
+  // when activated
+  :host(:hover.button-solid.in-toolbar:not(.ion-color):not(.in-toolbar-color):not(.ion-activated)) .button-native::after {
     background: #fff;
 
     opacity: 0.10;
   }
+}
+
+
+// iOS Button Activated
+// --------------------------------------------------
+
+:host(.button-clear.ion-activated) {
+  opacity: #{$button-ios-clear-opacity-activated};
+}
+
+:host(.button-outline.ion-activated.ion-color) .button-native {
+  color: current-color(contrast);
+
+  &::after {
+    background: current-color(base);
+  }
+}
+
+:host(.button-solid.ion-color.ion-activated) .button-native::after {
+  background: #{current-color(shade)};
 }
