@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.6.2-nightly.20230310](https://github.com/ionic-team/ionic-framework/compare/v6.6.1...v6.6.2-nightly.20230310) (2023-03-10)
+
+
+### Bug Fixes
+
+* **IonicSlides:** remove unnecessary autoplay option ([#26935](https://github.com/ionic-team/ionic-framework/issues/26935)) ([b8f8937](https://github.com/ionic-team/ionic-framework/commit/b8f893731471052df198824b7ece47606ffcc500))
+* **radio:** checked state is updated when value changes ([#26936](https://github.com/ionic-team/ionic-framework/issues/26936)) ([27a5356](https://github.com/ionic-team/ionic-framework/commit/27a5356fa2b72073d565e9d6f527107869faa3ee))
+
+
+
+
+
 ## [6.6.1](https://github.com/ionic-team/ionic-framework/compare/v6.6.0...v6.6.1) (2023-03-08)
 
 
