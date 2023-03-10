@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.0.0-rc.1](https://github.com/ionic-team/ionic-framework/compare/v7.0.0-rc.0...v7.0.0-rc.1) (2023-03-08)
+
+
+### Bug Fixes
+
+* **input, textarea:** disabled state is applied when true ([#26892](https://github.com/ionic-team/ionic-framework/issues/26892)) ([569401b](https://github.com/ionic-team/ionic-framework/commit/569401b1c8959f236ab6931e7c58063d4681402a)), closes [#26881](https://github.com/ionic-team/ionic-framework/issues/26881)
+* **item:** prevent slotted form controls from taking whole width of item ([#26897](https://github.com/ionic-team/ionic-framework/issues/26897)) ([78f5d96](https://github.com/ionic-team/ionic-framework/commit/78f5d960cf4a056b52f65d4731a7ee0771031306))
+* **many:** add aria-hidden to decorative icons ([#26922](https://github.com/ionic-team/ionic-framework/issues/26922)) ([78303dc](https://github.com/ionic-team/ionic-framework/commit/78303dccaa2b3e7e6fb107a5c0f0f213d8e39a7c))
+* **select:** popover is full width when used with floating/stacked labels ([#26907](https://github.com/ionic-team/ionic-framework/issues/26907)) ([7bc22f2](https://github.com/ionic-team/ionic-framework/commit/7bc22f2bbfa1d170f05d66f44b53cd28c4038bc5)), closes [#26903](https://github.com/ionic-team/ionic-framework/issues/26903)
+* **vue:** input components update refs on ionInput ([#26876](https://github.com/ionic-team/ionic-framework/issues/26876)) ([7d9ce74](https://github.com/ionic-team/ionic-framework/commit/7d9ce7420a4c041a6d21041c15680e809cd55e8d)), closes [#26700](https://github.com/ionic-team/ionic-framework/issues/26700)
+
+
+
+
+
+## [6.6.1](https://github.com/ionic-team/ionic-framework/compare/v6.6.0...v6.6.1) (2023-03-08)
+
+* **angular:** keepContentsMounted modal is sized correctly ([#26917](https://github.com/ionic-team/ionic-framework/issues/26917)) ([8d184c8](https://github.com/ionic-team/ionic-framework/commit/8d184c8c1b91dba9d6d5bbaf1b4a8480b75a3572)), closes [#26916](https://github.com/ionic-team/ionic-framework/issues/26916)
+* **button:** show correct activated state for ios ([#26900](https://github.com/ionic-team/ionic-framework/issues/26900)) ([67815cc](https://github.com/ionic-team/ionic-framework/commit/67815ccbf4650ecbbc6c79d5063ab5ba50cb358c)), closes [#22468](https://github.com/ionic-team/ionic-framework/issues/22468)
+* **datetime-button:** time-only values are parsed ([#26852](https://github.com/ionic-team/ionic-framework/issues/26852)) ([f54fc18](https://github.com/ionic-team/ionic-framework/commit/f54fc188843af52e723e06402e01ef92717e541f)), closes [#26851](https://github.com/ionic-team/ionic-framework/issues/26851)
+* **datetime:** resolve import error in stencil apps ([#26909](https://github.com/ionic-team/ionic-framework/issues/26909)) ([48c45af](https://github.com/ionic-team/ionic-framework/commit/48c45afdb6ca7dad0a1f2a6d3ece6df8ba23eb69)), closes [#26908](https://github.com/ionic-team/ionic-framework/issues/26908)
+* **menu, split-pane:** ssr does not fail on null customElements check ([#26854](https://github.com/ionic-team/ionic-framework/issues/26854)) ([451d220](https://github.com/ionic-team/ionic-framework/commit/451d2204e79a4a10c1eb829ab0bd75c137b02475)), closes [#24714](https://github.com/ionic-team/ionic-framework/issues/24714)
+* **modal:** avoid chrome memory leak bug ([#26911](https://github.com/ionic-team/ionic-framework/issues/26911)) ([a3f8e28](https://github.com/ionic-team/ionic-framework/commit/a3f8e281721f6ef8c9479f5870198b7a009daabd))
+* **react:** inline overlays dismiss when parent component unmounts ([#26245](https://github.com/ionic-team/ionic-framework/issues/26245)) ([c0e1bf9](https://github.com/ionic-team/ionic-framework/commit/c0e1bf92c4487c2ec8a117957cf84a2ce00f5fd8)), closes [#25775](https://github.com/ionic-team/ionic-framework/issues/25775) [#26185](https://github.com/ionic-team/ionic-framework/issues/26185)
+
+
+
+
+
 # [7.0.0-rc.0](https://github.com/ionic-team/ionic-framework/compare/v7.0.0-beta.6...v7.0.0-rc.0) (2023-03-01)
 
 **Note:** Version bump only for package ionic-framework
@@ -11,7 +40,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-# [7.0.0-beta.6](https://github.com/ionic-team/ionic-framework/compare/v6.6.0...v7.0.0-beta.6) (2023-03-01)
+# [7.0.0-beta.6](https://github.com/ionic-team/ionic-framework/compare/v7.0.0-beta.5...v7.0.0-beta.6) (2023-03-01)
 
 
 ### Bug Fixes
@@ -35,7 +64,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 | `$button-ios-border-radius`        | `10px`         | `14px`    |
 | `$button-ios-large-height`         | `2.8em`        | `3.1em`   |
 | `$button-ios-large-border-radius`  | `12px`         | `16px`    |
- 
 
 
 

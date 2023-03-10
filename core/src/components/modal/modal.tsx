@@ -294,7 +294,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   /**
    * Emitted after the modal has presented.
-   * Shorthand for ionModalWillDismiss.
+   * Shorthand for ionModalDidPresent.
    */
   @Event({ eventName: 'didPresent' }) didPresentShorthand!: EventEmitter<void>;
 

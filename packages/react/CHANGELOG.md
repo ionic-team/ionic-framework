@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.0.0-rc.1](https://github.com/ionic-team/ionic/compare/v7.0.0-rc.0...v7.0.0-rc.1) (2023-03-08)
+
+
+### Bug Fixes
+
+* **many:** add aria-hidden to decorative icons ([#26922](https://github.com/ionic-team/ionic/issues/26922)) ([78303dc](https://github.com/ionic-team/ionic/commit/78303dccaa2b3e7e6fb107a5c0f0f213d8e39a7c))
+
+
+
+
+
+## [6.6.1](https://github.com/ionic-team/ionic/compare/v6.6.0...v6.6.1) (2023-03-08)
+
+
+### Bug Fixes
+
+* **react:** inline overlays dismiss when parent component unmounts ([#26245](https://github.com/ionic-team/ionic/issues/26245)) ([c0e1bf9](https://github.com/ionic-team/ionic/commit/c0e1bf92c4487c2ec8a117957cf84a2ce00f5fd8)), closes [#25775](https://github.com/ionic-team/ionic/issues/25775) [#26185](https://github.com/ionic-team/ionic/issues/26185)
+
+
+
+
+
 # [7.0.0-rc.0](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.6...v7.0.0-rc.0) (2023-03-01)
 
 **Note:** Version bump only for package @ionic/react
@@ -11,12 +33,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-# [7.0.0-beta.6](https://github.com/ionic-team/ionic/compare/v6.6.0...v7.0.0-beta.6) (2023-03-01)
+# [7.0.0-beta.6](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.5...v7.0.0-beta.6) (2023-03-01)
 
-
-### Bug Fixes
-
-* **angular:** devs can import ionic/angular styles in css ([#26875](https://github.com/ionic-team/ionic/issues/26875)) ([0d2fac2](https://github.com/ionic-team/ionic/commit/0d2fac2eefd610271fbbbecc36e844b6b289dfee))
+**Note:** Version bump only for package @ionic/react
 
 
 
@@ -51,6 +70,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### BREAKING CHANGES
 
 * **searchbar:** The `detail` payload for the `ionInput` event now on `ion-searchbar` contains an object with the current `value` as well as the native event that triggered `ionInput`.
+
+
+
+
+
+# [7.0.0-beta.4](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.3...v7.0.0-beta.4) (2023-02-22)
+
+**Note:** Version bump only for package @ionic/react
 
 
 

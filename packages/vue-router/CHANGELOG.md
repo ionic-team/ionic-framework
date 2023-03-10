@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.0.0-rc.1](https://github.com/ionic-team/ionic/compare/v7.0.0-rc.0...v7.0.0-rc.1) (2023-03-08)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+## [6.6.1](https://github.com/ionic-team/ionic/compare/v6.6.0...v6.6.1) (2023-03-08)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
 # [7.0.0-rc.0](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.6...v7.0.0-rc.0) (2023-03-01)
 
 **Note:** Version bump only for package @ionic/vue-router
@@ -11,7 +27,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-# [7.0.0-beta.6](https://github.com/ionic-team/ionic/compare/v6.6.0...v7.0.0-beta.6) (2023-03-01)
+# [7.0.0-beta.6](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.5...v7.0.0-beta.6) (2023-03-01)
 
 
 ### Bug Fixes
@@ -39,6 +55,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 # [7.0.0-beta.5](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.4...v7.0.0-beta.5) (2023-02-27)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
+# [7.0.0-beta.4](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.3...v7.0.0-beta.4) (2023-02-22)
 
 **Note:** Version bump only for package @ionic/vue-router
 
