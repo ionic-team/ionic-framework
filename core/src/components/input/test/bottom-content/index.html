@@ -62,13 +62,17 @@
 
           <div class="grid-item">
             <h2>Error Hint</h2>
-            <ion-input class="ion-invalid" label="Email" error-text="Please enter a valid email"></ion-input>
+            <ion-input
+              class="ion-touched ion-invalid"
+              label="Email"
+              error-text="Please enter a valid email"
+            ></ion-input>
           </div>
 
           <div class="grid-item">
             <h2>Custom Error Color</h2>
             <ion-input
-              class="ion-invalid custom-error-color"
+              class="ion-touched ion-invalid custom-error-color"
               label="Email"
               error-text="Please enter a valid email"
             ></ion-input>
@@ -92,7 +96,7 @@
           <div class="grid-item">
             <h2>Counter with Error</h2>
             <ion-input
-              class="ion-invalid"
+              class="ion-touched ion-invalid"
               label="Email"
               counter="true"
               maxlength="100"
