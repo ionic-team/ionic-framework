@@ -47,8 +47,8 @@
  * If the input has a validity state, the
  * border and label should reflect that as a color.
  */
-:host(.has-focus.ion-valid) .input-bottom,
-:host(.ion-touched.ion-invalid) .input-bottom {
+:host(.has-focus.ion-valid),
+:host(.ion-touched.ion-invalid) {
   --border-color: var(--highlight-color);
 }
 

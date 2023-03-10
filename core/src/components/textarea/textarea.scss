@@ -365,8 +365,8 @@
  * If the textarea has a validity state, the
  * border and label should reflect that as a color.
  */
-:host(.has-focus.ion-valid) .textarea-bottom,
-:host(.ion-touched.ion-invalid) .textarea-bottom {
+:host(.has-focus.ion-valid),
+:host(.ion-touched.ion-invalid) {
   --border-color: var(--highlight-color);
 }
 
