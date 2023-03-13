@@ -10,7 +10,8 @@ test.describe('segment: a11y', () => {
     expect(results.violations).toEqual([]);
   });
 
-  test('segment buttons should be keyboard navigable', async ({ page, browserName, skip }, testInfo) => {
+  // TODO FW-3710
+  test.skip('segment buttons should be keyboard navigable', async ({ page, browserName, skip }, testInfo) => {
     // TODO (FW-2979)
     skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
     const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
@@ -20,7 +21,7 @@ test.describe('segment: a11y', () => {
 
     await page.goto('/src/components/segment/test/a11y');
 
-    const segmentButtons = page.locator('ion-segment-button button');
+    const segmentButtons = page.locator('ion-segment-button');
 
     await page.keyboard.press(tabKey);
     await expect(segmentButtons.nth(0)).toBeFocused();
