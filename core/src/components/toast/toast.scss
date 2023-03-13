@@ -112,7 +112,11 @@
   contain: content;
 }
 
-.toast-content {
+.toast-layout-stacked .toast-container {
+  flex-wrap: wrap;
+}
+
+.toast-layout-baseline .toast-content {
   display: flex;
 
   flex: 1;
@@ -132,6 +136,12 @@
 
 .toast-button-group {
   display: flex;
+}
+
+.toast-layout-stacked .toast-button-group {
+  justify-content: end;
+
+  width: 100%;
 }
 
 .toast-button {

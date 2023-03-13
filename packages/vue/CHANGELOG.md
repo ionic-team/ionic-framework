@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.6.1](https://github.com/ionic-team/ionic/compare/v6.6.0...v6.6.1) (2023-03-08)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+# [6.6.0](https://github.com/ionic-team/ionic/compare/v6.5.7...v6.6.0) (2023-03-01)
+
+
+### Features
+
+* **datetime:** add ability to specify custom colors for specific dates ([#26775](https://github.com/ionic-team/ionic/issues/26775)) ([2a761af](https://github.com/ionic-team/ionic/commit/2a761afd5a0e6d4e6f54096fdeb97b8bad1293de))
+* **toast:** add stacked buttons functionality ([#26790](https://github.com/ionic-team/ionic/issues/26790)) ([fc5fcc0](https://github.com/ionic-team/ionic/commit/fc5fcc064dec5256836e9622125b5e499ef00975))
+
+
+
+
+
+## [6.5.7](https://github.com/ionic-team/ionic/compare/v6.5.6...v6.5.7) (2023-03-01)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [6.5.6](https://github.com/ionic-team/ionic/compare/v6.5.5...v6.5.6) (2023-02-22)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [6.5.5](https://github.com/ionic-team/ionic/compare/v6.5.4...v6.5.5) (2023-02-20)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
 ## [6.5.4](https://github.com/ionic-team/ionic/compare/v6.5.3...v6.5.4) (2023-02-15)
 
 

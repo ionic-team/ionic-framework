@@ -3,6 +3,78 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.6.1](https://github.com/ionic-team/ionic/compare/v6.6.0...v6.6.1) (2023-03-08)
+
+
+### Bug Fixes
+
+* **button:** show correct activated state for ios ([#26900](https://github.com/ionic-team/ionic/issues/26900)) ([67815cc](https://github.com/ionic-team/ionic/commit/67815ccbf4650ecbbc6c79d5063ab5ba50cb358c)), closes [#22468](https://github.com/ionic-team/ionic/issues/22468)
+* **datetime-button:** time-only values are parsed ([#26852](https://github.com/ionic-team/ionic/issues/26852)) ([f54fc18](https://github.com/ionic-team/ionic/commit/f54fc188843af52e723e06402e01ef92717e541f)), closes [#26851](https://github.com/ionic-team/ionic/issues/26851)
+* **datetime:** resolve import error in stencil apps ([#26909](https://github.com/ionic-team/ionic/issues/26909)) ([48c45af](https://github.com/ionic-team/ionic/commit/48c45afdb6ca7dad0a1f2a6d3ece6df8ba23eb69)), closes [#26908](https://github.com/ionic-team/ionic/issues/26908)
+* **menu, split-pane:** ssr does not fail on null customElements check ([#26854](https://github.com/ionic-team/ionic/issues/26854)) ([451d220](https://github.com/ionic-team/ionic/commit/451d2204e79a4a10c1eb829ab0bd75c137b02475)), closes [#24714](https://github.com/ionic-team/ionic/issues/24714)
+* **modal:** avoid chrome memory leak bug ([#26911](https://github.com/ionic-team/ionic/issues/26911)) ([a3f8e28](https://github.com/ionic-team/ionic/commit/a3f8e281721f6ef8c9479f5870198b7a009daabd))
+
+
+
+
+
+# [6.6.0](https://github.com/ionic-team/ionic/compare/v6.5.7...v6.6.0) (2023-03-01)
+
+
+### Bug Fixes
+
+* **modal:** dialog styles work on old chrome versions ([#26746](https://github.com/ionic-team/ionic/issues/26746)) ([00d10f5](https://github.com/ionic-team/ionic/commit/00d10f5f6ad53850505bdad94b659b8801a3309d)), closes [#26745](https://github.com/ionic-team/ionic/issues/26745)
+
+
+### Features
+
+* **datetime:** add ability to specify custom colors for specific dates ([#26775](https://github.com/ionic-team/ionic/issues/26775)) ([2a761af](https://github.com/ionic-team/ionic/commit/2a761afd5a0e6d4e6f54096fdeb97b8bad1293de))
+* **picker-column:** assign custom aria-labels to column options ([#26749](https://github.com/ionic-team/ionic/issues/26749)) ([daa89a2](https://github.com/ionic-team/ionic/commit/daa89a26ac8fa655c56c9447a8635e7c436e4f63))
+* **toast:** add stacked buttons functionality ([#26790](https://github.com/ionic-team/ionic/issues/26790)) ([fc5fcc0](https://github.com/ionic-team/ionic/commit/fc5fcc064dec5256836e9622125b5e499ef00975))
+
+
+
+
+
+## [6.5.7](https://github.com/ionic-team/ionic/compare/v6.5.6...v6.5.7) (2023-03-01)
+
+
+### Bug Fixes
+
+* **content:** fullscreen values are recomputed on visible content ([#26847](https://github.com/ionic-team/ionic/issues/26847)) ([6dcd98b](https://github.com/ionic-team/ionic/commit/6dcd98b26ab8fd3bf0092416d613bf051fbdeacf)), closes [#26844](https://github.com/ionic-team/ionic/issues/26844)
+* **modal:** keyboard listener removed on dismiss ([#26856](https://github.com/ionic-team/ionic/issues/26856)) ([b4bcba3](https://github.com/ionic-team/ionic/commit/b4bcba353386b4d5d8d396e61ece421a15d42ff0))
+* **overlays:** focus trap refs cleared on dismiss ([#26855](https://github.com/ionic-team/ionic/issues/26855)) ([8d1d0fa](https://github.com/ionic-team/ionic/commit/8d1d0fa0c7a42a3c21a471131ba454774b26c314))
+
+
+
+
+
+## [6.5.6](https://github.com/ionic-team/ionic/compare/v6.5.5...v6.5.6) (2023-02-22)
+
+
+### Bug Fixes
+
+* **card:** border radius does not overflow on paint in Safari ([#26539](https://github.com/ionic-team/ionic/issues/26539)) ([df5c8e2](https://github.com/ionic-team/ionic/commit/df5c8e231825b5e5b6923f322c94224a00d3b309)), closes [#26529](https://github.com/ionic-team/ionic/issues/26529)
+
+
+
+
+
+## [6.5.5](https://github.com/ionic-team/ionic/compare/v6.5.4...v6.5.5) (2023-02-20)
+
+
+### Bug Fixes
+
+* **datetime:** days of week and spacing buttons are not announced by screen readers ([#26813](https://github.com/ionic-team/ionic/issues/26813)) ([1a346b6](https://github.com/ionic-team/ionic/commit/1a346b62068076d0b0cc6b2dea4136e0f06576b8)), closes [#26811](https://github.com/ionic-team/ionic/issues/26811)
+* **hide-caret:** blur listener correctly removed ([#26808](https://github.com/ionic-team/ionic/issues/26808)) ([fef634f](https://github.com/ionic-team/ionic/commit/fef634f7f055f1672af50b56610f84c76e626814)), closes [#26807](https://github.com/ionic-team/ionic/issues/26807)
+* **input:** compositionend event is removed on unmount ([#26806](https://github.com/ionic-team/ionic/issues/26806)) ([caa8719](https://github.com/ionic-team/ionic/commit/caa8719cea2f4b3b460551224a8c4a69bd29afeb)), closes [#26805](https://github.com/ionic-team/ionic/issues/26805)
+* **sanitizer:** improve reliability of sanitizer ([#26820](https://github.com/ionic-team/ionic/issues/26820)) ([5e41391](https://github.com/ionic-team/ionic/commit/5e41391ed2585072095f42f7a6d40497f0e129d2))
+* **swipe-back:** gesture rtl setting is reactive ([#26795](https://github.com/ionic-team/ionic/issues/26795)) ([3a64de4](https://github.com/ionic-team/ionic/commit/3a64de49dbf470d470cb4516df2a5226ba751051)), closes [#26794](https://github.com/ionic-team/ionic/issues/26794)
+
+
+
+
+
 ## [6.5.4](https://github.com/ionic-team/ionic/compare/v6.5.3...v6.5.4) (2023-02-15)
 
 

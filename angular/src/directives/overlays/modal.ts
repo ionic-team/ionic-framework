@@ -80,7 +80,7 @@ export declare interface IonModal extends Components.IonModal {
 @Component({
   selector: 'ion-modal',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<div class="ion-page" *ngIf="isCmpOpen || keepContentsMounted">
+  template: `<div class="ion-delegate-host ion-page" *ngIf="isCmpOpen || keepContentsMounted">
     <ng-container [ngTemplateOutlet]="template"></ng-container>
   </div>`,
   inputs: [

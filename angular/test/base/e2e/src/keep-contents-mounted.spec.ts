@@ -27,6 +27,12 @@ describe('overlays - keepContentsMounted', () => {
 
       cy.get('ion-modal ion-content').should('exist');
     });
+
+    it('should has ion-delegate-host on mount', () => {
+      cy.visit('/keep-contents-mounted');
+
+      cy.get('ion-modal .ion-delegate-host').should('exist');
+    });
   })
   describe('popover', () => {
     it('should not mount component if false', () => {

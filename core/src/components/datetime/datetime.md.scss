@@ -74,7 +74,7 @@
   font-size: $datetime-md-calendar-item-font-size;
 }
 
-:host .calendar-day:focus:after {
+.calendar-day:focus .calendar-day-highlight {
   background: current-color(base, 0.2);
 
   box-shadow: 0px 0px 0px 4px current-color(base, 0.2);
@@ -88,7 +88,7 @@
   color: current-color(base);
 }
 
-:host .calendar-day.calendar-day-today:after {
+.calendar-day.calendar-day-today .calendar-day-highlight {
   border: 1px solid current-color(base);
 }
 
@@ -101,7 +101,7 @@
   color: current-color(contrast);
 }
 
-:host .calendar-day.calendar-day-active:after {
+.calendar-day.calendar-day-active .calendar-day-highlight {
   border: 1px solid current-color(base);
 
   background: current-color(base);
