@@ -79,6 +79,12 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
     };
   }
 
+  componentDidLoad() {
+    if (this.segmentEl) {
+      this.updateState();
+    }
+  }
+
   private get hasLabel() {
     return !!this.el.querySelector('ion-label');
   }
