@@ -20,7 +20,7 @@ test.describe('segment: a11y', () => {
 
     await page.goto('/src/components/segment/test/a11y');
 
-    const segmentButtons = page.locator('ion-segment-button');
+    const segmentButtons = page.locator('ion-segment-button button');
 
     await page.keyboard.press(tabKey);
     await expect(segmentButtons.nth(0)).toBeFocused();
