@@ -25,7 +25,7 @@ export const IonIcon = /*@__PURE__*/ defineComponent({
       let iconToUse: typeof icon;
 
       const config = getConfig();
-      const iconMode = mode || config.get("mode");
+      const iconMode = mode || config?.get("mode");
 
       if (ios || md) {
         if (iconMode === "ios") {
