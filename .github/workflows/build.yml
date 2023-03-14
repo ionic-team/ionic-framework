@@ -180,7 +180,7 @@ jobs:
       with:
         app: ${{ matrix.apps }}
 
-  verify-test-react-e2e:
+  verify-test-react-router-e2e:
     if: ${{ always() }}
     needs: test-react-router-e2e
     runs-on: ubuntu-latest

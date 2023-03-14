@@ -1,5 +1,8 @@
 name: 'Test React Router E2E'
-description: 'Test React Router '
+description: 'Test React Router'
+inputs:
+  app:
+    description: 'The specific test application'
 runs:
   using: 'composite'
   steps:
