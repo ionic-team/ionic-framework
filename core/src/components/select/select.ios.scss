@@ -11,10 +11,6 @@
   --padding-start: #{$select-ios-padding-start};
 }
 
-:host(.ion-text-wrap) .select-text {
-  white-space: normal;
-}
-
 .select-icon {
   width: 12px;
   height: 18px;

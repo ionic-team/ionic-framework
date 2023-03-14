@@ -25,6 +25,8 @@
 
   font-family: $font-family-base;
 
+  white-space: nowrap;
+
   overflow: hidden;
   z-index: $z-index-item-input;
 }
@@ -42,10 +44,6 @@
 
 :host(.ion-focused) button {
   border: 2px solid #5e9ed6;
-}
-
-:host(.ion-text-wrap) .select-text {
-  white-space: normal;
 }
 
 .select-placeholder {
@@ -81,7 +79,7 @@ button {
 
   text-overflow: ellipsis;
 
-  white-space: nowrap;
+  white-space: inherit;
 
   overflow: hidden;
 }
