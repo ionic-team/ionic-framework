@@ -65,6 +65,12 @@
             <p>md: star</p>
           </ion-label>
         </ion-item>
+        <ion-item>
+          <ion-icon id="customSvg" slot="start" :ios="iosCustomSvg" :md="mdCustomSvg"></ion-icon>
+          <ion-label>
+            <p>Custom SVG</p>
+          </ion-label>
+        </ion-item>
       </ion-list>
 
 
@@ -106,6 +112,9 @@ export default defineComponent({
     IonToolbar
   },
   setup() {
+    const iosCustomSvg = "../assets/logo-apple.svg";
+    const mdCustomSvg = "../assets/logo-android.svg";
+
     const dynamic = ref(star);
 
     const toggle = () => {
@@ -114,6 +123,8 @@ export default defineComponent({
     }
 
     return {
+      iosCustomSvg,
+      mdCustomSvg,
       dynamic,
 
       heart,
