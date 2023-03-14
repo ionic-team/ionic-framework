@@ -5,6 +5,7 @@ import { arrowDown, caretBackSharp } from 'ionicons/icons';
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import type { SpinnerTypes } from '../../interface';
+import { ENABLE_HTML_CONTENT_DEFAULT } from '../../utils/config';
 import { isPlatform } from '../../utils/platform';
 import type { IonicSafeString } from '../../utils/sanitization';
 import { sanitizeDOMString } from '../../utils/sanitization';
@@ -14,6 +15,8 @@ import { SPINNERS } from '../spinner/spinner-configs';
   tag: 'ion-refresher-content',
 })
 export class RefresherContent implements ComponentInterface {
+  private customHTMLEnabled = config.get('enableHTMLContent', ENABLE_HTML_CONTENT_DEFAULT);
+
   @Element() el!: HTMLIonRefresherContentElement;
 
   /**
@@ -78,6 +81,24 @@ export class RefresherContent implements ComponentInterface {
     }
   }
 
+  private renderPullingText() {
+    const { customHTMLEnabled, pullingText } = this;
+    if (customHTMLEnabled) {
+      return <div class="refresher-pulling-text" innerHTML={sanitizeDOMString(pullingText)}></div>;
+    }
+
+    return <div class="refresher-pulling-text">{pullingText}</div>;
+  }
+
+  private renderRefreshingText() {
+    const { customHTMLEnabled, refreshingText } = this;
+    if (customHTMLEnabled) {
+      return <div class="refresher-refreshing-text" innerHTML={sanitizeDOMString(refreshingText)}></div>;
+    }
+
+    return <div class="refresher-refreshing-text">{refreshingText}</div>;
+  }
+
   render() {
     const pullingIcon = this.pullingIcon;
     const hasSpinner = pullingIcon != null && (SPINNERS[pullingIcon] as any) !== undefined;
@@ -103,9 +124,7 @@ export class RefresherContent implements ComponentInterface {
               <ion-icon icon={this.pullingIcon} lazy={false}></ion-icon>
             </div>
           )}
-          {this.pullingText !== undefined && (
-            <div class="refresher-pulling-text" innerHTML={sanitizeDOMString(this.pullingText)}></div>
-          )}
+          {this.pullingText !== undefined && this.renderPullingText()}
         </div>
         <div class="refresher-refreshing">
           {this.refreshingSpinner && (
@@ -113,9 +132,7 @@ export class RefresherContent implements ComponentInterface {
               <ion-spinner name={this.refreshingSpinner}></ion-spinner>
             </div>
           )}
-          {this.refreshingText !== undefined && (
-            <div class="refresher-refreshing-text" innerHTML={sanitizeDOMString(this.refreshingText)}></div>
-          )}
+          {this.refreshingText !== undefined && this.renderRefreshingText()}
         </div>
       </Host>
     );
