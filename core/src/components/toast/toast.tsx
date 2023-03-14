@@ -11,6 +11,7 @@ import type {
   OverlayInterface,
   ToastButton,
 } from '../../interface';
+import { ENABLE_HTML_CONTENT_DEFAULT } from '../../utils/config';
 import { printIonWarning } from '../../utils/logging';
 import { dismiss, eventMethod, isCancel, prepareOverlay, present, safeCall } from '../../utils/overlays';
 import type { IonicSafeString } from '../../utils/sanitization';
@@ -43,6 +44,7 @@ import type { ToastAttributes, ToastPosition, ToastLayout } from './toast-interf
   shadow: true,
 })
 export class Toast implements ComponentInterface, OverlayInterface {
+  private customHTMLEnabled = config.get('enableHTMLContent', ENABLE_HTML_CONTENT_DEFAULT);
   private durationTimeout?: ReturnType<typeof setTimeout>;
 
   presented = false;
@@ -303,6 +305,19 @@ export class Toast implements ComponentInterface, OverlayInterface {
     );
   }
 
+  private renderToastMessage() {
+    const { customHTMLEnabled, message } = this;
+    if (customHTMLEnabled) {
+      return <div class="toast-message" part="message" innerHTML={sanitizeDOMString(message)}></div>;
+    }
+
+    return (
+      <div class="toast-message" part="message">
+        {message}
+      </div>
+    );
+  }
+
   render() {
     const { layout, el } = this;
     const allButtons = this.getButtons();
@@ -359,9 +374,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
                   {this.header}
                 </div>
               )}
-              {this.message !== undefined && (
-                <div class="toast-message" part="message" innerHTML={sanitizeDOMString(this.message)}></div>
-              )}
+              {this.message !== undefined && this.renderToastMessage()}
             </div>
 
             {this.renderButtons(endButtons, 'end')}
