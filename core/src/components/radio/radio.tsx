@@ -164,16 +164,23 @@ export class Radio implements ComponentInterface {
     }
   }
 
-  @Watch('color')
   @Watch('checked')
+  @Watch('color')
   @Watch('disabled')
-  emitStyle() {
+  protected styleChanged() {
+    this.emitStyle();
+  }
+
+  private emitStyle() {
+    const style: StyleEventDetail = {
+      'interactive-disabled': this.disabled,
+    };
+
     if (this.legacyFormController.hasLegacyControl()) {
-      this.ionStyle.emit({
-        'radio-checked': this.checked,
-        'interactive-disabled': this.disabled,
-      });
+      style['radio-checked'] = this.checked;
     }
+
+    this.ionStyle.emit(style);
   }
 
   private updateState = () => {
