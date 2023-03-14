@@ -7,7 +7,7 @@ Ionic Framework supports multiple versions of Vue. As a result, we need to verif
 The Vue test app supports syncing your locally built changes for validation.
 
 1. Build the `@ionic/core`, `@ionic/vue`, and `@ionic/vue-router` projects using `npm run build`.
-2. [Build the Angular test app](#test-app-build-structure).
+2. [Build the Vue test app](#test-app-build-structure).
 3. Navigate to the built test app.
 4. Install dependencies using `npm install`.
 5. Sync your local changes using `npm run sync`.
