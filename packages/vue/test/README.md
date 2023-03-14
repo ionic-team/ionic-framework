@@ -8,8 +8,9 @@ The Vue test app supports syncing your locally built changes for validation.
 
 1. Build the `@ionic/core`, `@ionic/vue`, and `@ionic/vue-router` projects using `npm run build`.
 2. [Build the Angular test app](#test-app-build-structure).
-3. Install dependencies using `npm install`.
-4. Sync your local changes using `npm run sync`.
+3. Navigate to the built test app.
+4. Install dependencies using `npm install`.
+5. Sync your local changes using `npm run sync`.
 
 From here you can either build the application or start a local dev server. When re-syncing changes, you will need to wipe the build cache in `node_modules/.cache` and restart the dev server/re-build.
 
