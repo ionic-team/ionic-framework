@@ -98,4 +98,4 @@ Note: You may encounter some other peer dependency issues not covered by the Ang
 7. Open `./github/workflows/build.yml` and find the `test-angular-e2e` job.
 8. Find the `apps` field under `matrix`.
 9. Add "ng14" to the `apps` field.
-10. Committ these changes and push.
+10. Commit these changes and push.
