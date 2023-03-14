@@ -2,6 +2,7 @@ import type { ComponentInterface } from '@stencil/core';
 import { Component, Host, Prop, h } from '@stencil/core';
 
 import { config } from '../../global/config';
+import { ENABLE_HTML_CONTENT_DEFAULT } from '../../utils/config';
 import { getIonMode } from '../../global/ionic-global';
 import type { SpinnerTypes } from '../../interface';
 import type { IonicSafeString } from '../../utils/sanitization';
@@ -15,6 +16,8 @@ import { sanitizeDOMString } from '../../utils/sanitization';
   },
 })
 export class InfiniteScrollContent implements ComponentInterface {
+  private customHTMLEnabled = config.get('enableHTMLContent', ENABLE_HTML_CONTENT_DEFAULT);
+
   /**
    * An animated SVG spinner that shows while loading.
    */
@@ -46,6 +49,15 @@ export class InfiniteScrollContent implements ComponentInterface {
     }
   }
 
+  private renderLoadingText() {
+    const { customHTMLEnabled, loadingText } = this;
+    if (customHTMLEnabled) {
+      return <div class="infinite-loading-text" innerHTML={sanitizeDOMString(loadingText)} />;
+    }
+
+    return <div class="infinite-loading-text">{this.loadingText}</div>;
+  }
+
   render() {
     const mode = getIonMode(this);
     return (
@@ -63,9 +75,7 @@ export class InfiniteScrollContent implements ComponentInterface {
               <ion-spinner name={this.loadingSpinner} />
             </div>
           )}
-          {this.loadingText !== undefined && (
-            <div class="infinite-loading-text" innerHTML={sanitizeDOMString(this.loadingText)} />
-          )}
+          {this.loadingText !== undefined && this.renderLoadingText()}
         </div>
       </Host>
     );
