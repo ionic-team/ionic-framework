@@ -28,16 +28,16 @@ runs:
     - name: Install Dependencies
       run: npm install
       shell: bash
-      working-directory: ./packages/react-router/build/${{ inputs.app }}
+      working-directory: ./packages/react-router/test/build/${{ inputs.app }}
     - name: Sync Built Changes
       run: npm run sync
       shell: bash
-      working-directory: ./packages/react-router/build/${{ inputs.app }}
+      working-directory: ./packages/react-router/test/build/${{ inputs.app }}
     - name: Build
       run: npm run build
       shell: bash
-      working-directory: ./packages/react-router/build/${{ inputs.app }}
+      working-directory: ./packages/react-router/test/build/${{ inputs.app }}
     - name: Run Tests
       run: npm run e2e
       shell: bash
-      working-directory: ./packages/react-router/build/${{ inputs.app }}
+      working-directory: ./packages/react-router/test/build/${{ inputs.app }}
