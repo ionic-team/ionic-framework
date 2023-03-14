@@ -184,6 +184,8 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - uses: ./.github/workflows/actions/test-react-e2e
+      with:
+        app: ${{ matrix.apps }}
 
   verify-test-react-e2e:
     if: ${{ always() }}
