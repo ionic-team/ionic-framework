@@ -175,6 +175,10 @@ jobs:
     - uses: ./.github/workflows/actions/test-react-router-e2e
 
   test-react-e2e:
+    strategy:
+      fail-fast: false
+      matrix:
+        apps: [react17, react18]
     needs: [build-react, build-react-router]
     runs-on: ubuntu-latest
     steps:
