@@ -2,6 +2,18 @@
 
 Ionic Framework supports multiple versions of React. As a result, we need to verify that Ionic works correctly with each of these React versions.
 
+## Syncing Local Changes
+
+The React test app supports syncing your locally built changes for validation.
+
+1. Build the `@ionic/core`, `@ionic/react`, and `@ionic/react-router` projects using `npm run build`.
+2. [Build the React test app](#test-app-build-structure).
+3. Navigate to the built test app.
+4. Install dependencies using `npm install`.
+5. Sync your local changes using `npm run sync`.
+
+From here you can either build the application or start a local dev server. When re-syncing changes, you will need to wipe the build cache in `node_modules/.cache` and restart the dev server/re-build.
+
 ## Test App Build Structure
 
 Unlike other test applications, these test apps are broken up into multiple directories. These directories are then combined to create a single application. This allows us to share common application code, tests, etc so that each app is being tested the same way. Below details the different pieces that help create a single test application.
