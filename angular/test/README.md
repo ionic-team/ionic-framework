@@ -22,7 +22,7 @@ ng cache disable
 ng cache enable
 ```
 
-> Note: You will need to delete the `.angular` cache and restart the dev server every time you want to sync local changes of `@ionic/angular` or `@ionic/core`.
+> Note: You will need to delete the `.angular` cache and restart the dev server every time you want to sync local changes of Ionic.
 
 ## Test App Build Structure
 
