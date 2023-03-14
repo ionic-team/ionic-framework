@@ -15,6 +15,19 @@ describe('alert: custom html', () => {
     expect(content.querySelector('button.custom-html')).not.toBe(null);
   });
 
+  it('should allow for custom html', async () => {
+    config.reset({ enableHTMLContent: true });
+    const page = await newSpecPage({
+      components: [Toast],
+      html: `<ion-toast message="<button class='custom-html'>Custom Text</button>"></ion-toast>`,
+    });
+
+    const toast = page.body.querySelector('ion-toast');
+    const content = toast.shadowRoot.querySelector('.toast-message');
+    expect(content.textContent).toContain('Custom Text');
+    expect(content.querySelector('button.custom-html')).not.toBe(null);
+  });
+
   it('should not allow for custom html', async () => {
     config.reset({ enableHTMLContent: false });
     const page = await newSpecPage({
