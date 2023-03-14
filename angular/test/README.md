@@ -4,7 +4,7 @@ Ionic Framework supports multiple versions of Angular. As a result, we need to v
 
 ## Application Cache
 
-Angular CLI creates a cache of several files on disk by default in the `.angular` directory. This decreases the time taken to build the test application. When testing changes by directly modifying Ionic's source code in `node_modules`, you may need to manually clear the `.angular` cache and restart the local server every time you make a change. As a result, it may be desirable to disable the `.angular` cache while making changes to the code.
+Angular CLI creates a cache of several files on disk by default in the `.angular` directory. This decreases the time taken to build the test application. However, the cache makes it difficult to quickly sync and check local changes of Ionic. As a result, the `.angular` cache is disabled by default in the test app projects.
 
 See https://angular.io/cli/cache for more information.
 
@@ -21,6 +21,8 @@ ng cache disable
 ```
 ng cache enable
 ```
+
+> Note: You will need to delete the `.angular` cache and restart the dev server every time you want to sync local changes of `@ionic/angular` or `@ionic/core`.
 
 ## Test App Build Structure
 
