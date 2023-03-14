@@ -52,7 +52,7 @@ export class InfiniteScrollContent implements ComponentInterface {
   private renderLoadingText() {
     const { customHTMLEnabled, loadingText } = this;
     if (customHTMLEnabled) {
-      return <div class="infinite-loading-text" innerHTML={sanitizeDOMString(loadingText)} />;
+      return <div class="infinite-loading-text" innerHTML={sanitizeDOMString(loadingText)}></div>;
     }
 
     return <div class="infinite-loading-text">{this.loadingText}</div>;
