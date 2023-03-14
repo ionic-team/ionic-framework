@@ -51,5 +51,5 @@ As we add support for new versions of React, we will also need to update this di
 2. Update the application to the latest version of React.
 3. Make note of any files that changed during the upgrade (`package.json`, `package-lock.json`, etc).
 4. Copy the changed files to a new directory in `apps`.
-5. Add a new entry to the matrix for `test-core-react` in `./github/workflows/build.yml`. This will allow the new test app to run against all PRs.
+5. Add a new entry to the matrix for `test-react-e2e` in `./github/workflows/build.yml`. This will allow the new test app to run against all PRs.
 6. Commit these changes and push.
