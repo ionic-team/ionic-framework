@@ -93,6 +93,11 @@ export class Alert implements ComponentInterface, OverlayInterface {
    * `&lt;Ionic&gt;`
    *
    * For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
+   *
+   * This property accepts custom HTML as a string.
+   * Developers who only want to pass plain text
+   * can disable the custom HTML functionality
+   * by setting `enableHTMLContent: false` in the Ionic config.
    */
   @Prop() message?: string | IonicSafeString;
 
