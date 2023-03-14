@@ -3,13 +3,13 @@
 set -e
 
 # Pack @ionic/core
-npm pack ../../../core
+npm pack ../../../../../core
 
 # Pack @ionic/react
-npm pack ../../react
+npm pack ../../../../react
 
 # Pack @ionic/react-router
-npm pack ../
+npm pack ../../../
 
 # Install Dependencies
 npm install *.tgz --no-save
