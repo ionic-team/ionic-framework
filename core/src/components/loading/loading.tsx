@@ -10,6 +10,7 @@ import type {
   OverlayInterface,
   SpinnerTypes,
 } from '../../interface';
+import { ENABLE_HTML_CONTENT_DEFAULT } from '../../utils/config';
 import { BACKDROP, dismiss, eventMethod, prepareOverlay, present } from '../../utils/overlays';
 import type { IonicSafeString } from '../../utils/sanitization';
 import { sanitizeDOMString } from '../../utils/sanitization';
@@ -34,6 +35,7 @@ import { mdLeaveAnimation } from './animations/md.leave';
   scoped: true,
 })
 export class Loading implements ComponentInterface, OverlayInterface {
+  private customHTMLEnabled = config.get('enableHTMLContent', ENABLE_HTML_CONTENT_DEFAULT);
   private durationTimeout?: ReturnType<typeof setTimeout>;
 
   presented = false;
@@ -192,6 +194,19 @@ export class Loading implements ComponentInterface, OverlayInterface {
     this.dismiss(undefined, BACKDROP);
   };
 
+  private renderLoadingMessage(msgId: string) {
+    const { customHTMLEnabled, message } = this;
+    if (customHTMLEnabled) {
+      return <div class="loading-content" id={msgId} innerHTML={sanitizeDOMString(message)}></div>;
+    }
+
+    return (
+      <div class="loading-content" id={msgId}>
+        {message}
+      </div>
+    );
+  }
+
   render() {
     const { message, spinner, htmlAttributes, overlayIndex } = this;
     const mode = getIonMode(this);
@@ -231,9 +246,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
             </div>
           )}
 
-          {message !== undefined && (
-            <div class="loading-content" id={msgId} innerHTML={sanitizeDOMString(message)}></div>
-          )}
+          {message !== undefined && this.renderLoadingMessage(msgId)}
         </div>
 
         <div tabindex="0"></div>
