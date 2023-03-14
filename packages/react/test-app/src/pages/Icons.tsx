@@ -6,6 +6,8 @@ interface IconsProps {}
 
 const Icons: React.FC<IconsProps> = () => {
   const [dynamic, setDynamic] = useState(star);
+  const iosCustomSvg = "../assets/logo-apple.svg";
+  const mdCustomSvg = "../assets/logo-android.svg";
 
   const toggle = () => {
     setDynamic(dynamic => dynamic === star ? starOutline : star);
@@ -76,6 +78,12 @@ const Icons: React.FC<IconsProps> = () => {
               <h3>mode: md</h3>
               <p>ios: star outline</p>
               <p>md: star</p>
+            </IonLabel>
+          </IonItem>
+          <IonItem>
+            <IonIcon id="customSvg" slot="start" ios={iosCustomSvg} md={mdCustomSvg}></IonIcon>
+            <IonLabel>
+              <p>Custom SVG</p>
             </IonLabel>
           </IonItem>
         </IonList>
