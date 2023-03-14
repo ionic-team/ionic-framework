@@ -1,6 +1,7 @@
-import { isPlatform } from "@ionic/core/components";
 import { defineCustomElement } from "ionicons/components/ion-icon.js";
 import { h, defineComponent } from "vue";
+
+import { getConfig } from "../utils";
 
 export const IonIcon = /*@__PURE__*/ defineComponent({
   name: "IonIcon",
@@ -19,11 +20,15 @@ export const IonIcon = /*@__PURE__*/ defineComponent({
   setup(props, { slots }) {
     defineCustomElement();
     return () => {
-      const { icon, ios, md } = props;
+      const { icon, ios, md, mode } = props;
 
       let iconToUse: typeof icon;
+
+      const config = getConfig();
+      const iconMode = mode || config?.get("mode");
+
       if (ios || md) {
-        if (isPlatform("ios")) {
+        if (iconMode === "ios") {
           iconToUse = ios ?? md ?? icon;
         } else {
           iconToUse = md ?? ios ?? icon;

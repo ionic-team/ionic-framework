@@ -5623,7 +5623,7 @@ declare namespace LocalJSX {
          */
         "onDidDismiss"?: (event: IonModalCustomEvent<OverlayEventDetail>) => void;
         /**
-          * Emitted after the modal has presented. Shorthand for ionModalWillDismiss.
+          * Emitted after the modal has presented. Shorthand for ionModalDidPresent.
          */
         "onDidPresent"?: (event: IonModalCustomEvent<void>) => void;
         /**
