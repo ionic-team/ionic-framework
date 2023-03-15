@@ -71,6 +71,16 @@ export class Radio implements ComponentInterface {
    */
   @Prop() value?: any | null;
 
+  @Watch('value')
+  valueChanged() {
+    /**
+     * The new value of the radio may
+     * match the radio group's value,
+     * so we see if it should be checked.
+     */
+    this.updateState();
+  }
+
   /**
    * Where to place the label relative to the radio.
    * `"start"`: The label will appear to the left of the radio in LTR and to the right in RTL.
