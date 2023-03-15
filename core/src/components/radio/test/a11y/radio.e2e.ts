@@ -22,7 +22,7 @@ test.describe('radio: a11y', () => {
     await expect(firstGroupRadios.nth(0)).toBeFocused();
   });
 
-  // TODO FW-3757
+  // TODO FW-3747
   test.skip('using arrow keys should move between enabled radios within group', async ({ page, browserName }) => {
     const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
     await page.goto(`/src/components/radio/test/a11y`);
