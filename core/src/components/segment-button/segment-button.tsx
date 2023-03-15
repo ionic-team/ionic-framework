@@ -80,9 +80,7 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
   }
 
   componentDidLoad() {
-    if (this.segmentEl) {
-      this.updateState();
-    }
+    this.updateState();
   }
 
   private get hasLabel() {
