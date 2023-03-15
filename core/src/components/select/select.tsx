@@ -214,14 +214,10 @@ export class Select implements ComponentInterface {
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
   @Watch('disabled')
-  @Watch('placeholder')
   @Watch('isExpanded')
-  styleChanged() {
-    this.emitStyle();
-  }
-
+  @Watch('placeholder')
   @Watch('value')
-  valueChanged() {
+  protected styleChanged() {
     this.emitStyle();
   }
 
@@ -653,17 +649,21 @@ export class Select implements ComponentInterface {
   }
 
   private emitStyle() {
+    const { disabled } = this;
+    const style: StyleEventDetail = {
+      'interactive-disabled': disabled,
+    };
+
     if (this.legacyFormController.hasLegacyControl()) {
-      this.ionStyle.emit({
-        interactive: true,
-        'interactive-disabled': this.disabled,
-        select: true,
-        'select-disabled': this.disabled,
-        'has-placeholder': this.placeholder !== undefined,
-        'has-value': this.hasValue(),
-        'has-focus': this.isExpanded,
-      });
+      style['interactive'] = true;
+      style['select'] = true;
+      style['select-disabled'] = disabled;
+      style['has-placeholder'] = this.placeholder !== undefined;
+      style['has-value'] = this.hasValue();
+      style['has-focus'] = this.isExpanded;
     }
+
+    this.ionStyle.emit(style);
   }
 
   private onClick = (ev: UIEvent) => {
