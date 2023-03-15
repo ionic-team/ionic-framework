@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.6.2](https://github.com/ionic-team/ionic/compare/v6.6.1...v6.6.2) (2023-03-15)
+
+
+### Bug Fixes
+
+* **react/vue:** properly switch ionicon based on the mode when ios/md is set ([#26924](https://github.com/ionic-team/ionic/issues/26924)) ([1eb9a08](https://github.com/ionic-team/ionic/commit/1eb9a085b2d69dfcfc71ff49b25d33347dd54aae)), closes [#26207](https://github.com/ionic-team/ionic/issues/26207)
+
+
+
+
+
 ## [6.6.1](https://github.com/ionic-team/ionic/compare/v6.6.0...v6.6.1) (2023-03-08)
 
 
