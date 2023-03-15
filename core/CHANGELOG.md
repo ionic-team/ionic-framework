@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.0.0-rc.2](https://github.com/ionic-team/ionic/compare/v7.0.0-rc.1...v7.0.0-rc.2) (2023-03-15)
+
+
+### Bug Fixes
+
+* **input, select, textarea:** border color is set on host ([#26941](https://github.com/ionic-team/ionic/issues/26941)) ([4810e6f](https://github.com/ionic-team/ionic/commit/4810e6f2ac075cf5cd8065a1c10ad57db119beff))
+* **input, textarea:** show error state after touch ([#26940](https://github.com/ionic-team/ionic/issues/26940)) ([ef33270](https://github.com/ionic-team/ionic/commit/ef33270b55122574e0fdb32187410d8d8a4fa1ae)), closes [#26939](https://github.com/ionic-team/ionic/issues/26939) [#21643](https://github.com/ionic-team/ionic/issues/21643)
+* **many:** disabled control in item does not receive active/hover states ([#26867](https://github.com/ionic-team/ionic/issues/26867)) ([f829672](https://github.com/ionic-team/ionic/commit/f829672a6aa4477d1ce26f624f7316e6c5a1d514)), closes [#26706](https://github.com/ionic-team/ionic/issues/26706)
+* **toggle:** label is announced once on ios ([#26937](https://github.com/ionic-team/ionic/issues/26937)) ([f71d9b1](https://github.com/ionic-team/ionic/commit/f71d9b1101786aa39016e458ca0da3f1e871d093))
+
+
+
+
+
 ## [6.6.2](https://github.com/ionic-team/ionic/compare/v6.6.1...v6.6.2) (2023-03-15)
 
 
