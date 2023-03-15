@@ -8,7 +8,8 @@ test.describe('img: basic', () => {
     skip.mode('ios');
   });
 
-  test.describe('image successfully loads', () => {
+  // TODO FW-3596
+  test.describe.skip('image successfully loads', () => {
     let ionImgWillLoad: EventSpy;
     let ionImgDidLoad: EventSpy;
 

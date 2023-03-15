@@ -48,6 +48,7 @@
 :host-context(.ion-color)::slotted(*) .button-outline {
   --color-activated: #{current-color(base)};
   --color-focused: #{current-color(contrast)};
+  --background-activated: #{current-color(contrast)};
 }
 
 

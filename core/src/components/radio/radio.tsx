@@ -60,6 +60,16 @@ export class Radio implements ComponentInterface {
    */
   @Prop() value?: any | null;
 
+  @Watch('value')
+  valueChanged() {
+    /**
+     * The new value of the radio may
+     * match the radio group's value,
+     * so we see if it should be checked.
+     */
+    this.updateState();
+  }
+
   /**
    * Emitted when the styles change.
    * @internal

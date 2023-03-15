@@ -10,6 +10,6 @@ test.describe('toast: stacked layout', () => {
     await ionToastDidPresent.next();
 
     const toastWrapper = page.locator('ion-toast .toast-wrapper');
-    expect(await toastWrapper.screenshot()).toMatchSnapshot(`toast-stacked-${page.getSnapshotSettings()}.png`);
+    await expect(toastWrapper).toHaveScreenshot(`toast-stacked-${page.getSnapshotSettings()}.png`);
   });
 });

@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.6.2](https://github.com/ionic-team/ionic/compare/v6.6.1...v6.6.2) (2023-03-15)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [6.6.1](https://github.com/ionic-team/ionic/compare/v6.6.0...v6.6.1) (2023-03-08)
+
+
+### Bug Fixes
+
+* **angular:** keepContentsMounted modal is sized correctly ([#26917](https://github.com/ionic-team/ionic/issues/26917)) ([8d184c8](https://github.com/ionic-team/ionic/commit/8d184c8c1b91dba9d6d5bbaf1b4a8480b75a3572)), closes [#26916](https://github.com/ionic-team/ionic/issues/26916)
+
+
+
+
+
 # [6.6.0](https://github.com/ionic-team/ionic/compare/v6.5.7...v6.6.0) (2023-03-01)
 
 
