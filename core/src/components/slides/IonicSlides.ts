@@ -16,7 +16,6 @@ export const IonicSlides = (opts: any) => {
     slidesOffsetBefore: 0,
     slidesOffsetAfter: 0,
     touchEventsTarget: 'container',
-    autoplay: false,
     freeMode: false,
     freeModeMomentum: true,
     freeModeMomentumRatio: 1,
