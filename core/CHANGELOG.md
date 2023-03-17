@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.6.2](https://github.com/ionic-team/ionic/compare/v6.6.1...v6.6.2) (2023-03-15)
+
+
+### Bug Fixes
+
+* **accordion:** include margins during expand animation ([#26390](https://github.com/ionic-team/ionic/issues/26390)) ([f809918](https://github.com/ionic-team/ionic/commit/f80991813ae8873d8ef6038b0aeb763d727f402e)), closes [#26381](https://github.com/ionic-team/ionic/issues/26381)
+* **IonicSlides:** remove unnecessary autoplay option ([#26935](https://github.com/ionic-team/ionic/issues/26935)) ([b8f8937](https://github.com/ionic-team/ionic/commit/b8f893731471052df198824b7ece47606ffcc500))
+* **radio:** checked state is updated when value changes ([#26936](https://github.com/ionic-team/ionic/issues/26936)) ([27a5356](https://github.com/ionic-team/ionic/commit/27a5356fa2b72073d565e9d6f527107869faa3ee))
+* **react/vue:** properly switch ionicon based on the mode when ios/md is set ([#26924](https://github.com/ionic-team/ionic/issues/26924)) ([1eb9a08](https://github.com/ionic-team/ionic/commit/1eb9a085b2d69dfcfc71ff49b25d33347dd54aae)), closes [#26207](https://github.com/ionic-team/ionic/issues/26207)
+* **textarea:** inherit tabindex to inner textarea ([#26945](https://github.com/ionic-team/ionic/issues/26945)) ([2c68d01](https://github.com/ionic-team/ionic/commit/2c68d01b898a2f879445b8b64014189afe1255d7)), closes [#26944](https://github.com/ionic-team/ionic/issues/26944)
+
+
+
+
+
 ## [6.6.1](https://github.com/ionic-team/ionic/compare/v6.6.0...v6.6.1) (2023-03-08)
 
 

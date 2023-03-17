@@ -190,8 +190,23 @@ jobs:
         run: exit 1
 
   test-react-e2e:
+    strategy:
+      fail-fast: false
+      matrix:
+        apps: [react17, react18]
     needs: [build-react, build-react-router]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - uses: ./.github/workflows/actions/test-react-e2e
+      with:
+        app: ${{ matrix.apps }}
+
+  verify-test-react-e2e:
+    if: ${{ always() }}
+    needs: test-react-e2e
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check build matrix status
+        if: ${{ needs.test-react-e2e.result != 'success' }}
+        run: exit 1
