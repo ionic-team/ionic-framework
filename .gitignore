@@ -78,4 +78,7 @@ angular/test/build/
 # vue
 packages/vue/test/build/
 
+# react
+packages/react/test/build/
+
 .npmrc
