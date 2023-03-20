@@ -68,7 +68,7 @@ const isIdleCallbackComplete = async (page: E2EPage) => {
   await page.waitForFunction(
     () => {
       return new Promise((resolve) => {
-        if (window.requestIdleCallback) {
+        if ('requestIdleCallback' in window) {
           window.requestIdleCallback(resolve);
         } else {
           setTimeout(resolve, 32);
