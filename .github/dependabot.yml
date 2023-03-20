@@ -8,3 +8,4 @@ updates:
       - dependency-name: "@playwright/test"
       - dependency-name: "@axe-core/playwright"
       - dependency-name: "@stencil/core"
+        versioning-strategy: increase
