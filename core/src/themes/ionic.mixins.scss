@@ -326,16 +326,31 @@
       right: $end;
     }
   } @else {
-    @include ltr() {
-      left: $start;
-      right: $end;
+    @at-root {
+      @supports (inset-inline-start: 0) {
+        & {
+          inset-inline-start: $start;
+          inset-inline-end: $end;
+        }
+      }
     }
-    @include rtl() {
-      left: unset;
-      right: unset;
 
-      left: $end;
-      right: $start;
+    @at-root {
+      @supports not (inset-inline-start: 0) {
+        & {
+          @include ltr() {
+            left: $start;
+            right: $end;
+          }
+          @include rtl() {
+            left: unset;
+            right: unset;
+
+            left: $end;
+            right: $start;
+          }
+        }
+      }
     }
   }
 }
