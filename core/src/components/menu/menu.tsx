@@ -580,6 +580,25 @@ export class Menu implements ComponentInterface, MenuI {
     if (this.backdropEl) {
       this.backdropEl.classList.add(SHOW_BACKDROP);
     }
+
+    // add css class and hide content behind menu from screen readers
+    if (this.contentEl) {
+      this.contentEl.classList.add(MENU_CONTENT_OPEN);
+
+      /**
+       * When the menu is open and overlaying the main
+       * content, the main content should not be announced
+       * by the screenreader as the menu is the main
+       * focus. This is useful with screenreaders that have
+       * "read from top" gestures that read the entire
+       * page from top to bottom when activated.
+       * This should be done before the animation starts
+       * so that users cannot accidentally scroll
+       * the content while dragging a menu open.
+       */
+      this.contentEl.setAttribute('aria-hidden', 'true');
+    }
+
     this.blocker.block();
     this.isAnimating = true;
     if (shouldOpen) {
@@ -603,21 +622,6 @@ export class Menu implements ComponentInterface, MenuI {
     }
 
     if (isOpen) {
-      // add css class and hide content behind menu from screen readers
-      if (this.contentEl) {
-        this.contentEl.classList.add(MENU_CONTENT_OPEN);
-
-        /**
-         * When the menu is open and overlaying the main
-         * content, the main content should not be announced
-         * by the screenreader as the menu is the main
-         * focus. This is useful with screenreaders that have
-         * "read from top" gestures that read the entire
-         * page from top to bottom when activated.
-         */
-        this.contentEl.setAttribute('aria-hidden', 'true');
-      }
-
       // emit open event
       this.ionDidOpen.emit();
 
