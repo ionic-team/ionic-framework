@@ -36,6 +36,10 @@ runs:
       run: npm run sync
       shell: bash
       working-directory: ./packages/react/test/build/${{ inputs.app }}
+    - name: Liam TEst
+      run: npm ls @stencil/core
+      shell: bash
+      working-directory: ./packages/react/test/build/${{ inputs.app }}
     - name: Build
       run: npm run build
       shell: bash
