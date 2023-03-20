@@ -335,6 +335,7 @@
       }
     }
 
+    // TODO FW-3766
     @at-root {
       @supports not (inset-inline-start: 0) {
         & {
