@@ -65,13 +65,16 @@ const verifyRippleEffect = async (page: E2EPage, selector: string) => {
 };
 
 const isIdleCallbackComplete = async (page: E2EPage) => {
-  await page.waitForFunction(() => {
-    return new Promise((resolve) => {
-      if (window.requestIdleCallback) {
-        window.requestIdleCallback(resolve);
-      } else {
-        setTimeout(resolve, 32);
-      }
-    });
-  }, { timeout: 5000 });
-}
+  await page.waitForFunction(
+    () => {
+      return new Promise((resolve) => {
+        if (window.requestIdleCallback) {
+          window.requestIdleCallback(resolve);
+        } else {
+          setTimeout(resolve, 32);
+        }
+      });
+    },
+    { timeout: 5000 }
+  );
+};
