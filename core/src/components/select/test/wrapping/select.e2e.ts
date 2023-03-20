@@ -28,4 +28,3 @@ test.describe('select: wrapping', () => {
     await expect(select).toHaveScreenshot(`select-wrap-${page.getSnapshotSettings()}.png`);
   });
 });
-
