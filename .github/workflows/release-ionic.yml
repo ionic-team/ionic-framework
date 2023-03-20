@@ -8,7 +8,7 @@ on:
         type: string
         required: true
       tag:
-        description: 'The tag to publish to on NPM.'
+        description: 'The tag to publish to NPM.'
         type: string
         required: true
       preid:
