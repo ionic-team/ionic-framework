@@ -87,7 +87,9 @@
       "node_modules",
       "dist-transpiled",
       "dist",
-      "test-app"
+      "test/base/*",
+      "test/apps/*",
+      "test/build/*"
     ],
     "modulePaths": [
       "<rootDir>"
