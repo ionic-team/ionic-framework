@@ -19,7 +19,7 @@ describe('refresher-content: custom html', () => {
   });
 
   it('should allow for custom html', async () => {
-    config.reset({ enableHTMLContent: true });
+    config.reset({ enableInnerHTMLTemplates: true });
     const page = await newSpecPage({
       components: [RefresherContent],
       html: `<ion-refresher-content pulling-text="<button class='custom-pulling-html'>Custom Pulling Text</button>" refreshing-text="<button class='custom-refreshing-html'>Custom Refreshing Text</button>"></ion-refresher-content>`,
@@ -35,7 +35,7 @@ describe('refresher-content: custom html', () => {
   });
 
   it('should not allow for custom html', async () => {
-    config.reset({ enableHTMLContent: false });
+    config.reset({ enableInnerHTMLTemplates: false });
     const page = await newSpecPage({
       components: [RefresherContent],
       html: `<ion-refresher-content pulling-text="<button class='custom-pulling-html'>Custom Pulling Text</button>" refreshing-text="<button class='custom-html'>Custom Refreshing Text</button>"></ion-refresher-content>`,

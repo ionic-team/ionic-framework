@@ -44,7 +44,7 @@ import type { ToastAttributes, ToastPosition, ToastLayout } from './toast-interf
   shadow: true,
 })
 export class Toast implements ComponentInterface, OverlayInterface {
-  private customHTMLEnabled = config.get('enableHTMLContent', ENABLE_HTML_CONTENT_DEFAULT);
+  private customHTMLEnabled = config.get('enableInnerHTMLTemplates', ENABLE_HTML_CONTENT_DEFAULT);
   private durationTimeout?: ReturnType<typeof setTimeout>;
 
   presented = false;
@@ -104,7 +104,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
    * This property accepts custom HTML as a string.
    * Developers who only want to pass plain text
    * can disable the custom HTML functionality
-   * by setting `enableHTMLContent: false` in the Ionic config.
+   * by setting `enableInnerHTMLTemplates: false` in the Ionic config.
    */
   @Prop() message?: string | IonicSafeString;
 

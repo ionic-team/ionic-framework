@@ -15,7 +15,7 @@ import { SPINNERS } from '../spinner/spinner-configs';
   tag: 'ion-refresher-content',
 })
 export class RefresherContent implements ComponentInterface {
-  private customHTMLEnabled = config.get('enableHTMLContent', ENABLE_HTML_CONTENT_DEFAULT);
+  private customHTMLEnabled = config.get('enableInnerHTMLTemplates', ENABLE_HTML_CONTENT_DEFAULT);
 
   @Element() el!: HTMLIonRefresherContentElement;
 
@@ -38,7 +38,7 @@ export class RefresherContent implements ComponentInterface {
    * This property accepts custom HTML as a string.
    * Developers who only want to pass plain text
    * can disable the custom HTML functionality
-   * by setting `enableHTMLContent: false` in the Ionic config.
+   * by setting `enableInnerHTMLTemplates: false` in the Ionic config.
    */
   @Prop() pullingText?: string | IonicSafeString;
 
@@ -59,7 +59,7 @@ export class RefresherContent implements ComponentInterface {
    * This property accepts custom HTML as a string.
    * Developers who only want to pass plain text
    * can disable the custom HTML functionality
-   * by setting `enableHTMLContent: false` in the Ionic config.
+   * by setting `enableInnerHTMLTemplates: false` in the Ionic config.
    */
   @Prop() refreshingText?: string | IonicSafeString;
 

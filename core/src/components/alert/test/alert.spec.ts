@@ -15,7 +15,7 @@ describe('alert: custom html', () => {
   });
 
   it('should allow for custom html', async () => {
-    config.reset({ enableHTMLContent: true });
+    config.reset({ enableInnerHTMLTemplates: true });
     const page = await newSpecPage({
       components: [Alert],
       html: `<ion-alert message="<button class='custom-html'>Custom Text</button>"></ion-alert>`,
@@ -27,7 +27,7 @@ describe('alert: custom html', () => {
   });
 
   it('should not allow for custom html', async () => {
-    config.reset({ enableHTMLContent: false });
+    config.reset({ enableInnerHTMLTemplates: false });
     const page = await newSpecPage({
       components: [Alert],
       html: `<ion-alert message="<button class='custom-html'>Custom Text</button>"></ion-alert>`,

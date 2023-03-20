@@ -15,7 +15,7 @@ describe('infinite-scroll-content: custom html', () => {
   });
 
   it('should allow for custom html', async () => {
-    config.reset({ enableHTMLContent: true });
+    config.reset({ enableInnerHTMLTemplates: true });
     const page = await newSpecPage({
       components: [InfiniteScrollContent],
       html: `<ion-infinite-scroll-content loading-text="<button class='custom-html'>Custom Text</button>"></ion-infinite-scroll-content>`,
@@ -27,7 +27,7 @@ describe('infinite-scroll-content: custom html', () => {
   });
 
   it('should not allow for custom html', async () => {
-    config.reset({ enableHTMLContent: false });
+    config.reset({ enableInnerHTMLTemplates: false });
     const page = await newSpecPage({
       components: [InfiniteScrollContent],
       html: `<ion-infinite-scroll-content loading-text="<button class='custom-html'>Custom Text2</button>"></ion-infinite-scroll-content>`,
