@@ -64,6 +64,12 @@ const verifyRippleEffect = async (page: E2EPage, selector: string) => {
   await expect(el).toHaveClass(/ion-activated/);
 };
 
+/**
+ * This function is used to wait for the idle callback to be called.
+ * It mirrors the custom implementation in app.tsx for either
+ * using requestIdleCallback on supported browsers or a setTimeout
+ * of 32ms (~2 frames) on unsupported browsers (Safari).
+ */
 const isIdleCallbackComplete = async (page: E2EPage) => {
   await page.waitForFunction(
     () => {
