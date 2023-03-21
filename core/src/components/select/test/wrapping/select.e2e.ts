@@ -12,7 +12,7 @@ test.describe('select: wrapping', () => {
     `);
 
     const select = page.locator('ion-select');
-    await expect(select).toHaveScreenshot(`select-wrap-${page.getSnapshotSettings()}.png`);
+    await expect(select).toHaveScreenshot(`select-nowrap-${page.getSnapshotSettings()}.png`);
   });
 
   test('should wrap text with class', async ({ page, skip }) => {
@@ -42,7 +42,7 @@ test.describe('select: wrapping', () => {
       </ion-item>
     `);
 
-    const select = page.locator('ion-select');
-    await expect(select).toHaveScreenshot(`select-wrap-${page.getSnapshotSettings()}.png`);
+    const select = page.locator('ion-item');
+    await expect(select).toHaveScreenshot(`select-wrap-with-label-${page.getSnapshotSettings()}.png`);
   });
 });
