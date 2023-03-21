@@ -6,8 +6,8 @@ test.describe('select: wrapping', () => {
     skip.rtl();
 
     await page.setContent(`
-      <ion-select value="brown" aria-label="Hair Color">
-        <ion-select-option value="brown">Brown Hair Is The Best At Wrapping When No Label Exists And Really Long Text Exists To Make It Wrap The Text</ion-select-option>
+      <ion-select value="nowrap" aria-label="Should Not Wrap">
+        <ion-select-option value="nowrap">Should not wrap when no label exists and no class is added to make the text wrap</ion-select-option>
       </ion-select>
     `);
 
@@ -19,8 +19,8 @@ test.describe('select: wrapping', () => {
     skip.rtl();
 
     await page.setContent(`
-      <ion-select value="brown" aria-label="Hair Color" class="ion-text-wrap">
-        <ion-select-option value="brown">Brown Hair Is The Best At Wrapping When No Label Exists And Really Long Text Exists To Make It Wrap The Text</ion-select-option>
+      <ion-select value="wrap" aria-label="Should Wrap" class="ion-text-wrap">
+        <ion-select-option value="wrap">Should wrap when no label exists and really long text exists to make it wrap the text</ion-select-option>
       </ion-select>
     `);
 
@@ -31,10 +31,15 @@ test.describe('select: wrapping', () => {
   test('should not wrap label while wrapping text with class', async ({ page, skip }) => {
     skip.rtl();
 
+    // TODO update label for v7
     await page.setContent(`
-      <ion-select label="Hair Color" value="brown" aria-label="Hair Color" class="ion-text-wrap">
-        <ion-select-option value="brown">Brown Hair Is The Best At Wrapping When No Label Exists And Really Long Text Exists To Make It Wrap The Text</ion-select-option>
-      </ion-select>
+      <ion-item>
+        <ion-label>Really long label should not wrap</ion-label>
+        <ion-select value="wrap" aria-label="Should Wrap" class="ion-text-wrap">
+          <ion-select-option value="wrap">Should wrap value only when label exists and really long text exists to make it wrap the text</ion-select-option>
+        </ion-select>
+        </ion-label>
+      </ion-item>
     `);
 
     const select = page.locator('ion-select');
