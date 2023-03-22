@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.0.0-rc.3](https://github.com/ionic-team/ionic/compare/v7.0.0-rc.2...v7.0.0-rc.3) (2023-03-22)
+ 
+**Note:** Version bump only for package @ionic/core
+
+
+
+
+
+## [6.6.3](https://github.com/ionic-team/ionic/compare/v6.6.2...v6.6.3) (2023-03-22)
+
+### Bug Fixes
+
+* **menu:** main content is not scrollable while swiping ([#26976](https://github.com/ionic-team/ionic/issues/26976)) ([88bd8a4](https://github.com/ionic-team/ionic/commit/88bd8a47c5e844d1d3a2b3b13621826faf776afb)), closes [#21193](https://github.com/ionic-team/ionic/issues/21193)
+
+
+
+
+
 # [7.0.0-rc.2](https://github.com/ionic-team/ionic/compare/v7.0.0-rc.1...v7.0.0-rc.2) (2023-03-15)
 
 
