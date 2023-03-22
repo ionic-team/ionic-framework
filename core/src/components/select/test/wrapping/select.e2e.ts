@@ -31,7 +31,7 @@ test.describe('select: wrapping', () => {
   test('should not wrap label while wrapping text with class', async ({ page, skip }) => {
     skip.rtl();
 
-    // TODO update label for v7
+    // TODO(FW-3787) Make label a property of select
     await page.setContent(`
       <ion-item>
         <ion-label>Really long label should not wrap</ion-label>
