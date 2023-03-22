@@ -32,7 +32,7 @@
 </p>
 
 <h2 align="center">
-  <a href="https://ionicframework.com/getting-started/">Quickstart</a>
+  <a href="https://ionicframework.com/docs/intro/cli">Quickstart</a>
   <span> · </span>
   <a href="https://ionicframework.com/docs/">
     Documentation

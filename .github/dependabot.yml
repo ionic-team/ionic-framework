@@ -4,6 +4,8 @@ updates:
     directory: "/core"
     schedule:
       interval: "daily"
+    versioning-strategy: increase
     allow:
       - dependency-name: "@playwright/test"
       - dependency-name: "@axe-core/playwright"
+      - dependency-name: "@stencil/core"

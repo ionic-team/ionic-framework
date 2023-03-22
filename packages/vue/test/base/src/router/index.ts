@@ -34,6 +34,10 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/OverlaysKeepContentsMounted.vue')
   },
   {
+    path: '/icons',
+    component: () => import('@/views/Icons.vue')
+  },
+  {
     path: '/inputs',
     component: () => import('@/views/Inputs.vue')
   },
