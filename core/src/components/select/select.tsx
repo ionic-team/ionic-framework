@@ -4,7 +4,7 @@ import { createLegacyFormController } from '@utils/forms';
 import type { LegacyFormController } from '@utils/forms';
 import { printIonWarning } from '@utils/logging';
 import { isRTL } from '@utils/rtl';
-import { caretDownSharp, chevronForwardSharp } from 'ionicons/icons';
+import { caretDownSharp, chevronExpand } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
 import type {
@@ -880,7 +880,7 @@ For selects that do not render the label immediately next to the select, develop
    */
   private renderSelectIcon() {
     const mode = getIonMode(this);
-    const icon = mode === 'ios' ? chevronForwardSharp : caretDownSharp;
+    const icon = mode === 'ios' ? chevronExpand : caretDownSharp;
     return <ion-icon class="select-icon" part="icon" aria-hidden="true" icon={icon}></ion-icon>;
   }
 
