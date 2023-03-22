@@ -1,5 +1,8 @@
 name: 'Test React E2E'
 description: 'Test React E2E'
+inputs:
+  app:
+    description: 'The specific test application'
 runs:
   using: 'composite'
   steps:
@@ -21,19 +24,24 @@ runs:
         name: ionic-react-router
         path: ./packages/react-router
         filename: ReactRouterBuild.zip
+    - name: Create Test App
+      run: ./build.sh ${{ inputs.app }}
+      shell: bash
+      working-directory: ./packages/react/test
     - name: Install Dependencies
       run: npm install
       shell: bash
-      working-directory: ./packages/react/test-app
-    - name: Sync
+      working-directory: ./packages/react/test/build/${{ inputs.app }}
+    - name: Sync Built Changes
       run: npm run sync
       shell: bash
-      working-directory: ./packages/react/test-app
+      working-directory: ./packages/react/test/build/${{ inputs.app }}
     - name: Build
       run: npm run build
       shell: bash
-      working-directory: ./packages/react/test-app
-    - name: Run E2E Tests
+      working-directory: ./packages/react/test/build/${{ inputs.app }}
+    - name: Run Tests
       run: npm run e2e
       shell: bash
-      working-directory: ./packages/react/test-app
+      working-directory: ./packages/react/test/build/${{ inputs.app }}
+
