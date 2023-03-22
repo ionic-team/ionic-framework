@@ -3,7 +3,183 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [7.0.0-beta.1](https://github.com/ionic-team/ionic/compare/v6.5.2...v7.0.0-beta.1) (2023-02-01)
+# [7.0.0-rc.3](https://github.com/ionic-team/ionic/compare/v7.0.0-rc.2...v7.0.0-rc.3) (2023-03-22)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [6.6.3](https://github.com/ionic-team/ionic/compare/v6.6.2...v6.6.3) (2023-03-22)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+# [7.0.0-rc.2](https://github.com/ionic-team/ionic/compare/v7.0.0-rc.1..v7.0.0-rc.2) (2023-03-15)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [6.6.2](https://github.com/ionic-team/ionic/compare/v6.6.1...v6.6.2) (2023-03-15)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+# [7.0.0-rc.1](https://github.com/ionic-team/ionic/compare/v7.0.0-rc.0...v7.0.0-rc.1) (2023-03-08)
+
+
+### Bug Fixes
+
+* **many:** add aria-hidden to decorative icons ([#26922](https://github.com/ionic-team/ionic/issues/26922)) ([78303dc](https://github.com/ionic-team/ionic/commit/78303dccaa2b3e7e6fb107a5c0f0f213d8e39a7c))
+
+
+
+
+
+## [6.6.1](https://github.com/ionic-team/ionic/compare/v6.6.0...v6.6.1) (2023-03-08)
+
+
+### Bug Fixes
+
+* **angular:** keepContentsMounted modal is sized correctly ([#26917](https://github.com/ionic-team/ionic/issues/26917)) ([8d184c8](https://github.com/ionic-team/ionic/commit/8d184c8c1b91dba9d6d5bbaf1b4a8480b75a3572)), closes [#26916](https://github.com/ionic-team/ionic/issues/26916)
+
+
+
+
+
+
+# [7.0.0-rc.0](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.6...v7.0.0-rc.0) (2023-03-01)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+# [7.0.0-beta.6](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.5...v7.0.0-beta.6) (2023-03-01)
+
+
+### Bug Fixes
+
+* **angular:** devs can import ionic/angular styles in css ([#26875](https://github.com/ionic-team/ionic/issues/26875)) ([0d2fac2](https://github.com/ionic-team/ionic/commit/0d2fac2eefd610271fbbbecc36e844b6b289dfee))
+
+
+
+
+
+# [6.6.0](https://github.com/ionic-team/ionic/compare/v6.5.7...v6.6.0) (2023-03-01)
+
+
+### Features
+
+* **datetime:** add ability to specify custom colors for specific dates ([#26775](https://github.com/ionic-team/ionic/issues/26775)) ([2a761af](https://github.com/ionic-team/ionic/commit/2a761afd5a0e6d4e6f54096fdeb97b8bad1293de))
+* **toast:** add stacked buttons functionality ([#26790](https://github.com/ionic-team/ionic/issues/26790)) ([fc5fcc0](https://github.com/ionic-team/ionic/commit/fc5fcc064dec5256836e9622125b5e499ef00975))
+
+
+
+
+
+## [6.5.7](https://github.com/ionic-team/ionic/compare/v6.5.6...v6.5.7) (2023-03-01)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+# [7.0.0-beta.5](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.4...v7.0.0-beta.5) (2023-02-27)
+
+### Features 
+
+* **angular,angular-server:** angular v14 minimum support ([#26822](https://github.com/ionic-team/ionic/issues/26822)) ([1dee16f](https://github.com/ionic-team/ionic/commit/1dee16f3a25dedf831afc09f9c400a42e861beea))
+* **searchbar:** ionInput now emits value payload ([#26831](https://github.com/ionic-team/ionic/issues/26831)) ([865f8de](https://github.com/ionic-team/ionic/commit/865f8de9dc2d533b08730846f8d76bf165e8bc1d)), closes [#26828](https://github.com/ionic-team/ionic/issues/26828)
+
+
+### BREAKING CHANGES
+
+* **searchbar:** The `detail` payload for the `ionInput` event now on `ion-searchbar` contains an object with the current `value` as well as the native event that triggered `ionInput`.
+* **angular,angular-server:** Angular v14 is now required to use `@ionic/angular` and `@ionic/angular-server`. Upgrade your project to Angular v14 by following the [Angular v14 update guide](https://update.angular.io/?l=3&v=13.0-14.0).
+
+The dev-preview `environmentInjector` property has been removed from `ion-tabs` and `ion-router-outlet`. Standalone component routing is now available without additional custom configuration. Remove the `environmentInjector` property from your `ion-tabs` and `ion-router-outlet` components.
+
+
+
+
+
+# [7.0.0-beta.4](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.3...v7.0.0-beta.4) (2023-02-22)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [6.5.6](https://github.com/ionic-team/ionic/compare/v6.5.5...v6.5.6) (2023-02-22)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [6.5.5](https://github.com/ionic-team/ionic/compare/v6.5.4...v6.5.5) (2023-02-20)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+# [7.0.0-beta.3](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.2...v7.0.0-beta.3) (2023-02-15)
+
+
+### Features
+
+* **textarea:** add legacy prop ([#26783](https://github.com/ionic-team/ionic/issues/26783)) ([f7f6f1d](https://github.com/ionic-team/ionic/commit/f7f6f1d9f9ffd30afbdccfb558bd73f42b112715))
+
+
+
+
+
+## [6.5.4](https://github.com/ionic-team/ionic/compare/v6.5.3...v6.5.4) (2023-02-15)
+
+
+### Bug Fixes
+
+* **deps:** update ionicons usage to v6.1.2 ([#26752](https://github.com/ionic-team/ionic/issues/26752)) ([c07933c](https://github.com/ionic-team/ionic/commit/c07933cb69b0c31d3e44263769a7a26ee81223f8))
+* **deps:** update ionicons usage to v6.1.3 ([#26772](https://github.com/ionic-team/ionic/issues/26772)) ([1c71983](https://github.com/ionic-team/ionic/commit/1c719833292d4cfbdecadf9838d8c783785222ad))
+
+
+
+
+
+# [7.0.0-beta.2](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.1...v7.0.0-beta.2) (2023-02-08)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [6.5.3](https://github.com/ionic-team/ionic/compare/v6.5.2...v6.5.3) (2023-02-08)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+# [7.0.0-beta.1](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.0...v7.0.0-beta.1) (2023-02-01)
 
 
 ### Reverts
@@ -77,7 +253,6 @@ Angular:
 - The `canDismiss` property now defaults to `true` and can no longer be set to `undefined`.
 * **checkbox:** `ionChange` is no longer emitted when the `checked` property of `ion-checkbox` is modified externally. `ionChange` is only emitted from user committed changes, such as clicking or tapping the checkbox.
 * **accordion:** `ionChange` is no longer emitted when the `value` of `ion-accordion-group` is modified externally. `ionChange` is only emitted from user committed changes, such as clicking or tapping the accordion header.
-
 
 
 

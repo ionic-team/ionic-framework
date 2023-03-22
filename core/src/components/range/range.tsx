@@ -217,9 +217,9 @@ export class Range implements ComponentInterface {
 
   /**
    * Where to place the label relative to the range.
-   * `'start'`: The label will appear to the left of the range in LTR and to the right in RTL.
-   * `'end'`: The label will appear to the right of the range in LTR and to the left in RTL.
-   * `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+   * `"start"`: The label will appear to the left of the range in LTR and to the right in RTL.
+   * `"end"`: The label will appear to the right of the range in LTR and to the left in RTL.
+   * `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
    */
   @Prop() labelPlacement: 'start' | 'end' | 'fixed' = 'start';
 
@@ -553,13 +553,12 @@ export class Range implements ComponentInterface {
   private renderLegacyRange() {
     if (!this.hasLoggedDeprecationWarning) {
       printIonWarning(
-        `Using ion-range with an ion-label has been deprecated. To migrate, remove the ion-label and pass your label directly into ion-range instead.
+        `ion-range now requires providing a label with either the label slot or the "aria-label" attribute. To migrate, remove any usage of "ion-label" and pass the label text to either the component or the "aria-label" attribute.
 
-Example: <ion-range><div slot="label">Volume:</div></ion-range>
+Example: <ion-range><div slot="label">Volume</div></ion-range>
+Example with aria-label: <ion-range aria-label="Volume"></ion-range>
 
-For ranges that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the range.
-
-For ranges that do not render the label immediately next to the range, developers may continue to use "ion-label" but must manually associate the label with the range by using "aria-labelledby".`,
+Developers can use the "legacy" property to continue using the legacy form markup. This property will be removed in an upcoming major release of Ionic where this form control will use the modern form markup.`,
         this.el
       );
 
@@ -763,7 +762,16 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
 
         <div class="range-bar-container">
           <div class="range-bar" role="presentation" part="bar" />
-          <div class="range-bar range-bar-active" role="presentation" style={barStyle} part="bar-active" />
+          <div
+            class={{
+              'range-bar': true,
+              'range-bar-active': true,
+              'has-ticks': ticks.length > 0,
+            }}
+            role="presentation"
+            style={barStyle}
+            part="bar-active"
+          />
         </div>
 
         {renderKnob(rtl, {

@@ -1,5 +1,6 @@
 import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
+import type { E2ELocator } from '@utils/test/playwright';
 
 test.describe('select: basic', () => {
   test.beforeEach(async ({ page }) => {
@@ -40,9 +41,9 @@ test.describe('select: basic', () => {
 
       await ionAlertDidPresent.next();
 
-      expect(await page.screenshot({ animations: 'disabled' })).toMatchSnapshot(
-        `select-alert-diff-${page.getSnapshotSettings()}.png`
-      );
+      await expect(page).toHaveScreenshot(`select-alert-diff-${page.getSnapshotSettings()}.png`, {
+        animations: 'disabled',
+      });
 
       const alert = await page.locator('ion-alert');
       await alert.evaluate((el: HTMLIonAlertElement) => el.dismiss());
@@ -60,9 +61,9 @@ test.describe('select: basic', () => {
 
       await ionActionSheetDidPresent.next();
 
-      expect(await page.screenshot({ animations: 'disabled' })).toMatchSnapshot(
-        `select-action-sheet-diff-${page.getSnapshotSettings()}.png`
-      );
+      await expect(page).toHaveScreenshot(`select-action-sheet-diff-${page.getSnapshotSettings()}.png`, {
+        animations: 'disabled',
+      });
 
       const actionSheet = await page.locator('ion-action-sheet');
       await actionSheet.evaluate((el: HTMLIonActionSheetElement) => el.dismiss());
@@ -89,9 +90,9 @@ test.describe('select: basic', () => {
       const popoverOption1 = popover.locator('.select-interface-option:first-of-type ion-radio');
       await expect(popoverOption1).toBeFocused();
 
-      expect(await page.screenshot({ animations: 'disabled' })).toMatchSnapshot(
-        `select-popover-diff-${page.getSnapshotSettings()}.png`
-      );
+      await expect(page).toHaveScreenshot(`select-popover-diff-${page.getSnapshotSettings()}.png`, {
+        animations: 'disabled',
+      });
 
       await popover.evaluate((el: HTMLIonPopoverElement) => el.dismiss());
 
@@ -130,6 +131,7 @@ test.describe('select: ionChange', () => {
 
     await ionChange.next();
     expect(ionChange).toHaveReceivedEventDetail({ value: 'apple' });
+    expect(ionChange).toHaveReceivedEventTimes(1);
   });
 
   test('should fire ionChange when confirming a value from a popover', async ({ page }) => {
@@ -141,8 +143,8 @@ test.describe('select: ionChange', () => {
     `);
 
     const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
-    const ionChange = await page.spyOnEvent('ionChange');
-    const select = page.locator('ion-select');
+    const select = page.locator('ion-select') as E2ELocator;
+    const ionChange = await select.spyOnEvent('ionChange');
 
     await select.click();
     await ionPopoverDidPresent.next();
@@ -153,7 +155,39 @@ test.describe('select: ionChange', () => {
     await radioButtons.nth(0).click();
 
     await ionChange.next();
-    expect(ionChange).toHaveReceivedEventDetail({ value: 'apple', event: { isTrusted: true } });
+    expect(ionChange).toHaveReceivedEventDetail({ value: 'apple' });
+    expect(ionChange).toHaveReceivedEventTimes(1);
+  });
+
+  test('should fire ionChange when confirming multiple values from a popover', async ({ page }) => {
+    await page.setContent(`
+      <ion-select aria-label="Fruit" interface="popover" multiple="true">
+        <ion-select-option value="apple">Apple</ion-select-option>
+        <ion-select-option value="banana">Banana</ion-select-option>
+      </ion-select>
+    `);
+
+    const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
+    const select = page.locator('ion-select') as E2ELocator;
+    const ionChange = await select.spyOnEvent('ionChange');
+
+    await select.click();
+    await ionPopoverDidPresent.next();
+
+    const popover = page.locator('ion-popover');
+    const checkboxes = popover.locator('ion-checkbox');
+
+    await checkboxes.nth(0).click();
+    await ionChange.next();
+
+    expect(ionChange).toHaveReceivedEventDetail({ value: ['apple'] });
+    expect(ionChange).toHaveReceivedEventTimes(1);
+
+    await checkboxes.nth(1).click();
+    await ionChange.next();
+
+    expect(ionChange).toHaveReceivedEventDetail({ value: ['apple', 'banana'] });
+    expect(ionChange).toHaveReceivedEventTimes(2);
   });
 
   test('should fire ionChange when confirming a value from an action sheet', async ({ page }) => {
@@ -178,6 +212,7 @@ test.describe('select: ionChange', () => {
 
     await ionChange.next();
     expect(ionChange).toHaveReceivedEventDetail({ value: 'apple' });
+    expect(ionChange).toHaveReceivedEventTimes(1);
   });
 
   test('should not fire when programmatically setting a valid value', async ({ page }) => {

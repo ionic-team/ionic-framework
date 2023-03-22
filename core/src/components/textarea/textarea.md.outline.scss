@@ -20,7 +20,7 @@
  * If the textarea has a validity state, the
  * border should reflect that as a color.
  */
-:host(.textarea-fill-outline.ion-touched.ion-valid),
+:host(.has-focus.textarea-fill-outline.ion-valid),
 :host(.textarea-fill-outline.ion-touched.ion-invalid) {
   --border-color: var(--highlight-color);
 }

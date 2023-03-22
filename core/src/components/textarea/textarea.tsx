@@ -101,8 +101,8 @@ export class Textarea implements ComponentInterface {
   }
 
   /**
-   * The fill for the item. If `'solid'` the item will have a background. If
-   * `'outline'` the item will be transparent with a border. Only available in `md` mode.
+   * The fill for the item. If `"solid"` the item will have a background. If
+   * `"outline"` the item will be transparent with a border. Only available in `md` mode.
    */
   @Prop() fill?: 'outline' | 'solid';
 
@@ -210,13 +210,24 @@ export class Textarea implements ComponentInterface {
 
   /**
    * Where to place the label relative to the textarea.
-   * `'start'`: The label will appear to the left of the textarea in LTR and to the right in RTL.
-   * `'end'`: The label will appear to the right of the textarea in LTR and to the left in RTL.
-   * `'floating'`: The label will appear smaller and above the textarea when the textarea is focused or it has a value. Otherwise it will appear on top of the textarea.
-   * `'stacked'`: The label will appear smaller and above the textarea regardless even when the textarea is blurred or has no value.
-   * `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+   * `"start"`: The label will appear to the left of the textarea in LTR and to the right in RTL.
+   * `"end"`: The label will appear to the right of the textarea in LTR and to the left in RTL.
+   * `"floating"`: The label will appear smaller and above the textarea when the textarea is focused or it has a value. Otherwise it will appear on top of the textarea.
+   * `"stacked"`: The label will appear smaller and above the textarea regardless even when the textarea is blurred or has no value.
+   * `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
    */
   @Prop() labelPlacement: 'start' | 'end' | 'floating' | 'stacked' | 'fixed' = 'start';
+
+  /**
+   * Set the `legacy` property to `true` to forcibly use the legacy form control markup.
+   * Ionic will only opt components in to the modern form markup when they are
+   * using either the `aria-label` attribute or the default slot that contains
+   * the label text. As a result, the `legacy` property should only be used as
+   * an escape hatch when you want to avoid this automatic opt-in behavior.
+   * Note that this property will be removed in an upcoming major release
+   * of Ionic, and all form components will be opted-in to using the modern form markup.
+   */
+  @Prop() legacy?: boolean;
 
   /**
    * The shape of the textarea. If "round" it will have an increased border radius.
@@ -299,7 +310,7 @@ export class Textarea implements ComponentInterface {
   componentWillLoad() {
     this.inheritedAttributes = {
       ...inheritAriaAttributes(this.el),
-      ...inheritAttributes(this.el, ['data-form-type', 'title']),
+      ...inheritAttributes(this.el, ['data-form-type', 'title', 'tabindex']),
     };
   }
 
@@ -454,8 +465,14 @@ export class Textarea implements ComponentInterface {
   private renderLegacyTextarea() {
     if (!this.hasLoggedDeprecationWarning) {
       printIonWarning(
-        `Using ion-textarea with an ion-label has been deprecated. To migrate, remove the ion-label and use the "label" property on ion-textarea instead.
-For textareas that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the textarea.`,
+        `ion-textarea now requires providing a label with either the "label" property or the "aria-label" attribute. To migrate, remove any usage of "ion-label" and pass the label text to either the "label" property or the "aria-label" attribute.
+
+Example: <ion-textarea label="Comments"></ion-textarea>
+Example with aria-label: <ion-textarea aria-label="Comments"></ion-textarea>
+
+For textareas that do not render the label immediately next to the input, developers may continue to use "ion-label" but must manually associate the label with the textarea by using "aria-labelledby".
+
+Developers can use the "legacy" property to continue using the legacy form markup. This property will be removed in an upcoming major release of Ionic where this form control will use the modern form markup.`,
         this.el
       );
       this.hasLoggedDeprecationWarning = true;
@@ -585,7 +602,11 @@ For textareas that do not have a visible label, developers should use "aria-labe
   private renderBottomContent() {
     const { counter, helperText, errorText, maxlength } = this;
 
-    const hasHintText = helperText !== undefined || errorText !== undefined;
+    /**
+     * undefined and empty string values should
+     * be treated as not having helper/error text.
+     */
+    const hasHintText = !!helperText || !!errorText;
     const hasCounter = counter === true && maxlength !== undefined;
     if (!hasHintText && !hasCounter) {
       return;
@@ -608,7 +629,6 @@ For textareas that do not have a visible label, developers should use "aria-labe
 
     return (
       <Host
-        aria-disabled={disabled ? 'true' : null}
         class={createColorClasses(this.color, {
           [mode]: true,
           'has-value': this.hasValue(),
@@ -616,6 +636,7 @@ For textareas that do not have a visible label, developers should use "aria-labe
           [`textarea-fill-${fill}`]: fill !== undefined,
           [`textarea-shape-${shape}`]: shape !== undefined,
           [`textarea-label-placement-${labelPlacement}`]: true,
+          'textarea-disabled': disabled,
         })}
       >
         <label class="textarea-wrapper">

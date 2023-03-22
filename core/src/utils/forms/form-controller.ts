@@ -8,27 +8,31 @@ type HTMLLegacyFormControlElement = HTMLElement & { label?: string; legacy?: boo
  */
 export const createLegacyFormController = (el: HTMLLegacyFormControlElement): LegacyFormController => {
   const controlEl: HTMLLegacyFormControlElement = el;
-  let legacyControl = true;
-
-  /**
-   * Detect if developers are using the legacy form control syntax
-   * so a deprecation warning is logged. This warning can be disabled
-   * by either using the new `label` property or setting `aria-label`
-   * on the control.
-   * Alternatively, components that use a slot for the label
-   * can check to see if the component has slotted text
-   * in the light DOM.
-   */
-  const hasLabelProp = (controlEl as any).label !== undefined || hasLabelSlot(controlEl);
-  const hasAriaLabelAttribute = controlEl.hasAttribute('aria-label') || controlEl.hasAttribute('aria-labelledby');
-
-  /**
-   * Developers can manually opt-out of the modern form markup
-   * by setting `legacy="true"` on components.
-   */
-  legacyControl = controlEl.legacy === true || (!hasLabelProp && !hasAriaLabelAttribute);
+  let legacyControl: boolean | undefined;
 
   const hasLegacyControl = () => {
+    if (legacyControl === undefined) {
+      /**
+       * Detect if developers are using the legacy form control syntax
+       * so a deprecation warning is logged. This warning can be disabled
+       * by either using the new `label` property or setting `aria-label`
+       * on the control.
+       * Alternatively, components that use a slot for the label
+       * can check to see if the component has slotted text
+       * in the light DOM.
+       */
+      const hasLabelProp = (controlEl as any).label !== undefined || hasLabelSlot(controlEl);
+      const hasAriaLabelAttribute =
+        controlEl.hasAttribute('aria-label') ||
+        // Shadow DOM form controls cannot use aria-labelledby
+        (controlEl.hasAttribute('aria-labelledby') && controlEl.shadowRoot === null);
+
+      /**
+       * Developers can manually opt-out of the modern form markup
+       * by setting `legacy="true"` on components.
+       */
+      legacyControl = controlEl.legacy === true || (!hasLabelProp && !hasAriaLabelAttribute);
+    }
     return legacyControl;
   };
 

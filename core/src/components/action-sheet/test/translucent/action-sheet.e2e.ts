@@ -16,8 +16,6 @@ test.describe('action sheet: translucent', () => {
     await ionActionSheetDidPresent.next();
 
     const actionSheet = page.locator('ion-action-sheet');
-    expect(await actionSheet.screenshot()).toMatchSnapshot(
-      `action-sheet-translucent-${page.getSnapshotSettings()}.png`
-    );
+    await expect(actionSheet).toHaveScreenshot(`action-sheet-translucent-${page.getSnapshotSettings()}.png`);
   });
 });

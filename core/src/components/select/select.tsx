@@ -1,9 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, forceUpdate } from '@stencil/core';
-import { createLegacyFormController } from '@utils/forms';
-import type { LegacyFormController } from '@utils/forms';
-import { printIonWarning } from '@utils/logging';
-import { isRTL } from '@utils/rtl';
 import { caretDownSharp, chevronExpand } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -15,10 +11,14 @@ import type {
   PopoverOptions,
   StyleEventDetail,
 } from '../../interface';
+import type { LegacyFormController } from '../../utils/forms';
+import { createLegacyFormController } from '../../utils/forms';
 import { findItemLabel, focusElement, getAriaLabel, renderHiddenInput, inheritAttributes } from '../../utils/helpers';
 import type { Attributes } from '../../utils/helpers';
+import { printIonWarning } from '../../utils/logging';
 import { actionSheetController, alertController, popoverController } from '../../utils/overlays';
 import type { OverlaySelect } from '../../utils/overlays-interface';
+import { isRTL } from '../../utils/rtl';
 import { createColorClasses, hostContext } from '../../utils/theme';
 import { watchForOptions } from '../../utils/watch-options';
 import type { ActionSheetButton } from '../action-sheet/action-sheet-interface';
@@ -85,8 +85,8 @@ export class Select implements ComponentInterface {
   @Prop() disabled = false;
 
   /**
-   * The fill for the item. If `'solid'` the item will have a background. If
-   * `'outline'` the item will be transparent with a border. Only available in `md` mode.
+   * The fill for the item. If `"solid"` the item will have a background. If
+   * `"outline"` the item will be transparent with a border. Only available in `md` mode.
    */
   @Prop() fill?: 'outline' | 'solid';
 
@@ -110,12 +110,12 @@ export class Select implements ComponentInterface {
    * How to pack the label and select within a line.
    * `justify` does not apply when the label and select
    * are on different lines when `labelPlacement` is set to
-   * `'floating'` or `'stacked'`.
-   * `'start'`: The label and select will appear on the left in LTR and
+   * `"floating"` or `"stacked"`.
+   * `"start"`: The label and select will appear on the left in LTR and
    * on the right in RTL.
-   * `'end'`: The label and select will appear on the right in LTR and
+   * `"end"`: The label and select will appear on the right in LTR and
    * on the left in RTL.
-   * `'space-between'`: The label and select will appear on opposite
+   * `"space-between"`: The label and select will appear on opposite
    * ends of the line with space between the two elements.
    */
   @Prop() justify: 'start' | 'end' | 'space-between' = 'space-between';
@@ -127,12 +127,12 @@ export class Select implements ComponentInterface {
 
   /**
    * Where to place the label relative to the select.
-   * `'start'`: The label will appear to the left of the select in LTR and to the right in RTL.
-   * `'end'`: The label will appear to the right of the select in LTR and to the left in RTL.
-   * `'floating'`: The label will appear smaller and above the select when the select is focused or it has a value. Otherwise it will appear on top of the select.
-   * `'stacked'`: The label will appear smaller and above the select regardless even when the select is blurred or has no value.
-   * `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
-   * When using `'floating'` or `'stacked'` we recommend initializing the select with either a `value` or a `placeholder`.
+   * `"start"`: The label will appear to the left of the select in LTR and to the right in RTL.
+   * `"end"`: The label will appear to the right of the select in LTR and to the left in RTL.
+   * `"floating"`: The label will appear smaller and above the select when the select is focused or it has a value. Otherwise it will appear on top of the select.
+   * `"stacked"`: The label will appear smaller and above the select regardless even when the select is blurred or has no value.
+   * `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+   * When using `"floating"` or `"stacked"` we recommend initializing the select with either a `value` or a `placeholder`.
    */
   @Prop() labelPlacement?: 'start' | 'end' | 'floating' | 'stacked' | 'fixed' = 'start';
 
@@ -178,7 +178,7 @@ export class Select implements ComponentInterface {
   @Prop() shape?: 'round';
 
   /**
-   * the value of the select.
+   * The value of the select.
    */
   @Prop({ mutable: true }) value?: any | null;
 
@@ -214,14 +214,10 @@ export class Select implements ComponentInterface {
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
   @Watch('disabled')
-  @Watch('placeholder')
   @Watch('isExpanded')
-  styleChanged() {
-    this.emitStyle();
-  }
-
+  @Watch('placeholder')
   @Watch('value')
-  valueChanged() {
+  protected styleChanged() {
     this.emitStyle();
   }
 
@@ -453,7 +449,7 @@ export class Select implements ComponentInterface {
   }
 
   private async openPopover(ev: UIEvent) {
-    const { fill } = this;
+    const { fill, labelPlacement } = this;
     const interfaceOptions = this.interfaceOptions;
     const mode = getIonMode(this);
     const showBackdrop = mode === 'md' ? false : true;
@@ -479,11 +475,13 @@ export class Select implements ComponentInterface {
         size = 'cover';
       }
     } else {
+      const hasFloatingOrStackedLabel = labelPlacement === 'floating' || labelPlacement === 'stacked';
       /**
        * The popover should take up the full width
-       * when using a fill in MD mode.
+       * when using a fill in MD mode or if the
+       * label is floating/stacked.
        */
-      if (mode === 'md' && fill !== undefined) {
+      if (hasFloatingOrStackedLabel || (mode === 'md' && fill !== undefined)) {
         size = 'cover';
 
         /**
@@ -651,17 +649,21 @@ export class Select implements ComponentInterface {
   }
 
   private emitStyle() {
+    const { disabled } = this;
+    const style: StyleEventDetail = {
+      'interactive-disabled': disabled,
+    };
+
     if (this.legacyFormController.hasLegacyControl()) {
-      this.ionStyle.emit({
-        interactive: true,
-        'interactive-disabled': this.disabled,
-        select: true,
-        'select-disabled': this.disabled,
-        'has-placeholder': this.placeholder !== undefined,
-        'has-value': this.hasValue(),
-        'has-focus': this.isExpanded,
-      });
+      style['interactive'] = true;
+      style['select'] = true;
+      style['select-disabled'] = disabled;
+      style['has-placeholder'] = this.placeholder !== undefined;
+      style['has-value'] = this.hasValue();
+      style['has-focus'] = this.isExpanded;
     }
+
+    this.ionStyle.emit(style);
   }
 
   private onClick = (ev: UIEvent) => {
@@ -779,13 +781,12 @@ export class Select implements ComponentInterface {
   private renderLegacySelect() {
     if (!this.hasLoggedDeprecationWarning) {
       printIonWarning(
-        `Using ion-select with an ion-label has been deprecated. To migrate, remove the ion-label and use the "label" property on ion-select instead.
+        `ion-select now requires providing a label with either the "label" property or the "aria-label" attribute. To migrate, remove any usage of "ion-label" and pass the label text to either the "label" property or the "aria-label" attribute.
 
 Example: <ion-select label="Favorite Color">...</ion-select>
+Example with aria-label: <ion-select aria-label="Favorite Color">...</ion-select>
 
-For selects that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the select.
-
-For selects that do not render the label immediately next to the select, developers may continue to use "ion-label" but must manually associate the label with the select by using "aria-labelledby".`,
+Developers can use the "legacy" property to continue using the legacy form markup. This property will be removed in an upcoming major release of Ionic where this form control will use the modern form markup.`,
         this.el
       );
 

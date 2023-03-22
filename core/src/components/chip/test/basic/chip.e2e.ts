@@ -7,6 +7,30 @@ test.describe('chip: rendering', () => {
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(`chip-basic-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`chip-basic-${page.getSnapshotSettings()}.png`);
+  });
+
+  test('should not clip descenders in item', async ({ page, skip }) => {
+    skip.rtl();
+    skip.mode('md');
+
+    test.info().annotations.push({
+      type: 'issue',
+      description: 'https://github.com/ionic-team/ionic-framework/issues/18313',
+    });
+
+    await page.setContent(`
+      <ion-list>
+        <ion-item>
+          <ion-chip>
+            <ion-label>Agreements</ion-label>
+          </ion-chip>
+        </ion-item>
+      </ion-list>
+    `);
+
+    const chip = page.locator('ion-chip');
+
+    await expect(chip).toHaveScreenshot(`chip-descender-${page.getSnapshotSettings()}.png`);
   });
 });

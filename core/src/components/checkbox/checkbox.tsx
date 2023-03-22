@@ -79,19 +79,19 @@ export class Checkbox implements ComponentInterface {
 
   /**
    * Where to place the label relative to the checkbox.
-   * `'start'`: The label will appear to the left of the checkbox in LTR and to the right in RTL.
-   * `'end'`: The label will appear to the right of the checkbox in LTR and to the left in RTL.
-   * `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+   * `"start"`: The label will appear to the left of the checkbox in LTR and to the right in RTL.
+   * `"end"`: The label will appear to the right of the checkbox in LTR and to the left in RTL.
+   * `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
    */
   @Prop() labelPlacement: 'start' | 'end' | 'fixed' = 'start';
 
   /**
    * How to pack the label and checkbox within a line.
-   * `'start'`: The label and checkbox will appear on the left in LTR and
+   * `"start"`: The label and checkbox will appear on the left in LTR and
    * on the right in RTL.
-   * `'end'`: The label and checkbox will appear on the right in LTR and
+   * `"end"`: The label and checkbox will appear on the right in LTR and
    * on the left in RTL.
-   * `'space-between'`: The label and checkbox will appear on opposite
+   * `"space-between"`: The label and checkbox will appear on opposite
    * ends of the line with space between the two elements.
    */
   @Prop() justify: 'start' | 'end' | 'space-between' = 'space-between';
@@ -150,23 +150,22 @@ export class Checkbox implements ComponentInterface {
   }
 
   @Watch('checked')
-  checkedChanged() {
-    this.emitStyle();
-  }
-
   @Watch('disabled')
-  disabledChanged() {
+  protected styleChanged() {
     this.emitStyle();
   }
 
-  // TODO(FW-3100): remove this
   private emitStyle() {
+    const style: StyleEventDetail = {
+      'interactive-disabled': this.disabled,
+    };
+
+    // TODO(FW-3100): remove this
     if (this.legacyFormController.hasLegacyControl()) {
-      this.ionStyle.emit({
-        'checkbox-checked': this.checked,
-        'interactive-disabled': this.disabled,
-      });
+      style['checkbox-checked'] = this.checked;
     }
+
+    this.ionStyle.emit(style);
   }
 
   private setFocus() {
@@ -234,7 +233,6 @@ export class Checkbox implements ComponentInterface {
 
     return (
       <Host
-        aria-hidden={disabled ? 'true' : null}
         class={createColorClasses(color, {
           [mode]: true,
           'in-item': hostContext('ion-item', el),
@@ -247,6 +245,21 @@ export class Checkbox implements ComponentInterface {
         })}
       >
         <label class="checkbox-wrapper">
+          {/*
+            The native control must be rendered
+            before the visible label text due to https://bugs.webkit.org/show_bug.cgi?id=251951
+          */}
+          <input
+            type="checkbox"
+            checked={checked ? true : undefined}
+            disabled={disabled}
+            id={inputId}
+            onChange={this.toggleChecked}
+            onFocus={() => this.onFocus()}
+            onBlur={() => this.onBlur()}
+            ref={(focusEl) => (this.focusEl = focusEl)}
+            {...inheritedAttributes}
+          />
           <div
             class={{
               'label-text-wrapper': true,
@@ -260,17 +273,6 @@ export class Checkbox implements ComponentInterface {
               {path}
             </svg>
           </div>
-          <input
-            type="checkbox"
-            aria-checked={`${checked}`}
-            disabled={disabled}
-            id={inputId}
-            onChange={this.toggleChecked}
-            onFocus={() => this.onFocus()}
-            onBlur={() => this.onBlur()}
-            ref={(focusEl) => (this.focusEl = focusEl)}
-            {...inheritedAttributes}
-          />
         </label>
       </Host>
     );
@@ -280,12 +282,12 @@ export class Checkbox implements ComponentInterface {
   private renderLegacyCheckbox() {
     if (!this.hasLoggedDeprecationWarning) {
       printIonWarning(
-        `Using ion-checkbox with an ion-label has been deprecated. To migrate, remove the ion-label and pass your label directly into ion-checkbox instead.
+        `ion-checkbox now requires providing a label with either the default slot or the "aria-label" attribute. To migrate, remove any usage of "ion-label" and pass the label text to either the component or the "aria-label" attribute.
+
 Example: <ion-checkbox>Label</ion-checkbox>
+Example with aria-label: <ion-checkbox aria-label="Label"></ion-checkbox>
 
-For checkboxes that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the checkbox.
-
-For checkboxes that do not render the label immediately next to the checkbox, developers may continue to use "ion-label" but must manually associate the label with the checkbox by using "aria-labelledby".`,
+Developers can use the "legacy" property to continue using the legacy form markup. This property will be removed in an upcoming major release of Ionic where this form control will use the modern form markup.`,
         this.el
       );
 

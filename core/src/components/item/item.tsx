@@ -1,6 +1,5 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Listen, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
-import { printIonError, printIonWarning } from '@utils/logging';
 import { chevronForward } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -8,6 +7,7 @@ import type { AnimationBuilder, Color, CssClassMap, StyleEventDetail } from '../
 import type { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAttributes, raf } from '../../utils/helpers';
+import { printIonError, printIonWarning } from '../../utils/logging';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 import type { InputInputEventDetail } from '../input/input-interface';
 import type { RouterDirection } from '../router/utils/interface';
@@ -83,8 +83,8 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   @Prop() download: string | undefined;
 
   /**
-   * The fill for the item. If `'solid'` the item will have a background. If
-   * `'outline'` the item will be transparent with a border. Only available in `md` mode.
+   * The fill for the item. If `"solid"` the item will have a background. If
+   * `"outline"` the item will be transparent with a border. Only available in `md` mode.
    */
   @Prop() fill?: 'outline' | 'solid';
 

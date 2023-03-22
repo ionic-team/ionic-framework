@@ -1,14 +1,14 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
-import { createLegacyFormController } from '@utils/forms';
-import type { LegacyFormController } from '@utils/forms';
-import { printIonWarning } from '@utils/logging';
 import { closeCircle, closeSharp } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { AutocompleteTypes, Color, StyleEventDetail, TextFieldTypes } from '../../interface';
+import type { LegacyFormController } from '../../utils/forms';
+import { createLegacyFormController } from '../../utils/forms';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes, debounceEvent, findItemLabel, inheritAttributes } from '../../utils/helpers';
+import { printIonWarning } from '../../utils/logging';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 import type { InputChangeEventDetail, InputInputEventDetail } from './input-interface';
@@ -146,8 +146,8 @@ export class Input implements ComponentInterface {
   @Prop() errorText?: string;
 
   /**
-   * The fill for the item. If `'solid'` the item will have a background. If
-   * `'outline'` the item will be transparent with a border. Only available in `md` mode.
+   * The fill for the item. If `"solid"` the item will have a background. If
+   * `"outline"` the item will be transparent with a border. Only available in `md` mode.
    */
   @Prop() fill?: 'outline' | 'solid';
 
@@ -170,11 +170,11 @@ export class Input implements ComponentInterface {
 
   /**
    * Where to place the label relative to the input.
-   * `'start'`: The label will appear to the left of the input in LTR and to the right in RTL.
-   * `'end'`: The label will appear to the right of the input in LTR and to the left in RTL.
-   * `'floating'`: The label will appear smaller and above the input when the input is focused or it has a value. Otherwise it will appear on top of the input.
-   * `'stacked'`: The label will appear smaller and above the input regardless even when the input is blurred or has no value.
-   * `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+   * `"start"`: The label will appear to the left of the input in LTR and to the right in RTL.
+   * `"end"`: The label will appear to the right of the input in LTR and to the left in RTL.
+   * `"floating"`: The label will appear smaller and above the input when the input is focused or it has a value. Otherwise it will appear on top of the input.
+   * `"stacked"`: The label will appear smaller and above the input regardless even when the input is blurred or has no value.
+   * `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
    */
   @Prop() labelPlacement: 'start' | 'end' | 'floating' | 'stacked' | 'fixed' = 'start';
 
@@ -291,10 +291,9 @@ export class Input implements ComponentInterface {
    * Depending on the way the users interacts with the element, the `ionChange`
    * event fires at a different moment:
    * - When the user commits the change explicitly (e.g. by selecting a date
-   * from a date picker for `<ion-input type="date">`, etc.).
+   * from a date picker for `<ion-input type="date">`, pressing the "Enter" key, etc.).
    * - When the element loses focus after its value has changed: for elements
    * where the user's interaction is typing.
-   *
    */
   @Event() ionChange!: EventEmitter<InputChangeEventDetail>;
 
@@ -388,7 +387,7 @@ export class Input implements ComponentInterface {
     const nativeInput = this.nativeInput;
     if (nativeInput) {
       nativeInput.removeEventListener('compositionstart', this.onCompositionStart);
-      nativeInput.removeEventListener('compositionEnd', this.onCompositionEnd);
+      nativeInput.removeEventListener('compositionend', this.onCompositionEnd);
     }
   }
 
@@ -564,7 +563,11 @@ export class Input implements ComponentInterface {
   private renderBottomContent() {
     const { counter, helperText, errorText, maxlength } = this;
 
-    const hasHintText = helperText !== undefined || errorText !== undefined;
+    /**
+     * undefined and empty string values should
+     * be treated as not having helper/error text.
+     */
+    const hasHintText = !!helperText || !!errorText;
     const hasCounter = counter === true && maxlength !== undefined;
     if (!hasHintText && !hasCounter) {
       return;
@@ -637,7 +640,6 @@ export class Input implements ComponentInterface {
 
     return (
       <Host
-        aria-disabled={disabled ? 'true' : null}
         class={createColorClasses(this.color, {
           [mode]: true,
           'has-value': this.hasValue(),
@@ -647,6 +649,7 @@ export class Input implements ComponentInterface {
           [`input-label-placement-${labelPlacement}`]: true,
           'in-item': inItem,
           'in-item-color': hostContext('ion-item.ion-color', this.el),
+          'input-disabled': disabled,
         })}
       >
         <label class="input-wrapper">
@@ -716,13 +719,14 @@ export class Input implements ComponentInterface {
   private renderLegacyInput() {
     if (!this.hasLoggedDeprecationWarning) {
       printIonWarning(
-        `Using ion-input with an ion-label has been deprecated. To migrate, remove the ion-label and use the "label" property on ion-input instead.
+        `ion-input now requires providing a label with either the "label" property or the "aria-label" attribute. To migrate, remove any usage of "ion-label" and pass the label text to either the "label" property or the "aria-label" attribute.
 
 Example: <ion-input label="Email"></ion-input>
+Example with aria-label: <ion-input aria-label="Email"></ion-input>
 
-For inputs that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the input.
+For inputs that do not render the label immediately next to the input, developers may continue to use "ion-label" but must manually associate the label with the input by using "aria-labelledby".
 
-For inputs that do not render the label immediately next to the input, developers may continue to use "ion-label" but must manually associate the label with the input by using "aria-labelledby".`,
+Developers can use the "legacy" property to continue using the legacy form markup. This property will be removed in an upcoming major release of Ionic where this form control will use the modern form markup.`,
         this.el
       );
 

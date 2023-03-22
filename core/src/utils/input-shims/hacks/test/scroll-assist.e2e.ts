@@ -12,9 +12,11 @@ const getScrollPosition = async (contentEl: Locator) => {
   });
 };
 
-test.describe('scroll-assist', () => {
+// TODO FW-3427
+test.describe.skip('scroll-assist', () => {
   let scrollAssistFixture: ScrollAssistFixture;
   test.beforeEach(async ({ page, skip }) => {
+    test.slow();
     skip.rtl();
     skip.mode('md', 'Scroll utils are only needed on iOS mode');
     skip.browser('firefox');

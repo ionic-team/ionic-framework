@@ -3,26 +3,156 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [7.0.0-beta.1](https://github.com/ionic-team/ionic/compare/v6.5.2...v7.0.0-beta.1) (2023-02-01)
+# [7.0.0-rc.3](https://github.com/ionic-team/ionic/compare/v7.0.0-rc.2...v7.0.0-rc.3) (2023-03-22)
+
+**Note:** Version bump only for package @ionic/react-router
 
 
 
-# [7.0.0-beta.0](https://github.com/ionic-team/ionic/compare/v6.5.1...v7.0.0-beta.0) (2023-01-25)
 
 
-### Code Refactoring
+## [6.6.3](https://github.com/ionic-team/ionic/compare/v6.6.2...v6.6.3) (2023-03-22)
 
-* **react:** only ship es modules ([#26044](https://github.com/ionic-team/ionic/issues/26044)) ([c946af2](https://github.com/ionic-team/ionic/commit/c946af29d3d65e4e78c03f0bbcb2376fd9d8c469))
-
-
-### Performance Improvements
-
-* **many:** reduce delay when performing overlay or page transitions ([#26189](https://github.com/ionic-team/ionic/issues/26189)) ([30e3a14](https://github.com/ionic-team/ionic/commit/30e3a1485d9bc94b31c297bdd05fa847b4bcfb56)), closes [#24346](https://github.com/ionic-team/ionic/issues/24346)
+**Note:** Version bump only for package @ionic/react-router
 
 
-### BREAKING CHANGES
 
-* **react:** `@ionic/react` and `@ionic/react-router` no longer ship a CommonJS entry point. Instead, only an ES Module entry point is provided for improved compatibility with Vite.
+
+
+# [7.0.0-rc.2](https://github.com/ionic-team/ionic/compare/v7.0.0-rc.1...v7.0.0-rc.2) (2023-03-15)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+## [6.6.2](https://github.com/ionic-team/ionic/compare/v6.6.1...v6.6.2) (2023-03-15)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+# [7.0.0-rc.1](https://github.com/ionic-team/ionic/compare/v7.0.0-rc.0...v7.0.0-rc.1) (2023-03-08)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+## [6.6.1](https://github.com/ionic-team/ionic/compare/v6.6.0...v6.6.1) (2023-03-08)
+
+
+### Bug Fixes
+
+* **react:** inline overlays dismiss when parent component unmounts ([#26245](https://github.com/ionic-team/ionic/issues/26245)) ([c0e1bf9](https://github.com/ionic-team/ionic/commit/c0e1bf92c4487c2ec8a117957cf84a2ce00f5fd8)), closes [#25775](https://github.com/ionic-team/ionic/issues/25775) [#26185](https://github.com/ionic-team/ionic/issues/26185)
+
+
+
+
+
+# [7.0.0-rc.0](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.6...v7.0.0-rc.0) (2023-03-01)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+# [7.0.0-beta.6](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.5...v7.0.0-beta.6) (2023-03-01)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+# [6.6.0](https://github.com/ionic-team/ionic/compare/v6.5.7...v6.6.0) (2023-03-01)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+## [6.5.7](https://github.com/ionic-team/ionic/compare/v6.5.6...v6.5.7) (2023-03-01)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+# [7.0.0-beta.5](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.4...v7.0.0-beta.5) (2023-02-27)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+# [7.0.0-beta.4](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.3...v7.0.0-beta.4) (2023-02-22)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+## [6.5.6](https://github.com/ionic-team/ionic/compare/v6.5.5...v6.5.6) (2023-02-22)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+## [6.5.5](https://github.com/ionic-team/ionic/compare/v6.5.4...v6.5.5) (2023-02-20)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+# [7.0.0-beta.3](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.2...v7.0.0-beta.3) (2023-02-15)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+## [6.5.4](https://github.com/ionic-team/ionic/compare/v6.5.3...v6.5.4) (2023-02-15)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+# [7.0.0-beta.2](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.1...v7.0.0-beta.2) (2023-02-08)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+## [6.5.3](https://github.com/ionic-team/ionic/compare/v6.5.2...v6.5.3) (2023-02-08)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+# [7.0.0-beta.1](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.0...v7.0.0-beta.1) (2023-02-01)
+
+**Note:** Version bump only for package @ionic/react-router
 
 
 

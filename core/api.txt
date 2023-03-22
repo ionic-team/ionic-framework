@@ -392,6 +392,7 @@ ion-datetime,prop,dayValues,number | number[] | string | undefined,undefined,fal
 ion-datetime,prop,disabled,boolean,false,false,false
 ion-datetime,prop,doneText,string,'Done',false,false
 ion-datetime,prop,firstDayOfWeek,number,0,false,false
+ion-datetime,prop,highlightedDates,((dateIsoString: string) => DatetimeHighlightStyle | undefined) | DatetimeHighlight[] | undefined,undefined,false,false
 ion-datetime,prop,hourCycle,"h12" | "h23" | undefined,undefined,false,false
 ion-datetime,prop,hourValues,number | number[] | string | undefined,undefined,false,false
 ion-datetime,prop,isDateEnabled,((dateIsoString: string) => boolean) | undefined,undefined,false,false
@@ -1162,7 +1163,7 @@ ion-searchbar,event,ionCancel,void,true
 ion-searchbar,event,ionChange,SearchbarChangeEventDetail,true
 ion-searchbar,event,ionClear,void,true
 ion-searchbar,event,ionFocus,void,true
-ion-searchbar,event,ionInput,KeyboardEvent | null,true
+ion-searchbar,event,ionInput,SearchbarInputEventDetail,true
 ion-searchbar,css-prop,--background
 ion-searchbar,css-prop,--border-radius
 ion-searchbar,css-prop,--box-shadow
@@ -1362,6 +1363,7 @@ ion-textarea,prop,helperText,string | undefined,undefined,false,false
 ion-textarea,prop,inputmode,"decimal" | "email" | "none" | "numeric" | "search" | "tel" | "text" | "url" | undefined,undefined,false,false
 ion-textarea,prop,label,string | undefined,undefined,false,false
 ion-textarea,prop,labelPlacement,"end" | "fixed" | "floating" | "stacked" | "start",'start',false,false
+ion-textarea,prop,legacy,boolean | undefined,undefined,false,false
 ion-textarea,prop,maxlength,number | undefined,undefined,false,false
 ion-textarea,prop,minlength,number | undefined,undefined,false,false
 ion-textarea,prop,mode,"ios" | "md",undefined,false,false
@@ -1419,6 +1421,7 @@ ion-toast,prop,htmlAttributes,undefined | { [key: string]: any; },undefined,fals
 ion-toast,prop,icon,string | undefined,undefined,false,false
 ion-toast,prop,isOpen,boolean,false,false,false
 ion-toast,prop,keyboardClose,boolean,false,false,false
+ion-toast,prop,layout,"baseline" | "stacked",'baseline',false,false
 ion-toast,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-toast,prop,message,IonicSafeString | string | undefined,undefined,false,false
 ion-toast,prop,mode,"ios" | "md",undefined,false,false

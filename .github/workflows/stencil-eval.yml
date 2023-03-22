@@ -7,7 +7,8 @@ on:
     # Run every Monday-Friday
     # at 6:00 UTC (6:00 am UTC)
     - cron: '00 06 * * 1-5'
-
+  workflow_dispatch:
+    # allows for manual invocations in the GitHub UI
 
 # When pushing a new commit we should
 # cancel the previous test run to not
@@ -17,34 +18,39 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build-core:
+  build-core-with-stencil-eval:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
-          # Checkout the latest commit in this branch
-          ref: ${{ github.event.pull_request.head.sha }}
+          ref: feature-7.0
       - uses: ./.github/workflows/actions/build-core-stencil-eval
 
   test-core-clean-build:
-    needs: [build-core]
+    needs: [build-core-with-stencil-eval]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: feature-7.0
       - uses: ./.github/workflows/actions/test-core-clean-build
 
   test-core-lint:
-    needs: [build-core]
+    needs: [build-core-with-stencil-eval]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: feature-7.0
       - uses: ./.github/workflows/actions/test-core-lint
 
   test-core-spec:
-    needs: [build-core]
+    needs: [build-core-with-stencil-eval]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: feature-7.0
       - uses: ./.github/workflows/actions/test-core-spec
 
   test-core-screenshot:
@@ -62,10 +68,12 @@ jobs:
         # to be the length of the shard array.
         shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
         totalShards: [20]
-    needs: [build-core]
+    needs: [build-core-with-stencil-eval]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: feature-7.0
       - uses: ./.github/workflows/actions/test-core-screenshot
         with:
           shard: ${{ matrix.shard }}
@@ -90,10 +98,12 @@ jobs:
         run: exit 1
 
   build-vue:
-    needs: [build-core]
+    needs: [build-core-with-stencil-eval]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+      with:
+        ref: feature-7.0
     - uses: ./.github/workflows/actions/build-vue
 
   build-vue-router:
@@ -101,6 +111,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+      with:
+        ref: feature-7.0
     - uses: ./.github/workflows/actions/build-vue-router
 
   test-vue-e2e:
@@ -112,6 +124,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+      with:
+        ref: feature-7.0
     - uses: ./.github/workflows/actions/test-vue-e2e
       with:
         app: ${{ matrix.apps }}
@@ -126,10 +140,12 @@ jobs:
         run: exit 1
 
   build-angular:
-    needs: [build-core]
+    needs: [build-core-with-stencil-eval]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+      with:
+        ref: feature-7.0
     - uses: ./.github/workflows/actions/build-angular
 
   build-angular-server:
@@ -137,6 +153,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+      with:
+        ref: feature-7.0
     - uses: ./.github/workflows/actions/build-angular-server
 
   test-angular-e2e:
@@ -148,6 +166,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+      with:
+        ref: feature-7.0
     - uses: ./.github/workflows/actions/test-angular-e2e
       with:
         app: ${{ matrix.apps }}
@@ -162,10 +182,12 @@ jobs:
         run: exit 1
 
   build-react:
-    needs: [build-core]
+    needs: [build-core-with-stencil-eval]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+      with:
+        ref: feature-7.0
     - uses: ./.github/workflows/actions/build-react
 
   build-react-router:
@@ -173,18 +195,54 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+      with:
+        ref: feature-7.0
     - uses: ./.github/workflows/actions/build-react-router
 
   test-react-router-e2e:
+    strategy:
+      fail-fast: false
+      matrix:
+        apps: [reactrouter5]
     needs: [build-react, build-react-router]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+      with:
+        ref: feature-7.0
     - uses: ./.github/workflows/actions/test-react-router-e2e
+      with:
+        app: ${{ matrix.apps }}
+
+  verify-test-react-router-e2e:
+    if: ${{ always() }}
+    needs: test-react-router-e2e
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check build matrix status
+        if: ${{ needs.test-react-router-e2e.result != 'success' }}
+        run: exit 1
 
   test-react-e2e:
+    strategy:
+      fail-fast: false
+      matrix:
+        apps: [react17, react18]
     needs: [build-react, build-react-router]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+      with:
+        ref: feature-7.0
     - uses: ./.github/workflows/actions/test-react-e2e
+      with:
+        app: ${{ matrix.apps }}
+
+  verify-test-react-e2e:
+    if: ${{ always() }}
+    needs: test-react-e2e
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check build matrix status
+        if: ${{ needs.test-react-e2e.result != 'success' }}
+        run: exit 1

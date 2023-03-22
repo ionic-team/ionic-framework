@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react",
-  "version": "7.0.0-beta.1",
+  "version": "7.0.0-rc.3",
   "description": "React specific wrapper for @ionic/core",
   "keywords": [
     "ionic",
@@ -41,8 +41,8 @@
     "css/"
   ],
   "dependencies": {
-    "@ionic/core": "^7.0.0-beta.1",
-    "ionicons": "^6.1.1",
+    "@ionic/core": "^7.0.0-rc.3",
+    "ionicons": "^7.0.0",
     "tslib": "*"
   },
   "peerDependencies": {
@@ -86,7 +86,9 @@
       "node_modules",
       "dist-transpiled",
       "dist",
-      "test-app"
+      "test/base/*",
+      "test/apps/*",
+      "test/build/*"
     ],
     "modulePaths": [
       "<rootDir>"

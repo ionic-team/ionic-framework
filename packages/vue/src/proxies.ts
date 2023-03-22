@@ -290,6 +290,7 @@ export const IonDatetime = /*@__PURE__*/ defineContainer<JSX.IonDatetime>('ion-d
   'firstDayOfWeek',
   'titleSelectedDatesFormatter',
   'multiple',
+  'highlightedDates',
   'value',
   'showDefaultTitle',
   'showDefaultButtons',
@@ -433,7 +434,7 @@ export const IonInput = /*@__PURE__*/ defineContainer<JSX.IonInput>('ion-input',
   'ionFocus',
   'ionStyle'
 ],
-'value', 'v-ion-change', 'ionChange');
+'value', 'v-ion-input', 'ionInput');
 
 
 export const IonItem = /*@__PURE__*/ defineContainer<JSX.IonItem>('ion-item', defineIonItem, [
@@ -694,7 +695,7 @@ export const IonSearchbar = /*@__PURE__*/ defineContainer<JSX.IonSearchbar>('ion
   'ionFocus',
   'ionStyle'
 ],
-'value', 'v-ion-change', 'ionChange');
+'value', 'v-ion-input', 'ionInput');
 
 
 export const IonSegment = /*@__PURE__*/ defineContainer<JSX.IonSegment>('ion-segment', defineIonSegment, [
@@ -809,6 +810,7 @@ export const IonTextarea = /*@__PURE__*/ defineContainer<JSX.IonTextarea>('ion-t
   'helperText',
   'label',
   'labelPlacement',
+  'legacy',
   'shape',
   'ionChange',
   'ionInput',
@@ -816,7 +818,7 @@ export const IonTextarea = /*@__PURE__*/ defineContainer<JSX.IonTextarea>('ion-t
   'ionBlur',
   'ionFocus'
 ],
-'value', 'v-ion-change', 'ionChange');
+'value', 'v-ion-input', 'ionInput');
 
 
 export const IonThumbnail = /*@__PURE__*/ defineContainer<JSX.IonThumbnail>('ion-thumbnail', defineIonThumbnail);

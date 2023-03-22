@@ -155,9 +155,9 @@ export class Popover implements ComponentInterface, PopoverInterface {
    * Describes what kind of interaction with the trigger that
    * should cause the popover to open. Does not apply when the `trigger`
    * property is `undefined`.
-   * If `'click'`, the popover will be presented when the trigger is left clicked.
-   * If `'hover'`, the popover will be presented when a pointer hovers over the trigger.
-   * If `'context-menu'`, the popover will be presented when the trigger is right
+   * If `"click"`, the popover will be presented when the trigger is left clicked.
+   * If `"hover"`, the popover will be presented when a pointer hovers over the trigger.
+   * If `"context-menu"`, the popover will be presented when the trigger is right
    * clicked on desktop and long pressed on mobile. This will also prevent your
    * device's normal context menu from appearing.
    */
@@ -173,8 +173,8 @@ export class Popover implements ComponentInterface, PopoverInterface {
 
   /**
    * Describes how to calculate the popover width.
-   * If `'cover'`, the popover width will match the width of the trigger.
-   * If `'auto'`, the popover width will be determined by the content in
+   * If `"cover"`, the popover width will match the width of the trigger.
+   * If `"auto"`, the popover width will be determined by the content in
    * the popover.
    */
   @Prop() size: PopoverSize = 'auto';
@@ -187,10 +187,10 @@ export class Popover implements ComponentInterface, PopoverInterface {
 
   /**
    * Describes what to position the popover relative to.
-   * If `'trigger'`, the popover will be positioned relative
+   * If `"trigger"`, the popover will be positioned relative
    * to the trigger button. If passing in an event, this is
    * determined via event.target.
-   * If `'event'`, the popover will be positioned relative
+   * If `"event"`, the popover will be positioned relative
    * to the x/y coordinates of the trigger action. If passing
    * in an event, this is determined via event.clientX and event.clientY.
    */
@@ -198,14 +198,14 @@ export class Popover implements ComponentInterface, PopoverInterface {
 
   /**
    * Describes which side of the `reference` point to position
-   * the popover on. The `'start'` and `'end'` values are RTL-aware,
-   * and the `'left'` and `'right'` values are not.
+   * the popover on. The `"start"` and `"end"` values are RTL-aware,
+   * and the `"left"` and `"right"` values are not.
    */
   @Prop() side: PositionSide = 'bottom';
 
   /**
    * Describes how to align the popover content with the `reference` point.
-   * Defaults to `'center'` for `ios` mode, and `'start'` for `md` mode.
+   * Defaults to `"center"` for `ios` mode, and `"start"` for `md` mode.
    */
   @Prop({ mutable: true }) alignment?: PositionAlign;
 

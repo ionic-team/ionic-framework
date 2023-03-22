@@ -12,10 +12,13 @@ import { createColorClasses } from '../../utils/theme';
 import type { PickerColumnItem } from '../picker-column-internal/picker-column-internal-interfaces';
 
 import type {
-  TitleSelectedDatesFormatter,
   DatetimePresentation,
   DatetimeChangeEventDetail,
   DatetimeParts,
+  TitleSelectedDatesFormatter,
+  DatetimeHighlight,
+  DatetimeHighlightStyle,
+  DatetimeHighlightCallback,
 } from './datetime-interface';
 import { isSameDay, warnIfValueOutOfBounds, isBefore, isAfter } from './utils/comparison';
 import {
@@ -58,6 +61,7 @@ import {
 } from './utils/parse';
 import {
   getCalendarDayState,
+  getHighlightStyles,
   isDayDisabled,
   isMonthDisabled,
   isNextMonthDisabled,
@@ -82,6 +86,7 @@ import {
 export class Datetime implements ComponentInterface {
   private inputId = `ion-dt-${datetimeIds++}`;
   private calendarBodyRef?: HTMLElement;
+  private monthYearToggleItemRef?: HTMLIonItemElement;
   private popoverRef?: HTMLIonPopoverElement;
   private clearFocusVisible?: () => void;
   private parsedMinuteValues?: number[];
@@ -198,11 +203,11 @@ export class Datetime implements ComponentInterface {
   }
 
   /**
-   * Which values you want to select. `'date'` will show
-   * a calendar picker to select the month, day, and year. `'time'`
+   * Which values you want to select. `"date"` will show
+   * a calendar picker to select the month, day, and year. `"time"`
    * will show a time picker to select the hour, minute, and (optionally)
-   * AM/PM. `'date-time'` will show the date picker first and time picker second.
-   * `'time-date'` will show the time picker first and date picker second.
+   * AM/PM. `"date-time"` will show the date picker first and time picker second.
+   * `"time-date"` will show the time picker first and date picker second.
    */
   @Prop() presentation: DatetimePresentation = 'date-time';
 
@@ -295,7 +300,7 @@ export class Datetime implements ComponentInterface {
   /**
    * The locale to use for `ion-datetime`. This
    * impacts month and day name formatting.
-   * The `'default'` value refers to the default
+   * The `"default"` value refers to the default
    * locale set by your device.
    */
   @Prop() locale = 'default';
@@ -319,6 +324,17 @@ export class Datetime implements ComponentInterface {
    * applies to `presentation="date"` and `preferWheel="false"`.
    */
   @Prop() multiple = false;
+
+  /**
+   * Used to apply custom text and background colors to specific dates.
+   *
+   * Can be either an array of objects containing ISO strings and colors,
+   * or a callback that receives an ISO string and returns the colors.
+   *
+   * Only applies to the `date`, `date-time`, and `time-date` presentations,
+   * with `preferWheel="false"`.
+   */
+  @Prop() highlightedDates?: DatetimeHighlight[] | DatetimeHighlightCallback;
 
   /**
    * The value of the datetime as a valid ISO 8601 datetime string.
@@ -439,11 +455,11 @@ export class Datetime implements ComponentInterface {
    * a wheel picker where possible.
    *
    * A wheel picker can be rendered instead of a grid when `presentation` is
-   * one of the following values: `'date'`, `'date-time'`, or `'time-date'`.
+   * one of the following values: `"date"`, `"date-time"`, or `"time-date"`.
    *
    * A wheel picker will always be rendered regardless of
    * the `preferWheel` value when `presentation` is one of the following values:
-   * `'time'`, `'month'`, `'month-year'`, or `'year'`.
+   * `"time"`, `"month"`, `"month-year"`, or `"year"`.
    */
   @Prop() preferWheel = false;
 
@@ -1238,7 +1254,7 @@ export class Datetime implements ComponentInterface {
   };
 
   componentWillLoad() {
-    const { el, multiple, presentation, preferWheel } = this;
+    const { el, highlightedDates, multiple, presentation, preferWheel } = this;
 
     if (multiple) {
       if (presentation !== 'date') {
@@ -1247,6 +1263,19 @@ export class Datetime implements ComponentInterface {
 
       if (preferWheel) {
         printIonWarning('Multiple date selection is not supported with preferWheel="true".', el);
+      }
+    }
+
+    if (highlightedDates !== undefined) {
+      if (presentation !== 'date' && presentation !== 'date-time' && presentation !== 'time-date') {
+        printIonWarning(
+          'The highlightedDates property is only supported with the date, date-time, and time-date presentations.',
+          el
+        );
+      }
+
+      if (preferWheel) {
+        printIonWarning('The highlightedDates property is not supported with preferWheel="true".', el);
       }
     }
 
@@ -1890,7 +1919,32 @@ export class Datetime implements ComponentInterface {
       <div class="calendar-header">
         <div class="calendar-action-buttons">
           <div class="calendar-month-year">
-            <ion-item button detail={false} lines="none" onClick={() => this.toggleMonthAndYearView()}>
+            <ion-item
+              ref={(el) => (this.monthYearToggleItemRef = el)}
+              button
+              aria-label="Show year picker"
+              detail={false}
+              lines="none"
+              onClick={() => {
+                this.toggleMonthAndYearView();
+                /**
+                 * TODO: FW-3547
+                 *
+                 * Currently there is not a way to set the aria-label on the inner button
+                 * on the `ion-item` and have it be reactive to changes. This is a workaround
+                 * until we either refactor `ion-item` to a button or Stencil adds a way to
+                 * have reactive props for built-in properties, such as `aria-label`.
+                 */
+                const { monthYearToggleItemRef } = this;
+                if (monthYearToggleItemRef) {
+                  const btn = monthYearToggleItemRef.shadowRoot?.querySelector('.item-native');
+                  if (btn) {
+                    const monthYearAriaLabel = this.showMonthAndYear ? 'Hide year picker' : 'Show year picker';
+                    btn.setAttribute('aria-label', monthYearAriaLabel);
+                  }
+                }
+              }}
+            >
               <ion-label>
                 {getMonthAndYear(this.locale, this.workingParts)}
                 <ion-icon
@@ -1905,7 +1959,7 @@ export class Datetime implements ComponentInterface {
 
           <div class="calendar-next-prev">
             <ion-buttons>
-              <ion-button aria-label="previous month" disabled={prevMonthDisabled} onClick={() => this.prevMonth()}>
+              <ion-button aria-label="Previous month" disabled={prevMonthDisabled} onClick={() => this.prevMonth()}>
                 <ion-icon
                   dir={hostDir}
                   aria-hidden="true"
@@ -1915,7 +1969,7 @@ export class Datetime implements ComponentInterface {
                   flipRtl
                 ></ion-icon>
               </ion-button>
-              <ion-button aria-label="next month" disabled={nextMonthDisabled} onClick={() => this.nextMonth()}>
+              <ion-button aria-label="Next month" disabled={nextMonthDisabled} onClick={() => this.nextMonth()}>
                 <ion-icon
                   dir={hostDir}
                   aria-hidden="true"
@@ -1928,7 +1982,7 @@ export class Datetime implements ComponentInterface {
             </ion-buttons>
           </div>
         </div>
-        <div class="calendar-days-of-week">
+        <div class="calendar-days-of-week" aria-hidden="true">
           {getDaysOfWeek(this.locale, mode, this.firstDayOfWeek % 7).map((d) => {
             return <div class="day-of-week">{d}</div>;
           })}
@@ -1974,8 +2028,9 @@ export class Datetime implements ComponentInterface {
         <div class="calendar-month-grid">
           {getDaysOfMonth(month, year, this.firstDayOfWeek % 7).map((dateObject, index) => {
             const { day, dayOfWeek } = dateObject;
-            const { isDateEnabled, multiple } = this;
+            const { el, highlightedDates, isDateEnabled, multiple } = this;
             const referenceParts = { month, day, year };
+            const isCalendarPadding = day === null;
             const { isActive, isToday, ariaLabel, ariaSelected, disabled, text } = getCalendarDayState(
               this.locale,
               referenceParts,
@@ -1986,6 +2041,7 @@ export class Datetime implements ComponentInterface {
               this.parsedDayValues
             );
 
+            const dateIsoString = convertDataToISO(referenceParts);
             let isCalDayDisabled = isCalMonthDisabled || disabled;
 
             if (!isCalDayDisabled && isDateEnabled !== undefined) {
@@ -1995,13 +2051,24 @@ export class Datetime implements ComponentInterface {
                  * to prevent exceptions in the user's function from
                  * interrupting the calendar rendering.
                  */
-                isCalDayDisabled = !isDateEnabled(convertDataToISO(referenceParts));
+                isCalDayDisabled = !isDateEnabled(dateIsoString);
               } catch (e) {
                 printIonError(
                   'Exception thrown from provided `isDateEnabled` function. Please check your function and try again.',
+                  el,
                   e
                 );
               }
+            }
+
+            let dateStyle: DatetimeHighlightStyle | undefined = undefined;
+
+            /**
+             * Custom highlight styles should not override the style for selected dates,
+             * nor apply to "filler days" at the start of the grid.
+             */
+            if (highlightedDates !== undefined && !isActive && day !== null) {
+              dateStyle = getHighlightStyles(highlightedDates, dateIsoString, el);
             }
 
             return (
@@ -2014,15 +2081,21 @@ export class Datetime implements ComponentInterface {
                 data-day-of-week={dayOfWeek}
                 disabled={isCalDayDisabled}
                 class={{
-                  'calendar-day-padding': day === null,
+                  'calendar-day-padding': isCalendarPadding,
                   'calendar-day': true,
                   'calendar-day-active': isActive,
                   'calendar-day-today': isToday,
                 }}
+                style={
+                  dateStyle && {
+                    color: dateStyle.textColor,
+                  }
+                }
+                aria-hidden={isCalendarPadding ? 'true' : null}
                 aria-selected={ariaSelected}
                 aria-label={ariaLabel}
                 onClick={() => {
-                  if (day === null) {
+                  if (isCalendarPadding) {
                     return;
                   }
 
@@ -2053,6 +2126,12 @@ export class Datetime implements ComponentInterface {
                   }
                 }}
               >
+                <div
+                  class="calendar-day-highlight"
+                  style={{
+                    backgroundColor: dateStyle?.backgroundColor,
+                  }}
+                ></div>
                 {text}
               </button>
             );

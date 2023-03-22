@@ -19,12 +19,12 @@ test.describe('datetime: presentation', () => {
       await page.waitForChanges();
       compares.push({
         presentation,
-        screenshot: await datetime.screenshot(),
+        screenshot: datetime,
       });
     }
 
     for (const compare of compares) {
-      expect(compare.screenshot).toMatchSnapshot(
+      await expect(compare.screenshot).toHaveScreenshot(
         `datetime-presentation-${compare.presentation}-diff-${page.getSnapshotSettings()}.png`
       );
     }
@@ -108,45 +108,42 @@ test.describe('datetime: presentation', () => {
   });
 });
 
-// TODO: FW-3018
-test.skip('datetime: presentation: time', () => {
-  let timePickerFixture: TimePickerFixture;
-
-  test.beforeEach(async ({ page }) => {
-    timePickerFixture = new TimePickerFixture(page);
-    await timePickerFixture.goto();
+test.describe('datetime: presentation: time', () => {
+  test.beforeEach(async ({ skip }) => {
+    skip.rtl();
+    skip.mode('md');
   });
 
-  test('changing value from AM to AM should update the text', async () => {
-    await timePickerFixture.setValue('04:20:00');
-    await timePickerFixture.expectTime('4', '20', 'AM');
+  test('changing value from AM to AM should update the text', async ({ page }) => {
+    const timePickerFixture = new TimePickerFixture(page);
+    await timePickerFixture.goto('04:20:00');
 
     await timePickerFixture.setValue('11:03:00');
-    await timePickerFixture.expectTime('11', '03', 'AM');
+    await timePickerFixture.expectTime(11, 3, 'am');
   });
 
-  test('changing value from AM to PM should update the text', async () => {
-    await timePickerFixture.setValue('05:30:00');
-    await timePickerFixture.expectTime('5', '30', 'AM');
+  test('changing value from AM to PM should update the text', async ({ page }) => {
+    const timePickerFixture = new TimePickerFixture(page);
+    await timePickerFixture.goto('05:30:00');
 
     await timePickerFixture.setValue('16:40:00');
-    await timePickerFixture.expectTime('4', '40', 'PM');
+    await timePickerFixture.expectTime(16, 40, 'pm');
   });
 
-  test('changing the value from PM to AM should update the text', async () => {
-    await timePickerFixture.setValue('16:40:00');
-    await timePickerFixture.expectTime('4', '40', 'PM');
+  test('changing the value from PM to AM should update the text', async ({ page }) => {
+    const timePickerFixture = new TimePickerFixture(page);
+    await timePickerFixture.goto('16:40:00');
 
     await timePickerFixture.setValue('04:20:00');
-    await timePickerFixture.expectTime('4', '20', 'AM');
+    await timePickerFixture.expectTime(4, 20, 'am');
   });
 
-  test('changing the value from PM to PM should update the text', async () => {
-    await timePickerFixture.setValue('16:40:00');
-    await timePickerFixture.expectTime('4', '40', 'PM');
+  test('changing the value from PM to PM should update the text', async ({ page }) => {
+    const timePickerFixture = new TimePickerFixture(page);
+    await timePickerFixture.goto('16:40:00');
 
     await timePickerFixture.setValue('19:32:00');
-    await timePickerFixture.expectTime('7', '32', 'PM');
+    await timePickerFixture.expectTime(19, 32, 'pm');
   });
 });
 
@@ -159,9 +156,9 @@ class TimePickerFixture {
     this.page = page;
   }
 
-  async goto() {
+  async goto(value: string) {
     await this.page.setContent(`
-      <ion-datetime presentation="time" value="2022-03-10T13:00:00"></ion-datetime>
+      <ion-datetime presentation="time" value="${value}"></ion-datetime>
     `);
     await this.page.waitForSelector('.datetime-ready');
     this.timePicker = this.page.locator('ion-datetime');
@@ -172,19 +169,14 @@ class TimePickerFixture {
       el.value = newValue;
     }, value);
 
-    // Changing the value can take longer than the default 100ms to repaint
-    await this.page.waitForChanges(300);
+    await this.page.waitForChanges();
   }
 
-  async expectTime(hour: string, minute: string, ampm: string) {
-    expect(
-      await this.timePicker.locator('ion-picker-column-internal:nth-child(1) .picker-item-active').textContent()
-    ).toBe(hour);
-    expect(
-      await this.timePicker.locator('ion-picker-column-internal:nth-child(2) .picker-item-active').textContent()
-    ).toBe(minute);
-    expect(
-      await this.timePicker.locator('ion-picker-column-internal:nth-child(3) .picker-item-active').textContent()
-    ).toBe(ampm);
+  async expectTime(hour: number, minute: number, ampm: string) {
+    const pickerColumns = this.timePicker.locator('ion-picker-column-internal');
+
+    await expect(pickerColumns.nth(0)).toHaveJSProperty('value', hour);
+    await expect(pickerColumns.nth(1)).toHaveJSProperty('value', minute);
+    await expect(pickerColumns.nth(2)).toHaveJSProperty('value', ampm);
   }
 }

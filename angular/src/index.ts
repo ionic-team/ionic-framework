@@ -114,6 +114,7 @@ export {
   ScrollCustomEvent,
   SearchbarCustomEvent,
   SearchbarChangeEventDetail,
+  SearchbarInputEventDetail,
   SegmentChangeEventDetail,
   SegmentCustomEvent,
   SelectChangeEventDetail,
@@ -123,6 +124,7 @@ export {
   TextareaCustomEvent,
   ToastOptions,
   ToastButton,
+  ToastLayout,
   ToggleChangeEventDetail,
   ToggleCustomEvent,
 } from '@ionic/core';

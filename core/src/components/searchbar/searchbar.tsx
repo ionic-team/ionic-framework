@@ -9,7 +9,7 @@ import { debounceEvent, raf } from '../../utils/helpers';
 import { isRTL } from '../../utils/rtl';
 import { createColorClasses } from '../../utils/theme';
 
-import type { SearchbarChangeEventDetail } from './searchbar-interface';
+import type { SearchbarChangeEventDetail, SearchbarInputEventDetail } from './searchbar-interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -26,7 +26,7 @@ export class Searchbar implements ComponentInterface {
   private nativeInput?: HTMLInputElement;
   private isCancelVisible = false;
   private shouldAlignLeft = true;
-  private originalIonInput?: EventEmitter<KeyboardEvent | null>;
+  private originalIonInput?: EventEmitter<SearchbarInputEventDetail>;
 
   /**
    * The value of the input when the textarea is focused.
@@ -165,16 +165,17 @@ export class Searchbar implements ComponentInterface {
   /**
    * Emitted when the `value` of the `ion-searchbar` element has changed.
    */
-  @Event() ionInput!: EventEmitter<KeyboardEvent | null>;
+  @Event() ionInput!: EventEmitter<SearchbarInputEventDetail>;
 
   /**
    * The `ionChange` event is fired for `<ion-searchbar>` elements when the user
    * modifies the element's value. Unlike the `ionInput` event, the `ionChange`
    * event is not necessarily fired for each alteration to an element's value.
    *
-   * The `ionChange` event is fired when the element loses focus after its value
-   * has been modified. This includes modifications made when clicking the clear
-   * or cancel buttons.
+   * The `ionChange` event is fired when the value has been committed
+   * by the user. This can happen when the element loses focus or
+   * when the "Enter" key is pressed. `ionChange` can also fire
+   * when clicking the clear or cancel buttons.
    */
   @Event() ionChange!: EventEmitter<SearchbarChangeEventDetail>;
 
@@ -266,13 +267,21 @@ export class Searchbar implements ComponentInterface {
    * This API should be called for user committed changes.
    * This API should not be used for external value changes.
    */
-  private emitValueChange() {
+  private emitValueChange(event?: Event) {
     const { value } = this;
     // Checks for both null and undefined values
     const newValue = value == null ? value : value.toString();
     // Emitting a value change should update the internal state for tracking the focused value
     this.focusedValue = newValue;
-    this.ionChange.emit({ value: newValue });
+    this.ionChange.emit({ value: newValue, event });
+  }
+
+  /**
+   * Emits an `ionInput` event.
+   */
+  private emitInputChange(event?: Event) {
+    const { value } = this;
+    this.ionInput.emit({ value, event });
   }
 
   /**
@@ -288,7 +297,7 @@ export class Searchbar implements ComponentInterface {
         const value = this.getValue();
         if (value !== '') {
           this.value = '';
-          this.ionInput.emit(null);
+          this.emitInputChange();
 
           /**
            * When tapping clear button
@@ -338,7 +347,7 @@ export class Searchbar implements ComponentInterface {
      * manually fire ionChange.
      */
     if (value && !focused) {
-      this.emitValueChange();
+      this.emitValueChange(ev);
     }
 
     if (this.nativeInput) {
@@ -349,29 +358,29 @@ export class Searchbar implements ComponentInterface {
   /**
    * Update the Searchbar input value when the input changes
    */
-  private onInput = (ev: Event) => {
+  private onInput = (ev: InputEvent | Event) => {
     const input = ev.target as HTMLInputElement | null;
     if (input) {
       this.value = input.value;
     }
-    this.ionInput.emit(ev as KeyboardEvent);
+    this.emitInputChange(ev);
   };
 
-  private onChange = () => {
-    this.emitValueChange();
+  private onChange = (ev: Event) => {
+    this.emitValueChange(ev);
   };
 
   /**
    * Sets the Searchbar to not focused and checks if it should align left
    * based on whether there is a value in the searchbar or not.
    */
-  private onBlur = () => {
+  private onBlur = (ev: FocusEvent) => {
     this.focused = false;
     this.ionBlur.emit();
     this.positionElements();
 
     if (this.focusedValue !== this.value) {
-      this.emitValueChange();
+      this.emitValueChange(ev);
     }
     this.focusedValue = undefined;
   };

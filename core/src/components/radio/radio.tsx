@@ -71,11 +71,21 @@ export class Radio implements ComponentInterface {
    */
   @Prop() value?: any | null;
 
+  @Watch('value')
+  valueChanged() {
+    /**
+     * The new value of the radio may
+     * match the radio group's value,
+     * so we see if it should be checked.
+     */
+    this.updateState();
+  }
+
   /**
    * Where to place the label relative to the radio.
-   * `'start'`: The label will appear to the left of the radio in LTR and to the right in RTL.
-   * `'end'`: The label will appear to the right of the radio in LTR and to the left in RTL.
-   * `'fixed'`: The label has the same behavior as `'start'` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+   * `"start"`: The label will appear to the left of the radio in LTR and to the right in RTL.
+   * `"end"`: The label will appear to the right of the radio in LTR and to the left in RTL.
+   * `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
    */
   @Prop() labelPlacement: 'start' | 'end' | 'fixed' = 'start';
 
@@ -93,11 +103,11 @@ export class Radio implements ComponentInterface {
 
   /**
    * How to pack the label and radio within a line.
-   * `'start'`: The label and radio will appear on the left in LTR and
+   * `"start"`: The label and radio will appear on the left in LTR and
    * on the right in RTL.
-   * `'end'`: The label and radio will appear on the right in LTR and
+   * `"end"`: The label and radio will appear on the right in LTR and
    * on the left in RTL.
-   * `'space-between'`: The label and radio will appear on opposite
+   * `"space-between"`: The label and radio will appear on opposite
    * ends of the line with space between the two elements.
    */
   @Prop() justify: 'start' | 'end' | 'space-between' = 'space-between';
@@ -164,16 +174,23 @@ export class Radio implements ComponentInterface {
     }
   }
 
-  @Watch('color')
   @Watch('checked')
+  @Watch('color')
   @Watch('disabled')
-  emitStyle() {
+  protected styleChanged() {
+    this.emitStyle();
+  }
+
+  private emitStyle() {
+    const style: StyleEventDetail = {
+      'interactive-disabled': this.disabled,
+    };
+
     if (this.legacyFormController.hasLegacyControl()) {
-      this.ionStyle.emit({
-        'radio-checked': this.checked,
-        'interactive-disabled': this.disabled,
-      });
+      style['radio-checked'] = this.checked;
     }
+
+    this.ionStyle.emit(style);
   }
 
   private updateState = () => {
@@ -234,6 +251,18 @@ export class Radio implements ComponentInterface {
         })}
       >
         <label class="radio-wrapper">
+          {/*
+            The native control must be rendered
+            before the visible label text due to https://bugs.webkit.org/show_bug.cgi?id=251951
+          */}
+          <input
+            type="radio"
+            checked={checked}
+            disabled={disabled}
+            id={inputId}
+            ref={(nativeEl) => (this.nativeInput = nativeEl as HTMLInputElement)}
+            {...inheritedAttributes}
+          />
           <div
             class={{
               'label-text-wrapper': true,
@@ -243,14 +272,6 @@ export class Radio implements ComponentInterface {
             <slot></slot>
           </div>
           <div class="native-wrapper">{this.renderRadioControl()}</div>
-          <input
-            type="radio"
-            checked={checked}
-            disabled={disabled}
-            id={inputId}
-            ref={(nativeEl) => (this.nativeInput = nativeEl as HTMLInputElement)}
-            {...inheritedAttributes}
-          />
         </label>
       </Host>
     );
@@ -259,12 +280,12 @@ export class Radio implements ComponentInterface {
   private renderLegacyRadio() {
     if (!this.hasLoggedDeprecationWarning) {
       printIonWarning(
-        `Using ion-radio with an ion-label has been deprecated. To migrate, remove the ion-label and pass your label directly into ion-radio instead.
-Example: <ion-radio>Option Label:</ion-radio>
+        `ion-radio now requires providing a label with either the default slot or the "aria-label" attribute. To migrate, remove any usage of "ion-label" and pass the label text to either the component or the "aria-label" attribute.
 
-For radios that do not have a visible label, developers should use "aria-label" so screen readers can announce the purpose of the radio.
+Example: <ion-radio>Option Label</ion-radio>
+Example with aria-label: <ion-radio aria-label="Option Label"></ion-radio>
 
-For radios that do not render the label immediately next to the radio, developers may continue to use "ion-label" but must manually associate the label with the radio by using "aria-labelledby".`,
+Developers can use the "legacy" property to continue using the legacy form markup. This property will be removed in an upcoming major release of Ionic where this form control will use the modern form markup.`,
         this.el
       );
 

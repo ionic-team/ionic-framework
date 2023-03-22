@@ -1,5 +1,6 @@
 @import "./button";
 @import "./button.ios.vars";
+@import "../toolbar/toolbar.ios.vars";
 
 
 // iOS Button
@@ -23,6 +24,20 @@
   letter-spacing: #{$button-ios-letter-spacing};
 }
 
+/**
+ * The default buttons in a toolbar
+ * have a different font size/weight
+ * than buttons outside of a toolbar on iOS.
+ * However, we still want the "size"/"strong"
+ * properties to be usable in a toolbar, so we add
+ * the .in-buttons selector such that we
+ * can add the different font size/weight in a toolbar
+ * but still let "size"/"strong" override it.
+ */
+:host(.in-buttons) {
+  font-size: #{$toolbar-ios-button-font-size};
+  font-weight: 400;
+}
 
 // iOS Solid Button
 // --------------------------------------------------
@@ -57,14 +72,13 @@
 
 :host(.button-clear) {
   --background-activated: transparent;
+  --background-activated-opacity: 0;
   --background-focused: #{ion-color(primary, base)};
   --background-hover: transparent;
   --background-focused-opacity: .1;
 
   font-size: #{$button-ios-clear-font-size};
   font-weight: #{$button-ios-clear-font-weight};
-
-  letter-spacing: #{$button-ios-clear-letter-spacing};
 }
 
 
@@ -116,25 +130,6 @@
 }
 
 
-// iOS Button Activated
-// --------------------------------------------------
-
-:host(.button-clear.ion-activated) {
-  opacity: #{$button-ios-clear-opacity-activated};
-}
-
-:host(.button-outline.ion-activated.ion-color) .button-native {
-  color: current-color(contrast);
-
-  &::after {
-    background: current-color(base);
-  }
-}
-
-:host(.button-solid.ion-color.ion-activated) .button-native::after {
-  background: #{current-color(shade)};
-}
-
 // iOS Button Focused
 // --------------------------------------------------
 
@@ -151,14 +146,16 @@
   background: #{current-color(shade)};
 }
 
+
 // iOS Button Hover
 // --------------------------------------------------
 
 @media (any-hover: hover) {
   // Clear and outline buttons use opacity so set
-  // background to transparent
-  :host(.button-clear:hover),
-  :host(.button-outline:hover) {
+  // background to transparent, but this shouldn't
+  // apply on top of activated
+  :host(.button-clear:not(.ion-activated):hover),
+  :host(.button-outline:not(.ion-activated):hover) {
     opacity: #{$button-ios-clear-opacity-hover};
   }
 
@@ -177,10 +174,31 @@
   }
 
   // Solid buttons inside of a toolbar should use a tint of the current
-  // background so use white to tint it
-  :host(:hover.button-solid.in-toolbar:not(.ion-color):not(.in-toolbar-color)) .button-native::after {
+  // background so use white to tint it, but this should not apply
+  // when activated
+  :host(:hover.button-solid.in-toolbar:not(.ion-color):not(.in-toolbar-color):not(.ion-activated)) .button-native::after {
     background: #fff;
 
     opacity: 0.10;
   }
+}
+
+
+// iOS Button Activated
+// --------------------------------------------------
+
+:host(.button-clear.ion-activated) {
+  opacity: #{$button-ios-clear-opacity-activated};
+}
+
+:host(.button-outline.ion-activated.ion-color) .button-native {
+  color: current-color(contrast);
+
+  &::after {
+    background: current-color(base);
+  }
+}
+
+:host(.button-solid.ion-color.ion-activated) .button-native::after {
+  background: #{current-color(shade)};
 }

@@ -3,6 +3,7 @@ name: 'Ionic Framework Build'
 on:
   pull_request:
     branches: [ '**' ]
+  merge_group:
 
 # When pushing a new commit we should
 # cancel the previous test run to not
@@ -44,10 +45,6 @@ jobs:
 
   test-core-screenshot:
     strategy:
-      # This ensures that all screenshot shard
-      # failures are reported so the dev can
-      # review everything at once.
-      fail-fast: false
       matrix:
         # Divide the tests into n buckets
         # and run those buckets in parallel.
@@ -138,7 +135,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        apps: [ng12, ng13, ng14, ng15]
+        apps: [ng14, ng15]
     needs: [build-angular, build-angular-server]
     runs-on: ubuntu-latest
     steps:
@@ -171,15 +168,45 @@ jobs:
     - uses: ./.github/workflows/actions/build-react-router
 
   test-react-router-e2e:
+    strategy:
+      fail-fast: false
+      matrix:
+        apps: [reactrouter5]
     needs: [build-react, build-react-router]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - uses: ./.github/workflows/actions/test-react-router-e2e
+      with:
+        app: ${{ matrix.apps }}
+
+  verify-test-react-router-e2e:
+    if: ${{ always() }}
+    needs: test-react-router-e2e
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check build matrix status
+        if: ${{ needs.test-react-router-e2e.result != 'success' }}
+        run: exit 1
 
   test-react-e2e:
+    strategy:
+      fail-fast: false
+      matrix:
+        apps: [react17, react18]
     needs: [build-react, build-react-router]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - uses: ./.github/workflows/actions/test-react-e2e
+      with:
+        app: ${{ matrix.apps }}
+
+  verify-test-react-e2e:
+    if: ${{ always() }}
+    needs: test-react-e2e
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check build matrix status
+        if: ${{ needs.test-react-e2e.result != 'success' }}
+        run: exit 1

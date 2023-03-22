@@ -75,12 +75,11 @@ test.describe('modal: rendering', () => {
     await ionModalDidPresent.next();
 
     const modal = await page.locator('ion-modal');
+    await expect(modal).toHaveClass(/show-modal/);
 
     await page.setIonViewport();
 
-    expect(await page.screenshot()).toMatchSnapshot(
-      `modal-basic-present-${screenshotModifier}${page.getSnapshotSettings()}.png`
-    );
+    await expect(page).toHaveScreenshot(`modal-basic-present-${screenshotModifier}${page.getSnapshotSettings()}.png`);
 
     await modal.evaluate((el: HTMLIonModalElement) => {
       el.dismiss();
@@ -89,6 +88,7 @@ test.describe('modal: rendering', () => {
     await ionModalWillDismiss.next();
     await ionModalDidDismiss.next();
 
+    await expect(modal).not.toHaveClass(/show-modal/);
     await expect(modal).toBeHidden();
   };
 

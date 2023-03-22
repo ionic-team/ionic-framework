@@ -93,6 +93,12 @@
   border: 2px solid #5e9ed6;
 }
 
+// TODO FW-3194 - Remove :not(.legacy-select) piece
+:host(.in-item[slot="start"]:not(.legacy-select)),
+:host(.in-item[slot="end"]:not(.legacy-select)) {
+  width: auto;
+}
+
 .select-placeholder {
   color: var(--placeholder-color);
 
@@ -218,7 +224,17 @@ button {
   --highlight-color: var(--highlight-color-invalid);
 }
 
-:host(.ion-touched.ion-valid) {
+/**
+ * The component highlight is only shown
+ * on focus, so we can safely set the valid
+ * color state when touched/valid. If we
+ * set it when .has-focus is present then
+ * the highlight color would change
+ * from the valid color to the component's
+ * color during the transition after the
+ * component loses focus.
+ */
+:host(.ion-valid) {
   --highlight-color: var(--highlight-color-valid);
 }
 
