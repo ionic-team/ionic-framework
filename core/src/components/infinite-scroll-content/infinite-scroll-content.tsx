@@ -16,7 +16,7 @@ import { sanitizeDOMString } from '../../utils/sanitization';
   },
 })
 export class InfiniteScrollContent implements ComponentInterface {
-  private customHTMLEnabled = config.get('enableInnerHTMLTemplates', ENABLE_HTML_CONTENT_DEFAULT);
+  private customHTMLEnabled = config.get('innerHTMLTemplatesEnabled', ENABLE_HTML_CONTENT_DEFAULT);
 
   /**
    * An animated SVG spinner that shows while loading.
@@ -35,7 +35,7 @@ export class InfiniteScrollContent implements ComponentInterface {
    * This property accepts custom HTML as a string.
    * Developers who only want to pass plain text
    * can disable the custom HTML functionality
-   * by setting `enableInnerHTMLTemplates: false` in the Ionic config.
+   * by setting `innerHTMLTemplatesEnabled: false` in the Ionic config.
    */
   @Prop() loadingText?: string | IonicSafeString;
 

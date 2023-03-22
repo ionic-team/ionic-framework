@@ -193,7 +193,7 @@ export interface IonicConfig {
    * custom HTML will not be usable in the relevant components.
    * `innerHTML` usage is enabled by default.
    */
-  enableInnerHTMLTemplates?: boolean;
+  innerHTMLTemplatesEnabled?: boolean;
 
   /**
    * Overrides the default platform detection methods.
