@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.6.3-nightly.20230322](https://github.com/ionic-team/ionic/compare/v6.6.2...v6.6.3-nightly.20230322) (2023-03-22)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
 ## [6.6.2](https://github.com/ionic-team/ionic/compare/v6.6.1...v6.6.2) (2023-03-15)
 
 **Note:** Version bump only for package @ionic/angular-server
