@@ -19,6 +19,7 @@ test.describe('ripple-effect: basic', () => {
   test.describe('ripple effect with nested ion-button', () => {
     test('should add .ion-activated when the block is pressed', async ({ page }) => {
       await page.goto('/src/components/ripple-effect/test/basic?ionic:_testing=false');
+      await isIdleCallbackComplete(page);
 
       const el = page.locator('#ripple-with-button');
 
@@ -45,6 +46,7 @@ test.describe('ripple-effect: basic', () => {
 
 const verifyRippleEffect = async (page: E2EPage, selector: string) => {
   await page.goto('/src/components/ripple-effect/test/basic?ionic:_testing=false');
+  await isIdleCallbackComplete(page);
 
   const el = page.locator(selector);
 
@@ -60,4 +62,25 @@ const verifyRippleEffect = async (page: E2EPage, selector: string) => {
   await page.waitForSelector('.ion-activated');
 
   await expect(el).toHaveClass(/ion-activated/);
+};
+
+/**
+ * This function is used to wait for the idle callback to be called.
+ * It mirrors the custom implementation in app.tsx for either
+ * using requestIdleCallback on supported browsers or a setTimeout
+ * of 32ms (~2 frames) on unsupported browsers (Safari).
+ */
+const isIdleCallbackComplete = async (page: E2EPage) => {
+  await page.waitForFunction(
+    () => {
+      return new Promise((resolve) => {
+        if ('requestIdleCallback' in window) {
+          window.requestIdleCallback(resolve);
+        } else {
+          setTimeout(resolve, 32);
+        }
+      });
+    },
+    { timeout: 5000 }
+  );
 };
