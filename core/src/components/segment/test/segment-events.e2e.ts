@@ -198,7 +198,7 @@ test.describe('segment: events: ionChange', () => {
 
     await segmentButtons.nth(0).click();
 
-    await ionChange.next();
+    await ionChangeSpy.next();
     expect(ionChangeSpy).toHaveReceivedEventDetail({ value: '1' });
   })
 });
