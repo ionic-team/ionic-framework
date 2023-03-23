@@ -81,7 +81,8 @@ The Ionic Conference App is a full featured Ionic app. It is the perfect startin
 
 - [Angular Ionic Conference App](https://github.com/ionic-team/ionic-conference-app)
 - [React Ionic Conference App](https://github.com/ionic-team/ionic-react-conference-app)
-- [Vue Ionic Conference App](https://github.com/ionic-team/ionic-vue-conference-app)
+<!-- TODO(FW-3811): add this when the vue conference app is updated -->
+<!-- - [Vue Ionic Conference App](https://github.com/ionic-team/ionic-vue-conference-app) -->
 
 ### Contributing
 
