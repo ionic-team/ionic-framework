@@ -1,6 +1,6 @@
 {
   "name": "@ionic/docs",
-  "version": "6.6.3",
+  "version": "6.7.0",
   "description": "Pre-packaged API documentation for the Ionic docs.",
   "main": "core.json",
   "types": "core.d.ts",
