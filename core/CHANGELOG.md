@@ -3,6 +3,150 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.0.0-rc.3](https://github.com/ionic-team/ionic/compare/v7.0.0-rc.2...v7.0.0-rc.3) (2023-03-22)
+ 
+**Note:** Version bump only for package @ionic/core
+
+
+
+
+
+## [6.6.3](https://github.com/ionic-team/ionic/compare/v6.6.2...v6.6.3) (2023-03-22)
+
+### Bug Fixes
+
+* **menu:** main content is not scrollable while swiping ([#26976](https://github.com/ionic-team/ionic/issues/26976)) ([88bd8a4](https://github.com/ionic-team/ionic/commit/88bd8a47c5e844d1d3a2b3b13621826faf776afb)), closes [#21193](https://github.com/ionic-team/ionic/issues/21193)
+
+
+
+
+
+# [7.0.0-rc.2](https://github.com/ionic-team/ionic/compare/v7.0.0-rc.1...v7.0.0-rc.2) (2023-03-15)
+
+
+### Bug Fixes
+
+* **input, select, textarea:** border color is set on host ([#26941](https://github.com/ionic-team/ionic/issues/26941)) ([4810e6f](https://github.com/ionic-team/ionic/commit/4810e6f2ac075cf5cd8065a1c10ad57db119beff))
+* **input, textarea:** show error state after touch ([#26940](https://github.com/ionic-team/ionic/issues/26940)) ([ef33270](https://github.com/ionic-team/ionic/commit/ef33270b55122574e0fdb32187410d8d8a4fa1ae)), closes [#26939](https://github.com/ionic-team/ionic/issues/26939) [#21643](https://github.com/ionic-team/ionic/issues/21643)
+* **many:** disabled control in item does not receive active/hover states ([#26867](https://github.com/ionic-team/ionic/issues/26867)) ([f829672](https://github.com/ionic-team/ionic/commit/f829672a6aa4477d1ce26f624f7316e6c5a1d514)), closes [#26706](https://github.com/ionic-team/ionic/issues/26706)
+* **toggle:** label is announced once on ios ([#26937](https://github.com/ionic-team/ionic/issues/26937)) ([f71d9b1](https://github.com/ionic-team/ionic/commit/f71d9b1101786aa39016e458ca0da3f1e871d093))
+
+
+
+
+
+## [6.6.2](https://github.com/ionic-team/ionic/compare/v6.6.1...v6.6.2) (2023-03-15)
+
+
+### Bug Fixes
+
+* **accordion:** include margins during expand animation ([#26390](https://github.com/ionic-team/ionic/issues/26390)) ([f809918](https://github.com/ionic-team/ionic/commit/f80991813ae8873d8ef6038b0aeb763d727f402e)), closes [#26381](https://github.com/ionic-team/ionic/issues/26381)
+* **IonicSlides:** remove unnecessary autoplay option ([#26935](https://github.com/ionic-team/ionic/issues/26935)) ([b8f8937](https://github.com/ionic-team/ionic/commit/b8f893731471052df198824b7ece47606ffcc500))
+* **radio:** checked state is updated when value changes ([#26936](https://github.com/ionic-team/ionic/issues/26936)) ([27a5356](https://github.com/ionic-team/ionic/commit/27a5356fa2b72073d565e9d6f527107869faa3ee))
+* **react/vue:** properly switch ionicon based on the mode when ios/md is set ([#26924](https://github.com/ionic-team/ionic/issues/26924)) ([1eb9a08](https://github.com/ionic-team/ionic/commit/1eb9a085b2d69dfcfc71ff49b25d33347dd54aae)), closes [#26207](https://github.com/ionic-team/ionic/issues/26207)
+* **textarea:** inherit tabindex to inner textarea ([#26945](https://github.com/ionic-team/ionic/issues/26945)) ([2c68d01](https://github.com/ionic-team/ionic/commit/2c68d01b898a2f879445b8b64014189afe1255d7)), closes [#26944](https://github.com/ionic-team/ionic/issues/26944)
+
+
+
+
+
+# [7.0.0-rc.1](https://github.com/ionic-team/ionic/compare/v7.0.0-rc.0...v7.0.0-rc.1) (2023-03-08)
+
+
+### Bug Fixes
+
+* **input, textarea:** disabled state is applied when true ([#26892](https://github.com/ionic-team/ionic/issues/26892)) ([569401b](https://github.com/ionic-team/ionic/commit/569401b1c8959f236ab6931e7c58063d4681402a)), closes [#26881](https://github.com/ionic-team/ionic/issues/26881)
+* **item:** prevent slotted form controls from taking whole width of item ([#26897](https://github.com/ionic-team/ionic/issues/26897)) ([78f5d96](https://github.com/ionic-team/ionic/commit/78f5d960cf4a056b52f65d4731a7ee0771031306))
+* **many:** add aria-hidden to decorative icons ([#26922](https://github.com/ionic-team/ionic/issues/26922)) ([78303dc](https://github.com/ionic-team/ionic/commit/78303dccaa2b3e7e6fb107a5c0f0f213d8e39a7c))
+* **select:** popover is full width when used with floating/stacked labels ([#26907](https://github.com/ionic-team/ionic/issues/26907)) ([7bc22f2](https://github.com/ionic-team/ionic/commit/7bc22f2bbfa1d170f05d66f44b53cd28c4038bc5)), closes [#26903](https://github.com/ionic-team/ionic/issues/26903)
+* **vue:** input components update refs on ionInput ([#26876](https://github.com/ionic-team/ionic/issues/26876)) ([7d9ce74](https://github.com/ionic-team/ionic/commit/7d9ce7420a4c041a6d21041c15680e809cd55e8d)), closes [#26700](https://github.com/ionic-team/ionic/issues/26700)
+
+
+
+
+
+## [6.6.1](https://github.com/ionic-team/ionic/compare/v6.6.0...v6.6.1) (2023-03-08)
+
+
+### Bug Fixes
+
+* **button:** show correct activated state for ios ([#26900](https://github.com/ionic-team/ionic/issues/26900)) ([67815cc](https://github.com/ionic-team/ionic/commit/67815ccbf4650ecbbc6c79d5063ab5ba50cb358c)), closes [#22468](https://github.com/ionic-team/ionic/issues/22468)
+* **datetime-button:** time-only values are parsed ([#26852](https://github.com/ionic-team/ionic/issues/26852)) ([f54fc18](https://github.com/ionic-team/ionic/commit/f54fc188843af52e723e06402e01ef92717e541f)), closes [#26851](https://github.com/ionic-team/ionic/issues/26851)
+* **datetime:** resolve import error in stencil apps ([#26909](https://github.com/ionic-team/ionic/issues/26909)) ([48c45af](https://github.com/ionic-team/ionic/commit/48c45afdb6ca7dad0a1f2a6d3ece6df8ba23eb69)), closes [#26908](https://github.com/ionic-team/ionic/issues/26908)
+* **menu, split-pane:** ssr does not fail on null customElements check ([#26854](https://github.com/ionic-team/ionic/issues/26854)) ([451d220](https://github.com/ionic-team/ionic/commit/451d2204e79a4a10c1eb829ab0bd75c137b02475)), closes [#24714](https://github.com/ionic-team/ionic/issues/24714)
+* **modal:** avoid chrome memory leak bug ([#26911](https://github.com/ionic-team/ionic/issues/26911)) ([a3f8e28](https://github.com/ionic-team/ionic/commit/a3f8e281721f6ef8c9479f5870198b7a009daabd))
+
+
+
+
+
+# [7.0.0-rc.0](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.6...v7.0.0-rc.0) (2023-03-01)
+
+**Note:** Version bump only for package @ionic/core
+
+
+
+
+
+# [7.0.0-beta.6](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.5...v7.0.0-beta.6) (2023-03-01)
+
+
+### Bug Fixes
+
+* **button:** update for ios spec ([#26864](https://github.com/ionic-team/ionic/issues/26864)) ([df37357](https://github.com/ionic-team/ionic/commit/df3735765a7639d200a85834d8c3d72546e29791))
+* **datetime:** aria-label for show/hide year picker ([#26848](https://github.com/ionic-team/ionic/issues/26848)) ([ac66215](https://github.com/ionic-team/ionic/commit/ac66215399954c972267b9d18bbd5aa5ef41a4c1))
+
+
+### BREAKING CHANGES
+
+* **button:** Button is updated to align with the design specification for iOS.
+
+**Design tokens**
+
+| Token                              | Previous Value | New Value |
+| ---------------------------------- | -------------- | --------- |
+| `$button-ios-letter-spacing`       | `-0.03em`      | `0`       |
+| `$button-ios-clear-letter-spacing` | `0`            | Removed   |
+| `$button-ios-height`               | `2.8em`        | `3.1em`   |
+| `$button-ios-border-radius`        | `10px`         | `14px`    |
+| `$button-ios-large-height`         | `2.8em`        | `3.1em`   |
+| `$button-ios-large-border-radius`  | `12px`         | `16px`    |
+
+
+
+
+
+# [6.6.0](https://github.com/ionic-team/ionic/compare/v6.5.7...v6.6.0) (2023-03-01)
+
+
+### Bug Fixes
+
+* **modal:** dialog styles work on old chrome versions ([#26746](https://github.com/ionic-team/ionic/issues/26746)) ([00d10f5](https://github.com/ionic-team/ionic/commit/00d10f5f6ad53850505bdad94b659b8801a3309d)), closes [#26745](https://github.com/ionic-team/ionic/issues/26745)
+
+
+### Features
+
+* **datetime:** add ability to specify custom colors for specific dates ([#26775](https://github.com/ionic-team/ionic/issues/26775)) ([2a761af](https://github.com/ionic-team/ionic/commit/2a761afd5a0e6d4e6f54096fdeb97b8bad1293de))
+* **picker-column:** assign custom aria-labels to column options ([#26749](https://github.com/ionic-team/ionic/issues/26749)) ([daa89a2](https://github.com/ionic-team/ionic/commit/daa89a26ac8fa655c56c9447a8635e7c436e4f63))
+* **toast:** add stacked buttons functionality ([#26790](https://github.com/ionic-team/ionic/issues/26790)) ([fc5fcc0](https://github.com/ionic-team/ionic/commit/fc5fcc064dec5256836e9622125b5e499ef00975))
+
+
+
+
+
+## [6.5.7](https://github.com/ionic-team/ionic/compare/v6.5.6...v6.5.7) (2023-03-01)
+
+
+### Bug Fixes
+
+* **content:** fullscreen values are recomputed on visible content ([#26847](https://github.com/ionic-team/ionic/issues/26847)) ([6dcd98b](https://github.com/ionic-team/ionic/commit/6dcd98b26ab8fd3bf0092416d613bf051fbdeacf)), closes [#26844](https://github.com/ionic-team/ionic/issues/26844)
+* **modal:** keyboard listener removed on dismiss ([#26856](https://github.com/ionic-team/ionic/issues/26856)) ([b4bcba3](https://github.com/ionic-team/ionic/commit/b4bcba353386b4d5d8d396e61ece421a15d42ff0))
+* **overlays:** focus trap refs cleared on dismiss ([#26855](https://github.com/ionic-team/ionic/issues/26855)) ([8d1d0fa](https://github.com/ionic-team/ionic/commit/8d1d0fa0c7a42a3c21a471131ba454774b26c314))
+
+
+
+
+
 # [7.0.0-beta.5](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.4...v7.0.0-beta.5) (2023-02-27)
 
 

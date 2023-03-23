@@ -45,9 +45,9 @@
   color: var(--highlight-color);
 }
 
-:host(.select-label-placement-floating.ion-touched.ion-valid) .label-text-wrapper,
+:host(.has-focus.select-label-placement-floating.ion-valid) .label-text-wrapper,
 :host(.select-label-placement-floating.ion-touched.ion-invalid) .label-text-wrapper,
-:host(.select-label-placement-stacked.ion-touched.ion-valid) .label-text-wrapper,
+:host(.has-focus.select-label-placement-stacked.ion-valid) .label-text-wrapper,
 :host(.select-label-placement-stacked.ion-touched.ion-invalid) .label-text-wrapper {
   color: var(--highlight-color);
 }
@@ -103,7 +103,7 @@
  * color if there is a validation state.
  */
 :host(.select-expanded) .select-wrapper .select-icon,
-:host(.ion-touched.ion-valid) .select-wrapper .select-icon,
+:host(.has-focus.ion-valid) .select-wrapper .select-icon,
 :host(.ion-touched.ion-invalid) .select-wrapper .select-icon,
 :host(.ion-focused) .select-wrapper .select-icon {
   color: var(--highlight-color);

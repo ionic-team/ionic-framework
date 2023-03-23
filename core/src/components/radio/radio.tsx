@@ -71,6 +71,16 @@ export class Radio implements ComponentInterface {
    */
   @Prop() value?: any | null;
 
+  @Watch('value')
+  valueChanged() {
+    /**
+     * The new value of the radio may
+     * match the radio group's value,
+     * so we see if it should be checked.
+     */
+    this.updateState();
+  }
+
   /**
    * Where to place the label relative to the radio.
    * `"start"`: The label will appear to the left of the radio in LTR and to the right in RTL.
@@ -164,16 +174,23 @@ export class Radio implements ComponentInterface {
     }
   }
 
-  @Watch('color')
   @Watch('checked')
+  @Watch('color')
   @Watch('disabled')
-  emitStyle() {
+  protected styleChanged() {
+    this.emitStyle();
+  }
+
+  private emitStyle() {
+    const style: StyleEventDetail = {
+      'interactive-disabled': this.disabled,
+    };
+
     if (this.legacyFormController.hasLegacyControl()) {
-      this.ionStyle.emit({
-        'radio-checked': this.checked,
-        'interactive-disabled': this.disabled,
-      });
+      style['radio-checked'] = this.checked;
     }
+
+    this.ionStyle.emit(style);
   }
 
   private updateState = () => {

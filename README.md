@@ -32,7 +32,7 @@
 </p>
 
 <h2 align="center">
-  <a href="https://ionicframework.com/getting-started/">Quickstart</a>
+  <a href="https://ionicframework.com/docs/intro/cli">Quickstart</a>
   <span> · </span>
   <a href="https://ionicframework.com/docs/">
     Documentation
@@ -71,6 +71,7 @@ an [issue](https://github.com/ionic-team/ionic/issues/new) on this repository.
 
 Already have an Ionic app? These guides will help you migrate to the latest versions.
 
+* [Migrate from v6 to v7](https://ionicframework.com/docs/v7/updating/7-0)
 * [Migrate from v5 to v6](https://ionicframework.com/docs/reference/migration#migrating-from-ionic-5x-to-ionic-6x)
 * [Migrate from v4 to v5](https://ionicframework.com/docs/reference/migration#migrating-from-ionic-4x-to-ionic-5x)
 * [Migrate from v3 to v4](https://ionicframework.com/docs/reference/migration#migrating-from-ionic-30-to-ionic-40)

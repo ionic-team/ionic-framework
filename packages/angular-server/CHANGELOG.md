@@ -3,6 +3,89 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.0.0-rc.3](https://github.com/ionic-team/ionic/compare/v7.0.0-rc.2...v7.0.0-rc.3) (2023-03-22)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
+## [6.6.3](https://github.com/ionic-team/ionic/compare/v6.6.2...v6.6.3) (2023-03-22)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
+# [7.0.0-rc.2](https://github.com/ionic-team/ionic/compare/v7.0.0-rc.1...v7.0.0-rc.2) (2023-03-15)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
+## [6.6.2](https://github.com/ionic-team/ionic/compare/v6.6.1...v6.6.2) (2023-03-15)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
+# [7.0.0-rc.1](https://github.com/ionic-team/ionic/compare/v7.0.0-rc.0...v7.0.0-rc.1) (2023-03-08)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
+## [6.6.1](https://github.com/ionic-team/ionic/compare/v6.6.0...v6.6.1) (2023-03-08)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
+# [7.0.0-rc.0](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.6...v7.0.0-rc.0) (2023-03-01)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
+# [7.0.0-beta.6](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.5...v7.0.0-beta.6) (2023-03-01)
+
+
+### Bug Fixes
+
+* **angular:** devs can import ionic/angular styles in css ([#26875](https://github.com/ionic-team/ionic/issues/26875)) ([0d2fac2](https://github.com/ionic-team/ionic/commit/0d2fac2eefd610271fbbbecc36e844b6b289dfee))
+
+
+
+
+
+# [6.6.0](https://github.com/ionic-team/ionic/compare/v6.5.7...v6.6.0) (2023-03-01)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
+## [6.5.7](https://github.com/ionic-team/ionic/compare/v6.5.6...v6.5.7) (2023-03-01)
+
+**Note:** Version bump only for package @ionic/angular-server
+
+
+
+
+
 # [7.0.0-beta.5](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.4...v7.0.0-beta.5) (2023-02-27)
 
 
@@ -21,28 +104,9 @@ The dev-preview `environmentInjector` property has been removed from `ion-tabs` 
 
 
 
-# [7.0.0-beta.4](https://github.com/ionic-team/ionic/compare/v6.5.6...v7.0.0-beta.4) (2023-02-22)
+# [7.0.0-beta.4](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.3...v7.0.0-beta.4) (2023-02-22)
 
-
-
-# [7.0.0-beta.3](https://github.com/ionic-team/ionic/compare/v6.5.4...v7.0.0-beta.3) (2023-02-15)
-
-
-
-# [7.0.0-beta.2](https://github.com/ionic-team/ionic/compare/v6.5.3...v7.0.0-beta.2) (2023-02-08)
-
-
-
-# [7.0.0-beta.1](https://github.com/ionic-team/ionic/compare/v6.5.2...v7.0.0-beta.1) (2023-02-01)
-
-
-
-# [7.0.0-beta.0](https://github.com/ionic-team/ionic/compare/v6.5.1...v7.0.0-beta.0) (2023-01-25)
-
-
-### Features
-
-* **virtual-scroll:** remove virtual scroll component ([#25808](https://github.com/ionic-team/ionic/issues/25808)) ([1eb6fd0](https://github.com/ionic-team/ionic/commit/1eb6fd04d7f8c7ccd7dac08d085dc90d9f6283cc))
+**Note:** Version bump only for package @ionic/angular-server
 
 
 

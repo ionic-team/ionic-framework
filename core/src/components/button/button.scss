@@ -246,17 +246,6 @@ ion-ripple-effect {
   @include button-state();
 }
 
-// Button Activated
-:host(.ion-activated) {
-  color: var(--color-activated);
-}
-
-:host(.ion-activated) .button-native::after {
-  background: var(--background-activated);
-
-  opacity: var(--background-activated-opacity);
-}
-
 // Button Focused
 :host(.ion-focused) {
   color: var(--color-focused);
@@ -279,6 +268,17 @@ ion-ripple-effect {
 
     opacity: var(--background-hover-opacity);
   }
+}
+
+// Button Activated
+:host(.ion-activated) {
+  color: var(--color-activated);
+}
+
+:host(.ion-activated) .button-native::after {
+  background: var(--background-activated);
+
+  opacity: var(--background-activated-opacity);
 }
 
 
@@ -305,6 +305,7 @@ ion-ripple-effect {
   color: current-color(base);
 }
 
+
 // Button in Toolbar
 // --------------------------------------------------
 
@@ -319,4 +320,12 @@ ion-ripple-effect {
 :host(.button-solid.in-toolbar:not(.ion-color):not(.in-toolbar-color)) .button-native {
   background: #{var(--ion-toolbar-color, var(--background))};
   color: #{var(--ion-toolbar-background, var(--color))};
+}
+
+// Activated Button in Toolbar
+// --------------------------------------------------
+
+:host(.button-outline.ion-activated.in-toolbar:not(.ion-color):not(.in-toolbar-color)) .button-native {
+  background: var(--ion-toolbar-color, var(--color));
+  color: #{var(--ion-toolbar-background, var(--background), ion-color(primary, contrast))};
 }

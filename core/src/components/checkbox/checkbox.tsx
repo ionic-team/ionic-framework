@@ -150,23 +150,22 @@ export class Checkbox implements ComponentInterface {
   }
 
   @Watch('checked')
-  checkedChanged() {
-    this.emitStyle();
-  }
-
   @Watch('disabled')
-  disabledChanged() {
+  protected styleChanged() {
     this.emitStyle();
   }
 
-  // TODO(FW-3100): remove this
   private emitStyle() {
+    const style: StyleEventDetail = {
+      'interactive-disabled': this.disabled,
+    };
+
+    // TODO(FW-3100): remove this
     if (this.legacyFormController.hasLegacyControl()) {
-      this.ionStyle.emit({
-        'checkbox-checked': this.checked,
-        'interactive-disabled': this.disabled,
-      });
+      style['checkbox-checked'] = this.checked;
     }
+
+    this.ionStyle.emit(style);
   }
 
   private setFocus() {

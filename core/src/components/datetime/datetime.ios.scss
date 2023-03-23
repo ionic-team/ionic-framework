@@ -92,12 +92,20 @@
   font-size: 20px;
 }
 
-:host .calendar-day:after {
+.calendar-day:focus .calendar-day-highlight,
+.calendar-day.calendar-day-active .calendar-day-highlight {
   opacity: 0.2;
 }
 
-:host .calendar-day:focus:after {
+.calendar-day.calendar-day-active .calendar-day-highlight {
   background: current-color(base);
+}
+
+// !important is needed here to overwrite custom highlight background, which is inline.
+// Does not apply to the active state because highlights aren't applied at all there.
+.calendar-day:focus .calendar-day-highlight {
+  /* stylelint-disable-next-line declaration-no-important */
+  background: current-color(base) !important;
 }
 
 /**
@@ -119,10 +127,6 @@
   font-weight: 600;
 }
 
-:host .calendar-day.calendar-day-active:after {
-  background: current-color(base);
-}
-
 /**
  * Day that is selected and is today
  * should have white color.
@@ -131,7 +135,7 @@
   color: current-color(contrast);
 }
 
-:host .calendar-day.calendar-day-today.calendar-day-active:after {
+.calendar-day.calendar-day-today.calendar-day-active .calendar-day-highlight {
   background: current-color(base);
 
   opacity: 1;

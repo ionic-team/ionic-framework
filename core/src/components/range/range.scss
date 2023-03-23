@@ -168,6 +168,11 @@
   width: 100%;
 }
 
+:host(.in-item[slot="start"]),
+:host(.in-item[slot="end"]) {
+  width: auto;
+}
+
 :host(.in-item) ::slotted(ion-label) {
   align-self: center;
 }
