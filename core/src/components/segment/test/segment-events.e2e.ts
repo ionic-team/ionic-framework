@@ -176,7 +176,7 @@ test.describe('segment: events: ionChange', () => {
     expect(await segment.evaluate((el: HTMLIonSegmentElement) => el.value)).toBe('2');
   });
 
-  test.only('should emit when clicking after changing value programmatically', async ({ page }) => {
+  test('should emit when clicking after changing value programmatically', async ({ page }) => {
     test.info().annotations.push({
       type: 'issue',
       description: 'https://github.com/ionic-team/ionic-framework/issues/27002',
