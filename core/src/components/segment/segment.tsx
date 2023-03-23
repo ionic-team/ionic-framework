@@ -24,7 +24,6 @@ import type { SegmentChangeEventDetail } from './segment-interface';
 })
 export class Segment implements ComponentInterface {
   private gesture?: Gesture;
-  private checked?: HTMLIonSegmentButtonElement;
 
   // Value before the segment is dragged
   private valueBeforeGesture?: string;
@@ -227,6 +226,10 @@ export class Segment implements ComponentInterface {
     return Array.from(this.el.querySelectorAll('ion-segment-button'));
   }
 
+  private get checked() {
+    return this.getButtons().find((button) => button.value === this.value);
+  }
+
   /**
    * The gesture blocks the segment button ripple. This
    * function adds the ripple based on the checked segment
@@ -340,9 +343,6 @@ export class Segment implements ComponentInterface {
     const buttons = this.getButtons();
     const index = buttons.findIndex((button) => button.value === this.value);
     const next = index + 1;
-
-    // Keep track of the currently checked button
-    this.checked = buttons.find((button) => button.value === this.value);
 
     for (const button of buttons) {
       button.classList.remove('segment-button-after-checked');
@@ -474,8 +474,6 @@ export class Segment implements ComponentInterface {
         this.setCheckedClasses();
       }
     }
-
-    this.checked = current;
   };
 
   private getSegmentButton = (selector: 'first' | 'last' | 'next' | 'previous'): HTMLIonSegmentButtonElement | null => {
@@ -533,7 +531,7 @@ export class Segment implements ComponentInterface {
 
     if (keyDownSelectsButton) {
       const previous = this.checked;
-      this.checkButton(this.checked || current, current);
+      this.checkButton(previous || current, current);
       if (current !== previous) {
         this.emitValueChange();
       }
