@@ -163,11 +163,6 @@
   height: $item-ios-avatar-height;
 }
 
-::slotted(ion-thumbnail) {
-  width: $item-ios-thumbnail-width;
-  height: $item-ios-thumbnail-height;
-}
-
 ::slotted(ion-avatar[slot="end"]),
 ::slotted(ion-thumbnail[slot="end"]) {
   @include margin(($item-ios-padding-end * 0.5));
