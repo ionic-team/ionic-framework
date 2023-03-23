@@ -1,0 +1,48 @@
+name: 'Ionic Pre-Release'
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        required: true
+        type: choice
+        description: Which version should be published?
+        options:
+          - prepatch
+          - preminor
+          - premajor
+      prefix:
+        required: true
+        type: choice
+        description: What kind of pre-release is this?
+        default: beta
+        options:
+          - alpha
+          - beta
+          - rc
+
+jobs:
+  build-ionic:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Configure Identity
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+        shell: bash
+      - name: Install Dependencies
+        run: npm ci --no-package-lock && lerna bootstrap --ignore-scripts -- --legacy-peer-deps
+        shell: bash
+      - name: Prepare NPM Token
+        run: echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc
+        shell: bash
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Release
+        run: |
+          HUSKY_SKIP_HOOKS=1 lerna publish $(echo "${{ github.event.inputs.version }}") --no-verify-access --yes --force-publish='*' --dist-tag next --no-git-tag-version --no-push --skip-npm --preid $(echo "${{ github.events.inputs.prefix }}")
+        shell: bash
