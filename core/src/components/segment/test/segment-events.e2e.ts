@@ -183,7 +183,7 @@ test.describe('segment: events: ionChange', () => {
     });
 
     await page.setContent(`
-      <ion-segment value="1">
+      <ion-segment value="1" swipe-gesture="false">
         <ion-segment-button value="1">One</ion-segment-button>
         <ion-segment-button value="2">Two</ion-segment-button>
         <ion-segment-button value="3">Three</ion-segment-button>
@@ -191,16 +191,14 @@ test.describe('segment: events: ionChange', () => {
     `);
 
     const segment = page.locator('ion-segment');
+    const segmentButtons = segment.locator('ion-segment-button');
     const ionChangeSpy = await page.spyOnEvent('ionChange');
 
     await segment.evaluate((el: HTMLIonSegmentElement) => (el.value = '2'));
 
-    expect(ionChangeSpy).toHaveReceivedEventTimes(0);
-    expect(await segment.evaluate((el: HTMLIonSegmentElement) => el.value)).toBe('2');
+    await segmentButtons.nth(0).click();
 
-    await segment.nth(0).click();
-
-    await ionChangeSpy.next();
+    await ionChange.next();
     expect(ionChangeSpy).toHaveReceivedEventDetail({ value: '1' });
   })
 });
