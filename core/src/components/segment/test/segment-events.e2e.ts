@@ -175,4 +175,32 @@ test.describe('segment: events: ionChange', () => {
     expect(ionChangeSpy).toHaveReceivedEventTimes(0);
     expect(await segment.evaluate((el: HTMLIonSegmentElement) => el.value)).toBe('2');
   });
+
+  test.only('should emit when clicking after changing value programmatically', async ({ page }) => {
+    test.info().annotations.push({
+      type: 'issue',
+      description: 'https://github.com/ionic-team/ionic-framework/issues/27002',
+    });
+
+    await page.setContent(`
+      <ion-segment value="1">
+        <ion-segment-button value="1">One</ion-segment-button>
+        <ion-segment-button value="2">Two</ion-segment-button>
+        <ion-segment-button value="3">Three</ion-segment-button>
+      </ion-segment>
+    `);
+
+    const segment = page.locator('ion-segment');
+    const ionChangeSpy = await page.spyOnEvent('ionChange');
+
+    await segment.evaluate((el: HTMLIonSegmentElement) => (el.value = '2'));
+
+    expect(ionChangeSpy).toHaveReceivedEventTimes(0);
+    expect(await segment.evaluate((el: HTMLIonSegmentElement) => el.value)).toBe('2');
+
+    await segment.nth(0).click();
+
+    await ionChangeSpy.next();
+    expect(ionChangeSpy).toHaveReceivedEventDetail({ value: '1' });
+  })
 });
