@@ -96,6 +96,13 @@
   height: $item-md-avatar-height;
 }
 
+// Material Design Item Divider Thumbnail
+// --------------------------------------------------
+
+::slotted(ion-thumbnail) {
+  --size: #{$item-md-thumbnail-size};
+}
+
 // Material Design Item Divider Avatar/Thumbnail
 // --------------------------------------------------
 
