@@ -147,7 +147,7 @@ test.describe('modal: incorrect usage', () => {
     await page.goto('/src/components/modal/test/basic');
   });
 
-  test.only('it should warn when setting a breakpoint on a non-sheet modal', async ({ page }) => {
+  test('it should warn when setting a breakpoint on a non-sheet modal', async ({ page }) => {
     const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
 
     const warnings: string[] = [];
