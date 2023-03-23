@@ -42,7 +42,7 @@
   <span> · </span>
   <a href="https://blog.ionicframework.com/">Blog</a>
   <br />
-  Community: 
+  Community:
   <a href="https://ionic.link/discord">Discord</a>
   <span> · </span>
   <a href="https://forum.ionicframework.com/">Forums</a>
@@ -77,8 +77,12 @@ Already have an Ionic app? These guides will help you migrate to the latest vers
 
 ### Examples
 
-The [Ionic Conference App](https://github.com/ionic-team/ionic-conference-app) is a full featured Ionic app.
-It is the perfect starting point for learning and building your own app.
+The Ionic Conference App is a full featured Ionic app. It is the perfect starting point for learning and building your own app.
+
+- [Angular Ionic Conference App](https://github.com/ionic-team/ionic-conference-app)
+- [React Ionic Conference App](https://github.com/ionic-team/ionic-react-conference-app)
+<!-- TODO(FW-3811): add this when the vue conference app is updated -->
+<!-- - [Vue Ionic Conference App](https://github.com/ionic-team/ionic-vue-conference-app) -->
 
 ### Contributing
 
