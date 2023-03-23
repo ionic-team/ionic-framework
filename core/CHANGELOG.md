@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.7.0](https://github.com/ionic-team/ionic/compare/v6.6.3...v6.7.0) (2023-03-23)
+
+
+### Features
+
+* **config:** add option to disable custom html functionality ([#26956](https://github.com/ionic-team/ionic/issues/26956)) ([3b0af7c](https://github.com/ionic-team/ionic/commit/3b0af7c55d4fa039be33d6605414761494d5af8f))
+
+
+
+
+
+## [6.6.3](https://github.com/ionic-team/ionic/compare/v6.6.2...v6.6.3) (2023-03-22)
+
+
+### Bug Fixes
+
+* **menu:** main content is not scrollable while swiping ([#26976](https://github.com/ionic-team/ionic/issues/26976)) ([88bd8a4](https://github.com/ionic-team/ionic/commit/88bd8a47c5e844d1d3a2b3b13621826faf776afb)), closes [#21193](https://github.com/ionic-team/ionic/issues/21193)
+
+
+
+
+
 ## [6.6.2](https://github.com/ionic-team/ionic/compare/v6.6.1...v6.6.2) (2023-03-15)
 
 

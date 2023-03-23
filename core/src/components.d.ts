@@ -192,7 +192,7 @@ export namespace Components {
          */
         "leaveAnimation"?: AnimationBuilder;
         /**
-          * The main message to be displayed in the alert. `message` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
+          * The main message to be displayed in the alert. `message` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)  This property accepts custom HTML as a string. Developers who only want to pass plain text can disable the custom HTML functionality by setting `innerHTMLTemplatesEnabled: false` in the Ionic config.
          */
         "message"?: string | IonicSafeString;
         /**
@@ -1039,7 +1039,7 @@ export namespace Components {
          */
         "loadingSpinner"?: SpinnerTypes | null;
         /**
-          * Optional text to display while loading. `loadingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
+          * Optional text to display while loading. `loadingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)  This property accepts custom HTML as a string. Developers who only want to pass plain text can disable the custom HTML functionality by setting `innerHTMLTemplatesEnabled: false` in the Ionic config.
          */
         "loadingText"?: string | IonicSafeString;
     }
@@ -1422,7 +1422,7 @@ export namespace Components {
          */
         "leaveAnimation"?: AnimationBuilder;
         /**
-          * Optional text content to display in the loading indicator.
+          * Optional text content to display in the loading indicator.  This property accepts custom HTML as a string. Developers who only want to pass plain text can disable the custom HTML functionality by setting `innerHTMLTemplatesEnabled: false` in the Ionic config.
          */
         "message"?: string | IonicSafeString;
         /**
@@ -2221,7 +2221,7 @@ export namespace Components {
          */
         "pullingIcon"?: SpinnerTypes | string | null;
         /**
-          * The text you want to display when you begin to pull down. `pullingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
+          * The text you want to display when you begin to pull down. `pullingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)  This property accepts custom HTML as a string. Developers who only want to pass plain text can disable the custom HTML functionality by setting `innerHTMLTemplatesEnabled: false` in the Ionic config.
          */
         "pullingText"?: string | IonicSafeString;
         /**
@@ -2229,7 +2229,7 @@ export namespace Components {
          */
         "refreshingSpinner"?: SpinnerTypes | null;
         /**
-          * The text you want to display when performing a refresh. `refreshingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
+          * The text you want to display when performing a refresh. `refreshingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)  This property accepts custom HTML as a string. Developers who only want to pass plain text can disable the custom HTML functionality by setting `innerHTMLTemplatesEnabled: false` in the Ionic config.
          */
         "refreshingText"?: string | IonicSafeString;
     }
@@ -2990,7 +2990,7 @@ export namespace Components {
          */
         "leaveAnimation"?: AnimationBuilder;
         /**
-          * Message to be shown in the toast.
+          * Message to be shown in the toast. This property accepts custom HTML as a string. Developers who only want to pass plain text can disable the custom HTML functionality by setting `innerHTMLTemplatesEnabled: false` in the Ionic config.
          */
         "message"?: string | IonicSafeString;
         /**
@@ -4147,7 +4147,7 @@ declare namespace LocalJSX {
          */
         "leaveAnimation"?: AnimationBuilder;
         /**
-          * The main message to be displayed in the alert. `message` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
+          * The main message to be displayed in the alert. `message` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)  This property accepts custom HTML as a string. Developers who only want to pass plain text can disable the custom HTML functionality by setting `innerHTMLTemplatesEnabled: false` in the Ionic config.
          */
         "message"?: string | IonicSafeString;
         /**
@@ -5045,7 +5045,7 @@ declare namespace LocalJSX {
          */
         "loadingSpinner"?: SpinnerTypes | null;
         /**
-          * Optional text to display while loading. `loadingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
+          * Optional text to display while loading. `loadingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)  This property accepts custom HTML as a string. Developers who only want to pass plain text can disable the custom HTML functionality by setting `innerHTMLTemplatesEnabled: false` in the Ionic config.
          */
         "loadingText"?: string | IonicSafeString;
     }
@@ -5420,7 +5420,7 @@ declare namespace LocalJSX {
          */
         "leaveAnimation"?: AnimationBuilder;
         /**
-          * Optional text content to display in the loading indicator.
+          * Optional text content to display in the loading indicator.  This property accepts custom HTML as a string. Developers who only want to pass plain text can disable the custom HTML functionality by setting `innerHTMLTemplatesEnabled: false` in the Ionic config.
          */
         "message"?: string | IonicSafeString;
         /**
@@ -6188,7 +6188,7 @@ declare namespace LocalJSX {
          */
         "pullingIcon"?: SpinnerTypes | string | null;
         /**
-          * The text you want to display when you begin to pull down. `pullingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
+          * The text you want to display when you begin to pull down. `pullingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)  This property accepts custom HTML as a string. Developers who only want to pass plain text can disable the custom HTML functionality by setting `innerHTMLTemplatesEnabled: false` in the Ionic config.
          */
         "pullingText"?: string | IonicSafeString;
         /**
@@ -6196,7 +6196,7 @@ declare namespace LocalJSX {
          */
         "refreshingSpinner"?: SpinnerTypes | null;
         /**
-          * The text you want to display when performing a refresh. `refreshingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
+          * The text you want to display when performing a refresh. `refreshingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)  This property accepts custom HTML as a string. Developers who only want to pass plain text can disable the custom HTML functionality by setting `innerHTMLTemplatesEnabled: false` in the Ionic config.
          */
         "refreshingText"?: string | IonicSafeString;
     }
@@ -6999,7 +6999,7 @@ declare namespace LocalJSX {
          */
         "leaveAnimation"?: AnimationBuilder;
         /**
-          * Message to be shown in the toast.
+          * Message to be shown in the toast. This property accepts custom HTML as a string. Developers who only want to pass plain text can disable the custom HTML functionality by setting `innerHTMLTemplatesEnabled: false` in the Ionic config.
          */
         "message"?: string | IonicSafeString;
         /**
