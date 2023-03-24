@@ -154,8 +154,7 @@
   font-size: 13px;
 }
 
-
-// iOS Item Avatar & Thumbnail
+// iOS Item Avatar
 // --------------------------------------------------
 
 ::slotted(ion-avatar) {
@@ -163,10 +162,15 @@
   height: $item-ios-avatar-height;
 }
 
+// iOS Item Thumbnail
+// --------------------------------------------------
+
 ::slotted(ion-thumbnail) {
-  width: $item-ios-thumbnail-width;
-  height: $item-ios-thumbnail-height;
+  --size: #{$item-ios-thumbnail-size};
 }
+
+// iOS Item Avatar/Thumbnail
+// --------------------------------------------------
 
 ::slotted(ion-avatar[slot="end"]),
 ::slotted(ion-thumbnail[slot="end"]) {
