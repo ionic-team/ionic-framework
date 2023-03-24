@@ -32,7 +32,7 @@ test.describe('radio-group: form', () => {
   });
 });
 
-test.describe.only('radio-group: form submission', () => {
+test.describe('radio-group: form submission', () => {
   test('should submit radio data in a form', async ({ page, skip }) => {
     skip.rtl();
     skip.mode('md');
@@ -49,7 +49,9 @@ test.describe.only('radio-group: form submission', () => {
 
     const radioGroupData = await page.evaluate(() => {
       const form = document.querySelector('form');
-      if (!form) { return; }
+      if (!form) {
+        return;
+      }
 
       const formData = new FormData(form);
       return formData.get('my-group');
@@ -57,4 +59,4 @@ test.describe.only('radio-group: form submission', () => {
 
     await expect(radioGroupData).toBe('a');
   });
-})
+});
