@@ -31,3 +31,30 @@ test.describe('radio-group: form', () => {
     await expect(value).toHaveText('');
   });
 });
+
+test.describe.only('radio-group: form submission', () => {
+  test('should submit radio data in a form', async ({ page, skip }) => {
+    skip.rtl();
+    skip.mode('md');
+
+    await page.setContent(`
+      <form>
+        <ion-radio-group value="a" name="my-group">
+          <ion-radio value="a"></ion-radio>
+          <ion-radio value="b"></ion-radio>
+          <ion-radio value="c"></ion-radio>
+        </ion-radio-group>
+      </form>
+    `);
+
+    const radioGroupData = await page.evaluate(() => {
+      const form = document.querySelector('form');
+      if (!form) { return; }
+
+      const formData = new FormData(form);
+      return formData.get('my-group');
+    });
+
+    await expect(radioGroupData).toBe('a');
+  });
+})
