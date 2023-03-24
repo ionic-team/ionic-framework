@@ -24,4 +24,24 @@ test.describe('thumbnail: basic', () => {
 
     await expect(referenceEl).toHaveScreenshot(`thumbnail-ion-item-diff-${page.getSnapshotSettings()}.png`);
   });
+
+  test('size should be customizable in <ion-item>', async ({ page, skip }) => {
+    skip.rtl();
+
+    test.info().annotations.push({
+      type: 'issue',
+      description: 'https://github.com/ionic-team/ionic-framework/issues/22935',
+    });
+
+    await page.setContent(`
+      <ion-item>
+        <ion-thumbnail style="--size: 20px">
+          <img src="/src/components/thumbnail/test/thumbnail.svg" />
+        </ion-thumbnail>
+      </ion-item>
+    `);
+
+    const item = page.locator('ion-item');
+    await expect(item).toHaveScreenshot(`thumbnail-ion-item-size-diff-${page.getSnapshotSettings()}.png`);
+  });
 });
