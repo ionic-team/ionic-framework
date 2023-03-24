@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "6.7.0",
+  "version": "6.7.1-nightly.20230324",
   "description": "Base components for Ionic",
   "keywords": [
     "ionic",
