@@ -37,6 +37,11 @@ test.describe('radio-group: form submission', () => {
     skip.rtl();
     skip.mode('md');
 
+    test.info().annotations.push({
+      type: 'issue',
+      description: 'https://github.com/ionic-team/ionic-framework/issues/27016',
+    });
+
     await page.setContent(`
       <form>
         <ion-radio-group value="a" name="my-group">
