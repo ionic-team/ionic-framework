@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [6.7.0](https://github.com/ionic-team/ionic-framework/compare/v6.6.3...v6.7.0) (2023-03-23)
+
+
+### Features
+
+* **config:** add option to disable custom html functionality ([#26956](https://github.com/ionic-team/ionic-framework/issues/26956)) ([3b0af7c](https://github.com/ionic-team/ionic-framework/commit/3b0af7c55d4fa039be33d6605414761494d5af8f))
+
+
+
+
+
 # [7.0.0-rc.3](https://github.com/ionic-team/ionic-framework/compare/v7.0.0-rc.2...v7.0.0-rc.3) (2023-03-22)
 
 **Note:** Version bump only for package ionic-framework
@@ -12,6 +23,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 ## [6.6.3](https://github.com/ionic-team/ionic-framework/compare/v6.6.2...v6.6.3) (2023-03-22)
+
+**Note:** Version bump only for package ionic-framework
+
+
+
+
 
 ### Bug Fixes
 
