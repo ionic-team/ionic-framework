@@ -3,6 +3,7 @@ import { Component, Element, Event, Host, Listen, Prop, Watch, h } from '@stenci
 
 import { getIonMode } from '../../global/ionic-global';
 import type { RadioGroupChangeEventDetail } from '../../interface';
+import { renderHiddenInput } from '../../utils/helpers';
 
 @Component({
   tag: 'ion-radio-group',
@@ -156,8 +157,10 @@ export class RadioGroup implements ComponentInterface {
   }
 
   render() {
-    const { label, labelId } = this;
+    const { label, labelId, el, name, value } = this;
     const mode = getIonMode(this);
+
+    renderHiddenInput(true, el, name, value, false);
 
     return <Host role="radiogroup" aria-labelledby={label ? labelId : null} onClick={this.onClick} class={mode}></Host>;
   }
