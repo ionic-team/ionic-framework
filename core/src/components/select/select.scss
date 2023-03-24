@@ -25,6 +25,8 @@
 
   font-family: $font-family-base;
 
+  white-space: nowrap;
+
   overflow: hidden;
   z-index: $z-index-item-input;
 }
@@ -77,7 +79,7 @@ button {
 
   text-overflow: ellipsis;
 
-  white-space: nowrap;
+  white-space: inherit;
 
   overflow: hidden;
 }
