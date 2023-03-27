@@ -161,3 +161,10 @@
 
   overflow: inherit;
 }
+
+// Material Design Slotted Button
+// --------------------------------------------------
+
+::slotted(ion-button[slot="end"]) {
+  @include margin-horizontal($item-md-button-end-slot-margin-start, $item-md-button-end-slot-margin-end);
+}
