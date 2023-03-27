@@ -33,9 +33,9 @@ export class InfiniteScrollContent implements ComponentInterface {
    * For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
    *
    * This property accepts custom HTML as a string.
-   * Developers who only want to pass plain text
-   * can disable the custom HTML functionality
-   * by setting `innerHTMLTemplatesEnabled: false` in the Ionic config.
+   * Content is parsed as plaintext by default.
+   * `innerHTMLTemplatesEnabled` must be set to `true` in the Ionic config
+   * before custom HTML can be used.
    */
   @Prop() loadingText?: string | IonicSafeString;
 
