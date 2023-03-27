@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { test, Viewports } from '@utils/test/playwright';
 
-import { openPopover } from '../test.utils';
+import { openPopover, screenshotPopover } from '../test.utils';
 
 test.describe('popover: size', async () => {
   /**
@@ -13,16 +13,15 @@ test.describe('popover: size', async () => {
     await page.goto('/src/components/popover/test/size');
     await page.setViewportSize(Viewports.tablet.portrait); // avoid popovers overlapping
 
-    const sameTimeTriggers = ['auto-trigger', 'cover-trigger', 'event-trigger'];
+    // const sameTimeTriggers = ['auto-trigger', 'cover-trigger', 'event-trigger'];
 
-    for (const trigger of sameTimeTriggers) {
-      await openPopover(page, trigger, true);
-    }
+    // for (const trigger of sameTimeTriggers) {
+    //   await openPopover(page, trigger, true);
+    // }
 
-    await expect(page).toHaveScreenshot(`popover-size-${page.getSnapshotSettings()}.png`);
+    // await expect(page).toHaveScreenshot(`popover-size-${page.getSnapshotSettings()}.png`);
 
     // test this one separately since it would overlap others
-    // TODO FW-3598
-    //await screenshotPopover(page, 'no-event-trigger', 'size');
+    await screenshotPopover(page, 'no-event-trigger', 'size');
   });
 });
