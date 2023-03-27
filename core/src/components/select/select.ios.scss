@@ -31,5 +31,7 @@
   width: 18px;
   height: 18px;
 
-  color: #{$text-color-step-400};
+  // Color deviates from the iOS spec, but satisfies WCAG AAA:
+  // https://www.w3.org/TR/WCAG20-TECHS/G18.html
+  color: #{$text-color-step-350};
 }
