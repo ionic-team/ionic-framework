@@ -248,3 +248,25 @@ test.describe('select: label', () => {
     });
   });
 });
+
+test.describe.only('select: alert label', () => {
+  test('should use the label to set the default header in an alert', async ({ page, skip }) => {
+    skip.rtl();
+    skip.mode('md');
+
+    await page.setContent(`
+      <ion-select label="My Alert" interface="alert">
+        <ion-select-option value="a">A</ion-select-option>
+      </ion-select>
+    `);
+
+    const select = page.locator('ion-select');
+    const alert = page.locator('ion-alert');
+    const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+
+    await select.click();
+    await ionAlertDidPresent.next();
+
+    await expect(alert.locator('.alert-title')).toHaveText('My Alert');
+  });
+});
