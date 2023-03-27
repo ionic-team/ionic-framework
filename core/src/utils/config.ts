@@ -249,4 +249,4 @@ export const getMode = (): Mode => {
   return 'md';
 };
 
-export const ENABLE_HTML_CONTENT_DEFAULT = true;
+export const ENABLE_HTML_CONTENT_DEFAULT = false;
