@@ -35,6 +35,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Textarea](#version-7x-textarea)
   - [Toggle](#version-7x-toggle)
   - [Virtual Scroll](#version-7x-virtual-scroll)
+- [Config](#version-7x-config)
 - [Types](#version-7x-types)
   - [Overlay Attribute Interfaces](#version-7x-overlay-attribute-interfaces)
 - [JavaScript Frameworks](#version-7x-javascript-frameworks)
@@ -296,6 +297,10 @@ Developers using the component will need to migrate to a virtual scroll solution
 - [Vue](https://ionicframework.com/docs/vue/virtual-scroll)
 
 Any references to the virtual scroll types from `@ionic/core` have been removed. Please remove or replace these types: `Cell`, `VirtualNode`, `CellType`, `NodeChange`, `HeaderFn`, `ItemHeightFn`, `FooterHeightFn`, `ItemRenderFn` and `DomRenderFn`.
+
+<h2 id="version-7x-config">Config</h2>
+
+- `innerHTMLTemplatesEnabled` defaults to `false`. Developers who wish to use the `innerHTML` functionality inside of `ion-alert`, `ion-infinite-scroll-content`, `ion-loading`, `ion-refresher-content`, and `ion-toast` must set this config to `true` and properly sanitize their content.
 
 <h2 id="version-7x-types">Types</h2>
 

@@ -50,8 +50,9 @@
 
   font-family: $font-family-base;
 
-  cursor: pointer;
+  white-space: nowrap;
 
+  cursor: pointer;
   z-index: $z-index-item-input;
 }
 
@@ -179,7 +180,7 @@ button {
 
   text-overflow: ellipsis;
 
-  white-space: nowrap;
+  white-space: inherit;
 
   overflow: hidden;
 }

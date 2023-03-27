@@ -58,6 +58,12 @@
     </ion-app>
 
     <script>
+      window.Ionic = {
+        config: {
+          innerHTMLTemplatesEnabled: true,
+        },
+      };
+
       async function openAlert(opts) {
         const alert = await alertController.create(opts);
         await alert.present();
