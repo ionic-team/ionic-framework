@@ -744,6 +744,7 @@ export class Select implements ComponentInterface {
         class={createColorClasses(this.color, {
           [mode]: true,
           'in-item': inItem,
+          'in-item-color': hostContext('ion-item.ion-color', el),
           'select-disabled': disabled,
           'select-expanded': isExpanded,
           'has-value': this.hasValue(),
