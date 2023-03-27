@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.0.0-rc.4](https://github.com/ionic-team/ionic-framework/compare/v7.0.0-rc.3...v7.0.0-rc.4) (2023-03-27)
+
+
+### Bug Fixes
+
+* **fab, tab-button:** rtl alignment in safari and firefox ([#26986](https://github.com/ionic-team/ionic-framework/issues/26986)) ([e23fd9e](https://github.com/ionic-team/ionic-framework/commit/e23fd9eceed289284eb047261c0d6bdab6ac5e8e)), closes [#22739](https://github.com/ionic-team/ionic-framework/issues/22739)
+* **many:** innerHTML is disabled by default ([#27029](https://github.com/ionic-team/ionic-framework/issues/27029)) ([b7e4603](https://github.com/ionic-team/ionic-framework/commit/b7e46038e0eee611bb9f5d83772804e83b19a63d))
+* **radio-group:** radios participate in form submission ([#27018](https://github.com/ionic-team/ionic-framework/issues/27018)) ([3b99c31](https://github.com/ionic-team/ionic-framework/commit/3b99c31bab41bf7fcec340ac7159d3e8fce126c1)), closes [#27016](https://github.com/ionic-team/ionic-framework/issues/27016)
+* **segment:** change event fires when clicking ([#27010](https://github.com/ionic-team/ionic-framework/issues/27010)) ([3e0a905](https://github.com/ionic-team/ionic-framework/commit/3e0a905e81b2308450dcd2dc20489b7988f0e647)), closes [#27002](https://github.com/ionic-team/ionic-framework/issues/27002)
+* **select:** inherit white-space in select-text to allow text wrapping ([#26973](https://github.com/ionic-team/ionic-framework/issues/26973)) ([19c1e25](https://github.com/ionic-team/ionic-framework/commit/19c1e25399ca18c8e6a8dd39c0131979c0bb01e9)), closes [#19949](https://github.com/ionic-team/ionic-framework/issues/19949)
+
+
+### BREAKING CHANGES
+
+* **many:** The `innerHTMLTemplatesEnabled` Ionic Config now defaults to `false`. Developers can set this option to `true` if they would like to continue to use custom HTML features in `ion-alert`, `ion-infinite-scroll-content`, `ion-loading`, `ion-refresher-content`, and `ion-toast`.
+
+
+
+
+
 # [6.7.0](https://github.com/ionic-team/ionic-framework/compare/v6.6.3...v6.7.0) (2023-03-23)
 
 
