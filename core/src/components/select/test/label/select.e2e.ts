@@ -249,7 +249,7 @@ test.describe('select: label', () => {
   });
 });
 
-test.describe.only('select: alert label', () => {
+test.describe('select: alert label', () => {
   test('should use the label to set the default header in an alert', async ({ page, skip }) => {
     skip.rtl();
     skip.mode('md');
