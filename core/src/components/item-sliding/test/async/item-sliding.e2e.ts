@@ -12,7 +12,7 @@ test.describe('item-sliding: async', () => {
     const itemSlidingEl = page.locator('ion-item-sliding');
 
     // Wait for item to be added to DOM
-    await page.waitForSelector('#custom-item');
+    await page.waitForSelector('ion-item');
 
     // Click item to open ion-item-sliding
     await itemEl.click();
