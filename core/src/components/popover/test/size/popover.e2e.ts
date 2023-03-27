@@ -13,13 +13,13 @@ test.describe('popover: size', async () => {
     await page.goto('/src/components/popover/test/size');
     await page.setViewportSize(Viewports.tablet.portrait); // avoid popovers overlapping
 
-    // const sameTimeTriggers = ['auto-trigger', 'cover-trigger', 'event-trigger'];
+    const sameTimeTriggers = ['auto-trigger', 'cover-trigger', 'event-trigger'];
 
-    // for (const trigger of sameTimeTriggers) {
-    //   await openPopover(page, trigger, true);
-    // }
+    for (const trigger of sameTimeTriggers) {
+      await openPopover(page, trigger, true);
+    }
 
-    // await expect(page).toHaveScreenshot(`popover-size-${page.getSnapshotSettings()}.png`);
+    await expect(page).toHaveScreenshot(`popover-size-${page.getSnapshotSettings()}.png`);
 
     // test this one separately since it would overlap others
     await screenshotPopover(page, 'no-event-trigger', 'size');
