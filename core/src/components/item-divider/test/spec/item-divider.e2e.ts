@@ -15,6 +15,11 @@ test.describe('item-divider: spec', () => {
   test('should have margin-end on button in end slot', async ({ page, skip }) => {
     skip.mode('ios', 'This behavior is only available in MD mode.');
 
+    test.info().annotations.push({
+      type: 'issue',
+      description: 'https://github.com/ionic-team/ionic-framework/issues/17012',
+    });
+
     const button = page.locator('ion-button');
     const buttonMarginEnd = await button.evaluate((el) => {
       const styles = window.getComputedStyle(el);
