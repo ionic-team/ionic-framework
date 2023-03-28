@@ -1,6 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, forceUpdate } from '@stencil/core';
-import { caretDownSharp } from 'ionicons/icons';
+import { caretDownSharp, chevronExpand } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
 import type {
@@ -759,6 +759,7 @@ export class Select implements ComponentInterface {
         class={createColorClasses(this.color, {
           [mode]: true,
           'in-item': inItem,
+          'in-item-color': hostContext('ion-item.ion-color', el),
           'select-disabled': disabled,
           'select-expanded': isExpanded,
           'has-value': this.hasValue(),
@@ -895,7 +896,9 @@ Developers can use the "legacy" property to continue using the legacy form marku
    * next to the select text.
    */
   private renderSelectIcon() {
-    return <ion-icon class="select-icon" part="icon" aria-hidden="true" icon={caretDownSharp}></ion-icon>;
+    const mode = getIonMode(this);
+    const icon = mode === 'ios' ? chevronExpand : caretDownSharp;
+    return <ion-icon class="select-icon" part="icon" aria-hidden="true" icon={icon}></ion-icon>;
   }
 
   private get ariaLabel() {
