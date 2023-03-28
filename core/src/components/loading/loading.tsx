@@ -4,6 +4,7 @@ import { Watch, Component, Element, Event, Host, Method, Prop, h } from '@stenci
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import type { AnimationBuilder, FrameworkDelegate, OverlayInterface } from '../../interface';
+import { ENABLE_HTML_CONTENT_DEFAULT } from '../../utils/config';
 import { raf } from '../../utils/helpers';
 import {
   BACKDROP,
@@ -41,6 +42,7 @@ import { mdLeaveAnimation } from './animations/md.leave';
 export class Loading implements ComponentInterface, OverlayInterface {
   private readonly delegateController = createDelegateController(this);
   private readonly triggerController = createTriggerController();
+  private customHTMLEnabled = config.get('innerHTMLTemplatesEnabled', ENABLE_HTML_CONTENT_DEFAULT);
   private durationTimeout?: ReturnType<typeof setTimeout>;
   private currentTransition?: Promise<any>;
 
@@ -75,6 +77,11 @@ export class Loading implements ComponentInterface, OverlayInterface {
 
   /**
    * Optional text content to display in the loading indicator.
+   *
+   * This property accepts custom HTML as a string.
+   * Content is parsed as plaintext by default.
+   * `innerHTMLTemplatesEnabled` must be set to `true` in the Ionic config
+   * before custom HTML can be used.
    */
   @Prop() message?: string | IonicSafeString;
 
@@ -296,6 +303,19 @@ export class Loading implements ComponentInterface, OverlayInterface {
     this.dismiss(undefined, BACKDROP);
   };
 
+  private renderLoadingMessage(msgId: string) {
+    const { customHTMLEnabled, message } = this;
+    if (customHTMLEnabled) {
+      return <div class="loading-content" id={msgId} innerHTML={sanitizeDOMString(message)}></div>;
+    }
+
+    return (
+      <div class="loading-content" id={msgId}>
+        {message}
+      </div>
+    );
+  }
+
   render() {
     const { message, spinner, htmlAttributes, overlayIndex } = this;
     const mode = getIonMode(this);
@@ -335,9 +355,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
             </div>
           )}
 
-          {message !== undefined && (
-            <div class="loading-content" id={msgId} innerHTML={sanitizeDOMString(message)}></div>
-          )}
+          {message !== undefined && this.renderLoadingMessage(msgId)}
         </div>
 
         <div tabindex="0"></div>

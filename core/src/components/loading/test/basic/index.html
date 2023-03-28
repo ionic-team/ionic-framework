@@ -100,6 +100,12 @@
       </ion-content>
     </ion-app>
     <script>
+      window.Ionic = {
+        config: {
+          innerHTMLTemplatesEnabled: true,
+        },
+      };
+
       async function openLoading(opts) {
         const loading = await loadingController.create(opts);
         await loading.present();

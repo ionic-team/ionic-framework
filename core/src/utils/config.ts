@@ -190,6 +190,16 @@ export interface IonicConfig {
   sanitizerEnabled?: boolean;
 
   /**
+   * Relevant Components: ion-alert, ion-infinite-scroll-content, ion-loading, ion-refresher-content, ion-toast
+   * If `false`, all `innerHTML` usage will be disabled in Ionic, and
+   * custom HTML will not be usable in the relevant components.
+   * If `true`, all `innerHTML` usage will be enabled in Ionic, and
+   * custom HTML will be usable in the relevant components.
+   * `innerHTML` usage is disabled by default.
+   */
+  innerHTMLTemplatesEnabled?: boolean;
+
+  /**
    * Overrides the default platform detection methods.
    */
   platform?: PlatformConfig;
@@ -240,3 +250,5 @@ export const getMode = (): Mode => {
   }
   return 'md';
 };
+
+export const ENABLE_HTML_CONTENT_DEFAULT = false;

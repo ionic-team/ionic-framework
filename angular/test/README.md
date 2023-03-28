@@ -2,6 +2,18 @@
 
 Ionic Framework supports multiple versions of Angular. As a result, we need to verify that Ionic works correctly with each of these Angular versions.
 
+## Syncing Local Changes
+
+The Angular test app supports syncing your locally built changes for validation.
+
+1. Build the `core` and `packages/angular` projects using `npm run build`.
+2. [Build the Angular test app](#test-app-build-structure).
+3. Navigate to the built test app.
+4. Install dependencies using `npm install`.
+5. Sync your local changes using `npm run sync`.
+
+From here you can either build the application or start a local dev server. When re-syncing changes, you will need to [wipe or disable the application cache](#application-cache).
+
 ## Application Cache
 
 Angular CLI creates a cache of several files on disk by default in the `.angular` directory. This decreases the time taken to build the test application. However, the cache makes it difficult to quickly sync and check local changes of Ionic. As a result, the `.angular` cache is disabled by default in the test app projects.

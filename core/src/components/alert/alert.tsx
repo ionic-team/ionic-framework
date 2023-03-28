@@ -1,8 +1,10 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Listen, Method, Prop, Watch, forceUpdate, h } from '@stencil/core';
 
+import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import type { AnimationBuilder, CssClassMap, OverlayInterface, FrameworkDelegate } from '../../interface';
+import { ENABLE_HTML_CONTENT_DEFAULT } from '../../utils/config';
 import type { Gesture } from '../../utils/gesture';
 import { createButtonActiveGesture } from '../../utils/gesture/button-active';
 import {
@@ -43,7 +45,7 @@ import { mdLeaveAnimation } from './animations/md.leave';
 export class Alert implements ComponentInterface, OverlayInterface {
   private readonly delegateController = createDelegateController(this);
   private readonly triggerController = createTriggerController();
-
+  private customHTMLEnabled = config.get('innerHTMLTemplatesEnabled', ENABLE_HTML_CONTENT_DEFAULT);
   private activeId?: string;
   private inputType?: string;
   private processedInputs: AlertInput[] = [];
@@ -105,6 +107,11 @@ export class Alert implements ComponentInterface, OverlayInterface {
    * `&lt;Ionic&gt;`
    *
    * For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
+   *
+   * This property accepts custom HTML as a string.
+   * Content is parsed as plaintext by default.
+   * `innerHTMLTemplatesEnabled` must be set to `true` in the Ionic config
+   * before custom HTML can be used.
    */
   @Prop() message?: string | IonicSafeString;
 
@@ -671,6 +678,19 @@ export class Alert implements ComponentInterface, OverlayInterface {
     );
   }
 
+  private renderAlertMessage(msgId: string) {
+    const { customHTMLEnabled, message } = this;
+    if (customHTMLEnabled) {
+      return <div id={msgId} class="alert-message" innerHTML={sanitizeDOMString(message)}></div>;
+    }
+
+    return (
+      <div id={msgId} class="alert-message">
+        {message}
+      </div>
+    );
+  }
+
   render() {
     const { overlayIndex, header, subHeader, message, htmlAttributes } = this;
     const mode = getIonMode(this);
@@ -723,7 +743,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
             )}
           </div>
 
-          <div id={msgId} class="alert-message" innerHTML={sanitizeDOMString(message)}></div>
+          {this.renderAlertMessage(msgId)}
 
           {this.renderAlertInputs()}
           {this.renderAlertButtons()}
