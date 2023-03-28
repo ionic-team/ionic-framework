@@ -241,10 +241,3 @@ $item-md-media-end-slot-margin-start:       16px !default;
 
 /// @prop - Margin end for an avatar/thumbnail in the end slot
 $item-md-media-end-slot-margin-end:         null !default;
-
-
-/// @prop - Margin start for a button in the end slot
-$item-md-button-end-slot-margin-start:      $item-md-end-slot-margin-start !default;
-
-/// @prop - Margin end for a button in the end slot
-$item-md-button-end-slot-margin-end:        2px !default;
