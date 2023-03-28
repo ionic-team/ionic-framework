@@ -570,7 +570,7 @@ export class Select implements ComponentInterface {
      * when setting the header.
      */
     let label: HTMLElement | null;
-    let labelText: string | null;
+    let labelText: string | null | undefined;
 
     if (this.legacyFormController.hasLegacyControl()) {
       label = this.getLabel();
