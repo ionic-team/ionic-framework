@@ -187,7 +187,7 @@ ion-breadcrumb,part,native
 ion-breadcrumb,part,separator
 
 ion-breadcrumbs,shadow
-ion-breadcrumbs,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,false
+ion-breadcrumbs,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-breadcrumbs,prop,itemsAfterCollapse,number,1,false,false
 ion-breadcrumbs,prop,itemsBeforeCollapse,number,1,false,false
 ion-breadcrumbs,prop,maxItems,number | undefined,undefined,false,false
