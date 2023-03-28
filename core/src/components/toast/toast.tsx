@@ -11,6 +11,7 @@ import type {
   OverlayInterface,
   ToastButton,
 } from '../../interface';
+import { ENABLE_HTML_CONTENT_DEFAULT } from '../../utils/config';
 import { printIonWarning } from '../../utils/logging';
 import { dismiss, eventMethod, isCancel, prepareOverlay, present, safeCall } from '../../utils/overlays';
 import type { IonicSafeString } from '../../utils/sanitization';
@@ -43,6 +44,7 @@ import type { ToastAttributes, ToastPosition, ToastLayout } from './toast-interf
   shadow: true,
 })
 export class Toast implements ComponentInterface, OverlayInterface {
+  private customHTMLEnabled = config.get('innerHTMLTemplatesEnabled', ENABLE_HTML_CONTENT_DEFAULT);
   private durationTimeout?: ReturnType<typeof setTimeout>;
 
   presented = false;
@@ -99,6 +101,10 @@ export class Toast implements ComponentInterface, OverlayInterface {
 
   /**
    * Message to be shown in the toast.
+   * This property accepts custom HTML as a string.
+   * Developers who only want to pass plain text
+   * can disable the custom HTML functionality
+   * by setting `innerHTMLTemplatesEnabled: false` in the Ionic config.
    */
   @Prop() message?: string | IonicSafeString;
 
@@ -299,6 +305,19 @@ export class Toast implements ComponentInterface, OverlayInterface {
     );
   }
 
+  private renderToastMessage() {
+    const { customHTMLEnabled, message } = this;
+    if (customHTMLEnabled) {
+      return <div class="toast-message" part="message" innerHTML={sanitizeDOMString(message)}></div>;
+    }
+
+    return (
+      <div class="toast-message" part="message">
+        {message}
+      </div>
+    );
+  }
+
   render() {
     const { layout, el } = this;
     const allButtons = this.getButtons();
@@ -355,9 +374,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
                   {this.header}
                 </div>
               )}
-              {this.message !== undefined && (
-                <div class="toast-message" part="message" innerHTML={sanitizeDOMString(this.message)}></div>
-              )}
+              {this.message !== undefined && this.renderToastMessage()}
             </div>
 
             {this.renderButtons(endButtons, 'end')}
