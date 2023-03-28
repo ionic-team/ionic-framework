@@ -562,8 +562,22 @@ export class Select implements ComponentInterface {
   }
 
   private async openAlert() {
-    const label = this.getLabel();
-    const labelText = label ? label.textContent : null;
+    /**
+     * TODO FW-3194
+     * Remove legacyFormController logic.
+     * Remove label and labelText vars
+     * Pass `this.label` instead of `labelText`
+     * when setting the header.
+     */
+    let label: HTMLElement | null;
+    let labelText: string | null | undefined;
+
+    if (this.legacyFormController.hasLegacyControl()) {
+      label = this.getLabel();
+      labelText = label ? label.textContent : null;
+    } else {
+      labelText = this.label;
+    }
 
     const interfaceOptions = this.interfaceOptions;
     const inputType = this.multiple ? 'checkbox' : 'radio';
@@ -622,6 +636,7 @@ export class Select implements ComponentInterface {
     return this.overlay.dismiss();
   }
 
+  // TODO FW-3194 Remove this
   private getLabel() {
     return findItemLabel(this.el);
   }
