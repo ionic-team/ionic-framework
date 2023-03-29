@@ -185,13 +185,13 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
     // If hitting arrow down or arrow right, move to the next radio
     // If we're on the last radio, move to the first radio
-    if (['ArrowDown', 'ArrowRight'].includes(ev.code)) {
+    if (['ArrowDown', 'ArrowRight'].includes(ev.key)) {
       nextEl = index === radios.length - 1 ? radios[0] : radios[index + 1];
     }
 
     // If hitting arrow up or arrow left, move to the previous radio
     // If we're on the first radio, move to the last radio
-    if (['ArrowUp', 'ArrowLeft'].includes(ev.code)) {
+    if (['ArrowUp', 'ArrowLeft'].includes(ev.key)) {
       nextEl = index === 0 ? radios[radios.length - 1] : radios[index - 1];
     }
 

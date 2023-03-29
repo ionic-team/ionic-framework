@@ -162,9 +162,7 @@ test.describe('modal: incorrect usage', () => {
     await ionModalDidPresent.next();
 
     const modal = await page.locator('ion-modal');
-    await modal.evaluate((el: HTMLIonModalElement) => {
-      el.setCurrentBreakpoint(0.5);
-    });
+    await modal.evaluate((el: HTMLIonModalElement) => el.setCurrentBreakpoint(0.5));
 
     expect(warnings.length).toBe(1);
     expect(warnings[0]).toBe('[Ionic Warning]: setCurrentBreakpoint is only supported on sheet modals.');
