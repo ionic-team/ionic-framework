@@ -212,6 +212,6 @@ export const shouldUseNativeRefresher = async (referenceEl: HTMLIonRefresherElem
     pullingSpinner !== null &&
     refreshingSpinner !== null &&
     ((mode === 'ios' && isPlatform('mobile') && (referenceEl.style as any).webkitOverflowScrolling !== undefined) ||
-      mode === 'md')
+      (mode === 'md' && (referenceEl.style as any).webkitOverflowScrolling !== undefined))
   );
 };
