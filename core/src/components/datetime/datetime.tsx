@@ -476,6 +476,15 @@ export class Datetime implements ComponentInterface {
   @Event() ionChange!: EventEmitter<DatetimeChangeEventDetail>;
 
   /**
+   * Emitted when month slides forward.
+   */
+  @Event() ionMonthForward!: EventEmitter<void>;
+  /**
+   * Emitted when month slides backward.
+   */
+  @Event() ionMonthPrev!: EventEmitter<void>;
+
+  /**
    * Emitted when the datetime has focus.
    */
   @Event() ionFocus!: EventEmitter<void>;
@@ -1326,6 +1335,7 @@ export class Datetime implements ComponentInterface {
       left: left * (isRTL(this.el) ? -1 : 1),
       behavior: 'smooth',
     });
+    this.ionMonthForward.emit()
   };
 
   private prevMonth = () => {
@@ -1344,6 +1354,7 @@ export class Datetime implements ComponentInterface {
       left: 0,
       behavior: 'smooth',
     });
+    this.ionMonthPrev.emit()
   };
 
   private toggleMonthAndYearView = () => {
