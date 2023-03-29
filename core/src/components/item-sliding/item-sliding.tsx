@@ -128,7 +128,16 @@ export class ItemSliding implements ComponentInterface {
    */
   @Method()
   async open(side: Side | undefined) {
-    if (this.item === null) {
+    /**
+     * It is possible for the item to be added to the DOM
+     * after the item-sliding component was created. As a result,
+     * if this.item is null, then we should attempt to
+     * query for the ion-item again.
+     * However, if the item is already defined then
+     * we do not query for it again.
+     */
+    const item = (this.item = this.item ?? this.el.querySelector('ion-item'));
+    if (item === null) {
       return;
     }
 

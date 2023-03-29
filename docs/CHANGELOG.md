@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.7.1](https://github.com/ionic-team/ionic-docs/compare/v6.7.0...v6.7.1) (2023-03-29)
+
+**Note:** Version bump only for package @ionic/docs
+
+
+
+
+
 # [7.0.0-rc.4](https://github.com/ionic-team/ionic-docs/compare/v7.0.0-rc.3...v7.0.0-rc.4) (2023-03-27)
 
 **Note:** Version bump only for package @ionic/docs

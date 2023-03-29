@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.7.1](https://github.com/ionic-team/ionic-framework/compare/v6.7.0...v6.7.1) (2023-03-29)
+
+
+### Bug Fixes
+
+* **item-sliding:** open method works with items added async ([#27035](https://github.com/ionic-team/ionic-framework/issues/27035)) ([521063b](https://github.com/ionic-team/ionic-framework/commit/521063bf241dc2c55bcd02a92ed8a418cfec6b1e)), closes [#26991](https://github.com/ionic-team/ionic-framework/issues/26991)
+* **item:** use thumbnail's size when present ([#27014](https://github.com/ionic-team/ionic-framework/issues/27014)) ([6cecdf4](https://github.com/ionic-team/ionic-framework/commit/6cecdf41451a5c7aa908494dfad9fab1496a0c6c)), closes [#22935](https://github.com/ionic-team/ionic-framework/issues/22935)
+* **radio-group:** radios participate in form submission ([#27018](https://github.com/ionic-team/ionic-framework/issues/27018)) ([3b99c31](https://github.com/ionic-team/ionic-framework/commit/3b99c31bab41bf7fcec340ac7159d3e8fce126c1)), closes [#27016](https://github.com/ionic-team/ionic-framework/issues/27016)
+* **select:** inherit white-space in select-text to allow text wrapping ([#26973](https://github.com/ionic-team/ionic-framework/issues/26973)) ([19c1e25](https://github.com/ionic-team/ionic-framework/commit/19c1e25399ca18c8e6a8dd39c0131979c0bb01e9)), closes [#19949](https://github.com/ionic-team/ionic-framework/issues/19949)
+
+
+
+
+
 # [7.0.0-rc.4](https://github.com/ionic-team/ionic-framework/compare/v7.0.0-rc.3...v7.0.0-rc.4) (2023-03-27)
 
 
