@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.0.0-rc.5](https://github.com/ionic-team/ionic-framework/compare/v7.0.0-rc.4...v7.0.0-rc.5) (2023-03-29)
+
+
+### Bug Fixes
+
+* **select:** alert header defaults to label ([#27034](https://github.com/ionic-team/ionic-framework/issues/27034)) ([408457a](https://github.com/ionic-team/ionic-framework/commit/408457aa95843cbf9fae7ce52d0f9de5e3362060)), closes [#27028](https://github.com/ionic-team/ionic-framework/issues/27028)
+* **select:** update iOS icon ([#27001](https://github.com/ionic-team/ionic-framework/issues/27001)) ([ee19891](https://github.com/ionic-team/ionic-framework/commit/ee198915424f1d4304283b44b526e3dcbe1f3494))
+
+
+
+
+
 ## [6.7.1](https://github.com/ionic-team/ionic-framework/compare/v6.7.0...v6.7.1) (2023-03-29)
 
 
