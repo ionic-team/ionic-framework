@@ -2,6 +2,9 @@
 
 set -e
 
+# Delete old packages
+rm -rf *.tgz
+
 # Pack @ionic/core
 npm pack ../../core
 
