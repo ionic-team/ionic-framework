@@ -4,7 +4,6 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValueAccessor } from './value-accessor';
 
 @Directive({
-  /* tslint:disable-next-line:directive-selector */
   selector: 'ion-input:not([type=number]),ion-textarea,ion-searchbar',
   providers: [
     {
@@ -19,8 +18,8 @@ export class TextValueAccessorDirective extends ValueAccessor {
     super(injector, el);
   }
 
-  @HostListener('ionChange', ['$event.target'])
+  @HostListener('ionInput', ['$event.target'])
   _handleInputEvent(el: HTMLIonInputElement | HTMLIonTextareaElement | HTMLIonSearchbarElement): void {
-    this.handleChangeEvent(el, el.value);
+    this.handleValueChange(el, el.value);
   }
 }

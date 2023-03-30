@@ -3,7 +3,7 @@ import { InfiniteScrollContent } from '../infinite-scroll-content';
 import { config } from '../../../global/config';
 
 describe('infinite-scroll-content: custom html', () => {
-  it('should allow for custom html by default', async () => {
+  it('should not allow for custom html by default', async () => {
     const page = await newSpecPage({
       components: [InfiniteScrollContent],
       html: `<ion-infinite-scroll-content loading-text="<button class='custom-html'>Custom Text</button>"></ion-infinite-scroll-content>`,
@@ -11,7 +11,7 @@ describe('infinite-scroll-content: custom html', () => {
 
     const content = page.body.querySelector('.infinite-loading-text');
     expect(content.textContent).toContain('Custom Text');
-    expect(content.querySelector('button.custom-html')).not.toBe(null);
+    expect(content.querySelector('button.custom-html')).toBe(null);
   });
 
   it('should allow for custom html', async () => {

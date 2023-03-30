@@ -1,5 +1,6 @@
-import type { AnimationBuilder, Mode, SpinnerTypes } from '../../interface';
+import type { AnimationBuilder, Mode } from '../../interface';
 import type { IonicSafeString } from '../../utils/sanitization';
+import type { SpinnerTypes } from '../spinner/spinner-configs';
 
 export interface LoadingOptions {
   spinner?: SpinnerTypes | null;
@@ -13,13 +14,8 @@ export interface LoadingOptions {
   mode?: Mode;
   keyboardClose?: boolean;
   id?: string;
-  htmlAttributes?: LoadingAttributes;
+  htmlAttributes?: { [key: string]: any };
 
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;
 }
-
-/**
- * @deprecated - Use { [key: string]: any } directly instead.
- */
-export type LoadingAttributes = { [key: string]: any };

@@ -193,8 +193,7 @@ ion-modal-controller,
 ion-picker-controller,
 ion-popover-controller,
 ion-toast-controller,
-.ion-page-hidden,
-[hidden] {
+.ion-page-hidden {
   /* stylelint-disable-next-line declaration-no-important */
   display: none !important;
 }

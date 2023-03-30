@@ -86,6 +86,7 @@ import {
 export class Datetime implements ComponentInterface {
   private inputId = `ion-dt-${datetimeIds++}`;
   private calendarBodyRef?: HTMLElement;
+  private monthYearToggleItemRef?: HTMLIonItemElement;
   private popoverRef?: HTMLIonPopoverElement;
   private clearFocusVisible?: () => void;
   private parsedMinuteValues?: number[];
@@ -202,11 +203,11 @@ export class Datetime implements ComponentInterface {
   }
 
   /**
-   * Which values you want to select. `'date'` will show
-   * a calendar picker to select the month, day, and year. `'time'`
+   * Which values you want to select. `"date"` will show
+   * a calendar picker to select the month, day, and year. `"time"`
    * will show a time picker to select the hour, minute, and (optionally)
-   * AM/PM. `'date-time'` will show the date picker first and time picker second.
-   * `'time-date'` will show the time picker first and date picker second.
+   * AM/PM. `"date-time"` will show the date picker first and time picker second.
+   * `"time-date"` will show the time picker first and date picker second.
    */
   @Prop() presentation: DatetimePresentation = 'date-time';
 
@@ -299,7 +300,7 @@ export class Datetime implements ComponentInterface {
   /**
    * The locale to use for `ion-datetime`. This
    * impacts month and day name formatting.
-   * The `'default'` value refers to the default
+   * The `"default"` value refers to the default
    * locale set by your device.
    */
   @Prop() locale = 'default';
@@ -337,7 +338,7 @@ export class Datetime implements ComponentInterface {
 
   /**
    * The value of the datetime as a valid ISO 8601 datetime string.
-   * Should be an array of strings if `multiple="true"`.
+   * This should be an array of strings only when `multiple="true"`.
    */
   @Prop({ mutable: true }) value?: string | string[] | null;
 
@@ -346,13 +347,10 @@ export class Datetime implements ComponentInterface {
    */
   @Watch('value')
   protected valueChanged() {
-    const { value, minParts, maxParts, workingParts, multiple } = this;
+    const { value, minParts, maxParts, workingParts } = this;
 
     if (this.hasValue()) {
-      if (!multiple && Array.isArray(value)) {
-        this.value = value[0];
-        return; // setting this.value will trigger re-run of this function
-      }
+      this.warnIfIncorrectValueUsage();
 
       /**
        * Clones the value of the `activeParts` to the private clone, to update
@@ -399,7 +397,7 @@ export class Datetime implements ComponentInterface {
     }
 
     this.emitStyle();
-    this.ionChange.emit({ value });
+    this.ionValueChange.emit({ value });
   }
 
   /**
@@ -457,11 +455,11 @@ export class Datetime implements ComponentInterface {
    * a wheel picker where possible.
    *
    * A wheel picker can be rendered instead of a grid when `presentation` is
-   * one of the following values: `'date'`, `'date-time'`, or `'time-date'`.
+   * one of the following values: `"date"`, `"date-time"`, or `"time-date"`.
    *
    * A wheel picker will always be rendered regardless of
    * the `preferWheel` value when `presentation` is one of the following values:
-   * `'time'`, `'month'`, `'month-year'`, or `'year'`.
+   * `"time"`, `"month"`, `"month-year"`, or `"year"`.
    */
   @Prop() preferWheel = false;
 
@@ -474,6 +472,14 @@ export class Datetime implements ComponentInterface {
    * Emitted when the value (selected date) has changed.
    */
   @Event() ionChange!: EventEmitter<DatetimeChangeEventDetail>;
+
+  /**
+   * Emitted when the value property has changed.
+   * This is used to ensure that ion-datetime-button can respond
+   * to any value property changes.
+   * @internal
+   */
+  @Event() ionValueChange!: EventEmitter<DatetimeChangeEventDetail>;
 
   /**
    * Emitted when the datetime has focus.
@@ -512,28 +518,9 @@ export class Datetime implements ComponentInterface {
     if (activeParts !== undefined || !isCalendarPicker) {
       const activePartsIsArray = Array.isArray(activeParts);
       if (activePartsIsArray && activeParts.length === 0) {
-        this.value = undefined;
+        this.setValue(undefined);
       } else {
-        /**
-         * Prevent convertDataToISO from doing any
-         * kind of transformation based on timezone
-         * This cancels out any change it attempts to make
-         *
-         * Important: Take the timezone offset based on
-         * the date that is currently selected, otherwise
-         * there can be 1 hr difference when dealing w/ DST
-         */
-        if (activePartsIsArray) {
-          const dates = convertDataToISO(activeParts).map((str) => new Date(str));
-          for (let i = 0; i < dates.length; i++) {
-            activeParts[i].tzOffset = dates[i].getTimezoneOffset() * -1;
-          }
-        } else {
-          const date = new Date(convertDataToISO(activeParts));
-          activeParts.tzOffset = date.getTimezoneOffset() * -1;
-        }
-
-        this.value = convertDataToISO(activeParts);
+        this.setValue(convertDataToISO(activeParts));
       }
     }
 
@@ -566,6 +553,32 @@ export class Datetime implements ComponentInterface {
       this.closeParentOverlay();
     }
   }
+
+  private warnIfIncorrectValueUsage = () => {
+    const { multiple, value } = this;
+    if (!multiple && Array.isArray(value)) {
+      /**
+       * We do some processing on the `value` array so
+       * that it looks more like an array when logged to
+       * the console.
+       * Example given ['a', 'b']
+       * Default toString() behavior: a,b
+       * Custom behavior: ['a', 'b']
+       */
+      printIonWarning(
+        `ion-datetime was passed an array of values, but multiple="false". This is incorrect usage and may result in unexpected behaviors. To dismiss this warning, pass a string to the "value" property when multiple="false".
+
+  Value Passed: [${value.map((v) => `'${v}'`).join(', ')}]
+`,
+        this.el
+      );
+    }
+  };
+
+  private setValue = (value?: string | string[] | null) => {
+    this.value = value;
+    this.ionChange.emit({ value });
+  };
 
   /**
    * Returns the DatetimePart interface
@@ -1173,17 +1186,12 @@ export class Datetime implements ComponentInterface {
   }
 
   private processValue = (value?: string | string[] | null) => {
-    /**
-     * TODO FW-2646 remove value !== ''
-     */
-    const hasValue = value !== '' && value !== null && value !== undefined;
-    let valueToProcess = hasValue ? parseDate(value) : this.defaultParts;
+    const hasValue = value !== null && value !== undefined;
+    const valueToProcess = hasValue ? parseDate(value) : this.defaultParts;
 
-    const { minParts, maxParts, multiple } = this;
-    if (!multiple && Array.isArray(value)) {
-      this.value = value[0];
-      valueToProcess = (valueToProcess as DatetimeParts[])[0];
-    }
+    const { minParts, maxParts } = this;
+
+    this.warnIfIncorrectValueUsage();
 
     /**
      * Datetime should only warn of out of bounds values
@@ -1204,7 +1212,7 @@ export class Datetime implements ComponentInterface {
      */
     const singleValue = Array.isArray(valueToProcess) ? valueToProcess[0] : valueToProcess;
 
-    const { month, day, year, hour, minute, tzOffset } = clampDate(singleValue, minParts, maxParts);
+    const { month, day, year, hour, minute } = clampDate(singleValue, minParts, maxParts);
     const ampm = parseAmPm(hour!);
 
     this.setWorkingParts({
@@ -1213,7 +1221,6 @@ export class Datetime implements ComponentInterface {
       year,
       hour,
       minute,
-      tzOffset,
       ampm,
     });
 
@@ -1233,7 +1240,6 @@ export class Datetime implements ComponentInterface {
           year,
           hour,
           minute,
-          tzOffset,
           ampm,
         };
       }
@@ -1305,7 +1311,7 @@ export class Datetime implements ComponentInterface {
   };
 
   private hasValue = () => {
-    return this.value != null && this.value !== '';
+    return this.value != null;
   };
 
   private nextMonth = () => {
@@ -1365,7 +1371,7 @@ export class Datetime implements ComponentInterface {
 
     const clearButtonClick = () => {
       this.reset();
-      this.value = undefined;
+      this.setValue(undefined);
     };
 
     /**
@@ -1913,7 +1919,32 @@ export class Datetime implements ComponentInterface {
       <div class="calendar-header">
         <div class="calendar-action-buttons">
           <div class="calendar-month-year">
-            <ion-item button detail={false} lines="none" onClick={() => this.toggleMonthAndYearView()}>
+            <ion-item
+              ref={(el) => (this.monthYearToggleItemRef = el)}
+              button
+              aria-label="Show year picker"
+              detail={false}
+              lines="none"
+              onClick={() => {
+                this.toggleMonthAndYearView();
+                /**
+                 * TODO: FW-3547
+                 *
+                 * Currently there is not a way to set the aria-label on the inner button
+                 * on the `ion-item` and have it be reactive to changes. This is a workaround
+                 * until we either refactor `ion-item` to a button or Stencil adds a way to
+                 * have reactive props for built-in properties, such as `aria-label`.
+                 */
+                const { monthYearToggleItemRef } = this;
+                if (monthYearToggleItemRef) {
+                  const btn = monthYearToggleItemRef.shadowRoot?.querySelector('.item-native');
+                  if (btn) {
+                    const monthYearAriaLabel = this.showMonthAndYear ? 'Hide year picker' : 'Show year picker';
+                    btn.setAttribute('aria-label', monthYearAriaLabel);
+                  }
+                }
+              }}
+            >
               <ion-label>
                 {getMonthAndYear(this.locale, this.workingParts)}
                 <ion-icon
@@ -1928,7 +1959,7 @@ export class Datetime implements ComponentInterface {
 
           <div class="calendar-next-prev">
             <ion-buttons>
-              <ion-button aria-label="previous month" disabled={prevMonthDisabled} onClick={() => this.prevMonth()}>
+              <ion-button aria-label="Previous month" disabled={prevMonthDisabled} onClick={() => this.prevMonth()}>
                 <ion-icon
                   dir={hostDir}
                   aria-hidden="true"
@@ -1938,7 +1969,7 @@ export class Datetime implements ComponentInterface {
                   flipRtl
                 ></ion-icon>
               </ion-button>
-              <ion-button aria-label="next month" disabled={nextMonthDisabled} onClick={() => this.nextMonth()}>
+              <ion-button aria-label="Next month" disabled={nextMonthDisabled} onClick={() => this.nextMonth()}>
                 <ion-icon
                   dir={hostDir}
                   aria-hidden="true"

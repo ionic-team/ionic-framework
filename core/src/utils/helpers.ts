@@ -1,6 +1,6 @@
 import type { EventEmitter } from '@stencil/core';
 
-import type { Side } from '../interface';
+import type { Side } from '../components/menu/menu-interface';
 
 // TODO(FW-2832): types
 
@@ -76,6 +76,15 @@ export const componentOnReady = (el: any, callback: any) => {
   } else {
     raf(() => callback(el));
   }
+};
+
+/**
+ * This functions checks if a Stencil component is using
+ * the lazy loaded build of Stencil. Returns `true` if
+ * the component is lazy loaded. Returns `false` otherwise.
+ */
+export const hasLazyBuild = (stencilEl: HTMLElement) => {
+  return (stencilEl as any).componentOnReady !== undefined;
 };
 
 export type Attributes = { [key: string]: any };

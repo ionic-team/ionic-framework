@@ -42,10 +42,6 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/Inputs.vue')
   },
   {
-    path: '/slides',
-    component: () => import('@/views/Slides.vue')
-  },
-  {
     path: '/default-href',
     component: () => import('@/views/DefaultHref.vue')
   },
@@ -156,7 +152,7 @@ const routes: Array<RouteRecordRaw> = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes
 });
 

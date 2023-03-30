@@ -5,8 +5,8 @@
 // -----------------------------------------
 
 :host {
-  --background: #{$toggle-ios-background-color-off};
-  --background-checked: #{ion-color(primary, base)};
+  --track-background: #{$toggle-ios-background-color-off};
+  --track-background-checked: #{ion-color(primary, base)};
   --border-radius: #{$toggle-ios-border-radius};
   --handle-background: #{$toggle-ios-handle-background-color};
   --handle-background-checked: #{$toggle-ios-handle-background-color};
@@ -17,12 +17,28 @@
   --handle-width: #{$toggle-ios-handle-width};
   --handle-spacing: #{$toggle-ios-border-width};
   --handle-transition: #{$toggle-ios-transition};
+}
 
+:host(.legacy-toggle) {
   width: $toggle-ios-width;
   height: $toggle-ios-height;
 
   contain: strict;
 
+  overflow: hidden;
+}
+
+// Toggle Native Wrapper
+// ----------------------------------------------------------------
+
+.native-wrapper .toggle-icon {
+  width: $toggle-ios-width;
+  height: $toggle-ios-height;
+
+  /**
+   * The handle box shadow should not
+   * overflow outside of the track container.
+   */
   overflow: hidden;
 }
 
@@ -165,7 +181,7 @@
 // iOS Toggle Within An Item
 // ----------------------------------------------------------
 
-:host(.in-item[slot]) {
+:host(.in-item.legacy-toggle) {
   @include margin($toggle-ios-media-margin);
   @include padding(
     $toggle-ios-item-end-padding-top,
@@ -175,7 +191,7 @@
   );
 }
 
-:host(.in-item[slot="start"]) {
+:host(.in-item.legacy-toggle[slot="start"]) {
   @include padding(
     $toggle-ios-item-start-padding-top,
     $toggle-ios-item-start-padding-end,

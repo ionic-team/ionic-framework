@@ -22,6 +22,6 @@ export class RadioValueAccessorDirective extends ValueAccessor {
   // TODO(FW-2827): type (HTMLIonRadioElement and HTMLElement are both missing `checked`)
   @HostListener('ionSelect', ['$event.target'])
   _handleIonSelect(el: any): void {
-    this.handleChangeEvent(el, el.checked);
+    this.handleValueChange(el, el.checked);
   }
 }

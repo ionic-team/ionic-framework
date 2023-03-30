@@ -3,7 +3,7 @@ import { Alert } from '../alert';
 import { config } from '../../../global/config';
 
 describe('alert: custom html', () => {
-  it('should allow for custom html by default', async () => {
+  it('should not allow for custom html by default', async () => {
     const page = await newSpecPage({
       components: [Alert],
       html: `<ion-alert message="<button class='custom-html'>Custom Text</button>"></ion-alert>`,
@@ -11,7 +11,7 @@ describe('alert: custom html', () => {
 
     const content = page.body.querySelector('.alert-message');
     expect(content.textContent).toContain('Custom Text');
-    expect(content.querySelector('button.custom-html')).not.toBe(null);
+    expect(content.querySelector('button.custom-html')).toBe(null);
   });
 
   it('should allow for custom html', async () => {

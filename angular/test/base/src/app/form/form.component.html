@@ -51,17 +51,12 @@
         <ion-checkbox formControlName="checkbox" slot="start"></ion-checkbox>
       </ion-item>
 
-      <ion-item>
-        <ion-label>Range</ion-label>
-        <ion-range formControlName="range"></ion-range>
-      </ion-item>
-
     </ion-list>
     <p>
       Form Status: <span id="status">{{ profileForm.status }}</span>
     </p>
     <p>
-      Form Status: <span id="data">{{ profileForm.value | json }}</span>
+      Form value: <span id="data">{{ profileForm.value | json }}</span>
     </p>
     <p>
       Form Submit: <span id="submit">{{submitted}}</span>

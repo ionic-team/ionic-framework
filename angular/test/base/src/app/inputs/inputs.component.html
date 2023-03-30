@@ -23,7 +23,7 @@
 
     <ion-item>
       <ion-label>Select</ion-label>
-      <ion-select [(ngModel)]="select">
+      <ion-select [(ngModel)]="select" id="game-console">
         <ion-select-option value="">No Game Console</ion-select-option>
         <ion-select-option value="nes">NES</ion-select-option>
         <ion-select-option value="n64" selected>Nintendo64</ion-select-option>
@@ -75,7 +75,7 @@
 
     <ion-item>
       <ion-label>Checkbox</ion-label>
-      <ion-checkbox [(ngModel)]="checkbox" slot="start"></ion-checkbox>
+      <ion-checkbox [(ngModel)]="checkbox" slot="start" id="first-checkbox"></ion-checkbox>
       <ion-note slot="end" id="checkbox-note">{{checkbox}}</ion-note>
     </ion-item>
 
@@ -83,20 +83,6 @@
       <ion-label>Checkbox Mirror</ion-label>
       <ion-checkbox [(ngModel)]="checkbox" slot="start"></ion-checkbox>
       <ion-note slot="end">{{checkbox}}</ion-note>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Range</ion-label>
-      <ion-range [(ngModel)]="range"></ion-range>
-      <ion-note slot="end" id="range-note">{{range}}</ion-note>
-    </ion-item>
-
-    <ion-item color="dark">
-      <ion-label>Range Mirror</ion-label>
-      <ion-range [(ngModel)]="range">
-        <ion-toggle slot="start" id="nested-toggle" [(ngModel)]="toggle"></ion-toggle>
-      </ion-range>
-      <ion-note slot="end">{{range}}</ion-note>
     </ion-item>
 
   </ion-list>

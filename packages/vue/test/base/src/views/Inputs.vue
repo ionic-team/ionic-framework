@@ -85,10 +85,10 @@
       <div class="ion-padding">
         Checkbox: {{ checkbox }}<br>
         Toggle: {{ toggle }}<br>
-        Input: {{ input }}<br>
+        Input: <span id="input-ref">{{ input }}</span><br>
         Range: {{ range }}<br>
-        Textarea: {{ textarea }}<br>
-        Searchbar: {{ searchbar }}<br>
+        Textarea: <span id="textarea-ref">{{ textarea }}</span><br>
+        Searchbar: <span id="searchbar-ref">{{ searchbar }}</span><br>
         Datetime: {{ datetime }}<br>
         Radio Group: {{ radio }}<br>
         Segment: {{ segment }}<br>

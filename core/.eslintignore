@@ -1,4 +1,3 @@
-src/components/slides/swiper/swiper.bundle.js
 src/components.d.ts
 **/test/**/*.spec.ts
 **/test/**/*.spec.tsx

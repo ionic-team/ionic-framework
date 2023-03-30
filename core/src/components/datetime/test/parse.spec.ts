@@ -33,13 +33,16 @@ describe('parseDate()', () => {
       hour: 13,
       minute: 47,
       month: 12,
-      tzOffset: 0,
       year: 2022,
     });
   });
 
+  /**
+   * Note: As Ionic v7 datetime no longer parses time zone information/
+   * See https://github.com/ionic-team/ionic-framework/commit/3fb4caf21ffac12f765c4c80bf1850e05d211c6a
+   */
   it('should return the correct time zone offset', () => {
-    expect(parseDate('2022-12-15T13:47:30-02:00').tzOffset).toEqual(-120);
+    expect(parseDate('2022-12-15T13:47:30-02:00').tzOffset).toEqual(undefined);
   });
 
   it('should parse an array of dates', () => {
@@ -50,7 +53,6 @@ describe('parseDate()', () => {
         hour: 13,
         minute: 47,
         month: 12,
-        tzOffset: 0,
         year: 2022,
       },
       {
@@ -59,7 +61,6 @@ describe('parseDate()', () => {
         hour: 20,
         minute: 19,
         month: 3,
-        tzOffset: 0,
         year: 2023,
       },
     ]);
