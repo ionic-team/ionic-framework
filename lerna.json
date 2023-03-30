@@ -5,5 +5,5 @@
     "angular",
     "packages/*"
   ],
-  "version": "7.0.0-rc.4"
+  "version": "7.0.0"
 }
