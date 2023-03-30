@@ -258,7 +258,6 @@
   @include padding-horizontal($item-md-note-end-slot-padding-start, $item-md-note-end-slot-padding-end);
 }
 
-
 // Material Design Item Avatar
 // --------------------------------------------------
 
@@ -267,13 +266,11 @@
   height: $item-md-avatar-height;
 }
 
-
 // Material Design Item Thumbnail
 // --------------------------------------------------
 
 ::slotted(ion-thumbnail) {
-  width: $item-md-thumbnail-width;
-  height: $item-md-thumbnail-height;
+  --size: #{$item-md-thumbnail-size};
 }
 
 // Material Design Item Avatar/Thumbnail

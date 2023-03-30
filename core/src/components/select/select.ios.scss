@@ -28,5 +28,10 @@
 }
 
 .select-icon {
-  color: #{$text-color-step-700};
+  width: 18px;
+  height: 18px;
+
+  // Color deviates from the iOS spec, but satisfies WCAG AAA:
+  // https://www.w3.org/TR/WCAG20-TECHS/G18.html
+  color: #{$text-color-step-350};
 }

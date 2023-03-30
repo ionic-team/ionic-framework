@@ -26,8 +26,9 @@ on:
           - v4-lts
       preid:
         type: choice
-        description: Which prerelease identifier should be used? This is only needed when version is "prepatch", "preminor", or "premajor".
+        description: Which prerelease identifier should be used? This is only needed when version is "prepatch", "preminor", "premajor", or "prerelease".
         options:
+          - ''
           - alpha
           - beta
           - rc
