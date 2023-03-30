@@ -46,7 +46,7 @@
     "@stencil/angular-output-target": "^0.4.0",
     "@stencil/react-output-target": "^0.2.1",
     "@stencil/sass": "^2.0.0",
-    "@stencil/vue-output-target": "^0.7.0",
+    "@stencil/vue-output-target": "^0.8.1",
     "@types/jest": "^27.5.2",
     "@types/node": "^14.6.0",
     "@types/swiper": "5.4.0",

@@ -88,7 +88,7 @@ export const IonAccordion = /*@__PURE__*/ defineContainer<JSX.IonAccordion>('ion
 ]);
 
 
-export const IonAccordionGroup = /*@__PURE__*/ defineContainer<JSX.IonAccordionGroup>('ion-accordion-group', defineIonAccordionGroup, [
+export const IonAccordionGroup = /*@__PURE__*/ defineContainer<JSX.IonAccordionGroup, JSX.IonAccordionGroup["value"]>('ion-accordion-group', defineIonAccordionGroup, [
   'animated',
   'multiple',
   'value',
@@ -205,7 +205,7 @@ export const IonCardTitle = /*@__PURE__*/ defineContainer<JSX.IonCardTitle>('ion
 ]);
 
 
-export const IonCheckbox = /*@__PURE__*/ defineContainer<JSX.IonCheckbox>('ion-checkbox', defineIonCheckbox, [
+export const IonCheckbox = /*@__PURE__*/ defineContainer<JSX.IonCheckbox, JSX.IonCheckbox["checked"]>('ion-checkbox', defineIonCheckbox, [
   'color',
   'name',
   'checked',
@@ -268,7 +268,7 @@ export const IonContent = /*@__PURE__*/ defineContainer<JSX.IonContent>('ion-con
 ]);
 
 
-export const IonDatetime = /*@__PURE__*/ defineContainer<JSX.IonDatetime>('ion-datetime', defineIonDatetime, [
+export const IonDatetime = /*@__PURE__*/ defineContainer<JSX.IonDatetime, JSX.IonDatetime["value"]>('ion-datetime', defineIonDatetime, [
   'color',
   'name',
   'disabled',
@@ -389,7 +389,7 @@ export const IonInfiniteScrollContent = /*@__PURE__*/ defineContainer<JSX.IonInf
 ]);
 
 
-export const IonInput = /*@__PURE__*/ defineContainer<JSX.IonInput>('ion-input', defineIonInput, [
+export const IonInput = /*@__PURE__*/ defineContainer<JSX.IonInput, JSX.IonInput["value"]>('ion-input', defineIonInput, [
   'fireFocusEvents',
   'color',
   'accept',
@@ -567,7 +567,7 @@ export const IonProgressBar = /*@__PURE__*/ defineContainer<JSX.IonProgressBar>(
 ]);
 
 
-export const IonRadio = /*@__PURE__*/ defineContainer<JSX.IonRadio>('ion-radio', defineIonRadio, [
+export const IonRadio = /*@__PURE__*/ defineContainer<JSX.IonRadio, JSX.IonRadio["value"]>('ion-radio', defineIonRadio, [
   'color',
   'name',
   'disabled',
@@ -579,7 +579,7 @@ export const IonRadio = /*@__PURE__*/ defineContainer<JSX.IonRadio>('ion-radio',
 'value', 'v-ion-change', 'ionChange');
 
 
-export const IonRadioGroup = /*@__PURE__*/ defineContainer<JSX.IonRadioGroup>('ion-radio-group', defineIonRadioGroup, [
+export const IonRadioGroup = /*@__PURE__*/ defineContainer<JSX.IonRadioGroup, JSX.IonRadioGroup["value"]>('ion-radio-group', defineIonRadioGroup, [
   'allowEmptySelection',
   'name',
   'value',
@@ -588,7 +588,7 @@ export const IonRadioGroup = /*@__PURE__*/ defineContainer<JSX.IonRadioGroup>('i
 'value', 'v-ion-change', 'ionChange');
 
 
-export const IonRange = /*@__PURE__*/ defineContainer<JSX.IonRange>('ion-range', defineIonRange, [
+export const IonRange = /*@__PURE__*/ defineContainer<JSX.IonRange, JSX.IonRange["value"]>('ion-range', defineIonRange, [
   'color',
   'debounce',
   'name',
@@ -651,7 +651,7 @@ export const IonRippleEffect = /*@__PURE__*/ defineContainer<JSX.IonRippleEffect
 export const IonRow = /*@__PURE__*/ defineContainer<JSX.IonRow>('ion-row', defineIonRow);
 
 
-export const IonSearchbar = /*@__PURE__*/ defineContainer<JSX.IonSearchbar>('ion-searchbar', defineIonSearchbar, [
+export const IonSearchbar = /*@__PURE__*/ defineContainer<JSX.IonSearchbar, JSX.IonSearchbar["value"]>('ion-searchbar', defineIonSearchbar, [
   'color',
   'animated',
   'autocomplete',
@@ -681,7 +681,7 @@ export const IonSearchbar = /*@__PURE__*/ defineContainer<JSX.IonSearchbar>('ion
 'value', 'v-ion-change', 'ionChange');
 
 
-export const IonSegment = /*@__PURE__*/ defineContainer<JSX.IonSegment>('ion-segment', defineIonSegment, [
+export const IonSegment = /*@__PURE__*/ defineContainer<JSX.IonSegment, JSX.IonSegment["value"]>('ion-segment', defineIonSegment, [
   'color',
   'disabled',
   'scrollable',
@@ -695,7 +695,7 @@ export const IonSegment = /*@__PURE__*/ defineContainer<JSX.IonSegment>('ion-seg
 'value', 'v-ion-change', 'ionChange');
 
 
-export const IonSegmentButton = /*@__PURE__*/ defineContainer<JSX.IonSegmentButton>('ion-segment-button', defineIonSegmentButton, [
+export const IonSegmentButton = /*@__PURE__*/ defineContainer<JSX.IonSegmentButton, JSX.IonSegmentButton["value"]>('ion-segment-button', defineIonSegmentButton, [
   'disabled',
   'layout',
   'type',
@@ -704,7 +704,7 @@ export const IonSegmentButton = /*@__PURE__*/ defineContainer<JSX.IonSegmentButt
 'value', 'v-ion-change', 'ionChange');
 
 
-export const IonSelect = /*@__PURE__*/ defineContainer<JSX.IonSelect>('ion-select', defineIonSelect, [
+export const IonSelect = /*@__PURE__*/ defineContainer<JSX.IonSelect, JSX.IonSelect["value"]>('ion-select', defineIonSelect, [
   'disabled',
   'cancelText',
   'okText',
@@ -784,7 +784,7 @@ export const IonText = /*@__PURE__*/ defineContainer<JSX.IonText>('ion-text', de
 ]);
 
 
-export const IonTextarea = /*@__PURE__*/ defineContainer<JSX.IonTextarea>('ion-textarea', defineIonTextarea, [
+export const IonTextarea = /*@__PURE__*/ defineContainer<JSX.IonTextarea, JSX.IonTextarea["value"]>('ion-textarea', defineIonTextarea, [
   'fireFocusEvents',
   'color',
   'autocapitalize',
@@ -825,7 +825,7 @@ export const IonTitle = /*@__PURE__*/ defineContainer<JSX.IonTitle>('ion-title',
 ]);
 
 
-export const IonToggle = /*@__PURE__*/ defineContainer<JSX.IonToggle>('ion-toggle', defineIonToggle, [
+export const IonToggle = /*@__PURE__*/ defineContainer<JSX.IonToggle, JSX.IonToggle["checked"]>('ion-toggle', defineIonToggle, [
   'color',
   'name',
   'checked',
