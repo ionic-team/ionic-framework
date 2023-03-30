@@ -49,7 +49,7 @@ test.describe('sheet modal: backdrop', () => {
 
     await ionModalDidPresent.next();
 
-    const input = await page.locator('#root-input input');
+    const input = page.locator('#root-input input').first();
     await input.click();
     await expect(input).toBeFocused();
   });

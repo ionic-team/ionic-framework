@@ -2,31 +2,31 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import type {
-  Color,
-  Gesture,
-  GestureDetail,
-  KnobName,
-  RangeChangeEventDetail,
-  RangeKnobMoveEndEventDetail,
-  RangeKnobMoveStartEventDetail,
-  RangeValue,
-  StyleEventDetail,
-} from '../../interface';
+import type { Color, Gesture, GestureDetail, StyleEventDetail } from '../../interface';
 import { findClosestIonContent, disableContentScrollY, resetContentScrollY } from '../../utils/content';
+import type { LegacyFormController } from '../../utils/forms';
+import { createLegacyFormController } from '../../utils/forms';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes, clamp, debounceEvent, getAriaLabel, renderHiddenInput } from '../../utils/helpers';
 import { printIonWarning } from '../../utils/logging';
 import { isRTL } from '../../utils/rtl';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
-import type { PinFormatter } from './range-interface';
+import type {
+  KnobName,
+  RangeChangeEventDetail,
+  RangeKnobMoveEndEventDetail,
+  RangeKnobMoveStartEventDetail,
+  RangeValue,
+  PinFormatter,
+} from './range-interface';
 
 // TODO(FW-2832): types
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
+ * @slot label - The label text to associate with the range. Use the "labelPlacement" property to control where the label is placed relative to the range.
  * @slot start - Content is placed to the left of the range slider in LTR, and to the right in RTL.
  * @slot end - Content is placed to the right of the range slider in LTR, and to the left in RTL.
  *
@@ -46,7 +46,7 @@ import type { PinFormatter } from './range-interface';
   shadow: true,
 })
 export class Range implements ComponentInterface {
-  private rangeId?: string;
+  private rangeId = `ion-r-${rangeIds++}`;
   private didLoad = false;
   private noUpdate = false;
   private rect!: ClientRect;
@@ -56,6 +56,11 @@ export class Range implements ComponentInterface {
   private inheritedAttributes: Attributes = {};
   private contentEl: HTMLElement | null = null;
   private initialContentScrollY = true;
+  private originalIonInput?: EventEmitter<RangeChangeEventDetail>;
+  private legacyFormController!: LegacyFormController;
+
+  // This flag ensures we log the deprecation warning at most once.
+  private hasLoggedDeprecationWarning = false;
 
   @Element() el!: HTMLIonRangeElement;
 
@@ -72,22 +77,24 @@ export class Range implements ComponentInterface {
 
   /**
    * How long, in milliseconds, to wait to trigger the
-   * `ionChange` event after each change in the range value.
-   * This also impacts form bindings such as `ngModel` or `v-model`.
+   * `ionInput` event after each change in the range value.
    */
-  @Prop() debounce = 0;
+  @Prop() debounce?: number;
 
   @Watch('debounce')
   protected debounceChanged() {
-    this.ionChange = debounceEvent(this.ionChange, this.debounce);
+    const { ionInput, debounce, originalIonInput } = this;
+    /**
+     * If debounce is undefined, we have to manually revert the ionInput emitter in case
+     * debounce used to be set to a number. Otherwise, the event would stay debounced.
+     */
+    this.ionInput = debounce === undefined ? originalIonInput ?? ionInput : debounceEvent(ionInput, debounce);
   }
-
-  // TODO: In Ionic Framework v6 this should initialize to this.rangeId like the other form components do.
 
   /**
    * The name of the control, which is submitted with the form data.
    */
-  @Prop() name = '';
+  @Prop() name = this.rangeId;
 
   /**
    * Show two knobs.
@@ -187,14 +194,10 @@ export class Range implements ComponentInterface {
    */
   @Prop({ mutable: true }) value: RangeValue = 0;
   @Watch('value')
-  protected valueChanged(value: RangeValue) {
+  protected valueChanged() {
     if (!this.noUpdate) {
       this.updateRatio();
     }
-
-    value = this.ensureValueInBounds(value);
-
-    this.ionChange.emit({ value });
   }
 
   private clampBounds = (value: any): number => {
@@ -213,9 +216,40 @@ export class Range implements ComponentInterface {
   };
 
   /**
-   * Emitted when the value property has changed.
+   * Where to place the label relative to the range.
+   * `"start"`: The label will appear to the left of the range in LTR and to the right in RTL.
+   * `"end"`: The label will appear to the right of the range in LTR and to the left in RTL.
+   * `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+   */
+  @Prop() labelPlacement: 'start' | 'end' | 'fixed' = 'start';
+
+  /**
+   * Set the `legacy` property to `true` to forcibly use the legacy form control markup.
+   * Ionic will only opt components in to the modern form markup when they are
+   * using either the `aria-label` attribute or the `label` property. As a result,
+   * the `legacy` property should only be used as an escape hatch when you want to
+   * avoid this automatic opt-in behavior.
+   * Note that this property will be removed in an upcoming major release
+   * of Ionic, and all form components will be opted-in to using the modern form markup.
+   */
+  @Prop() legacy?: boolean;
+
+  /**
+   * The `ionChange` event is fired for `<ion-range>` elements when the user
+   * modifies the element's value:
+   * - When the user releases the knob after dragging;
+   * - When the user moves the knob with keyboard arrows
+   *
+   * `ionChange` is not fired when the value is changed programmatically.
    */
   @Event() ionChange!: EventEmitter<RangeChangeEventDetail>;
+
+  /**
+   * The `ionInput` event is fired for `<ion-range>` elements when the value
+   * is modified. Unlike `ionChange`, `ionInput` is fired continuously
+   * while the user is dragging the knob.
+   */
+  @Event() ionInput!: EventEmitter<RangeChangeEventDetail>;
 
   /**
    * Emitted when the styles change.
@@ -266,17 +300,24 @@ export class Range implements ComponentInterface {
      * If user has custom ID set then we should
      * not assign the default incrementing ID.
      */
-    this.rangeId = this.el.hasAttribute('id') ? this.el.getAttribute('id')! : `ion-r-${rangeIds++}`;
+    if (this.el.hasAttribute('id')) {
+      this.rangeId = this.el.getAttribute('id')!;
+    }
 
     this.inheritedAttributes = inheritAriaAttributes(this.el);
   }
 
   componentDidLoad() {
+    this.originalIonInput = this.ionInput;
     this.setupGesture();
     this.didLoad = true;
   }
 
   connectedCallback() {
+    const { el } = this;
+
+    this.legacyFormController = createLegacyFormController(el);
+
     this.updateRatio();
     this.debounceChanged();
     this.disabledChanged();
@@ -319,6 +360,7 @@ export class Range implements ComponentInterface {
 
     this.ionKnobMoveStart.emit({ value: ensureValueInBounds(this.value) });
     this.updateValue();
+    this.emitValueChange();
     this.ionKnobMoveEnd.emit({ value: ensureValueInBounds(this.value) });
   };
   private getValue(): RangeValue {
@@ -339,11 +381,25 @@ export class Range implements ComponentInterface {
     }
   }
 
+  // TODO FW-2997 remove this
   private emitStyle() {
-    this.ionStyle.emit({
-      interactive: true,
-      'interactive-disabled': this.disabled,
-    });
+    if (this.legacyFormController.hasLegacyControl()) {
+      this.ionStyle.emit({
+        interactive: true,
+        'interactive-disabled': this.disabled,
+      });
+    }
+  }
+
+  /**
+   * Emits an `ionChange` event.
+   *
+   * This API should be called for user committed changes.
+   * This API should not be used for external value changes.
+   */
+  private emitValueChange() {
+    this.value = this.ensureValueInBounds(this.value);
+    this.ionChange.emit({ value: this.value });
   }
 
   private onStart(detail: GestureDetail) {
@@ -384,6 +440,7 @@ export class Range implements ComponentInterface {
     this.update(detail.currentX);
     this.pressedKnob = undefined;
 
+    this.emitValueChange();
     this.ionKnobMoveEnd.emit({ value: this.ensureValueInBounds(this.value) });
   }
 
@@ -460,6 +517,8 @@ export class Range implements ComponentInterface {
           upper: Math.max(valA, valB),
         };
 
+    this.ionInput.emit({ value: this.value });
+
     this.noUpdate = false;
   }
 
@@ -490,7 +549,103 @@ export class Range implements ComponentInterface {
     }
   };
 
-  render() {
+  // TODO FW-2997 remove this
+  private renderLegacyRange() {
+    if (!this.hasLoggedDeprecationWarning) {
+      printIonWarning(
+        `ion-range now requires providing a label with either the label slot or the "aria-label" attribute. To migrate, remove any usage of "ion-label" and pass the label text to either the component or the "aria-label" attribute.
+
+Example: <ion-range><div slot="label">Volume</div></ion-range>
+Example with aria-label: <ion-range aria-label="Volume"></ion-range>
+
+Developers can use the "legacy" property to continue using the legacy form markup. This property will be removed in an upcoming major release of Ionic where this form control will use the modern form markup.`,
+        this.el
+      );
+
+      if (this.legacy) {
+        printIonWarning(
+          `ion-range is being used with the "legacy" property enabled which will forcibly enable the legacy form markup. This property will be removed in an upcoming major release of Ionic where this form control will use the modern form markup.
+
+Developers can dismiss this warning by removing their usage of the "legacy" property and using the new range syntax.`,
+          this.el
+        );
+      }
+
+      this.hasLoggedDeprecationWarning = true;
+    }
+
+    const { el, pressedKnob, disabled, pin, rangeId } = this;
+
+    const mode = getIonMode(this);
+
+    renderHiddenInput(true, el, this.name, JSON.stringify(this.getValue()), disabled);
+
+    return (
+      <Host
+        onFocusin={this.onFocus}
+        onFocusout={this.onBlur}
+        id={rangeId}
+        class={createColorClasses(this.color, {
+          [mode]: true,
+          'in-item': hostContext('ion-item', el),
+          'range-disabled': disabled,
+          'range-pressed': pressedKnob !== undefined,
+          'range-has-pin': pin,
+          'legacy-range': true,
+        })}
+      >
+        <slot name="start"></slot>
+        {this.renderRangeSlider()}
+        <slot name="end"></slot>
+      </Host>
+    );
+  }
+
+  private renderRange() {
+    const { disabled, el, rangeId, pin, pressedKnob, labelPlacement } = this;
+
+    const mode = getIonMode(this);
+
+    renderHiddenInput(true, el, this.name, JSON.stringify(this.getValue()), disabled);
+
+    return (
+      <Host
+        onFocusin={this.onFocus}
+        onFocusout={this.onBlur}
+        id={rangeId}
+        class={createColorClasses(this.color, {
+          [mode]: true,
+          'in-item': hostContext('ion-item', el),
+          'range-disabled': disabled,
+          'range-pressed': pressedKnob !== undefined,
+          'range-has-pin': pin,
+          [`range-label-placement-${labelPlacement}`]: true,
+        })}
+      >
+        <label class="range-wrapper" id="range-label">
+          <div
+            class={{
+              'label-text-wrapper': true,
+              'label-text-wrapper-hidden': !this.hasLabel,
+            }}
+          >
+            <slot name="label"></slot>
+          </div>
+          <div class="native-wrapper">
+            <slot name="start"></slot>
+            {this.renderRangeSlider()}
+            <slot name="end"></slot>
+          </div>
+        </label>
+      </Host>
+    );
+  }
+
+  private get hasLabel() {
+    return this.el.querySelector('[slot="label"]') !== null;
+  }
+
+  private renderRangeSlider() {
     const {
       min,
       max,
@@ -516,7 +671,7 @@ export class Range implements ComponentInterface {
     if (labelText === undefined || labelText === null) {
       labelText = inheritedAttributes['aria-label'];
     }
-    const mode = getIonMode(this);
+
     let barStart = `${ratioLower * 100}%`;
     let barEnd = `${100 - ratioUpper * 100}%`;
 
@@ -586,43 +741,60 @@ export class Range implements ComponentInterface {
       }
     }
 
-    renderHiddenInput(true, el, this.name, JSON.stringify(this.getValue()), disabled);
+    let labelledBy: string | undefined;
+    if (!this.legacyFormController.hasLegacyControl() && this.hasLabel) {
+      labelledBy = 'range-label';
+    }
 
     return (
-      <Host
-        onFocusin={this.onFocus}
-        onFocusout={this.onBlur}
-        id={rangeId}
-        class={createColorClasses(this.color, {
-          [mode]: true,
-          'in-item': hostContext('ion-item', el),
-          'range-disabled': disabled,
-          'range-pressed': pressedKnob !== undefined,
-          'range-has-pin': pin,
-        })}
-      >
-        <slot name="start"></slot>
-        <div class="range-slider" ref={(rangeEl) => (this.rangeSlider = rangeEl)}>
-          {ticks.map((tick) => (
-            <div
-              style={tickStyle(tick)}
-              role="presentation"
-              class={{
-                'range-tick': true,
-                'range-tick-active': tick.active,
-              }}
-              part={tick.active ? 'tick-active' : 'tick'}
-            />
-          ))}
+      <div class="range-slider" ref={(rangeEl) => (this.rangeSlider = rangeEl)}>
+        {ticks.map((tick) => (
+          <div
+            style={tickStyle(tick)}
+            role="presentation"
+            class={{
+              'range-tick': true,
+              'range-tick-active': tick.active,
+            }}
+            part={tick.active ? 'tick-active' : 'tick'}
+          />
+        ))}
 
+        <div class="range-bar-container">
           <div class="range-bar" role="presentation" part="bar" />
-          <div class="range-bar range-bar-active" role="presentation" style={barStyle} part="bar-active" />
+          <div
+            class={{
+              'range-bar': true,
+              'range-bar-active': true,
+              'has-ticks': ticks.length > 0,
+            }}
+            role="presentation"
+            style={barStyle}
+            part="bar-active"
+          />
+        </div>
 
-          {renderKnob(rtl, {
-            knob: 'A',
-            pressed: pressedKnob === 'A',
-            value: this.valA,
-            ratio: this.ratioA,
+        {renderKnob(rtl, {
+          knob: 'A',
+          pressed: pressedKnob === 'A',
+          value: this.valA,
+          ratio: this.ratioA,
+          pin,
+          pinFormatter,
+          disabled,
+          handleKeyboard,
+          min,
+          max,
+          labelText,
+          labelledBy,
+        })}
+
+        {this.dualKnobs &&
+          renderKnob(rtl, {
+            knob: 'B',
+            pressed: pressedKnob === 'B',
+            value: this.valB,
+            ratio: this.ratioB,
             pin,
             pinFormatter,
             disabled,
@@ -630,26 +802,15 @@ export class Range implements ComponentInterface {
             min,
             max,
             labelText,
+            labelledBy,
           })}
-
-          {this.dualKnobs &&
-            renderKnob(rtl, {
-              knob: 'B',
-              pressed: pressedKnob === 'B',
-              value: this.valB,
-              ratio: this.ratioB,
-              pin,
-              pinFormatter,
-              disabled,
-              handleKeyboard,
-              min,
-              max,
-              labelText,
-            })}
-        </div>
-        <slot name="end"></slot>
-      </Host>
+      </div>
     );
+  }
+
+  render() {
+    const { legacyFormController } = this;
+    return legacyFormController.hasLegacyControl() ? this.renderLegacyRange() : this.renderRange();
   }
 }
 
@@ -664,13 +825,26 @@ interface RangeKnob {
   pin: boolean;
   pinFormatter: PinFormatter;
   labelText?: string | null;
-
+  labelledBy?: string;
   handleKeyboard: (name: KnobName, isIncrease: boolean) => void;
 }
 
 const renderKnob = (
   rtl: boolean,
-  { knob, value, ratio, min, max, disabled, pressed, pin, handleKeyboard, labelText, pinFormatter }: RangeKnob
+  {
+    knob,
+    value,
+    ratio,
+    min,
+    max,
+    disabled,
+    pressed,
+    pin,
+    handleKeyboard,
+    labelText,
+    labelledBy,
+    pinFormatter,
+  }: RangeKnob
 ) => {
   const start = rtl ? 'right' : 'left';
 
@@ -709,7 +883,8 @@ const renderKnob = (
       style={knobStyle()}
       role="slider"
       tabindex={disabled ? -1 : 0}
-      aria-label={labelText}
+      aria-label={labelledBy === undefined ? labelText : null}
+      aria-labelledby={labelledBy !== undefined ? labelledBy : null}
       aria-valuemin={min}
       aria-valuemax={max}
       aria-disabled={disabled ? 'true' : null}

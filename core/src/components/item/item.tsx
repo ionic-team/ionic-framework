@@ -3,13 +3,14 @@ import { Component, Element, Host, Listen, Prop, State, Watch, forceUpdate, h } 
 import { chevronForward } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { AnimationBuilder, Color, CssClassMap, RouterDirection, StyleEventDetail } from '../../interface';
+import type { AnimationBuilder, Color, CssClassMap, StyleEventDetail } from '../../interface';
 import type { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAttributes, raf } from '../../utils/helpers';
-import { printIonError } from '../../utils/logging';
+import { printIonError, printIonWarning } from '../../utils/logging';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
-import type { InputChangeEventDetail } from '../input/input-interface';
+import type { InputInputEventDetail } from '../input/input-interface';
+import type { RouterDirection } from '../router/utils/interface';
 
 import type { CounterFormatter } from './item-interface';
 
@@ -19,8 +20,8 @@ import type { CounterFormatter } from './item-interface';
  * @slot - Content is placed between the named slots if provided without a slot.
  * @slot start - Content is placed to the left of the item text in LTR, and to the right in RTL.
  * @slot end - Content is placed to the right of the item text in LTR, and to the left in RTL.
- * @slot helper - Content is placed under the item and displayed when no error is detected.
- * @slot error - Content is placed under the item and displayed when an error is detected.
+ * @slot helper - Content is placed under the item and displayed when no error is detected. **DEPRECATED** Use the "helperText" property on ion-input or ion-textarea instead.
+ * @slot error - Content is placed under the item and displayed when an error is detected. **DEPRECATED** Use the "errorText" property on ion-input or ion-textarea instead.
  *
  * @part native - The native HTML button, anchor or div element that wraps all child elements.
  * @part detail-icon - The chevron icon for the item. Only applies when `detail="true"`.
@@ -38,7 +39,6 @@ import type { CounterFormatter } from './item-interface';
 export class Item implements ComponentInterface, AnchorInterface, ButtonInterface {
   private labelColorStyles = {};
   private itemStyles = new Map<string, CssClassMap>();
-  private clickListener?: (ev: Event) => void;
   private inheritedAriaAttributes: Attributes = {};
 
   @Element() el!: HTMLIonItemElement;
@@ -83,8 +83,8 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   @Prop() download: string | undefined;
 
   /**
-   * The fill for the item. If `'solid'` the item will have a background. If
-   * `'outline'` the item will be transparent with a border. Only available in `md` mode.
+   * The fill for the item. If `"solid"` the item will have a background. If
+   * `"outline"` the item will be transparent with a border. Only available in `md` mode.
    */
   @Prop() fill?: 'outline' | 'solid';
 
@@ -112,6 +112,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
 
   /**
    * If `true`, a character counter will display the ratio of characters used and the total character limit. Only applies when the `maxlength` property is set on the inner `ion-input` or `ion-textarea`.
+   * @deprecated Use the `counter` property on `ion-input` or `ion-textarea` instead.
    */
   @Prop() counter = false;
 
@@ -142,6 +143,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   /**
    * A callback used to format the counter text.
    * By default the counter text is set to "itemLength / maxLength".
+   * @deprecated Use the `counterFormatter` property on `ion-input` or `ion-textarea` instead.
    */
   @Prop() counterFormatter?: CounterFormatter;
 
@@ -152,8 +154,8 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     this.updateCounterOutput(this.getFirstInput());
   }
 
-  @Listen('ionChange')
-  handleIonChange(ev: CustomEvent<InputChangeEventDetail>) {
+  @Listen('ionInput')
+  handleIonInput(ev: CustomEvent<InputInputEventDetail>) {
     if (this.counter && ev.target === this.getFirstInput()) {
       this.updateCounterOutput(ev.target as HTMLIonInputElement | HTMLIonTextareaElement);
     }
@@ -207,30 +209,56 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     this.hasStartEl();
   }
 
-  componentDidUpdate() {
-    // Do not use @Listen here to avoid making all items
-    // appear as clickable to screen readers
-    // https://github.com/ionic-team/ionic-framework/issues/22011
-    const input = this.getFirstInput();
-    if (input !== undefined && !this.clickListener) {
-      this.clickListener = (ev: Event) => this.delegateFocus(ev, input);
-      this.el.addEventListener('click', this.clickListener);
-    }
-  }
-
-  disconnectedCallback() {
-    const input = this.getFirstInput();
-    if (input !== undefined && this.clickListener) {
-      this.el.removeEventListener('click', this.clickListener);
-      this.clickListener = undefined;
-    }
-  }
-
   componentWillLoad() {
     this.inheritedAriaAttributes = inheritAttributes(this.el, ['aria-label']);
   }
 
   componentDidLoad() {
+    const { el, counter, counterFormatter, fill, shape } = this;
+    const hasHelperSlot = el.querySelector('[slot="helper"]') !== null;
+    if (hasHelperSlot) {
+      printIonWarning(
+        'The "helper" slot has been deprecated in favor of using the "helperText" property on ion-input or ion-textarea.',
+        el
+      );
+    }
+
+    const hasErrorSlot = el.querySelector('[slot="error"]') !== null;
+    if (hasErrorSlot) {
+      printIonWarning(
+        'The "error" slot has been deprecated in favor of using the "errorText" property on ion-input or ion-textarea.',
+        el
+      );
+    }
+
+    if (counter === true) {
+      printIonWarning(
+        'The "counter" property has been deprecated in favor of using the "counter" property on ion-input or ion-textarea.',
+        el
+      );
+    }
+
+    if (counterFormatter !== undefined) {
+      printIonWarning(
+        'The "counterFormatter" property has been deprecated in favor of using the "counterFormatter" property on ion-input or ion-textarea.',
+        el
+      );
+    }
+
+    if (fill !== undefined) {
+      printIonWarning(
+        'The "fill" property has been deprecated in favor of using the "fill" property on ion-input or ion-textarea.',
+        el
+      );
+    }
+
+    if (shape !== undefined) {
+      printIonWarning(
+        'The "shape" property has been deprecated in favor of using the "shape" property on ion-input or ion-textarea.',
+        el
+      );
+    }
+
     raf(() => {
       this.setMultipleInputs();
       this.focusable = this.isFocusable();
@@ -291,33 +319,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
       HTMLIonInputElement | HTMLIonTextareaElement
     >;
     return inputs[0];
-  }
-
-  // This is needed for WebKit due to a delegatesFocus bug where
-  // clicking on the left padding of an item is not focusing the input
-  // but is opening the keyboard. It will no longer be needed with
-  // iOS 14.
-  private delegateFocus(ev: Event, input: HTMLIonInputElement | HTMLIonTextareaElement) {
-    const clickedItem = (ev.target as HTMLElement).tagName === 'ION-ITEM';
-    let firstActive = false;
-
-    // If the first input is the same as the active element we need
-    // to focus the first input again, but if the active element
-    // is another input inside of the item we shouldn't switch focus
-    if (document.activeElement) {
-      firstActive = input.querySelector('input, textarea') === document.activeElement;
-    }
-
-    // Only focus the first input if we clicked on an ion-item
-    // and the first input exists
-    if (clickedItem && (firstActive || !this.multipleInputs)) {
-      input.fireFocusEvents = false;
-      input.setBlur();
-      input.setFocus();
-      raf(() => {
-        input.fireFocusEvents = true;
-      });
-    }
   }
 
   private updateCounterOutput(inputEl: HTMLIonInputElement | HTMLIonTextareaElement) {

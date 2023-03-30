@@ -2,13 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { OverlayEventDetail } from './interfaces';
-import {
-  StencilReactForwardedRef,
-  attachProps,
-  dashToPascalCase,
-  defineCustomElement,
-  setRef,
-} from './utils';
+import { StencilReactForwardedRef, attachProps, dashToPascalCase, defineCustomElement, setRef } from './utils';
 
 interface OverlayElement extends HTMLElement {
   present: () => Promise<void>;
@@ -24,10 +18,7 @@ export interface ReactOverlayProps {
   onWillPresent?: (event: CustomEvent<OverlayEventDetail>) => void;
 }
 
-export const createOverlayComponent = <
-  OverlayComponent extends object,
-  OverlayType extends OverlayElement
->(
+export const createOverlayComponent = <OverlayComponent extends object, OverlayType extends OverlayElement>(
   tagName: string,
   controller: { create: (options: any) => Promise<OverlayType> },
   customElement?: any
@@ -79,7 +70,7 @@ export const createOverlayComponent = <
       if (this.props.onDidDismiss) {
         this.props.onDidDismiss(event);
       }
-      setRef(this.props.forwardedRef, null)
+      setRef(this.props.forwardedRef, null);
     }
 
     shouldComponentUpdate(nextProps: Props) {
@@ -113,25 +104,14 @@ export const createOverlayComponent = <
     }
 
     async present(prevProps?: Props) {
-      const {
-        children,
-        isOpen,
-        onDidDismiss,
-        onDidPresent,
-        onWillDismiss,
-        onWillPresent,
-        ...cProps
-      } = this.props;
+      const { children, isOpen, onDidDismiss, onDidPresent, onWillDismiss, onWillPresent, ...cProps } = this.props;
       const elementProps = {
         ...cProps,
         ref: this.props.forwardedRef,
         [didDismissEventName]: this.handleDismiss,
-        [didPresentEventName]: (e: CustomEvent) =>
-          this.props.onDidPresent && this.props.onDidPresent(e),
-        [willDismissEventName]: (e: CustomEvent) =>
-          this.props.onWillDismiss && this.props.onWillDismiss(e),
-        [willPresentEventName]: (e: CustomEvent) =>
-          this.props.onWillPresent && this.props.onWillPresent(e),
+        [didPresentEventName]: (e: CustomEvent) => this.props.onDidPresent && this.props.onDidPresent(e),
+        [willDismissEventName]: (e: CustomEvent) => this.props.onWillDismiss && this.props.onWillDismiss(e),
+        [willPresentEventName]: (e: CustomEvent) => this.props.onWillPresent && this.props.onWillPresent(e),
       };
 
       this.overlay = await controller.create({

@@ -262,10 +262,11 @@ const readQueryParam = (url: string, key: string) => {
 };
 
 const proxyEvent = <T>(emitter: Subject<T>, el: EventTarget, eventName: string) => {
-  if (el as any) {
-    el.addEventListener(eventName, (ev: Event | undefined | null) => {
+  if (el) {
+    el.addEventListener(eventName, (ev) => {
       // ?? cordova might emit "null" events
-      emitter.next(ev != null ? ((ev as any).detail as T) : undefined);
+      const value = ev != null ? (ev as any).detail : undefined;
+      emitter.next(value);
     });
   }
 };

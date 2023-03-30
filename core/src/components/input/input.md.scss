@@ -1,17 +1,25 @@
 @import "./input";
 @import "./input.md.vars";
-
+@import "./input.md.solid.scss";
+@import "./input.md.outline.scss";
+@import "../item/item.md.vars.scss";
 
 // Material Design Input
 // --------------------------------------------------
 
 :host {
+  --border-width: 1px;
+  --border-color: #{$item-md-border-color};
+
+  font-size: $input-md-font-size;
+}
+
+// TODO FW-2764 Remove this
+:host(.legacy-input) {
   --padding-top: #{$input-md-padding-top};
   --padding-end: #{$input-md-padding-end};
   --padding-bottom: #{$input-md-padding-bottom};
   --padding-start: #{$input-md-padding-start};
-
-  font-size: $input-md-font-size;
 }
 
 :host-context(.item-label-stacked),
@@ -24,4 +32,91 @@
 .input-clear-icon ion-icon {
   width: 22px;
   height: 22px;
+}
+
+// Input - Disabled
+// ----------------------------------------------------------------
+:host(.legacy-input) .native-input[disabled],
+:host(.input-disabled) {
+  opacity: #{$input-md-disabled-opacity};
+}
+
+// Input Bottom
+// ----------------------------------------------------------------
+/**
+ * If the input has a validity state, the
+ * border and label should reflect that as a color.
+ */
+:host(.has-focus.ion-valid),
+:host(.ion-touched.ion-invalid) {
+  --border-color: var(--highlight-color);
+}
+
+.input-bottom .counter {
+  letter-spacing: .0333333333em;
+}
+
+// Input Wrapper
+// ----------------------------------------------------------------
+
+:host(:not(.legacy-input)) {
+  min-height: 56px;
+}
+
+// Input Label
+// ----------------------------------------------------------------
+
+/**
+ * When the input is focused the label should
+ * take on the highlight color. This should
+ * only apply to floating or stacked labels.
+ */
+:host(.input-label-placement-floating.has-focus) .label-text-wrapper,
+:host(.input-label-placement-stacked.has-focus) .label-text-wrapper {
+  color: var(--highlight-color);
+}
+
+:host(.has-focus.input-label-placement-floating.ion-valid) .label-text-wrapper,
+:host(.input-label-placement-floating.ion-touched.ion-invalid) .label-text-wrapper,
+:host(.has-focus.input-label-placement-stacked.ion-valid) .label-text-wrapper,
+:host(.input-label-placement-stacked.ion-touched.ion-invalid) .label-text-wrapper {
+  color: var(--highlight-color);
+}
+
+// Input Highlight
+// ----------------------------------------------------------------
+
+.input-highlight {
+  @include position(null, null, -1px, 0);
+
+  position: absolute;
+
+  width: 100%;
+  height: 2px;
+
+  transform: scale(0);
+
+  transition: transform 200ms;
+
+  background: var(--highlight-color);
+}
+
+:host(.has-focus) .input-highlight {
+  transform: scale(1);
+}
+
+/**
+ * Adjust the highlight up by 1px
+ * so it is not cut off by the
+ * the item's line (if one is present).
+ */
+:host(.in-item) .input-highlight {
+  @include position(null, null, 0, 0);
+}
+
+// Input Shape Rounded
+// ----------------------------------------------------------------
+
+:host(.input-shape-round) {
+  --border-radius: 16px;
 }

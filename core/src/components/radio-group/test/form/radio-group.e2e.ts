@@ -15,7 +15,7 @@ test.describe('radio-group: form', () => {
     await griffRadio.click();
     await page.waitForChanges();
 
-    await expect(ionChange).toHaveReceivedEventDetail({ value: 'griff' });
+    await expect(ionChange).toHaveReceivedEventDetail({ value: 'griff', event: { isTrusted: true } });
   });
 
   test('selecting a disabled option should not update the value', async ({ page }) => {

@@ -11,16 +11,31 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
-    <link href="../../../../../css/core.css" rel="stylesheet" />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
     <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
-
     <style>
-      ion-range {
-        /* End knob is being cut-off */
-        width: 90%;
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(250px, 1fr));
+        grid-row-gap: 20px;
+        grid-column-gap: 20px;
+      }
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+
+        color: #6f7378;
+
+        margin-top: 10px;
+      }
+      @media screen and (max-width: 800px) {
+        .grid {
+          grid-template-columns: 1fr;
+          padding: 0;
+        }
       }
     </style>
   </head>
@@ -32,12 +47,12 @@
           <ion-title>Range - activeBarStart</ion-title>
         </ion-toolbar>
       </ion-header>
-      <ion-content class="ion-padding" id="content">
-        <ion-list>
-          <ion-item>
-            <ion-label position="stacked">activeBarStart is 0 and value is 0.</ion-label>
+      <ion-content class="ion-padding">
+        <div class="grid">
+          <div class="grid-item">
+            <h2>activeBarStart 0, value 0</h2>
             <ion-range
-              class="ion-no-padding"
+              aria-label="my range"
               min="-100"
               max="100"
               snaps="10"
@@ -45,13 +60,13 @@
               pin="true"
               active-bar-start="0"
               value="0"
-            >
-            </ion-range>
-          </ion-item>
-          <ion-item>
-            <ion-label position="stacked"> activeBarStart is 0 and value is 70. </ion-label>
+            ></ion-range>
+          </div>
+
+          <div class="grid-item">
+            <h2>activeBarStart 0, value 70</h2>
             <ion-range
-              class="ion-no-padding"
+              aria-label="my range"
               min="-100"
               max="100"
               snaps="10"
@@ -59,13 +74,13 @@
               pin="true"
               active-bar-start="0"
               value="70"
-            >
-            </ion-range>
-          </ion-item>
-          <ion-item>
-            <ion-label position="stacked"> activeBarStart is 0 and value is -70. </ion-label>
+            ></ion-range>
+          </div>
+
+          <div class="grid-item">
+            <h2>activeBarStart 0, value -70</h2>
             <ion-range
-              class="ion-no-padding"
+              aria-label="my range"
               min="-100"
               max="100"
               snaps="10"
@@ -73,13 +88,13 @@
               pin="true"
               active-bar-start="0"
               value="-70"
-            >
-            </ion-range>
-          </ion-item>
-          <ion-item>
-            <ion-label position="stacked"> activeBarStart is -30 and value is 0. </ion-label>
+            ></ion-range>
+          </div>
+
+          <div class="grid-item">
+            <h2>activeBarStart -30, value 0</h2>
             <ion-range
-              class="ion-no-padding"
+              aria-label="my range"
               min="-100"
               max="100"
               snaps="10"
@@ -87,13 +102,13 @@
               pin="true"
               active-bar-start="-30"
               value="0"
-            >
-            </ion-range>
-          </ion-item>
-          <ion-item>
-            <ion-label position="stacked"> activeBarStart is 30 and value is 0. </ion-label>
+            ></ion-range>
+          </div>
+
+          <div class="grid-item">
+            <h2>activeBarStart 30, value 0</h2>
             <ion-range
-              class="ion-no-padding"
+              aria-label="my range"
               min="-100"
               max="100"
               snaps="10"
@@ -101,13 +116,13 @@
               pin="true"
               active-bar-start="30"
               value="0"
-            >
-            </ion-range>
-          </ion-item>
-          <ion-item>
-            <ion-label position="stacked">activeBarStart is between steps</ion-label>
+            ></ion-range>
+          </div>
+
+          <div class="grid-item">
+            <h2>activeBarStart is between steps</h2>
             <ion-range
-              class="ion-no-padding"
+              aria-label="my range"
               min="-100"
               max="100"
               snaps="10"
@@ -116,21 +131,38 @@
               active-bar-start="25"
               value="0"
             ></ion-range>
-          </ion-item>
-          <ion-item>
-            <ion-label position="stacked">invalid activeBarStart value (less than min)</ion-label>
-            <ion-range class="ion-no-padding" min="0" max="100" snaps="10" step="10" pin="true" active-bar-start="-30">
-            </ion-range>
-          </ion-item>
-          <ion-item>
-            <ion-label position="stacked">invalid activeBarStart value (greater than max)</ion-label>
-            <ion-range class="ion-no-padding" min="0" max="100" snaps="10" step="10" pin="true" active-bar-start="110">
-            </ion-range>
-          </ion-item>
-          <ion-item>
-            <ion-label position="stacked"> activeBarStart is ignored with dual knobs enabled. </ion-label>
+          </div>
+
+          <div class="grid-item">
+            <h2>invalid activeBarStart value (less than min)</h2>
             <ion-range
-              class="ion-no-padding"
+              aria-label="my range"
+              min="0"
+              max="100"
+              snaps="10"
+              step="10"
+              pin="true"
+              active-bar-start="-30"
+            ></ion-range>
+          </div>
+
+          <div class="grid-item">
+            <h2>invalid activeBarStart value (greater than max)</h2>
+            <ion-range
+              aria-label="my range"
+              min="0"
+              max="100"
+              snaps="10"
+              step="10"
+              pin="true"
+              active-bar-start="110"
+            ></ion-range>
+          </div>
+
+          <div class="grid-item">
+            <h2>activeBarStart is ignored with dual knobs enabled</h2>
+            <ion-range
+              aria-label="my range"
               min="-100"
               max="100"
               snaps="10"
@@ -140,8 +172,8 @@
               dual-knobs="true"
               value="30"
             ></ion-range>
-          </ion-item>
-        </ion-list>
+          </div>
+        </div>
       </ion-content>
     </ion-app>
   </body>

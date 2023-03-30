@@ -31,5 +31,8 @@
         <ion-select-option [value]="1">Option 1</ion-select-option>
       </ion-select>
     </ion-item>
+
+    <ion-button id="set-to-null" (click)="setSelect(null)">Set select value to "null"></ion-button>
+    <ion-button id="set-to-undefined" (click)="setSelect(undefined)">Set select value to "undefined"></ion-button>
   </form>
 </ion-content>
