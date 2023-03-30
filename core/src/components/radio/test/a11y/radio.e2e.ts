@@ -1,25 +1,18 @@
+import AxeBuilder from '@axe-core/playwright';
 import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
 test.describe('radio: a11y', () => {
-  test.beforeEach(({ skip }) => {
+  test.beforeEach(async ({ skip }) => {
     skip.rtl();
+    skip.mode('md');
   });
-  test('tabbing should switch between radio groups', async ({ page, browserName }) => {
-    const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
+
+  test('should not have accessibility violations', async ({ page }) => {
     await page.goto(`/src/components/radio/test/a11y`);
 
-    const firstGroupRadios = page.locator('#first-group ion-radio');
-    const secondGroupRadios = page.locator('#second-group ion-radio');
-
-    await page.keyboard.press(tabKey);
-    await expect(firstGroupRadios.nth(0)).toBeFocused();
-
-    await page.keyboard.press(tabKey);
-    await expect(secondGroupRadios.nth(0)).toBeFocused();
-
-    await page.keyboard.press(`Shift+${tabKey}`);
-    await expect(firstGroupRadios.nth(0)).toBeFocused();
+    const results = await new AxeBuilder({ page }).analyze();
+    expect(results.violations).toEqual([]);
   });
 
   // TODO FW-3747

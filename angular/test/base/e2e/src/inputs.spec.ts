@@ -9,7 +9,6 @@ describe('Inputs', () => {
     cy.get('ion-input').should('have.prop', 'value').and('equal', 'some text');
     cy.get('ion-datetime').should('have.prop', 'value').and('equal', '1994-03-15');
     cy.get('ion-select').should('have.prop', 'value').and('equal', 'nes');
-    cy.get('ion-range').should('have.prop', 'value').and('equal', 10);
   });
 
   it('should have reset value', () => {
@@ -17,10 +16,15 @@ describe('Inputs', () => {
 
     cy.get('ion-checkbox').should('have.prop', 'checked').and('equal', false);
     cy.get('ion-toggle').should('have.prop', 'checked').and('equal', false);
-    cy.get('ion-input').should('have.prop', 'value').and('equal', '');
-    cy.get('ion-datetime').should('have.prop', 'value').and('equal', '');
-    cy.get('ion-select').should('have.prop', 'value').and('equal', '');
-    cy.get('ion-range').should('have.prop', 'value').and('be.NaN');
+    /**
+     * The `value` property gets set to undefined
+     * for these components, so we need to check
+     * not.have.prop which will check that the
+     * value property is undefined.
+     */
+    cy.get('ion-input').should('not.have.prop', 'value');
+    cy.get('ion-datetime').should('not.have.prop', 'value');
+    cy.get('ion-select').should('not.have.prop', 'value');
   });
 
   it('should get some value', () => {
@@ -32,30 +36,31 @@ describe('Inputs', () => {
     cy.get('ion-input').should('have.prop', 'value').and('equal', 'some text');
     cy.get('ion-datetime').should('have.prop', 'value').and('equal', '1994-03-15');
     cy.get('ion-select').should('have.prop', 'value').and('equal', 'nes');
-    cy.get('ion-range').should('have.prop', 'value').and('equal', 10);
   });
 
   it('change values should update angular', () => {
     cy.get('#reset-button').click();
 
-    cy.get('ion-checkbox').invoke('prop', 'checked', true);
-    cy.get('ion-toggle').invoke('prop', 'checked', true);
-    cy.get('ion-input').invoke('prop', 'value', 'hola');
-    cy.get('ion-datetime').invoke('prop', 'value', '1996-03-15');
-    cy.get('ion-select').invoke('prop', 'value', 'playstation');
-    cy.get('ion-range').invoke('prop', 'value', 20);
+    cy.get('ion-checkbox#first-checkbox').click();
+    cy.get('ion-toggle').first().click();
+
+    cy.get('ion-input').eq(0).type('hola');
+    cy.get('ion-input input').eq(0).blur();
+
+    // Set date to 1994-03-14
+    cy.get('ion-datetime').first().shadow().find('.calendar-day:not([disabled])').first().click();
+
+    cy.get('ion-select#game-console').click();
+    cy.get('ion-alert').should('exist').should('be.visible');
+    // Playstation option
+    cy.get('ion-alert .alert-radio-button:nth-of-type(4)').click();
+    // Click confirm button
+    cy.get('ion-alert .alert-button:not(.alert-button-role-cancel)').click();
 
     cy.get('#checkbox-note').should('have.text', 'true');
     cy.get('#toggle-note').should('have.text', 'true');
     cy.get('#input-note').should('have.text', 'hola');
-    cy.get('#datetime-note').should('have.text', '1996-03-15');
-    cy.get('#select-note').should('have.text', 'playstation');
-    cy.get('#range-note').should('have.text', '20');
+    cy.get('#datetime-note').should('have.text', '1994-03-14');
+    cy.get('#select-note').should('have.text', 'ps');
   });
-
-  it('nested components should not interfere with NgModel', () => {
-    cy.get('#range-note').should('have.text', '10');
-    cy.get('#nested-toggle').click();
-    cy.get('#range-note').should('have.text', '10');
-  });
-})
+});

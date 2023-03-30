@@ -349,7 +349,6 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       }
 
       await routerOutlet.commit(enteringEl, leavingEl, {
-        deepWait: true,
         duration: skipTransition || directionToUse === undefined ? 0 : undefined,
         direction: directionToUse,
         showGoBack: !!routeInfo.pushedByRoute,

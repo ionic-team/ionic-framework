@@ -3,7 +3,7 @@ import { Loading } from '../loading';
 import { config } from '../../../global/config';
 
 describe('alert: custom html', () => {
-  it('should allow for custom html by default', async () => {
+  it('should not allow for custom html by default', async () => {
     const page = await newSpecPage({
       components: [Loading],
       html: `<ion-loading message="<button class='custom-html'>Custom Text</button>"></ion-loading>`,
@@ -11,7 +11,7 @@ describe('alert: custom html', () => {
 
     const content = page.body.querySelector('.loading-content');
     expect(content.textContent).toContain('Custom Text');
-    expect(content.querySelector('button.custom-html')).not.toBe(null);
+    expect(content.querySelector('button.custom-html')).toBe(null);
   });
 
   it('should allow for custom html', async () => {

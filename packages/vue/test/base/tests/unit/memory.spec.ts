@@ -1,4 +1,5 @@
 import { mount } from '@vue/test-utils';
+import { describe, expect, it, vi } from 'vitest';
 import { createRouter, createMemoryHistory } from '@ionic/vue-router';
 import {
   IonContent,
@@ -18,9 +19,6 @@ const App = {
 }
 
 describe('createMemoryHistory', () => {
-  beforeAll(() => {
-    (HTMLElement.prototype as HTMLIonRouterOutletElement).commit = jest.fn();
-  });
   it('should not error when going back with memory router', async () => {
     const PageTemplate = {
       template: `
@@ -44,7 +42,7 @@ describe('createMemoryHistory', () => {
         { path: '/page3', component: PageTemplate }
       ]
     });
-    const push = jest.spyOn(router, 'back')
+    const push = vi.spyOn(router, 'back');
 
     router.push('/');
     await router.isReady();

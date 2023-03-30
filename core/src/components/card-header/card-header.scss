@@ -7,8 +7,10 @@
   --background: transparent;
   --color: inherit;
 
-  display: block;
+  display: flex;
   position: relative;
+
+  flex-direction: column;
 
   background: var(--background);
   color: var(--color);

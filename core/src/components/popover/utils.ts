@@ -1,5 +1,6 @@
-import type { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from '../../interface';
 import { getElementRoot, raf } from '../../utils/helpers';
+
+import type { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from './popover-interface';
 
 interface InteractionCallback {
   eventName: string;

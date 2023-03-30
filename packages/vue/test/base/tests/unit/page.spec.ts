@@ -1,4 +1,5 @@
 import { mount } from '@vue/test-utils';
+import { describe, expect, it } from 'vitest';
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { IonicVue, IonApp, IonRouterOutlet, IonPage } from '@ionic/vue';
 
@@ -8,9 +9,6 @@ const App = {
 }
 
 describe('IonPage', () => {
-  beforeAll(() => {
-    (HTMLElement.prototype as HTMLIonRouterOutletElement).commit = jest.fn();
-  });
   it('should add ion-page class', async () => {
     const Page1 = {
       template: '<ion-page></ion-page>',

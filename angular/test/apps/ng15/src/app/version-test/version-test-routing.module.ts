@@ -3,12 +3,7 @@ import { RouterModule } from "@angular/router";
 
 @NgModule({
   imports: [
-    RouterModule.forChild([
-      {
-        path: 'standalone',
-        loadComponent: () => import('./standalone/standalone.component').then(m => m.StandaloneComponent)
-      }
-    ])
+    RouterModule.forChild([])
   ],
   exports: [RouterModule]
 })

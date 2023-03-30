@@ -20,18 +20,24 @@ export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDes
   constructor(protected injector: Injector, protected el: ElementRef) {}
 
   writeValue(value: any): void {
-    /**
-     * TODO FW-2646
-     * Change `value == null ? '' : value;`
-     * to `value`. This was a fix for IE9, but IE9
-     * is no longer supported; however, this change
-     * is potentially a breaking change
-     */
-    this.el.nativeElement.value = this.lastValue = value == null ? '' : value;
+    this.el.nativeElement.value = this.lastValue = value;
     setIonicClasses(this.el);
   }
 
-  handleChangeEvent(el: HTMLElement, value: any): void {
+  /**
+   * Notifies the ControlValueAccessor of a change in the value of the control.
+   *
+   * This is called by each of the ValueAccessor directives when we want to update
+   * the status and validity of the form control. For example with text components this
+   * is called when the ionInput event is fired. For select components this is called
+   * when the ionChange event is fired.
+   *
+   * This also updates the Ionic form status classes on the element.
+   *
+   * @param el The component element.
+   * @param value The new value of the control.
+   */
+  handleValueChange(el: HTMLElement, value: any): void {
     if (el === this.el.nativeElement) {
       if (value !== this.lastValue) {
         this.lastValue = value;

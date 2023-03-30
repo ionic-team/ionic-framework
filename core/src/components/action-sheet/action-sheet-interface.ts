@@ -11,16 +11,11 @@ export interface ActionSheetOptions {
   mode?: Mode;
   keyboardClose?: boolean;
   id?: string;
-  htmlAttributes?: ActionSheetAttributes;
+  htmlAttributes?: { [key: string]: any };
 
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;
 }
-
-/**
- * @deprecated - Use { [key: string]: any } directly instead.
- */
-export type ActionSheetAttributes = { [key: string]: any };
 
 export interface ActionSheetButton<T = any> {
   text?: string;
