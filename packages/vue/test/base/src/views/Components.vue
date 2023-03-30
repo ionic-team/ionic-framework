@@ -2,9 +2,6 @@
   <ion-page>
     <ion-content>
       <ion-list>
-        <ion-item button router-link="/components/breadcrumbs">
-          <ion-label>Breadcrumbs</ion-label>
-        </ion-item>
         <ion-item button router-link="/components/select">
           <ion-label>Select</ion-label>
         </ion-item>
