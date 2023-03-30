@@ -2,8 +2,9 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Listen, Prop, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { RadioGroupChangeEventDetail } from '../../interface';
 import { renderHiddenInput } from '../../utils/helpers';
+
+import type { RadioGroupChangeEventDetail } from './radio-group-interface';
 
 @Component({
   tag: 'ion-radio-group',
@@ -33,14 +34,22 @@ export class RadioGroup implements ComponentInterface {
   @Watch('value')
   valueChanged(value: any | undefined) {
     this.setRadioTabindex(value);
-
-    this.ionChange.emit({ value });
+    this.ionValueChange.emit({ value });
   }
 
   /**
    * Emitted when the value has changed.
    */
   @Event() ionChange!: EventEmitter<RadioGroupChangeEventDetail>;
+
+  /**
+   * Emitted when the `value` property has changed.
+   * This is used to ensure that `ion-radio` can respond
+   * to any value property changes from the group.
+   *
+   * @internal
+   */
+  @Event() ionValueChange!: EventEmitter<RadioGroupChangeEventDetail>;
 
   componentDidLoad() {
     this.setRadioTabindex(this.value);
@@ -83,6 +92,17 @@ export class RadioGroup implements ComponentInterface {
     return Array.from(this.el.querySelectorAll('ion-radio'));
   }
 
+  /**
+   * Emits an `ionChange` event.
+   *
+   * This API should be called for user committed changes.
+   * This API should not be used for external value changes.
+   */
+  private emitValueChange(event?: Event) {
+    const { value } = this;
+    this.ionChange.emit({ value, event });
+  }
+
   private onClick = (ev: Event) => {
     ev.preventDefault();
 
@@ -98,18 +118,19 @@ export class RadioGroup implements ComponentInterface {
       const newValue = selectedRadio.value;
       if (newValue !== currentValue) {
         this.value = newValue;
+        this.emitValueChange(ev);
       } else if (this.allowEmptySelection) {
         this.value = undefined;
+        this.emitValueChange(ev);
       }
     }
   };
 
   @Listen('keydown', { target: 'document' })
-  onKeydown(ev: any) {
-    // TODO(FW-2832): type
+  onKeydown(ev: KeyboardEvent) {
     const inSelectPopover = !!this.el.closest('ion-select-popover');
 
-    if (ev.target && !this.el.contains(ev.target)) {
+    if (ev.target && !this.el.contains(ev.target as HTMLElement)) {
       return;
     }
 
@@ -118,7 +139,7 @@ export class RadioGroup implements ComponentInterface {
     const radios = this.getRadios().filter((radio) => !radio.disabled);
 
     // Only move the radio if the current focus is in the radio group
-    if (ev.target && radios.includes(ev.target)) {
+    if (ev.target && radios.includes(ev.target as HTMLIonRadioElement)) {
       const index = radios.findIndex((radio) => radio === ev.target);
       const current = radios[index];
 
@@ -141,13 +162,24 @@ export class RadioGroup implements ComponentInterface {
 
         if (!inSelectPopover) {
           this.value = next.value;
+          this.emitValueChange(ev);
         }
       }
 
       // Update the radio group value when a user presses the
       // space bar on top of a selected radio
       if ([' '].includes(ev.key)) {
+        const previousValue = this.value;
         this.value = this.allowEmptySelection && this.value !== undefined ? undefined : current.value;
+        if (previousValue !== this.value || this.allowEmptySelection) {
+          /**
+           * Value change should only be emitted if the value is different,
+           * such as selecting a new radio with the space bar or if
+           * the radio group allows for empty selection and the user
+           * is deselecting a checked radio.
+           */
+          this.emitValueChange(ev);
+        }
 
         // Prevent browsers from jumping
         // to the bottom of the screen

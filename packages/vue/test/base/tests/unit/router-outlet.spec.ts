@@ -1,4 +1,5 @@
 import { enableAutoUnmount, mount } from '@vue/test-utils';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import {
   IonicVue,
@@ -68,7 +69,7 @@ describe('Routing', () => {
     /**
      * Mock the commit function on IonRouterOutlet
      */
-    const commitFn = jest.fn();
+    const commitFn = vi.fn();
     const routerOutlet = wrapper.findComponent(IonRouterOutlet);
     routerOutlet.vm.$el.commit = commitFn;
 
@@ -130,7 +131,7 @@ describe('Routing', () => {
     /**
      * Mock the commit function on IonRouterOutlet
      */
-    const commitFn = jest.fn();
+    const commitFn = vi.fn();
     const routerOutlet = wrapper.findComponent(IonRouterOutlet);
     routerOutlet.vm.$el.commit = commitFn;
 

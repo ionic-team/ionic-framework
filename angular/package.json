@@ -1,6 +1,6 @@
 {
   "name": "@ionic/angular",
-  "version": "6.7.0",
+  "version": "7.0.0",
   "description": "Angular specific wrappers for @ionic/core",
   "keywords": [
     "ionic",
@@ -27,7 +27,7 @@
     "build": "npm run clean && npm run build.ng && npm run build.core && npm run clean-generated",
     "build.core": "node scripts/build-core.js",
     "build.link": "npm run build && node scripts/link-copy.js",
-    "build.ng": "ng-packagr -p package.json -c tsconfig.json",
+    "build.ng": "ng-packagr -p ng-package.json -c tsconfig.json",
     "clean": "node scripts/clean.js",
     "clean-generated": "node ./scripts/clean-generated.js",
     "lint": "npm run eslint && npm run prettier -- --write --cache",
@@ -41,57 +41,54 @@
     "tsc": "tsc -p .",
     "validate": "npm i && npm run lint && npm run test && npm run build"
   },
+  "exports": {
+    "./css/*": {
+      "style": "./css/*"
+    }
+  },
   "dependencies": {
-    "@ionic/core": "^6.7.0",
-    "ionicons": "^6.1.3",
+    "@ionic/core": "^7.0.0",
+    "ionicons": "^7.0.0",
     "jsonc-parser": "^3.0.0",
-    "tslib": "^2.0.0"
+    "tslib": "^2.3.0"
   },
   "peerDependencies": {
-    "@angular/core": ">=12.0.0",
-    "@angular/forms": ">=12.0.0",
-    "@angular/router": ">=12.0.0",
-    "rxjs": ">=6.6.0",
+    "@angular/core": ">=14.0.0",
+    "@angular/forms": ">=14.0.0",
+    "@angular/router": ">=14.0.0",
+    "rxjs": ">=7.5.0",
     "zone.js": ">=0.11.0"
   },
   "devDependencies": {
-    "@angular-devkit/core": "^12.0.0",
-    "@angular-devkit/schematics": "^12.0.0",
-    "@angular-eslint/eslint-plugin": "^12.5.0",
-    "@angular-eslint/eslint-plugin-template": "^12.5.0",
-    "@angular-eslint/template-parser": "^12.5.0",
-    "@angular/common": "^12.0.0",
-    "@angular/compiler": "^12.0.0",
-    "@angular/compiler-cli": "^12.0.0",
-    "@angular/core": "^12.0.0",
-    "@angular/forms": "^12.0.0",
-    "@angular/router": "^12.0.0",
+    "@angular-devkit/core": "^14.0.0",
+    "@angular-devkit/schematics": "^14.0.0",
+    "@angular-eslint/eslint-plugin": "^14.0.0",
+    "@angular-eslint/eslint-plugin-template": "^14.0.0",
+    "@angular-eslint/template-parser": "^14.0.0",
+    "@angular/common": "^14.0.0",
+    "@angular/compiler": "^14.0.0",
+    "@angular/compiler-cli": "^14.0.0",
+    "@angular/core": "^14.0.0",
+    "@angular/forms": "^14.0.0",
+    "@angular/platform-browser": "^14.0.0",
+    "@angular/platform-browser-dynamic": "^14.0.0",
+    "@angular/router": "^14.0.0",
     "@ionic/eslint-config": "^0.3.0",
     "@ionic/prettier-config": "^2.0.0",
-    "@schematics/angular": "^12.2.9",
+    "@schematics/angular": "^14.0.0",
     "@types/node": "12.12.5",
-    "@typescript-eslint/eslint-plugin": "^4.32.0",
-    "@typescript-eslint/parser": "^4.32.0",
-    "eslint": "^7.32.0",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "eslint": "^8.0.0",
     "eslint-plugin-import": "^2.25.2",
     "fs-extra": "^7.0.0",
-    "ng-packagr": "^12.0.0",
+    "ng-packagr": "^14.0.0",
     "prettier": "^2.4.1",
-    "rxjs": "^6.6.2",
-    "typescript": "4.2.4",
-    "typescript-eslint-language-service": "^4.1.5",
+    "rxjs": "~7.5.0",
+    "typescript": "~4.7.2",
+    "typescript-eslint-language-service": "^5.0.0",
     "zone.js": "~0.11.4"
   },
   "prettier": "@ionic/prettier-config",
-  "schematics": "./schematics/collection.json",
-  "ngPackage": {
-    "lib": {
-      "entryFile": "src/index.ts"
-    },
-    "allowedNonPeerDependencies": [
-      "@ionic/core",
-      "ionicons",
-      "jsonc-parser"
-    ]
-  }
+  "schematics": "./schematics/collection.json"
 }

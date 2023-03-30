@@ -97,16 +97,22 @@
 
         <h1>Complex Custom Toggles</h1>
         <ion-toggle aria-label="Custom" mode="ios" class="all-custom"></ion-toggle>
-        <ion-toggle aria-label="Custom" mode="ios" checked class="all-custom"></ion-toggle>
+        <ion-toggle aria-label="Custom" ode="ios" checked class="all-custom"></ion-toggle>
 
         <ion-toggle aria-label="Custom Overflow" class="custom-overflow"></ion-toggle>
         <ion-toggle aria-label="Custom Overflow" checked class="custom-overflow"></ion-toggle>
 
-        <ion-toggle aria-label="Custom Spacing iOS" mode="ios" color="dark" class="custom-spacing"></ion-toggle>
-        <ion-toggle aria-label="Custom Spacing iOS" mode="ios" color="dark" checked class="custom-spacing"></ion-toggle>
+        <ion-toggle aria-label="Custom Overflow iOS" mode="ios" color="dark" class="custom-spacing"></ion-toggle>
+        <ion-toggle
+          aria-label="Custom Overflow iOS"
+          mode="ios"
+          color="dark"
+          checked
+          class="custom-spacing"
+        ></ion-toggle>
 
-        <ion-toggle aria-label="Custom Spacing MD" mode="md" color="dark" class="custom-spacing"></ion-toggle>
-        <ion-toggle aria-label="Custom Spacing MD" mode="md" color="dark" checked class="custom-spacing"></ion-toggle>
+        <ion-toggle aria-label="Custom Overflow MD" mode="md" color="dark" class="custom-spacing"></ion-toggle>
+        <ion-toggle aria-label="Custom Overflow MD" mode="md" color="dark" checked class="custom-spacing"></ion-toggle>
 
         <ion-toggle aria-label="Custom Icon iOS" mode="ios" class="icon-custom"></ion-toggle>
         <ion-toggle aria-label="Custom Icon iOS" mode="ios" checked class="icon-custom"></ion-toggle>
@@ -114,44 +120,43 @@
     </ion-app>
 
     <style>
-      ion-toggle {
-        padding: 5px;
-      }
-
-      .width-small {
+      .width-small::part(track) {
         width: 40px;
       }
 
-      .width-large {
+      .width-large::part(track) {
         width: 100px;
       }
 
-      .ios.height-small {
+      .ios.height-small::part(track) {
         height: 20px;
+      }
 
+      .md.height-small::part(track) {
+        height: 10px;
+      }
+
+      .height-small {
         /* The height of the handle is 100% of the track height - 4px */
         --handle-width: 16px;
       }
 
-      .md.height-small {
-        height: 10px;
-
-        /* The height of the handle is 100% of the track height + 6px */
-        --handle-width: 16px;
+      .height-large::part(track) {
+        height: 60px;
       }
 
       .height-large {
-        height: 60px;
-
         --border-radius: 4px;
         --handle-border-radius: 4px;
 
         --handle-width: 50%;
       }
 
-      .handle-height-large {
+      .handle-height-large::part(track) {
         height: 60px;
+      }
 
+      .handle-height-large {
         /*
        * The max height of the handle is 100% of the track height - handle spacing
        * so this will never show as being 150%
@@ -167,34 +172,38 @@
       }
 
       .icon-custom {
-        --handle-background-checked: #fff url(/src/components/toggle/test/sizes/power-outline.svg) no-repeat center /
-          contain;
+        --handle-background-checked: #fff url(/src/components/toggle/test/legacy/sizes/power-outline.svg) no-repeat
+          center / contain;
       }
 
       .icon-custom::before {
         position: absolute;
         content: 'ON';
         color: white;
-        top: 16px;
-        left: 10px;
+        top: 11px;
+        left: 5px;
         z-index: 1;
         font-size: 8px;
       }
 
       .all-custom {
-        height: 20px;
-        width: 40px;
-
-        --background: #fff;
-        --background-checked: #0366a6;
-        --handle-background: #bbbbbb;
-        --handle-width: 20px;
-        --handle-height: 20px;
-        --handle-spacing: 0;
-        --handle-box-shadow: none;
-
         border: 2px solid #bbb;
         border-radius: 16px;
+
+        --handle-width: 20px;
+        --handle-spacing: 0px;
+        --handle-background: #bbbbbb;
+        --handle-background-checked: white;
+        --handle-box-shadow: none;
+
+        --track-background: #ececec;
+      }
+
+      .all-custom::part(track) {
+        width: 40px;
+        height: 20px;
+
+        margin: 6px;
       }
 
       .all-custom.toggle-checked {
@@ -204,13 +213,15 @@
       }
 
       .custom-overflow {
-        overflow: visible;
-
         contain: none;
 
         --background-checked: #d6ffd6;
 
         --handle-box-shadow: 0 3px 12px rgba(255, 0, 0, 0.6), 0 3px 1px rgba(50, 70, 255, 0.6);
+      }
+
+      .custom-overflow::part(track) {
+        overflow: visible;
       }
 
       .ios.custom-spacing {

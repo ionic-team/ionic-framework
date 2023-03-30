@@ -1,6 +1,6 @@
 describe('Nested', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:8080/nested');
+    cy.visit('/nested');
     cy.ionPageVisible('nestedchild');
   });
 
@@ -31,7 +31,8 @@ describe('Nested', () => {
 
 describe('Nested - Replace', () => {
   it('should replace a route but still be able to go back to main outlet', () => {
-    cy.visit('http://localhost:8080');
+    cy.visit('/');
+    cy.ionPageVisible('home');
 
     cy.routerPush('/nested');
     cy.ionPageHidden('home');

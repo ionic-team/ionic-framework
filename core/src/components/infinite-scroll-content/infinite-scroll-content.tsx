@@ -3,10 +3,10 @@ import { Component, Host, Prop, h } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import type { SpinnerTypes } from '../../interface';
 import { ENABLE_HTML_CONTENT_DEFAULT } from '../../utils/config';
 import type { IonicSafeString } from '../../utils/sanitization';
 import { sanitizeDOMString } from '../../utils/sanitization';
+import type { SpinnerTypes } from '../spinner/spinner-configs';
 
 @Component({
   tag: 'ion-infinite-scroll-content',
@@ -33,9 +33,9 @@ export class InfiniteScrollContent implements ComponentInterface {
    * For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
    *
    * This property accepts custom HTML as a string.
-   * Developers who only want to pass plain text
-   * can disable the custom HTML functionality
-   * by setting `innerHTMLTemplatesEnabled: false` in the Ionic config.
+   * Content is parsed as plaintext by default.
+   * `innerHTMLTemplatesEnabled` must be set to `true` in the Ionic config
+   * before custom HTML can be used.
    */
   @Prop() loadingText?: string | IonicSafeString;
 

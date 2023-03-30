@@ -12,13 +12,10 @@
   --border-color: #{$checkbox-ios-icon-border-color-off};
 
   // Background
-  --background: #{$checkbox-ios-background-color-off};
+  --checkbox-background: #{$checkbox-ios-background-color-off};
 
   // Size
   --size: #{$checkbox-ios-icon-size};
-
-  width: var(--size);
-  height: var(--size);
 }
 
 
@@ -31,9 +28,10 @@
 
 
 // iOS Checkbox Within An Item
+// TODO(FW-3100): remove this
 // -----------------------------------------
 
-:host(.in-item) {
+:host(.in-item.legacy-checkbox) {
   // end position by default
   @include margin($checkbox-ios-item-end-margin-top, $checkbox-ios-item-end-margin-end, $checkbox-ios-item-end-margin-bottom, $checkbox-ios-item-end-margin-start);
 
@@ -42,6 +40,6 @@
   position: static;
 }
 
-:host(.in-item[slot="start"]) {
+:host(.in-item.legacy-checkbox[slot="start"]) {
   @include margin($checkbox-ios-item-start-margin-top, $checkbox-ios-item-start-margin-end, $checkbox-ios-item-start-margin-bottom, $checkbox-ios-item-start-margin-start);
 }

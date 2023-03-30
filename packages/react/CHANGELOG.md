@@ -3,7 +3,47 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.0.0](https://github.com/ionic-team/ionic/compare/v7.0.0-rc.5...v7.0.0) (2023-03-29)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+# [7.0.0-rc.5](https://github.com/ionic-team/ionic/compare/v7.0.0-rc.4...v7.0.0-rc.5) (2023-03-29)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [6.7.1](https://github.com/ionic-team/ionic/compare/v6.7.0...v6.7.1) (2023-03-29)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+# [7.0.0-rc.4](https://github.com/ionic-team/ionic/compare/v7.0.0-rc.3...v7.0.0-rc.4) (2023-03-27)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
 # [6.7.0](https://github.com/ionic-team/ionic/compare/v6.6.3...v6.7.0) (2023-03-23)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+# [7.0.0-rc.3](https://github.com/ionic-team/ionic/compare/v7.0.0-rc.2...v7.0.0-rc.3) (2023-03-22)
 
 **Note:** Version bump only for package @ionic/react
 
@@ -19,12 +59,32 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+# [7.0.0-rc.2](https://github.com/ionic-team/ionic/compare/v7.0.0-rc.1...v7.0.0-rc.2) (2023-03-15)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
 ## [6.6.2](https://github.com/ionic-team/ionic/compare/v6.6.1...v6.6.2) (2023-03-15)
 
 
 ### Bug Fixes
 
+
 * **react/vue:** properly switch ionicon based on the mode when ios/md is set ([#26924](https://github.com/ionic-team/ionic/issues/26924)) ([1eb9a08](https://github.com/ionic-team/ionic/commit/1eb9a085b2d69dfcfc71ff49b25d33347dd54aae)), closes [#26207](https://github.com/ionic-team/ionic/issues/26207)
+
+
+
+
+
+# [7.0.0-rc.1](https://github.com/ionic-team/ionic/compare/v7.0.0-rc.0...v7.0.0-rc.1) (2023-03-08)
+
+
+### Bug Fixes
+
+* **many:** add aria-hidden to decorative icons ([#26922](https://github.com/ionic-team/ionic/issues/26922)) ([78303dc](https://github.com/ionic-team/ionic/commit/78303dccaa2b3e7e6fb107a5c0f0f213d8e39a7c))
 
 
 
@@ -41,10 +101,26 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+# [7.0.0-rc.0](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.6...v7.0.0-rc.0) (2023-03-01)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+# [7.0.0-beta.6](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.5...v7.0.0-beta.6) (2023-03-01)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
 # [6.6.0](https://github.com/ionic-team/ionic/compare/v6.5.7...v6.6.0) (2023-03-01)
 
-
 ### Features
+
 
 * **toast:** add stacked buttons functionality ([#26790](https://github.com/ionic-team/ionic/issues/26790)) ([fc5fcc0](https://github.com/ionic-team/ionic/commit/fc5fcc064dec5256836e9622125b5e499ef00975))
 
@@ -53,6 +129,29 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 ## [6.5.7](https://github.com/ionic-team/ionic/compare/v6.5.6...v6.5.7) (2023-03-01)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+# [7.0.0-beta.5](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.4...v7.0.0-beta.5) (2023-02-27)
+
+### Features
+
+* **searchbar:** ionInput now emits value payload ([#26831](https://github.com/ionic-team/ionic/issues/26831)) ([865f8de](https://github.com/ionic-team/ionic/commit/865f8de9dc2d533b08730846f8d76bf165e8bc1d)), closes [#26828](https://github.com/ionic-team/ionic/issues/26828)
+
+
+### BREAKING CHANGES
+
+* **searchbar:** The `detail` payload for the `ionInput` event now on `ion-searchbar` contains an object with the current `value` as well as the native event that triggered `ionInput`.
+
+
+
+
+
+# [7.0.0-beta.4](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.3...v7.0.0-beta.4) (2023-02-22)
 
 **Note:** Version bump only for package @ionic/react
 
@@ -76,6 +175,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+# [7.0.0-beta.3](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.2...v7.0.0-beta.3) (2023-02-15)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
 ## [6.5.4](https://github.com/ionic-team/ionic/compare/v6.5.3...v6.5.4) (2023-02-15)
 
 
@@ -83,6 +190,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 * **deps:** update ionicons usage to v6.1.2 ([#26752](https://github.com/ionic-team/ionic/issues/26752)) ([c07933c](https://github.com/ionic-team/ionic/commit/c07933cb69b0c31d3e44263769a7a26ee81223f8))
 * **deps:** update ionicons usage to v6.1.3 ([#26772](https://github.com/ionic-team/ionic/issues/26772)) ([1c71983](https://github.com/ionic-team/ionic/commit/1c719833292d4cfbdecadf9838d8c783785222ad))
+
+
+
+
+
+# [7.0.0-beta.2](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.1...v7.0.0-beta.2) (2023-02-08)
+
+**Note:** Version bump only for package @ionic/react
 
 
 
@@ -96,9 +211,50 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+# [7.0.0-beta.1](https://github.com/ionic-team/ionic/compare/v7.0.0-beta.0...v7.0.0-beta.1) (2023-02-01)
+
+
+### Reverts
+
+* revert base components feature ([#26692](https://github.com/ionic-team/ionic/issues/26692)) ([b78b454](https://github.com/ionic-team/ionic/commit/b78b454e089462afa866972b97bb06faa84bd319))
+
+
+
+
+
 ## [6.5.2](https://github.com/ionic-team/ionic/compare/v6.5.1...v6.5.2) (2023-02-01)
 
 **Note:** Version bump only for package @ionic/react
+
+
+
+
+# [7.0.0-beta.0](https://github.com/ionic-team/ionic/compare/v6.5.1...v7.0.0-beta.0) (2023-01-25)
+
+
+### Code Refactoring
+
+* **react:** only ship es modules ([#26044](https://github.com/ionic-team/ionic/issues/26044)) ([c946af2](https://github.com/ionic-team/ionic/commit/c946af29d3d65e4e78c03f0bbcb2376fd9d8c469))
+* **types:** remove overlay attribute interfaces ([#26181](https://github.com/ionic-team/ionic/issues/26181)) ([322a1db](https://github.com/ionic-team/ionic/commit/322a1dbcd00fc1f3db17fb9fb46ba91ba164acd3))
+
+
+### Features
+
+* **action-sheet:** use action sheet overlay inline ([#26172](https://github.com/ionic-team/ionic/issues/26172)) ([92b763a](https://github.com/ionic-team/ionic/commit/92b763a538f1c935e10d90c3f4af1debf1cab2c3))
+* **alert:** add ability to use alert inline ([#26316](https://github.com/ionic-team/ionic/issues/26316)) ([08c0a55](https://github.com/ionic-team/ionic/commit/08c0a5520a4f9be19d88644df26f4d38587985fa))
+* **base-components:** add ability to remove ios and md theme ([#26669](https://github.com/ionic-team/ionic/issues/26669)) ([18f109c](https://github.com/ionic-team/ionic/commit/18f109c7dae97d4e74bee9b72a341aeafd95b222))
+* **loading:** use loading overlay inline ([#26153](https://github.com/ionic-team/ionic/issues/26153)) ([34ca337](https://github.com/ionic-team/ionic/commit/34ca337b8af27b144fb44428c8ed8cf07fc79bfc))
+* **picker:** add ability to use picker inline ([#26336](https://github.com/ionic-team/ionic/issues/26336)) ([c0a8501](https://github.com/ionic-team/ionic/commit/c0a85016572956149ed4f01109f11154d7b5cb57))
+* **slides:** remove ion-slide, ion-slides, and IonicSwiper module ([#25868](https://github.com/ionic-team/ionic/issues/25868)) ([d478e03](https://github.com/ionic-team/ionic/commit/d478e03914fed15766c893738d6386d7623d066d))
+* **toast:** add ability to use toast inline ([#26215](https://github.com/ionic-team/ionic/issues/26215)) ([003de44](https://github.com/ionic-team/ionic/commit/003de44d9283d23ecfdf1ab5fada2b7a372a4ca9))
+* **virtual-scroll:** remove virtual scroll component ([#25808](https://github.com/ionic-team/ionic/issues/25808)) ([1eb6fd0](https://github.com/ionic-team/ionic/commit/1eb6fd04d7f8c7ccd7dac08d085dc90d9f6283cc))
+
+
+### BREAKING CHANGES
+
+* **types:** `ActionSheetAttributes`, `AlertAttributes`, `AlertTextareaAttributes`, `AlertInputAttributes`, `LoadingAttributes`, `ModalAttributes`, `PickerAttributes`, `PopoverAttributes`, and `ToastAttributes` have been removed. Developers should use `{ [key: string]: any }` instead.
+* **react:** `@ionic/react` and `@ionic/react-router` no longer ship a CommonJS entry point. Instead, only an ES Module entry point is provided for improved compatibility with Vite.
+
 
 
 

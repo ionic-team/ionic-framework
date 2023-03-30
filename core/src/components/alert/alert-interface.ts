@@ -11,7 +11,7 @@ export interface AlertOptions {
   backdropDismiss?: boolean;
   translucent?: boolean;
   animated?: boolean;
-  htmlAttributes?: AlertAttributes;
+  htmlAttributes?: { [key: string]: any };
 
   mode?: Mode;
   keyboardClose?: boolean;
@@ -20,11 +20,6 @@ export interface AlertOptions {
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;
 }
-
-/**
- * @deprecated - Use { [key: string]: any } directly instead.
- */
-export type AlertAttributes = { [key: string]: any };
 
 export interface AlertInput {
   type?: TextFieldTypes | 'checkbox' | 'radio' | 'textarea';
@@ -42,19 +37,9 @@ export interface AlertInput {
   min?: string | number;
   max?: string | number;
   cssClass?: string | string[];
-  attributes?: AlertInputAttributes | AlertTextareaAttributes;
+  attributes?: { [key: string]: any };
   tabindex?: number;
 }
-
-/**
- * @deprecated - Use { [key: string]: any } directly instead.
- */
-export type AlertTextareaAttributes = { [key: string]: any };
-
-/**
- * @deprecated - Use { [key: string]: any } directly instead.
- */
-export type AlertInputAttributes = { [key: string]: any };
 
 type AlertButtonOverlayHandler = boolean | void | { [key: string]: any };
 

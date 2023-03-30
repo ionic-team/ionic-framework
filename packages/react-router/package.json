@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react-router",
-  "version": "6.7.0",
+  "version": "7.0.0",
   "description": "React Router wrapper for @ionic/react",
   "keywords": [
     "ionic",
@@ -32,13 +32,12 @@
     "sync": "sh ./scripts/sync.sh"
   },
   "main": "dist/index.js",
-  "module": "dist/index.esm.js",
   "types": "dist/types/index.d.ts",
   "files": [
     "dist/"
   ],
   "dependencies": {
-    "@ionic/react": "^6.7.0",
+    "@ionic/react": "^7.0.0",
     "tslib": "*"
   },
   "peerDependencies": {
