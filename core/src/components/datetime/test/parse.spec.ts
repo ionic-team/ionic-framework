@@ -1,4 +1,4 @@
-import { clampDate, getPartsFromCalendarDay, parseAmPm, parseMinParts, parseMaxParts } from '../utils/parse';
+import { clampDate, getPartsFromCalendarDay, parseAmPm, parseDate, parseMinParts, parseMaxParts } from '../utils/parse';
 
 describe('getPartsFromCalendarDay()', () => {
   it('should extract DatetimeParts from a calendar day element', () => {
@@ -17,7 +17,55 @@ describe('getPartsFromCalendarDay()', () => {
   });
 });
 
-// TODO FW-2794: parseDate()
+describe('parseDate()', () => {
+  it('should return undefined when passed undefined', () => {
+    expect(parseDate(undefined)).toStrictEqual(undefined);
+  });
+
+  it('should return undefined when passed null', () => {
+    expect(parseDate(null)).toStrictEqual(undefined);
+  });
+
+  it('should return the correct date object when passed a date', () => {
+    expect(parseDate('2022-12-15T13:47')).toEqual({
+      ampm: 'pm',
+      day: 15,
+      hour: 13,
+      minute: 47,
+      month: 12,
+      year: 2022,
+    });
+  });
+
+  /**
+   * Note: As Ionic v7 datetime no longer parses time zone information/
+   * See https://github.com/ionic-team/ionic-framework/commit/3fb4caf21ffac12f765c4c80bf1850e05d211c6a
+   */
+  it('should return the correct time zone offset', () => {
+    expect(parseDate('2022-12-15T13:47:30-02:00').tzOffset).toEqual(undefined);
+  });
+
+  it('should parse an array of dates', () => {
+    expect(parseDate(['2022-12-15T13:47', '2023-03-23T20:19:33.517Z'])).toEqual([
+      {
+        ampm: 'pm',
+        day: 15,
+        hour: 13,
+        minute: 47,
+        month: 12,
+        year: 2022,
+      },
+      {
+        ampm: 'pm',
+        day: 23,
+        hour: 20,
+        minute: 19,
+        month: 3,
+        year: 2023,
+      },
+    ]);
+  });
+});
 
 describe('clampDate()', () => {
   const minParts = {

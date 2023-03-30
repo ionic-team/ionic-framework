@@ -25,6 +25,8 @@
 }
 
 .select-icon {
+  width: 13px;
+
   transition: transform .15s cubic-bezier(.4, 0, .2, 1);
 
   color: #{$text-color-step-500};

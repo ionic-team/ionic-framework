@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.0.0](https://github.com/ionic-team/ionic/compare/v7.0.0-rc.5...v7.0.0) (2023-03-29)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+# [7.0.0-rc.5](https://github.com/ionic-team/ionic/compare/v7.0.0-rc.4...v7.0.0-rc.5) (2023-03-29)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+## [6.7.1](https://github.com/ionic-team/ionic/compare/v6.7.0...v6.7.1) (2023-03-29)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+# [7.0.0-rc.4](https://github.com/ionic-team/ionic/compare/v7.0.0-rc.3...v7.0.0-rc.4) (2023-03-27)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
+# [6.7.0](https://github.com/ionic-team/ionic/compare/v6.6.3...v6.7.0) (2023-03-23)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
 # [7.0.0-rc.3](https://github.com/ionic-team/ionic/compare/v7.0.0-rc.2...v7.0.0-rc.3) (2023-03-22)
 
 **Note:** Version bump only for package @ionic/react-router

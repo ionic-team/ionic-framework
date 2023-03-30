@@ -2,6 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Listen, Prop, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
+import { renderHiddenInput } from '../../utils/helpers';
 
 import type { RadioGroupChangeEventDetail } from './radio-group-interface';
 
@@ -146,13 +147,13 @@ export class RadioGroup implements ComponentInterface {
 
       // If hitting arrow down or arrow right, move to the next radio
       // If we're on the last radio, move to the first radio
-      if (['ArrowDown', 'ArrowRight'].includes(ev.code)) {
+      if (['ArrowDown', 'ArrowRight'].includes(ev.key)) {
         next = index === radios.length - 1 ? radios[0] : radios[index + 1];
       }
 
       // If hitting arrow up or arrow left, move to the previous radio
       // If we're on the first radio, move to the last radio
-      if (['ArrowUp', 'ArrowLeft'].includes(ev.code)) {
+      if (['ArrowUp', 'ArrowLeft'].includes(ev.key)) {
         next = index === 0 ? radios[radios.length - 1] : radios[index - 1];
       }
 
@@ -167,7 +168,7 @@ export class RadioGroup implements ComponentInterface {
 
       // Update the radio group value when a user presses the
       // space bar on top of a selected radio
-      if (['Space'].includes(ev.code)) {
+      if ([' '].includes(ev.key)) {
         const previousValue = this.value;
         this.value = this.allowEmptySelection && this.value !== undefined ? undefined : current.value;
         if (previousValue !== this.value || this.allowEmptySelection) {
@@ -188,8 +189,10 @@ export class RadioGroup implements ComponentInterface {
   }
 
   render() {
-    const { label, labelId } = this;
+    const { label, labelId, el, name, value } = this;
     const mode = getIonMode(this);
+
+    renderHiddenInput(true, el, name, value, false);
 
     return <Host role="radiogroup" aria-labelledby={label ? labelId : null} onClick={this.onClick} class={mode}></Host>;
   }
