@@ -25,7 +25,7 @@ export interface PopoverOptions<T extends ComponentRef = ComponentRef> {
   mode?: Mode;
   keyboardClose?: boolean;
   id?: string;
-  htmlAttributes?: PopoverAttributes;
+  htmlAttributes?: { [key: string]: any };
 
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;
@@ -40,11 +40,6 @@ export interface PopoverOptions<T extends ComponentRef = ComponentRef> {
   trigger?: string;
   triggerAction?: string;
 }
-
-/**
- * @deprecated - Use { [key: string]: any } directly instead.
- */
-export type PopoverAttributes = { [key: string]: any };
 
 export type PopoverSize = 'cover' | 'auto';
 

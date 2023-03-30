@@ -6,8 +6,9 @@ import {
   LIFECYCLE_WILL_ENTER,
   LIFECYCLE_WILL_LEAVE,
 } from '../../components/nav/constants';
-import type { Animation, AnimationBuilder, NavDirection, NavOptions } from '../../interface';
-import { componentOnReady, raf } from '../helpers';
+import type { NavOptions, NavDirection } from '../../components/nav/nav-interface';
+import type { Animation, AnimationBuilder } from '../animation/animation-interface';
+import { raf } from '../helpers';
 
 const iosTransitionAnimation = () => import('./ios.transition');
 const mdTransitionAnimation = () => import('./md.transition');
@@ -137,11 +138,11 @@ const noAnimation = async (opts: TransitionOptions): Promise<TransitionResult> =
 
 const waitForReady = async (opts: TransitionOptions, defaultDeep: boolean) => {
   const deep = opts.deepWait !== undefined ? opts.deepWait : defaultDeep;
-  const promises = deep
-    ? [deepReady(opts.enteringEl), deepReady(opts.leavingEl)]
-    : [shallowReady(opts.enteringEl), shallowReady(opts.leavingEl)];
 
-  await Promise.all(promises);
+  if (deep) {
+    await Promise.all([deepReady(opts.enteringEl), deepReady(opts.leavingEl)]);
+  }
+
   await notifyViewReady(opts.viewIsReady, opts.enteringEl);
 };
 
@@ -195,13 +196,6 @@ export const lifecycle = (el: HTMLElement | undefined, eventName: string) => {
     });
     el.dispatchEvent(ev);
   }
-};
-
-const shallowReady = (el: Element | undefined): Promise<any> => {
-  if (el) {
-    return new Promise((resolve) => componentOnReady(el, resolve));
-  }
-  return Promise.resolve();
 };
 
 export const deepReady = async (el: any | undefined): Promise<void> => {

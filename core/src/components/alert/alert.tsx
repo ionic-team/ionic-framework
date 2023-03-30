@@ -3,25 +3,27 @@ import { Component, Element, Event, Host, Listen, Method, Prop, Watch, forceUpda
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import type {
-  AlertButton,
-  AlertInput,
-  AlertInputAttributes,
-  AlertTextareaAttributes,
-  AnimationBuilder,
-  CssClassMap,
-  OverlayEventDetail,
-  OverlayInterface,
-} from '../../interface';
+import type { AnimationBuilder, CssClassMap, OverlayInterface, FrameworkDelegate } from '../../interface';
 import { ENABLE_HTML_CONTENT_DEFAULT } from '../../utils/config';
 import type { Gesture } from '../../utils/gesture';
 import { createButtonActiveGesture } from '../../utils/gesture/button-active';
-import { BACKDROP, dismiss, eventMethod, isCancel, prepareOverlay, present, safeCall } from '../../utils/overlays';
+import {
+  createDelegateController,
+  createTriggerController,
+  BACKDROP,
+  dismiss,
+  eventMethod,
+  isCancel,
+  prepareOverlay,
+  present,
+  safeCall,
+} from '../../utils/overlays';
+import type { OverlayEventDetail } from '../../utils/overlays-interface';
 import type { IonicSafeString } from '../../utils/sanitization';
 import { sanitizeDOMString } from '../../utils/sanitization';
 import { getClassMap } from '../../utils/theme';
 
-import type { AlertAttributes } from './alert-interface';
+import type { AlertButton, AlertInput } from './alert-interface';
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
@@ -41,6 +43,8 @@ import { mdLeaveAnimation } from './animations/md.leave';
   scoped: true,
 })
 export class Alert implements ComponentInterface, OverlayInterface {
+  private readonly delegateController = createDelegateController(this);
+  private readonly triggerController = createTriggerController();
   private customHTMLEnabled = config.get('innerHTMLTemplatesEnabled', ENABLE_HTML_CONTENT_DEFAULT);
   private activeId?: string;
   private inputType?: string;
@@ -48,6 +52,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
   private processedButtons: AlertButton[] = [];
   private wrapperEl?: HTMLElement;
   private gesture?: Gesture;
+  private currentTransition?: Promise<any>;
 
   presented = false;
   lastFocus?: HTMLElement;
@@ -56,6 +61,12 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
   /** @internal */
   @Prop() overlayIndex!: number;
+
+  /** @internal */
+  @Prop() delegate?: FrameworkDelegate;
+
+  /** @internal */
+  @Prop() hasController = false;
 
   /**
    * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
@@ -98,9 +109,9 @@ export class Alert implements ComponentInterface, OverlayInterface {
    * For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
    *
    * This property accepts custom HTML as a string.
-   * Developers who only want to pass plain text
-   * can disable the custom HTML functionality
-   * by setting `innerHTMLTemplatesEnabled: false` in the Ionic config.
+   * Content is parsed as plaintext by default.
+   * `innerHTMLTemplatesEnabled` must be set to `true` in the Ionic config
+   * before custom HTML can be used.
    */
   @Prop() message?: string | IonicSafeString;
 
@@ -134,7 +145,37 @@ export class Alert implements ComponentInterface, OverlayInterface {
   /**
    * Additional attributes to pass to the alert.
    */
-  @Prop() htmlAttributes?: AlertAttributes;
+  @Prop() htmlAttributes?: { [key: string]: any };
+
+  /**
+   * If `true`, the alert will open. If `false`, the alert will close.
+   * Use this if you need finer grained control over presentation, otherwise
+   * just use the alertController or the `trigger` property.
+   * Note: `isOpen` will not automatically be set back to `false` when
+   * the alert dismisses. You will need to do that in your code.
+   */
+  @Prop() isOpen = false;
+  @Watch('isOpen')
+  onIsOpenChange(newValue: boolean, oldValue: boolean) {
+    if (newValue === true && oldValue === false) {
+      this.present();
+    } else if (newValue === false && oldValue === true) {
+      this.dismiss();
+    }
+  }
+
+  /**
+   * An ID corresponding to the trigger element that
+   * causes the alert to open when clicked.
+   */
+  @Prop() trigger: string | undefined;
+  @Watch('trigger')
+  triggerChanged() {
+    const { trigger, el, triggerController } = this;
+    if (trigger) {
+      triggerController.addClickListener(el, trigger);
+    }
+  }
 
   /**
    * Emitted after the alert has presented.
@@ -155,6 +196,30 @@ export class Alert implements ComponentInterface, OverlayInterface {
    * Emitted after the alert has dismissed.
    */
   @Event({ eventName: 'ionAlertDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
+
+  /**
+   * Emitted after the alert has presented.
+   * Shorthand for ionAlertWillDismiss.
+   */
+  @Event({ eventName: 'didPresent' }) didPresentShorthand!: EventEmitter<void>;
+
+  /**
+   * Emitted before the alert has presented.
+   * Shorthand for ionAlertWillPresent.
+   */
+  @Event({ eventName: 'willPresent' }) willPresentShorthand!: EventEmitter<void>;
+
+  /**
+   * Emitted before the alert has dismissed.
+   * Shorthand for ionAlertWillDismiss.
+   */
+  @Event({ eventName: 'willDismiss' }) willDismissShorthand!: EventEmitter<OverlayEventDetail>;
+
+  /**
+   * Emitted after the alert has dismissed.
+   * Shorthand for ionAlertDidDismiss.
+   */
+  @Event({ eventName: 'didDismiss' }) didDismissShorthand!: EventEmitter<OverlayEventDetail>;
 
   @Listen('keydown', { target: 'document' })
   onKeydown(ev: any) {
@@ -260,6 +325,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
   connectedCallback() {
     prepareOverlay(this.el);
+    this.triggerChanged();
   }
 
   componentWillLoad() {
@@ -268,6 +334,8 @@ export class Alert implements ComponentInterface, OverlayInterface {
   }
 
   disconnectedCallback() {
+    this.triggerController.removeClickListener();
+
     if (this.gesture) {
       this.gesture.destroy();
       this.gesture = undefined;
@@ -295,8 +363,24 @@ export class Alert implements ComponentInterface, OverlayInterface {
    * Present the alert overlay after it has been created.
    */
   @Method()
-  present(): Promise<void> {
-    return present(this, 'alertEnter', iosEnterAnimation, mdEnterAnimation);
+  async present(): Promise<void> {
+    /**
+     * When using an inline alert
+     * and dismissing an alert it is possible to
+     * quickly present the alert while it is
+     * dismissing. We need to await any current
+     * transition to allow the dismiss to finish
+     * before presenting again.
+     */
+    if (this.currentTransition !== undefined) {
+      await this.currentTransition;
+    }
+
+    await this.delegateController.attachViewToDom();
+
+    this.currentTransition = present(this, 'alertEnter', iosEnterAnimation, mdEnterAnimation);
+    await this.currentTransition;
+    this.currentTransition = undefined;
   }
 
   /**
@@ -309,8 +393,15 @@ export class Alert implements ComponentInterface, OverlayInterface {
    * Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
    */
   @Method()
-  dismiss(data?: any, role?: string): Promise<boolean> {
-    return dismiss(this, data, role, 'alertLeave', iosLeaveAnimation, mdLeaveAnimation);
+  async dismiss(data?: any, role?: string): Promise<boolean> {
+    this.currentTransition = dismiss(this, data, role, 'alertLeave', iosLeaveAnimation, mdLeaveAnimation);
+    const dismissed = await this.currentTransition;
+
+    if (dismissed) {
+      this.delegateController.removeViewFromDom();
+    }
+
+    return dismissed;
   }
 
   /**
@@ -509,7 +600,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
                   value={i.value}
                   id={i.id}
                   tabIndex={i.tabindex}
-                  {...(i.attributes as AlertTextareaAttributes)}
+                  {...(i.attributes as { [key: string]: any })}
                   disabled={i.attributes?.disabled ?? i.disabled}
                   class={inputClass(i)}
                   onInput={(e) => {
@@ -532,7 +623,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
                   value={i.value}
                   id={i.id}
                   tabIndex={i.tabindex}
-                  {...(i.attributes as AlertInputAttributes)}
+                  {...(i.attributes as { [key: string]: any })}
                   disabled={i.attributes?.disabled ?? i.disabled}
                   class={inputClass(i)}
                   onInput={(e) => {

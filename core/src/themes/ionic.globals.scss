@@ -32,6 +32,11 @@ $screen-breakpoints: (
   xl: 1200px
 ) !default;
 
+// Input placeholder opacity
+// Ensures that the placeholder has the
+// correct color contrast against the background.
+$placeholder-opacity: 0.6 !default;
+
 
 // Z-Index
 // --------------------------------------------------

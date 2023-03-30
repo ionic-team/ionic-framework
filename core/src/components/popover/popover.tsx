@@ -2,24 +2,12 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import type {
-  AnimationBuilder,
-  ComponentProps,
-  ComponentRef,
-  FrameworkDelegate,
-  OverlayEventDetail,
-  PopoverAttributes,
-  PopoverInterface,
-  PopoverSize,
-  PositionAlign,
-  PositionReference,
-  PositionSide,
-  TriggerAction,
-} from '../../interface';
+import type { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate } from '../../interface';
 import { CoreDelegate, attachComponent, detachComponent } from '../../utils/framework-delegate';
-import { addEventListener, raf } from '../../utils/helpers';
+import { addEventListener, raf, hasLazyBuild } from '../../utils/helpers';
 import { printIonWarning } from '../../utils/logging';
 import { BACKDROP, dismiss, eventMethod, focusFirstDescendant, prepareOverlay, present } from '../../utils/overlays';
+import type { OverlayEventDetail } from '../../utils/overlays-interface';
 import { isPlatform } from '../../utils/platform';
 import { getClassMap } from '../../utils/theme';
 import { deepReady } from '../../utils/transition';
@@ -28,6 +16,14 @@ import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
+import type {
+  PopoverInterface,
+  PopoverSize,
+  PositionAlign,
+  PositionReference,
+  PositionSide,
+  TriggerAction,
+} from './popover-interface';
 import { configureDismissInteraction, configureKeyboardInteraction, configureTriggerInteraction } from './utils';
 
 // TODO(FW-2832): types
@@ -153,15 +149,15 @@ export class Popover implements ComponentInterface, PopoverInterface {
   /**
    * Additional attributes to pass to the popover.
    */
-  @Prop() htmlAttributes?: PopoverAttributes;
+  @Prop() htmlAttributes?: { [key: string]: any };
 
   /**
    * Describes what kind of interaction with the trigger that
    * should cause the popover to open. Does not apply when the `trigger`
    * property is `undefined`.
-   * If `'click'`, the popover will be presented when the trigger is left clicked.
-   * If `'hover'`, the popover will be presented when a pointer hovers over the trigger.
-   * If `'context-menu'`, the popover will be presented when the trigger is right
+   * If `"click"`, the popover will be presented when the trigger is left clicked.
+   * If `"hover"`, the popover will be presented when a pointer hovers over the trigger.
+   * If `"context-menu"`, the popover will be presented when the trigger is right
    * clicked on desktop and long pressed on mobile. This will also prevent your
    * device's normal context menu from appearing.
    */
@@ -177,8 +173,8 @@ export class Popover implements ComponentInterface, PopoverInterface {
 
   /**
    * Describes how to calculate the popover width.
-   * If `'cover'`, the popover width will match the width of the trigger.
-   * If `'auto'`, the popover width will be determined by the content in
+   * If `"cover"`, the popover width will match the width of the trigger.
+   * If `"auto"`, the popover width will be determined by the content in
    * the popover.
    */
   @Prop() size: PopoverSize = 'auto';
@@ -191,10 +187,10 @@ export class Popover implements ComponentInterface, PopoverInterface {
 
   /**
    * Describes what to position the popover relative to.
-   * If `'trigger'`, the popover will be positioned relative
+   * If `"trigger"`, the popover will be positioned relative
    * to the trigger button. If passing in an event, this is
    * determined via event.target.
-   * If `'event'`, the popover will be positioned relative
+   * If `"event"`, the popover will be positioned relative
    * to the x/y coordinates of the trigger action. If passing
    * in an event, this is determined via event.clientX and event.clientY.
    */
@@ -202,14 +198,14 @@ export class Popover implements ComponentInterface, PopoverInterface {
 
   /**
    * Describes which side of the `reference` point to position
-   * the popover on. The `'start'` and `'end'` values are RTL-aware,
-   * and the `'left'` and `'right'` values are not.
+   * the popover on. The `"start"` and `"end"` values are RTL-aware,
+   * and the `"left"` and `"right"` values are not.
    */
   @Prop() side: PositionSide = 'bottom';
 
   /**
    * Describes how to align the popover content with the `reference` point.
-   * Defaults to `'center'` for `ios` mode, and `'start'` for `md` mode.
+   * Defaults to `"center"` for `ios` mode, and `"start"` for `md` mode.
    */
   @Prop({ mutable: true }) alignment?: PositionAlign;
 
@@ -448,16 +444,18 @@ export class Popover implements ComponentInterface, PopoverInterface {
       await this.currentTransition;
     }
 
+    const { el } = this;
+
     const { inline, delegate } = this.getDelegate(true);
     this.usersElement = await attachComponent(
       delegate,
-      this.el,
+      el,
       this.component,
       ['popover-viewport'],
       this.componentProps,
       inline
     );
-    await deepReady(this.usersElement);
+    hasLazyBuild(el) && (await deepReady(this.usersElement));
 
     if (!this.keyboardEvents) {
       this.configureKeyboardInteraction();

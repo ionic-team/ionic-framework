@@ -216,7 +216,7 @@ export const IonRouterOutlet = /*@__PURE__*/ defineComponent({
       };
     });
 
-    const transition = (
+    const transition = async (
       enteringEl: HTMLElement,
       leavingEl: HTMLElement,
       direction: any,
@@ -224,52 +224,37 @@ export const IonRouterOutlet = /*@__PURE__*/ defineComponent({
       progressAnimation: boolean,
       animationBuilder?: AnimationBuilder
     ) => {
-      return new Promise((resolve) => {
-        if (skipTransition) {
-          skipTransition = false;
-          return resolve(false);
-        }
+      if (skipTransition) {
+        skipTransition = false;
+        return Promise.resolve(false);
+      }
 
-        if (enteringEl === leavingEl) {
-          return resolve(false);
-        }
+      if (enteringEl === leavingEl) {
+        return Promise.resolve(false);
+      }
 
-        requestAnimationFrame(() => {
-          requestAnimationFrame(async () => {
-            enteringEl.classList.add("ion-page-invisible");
+      enteringEl.classList.add("ion-page-invisible");
 
-            const hasRootDirection =
-              direction === undefined ||
-              direction === "root" ||
-              direction === "none";
-            const result = await ionRouterOutlet.value.commit(
-              enteringEl,
-              leavingEl,
-              {
-                deepWait: true,
-                /**
-                 * replace operations result in a direction of none.
-                 * These typically do not have need animations, so we set
-                 * the duration to 0. However, if a developer explicitly
-                 * passes an animationBuilder, we should assume that
-                 * they want an animation to be played even
-                 * though it is a replace operation.
-                 */
-                duration:
-                  hasRootDirection && animationBuilder === undefined
-                    ? 0
-                    : undefined,
-                direction,
-                showGoBack,
-                progressAnimation,
-                animationBuilder,
-              }
-            );
-
-            return resolve(result);
-          });
-        });
+      const hasRootDirection =
+        direction === undefined || direction === "root" || direction === "none";
+      const result = await ionRouterOutlet.value.commit(enteringEl, leavingEl, {
+        /**
+         * replace operations result in a direction of none.
+         * These typically do not have need animations, so we set
+         * the duration to 0. However, if a developer explicitly
+         * passes an animationBuilder, we should assume that
+         * they want an animation to be played even
+         * though it is a replace operation.
+         */
+        duration:
+          hasRootDirection && animationBuilder === undefined ? 0 : undefined,
+        direction,
+        showGoBack,
+        progressAnimation,
+        animationBuilder,
       });
+
+      return result;
     };
 
     const handlePageTransition = async () => {

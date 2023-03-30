@@ -2,7 +2,9 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Listen, Method, Prop, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { AccordionGroupChangeEventDetail } from '../../interface';
+import { printIonWarning } from '../../utils/logging';
+
+import type { AccordionGroupChangeEventDetail } from './accordion-group-interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -32,7 +34,9 @@ export class AccordionGroup implements ComponentInterface {
   @Prop() multiple?: boolean;
 
   /**
-   * The value of the accordion group.
+   * The value of the accordion group. This controls which
+   * accordions are expanded.
+   * This should be an array of strings only when `multiple="true"`
    */
   @Prop({ mutable: true }) value?: string | string[] | null;
 
@@ -55,25 +59,48 @@ export class AccordionGroup implements ComponentInterface {
   @Prop() expand: 'compact' | 'inset' = 'compact';
 
   /**
-   * Emitted when the value property has changed.
+   * Emitted when the value property has changed
+   * as a result of a user action such as a click.
+   * This event will not emit when programmatically setting
+   * the value property.
    */
   @Event() ionChange!: EventEmitter<AccordionGroupChangeEventDetail>;
+
+  /**
+   * Emitted when the value property has changed.
+   * This is used to ensure that ion-accordion can respond
+   * to any value property changes.
+   * @internal
+   */
+  @Event() ionValueChange!: EventEmitter<AccordionGroupChangeEventDetail>;
 
   @Watch('value')
   valueChanged() {
     const { value, multiple } = this;
 
-    /**
-     * If accordion group does not
-     * let multiple accordions be open
-     * at once, but user passes an array
-     * just grab the first value.
-     */
     if (!multiple && Array.isArray(value)) {
-      this.value = value[0];
-    } else {
-      this.ionChange.emit({ value: this.value });
+      /**
+       * We do some processing on the `value` array so
+       * that it looks more like an array when logged to
+       * the console.
+       * Example given ['a', 'b']
+       * Default toString() behavior: a,b
+       * Custom behavior: ['a', 'b']
+       */
+      printIonWarning(
+        `ion-accordion-group was passed an array of values, but multiple="false". This is incorrect usage and may result in unexpected behaviors. To dismiss this warning, pass a string to the "value" property when multiple="false".
+
+  Value Passed: [${value.map((v) => `'${v}'`).join(', ')}]
+`,
+        this.el
+      );
     }
+
+    /**
+     * Do not use `value` here as that will be
+     * not account for the adjustment we make above.
+     */
+    this.ionValueChange.emit({ value: this.value });
   }
 
   @Watch('disabled')
@@ -156,6 +183,23 @@ export class AccordionGroup implements ComponentInterface {
   }
 
   /**
+   * Sets the value property and emits ionChange.
+   * This should only be called when the user interacts
+   * with the accordion and not for any update
+   * to the value property. The exception is when
+   * the app sets the value of a single-select
+   * accordion group to an array.
+   */
+  private setValue(accordionValue: string | string[] | null | undefined) {
+    const value = (this.value = accordionValue);
+    this.ionChange.emit({ value });
+  }
+
+  /**
+   * This method is used to ensure that the value
+   * of ion-accordion-group is being set in a valid
+   * way. This method should only be called in
+   * response to a user generated action.
    * @internal
    */
   @Method()
@@ -177,10 +221,10 @@ export class AccordionGroup implements ComponentInterface {
         const processedValue = Array.isArray(groupValue) ? groupValue : [groupValue];
         const valueExists = processedValue.find((v) => v === accordionValue);
         if (valueExists === undefined && accordionValue !== undefined) {
-          this.value = [...processedValue, accordionValue];
+          this.setValue([...processedValue, accordionValue]);
         }
       } else {
-        this.value = accordionValue;
+        this.setValue(accordionValue);
       }
     } else {
       /**
@@ -190,9 +234,9 @@ export class AccordionGroup implements ComponentInterface {
       if (multiple) {
         const groupValue = value ?? [];
         const processedValue = Array.isArray(groupValue) ? groupValue : [groupValue];
-        this.value = processedValue.filter((v) => v !== accordionValue);
+        this.setValue(processedValue.filter((v) => v !== accordionValue));
       } else {
-        this.value = undefined;
+        this.setValue(undefined);
       }
     }
   }

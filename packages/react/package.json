@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react",
-  "version": "6.7.0",
+  "version": "7.0.0",
   "description": "React specific wrapper for @ionic/core",
   "keywords": [
     "ionic",
@@ -35,15 +35,14 @@
     "sync": "sh ./scripts/sync.sh"
   },
   "main": "dist/index.js",
-  "module": "dist/index.esm.js",
   "types": "dist/types/index.d.ts",
   "files": [
     "dist/",
     "css/"
   ],
   "dependencies": {
-    "@ionic/core": "^6.7.0",
-    "ionicons": "^6.1.3",
+    "@ionic/core": "^7.0.0",
+    "ionicons": "^7.0.0",
     "tslib": "*"
   },
   "peerDependencies": {

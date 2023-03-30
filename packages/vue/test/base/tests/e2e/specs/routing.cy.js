@@ -1,6 +1,7 @@
 describe('Routing', () => {
   it('should go to sibling page', () => {
-    cy.visit('http://localhost:8080');
+    cy.visit('/');
+    cy.ionPageVisible('home');
     cy.get('ion-item#routing').click();
 
     cy.ionPageVisible('routing');
@@ -8,13 +9,15 @@ describe('Routing', () => {
   });
 
   it('should set query params and keep view in stack', () => {
-    cy.visit('http://localhost:8080/routing');
+    cy.visit('/routing');
+    cy.ionPageVisible('routing');
     cy.get('#route-params').click();
     cy.ionPageVisible('routing');
   });
 
   it('should go back home', () => {
-    cy.visit('http://localhost:8080');
+    cy.visit('/');
+    cy.ionPageVisible('home');
     cy.get('ion-item#routing').click();
 
     cy.ionBackClick('routing');
@@ -24,7 +27,8 @@ describe('Routing', () => {
   });
 
   it('should go back home with default href', () => {
-    cy.visit('http://localhost:8080/default-href');
+    cy.visit('/default-href');
+    cy.ionPageVisible('defaulthref');
 
     cy.ionBackClick('defaulthref');
 
@@ -33,7 +37,8 @@ describe('Routing', () => {
   });
 
   it('should show back button', () => {
-    cy.visit('http://localhost:8080');
+    cy.visit('/');
+    cy.ionPageVisible('home');
 
     cy.get('#routing').click();
     cy.get('#child').click();
@@ -48,7 +53,8 @@ describe('Routing', () => {
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22359
   it('should navigate to multiple pages that match the same parameterized route', () => {
-    cy.visit('http://localhost:8080/routing');
+    cy.visit('/routing');
+    cy.ionPageVisible('routing');
 
     cy.get('#parameter-abc').click();
     cy.ionPageVisible('routingparameter-abc');
@@ -64,7 +70,8 @@ describe('Routing', () => {
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22359
   it('should handle parameterized urls properly', () => {
-    cy.visit('http://localhost:8080/routing');
+    cy.visit('/routing');
+    cy.ionPageVisible('routing');
 
     cy.get('#parameter-abc').click();
     cy.ionPageVisible('routingparameter-abc');
@@ -76,7 +83,8 @@ describe('Routing', () => {
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22324
   it('should show correct view when navigating back from parameterized page to query string page', () => {
-    cy.visit('http://localhost:8080/routing');
+    cy.visit('/routing');
+    cy.ionPageVisible('routing');
     cy.get('#route-params').click();
     cy.get('#parameter-view-item').click();
 
@@ -91,7 +99,8 @@ describe('Routing', () => {
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22359
   it('should work properly with async navigation guards', () => {
-    cy.visit('http://localhost:8080');
+    cy.visit('/');
+    cy.ionPageVisible('home');
     cy.get('#delayed-redirect').click();
 
     cy.get('ion-loading').should('exist');
@@ -107,8 +116,8 @@ describe('Routing', () => {
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22412
   it('should correctly replace route in a component', () => {
-    cy.visit('http://localhost:8080/routing?ionic:mode=ios');
-
+    cy.visit('/routing?ionic:mode=ios');
+    cy.ionPageVisible('routing');
     cy.get('#replace').click();
 
     cy.ionPageVisible('navigation');
@@ -120,8 +129,7 @@ describe('Routing', () => {
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22654
   it('should show correct view when navigating between parameter urls', () => {
-    cy.visit('http://localhost:8080/nested');
-
+    cy.visit('/nested');
     cy.ionPageVisible('nestedchild');
 
     cy.get('[data-pageid="routeroutlet"] #trash').click();
@@ -148,7 +156,8 @@ describe('Routing', () => {
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22658
   it('should select correct leaving view when navigating between parameter urls', () => {
-    cy.visit('http://localhost:8080');
+    cy.visit('/');
+    cy.ionPageVisible('home');
 
     cy.routerPush('/routing/123');
     cy.ionPageVisible('routingparameter-123');
@@ -177,7 +186,8 @@ describe('Routing', () => {
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22528
   it('should not show ion-back-button when replacing to root page', () => {
-    cy.visit('http://localhost:8080');
+    cy.visit('/');
+    cy.ionPageVisible('home');
 
     cy.routerPush('/navigation');
     cy.ionPageVisible('navigation');
@@ -192,7 +202,8 @@ describe('Routing', () => {
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/22662
   it('should push a new instance of a parameterized page so there is a transition', () => {
-    cy.visit('http://localhost:8080');
+    cy.visit('/');
+    cy.ionPageVisible('home');
 
     cy.routerPush('/routing/123');
     cy.ionPageVisible('routingparameter-123');
@@ -209,7 +220,8 @@ describe('Routing', () => {
   });
 
   it('should select correct view when using router.go()', () => {
-    cy.visit('http://localhost:8080');
+    cy.visit('/');
+    cy.ionPageVisible('home');
 
     cy.routerPush('/routing');
     cy.ionPageVisible('routing');
@@ -233,7 +245,8 @@ describe('Routing', () => {
   })
 
   it('should select correct view when traversing backward and forward through history', () => {
-    cy.visit('http://localhost:8080');
+    cy.visit('/');
+    cy.ionPageVisible('home');
 
     cy.routerPush('/routing');
     cy.ionPageVisible('routing');
@@ -265,7 +278,8 @@ describe('Routing', () => {
   })
 
   it('should create new stack items when going back then pushing pages', () => {
-    cy.visit('http://localhost:8080');
+    cy.visit('/');
+    cy.ionPageVisible('home');
 
     cy.routerPush('/routing');
     cy.ionPageVisible('routing');
@@ -289,7 +303,8 @@ describe('Routing', () => {
   })
 
   it('should properly go back using ion-back-button after using router.go()', () => {
-    cy.visit('http://localhost:8080');
+    cy.visit('/');
+    cy.ionPageVisible('home');
 
     cy.routerPush('/routing');
     cy.ionPageVisible('routing');
@@ -317,7 +332,8 @@ describe('Routing', () => {
   });
 
   it('should unmount views skipped over by using router.go with a negative value', () => {
-    cy.visit('http://localhost:8080');
+    cy.visit('/');
+    cy.ionPageVisible('home');
 
     cy.routerPush('/routing');
     cy.ionPageVisible('routing');
@@ -335,7 +351,8 @@ describe('Routing', () => {
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/23987
   it('should choose correct view when navigating back', () => {
-    cy.visit('http://localhost:8080');
+    cy.visit('/');
+    cy.ionPageVisible('home');
 
     cy.routerPush('/routing');
     cy.ionPageVisible('routing');
@@ -380,7 +397,8 @@ describe('Routing', () => {
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/24226
   it('should correctly replace a route after popping', () => {
-    cy.visit('http://localhost:8080');
+    cy.visit('/');
+    cy.ionPageVisible('home');
 
     cy.routerPush('/routing');
     cy.ionPageVisible('routing');
@@ -401,7 +419,8 @@ describe('Routing', () => {
 
   // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/23873
   it('should correctly show pages after going back to defaultHref page', () => {
-    cy.visit('http://localhost:8080/default-href');
+    cy.visit('/default-href');
+    cy.ionPageVisible('defaulthref');
 
     cy.routerPush('/routing');
     cy.ionPageVisible('routing');
@@ -433,7 +452,8 @@ describe('Routing', () => {
   })
 
   it('should correctly update location history after rewriting past state', () => {
-    cy.visit('http://localhost:8080');
+    cy.visit('/');
+    cy.ionPageVisible('home');
 
     cy.routerPush('/routing');
     cy.ionPageVisible('routing');
@@ -473,7 +493,8 @@ describe('Routing', () => {
   })
 
   it('should correctly update location history after setting root state', () => {
-    cy.visit('http://localhost:8080');
+    cy.visit('/');
+    cy.ionPageVisible('home');
 
     cy.routerPush('/routing');
     cy.ionPageVisible('routing');
@@ -516,7 +537,8 @@ describe('Routing', () => {
 describe('Routing - Swipe to Go Back', () => {
   beforeEach(() => {
     cy.viewport(320, 568);
-    cy.visit('http://localhost:8080?ionic:mode=ios');
+    cy.visit('?ionic:mode=ios');
+    cy.ionPageVisible('home');
     cy.get('#routing').click();
     cy.ionPageHidden('home');
     cy.ionPageVisible('routing')
@@ -537,7 +559,8 @@ describe('Routing - Swipe to Go Back', () => {
   });
 
   it.skip('swipe to go back should work when using router.go()', () => {
-    cy.visit('http://localhost:8080?ionic:mode=ios');
+    cy.visit('?ionic:mode=ios');
+    cy.ionPageVisible('home');
 
     cy.routerPush('/routing');
     cy.ionPageVisible('routing');

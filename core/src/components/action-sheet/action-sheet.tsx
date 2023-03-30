@@ -1,20 +1,25 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Method, Prop, h, readTask } from '@stencil/core';
+import { Watch, Component, Element, Event, Host, Method, Prop, h, readTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import type {
-  ActionSheetAttributes,
-  ActionSheetButton,
-  AnimationBuilder,
-  CssClassMap,
-  OverlayEventDetail,
-  OverlayInterface,
-} from '../../interface';
+import type { AnimationBuilder, CssClassMap, FrameworkDelegate, OverlayInterface } from '../../interface';
 import type { Gesture } from '../../utils/gesture';
 import { createButtonActiveGesture } from '../../utils/gesture/button-active';
-import { BACKDROP, dismiss, eventMethod, isCancel, prepareOverlay, present, safeCall } from '../../utils/overlays';
+import {
+  BACKDROP,
+  createDelegateController,
+  createTriggerController,
+  dismiss,
+  eventMethod,
+  isCancel,
+  prepareOverlay,
+  present,
+  safeCall,
+} from '../../utils/overlays';
+import type { OverlayEventDetail } from '../../utils/overlays-interface';
 import { getClassMap } from '../../utils/theme';
 
+import type { ActionSheetButton } from './action-sheet-interface';
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
@@ -32,17 +37,27 @@ import { mdLeaveAnimation } from './animations/md.leave';
   scoped: true,
 })
 export class ActionSheet implements ComponentInterface, OverlayInterface {
-  presented = false;
-  lastFocus?: HTMLElement;
-  animation?: any;
+  private readonly delegateController = createDelegateController(this);
+  private readonly triggerController = createTriggerController();
+  private currentTransition?: Promise<any>;
   private wrapperEl?: HTMLElement;
   private groupEl?: HTMLElement;
   private gesture?: Gesture;
+
+  presented = false;
+  lastFocus?: HTMLElement;
+  animation?: any;
 
   @Element() el!: HTMLIonActionSheetElement;
 
   /** @internal */
   @Prop() overlayIndex!: number;
+
+  /** @internal */
+  @Prop() delegate?: FrameworkDelegate;
+
+  /** @internal */
+  @Prop() hasController = false;
 
   /**
    * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
@@ -100,38 +115,106 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   /**
    * Additional attributes to pass to the action sheet.
    */
-  @Prop() htmlAttributes?: ActionSheetAttributes;
+  @Prop() htmlAttributes?: { [key: string]: any };
 
   /**
-   * Emitted after the alert has presented.
+   * If `true`, the action sheet will open. If `false`, the action sheet will close.
+   * Use this if you need finer grained control over presentation, otherwise
+   * just use the actionSheetController or the `trigger` property.
+   * Note: `isOpen` will not automatically be set back to `false` when
+   * the action sheet dismisses. You will need to do that in your code.
+   */
+  @Prop() isOpen = false;
+  @Watch('isOpen')
+  onIsOpenChange(newValue: boolean, oldValue: boolean) {
+    if (newValue === true && oldValue === false) {
+      this.present();
+    } else if (newValue === false && oldValue === true) {
+      this.dismiss();
+    }
+  }
+
+  /**
+   * An ID corresponding to the trigger element that
+   * causes the action sheet to open when clicked.
+   */
+  @Prop() trigger: string | undefined;
+  @Watch('trigger')
+  triggerChanged() {
+    const { trigger, el, triggerController } = this;
+    if (trigger) {
+      triggerController.addClickListener(el, trigger);
+    }
+  }
+
+  /**
+   * Emitted after the action sheet has presented.
    */
   @Event({ eventName: 'ionActionSheetDidPresent' }) didPresent!: EventEmitter<void>;
 
   /**
-   * Emitted before the alert has presented.
+   * Emitted before the action sheet has presented.
    */
   @Event({ eventName: 'ionActionSheetWillPresent' }) willPresent!: EventEmitter<void>;
 
   /**
-   * Emitted before the alert has dismissed.
+   * Emitted before the action sheet has dismissed.
    */
   @Event({ eventName: 'ionActionSheetWillDismiss' }) willDismiss!: EventEmitter<OverlayEventDetail>;
 
   /**
-   * Emitted after the alert has dismissed.
+   * Emitted after the action sheet has dismissed.
    */
   @Event({ eventName: 'ionActionSheetDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
+
+  /**
+   * Emitted after the action sheet has presented.
+   * Shorthand for ionActionSheetWillDismiss.
+   */
+  @Event({ eventName: 'didPresent' }) didPresentShorthand!: EventEmitter<void>;
+
+  /**
+   * Emitted before the action sheet has presented.
+   * Shorthand for ionActionSheetWillPresent.
+   */
+  @Event({ eventName: 'willPresent' }) willPresentShorthand!: EventEmitter<void>;
+
+  /**
+   * Emitted before the action sheet has dismissed.
+   * Shorthand for ionActionSheetWillDismiss.
+   */
+  @Event({ eventName: 'willDismiss' }) willDismissShorthand!: EventEmitter<OverlayEventDetail>;
+
+  /**
+   * Emitted after the action sheet has dismissed.
+   * Shorthand for ionActionSheetDidDismiss.
+   */
+  @Event({ eventName: 'didDismiss' }) didDismissShorthand!: EventEmitter<OverlayEventDetail>;
 
   /**
    * Present the action sheet overlay after it has been created.
    */
   @Method()
-  present(): Promise<void> {
-    return present(this, 'actionSheetEnter', iosEnterAnimation, mdEnterAnimation);
-  }
+  async present(): Promise<void> {
+    /**
+     * When using an inline action sheet
+     * and dismissing a action sheet it is possible to
+     * quickly present the action sheet while it is
+     * dismissing. We need to await any current
+     * transition to allow the dismiss to finish
+     * before presenting again.
+     */
+    if (this.currentTransition !== undefined) {
+      await this.currentTransition;
+    }
 
-  connectedCallback() {
-    prepareOverlay(this.el);
+    await this.delegateController.attachViewToDom();
+
+    this.currentTransition = present(this, 'actionSheetEnter', iosEnterAnimation, mdEnterAnimation);
+
+    await this.currentTransition;
+
+    this.currentTransition = undefined;
   }
 
   /**
@@ -144,8 +227,15 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
    * Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
    */
   @Method()
-  dismiss(data?: any, role?: string): Promise<boolean> {
-    return dismiss(this, data, role, 'actionSheetLeave', iosLeaveAnimation, mdLeaveAnimation);
+  async dismiss(data?: any, role?: string): Promise<boolean> {
+    this.currentTransition = dismiss(this, data, role, 'actionSheetLeave', iosLeaveAnimation, mdLeaveAnimation);
+    const dismissed = await this.currentTransition;
+
+    if (dismissed) {
+      this.delegateController.removeViewFromDom();
+    }
+
+    return dismissed;
   }
 
   /**
@@ -208,11 +298,17 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
     }
   };
 
+  connectedCallback() {
+    prepareOverlay(this.el);
+    this.triggerChanged();
+  }
+
   disconnectedCallback() {
     if (this.gesture) {
       this.gesture.destroy();
       this.gesture = undefined;
     }
+    this.triggerController.removeClickListener();
   }
 
   componentDidLoad() {

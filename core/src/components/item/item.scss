@@ -95,7 +95,6 @@
   box-sizing: border-box;
 }
 
-
 // Item: Color
 // --------------------------------------------------
 
@@ -305,6 +304,16 @@ button, a {
 // --------------------------------------------------
 
 .item-detail-icon {
+  /**
+   * IonItem applies its own end padding. However,
+   * all IonIcons have the same bounding box meaning
+   * there may be white space for narrow icons. As
+   * a result, the white space gives the appearance
+   * that there is too much end margin. We move the default
+   * chevron icon over to account for this extra whitespace.
+   */
+  @include margin(null, -6px, null, calc(var(--inner-padding-end) / 2));
+
   color: var(--detail-icon-color);
 
   font-size: var(--detail-icon-font-size);
@@ -481,14 +490,14 @@ button, a {
 // Item Select
 // --------------------------------------------------
 
-:host(:not(.item-label)) ::slotted(ion-select) {
+:host(:not(.item-label)) ::slotted(ion-select.legacy-select) {
   --padding-start: 0;
 
   max-width: none;
 }
 
-:host(.item-label-stacked) ::slotted(ion-select),
-:host(.item-label-floating) ::slotted(ion-select) {
+:host(.item-label-stacked) ::slotted(ion-select.legacy-select),
+:host(.item-label-floating) ::slotted(ion-select.legacy-select) {
   --padding-top: 8px;
   --padding-bottom: 8px;
   --padding-start: 0;
@@ -524,7 +533,7 @@ button, a {
 :host(.item-multiple-inputs) ::slotted(ion-checkbox),
 :host(.item-multiple-inputs) ::slotted(ion-datetime),
 :host(.item-multiple-inputs) ::slotted(ion-radio),
-:host(.item-multiple-inputs) ::slotted(ion-select) {
+:host(.item-multiple-inputs) ::slotted(ion-select.legacy-select) {
   position: relative;
 }
 

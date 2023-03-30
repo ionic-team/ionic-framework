@@ -19,12 +19,12 @@ export class BooleanValueAccessorDirective extends ValueAccessor {
   }
 
   writeValue(value: boolean): void {
-    this.el.nativeElement.checked = this.lastValue = value == null ? false : value;
+    this.el.nativeElement.checked = this.lastValue = value;
     setIonicClasses(this.el);
   }
 
   @HostListener('ionChange', ['$event.target'])
   _handleIonChange(el: HTMLIonCheckboxElement | HTMLIonToggleElement): void {
-    this.handleChangeEvent(el, el.checked);
+    this.handleValueChange(el, el.checked);
   }
 }

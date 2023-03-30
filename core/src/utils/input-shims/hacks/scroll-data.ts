@@ -1,3 +1,5 @@
+import { SCROLL_AMOUNT_PADDING } from './common';
+
 const SCROLL_ASSIST_SPEED = 0.3;
 
 export interface ScrollData {
@@ -33,7 +35,7 @@ const calcScrollData = (
 
   // compute safe area
   const safeAreaTop = visibleAreaTop + 15;
-  const safeAreaBottom = visibleAreaBottom * 0.75;
+  const safeAreaBottom = visibleAreaBottom - SCROLL_AMOUNT_PADDING;
 
   // figure out if each edge of the input is within the safe area
   const distanceToBottom = safeAreaBottom - inputBottom;

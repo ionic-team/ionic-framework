@@ -102,34 +102,6 @@ describe('getLocalizedDayPeriod', () => {
 });
 
 describe('getLocalizedTime', () => {
-  describe('with a timezone offset', () => {
-    it('should ignore the offset and localize the time to PM', () => {
-      const datetimeParts = {
-        day: 1,
-        month: 1,
-        year: 2022,
-        hour: 13,
-        minute: 40,
-        tzOffset: -240,
-      };
-
-      expect(getLocalizedTime('en-US', datetimeParts, false)).toEqual('1:40 PM');
-    });
-
-    it('should ignore the offset and localize the time to AM', () => {
-      const datetimeParts = {
-        day: 1,
-        month: 1,
-        year: 2022,
-        hour: 9,
-        minute: 40,
-        tzOffset: -240,
-      };
-
-      expect(getLocalizedTime('en-US', datetimeParts, false)).toEqual('9:40 AM');
-    });
-  });
-
   it('should localize the time to PM', () => {
     const datetimeParts = {
       day: 1,
@@ -137,7 +109,6 @@ describe('getLocalizedTime', () => {
       year: 2022,
       hour: 13,
       minute: 40,
-      tzOffset: 0,
     };
 
     expect(getLocalizedTime('en-US', datetimeParts, false)).toEqual('1:40 PM');
@@ -150,7 +121,6 @@ describe('getLocalizedTime', () => {
       year: 2022,
       hour: 9,
       minute: 40,
-      tzOffset: 0,
     };
 
     expect(getLocalizedTime('en-US', datetimeParts, false)).toEqual('9:40 AM');
@@ -163,7 +133,6 @@ describe('getLocalizedTime', () => {
       year: 2022,
       hour: 0,
       minute: 0,
-      tzOffset: 0,
     };
 
     expect(getLocalizedTime('en-GB', datetimeParts, false)).toEqual('12:00 am');
