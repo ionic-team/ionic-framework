@@ -1,0 +1,16 @@
+<ion-content>
+  <form [formGroup]="form">
+    <ion-list>
+      <ion-item>
+        <ion-label>Searchbar</ion-label>
+        <ion-searchbar formControlName="searchbar"></ion-searchbar>
+      </ion-item>
+    </ion-list>
+  </form>
+  <p>
+    Form status: <span id="status">{{ form.status }}</span>
+  </p>
+  <p>
+    Form value: <span id="value">{{ form.value | json }}</span>
+  </p>
+</ion-content>

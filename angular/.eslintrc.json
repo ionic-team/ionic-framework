@@ -1,6 +1,6 @@
 {
   "root": true,
-  "ignorePatterns": ["test/**/*", "src/directives/virtual-scroll/**/*"],
+  "ignorePatterns": ["test/**/*"],
   "overrides": [
     {
       "files": ["*.ts"],

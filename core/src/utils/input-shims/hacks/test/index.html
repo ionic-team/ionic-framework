@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Scroll Padding</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .spacer {
+        background: #eee;
+        width: 100%;
+
+        margin: 10px 0;
+      }
+
+      .keyboard {
+        position: fixed;
+
+        bottom: 0;
+        left: 0;
+        right: 0;
+
+        height: 250px;
+
+        background: rgba(0, 0, 255, 0.5);
+
+        z-index: 1;
+
+        pointer-events: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="keyboard"></div>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Modal - Inline</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <ion-item>
+          <ion-label>Input Above Keyboard</ion-label>
+          <ion-input id="input-above-keyboard"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Textarea Above Keyboard</ion-label>
+          <ion-textarea id="textarea-above-keyboard"></ion-textarea>
+        </ion-item>
+
+        <div class="spacer" style="height: 400px"></div>
+
+        <ion-item id="item-below-keyboard">
+          <ion-label>Input Below Keyboard</ion-label>
+          <ion-input id="input-below-keyboard"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Textarea Below Keyboard</ion-label>
+          <ion-textarea id="textarea-below-keyboard"></ion-textarea>
+        </ion-item>
+
+        <div class="spacer" style="height: 400px"></div>
+
+        <ion-item>
+          <ion-label>Input Outside Viewport</ion-label>
+          <ion-input id="input-outside-viewport"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Textarea Outside Viewport</ion-label>
+          <ion-textarea id="textarea-outside-viewport"></ion-textarea>
+        </ion-item>
+      </ion-content>
+
+      <script>
+        window.Ionic = {
+          config: {
+            keyboardHeight: 250,
+          },
+        };
+
+        const params = new URLSearchParams(window.location.href.split('?')[1]);
+        const resizeMode = params.get('resizeMode');
+
+        if (resizeMode) {
+          window.Capacitor = {
+            isPluginAvailable: (plugin) => plugin === 'Keyboard',
+            Plugins: {
+              Keyboard: {
+                getResizeMode: () => {
+                  return Promise.resolve({
+                    mode: resizeMode,
+                  });
+                },
+              },
+            },
+          };
+        }
+      </script>
+    </ion-app>
+  </body>
+</html>

@@ -5,8 +5,8 @@
 // -----------------------------------------
 
 :host {
-  --background: #{$toggle-md-track-background-color-off};
-  --background-checked: #{ion-color(primary, base, $toggle-md-track-background-color-alpha-on)};
+  --track-background: #{$toggle-md-track-background-color-off};
+  --track-background-checked: #{ion-color(primary, base, $toggle-md-track-background-color-alpha-on)};
   --border-radius: #{$toggle-md-track-height};
   --handle-background: #{$toggle-md-handle-background-color-off};
   --handle-background-checked: #{ion-color(primary, base)};
@@ -17,13 +17,22 @@
   --handle-max-height: #{$toggle-md-handle-max-height};
   --handle-spacing: 0;
   --handle-transition: #{$toggle-md-transition};
+}
 
+:host(.legacy-toggle) {
   @include padding($toggle-md-padding-top, $toggle-md-padding-end, $toggle-md-padding-bottom, $toggle-md-padding-start);
-
   width: $toggle-md-track-width;
   height: $toggle-md-track-height;
 
   contain: strict;
+}
+
+// Toggle Native Wrapper
+// ----------------------------------------------------------------
+
+.native-wrapper .toggle-icon {
+  width: $toggle-md-track-width;
+  height: $toggle-md-track-height;
 }
 
 :host(.ion-color.toggle-checked) .toggle-icon {
@@ -76,7 +85,7 @@
 // Material Design Toggle Within An Item
 // ----------------------------------------------------------
 
-:host(.in-item[slot]) {
+:host(.in-item.legacy-toggle) {
   @include margin(
     $toggle-md-media-margin-top,
     $toggle-md-media-margin-end,
@@ -93,7 +102,7 @@
   cursor: pointer;
 }
 
-:host(.in-item[slot="start"]) {
+:host(.in-item.legacy-toggle[slot="start"]) {
   @include padding(
     $toggle-md-item-start-padding-top,
     $toggle-md-item-start-padding-end,

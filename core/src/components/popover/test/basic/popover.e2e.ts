@@ -76,7 +76,7 @@ test.describe('popover: focus trap', async () => {
   test('should not override keyboard interactions for textarea elements', async ({ page, browserName }) => {
     const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
     const popover = page.locator('ion-popover');
-    const innerNativeTextarea = page.locator('ion-textarea textarea');
+    const innerNativeTextarea = page.locator('ion-textarea textarea').nth(0);
     const vanillaTextarea = page.locator('ion-textarea + textarea');
 
     await openPopover(page, 'popover-with-textarea');

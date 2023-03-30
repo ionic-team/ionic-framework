@@ -32,15 +32,33 @@ const testComponent = (overlay, shadow = false) => {
      * so they should not be removed from the DOM. This test
      * might need to be revisited if other overlay components
      * are converted to shadow as well.
+     * 
+     * Migrate these overlays to use `testInlineOverlay` instead.
      */
     cy.get(overlay).should('not.exist');
+  }
+}
+
+const testInlineOverlay = (overlay, shadow = false) => {
+  cy.get(`ion-radio#${overlay}`).click();
+  cy.get('ion-radio#component').click();
+
+  cy.get('ion-button#present-overlay').click();
+  cy.get(overlay).should('exist').should('be.visible');
+
+  if (shadow) {
+    cy.get(overlay).shadow().find('ion-backdrop').click({ force: true });
+  } else {
+    cy.get(`${overlay} ion-backdrop`).click({ force: true });
+
+    cy.get(overlay).should('not.be.visible');
   }
 }
 
 describe('Overlays', () => {
   beforeEach(() => {
     cy.viewport(1000, 900);
-    cy.visit('http://localhost:8080/overlays')
+    cy.visit('/overlays');
   })
 
   it(`should open and close ion-alert via controller`, () => {
@@ -68,23 +86,23 @@ describe('Overlays', () => {
     cy.get('ion-radio#controller').click();
 
     cy.get('ion-button#present-overlay').click();
-    cy.get('ion-toast').should('exist');
+    cy.get('ion-toast.ion-toast-controller').should('exist');
 
-    cy.get('ion-toast').shadow().find('button').click();
+    cy.get('ion-toast.ion-toast-controller').shadow().find('button').click();
 
-    cy.get('ion-toast').should('not.exist');
+    cy.get('ion-toast.ion-toast-controller').should('not.exist');
   });
 
   it(`should open and close ion-alert via component`, () => {
-    testComponent('ion-alert');
+    testInlineOverlay('ion-alert');
   });
 
   it(`should open and close ion-action-sheet via component`, () => {
-    testComponent('ion-action-sheet');
+    testInlineOverlay('ion-action-sheet');
   });
 
   it(`should open and close ion-loading via component`, () => {
-    testComponent('ion-loading');
+    testInlineOverlay('ion-loading');
   });
 
   it(`should open and close ion-modal via component`, () => {
@@ -104,7 +122,7 @@ describe('Overlays', () => {
 
     cy.get('ion-toast').shadow().find('button').click();
 
-    cy.get('ion-toast').should('not.exist');
+    cy.get('ion-toast').should('not.be.visible');
   });
 
   it('should pass props to modal via controller', () => {

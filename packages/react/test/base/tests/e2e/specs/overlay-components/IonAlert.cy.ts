@@ -13,7 +13,7 @@ describe('IonAlert', () => {
     //click ok
     cy.get('ion-alert').get('button:contains("Ok")').click();
     cy.get('div').contains('Ok clicked');
-    cy.get('ion-alert').should('not.exist');
+    cy.get('ion-alert').should('not.be.visible');
   });
 
   it('display alert and call dismiss to close it', () => {
@@ -22,6 +22,6 @@ describe('IonAlert', () => {
     cy.get('ion-alert').contains('Alert');
 
     //verify alert is gone
-    cy.get('ion-alert').should('not.exist');
+    cy.get('ion-alert').should('not.be.visible');
   });
 });

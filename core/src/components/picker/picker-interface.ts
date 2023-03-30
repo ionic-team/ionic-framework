@@ -11,16 +11,11 @@ export interface PickerOptions {
   mode?: Mode;
   keyboardClose?: boolean;
   id?: string;
-  htmlAttributes?: PickerAttributes;
+  htmlAttributes?: { [key: string]: any };
 
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;
 }
-
-/**
- * @deprecated - Use { [key: string]: any } directly instead.
- */
-export type PickerAttributes = { [key: string]: any };
 
 export interface PickerButton {
   text?: string;
@@ -42,12 +37,6 @@ export interface PickerColumn {
   prefixWidth?: string;
   suffixWidth?: string;
   optionsWidth?: string;
-
-  /**
-   * @deprecated - Use the `columns` property on `ion-picker`
-   * to refresh the component view instead.
-   */
-  refresh?: () => void;
 }
 
 export interface PickerColumnOption {

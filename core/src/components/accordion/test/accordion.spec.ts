@@ -40,42 +40,6 @@ it('should open correct accordions', async () => {
   expect(accordions[2].classList.contains('accordion-collapsed')).toEqual(true);
 });
 
-it('should not open more than one accordion when multiple="false"', async () => {
-  const page = await newSpecPage({
-    components: [Item, Accordion, AccordionGroup],
-    html: `
-      <ion-accordion-group animated="false">
-        <ion-accordion value="first">
-          <ion-item slot="header">Label</ion-item>
-          <div slot="content">Content</div>
-        </ion-accordion>
-        <ion-accordion value="second">
-          <ion-item slot="header">Label</ion-item>
-          <div slot="content">Content</div>
-        </ion-accordion>
-        <ion-accordion value="third">
-          <ion-item slot="header">Label</ion-item>
-          <div slot="content">Content</div>
-        </ion-accordion>
-      </ion-accordion-group>
-    `,
-  });
-
-  const accordionGroup = page.body.querySelector('ion-accordion-group');
-  const accordions = accordionGroup.querySelectorAll('ion-accordion');
-
-  accordions.forEach((accordion) => {
-    expect(accordion.classList.contains('accordion-collapsed')).toEqual(true);
-  });
-
-  accordionGroup.value = ['first', 'second'];
-  await page.waitForChanges();
-
-  expect(accordions[0].classList.contains('accordion-collapsed')).toEqual(false);
-  expect(accordions[1].classList.contains('accordion-collapsed')).toEqual(true);
-  expect(accordions[2].classList.contains('accordion-collapsed')).toEqual(true);
-});
-
 it('should open more than one accordion when multiple="true"', async () => {
   const page = await newSpecPage({
     components: [Item, Accordion, AccordionGroup],

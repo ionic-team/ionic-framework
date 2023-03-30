@@ -9,7 +9,7 @@ describe('IonToast', () => {
     cy.get('ion-toast');
     cy.get('ion-toast').shadow().contains('Hello from a toast!');
     cy.get('ion-toast').shadow().find('button').contains('hide').click();
-    cy.get('ion-toast').should('not.exist');
+    cy.get('ion-toast').should('not.be.visible');
   });
 
   it('display toast and call dismiss to close it', () => {
@@ -17,6 +17,6 @@ describe('IonToast', () => {
     cy.get('ion-button').contains('Show Toast, call dismiss in 250 ms').click();
      cy.get('ion-toast');
      cy.get('ion-toast').shadow().contains('Hello from a toast!');
-     cy.get('ion-toast').should('not.exist');
+     cy.get('ion-toast').should('not.be.visible');
   });
 });
