@@ -71,10 +71,6 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/Components.vue'),
   },
   {
-    path: '/components/breadcrumbs',
-    component: () => import('@/views/Breadcrumbs.vue')
-  },
-  {
     path: '/components/select',
     component: () => import('@/views/Select.vue')
   },

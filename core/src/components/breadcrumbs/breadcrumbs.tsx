@@ -30,7 +30,7 @@ export class Breadcrumbs implements ComponentInterface {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Prop({ reflect: true }) color?: Color;
+  @Prop() color?: Color;
 
   /**
    * The maximum number of breadcrumbs to show before collapsing.
