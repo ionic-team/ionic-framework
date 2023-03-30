@@ -8,7 +8,7 @@
   --min-height: #{$item-ios-min-height};
   --transition: background-color 200ms linear, opacity 200ms linear;
   --padding-start: #{$item-ios-padding-start};
-  --inner-padding-end: #{$item-ios-padding-end * 0.5};
+  --inner-padding-end: #{$item-ios-padding-end};
   --inner-border-width: #{0px 0px $item-ios-border-bottom-width 0px};
   --background: #{$item-ios-background};
   --background-activated: #000;
@@ -203,8 +203,8 @@
   --min-height: 68px;
 }
 
-:host(.item-label-stacked) ::slotted(ion-select),
-:host(.item-label-floating) ::slotted(ion-select) {
+:host(.item-label-stacked) ::slotted(ion-select.legacy-select),
+:host(.item-label-floating) ::slotted(ion-select.legacy-select) {
   --padding-top: 8px;
   --padding-bottom: 8px;
   --padding-start: 0px;
@@ -214,7 +214,7 @@
 // iOS Fixed Labels
 // --------------------------------------------------
 
-:host(.item-label-fixed) ::slotted(ion-select),
+:host(.item-label-fixed) ::slotted(ion-select.legacy-select),
 :host(.item-label-fixed) ::slotted(ion-datetime) {
   --padding-start: 0;
 }

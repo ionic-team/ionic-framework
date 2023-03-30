@@ -1,4 +1,5 @@
-import type { AnimationBuilder, ComponentProps, NavComponent } from '../../interface';
+import type { AnimationBuilder, ComponentProps } from '../../interface';
+import type { NavComponent } from '../nav/nav-interface';
 import type { RouterDirection } from '../router/utils/interface';
 
 export const navLink = (

@@ -31,18 +31,13 @@ test.describe('select: wrapping', () => {
   test('should not wrap label while wrapping text with class', async ({ page, skip }) => {
     skip.rtl();
 
-    // TODO(FW-3787) Make label a property of select
     await page.setContent(`
-      <ion-item>
-        <ion-label>Really long label should not wrap</ion-label>
-        <ion-select value="wrap" aria-label="Should Wrap" class="ion-text-wrap">
-          <ion-select-option value="wrap">Should wrap value only when label exists and really long text exists to make it wrap the text</ion-select-option>
-        </ion-select>
-        </ion-label>
-      </ion-item>
+      <ion-select value="wrap" label="Really long label should not wrap" class="ion-text-wrap">
+        <ion-select-option value="wrap">Should wrap value only when label exists and really long text exists to make it wrap the text</ion-select-option>
+      </ion-select>
     `);
 
-    const select = page.locator('ion-item');
+    const select = page.locator('ion-select');
     await expect(select).toHaveScreenshot(`select-wrap-with-label-${page.getSnapshotSettings()}.png`);
   });
 });

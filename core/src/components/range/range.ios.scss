@@ -8,13 +8,17 @@
   --knob-border-radius: 50%;
   --knob-background: #{$range-ios-knob-background-color};
   --knob-box-shadow: #{$range-ios-knob-box-shadow};
-  --knob-size: 28px;
+  --knob-size: #{$range-ios-knob-width};
   --bar-height: #{$range-ios-bar-height};
   --bar-background: #{$range-ios-bar-background-color};
   --bar-background-active: #{ion-color(primary, base)};
-  --bar-border-radius: 0;
+  --bar-border-radius: #{$range-ios-bar-border-radius};
   --height: #{$range-ios-slider-height};
+  --margin: 16px;
+}
 
+// TODO FW-2997 remove this
+:host(.legacy-range) {
   @include padding($range-ios-padding-vertical, $range-ios-padding-horizontal);
 }
 
@@ -24,11 +28,11 @@
 }
 
 ::slotted([slot="start"]) {
-  @include margin(0, 16px, 0, 0);
+  @include margin(0, var(--margin), 0, 0);
 }
 
 ::slotted([slot="end"]) {
-  @include margin(0, 0, 0, 16px);
+  @include margin(0, 0, 0, var(--margin));
 }
 
 :host(.range-has-pin) {
@@ -41,6 +45,11 @@
   width: auto;
 
   background: var(--bar-background-active);
+
+  &.has-ticks {
+    @include border-radius(0);
+    @include margin(null, calc(-1 * $range-ios-tick-width * 0.5), null, calc(-1 * $range-ios-tick-width * 0.5));
+  }
 }
 
 .range-tick {
@@ -48,7 +57,7 @@
   @include border-radius($range-ios-tick-border-radius);
 
   position: absolute;
-  top: ($range-ios-hit-height * 0.5) - ($range-ios-tick-height * 0.5) + ($range-ios-bar-height * 0.5);
+  top: ($range-ios-hit-height * 0.5) - ($range-ios-tick-height * 0.5);
 
   width: $range-ios-tick-width;
   height: $range-ios-tick-height;

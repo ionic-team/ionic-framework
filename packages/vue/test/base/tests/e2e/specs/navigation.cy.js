@@ -1,6 +1,6 @@
 describe('Navigation', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:8080/navigation');
+    cy.visit('/navigation');
   });
 
   it('should push a page with props', () => {

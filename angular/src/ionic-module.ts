@@ -3,11 +3,13 @@ import { ModuleWithProviders, APP_INITIALIZER, NgModule, NgZone } from '@angular
 import { IonicConfig } from '@ionic/core';
 
 import { appInitialize } from './app-initialize';
-import { BooleanValueAccessorDirective } from './directives/control-value-accessors/boolean-value-accessor';
-import { NumericValueAccessorDirective } from './directives/control-value-accessors/numeric-value-accessor';
-import { RadioValueAccessorDirective } from './directives/control-value-accessors/radio-value-accessor';
-import { SelectValueAccessorDirective } from './directives/control-value-accessors/select-value-accessor';
-import { TextValueAccessorDirective } from './directives/control-value-accessors/text-value-accessor';
+import {
+  BooleanValueAccessorDirective,
+  NumericValueAccessorDirective,
+  RadioValueAccessorDirective,
+  SelectValueAccessorDirective,
+  TextValueAccessorDirective,
+} from './directives/control-value-accessors';
 import { IonBackButtonDelegateDirective } from './directives/navigation/ion-back-button';
 import { IonRouterOutlet } from './directives/navigation/ion-router-outlet';
 import { IonTabs } from './directives/navigation/ion-tabs';
@@ -19,10 +21,6 @@ import {
 import { IonModal } from './directives/overlays/modal';
 import { IonPopover } from './directives/overlays/popover';
 import { DIRECTIVES } from './directives/proxies-list';
-import { VirtualFooter } from './directives/virtual-scroll/virtual-footer';
-import { VirtualHeader } from './directives/virtual-scroll/virtual-header';
-import { VirtualItem } from './directives/virtual-scroll/virtual-item';
-import { IonVirtualScroll } from './directives/virtual-scroll/virtual-scroll';
 import { AngularDelegate } from './providers/angular-delegate';
 import { ConfigToken } from './providers/config';
 import { ModalController } from './providers/modal-controller';
@@ -50,12 +48,6 @@ const DECLARATIONS = [
   NavDelegate,
   RouterLinkDelegateDirective,
   RouterLinkWithHrefDelegateDirective,
-
-  // virtual scroll
-  VirtualFooter,
-  VirtualHeader,
-  VirtualItem,
-  IonVirtualScroll,
 ];
 
 @NgModule({

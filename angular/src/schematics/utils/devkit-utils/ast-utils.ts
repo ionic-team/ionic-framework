@@ -332,7 +332,7 @@ export function getFirstNgModuleName(source: ts.SourceFile): string | undefined 
   // Then walk parent pointers up the AST, looking for the ClassDeclaration parent of the NgModule
   // metadata.
   const moduleClass = findClassDeclarationParent(ngModulesMetadata[0]);
-  if (!moduleClass || !moduleClass.name) {
+  if (!moduleClass?.name) {
     return undefined;
   }
 

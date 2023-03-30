@@ -195,6 +195,12 @@
       </ion-content>
     </ion-app>
     <script>
+      window.Ionic = {
+        config: {
+          innerHTMLTemplatesEnabled: true,
+        },
+      };
+
       window.addEventListener('ionToastDidDismiss', function (e) {
         console.log('didDismiss', e);
       });
