@@ -8,6 +8,7 @@ test.describe('datetime: display', () => {
         await page.setContent(`
           <ion-datetime value="2022-02-22T16:30:00" presentation="date-time"></ion-datetime>
         `);
+        await page.waitForSelector('.datetime-ready');
         const datetime = page.locator('ion-datetime');
         await expect(datetime).toHaveScreenshot(`datetime-display-date-time-${page.getSnapshotSettings()}.png`);
       });
@@ -15,6 +16,7 @@ test.describe('datetime: display', () => {
         await page.setContent(`
           <ion-datetime value="2022-02-22T16:30:00" presentation="time-date"></ion-datetime>
         `);
+        await page.waitForSelector('.datetime-ready');
         const datetime = page.locator('ion-datetime');
         await expect(datetime).toHaveScreenshot(`datetime-display-time-date-${page.getSnapshotSettings()}.png`);
       });
@@ -22,6 +24,7 @@ test.describe('datetime: display', () => {
         await page.setContent(`
           <ion-datetime value="2022-02-22T16:30:00" presentation="time"></ion-datetime>
         `);
+        await page.waitForSelector('.datetime-ready');
         const datetime = page.locator('ion-datetime');
         await expect(datetime).toHaveScreenshot(`datetime-display-time-${page.getSnapshotSettings()}.png`);
       });
@@ -29,6 +32,7 @@ test.describe('datetime: display', () => {
         await page.setContent(`
           <ion-datetime value="2022-02-22T16:30:00" presentation="date"></ion-datetime>
         `);
+        await page.waitForSelector('.datetime-ready');
         const datetime = page.locator('ion-datetime');
         await expect(datetime).toHaveScreenshot(`datetime-display-date-${page.getSnapshotSettings()}.png`);
       });
@@ -46,6 +50,7 @@ test.describe('datetime: display', () => {
         await page.setContent(`
           <ion-datetime size="cover" value="2022-02-22T16:30:00" presentation="date-time"></ion-datetime>
         `);
+        await page.waitForSelector('.datetime-ready');
         const datetime = page.locator('ion-datetime');
         await expect(datetime).toHaveScreenshot(`datetime-display-cover-date-time-${page.getSnapshotSettings()}.png`);
       });
@@ -53,6 +58,7 @@ test.describe('datetime: display', () => {
         await page.setContent(`
           <ion-datetime size="cover" value="2022-02-22T16:30:00" presentation="time-date"></ion-datetime>
         `);
+        await page.waitForSelector('.datetime-ready');
         const datetime = page.locator('ion-datetime');
         await expect(datetime).toHaveScreenshot(`datetime-display-cover-time-date-${page.getSnapshotSettings()}.png`);
       });
@@ -60,6 +66,7 @@ test.describe('datetime: display', () => {
         await page.setContent(`
           <ion-datetime size="cover" value="2022-02-22T16:30:00" presentation="time"></ion-datetime>
         `);
+        await page.waitForSelector('.datetime-ready');
         const datetime = page.locator('ion-datetime');
         await expect(datetime).toHaveScreenshot(`datetime-display-cover-time-${page.getSnapshotSettings()}.png`);
       });
@@ -67,6 +74,7 @@ test.describe('datetime: display', () => {
         await page.setContent(`
           <ion-datetime size="cover" value="2022-02-22T16:30:00" presentation="date"></ion-datetime>
         `);
+        await page.waitForSelector('.datetime-ready');
         const datetime = page.locator('ion-datetime');
         await expect(datetime).toHaveScreenshot(`datetime-display-cover-date-${page.getSnapshotSettings()}.png`);
       });
