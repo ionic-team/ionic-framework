@@ -354,7 +354,11 @@ export class Refresher implements ComponentInterface {
 
           this.state = RefresherState.Pulling;
 
-          writeTask(() => this.scrollEl!.style.setProperty('--overflow', 'hidden'));
+          if (this.scrollEl!.matches(ION_CONTENT_CLASS_SELECTOR)) {
+            writeTask(() => this.scrollEl!.style.setProperty('overflow', 'hidden'));
+          } else {
+            writeTask(() => this.scrollEl!.style.setProperty('--overflow', 'hidden'));
+          }
 
           const animationType = getRefresherAnimationType(contentEl);
           const animation = createPullingAnimation(animationType, pullingRefresherIcon, this.el);
@@ -378,7 +382,11 @@ export class Refresher implements ComponentInterface {
 
         this.gesture!.enable(false);
 
-        writeTask(() => this.scrollEl!.style.removeProperty('--overflow'));
+        if (this.scrollEl!.matches(ION_CONTENT_CLASS_SELECTOR)) {
+          writeTask(() => this.scrollEl!.style.removeProperty('overflow'));
+        } else {
+          writeTask(() => this.scrollEl!.style.removeProperty('--overflow'));
+        }
         if (this.progress <= 0.4) {
           ev.data.animation.progressEnd(0, this.progress, 500).onFinish(() => {
             this.animations.forEach((ani) => ani.destroy());
