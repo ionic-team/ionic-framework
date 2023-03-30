@@ -46,7 +46,6 @@ export function hydrateIonicComponents(doc: any, appId: any) {
 
         // auxiliar
         'ion-picker-column',
-        'ion-virtual-scroll',
       ],
     }).then((hydrateResults) => {
       hydrateResults.diagnostics.forEach((d) => {

@@ -1,4 +1,4 @@
-@import "../components/slides/slides.ios.vars.scss";
+@import "../themes/ionic.globals.ios.scss";
 
 // Slides
 // --------------------------------------------------
@@ -8,12 +8,12 @@
   // These values are the same for iOS and MD
   // We just do not add a .md or .ios class beforehand
   // so the styles are easier to override by the user.
-  --bullet-background: #{$slides-ios-bullet-background};
-  --bullet-background-active: #{$slides-ios-bullet-background-active};
-  --progress-bar-background: #{$slides-ios-progress-bar-background};
-  --progress-bar-background-active: #{$slides-ios-progress-bar-background-active};
-  --scroll-bar-background: #{$slides-ios-scroll-bar-background};
-  --scroll-bar-background-active: #{$slides-ios-scroll-bar-drag-background};
+  --bullet-background: $text-color-step-800;
+  --bullet-background-active: ion-color(primary, base);
+  --progress-bar-background: rgba($text-color-rgb, .25);
+  --progress-bar-background-active: ion-color(primary, shade);
+  --scroll-bar-background: rgba($text-color-rgb, .1);
+  --scroll-bar-background-active: rgba($text-color-rgb, .5);
   /**
    * @prop --bullet-background: Background of the pagination bullets
    * @prop --bullet-background-active: Background of the active pagination bullet

@@ -1,0 +1,258 @@
+@import "./select.vars";
+
+// Select Fill: Outline
+// ----------------------------------------------------------------
+
+:host(.select-fill-outline) {
+  --border-color: #{$background-color-step-300};
+  --border-radius: 4px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+}
+
+:host(.select-fill-outline.select-shape-round) {
+  --border-radius: 28px;
+  --padding-start: 32px;
+  --padding-end: 32px;
+}
+
+/**
+ * If the select has a validity state, the
+ * border should reflect that as a color.
+ */
+:host(.has-focus.select-fill-outline.ion-valid),
+:host(.select-fill-outline.ion-touched.ion-invalid) {
+  --border-color: var(--highlight-color);
+}
+
+/**
+ * Border should be
+ * slightly darker on hover.
+ */
+@media (any-hover: hover) {
+  :host(.select-fill-outline:hover) {
+    --border-color: #{$background-color-step-750};
+  }
+}
+
+/**
+ * The border should get thicker
+ * and take on component color when
+ * the select is focused.
+ */
+:host(.select-fill-outline.select-expanded),
+:host(.select-fill-outline.ion-focused) {
+  --border-width: 2px;
+  --border-color: var(--highlight-color);
+}
+
+/**
+ * The bottom content should never have
+ * a border with the outline style.
+ */
+:host(.select-fill-outline) .select-bottom {
+  border-top: none;
+}
+
+/**
+ * Outline selects do not have a bottom border.
+ * Instead, they have a border that wraps the
+ * select + label.
+ */
+:host(.select-fill-outline) .select-wrapper {
+  border-bottom: none;
+}
+
+:host(.select-ltr.select-fill-outline.select-label-placement-stacked) .label-text-wrapper,
+:host(.select-ltr.select-fill-outline.select-label-placement-floating) .label-text-wrapper {
+  // stylelint-disable-next-line property-disallowed-list
+  transform-origin: left top;
+}
+
+:host(.select-rtl.select-fill-outline.select-label-placement-stacked) .label-text-wrapper,
+:host(.select-rtl.select-fill-outline.select-label-placement-floating) .label-text-wrapper {
+  // stylelint-disable-next-line property-disallowed-list
+  transform-origin: right top;
+}
+
+:host(.select-fill-outline.select-label-placement-stacked) .label-text-wrapper,
+:host(.select-fill-outline.select-label-placement-floating) .label-text-wrapper {
+  position: absolute;
+
+  /**
+   * Label text should not extend
+   * beyond the bounds of the select.
+   */
+  max-width: calc(100% - var(--padding-start) - var(--padding-end));
+}
+
+/**
+ * The label should appear on top of an outline
+ * container that overlaps it so it is always clickable.
+ */
+:host(.select-fill-outline) .label-text-wrapper,
+:host(.select-fill-outline) .label-text-wrapper {
+  position: relative;
+
+  z-index: 1;
+}
+
+/**
+ * This makes the label sit above the select.
+ */
+:host(.select-expanded.select-fill-outline.select-label-placement-floating) .label-text-wrapper,
+:host(.ion-focused.select-fill-outline.select-label-placement-floating) .label-text-wrapper,
+:host(.has-value.select-fill-outline.select-label-placement-floating) .label-text-wrapper,
+:host(.select-fill-outline.select-label-placement-stacked) .label-text-wrapper {
+  @include transform(translateY(-32%), scale(#{$select-floating-label-scale}));
+  @include margin(0);
+
+  /**
+   * Label text should not extend
+   * beyond the bounds of the select.
+   */
+  max-width: calc((100% - var(--padding-start) - var(--padding-end) - #{$select-md-floating-label-padding * 2}) / #{$select-floating-label-scale});
+}
+
+/**
+ * This ensures that the select does not
+ * overlap the floating label while still
+ * remaining visually centered.
+ */
+:host(.select-fill-outline.select-label-placement-stacked) select,
+:host(.select-fill-outline.select-label-placement-floating) select {
+  @include margin(6px, 0, 6px, 0);
+}
+
+// Select Fill: Outline Outline Container
+// ----------------------------------------------------------------
+
+:host(.select-fill-outline) .select-outline-container {
+  @include position(0, 0, 0, 0);
+
+  display: flex;
+
+  position: absolute;
+
+  width: 100%;
+  height: 100%;
+}
+
+:host(.select-fill-outline) .select-outline-start,
+:host(.select-fill-outline) .select-outline-end {
+  pointer-events: none;
+}
+
+/**
+ * By default, each piece of the container should have
+ * a top and bottom border. This gives the appearance
+ * of a unified container with a border.
+ */
+:host(.select-fill-outline) .select-outline-start,
+:host(.select-fill-outline) .select-outline-notch,
+:host(.select-fill-outline) .select-outline-end {
+  border-top: var(--border-width) var(--border-style) var(--border-color);
+  border-bottom: var(--border-width) var(--border-style) var(--border-color);
+
+  /**
+   * `border-box` is applied in the global
+   * Ionic stylesheet, but since this is in
+   * the Shadow DOM, these elements do not
+   * receive the global style. The outline
+   * pieces for `ion-input` do because that
+   * component is in the Light DOM.
+   */
+  box-sizing: border-box;
+}
+
+/**
+ * Ensures long labels do not cause the notch to flow
+ * out of bounds.
+ */
+:host(.select-fill-outline) .select-outline-notch {
+  max-width: calc(100% - var(--padding-start) - var(--padding-end));
+}
+
+/**
+ * This element ensures that the notch used
+ * the size of the scaled text so that the
+ * border cut out is the correct width.
+ * The text in this element should not
+ * be interactive.
+ */
+:host(.select-fill-outline) .notch-spacer {
+  /**
+   * We need $select-md-floating-label-padding of padding on the right.
+   * However, we also subtracted $select-md-floating-label-padding from
+   * the width of .select-outline-start
+   * to create space, so we need to take
+   * that into consideration here.
+   */
+  @include padding(null, #{$select-md-floating-label-padding * 2}, null, null);
+
+  font-size: calc(1em * #{$select-floating-label-scale});
+
+  opacity: 0;
+  pointer-events: none;
+}
+
+:host(.select-ltr.select-fill-outline) .select-outline-start {
+  // stylelint-disable-next-line property-disallowed-list
+  border-left: var(--border-width) var(--border-style) var(--border-color);
+  // stylelint-disable-next-line property-disallowed-list
+  border-radius: var(--border-radius) 0px 0px var(--border-radius);
+}
+
+:host(.select-rtl.select-fill-outline) .select-outline-start {
+  // stylelint-disable-next-line property-disallowed-list
+  border-right: var(--border-width) var(--border-style) var(--border-color);
+  // stylelint-disable-next-line property-disallowed-list
+  border-radius: 0px var(--border-radius) var(--border-radius) 0px;
+}
+
+:host(.select-fill-outline) .select-outline-start {
+  /**
+   * There should be spacing between the translated text
+   * and .select-outline-start. However, we can't add this
+   * spacing onto the notch because it would cause the
+   * label to look like it is not aligned with the
+   * text select. Instead, we subtract a few pixels from
+   * this element.
+   */
+  width: calc(var(--padding-start) - #{$select-md-floating-label-padding});
+}
+
+:host(.select-ltr.select-fill-outline) .select-outline-end {
+  // stylelint-disable-next-line property-disallowed-list
+  border-right: var(--border-width) var(--border-style) var(--border-color);
+  // stylelint-disable-next-line property-disallowed-list
+  border-radius: 0px var(--border-radius) var(--border-radius) 0px;
+}
+
+:host(.select-rtl.select-fill-outline) .select-outline-end {
+  // stylelint-disable-next-line property-disallowed-list
+  border-left: var(--border-width) var(--border-style) var(--border-color);
+  // stylelint-disable-next-line property-disallowed-list
+  border-radius: var(--border-radius) 0px 0px var(--border-radius);
+}
+
+:host(.select-fill-outline) .select-outline-end {
+  /**
+   * The ending outline fragment
+   * should take up the remaining free space.
+   */
+  flex-grow: 1;
+}
+
+/**
+ * When the select either has focus or a value,
+ * there should be a "cut out" at the top for
+ * the floating/stacked label. We simulate this "cut out"
+ * by removing the top border from the notch fragment.
+ */
+:host(.select-expanded.select-fill-outline.select-label-placement-floating) .select-outline-notch,
+:host(.ion-focused.select-fill-outline.select-label-placement-floating) .select-outline-notch,
+:host(.has-value.select-fill-outline.select-label-placement-floating) .select-outline-notch,
+:host(.select-fill-outline.select-label-placement-stacked) .select-outline-notch {
+  border-top: none;
+}

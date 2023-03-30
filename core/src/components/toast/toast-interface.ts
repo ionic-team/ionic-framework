@@ -11,7 +11,7 @@ export interface ToastOptions {
   translucent?: boolean;
   animated?: boolean;
   icon?: string;
-  htmlAttributes?: ToastAttributes;
+  htmlAttributes?: { [key: string]: any };
   layout?: ToastLayout;
 
   color?: Color;
@@ -22,11 +22,6 @@ export interface ToastOptions {
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;
 }
-
-/**
- * @deprecated - Use { [key: string]: any } directly instead.
- */
-export type ToastAttributes = { [key: string]: any };
 
 export type ToastLayout = 'baseline' | 'stacked';
 

@@ -28,19 +28,25 @@ ion-action-sheet,prop,cssClass,string | string[] | undefined,undefined,false,fal
 ion-action-sheet,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-action-sheet,prop,header,string | undefined,undefined,false,false
 ion-action-sheet,prop,htmlAttributes,undefined | { [key: string]: any; },undefined,false,false
+ion-action-sheet,prop,isOpen,boolean,false,false,false
 ion-action-sheet,prop,keyboardClose,boolean,true,false,false
 ion-action-sheet,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-action-sheet,prop,mode,"ios" | "md",undefined,false,false
 ion-action-sheet,prop,subHeader,string | undefined,undefined,false,false
 ion-action-sheet,prop,translucent,boolean,false,false,false
+ion-action-sheet,prop,trigger,string | undefined,undefined,false,false
 ion-action-sheet,method,dismiss,dismiss(data?: any, role?: string) => Promise<boolean>
 ion-action-sheet,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-action-sheet,method,onWillDismiss,onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-action-sheet,method,present,present() => Promise<void>
+ion-action-sheet,event,didDismiss,OverlayEventDetail<any>,true
+ion-action-sheet,event,didPresent,void,true
 ion-action-sheet,event,ionActionSheetDidDismiss,OverlayEventDetail<any>,true
 ion-action-sheet,event,ionActionSheetDidPresent,void,true
 ion-action-sheet,event,ionActionSheetWillDismiss,OverlayEventDetail<any>,true
 ion-action-sheet,event,ionActionSheetWillPresent,void,true
+ion-action-sheet,event,willDismiss,OverlayEventDetail<any>,true
+ion-action-sheet,event,willPresent,void,true
 ion-action-sheet,css-prop,--backdrop-opacity
 ion-action-sheet,css-prop,--background
 ion-action-sheet,css-prop,--button-background
@@ -74,20 +80,26 @@ ion-alert,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefin
 ion-alert,prop,header,string | undefined,undefined,false,false
 ion-alert,prop,htmlAttributes,undefined | { [key: string]: any; },undefined,false,false
 ion-alert,prop,inputs,AlertInput[],[],false,false
+ion-alert,prop,isOpen,boolean,false,false,false
 ion-alert,prop,keyboardClose,boolean,true,false,false
 ion-alert,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-alert,prop,message,IonicSafeString | string | undefined,undefined,false,false
 ion-alert,prop,mode,"ios" | "md",undefined,false,false
 ion-alert,prop,subHeader,string | undefined,undefined,false,false
 ion-alert,prop,translucent,boolean,false,false,false
+ion-alert,prop,trigger,string | undefined,undefined,false,false
 ion-alert,method,dismiss,dismiss(data?: any, role?: string) => Promise<boolean>
 ion-alert,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-alert,method,onWillDismiss,onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-alert,method,present,present() => Promise<void>
+ion-alert,event,didDismiss,OverlayEventDetail<any>,true
+ion-alert,event,didPresent,void,true
 ion-alert,event,ionAlertDidDismiss,OverlayEventDetail<any>,true
 ion-alert,event,ionAlertDidPresent,void,true
 ion-alert,event,ionAlertWillDismiss,OverlayEventDetail<any>,true
 ion-alert,event,ionAlertWillPresent,void,true
+ion-alert,event,willDismiss,OverlayEventDetail<any>,true
+ion-alert,event,willPresent,void,true
 ion-alert,css-prop,--backdrop-opacity
 ion-alert,css-prop,--background
 ion-alert,css-prop,--height
@@ -281,19 +293,22 @@ ion-checkbox,prop,checked,boolean,false,false,false
 ion-checkbox,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-checkbox,prop,disabled,boolean,false,false,false
 ion-checkbox,prop,indeterminate,boolean,false,false,false
+ion-checkbox,prop,justify,"end" | "space-between" | "start",'space-between',false,false
+ion-checkbox,prop,labelPlacement,"end" | "fixed" | "start",'start',false,false
+ion-checkbox,prop,legacy,boolean | undefined,undefined,false,false
 ion-checkbox,prop,mode,"ios" | "md",undefined,false,false
 ion-checkbox,prop,name,string,this.inputId,false,false
 ion-checkbox,prop,value,any,'on',false,false
 ion-checkbox,event,ionBlur,void,true
 ion-checkbox,event,ionChange,CheckboxChangeEventDetail<any>,true
 ion-checkbox,event,ionFocus,void,true
-ion-checkbox,css-prop,--background
-ion-checkbox,css-prop,--background-checked
 ion-checkbox,css-prop,--border-color
 ion-checkbox,css-prop,--border-color-checked
 ion-checkbox,css-prop,--border-radius
 ion-checkbox,css-prop,--border-style
 ion-checkbox,css-prop,--border-width
+ion-checkbox,css-prop,--checkbox-background
+ion-checkbox,css-prop,--checkbox-background-checked
 ion-checkbox,css-prop,--checkmark-color
 ion-checkbox,css-prop,--checkmark-width
 ion-checkbox,css-prop,--size
@@ -526,10 +541,18 @@ ion-input,prop,autofocus,boolean,false,false,false
 ion-input,prop,clearInput,boolean,false,false,false
 ion-input,prop,clearOnEdit,boolean | undefined,undefined,false,false
 ion-input,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
-ion-input,prop,debounce,number,0,false,false
+ion-input,prop,counter,boolean,false,false,false
+ion-input,prop,counterFormatter,((inputLength: number, maxLength: number) => string) | undefined,undefined,false,false
+ion-input,prop,debounce,number | undefined,undefined,false,false
 ion-input,prop,disabled,boolean,false,false,false
 ion-input,prop,enterkeyhint,"done" | "enter" | "go" | "next" | "previous" | "search" | "send" | undefined,undefined,false,false
+ion-input,prop,errorText,string | undefined,undefined,false,false
+ion-input,prop,fill,"outline" | "solid" | undefined,undefined,false,false
+ion-input,prop,helperText,string | undefined,undefined,false,false
 ion-input,prop,inputmode,"decimal" | "email" | "none" | "numeric" | "search" | "tel" | "text" | "url" | undefined,undefined,false,false
+ion-input,prop,label,string | undefined,undefined,false,false
+ion-input,prop,labelPlacement,"end" | "fixed" | "floating" | "stacked" | "start",'start',false,false
+ion-input,prop,legacy,boolean | undefined,undefined,false,false
 ion-input,prop,max,number | string | undefined,undefined,false,false
 ion-input,prop,maxlength,number | undefined,undefined,false,false
 ion-input,prop,min,number | string | undefined,undefined,false,false
@@ -541,6 +564,7 @@ ion-input,prop,pattern,string | undefined,undefined,false,false
 ion-input,prop,placeholder,string | undefined,undefined,false,false
 ion-input,prop,readonly,boolean,false,false,false
 ion-input,prop,required,boolean,false,false,false
+ion-input,prop,shape,"round" | undefined,undefined,false,false
 ion-input,prop,size,number | undefined,undefined,false,false
 ion-input,prop,spellcheck,boolean,false,false,false
 ion-input,prop,step,string | undefined,undefined,false,false
@@ -551,9 +575,16 @@ ion-input,method,setFocus,setFocus() => Promise<void>
 ion-input,event,ionBlur,FocusEvent,true
 ion-input,event,ionChange,InputChangeEventDetail,true
 ion-input,event,ionFocus,FocusEvent,true
-ion-input,event,ionInput,InputEvent,true
+ion-input,event,ionInput,InputInputEventDetail,true
 ion-input,css-prop,--background
+ion-input,css-prop,--border-color
+ion-input,css-prop,--border-radius
+ion-input,css-prop,--border-style
+ion-input,css-prop,--border-width
 ion-input,css-prop,--color
+ion-input,css-prop,--highlight-color-focused
+ion-input,css-prop,--highlight-color-invalid
+ion-input,css-prop,--highlight-color-valid
 ion-input,css-prop,--padding-bottom
 ion-input,css-prop,--padding-end
 ion-input,css-prop,--padding-start
@@ -694,6 +725,7 @@ ion-loading,prop,cssClass,string | string[] | undefined,undefined,false,false
 ion-loading,prop,duration,number,0,false,false
 ion-loading,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-loading,prop,htmlAttributes,undefined | { [key: string]: any; },undefined,false,false
+ion-loading,prop,isOpen,boolean,false,false,false
 ion-loading,prop,keyboardClose,boolean,true,false,false
 ion-loading,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-loading,prop,message,IonicSafeString | string | undefined,undefined,false,false
@@ -701,14 +733,19 @@ ion-loading,prop,mode,"ios" | "md",undefined,false,false
 ion-loading,prop,showBackdrop,boolean,true,false,false
 ion-loading,prop,spinner,"bubbles" | "circles" | "circular" | "crescent" | "dots" | "lines" | "lines-sharp" | "lines-sharp-small" | "lines-small" | null | undefined,undefined,false,false
 ion-loading,prop,translucent,boolean,false,false,false
+ion-loading,prop,trigger,string | undefined,undefined,false,false
 ion-loading,method,dismiss,dismiss(data?: any, role?: string) => Promise<boolean>
 ion-loading,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-loading,method,onWillDismiss,onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-loading,method,present,present() => Promise<void>
+ion-loading,event,didDismiss,OverlayEventDetail<any>,true
+ion-loading,event,didPresent,void,true
 ion-loading,event,ionLoadingDidDismiss,OverlayEventDetail<any>,true
 ion-loading,event,ionLoadingDidPresent,void,true
 ion-loading,event,ionLoadingWillDismiss,OverlayEventDetail<any>,true
 ion-loading,event,ionLoadingWillPresent,void,true
+ion-loading,event,willDismiss,OverlayEventDetail<any>,true
+ion-loading,event,willPresent,void,true
 ion-loading,css-prop,--backdrop-opacity
 ion-loading,css-prop,--background
 ion-loading,css-prop,--height
@@ -779,7 +816,7 @@ ion-modal,prop,animated,boolean,true,false,false
 ion-modal,prop,backdropBreakpoint,number,0,false,false
 ion-modal,prop,backdropDismiss,boolean,true,false,false
 ion-modal,prop,breakpoints,number[] | undefined,undefined,false,false
-ion-modal,prop,canDismiss,((data?: any, role?: string | undefined) => Promise<boolean>) | boolean | undefined,undefined,false,false
+ion-modal,prop,canDismiss,((data?: any, role?: string | undefined) => Promise<boolean>) | boolean,true,false,false
 ion-modal,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-modal,prop,handle,boolean | undefined,undefined,false,false
 ion-modal,prop,handleBehavior,"cycle" | "none" | undefined,'none',false,false
@@ -792,7 +829,6 @@ ion-modal,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefin
 ion-modal,prop,mode,"ios" | "md",undefined,false,false
 ion-modal,prop,presentingElement,HTMLElement | undefined,undefined,false,false
 ion-modal,prop,showBackdrop,boolean,true,false,false
-ion-modal,prop,swipeToClose,boolean,false,false,false
 ion-modal,prop,trigger,string | undefined,undefined,false,false
 ion-modal,method,dismiss,dismiss(data?: any, role?: string) => Promise<boolean>
 ion-modal,method,getCurrentBreakpoint,getCurrentBreakpoint() => Promise<number | undefined>
@@ -867,19 +903,25 @@ ion-picker,prop,cssClass,string | string[] | undefined,undefined,false,false
 ion-picker,prop,duration,number,0,false,false
 ion-picker,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-picker,prop,htmlAttributes,undefined | { [key: string]: any; },undefined,false,false
+ion-picker,prop,isOpen,boolean,false,false,false
 ion-picker,prop,keyboardClose,boolean,true,false,false
 ion-picker,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
 ion-picker,prop,mode,"ios" | "md",undefined,false,false
 ion-picker,prop,showBackdrop,boolean,true,false,false
+ion-picker,prop,trigger,string | undefined,undefined,false,false
 ion-picker,method,dismiss,dismiss(data?: any, role?: string) => Promise<boolean>
 ion-picker,method,getColumn,getColumn(name: string) => Promise<PickerColumn | undefined>
 ion-picker,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-picker,method,onWillDismiss,onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-picker,method,present,present() => Promise<void>
+ion-picker,event,didDismiss,OverlayEventDetail<any>,true
+ion-picker,event,didPresent,void,true
 ion-picker,event,ionPickerDidDismiss,OverlayEventDetail<any>,true
 ion-picker,event,ionPickerDidPresent,void,true
 ion-picker,event,ionPickerWillDismiss,OverlayEventDetail<any>,true
 ion-picker,event,ionPickerWillPresent,void,true
+ion-picker,event,willDismiss,OverlayEventDetail<any>,true
+ion-picker,event,willPresent,void,true
 ion-picker,css-prop,--backdrop-opacity
 ion-picker,css-prop,--background
 ion-picker,css-prop,--background-rgb
@@ -961,6 +1003,9 @@ ion-progress-bar,part,track
 ion-radio,shadow
 ion-radio,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-radio,prop,disabled,boolean,false,false,false
+ion-radio,prop,justify,"end" | "space-between" | "start",'space-between',false,false
+ion-radio,prop,labelPlacement,"end" | "fixed" | "start",'start',false,false
+ion-radio,prop,legacy,boolean | undefined,undefined,false,false
 ion-radio,prop,mode,"ios" | "md",undefined,false,false
 ion-radio,prop,name,string,this.inputId,false,false
 ion-radio,prop,value,any,undefined,false,false
@@ -982,13 +1027,15 @@ ion-radio-group,event,ionChange,RadioGroupChangeEventDetail<any>,true
 ion-range,shadow
 ion-range,prop,activeBarStart,number | undefined,undefined,false,false
 ion-range,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
-ion-range,prop,debounce,number,0,false,false
+ion-range,prop,debounce,number | undefined,undefined,false,false
 ion-range,prop,disabled,boolean,false,false,false
 ion-range,prop,dualKnobs,boolean,false,false,false
+ion-range,prop,labelPlacement,"end" | "fixed" | "start",'start',false,false
+ion-range,prop,legacy,boolean | undefined,undefined,false,false
 ion-range,prop,max,number,100,false,false
 ion-range,prop,min,number,0,false,false
 ion-range,prop,mode,"ios" | "md",undefined,false,false
-ion-range,prop,name,string,'',false,false
+ion-range,prop,name,string,this.rangeId,false,false
 ion-range,prop,pin,boolean,false,false,false
 ion-range,prop,pinFormatter,(value: number) => string | number,(value: number): number => Math.round(value),false,false
 ion-range,prop,snaps,boolean,false,false,false
@@ -998,6 +1045,7 @@ ion-range,prop,value,number | { lower: number; upper: number; },0,false,false
 ion-range,event,ionBlur,void,true
 ion-range,event,ionChange,RangeChangeEventDetail,true
 ion-range,event,ionFocus,void,true
+ion-range,event,ionInput,RangeChangeEventDetail,true
 ion-range,event,ionKnobMoveEnd,RangeKnobMoveEndEventDetail,true
 ion-range,event,ionKnobMoveStart,RangeKnobMoveStartEventDetail,true
 ion-range,css-prop,--bar-background
@@ -1096,7 +1144,7 @@ ion-searchbar,prop,cancelButtonIcon,string,config.get('backButtonIcon', arrowBac
 ion-searchbar,prop,cancelButtonText,string,'Cancel',false,false
 ion-searchbar,prop,clearIcon,string | undefined,undefined,false,false
 ion-searchbar,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
-ion-searchbar,prop,debounce,number,250,false,false
+ion-searchbar,prop,debounce,number | undefined,undefined,false,false
 ion-searchbar,prop,disabled,boolean,false,false,false
 ion-searchbar,prop,enterkeyhint,"done" | "enter" | "go" | "next" | "previous" | "search" | "send" | undefined,undefined,false,false
 ion-searchbar,prop,inputmode,"decimal" | "email" | "none" | "numeric" | "search" | "tel" | "text" | "url" | undefined,undefined,false,false
@@ -1115,7 +1163,7 @@ ion-searchbar,event,ionCancel,void,true
 ion-searchbar,event,ionChange,SearchbarChangeEventDetail,true
 ion-searchbar,event,ionClear,void,true
 ion-searchbar,event,ionFocus,void,true
-ion-searchbar,event,ionInput,KeyboardEvent,true
+ion-searchbar,event,ionInput,SearchbarInputEventDetail,true
 ion-searchbar,css-prop,--background
 ion-searchbar,css-prop,--border-radius
 ion-searchbar,css-prop,--box-shadow
@@ -1135,7 +1183,7 @@ ion-segment,prop,mode,"ios" | "md",undefined,false,false
 ion-segment,prop,scrollable,boolean,false,false,false
 ion-segment,prop,selectOnFocus,boolean,false,false,false
 ion-segment,prop,swipeGesture,boolean,true,false,false
-ion-segment,prop,value,null | string | undefined,undefined,false,false
+ion-segment,prop,value,string | undefined,undefined,false,false
 ion-segment,event,ionChange,SegmentChangeEventDetail,true
 ion-segment,css-prop,--background
 
@@ -1179,16 +1227,23 @@ ion-segment-button,part,native
 
 ion-select,shadow
 ion-select,prop,cancelText,string,'Cancel',false,false
+ion-select,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-select,prop,compareWith,((currentValue: any, compareValue: any) => boolean) | null | string | undefined,undefined,false,false
 ion-select,prop,disabled,boolean,false,false,false
+ion-select,prop,fill,"outline" | "solid" | undefined,undefined,false,false
 ion-select,prop,interface,"action-sheet" | "alert" | "popover",'alert',false,false
 ion-select,prop,interfaceOptions,any,{},false,false
+ion-select,prop,justify,"end" | "space-between" | "start",'space-between',false,false
+ion-select,prop,label,string | undefined,undefined,false,false
+ion-select,prop,labelPlacement,"end" | "fixed" | "floating" | "stacked" | "start" | undefined,'start',false,false
+ion-select,prop,legacy,boolean | undefined,undefined,false,false
 ion-select,prop,mode,"ios" | "md",undefined,false,false
 ion-select,prop,multiple,boolean,false,false,false
 ion-select,prop,name,string,this.inputId,false,false
 ion-select,prop,okText,string,'OK',false,false
 ion-select,prop,placeholder,string | undefined,undefined,false,false
 ion-select,prop,selectedText,null | string | undefined,undefined,false,false
+ion-select,prop,shape,"round" | undefined,undefined,false,false
 ion-select,prop,value,any,undefined,false,false
 ion-select,method,open,open(event?: UIEvent) => Promise<any>
 ion-select,event,ionBlur,void,true
@@ -1196,12 +1251,21 @@ ion-select,event,ionCancel,void,true
 ion-select,event,ionChange,SelectChangeEventDetail<any>,true
 ion-select,event,ionDismiss,void,true
 ion-select,event,ionFocus,void,true
+ion-select,css-prop,--background
+ion-select,css-prop,--border-color Color of the select border
+ion-select,css-prop,--border-radius Radius of the select border
+ion-select,css-prop,--border-style Style of the select border
+ion-select,css-prop,--border-width Width of the select border
+ion-select,css-prop,--highlight-color-focused The color of the highlight on the select when focused
+ion-select,css-prop,--highlight-color-invalid The color of the highlight on the select when invalid
+ion-select,css-prop,--highlight-color-valid The color of the highlight on the select when valid
 ion-select,css-prop,--padding-bottom
 ion-select,css-prop,--padding-end
 ion-select,css-prop,--padding-start
 ion-select,css-prop,--padding-top
 ion-select,css-prop,--placeholder-color
 ion-select,css-prop,--placeholder-opacity
+ion-select,css-prop,--ripple-color
 ion-select,part,icon
 ion-select,part,placeholder
 ion-select,part,text
@@ -1215,52 +1279,6 @@ ion-skeleton-text,prop,animated,boolean,false,false,false
 ion-skeleton-text,css-prop,--background
 ion-skeleton-text,css-prop,--background-rgb
 ion-skeleton-text,css-prop,--border-radius
-
-ion-slide,none
-
-ion-slides,none
-ion-slides,prop,mode,"ios" | "md",undefined,false,false
-ion-slides,prop,options,any,{},false,false
-ion-slides,prop,pager,boolean,false,false,false
-ion-slides,prop,scrollbar,boolean,false,false,false
-ion-slides,method,getActiveIndex,getActiveIndex() => Promise<number>
-ion-slides,method,getPreviousIndex,getPreviousIndex() => Promise<number>
-ion-slides,method,getSwiper,getSwiper() => Promise<any>
-ion-slides,method,isBeginning,isBeginning() => Promise<boolean>
-ion-slides,method,isEnd,isEnd() => Promise<boolean>
-ion-slides,method,length,length() => Promise<number>
-ion-slides,method,lockSwipeToNext,lockSwipeToNext(lock: boolean) => Promise<void>
-ion-slides,method,lockSwipeToPrev,lockSwipeToPrev(lock: boolean) => Promise<void>
-ion-slides,method,lockSwipes,lockSwipes(lock: boolean) => Promise<void>
-ion-slides,method,slideNext,slideNext(speed?: number, runCallbacks?: boolean) => Promise<void>
-ion-slides,method,slidePrev,slidePrev(speed?: number, runCallbacks?: boolean) => Promise<void>
-ion-slides,method,slideTo,slideTo(index: number, speed?: number, runCallbacks?: boolean) => Promise<void>
-ion-slides,method,startAutoplay,startAutoplay() => Promise<void>
-ion-slides,method,stopAutoplay,stopAutoplay() => Promise<void>
-ion-slides,method,update,update() => Promise<void>
-ion-slides,method,updateAutoHeight,updateAutoHeight(speed?: number) => Promise<void>
-ion-slides,event,ionSlideDidChange,void,true
-ion-slides,event,ionSlideDoubleTap,void,true
-ion-slides,event,ionSlideDrag,void,true
-ion-slides,event,ionSlideNextEnd,void,true
-ion-slides,event,ionSlideNextStart,void,true
-ion-slides,event,ionSlidePrevEnd,void,true
-ion-slides,event,ionSlidePrevStart,void,true
-ion-slides,event,ionSlideReachEnd,void,true
-ion-slides,event,ionSlideReachStart,void,true
-ion-slides,event,ionSlidesDidLoad,void,true
-ion-slides,event,ionSlideTap,void,true
-ion-slides,event,ionSlideTouchEnd,void,true
-ion-slides,event,ionSlideTouchStart,void,true
-ion-slides,event,ionSlideTransitionEnd,void,true
-ion-slides,event,ionSlideTransitionStart,void,true
-ion-slides,event,ionSlideWillChange,void,true
-ion-slides,css-prop,--bullet-background
-ion-slides,css-prop,--bullet-background-active
-ion-slides,css-prop,--progress-bar-background
-ion-slides,css-prop,--progress-bar-background-active
-ion-slides,css-prop,--scroll-bar-background
-ion-slides,css-prop,--scroll-bar-background-active
 
 ion-spinner,shadow
 ion-spinner,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
@@ -1334,10 +1352,18 @@ ion-textarea,prop,autofocus,boolean,false,false,false
 ion-textarea,prop,clearOnEdit,boolean,false,false,false
 ion-textarea,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-textarea,prop,cols,number | undefined,undefined,false,false
-ion-textarea,prop,debounce,number,0,false,false
+ion-textarea,prop,counter,boolean,false,false,false
+ion-textarea,prop,counterFormatter,((inputLength: number, maxLength: number) => string) | undefined,undefined,false,false
+ion-textarea,prop,debounce,number | undefined,undefined,false,false
 ion-textarea,prop,disabled,boolean,false,false,false
 ion-textarea,prop,enterkeyhint,"done" | "enter" | "go" | "next" | "previous" | "search" | "send" | undefined,undefined,false,false
+ion-textarea,prop,errorText,string | undefined,undefined,false,false
+ion-textarea,prop,fill,"outline" | "solid" | undefined,undefined,false,false
+ion-textarea,prop,helperText,string | undefined,undefined,false,false
 ion-textarea,prop,inputmode,"decimal" | "email" | "none" | "numeric" | "search" | "tel" | "text" | "url" | undefined,undefined,false,false
+ion-textarea,prop,label,string | undefined,undefined,false,false
+ion-textarea,prop,labelPlacement,"end" | "fixed" | "floating" | "stacked" | "start",'start',false,false
+ion-textarea,prop,legacy,boolean | undefined,undefined,false,false
 ion-textarea,prop,maxlength,number | undefined,undefined,false,false
 ion-textarea,prop,minlength,number | undefined,undefined,false,false
 ion-textarea,prop,mode,"ios" | "md",undefined,false,false
@@ -1346,6 +1372,7 @@ ion-textarea,prop,placeholder,string | undefined,undefined,false,false
 ion-textarea,prop,readonly,boolean,false,false,false
 ion-textarea,prop,required,boolean,false,false,false
 ion-textarea,prop,rows,number | undefined,undefined,false,false
+ion-textarea,prop,shape,"round" | undefined,undefined,false,false
 ion-textarea,prop,spellcheck,boolean,false,false,false
 ion-textarea,prop,value,null | string | undefined,'',false,false
 ion-textarea,prop,wrap,"hard" | "off" | "soft" | undefined,undefined,false,false
@@ -1354,10 +1381,16 @@ ion-textarea,method,setFocus,setFocus() => Promise<void>
 ion-textarea,event,ionBlur,FocusEvent,true
 ion-textarea,event,ionChange,TextareaChangeEventDetail,true
 ion-textarea,event,ionFocus,FocusEvent,true
-ion-textarea,event,ionInput,InputEvent,true
+ion-textarea,event,ionInput,TextareaInputEventDetail,true
 ion-textarea,css-prop,--background
+ion-textarea,css-prop,--border-color
 ion-textarea,css-prop,--border-radius
+ion-textarea,css-prop,--border-style
+ion-textarea,css-prop,--border-width
 ion-textarea,css-prop,--color
+ion-textarea,css-prop,--highlight-color-focused
+ion-textarea,css-prop,--highlight-color-invalid
+ion-textarea,css-prop,--highlight-color-valid
 ion-textarea,css-prop,--padding-bottom
 ion-textarea,css-prop,--padding-end
 ion-textarea,css-prop,--padding-start
@@ -1386,6 +1419,7 @@ ion-toast,prop,enterAnimation,((baseEl: any, opts?: any) => Animation) | undefin
 ion-toast,prop,header,string | undefined,undefined,false,false
 ion-toast,prop,htmlAttributes,undefined | { [key: string]: any; },undefined,false,false
 ion-toast,prop,icon,string | undefined,undefined,false,false
+ion-toast,prop,isOpen,boolean,false,false,false
 ion-toast,prop,keyboardClose,boolean,false,false,false
 ion-toast,prop,layout,"baseline" | "stacked",'baseline',false,false
 ion-toast,prop,leaveAnimation,((baseEl: any, opts?: any) => Animation) | undefined,undefined,false,false
@@ -1393,14 +1427,19 @@ ion-toast,prop,message,IonicSafeString | string | undefined,undefined,false,fals
 ion-toast,prop,mode,"ios" | "md",undefined,false,false
 ion-toast,prop,position,"bottom" | "middle" | "top",'bottom',false,false
 ion-toast,prop,translucent,boolean,false,false,false
+ion-toast,prop,trigger,string | undefined,undefined,false,false
 ion-toast,method,dismiss,dismiss(data?: any, role?: string) => Promise<boolean>
 ion-toast,method,onDidDismiss,onDidDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-toast,method,onWillDismiss,onWillDismiss<T = any>() => Promise<OverlayEventDetail<T>>
 ion-toast,method,present,present() => Promise<void>
+ion-toast,event,didDismiss,OverlayEventDetail<any>,true
+ion-toast,event,didPresent,void,true
 ion-toast,event,ionToastDidDismiss,OverlayEventDetail<any>,true
 ion-toast,event,ionToastDidPresent,void,true
 ion-toast,event,ionToastWillDismiss,OverlayEventDetail<any>,true
 ion-toast,event,ionToastWillPresent,void,true
+ion-toast,event,willDismiss,OverlayEventDetail<any>,true
+ion-toast,event,willPresent,void,true
 ion-toast,css-prop,--background
 ion-toast,css-prop,--border-color
 ion-toast,css-prop,--border-radius
@@ -1429,14 +1468,15 @@ ion-toggle,prop,checked,boolean,false,false,false
 ion-toggle,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-toggle,prop,disabled,boolean,false,false,false
 ion-toggle,prop,enableOnOffLabels,boolean | undefined,config.get('toggleOnOffLabels'),false,false
+ion-toggle,prop,justify,"end" | "space-between" | "start",'space-between',false,false
+ion-toggle,prop,labelPlacement,"end" | "fixed" | "start",'start',false,false
+ion-toggle,prop,legacy,boolean | undefined,undefined,false,false
 ion-toggle,prop,mode,"ios" | "md",undefined,false,false
 ion-toggle,prop,name,string,this.inputId,false,false
 ion-toggle,prop,value,null | string | undefined,'on',false,false
 ion-toggle,event,ionBlur,void,true
 ion-toggle,event,ionChange,ToggleChangeEventDetail<any>,true
 ion-toggle,event,ionFocus,void,true
-ion-toggle,css-prop,--background
-ion-toggle,css-prop,--background-checked
 ion-toggle,css-prop,--border-radius
 ion-toggle,css-prop,--handle-background
 ion-toggle,css-prop,--handle-background-checked
@@ -1447,6 +1487,8 @@ ion-toggle,css-prop,--handle-max-height
 ion-toggle,css-prop,--handle-spacing
 ion-toggle,css-prop,--handle-transition
 ion-toggle,css-prop,--handle-width
+ion-toggle,css-prop,--track-background
+ion-toggle,css-prop,--track-background-checked
 ion-toggle,part,handle
 ion-toggle,part,track
 
@@ -1464,21 +1506,3 @@ ion-toolbar,css-prop,--padding-bottom
 ion-toolbar,css-prop,--padding-end
 ion-toolbar,css-prop,--padding-start
 ion-toolbar,css-prop,--padding-top
-
-ion-virtual-scroll,none
-ion-virtual-scroll,prop,approxFooterHeight,number,30,false,false
-ion-virtual-scroll,prop,approxHeaderHeight,number,30,false,false
-ion-virtual-scroll,prop,approxItemHeight,number,45,false,false
-ion-virtual-scroll,prop,footerFn,((item: any, index: number, items: any[]) => string | null | undefined) | undefined,undefined,false,false
-ion-virtual-scroll,prop,footerHeight,((item: any, index: number) => number) | undefined,undefined,false,false
-ion-virtual-scroll,prop,headerFn,((item: any, index: number, items: any[]) => string | null | undefined) | undefined,undefined,false,false
-ion-virtual-scroll,prop,headerHeight,((item: any, index: number) => number) | undefined,undefined,false,false
-ion-virtual-scroll,prop,itemHeight,((item: any, index: number) => number) | undefined,undefined,false,false
-ion-virtual-scroll,prop,items,any[] | undefined,undefined,false,false
-ion-virtual-scroll,prop,nodeRender,((el: HTMLElement | null, cell: Cell, domIndex: number) => HTMLElement) | undefined,undefined,false,false
-ion-virtual-scroll,prop,renderFooter,((item: any, index: number) => any) | undefined,undefined,false,false
-ion-virtual-scroll,prop,renderHeader,((item: any, index: number) => any) | undefined,undefined,false,false
-ion-virtual-scroll,prop,renderItem,((item: any, index: number) => any) | undefined,undefined,false,false
-ion-virtual-scroll,method,checkEnd,checkEnd() => Promise<void>
-ion-virtual-scroll,method,checkRange,checkRange(offset: number, len?: number) => Promise<void>
-ion-virtual-scroll,method,positionForItem,positionForItem(index: number) => Promise<number>

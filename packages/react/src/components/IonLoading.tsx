@@ -1,11 +1,9 @@
-import type { LoadingOptions } from '@ionic/core/components';
-import { loadingController } from '@ionic/core/components';
+import type { JSX } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-loading.js';
 
-import { createControllerComponent } from './createControllerComponent';
+import { createInlineOverlayComponent } from './createInlineOverlayComponent';
 
-export const IonLoading = /*@__PURE__*/ createControllerComponent<LoadingOptions, HTMLIonLoadingElement>(
+export const IonLoading = /*@__PURE__*/ createInlineOverlayComponent<JSX.IonLoading, HTMLIonLoadingElement>(
   'ion-loading',
-  loadingController,
   defineCustomElement
 );

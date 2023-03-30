@@ -1,0 +1,76 @@
+@import "./input.vars";
+
+// Input Fill: Solid
+// ----------------------------------------------------------------
+
+:host(.input-fill-solid) {
+  --background: #{$background-color-step-50};
+  --border-color: #{$background-color-step-500};
+  --border-radius: 4px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+}
+
+/**
+ * The solid fill style has a border
+ * at the bottom of the input wrapper.
+ * As a result, the border on the "bottom
+ * content" is not needed.
+ */
+:host(.input-fill-solid) .input-wrapper {
+  border-bottom: var(--border-width) var(--border-style) var(--border-color);
+}
+
+/**
+ * If the input has a validity state, the
+ * border should reflect that as a color.
+ */
+:host(.has-focus.input-fill-solid.ion-valid),
+:host(.input-fill-solid.ion-touched.ion-invalid) {
+  --border-color: var(--highlight-color);
+}
+
+:host(.input-fill-solid) .input-bottom {
+  border-top: none;
+}
+
+/**
+ * Background and border should be
+ * slightly darker on hover.
+ */
+@media (any-hover: hover) {
+  :host(.input-fill-solid:hover) {
+    --background: #{$background-color-step-100};
+    --border-color: #{$background-color-step-750};
+  }
+}
+
+/**
+ * Background and border should be
+ * much darker on focus.
+ */
+:host(.input-fill-solid.has-focus) {
+  --background: #{$background-color-step-150};
+  --border-color: #{$background-color-step-750};
+}
+
+:host(.input-fill-solid) .input-wrapper {
+  /**
+   * Only the top left and top right borders should.
+   * have a radius when using a solid fill.
+   */
+  @include border-radius(var(--border-radius), var(--border-radius), 0px, 0px);
+}
+
+// Input Label
+// ----------------------------------------------------------------
+
+:host(.input-fill-solid.input-label-placement-stacked) .label-text-wrapper,
+:host(.has-focus.input-fill-solid.input-label-placement-floating) .label-text-wrapper,
+:host(.has-value.input-fill-solid.input-label-placement-floating) .label-text-wrapper {
+  /**
+   * Label text should not extend
+   * beyond the bounds of the input.
+   */
+  max-width: calc(100% / #{$input-floating-label-scale});
+}

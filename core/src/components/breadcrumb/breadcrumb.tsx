@@ -3,10 +3,13 @@ import { Component, Element, Event, Host, Prop, h } from '@stencil/core';
 import { chevronForwardOutline, ellipsisHorizontal } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { AnimationBuilder, BreadcrumbCollapsedClickEventDetail, Color, RouterDirection } from '../../interface';
+import type { AnimationBuilder, Color } from '../../interface';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes } from '../../utils/helpers';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
+import type { RouterDirection } from '../router/utils/interface';
+
+import type { BreadcrumbCollapsedClickEventDetail } from './breadcrumb-interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -212,13 +215,14 @@ export class Breadcrumb implements ComponentInterface {
         {showCollapsedIndicator && (
           <button
             part="collapsed-indicator"
+            aria-label="Show more breadcrumbs"
             onClick={() => this.collapsedIndicatorClick()}
             ref={(collapsedEl) => (this.collapsedRef = collapsedEl)}
             class={{
               'breadcrumbs-collapsed-indicator': true,
             }}
           >
-            <ion-icon icon={ellipsisHorizontal} lazy={false}></ion-icon>
+            <ion-icon aria-hidden="true" icon={ellipsisHorizontal} lazy={false}></ion-icon>
           </button>
         )}
         {showSeparator && (

@@ -11,6 +11,7 @@ test.describe('radio-group', () => {
     test('radio should remain checked after being removed/readded to the dom', async ({ page }) => {
       const radioGroup = page.locator('ion-radio-group');
       const radio = page.locator('ion-radio[value=two]');
+      const searchbarInput = page.locator('ion-searchbar input');
 
       // select radio
       await radio.click();
@@ -18,6 +19,7 @@ test.describe('radio-group', () => {
 
       // filter radio so it is not in DOM
       await page.fill('ion-searchbar input', 'zero');
+      await searchbarInput.evaluate((el) => el.blur());
       await page.waitForChanges();
       await expect(radio).toBeHidden();
 
@@ -26,6 +28,7 @@ test.describe('radio-group', () => {
 
       // clear the search so the radio appears
       await page.fill('ion-searchbar input', '');
+      await searchbarInput.evaluate((el) => el.blur());
       await page.waitForChanges();
 
       // ensure that the new radio instance is still checked

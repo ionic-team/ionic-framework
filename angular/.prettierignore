@@ -1,5 +1,4 @@
 dist
-virtual-scroll
 scripts
 test
 src/directives/proxies.ts
