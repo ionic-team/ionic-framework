@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "7.0.0-rc.4",
+  "version": "7.0.0",
   "description": "Base components for Ionic",
   "keywords": [
     "ionic",
@@ -40,13 +40,13 @@
     "@ionic/eslint-config": "^0.3.0",
     "@ionic/prettier-config": "^2.0.0",
     "@jest/core": "^27.5.1",
-    "@playwright/test": "^1.32.0",
+    "@playwright/test": "^1.32.1",
     "@rollup/plugin-node-resolve": "^8.4.0",
     "@rollup/plugin-virtual": "^2.0.3",
     "@stencil/angular-output-target": "^0.6.0",
     "@stencil/react-output-target": "^0.5.0",
     "@stencil/sass": "^3.0.0",
-    "@stencil/vue-output-target": "^0.8.0",
+    "@stencil/vue-output-target": "^0.8.1",
     "@types/jest": "^27.5.2",
     "@types/node": "^14.6.0",
     "@typescript-eslint/eslint-plugin": "^5.17.0",
