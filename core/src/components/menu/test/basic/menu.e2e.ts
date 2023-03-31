@@ -74,6 +74,53 @@ test.describe('menu: basic', () => {
 
     await expect(scrollTop).toBe(200);
   });
+
+  test('should render on the correct side when side is changed dynamically', async ({ page }) => {
+    test.info().annotations.push({
+      type: 'issue',
+      description: 'https://github.com/ionic-team/ionic-framework/issues/25601',
+    });
+
+    const ionDidOpen = await page.spyOnEvent('ionDidOpen');
+    const ionDidClose = await page.spyOnEvent('ionDidClose');
+
+    await page.locator('[menu-id="start-menu"]').evaluate(async (el: HTMLIonMenuElement) => {
+      el.side = 'end';
+    });
+    await page.click('#open-start');
+    await ionDidOpen.next();
+
+    await expect(page).toHaveScreenshot(`menu-basic-side-toggled-${page.getSnapshotSettings()}.png`);
+
+    await page.locator('[menu-id="start-menu"]').evaluate(async (el: HTMLIonMenuElement) => {
+      await el.close();
+    });
+    await ionDidClose.next();
+  });
+
+  test('should render on the correct side when document direction is changed dynamically', async ({ page, skip }) => {
+    test.info().annotations.push({
+      type: 'issue',
+      description: 'https://github.com/ionic-team/ionic-framework/issues/25601',
+    });
+
+    skip.rtl('Document direction is not dependent on initial load');
+    const ionDidOpen = await page.spyOnEvent('ionDidOpen');
+    const ionDidClose = await page.spyOnEvent('ionDidClose');
+
+    await page.evaluate(() => {
+      document.dir = 'rtl';
+    });
+    await page.click('#open-start');
+    await ionDidOpen.next();
+
+    await expect(page).toHaveScreenshot(`menu-basic-doc-dir-toggled-${page.getSnapshotSettings()}.png`);
+
+    await page.locator('[menu-id="start-menu"]').evaluate(async (el: HTMLIonMenuElement) => {
+      await el.close();
+    });
+    await ionDidClose.next();
+  });
 });
 
 async function testMenu(page: E2EPage, menu: Locator, menuId: string) {
