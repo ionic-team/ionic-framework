@@ -31,6 +31,7 @@ test.describe('textarea: autogrow', () => {
       ].join('\n')
     );
 
+    await page.waitForChanges();
     await expect(ionTextarea).toHaveScreenshot(`textarea-autogrow-after-${page.getSnapshotSettings()}.png`);
   });
 
