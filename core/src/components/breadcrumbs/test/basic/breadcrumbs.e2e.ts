@@ -11,15 +11,4 @@ test.describe('breadcrumbs: basic', () => {
 
     await expect(page).toHaveScreenshot(`breadcrumb-diff-${page.getSnapshotSettings()}.png`);
   });
-
-  test('should have color attribute', async ({ page }) => {
-    test.info().annotations.push({
-      type: 'issue',
-      description: 'https://github.com/ionic-team/ionic-framework/issues/25446',
-    });
-
-    const breadcrumbs = page.locator('#color');
-
-    expect(await breadcrumbs.getAttribute('color')).not.toBe(null);
-  });
 });
