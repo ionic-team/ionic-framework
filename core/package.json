@@ -31,12 +31,12 @@
     "loader/"
   ],
   "dependencies": {
-    "@stencil/core": "^3.1.0",
+    "@stencil/core": "^3.2.0",
     "ionicons": "^7.1.0",
     "tslib": "^2.1.0"
   },
   "devDependencies": {
-    "@axe-core/playwright": "^4.4.2",
+    "@axe-core/playwright": "^4.6.1",
     "@ionic/eslint-config": "^0.3.0",
     "@ionic/prettier-config": "^2.0.0",
     "@jest/core": "^27.5.1",
