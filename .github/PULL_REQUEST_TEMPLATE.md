@@ -1,6 +1,6 @@
 <!-- Please refer to our contributing documentation for any questions on submitting a pull request, or let us know here if you need any help: https://ionicframework.com/docs/building/contributing -->
 
-<!-- Some docs updates need to be made in the `ionic-docs` repo, in a separate PR. See the https://github.com/ionic-team/ionic-framework/blob/main/.github/CONTRIBUTING.md#modifying-documentation for details. -->
+<!-- Some docs updates need to be made in the `ionic-docs` repo, in a separate PR. See https://github.com/ionic-team/ionic-framework/blob/main/.github/CONTRIBUTING.md#modifying-documentation for details. -->
 
 <!-- Please do not submit updates to dependencies unless it fixes an issue. --> 
 
