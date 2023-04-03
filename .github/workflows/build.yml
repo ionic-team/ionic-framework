@@ -8,8 +8,11 @@ on:
 # When pushing a new commit we should
 # cancel the previous test run to not
 # consume more runners than we need to.
+# head_ref ensures that this is only set
+# when creating pull requests and
+# does not intefere with merge queues.
 concurrency:
-  group: ${{ github.ref }}
+  group: ${{ github.head_ref }}
   cancel-in-progress: true
 
 jobs:
