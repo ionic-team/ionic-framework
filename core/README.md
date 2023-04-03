@@ -1,3 +1,5 @@
+this is a test
+
 # @ionic/core
 
 [Ionic](https://ionicframework.com/) is an open source App Development Framework that makes it easy to build top quality Native and Progressive Web Apps with web technologies.
