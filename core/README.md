@@ -1,9 +1,6 @@
-HELLO WORLD
+first commit
 
-
-another commit
-
-abc123
+second commit
 
 # @ionic/core
 
