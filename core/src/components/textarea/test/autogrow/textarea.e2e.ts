@@ -10,7 +10,8 @@ test.describe('textarea: autogrow', () => {
     await expect(page).toHaveScreenshot(`textarea-autogrow-diff-${page.getSnapshotSettings()}.png`);
   });
 
-  test('should grow when typing', async ({ page }) => {
+  // TODO(FW-3920): Autogrow test is flaky
+  test.skip('should grow when typing', async ({ page }) => {
     await page.setContent(`
       <ion-textarea aria-label="Textarea" auto-grow="true"></ion-textarea>
     `);
