@@ -4,7 +4,7 @@
 
 <!-- Please do not submit updates to dependencies unless it fixes an issue. --> 
 
-<!-- Please try to limit your pull request to one type, submit multiple pull requests if needed. --> 
+<!-- Please try to limit your pull request to one type (bugfix, feature, etc). Submit multiple pull requests if needed. --> 
 
 ## What is the current behavior?
 <!-- Please describe the current behavior that you are modifying. -->
