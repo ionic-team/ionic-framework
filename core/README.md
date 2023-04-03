@@ -1,5 +1,8 @@
-this is a test123
-123
+HELLO WORLD
+
+
+another commit
+
 # @ionic/core
 
 [Ionic](https://ionicframework.com/) is an open source App Development Framework that makes it easy to build top quality Native and Progressive Web Apps with web technologies.
