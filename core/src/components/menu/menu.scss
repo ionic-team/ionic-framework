@@ -37,7 +37,6 @@
 
 
 .menu-inner {
-  @include position(0, auto, 0, 0);
   @include transform(translateX(-9999px));
 
   display: flex;
@@ -62,21 +61,13 @@
 :host(.menu-side-start) .menu-inner {
   --ion-safe-area-right: 0px;
 
-  @include multi-dir() {
-    /* stylelint-disable property-disallowed-list */
-    right: auto;
-    left: 0;
-  }
+  @include position(0, auto, 0, 0);
 }
 
 :host(.menu-side-end) .menu-inner {
   --ion-safe-area-left: 0px;
 
-  @include multi-dir() {
-    right: 0;
-    left: auto;
-    /* stylelint-enable property-disallowed-list */
-  }
+  @include position(0, 0, 0, auto);
 }
 
 ion-backdrop {

@@ -130,6 +130,11 @@ export class Menu implements ComponentInterface, MenuI {
   @Watch('side')
   protected sideChanged() {
     this.isEndSide = isEnd(this.side);
+    /**
+     * Menu direction animation is calculated based on the document direction.
+     * If the document direction changes, we need to create a new animation.
+     */
+    this.animation = undefined;
   }
 
   /**
@@ -413,10 +418,16 @@ export class Menu implements ComponentInterface, MenuI {
     // Menu swipe animation takes the menu's inner width as parameter,
     // If `offsetWidth` changes, we need to create a new animation.
     const width = this.menuInnerEl!.offsetWidth;
-    if (width === this.width && this.animation !== undefined) {
+    /**
+     * Menu direction animation is calculated based on the document direction.
+     * If the document direction changes, we need to create a new animation.
+     */
+    const isEndSide = isEnd(this.side);
+    if (width === this.width && this.animation !== undefined && isEndSide === this.isEndSide) {
       return;
     }
     this.width = width;
+    this.isEndSide = isEndSide;
 
     // Destroy existing animation
     if (this.animation) {
@@ -703,7 +714,7 @@ export class Menu implements ComponentInterface, MenuI {
   }
 
   render() {
-    const { isEndSide, type, disabled, isPaneVisible, inheritedAttributes } = this;
+    const { type, disabled, isPaneVisible, inheritedAttributes, side } = this;
     const mode = getIonMode(this);
 
     return (
@@ -714,8 +725,7 @@ export class Menu implements ComponentInterface, MenuI {
           [mode]: true,
           [`menu-type-${type}`]: true,
           'menu-enabled': !disabled,
-          'menu-side-end': isEndSide,
-          'menu-side-start': !isEndSide,
+          [`menu-side-${side}`]: true,
           'menu-pane-visible': isPaneVisible,
         }}
       >
