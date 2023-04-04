@@ -15,7 +15,7 @@ test.describe('toast: trigger', () => {
     await page.click('#default');
 
     await ionToastDidPresent.next();
-    await expect(alert).toBeVisible();
+    await expect(toast).toBeVisible();
   });
 
   test('should present a previously presented toast', async ({ page }) => {
@@ -30,6 +30,6 @@ test.describe('toast: trigger', () => {
     await page.click('#timeout');
 
     await ionToastDidPresent.next();
-    await expect(alert).toBeVisible();
+    await expect(toast).toBeVisible();
   });
 });
