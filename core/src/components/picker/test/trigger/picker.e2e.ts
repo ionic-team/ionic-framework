@@ -1,3 +1,4 @@
+import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
 test.describe('picker: trigger', () => {
@@ -9,15 +10,18 @@ test.describe('picker: trigger', () => {
 
   test('should open the picker', async ({ page }) => {
     const ionPickerDidPresent = await page.spyOnEvent('ionPickerDidPresent');
+    const picker = page.locator('#default-picker');
+
     await page.click('#default');
 
     await ionPickerDidPresent.next();
-    await page.waitForSelector('#default-picker', { state: 'visible' });
+    await expect(picker).toBeVisible();
   });
 
   test('should present a previously presented picker', async ({ page }) => {
     const ionPickerDidPresent = await page.spyOnEvent('ionPickerDidPresent');
     const ionPickerDidDismiss = await page.spyOnEvent('ionPickerDidDismiss');
+    const picker = page.locator('#timeout-picker');
 
     await page.click('#timeout');
 
@@ -26,6 +30,6 @@ test.describe('picker: trigger', () => {
     await page.click('#timeout');
 
     await ionPickerDidPresent.next();
-    await page.waitForSelector('#timeout-picker', { state: 'visible' });
+    await expect(picker).toBeVisible();
   });
 });

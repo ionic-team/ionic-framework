@@ -1,3 +1,4 @@
+import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
 test.describe('loading: trigger', () => {
@@ -9,15 +10,17 @@ test.describe('loading: trigger', () => {
 
   test('should open the loading indicator', async ({ page }) => {
     const ionLoadingDidPresent = await page.spyOnEvent('ionLoadingDidPresent');
+    const loading = page.locator('ion-loading#default-loading');
     await page.click('#default');
 
     await ionLoadingDidPresent.next();
-    await page.waitForSelector('#default-loading', { state: 'visible' });
+    await expect(loading).toBeVisible();
   });
 
   test('should present a previously presented loading indicator', async ({ page }) => {
     const ionLoadingDidPresent = await page.spyOnEvent('ionLoadingDidPresent');
     const ionLoadingDidDismiss = await page.spyOnEvent('ionLoadingDidDismiss');
+    const loading = page.locator('ion-loading#timeout-loading');
 
     await page.click('#timeout');
 
@@ -26,6 +29,6 @@ test.describe('loading: trigger', () => {
     await page.click('#timeout');
 
     await ionLoadingDidPresent.next();
-    await page.waitForSelector('#timeout-loading', { state: 'visible' });
+    await expect(loading).toBeVisible();
   });
 });

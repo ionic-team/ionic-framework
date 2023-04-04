@@ -1,3 +1,4 @@
+import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
 test.describe('alert: trigger', () => {
@@ -9,15 +10,18 @@ test.describe('alert: trigger', () => {
 
   test('should open the alert', async ({ page }) => {
     const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+    const alert = page.locator('#default-alert');
+
     await page.click('#default');
 
     await ionAlertDidPresent.next();
-    await page.waitForSelector('#default-alert', { state: 'visible' });
+    await expect(alert).toBeVisible();
   });
 
   test('should present a previously presented alert', async ({ page }) => {
     const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
     const ionAlertDidDismiss = await page.spyOnEvent('ionAlertDidDismiss');
+    const alert = page.locator('#timeout-alert');
 
     await page.click('#timeout');
 
@@ -26,6 +30,6 @@ test.describe('alert: trigger', () => {
     await page.click('#timeout');
 
     await ionAlertDidPresent.next();
-    await page.waitForSelector('#timeout-alert', { state: 'visible' });
+    await expect(alert).toBeVisible();
   });
 });

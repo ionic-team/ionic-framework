@@ -1,3 +1,4 @@
+import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
 test.describe('picker: isOpen', () => {
@@ -9,22 +10,25 @@ test.describe('picker: isOpen', () => {
 
   test('should open the picker', async ({ page }) => {
     const ionPickerDidPresent = await page.spyOnEvent('ionPickerDidPresent');
+    const picker = page.locator('ion-picker');
+
     await page.click('#default');
 
     await ionPickerDidPresent.next();
-    await page.waitForSelector('ion-picker', { state: 'visible' });
+    await expect(picker).toBeVisible();
   });
 
   test('should open the picker then close after a timeout', async ({ page }) => {
     const ionPickerDidPresent = await page.spyOnEvent('ionPickerDidPresent');
     const ionPickerDidDismiss = await page.spyOnEvent('ionPickerDidDismiss');
+    const picker = page.locator('ion-picker');
+
     await page.click('#timeout');
 
     await ionPickerDidPresent.next();
-    await page.waitForSelector('ion-picker', { state: 'visible' });
+    await expect(picker).toBeVisible();
 
     await ionPickerDidDismiss.next();
-
-    await page.waitForSelector('ion-picker', { state: 'hidden' });
+    await expect(picker).toBeHidden();
   });
 });
