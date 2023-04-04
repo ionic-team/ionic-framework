@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.1-nightly.20230404](https://github.com/ionic-team/ionic/compare/v7.0.0...v7.0.1-nightly.20230404) (2023-04-04)
+
+
+### Bug Fixes
+
+* **breadcrumbs:** color attribute shows on DOM for Vue ([#27068](https://github.com/ionic-team/ionic/issues/27068)) ([141ced5](https://github.com/ionic-team/ionic/commit/141ced50103098fd711e0088ea8be4efdaadd0a9))
+* **item-divider:** set padding-end for md ([#27019](https://github.com/ionic-team/ionic/issues/27019)) ([426913d](https://github.com/ionic-team/ionic/commit/426913d0de50e65a76b029258daa09e6567c6515)), closes [#23785](https://github.com/ionic-team/ionic/issues/23785)
+* **vue:** v-model props have correct type ([#27067](https://github.com/ionic-team/ionic/issues/27067)) ([14145dc](https://github.com/ionic-team/ionic/commit/14145dcaebef4dde7654317597fdee6a0cdb4bfa)), closes [#27057](https://github.com/ionic-team/ionic/issues/27057)
+
+
+### Reverts
+
+* Revert "bug(breadcrumbs): color attribute shows on DOM for Vue (#27040)" (#27069) ([abadeed](https://github.com/ionic-team/ionic/commit/abadeedc9e953f8a1e114d98e118d4c2f05c73dd)), closes [#27040](https://github.com/ionic-team/ionic/issues/27040) [#27069](https://github.com/ionic-team/ionic/issues/27069)
+
+
+
+
+
 # [7.0.0](https://github.com/ionic-team/ionic/compare/v7.0.0-rc.5...v7.0.0) (2023-03-29)
 
 **Note:** Version bump only for package @ionic/core
