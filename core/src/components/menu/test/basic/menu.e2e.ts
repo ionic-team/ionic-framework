@@ -75,11 +75,13 @@ test.describe('menu: basic', () => {
     await expect(scrollTop).toBe(200);
   });
 
-  test('should render on the correct side when side is changed dynamically', async ({ page }) => {
+  test('should render on the correct side when side is changed dynamically', async ({ page, skip }) => {
     test.info().annotations.push({
       type: 'issue',
       description: 'https://github.com/ionic-team/ionic-framework/issues/25601',
     });
+
+    skip.mode('ios', 'Dynamic side changes are not mode dependent');
 
     const ionDidOpen = await page.spyOnEvent('ionDidOpen');
     const ionDidClose = await page.spyOnEvent('ionDidClose');
@@ -105,6 +107,8 @@ test.describe('menu: basic', () => {
     });
 
     skip.rtl('Document direction is not dependent on initial load');
+    skip.mode('ios', 'Dynamic side changes are not mode dependent');
+
     const ionDidOpen = await page.spyOnEvent('ionDidOpen');
     const ionDidClose = await page.spyOnEvent('ionDidClose');
 
