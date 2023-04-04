@@ -51,3 +51,18 @@ it('should exclude the separator from narrators', async () => {
 
   expect(separator.getAttribute('aria-hidden')).toBe('true');
 });
+
+it('should have color attribute', async () => {
+  const page = await newSpecPage({
+    components: [Breadcrumb, Breadcrumbs],
+    html: `
+      <ion-breadcrumbs color="danger">
+        <ion-breadcrumb>First</ion-breadcrumb>
+      </ion-breadcrumbs>
+    `,
+  });
+
+  const breadcrumbs = page.body.querySelector('ion-breadcrumbs');
+
+  expect(breadcrumbs.hasAttribute('color')).toBe(true);
+});

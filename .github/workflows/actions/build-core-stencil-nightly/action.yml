@@ -1,0 +1,27 @@
+name: 'Build Ionic Core with Stencil Nightly'
+description: 'Build Ionic Core with a Nightly Build of Stencil'
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16.x
+
+    - name: Install Dependencies
+      run: npm ci
+      working-directory: ./core
+      shell: bash
+    - name: Install Stencil Nightly
+      working-directory: ./core
+      run: npm i @stencil/core@nightly
+      shell: bash
+    - name: Build Core
+      run: npm run build -- --ci
+      working-directory: ./core
+      shell: bash
+    - uses: ./.github/workflows/actions/upload-archive
+      with:
+        name: ionic-core
+        output: core/CoreBuild.zip
+        paths: core/dist core/components core/css core/hydrate core/loader core/src/components.d.ts
