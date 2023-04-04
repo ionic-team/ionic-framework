@@ -354,11 +354,9 @@ export class Refresher implements ComponentInterface {
 
           this.state = RefresherState.Pulling;
 
-          if (this.scrollEl!.matches(ION_CONTENT_CLASS_SELECTOR)) {
-            writeTask(() => this.scrollEl!.style.setProperty('overflow', 'hidden'));
-          } else {
-            writeTask(() => this.scrollEl!.style.setProperty('--overflow', 'hidden'));
-          }
+          const { scrollEl } = this;
+          const overflowProperty = scrollEl!.matches(ION_CONTENT_CLASS_SELECTOR) ? 'overflow' : '--overflow';
+          writeTask(() => scrollEl!.style.setProperty(overflowProperty, 'hidden'));
 
           const animationType = getRefresherAnimationType(contentEl);
           const animation = createPullingAnimation(animationType, pullingRefresherIcon, this.el);
@@ -382,11 +380,9 @@ export class Refresher implements ComponentInterface {
 
         this.gesture!.enable(false);
 
-        if (this.scrollEl!.matches(ION_CONTENT_CLASS_SELECTOR)) {
-          writeTask(() => this.scrollEl!.style.removeProperty('overflow'));
-        } else {
-          writeTask(() => this.scrollEl!.style.removeProperty('--overflow'));
-        }
+          const { scrollEl } = this;
+          const overflowProperty = scrollEl!.matches(ION_CONTENT_CLASS_SELECTOR) ? 'overflow' : '--overflow';
+          writeTask(() => scrollEl!.style.removeProperty(overflowProperty, 'hidden'));
         if (this.progress <= 0.4) {
           ev.data.animation.progressEnd(0, this.progress, 500).onFinish(() => {
             this.animations.forEach((ani) => ani.destroy());
