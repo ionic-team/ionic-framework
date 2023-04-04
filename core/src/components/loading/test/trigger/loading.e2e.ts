@@ -10,7 +10,7 @@ test.describe('loading: trigger', () => {
 
   test('should open the loading indicator', async ({ page }) => {
     const ionLoadingDidPresent = await page.spyOnEvent('ionLoadingDidPresent');
-    const loading = page.locator('ion-loading#default-loading');
+    const loading = page.locator('#default-loading');
     await page.click('#default');
 
     await ionLoadingDidPresent.next();
@@ -20,7 +20,7 @@ test.describe('loading: trigger', () => {
   test('should present a previously presented loading indicator', async ({ page }) => {
     const ionLoadingDidPresent = await page.spyOnEvent('ionLoadingDidPresent');
     const ionLoadingDidDismiss = await page.spyOnEvent('ionLoadingDidDismiss');
-    const loading = page.locator('ion-loading#timeout-loading');
+    const loading = page.locator('#timeout-loading');
 
     await page.click('#timeout');
 
