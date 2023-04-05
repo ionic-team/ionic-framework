@@ -17,8 +17,6 @@ on:
         description: Which npm tag should this be published to?
         options:
           - v6-lts
-          - v5-lts
-          - v4-lts
 
 jobs:
   release-ionic:
