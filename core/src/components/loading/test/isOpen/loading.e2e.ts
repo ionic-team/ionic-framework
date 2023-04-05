@@ -1,3 +1,4 @@
+import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
 test.describe('loading: isOpen', () => {
@@ -9,22 +10,25 @@ test.describe('loading: isOpen', () => {
 
   test('should open the loading indicator', async ({ page }) => {
     const ionLoadingDidPresent = await page.spyOnEvent('ionLoadingDidPresent');
+    const loading = page.locator('ion-loading');
+
     await page.click('#default');
 
     await ionLoadingDidPresent.next();
-    await page.waitForSelector('ion-loading', { state: 'visible' });
+    await expect(loading).toBeVisible();
   });
 
   test('should open the loading indicator then close after a timeout', async ({ page }) => {
     const ionLoadingDidPresent = await page.spyOnEvent('ionLoadingDidPresent');
     const ionLoadingDidDismiss = await page.spyOnEvent('ionLoadingDidDismiss');
+    const loading = page.locator('ion-loading');
+
     await page.click('#timeout');
 
     await ionLoadingDidPresent.next();
-    await page.waitForSelector('ion-loading', { state: 'visible' });
+    await expect(loading).toBeVisible();
 
     await ionLoadingDidDismiss.next();
-
-    await page.waitForSelector('ion-loading', { state: 'hidden' });
+    await expect(loading).toBeHidden();
   });
 });
