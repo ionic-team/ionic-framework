@@ -28,10 +28,17 @@
 }
 
 .select-icon {
-  width: 18px;
-  height: 18px;
+  width: $select-ios-icon-size;
 
   // Color deviates from the iOS spec, but satisfies WCAG AAA:
   // https://www.w3.org/TR/WCAG20-TECHS/G18.html
   color: #{$text-color-step-350};
+}
+
+// Select Native Wrapper
+// ----------------------------------------------------------------
+
+:host(.select-label-placement-stacked) .native-wrapper,
+:host(.select-label-placement-floating) .native-wrapper {
+  width: calc(100% - $select-ios-icon-size - $select-icon-margin-start);
 }

@@ -19,6 +19,9 @@ $select-md-padding-start:       $item-md-padding-start !default;
 /// @prop - Color of the select icon
 $select-md-icon-color:          $text-color-step-600 !default;
 
+/// @prop - Size of the select icon
+$select-md-icon-size: 13px !default;
+
 /// @prop - Color of the select placeholder
 $select-md-placeholder-color:   $select-md-icon-color !default;
 
