@@ -73,6 +73,8 @@ jobs:
       fixes: ${{ steps.commits.outputs.RESOLVED }}
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Get the commits that are linked to the fixes
         id: commits
         run: echo "RESOLVED=$(git log --grep='resolve' --grep='close' --grep='fix' --pretty=format:'%b' ${{ needs.previous-release-version.outputs.version }}..${{ needs.release-version.outputs.version }})" >> $GITHUB_OUTPUT
