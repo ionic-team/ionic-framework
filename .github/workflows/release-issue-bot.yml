@@ -50,6 +50,8 @@ jobs:
       version: ${{ steps.previous-release.outputs.VERSION }}
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Get the previous version
         id: previous-version
         # get previous release with the same major version that is not a pre-release
