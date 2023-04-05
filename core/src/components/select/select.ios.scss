@@ -29,6 +29,7 @@
 
 .select-icon {
   width: $select-ios-icon-size;
+  height: $select-ios-icon-size;
 
   // Color deviates from the iOS spec, but satisfies WCAG AAA:
   // https://www.w3.org/TR/WCAG20-TECHS/G18.html
