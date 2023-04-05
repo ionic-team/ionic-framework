@@ -17,11 +17,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * **vue:** v-model props have correct type ([#27067](https://github.com/ionic-team/ionic-framework/issues/27067)) ([14145dc](https://github.com/ionic-team/ionic-framework/commit/14145dcaebef4dde7654317597fdee6a0cdb4bfa)), closes [#27057](https://github.com/ionic-team/ionic-framework/issues/27057)
 
 
-### Reverts
-
-* Revert "bug(breadcrumbs): color attribute shows on DOM for Vue (#27040)" (#27069) ([abadeed](https://github.com/ionic-team/ionic-framework/commit/abadeedc9e953f8a1e114d98e118d4c2f05c73dd)), closes [#27040](https://github.com/ionic-team/ionic-framework/issues/27040) [#27069](https://github.com/ionic-team/ionic-framework/issues/27069)
-
-
 
 
 
