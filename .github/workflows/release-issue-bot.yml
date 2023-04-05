@@ -50,6 +50,7 @@ jobs:
       version: ${{ steps.previous-release.outputs.VERSION }}
     steps:
       - name: Get the previous version
+        uses: actions/checkout@v3
         id: previous-version
         # get previous release with the same major version that is not a pre-release
         # remove the "v" prefix from the tag
@@ -70,6 +71,7 @@ jobs:
       fixes: ${{ steps.commits.outputs.RESOLVED }}
     steps:
       - name: Get the commits that are linked to the fixes
+        uses: actions/checkout@v3
         id: commits
         run: echo "RESOLVED=$(git log --grep='resolves|fixes|closes' --pretty=format:'%b' ${{ needs.previous-release-version.outputs.version }}..${{ needs.release-version.outputs.version }}" >> $GITHUB_OUTPUT
   # print the commits with fixes between the previous release and the current release
