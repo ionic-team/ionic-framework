@@ -33,7 +33,7 @@ jobs:
     steps:
       - name: Get the major
         id: major-version
-        run: echo "VERSION=$(echo ${{ needs.release-version.outputs.version }}" | cut -d. -f1)" >> $GITHUB_OUTPUT
+        run: echo "VERSION=$(echo ${{ needs.release-version.outputs.version }} | cut -d. -f1)" >> $GITHUB_OUTPUT
   # print the major version
   print-major-version:
     runs-on: ubuntu-latest
