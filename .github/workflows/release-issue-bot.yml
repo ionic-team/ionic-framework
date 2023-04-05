@@ -58,7 +58,7 @@ jobs:
         # remove the "v" prefix from the tag
         run: |
           git tag --list --sort=-v:refname | head -n 10
-          ls -la
+          git tag --list --sort=-v:refname | grep -E '^${{ needs.major-version.outputs.version }}\.[0-9]+\.[0-9]+$' | grep -vE '${{ needs.release-version.outputs.version }}' | head -n 1
           echo "VERSION=$(git tag --list --sort=-v:refname | grep -E '^${{ needs.major-version.outputs.version }}\.[0-9]+\.[0-9]+$' | grep -vE '${{ needs.release-version.outputs.version }}' | head -n 1)" >> $GITHUB_OUTPUT
   # print the previous release version
   print-previous-release-version:
