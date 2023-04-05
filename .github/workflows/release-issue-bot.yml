@@ -56,9 +56,7 @@ jobs:
         id: previous-release-version
         # get previous release with the same major version that is not a pre-release
         # remove the "v" prefix from the tag
-        run: |
-          git tag --list --sort=-v:refname | grep -E '^${{ needs.major-version.outputs.version }}\.[0-9]+\.[0-9]+$' | grep -vE '${{ needs.release-version.outputs.version }}' | head -n 1
-          echo "VERSION=$(git tag --list --sort=-v:refname | grep -E '^${{ needs.major-version.outputs.version }}\.[0-9]+\.[0-9]+$' | grep -vE '${{ needs.release-version.outputs.version }}' | head -n 1)" >> $GITHUB_OUTPUT
+        run: echo "VERSION=$(git tag --list --sort=-v:refname | grep -E '^${{ needs.major-version.outputs.version }}\.[0-9]+\.[0-9]+$' | grep -vE '${{ needs.release-version.outputs.version }}' | head -n 1)" >> $GITHUB_OUTPUT
   # print the previous release version
   print-previous-release-version:
     runs-on: ubuntu-latest
@@ -77,7 +75,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: Get the commits that are linked to the fixes
         id: commits
-        run: echo "RESOLVED=$(git log --grep='resolves|fixes|closes' --pretty=format:'%b' ${{ needs.previous-release-version.outputs.version }}..${{ needs.release-version.outputs.version }}" >> $GITHUB_OUTPUT
+        run: echo "RESOLVED=$(git log --grep='resolve' --grep='close' --grep='fix' --pretty=format:'%b' ${{ needs.previous-release-version.outputs.version }}..${{ needs.release-version.outputs.version }})" >> $GITHUB_OUTPUT
   # print the commits with fixes between the previous release and the current release
   print-resolved-commits:
     runs-on: ubuntu-latest
