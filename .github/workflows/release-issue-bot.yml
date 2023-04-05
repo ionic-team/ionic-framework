@@ -96,3 +96,14 @@ jobs:
     steps:
       - name: Print the issues
         run: echo ${{ needs.issues.outputs.issues }}
+  # push the issues to an array
+  push-issues:
+    runs-on: ubuntu-latest
+    needs: [issues]
+    if: needs.issues.outputs.issues != ''
+    outputs:
+      issues: ${{ steps.push-issues.outputs.ISSUES }}
+    steps:
+      - name: Push the issues to an array
+        id: push-issues
+        run: echo "ISSUES=$(echo ${{ needs.issues.outputs.issues }} | tr ' ' '\
