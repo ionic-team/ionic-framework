@@ -47,7 +47,7 @@ jobs:
     needs: [release-version, major-version]
     if: needs.release-version.outputs.version != '' && needs.major-version.outputs.version != ''
     outputs:
-      version: ${{ steps.previous-release.outputs.VERSION }}
+      version: ${{ steps.previous-release-version.outputs.VERSION }}
     steps:
       - uses: actions/checkout@v3
         with:
