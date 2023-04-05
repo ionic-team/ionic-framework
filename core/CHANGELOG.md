@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.1](https://github.com/ionic-team/ionic/compare/v7.0.0...v7.0.1) (2023-04-05)
+
+
+### Bug Fixes
+
+* **breadcrumbs:** color attribute shows on DOM for Vue ([#27068](https://github.com/ionic-team/ionic/issues/27068)) ([141ced5](https://github.com/ionic-team/ionic/commit/141ced50103098fd711e0088ea8be4efdaadd0a9))
+* **item-divider:** removal of unneeded margin unset ([#27042](https://github.com/ionic-team/ionic/issues/27042)) ([d925237](https://github.com/ionic-team/ionic/commit/d925237082cd2f55a573ddb0301afcbd84f4fda0)), closes [#17012](https://github.com/ionic-team/ionic/issues/17012) [ionic-team/ionic-framework#27024](https://github.com/ionic-team/ionic-framework/issues/27024)
+* **item-divider:** set padding-end for md ([#27019](https://github.com/ionic-team/ionic/issues/27019)) ([426913d](https://github.com/ionic-team/ionic/commit/426913d0de50e65a76b029258daa09e6567c6515)), closes [#23785](https://github.com/ionic-team/ionic/issues/23785)
+* **menu:** update location when dynamically changing side or doc dir ([#27079](https://github.com/ionic-team/ionic/issues/27079)) ([a35886e](https://github.com/ionic-team/ionic/commit/a35886e71c7c4b8abdd01ad33d92828c04249dc5)), closes [#25601](https://github.com/ionic-team/ionic/issues/25601) [#19489](https://github.com/ionic-team/ionic/issues/19489)
+* **picker-column-internal:** hide empty picker items from screenreaders ([#27038](https://github.com/ionic-team/ionic/issues/27038)) ([4e7424d](https://github.com/ionic-team/ionic/commit/4e7424de035888e324b03af321c90ebbb6402746)), closes [#26809](https://github.com/ionic-team/ionic/issues/26809)
+* **refresher:** set overflow styles when using custom scroll target ([#27058](https://github.com/ionic-team/ionic/issues/27058)) ([adbb50c](https://github.com/ionic-team/ionic/commit/adbb50ca5b92793ba002e4d704b2a643b92aabc7))
+* **vue:** v-model props have correct type ([#27067](https://github.com/ionic-team/ionic/issues/27067)) ([14145dc](https://github.com/ionic-team/ionic/commit/14145dcaebef4dde7654317597fdee6a0cdb4bfa)), closes [#27057](https://github.com/ionic-team/ionic/issues/27057)
+
+
+### Reverts
+
+* Revert "bug(breadcrumbs): color attribute shows on DOM for Vue (#27040)" (#27069) ([abadeed](https://github.com/ionic-team/ionic/commit/abadeedc9e953f8a1e114d98e118d4c2f05c73dd)), closes [#27040](https://github.com/ionic-team/ionic/issues/27040) [#27069](https://github.com/ionic-team/ionic/issues/27069)
+
+
+
+
+
 # [7.0.0](https://github.com/ionic-team/ionic/compare/v7.0.0-rc.5...v7.0.0) (2023-03-29)
 
 **Note:** Version bump only for package @ionic/core
