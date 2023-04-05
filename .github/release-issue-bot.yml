@@ -1,0 +1,67 @@
+name: 'Update Issue with Release Version'
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  # get the release version
+  release-version:
+    # only run if the release is not a pre-release
+    if: ${{ !github.event.release.prerelease }}
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.release-version.outputs.VERSION }}
+    steps:
+      - name: Get the latest release version
+        id: release-version
+        run: echo "VERSION=${{ github.event.release.tag_name }}" >> $GITHUB_OUTPUT
+  # get the major version
+  major-version:
+    runs-on: ubuntu-latest
+    needs: [release-version]
+    if: needs.release-version.outputs.version != ''
+    outputs:
+      version: ${{ steps.major-version.outputs.VERSION }}
+    steps:
+      - name: Get the major
+        id: major-version
+        run: echo "::set-output name=VERSION::$(echo ${{ needs.release-version.outputs.version }}}}" | cut -d. -f1)}"
+        run: echo "VERSION=$(echo ${{ needs.release-version.outputs.version }}" | cut -d. -f1)" >> $GITHUB_OUTPUT
+  # get the previous release version with the same major version
+  previous-release-version:
+    runs-on: ubuntu-latest
+    needs: [release-version, major-version]
+    if: needs.release-version.outputs.version != '' && needs.major-version.outputs.version != ''
+    outputs:
+      version: ${{ steps.previous-release.outputs.VERSION }}
+    steps:
+      - name: Get the previous version
+        id: previous-version
+        # get previous release with the same major version that is not a pre-release
+        run: echo "VERSION=$(git tag --list --sort=-v:refname | grep -E '^v${{ needs.major-version.outputs.version }}\.[0-9]+\.[0-9]+$' | grep -vE 'v${{ needs.release-version.outputs.version }}' | head -n 1)" >> $GITHUB_OUTPUT
+  # get the commits with fixes between the previous release and the current release
+  resolved-commits:
+    runs-on: ubuntu-latest
+    needs: [release-version, previous-release-version]
+    if: needs.release-version.outputs.version != '' && needs.previous-release-version.outputs.version != ''
+    outputs:
+      fixes: ${{ steps.commits.outputs.RESOLVED }}
+    steps:
+      - name: Get the commits that are linked to the fixes
+        id: commits
+        run: echo "RESOLVED=$(git log --grep='resolves|fixes|closes' --pretty=format:'%b' ${{ needs.previous-release-version.outputs.version }}..${{ needs.release-version.outputs.version }}" >> $GITHUB_OUTPUT
+  # get the issues that are linked to the fixes
+  issues:
+    runs-on: ubuntu-latest
+    needs: [resolved-commits]
+    if: needs.resolved-commits.outputs.fixes != ''
+    outputs:
+      issues: ${{ steps.get-issues.outputs.ISSUES }}
+    steps:
+      - name: Get the issues
+        id: get-issues
+        run: echo "ISSUES=$(echo ${{ steps.get_fixes.outputs.fixes }} | grep -E '#[0-9]' | cut -d# -f2 | sort | uniq)" >> $GITHUB_OUTPUT
+
+
+  
