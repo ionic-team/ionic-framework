@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.7.2](https://github.com/ionic-team/ionic-framework/compare/v6.7.1...v6.7.2) (2023-04-05)
+
+
+### Bug Fixes
+
+* **item-divider:** set padding-end for md ([#27070](https://github.com/ionic-team/ionic-framework/issues/27070)) ([214e835](https://github.com/ionic-team/ionic-framework/commit/214e83529f7115852c27a37869c8231330fdb8ac))
+* **picker-column-internal:** hide empty picker items from screenreaders ([#27114](https://github.com/ionic-team/ionic-framework/issues/27114)) ([3ecfb9c](https://github.com/ionic-team/ionic-framework/commit/3ecfb9ce43d9d5cf93f1f2be26a0922a16894362)), closes [#26809](https://github.com/ionic-team/ionic-framework/issues/26809)
+
+
+
+## [6.0.16](https://github.com/ionic-team/ionic-framework/compare/v6.0.15...v6.0.16) (2022-04-08)
+
+
+### Bug Fixes
+
+* **angular:** button components now route correctly without reload ([#25071](https://github.com/ionic-team/ionic-framework/issues/25071)) ([fb994fa](https://github.com/ionic-team/ionic-framework/commit/fb994fa9a7721a3575fb8d123be34aea4bf076a4))
+
+
+
+## [6.0.15](https://github.com/ionic-team/ionic-framework/compare/v6.0.14...v6.0.15) (2022-04-06)
+
+
+
+
+
 ## [6.7.1](https://github.com/ionic-team/ionic-framework/compare/v6.7.0...v6.7.1) (2023-03-29)
 
 
