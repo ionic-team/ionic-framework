@@ -73,7 +73,6 @@ test.describe('picker-internal', () => {
   });
 
   test.describe('within overlay:', () => {
-
     test('popover: should not have visual regression', async ({ page }) => {
       await page.goto(`/src/components/picker-internal/test/basic`);
 
