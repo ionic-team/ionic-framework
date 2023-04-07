@@ -243,8 +243,14 @@ export class Searchbar implements ComponentInterface {
   }
 
   /**
-   * Sets focus on the specified `ion-searchbar`. Use this method instead of the global
+   * Sets focus on the native `input` in `ion-searchbar`. Use this method instead of the global
    * `input.focus()`.
+   *
+   * Developers who wish to focus an input when a page enters
+   * should call `setFocus()` in the `ionViewDidEnter()` lifecycle method.
+   * 
+   * Focusing an input within an overlay should be done after the overlay has
+   * completed its transition. 
    */
   @Method()
   async setFocus() {
