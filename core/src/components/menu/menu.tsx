@@ -241,12 +241,15 @@ export class Menu implements ComponentInterface, MenuI {
     this.updateState();
   }
 
-  disconnectedCallback() {
+  async disconnectedCallback() {
     /**
      * The menu should be closed when it is
      * unmounted from the DOM.
+     * This is an async call, so we need to wait for
+     * this to finish otherwise contentEl
+     * will not have MENU_CONTENT_OPEN removed.
      */
-    this.close(false);
+    await this.close(false);
 
     this.blocker.destroy();
     menuController._unregister(this);
