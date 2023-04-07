@@ -242,6 +242,12 @@ export class Menu implements ComponentInterface, MenuI {
   }
 
   disconnectedCallback() {
+    /**
+     * The menu should be closed when it is
+     * unmounted from the DOM.
+     */
+    this.close(false);
+
     this.blocker.destroy();
     menuController._unregister(this);
     if (this.animation) {
@@ -251,15 +257,6 @@ export class Menu implements ComponentInterface, MenuI {
       this.gesture.destroy();
       this.gesture = undefined;
     }
-
-    /**
-     * The menu should be closed when it is
-     * unmounted from the DOM. Note: Do not
-     * call this.close() since events will
-     * not fire as expected due to the component
-     * no longer being in the DOM.
-     */
-    this._isOpen = false;
 
     this.animation = undefined;
     this.contentEl = undefined;
