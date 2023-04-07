@@ -253,7 +253,7 @@ export class Menu implements ComponentInterface, MenuI {
     }
 
     this.animation = undefined;
-    this.contentEl = this.backdropEl = this.menuInnerEl = undefined;
+    this.contentEl = undefined;
   }
 
   @Listen('ionSplitPaneVisible', { target: 'body' })
