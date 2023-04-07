@@ -37,7 +37,6 @@ export class Menu implements ComponentInterface, MenuI {
   private lastOnEnd = 0;
   private gesture?: Gesture;
   private blocker = GESTURE_CONTROLLER.createBlocker({ disableScroll: true });
-  private openOnConnect = false;
 
   isAnimating = false;
   width!: number;
@@ -218,15 +217,6 @@ export class Menu implements ComponentInterface, MenuI {
     // register this menu with the app's menu controller
     menuController._register(this);
 
-    /**
-     * Re-open the menu if needed
-     * when it is re-added to the DOM.
-     */
-    if (this.openOnConnect) {
-      this.open(false);
-      this.openOnConnect = false;
-    }
-
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: document,
       gestureName: 'menu-swipe',
@@ -263,17 +253,13 @@ export class Menu implements ComponentInterface, MenuI {
     }
 
     /**
-     * If the menu is open when it is unmounted,
-     * it should still be open if it is re-mounted.
-     * Note that we do not call this.close() here
-     * because the element is already disconnected
-     * from the DOM, so willClose and didClose events
-     * will not fire as expected.
+     * The menu should be closed when it is
+     * unmounted from the DOM. Note: Do not
+     * call this.close() since events will
+     * not fire as expected due to the component
+     * no longer being in the DOM.
      */
-    if (this._isOpen) {
-      this._isOpen = false;
-      this.openOnConnect = true;
-    }
+    this._isOpen = false;
 
     this.animation = undefined;
     this.contentEl = undefined;
