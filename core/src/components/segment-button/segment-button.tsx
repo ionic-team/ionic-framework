@@ -96,7 +96,10 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
 
     if (segmentEl) {
       this.checked = segmentEl.value === this.value;
-      this.disabled = segmentEl.disabled;
+      
+      if (segmentEl.disabled) {
+        this.disabled = true;
+      }
     }
   };
 
