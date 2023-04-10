@@ -23,12 +23,19 @@ export const createLegacyFormController = (el: HTMLLegacyFormControlElement): Le
        * can check to see if the component has slotted text
        * in the light DOM.
        */
-      const legacyLabel = findItemLabel(controlEl);
+      const hasLabelProp = controlEl.label !== undefined || hasLabelSlot(controlEl);
+      const hasAriaLabelAttribute =
+        controlEl.hasAttribute('aria-label') ||
+        // Shadow DOM form controls cannot use aria-labelledby
+        (controlEl.hasAttribute('aria-labelledby') && controlEl.shadowRoot === null);
+      const legacyItemLabel = findItemLabel(controlEl);
+
       /**
        * Developers can manually opt-out of the modern form markup
        * by setting `legacy="true"` on components.
        */
-      legacyControl = controlEl.legacy === true || (legacyLabel !== null && !hasLabelSlot(controlEl));
+      legacyControl =
+        controlEl.legacy === true || (!hasLabelProp && !hasAriaLabelAttribute && legacyItemLabel !== null);
     }
     return legacyControl;
   };
