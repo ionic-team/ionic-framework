@@ -160,7 +160,7 @@ export class Toggle implements ComponentInterface {
 
     this.legacyFormController = createLegacyFormController(el);
 
-    this.gesture = (await import('@utils/gesture')).createGesture({
+    this.gesture = (await import('../../utils/gesture')).createGesture({
       el,
       gestureName: 'toggle',
       gesturePriority: 100,

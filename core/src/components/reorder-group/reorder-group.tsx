@@ -63,7 +63,7 @@ export class ReorderGroup implements ComponentInterface {
     if (contentEl) {
       this.scrollEl = await getScrollElement(contentEl);
     }
-    this.gesture = (await import('@utils/gesture')).createGesture({
+    this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.el,
       gestureName: 'reorder',
       gesturePriority: 110,

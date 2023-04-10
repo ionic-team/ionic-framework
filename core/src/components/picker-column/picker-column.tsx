@@ -63,7 +63,7 @@ export class PickerColumnCmp implements ComponentInterface {
     this.rotateFactor = pickerRotateFactor;
     this.scaleFactor = pickerScaleFactor;
 
-    this.gesture = (await import('@utils/gesture')).createGesture({
+    this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.el,
       gestureName: 'picker-swipe',
       gesturePriority: 100,

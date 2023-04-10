@@ -217,7 +217,7 @@ export class Menu implements ComponentInterface, MenuI {
     // register this menu with the app's menu controller
     menuController._register(this);
 
-    this.gesture = (await import('@utils/gesture')).createGesture({
+    this.gesture = (await import('../../utils/gesture')).createGesture({
       el: document,
       gestureName: 'menu-swipe',
       gesturePriority: 30,

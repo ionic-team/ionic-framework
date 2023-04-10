@@ -114,7 +114,7 @@ export class Nav implements NavOutlet {
   async componentDidLoad() {
     this.rootChanged();
 
-    this.gesture = (await import('@utils/gesture/swipe-back')).createSwipeBackGesture(
+    this.gesture = (await import('../../utils/gesture/swipe-back')).createSwipeBackGesture(
       this.el,
       this.canStart.bind(this),
       this.onStart.bind(this),

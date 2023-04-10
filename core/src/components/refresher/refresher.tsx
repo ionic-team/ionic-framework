@@ -265,7 +265,7 @@ export class Refresher implements ComponentInterface {
 
     this.scrollEl!.addEventListener('scroll', this.scrollListenerCallback);
 
-    this.gesture = (await import('@utils/gesture')).createGesture({
+    this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.scrollEl!,
       gestureName: 'refresher',
       gesturePriority: 31,
@@ -328,7 +328,7 @@ export class Refresher implements ComponentInterface {
       });
     }
 
-    this.gesture = (await import('@utils/gesture')).createGesture({
+    this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.scrollEl!,
       gestureName: 'refresher',
       gesturePriority: 31,
@@ -477,7 +477,7 @@ export class Refresher implements ComponentInterface {
       if (await shouldUseNativeRefresher(this.el, getIonMode(this))) {
         this.setupNativeRefresher(contentEl);
       } else {
-        this.gesture = (await import('@utils/gesture')).createGesture({
+        this.gesture = (await import('../../utils/gesture')).createGesture({
           el: contentEl,
           gestureName: 'refresher',
           gesturePriority: 31,

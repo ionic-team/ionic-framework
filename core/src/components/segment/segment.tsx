@@ -165,7 +165,7 @@ export class Segment implements ComponentInterface {
   async componentDidLoad() {
     this.setCheckedClasses();
 
-    this.gesture = (await import('@utils/gesture')).createGesture({
+    this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.el,
       gestureName: 'segment',
       gesturePriority: 100,
