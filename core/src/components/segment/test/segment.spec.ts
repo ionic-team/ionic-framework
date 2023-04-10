@@ -14,6 +14,8 @@ it('should set checked state when value is set asynchronously', async () => {
 
   const segmentButton = page.root.querySelector('ion-segment-button');
 
+  expect(segmentButton.classList.contains('segment-button-checked')).toBe(false);
+
   segmentButton.value = 'first';
   await page.waitForChanges();
 
