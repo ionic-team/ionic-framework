@@ -37,7 +37,7 @@ Thanks for your interest in contributing to the Ionic Framework! :tada:
 
 ## Contributing Etiquette
 
-Please see our [Contributor Code of Conduct](https://github.com/ionic-team/ionic/blob/main/CODE_OF_CONDUCT.md) for information on our rules of conduct.
+Please see our [Contributor Code of Conduct](https://github.com/ionic-team/ionic-framework/blob/main/CODE_OF_CONDUCT.md) for information on our rules of conduct.
 
 
 ## Creating an Issue
@@ -50,9 +50,9 @@ Please see our [Contributor Code of Conduct](https://github.com/ionic-team/ionic
 
 * Issues with no clear steps to reproduce will not be triaged. If an issue is labeled with "needs: reply" and receives no further replies from the author of the issue for more than 14 days, it will be closed.
 
-* If you think you have found a bug, or have a new feature idea, please start by making sure it hasn't already been [reported](https://github.com/ionic-team/ionic/issues?utf8=%E2%9C%93&q=is%3Aissue). You can search through existing issues to see if there is a similar one reported. Include closed issues as it may have been closed with a solution.
+* If you think you have found a bug, or have a new feature idea, please start by making sure it hasn't already been [reported](https://github.com/ionic-team/ionic-framework/issues?utf8=%E2%9C%93&q=is%3Aissue). You can search through existing issues to see if there is a similar one reported. Include closed issues as it may have been closed with a solution.
 
-* Next, [create a new issue](https://github.com/ionic-team/ionic/issues/new/choose) that thoroughly explains the problem. Please fill out the populated issue form before submitting the issue.
+* Next, [create a new issue](https://github.com/ionic-team/ionic-framework/issues/new/choose) that thoroughly explains the problem. Please fill out the populated issue form before submitting the issue.
 
 
 ## Creating a Good Code Reproduction
@@ -63,7 +63,7 @@ A code reproduction is a small application that is built to demonstrate a partic
 
 ### Why Should You Create a Reproduction?
 
-A code reproduction of the issue you are experiencing helps us better isolate the cause of the problem. This is an important first step to getting any bug fixed! 
+A code reproduction of the issue you are experiencing helps us better isolate the cause of the problem. This is an important first step to getting any bug fixed!
 
 Without a reliable code reproduction, it is unlikely we will be able to resolve the issue, leading to it being closed. In other words, creating a code reproduction of the issue helps us help you.
 
@@ -84,7 +84,7 @@ Without a reliable code reproduction, it is unlikely we will be able to resolve 
 
 ## Creating a Pull Request
 
-Before creating a pull request, please read our requirements that explains the minimal details to have your PR considered and merged into the codebase. 
+Before creating a pull request, please read our requirements that explains the minimal details to have your PR considered and merged into the codebase.
 
 ### Requirements
 1. PRs must reference an existing issue that describes the issue or feature being submitted.
@@ -93,7 +93,7 @@ Before creating a pull request, please read our requirements that explains the m
 
 > Note: We appreciate you taking the time to contribute! Before submitting a pull request, please take the time to comment on the issue you are wanting to resolve. This helps us prevent duplicate effort or advise if the team is already addressing the issue.
 
-* Looking for an issue to fix? Look through our issues with the [help wanted](https://github.com/ionic-team/ionic/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22) label!
+* Looking for an issue to fix? Look through our issues with the [help wanted](https://github.com/ionic-team/ionic-framework/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22) label!
 
 ### Setup
 
@@ -227,7 +227,7 @@ Before creating a pull request, please read our requirements that explains the m
 
 ### Submit Pull Request
 
-1. [Create a new pull request](https://github.com/ionic-team/ionic/compare) with the `main` branch as the `base`. You may need to click on `compare across forks` to find your changes.
+1. [Create a new pull request](https://github.com/ionic-team/ionic-framework/compare) with the `main` branch as the `base`. You may need to click on `compare across forks` to find your changes.
 2. See the [Creating a pull request from a fork](https://help.github.com/articles/creating-a-pull-request-from-a-fork/) GitHub help article for more information.
 3. Please fill out the provided Pull Request template to the best of your ability and include any issues that are related.
 
@@ -240,7 +240,7 @@ To expedite the process, please ensure that all feature PRs have an associated i
 
 ## Commit Message Guidelines
 
-We have very precise rules over how our git commit messages should be formatted. This leads to readable messages that are easy to follow when looking through the project history. We also use the git commit messages to generate our [changelog](https://github.com/ionic-team/ionic/blob/main/CHANGELOG.md). Our format closely resembles Angular's [commit message guidelines](https://github.com/angular/angular/blob/main/CONTRIBUTING.md#commit).
+We have very precise rules over how our git commit messages should be formatted. This leads to readable messages that are easy to follow when looking through the project history. We also use the git commit messages to generate our [changelog](https://github.com/ionic-team/ionic-framework/blob/main/CHANGELOG.md). Our format closely resembles Angular's [commit message guidelines](https://github.com/angular/angular/blob/main/CONTRIBUTING.md#commit).
 
 ### Commit Message Format
 
