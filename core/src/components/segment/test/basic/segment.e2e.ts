@@ -60,7 +60,7 @@ test.describe('segment: basic', () => {
   });
 
   test.describe('segment: behavior', () => {
-    test.only('segment buttons should be disabled when added to disabled segment asyncronously', async ({ page, skip }) => {
+    test('segment buttons should be disabled when added to disabled segment asyncronously', async ({ page, skip }) => {
       skip.rtl();
       skip.mode('ios');
 
