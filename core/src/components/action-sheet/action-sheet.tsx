@@ -13,11 +13,11 @@ import {
   present,
   safeCall,
 } from '@utils/overlays';
-import type { OverlayEventDetail } from '@utils/overlays-interface';
 import { getClassMap } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { AnimationBuilder, CssClassMap, FrameworkDelegate, OverlayInterface } from '../../interface';
+import type { OverlayEventDetail } from '../../utils/overlays-interface';
 
 import type { ActionSheetButton } from './action-sheet-interface';
 import { iosEnterAnimation } from './animations/ios.enter';

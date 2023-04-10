@@ -16,7 +16,6 @@ import {
   present,
   createTriggerController,
 } from '@utils/overlays';
-import type { OverlayEventDetail } from '@utils/overlays-interface';
 import { getClassMap } from '@utils/theme';
 import { deepReady } from '@utils/transition';
 
@@ -32,6 +31,7 @@ import type {
   OverlayInterface,
 } from '../../interface';
 import { KEYBOARD_DID_OPEN } from '../../utils/keyboard/keyboard';
+import type { OverlayEventDetail } from '../../utils/overlays-interface';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';

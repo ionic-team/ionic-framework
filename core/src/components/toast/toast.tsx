@@ -12,14 +12,14 @@ import {
   present,
   safeCall,
 } from '@utils/overlays';
-import type { OverlayEventDetail } from '@utils/overlays-interface';
-import type { IonicSafeString } from '@utils/sanitization';
 import { sanitizeDOMString } from '@utils/sanitization';
 import { createColorClasses, getClassMap } from '@utils/theme';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import type { AnimationBuilder, Color, CssClassMap, OverlayInterface, FrameworkDelegate } from '../../interface';
+import type { OverlayEventDetail } from '../../utils/overlays-interface';
+import type { IonicSafeString } from '../../utils/sanitization';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';

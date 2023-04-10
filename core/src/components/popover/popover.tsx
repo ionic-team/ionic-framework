@@ -4,13 +4,13 @@ import { CoreDelegate, attachComponent, detachComponent } from '@utils/framework
 import { addEventListener, raf, hasLazyBuild } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 import { BACKDROP, dismiss, eventMethod, focusFirstDescendant, prepareOverlay, present } from '@utils/overlays';
-import type { OverlayEventDetail } from '@utils/overlays-interface';
 import { isPlatform } from '@utils/platform';
 import { getClassMap } from '@utils/theme';
 import { deepReady } from '@utils/transition';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate } from '../../interface';
+import type { OverlayEventDetail } from '../../utils/overlays-interface';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
