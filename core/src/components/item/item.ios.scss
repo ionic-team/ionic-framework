@@ -15,11 +15,11 @@
    * The active/focus states need
    * to be the opposite of the background color
    * so there is enough contrast. The background
-   * defaults to $background-color, so we
-   * default to $text-color which will give us
+   * defaults to var(--ion-background-color), so we
+   * default to var(--ion-text-color) which will give us
    * the opposite color.
-   * i.e. is $background-color is #000
-   * then $text-color will be #fff.
+   * i.e. if var(--ion-background-color) is #000
+   * then var(--ion-text-color) will be #fff.
    */
   --background-activated: #{$text-color};
   --background-focused: #{$text-color};
