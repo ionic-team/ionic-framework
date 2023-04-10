@@ -397,6 +397,9 @@ export class Input implements ComponentInterface {
    *
    * Developers who wish to focus an input when a page enters
    * should call `setFocus()` in the `ionViewDidEnter()` lifecycle method.
+   *
+   * Developers who wish to focus an input when an overlay is presented
+   * should call `setFocus` after `didPresent` has resolved.
    */
   @Method()
   async setFocus() {
