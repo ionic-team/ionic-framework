@@ -7,8 +7,9 @@
   <form [formGroup]="form">
     <ion-list>
       <ion-item>
-        <ion-label>Range</ion-label>
-        <ion-range formControlName="range" min="0" max="20"></ion-range>
+        <ion-range formControlName="range" min="0" max="20">
+          <div slot="label">Range</div>
+        </ion-range>
       </ion-item>
     </ion-list>
     <ion-button type="submit">Submit</ion-button>
