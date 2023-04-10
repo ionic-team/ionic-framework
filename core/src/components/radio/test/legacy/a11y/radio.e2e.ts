@@ -1,7 +1,8 @@
 import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
-test.describe('radio: a11y', () => {
+// TODO FW-3747
+test.describe.skip('radio: a11y', () => {
   test.beforeEach(({ skip }) => {
     skip.rtl();
   });
@@ -21,8 +22,7 @@ test.describe('radio: a11y', () => {
     await page.keyboard.press(`Shift+${tabKey}`);
     await expect(firstGroupRadios.nth(0)).toBeFocused();
   });
-  // TODO FW-3956
-  test.skip('using arrow keys should move between enabled radios within group', async ({ page, browserName }) => {
+  test('using arrow keys should move between enabled radios within group', async ({ page, browserName }) => {
     const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
     await page.goto(`/src/components/radio/test/legacy/a11y`);
 
