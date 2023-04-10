@@ -410,9 +410,15 @@ export class PickerColumnInternal implements ComponentInterface {
           ['picker-column-numeric-input']: numericInput,
         })}
       >
-        <div class="picker-item picker-item-empty">&nbsp;</div>
-        <div class="picker-item picker-item-empty">&nbsp;</div>
-        <div class="picker-item picker-item-empty">&nbsp;</div>
+        <div class="picker-item picker-item-empty" aria-hidden="true">
+          &nbsp;
+        </div>
+        <div class="picker-item picker-item-empty" aria-hidden="true">
+          &nbsp;
+        </div>
+        <div class="picker-item picker-item-empty" aria-hidden="true">
+          &nbsp;
+        </div>
         {items.map((item, index) => {
           {
             /*
@@ -442,9 +448,15 @@ export class PickerColumnInternal implements ComponentInterface {
             </button>
           );
         })}
-        <div class="picker-item picker-item-empty">&nbsp;</div>
-        <div class="picker-item picker-item-empty">&nbsp;</div>
-        <div class="picker-item picker-item-empty">&nbsp;</div>
+        <div class="picker-item picker-item-empty" aria-hidden="true">
+          &nbsp;
+        </div>
+        <div class="picker-item picker-item-empty" aria-hidden="true">
+          &nbsp;
+        </div>
+        <div class="picker-item picker-item-empty" aria-hidden="true">
+          &nbsp;
+        </div>
       </Host>
     );
   }

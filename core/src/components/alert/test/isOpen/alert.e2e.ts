@@ -1,3 +1,4 @@
+import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
 test.describe('alert: isOpen', () => {
@@ -9,22 +10,25 @@ test.describe('alert: isOpen', () => {
 
   test('should open the alert', async ({ page }) => {
     const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+    const alert = page.locator('ion-alert');
+
     await page.click('#default');
 
     await ionAlertDidPresent.next();
-    await page.waitForSelector('ion-alert', { state: 'visible' });
+    await expect(alert).toBeVisible();
   });
 
   test('should open the alert then close after a timeout', async ({ page }) => {
     const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
     const ionAlertDidDismiss = await page.spyOnEvent('ionAlertDidDismiss');
+    const alert = page.locator('ion-alert');
+
     await page.click('#timeout');
 
     await ionAlertDidPresent.next();
-    await page.waitForSelector('ion-alert', { state: 'visible' });
+    await expect(alert).toBeVisible();
 
     await ionAlertDidDismiss.next();
-
-    await page.waitForSelector('ion-alert', { state: 'hidden' });
+    await expect(alert).toBeHidden();
   });
 });
