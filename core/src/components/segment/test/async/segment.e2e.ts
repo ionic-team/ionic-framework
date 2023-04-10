@@ -14,7 +14,7 @@ test.describe('segment: async', () => {
 
     const segmentButton = page.locator('ion-segment-button');
 
-    await segmentButton.evaluate((el: HTMLIonSegmentButtonElement) => el.value = 'first');
+    await segmentButton.evaluate((el: HTMLIonSegmentButtonElement) => (el.value = 'first'));
     await page.waitForChanges();
 
     await expect(segmentButton).toHaveClass(/segment-button-checked/);

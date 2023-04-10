@@ -1,5 +1,5 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Element, Host, Prop, Method, State, forceUpdate, h } from '@stencil/core';
+import { Component, Element, Host, Prop, Method, State, Watch, forceUpdate, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { ButtonInterface } from '../../utils/element-interface';
@@ -54,6 +54,10 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
    * The value of the segment button.
    */
   @Prop() value: string = 'ion-sb-' + ids++;
+  @Watch('value')
+  valueChanged() {
+    this.updateState();
+  }
 
   connectedCallback() {
     const segmentEl = (this.segmentEl = this.el.closest('ion-segment'));
@@ -77,10 +81,6 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
     this.inheritedAttributes = {
       ...inheritAttributes(this.el, ['aria-label']),
     };
-  }
-
-  componentDidLoad() {
-    this.updateState();
   }
 
   private get hasLabel() {
