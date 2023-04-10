@@ -1270,7 +1270,7 @@ export namespace Components {
          */
         "required": boolean;
         /**
-          * Sets focus on the native `input` in `ion-input`. Use this method instead of the global `input.focus()`.  Developers who wish to focus an input when a page enters should call `setFocus()` in the `ionViewDidEnter()` lifecycle method.
+          * Sets focus on the native `input` in `ion-input`. Use this method instead of the global `input.focus()`.  Developers who wish to focus an input when a page enters should call `setFocus()` in the `ionViewDidEnter()` lifecycle method.  Developers who wish to focus an input when an overlay is presented should call `setFocus` after `didPresent` has resolved.
          */
         "setFocus": () => Promise<void>;
         /**
@@ -2583,7 +2583,7 @@ export namespace Components {
          */
         "searchIcon"?: string;
         /**
-          * Sets focus on the specified `ion-searchbar`. Use this method instead of the global `input.focus()`.
+          * Sets focus on the native `input` in `ion-searchbar`. Use this method instead of the global `input.focus()`.  Developers who wish to focus an input when a page enters should call `setFocus()` in the `ionViewDidEnter()` lifecycle method.  Developers who wish to focus an input when an overlay is presented should call `setFocus` after `didPresent` has resolved.
          */
         "setFocus": () => Promise<void>;
         /**
