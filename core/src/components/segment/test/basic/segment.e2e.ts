@@ -58,4 +58,31 @@ test.describe('segment: basic', () => {
       await expect(segment).toHaveScreenshot(`segment-color-${page.getSnapshotSettings()}.png`);
     });
   });
+
+  test.describe('segment: behavior', () => {
+    test.only('segment buttons should be disabled when added to disabled segment asyncronously', async ({ page, skip }) => {
+      skip.rtl();
+      skip.mode('ios');
+
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/25396',
+      });
+
+      await page.setContent(`
+        <ion-segment disabled="true"></ion-segment>
+        <script>
+          const segment = document.querySelector('ion-segment');
+          setTimeout(() => {
+            segment.insertAdjacentHTML('beforeend', '<ion-segment-button>Segment</ion-segment-button>');
+          }, 500); // shorter times don't trigger the issue consistently enough
+        </script>
+      `);
+
+      const segmentButton = page.locator('ion-segment-button');
+      await expect(segmentButton).toBeVisible();
+
+      await expect(segmentButton).toHaveClass(/segment-button-disabled/);
+    });
+  });
 });
