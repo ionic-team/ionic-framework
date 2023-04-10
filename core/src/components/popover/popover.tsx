@@ -1,6 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
-import { configureDismissInteraction, configureKeyboardInteraction, configureTriggerInteraction } from '@utils';
 import { CoreDelegate, attachComponent, detachComponent } from '@utils/framework-delegate';
 import { addEventListener, raf, hasLazyBuild } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
@@ -25,6 +24,7 @@ import type {
   PositionSide,
   TriggerAction,
 } from './popover-interface';
+import { configureDismissInteraction, configureKeyboardInteraction, configureTriggerInteraction } from './utils';
 
 // TODO(FW-2832): types
 

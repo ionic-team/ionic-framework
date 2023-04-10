@@ -1,4 +1,3 @@
-import { setCardStatusBarDark, setCardStatusBarDefault, calculateSpringStep, handleCanDismiss } from '@utils';
 import { getTimeGivenProgression } from '@utils/animation/cubic-bezier';
 import { isIonContent, findClosestIonContent, disableContentScrollY, resetContentScrollY } from '@utils/content';
 import type { GestureDetail } from '@utils/gesture';
@@ -7,6 +6,9 @@ import { clamp, getElementRoot } from '@utils/helpers';
 import type { Style as StatusBarStyle } from '@utils/native/status-bar';
 
 import type { Animation } from '../../../interface';
+import { setCardStatusBarDark, setCardStatusBarDefault } from '../utils';
+
+import { calculateSpringStep, handleCanDismiss } from './utils';
 
 // Defaults for the card swipe animation
 export const SwipeToCloseDefaults = {

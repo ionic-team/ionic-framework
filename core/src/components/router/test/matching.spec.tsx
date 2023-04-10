@@ -1,4 +1,4 @@
-import type { RouteChain } from '@utils/interface';
+import type { RouteChain } from '../utils/interface';
 import {
   RouterSegments,
   matchesIDs,
@@ -6,8 +6,8 @@ import {
   matchesRedirect,
   mergeParams,
   findChainForSegments,
-} from '@utils/matching';
-import { parsePath } from '@utils/path';
+} from '../utils/matching';
+import { parsePath } from '../utils/path';
 
 const CHAIN_1: RouteChain = [
   { id: '2', segments: ['to'], params: undefined },

@@ -1,4 +1,4 @@
-import { generateMonths, getDaysOfWeek, generateTime, getToday, getCombinedDateColumnData } from '@utils/data';
+import { generateMonths, getDaysOfWeek, generateTime, getToday, getCombinedDateColumnData } from '../utils/data';
 
 describe('generateMonths()', () => {
   it('should generate correct month data', () => {

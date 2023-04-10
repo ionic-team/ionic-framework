@@ -1,4 +1,4 @@
-import { getCalendarDayState, isDayDisabled, isNextMonthDisabled, isPrevMonthDisabled } from '@utils/state';
+import { getCalendarDayState, isDayDisabled, isNextMonthDisabled, isPrevMonthDisabled } from '../utils/state';
 
 describe('getCalendarDayState()', () => {
   it('should return correct state', () => {

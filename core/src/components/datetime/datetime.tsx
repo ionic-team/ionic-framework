@@ -1,63 +1,9 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
-import { isSameDay, warnIfValueOutOfBounds, isBefore, isAfter } from '@utils/comparison';
-import {
-  generateMonths,
-  getDaysOfMonth,
-  getDaysOfWeek,
-  getToday,
-  getMonthColumnData,
-  getDayColumnData,
-  getYearColumnData,
-  getTimeColumnsData,
-  getCombinedDateColumnData,
-} from '@utils/data';
 import { startFocusVisible } from '@utils/focus-visible';
-import { formatValue, getLocalizedTime, getMonthAndDay, getMonthAndYear } from '@utils/format';
-import {
-  getElementRoot,
-  raf,
-  renderHiddenInput,
-  is24Hour,
-  isLocaleDayPeriodRTL,
-  isMonthFirstLocale,
-  getNumDaysInMonth,
-} from '@utils/helpers';
+import { getElementRoot, raf, renderHiddenInput } from '@utils/helpers';
 import { printIonError, printIonWarning } from '@utils/logging';
-import {
-  calculateHourFromAMPM,
-  convertDataToISO,
-  getClosestValidDate,
-  getEndOfWeek,
-  getNextDay,
-  getNextMonth,
-  getNextWeek,
-  getNextYear,
-  getPreviousDay,
-  getPreviousMonth,
-  getPreviousWeek,
-  getPreviousYear,
-  getStartOfWeek,
-  validateParts,
-} from '@utils/manipulation';
-import {
-  clampDate,
-  convertToArrayOfNumbers,
-  getPartsFromCalendarDay,
-  parseAmPm,
-  parseDate,
-  parseMaxParts,
-  parseMinParts,
-} from '@utils/parse';
 import { isRTL } from '@utils/rtl';
-import {
-  getCalendarDayState,
-  getHighlightStyles,
-  isDayDisabled,
-  isMonthDisabled,
-  isNextMonthDisabled,
-  isPrevMonthDisabled,
-} from '@utils/state';
 import { createColorClasses } from '@utils/theme';
 import { caretDownSharp, caretUpSharp, chevronBack, chevronDown, chevronForward } from 'ionicons/icons';
 
@@ -74,6 +20,53 @@ import type {
   DatetimeHighlightStyle,
   DatetimeHighlightCallback,
 } from './datetime-interface';
+import { isSameDay, warnIfValueOutOfBounds, isBefore, isAfter } from './utils/comparison';
+import {
+  generateMonths,
+  getDaysOfMonth,
+  getDaysOfWeek,
+  getToday,
+  getMonthColumnData,
+  getDayColumnData,
+  getYearColumnData,
+  getTimeColumnsData,
+  getCombinedDateColumnData,
+} from './utils/data';
+import { formatValue, getLocalizedTime, getMonthAndDay, getMonthAndYear } from './utils/format';
+import { is24Hour, isLocaleDayPeriodRTL, isMonthFirstLocale, getNumDaysInMonth } from './utils/helpers';
+import {
+  calculateHourFromAMPM,
+  convertDataToISO,
+  getClosestValidDate,
+  getEndOfWeek,
+  getNextDay,
+  getNextMonth,
+  getNextWeek,
+  getNextYear,
+  getPreviousDay,
+  getPreviousMonth,
+  getPreviousWeek,
+  getPreviousYear,
+  getStartOfWeek,
+  validateParts,
+} from './utils/manipulation';
+import {
+  clampDate,
+  convertToArrayOfNumbers,
+  getPartsFromCalendarDay,
+  parseAmPm,
+  parseDate,
+  parseMaxParts,
+  parseMinParts,
+} from './utils/parse';
+import {
+  getCalendarDayState,
+  getHighlightStyles,
+  isDayDisabled,
+  isMonthDisabled,
+  isNextMonthDisabled,
+  isPrevMonthDisabled,
+} from './utils/state';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.

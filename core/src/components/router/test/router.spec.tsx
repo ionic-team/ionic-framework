@@ -1,9 +1,9 @@
 import { mockWindow } from '@stencil/core/testing';
 
-import type { RouteChain, RouteID } from '@utils/interface';
-import { findChainForSegments, findChainForIDs } from '@utils/matching';
-import { readRoutes } from '@utils/parser';
-import { chainToSegments, generatePath, parsePath } from '@utils/path';
+import type { RouteChain, RouteID } from '../utils/interface';
+import { findChainForSegments, findChainForIDs } from '../utils/matching';
+import { readRoutes } from '../utils/parser';
+import { chainToSegments, generatePath, parsePath } from '../utils/path';
 
 import { mockRouteElement } from './parser.spec';
 
