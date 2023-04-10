@@ -248,9 +248,9 @@ export class Searchbar implements ComponentInterface {
    *
    * Developers who wish to focus an input when a page enters
    * should call `setFocus()` in the `ionViewDidEnter()` lifecycle method.
-   * 
-   * Focusing an input within an overlay should be done after the overlay has
-   * completed its transition. 
+   *
+   * Developers who wish to focus an input when an overlay is presented
+   * should call `setFocus` after `didPresent` has resolved.
    */
   @Method()
   async setFocus() {
