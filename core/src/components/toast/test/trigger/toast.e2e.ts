@@ -1,3 +1,4 @@
+import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
 test.describe('toast: trigger', () => {
@@ -9,15 +10,18 @@ test.describe('toast: trigger', () => {
 
   test('should open the toast', async ({ page }) => {
     const ionToastDidPresent = await page.spyOnEvent('ionToastDidPresent');
+    const toast = page.locator('#default-toast');
+
     await page.click('#default');
 
     await ionToastDidPresent.next();
-    await page.waitForSelector('#default-toast', { state: 'visible' });
+    await expect(toast).toBeVisible();
   });
 
   test('should present a previously presented toast', async ({ page }) => {
     const ionToastDidPresent = await page.spyOnEvent('ionToastDidPresent');
     const ionToastDidDismiss = await page.spyOnEvent('ionToastDidDismiss');
+    const toast = page.locator('#timeout-toast');
 
     await page.click('#timeout');
 
@@ -26,6 +30,6 @@ test.describe('toast: trigger', () => {
     await page.click('#timeout');
 
     await ionToastDidPresent.next();
-    await page.waitForSelector('#timeout-toast', { state: 'visible' });
+    await expect(toast).toBeVisible();
   });
 });

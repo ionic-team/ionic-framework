@@ -42,7 +42,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
   - [Angular](#version-7x-angular)
   - [React](#version-7x-react)
   - [Vue](#version-7x-vue)
-- [Utilities](#version-7x-utilities)
+- [CSS Utilities](#version-7x-css-utilities)
   - [hidden attribute](#version-7x-hidden-attribute)
 
 <h2 id="version-7x-browser-platform-support">Browser and Platform Support</h2>
@@ -207,7 +207,7 @@ Ionic now listens on the `keydown` event instead of the `keyup` event when deter
 
 - The `debounce` property's value value has changed from `0` to `undefined`. If `debounce` is undefined, the `ionInput` event will fire immediately.
 
-- Range no longer clamps assigned values within bounds. Developers will need to validate the value they are assigning to `ion-range` is within the `min` and `max` bounds when programmatically assigning a value. 
+- Range no longer clamps assigned values within bounds. Developers will need to validate the value they are assigning to `ion-range` is within the `min` and `max` bounds when programmatically assigning a value.
 
 - The `name` property defaults to `ion-r-${rangeIds++}` where `rangeIds` is a number that is incremented for every instance of `ion-range`.
 
@@ -326,7 +326,7 @@ Any references to the virtual scroll types from `@ionic/core` have been removed.
 
 `@ionic/vue` and `@ionic/vue-router` no longer ship a CommonJS entry point. Instead, only an ES Module entry point is provided for improved compatibility with Vite.
 
-<h2 id="version-7x-utilities">Utilities</h2>
+<h2 id="version-7x-css-utilities">CSS Utilities</h2>
 
 <h4 id="version-7x-hidden-attribute">`hidden` attribute</h4>
 

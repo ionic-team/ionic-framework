@@ -15,7 +15,7 @@ test.describe('menu: a11y', () => {
     const button = page.locator('#open-menu');
 
     await button.click();
-    await page.waitForSelector('ion-menu', { state: 'visible' });
+    await expect(menu).toBeVisible();
 
     await expect(menu).toHaveAttribute('role', 'navigation');
 

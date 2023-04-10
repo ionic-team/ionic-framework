@@ -1,3 +1,4 @@
+import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
 test.describe('toast: isOpen', () => {
@@ -9,22 +10,25 @@ test.describe('toast: isOpen', () => {
 
   test('should open the toast', async ({ page }) => {
     const ionToastDidPresent = await page.spyOnEvent('ionToastDidPresent');
+    const toast = page.locator('ion-toast');
+
     await page.click('#default');
 
     await ionToastDidPresent.next();
-    await page.waitForSelector('ion-toast', { state: 'visible' });
+    await expect(toast).toBeVisible();
   });
 
   test('should open the toast then close after a timeout', async ({ page }) => {
     const ionToastDidPresent = await page.spyOnEvent('ionToastDidPresent');
     const ionToastDidDismiss = await page.spyOnEvent('ionToastDidDismiss');
+    const toast = page.locator('ion-toast');
+
     await page.click('#timeout');
 
     await ionToastDidPresent.next();
-    await page.waitForSelector('ion-toast', { state: 'visible' });
+    await expect(toast).toBeVisible();
 
     await ionToastDidDismiss.next();
-
-    await page.waitForSelector('ion-toast', { state: 'hidden' });
+    await expect(toast).toBeHidden();
   });
 });
