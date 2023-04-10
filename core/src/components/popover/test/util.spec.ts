@@ -1,4 +1,4 @@
-import { isTriggerElement, getIndexOfItem, getNextItem, getPrevItem } from '../utils';
+import { isTriggerElement, getIndexOfItem, getNextItem, getPrevItem } from '@utils';
 
 describe('isTriggerElement', () => {
   it('should return true is element is a trigger', () => {

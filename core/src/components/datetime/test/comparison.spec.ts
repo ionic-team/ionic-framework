@@ -1,4 +1,4 @@
-import { isSameDay, isBefore, isAfter } from '../utils/comparison';
+import { isSameDay, isBefore, isAfter } from '@utils/comparison';
 
 describe('isSameDay()', () => {
   it('should return correct results for month, day, and year', () => {

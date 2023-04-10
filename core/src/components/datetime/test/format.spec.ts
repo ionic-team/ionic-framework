@@ -6,7 +6,7 @@ import {
   getMonthAndYear,
   getLocalizedDayPeriod,
   getLocalizedTime,
-} from '../utils/format';
+} from '@utils/format';
 
 describe('generateDayAriaLabel()', () => {
   it('should return Wednesday, May 12', () => {

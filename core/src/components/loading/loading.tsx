@@ -1,11 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Watch, Component, Element, Event, Host, Method, Prop, h } from '@stencil/core';
-
-import { config } from '../../global/config';
-import { getIonMode } from '../../global/ionic-global';
-import type { AnimationBuilder, FrameworkDelegate, OverlayInterface } from '../../interface';
-import { ENABLE_HTML_CONTENT_DEFAULT } from '../../utils/config';
-import { raf } from '../../utils/helpers';
+import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
+import { raf } from '@utils/helpers';
 import {
   BACKDROP,
   dismiss,
@@ -14,11 +10,15 @@ import {
   present,
   createDelegateController,
   createTriggerController,
-} from '../../utils/overlays';
-import type { OverlayEventDetail } from '../../utils/overlays-interface';
-import type { IonicSafeString } from '../../utils/sanitization';
-import { sanitizeDOMString } from '../../utils/sanitization';
-import { getClassMap } from '../../utils/theme';
+} from '@utils/overlays';
+import type { OverlayEventDetail } from '@utils/overlays-interface';
+import type { IonicSafeString } from '@utils/sanitization';
+import { sanitizeDOMString } from '@utils/sanitization';
+import { getClassMap } from '@utils/theme';
+
+import { config } from '../../global/config';
+import { getIonMode } from '../../global/ionic-global';
+import type { AnimationBuilder, FrameworkDelegate, OverlayInterface } from '../../interface';
 import type { SpinnerTypes } from '../spinner/spinner-configs';
 
 import { iosEnterAnimation } from './animations/ios.enter';

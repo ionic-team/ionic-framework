@@ -1,12 +1,12 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import { getElementRoot, raf } from '@utils/helpers';
+import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '@utils/native/haptic';
+import { isPlatform } from '@utils/platform';
+import { createColorClasses } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Color } from '../../interface';
-import { getElementRoot, raf } from '../../utils/helpers';
-import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/native/haptic';
-import { isPlatform } from '../../utils/platform';
-import { createColorClasses } from '../../utils/theme';
 import type { PickerInternalCustomEvent } from '../picker-internal/picker-internal-interfaces';
 
 import type { PickerColumnItem } from './picker-column-internal-interfaces';

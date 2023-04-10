@@ -1,10 +1,9 @@
-import type { Animation } from '../../../interface';
-import type { GestureDetail } from '../../../utils/gesture';
-import { createGesture } from '../../../utils/gesture';
-import { clamp, raf } from '../../../utils/helpers';
-import { getBackdropValueForSheet } from '../utils';
+import { getBackdropValueForSheet, calculateSpringStep, handleCanDismiss } from '@utils';
+import type { GestureDetail } from '@utils/gesture';
+import { createGesture } from '@utils/gesture';
+import { clamp, raf } from '@utils/helpers';
 
-import { calculateSpringStep, handleCanDismiss } from './utils';
+import type { Animation } from '../../../interface';
 
 export interface MoveSheetToBreakpointOptions {
   /**

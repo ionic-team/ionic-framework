@@ -1,10 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Watch, Component, Element, Event, Host, Method, Prop, h, readTask } from '@stencil/core';
-
-import { getIonMode } from '../../global/ionic-global';
-import type { AnimationBuilder, CssClassMap, FrameworkDelegate, OverlayInterface } from '../../interface';
-import type { Gesture } from '../../utils/gesture';
-import { createButtonActiveGesture } from '../../utils/gesture/button-active';
+import type { Gesture } from '@utils/gesture';
+import { createButtonActiveGesture } from '@utils/gesture/button-active';
 import {
   BACKDROP,
   createDelegateController,
@@ -15,9 +12,12 @@ import {
   prepareOverlay,
   present,
   safeCall,
-} from '../../utils/overlays';
-import type { OverlayEventDetail } from '../../utils/overlays-interface';
-import { getClassMap } from '../../utils/theme';
+} from '@utils/overlays';
+import type { OverlayEventDetail } from '@utils/overlays-interface';
+import { getClassMap } from '@utils/theme';
+
+import { getIonMode } from '../../global/ionic-global';
+import type { AnimationBuilder, CssClassMap, FrameworkDelegate, OverlayInterface } from '../../interface';
 
 import type { ActionSheetButton } from './action-sheet-interface';
 import { iosEnterAnimation } from './animations/ios.enter';

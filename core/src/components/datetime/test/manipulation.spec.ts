@@ -15,7 +15,7 @@ import {
   subtractDays,
   addDays,
   validateParts,
-} from '../utils/manipulation';
+} from '@utils/manipulation';
 
 describe('addDays()', () => {
   it('should correctly add days', () => {

@@ -1,5 +1,6 @@
+import type { IonicSafeString } from '@utils/sanitization';
+
 import type { AnimationBuilder, Color, Mode } from '../../interface';
-import type { IonicSafeString } from '../../utils/sanitization';
 
 export interface ToastOptions {
   header?: string;

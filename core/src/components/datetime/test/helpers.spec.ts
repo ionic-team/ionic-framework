@@ -1,4 +1,4 @@
-import { isLeapYear, getNumDaysInMonth, is24Hour, isMonthFirstLocale } from '../utils/helpers';
+import { isLeapYear, getNumDaysInMonth, is24Hour, isMonthFirstLocale } from '@utils/helpers';
 
 describe('daysInMonth()', () => {
   it('should return correct days in month for month and year', () => {

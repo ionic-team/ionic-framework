@@ -1,18 +1,12 @@
-import type { Animation } from '../../../interface';
-import { getTimeGivenProgression } from '../../../utils/animation/cubic-bezier';
-import {
-  isIonContent,
-  findClosestIonContent,
-  disableContentScrollY,
-  resetContentScrollY,
-} from '../../../utils/content';
-import type { GestureDetail } from '../../../utils/gesture';
-import { createGesture } from '../../../utils/gesture';
-import { clamp, getElementRoot } from '../../../utils/helpers';
-import type { Style as StatusBarStyle } from '../../../utils/native/status-bar';
-import { setCardStatusBarDark, setCardStatusBarDefault } from '../utils';
+import { setCardStatusBarDark, setCardStatusBarDefault, calculateSpringStep, handleCanDismiss } from '@utils';
+import { getTimeGivenProgression } from '@utils/animation/cubic-bezier';
+import { isIonContent, findClosestIonContent, disableContentScrollY, resetContentScrollY } from '@utils/content';
+import type { GestureDetail } from '@utils/gesture';
+import { createGesture } from '@utils/gesture';
+import { clamp, getElementRoot } from '@utils/helpers';
+import type { Style as StatusBarStyle } from '@utils/native/status-bar';
 
-import { calculateSpringStep, handleCanDismiss } from './utils';
+import type { Animation } from '../../../interface';
 
 // Defaults for the card swipe animation
 export const SwipeToCloseDefaults = {

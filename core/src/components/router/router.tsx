@@ -1,17 +1,16 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Listen, Method, Prop } from '@stencil/core';
+import { ROUTER_INTENT_BACK, ROUTER_INTENT_FORWARD, ROUTER_INTENT_NONE } from '@utils/constants';
+import { printRedirects, printRoutes } from '@utils/debug';
+import { readNavState, waitUntilNavNode, writeNavState } from '@utils/dom';
+import { debounce } from '@utils/helpers';
+import type { RouteChain, RouterDirection, RouterEventDetail } from '@utils/interface';
+import { findChainForIDs, findChainForSegments, findRouteRedirect } from '@utils/matching';
+import { readRedirects, readRoutes } from '@utils/parser';
+import { chainToSegments, generatePath, parsePath, readSegments, writeSegments } from '@utils/path';
 
 import type { AnimationBuilder, BackButtonEvent } from '../../interface';
-import { debounce } from '../../utils/helpers';
 import type { NavigationHookResult } from '../route/route-interface';
-
-import { ROUTER_INTENT_BACK, ROUTER_INTENT_FORWARD, ROUTER_INTENT_NONE } from './utils/constants';
-import { printRedirects, printRoutes } from './utils/debug';
-import { readNavState, waitUntilNavNode, writeNavState } from './utils/dom';
-import type { RouteChain, RouterDirection, RouterEventDetail } from './utils/interface';
-import { findChainForIDs, findChainForSegments, findRouteRedirect } from './utils/matching';
-import { readRedirects, readRoutes } from './utils/parser';
-import { chainToSegments, generatePath, parsePath, readSegments, writeSegments } from './utils/path';
 
 @Component({
   tag: 'ion-router',

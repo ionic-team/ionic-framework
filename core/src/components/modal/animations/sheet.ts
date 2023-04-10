@@ -1,6 +1,7 @@
-import { createAnimation } from '../../../utils/animation/animation';
+import { getBackdropValueForSheet } from '@utils';
+import { createAnimation } from '@utils/animation/animation';
+
 import type { ModalAnimationOptions } from '../modal-interface';
-import { getBackdropValueForSheet } from '../utils';
 
 export const createSheetEnterAnimation = (opts: ModalAnimationOptions) => {
   const { currentBreakpoint, backdropBreakpoint } = opts;

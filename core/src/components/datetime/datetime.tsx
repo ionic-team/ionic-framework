@@ -1,26 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
-import { caretDownSharp, caretUpSharp, chevronBack, chevronDown, chevronForward } from 'ionicons/icons';
-
-import { getIonMode } from '../../global/ionic-global';
-import type { Color, Mode, StyleEventDetail } from '../../interface';
-import { startFocusVisible } from '../../utils/focus-visible';
-import { getElementRoot, raf, renderHiddenInput } from '../../utils/helpers';
-import { printIonError, printIonWarning } from '../../utils/logging';
-import { isRTL } from '../../utils/rtl';
-import { createColorClasses } from '../../utils/theme';
-import type { PickerColumnItem } from '../picker-column-internal/picker-column-internal-interfaces';
-
-import type {
-  DatetimePresentation,
-  DatetimeChangeEventDetail,
-  DatetimeParts,
-  TitleSelectedDatesFormatter,
-  DatetimeHighlight,
-  DatetimeHighlightStyle,
-  DatetimeHighlightCallback,
-} from './datetime-interface';
-import { isSameDay, warnIfValueOutOfBounds, isBefore, isAfter } from './utils/comparison';
+import { isSameDay, warnIfValueOutOfBounds, isBefore, isAfter } from '@utils/comparison';
 import {
   generateMonths,
   getDaysOfMonth,
@@ -31,9 +11,19 @@ import {
   getYearColumnData,
   getTimeColumnsData,
   getCombinedDateColumnData,
-} from './utils/data';
-import { formatValue, getLocalizedTime, getMonthAndDay, getMonthAndYear } from './utils/format';
-import { is24Hour, isLocaleDayPeriodRTL, isMonthFirstLocale, getNumDaysInMonth } from './utils/helpers';
+} from '@utils/data';
+import { startFocusVisible } from '@utils/focus-visible';
+import { formatValue, getLocalizedTime, getMonthAndDay, getMonthAndYear } from '@utils/format';
+import {
+  getElementRoot,
+  raf,
+  renderHiddenInput,
+  is24Hour,
+  isLocaleDayPeriodRTL,
+  isMonthFirstLocale,
+  getNumDaysInMonth,
+} from '@utils/helpers';
+import { printIonError, printIonWarning } from '@utils/logging';
 import {
   calculateHourFromAMPM,
   convertDataToISO,
@@ -49,7 +39,7 @@ import {
   getPreviousYear,
   getStartOfWeek,
   validateParts,
-} from './utils/manipulation';
+} from '@utils/manipulation';
 import {
   clampDate,
   convertToArrayOfNumbers,
@@ -58,7 +48,8 @@ import {
   parseDate,
   parseMaxParts,
   parseMinParts,
-} from './utils/parse';
+} from '@utils/parse';
+import { isRTL } from '@utils/rtl';
 import {
   getCalendarDayState,
   getHighlightStyles,
@@ -66,7 +57,23 @@ import {
   isMonthDisabled,
   isNextMonthDisabled,
   isPrevMonthDisabled,
-} from './utils/state';
+} from '@utils/state';
+import { createColorClasses } from '@utils/theme';
+import { caretDownSharp, caretUpSharp, chevronBack, chevronDown, chevronForward } from 'ionicons/icons';
+
+import { getIonMode } from '../../global/ionic-global';
+import type { Color, Mode, StyleEventDetail } from '../../interface';
+import type { PickerColumnItem } from '../picker-column-internal/picker-column-internal-interfaces';
+
+import type {
+  DatetimePresentation,
+  DatetimeChangeEventDetail,
+  DatetimeParts,
+  TitleSelectedDatesFormatter,
+  DatetimeHighlight,
+  DatetimeHighlightStyle,
+  DatetimeHighlightCallback,
+} from './datetime-interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.

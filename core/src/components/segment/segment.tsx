@@ -1,13 +1,13 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Listen, Prop, State, Watch, h, writeTask } from '@stencil/core';
+import type { Gesture, GestureDetail } from '@utils/gesture';
+import { pointerCoord } from '@utils/helpers';
+import { isRTL } from '@utils/rtl';
+import { createColorClasses, hostContext } from '@utils/theme';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import type { Color, StyleEventDetail } from '../../interface';
-import type { Gesture, GestureDetail } from '../../utils/gesture';
-import { pointerCoord } from '../../utils/helpers';
-import { isRTL } from '../../utils/rtl';
-import { createColorClasses, hostContext } from '../../utils/theme';
 
 import type { SegmentChangeEventDetail } from './segment-interface';
 
@@ -165,7 +165,7 @@ export class Segment implements ComponentInterface {
   async componentDidLoad() {
     this.setCheckedClasses();
 
-    this.gesture = (await import('../../utils/gesture')).createGesture({
+    this.gesture = (await import('@utils/gesture')).createGesture({
       el: this.el,
       gestureName: 'segment',
       gesturePriority: 100,

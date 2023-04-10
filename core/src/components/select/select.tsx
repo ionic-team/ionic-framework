@@ -1,5 +1,15 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, forceUpdate } from '@stencil/core';
+import type { LegacyFormController } from '@utils/forms';
+import { createLegacyFormController } from '@utils/forms';
+import { findItemLabel, focusElement, getAriaLabel, renderHiddenInput, inheritAttributes } from '@utils/helpers';
+import type { Attributes } from '@utils/helpers';
+import { printIonWarning } from '@utils/logging';
+import { actionSheetController, alertController, popoverController } from '@utils/overlays';
+import type { OverlaySelect } from '@utils/overlays-interface';
+import { isRTL } from '@utils/rtl';
+import { createColorClasses, hostContext } from '@utils/theme';
+import { watchForOptions } from '@utils/watch-options';
 import { caretDownSharp, chevronExpand } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -11,16 +21,6 @@ import type {
   PopoverOptions,
   StyleEventDetail,
 } from '../../interface';
-import type { LegacyFormController } from '../../utils/forms';
-import { createLegacyFormController } from '../../utils/forms';
-import { findItemLabel, focusElement, getAriaLabel, renderHiddenInput, inheritAttributes } from '../../utils/helpers';
-import type { Attributes } from '../../utils/helpers';
-import { printIonWarning } from '../../utils/logging';
-import { actionSheetController, alertController, popoverController } from '../../utils/overlays';
-import type { OverlaySelect } from '../../utils/overlays-interface';
-import { isRTL } from '../../utils/rtl';
-import { createColorClasses, hostContext } from '../../utils/theme';
-import { watchForOptions } from '../../utils/watch-options';
 import type { ActionSheetButton } from '../action-sheet/action-sheet-interface';
 import type { AlertInput } from '../alert/alert-interface';
 import type { SelectPopoverOption } from '../select-popover/select-popover-interface';

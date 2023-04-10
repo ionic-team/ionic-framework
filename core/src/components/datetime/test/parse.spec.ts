@@ -1,4 +1,4 @@
-import { clampDate, getPartsFromCalendarDay, parseAmPm, parseDate, parseMinParts, parseMaxParts } from '../utils/parse';
+import { clampDate, getPartsFromCalendarDay, parseAmPm, parseDate, parseMinParts, parseMaxParts } from '@utils/parse';
 
 describe('getPartsFromCalendarDay()', () => {
   it('should extract DatetimeParts from a calendar day element', () => {

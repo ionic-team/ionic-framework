@@ -1,9 +1,9 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
+import type { Attributes } from '@utils/helpers';
+import { inheritAttributes } from '@utils/helpers';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { Attributes } from '../../utils/helpers';
-import { inheritAttributes } from '../../utils/helpers';
 
 /**
  * @part image - The inner `img` element.

@@ -1,9 +1,9 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Build, Component, Element, Host, Method, h } from '@stencil/core';
+import { isPlatform } from '@utils/platform';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { isPlatform } from '../../utils/platform';
 
 @Component({
   tag: 'ion-app',
@@ -19,10 +19,10 @@ export class App implements ComponentInterface {
       rIC(async () => {
         const isHybrid = isPlatform(window, 'hybrid');
         if (!config.getBoolean('_testing')) {
-          import('../../utils/tap-click').then((module) => module.startTapClick(config));
+          import('@utils/tap-click').then((module) => module.startTapClick(config));
         }
         if (config.getBoolean('statusTap', isHybrid)) {
-          import('../../utils/status-tap').then((module) => module.startStatusTap());
+          import('@utils/status-tap').then((module) => module.startStatusTap());
         }
         if (config.getBoolean('inputShims', needInputShims())) {
           /**
@@ -30,18 +30,18 @@ export class App implements ComponentInterface {
            * platforms proceed into this block.
            */
           const platform = isPlatform(window, 'ios') ? 'ios' : 'android';
-          import('../../utils/input-shims/input-shims').then((module) => module.startInputShims(config, platform));
+          import('@utils/input-shims/input-shims').then((module) => module.startInputShims(config, platform));
         }
-        const hardwareBackButtonModule = await import('../../utils/hardware-back-button');
+        const hardwareBackButtonModule = await import('@utils/hardware-back-button');
         if (config.getBoolean('hardwareBackButton', isHybrid)) {
           hardwareBackButtonModule.startHardwareBackButton();
         } else {
           hardwareBackButtonModule.blockHardwareBackButton();
         }
         if (typeof (window as any) !== 'undefined') {
-          import('../../utils/keyboard/keyboard').then((module) => module.startKeyboardAssist(window));
+          import('@utils/keyboard/keyboard').then((module) => module.startKeyboardAssist(window));
         }
-        import('../../utils/focus-visible').then((module) => (this.focusVisible = module.startFocusVisible()));
+        import('@utils/focus-visible').then((module) => (this.focusVisible = module.startFocusVisible()));
       });
     }
   }

@@ -1,13 +1,14 @@
-import type { Animation } from '../../../interface';
-import { createAnimation } from '../../../utils/animation/animation';
-import { getElementRoot } from '../../../utils/helpers';
 import {
   calculateWindowAdjustment,
   getArrowDimensions,
   getPopoverDimensions,
   getPopoverPosition,
   shouldShowArrow,
-} from '../utils';
+} from '@utils';
+import { createAnimation } from '@utils/animation/animation';
+import { getElementRoot } from '@utils/helpers';
+
+import type { Animation } from '../../../interface';
 
 const POPOVER_IOS_BODY_PADDING = 5;
 

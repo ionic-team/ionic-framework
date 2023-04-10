@@ -1,15 +1,15 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Listen, Method, Prop, State, Watch, h } from '@stencil/core';
+import { getTimeGivenProgression } from '@utils/animation/cubic-bezier';
+import { GESTURE_CONTROLLER } from '@utils/gesture';
+import type { Attributes } from '@utils/helpers';
+import { inheritAriaAttributes, assert, clamp, isEndSide as isEnd } from '@utils/helpers';
+import { menuController } from '@utils/menu-controller';
+import { getOverlay } from '@utils/overlays';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import type { Animation, Gesture, GestureDetail } from '../../interface';
-import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
-import { GESTURE_CONTROLLER } from '../../utils/gesture';
-import type { Attributes } from '../../utils/helpers';
-import { inheritAriaAttributes, assert, clamp, isEndSide as isEnd } from '../../utils/helpers';
-import { menuController } from '../../utils/menu-controller';
-import { getOverlay } from '../../utils/overlays';
 
 import type { MenuChangeEventDetail, MenuI, Side } from './menu-interface';
 
@@ -217,7 +217,7 @@ export class Menu implements ComponentInterface, MenuI {
     // register this menu with the app's menu controller
     menuController._register(this);
 
-    this.gesture = (await import('../../utils/gesture')).createGesture({
+    this.gesture = (await import('@utils/gesture')).createGesture({
       el: document,
       gestureName: 'menu-swipe',
       gesturePriority: 30,
