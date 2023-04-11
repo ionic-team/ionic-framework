@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.2-nightly.20230411](https://github.com/ionic-team/ionic/compare/v7.0.1...v7.0.2-nightly.20230411) (2023-04-11)
+
+
+### Bug Fixes
+
+* **item:** ios active state has correct contrast ([#27134](https://github.com/ionic-team/ionic/issues/27134)) ([bbdb0ca](https://github.com/ionic-team/ionic/commit/bbdb0ca480d7cd46c030d1947ced712653cf122b)), closes [#000](https://github.com/ionic-team/ionic/issues/000) [#000](https://github.com/ionic-team/ionic/issues/000)
+* **menu:** refs are not destroyed on unmount ([#27141](https://github.com/ionic-team/ionic/issues/27141)) ([b81b0d1](https://github.com/ionic-team/ionic/commit/b81b0d14258d7b8caf028e6cfe81772ed2f5f119)), closes [/github.com/ionic-team/ionic-framework/blob/687b37ad3e3237b874473817bb7b59143ac113ce/packages/core/src/components/menu/menu.tsx#L136-L137](https://github.com//github.com/ionic-team/ionic-framework/blob/687b37ad3e3237b874473817bb7b59143ac113ce/packages/core/src/components/menu/menu.tsx/issues/L136-L137)
+
+
+
+
+
 ## [7.0.1](https://github.com/ionic-team/ionic/compare/v7.0.0...v7.0.1) (2023-04-05)
 
 
