@@ -34,7 +34,7 @@ export class Input implements ComponentInterface {
 
   // This flag ensures we log the deprecation warning at most once.
   private hasLoggedDeprecationWarning = false;
-  private originalIonInput?: EventEmitter<InputInputEventDetail>;
+  private originalIonInput?: EventEmitter<InputInputEventDetail | string>;
 
   /**
    * `true` if the input was cleared as a result of the user typing
@@ -281,7 +281,7 @@ export class Input implements ComponentInterface {
    * the interface is [`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event). If
    * the input is cleared on edit, the type is `null`.
    */
-  @Event() ionInput!: EventEmitter<InputInputEventDetail>;
+  @Event() ionInput!: EventEmitter<InputInputEventDetail | string>;
 
   /**
    * The `ionChange` event is fired for `<ion-input>` elements when the user
