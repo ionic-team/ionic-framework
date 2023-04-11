@@ -72,6 +72,7 @@ input {
 
 :host(.in-item:not(.legacy-radio)) {
   width: 100%;
+  height: 100%;
 }
 
 :host(.in-item[slot="start"]:not(.legacy-radio)),
