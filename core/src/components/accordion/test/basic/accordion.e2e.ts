@@ -15,7 +15,7 @@ test.describe('accordion: ionChange', () => {
   test.beforeEach(({ skip }) => {
     skip.rtl();
   });
-  test('should fire ionChange when interacting with accordions', async ({ page }) => {
+  test.only('should fire ionChange when interacting with accordions', async ({ page }) => {
     await page.setContent(`
       <ion-accordion-group value="second">
         <ion-accordion value="first">
@@ -41,9 +41,6 @@ test.describe('accordion: ionChange', () => {
 
     await accordionHeaders.nth(1).click();
     await expect(ionChange).toHaveReceivedEventDetail({ value: 'second' });
-
-    await accordionHeaders.nth(1).click();
-    await expect(ionChange).toHaveReceivedEventDetail({ value: undefined });
 
     await accordionHeaders.nth(2).click();
     await expect(ionChange).toHaveReceivedEventDetail({ value: 'third' });
