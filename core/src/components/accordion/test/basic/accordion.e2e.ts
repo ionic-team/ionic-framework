@@ -74,10 +74,13 @@ test.describe('accordion: ionChange', () => {
 });
 
 test.describe('accordion: animated', () => {
-  test.beforeEach(({ skip }) => {
+  test('should not animate when false', async ({ page, skip }) => {
+    test.info().annotations.push({
+      type: 'issue',
+      description: 'https://github.com/ionic-team/ionic-framework/issues/27047',
+    });
+
     skip.rtl();
-  });
-  test('should not animate when false', async ({ page }) => {
     await page.setContent(`
       <ion-accordion-group animated="false">
         <ion-accordion>
@@ -89,7 +92,7 @@ test.describe('accordion: animated', () => {
 
     const accordionGroup = page.locator('ion-accordion-group');
     const accordion = accordionGroup.locator('ion-accordion');
-    
+
     const accordionGroupAnimatedAttribute = await accordionGroup.getAttribute('animated');
     expect(accordionGroupAnimatedAttribute).toBe('false');
 
