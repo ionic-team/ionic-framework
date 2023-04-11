@@ -38,7 +38,7 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
   /**
    * If `true`, the user cannot interact with the segment button.
    */
-  @Prop() disabled = false;
+  @Prop({ mutable: true }) disabled = false;
 
   /**
    * Set the layout of the text and icon in the segment.
@@ -92,8 +92,14 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
   };
 
   private updateState = () => {
-    if (this.segmentEl) {
-      this.checked = this.segmentEl.value === this.value;
+    const { segmentEl } = this;
+
+    if (segmentEl) {
+      this.checked = segmentEl.value === this.value;
+
+      if (segmentEl.disabled) {
+        this.disabled = true;
+      }
     }
   };
 
