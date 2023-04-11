@@ -22,4 +22,4 @@ runs:
       with:
         name: ionic-core
         output: core/CoreBuild.zip
-        paths: core/dist core/components core/css core/hydrate core/loader core/src/components.d.ts
+        paths: core/dist core/components core/css core/hydrate core/loader core/src/components.d.ts core/api.txt
