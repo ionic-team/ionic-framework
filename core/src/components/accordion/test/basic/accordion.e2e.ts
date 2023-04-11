@@ -15,7 +15,7 @@ test.describe('accordion: ionChange', () => {
   test.beforeEach(({ skip }) => {
     skip.rtl();
   });
-  test.only('should fire ionChange when interacting with accordions', async ({ page }) => {
+  test('should fire ionChange when interacting with accordions', async ({ page }) => {
     await page.setContent(`
       <ion-accordion-group value="second">
         <ion-accordion value="first">
