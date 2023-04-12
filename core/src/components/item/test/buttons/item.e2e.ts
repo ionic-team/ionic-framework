@@ -15,4 +15,14 @@ test.describe('item: buttons', () => {
 
     await expect(page).toHaveScreenshot(`item-buttons-diff-${page.getSnapshotSettings()}.png`);
   });
+
+  test('should not have visual regressions in dark', async ({ page, skip }) => {
+    skip.rtl();
+
+    await page.goto(`/src/components/item/test/buttons?dark=true`);
+
+    await page.setIonViewport();
+
+    await expect(page).toHaveScreenshot(`item-buttons-dark-diff-${page.getSnapshotSettings()}.png`);
+  });
 });

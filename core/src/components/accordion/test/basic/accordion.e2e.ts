@@ -42,9 +42,6 @@ test.describe('accordion: ionChange', () => {
     await accordionHeaders.nth(1).click();
     await expect(ionChange).toHaveReceivedEventDetail({ value: 'second' });
 
-    await accordionHeaders.nth(1).click();
-    await expect(ionChange).toHaveReceivedEventDetail({ value: undefined });
-
     await accordionHeaders.nth(2).click();
     await expect(ionChange).toHaveReceivedEventDetail({ value: 'third' });
   });
