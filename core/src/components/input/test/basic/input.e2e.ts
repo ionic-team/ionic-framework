@@ -5,7 +5,7 @@ test.describe('input: basic', () => {
   test.describe('input with overflow', () => {
     test('should not have visual regressions', async ({ page }) => {
       await page.setContent(`
-        <ion-input value="reallylonglonglonginputtoseetheedgesreallylonglonglonginputtoseetheedges"></ion-input>
+        <ion-input aria-label="Long Input" value="reallylonglonglonginputtoseetheedgesreallylonglonglonginputtoseetheedges"></ion-input>
       `);
       const input = page.locator('ion-input');
       // Validates the display of an input where text extends off the edge of the component.
@@ -15,7 +15,7 @@ test.describe('input: basic', () => {
   test.describe('input with placeholder', () => {
     test('should not have visual regressions', async ({ page }) => {
       await page.setContent(`
-        <ion-input placeholder="Placeholder"></ion-input>
+        <ion-input aria-label="Input with Placeholder" placeholder="Placeholder"></ion-input>
       `);
       const input = page.locator('ion-input');
       // Validates the display of an input with a placeholder.
