@@ -5,7 +5,7 @@ test.describe('input: a11y', () => {
   test('does not set a default aria-labelledby when there is not a neighboring ion-label', async ({ page, skip }) => {
     skip.rtl();
 
-    await page.setContent('<ion-input></ion-input>');
+    await page.setContent('<ion-input legacy="true"></ion-input>');
 
     const input = page.locator('ion-input > input');
     const ariaLabelledBy = await input.getAttribute('aria-labelledby');
