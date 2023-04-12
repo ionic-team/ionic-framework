@@ -16,6 +16,8 @@ export const IonApp = /*@__PURE__*/ defineComponent((_, { attrs, slots }) => {
   };
 });
 
+IonApp.name = "IonApp";
+
 /**
  * When rendering user components inside of
  * ion-modal, or ion-popover the component

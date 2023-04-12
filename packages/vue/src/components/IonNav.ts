@@ -22,3 +22,5 @@ export const IonNav = /*@__PURE__*/ defineComponent(() => {
     return h("ion-nav", { delegate }, views.value);
   };
 });
+
+IonNav.name = "IonNav";
