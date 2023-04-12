@@ -178,9 +178,9 @@ it('should not animate when false', async () => {
     `,
   });
 
-  const accordionGroup = page.body.querySelector('ion-accordion-group');
-  const accordion = accordionGroup?.querySelector('ion-accordion');
+  const accordionGroup = page.body.querySelector('ion-accordion-group')!;
+  const accordion = accordionGroup.querySelector('ion-accordion')!;
 
-  expect(accordionGroup?.animated).toEqual(false);
-  expect(accordion?.classList.contains('accordion-animated')).toEqual(false);
+  expect(accordionGroup.animated).toEqual(false);
+  expect(accordion.classList.contains('accordion-animated')).toEqual(false);
 });
