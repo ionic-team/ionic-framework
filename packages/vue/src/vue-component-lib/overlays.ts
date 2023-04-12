@@ -173,7 +173,7 @@ export const defineOverlayContainer = <Props extends object>(name: string, defin
 
   const Container = (controller !== undefined) ? createControllerComponent() : createInlineComponent();
 
-  Container.displayName = name;
+  Container.name = name;
 
   Container.props = {
     'isOpen': DEFAULT_EMPTY_PROP
