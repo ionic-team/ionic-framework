@@ -165,7 +165,7 @@ it('should set default values if not provided', async () => {
 });
 
 // Verifies fix for https://github.com/ionic-team/ionic-framework/issues/27047
-it('should not animate when false', async () => {
+it('should not have animated class when animated="false"', async () => {
   const page = await newSpecPage({
     components: [Item, Accordion, AccordionGroup],
     html: `
