@@ -163,3 +163,24 @@ it('should set default values if not provided', async () => {
 
   expect(accordion.classList.contains('accordion-collapsed')).toEqual(false);
 });
+
+// Verifies fix for https://github.com/ionic-team/ionic-framework/issues/27047
+it('should not animate when false', async () => {
+  const page = await newSpecPage({
+    components: [Item, Accordion, AccordionGroup],
+    html: `
+      <ion-accordion-group animated="false">
+        <ion-accordion>
+          <ion-item slot="header">Label</ion-item>
+          <div slot="content">Content</div>
+        </ion-accordion>
+      </ion-accordion-group>
+    `,
+  });
+
+  const accordionGroup = page.body.querySelector('ion-accordion-group');
+  const accordion = accordionGroup?.querySelector('ion-accordion');
+
+  expect(accordionGroup?.animated).toEqual(false);
+  expect(accordion?.classList.contains('accordion-animated')).toEqual(false);
+});

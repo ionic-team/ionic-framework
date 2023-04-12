@@ -72,31 +72,3 @@ test.describe('accordion: ionChange', () => {
     await expect(ionChange).not.toHaveReceivedEvent();
   });
 });
-
-test.describe('accordion: animated', () => {
-  test('should not animate when false', async ({ page, skip }) => {
-    test.info().annotations.push({
-      type: 'issue',
-      description: 'https://github.com/ionic-team/ionic-framework/issues/27047',
-    });
-
-    skip.rtl();
-    await page.setContent(`
-      <ion-accordion-group animated="false">
-        <ion-accordion>
-          <ion-item slot="header">Label</ion-item>
-          <div slot="content">Content</div>
-        </ion-accordion>
-      </ion-accordion-group>
-    `);
-
-    const accordionGroup = page.locator('ion-accordion-group');
-    const accordion = accordionGroup.locator('ion-accordion');
-
-    const accordionGroupAnimatedAttribute = await accordionGroup.getAttribute('animated');
-    expect(accordionGroupAnimatedAttribute).toBe('false');
-
-    const accordionClass = await accordion.getAttribute('class');
-    expect(accordionClass).not.toContain('accordion-animated');
-  });
-});
