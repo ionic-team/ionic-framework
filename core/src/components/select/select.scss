@@ -125,7 +125,7 @@ button {
 // --------------------------------------------------
 
 .select-icon {
-  @include margin(0, 0, 0, 4px);
+  @include margin(0, 0, 0, $select-icon-margin-start);
 
   position: relative;
 }
