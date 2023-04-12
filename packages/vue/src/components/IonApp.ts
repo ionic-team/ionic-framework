@@ -16,7 +16,7 @@ export const IonApp = /*@__PURE__*/ defineComponent((_, { attrs, slots }) => {
   };
 });
 
-IonApp.displayName = "IonApp";
+IonApp.name = "IonApp";
 
 /**
  * When rendering user components inside of
