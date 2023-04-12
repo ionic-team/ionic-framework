@@ -23,4 +23,4 @@ export const IonNav = /*@__PURE__*/ defineComponent(() => {
   };
 });
 
-IonNav.displayName = "IonNav";
+IonNav.name = "IonNav";
