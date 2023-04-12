@@ -25,7 +25,7 @@
 }
 
 .select-icon {
-  width: 13px;
+  width: $select-md-icon-size;
 
   transition: transform .15s cubic-bezier(.4, 0, .2, 1);
 
@@ -141,4 +141,12 @@
 
 :host(.select-shape-round) {
   --border-radius: 16px;
+}
+
+// Select Native Wrapper
+// ----------------------------------------------------------------
+
+:host(.select-label-placement-stacked) .native-wrapper,
+:host(.select-label-placement-floating) .native-wrapper {
+  width: calc(100% - $select-md-icon-size - $select-icon-margin-start);
 }

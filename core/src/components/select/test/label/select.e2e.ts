@@ -168,17 +168,17 @@ test.describe('select: label', () => {
         `select-label-floating-expanded-${page.getSnapshotSettings()}.png`
       );
     });
-    test('long label should truncate', async ({ page }) => {
+    test('long text should truncate', async ({ page }) => {
       await page.setContent(`
         <ion-select label="Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label" label-placement="floating" value="apples" placeholder="Select a Fruit">
-          <ion-select-option value="apples">Apples</ion-select-option>
+          <ion-select-option value="apples">Apples Apples Apples Apples Apples Apples Apples Apples</ion-select-option>
         </ion-select>
       `);
 
       const select = page.locator('ion-select');
 
       expect(await select.screenshot({ animations: 'disabled' })).toMatchSnapshot(
-        `select-label-floating-long-label-${page.getSnapshotSettings()}.png`
+        `select-label-floating-long-text-${page.getSnapshotSettings()}.png`
       );
     });
   });
@@ -219,17 +219,17 @@ test.describe('select: label', () => {
         `select-label-stacked-expanded-${page.getSnapshotSettings()}.png`
       );
     });
-    test('long label should truncate', async ({ page }) => {
+    test('long text should truncate', async ({ page }) => {
       await page.setContent(`
         <ion-select label="Label Label Label Label Label Label Label Label Label Label Label Label Label Label Label" label-placement="stacked" value="apples" placeholder="Select a Fruit">
-          <ion-select-option value="apples">Apples</ion-select-option>
+          <ion-select-option value="apples">Apples Apples Apples Apples Apples Apples Apples Apples</ion-select-option>
         </ion-select>
       `);
 
       const select = page.locator('ion-select');
 
       expect(await select.screenshot({ animations: 'disabled' })).toMatchSnapshot(
-        `select-label-stacked-long-label-${page.getSnapshotSettings()}.png`
+        `select-label-stacked-long-text-${page.getSnapshotSettings()}.png`
       );
     });
   });
