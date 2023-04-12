@@ -40,11 +40,6 @@
           </ion-item>
 
           <ion-item>
-            <ion-label>Disabled Datetime</ion-label>
-            <ion-datetime disabled value="2019-01-01"></ion-datetime>
-          </ion-item>
-
-          <ion-item>
             <ion-select label="Disabled Select" disabled value="n64">
               <ion-select-option value="">No Game Console</ion-select-option>
               <ion-select-option value="nes">NES</ion-select-option>
@@ -113,7 +108,7 @@
           </ion-item>
 
           <ion-item>
-            <ion-label>Disabled Selects</ion-label>
+            <ion-label slot="start">Disabled Selects</ion-label>
             <ion-select aria-label="Month" placeholder="month">
               <ion-select-option value="1">January</ion-select-option>
               <ion-select-option value="2">February</ion-select-option>
@@ -151,19 +146,7 @@
           </ion-item>
 
           <ion-item>
-            <ion-input label="Disabled Input" slot="start" placeholder="Disabled" disabled></ion-input>
-            <ion-segment>
-              <ion-segment-button value="friends">
-                <ion-label>Friends</ion-label>
-              </ion-segment-button>
-              <ion-segment-button value="enemies">
-                <ion-label>Enemies</ion-label>
-              </ion-segment-button>
-            </ion-segment>
-          </ion-item>
-
-          <ion-item>
-            <ion-checkbox slot="start" disabled> Disabled Checkbox </ion-checkbox>
+            <ion-checkbox slot="start" disabled aria-label="Checkbox"></ion-checkbox>
             <ion-searchbar></ion-searchbar>
           </ion-item>
         </ion-list>
