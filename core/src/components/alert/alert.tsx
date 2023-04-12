@@ -1,12 +1,8 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Listen, Method, Prop, Watch, forceUpdate, h } from '@stencil/core';
-
-import { config } from '../../global/config';
-import { getIonMode } from '../../global/ionic-global';
-import type { AnimationBuilder, CssClassMap, OverlayInterface, FrameworkDelegate } from '../../interface';
-import { ENABLE_HTML_CONTENT_DEFAULT } from '../../utils/config';
-import type { Gesture } from '../../utils/gesture';
-import { createButtonActiveGesture } from '../../utils/gesture/button-active';
+import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
+import type { Gesture } from '@utils/gesture';
+import { createButtonActiveGesture } from '@utils/gesture/button-active';
 import {
   createDelegateController,
   createTriggerController,
@@ -17,11 +13,15 @@ import {
   prepareOverlay,
   present,
   safeCall,
-} from '../../utils/overlays';
+} from '@utils/overlays';
+import { sanitizeDOMString } from '@utils/sanitization';
+import { getClassMap } from '@utils/theme';
+
+import { config } from '../../global/config';
+import { getIonMode } from '../../global/ionic-global';
+import type { AnimationBuilder, CssClassMap, OverlayInterface, FrameworkDelegate } from '../../interface';
 import type { OverlayEventDetail } from '../../utils/overlays-interface';
 import type { IonicSafeString } from '../../utils/sanitization';
-import { sanitizeDOMString } from '../../utils/sanitization';
-import { getClassMap } from '../../utils/theme';
 
 import type { AlertButton, AlertInput } from './alert-interface';
 import { iosEnterAnimation } from './animations/ios.enter';

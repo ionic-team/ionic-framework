@@ -1,8 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
-
-import { getIonMode } from '../../global/ionic-global';
-import type { AnimationBuilder, CssClassMap, OverlayInterface, FrameworkDelegate } from '../../interface';
 import {
   createDelegateController,
   createTriggerController,
@@ -13,9 +10,12 @@ import {
   prepareOverlay,
   present,
   safeCall,
-} from '../../utils/overlays';
+} from '@utils/overlays';
+import { getClassMap } from '@utils/theme';
+
+import { getIonMode } from '../../global/ionic-global';
+import type { AnimationBuilder, CssClassMap, OverlayInterface, FrameworkDelegate } from '../../interface';
 import type { OverlayEventDetail } from '../../utils/overlays-interface';
-import { getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';

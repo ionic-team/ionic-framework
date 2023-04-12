@@ -1,5 +1,23 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
+import { findIonContent, printIonContentErrorMsg } from '@utils/content';
+import { CoreDelegate, attachComponent, detachComponent } from '@utils/framework-delegate';
+import { raf, inheritAttributes, hasLazyBuild } from '@utils/helpers';
+import type { Attributes } from '@utils/helpers';
+import { printIonWarning } from '@utils/logging';
+import { Style as StatusBarStyle, StatusBar } from '@utils/native/status-bar';
+import {
+  GESTURE,
+  BACKDROP,
+  activeAnimations,
+  dismiss,
+  eventMethod,
+  prepareOverlay,
+  present,
+  createTriggerController,
+} from '@utils/overlays';
+import { getClassMap } from '@utils/theme';
+import { deepReady } from '@utils/transition';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
@@ -12,26 +30,8 @@ import type {
   Gesture,
   OverlayInterface,
 } from '../../interface';
-import { findIonContent, printIonContentErrorMsg } from '../../utils/content';
-import { CoreDelegate, attachComponent, detachComponent } from '../../utils/framework-delegate';
-import { raf, inheritAttributes, hasLazyBuild } from '../../utils/helpers';
-import type { Attributes } from '../../utils/helpers';
 import { KEYBOARD_DID_OPEN } from '../../utils/keyboard/keyboard';
-import { printIonWarning } from '../../utils/logging';
-import { Style as StatusBarStyle, StatusBar } from '../../utils/native/status-bar';
-import {
-  GESTURE,
-  BACKDROP,
-  activeAnimations,
-  dismiss,
-  eventMethod,
-  prepareOverlay,
-  present,
-  createTriggerController,
-} from '../../utils/overlays';
 import type { OverlayEventDetail } from '../../utils/overlays-interface';
-import { getClassMap } from '../../utils/theme';
-import { deepReady } from '../../utils/transition';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
