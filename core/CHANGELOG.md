@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.7.3](https://github.com/ionic-team/ionic/compare/v6.7.2...v6.7.3) (2023-04-12)
+
+
+### Bug Fixes
+
+* **menu:** refs are not destroyed on unmount ([#27158](https://github.com/ionic-team/ionic/issues/27158)) ([ab6cdff](https://github.com/ionic-team/ionic/commit/ab6cdff97e710da47b113642f9bcb735a515375e))
+
+
+
+
+
 ## [6.7.2](https://github.com/ionic-team/ionic/compare/v6.7.1...v6.7.2) (2023-04-05)
 
 
