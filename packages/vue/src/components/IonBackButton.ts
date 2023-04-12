@@ -37,4 +37,4 @@ export const IonBackButton = /*@__PURE__*/ defineComponent(
   }
 );
 
-IonBackButton.name = "IonBackButton";
+IonBackButton.displayName = "IonBackButton";
