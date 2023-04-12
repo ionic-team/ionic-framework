@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.2](https://github.com/ionic-team/ionic-framework/compare/v7.0.1...v7.0.2) (2023-04-12)
+
+
+### Bug Fixes
+
+* **item:** ios active state has correct contrast ([#27134](https://github.com/ionic-team/ionic-framework/issues/27134)) ([bbdb0ca](https://github.com/ionic-team/ionic-framework/commit/bbdb0ca480d7cd46c030d1947ced712653cf122b)), closes [#27130](https://github.com/ionic-team/ionic-framework/issues/27130)
+* **menu:** refs are not destroyed on unmount ([#27141](https://github.com/ionic-team/ionic-framework/issues/27141)) ([b81b0d1](https://github.com/ionic-team/ionic-framework/commit/b81b0d14258d7b8caf028e6cfe81772ed2f5f119)), closes [#24907](https://github.com/ionic-team/ionic-framework/issues/24907)
+* **radio:** takes up full height in item ([#27168](https://github.com/ionic-team/ionic-framework/issues/27168)) ([987c79f](https://github.com/ionic-team/ionic-framework/commit/987c79f05b6791084c4526d80c8c28a28047dd58)), closes [#27159](https://github.com/ionic-team/ionic-framework/issues/27159)
+* **segment:** segment disables segment buttons created asynchronously ([#27155](https://github.com/ionic-team/ionic-framework/issues/27155)) ([ad6b130](https://github.com/ionic-team/ionic-framework/commit/ad6b1301cf8528f7c9ad3c52730f01861117b380)), closes [#25396](https://github.com/ionic-team/ionic-framework/issues/25396)
+
+
+
+
+
 ## [7.0.1](https://github.com/ionic-team/ionic-framework/compare/v7.0.0...v7.0.1) (2023-04-05)
 
 
