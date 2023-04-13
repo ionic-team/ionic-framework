@@ -367,13 +367,6 @@ export class Input implements ComponentInterface {
 
   componentDidLoad() {
     this.originalIonInput = this.ionInput;
-    const nativeInput = this.nativeInput;
-    if (nativeInput) {
-      // TODO: FW-729 Update to JSX bindings when Stencil resolves bug with:
-      // https://github.com/ionic-team/stencil/issues/3235
-      nativeInput.addEventListener('compositionstart', this.onCompositionStart);
-      nativeInput.addEventListener('compositionend', this.onCompositionEnd);
-    }
   }
 
   disconnectedCallback() {
@@ -383,11 +376,6 @@ export class Input implements ComponentInterface {
           detail: this.el,
         })
       );
-    }
-    const nativeInput = this.nativeInput;
-    if (nativeInput) {
-      nativeInput.removeEventListener('compositionstart', this.onCompositionStart);
-      nativeInput.removeEventListener('compositionend', this.onCompositionEnd);
     }
   }
 
@@ -690,6 +678,8 @@ export class Input implements ComponentInterface {
               onBlur={this.onBlur}
               onFocus={this.onFocus}
               onKeyDown={this.onKeydown}
+              onCompositionstart={this.onCompositionStart}
+              onCompositionend={this.onCompositionEnd}
               {...this.inheritedAttributes}
             />
             {this.clearInput && !readonly && !disabled && (

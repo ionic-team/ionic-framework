@@ -11,7 +11,7 @@ test.describe('list: inset', () => {
         <div class="wrapper" style="display: flex">
           <ion-list inset="true" style="width: 100%" lines="full">
             <ion-item>
-              <ion-input value="Input Text"></ion-input>
+              <ion-input aria-label="Input" value="Input Text"></ion-input>
             </ion-item>
             <ion-item>Pokémon Yellow</ion-item>
             <ion-item lines="inset">Super Metroid (with Inset Line)</ion-item>
@@ -33,7 +33,7 @@ test.describe('list: inset', () => {
         <div class="wrapper" style="display: flex">
           <ion-list inset="true" style="width: 100%" lines="inset">
             <ion-item>
-              <ion-input value="Input Text"></ion-input>
+              <ion-input aria-label="Input" value="Input Text"></ion-input>
             </ion-item>
             <ion-item>Pokémon Yellow</ion-item>
             <ion-item lines="full">Super Metroid (with Full Line)</ion-item>
@@ -55,7 +55,7 @@ test.describe('list: inset', () => {
         <div class="wrapper" style="display: flex">
           <ion-list inset="true" style="width: 100%" lines="none">
             <ion-item>
-              <ion-input value="Input Text"></ion-input>
+              <ion-input aria-label="Input" value="Input Text"></ion-input>
             </ion-item>
             <ion-item>Pokémon Yellow</ion-item>
             <ion-item lines="full">Super Metroid (with Full Line)</ion-item>
