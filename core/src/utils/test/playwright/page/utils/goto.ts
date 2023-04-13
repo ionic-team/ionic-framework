@@ -8,7 +8,7 @@ import type { Page, TestInfo } from '@playwright/test';
  * to be hydrated before proceeding with the test.
  */
 export const goto = async (page: Page, url: string, options: any, testInfo: TestInfo, originalFn: typeof page.goto) => {
-  const { mode, rtl, _testing } = testInfo.project.metadata;
+  const { mode, rtl, theme, _testing } = testInfo.project.metadata;
 
   const splitUrl = url.split('?');
   const paramsString = splitUrl[1];
@@ -20,6 +20,7 @@ export const goto = async (page: Page, url: string, options: any, testInfo: Test
   const urlToParams = new URLSearchParams(paramsString);
   const formattedMode = urlToParams.get('ionic:mode') ?? mode;
   const formattedRtl = urlToParams.get('rtl') ?? rtl;
+  const formattedTheme = urlToParams.get('theme') ?? theme;
   const ionicTesting = urlToParams.get('ionic:_testing') ?? _testing;
 
   /**
@@ -27,6 +28,7 @@ export const goto = async (page: Page, url: string, options: any, testInfo: Test
    */
   urlToParams.delete('ionic:mode');
   urlToParams.delete('rtl');
+  urlToParams.delete('theme');
   urlToParams.delete('ionic:_testing');
 
   /**
@@ -37,7 +39,7 @@ export const goto = async (page: Page, url: string, options: any, testInfo: Test
   const remainingQueryParams = decodeURIComponent(urlToParams.toString());
   const remainingQueryParamsString = remainingQueryParams == '' ? '' : `&${remainingQueryParams}`;
 
-  const formattedUrl = `${splitUrl[0]}?ionic:_testing=${ionicTesting}&ionic:mode=${formattedMode}&rtl=${formattedRtl}${remainingQueryParamsString}`;
+  const formattedUrl = `${splitUrl[0]}?ionic:_testing=${ionicTesting}&ionic:mode=${formattedMode}&rtl=${formattedRtl}&theme=${formattedTheme}${remainingQueryParamsString}`;
 
   testInfo.annotations.push({
     type: 'mode',
@@ -50,6 +52,11 @@ export const goto = async (page: Page, url: string, options: any, testInfo: Test
       description: 'true',
     });
   }
+
+  testInfo.annotations.push({
+    type: 'theme',
+    description: formattedTheme,
+  });
 
   const result = await Promise.all([
     page.waitForFunction(() => (window as any).testAppLoaded === true, { timeout: 4750 }),

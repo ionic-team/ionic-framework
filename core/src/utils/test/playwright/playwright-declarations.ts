@@ -104,6 +104,7 @@ export interface E2ESkip {
   rtl: (reason?: string) => void;
   browser: (browserNameOrCallback: BrowserNameOrCallback, reason?: string) => void;
   mode: (mode: 'md' | 'ios', reason?: string) => void;
+  theme: (theme: 'default' | 'dark', reason?: string) => void;
 }
 
 export interface SetIonViewportOptions {

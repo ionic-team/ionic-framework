@@ -54,6 +54,16 @@ const generateProjects = () => {
         metadata: {
           mode,
           rtl: false,
+          theme: 'default',
+          _testing: true
+        }
+      });
+      projectsWithMetadata.push({
+        ...project,
+        metadata: {
+          mode,
+          rtl: false,
+          theme: 'dark',
           _testing: true
         }
       });
@@ -62,6 +72,7 @@ const generateProjects = () => {
         metadata: {
           mode,
           rtl: true,
+          theme: 'default',
           _testing: true
         }
       });

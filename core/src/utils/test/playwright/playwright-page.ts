@@ -84,5 +84,8 @@ export const test = base.extend<CustomFixtures>({
     mode: (mode: string, reason = `The functionality that is being tested is not applicable to ${mode} mode`) => {
       base.skip(base.info().project.metadata.mode === mode, reason);
     },
+    theme: (theme: string, reason = `The functionality that is being tested is not applicable to ${theme} theme`) => {
+      base.skip(base.info().project.metadata.theme === theme, reason);
+    },
   },
 });
