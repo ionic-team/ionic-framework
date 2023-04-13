@@ -103,7 +103,8 @@
 
   <style>
     body {
-      background: #f6f6f6;
+      background: var(--ion-color-step-50, #f6f6f6);
+      color: var(--ion-text-color, initial);
     }
 
     .grid {
@@ -116,6 +117,7 @@
     .custom-accordion-button {
       width: 100%;
       background: transparent;
+      color: inherit;
       outline: none;
       text-align: left;
       padding: 20px 16px;
@@ -126,7 +128,7 @@
     }
 
     ion-accordion {
-      border-bottom: 1px solid #ddd;
+      border-bottom: 1px solid var(--ion-color-step-150, #ddd);
     }
 
     ion-accordion:last-child {
@@ -135,11 +137,13 @@
 
     .custom-colors ion-accordion:first-child {
       background: rgb(245, 116, 116);
+      color: black;
       border-bottom-color: red;
     }
 
     .custom-colors ion-accordion:last-child {
       background: rgb(160, 160, 250);
+      color: black;
     }
   </style>
 </html>
