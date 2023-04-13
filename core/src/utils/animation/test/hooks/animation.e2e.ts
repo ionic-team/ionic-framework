@@ -5,6 +5,7 @@ import type { E2EPage } from '@utils/test/playwright';
 test.describe('animation: hooks', async () => {
   test.beforeEach(({ skip }) => {
     skip.rtl();
+    skip.theme('dark');
     skip.mode('ios');
   });
 
