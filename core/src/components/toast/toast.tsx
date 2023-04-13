@@ -422,7 +422,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
   }
 
   private renderToastMessage() {
-    const { customHTMLEnabled, message } = this;
+    const { customHTMLEnabled, message, revealContentToScreenReader } = this;
     if (customHTMLEnabled) {
       return <div class="toast-message" part="message" innerHTML={sanitizeDOMString(message)}></div>;
     }
@@ -482,17 +482,31 @@ export class Toast implements ComponentInterface, OverlayInterface {
 
             <div
               class="toast-content"
-              role="region"
+              role="status"
               aria-atomic="true"
               aria-live="polite"
-              aria-hidden={revealContentToScreenReader ? null : 'true'}
             >
-              {this.header !== undefined && (
-                <div class="toast-header" part="header">
+              {!revealContentToScreenReader && this.header !== undefined && (
+                <div key="a" aria-hidden="true" class="toast-header" part="header">
                   {this.header}
                 </div>
               )}
-              {this.message !== undefined && this.renderToastMessage()}
+              {!revealContentToScreenReader && this.message !== undefined && (
+                <div key="c" class="toast-message" aria-hidden="true" part="message">
+                  {this.message}
+                </div>
+              )}
+
+              {revealContentToScreenReader && this.header !== undefined && (
+                <div key="b" class="toast-header" part="header">
+                  {this.header}
+                </div>
+              )}
+              {revealContentToScreenReader && this.message !== undefined && (
+                <div key="d" class="toast-message" part="message">
+                  {this.message}
+                </div>
+              )}
             </div>
 
             {this.renderButtons(endButtons, 'end')}
