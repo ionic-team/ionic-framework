@@ -431,7 +431,6 @@ export class Toast implements ComponentInterface, OverlayInterface {
       [`toast-${this.position}`]: true,
       [`toast-layout-${layout}`]: true,
     };
-    const role = allButtons.length > 0 ? 'dialog' : 'status';
 
     /**
      * Stacked buttons are only meant to be
@@ -446,9 +445,6 @@ export class Toast implements ComponentInterface, OverlayInterface {
 
     return (
       <Host
-        aria-live="polite"
-        aria-atomic="true"
-        role={role}
         tabindex="-1"
         {...(this.htmlAttributes as any)}
         style={{
@@ -470,7 +466,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
               <ion-icon class="toast-icon" part="icon" icon={this.icon} lazy={false} aria-hidden="true"></ion-icon>
             )}
 
-            <div class="toast-content">
+            <div class="toast-content" role="status" aria-live="polite">
               {this.header !== undefined && (
                 <div class="toast-header" part="header">
                   {this.header}
