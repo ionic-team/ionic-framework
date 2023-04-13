@@ -184,7 +184,7 @@ export const defineContainer = <Props, VModelType = string | number | boolean>(
     };
   });
 
-  Container.displayName = name;
+  Container.name = name;
 
   Container.props = {
     [ROUTER_LINK_VALUE]: DEFAULT_EMPTY_PROP,
