@@ -156,3 +156,14 @@
 
   --ion-card-background: #1e1e1e;
 }
+
+
+/*
+ * This is required for all e2e tests that do not wrap
+ * the components in an ion-content (most a11y tests).
+ * It ensures that all text will switch colors with dark
+ * mode and pass any axe color contrast tests.
+ */
+ body {
+  color: var(--ion-text-color, initial);
+}
