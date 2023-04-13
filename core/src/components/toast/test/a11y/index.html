@@ -18,16 +18,16 @@
       <main>
         <h1 style="background-color: white">Toast - a11y</h1>
 
-        <button id="polite" onclick="presentToast({ message: 'This is a toast message' })">Present Toast</button>
-        <button
-          id="assertive"
-          onclick="presentToast({ message: 'This is an assertive toast message', htmlAttributes: { 'aria-live': 'assertive' } })"
-        >
-          Present Assertive Toast
-        </button>
+        <button id="inline-toast-trigger">Present Inline Toast</button>
+        <ion-toast id="inline-toast" trigger="inline-toast-trigger" icon="person" header="Inline Toast Header" message="Inline Toast Message"></ion-toast>
+
+        <button id="controller-toast-trigger" onclick="presentToast({ icon: 'person', header: 'Controller Toast Header', message: 'Controller Toast Message', buttons: ['Ok'] })">Present Controller Toast</button>
       </main>
     </ion-app>
     <script>
+      const inlineToast = document.querySelector('#inline-toast');
+      inlineToast.buttons = ['Ok'];
+
       const presentToast = async (opts) => {
         const toast = await toastController.create(opts);
 
