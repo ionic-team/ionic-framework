@@ -25,7 +25,10 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo) =
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
         <link href="${baseUrl}/css/ionic.bundle.css" rel="stylesheet" />
         <link href="${baseUrl}/scripts/testing/styles.css" rel="stylesheet" />
-        ${testInfo.project.metadata.theme == 'dark' && '<link href="' + baseUrl + '/scripts/testing/dark.css" rel="stylesheet" />'}
+        ${
+          testInfo.project.metadata.theme == 'dark' &&
+          '<link href="' + baseUrl + '/scripts/testing/dark.css" rel="stylesheet" />'
+        }
         <script src="${baseUrl}/scripts/testing/scripts.js"></script>
         <script type="module" src="${baseUrl}/dist/ionic/ionic.esm.js"></script>
         <script>
