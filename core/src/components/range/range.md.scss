@@ -30,6 +30,10 @@
   @include padding($range-md-padding-vertical, $range-md-padding-horizontal);
 }
 
+:host(.in-item:not(.range-has-label):not(.legacy-range)) .range-slider {
+  @include margin(null, $range-md-padding-horizontal);
+}
+
 :host(.ion-color) .range-bar {
   background: current-color(base, 0.26);
 }
@@ -53,7 +57,12 @@
 }
 
 :host(.range-has-pin) {
-  @include padding($range-md-padding-vertical + $range-md-pin-font-size + $range-md-pin-padding-vertical, null, null, null);
+  @include padding(
+    $range-md-padding-vertical + $range-md-pin-font-size + $range-md-pin-padding-vertical,
+    null,
+    null,
+    null
+  );
 }
 
 .range-bar-active {
@@ -65,7 +74,7 @@
 }
 
 .range-knob {
-  transform: scale(.67);
+  transform: scale(0.67);
 
   transition-duration: 120ms;
   transition-property: transform, background-color, border;
@@ -115,7 +124,7 @@
 .range-pin {
   @include padding($range-md-pin-padding-vertical, $range-md-pin-padding-horizontal);
   @include border-radius(50%);
-  @include transform(translate3d(0, 0, 0), scale(.01));
+  @include transform(translate3d(0, 0, 0), scale(0.01));
 
   display: inline-block;
   position: relative;
@@ -209,7 +218,7 @@
 }
 
 :host(.range-disabled) .range-knob {
-  transform: scale(.55);
+  transform: scale(0.55);
 
   outline: 5px solid #fff;
 

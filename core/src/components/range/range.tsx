@@ -610,7 +610,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
   }
 
   private renderRange() {
-    const { disabled, el, rangeId, pin, pressedKnob, labelPlacement, label } = this;
+    const { disabled, el, rangeId, pin, pressedKnob, labelPlacement, hasLabel, label } = this;
 
     const mode = getIonMode(this);
 
@@ -624,6 +624,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
         class={createColorClasses(this.color, {
           [mode]: true,
           'in-item': hostContext('ion-item', el),
+          'range-has-label': hasLabel,
           'range-disabled': disabled,
           'range-pressed': pressedKnob !== undefined,
           'range-has-pin': pin,
