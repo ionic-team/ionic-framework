@@ -6,7 +6,7 @@ Ionic Framework supports multiple versions of React. As a result, we need to ver
 
 The React test app supports syncing your locally built changes for validation.
 
-1. Build the `@ionic/core`, `@ionic/react`, and `@ionic/react-router` projects using `npm run build`.
+1. Build the `core`, `packages/react`, and `packages/react-router` directories using `npm run build`.
 2. [Build the React test app](#test-app-build-structure).
 3. Navigate to the built test app.
 4. Install dependencies using `npm install`.
