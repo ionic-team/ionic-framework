@@ -20,7 +20,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       await page.setContent(
         `<ion-app>
           <ion-content>
-            <ion-range min="0" max="100" value="80" legacy="true"></ion-range>
+            <ion-range aria-label="Range" min="0" max="100" value="80"></ion-range>
           </ion-content>
         </ion-app>
           `,
@@ -54,7 +54,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       await page.setContent(
         `<ion-app>
           <ion-content>
-            <ion-range min="0" max="100" value="50" pin="true" legacy="true"></ion-range>
+            <ion-range aria-label="Range" min="0" max="100" value="50" pin="true"></ion-range>
           </ion-content>
         </ion-app>
         `,
