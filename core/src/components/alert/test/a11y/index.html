@@ -9,11 +9,17 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <script type="module">
+      import { alertController } from '../../../../dist/ionic/index.esm.js';
+      window.alertController = alertController;
+    </script>
+
+    <style>
+      body {
+        color: var(--ion-text-color, initial);
+      }
+    </style>
   </head>
-  <script type="module">
-    import { alertController } from '../../../../dist/ionic/index.esm.js';
-    window.alertController = alertController;
-  </script>
 
   <body>
     <main class="ion-padding">

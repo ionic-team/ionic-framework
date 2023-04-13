@@ -12,11 +12,18 @@
       import { toastController } from '../../../../dist/ionic/index.esm.js';
       window.toastController = toastController;
     </script>
+
+    <style>
+      body {
+        color: var(--ion-text-color, initial);
+      }
+    </style>
   </head>
+
   <body>
     <ion-app>
       <main>
-        <h1 style="background-color: white">Toast - a11y</h1>
+        <h1>Toast - a11y</h1>
 
         <button id="polite" onclick="presentToast({ message: 'This is a toast message' })">Present Toast</button>
         <button
