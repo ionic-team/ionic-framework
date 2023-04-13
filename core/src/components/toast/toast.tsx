@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Watch, Component, Element, Event, h, Host, Method, Prop } from '@stencil/core';
+import { Watch, Component, Element, Event, h, Host, Method, Prop, State } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
@@ -54,6 +54,16 @@ export class Toast implements ComponentInterface, OverlayInterface {
   private durationTimeout?: ReturnType<typeof setTimeout>;
 
   presented = false;
+
+  /**
+   * Some screen readers such as NVDA do not
+   * announce content with aria-live that
+   * is initially hidden. To work around this,
+   * we set aria-hidden="true" and then remove
+   * the aria-hidden once the toast content is
+   * fully visible.
+   */
+  @State() revealContentToScreenReader = false;
 
   @Element() el!: HTMLIonToastElement;
 
@@ -268,6 +278,9 @@ export class Toast implements ComponentInterface, OverlayInterface {
       this.position
     );
     await this.currentTransition;
+
+    this.revealContentToScreenReader = true;
+
     this.currentTransition = undefined;
 
     if (this.duration > 0) {
@@ -303,6 +316,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
 
     if (dismissed) {
       this.delegateController.removeViewFromDom();
+      this.revealContentToScreenReader = false;
     }
 
     return dismissed;
@@ -421,7 +435,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
   }
 
   render() {
-    const { layout, el } = this;
+    const { layout, el, revealContentToScreenReader } = this;
     const allButtons = this.getButtons();
     const startButtons = allButtons.filter((b) => b.side === 'start');
     const endButtons = allButtons.filter((b) => b.side !== 'start');
@@ -466,7 +480,13 @@ export class Toast implements ComponentInterface, OverlayInterface {
               <ion-icon class="toast-icon" part="icon" icon={this.icon} lazy={false} aria-hidden="true"></ion-icon>
             )}
 
-            <div class="toast-content" role="status" aria-live="polite">
+            <div
+              class="toast-content"
+              role="region"
+              aria-atomic="true"
+              aria-live="polite"
+              aria-hidden={revealContentToScreenReader ? null : 'true'}
+            >
               {this.header !== undefined && (
                 <div class="toast-header" part="header">
                   {this.header}

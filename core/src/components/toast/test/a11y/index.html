@@ -49,6 +49,11 @@
 
       const updateContent = () => {
         const toasts = document.querySelectorAll('ion-toast');
+        /**
+         * Note: Multiple updates to the props
+         * may cause screen readers like NVDA to announce
+         * the entire content multiple times.
+         */
         toasts.forEach((toast) => {
           toast.header = 'Updated Header';
           toast.message = 'Updated Message';
