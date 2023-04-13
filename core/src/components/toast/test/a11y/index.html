@@ -19,9 +19,20 @@
         <h1 style="background-color: white">Toast - a11y</h1>
 
         <button id="inline-toast-trigger">Present Inline Toast</button>
-        <ion-toast id="inline-toast" trigger="inline-toast-trigger" icon="person" header="Inline Toast Header" message="Inline Toast Message"></ion-toast>
+        <ion-toast
+          id="inline-toast"
+          trigger="inline-toast-trigger"
+          icon="person"
+          header="Inline Toast Header"
+          message="Inline Toast Message"
+        ></ion-toast>
 
-        <button id="controller-toast-trigger" onclick="presentToast({ icon: 'person', header: 'Controller Toast Header', message: 'Controller Toast Message', buttons: ['Ok'] })">Present Controller Toast</button>
+        <button
+          id="controller-toast-trigger"
+          onclick="presentToast({ icon: 'person', header: 'Controller Toast Header', message: 'Controller Toast Message', buttons: ['Ok'] })"
+        >
+          Present Controller Toast
+        </button>
       </main>
     </ion-app>
     <script>
