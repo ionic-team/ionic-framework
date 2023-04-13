@@ -6,7 +6,7 @@ Ionic Framework supports multiple versions of Angular. As a result, we need to v
 
 The Angular test app supports syncing your locally built changes for validation.
 
-1. Build the `core` and `packages/angular` projects using `npm run build`.
+1. Build the `core` and `packages/angular` directories using `npm run build`.
 2. [Build the Angular test app](#test-app-build-structure).
 3. Navigate to the built test app.
 4. Install dependencies using `npm install`.
