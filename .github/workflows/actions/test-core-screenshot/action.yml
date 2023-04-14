@@ -7,6 +7,9 @@ inputs:
     description: 'Playwright total number of test shards (ex: 4)'
   update:
     description: 'Whether or not to update the reference snapshots'
+  commandModifier:
+    description: 'Command modifier to run'
+
 runs:
   using: 'composite'
   steps:
@@ -24,7 +27,7 @@ runs:
       working-directory: ./core
     - name: Test
       if: inputs.update != 'true'
-      run: npm run test.e2e -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }}
+      run: npm run test.e2e${{ inputs.commandModifier }} -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }}
       shell: bash
       working-directory: ./core
     - name: Test and Update
@@ -46,7 +49,7 @@ runs:
       # which is why we not using the upload-archive
       # composite step here.
       run: |
-        npm run test.e2e -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }} --update-snapshots
+        npm run test.e2e${{ inputs.commandModifier }} -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }} --update-snapshots
         git add src/\*.png --force
         mkdir updated-screenshots
         cd ../ && rsync -R --progress $(git diff --name-only --cached) core/updated-screenshots
