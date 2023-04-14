@@ -7,6 +7,7 @@ test.describe('item: disabled state', () => {
 
     await page.setIonViewport();
 
+    // TODO: FW-4037 - Fix label color inconsistency between disabled controls
     await expect(page).toHaveScreenshot(`item-disabled-diff-${page.getSnapshotSettings()}.png`);
   });
 });
