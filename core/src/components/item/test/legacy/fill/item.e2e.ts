@@ -3,7 +3,7 @@ import { test } from '@utils/test/playwright';
 
 test.describe('item: fill', () => {
   test('should not have visual regressions', async ({ page }) => {
-    await page.goto(`/src/components/item/test/fill`);
+    await page.goto(`/src/components/item/test/legacy/fill`);
 
     await page.setIonViewport();
 
