@@ -422,7 +422,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
   }
 
   private renderToastMessage() {
-    const { customHTMLEnabled, message, revealContentToScreenReader } = this;
+    const { customHTMLEnabled, message } = this;
     if (customHTMLEnabled) {
       return <div class="toast-message" part="message" innerHTML={sanitizeDOMString(message)}></div>;
     }
@@ -480,30 +480,25 @@ export class Toast implements ComponentInterface, OverlayInterface {
               <ion-icon class="toast-icon" part="icon" icon={this.icon} lazy={false} aria-hidden="true"></ion-icon>
             )}
 
-            <div
-              class="toast-content"
-              role="status"
-              aria-atomic="true"
-              aria-live="polite"
-            >
+            <div class="toast-content" role="status" aria-atomic="true" aria-live="polite">
               {!revealContentToScreenReader && this.header !== undefined && (
-                <div key="a" aria-hidden="true" class="toast-header" part="header">
+                <div key="oldHeader" aria-hidden="true" class="toast-header" part="header">
                   {this.header}
                 </div>
               )}
               {!revealContentToScreenReader && this.message !== undefined && (
-                <div key="c" class="toast-message" aria-hidden="true" part="message">
+                <div key="oldMessage" class="toast-message" aria-hidden="true" part="message">
                   {this.message}
                 </div>
               )}
 
               {revealContentToScreenReader && this.header !== undefined && (
-                <div key="b" class="toast-header" part="header">
+                <div key="header" class="toast-header" part="header">
                   {this.header}
                 </div>
               )}
               {revealContentToScreenReader && this.message !== undefined && (
-                <div key="d" class="toast-message" part="message">
+                <div key="message" class="toast-message" part="message">
                   {this.message}
                 </div>
               )}
