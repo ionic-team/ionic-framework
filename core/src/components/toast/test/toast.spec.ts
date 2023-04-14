@@ -2,7 +2,7 @@ import { newSpecPage } from '@stencil/core/testing';
 import { Toast } from '../toast';
 import { config } from '../../../global/config';
 
-describe('alert: custom html', () => {
+describe('toast: custom html', () => {
   it('should not allow for custom html by default', async () => {
     const page = await newSpecPage({
       components: [Toast],
