@@ -276,6 +276,11 @@ export class Toast implements ComponentInterface, OverlayInterface {
     );
     await this.currentTransition;
 
+    /**
+     * Content is revealed to screen readers after
+     * the transition to avoid jank since this
+     * state updates will cause a re-render.
+     */
     this.revealContentToScreenReader = true;
 
     this.currentTransition = undefined;
