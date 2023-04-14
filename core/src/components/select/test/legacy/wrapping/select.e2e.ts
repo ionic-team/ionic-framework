@@ -6,7 +6,7 @@ test.describe('select: wrapping', () => {
     skip.rtl();
 
     await page.setContent(`
-      <ion-select value="nowrap">
+      <ion-select value="nowrap" legacy="true">
         <ion-select-option value="nowrap">Should not wrap when no label exists and no class is added to make the text wrap</ion-select-option>
       </ion-select>
     `);
@@ -19,7 +19,7 @@ test.describe('select: wrapping', () => {
     skip.rtl();
 
     await page.setContent(`
-      <ion-select value="wrap" class="ion-text-wrap">
+      <ion-select value="wrap" legacy="true" class="ion-text-wrap">
         <ion-select-option value="wrap">Should wrap when no label exists and really long text exists to make it wrap the text</ion-select-option>
       </ion-select>
     `);
