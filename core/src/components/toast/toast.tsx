@@ -413,15 +413,31 @@ export class Toast implements ComponentInterface, OverlayInterface {
     );
   }
 
-  private renderToastMessage() {
+  private renderToastMessage(key: string, ariaHidden: 'true' | null = null) {
     const { customHTMLEnabled, message } = this;
     if (customHTMLEnabled) {
-      return <div class="toast-message" part="message" innerHTML={sanitizeDOMString(message)}></div>;
+      return (
+        <div
+          key={key}
+          aria-hidden={ariaHidden}
+          class="toast-message"
+          part="message"
+          innerHTML={sanitizeDOMString(message)}
+        ></div>
+      );
     }
 
     return (
-      <div class="toast-message" part="message">
+      <div key={key} aria-hidden={ariaHidden} class="toast-message" part="message">
         {message}
+      </div>
+    );
+  }
+
+  private renderHeader(key: string, ariaHidden: 'true' | null = null) {
+    return (
+      <div key={key} class="toast-header" aria-hidden={ariaHidden} part="header">
+        {this.header}
       </div>
     );
   }
@@ -502,27 +518,12 @@ export class Toast implements ComponentInterface, OverlayInterface {
                 The "old" content is hidden using aria-hidden otherwise
                 VoiceOver will announce the toast content twice when presenting.
               */}
-              {!revealContentToScreenReader && this.header !== undefined && (
-                <div key="oldHeader" class="toast-header" aria-hidden="true" part="header">
-                  {this.header}
-                </div>
-              )}
-              {!revealContentToScreenReader && this.message !== undefined && (
-                <div key="oldMessage" class="toast-message" aria-hidden="true" part="message">
-                  {this.message}
-                </div>
-              )}
-
-              {revealContentToScreenReader && this.header !== undefined && (
-                <div key="header" class="toast-header" part="header">
-                  {this.header}
-                </div>
-              )}
-              {revealContentToScreenReader && this.message !== undefined && (
-                <div key="message" class="toast-message" part="message">
-                  {this.message}
-                </div>
-              )}
+              {!revealContentToScreenReader && this.header !== undefined && this.renderHeader('oldHeader', 'true')}
+              {!revealContentToScreenReader &&
+                this.message !== undefined &&
+                this.renderToastMessage('oldMessage', 'true')}
+              {revealContentToScreenReader && this.header !== undefined && this.renderHeader('header')}
+              {revealContentToScreenReader && this.message !== undefined && this.renderToastMessage('header')}
             </div>
 
             {this.renderButtons(endButtons, 'end')}
