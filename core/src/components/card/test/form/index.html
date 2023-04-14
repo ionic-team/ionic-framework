@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Card - Form</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Card - Form</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <ion-card>
+          <ion-card-content>
+            <ion-grid>
+              <ion-row>
+                <ion-col>
+                  <ion-item style="border: 1px solid grey; margin: 16px">
+                    <ion-input label="input" label-placement="stacked"></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col>
+                  <ion-item style="border: 1px solid grey; margin: 16px">
+                    <ion-select label="select" label-placement="stacked"></ion-select>
+                  </ion-item>
+                </ion-col>
+                <ion-col>
+                  <ion-item style="border: 1px solid grey; margin: 16px">
+                    <ion-textarea label="textarea" label-placement="stacked"></ion-textarea>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>
