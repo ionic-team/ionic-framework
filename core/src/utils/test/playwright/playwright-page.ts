@@ -18,7 +18,13 @@ import {
   locator,
 } from './page/utils';
 import type { LocatorOptions } from './page/utils';
-import type { E2EPage, E2ESkip, BrowserNameOrCallback, SetIonViewportOptions } from './playwright-declarations';
+import type {
+  E2EPageOptions,
+  E2EPage,
+  E2ESkip,
+  BrowserNameOrCallback,
+  SetIonViewportOptions,
+} from './playwright-declarations';
 
 type CustomTestArgs = PlaywrightTestArgs &
   PlaywrightTestOptions &
@@ -43,7 +49,7 @@ export async function extendPageFixture(page: E2EPage, testInfo: TestInfo) {
   const originalLocator = page.locator.bind(page);
 
   // Overridden Playwright methods
-  page.goto = (url: string, options) => goToPage(page, url, options, testInfo, originalGoto);
+  page.goto = (url: string, options?: E2EPageOptions) => goToPage(page, url, options, testInfo, originalGoto);
   page.setContent = (html: string) => setContent(page, html, testInfo);
   page.locator = (selector: string, options?: LocatorOptions) => locator(page, originalLocator, selector, options);
 
