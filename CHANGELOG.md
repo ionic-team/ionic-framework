@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.3-nightly.20230414](https://github.com/ionic-team/ionic-framework/compare/v7.0.1...v7.0.3-nightly.20230414) (2023-04-14)
+
+
+### Bug Fixes
+
+* **accordion:** inset style respects animated property ([#27173](https://github.com/ionic-team/ionic-framework/issues/27173)) ([114fe28](https://github.com/ionic-team/ionic-framework/commit/114fe28f3cc9ee52bc5eefa569353f490ab01023)), closes [#27047](https://github.com/ionic-team/ionic-framework/issues/27047)
+* **item:** ios active state has correct contrast ([#27134](https://github.com/ionic-team/ionic-framework/issues/27134)) ([bbdb0ca](https://github.com/ionic-team/ionic-framework/commit/bbdb0ca480d7cd46c030d1947ced712653cf122b)), closes [#000](https://github.com/ionic-team/ionic-framework/issues/000) [#000](https://github.com/ionic-team/ionic-framework/issues/000)
+* **menu:** refs are not destroyed on unmount ([#27141](https://github.com/ionic-team/ionic-framework/issues/27141)) ([b81b0d1](https://github.com/ionic-team/ionic-framework/commit/b81b0d14258d7b8caf028e6cfe81772ed2f5f119)), closes [/github.com/ionic-team/ionic-framework/blob/687b37ad3e3237b874473817bb7b59143ac113ce/packages/core/src/components/menu/menu.tsx#L136-L137](https://github.com//github.com/ionic-team/ionic-framework/blob/687b37ad3e3237b874473817bb7b59143ac113ce/packages/core/src/components/menu/menu.tsx/issues/L136-L137)
+* **radio:** takes up full height in item ([#27168](https://github.com/ionic-team/ionic-framework/issues/27168)) ([987c79f](https://github.com/ionic-team/ionic-framework/commit/987c79f05b6791084c4526d80c8c28a28047dd58)), closes [/github.com/ionic-team/ionic-framework/blob/cb8f07c5530ffc222580a3e3bae8dc85f62c73e5/core/src/components/checkbox/checkbox.scss#L42](https://github.com//github.com/ionic-team/ionic-framework/blob/cb8f07c5530ffc222580a3e3bae8dc85f62c73e5/core/src/components/checkbox/checkbox.scss/issues/L42) [/github.com/ionic-team/ionic-framework/blob/cb8f07c5530ffc222580a3e3bae8dc85f62c73e5/core/src/components/toggle/toggle.scss#L43](https://github.com//github.com/ionic-team/ionic-framework/blob/cb8f07c5530ffc222580a3e3bae8dc85f62c73e5/core/src/components/toggle/toggle.scss/issues/L43)
+* **segment-button:** update checked state on render ([#26970](https://github.com/ionic-team/ionic-framework/issues/26970)) ([16aa977](https://github.com/ionic-team/ionic-framework/commit/16aa9770bba983705d807ad363498693a0e7969b)), closes [#26830](https://github.com/ionic-team/ionic-framework/issues/26830)
+* **segment:** segment disables segment buttons created asyncronously ([#27155](https://github.com/ionic-team/ionic-framework/issues/27155)) ([ad6b130](https://github.com/ionic-team/ionic-framework/commit/ad6b1301cf8528f7c9ad3c52730f01861117b380))
+* **select:** text does not overlap icon ([#27125](https://github.com/ionic-team/ionic-framework/issues/27125)) ([6fc0024](https://github.com/ionic-team/ionic-framework/commit/6fc002458ad23b129a214fd34d3a2fdc33800373)), closes [#27081](https://github.com/ionic-team/ionic-framework/issues/27081)
+* **vue:** components have correct name in Vue Dev Tools ([#27180](https://github.com/ionic-team/ionic-framework/issues/27180)) ([07941a5](https://github.com/ionic-team/ionic-framework/commit/07941a59ba68a46d1345fecec6df82fb4655a0b5)), closes [#25199](https://github.com/ionic-team/ionic-framework/issues/25199)
+
+
+
+
+
 ## [7.0.2](https://github.com/ionic-team/ionic-framework/compare/v7.0.1...v7.0.2) (2023-04-12)
 
 
