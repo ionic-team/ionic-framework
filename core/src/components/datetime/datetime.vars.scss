@@ -9,5 +9,5 @@ $datetime-min-width:             16px !default;
 /// @prop - Minimum height of the datetime
 $datetime-min-height:            1.2em !default;
 
-/// @prop - Text color of the calendar day
-$datetime-calendar-day-color:    $text-color !default;
+/// @prop - Text color of the calendar day and time when not selected
+$datetime-text-color:    $text-color !default;

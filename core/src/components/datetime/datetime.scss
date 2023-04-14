@@ -16,6 +16,8 @@
 
   background: var(--background);
 
+  color: $datetime-text-color;
+
   overflow: hidden;
 }
 
@@ -339,7 +341,7 @@ ion-picker-column-internal {
   outline: none;
 
   background: none;
-  color: $datetime-calendar-day-color;
+  color: inherit;
 
   font-family: $font-family-base;
 
@@ -401,7 +403,7 @@ ion-picker-column-internal {
 
   background: var(--ion-color-step-300, #edeef0);
 
-  color: $text-color;
+  color: inherit;
 
   font-family: inherit;
   font-size: inherit;
