@@ -30,8 +30,26 @@
   @include padding($range-md-padding-vertical, $range-md-padding-horizontal);
 }
 
-:host(.in-item:not(.range-has-label):not(.legacy-range)) .range-slider {
+:host(.in-item:not(.range-has-label):not(.range-has-start-icon):not(.range-has-end-icon):not(.legacy-range)) .range-slider {
+  // Add margins on both sides of the range slider
+  // to prevent the range knob from being cut off.
   @include margin(null, $range-md-padding-horizontal);
+}
+
+:host(.in-item.range-has-label.range-label-placement-start:not(.legacy-range):not(.range-has-end-icon)) .range-slider,
+:host(.in-item.range-has-start-icon:not(.legacy-range):not(.range-has-end-icon)) .range-slider {
+  // Only add margin to the right if the range has
+  // a label to the left or a start icon.
+  // Do not add right margin if the range has an end icon.
+  @include margin(null, $range-md-padding-horizontal, null, 0);
+}
+
+:host(.in-item.range-has-label.range-label-placement-end:not(.legacy-range):not(.range-has-start-icon)) .range-slider,
+:host(.in-item.range-has-end-icon:not(.legacy-range):not(.range-has-start-icon)) .range-slider {
+  // Only add margin to the left if the range has
+  // a label to the right or an end icon.
+  // Do not add left margin if the range has a start icon.
+  @include margin(null, 0, null, $range-md-padding-horizontal);
 }
 
 :host(.ion-color) .range-bar {
@@ -74,7 +92,7 @@
 }
 
 .range-knob {
-  transform: scale(0.67);
+  transform: scale(.67);
 
   transition-duration: 120ms;
   transition-property: transform, background-color, border;
@@ -124,7 +142,7 @@
 .range-pin {
   @include padding($range-md-pin-padding-vertical, $range-md-pin-padding-horizontal);
   @include border-radius(50%);
-  @include transform(translate3d(0, 0, 0), scale(0.01));
+  @include transform(translate3d(0, 0, 0), scale(.01));
 
   display: inline-block;
   position: relative;
@@ -218,7 +236,7 @@
 }
 
 :host(.range-disabled) .range-knob {
-  transform: scale(0.55);
+  transform: scale(.55);
 
   outline: 5px solid #fff;
 
