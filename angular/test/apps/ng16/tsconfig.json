@@ -15,10 +15,10 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "ES2022",
-    "module": "es2020",
+    "module": "ES2022",
     "emitDecoratorMetadata": true,
     "typeRoots": ["node_modules/@types"],
-    "lib": ["es2020", "dom"],
+    "lib": ["ES2022", "dom"],
     "plugins": [
       {
         "name": "typescript-eslint-language-service"
