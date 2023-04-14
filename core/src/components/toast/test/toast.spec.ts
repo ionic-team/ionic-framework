@@ -87,4 +87,4 @@ describe('toast: a11y smoke test', () => {
     expect(header.getAttribute('aria-hidden')).toBe(null);
     expect(message.getAttribute('aria-hidden')).toBe(null);
   });
-})
+});
