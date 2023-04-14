@@ -96,7 +96,7 @@
     // If the selector contains :host( it means it is targeting a class on the host
     // element so we need to change how we target it:
     // @include add-root-selector(":host(.fixed)", "[dir=rtl]")
-    // --> :host([dir=rtl].fixed)
+    // --> [dir=rtl] :host(.fixed)
     @if str-contains($selector, ":host(") {
       $new-element: ();
       $elements: str-split($selector, " ");
@@ -108,16 +108,18 @@
           // :host(.fixed) -> .fixed
           $updated-element: str-replace($element, ")", "");
           $updated-element: str-replace($updated-element, ":host(", "");
+
           // Add the class back inside of host with the rtl selector:
-          // .fixed -> :host([dir=rtl].fixed)
-          $updated-element: str-replace($updated-element, $updated-element, ":host(#{$addHostSelector}#{$updated-element})");
+          // .fixed -> [dir=rtl] :host(.fixed)
+          $updated-element: str-replace($updated-element, $updated-element, "#{$addHostSelector} :host(#{$updated-element})");
+          
           // Add the final selector after all transformations:
-          // :host(.fixed) -> :host([dir=rtl].fixed)
+          // :host(.fixed) -> [dir=rtl] :host(.fixed)
           $new-element: append($new-element, $updated-element, space);
         } @else {
           // Add back any selectors that followed the host after transforming the
           // first selector:
-          // :host(.fixed) ::slotted(ion-icon) -> :host([dir=rtl].fixed) ::slotted(ion-icon)
+          // :host(.fixed) ::slotted(ion-icon) -> [dir=rtl] :host(.fixed) ::slotted(ion-icon)
           $new-element: append($new-element, $element, space);
         }
       }
