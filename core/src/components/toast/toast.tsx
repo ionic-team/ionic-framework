@@ -55,14 +55,6 @@ export class Toast implements ComponentInterface, OverlayInterface {
 
   presented = false;
 
-  /**
-   * Some screen readers such as NVDA do not
-   * announce content with aria-live that
-   * is initially hidden. To work around this,
-   * we set aria-hidden="true" and then remove
-   * the aria-hidden once the toast content is
-   * fully visible.
-   */
   @State() revealContentToScreenReader = false;
 
   @Element() el!: HTMLIonToastElement;
@@ -480,9 +472,38 @@ export class Toast implements ComponentInterface, OverlayInterface {
               <ion-icon class="toast-icon" part="icon" icon={this.icon} lazy={false} aria-hidden="true"></ion-icon>
             )}
 
+            {/*
+              This creates a live region where screen readers
+              only announce the header and the message. Elements
+              such as icons and buttons should not be announced.
+              aria-live and aria-atomic here are redundant, but we
+              add them to maximize browser compatibility.
+
+              Toasts are meant to be subtle notifications that do
+              not interrupt the user which is why this has
+              a "status" role and a "polite" presentation.
+            */}
             <div class="toast-content" role="status" aria-atomic="true" aria-live="polite">
+              {/*
+                This logic below is done to improve consistency
+                across platforms when showing and updating live regions.
+
+                TalkBack and VoiceOver announce the live region content
+                when the toast is shown, but NVDA does not. As a result,
+                we need to trigger a DOM update so NVDA detects changes and
+                announces an update to the live region. We do this after
+                the toast is fully visible to avoid jank during the presenting
+                animation.
+
+                The "key" attribute is used here to force Stencil to render
+                new nodes and not re-use nodes. Otherwise, NVDA would not
+                detect any changes to the live region.
+
+                The "old" content is hidden using aria-hidden otherwise
+                VoiceOver will announce the toast content twice when presenting.
+              */}
               {!revealContentToScreenReader && this.header !== undefined && (
-                <div key="oldHeader" aria-hidden="true" class="toast-header" part="header">
+                <div key="oldHeader" class="toast-header" aria-hidden="true" part="header">
                   {this.header}
                 </div>
               )}
