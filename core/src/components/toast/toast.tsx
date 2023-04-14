@@ -463,7 +463,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
   }
 
   render() {
-    const { layout, el, revealContentToScreenReader } = this;
+    const { layout, el, revealContentToScreenReader, header, message } = this;
     const allButtons = this.getButtons();
     const startButtons = allButtons.filter((b) => b.side === 'start');
     const endButtons = allButtons.filter((b) => b.side !== 'start');
@@ -538,12 +538,10 @@ export class Toast implements ComponentInterface, OverlayInterface {
                 The "old" content is hidden using aria-hidden otherwise
                 VoiceOver will announce the toast content twice when presenting.
               */}
-              {!revealContentToScreenReader && this.header !== undefined && this.renderHeader('oldHeader', 'true')}
-              {!revealContentToScreenReader &&
-                this.message !== undefined &&
-                this.renderToastMessage('oldMessage', 'true')}
-              {revealContentToScreenReader && this.header !== undefined && this.renderHeader('header')}
-              {revealContentToScreenReader && this.message !== undefined && this.renderToastMessage('header')}
+              {!revealContentToScreenReader && header !== undefined && this.renderHeader('oldHeader', 'true')}
+              {!revealContentToScreenReader && message !== undefined && this.renderToastMessage('oldMessage', 'true')}
+              {revealContentToScreenReader && header !== undefined && this.renderHeader('header')}
+              {revealContentToScreenReader && message !== undefined && this.renderToastMessage('header')}
             </div>
 
             {this.renderButtons(endButtons, 'end')}
