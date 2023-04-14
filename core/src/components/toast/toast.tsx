@@ -55,6 +55,11 @@ export class Toast implements ComponentInterface, OverlayInterface {
 
   presented = false;
 
+  /**
+   * When `true`, content inside of .toast-content
+   * will have aria-hidden elements removed causing
+   * screen readers to announce the remaining content.
+   */
   @State() revealContentToScreenReader = false;
 
   @Element() el!: HTMLIonToastElement;
@@ -413,6 +418,11 @@ export class Toast implements ComponentInterface, OverlayInterface {
     );
   }
 
+  /**
+   * Render the `message` property.
+   * @param key - A key to give the element a stable identity. This is used to improve compatibility with screen readers.
+   * @param ariaHidden - If "true" then content will be hidden from screen readers.
+   */
   private renderToastMessage(key: string, ariaHidden: 'true' | null = null) {
     const { customHTMLEnabled, message } = this;
     if (customHTMLEnabled) {
@@ -434,6 +444,11 @@ export class Toast implements ComponentInterface, OverlayInterface {
     );
   }
 
+  /**
+   * Render the `header` property.
+   * @param key - A key to give the element a stable identity. This is used to improve compatibility with screen readers.
+   * @param ariaHidden - If "true" then content will be hidden from screen readers.
+   */
   private renderHeader(key: string, ariaHidden: 'true' | null = null) {
     return (
       <div key={key} class="toast-header" aria-hidden={ariaHidden} part="header">
