@@ -56,7 +56,7 @@ runs:
         if [ -d core/updated-screenshots/core ]; then
           echo "::set-output name=hasUpdatedScreenshots::$(echo 'true')"
           cd core/updated-screenshots
-          zip -q -r ../../UpdatedScreenshots-${{ inputs.shard }}-${{ inputs.totalShards }}.zip core
+          zip -q -r ../../UpdatedScreenshots-${{ inputs.commandModifier }}-${{ inputs.shard }}-${{ inputs.totalShards }}.zip core
         fi
       shell: bash
       working-directory: ./core
@@ -64,8 +64,8 @@ runs:
       if: inputs.update == 'true' && steps.test-and-update.outputs.hasUpdatedScreenshots == 'true'
       uses: actions/upload-artifact@v3
       with:
-        name: updated-screenshots-${{ inputs.shard }}-${{ inputs.totalShards }}
-        path: UpdatedScreenshots-${{ inputs.shard }}-${{ inputs.totalShards }}.zip
+        name: updated-screenshots-${{ inputs.commandModifier }}-${{ inputs.shard }}-${{ inputs.totalShards }}
+        path: UpdatedScreenshots-${{ inputs.commandModifier }}-${{ inputs.shard }}-${{ inputs.totalShards }}.zip
     - name: Archive Test Results
       # The always() ensures that this step
       # runs even if the previous step fails.
@@ -76,6 +76,6 @@ runs:
       if: always()
       uses: ./.github/workflows/actions/upload-archive
       with:
-        name: test-results-${{ inputs.shard }}-${{ inputs.totalShards }}
-        output: core/TestResults-${{ inputs.shard }}-${{ inputs.totalShards }}.zip
+        name: test-results-${{ inputs.commandModifier }}-${{ inputs.shard }}-${{ inputs.totalShards }}
+        output: core/TestResults-${{ inputs.commandModifier }}-${{ inputs.shard }}-${{ inputs.totalShards }}.zip
         paths: core/playwright-report
