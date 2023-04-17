@@ -46,22 +46,14 @@ test.describe('input: item', () => {
       `<ion-item>
         <ion-input></ion-input>
       </ion-item>
-      <ion-button onclick="setLabel()">Set label</ion-button>
-
-      <script>
-        function setLabel() {
-          const input = document.querySelector('ion-input');
-          input.label = 'New label';
-        }
-      </script>
       `
     );
     const input = page.locator('ion-input');
     // Initial template should be modern
     await expect(input).not.toHaveClass(/legacy-input/);
 
-    // Click button to set label
-    await page.click('ion-button');
+    // Update the input label
+    await input.evaluate((el: HTMLIonInputElement) => (el.label = 'New label'));
     await page.waitForChanges();
 
     // Template should still be modern
