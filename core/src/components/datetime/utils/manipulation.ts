@@ -2,7 +2,7 @@ import type { DatetimeParts } from '../datetime-interface';
 
 import { isSameDay } from './comparison';
 import { getNumDaysInMonth } from './helpers';
-import { parseAmPm } from './parse';
+import { clampDate, parseAmPm } from './parse';
 
 const twoDigit = (val: number | undefined): string => {
   return ('0' + (val !== undefined ? Math.abs(val) : '0')).slice(-2);
@@ -333,27 +333,15 @@ export const calculateHourFromAMPM = (currentParts: DatetimeParts, newAMPM: 'am'
 /**
  * Updates parts to ensure that month and day
  * values are valid. For days that do not exist,
- * the closest valid day is used.
+ * or are outside the min/max bounds, the closest
+ * valid day is used.
  */
 export const validateParts = (
   parts: DatetimeParts,
   minParts?: DatetimeParts,
   maxParts?: DatetimeParts
 ): DatetimeParts => {
-  const { month, day, year } = parts;
-  const partsCopy = { ...parts };
-
-  const numDays = getNumDaysInMonth(month, year);
-
-  /**
-   * If the max number of days
-   * is greater than the day we want
-   * to set, update the DatetimeParts
-   * day field to be the max days.
-   */
-  if (day !== null && numDays < day) {
-    partsCopy.day = numDays;
-  }
+  const partsCopy = clampDate({ ...parts }, minParts, maxParts);
 
   /**
    * If value is same day as min day,

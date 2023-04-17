@@ -1679,7 +1679,7 @@ export class Datetime implements ComponentInterface {
       return [];
     }
 
-    const { minParts, maxParts, workingParts } = this;
+    const { workingParts } = this;
 
     const activePart = this.getActivePartsWithFallback();
 
@@ -1703,28 +1703,10 @@ export class Datetime implements ComponentInterface {
             month: ev.detail.value,
           });
 
-          /**
-           * Clamp the active parts to ensure a date outside the min/max
-           * doesn't get auto-selected when using the month picker.
-           *
-           * For example, if a datetime has min="2021-01-15", and you select
-           * Feb 1st manually, then use the month dropdown to switch to January,
-           * this clamp prevents Jan 1st from being selected, which would be
-           * earlier than the min.
-           *
-           * We don't need to clamp the working parts since the same month
-           * is shown either way, and you can't select entire months that are
-           * outside the max/min to begin with.
-           */
-          const clampedActiveParts = clampDate(
-            {
-              ...activePart,
-              month: ev.detail.value,
-            },
-            minParts,
-            maxParts
-          );
-          this.setActiveParts(clampedActiveParts);
+          this.setActiveParts({
+            ...activePart,
+            month: ev.detail.value,
+          });
 
           // We can re-attach the scroll listener after
           // the working parts have been updated.
