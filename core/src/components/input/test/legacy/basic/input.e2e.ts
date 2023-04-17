@@ -8,7 +8,7 @@ test.describe('input: basic', () => {
         <ion-content>
           <ion-list>
             <ion-item>
-              <ion-input value="reallylonglonglonginputtoseetheedgesreallylonglonglonginputtoseetheedges"></ion-input>
+              <ion-input value="reallylonglonglonginputtoseetheedgesreallylonglonglonginputtoseetheedges" legacy="true"></ion-input>
             </ion-item>
           </ion-list>
         </ion-content>
@@ -25,7 +25,7 @@ test.describe('input: basic', () => {
       <ion-content>
         <ion-list>
           <ion-item>
-            <ion-input placeholder="Placeholder"></ion-input>
+            <ion-input placeholder="Placeholder" legacy="true"></ion-input>
           </ion-item>
         </ion-list>
       </ion-content>
@@ -42,7 +42,7 @@ test.describe('input: basic', () => {
       <ion-content>
         <ion-list>
           <ion-item>
-            <ion-input value="Input disabled" disabled></ion-input>
+            <ion-input value="Input disabled" disabled legacy="true"></ion-input>
           </ion-item>
         </ion-list>
       </ion-content>
@@ -59,7 +59,7 @@ test.describe('input: basic', () => {
       <ion-content>
         <ion-list>
           <ion-item lines="full">
-            <ion-input placeholder="Full"></ion-input>
+            <ion-input placeholder="Full" legacy="true"></ion-input>
           </ion-item>
         </ion-list>
       </ion-content>
@@ -88,7 +88,7 @@ test.describe('input: basic', () => {
       <ion-content>
         <ion-list>
           <ion-item lines="inset">
-            <ion-input placeholder="Inset"></ion-input>
+            <ion-input placeholder="Inset" legacy="true"></ion-input>
           </ion-item>
         </ion-list>
       </ion-content>
@@ -118,7 +118,7 @@ test.describe('input: basic', () => {
       <ion-content>
         <ion-list>
           <ion-item lines="none">
-            <ion-input placeholder="None"></ion-input>
+            <ion-input placeholder="None" legacy="true"></ion-input>
           </ion-item>
         </ion-list>
       </ion-content>
@@ -152,6 +152,7 @@ test.describe('input: basic', () => {
             <ion-input
               clear-input
               value="reallylonglonglonginputtoseetheedgesreallylonglonglonginputtoseetheedges"
+              legacy="true"
             ></ion-input>
           </ion-item>
         </ion-list>
@@ -170,7 +171,7 @@ test.describe('input: clear button', () => {
   });
   test('should clear the input when pressed', async ({ page }) => {
     await page.setContent(`
-      <ion-input value="abc" clear-input="true"></ion-input>
+      <ion-input value="abc" clear-input="true" legacy="true"></ion-input>
     `);
 
     const input = page.locator('ion-input');
@@ -191,7 +192,7 @@ test.describe('input: clear button', () => {
    */
   test('should keep the input focused when the clear button is pressed', async ({ page }) => {
     await page.setContent(`
-      <ion-input value="abc" clear-input="true"></ion-searchbar>
+      <ion-input value="abc" clear-input="true" legacy="true"></ion-input>
     `);
 
     const input = page.locator('ion-input');

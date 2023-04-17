@@ -15,7 +15,7 @@ test.describe('range: basic', () => {
    * TODO FW-2873
    */
   test.fixme('should emit start/end events', async ({ page }, testInfo) => {
-    await page.setContent(`<ion-range value="20"></ion-range>`);
+    await page.setContent(`<ion-range value="20" legacy="true"></ion-range>`);
 
     const rangeStart = await page.spyOnEvent('ionKnobMoveStart');
     const rangeEnd = await page.spyOnEvent('ionKnobMoveEnd');
@@ -43,7 +43,7 @@ test.describe('range: basic', () => {
   });
 
   test('should emit start/end events, keyboard', async ({ page }) => {
-    await page.setContent(`<ion-range value="20"></ion-range>`);
+    await page.setContent(`<ion-range value="20" legacy="true"></ion-range>`);
 
     const rangeStart = await page.spyOnEvent('ionKnobMoveStart');
     const rangeEnd = await page.spyOnEvent('ionKnobMoveEnd');
