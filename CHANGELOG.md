@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.3-alpha.0](https://github.com/ionic-team/ionic-framework/compare/v7.0.0...v7.0.3-alpha.0) (2023-04-17)
+
+
+### Bug Fixes
+
+* **accordion:** inset style respects animated property ([#27173](https://github.com/ionic-team/ionic-framework/issues/27173)) ([a6c455d](https://github.com/ionic-team/ionic-framework/commit/a6c455d2ab69a1e7066a7b2e8d1a0e139a440b8b)), closes [#27047](https://github.com/ionic-team/ionic-framework/issues/27047)
+* **breadcrumbs:** color attribute shows on DOM for Vue ([#27068](https://github.com/ionic-team/ionic-framework/issues/27068)) ([141ced5](https://github.com/ionic-team/ionic-framework/commit/141ced50103098fd711e0088ea8be4efdaadd0a9))
+* **item-divider:** removal of unneeded margin unset ([#27042](https://github.com/ionic-team/ionic-framework/issues/27042)) ([d925237](https://github.com/ionic-team/ionic-framework/commit/d925237082cd2f55a573ddb0301afcbd84f4fda0)), closes [#17012](https://github.com/ionic-team/ionic-framework/issues/17012) [ionic-team/ionic-framework#27024](https://github.com/ionic-team/ionic-framework/issues/27024)
+* **item-divider:** set padding-end for md ([#27019](https://github.com/ionic-team/ionic-framework/issues/27019)) ([426913d](https://github.com/ionic-team/ionic-framework/commit/426913d0de50e65a76b029258daa09e6567c6515)), closes [#23785](https://github.com/ionic-team/ionic-framework/issues/23785)
+* **item:** ios active state has correct contrast ([#27134](https://github.com/ionic-team/ionic-framework/issues/27134)) ([788b413](https://github.com/ionic-team/ionic-framework/commit/788b413af6eef2c59f37f0aa6c643e04435ce404)), closes [#27130](https://github.com/ionic-team/ionic-framework/issues/27130) [#000](https://github.com/ionic-team/ionic-framework/issues/000) [#000](https://github.com/ionic-team/ionic-framework/issues/000)
+* **menu:** refs are not destroyed on unmount ([#27141](https://github.com/ionic-team/ionic-framework/issues/27141)) ([3820e52](https://github.com/ionic-team/ionic-framework/commit/3820e52e7f4bb2a6ad40bb5dbfaa0019b76e0868)), closes [#24907](https://github.com/ionic-team/ionic-framework/issues/24907) [/github.com/ionic-team/ionic-framework/blob/687b37ad3e3237b874473817bb7b59143ac113ce/packages/core/src/components/menu/menu.tsx#L136-L137](https://github.com//github.com/ionic-team/ionic-framework/blob/687b37ad3e3237b874473817bb7b59143ac113ce/packages/core/src/components/menu/menu.tsx/issues/L136-L137)
+* **menu:** update location when dynamically changing side or doc dir ([#27079](https://github.com/ionic-team/ionic-framework/issues/27079)) ([a35886e](https://github.com/ionic-team/ionic-framework/commit/a35886e71c7c4b8abdd01ad33d92828c04249dc5)), closes [#25601](https://github.com/ionic-team/ionic-framework/issues/25601) [#19489](https://github.com/ionic-team/ionic-framework/issues/19489)
+* **picker-column-internal:** hide empty picker items from screenreaders ([#27038](https://github.com/ionic-team/ionic-framework/issues/27038)) ([4e7424d](https://github.com/ionic-team/ionic-framework/commit/4e7424de035888e324b03af321c90ebbb6402746)), closes [#26809](https://github.com/ionic-team/ionic-framework/issues/26809)
+* **radio:** takes up full height in item ([#27168](https://github.com/ionic-team/ionic-framework/issues/27168)) ([484289f](https://github.com/ionic-team/ionic-framework/commit/484289f5724ebb548f0eb36a3062ecae2046b8e5)), closes [#27159](https://github.com/ionic-team/ionic-framework/issues/27159) [/github.com/ionic-team/ionic-framework/blob/cb8f07c5530ffc222580a3e3bae8dc85f62c73e5/core/src/components/checkbox/checkbox.scss#L42](https://github.com//github.com/ionic-team/ionic-framework/blob/cb8f07c5530ffc222580a3e3bae8dc85f62c73e5/core/src/components/checkbox/checkbox.scss/issues/L42) [/github.com/ionic-team/ionic-framework/blob/cb8f07c5530ffc222580a3e3bae8dc85f62c73e5/core/src/components/toggle/toggle.scss#L43](https://github.com//github.com/ionic-team/ionic-framework/blob/cb8f07c5530ffc222580a3e3bae8dc85f62c73e5/core/src/components/toggle/toggle.scss/issues/L43)
+* **refresher:** set overflow styles when using custom scroll target ([#27058](https://github.com/ionic-team/ionic-framework/issues/27058)) ([adbb50c](https://github.com/ionic-team/ionic-framework/commit/adbb50ca5b92793ba002e4d704b2a643b92aabc7))
+* **segment-button:** update checked state on render ([#26970](https://github.com/ionic-team/ionic-framework/issues/26970)) ([2c72c94](https://github.com/ionic-team/ionic-framework/commit/2c72c949d2b44f8c832dce3b920acb1dcac7c742)), closes [#26830](https://github.com/ionic-team/ionic-framework/issues/26830)
+* **segment:** segment disables segment buttons created asyncronously ([#27155](https://github.com/ionic-team/ionic-framework/issues/27155)) ([b9898d0](https://github.com/ionic-team/ionic-framework/commit/b9898d09b54c1d33183550d9e6db9b297ceebb96)), closes [#25396](https://github.com/ionic-team/ionic-framework/issues/25396)
+* **select:** text does not overlap icon ([#27125](https://github.com/ionic-team/ionic-framework/issues/27125)) ([f6ff206](https://github.com/ionic-team/ionic-framework/commit/f6ff2062871221923ea68b44d3731e2413bd6d75)), closes [#27081](https://github.com/ionic-team/ionic-framework/issues/27081)
+* **vue:** components have correct name in Vue Dev Tools ([#27180](https://github.com/ionic-team/ionic-framework/issues/27180)) ([59db508](https://github.com/ionic-team/ionic-framework/commit/59db508e8031c3db2d5efca9648687f85337ca60)), closes [#25199](https://github.com/ionic-team/ionic-framework/issues/25199)
+* **vue:** v-model props have correct type ([#27067](https://github.com/ionic-team/ionic-framework/issues/27067)) ([14145dc](https://github.com/ionic-team/ionic-framework/commit/14145dcaebef4dde7654317597fdee6a0cdb4bfa)), closes [#27057](https://github.com/ionic-team/ionic-framework/issues/27057)
+
+
+### Reverts
+
+* Revert "bug(breadcrumbs): color attribute shows on DOM for Vue (#27040)" (#27069) ([abadeed](https://github.com/ionic-team/ionic-framework/commit/abadeedc9e953f8a1e114d98e118d4c2f05c73dd)), closes [#27040](https://github.com/ionic-team/ionic-framework/issues/27040) [#27069](https://github.com/ionic-team/ionic-framework/issues/27069)
+
+
+
+
+
 ## [7.0.2](https://github.com/ionic-team/ionic-framework/compare/v7.0.1...v7.0.2) (2023-04-12)
 
 
