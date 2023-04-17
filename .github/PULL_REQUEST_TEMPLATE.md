@@ -1,4 +1,4 @@
-Issue URL:
+Issue number: #
 
 ---------
 
