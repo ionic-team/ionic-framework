@@ -9,7 +9,6 @@
     "sync": "sh scripts/sync.sh",
     "build": "ng build --configuration production --no-progress",
     "lint": "ng lint",
-    "postinstall": "ngcc",
     "serve:ssr": "node dist/test-app/server/main.js",
     "build:ssr": "ng build --prod && ng run test-app:server:production",
     "dev:ssr": "ng run test-app:serve-ssr",
