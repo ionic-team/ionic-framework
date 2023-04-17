@@ -341,7 +341,20 @@ export const validateParts = (
   minParts?: DatetimeParts,
   maxParts?: DatetimeParts
 ): DatetimeParts => {
+  const { month, day, year } = parts;
   const partsCopy = clampDate({ ...parts }, minParts, maxParts);
+
+  const numDays = getNumDaysInMonth(month, year);
+
+  /**
+   * If the max number of days
+   * is greater than the day we want
+   * to set, update the DatetimeParts
+   * day field to be the max days.
+   */
+  if (day !== null && numDays < day) {
+    partsCopy.day = numDays;
+  }
 
   /**
    * If value is same day as min day,
