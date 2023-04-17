@@ -9,6 +9,7 @@ import { printIonWarning } from '../../utils/logging';
 import { BACKDROP, dismiss, eventMethod, focusFirstDescendant, prepareOverlay, present } from '../../utils/overlays';
 import type { OverlayEventDetail } from '../../utils/overlays-interface';
 import { isPlatform } from '../../utils/platform';
+import { isRTL } from '../../utils/rtl';
 import { getClassMap } from '../../utils/theme';
 import { deepReady } from '../../utils/transition';
 
@@ -663,9 +664,10 @@ export class Popover implements ComponentInterface, PopoverInterface {
 
   render() {
     const mode = getIonMode(this);
-    const { onLifecycle, popoverId, parentPopover, dismissOnSelect, side, arrow, htmlAttributes } = this;
+    const { onLifecycle, popoverId, parentPopover, dismissOnSelect, side, arrow, htmlAttributes, el } = this;
     const desktop = isPlatform('desktop');
     const enableArrow = arrow && !parentPopover;
+    const rtl = isRTL(el) ? 'rtl' : 'ltr';
 
     return (
       <Host
@@ -695,7 +697,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
         {!parentPopover && <ion-backdrop tappable={this.backdropDismiss} visible={this.showBackdrop} part="backdrop" />}
 
         <div class="popover-wrapper ion-overlay-wrapper" onClick={dismissOnSelect ? () => this.dismiss() : undefined}>
-          {enableArrow && <div class="popover-arrow" part="arrow"></div>}
+          {enableArrow && <div class={{ 'popover-arrow': true, [`popover-arrow-${rtl}`]: true }} part="arrow"></div>}
           <div class="popover-content" part="content">
             <slot></slot>
           </div>

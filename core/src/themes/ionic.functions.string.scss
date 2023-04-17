@@ -154,10 +154,12 @@
 
       $list: append($list, $new-element, comma);
 
-    // If the selector does not contain host at all it is either a shadow
+    // If the selector does not contain host at all it is either a component
     // or normal element so append both the dir check and the rtl selector
-    // @include add-root-selector(".shadow", "[dir=rtl]")
-    // --> [dir=rtl] .shadow
+    // @include add-root-selector("ion-component", "[dir=rtl]")
+    // --> [dir=rtl] ion-component
+    // Important: This will not work if the component is using shadow DOM.
+    // --> @include add-root-selector(":host(.popover-side-left) .popover-arrow", "[dir=rtl]") 
     } @else {
       $list: append($list, "#{$addHostSelector} #{$selector}", comma);
     }

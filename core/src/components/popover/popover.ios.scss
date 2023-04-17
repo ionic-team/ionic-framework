@@ -75,17 +75,13 @@
   transform: rotate(180deg);
 }
 
-:host(.popover-side-start) .popover-arrow {
-  @include rtl() {
-    transform: rotate(-90deg);
-  }
+:host(.popover-side-start) .popover-arrow-ltr,
+:host(.popover-side-end) .popover-arrow-rtl {
   transform: rotate(90deg);
 }
 
-:host(.popover-side-end) .popover-arrow {
-  @include rtl() {
-    transform: rotate(90deg);
-  }
+:host(.popover-side-end) .popover-arrow-ltr,
+:host(.popover-side-start) .popover-arrow-rtl {
   transform: rotate(-90deg);
 }
 
