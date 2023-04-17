@@ -112,7 +112,7 @@
           // Add the class back inside of host with the rtl selector:
           // .fixed -> [dir=rtl] :host(.fixed)
           $updated-element: str-replace($updated-element, $updated-element, "#{$addHostSelector} :host(#{$updated-element})");
-          
+
           // Add the final selector after all transformations:
           // :host(.fixed) -> [dir=rtl] :host(.fixed)
           $new-element: append($new-element, $updated-element, space);
@@ -130,9 +130,30 @@
     // it means it is targeting just the host
     // element so we can change it to add on the rtl selector:
     // @include add-root-selector(":host", "[dir=rtl]")
-    // --> :host([dir=rtl])
+    // --> [dir=rtl] :host
     } @else if str-contains($selector, ":host") {
-      $list: append($list, ":host(#{$addHostSelector})", comma);
+      $new-element: ();
+      $elements: str-split($selector, " ");
+
+      @each $element in $elements {
+        @if str-contains($element, ":host") {
+          // Replace the :host with the rtl selector:
+          // :host -> [dir=rtl] :host
+          $updated-element: str-replace($element, ":host", "#{$addHostSelector} :host");
+
+          // Add the final selector after all transformations:
+          // :host -> [dir=rtl] :host
+          $new-element: append($new-element, $updated-element, space);
+        } @else {
+          // Add back any selectors that followed the host after transforming the
+          // first selector:
+          // :host ::slotted(ion-icon) -> [dir=rtl] :host ::slotted(ion-icon)
+          $new-element: append($new-element, $element, space);
+        }
+      }
+
+      $list: append($list, $new-element, comma);
+
     // If the selector does not contain host at all it is either a shadow
     // or normal element so append both the dir check and the rtl selector
     // @include add-root-selector(".shadow", "[dir=rtl]")

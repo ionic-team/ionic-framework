@@ -286,13 +286,13 @@
   overflow: hidden;
 }
 
-.alert-button:first-child {
+:host .alert-button:first-child {
   @include rtl() {
     border-right: 0;
   }
 }
 
-.alert-button:last-child {
+:host .alert-button:last-child {
   @include rtl() {
     border-right: $alert-ios-button-border-width $alert-ios-button-border-style $alert-ios-button-border-color;
   }
