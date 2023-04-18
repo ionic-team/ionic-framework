@@ -4,7 +4,7 @@ import type { TestConfig } from './generator';
 import type { EventSpy } from './page/event-spy';
 import type { LocatorOptions, E2ELocator } from './page/utils/locator';
 
-export interface E2EPageOptions extends PageOptions, TestConfig {}
+export interface E2EPageOptions extends TestConfig, PageOptions {}
 
 interface PageOptions {
   /**
@@ -59,6 +59,14 @@ export interface E2EPage extends Page {
    * [`new URL()`](https://developer.mozilla.org/en-US/docs/Web/API/URL/URL) constructor.
    */
   goto: (url: string, options?: E2EPageOptions) => Promise<null | Response>;
+
+  /**
+   * Assigns HTML markup to a page.
+   * @param html - The HTML markup to assign to the page
+   * @param options - Ionic config options or Playwright options for the page
+   */
+  setContent: (html: string, options?: E2EPageOptions) => Promise<void>;
+
   /**
    * Find an element by selector.
    * See https://playwright.dev/docs/locators for more information.

@@ -50,7 +50,7 @@ export async function extendPageFixture(page: E2EPage, testInfo: TestInfo) {
 
   // Overridden Playwright methods
   page.goto = (url: string, options?: E2EPageOptions) => goToPage(page, url, options, testInfo, originalGoto);
-  page.setContent = (html: string) => setContent(page, html, testInfo);
+  page.setContent = (html: string, options?: E2EPageOptions) => setContent(page, html, options, testInfo);
   page.locator = (selector: string, options?: LocatorOptions) => locator(page, originalLocator, selector, options);
 
   // Custom Ionic methods
