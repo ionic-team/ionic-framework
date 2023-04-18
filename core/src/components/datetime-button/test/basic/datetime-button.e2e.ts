@@ -183,3 +183,29 @@ test.describe('datetime-button: wheel', () => {
     await expect(page.locator('#time-button')).not.toBeVisible();
   });
 });
+
+test.describe('datetime-button: dark mode', () => {
+  test('should render time', async ({ page, skip }) => {
+    test.info().annotations.push({
+      type: 'issue',
+      description: 'https://github.com/ionic-team/ionic-framework/issues/26060',
+    });
+
+    skip.rtl();
+
+    await page.goto('/src/components/datetime-button/test/basic');
+
+    await page.evaluate(() => document.body.classList.toggle('dark'));
+    await page.waitForChanges();
+
+    const datetimeButton = page.locator('ion-datetime-button[datetime="default-datetime"]');
+    const timeButton = datetimeButton.locator('#time-button');
+    await timeButton.click();
+
+    await page.waitForChanges();
+
+    const datetime = page.locator('#default-datetime');
+
+    await expect(datetime).toHaveScreenshot(`datetime-button-dark-time-${page.getSnapshotSettings()}.png`);
+  });
+});

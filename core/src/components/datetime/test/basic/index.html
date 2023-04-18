@@ -276,7 +276,7 @@
 
           <div class="grid-item">
             <h2>Modal</h2>
-            <ion-button onclick="presentModal()">Present Modal</ion-button>
+            <ion-button id="open-modal-basic" onclick="presentModal()">Present Modal</ion-button>
           </div>
 
           <div class="grid-item">
@@ -394,7 +394,7 @@
           // create component to open
           const element = document.createElement('div');
           element.innerHTML = `
-            <ion-datetime show-default-buttons="true" color="danger">
+            <ion-datetime id="datetime-modal" show-default-buttons="true" color="danger">
               <span slot="title">Select Date</span>
             </ion-datetime>
           `;

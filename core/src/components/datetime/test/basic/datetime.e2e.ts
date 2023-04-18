@@ -408,3 +408,30 @@ test('datetime: md highlight should not clip at start or end of month', async ({
 
   await expect(datetime).toHaveScreenshot(`date-highlight-end-of-month-${page.getSnapshotSettings()}.png`);
 });
+
+test.describe('datetime: dark mode', () => {
+  test('should render a calender in a modal', async ({ page, skip }) => {
+    test.info().annotations.push({
+      type: 'issue',
+      description: 'https://github.com/ionic-team/ionic-framework/issues/26060',
+    });
+
+    skip.rtl();
+
+    await page.goto('/src/components/datetime/test/basic');
+
+    await page.evaluate(() => document.body.classList.toggle('dark'));
+    await page.waitForChanges();
+
+    const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+
+    const button = page.locator('#open-modal-basic');
+    await button.click();
+
+    await ionModalDidPresent.next();
+
+    const datetime = page.locator('ion-datetime#datetime-modal');
+
+    await expect(datetime).toHaveScreenshot(`datetime-dark-modal-${page.getSnapshotSettings()}.png`);
+  });
+});
