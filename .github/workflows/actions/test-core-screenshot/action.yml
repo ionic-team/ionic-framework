@@ -7,6 +7,9 @@ inputs:
     description: 'Playwright total number of test shards (ex: 4)'
   update:
     description: 'Whether or not to update the reference snapshots'
+  commandModifier:
+    description: 'Command modifier to run. This is should only be used to temporarily run legacy E2E tests as we migrate to the generator infrastructure.'
+
 runs:
   using: 'composite'
   steps:
@@ -24,7 +27,7 @@ runs:
       working-directory: ./core
     - name: Test
       if: inputs.update != 'true'
-      run: npm run test.e2e -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }}
+      run: npm run test.e2e${{ inputs.commandModifier }} -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }}
       shell: bash
       working-directory: ./core
     - name: Test and Update
@@ -46,14 +49,14 @@ runs:
       # which is why we not using the upload-archive
       # composite step here.
       run: |
-        npm run test.e2e -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }} --update-snapshots
+        npm run test.e2e${{ inputs.commandModifier }} -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }} --update-snapshots
         git add src/\*.png --force
         mkdir updated-screenshots
         cd ../ && rsync -R --progress $(git diff --name-only --cached) core/updated-screenshots
         if [ -d core/updated-screenshots/core ]; then
           echo "::set-output name=hasUpdatedScreenshots::$(echo 'true')"
           cd core/updated-screenshots
-          zip -q -r ../../UpdatedScreenshots-${{ inputs.shard }}-${{ inputs.totalShards }}.zip core
+          zip -q -r ../../UpdatedScreenshots${{ inputs.commandModifier }}-${{ inputs.shard }}-${{ inputs.totalShards }}.zip core
         fi
       shell: bash
       working-directory: ./core
@@ -61,8 +64,8 @@ runs:
       if: inputs.update == 'true' && steps.test-and-update.outputs.hasUpdatedScreenshots == 'true'
       uses: actions/upload-artifact@v3
       with:
-        name: updated-screenshots-${{ inputs.shard }}-${{ inputs.totalShards }}
-        path: UpdatedScreenshots-${{ inputs.shard }}-${{ inputs.totalShards }}.zip
+        name: updated-screenshots${{ inputs.commandModifier }}-${{ inputs.shard }}-${{ inputs.totalShards }}
+        path: UpdatedScreenshots${{ inputs.commandModifier }}-${{ inputs.shard }}-${{ inputs.totalShards }}.zip
     - name: Archive Test Results
       # The always() ensures that this step
       # runs even if the previous step fails.
@@ -73,6 +76,6 @@ runs:
       if: always()
       uses: ./.github/workflows/actions/upload-archive
       with:
-        name: test-results-${{ inputs.shard }}-${{ inputs.totalShards }}
-        output: core/TestResults-${{ inputs.shard }}-${{ inputs.totalShards }}.zip
+        name: test-results${{ inputs.commandModifier }}-${{ inputs.shard }}-${{ inputs.totalShards }}
+        output: core/TestResults${{ inputs.commandModifier }}-${{ inputs.shard }}-${{ inputs.totalShards }}.zip
         paths: core/playwright-report
