@@ -20,7 +20,7 @@ export const goto = async (
     return null;
   }
 
-  const { mode, direction, theme } = options;
+  const { mode, direction } = options;
 
   const rtlString = direction === 'rtl' ? 'true' : undefined;
 
