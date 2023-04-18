@@ -160,6 +160,7 @@
 }
 
 // TODO: FW-2876 - Remove this selector
+:host(.legacy-textarea) .native-textarea,
 :host(.legacy-textarea) .textarea-legacy-wrapper::after {
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
   @include border-radius(var(--border-radius));

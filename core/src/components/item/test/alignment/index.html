@@ -27,11 +27,11 @@
           <ion-list-header>Leading Icons</ion-list-header>
           <ion-item>
             <ion-icon slot="start" name="radio-button-off"></ion-icon>
-            <ion-input placeholder="Choose Starting Point"></ion-input>
+            <ion-input aria-label="Starting Point" placeholder="Choose Starting Point"></ion-input>
           </ion-item>
           <ion-item>
             <ion-icon slot="start" name="pin"></ion-icon>
-            <ion-select placeholder="Choose Really Really Long Destination Here">
+            <ion-select aria-label="Destination" placeholder="Choose Really Really Long Destination Here">
               <ion-select-option>Madison, WI</ion-select-option>
               <ion-select-option>Atlanta, GA</ion-select-option>
             </ion-select>
@@ -41,12 +41,10 @@
         <ion-list>
           <ion-list-header>Default Labels</ion-list-header>
           <ion-item>
-            <ion-label>From</ion-label>
-            <ion-input placeholder="Choose Starting Point"></ion-input>
+            <ion-input label="From" placeholder="Choose Starting Point"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label>Destination</ion-label>
-            <ion-select placeholder="Choose Really Really Long Destination Here">
+            <ion-select label="Destination" placeholder="Choose Really Really Long Destination Here">
               <ion-select-option>Madison, WI</ion-select-option>
               <ion-select-option>Atlanta, GA</ion-select-option>
             </ion-select>
@@ -56,12 +54,14 @@
         <ion-list>
           <ion-list-header>Fixed Labels</ion-list-header>
           <ion-item>
-            <ion-label position="fixed">From</ion-label>
-            <ion-input placeholder="Choose Starting Point"></ion-input>
+            <ion-input label="From" label-placement="fixed" placeholder="Choose Starting Point"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label position="fixed">Destination</ion-label>
-            <ion-select placeholder="Choose Really Really Long Destination Here">
+            <ion-select
+              label="Destination"
+              label-placement="fixed"
+              placeholder="Choose Really Really Long Destination Here"
+            >
               <ion-select-option>Madison, WI</ion-select-option>
               <ion-select-option>Atlanta, GA</ion-select-option>
             </ion-select>
@@ -71,12 +71,10 @@
         <ion-list>
           <ion-list-header>Floating Labels</ion-list-header>
           <ion-item>
-            <ion-label position="floating">From</ion-label>
-            <ion-input></ion-input>
+            <ion-input label="From" label-placement="floating"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label position="floating">Destination</ion-label>
-            <ion-select>
+            <ion-select label="Destination" label-placement="floating">
               <ion-select-option>Madison, WI</ion-select-option>
               <ion-select-option>Atlanta, GA</ion-select-option>
             </ion-select>
@@ -86,12 +84,14 @@
         <ion-list>
           <ion-list-header>Stacked Labels</ion-list-header>
           <ion-item>
-            <ion-label position="stacked">From</ion-label>
-            <ion-input placeholder="Choose Starting Point"></ion-input>
+            <ion-input label="From" label-placement="stacked" placeholder="Choose Starting Point"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label position="stacked">Destination</ion-label>
-            <ion-select placeholder="Choose Really Really Long Destination Here">
+            <ion-select
+              label="Destination"
+              label-placement="stacked"
+              placeholder="Choose Really Really Long Destination Here"
+            >
               <ion-select-option>Madison, WI</ion-select-option>
               <ion-select-option>Atlanta, GA</ion-select-option>
             </ion-select>
@@ -101,12 +101,14 @@
         <ion-list>
           <ion-list-header>End Labels</ion-list-header>
           <ion-item>
-            <ion-label slot="end">From</ion-label>
-            <ion-input placeholder="Choose Starting Point"></ion-input>
+            <ion-input label="From" label-placement="end" placeholder="Choose Starting Point"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label slot="end">Destination</ion-label>
-            <ion-select placeholder="Choose Really Really Long Destination Here">
+            <ion-select
+              label="Destination"
+              label-placement="end"
+              placeholder="Choose Really Really Long Destination Here"
+            >
               <ion-select-option>Madison, WI</ion-select-option>
               <ion-select-option>Atlanta, GA</ion-select-option>
             </ion-select>

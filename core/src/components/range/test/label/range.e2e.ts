@@ -5,7 +5,7 @@ test.describe('range: label', () => {
   test.describe('range: no start or end items', () => {
     test('should render a range with no visible label', async ({ page }) => {
       await page.setContent(`
-        <ion-range></ion-range>
+        <ion-range legacy="true"></ion-range>
       `);
 
       const range = page.locator('ion-range');
@@ -50,7 +50,7 @@ test.describe('range: label', () => {
   test.describe('range: start and end items', () => {
     test('should render a range with no visible label', async ({ page }) => {
       await page.setContent(`
-        <ion-range>
+        <ion-range legacy="true">
           <ion-icon name="volume-off" slot="start"></ion-icon>
           <ion-icon name="volume-high" slot="end"></ion-icon>
         </ion-range>
