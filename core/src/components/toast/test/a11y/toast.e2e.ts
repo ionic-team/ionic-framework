@@ -7,12 +7,10 @@ test.describe('toast: a11y', () => {
     test.skip(testInfo.project.metadata.rtl === true, 'This test does not check LTR vs RTL layouts');
     await page.goto(`/src/components/toast/test/a11y`);
   });
-  test('should not have any axe violations with polite toasts', async ({ page }) => {
+  test('should not have any axe violations with inline toasts', async ({ page }) => {
     const ionToastDidPresent = await page.spyOnEvent('ionToastDidPresent');
 
-    const politeButton = page.locator('#polite');
-    await politeButton.click();
-
+    await page.click('#inline-toast-trigger');
     await ionToastDidPresent.next();
 
     /**
@@ -23,12 +21,10 @@ test.describe('toast: a11y', () => {
     const results = await new AxeBuilder({ page }).disableRules('color-contrast').analyze();
     expect(results.violations).toEqual([]);
   });
-  test('should not have any axe violations with assertive toasts', async ({ page }) => {
+  test('should not have any axe violations with controller toasts', async ({ page }) => {
     const ionToastDidPresent = await page.spyOnEvent('ionToastDidPresent');
 
-    const politeButton = page.locator('#assertive');
-    await politeButton.click();
-
+    await page.click('#controller-toast-trigger');
     await ionToastDidPresent.next();
 
     /**
