@@ -75,13 +75,13 @@
   transform: rotate(180deg);
 }
 
-:host(.popover-side-start) .popover-arrow-ltr,
-:host(.popover-side-end) .popover-arrow-rtl {
+:host(.popover-side-start.popover-ltr) .popover-arrow,
+:host(.popover-side-end.popover-rtl) .popover-arrow {
   transform: rotate(90deg);
 }
 
-:host(.popover-side-end) .popover-arrow-ltr,
-:host(.popover-side-start) .popover-arrow-rtl {
+:host(.popover-side-end.popover-ltr) .popover-arrow,
+:host(.popover-side-start.popover-rtl) .popover-arrow {
   transform: rotate(-90deg);
 }
 

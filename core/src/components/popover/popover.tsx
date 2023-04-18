@@ -668,7 +668,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
     const desktop = isPlatform('desktop');
     const enableArrow = arrow && !parentPopover;
     const rtl = isRTL(el) ? 'rtl' : 'ltr';
-
+    console.log(`popover-side-${rtl}`);
     return (
       <Host
         aria-modal="true"
@@ -686,6 +686,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
           'overlay-hidden': true,
           'popover-desktop': desktop,
           [`popover-side-${side}`]: true,
+          [`popover-${rtl}`]: true,
           'popover-nested': !!parentPopover,
         }}
         onIonPopoverDidPresent={onLifecycle}
@@ -697,7 +698,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
         {!parentPopover && <ion-backdrop tappable={this.backdropDismiss} visible={this.showBackdrop} part="backdrop" />}
 
         <div class="popover-wrapper ion-overlay-wrapper" onClick={dismissOnSelect ? () => this.dismiss() : undefined}>
-          {enableArrow && <div class={{ 'popover-arrow': true, [`popover-arrow-${rtl}`]: true }} part="arrow"></div>}
+          {enableArrow && <div class="popover-arrow" part="arrow"></div>}
           <div class="popover-content" part="content">
             <slot></slot>
           </div>
