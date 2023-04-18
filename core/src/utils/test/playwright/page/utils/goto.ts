@@ -17,7 +17,7 @@ export const goto = async (
 ) => {
   // TODO error
   if (!options) {
-    return;
+    return null;
   }
 
   const { mode, direction, theme } = options;
