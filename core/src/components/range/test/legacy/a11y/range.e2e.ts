@@ -9,7 +9,7 @@ test.describe('range: a11y', () => {
     await page.setContent(
       `<ion-app>
         <ion-content>
-          <ion-range min="0" max="100" value="80"></ion-range>
+          <ion-range min="0" max="100" value="80" legacy="true"></ion-range>
         </ion-content>
       </ion-app>
         `
@@ -41,7 +41,7 @@ test.describe('range: a11y', () => {
       await page.setContent(
         `<ion-app>
           <ion-content>
-            <ion-range min="0" max="100" value="50" pin="true"></ion-range>
+            <ion-range min="0" max="100" value="50" pin="true" legacy="true"></ion-range>
           </ion-content>
         </ion-app>
         `
