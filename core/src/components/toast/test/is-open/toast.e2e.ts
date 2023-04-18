@@ -5,7 +5,7 @@ test.describe('toast: isOpen', () => {
   test.beforeEach(async ({ page, skip }) => {
     skip.rtl('isOpen does not behave differently in RTL');
     skip.mode('md', 'isOpen does not behave differently in MD');
-    await page.goto('/src/components/toast/test/isOpen');
+    await page.goto('/src/components/toast/test/is-open');
   });
 
   test('should open the toast', async ({ page }) => {

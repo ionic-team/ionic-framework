@@ -5,7 +5,7 @@ import { openPopover } from '../test.utils';
 
 test.describe('popover: dismissOnSelect', async () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/src/components/popover/test/dismissOnSelect');
+    await page.goto('/src/components/popover/test/dismiss-on-select');
   });
 
   test('should not dismiss a popover when clicking a hover trigger', async ({ page }) => {

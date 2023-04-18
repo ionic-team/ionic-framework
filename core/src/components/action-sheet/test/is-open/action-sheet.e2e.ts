@@ -5,7 +5,7 @@ test.describe('action sheet: isOpen', () => {
   test.beforeEach(async ({ page, skip }) => {
     skip.rtl('isOpen does not behave differently in RTL');
     skip.mode('md', 'isOpen does not behave differently in MD');
-    await page.goto('/src/components/action-sheet/test/isOpen');
+    await page.goto('/src/components/action-sheet/test/is-open');
   });
 
   test('should open the action sheet', async ({ page }) => {
