@@ -8,6 +8,7 @@ export interface TestConfig {
 
 interface TestUtilities {
   title: (title: string) => string;
+  screenshot: (fileName: string) => string;
   config: TestConfig;
 }
 
@@ -26,6 +27,16 @@ const generateTitle = (title: string, config: TestConfig): string => {
   const { mode, direction } = config;
 
   return `${title} - ${mode}/${direction}`;
+};
+
+/**
+ * Generates a unique filename based on a base filename
+ * and a test config.
+ */
+const generateScreenshotName = (fileName: string, config: TestConfig): string => {
+  const { mode, direction } = config;
+
+  return `${fileName}-${mode}-${direction}.png`;
 };
 
 export const configs = (testConfig: TestConfigOption = DEFAULT_TEST_CONFIG_OPTION): TestUtilities[] => {
@@ -50,6 +61,7 @@ export const configs = (testConfig: TestConfigOption = DEFAULT_TEST_CONFIG_OPTIO
     return {
       config,
       title: (title: string) => generateTitle(title, config),
+      screenshot: (fileName: string) => generateScreenshotName(fileName, config),
     };
   });
 };
