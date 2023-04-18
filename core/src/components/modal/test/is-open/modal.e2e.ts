@@ -5,7 +5,7 @@ test.describe('modal: isOpen', () => {
   test.beforeEach(async ({ page, skip }) => {
     skip.rtl();
     skip.mode('md');
-    await page.goto('/src/components/modal/test/isOpen');
+    await page.goto('/src/components/modal/test/is-open');
   });
 
   test('should open the modal', async ({ page }) => {
