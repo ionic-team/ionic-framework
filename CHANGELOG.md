@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.3](https://github.com/ionic-team/ionic-framework/compare/v7.0.2...v7.0.3) (2023-04-19)
+
+
+### Bug Fixes
+
+* **accordion:** inset style respects animated property ([#27173](https://github.com/ionic-team/ionic-framework/issues/27173)) ([114fe28](https://github.com/ionic-team/ionic-framework/commit/114fe28f3cc9ee52bc5eefa569353f490ab01023)), closes [#27047](https://github.com/ionic-team/ionic-framework/issues/27047)
+* **datetime:** clamp date between min and max when using month picker ([#27185](https://github.com/ionic-team/ionic-framework/issues/27185)) ([0385c08](https://github.com/ionic-team/ionic-framework/commit/0385c0862c98c9387b38d3a4416d74a2cc132ddd)), closes [#27027](https://github.com/ionic-team/ionic-framework/issues/27027)
+* **input:** string values are emitted ([#27226](https://github.com/ionic-team/ionic-framework/issues/27226)) ([cdb0627](https://github.com/ionic-team/ionic-framework/commit/cdb0627c87299ba36da670c81f9d4e3446bb500d))
+* **many:** dynamic label support for modern form controls ([#27156](https://github.com/ionic-team/ionic-framework/issues/27156)) ([30b548b](https://github.com/ionic-team/ionic-framework/commit/30b548b167883f0a657b0410d3bcf76dbb6895e0)), closes [#27085](https://github.com/ionic-team/ionic-framework/issues/27085)
+* **menu:** export menu interfaces ([#27227](https://github.com/ionic-team/ionic-framework/issues/27227)) ([80d8c66](https://github.com/ionic-team/ionic-framework/commit/80d8c667666ffdb6b8e668ef94cc58a93045bd0e))
+* **segment-button:** update checked state on render ([#26970](https://github.com/ionic-team/ionic-framework/issues/26970)) ([16aa977](https://github.com/ionic-team/ionic-framework/commit/16aa9770bba983705d807ad363498693a0e7969b)), closes [#26830](https://github.com/ionic-team/ionic-framework/issues/26830)
+* **select:** respect --border-radius with modern template ([#27213](https://github.com/ionic-team/ionic-framework/issues/27213)) ([6ffbdbb](https://github.com/ionic-team/ionic-framework/commit/6ffbdbb3b2b69290cf25753d535bc7483bd7c6e8)), closes [#27208](https://github.com/ionic-team/ionic-framework/issues/27208)
+* **select:** text does not overlap icon ([#27125](https://github.com/ionic-team/ionic-framework/issues/27125)) ([6fc0024](https://github.com/ionic-team/ionic-framework/commit/6fc002458ad23b129a214fd34d3a2fdc33800373)), closes [#27081](https://github.com/ionic-team/ionic-framework/issues/27081)
+* **textarea:** legacy textarea respects padding ([#27219](https://github.com/ionic-team/ionic-framework/issues/27219)) ([742d429](https://github.com/ionic-team/ionic-framework/commit/742d4295ddfe40c643d9dd21ffc6d9fb3eb6f717)), closes [#27218](https://github.com/ionic-team/ionic-framework/issues/27218)
+* **toast:** screen readers announce content ([#27198](https://github.com/ionic-team/ionic-framework/issues/27198)) ([76c8b94](https://github.com/ionic-team/ionic-framework/commit/76c8b94e2a818e1b824701b788d5ed8b6e554d42)), closes [#25866](https://github.com/ionic-team/ionic-framework/issues/25866)
+* **vue:** components have correct name in Vue Dev Tools ([#27180](https://github.com/ionic-team/ionic-framework/issues/27180)) ([07941a5](https://github.com/ionic-team/ionic-framework/commit/07941a59ba68a46d1345fecec6df82fb4655a0b5)), closes [#25199](https://github.com/ionic-team/ionic-framework/issues/25199)
+
+
+
+
+
 ## [7.0.2](https://github.com/ionic-team/ionic-framework/compare/v7.0.1...v7.0.2) (2023-04-12)
 
 
