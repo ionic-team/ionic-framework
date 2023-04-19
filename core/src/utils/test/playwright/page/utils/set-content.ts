@@ -1,4 +1,5 @@
 import type { Page, TestInfo } from '@playwright/test';
+import type { E2EPageOptions } from '@utils/test/playwright';
 
 /**
  * Overwrites the default Playwright page.setContent method.
@@ -8,18 +9,28 @@ import type { Page, TestInfo } from '@playwright/test';
  *
  * @param page The Playwright page object.
  * @param html The HTML content to set on the page.
- * @param testInfo The TestInfo associated with the current test run.
+ * @param testInfo The TestInfo associated with the current test run. (DEPRECATED)
+ * @param options The test config associated with the current test run.
  */
-export const setContent = async (page: Page, html: string, testInfo: TestInfo) => {
+export const setContent = async (page: Page, html: string, testInfo: TestInfo, options?: E2EPageOptions) => {
   if (page.isClosed()) {
     throw new Error('setContent unavailable: page is already closed');
+  }
+
+  let mode, direction;
+  if (options == undefined) {
+    mode = testInfo.project.metadata.mode;
+    direction = testInfo.project.metadata.rtl ? 'rtl' : 'ltr';
+  } else {
+    mode = options.mode;
+    direction = options.direction;
   }
 
   const baseUrl = process.env.PLAYWRIGHT_TEST_BASE_URL;
 
   const output = `
     <!DOCTYPE html>
-    <html dir="${testInfo.project.metadata.rtl ? 'rtl' : 'ltr'}">
+    <html dir="${direction}">
       <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
@@ -30,7 +41,7 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo) =
         <script>
           window.Ionic = {
             config: {
-              mode: '${testInfo.project.metadata.mode}'
+              mode: '${mode}'
             }
           }
         </script>
@@ -59,6 +70,6 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo) =
       }
     });
 
-    await page.goto(`${baseUrl}#`);
+    await page.goto(`${baseUrl}#`, options);
   }
 };

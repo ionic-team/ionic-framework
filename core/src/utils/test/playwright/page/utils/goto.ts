@@ -1,4 +1,5 @@
 import type { Page, TestInfo } from '@playwright/test';
+import type { E2EPageOptions } from '@utils/test/playwright';
 
 /**
  * This is an extended version of Playwright's
@@ -7,8 +8,34 @@ import type { Page, TestInfo } from '@playwright/test';
  * automatically waits for the Stencil components
  * to be hydrated before proceeding with the test.
  */
-export const goto = async (page: Page, url: string, options: any, testInfo: TestInfo, originalFn: typeof page.goto) => {
-  const { mode, rtl, _testing } = testInfo.project.metadata;
+export const goto = async (
+  page: Page,
+  url: string,
+  testInfo: TestInfo,
+  originalFn: typeof page.goto,
+  options?: E2EPageOptions
+) => {
+  if (options === undefined && testInfo.project.metadata.mode === undefined) {
+    throw new Error(`
+A config must be passed to page.goto to use a generator test:
+
+configs().forEach(({ config, title }) => {
+  test(title('example test'), async ({ page }) => {
+    await page.goto('/src/components/button/test/basic', config);
+  });
+});`);
+  }
+
+  let mode, direction;
+  if (options == undefined) {
+    mode = testInfo.project.metadata.mode;
+    direction = testInfo.project.metadata.rtl ? 'rtl' : 'ltr';
+  } else {
+    mode = options.mode;
+    direction = options.direction;
+  }
+
+  const rtlString = direction === 'rtl' ? 'true' : undefined;
 
   const splitUrl = url.split('?');
   const paramsString = splitUrl[1];
@@ -19,8 +46,8 @@ export const goto = async (page: Page, url: string, options: any, testInfo: Test
    */
   const urlToParams = new URLSearchParams(paramsString);
   const formattedMode = urlToParams.get('ionic:mode') ?? mode;
-  const formattedRtl = urlToParams.get('rtl') ?? rtl;
-  const ionicTesting = urlToParams.get('ionic:_testing') ?? _testing;
+  const formattedRtl = urlToParams.get('rtl') ?? rtlString;
+  const ionicTesting = urlToParams.get('ionic:_testing') ?? true;
 
   /**
    * Pass through other custom query params
@@ -44,12 +71,10 @@ export const goto = async (page: Page, url: string, options: any, testInfo: Test
     description: formattedMode,
   });
 
-  if (rtl) {
-    testInfo.annotations.push({
-      type: 'rtl',
-      description: 'true',
-    });
-  }
+  testInfo.annotations.push({
+    type: 'rtl',
+    description: formattedRtl === 'true' ? 'rtl' : 'ltr',
+  });
 
   const result = await Promise.all([
     page.waitForFunction(() => (window as any).testAppLoaded === true, { timeout: 4750 }),

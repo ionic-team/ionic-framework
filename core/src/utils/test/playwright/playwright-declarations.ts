@@ -1,8 +1,8 @@
 import type { Page, Response } from '@playwright/test';
 
+import type { TestConfig } from './generator';
 import type { EventSpy } from './page/event-spy';
 import type { LocatorOptions, E2ELocator } from './page/utils/locator';
-import type { TestConfig } from './generator';
 
 export interface E2EPageOptions extends PageOptions, TestConfig {}
 
@@ -58,10 +58,7 @@ export interface E2EPage extends Page {
    * @param url URL to navigate page to. The url should include scheme, e.g. `https://`. When a `baseURL` via the context options was provided and the passed URL is a path, it gets merged via the
    * [`new URL()`](https://developer.mozilla.org/en-US/docs/Web/API/URL/URL) constructor.
    */
-  goto: (
-    url: string,
-    options?: E2EPageOptions
-  ) => Promise<null | Response>;
+  goto: (url: string, options?: E2EPageOptions) => Promise<null | Response>;
 
   /**
    * Assigns HTML markup to a page.
