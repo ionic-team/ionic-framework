@@ -44,7 +44,7 @@ test('my custom test', ({ page, skip }) => {
 });
 ```
 
-Deprecated: Use a generator instead.
+Deprecated: Use a [generator](#generators) instead.
 
 **`skip.rtl` (DEPRECATED)**
 ```typescript
@@ -57,7 +57,7 @@ test('my custom test', ({ page, skip }) => {
 });
 ```
 
-Deprecated: Use a generator instead.
+Deprecated: Use a [generator](#generators) instead.
 
 **`skip.browser`**
 ```typescript
