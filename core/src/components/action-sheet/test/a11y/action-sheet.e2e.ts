@@ -22,7 +22,7 @@ const testAria = async (page: E2EPage, buttonID: string, expectedAriaLabelledBy:
 };
 
 test.describe('action-sheet: a11y', () => {
-  configs({ direction: ['ltr'] }).forEach(({ config, title }) => {
+  configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
     test(title('should not have accessibility violations when header is defined'), async ({ page }) => {
       await page.goto(`/src/components/action-sheet/test/a11y`, config);
 

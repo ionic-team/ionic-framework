@@ -4,7 +4,7 @@ import { configs, test } from '@utils/test/playwright';
 import type { E2EPage } from '@utils/test/playwright';
 
 test.describe('action sheet: data', () => {
-  configs({ direction: ['ltr'] }).forEach(({ config, title }) => {
+  configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
     test(title('should return data'), async ({ page }) => {
       await page.goto(`/src/components/action-sheet/test/basic`, config);
       const actionSheetFixture = new ActionSheetFixture(page);
@@ -37,7 +37,7 @@ test.describe('action sheet: data', () => {
 });
 
 test.describe('action sheet: attributes', () => {
-  configs({ direction: ['ltr'] }).forEach(({ config, title }) => {
+  configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
     test(title('should set htmlAttributes'), async ({ page }) => {
       await page.goto(`/src/components/action-sheet/test/basic`, config);
       const actionSheetFixture = new ActionSheetFixture(page);
@@ -99,7 +99,7 @@ test.describe('action sheet: variant rendering', () => {
 });
 
 test.describe('action sheet: variant functionality', () => {
-  configs({ direction: ['ltr'] }).forEach(({ config, title }) => {
+  configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
     test(title('should open custom backdrop action sheet'), async ({ page }) => {
       await page.goto(`/src/components/action-sheet/test/basic`, config);
       const actionSheetFixture = new ActionSheetFixture(page);
@@ -135,7 +135,7 @@ test.describe('action sheet: variant functionality', () => {
 });
 
 test.describe('action sheet: focus trap', () => {
-  configs({ direction: ['ltr'] }).forEach(({ config, title }) => {
+  configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
     test(title('it should trap focus in action sheet'), async ({ page, browserName }) => {
       await page.goto(`/src/components/action-sheet/test/basic`, config);
       const actionSheetFixture = new ActionSheetFixture(page);

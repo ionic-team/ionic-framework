@@ -2,7 +2,7 @@ import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
 test.describe('action sheet: isOpen', () => {
-  configs({ direction: ['ltr'], mode: ['ios'] }).forEach(({ config, title }) => {
+  configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ config, title }) => {
     test(title('should open the action sheet'), async ({ page }) => {
       await page.goto('/src/components/action-sheet/test/isOpen', config);
 
