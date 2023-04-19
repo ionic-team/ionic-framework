@@ -2,7 +2,7 @@ import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
 test.describe('accordion: nested', () => {
-  configs({ direction: ['ltr'] }).forEach(({ config, screenshot, title }) => {
+  configs({ directions: ['ltr'] }).forEach(({ config, screenshot, title }) => {
     test(title('parent and child should not be disabled'), async ({ page }) => {
       await page.goto(`/src/components/accordion/test/nested`, config);
 

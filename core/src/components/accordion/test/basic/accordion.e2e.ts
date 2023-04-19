@@ -14,7 +14,7 @@ test.describe('accordion: basic', () => {
 });
 
 test.describe('accordion: ionChange', () => {
-  configs({ direction: ['ltr'] }).forEach(({ config, title }) => {
+  configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
     test(title('should fire ionChange when interacting with accordions'), async ({ page }) => {
       await page.setContent(
         `

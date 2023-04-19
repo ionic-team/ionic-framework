@@ -2,7 +2,7 @@ import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
 test.describe('accordion: states', () => {
-  configs({ mode: ['md'], direction: ['ltr'] }).forEach(({ config, title }) => {
+  configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ config, title }) => {
     test(title('should properly set readonly on child accordions'), async ({ page }) => {
       await page.setContent(
         `
