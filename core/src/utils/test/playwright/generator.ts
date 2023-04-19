@@ -1,7 +1,7 @@
 type Mode = 'ios' | 'md';
 type Direction = 'ltr' | 'rtl';
 
-interface TestConfig {
+export interface TestConfig {
   mode: Mode;
   direction: Direction;
 }

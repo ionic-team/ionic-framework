@@ -2,6 +2,36 @@ import type { Page, Response } from '@playwright/test';
 
 import type { EventSpy } from './page/event-spy';
 import type { LocatorOptions, E2ELocator } from './page/utils/locator';
+import type { TestConfig } from './generator';
+
+export interface E2EPageOptions extends PageOptions, TestConfig {}
+
+interface PageOptions {
+  /**
+   * Referer header value. If provided it will take preference over the referer header value set by
+   * [page.setExtraHTTPHeaders(headers)](https://playwright.dev/docs/api/class-page#page-set-extra-http-headers).
+   */
+  referer?: string;
+
+  /**
+   * Maximum operation time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be
+   * changed by using the
+   * [browserContext.setDefaultNavigationTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-navigation-timeout),
+   * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout),
+   * [page.setDefaultNavigationTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-navigation-timeout)
+   * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
+   */
+  timeout?: number;
+
+  /**
+   * When to consider operation succeeded, defaults to `load`. Events can be either:
+   * - `'domcontentloaded'` - consider operation to be finished when the `DOMContentLoaded` event is fired.
+   * - `'load'` - consider operation to be finished when the `load` event is fired.
+   * - `'networkidle'` - consider operation to be finished when there are no network connections for at least `500` ms.
+   * - `'commit'` - consider operation to be finished when network response is received and the document started loading.
+   */
+  waitUntil?: 'load' | 'domcontentloaded' | 'networkidle' | 'commit';
+}
 
 export interface E2EPage extends Page {
   /**
@@ -30,33 +60,16 @@ export interface E2EPage extends Page {
    */
   goto: (
     url: string,
-    options?: {
-      /**
-       * Referer header value. If provided it will take preference over the referer header value set by
-       * [page.setExtraHTTPHeaders(headers)](https://playwright.dev/docs/api/class-page#page-set-extra-http-headers).
-       */
-      referer?: string;
-
-      /**
-       * Maximum operation time in milliseconds, defaults to 30 seconds, pass `0` to disable timeout. The default value can be
-       * changed by using the
-       * [browserContext.setDefaultNavigationTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-navigation-timeout),
-       * [browserContext.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-browsercontext#browser-context-set-default-timeout),
-       * [page.setDefaultNavigationTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-navigation-timeout)
-       * or [page.setDefaultTimeout(timeout)](https://playwright.dev/docs/api/class-page#page-set-default-timeout) methods.
-       */
-      timeout?: number;
-
-      /**
-       * When to consider operation succeeded, defaults to `load`. Events can be either:
-       * - `'domcontentloaded'` - consider operation to be finished when the `DOMContentLoaded` event is fired.
-       * - `'load'` - consider operation to be finished when the `load` event is fired.
-       * - `'networkidle'` - consider operation to be finished when there are no network connections for at least `500` ms.
-       * - `'commit'` - consider operation to be finished when network response is received and the document started loading.
-       */
-      waitUntil?: 'load' | 'domcontentloaded' | 'networkidle' | 'commit';
-    }
+    options?: E2EPageOptions
   ) => Promise<null | Response>;
+
+  /**
+   * Assigns HTML markup to a page.
+   * @param html - The HTML markup to assign to the page
+   * @param options - Ionic config options or Playwright options for the page
+   */
+  setContent: (html: string, options?: E2EPageOptions) => Promise<void>;
+
   /**
    * Find an element by selector.
    * See https://playwright.dev/docs/locators for more information.
