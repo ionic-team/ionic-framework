@@ -91,9 +91,9 @@ The [page fixture](https://playwright.dev/docs/test-fixtures) has been extended 
 
 | Method | Description |
 | - | - |
-| `goto` | The [page.goto](https://playwright.dev/docs/api/class-page#page-goto) method extended to support a config from a generator and to automatically wait for Stencil components to initialize. |
-| `setContent` | The [page.setContent](https://playwright.dev/docs/api/class-page#page-set-content) method extended to support a config from a generator and to automatically wait for Stencil components to initialize. |
-| `locator` | The [page.locator](https://playwright.dev/docs/api/class-page#page-locator) method extended to support `spyOnEvent` for generator results. |
+| `goto` | The [page.goto](https://playwright.dev/docs/api/class-page#page-goto) method extended to support a config from a [generator](#generator) and to automatically wait for Stencil components to initialize. |
+| `setContent` | The [page.setContent](https://playwright.dev/docs/api/class-page#page-set-content) method extended to support a config from a [generator](#generator) and to automatically wait for Stencil components to initialize. |
+| `locator` | The [page.locator](https://playwright.dev/docs/api/class-page#page-locator) method extended to support `spyOnEvent`. |
 | `setIonViewport` | Resizes the browser window to fit the entire height of `ion-content` on screen. Only needed when taking fullsize screenshots with `ion-content`. |
 | `waitForChanges` | Waits for Stencil to re-render before proceeeding. This is typically only needed when you update a property on a component. |
 | `spyOnEvent` | Creates an event spy that can be used to wait for a [CustomEvent](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent) to be emitted. |
