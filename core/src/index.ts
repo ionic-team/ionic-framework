@@ -27,5 +27,4 @@ export {
   popoverController,
   toastController,
 } from './utils/overlays';
-export { IonicSwiper } from './components/slides/IonicSwiper';
 export { IonicSlides } from './components/slides/IonicSlides';

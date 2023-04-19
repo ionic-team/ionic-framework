@@ -1,6 +1,6 @@
 describe('Inputs', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:8080/inputs')
+    cy.visit('/inputs')
   })
   it('should have default value', () => {
     cy.get('ion-checkbox').should('have.prop', 'checked').and('eq', false);
@@ -41,5 +41,23 @@ describe('Inputs', () => {
     cy.get('ion-radio-group').should('have.prop', 'value').and('eq', 'red');
     cy.get('ion-segment').should('have.prop', 'value').and('eq', 'dogs');
     cy.get('ion-select').should('have.prop', 'value').and('eq', 'apples');
+  });
+
+  describe('updating text input refs', () => {
+    it('typing into input should update ref', () => {
+      cy.get('ion-input input').type('Hello Input', { scrollBehavior: false });
+
+      cy.get('#input-ref').should('have.text', 'Hello Input');
+    });
+    it('typing into searchbar should update ref', () => {
+      cy.get('ion-searchbar input').type('Hello Searchbar', { scrollBehavior: false });
+
+      cy.get('#searchbar-ref').should('have.text', 'Hello Searchbar');
+    });
+    it('typing into textarea should update ref', () => {
+      cy.get('ion-textarea textarea').type('Hello Textarea', { scrollBehavior: false });
+
+      cy.get('#textarea-ref').should('have.text', 'Hello Textarea');
+    });
   });
 })

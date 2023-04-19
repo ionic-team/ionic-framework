@@ -5,6 +5,7 @@ import { getIonMode } from '../../global/ionic-global';
 import type { Color } from '../../interface';
 import { getElementRoot, raf } from '../../utils/helpers';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/native/haptic';
+import { isPlatform } from '../../utils/platform';
 import { createColorClasses } from '../../utils/theme';
 import type { PickerInternalCustomEvent } from '../picker-internal/picker-internal-interfaces';
 
@@ -240,6 +241,12 @@ export class PickerColumnInternal implements ComponentInterface {
    * the item object.
    */
   private initializeScrollListener = () => {
+    /**
+     * The haptics for the wheel picker are
+     * an iOS-only feature. As a result, they should
+     * be disabled on Android.
+     */
+    const enableHaptics = isPlatform('ios');
     const { el } = this;
 
     let timeout: ReturnType<typeof setTimeout> | undefined;
@@ -253,7 +260,7 @@ export class PickerColumnInternal implements ComponentInterface {
         }
 
         if (!this.isScrolling) {
-          hapticSelectionStart();
+          enableHaptics && hapticSelectionStart();
           this.isScrolling = true;
         }
 
@@ -280,7 +287,7 @@ export class PickerColumnInternal implements ComponentInterface {
          * we need to run haptics again.
          */
         if (activeElement !== activeEl) {
-          hapticSelectionChanged();
+          enableHaptics && hapticSelectionChanged();
 
           if (this.canExitInputMode) {
             /**
@@ -303,7 +310,7 @@ export class PickerColumnInternal implements ComponentInterface {
 
         timeout = setTimeout(() => {
           this.isScrolling = false;
-          hapticSelectionEnd();
+          enableHaptics && hapticSelectionEnd();
 
           /**
            * Certain tasks (such as those that
@@ -403,9 +410,15 @@ export class PickerColumnInternal implements ComponentInterface {
           ['picker-column-numeric-input']: numericInput,
         })}
       >
-        <div class="picker-item picker-item-empty">&nbsp;</div>
-        <div class="picker-item picker-item-empty">&nbsp;</div>
-        <div class="picker-item picker-item-empty">&nbsp;</div>
+        <div class="picker-item picker-item-empty" aria-hidden="true">
+          &nbsp;
+        </div>
+        <div class="picker-item picker-item-empty" aria-hidden="true">
+          &nbsp;
+        </div>
+        <div class="picker-item picker-item-empty" aria-hidden="true">
+          &nbsp;
+        </div>
         {items.map((item, index) => {
           {
             /*
@@ -435,9 +448,15 @@ export class PickerColumnInternal implements ComponentInterface {
             </button>
           );
         })}
-        <div class="picker-item picker-item-empty">&nbsp;</div>
-        <div class="picker-item picker-item-empty">&nbsp;</div>
-        <div class="picker-item picker-item-empty">&nbsp;</div>
+        <div class="picker-item picker-item-empty" aria-hidden="true">
+          &nbsp;
+        </div>
+        <div class="picker-item picker-item-empty" aria-hidden="true">
+          &nbsp;
+        </div>
+        <div class="picker-item picker-item-empty" aria-hidden="true">
+          &nbsp;
+        </div>
       </Host>
     );
   }

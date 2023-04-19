@@ -78,3 +78,10 @@ const removeClone = (componentEl: HTMLElement, inputEl: HTMLElement) => {
   componentEl.style.pointerEvents = '';
   inputEl.style.transform = '';
 };
+
+/**
+ * Factoring in 50px gives us some room
+ * in case the keyboard shows password/autofill bars
+ * asynchronously.
+ */
+export const SCROLL_AMOUNT_PADDING = 50;

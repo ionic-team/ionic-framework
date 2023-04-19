@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
-    <title>Select - Basic</title>
+    <title>Select - Label</title>
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
@@ -12,56 +12,165 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(250px, 1fr));
+        grid-row-gap: 20px;
+        grid-column-gap: 20px;
+      }
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+
+        color: #6f7378;
+
+        margin-top: 10px;
+      }
+      @media screen and (max-width: 800px) {
+        .grid {
+          grid-template-columns: 1fr;
+          padding: 0;
+        }
+      }
+
+      ion-select {
+        width: 100%;
+      }
+    </style>
   </head>
 
   <body>
     <ion-app>
       <ion-header>
         <ion-toolbar>
-          <ion-title>Select - Labels</ion-title>
+          <ion-title>Select - Label</ion-title>
         </ion-toolbar>
       </ion-header>
 
-      <ion-content>
-        <ion-list>
-          <ion-item>
-            <ion-label position="floating">Gender</ion-label>
-            <ion-select placeholder="Placeholder">
-              <ion-select-option value="fn">Female</ion-select-option>
-              <ion-select-option value="ml">Male</ion-select-option>
-            </ion-select>
-          </ion-item>
+      <ion-content id="content" class="ion-padding">
+        <h1>Placement Start</h1>
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Justify Start</h2>
+            <ion-select
+              label="Favorite Fruit"
+              placeholder="Select a fruit"
+              label-placement="start"
+              justify="start"
+            ></ion-select>
+          </div>
 
-          <ion-item>
-            <ion-label position="floating">Hair Color</ion-label>
-            <ion-select value="">
-              <ion-select-option value="brown">Brown</ion-select-option>
-              <ion-select-option value="">Empty Value</ion-select-option>
-              <ion-select-option value="black">Black</ion-select-option>
-              <ion-select-option value="red">Red</ion-select-option>
-            </ion-select>
-          </ion-item>
+          <div class="grid-item">
+            <h2>Justify End</h2>
+            <ion-select
+              label="Favorite Fruit"
+              placeholder="Select a fruit"
+              label-placement="start"
+              justify="end"
+            ></ion-select>
+          </div>
 
-          <ion-item>
-            <ion-label position="floating">Hair Color</ion-label>
-            <ion-select selected-text="SelectedText prop">
-              <ion-select-option value="brown">Brown</ion-select-option>
-              <ion-select-option value="blonde">Blonde</ion-select-option>
-              <ion-select-option value="black">Black</ion-select-option>
-              <ion-select-option value="red">Red</ion-select-option>
-            </ion-select>
-          </ion-item>
+          <div class="grid-item">
+            <h2>Justify Space Between</h2>
+            <ion-select
+              label="Favorite Fruit"
+              placeholder="Select a fruit"
+              label-placement="start"
+              justify="space-between"
+            ></ion-select>
+          </div>
+        </div>
 
-          <ion-item>
-            <ion-label position="floating">Hair Color</ion-label>
-            <ion-select>
-              <ion-select-option value="brown">Brown</ion-select-option>
-              <ion-select-option value="blonde">Blonde</ion-select-option>
-              <ion-select-option value="black">Black</ion-select-option>
-              <ion-select-option value="red">Red</ion-select-option>
+        <h1>Placement End</h1>
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Justify Start</h2>
+            <ion-select
+              label="Favorite Fruit"
+              placeholder="Select a fruit"
+              label-placement="end"
+              justify="start"
+            ></ion-select>
+          </div>
+
+          <div class="grid-item">
+            <h2>Justify End</h2>
+            <ion-select
+              label="Favorite Fruit"
+              placeholder="Select a fruit"
+              label-placement="end"
+              justify="end"
+            ></ion-select>
+          </div>
+
+          <div class="grid-item">
+            <h2>Justify Space Between</h2>
+            <ion-select
+              label="Favorite Fruit"
+              placeholder="Select a fruit"
+              label-placement="end"
+              justify="space-between"
+            ></ion-select>
+          </div>
+        </div>
+
+        <h1>Placement Fixed</h1>
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Justify Start</h2>
+            <ion-select
+              label="Favorite Fruit"
+              placeholder="Select a fruit"
+              label-placement="fixed"
+              justify="start"
+            ></ion-select>
+          </div>
+
+          <div class="grid-item">
+            <h2>Justify End</h2>
+            <ion-select
+              label="Favorite Fruit"
+              placeholder="Select a fruit"
+              label-placement="fixed"
+              justify="end"
+            ></ion-select>
+          </div>
+
+          <div class="grid-item">
+            <h2>Justify Space Between</h2>
+            <ion-select
+              label="Favorite Fruit"
+              placeholder="Select a fruit"
+              label-placement="fixed"
+              justify="space-between"
+            ></ion-select>
+          </div>
+        </div>
+
+        <h1>Placement Floating</h1>
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Default</h2>
+            <ion-select label="Favorite Fruit" label-placement="floating">
+              <ion-select-option value="apples">Apples</ion-select-option>
+              <ion-select-option value="bananas">Bananas</ion-select-option>
+              <ion-select-option value="oranges">Oranges</ion-select-option>
             </ion-select>
-          </ion-item>
-        </ion-list>
+          </div>
+        </div>
+
+        <h1>Placement Stacked</h1>
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Default</h2>
+            <ion-select label="Favorite Fruit" label-placement="stacked">
+              <ion-select-option value="apples">Apples</ion-select-option>
+              <ion-select-option value="bananas">Bananas</ion-select-option>
+              <ion-select-option value="oranges">Oranges</ion-select-option>
+            </ion-select>
+          </div>
+        </div>
       </ion-content>
     </ion-app>
   </body>

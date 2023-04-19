@@ -2,10 +2,16 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { Color, StyleEventDetail, TextareaChangeEventDetail } from '../../interface';
+import type { Color, StyleEventDetail } from '../../interface';
+import type { LegacyFormController } from '../../utils/forms';
+import { createLegacyFormController } from '../../utils/forms';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes, debounceEvent, findItemLabel, inheritAttributes } from '../../utils/helpers';
-import { createColorClasses } from '../../utils/theme';
+import { printIonWarning } from '../../utils/logging';
+import { createColorClasses, hostContext } from '../../utils/theme';
+import { getCounterText } from '../input/input.utils';
+
+import type { TextareaChangeEventDetail, TextareaInputEventDetail } from './textarea-interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -21,21 +27,27 @@ import { createColorClasses } from '../../utils/theme';
 export class Textarea implements ComponentInterface {
   private nativeInput?: HTMLTextAreaElement;
   private inputId = `ion-textarea-${textareaIds++}`;
-  private didBlurAfterEdit = false;
+  /**
+   * `true` if the textarea was cleared as a result of the user typing
+   * with `clearOnEdit` enabled.
+   *
+   * Resets when the textarea loses focus.
+   */
+  private didTextareaClearOnEdit = false;
   private textareaWrapper?: HTMLElement;
   private inheritedAttributes: Attributes = {};
+  private originalIonInput?: EventEmitter<TextareaInputEventDetail>;
+  private legacyFormController!: LegacyFormController;
+
+  // This flag ensures we log the deprecation warning at most once.
+  private hasLoggedDeprecationWarning = false;
 
   /**
-   * This is required for a WebKit bug which requires us to
-   * blur and focus an input to properly focus the input in
-   * an item with delegatesFocus. It will no longer be needed
-   * with iOS 14.
-   *
-   * @internal
+   * The value of the textarea when the textarea is focused.
    */
-  @Prop() fireFocusEvents = true;
+  private focusedValue?: string | null;
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLIonTextareaElement;
 
   @State() hasFocus = false;
 
@@ -58,18 +70,24 @@ export class Textarea implements ComponentInterface {
   @Prop() autofocus = false;
 
   /**
-   * If `true`, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
+   * If `true`, the value will be cleared after focus upon edit.
    */
-  @Prop({ mutable: true }) clearOnEdit = false;
+  @Prop() clearOnEdit = false;
 
   /**
-   * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. This also impacts form bindings such as `ngModel` or `v-model`.
+   * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
    */
-  @Prop() debounce = 0;
+  @Prop() debounce?: number;
 
   @Watch('debounce')
   protected debounceChanged() {
-    this.ionChange = debounceEvent(this.ionChange, this.debounce);
+    const { ionInput, debounce, originalIonInput } = this;
+
+    /**
+     * If debounce is undefined, we have to manually revert the ionInput emitter in case
+     * debounce used to be set to a number. Otherwise, the event would stay debounced.
+     */
+    this.ionInput = debounce === undefined ? originalIonInput ?? ionInput : debounceEvent(ionInput, debounce);
   }
 
   /**
@@ -81,6 +99,12 @@ export class Textarea implements ComponentInterface {
   protected disabledChanged() {
     this.emitStyle();
   }
+
+  /**
+   * The fill for the item. If `"solid"` the item will have a background. If
+   * `"outline"` the item will be transparent with a border. Only available in `md` mode.
+   */
+  @Prop() fill?: 'outline' | 'solid';
 
   /**
    * A hint to the browser for which keyboard to display.
@@ -97,12 +121,12 @@ export class Textarea implements ComponentInterface {
   @Prop() enterkeyhint?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
 
   /**
-   * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
+   * This attribute specifies the maximum number of characters that the user can enter.
    */
   @Prop() maxlength?: number;
 
   /**
-   * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the minimum number of characters that the user can enter.
+   * This attribute specifies the minimum number of characters that the user can enter.
    */
   @Prop() minlength?: number;
 
@@ -158,6 +182,59 @@ export class Textarea implements ComponentInterface {
   @Prop({ mutable: true }) value?: string | null = '';
 
   /**
+   * If `true`, a character counter will display the ratio of characters used and the total character limit.
+   * Developers must also set the `maxlength` property for the counter to be calculated correctly.
+   */
+  @Prop() counter = false;
+
+  /**
+   * A callback used to format the counter text.
+   * By default the counter text is set to "itemLength / maxLength".
+   */
+  @Prop() counterFormatter?: (inputLength: number, maxLength: number) => string;
+
+  /**
+   * Text that is placed under the textarea and displayed when an error is detected.
+   */
+  @Prop() errorText?: string;
+
+  /**
+   * Text that is placed under the textarea and displayed when no error is detected.
+   */
+  @Prop() helperText?: string;
+
+  /**
+   * The visible label associated with the textarea.
+   */
+  @Prop() label?: string;
+
+  /**
+   * Where to place the label relative to the textarea.
+   * `"start"`: The label will appear to the left of the textarea in LTR and to the right in RTL.
+   * `"end"`: The label will appear to the right of the textarea in LTR and to the left in RTL.
+   * `"floating"`: The label will appear smaller and above the textarea when the textarea is focused or it has a value. Otherwise it will appear on top of the textarea.
+   * `"stacked"`: The label will appear smaller and above the textarea regardless even when the textarea is blurred or has no value.
+   * `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+   */
+  @Prop() labelPlacement: 'start' | 'end' | 'floating' | 'stacked' | 'fixed' = 'start';
+
+  /**
+   * Set the `legacy` property to `true` to forcibly use the legacy form control markup.
+   * Ionic will only opt components in to the modern form markup when they are
+   * using either the `aria-label` attribute or the default slot that contains
+   * the label text. As a result, the `legacy` property should only be used as
+   * an escape hatch when you want to avoid this automatic opt-in behavior.
+   * Note that this property will be removed in an upcoming major release
+   * of Ionic, and all form components will be opted-in to using the modern form markup.
+   */
+  @Prop() legacy?: boolean;
+
+  /**
+   * The shape of the textarea. If "round" it will have an increased border radius.
+   */
+  @Prop() shape?: 'round';
+
+  /**
    * Update the native input element when the value changes
    */
   @Watch('value')
@@ -169,18 +246,26 @@ export class Textarea implements ComponentInterface {
     }
     this.runAutoGrow();
     this.emitStyle();
-    this.ionChange.emit({ value });
   }
 
   /**
-   * Emitted when the input value has changed.
+   * The `ionChange` event is fired for `<ion-textarea>` elements when the user
+   * modifies the element's value. Unlike the `ionInput` event, the `ionChange`
+   * event is not necessarily fired for each alteration to an element's value.
+   *
+   * The `ionChange` event is fired when the element loses focus after its value
+   * has been modified.
    */
   @Event() ionChange!: EventEmitter<TextareaChangeEventDetail>;
 
   /**
-   * Emitted when a keyboard input occurred.
+   * The `ionInput` event fires when the `value` of an `<ion-textarea>` element
+   * has been changed.
+   *
+   * When `clearOnEdit` is enabled, the `ionInput` event will be fired when
+   * the user clears the textarea by performing a keydown event.
    */
-  @Event() ionInput!: EventEmitter<InputEvent>;
+  @Event() ionInput!: EventEmitter<TextareaInputEventDetail>;
 
   /**
    * Emitted when the styles change.
@@ -199,12 +284,14 @@ export class Textarea implements ComponentInterface {
   @Event() ionFocus!: EventEmitter<FocusEvent>;
 
   connectedCallback() {
+    const { el } = this;
+    this.legacyFormController = createLegacyFormController(el);
     this.emitStyle();
     this.debounceChanged();
     if (Build.isBrowser) {
       document.dispatchEvent(
         new CustomEvent('ionInputDidLoad', {
-          detail: this.el,
+          detail: el,
         })
       );
     }
@@ -223,11 +310,12 @@ export class Textarea implements ComponentInterface {
   componentWillLoad() {
     this.inheritedAttributes = {
       ...inheritAriaAttributes(this.el),
-      ...inheritAttributes(this.el, ['data-form-type', 'title']),
+      ...inheritAttributes(this.el, ['data-form-type', 'title', 'tabindex']),
     };
   }
 
   componentDidLoad() {
+    this.originalIonInput = this.ionInput;
     this.runAutoGrow();
   }
 
@@ -243,18 +331,6 @@ export class Textarea implements ComponentInterface {
   }
 
   /**
-   * Sets blur on the native `textarea` in `ion-textarea`. Use this method instead of the global
-   * `textarea.blur()`.
-   * @internal
-   */
-  @Method()
-  async setBlur() {
-    if (this.nativeInput) {
-      this.nativeInput.blur();
-    }
-  }
-
-  /**
    * Returns the native `<textarea>` element used under the hood.
    */
   @Method()
@@ -263,15 +339,40 @@ export class Textarea implements ComponentInterface {
   }
 
   private emitStyle() {
-    this.ionStyle.emit({
-      interactive: true,
-      textarea: true,
-      input: true,
-      'interactive-disabled': this.disabled,
-      'has-placeholder': this.placeholder !== undefined,
-      'has-value': this.hasValue(),
-      'has-focus': this.hasFocus,
-    });
+    if (this.legacyFormController.hasLegacyControl()) {
+      this.ionStyle.emit({
+        interactive: true,
+        textarea: true,
+        input: true,
+        'interactive-disabled': this.disabled,
+        'has-placeholder': this.placeholder !== undefined,
+        'has-value': this.hasValue(),
+        'has-focus': this.hasFocus,
+      });
+    }
+  }
+
+  /**
+   * Emits an `ionChange` event.
+   *
+   * This API should be called for user committed changes.
+   * This API should not be used for external value changes.
+   */
+  private emitValueChange(event?: Event) {
+    const { value } = this;
+    // Checks for both null and undefined values
+    const newValue = value == null ? value : value.toString();
+    // Emitting a value change should update the internal state for tracking the focused value
+    this.focusedValue = newValue;
+    this.ionChange.emit({ value: newValue, event });
+  }
+
+  /**
+   * Emits an `ionInput` event.
+   */
+  private emitInputChange(event?: Event) {
+    const { value } = this;
+    this.ionInput.emit({ value, event });
   }
 
   private runAutoGrow() {
@@ -289,26 +390,22 @@ export class Textarea implements ComponentInterface {
   /**
    * Check if we need to clear the text input if clearOnEdit is enabled
    */
-  private checkClearOnEdit() {
+  private checkClearOnEdit(ev: Event) {
     if (!this.clearOnEdit) {
       return;
     }
-
-    // Did the input value change after it was blurred and edited?
-    if (this.didBlurAfterEdit && this.hasValue()) {
-      // Clear the input
+    /**
+     * Clear the textarea if the control has not been previously cleared
+     * during focus.
+     */
+    if (!this.didTextareaClearOnEdit && this.hasValue()) {
       this.value = '';
+      this.emitInputChange(ev);
     }
-
-    // Reset the flag
-    this.didBlurAfterEdit = false;
+    this.didTextareaClearOnEdit = true;
   }
 
   private focusChange() {
-    // If clearOnEdit is enabled and the input blurred but has a value, set a flag
-    if (this.clearOnEdit && !this.hasFocus && this.hasValue()) {
-      this.didBlurAfterEdit = true;
-    }
     this.emitStyle();
   }
 
@@ -320,37 +417,67 @@ export class Textarea implements ComponentInterface {
     return this.value || '';
   }
 
+  // `Event` type is used instead of `InputEvent`
+  // since the types from Stencil are not derived
+  // from the element (e.g. textarea and input
+  // should be InputEvent, but all other elements
+  // should be Event).
   private onInput = (ev: Event) => {
-    if (this.nativeInput) {
-      this.value = this.nativeInput.value;
+    const input = ev.target as HTMLTextAreaElement | null;
+    if (input) {
+      this.value = input.value || '';
     }
-    this.emitStyle();
-    this.ionInput.emit(ev as InputEvent);
+    this.emitInputChange(ev);
+  };
+
+  private onChange = (ev: Event) => {
+    this.emitValueChange(ev);
   };
 
   private onFocus = (ev: FocusEvent) => {
     this.hasFocus = true;
+    this.focusedValue = this.value;
     this.focusChange();
 
-    if (this.fireFocusEvents) {
-      this.ionFocus.emit(ev);
-    }
+    this.ionFocus.emit(ev);
   };
 
   private onBlur = (ev: FocusEvent) => {
     this.hasFocus = false;
     this.focusChange();
 
-    if (this.fireFocusEvents) {
-      this.ionBlur.emit(ev);
+    if (this.focusedValue !== this.value) {
+      /**
+       * Emits the `ionChange` event when the textarea value
+       * is different than the value when the textarea was focused.
+       */
+      this.emitValueChange(ev);
     }
+    this.didTextareaClearOnEdit = false;
+    this.ionBlur.emit(ev);
   };
 
-  private onKeyDown = () => {
-    this.checkClearOnEdit();
+  private onKeyDown = (ev: Event) => {
+    this.checkClearOnEdit(ev);
   };
 
-  render() {
+  // TODO: FW-2876 - Remove this render function
+  private renderLegacyTextarea() {
+    if (!this.hasLoggedDeprecationWarning) {
+      printIonWarning(
+        `ion-textarea now requires providing a label with either the "label" property or the "aria-label" attribute. To migrate, remove any usage of "ion-label" and pass the label text to either the "label" property or the "aria-label" attribute.
+
+Example: <ion-textarea label="Comments"></ion-textarea>
+Example with aria-label: <ion-textarea aria-label="Comments"></ion-textarea>
+
+For textareas that do not render the label immediately next to the input, developers may continue to use "ion-label" but must manually associate the label with the textarea by using "aria-labelledby".
+
+Developers can use the "legacy" property to continue using the legacy form markup. This property will be removed in an upcoming major release of Ionic where this form control will use the modern form markup.`,
+        this.el
+      );
+      this.hasLoggedDeprecationWarning = true;
+    }
+
     const mode = getIonMode(this);
     const value = this.getValue();
     const labelId = this.inputId + '-lbl';
@@ -364,12 +491,13 @@ export class Textarea implements ComponentInterface {
         aria-disabled={this.disabled ? 'true' : null}
         class={createColorClasses(this.color, {
           [mode]: true,
+          'legacy-textarea': true,
         })}
       >
-        <div class="textarea-wrapper" ref={(el) => (this.textareaWrapper = el)}>
+        <div class="textarea-legacy-wrapper" ref={(el) => (this.textareaWrapper = el)}>
           <textarea
             class="native-textarea"
-            aria-labelledby={label ? labelId : null}
+            aria-labelledby={label ? label.id : null}
             ref={(el) => (this.nativeInput = el)}
             autoCapitalize={this.autocapitalize}
             autoFocus={this.autofocus}
@@ -387,6 +515,7 @@ export class Textarea implements ComponentInterface {
             rows={this.rows}
             wrap={this.wrap}
             onInput={this.onInput}
+            onChange={this.onChange}
             onBlur={this.onBlur}
             onFocus={this.onFocus}
             onKeyDown={this.onKeyDown}
@@ -397,6 +526,162 @@ export class Textarea implements ComponentInterface {
         </div>
       </Host>
     );
+  }
+
+  private renderLabel() {
+    const { label } = this;
+    if (label === undefined) {
+      return;
+    }
+
+    return (
+      <div class="label-text-wrapper">
+        <div class="label-text">{this.label}</div>
+      </div>
+    );
+  }
+
+  /**
+   * Renders the border container when fill="outline".
+   */
+  private renderLabelContainer() {
+    const mode = getIonMode(this);
+    const hasOutlineFill = mode === 'md' && this.fill === 'outline';
+
+    if (hasOutlineFill) {
+      /**
+       * The outline fill has a special outline
+       * that appears around the textarea and the label.
+       * Certain stacked and floating label placements cause the
+       * label to translate up and create a "cut out"
+       * inside of that border by using the notch-spacer element.
+       */
+      return [
+        <div class="textarea-outline-container">
+          <div class="textarea-outline-start"></div>
+          <div class="textarea-outline-notch">
+            <div class="notch-spacer" aria-hidden="true">
+              {this.label}
+            </div>
+          </div>
+          <div class="textarea-outline-end"></div>
+        </div>,
+        this.renderLabel(),
+      ];
+    }
+    /**
+     * If not using the outline style,
+     * we can render just the label.
+     */
+    return this.renderLabel();
+  }
+
+  /**
+   * Renders the helper text or error text values
+   */
+  private renderHintText() {
+    const { helperText, errorText } = this;
+
+    return [<div class="helper-text">{helperText}</div>, <div class="error-text">{errorText}</div>];
+  }
+
+  private renderCounter() {
+    const { counter, maxlength, counterFormatter, value } = this;
+    if (counter !== true || maxlength === undefined) {
+      return;
+    }
+
+    return <div class="counter">{getCounterText(value, maxlength, counterFormatter)}</div>;
+  }
+
+  /**
+   * Responsible for rendering helper text,
+   * error text, and counter. This element should only
+   * be rendered if hint text is set or counter is enabled.
+   */
+  private renderBottomContent() {
+    const { counter, helperText, errorText, maxlength } = this;
+
+    /**
+     * undefined and empty string values should
+     * be treated as not having helper/error text.
+     */
+    const hasHintText = !!helperText || !!errorText;
+    const hasCounter = counter === true && maxlength !== undefined;
+    if (!hasHintText && !hasCounter) {
+      return;
+    }
+
+    return (
+      <div class="textarea-bottom">
+        {this.renderHintText()}
+        {this.renderCounter()}
+      </div>
+    );
+  }
+
+  private renderTextarea() {
+    const { inputId, disabled, fill, shape, labelPlacement } = this;
+    const mode = getIonMode(this);
+    const value = this.getValue();
+    const inItem = hostContext('ion-item', this.el);
+    const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;
+
+    return (
+      <Host
+        class={createColorClasses(this.color, {
+          [mode]: true,
+          'has-value': this.hasValue(),
+          'has-focus': this.hasFocus,
+          [`textarea-fill-${fill}`]: fill !== undefined,
+          [`textarea-shape-${shape}`]: shape !== undefined,
+          [`textarea-label-placement-${labelPlacement}`]: true,
+          'textarea-disabled': disabled,
+        })}
+      >
+        <label class="textarea-wrapper">
+          {this.renderLabelContainer()}
+          <div class="native-wrapper" ref={(el) => (this.textareaWrapper = el)}>
+            <textarea
+              class="native-textarea"
+              ref={(el) => (this.nativeInput = el)}
+              id={inputId}
+              disabled={disabled}
+              autoCapitalize={this.autocapitalize}
+              autoFocus={this.autofocus}
+              enterKeyHint={this.enterkeyhint}
+              inputMode={this.inputmode}
+              minLength={this.minlength}
+              maxLength={this.maxlength}
+              name={this.name}
+              placeholder={this.placeholder || ''}
+              readOnly={this.readonly}
+              required={this.required}
+              spellcheck={this.spellcheck}
+              cols={this.cols}
+              rows={this.rows}
+              wrap={this.wrap}
+              onInput={this.onInput}
+              onChange={this.onChange}
+              onBlur={this.onBlur}
+              onFocus={this.onFocus}
+              onKeyDown={this.onKeyDown}
+              {...this.inheritedAttributes}
+            >
+              {value}
+            </textarea>
+          </div>
+          {shouldRenderHighlight && <div class="textarea-highlight"></div>}
+        </label>
+        {this.renderBottomContent()}
+      </Host>
+    );
+  }
+
+  render() {
+    const { legacyFormController } = this;
+
+    return legacyFormController.hasLegacyControl() ? this.renderLegacyTextarea() : this.renderTextarea();
   }
 }
 

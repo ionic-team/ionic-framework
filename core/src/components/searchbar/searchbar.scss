@@ -20,7 +20,7 @@
   --placeholder-color: initial;
   --placeholder-font-style: initial;
   --placeholder-font-weight: initial;
-  --placeholder-opacity: .5;
+  --placeholder-opacity: #{$placeholder-opacity};
 
   @include font-smoothing();
 

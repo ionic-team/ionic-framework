@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Item - Slotted Inputs</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Slotted Inputs</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content id="content">
+        <ion-list>
+          <ion-item>
+            <ion-checkbox slot="start">Start</ion-checkbox>
+            Checkbox
+            <ion-checkbox slot="end">End</ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-radio slot="start">Start</ion-radio>
+            Radio
+            <ion-radio slot="end">End</ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-toggle slot="start">Start</ion-toggle>
+            Toggle
+            <ion-toggle slot="end">End</ion-toggle>
+          </ion-item>
+          <ion-item>
+            <ion-range slot="start"><div slot="label">Start</div></ion-range>
+            Range
+            <ion-range slot="end"><div slot="label">End</div></ion-range>
+          </ion-item>
+          <ion-item>
+            <ion-input label="Start" slot="start"></ion-input>
+            Input
+            <ion-input label="End" slot="end"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-textarea label="Start" slot="start"></ion-textarea>
+            Textarea
+            <ion-textarea label="End" slot="end"></ion-textarea>
+          </ion-item>
+          <ion-item>
+            <ion-select label="Start" slot="start"></ion-select>
+            Select
+            <ion-select label="End" slot="end"></ion-select>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>

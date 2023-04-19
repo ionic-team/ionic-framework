@@ -20,11 +20,11 @@
         <ion-item button router-link="/overlays">
           <ion-label>Overlays</ion-label>
         </ion-item>
+        <ion-item button router-link="/icons">
+          <ion-label>Icons</ion-label>
+        </ion-item>
         <ion-item button router-link="/inputs">
           <ion-label>Inputs</ion-label>
-        </ion-item>
-        <ion-item button router-link="/slides">
-          <ion-label>Slides</ion-label>
         </ion-item>
         <ion-item button router-link="/navigation" id="navigation">
           <ion-label>Navigation</ion-label>

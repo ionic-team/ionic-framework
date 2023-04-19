@@ -2,9 +2,10 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { Gesture, GestureDetail, Side } from '../../interface';
+import type { Gesture, GestureDetail } from '../../interface';
 import { findClosestIonContent, disableContentScrollY, resetContentScrollY } from '../../utils/content';
 import { isEndSide } from '../../utils/helpers';
+import type { Side } from '../menu/menu-interface';
 
 const SWIPE_MARGIN = 30;
 const ELASTIC_FACTOR = 0.55;
@@ -127,7 +128,16 @@ export class ItemSliding implements ComponentInterface {
    */
   @Method()
   async open(side: Side | undefined) {
-    if (this.item === null) {
+    /**
+     * It is possible for the item to be added to the DOM
+     * after the item-sliding component was created. As a result,
+     * if this.item is null, then we should attempt to
+     * query for the ion-item again.
+     * However, if the item is already defined then
+     * we do not query for it again.
+     */
+    const item = (this.item = this.item ?? this.el.querySelector('ion-item'));
+    if (item === null) {
       return;
     }
 

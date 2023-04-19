@@ -2,8 +2,12 @@ import { expect } from '@playwright/test';
 import type { E2EPage } from '@utils/test/playwright';
 import { test } from '@utils/test/playwright';
 
-// TODO FW-3081
-test.describe.skip('ripple-effect: basic', () => {
+test.describe('ripple-effect: basic', () => {
+  test.beforeEach(async ({ skip }) => {
+    skip.rtl();
+    skip.mode('ios');
+  });
+
   test('should add .ion-activated when pressed', async ({ page }) => {
     await verifyRippleEffect(page, '#small-btn');
     await verifyRippleEffect(page, '#large-btn');
@@ -14,7 +18,8 @@ test.describe.skip('ripple-effect: basic', () => {
 
   test.describe('ripple effect with nested ion-button', () => {
     test('should add .ion-activated when the block is pressed', async ({ page }) => {
-      await page.goto(`/src/components/ripple-effect/test/basic?ionic:_testing=false&ionic:mode=md`);
+      await page.goto('/src/components/ripple-effect/test/basic?ionic:_testing=false');
+      await isIdleCallbackComplete(page);
 
       const el = page.locator('#ripple-with-button');
 
@@ -30,9 +35,7 @@ test.describe.skip('ripple-effect: basic', () => {
       // Waits for the ripple effect to be added
       await page.waitForSelector('.ion-activated');
 
-      const elHandle = await el.elementHandle();
-      const classes = await elHandle?.evaluate((el) => el.classList.value);
-      expect(classes).toMatch(/ion-activated/);
+      await expect(el).toHaveClass(/ion-activated/);
     });
 
     test('should add .ion-activated when the button is pressed', async ({ page }) => {
@@ -42,7 +45,8 @@ test.describe.skip('ripple-effect: basic', () => {
 });
 
 const verifyRippleEffect = async (page: E2EPage, selector: string) => {
-  await page.goto(`/src/components/ripple-effect/test/basic?ionic:_testing=false&ionic:mode=md`);
+  await page.goto('/src/components/ripple-effect/test/basic?ionic:_testing=false');
+  await isIdleCallbackComplete(page);
 
   const el = page.locator(selector);
 
@@ -55,10 +59,28 @@ const verifyRippleEffect = async (page: E2EPage, selector: string) => {
     await page.mouse.down();
   }
 
-  // Waits for the ripple effect to be added
-  await page.waitForSelector(`${selector}.ion-activated`);
+  await page.waitForSelector('.ion-activated');
 
-  const elHandle = await el.elementHandle();
-  const classes = await elHandle?.evaluate((el) => el.classList.value);
-  expect(classes).toMatch(/ion-activated/);
+  await expect(el).toHaveClass(/ion-activated/);
+};
+
+/**
+ * This function is used to wait for the idle callback to be called.
+ * It mirrors the custom implementation in app.tsx for either
+ * using requestIdleCallback on supported browsers or a setTimeout
+ * of 32ms (~2 frames) on unsupported browsers (Safari).
+ */
+const isIdleCallbackComplete = async (page: E2EPage) => {
+  await page.waitForFunction(
+    () => {
+      return new Promise((resolve) => {
+        if ('requestIdleCallback' in window) {
+          window.requestIdleCallback(resolve);
+        } else {
+          setTimeout(resolve, 32);
+        }
+      });
+    },
+    { timeout: 5000 }
+  );
 };

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Alert - isOpen</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Alert - isOpen</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <ion-button id="default" onclick="openAlert()">Open Alert</ion-button>
+        <ion-button id="timeout" onclick="openAlert(500)">Open Alert, Close After 500ms</ion-button>
+
+        <ion-alert header="Alert" message="Hello World!"></ion-alert>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      const alert = document.querySelector('ion-alert');
+      alert.buttons = ['OK'];
+
+      const openAlert = (timeout) => {
+        alert.isOpen = true;
+
+        if (timeout) {
+          setTimeout(() => {
+            alert.isOpen = false;
+          }, timeout);
+        }
+      };
+
+      alert.addEventListener('ionAlertDidDismiss', () => {
+        alert.isOpen = false;
+      });
+    </script>
+  </body>
+</html>

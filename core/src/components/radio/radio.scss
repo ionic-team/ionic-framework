@@ -16,9 +16,18 @@
   position: relative;
   box-sizing: border-box;
 
+  max-width: 100%;
+
+  min-height: inherit;
+
   user-select: none;
 
   z-index: $z-index-item-input;
+}
+
+// TODO FW-3125: Remove :not selector and move styles to host
+:host(:not(.legacy-radio)) {
+  cursor: pointer;
 }
 
 :host(.radio-disabled) {
@@ -42,7 +51,8 @@
   box-sizing: border-box;
 }
 
-label {
+// TODO FW-3125: Remove this style
+:host(.legacy-radio) label {
   @include input-cover();
 
   display: flex;
@@ -58,4 +68,146 @@ input {
 
 :host(:focus) {
   outline: none;
+}
+
+:host(.in-item:not(.legacy-radio)) {
+  width: 100%;
+  height: 100%;
+}
+
+:host(.in-item[slot="start"]:not(.legacy-radio)),
+:host(.in-item[slot="end"]:not(.legacy-radio)) {
+  width: auto;
+}
+
+// Radio Wrapper
+// --------------------------------------------------
+.radio-wrapper {
+  display: flex;
+
+  position: relative;
+
+  flex-grow: 1;
+
+  align-items: center;
+
+  height: inherit;
+
+  min-height: inherit;
+
+  cursor: inherit;
+}
+
+// Radio Label
+// ----------------------------------------------------------------
+
+.label-text-wrapper {
+  /**
+   * This ensures that double tapping this text
+   * clicks the <label> and focuses the radio
+   * when a screen reader is enabled.
+   */
+  pointer-events: none;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+}
+
+/**
+ * If no label text is placed into the slot
+ * then the element should be hidden otherwise
+ * there will be additional margins added.
+ */
+.label-text-wrapper-hidden {
+  display: none;
+}
+
+// Radio Native Wrapper
+// ----------------------------------------------------------------
+
+.native-wrapper {
+  display: flex;
+
+  align-items: center;
+}
+
+// Radio Justify
+// --------------------------------------------------
+
+:host(.radio-justify-space-between) .radio-wrapper {
+  justify-content: space-between;
+}
+
+:host(.radio-justify-start) .radio-wrapper {
+  justify-content: start;
+}
+
+:host(.radio-justify-end) .radio-wrapper {
+  justify-content: end;
+}
+
+// Radio Label Placement - Start
+// ----------------------------------------------------------------
+
+/**
+ * Label is on the left of the radio in LTR and
+ * on the right in RTL.
+ */
+:host(.radio-label-placement-start) .radio-wrapper {
+  flex-direction: row;
+}
+
+:host(.radio-label-placement-start) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the radio should be on the end
+   * when the label sits at the start.
+   */
+  @include margin(0, 8px, 0, 0);
+}
+
+// Radio Label Placement - End
+// ----------------------------------------------------------------
+
+/**
+ * Label is on the right of the radio in LTR and
+ * on the left in RTL.
+ */
+:host(.radio-label-placement-end) .radio-wrapper {
+  flex-direction: row-reverse;
+}
+
+/**
+ * The margin between the label and
+ * the radio should be on the start
+ * when the label sits at the end.
+ */
+:host(.radio-label-placement-end) .label-text-wrapper {
+  @include margin(0, 0, 0, 8px);
+}
+
+// Radio Label Placement - Fixed
+// ----------------------------------------------------------------
+
+:host(.radio-label-placement-fixed) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the radio should be on the end
+   * when the label sits at the start.
+   */
+  @include margin(0, 8px, 0, 0);
+}
+
+/**
+ * Label is on the left of the radio in LTR and
+ * on the right in RTL. Label also has a fixed width.
+ */
+:host(.radio-label-placement-fixed) .label-text-wrapper {
+  flex: 0 0 100px;
+
+  width: 100px;
+  min-width: 100px;
 }

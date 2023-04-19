@@ -1,18 +1,22 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, h, Host, Method, Prop } from '@stencil/core';
+import { Watch, Component, Element, Event, h, Host, Method, Prop, State } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import type {
-  AnimationBuilder,
-  Color,
-  CssClassMap,
-  OverlayEventDetail,
-  OverlayInterface,
-  ToastButton,
-} from '../../interface';
+import type { AnimationBuilder, Color, CssClassMap, OverlayInterface, FrameworkDelegate } from '../../interface';
+import { ENABLE_HTML_CONTENT_DEFAULT } from '../../utils/config';
 import { printIonWarning } from '../../utils/logging';
-import { dismiss, eventMethod, isCancel, prepareOverlay, present, safeCall } from '../../utils/overlays';
+import {
+  createDelegateController,
+  createTriggerController,
+  dismiss,
+  eventMethod,
+  isCancel,
+  prepareOverlay,
+  present,
+  safeCall,
+} from '../../utils/overlays';
+import type { OverlayEventDetail } from '../../utils/overlays-interface';
 import type { IonicSafeString } from '../../utils/sanitization';
 import { sanitizeDOMString } from '../../utils/sanitization';
 import { createColorClasses, getClassMap } from '../../utils/theme';
@@ -21,7 +25,7 @@ import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
-import type { ToastAttributes, ToastPosition, ToastLayout } from './toast-interface';
+import type { ToastButton, ToastPosition, ToastLayout } from './toast-interface';
 
 // TODO(FW-2832): types
 
@@ -43,9 +47,20 @@ import type { ToastAttributes, ToastPosition, ToastLayout } from './toast-interf
   shadow: true,
 })
 export class Toast implements ComponentInterface, OverlayInterface {
+  private readonly delegateController = createDelegateController(this);
+  private readonly triggerController = createTriggerController();
+  private currentTransition?: Promise<any>;
+  private customHTMLEnabled = config.get('innerHTMLTemplatesEnabled', ENABLE_HTML_CONTENT_DEFAULT);
   private durationTimeout?: ReturnType<typeof setTimeout>;
 
   presented = false;
+
+  /**
+   * When `true`, content inside of .toast-content
+   * will have aria-hidden elements removed causing
+   * screen readers to announce the remaining content.
+   */
+  @State() revealContentToScreenReader = false;
 
   @Element() el!: HTMLIonToastElement;
 
@@ -53,6 +68,12 @@ export class Toast implements ComponentInterface, OverlayInterface {
    * @internal
    */
   @Prop() overlayIndex!: number;
+
+  /** @internal */
+  @Prop() delegate?: FrameworkDelegate;
+
+  /** @internal */
+  @Prop() hasController = false;
 
   /**
    * The color to use from your application's color palette.
@@ -99,6 +120,10 @@ export class Toast implements ComponentInterface, OverlayInterface {
 
   /**
    * Message to be shown in the toast.
+   * This property accepts custom HTML as a string.
+   * Content is parsed as plaintext by default.
+   * `innerHTMLTemplatesEnabled` must be set to `true` in the Ionic config
+   * before custom HTML can be used.
    */
   @Prop() message?: string | IonicSafeString;
 
@@ -138,7 +163,37 @@ export class Toast implements ComponentInterface, OverlayInterface {
   /**
    * Additional attributes to pass to the toast.
    */
-  @Prop() htmlAttributes?: ToastAttributes;
+  @Prop() htmlAttributes?: { [key: string]: any };
+
+  /**
+   * If `true`, the toast will open. If `false`, the toast will close.
+   * Use this if you need finer grained control over presentation, otherwise
+   * just use the toastController or the `trigger` property.
+   * Note: `isOpen` will not automatically be set back to `false` when
+   * the toast dismisses. You will need to do that in your code.
+   */
+  @Prop() isOpen = false;
+  @Watch('isOpen')
+  onIsOpenChange(newValue: boolean, oldValue: boolean) {
+    if (newValue === true && oldValue === false) {
+      this.present();
+    } else if (newValue === false && oldValue === true) {
+      this.dismiss();
+    }
+  }
+
+  /**
+   * An ID corresponding to the trigger element that
+   * causes the toast to open when clicked.
+   */
+  @Prop() trigger: string | undefined;
+  @Watch('trigger')
+  triggerChanged() {
+    const { trigger, el, triggerController } = this;
+    if (trigger) {
+      triggerController.addClickListener(el, trigger);
+    }
+  }
 
   /**
    * Emitted after the toast has presented.
@@ -160,8 +215,37 @@ export class Toast implements ComponentInterface, OverlayInterface {
    */
   @Event({ eventName: 'ionToastDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
 
+  /**
+   * Emitted after the toast has presented.
+   * Shorthand for ionToastWillDismiss.
+   */
+  @Event({ eventName: 'didPresent' }) didPresentShorthand!: EventEmitter<void>;
+
+  /**
+   * Emitted before the toast has presented.
+   * Shorthand for ionToastWillPresent.
+   */
+  @Event({ eventName: 'willPresent' }) willPresentShorthand!: EventEmitter<void>;
+
+  /**
+   * Emitted before the toast has dismissed.
+   * Shorthand for ionToastWillDismiss.
+   */
+  @Event({ eventName: 'willDismiss' }) willDismissShorthand!: EventEmitter<OverlayEventDetail>;
+
+  /**
+   * Emitted after the toast has dismissed.
+   * Shorthand for ionToastDidDismiss.
+   */
+  @Event({ eventName: 'didDismiss' }) didDismissShorthand!: EventEmitter<OverlayEventDetail>;
+
   connectedCallback() {
     prepareOverlay(this.el);
+    this.triggerChanged();
+  }
+
+  disconnectedCallback() {
+    this.triggerController.removeClickListener();
   }
 
   /**
@@ -169,7 +253,37 @@ export class Toast implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async present(): Promise<void> {
-    await present<ToastPresentOptions>(this, 'toastEnter', iosEnterAnimation, mdEnterAnimation, this.position);
+    /**
+     * When using an inline toast
+     * and dismissing a toast it is possible to
+     * quickly present the toast while it is
+     * dismissing. We need to await any current
+     * transition to allow the dismiss to finish
+     * before presenting again.
+     */
+    if (this.currentTransition !== undefined) {
+      await this.currentTransition;
+    }
+
+    await this.delegateController.attachViewToDom();
+
+    this.currentTransition = present<ToastPresentOptions>(
+      this,
+      'toastEnter',
+      iosEnterAnimation,
+      mdEnterAnimation,
+      this.position
+    );
+    await this.currentTransition;
+
+    /**
+     * Content is revealed to screen readers after
+     * the transition to avoid jank since this
+     * state updates will cause a re-render.
+     */
+    this.revealContentToScreenReader = true;
+
+    this.currentTransition = undefined;
 
     if (this.duration > 0) {
       this.durationTimeout = setTimeout(() => this.dismiss(undefined, 'timeout'), this.duration);
@@ -186,11 +300,12 @@ export class Toast implements ComponentInterface, OverlayInterface {
    * Some examples include: ``"cancel"`, `"destructive"`, "selected"`, and `"backdrop"`.
    */
   @Method()
-  dismiss(data?: any, role?: string): Promise<boolean> {
+  async dismiss(data?: any, role?: string): Promise<boolean> {
     if (this.durationTimeout) {
       clearTimeout(this.durationTimeout);
     }
-    return dismiss<ToastDismissOptions>(
+
+    this.currentTransition = dismiss<ToastDismissOptions>(
       this,
       data,
       role,
@@ -199,6 +314,14 @@ export class Toast implements ComponentInterface, OverlayInterface {
       mdLeaveAnimation,
       this.position
     );
+    const dismissed = await this.currentTransition;
+
+    if (dismissed) {
+      this.delegateController.removeViewFromDom();
+      this.revealContentToScreenReader = false;
+    }
+
+    return dismissed;
   }
 
   /**
@@ -281,6 +404,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
             <div class="toast-button-inner">
               {b.icon && (
                 <ion-icon
+                  aria-hidden="true"
                   icon={b.icon}
                   slot={b.text === undefined ? 'icon-only' : undefined}
                   class="toast-button-icon"
@@ -299,8 +423,47 @@ export class Toast implements ComponentInterface, OverlayInterface {
     );
   }
 
+  /**
+   * Render the `message` property.
+   * @param key - A key to give the element a stable identity. This is used to improve compatibility with screen readers.
+   * @param ariaHidden - If "true" then content will be hidden from screen readers.
+   */
+  private renderToastMessage(key: string, ariaHidden: 'true' | null = null) {
+    const { customHTMLEnabled, message } = this;
+    if (customHTMLEnabled) {
+      return (
+        <div
+          key={key}
+          aria-hidden={ariaHidden}
+          class="toast-message"
+          part="message"
+          innerHTML={sanitizeDOMString(message)}
+        ></div>
+      );
+    }
+
+    return (
+      <div key={key} aria-hidden={ariaHidden} class="toast-message" part="message">
+        {message}
+      </div>
+    );
+  }
+
+  /**
+   * Render the `header` property.
+   * @param key - A key to give the element a stable identity. This is used to improve compatibility with screen readers.
+   * @param ariaHidden - If "true" then content will be hidden from screen readers.
+   */
+  private renderHeader(key: string, ariaHidden: 'true' | null = null) {
+    return (
+      <div key={key} class="toast-header" aria-hidden={ariaHidden} part="header">
+        {this.header}
+      </div>
+    );
+  }
+
   render() {
-    const { layout, el } = this;
+    const { layout, el, revealContentToScreenReader, header, message } = this;
     const allButtons = this.getButtons();
     const startButtons = allButtons.filter((b) => b.side === 'start');
     const endButtons = allButtons.filter((b) => b.side !== 'start');
@@ -310,7 +473,6 @@ export class Toast implements ComponentInterface, OverlayInterface {
       [`toast-${this.position}`]: true,
       [`toast-layout-${layout}`]: true,
     };
-    const role = allButtons.length > 0 ? 'dialog' : 'status';
 
     /**
      * Stacked buttons are only meant to be
@@ -325,9 +487,6 @@ export class Toast implements ComponentInterface, OverlayInterface {
 
     return (
       <Host
-        aria-live="polite"
-        aria-atomic="true"
-        role={role}
         tabindex="-1"
         {...(this.htmlAttributes as any)}
         style={{
@@ -349,15 +508,40 @@ export class Toast implements ComponentInterface, OverlayInterface {
               <ion-icon class="toast-icon" part="icon" icon={this.icon} lazy={false} aria-hidden="true"></ion-icon>
             )}
 
-            <div class="toast-content">
-              {this.header !== undefined && (
-                <div class="toast-header" part="header">
-                  {this.header}
-                </div>
-              )}
-              {this.message !== undefined && (
-                <div class="toast-message" part="message" innerHTML={sanitizeDOMString(this.message)}></div>
-              )}
+            {/*
+              This creates a live region where screen readers
+              only announce the header and the message. Elements
+              such as icons and buttons should not be announced.
+              aria-live and aria-atomic here are redundant, but we
+              add them to maximize browser compatibility.
+
+              Toasts are meant to be subtle notifications that do
+              not interrupt the user which is why this has
+              a "status" role and a "polite" presentation.
+            */}
+            <div class="toast-content" role="status" aria-atomic="true" aria-live="polite">
+              {/*
+                This logic below is done to improve consistency
+                across platforms when showing and updating live regions.
+
+                TalkBack and VoiceOver announce the live region content
+                when the toast is shown, but NVDA does not. As a result,
+                we need to trigger a DOM update so NVDA detects changes and
+                announces an update to the live region. We do this after
+                the toast is fully visible to avoid jank during the presenting
+                animation.
+
+                The "key" attribute is used here to force Stencil to render
+                new nodes and not re-use nodes. Otherwise, NVDA would not
+                detect any changes to the live region.
+
+                The "old" content is hidden using aria-hidden otherwise
+                VoiceOver will announce the toast content twice when presenting.
+              */}
+              {!revealContentToScreenReader && header !== undefined && this.renderHeader('oldHeader', 'true')}
+              {!revealContentToScreenReader && message !== undefined && this.renderToastMessage('oldMessage', 'true')}
+              {revealContentToScreenReader && header !== undefined && this.renderHeader('header')}
+              {revealContentToScreenReader && message !== undefined && this.renderToastMessage('header')}
             </div>
 
             {this.renderButtons(endButtons, 'end')}

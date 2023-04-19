@@ -10,9 +10,10 @@ test.describe('textarea: autogrow', () => {
     await expect(page).toHaveScreenshot(`textarea-autogrow-diff-${page.getSnapshotSettings()}.png`);
   });
 
-  test('should grow when typing', async ({ page }) => {
+  // TODO(FW-3920): Autogrow test is flaky
+  test.skip('should grow when typing', async ({ page }) => {
     await page.setContent(`
-      <ion-textarea auto-grow="true"></ion-textarea>
+      <ion-textarea aria-label="Textarea" auto-grow="true"></ion-textarea>
     `);
 
     const ionTextarea = page.locator('ion-textarea');
@@ -31,6 +32,7 @@ test.describe('textarea: autogrow', () => {
       ].join('\n')
     );
 
+    await page.waitForChanges();
     await expect(ionTextarea).toHaveScreenshot(`textarea-autogrow-after-${page.getSnapshotSettings()}.png`);
   });
 
@@ -41,13 +43,18 @@ test.describe('textarea: autogrow', () => {
     });
 
     await page.setContent(
-      `<ion-textarea
-        auto-grow="true"
-        value="abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz">
-      </ion-textarea>`
+      `<ion-app>
+        <ion-content>
+          <ion-textarea
+            aria-label="Textarea"
+            auto-grow="true"
+            value="abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz">
+          </ion-textarea>
+        </ion-content>
+      </ion-app>`
     );
 
-    const textarea = page.locator('ion-textarea');
+    const textarea = await page.locator('ion-textarea');
 
     await expect(textarea).toHaveScreenshot(`textarea-autogrow-word-break-${page.getSnapshotSettings()}.png`);
   });

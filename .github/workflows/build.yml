@@ -135,7 +135,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        apps: [ng12, ng13, ng14, ng15]
+        apps: [ng14, ng15]
     needs: [build-angular, build-angular-server]
     runs-on: ubuntu-latest
     steps:
@@ -168,15 +168,45 @@ jobs:
     - uses: ./.github/workflows/actions/build-react-router
 
   test-react-router-e2e:
+    strategy:
+      fail-fast: false
+      matrix:
+        apps: [reactrouter5]
     needs: [build-react, build-react-router]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - uses: ./.github/workflows/actions/test-react-router-e2e
+      with:
+        app: ${{ matrix.apps }}
+
+  verify-test-react-router-e2e:
+    if: ${{ always() }}
+    needs: test-react-router-e2e
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check build matrix status
+        if: ${{ needs.test-react-router-e2e.result != 'success' }}
+        run: exit 1
 
   test-react-e2e:
+    strategy:
+      fail-fast: false
+      matrix:
+        apps: [react17, react18]
     needs: [build-react, build-react-router]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - uses: ./.github/workflows/actions/test-react-e2e
+      with:
+        app: ${{ matrix.apps }}
+
+  verify-test-react-e2e:
+    if: ${{ always() }}
+    needs: test-react-e2e
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check build matrix status
+        if: ${{ needs.test-react-e2e.result != 'success' }}
+        run: exit 1

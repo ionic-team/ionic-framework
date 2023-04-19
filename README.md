@@ -32,7 +32,7 @@
 </p>
 
 <h2 align="center">
-  <a href="https://ionicframework.com/getting-started/">Quickstart</a>
+  <a href="https://ionicframework.com/docs/intro/cli">Quickstart</a>
   <span> · </span>
   <a href="https://ionicframework.com/docs/">
     Documentation
@@ -42,7 +42,7 @@
   <span> · </span>
   <a href="https://blog.ionicframework.com/">Blog</a>
   <br />
-  Community: 
+  Community:
   <a href="https://ionic.link/discord">Discord</a>
   <span> · </span>
   <a href="https://forum.ionicframework.com/">Forums</a>
@@ -71,14 +71,19 @@ an [issue](https://github.com/ionic-team/ionic/issues/new) on this repository.
 
 Already have an Ionic app? These guides will help you migrate to the latest versions.
 
-* [Migrate from v5 to v6](https://ionicframework.com/docs/reference/migration#migrating-from-ionic-5x-to-ionic-6x)
-* [Migrate from v4 to v5](https://ionicframework.com/docs/reference/migration#migrating-from-ionic-4x-to-ionic-5x)
-* [Migrate from v3 to v4](https://ionicframework.com/docs/reference/migration#migrating-from-ionic-30-to-ionic-40)
+* [Migrate from v6 to v7](https://ionicframework.com/docs/updating/7-0)
+* [Migrate from v5 to v6](https://ionicframework.com/docs/updating/6-0)
+* [Migrate from v4 to v5](https://ionicframework.com/docs/updating/5-0)
+* [Migrate from v3 to v4](https://ionicframework.com/docs/updating/4-0)
 
 ### Examples
 
-The [Ionic Conference App](https://github.com/ionic-team/ionic-conference-app) is a full featured Ionic app.
-It is the perfect starting point for learning and building your own app.
+The Ionic Conference App is a full featured Ionic app. It is the perfect starting point for learning and building your own app.
+
+- [Angular Ionic Conference App](https://github.com/ionic-team/ionic-conference-app)
+- [React Ionic Conference App](https://github.com/ionic-team/ionic-react-conference-app)
+<!-- TODO(FW-3811): add this when the vue conference app is updated -->
+<!-- - [Vue Ionic Conference App](https://github.com/ionic-team/ionic-vue-conference-app) -->
 
 ### Contributing
 

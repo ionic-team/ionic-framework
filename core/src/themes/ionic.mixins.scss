@@ -242,26 +242,10 @@
     #{$prop}-right: $end;
 
   } @else {
-    #{$prop}-left: $start;
-    #{$prop}-right: $end;
-
-    @at-root {
-      @supports ((margin-inline-start: 0) or (-webkit-margin-start: 0)) {
-        & {
-          @if $start != null {
-            #{$prop}-left: unset;
-          }
-          @if $end != null {
-            #{$prop}-right: unset;
-          }
-
-          -webkit-#{$prop}-start: $start;
-          #{$prop}-inline-start: $start;
-          -webkit-#{$prop}-end: $end;
-          #{$prop}-inline-end: $end;
-        }
-      }
-    }
+    -webkit-#{$prop}-start: $start;
+    #{$prop}-inline-start: $start;
+    -webkit-#{$prop}-end: $end;
+    #{$prop}-inline-end: $end;
   }
 }
 
@@ -326,16 +310,32 @@
       right: $end;
     }
   } @else {
-    @include ltr() {
-      left: $start;
-      right: $end;
+    @at-root {
+      @supports (inset-inline-start: 0) {
+        & {
+          inset-inline-start: $start;
+          inset-inline-end: $end;
+        }
+      }
     }
-    @include rtl() {
-      left: unset;
-      right: unset;
 
-      left: $end;
-      right: $start;
+    // TODO FW-3766
+    @at-root {
+      @supports not (inset-inline-start: 0) {
+        & {
+          @include ltr() {
+            left: $start;
+            right: $end;
+          }
+          @include rtl() {
+            left: unset;
+            right: unset;
+
+            left: $end;
+            right: $start;
+          }
+        }
+      }
     }
   }
 }

@@ -31,7 +31,7 @@ describe('getAriaLabel()', () => {
       components: [Toggle],
       html: `
         <div id="my-label">Hello World</div>
-        <ion-toggle aria-labelledby="my-label"></ion-toggle>
+        <ion-toggle legacy="true" aria-labelledby="my-label"></ion-toggle>
       `,
     });
 
@@ -49,7 +49,7 @@ describe('getAriaLabel()', () => {
       components: [Toggle],
       html: `
         <div id="id.1">Hello World</div>
-        <ion-toggle aria-labelledby="id.1"></ion-toggle>
+        <ion-toggle legacy="true" aria-labelledby="id.1"></ion-toggle>
       `,
     });
 
@@ -66,7 +66,7 @@ describe('getAriaLabel()', () => {
       components: [Toggle],
       html: `
         <label id="my-id" for="id.1">Hello World</label>
-        <ion-toggle id="id.1"></ion-toggle>
+        <ion-toggle legacy="true" id="id.1"></ion-toggle>
       `,
     });
 
@@ -83,7 +83,7 @@ describe('getAriaLabel()', () => {
       components: [Toggle],
       html: `
         <label for="id.1">Hello World</label>
-        <ion-toggle id="id.1"></ion-toggle>
+        <ion-toggle legacy="true" id="id.1"></ion-toggle>
       `,
     });
 

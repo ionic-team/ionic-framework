@@ -8,11 +8,21 @@
   --min-height: #{$item-ios-min-height};
   --transition: background-color 200ms linear, opacity 200ms linear;
   --padding-start: #{$item-ios-padding-start};
-  --inner-padding-end: #{$item-ios-padding-end * 0.5};
+  --inner-padding-end: #{$item-ios-padding-end};
   --inner-border-width: #{0px 0px $item-ios-border-bottom-width 0px};
   --background: #{$item-ios-background};
-  --background-activated: #000;
-  --background-focused: #000;
+  /**
+   * The active/focus states need
+   * to be the opposite of the background color
+   * so there is enough contrast. The background
+   * defaults to var(--ion-background-color), so we
+   * default to var(--ion-text-color) which will give us
+   * the opposite color.
+   * i.e. if var(--ion-background-color) is #000
+   * then var(--ion-text-color) will be #fff.
+   */
+  --background-activated: #{$text-color};
+  --background-focused: #{$text-color};
   --background-hover: currentColor;
   --background-activated-opacity: .12;
   --background-focused-opacity: .15;
@@ -154,8 +164,7 @@
   font-size: 13px;
 }
 
-
-// iOS Item Avatar & Thumbnail
+// iOS Item Avatar
 // --------------------------------------------------
 
 ::slotted(ion-avatar) {
@@ -163,10 +172,15 @@
   height: $item-ios-avatar-height;
 }
 
+// iOS Item Thumbnail
+// --------------------------------------------------
+
 ::slotted(ion-thumbnail) {
-  width: $item-ios-thumbnail-width;
-  height: $item-ios-thumbnail-height;
+  --size: #{$item-ios-thumbnail-size};
 }
+
+// iOS Item Avatar/Thumbnail
+// --------------------------------------------------
 
 ::slotted(ion-avatar[slot="end"]),
 ::slotted(ion-thumbnail[slot="end"]) {
@@ -199,8 +213,8 @@
   --min-height: 68px;
 }
 
-:host(.item-label-stacked) ::slotted(ion-select),
-:host(.item-label-floating) ::slotted(ion-select) {
+:host(.item-label-stacked) ::slotted(ion-select.legacy-select),
+:host(.item-label-floating) ::slotted(ion-select.legacy-select) {
   --padding-top: 8px;
   --padding-bottom: 8px;
   --padding-start: 0px;
@@ -210,7 +224,7 @@
 // iOS Fixed Labels
 // --------------------------------------------------
 
-:host(.item-label-fixed) ::slotted(ion-select),
+:host(.item-label-fixed) ::slotted(ion-select.legacy-select),
 :host(.item-label-fixed) ::slotted(ion-datetime) {
   --padding-start: 0;
 }

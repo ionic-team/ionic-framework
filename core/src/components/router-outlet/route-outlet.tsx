@@ -10,17 +10,13 @@ import type {
   ComponentRef,
   FrameworkDelegate,
   Gesture,
-  NavOutlet,
-  RouteID,
-  RouteWrite,
-  RouterDirection,
-  RouterOutletOptions,
-  SwipeGestureHandler,
 } from '../../interface';
 import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
-import { shallowEqualStringMap } from '../../utils/helpers';
+import { shallowEqualStringMap, hasLazyBuild } from '../../utils/helpers';
 import { transition } from '../../utils/transition';
+import type { RouterOutletOptions, SwipeGestureHandler } from '../nav/nav-interface';
+import type { RouteID, RouterDirection, RouteWrite, NavOutlet } from '../router/utils/interface';
 
 @Component({
   tag: 'ion-router-outlet',
@@ -239,6 +235,13 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
       enteringEl,
       leavingEl,
       baseEl: el,
+
+      /**
+       * We need to wait for all Stencil components
+       * to be ready only when using the lazy
+       * loaded bundle.
+       */
+      deepWait: hasLazyBuild(el),
       progressCallback: opts.progressAnimation
         ? (ani) => {
             /**

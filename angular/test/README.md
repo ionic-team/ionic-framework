@@ -2,9 +2,21 @@
 
 Ionic Framework supports multiple versions of Angular. As a result, we need to verify that Ionic works correctly with each of these Angular versions.
 
+## Syncing Local Changes
+
+The Angular test app supports syncing your locally built changes for validation.
+
+1. Build the `core` and `packages/angular` directories using `npm run build`.
+2. [Build the Angular test app](#test-app-build-structure).
+3. Navigate to the built test app.
+4. Install dependencies using `npm install`.
+5. Sync your local changes using `npm run sync`.
+
+From here you can either build the application or start a local dev server. When re-syncing changes, you will need to [wipe or disable the application cache](#application-cache).
+
 ## Application Cache
 
-Angular CLI creates a cache of several files on disk by default in the `.angular` directory. This decreases the time taken to build the test application. When testing changes by directly modifying Ionic's source code in `node_modules`, you may need to manually clear the `.angular` cache and restart the local server every time you make a change. As a result, it may be desirable to disable the `.angular` cache while making changes to the code.
+Angular CLI creates a cache of several files on disk by default in the `.angular` directory. This decreases the time taken to build the test application. However, the cache makes it difficult to quickly sync and check local changes of Ionic. As a result, the `.angular` cache is disabled by default in the test app projects.
 
 See https://angular.io/cli/cache for more information.
 
@@ -21,6 +33,8 @@ ng cache disable
 ```
 ng cache enable
 ```
+
+> Note: You will need to delete the `.angular` cache and restart the dev server every time you want to sync local changes of Ionic.
 
 ## Test App Build Structure
 
@@ -86,4 +100,4 @@ Note: You may encounter some other peer dependency issues not covered by the Ang
 7. Open `./github/workflows/build.yml` and find the `test-angular-e2e` job.
 8. Find the `apps` field under `matrix`.
 9. Add "ng14" to the `apps` field.
-10. Committ these changes and push.
+10. Commit these changes and push.

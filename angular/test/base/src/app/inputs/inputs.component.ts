@@ -11,7 +11,6 @@ export class InputsComponent {
   checkbox = true;
   toggle = true;
   select? = 'nes';
-  range? = 10;
   changes = 0;
 
   setValues() {
@@ -21,7 +20,6 @@ export class InputsComponent {
     this.checkbox = true;
     this.toggle = true;
     this.select = 'nes';
-    this.range = 10;
   }
 
   resetValues() {
@@ -31,8 +29,8 @@ export class InputsComponent {
     this.checkbox = false;
     this.toggle = false;
     this.select = undefined;
-    this.range = undefined;
   }
+
   counter() {
     this.changes++;
     return Math.floor(this.changes / 2);

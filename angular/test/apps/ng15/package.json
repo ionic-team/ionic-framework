@@ -42,15 +42,15 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^15.0.0",
-    "@angular-eslint/builder": "^15.0.0-alpha.0",
-    "@angular-eslint/eslint-plugin": "^15.0.0-alpha.0",
-    "@angular-eslint/eslint-plugin-template": "^15.0.0-alpha.0",
-    "@angular-eslint/schematics": "^15.0.0-alpha.0",
-    "@angular-eslint/template-parser": "^15.0.0-alpha.0",
+    "@angular-eslint/builder": "^15.0.0",
+    "@angular-eslint/eslint-plugin": "^15.0.0",
+    "@angular-eslint/eslint-plugin-template": "^15.0.0",
+    "@angular-eslint/schematics": "^15.0.0",
+    "@angular-eslint/template-parser": "^15.0.0",
     "@angular/cli": "^15.0.0",
     "@angular/compiler-cli": "^15.0.0",
     "@angular/language-service": "^15.0.0",
-    "@nguniversal/builders": "^15.0.0-next.0",
+    "@nguniversal/builders": "^15.0.0",
     "@types/express": "^4.17.7",
     "@types/node": "^12.12.54",
     "@typescript-eslint/eslint-plugin": "4.28.2",
@@ -64,5 +64,8 @@
     "wait-on": "^5.2.1",
     "webpack": "^5.61.0",
     "webpack-cli": "^4.9.2"
+  },
+  "engines": {
+    "node": ">= 16"
   }
 }

@@ -258,7 +258,6 @@
   @include padding-horizontal($item-md-note-end-slot-padding-start, $item-md-note-end-slot-padding-end);
 }
 
-
 // Material Design Item Avatar
 // --------------------------------------------------
 
@@ -267,13 +266,11 @@
   height: $item-md-avatar-height;
 }
 
-
 // Material Design Item Thumbnail
 // --------------------------------------------------
 
 ::slotted(ion-thumbnail) {
-  width: $item-md-thumbnail-width;
-  height: $item-md-thumbnail-height;
+  --size: #{$item-md-thumbnail-size};
 }
 
 // Material Design Item Avatar/Thumbnail
@@ -315,7 +312,7 @@
 // Material Design Fixed Labels
 // --------------------------------------------------
 
-:host(.item-label-fixed) ::slotted(ion-select),
+:host(.item-label-fixed) ::slotted(ion-select.legacy-select),
 :host(.item-label-fixed) ::slotted(ion-datetime) {
   --padding-start: 8px;
 }
@@ -361,8 +358,8 @@
   --min-height: 55px;
 }
 
-:host(.item-label-stacked) ::slotted(ion-select),
-:host(.item-label-floating) ::slotted(ion-select) {
+:host(.item-label-stacked) ::slotted(ion-select.legacy-select),
+:host(.item-label-floating) ::slotted(ion-select.legacy-select) {
   --padding-top: 8px;
   --padding-bottom: 8px;
   --padding-start: 0;

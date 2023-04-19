@@ -4,7 +4,7 @@ import { NavContext } from '../contexts/NavContext';
 
 import type { IonicReactProps } from './IonicReactProps';
 import { IonIconInner } from './inner-proxies';
-import { createForwardRef, isPlatform } from './utils';
+import { createForwardRef, getConfig } from './utils';
 
 interface IonIconProps {
   color?: string;
@@ -34,12 +34,15 @@ class IonIconContainer extends React.PureComponent<InternalProps> {
   }
 
   render() {
-    const { icon, ios, md, ...rest } = this.props;
+    const { icon, ios, md, mode, ...rest } = this.props;
 
     let iconToUse: typeof icon;
 
+    const config = getConfig();
+    const iconMode = mode || config?.get('mode');
+
     if (ios || md) {
-      if (isPlatform('ios')) {
+      if (iconMode === 'ios') {
         iconToUse = ios ?? md ?? icon;
       } else {
         iconToUse = md ?? ios ?? icon;

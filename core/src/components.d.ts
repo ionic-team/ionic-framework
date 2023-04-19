@@ -5,17 +5,78 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AccordionGroupChangeEventDetail, ActionSheetAttributes, ActionSheetButton, AlertButton, AlertInput, AnimationBuilder, AutocompleteTypes, BreadcrumbCollapsedClickEventDetail, CheckboxChangeEventDetail, Color, ComponentProps, ComponentRef, DomRenderFn, FooterHeightFn, FrameworkDelegate, HeaderFn, HeaderHeightFn, InputChangeEventDetail, ItemHeightFn, ItemRenderFn, ItemReorderEventDetail, LoadingAttributes, MenuChangeEventDetail, ModalAttributes, ModalBreakpointChangeEventDetail, ModalHandleBehavior, NavComponent, NavComponentWithProps, NavOptions, OverlayEventDetail, PickerAttributes, PickerButton, PickerColumn, PopoverAttributes, PopoverSize, PositionAlign, PositionReference, PositionSide, RadioGroupChangeEventDetail, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue, RefresherEventDetail, RouteID, RouterDirection, RouterEventDetail, RouterOutletOptions, RouteWrite, ScrollBaseDetail, ScrollDetail, SearchbarChangeEventDetail, SegmentButtonLayout, SegmentChangeEventDetail, SelectChangeEventDetail, SelectInterface, SelectPopoverOption, Side, SpinnerTypes, StyleEventDetail, SwipeGestureHandler, TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout, TextareaChangeEventDetail, TextFieldTypes, ToastButton, ToggleChangeEventDetail, TransitionDoneFn, TransitionInstruction, TriggerAction, ViewController } from "./interface";
+import { AccordionGroupChangeEventDetail } from "./components/accordion-group/accordion-group-interface";
+import { AnimationBuilder, AutocompleteTypes, Color, ComponentProps, ComponentRef, FrameworkDelegate, StyleEventDetail, TextFieldTypes } from "./interface";
+import { ActionSheetButton } from "./components/action-sheet/action-sheet-interface";
+import { OverlayEventDetail } from "./utils/overlays-interface";
 import { IonicSafeString } from "./utils/sanitization";
-import { AlertAttributes } from "./components/alert/alert-interface";
+import { AlertButton, AlertInput } from "./components/alert/alert-interface";
+import { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./components/router/utils/interface";
+import { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
+import { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
+import { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
 import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimePresentation, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
+import { SpinnerTypes } from "./components/spinner/spinner-configs";
+import { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
 import { CounterFormatter } from "./components/item/item-interface";
+import { MenuChangeEventDetail, Side } from "./components/menu/menu-interface";
+import { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
+import { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
+import { ViewController } from "./components/nav/view-controller";
+import { PickerButton, PickerColumn } from "./components/picker/picker-interface";
 import { PickerColumnItem } from "./components/picker-column-internal/picker-column-internal-interfaces";
 import { PickerInternalChangeEventDetail } from "./components/picker-internal/picker-internal-interfaces";
-import { PinFormatter } from "./components/range/range-interface";
+import { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from "./components/popover/popover-interface";
+import { RadioGroupChangeEventDetail } from "./components/radio-group/radio-group-interface";
+import { PinFormatter, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue } from "./components/range/range-interface";
+import { RefresherEventDetail } from "./components/refresher/refresher-interface";
+import { ItemReorderEventDetail } from "./components/reorder-group/reorder-group-interface";
 import { NavigationHookCallback } from "./components/route/route-interface";
-import { SelectCompareFn } from "./components/select/select-interface";
-import { ToastAttributes, ToastLayout, ToastPosition } from "./components/toast/toast-interface";
+import { SearchbarChangeEventDetail, SearchbarInputEventDetail } from "./components/searchbar/searchbar-interface";
+import { SegmentChangeEventDetail } from "./components/segment/segment-interface";
+import { SegmentButtonLayout } from "./components/segment-button/segment-button-interface";
+import { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./components/select/select-interface";
+import { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
+import { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
+import { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
+import { ToastButton, ToastLayout, ToastPosition } from "./components/toast/toast-interface";
+import { ToggleChangeEventDetail } from "./components/toggle/toggle-interface";
+export { AccordionGroupChangeEventDetail } from "./components/accordion-group/accordion-group-interface";
+export { AnimationBuilder, AutocompleteTypes, Color, ComponentProps, ComponentRef, FrameworkDelegate, StyleEventDetail, TextFieldTypes } from "./interface";
+export { ActionSheetButton } from "./components/action-sheet/action-sheet-interface";
+export { OverlayEventDetail } from "./utils/overlays-interface";
+export { IonicSafeString } from "./utils/sanitization";
+export { AlertButton, AlertInput } from "./components/alert/alert-interface";
+export { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./components/router/utils/interface";
+export { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
+export { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
+export { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
+export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimePresentation, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
+export { SpinnerTypes } from "./components/spinner/spinner-configs";
+export { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
+export { CounterFormatter } from "./components/item/item-interface";
+export { MenuChangeEventDetail, Side } from "./components/menu/menu-interface";
+export { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
+export { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
+export { ViewController } from "./components/nav/view-controller";
+export { PickerButton, PickerColumn } from "./components/picker/picker-interface";
+export { PickerColumnItem } from "./components/picker-column-internal/picker-column-internal-interfaces";
+export { PickerInternalChangeEventDetail } from "./components/picker-internal/picker-internal-interfaces";
+export { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from "./components/popover/popover-interface";
+export { RadioGroupChangeEventDetail } from "./components/radio-group/radio-group-interface";
+export { PinFormatter, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue } from "./components/range/range-interface";
+export { RefresherEventDetail } from "./components/refresher/refresher-interface";
+export { ItemReorderEventDetail } from "./components/reorder-group/reorder-group-interface";
+export { NavigationHookCallback } from "./components/route/route-interface";
+export { SearchbarChangeEventDetail, SearchbarInputEventDetail } from "./components/searchbar/searchbar-interface";
+export { SegmentChangeEventDetail } from "./components/segment/segment-interface";
+export { SegmentButtonLayout } from "./components/segment-button/segment-button-interface";
+export { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./components/select/select-interface";
+export { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
+export { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
+export { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
+export { ToastButton, ToastLayout, ToastPosition } from "./components/toast/toast-interface";
+export { ToggleChangeEventDetail } from "./components/toggle/toggle-interface";
 export namespace Components {
     interface IonAccordion {
         /**
@@ -35,7 +96,7 @@ export namespace Components {
          */
         "toggleIcon": string;
         /**
-          * The slot inside of `ion-item` to place the toggle icon. Defaults to `'end'`.
+          * The slot inside of `ion-item` to place the toggle icon. Defaults to `"end"`.
          */
         "toggleIconSlot": 'start' | 'end';
         /**
@@ -69,9 +130,12 @@ export namespace Components {
           * If `true`, the accordion group cannot be interacted with, but does not alter the opacity.
          */
         "readonly": boolean;
+        /**
+          * This method is used to ensure that the value of ion-accordion-group is being set in a valid way. This method should only be called in response to a user generated action.
+         */
         "requestAccordionToggle": (accordionValue: string | undefined, accordionExpand: boolean) => Promise<void>;
         /**
-          * The value of the accordion group.
+          * The value of the accordion group. This controls which accordions are expanded. This should be an array of strings only when `multiple="true"`
          */
         "value"?: string | string[] | null;
     }
@@ -92,6 +156,7 @@ export namespace Components {
           * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
          */
         "cssClass"?: string | string[];
+        "delegate"?: FrameworkDelegate;
         /**
           * Dismiss the action sheet overlay after it has been presented.
           * @param data Any data to emit in the dismiss events.
@@ -102,6 +167,7 @@ export namespace Components {
           * Animation to use when the action sheet is presented.
          */
         "enterAnimation"?: AnimationBuilder;
+        "hasController": boolean;
         /**
           * Title for the action sheet.
          */
@@ -109,7 +175,11 @@ export namespace Components {
         /**
           * Additional attributes to pass to the action sheet.
          */
-        "htmlAttributes"?: ActionSheetAttributes;
+        "htmlAttributes"?: { [key: string]: any };
+        /**
+          * If `true`, the action sheet will open. If `false`, the action sheet will close. Use this if you need finer grained control over presentation, otherwise just use the actionSheetController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the action sheet dismisses. You will need to do that in your code.
+         */
+        "isOpen": boolean;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -143,6 +213,10 @@ export namespace Components {
           * If `true`, the action sheet will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent": boolean;
+        /**
+          * An ID corresponding to the trigger element that causes the action sheet to open when clicked.
+         */
+        "trigger": string | undefined;
     }
     interface IonAlert {
         /**
@@ -161,6 +235,7 @@ export namespace Components {
           * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
          */
         "cssClass"?: string | string[];
+        "delegate"?: FrameworkDelegate;
         /**
           * Dismiss the alert overlay after it has been presented.
           * @param data Any data to emit in the dismiss events.
@@ -171,6 +246,7 @@ export namespace Components {
           * Animation to use when the alert is presented.
          */
         "enterAnimation"?: AnimationBuilder;
+        "hasController": boolean;
         /**
           * The main title in the heading of the alert.
          */
@@ -178,11 +254,15 @@ export namespace Components {
         /**
           * Additional attributes to pass to the alert.
          */
-        "htmlAttributes"?: AlertAttributes;
+        "htmlAttributes"?: { [key: string]: any };
         /**
           * Array of input to show in the alert.
          */
         "inputs": AlertInput[];
+        /**
+          * If `true`, the alert will open. If `false`, the alert will close. Use this if you need finer grained control over presentation, otherwise just use the alertController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the alert dismisses. You will need to do that in your code.
+         */
+        "isOpen": boolean;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -192,7 +272,7 @@ export namespace Components {
          */
         "leaveAnimation"?: AnimationBuilder;
         /**
-          * The main message to be displayed in the alert. `message` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
+          * The main message to be displayed in the alert. `message` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)  This property accepts custom HTML as a string. Content is parsed as plaintext by default. `innerHTMLTemplatesEnabled` must be set to `true` in the Ionic config before custom HTML can be used.
          */
         "message"?: string | IonicSafeString;
         /**
@@ -220,6 +300,10 @@ export namespace Components {
           * If `true`, the alert will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent": boolean;
+        /**
+          * An ID corresponding to the trigger element that causes the alert to open when clicked.
+         */
+        "trigger": string | undefined;
     }
     interface IonApp {
         "setFocus": (elements: HTMLElement[]) => Promise<void>;
@@ -535,6 +619,18 @@ export namespace Components {
          */
         "indeterminate": boolean;
         /**
+          * How to pack the label and checkbox within a line. `"start"`: The label and checkbox will appear on the left in LTR and on the right in RTL. `"end"`: The label and checkbox will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and checkbox will appear on opposite ends of the line with space between the two elements.
+         */
+        "justify": 'start' | 'end' | 'space-between';
+        /**
+          * Where to place the label relative to the checkbox. `"start"`: The label will appear to the left of the checkbox in LTR and to the right in RTL. `"end"`: The label will appear to the right of the checkbox in LTR and to the left in RTL. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+         */
+        "labelPlacement": 'start' | 'end' | 'fixed';
+        /**
+          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt checkboxes in to the modern form markup when they are using either the `aria-label` attribute or have text in the default slot. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior.  Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
+         */
+        "legacy"?: boolean;
+        /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
@@ -669,7 +765,7 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * If `true` and the content does not cause an overflow scroll, the scroll interaction will cause a bounce. If the content exceeds the bounds of ionContent, nothing will change. Note, the does not disable the system bounce on iOS. That is an OS level setting.
+          * If `true` and the content does not cause an overflow scroll, the scroll interaction will cause a bounce. If the content exceeds the bounds of ionContent, nothing will change. Note, this does not disable the system bounce on iOS. That is an OS level setting.
          */
         "forceOverscroll"?: boolean;
         /**
@@ -775,7 +871,7 @@ export namespace Components {
          */
         "isDateEnabled"?: (dateIsoString: string) => boolean;
         /**
-          * The locale to use for `ion-datetime`. This impacts month and day name formatting. The `'default'` value refers to the default locale set by your device.
+          * The locale to use for `ion-datetime`. This impacts month and day name formatting. The `"default"` value refers to the default locale set by your device.
          */
         "locale": string;
         /**
@@ -807,11 +903,11 @@ export namespace Components {
          */
         "name": string;
         /**
-          * If `true`, a wheel picker will be rendered instead of a calendar grid where possible. If `false`, a calendar grid will be rendered instead of a wheel picker where possible.  A wheel picker can be rendered instead of a grid when `presentation` is one of the following values: `'date'`, `'date-time'`, or `'time-date'`.  A wheel picker will always be rendered regardless of the `preferWheel` value when `presentation` is one of the following values: `'time'`, `'month'`, `'month-year'`, or `'year'`.
+          * If `true`, a wheel picker will be rendered instead of a calendar grid where possible. If `false`, a calendar grid will be rendered instead of a wheel picker where possible.  A wheel picker can be rendered instead of a grid when `presentation` is one of the following values: `"date"`, `"date-time"`, or `"time-date"`.  A wheel picker will always be rendered regardless of the `preferWheel` value when `presentation` is one of the following values: `"time"`, `"month"`, `"month-year"`, or `"year"`.
          */
         "preferWheel": boolean;
         /**
-          * Which values you want to select. `'date'` will show a calendar picker to select the month, day, and year. `'time'` will show a time picker to select the hour, minute, and (optionally) AM/PM. `'date-time'` will show the date picker first and time picker second. `'time-date'` will show the time picker first and date picker second.
+          * Which values you want to select. `"date"` will show a calendar picker to select the month, day, and year. `"time"` will show a time picker to select the hour, minute, and (optionally) AM/PM. `"date-time"` will show the date picker first and time picker second. `"time-date"` will show the time picker first and date picker second.
          */
         "presentation": DatetimePresentation;
         /**
@@ -847,7 +943,7 @@ export namespace Components {
          */
         "titleSelectedDatesFormatter"?: TitleSelectedDatesFormatter;
         /**
-          * The value of the datetime as a valid ISO 8601 datetime string. Should be an array of strings if `multiple="true"`.
+          * The value of the datetime as a valid ISO 8601 datetime string. This should be an array of strings only when `multiple="true"`.
          */
         "value"?: string | string[] | null;
         /**
@@ -1039,7 +1135,7 @@ export namespace Components {
          */
         "loadingSpinner"?: SpinnerTypes | null;
         /**
-          * Optional text to display while loading. `loadingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
+          * Optional text to display while loading. `loadingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)  This property accepts custom HTML as a string. Content is parsed as plaintext by default. `innerHTMLTemplatesEnabled` must be set to `true` in the Ionic config before custom HTML can be used.
          */
         "loadingText"?: string | IonicSafeString;
     }
@@ -1078,9 +1174,17 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. This also impacts form bindings such as `ngModel` or `v-model`.
+          * If `true`, a character counter will display the ratio of characters used and the total character limit. Developers must also set the `maxlength` property for the counter to be calculated correctly.
          */
-        "debounce": number;
+        "counter": boolean;
+        /**
+          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".
+         */
+        "counterFormatter"?: (inputLength: number, maxLength: number) => string;
+        /**
+          * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
+         */
+        "debounce"?: number;
         /**
           * If `true`, the user cannot interact with the input.
          */
@@ -1090,17 +1194,37 @@ export namespace Components {
          */
         "enterkeyhint"?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
         /**
-          * This is required for a WebKit bug which requires us to blur and focus an input to properly focus the input in an item with delegatesFocus. It will no longer be needed with iOS 14.
+          * Text that is placed under the input and displayed when an error is detected.
          */
-        "fireFocusEvents": boolean;
+        "errorText"?: string;
+        /**
+          * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available in `md` mode.
+         */
+        "fill"?: 'outline' | 'solid';
         /**
           * Returns the native `<input>` element used under the hood.
          */
         "getInputElement": () => Promise<HTMLInputElement>;
         /**
+          * Text that is placed under the input and displayed when no error is detected.
+         */
+        "helperText"?: string;
+        /**
           * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
          */
         "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
+        /**
+          * The visible label associated with the input.
+         */
+        "label"?: string;
+        /**
+          * Where to place the label relative to the input. `"start"`: The label will appear to the left of the input in LTR and to the right in RTL. `"end"`: The label will appear to the right of the input in LTR and to the left in RTL. `"floating"`: The label will appear smaller and above the input when the input is focused or it has a value. Otherwise it will appear on top of the input. `"stacked"`: The label will appear smaller and above the input regardless even when the input is blurred or has no value. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+         */
+        "labelPlacement": 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
+        /**
+          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the `label` property. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
+         */
+        "legacy"?: boolean;
         /**
           * The maximum value, which must not be less than its minimum (min attribute) value.
          */
@@ -1146,13 +1270,13 @@ export namespace Components {
          */
         "required": boolean;
         /**
-          * Sets blur on the native `input` in `ion-input`. Use this method instead of the global `input.blur()`.
-         */
-        "setBlur": () => Promise<void>;
-        /**
-          * Sets focus on the native `input` in `ion-input`. Use this method instead of the global `input.focus()`.  Developers who wish to focus an input when a page enters should call `setFocus()` in the `ionViewDidEnter()` lifecycle method.
+          * Sets focus on the native `input` in `ion-input`. Use this method instead of the global `input.focus()`.  Developers who wish to focus an input when a page enters should call `setFocus()` in the `ionViewDidEnter()` lifecycle method.  Developers who wish to focus an input when an overlay is presented should call `setFocus` after `didPresent` has resolved.
          */
         "setFocus": () => Promise<void>;
+        /**
+          * The shape of the input. If "round" it will have an increased border radius.
+         */
+        "shape"?: 'round';
         /**
           * The initial size of the control. This value is in pixels unless the value of the type attribute is `"text"` or `"password"`, in which case it is an integer number of characters. This attribute applies only when the `type` attribute is set to `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, or `"password"`, otherwise it is ignored.
          */
@@ -1185,10 +1309,12 @@ export namespace Components {
         "color"?: Color;
         /**
           * If `true`, a character counter will display the ratio of characters used and the total character limit. Only applies when the `maxlength` property is set on the inner `ion-input` or `ion-textarea`.
+          * @deprecated Use the `counter` property on `ion-input` or `ion-textarea` instead.
          */
         "counter": boolean;
         /**
           * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".
+          * @deprecated Use the `counterFormatter` property on `ion-input` or `ion-textarea` instead.
          */
         "counterFormatter"?: CounterFormatter;
         /**
@@ -1208,7 +1334,7 @@ export namespace Components {
          */
         "download": string | undefined;
         /**
-          * The fill for the item. If `'solid'` the item will have a background. If `'outline'` the item will be transparent with a border. Only available in `md` mode.
+          * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available in `md` mode.
          */
         "fill"?: 'outline' | 'solid';
         /**
@@ -1395,6 +1521,7 @@ export namespace Components {
           * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
          */
         "cssClass"?: string | string[];
+        "delegate"?: FrameworkDelegate;
         /**
           * Dismiss the loading overlay after it has been presented.
           * @param data Any data to emit in the dismiss events.
@@ -1409,10 +1536,15 @@ export namespace Components {
           * Animation to use when the loading indicator is presented.
          */
         "enterAnimation"?: AnimationBuilder;
+        "hasController": boolean;
         /**
           * Additional attributes to pass to the loader.
          */
-        "htmlAttributes"?: LoadingAttributes;
+        "htmlAttributes"?: { [key: string]: any };
+        /**
+          * If `true`, the loading indicator will open. If `false`, the loading indicator will close. Use this if you need finer grained control over presentation, otherwise just use the loadingController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the loading indicator dismisses. You will need to do that in your code.
+         */
+        "isOpen": boolean;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -1422,7 +1554,7 @@ export namespace Components {
          */
         "leaveAnimation"?: AnimationBuilder;
         /**
-          * Optional text content to display in the loading indicator.
+          * Optional text content to display in the loading indicator.  This property accepts custom HTML as a string. Content is parsed as plaintext by default. `innerHTMLTemplatesEnabled` must be set to `true` in the Ionic config before custom HTML can be used.
          */
         "message"?: string | IonicSafeString;
         /**
@@ -1454,6 +1586,10 @@ export namespace Components {
           * If `true`, the loading indicator will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent": boolean;
+        /**
+          * An ID corresponding to the trigger element that causes the loading indicator to open when clicked.
+         */
+        "trigger": string | undefined;
     }
     interface IonMenu {
         /**
@@ -1565,7 +1701,7 @@ export namespace Components {
         /**
           * Determines whether or not a modal can dismiss when calling the `dismiss` method.  If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss. If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.
          */
-        "canDismiss"?: undefined | boolean | ((data?: any, role?: string) => Promise<boolean>);
+        "canDismiss": boolean | ((data?: any, role?: string) => Promise<boolean>);
         /**
           * The component to display inside of the modal.
          */
@@ -1605,7 +1741,7 @@ export namespace Components {
         /**
           * Additional attributes to pass to the modal.
          */
-        "htmlAttributes"?: ModalAttributes;
+        "htmlAttributes"?: { [key: string]: any };
         /**
           * A decimal value between 0 and 1 that indicates the initial point the modal will open at when creating a sheet modal. This value must also be listed in the `breakpoints` array.
          */
@@ -1655,11 +1791,6 @@ export namespace Components {
           * If `true`, a backdrop will be displayed behind the modal. This property controls whether or not the backdrop darkens the screen when the modal is presented. It does not control whether or not the backdrop is active or present in the DOM.
          */
         "showBackdrop": boolean;
-        /**
-          * If `true`, the modal can be swiped to dismiss. Only applies in iOS mode.
-          * @deprecated - To prevent modals from dismissing, use canDismiss instead.
-         */
-        "swipeToClose": boolean;
         /**
           * An ID corresponding to the trigger element that causes the modal to open when clicked.
          */
@@ -1836,6 +1967,7 @@ export namespace Components {
           * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
          */
         "cssClass"?: string | string[];
+        "delegate"?: FrameworkDelegate;
         /**
           * Dismiss the picker overlay after it has been presented.
           * @param data Any data to emit in the dismiss events.
@@ -1855,10 +1987,15 @@ export namespace Components {
           * @param name The name of the column.
          */
         "getColumn": (name: string) => Promise<PickerColumn | undefined>;
+        "hasController": boolean;
         /**
           * Additional attributes to pass to the picker.
          */
-        "htmlAttributes"?: PickerAttributes;
+        "htmlAttributes"?: { [key: string]: any };
+        /**
+          * If `true`, the picker will open. If `false`, the picker will close. Use this if you need finer grained control over presentation, otherwise just use the pickerController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the picker dismisses. You will need to do that in your code.
+         */
+        "isOpen": boolean;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -1888,6 +2025,10 @@ export namespace Components {
           * If `true`, a backdrop will be displayed behind the picker.
          */
         "showBackdrop": boolean;
+        /**
+          * An ID corresponding to the trigger element that causes the picker to open when clicked.
+         */
+        "trigger": string | undefined;
     }
     interface IonPickerColumn {
         /**
@@ -1931,7 +2072,7 @@ export namespace Components {
     }
     interface IonPopover {
         /**
-          * Describes how to align the popover content with the `reference` point. Defaults to `'center'` for `ios` mode, and `'start'` for `md` mode.
+          * Describes how to align the popover content with the `reference` point. Defaults to `"center"` for `ios` mode, and `"start"` for `md` mode.
          */
         "alignment"?: PositionAlign;
         /**
@@ -1983,7 +2124,7 @@ export namespace Components {
         /**
           * Additional attributes to pass to the popover.
          */
-        "htmlAttributes"?: PopoverAttributes;
+        "htmlAttributes"?: { [key: string]: any };
         /**
           * If `true`, the popover will open. If `false`, the popover will close. Use this if you need finer grained control over presentation, otherwise just use the popoverController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the popover dismisses. You will need to do that in your code.
          */
@@ -2023,7 +2164,7 @@ export namespace Components {
          */
         "presentFromTrigger": (event?: any, focusDescendant?: boolean) => Promise<void>;
         /**
-          * Describes what to position the popover relative to. If `'trigger'`, the popover will be positioned relative to the trigger button. If passing in an event, this is determined via event.target. If `'event'`, the popover will be positioned relative to the x/y coordinates of the trigger action. If passing in an event, this is determined via event.clientX and event.clientY.
+          * Describes what to position the popover relative to. If `"trigger"`, the popover will be positioned relative to the trigger button. If passing in an event, this is determined via event.target. If `"event"`, the popover will be positioned relative to the x/y coordinates of the trigger action. If passing in an event, this is determined via event.clientX and event.clientY.
          */
         "reference": PositionReference;
         /**
@@ -2031,11 +2172,11 @@ export namespace Components {
          */
         "showBackdrop": boolean;
         /**
-          * Describes which side of the `reference` point to position the popover on. The `'start'` and `'end'` values are RTL-aware, and the `'left'` and `'right'` values are not.
+          * Describes which side of the `reference` point to position the popover on. The `"start"` and `"end"` values are RTL-aware, and the `"left"` and `"right"` values are not.
          */
         "side": PositionSide;
         /**
-          * Describes how to calculate the popover width. If `'cover'`, the popover width will match the width of the trigger. If `'auto'`, the popover width will be determined by the content in the popover.
+          * Describes how to calculate the popover width. If `"cover"`, the popover width will match the width of the trigger. If `"auto"`, the popover width will be determined by the content in the popover.
          */
         "size": PopoverSize;
         /**
@@ -2047,7 +2188,7 @@ export namespace Components {
          */
         "trigger": string | undefined;
         /**
-          * Describes what kind of interaction with the trigger that should cause the popover to open. Does not apply when the `trigger` property is `undefined`. If `'click'`, the popover will be presented when the trigger is left clicked. If `'hover'`, the popover will be presented when a pointer hovers over the trigger. If `'context-menu'`, the popover will be presented when the trigger is right clicked on desktop and long pressed on mobile. This will also prevent your device's normal context menu from appearing.
+          * Describes what kind of interaction with the trigger that should cause the popover to open. Does not apply when the `trigger` property is `undefined`. If `"click"`, the popover will be presented when the trigger is left clicked. If `"hover"`, the popover will be presented when a pointer hovers over the trigger. If `"context-menu"`, the popover will be presented when the trigger is right clicked on desktop and long pressed on mobile. This will also prevent your device's normal context menu from appearing.
          */
         "triggerAction": TriggerAction;
     }
@@ -2087,6 +2228,18 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * How to pack the label and radio within a line. `"start"`: The label and radio will appear on the left in LTR and on the right in RTL. `"end"`: The label and radio will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and radio will appear on opposite ends of the line with space between the two elements.
+         */
+        "justify": 'start' | 'end' | 'space-between';
+        /**
+          * Where to place the label relative to the radio. `"start"`: The label will appear to the left of the radio in LTR and to the right in RTL. `"end"`: The label will appear to the right of the radio in LTR and to the left in RTL. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+         */
+        "labelPlacement": 'start' | 'end' | 'fixed';
+        /**
+          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the default slot that contains the label text. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
+         */
+        "legacy"?: boolean;
+        /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
@@ -2125,9 +2278,9 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * How long, in milliseconds, to wait to trigger the `ionChange` event after each change in the range value. This also impacts form bindings such as `ngModel` or `v-model`.
+          * How long, in milliseconds, to wait to trigger the `ionInput` event after each change in the range value.
          */
-        "debounce": number;
+        "debounce"?: number;
         /**
           * If `true`, the user cannot interact with the range.
          */
@@ -2136,6 +2289,14 @@ export namespace Components {
           * Show two knobs.
          */
         "dualKnobs": boolean;
+        /**
+          * Where to place the label relative to the range. `"start"`: The label will appear to the left of the range in LTR and to the right in RTL. `"end"`: The label will appear to the right of the range in LTR and to the left in RTL. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+         */
+        "labelPlacement": 'start' | 'end' | 'fixed';
+        /**
+          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the `label` property. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
+         */
+        "legacy"?: boolean;
         /**
           * Maximum integer value of the range.
          */
@@ -2221,7 +2382,7 @@ export namespace Components {
          */
         "pullingIcon"?: SpinnerTypes | string | null;
         /**
-          * The text you want to display when you begin to pull down. `pullingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
+          * The text you want to display when you begin to pull down. `pullingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)  Content is parsed as plaintext by default. `innerHTMLTemplatesEnabled` must be set to `true` in the Ionic config before custom HTML can be used.
          */
         "pullingText"?: string | IonicSafeString;
         /**
@@ -2229,7 +2390,7 @@ export namespace Components {
          */
         "refreshingSpinner"?: SpinnerTypes | null;
         /**
-          * The text you want to display when performing a refresh. `refreshingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
+          * The text you want to display when performing a refresh. `refreshingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)  Content is parsed as plaintext by default. `innerHTMLTemplatesEnabled` must be set to `true` in the Ionic config before custom HTML can be used.
          */
         "refreshingText"?: string | IonicSafeString;
     }
@@ -2390,9 +2551,9 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. This also impacts form bindings such as `ngModel` or `v-model`.
+          * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
          */
-        "debounce": number;
+        "debounce"?: number;
         /**
           * If `true`, the user cannot interact with the input.
          */
@@ -2422,7 +2583,7 @@ export namespace Components {
          */
         "searchIcon"?: string;
         /**
-          * Sets focus on the specified `ion-searchbar`. Use this method instead of the global `input.focus()`.
+          * Sets focus on the native `input` in `ion-searchbar`. Use this method instead of the global `input.focus()`.  Developers who wish to focus an input when a page enters should call `setFocus()` in the `ionViewDidEnter()` lifecycle method.  Developers who wish to focus an input when an overlay is presented should call `setFocus` after `didPresent` has resolved.
          */
         "setFocus": () => Promise<void>;
         /**
@@ -2474,7 +2635,7 @@ export namespace Components {
         /**
           * the value of the segment.
          */
-        "value"?: string | null;
+        "value"?: string;
     }
     interface IonSegmentButton {
         /**
@@ -2505,6 +2666,10 @@ export namespace Components {
          */
         "cancelText": string;
         /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).  This property is only available when using the modern select syntax.
+         */
+        "color"?: Color;
+        /**
           * A property name or function used to compare object values
          */
         "compareWith"?: string | SelectCompareFn | null;
@@ -2513,6 +2678,10 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available in `md` mode.
+         */
+        "fill"?: 'outline' | 'solid';
+        /**
           * The interface the select should use: `action-sheet`, `popover` or `alert`.
          */
         "interface": SelectInterface;
@@ -2520,6 +2689,22 @@ export namespace Components {
           * Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [ion-alert docs](./alert), the [ion-action-sheet docs](./action-sheet) and the [ion-popover docs](./popover) for the create options for each interface.  Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert` interface.
          */
         "interfaceOptions": any;
+        /**
+          * How to pack the label and select within a line. `justify` does not apply when the label and select are on different lines when `labelPlacement` is set to `"floating"` or `"stacked"`. `"start"`: The label and select will appear on the left in LTR and on the right in RTL. `"end"`: The label and select will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and select will appear on opposite ends of the line with space between the two elements.
+         */
+        "justify": 'start' | 'end' | 'space-between';
+        /**
+          * The visible label associated with the select.
+         */
+        "label"?: string;
+        /**
+          * Where to place the label relative to the select. `"start"`: The label will appear to the left of the select in LTR and to the right in RTL. `"end"`: The label will appear to the right of the select in LTR and to the left in RTL. `"floating"`: The label will appear smaller and above the select when the select is focused or it has a value. Otherwise it will appear on top of the select. `"stacked"`: The label will appear smaller and above the select regardless even when the select is blurred or has no value. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("..."). When using `"floating"` or `"stacked"` we recommend initializing the select with either a `value` or a `placeholder`.
+         */
+        "labelPlacement"?: 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
+        /**
+          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the `label` property. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
+         */
+        "legacy"?: boolean;
         /**
           * The mode determines which platform styles to use.
          */
@@ -2550,7 +2735,11 @@ export namespace Components {
          */
         "selectedText"?: string | null;
         /**
-          * the value of the select.
+          * The shape of the select. If "round" it will have an increased border radius.
+         */
+        "shape"?: 'round';
+        /**
+          * The value of the select.
          */
         "value"?: any | null;
     }
@@ -2591,101 +2780,6 @@ export namespace Components {
           * If `true`, the skeleton text will animate.
          */
         "animated": boolean;
-    }
-    interface IonSlide {
-    }
-    interface IonSlides {
-        /**
-          * Get the index of the active slide.
-         */
-        "getActiveIndex": () => Promise<number>;
-        /**
-          * Get the index of the previous slide.
-         */
-        "getPreviousIndex": () => Promise<number>;
-        /**
-          * Get the Swiper instance. Use this to access the full Swiper API. See https://swiperjs.com/swiper-api for all API options.
-         */
-        "getSwiper": () => Promise<any>;
-        /**
-          * Get whether or not the current slide is the first slide.
-         */
-        "isBeginning": () => Promise<boolean>;
-        /**
-          * Get whether or not the current slide is the last slide.
-         */
-        "isEnd": () => Promise<boolean>;
-        /**
-          * Get the total number of slides.
-         */
-        "length": () => Promise<number>;
-        /**
-          * Lock or unlock the ability to slide to the next slide.
-          * @param lock If `true`, disable swiping to the next slide.
-         */
-        "lockSwipeToNext": (lock: boolean) => Promise<void>;
-        /**
-          * Lock or unlock the ability to slide to the previous slide.
-          * @param lock If `true`, disable swiping to the previous slide.
-         */
-        "lockSwipeToPrev": (lock: boolean) => Promise<void>;
-        /**
-          * Lock or unlock the ability to slide to the next or previous slide.
-          * @param lock If `true`, disable swiping to the next and previous slide.
-         */
-        "lockSwipes": (lock: boolean) => Promise<void>;
-        /**
-          * The mode determines which platform styles to use.
-         */
-        "mode"?: "ios" | "md";
-        /**
-          * Options to pass to the swiper instance. See https://swiperjs.com/swiper-api for valid options
-         */
-        "options": any;
-        /**
-          * If `true`, show the pagination.
-         */
-        "pager": boolean;
-        /**
-          * If `true`, show the scrollbar.
-         */
-        "scrollbar": boolean;
-        /**
-          * Transition to the next slide.
-          * @param speed The transition duration (in ms).
-          * @param runCallbacks If true, the transition will produce [Transition/SlideChange][Start/End] transition events.
-         */
-        "slideNext": (speed?: number, runCallbacks?: boolean) => Promise<void>;
-        /**
-          * Transition to the previous slide.
-          * @param speed The transition duration (in ms).
-          * @param runCallbacks If true, the transition will produce the [Transition/SlideChange][Start/End] transition events.
-         */
-        "slidePrev": (speed?: number, runCallbacks?: boolean) => Promise<void>;
-        /**
-          * Transition to the specified slide.
-          * @param index The index of the slide to transition to.
-          * @param speed The transition duration (in ms).
-          * @param runCallbacks If true, the transition will produce [Transition/SlideChange][Start/End] transition events.
-         */
-        "slideTo": (index: number, speed?: number, runCallbacks?: boolean) => Promise<void>;
-        /**
-          * Start auto play.
-         */
-        "startAutoplay": () => Promise<void>;
-        /**
-          * Stop auto play.
-         */
-        "stopAutoplay": () => Promise<void>;
-        /**
-          * Update the underlying slider implementation. Call this if you've added or removed child slides.
-         */
-        "update": () => Promise<void>;
-        /**
-          * Force swiper to update its height (when autoHeight is enabled) for the duration equal to 'speed' parameter.
-          * @param speed The transition duration (in ms).
-         */
-        "updateAutoHeight": (speed?: number) => Promise<void>;
     }
     interface IonSpinner {
         /**
@@ -2767,7 +2861,7 @@ export namespace Components {
          */
         "href": string | undefined;
         /**
-          * Set the layout of the text and icon in the tab bar. It defaults to `'icon-top'`.
+          * Set the layout of the text and icon in the tab bar. It defaults to `"icon-top"`.
          */
         "layout"?: TabButtonLayout;
         /**
@@ -2834,7 +2928,7 @@ export namespace Components {
          */
         "autofocus": boolean;
         /**
-          * If `true`, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
+          * If `true`, the value will be cleared after focus upon edit.
          */
         "clearOnEdit": boolean;
         /**
@@ -2846,9 +2940,17 @@ export namespace Components {
          */
         "cols"?: number;
         /**
-          * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. This also impacts form bindings such as `ngModel` or `v-model`.
+          * If `true`, a character counter will display the ratio of characters used and the total character limit. Developers must also set the `maxlength` property for the counter to be calculated correctly.
          */
-        "debounce": number;
+        "counter": boolean;
+        /**
+          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".
+         */
+        "counterFormatter"?: (inputLength: number, maxLength: number) => string;
+        /**
+          * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
+         */
+        "debounce"?: number;
         /**
           * If `true`, the user cannot interact with the textarea.
          */
@@ -2858,23 +2960,43 @@ export namespace Components {
          */
         "enterkeyhint"?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
         /**
-          * This is required for a WebKit bug which requires us to blur and focus an input to properly focus the input in an item with delegatesFocus. It will no longer be needed with iOS 14.
+          * Text that is placed under the textarea and displayed when an error is detected.
          */
-        "fireFocusEvents": boolean;
+        "errorText"?: string;
+        /**
+          * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available in `md` mode.
+         */
+        "fill"?: 'outline' | 'solid';
         /**
           * Returns the native `<textarea>` element used under the hood.
          */
         "getInputElement": () => Promise<HTMLTextAreaElement>;
         /**
+          * Text that is placed under the textarea and displayed when no error is detected.
+         */
+        "helperText"?: string;
+        /**
           * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
          */
         "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
         /**
-          * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
+          * The visible label associated with the textarea.
+         */
+        "label"?: string;
+        /**
+          * Where to place the label relative to the textarea. `"start"`: The label will appear to the left of the textarea in LTR and to the right in RTL. `"end"`: The label will appear to the right of the textarea in LTR and to the left in RTL. `"floating"`: The label will appear smaller and above the textarea when the textarea is focused or it has a value. Otherwise it will appear on top of the textarea. `"stacked"`: The label will appear smaller and above the textarea regardless even when the textarea is blurred or has no value. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+         */
+        "labelPlacement": 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
+        /**
+          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the default slot that contains the label text. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
+         */
+        "legacy"?: boolean;
+        /**
+          * This attribute specifies the maximum number of characters that the user can enter.
          */
         "maxlength"?: number;
         /**
-          * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the minimum number of characters that the user can enter.
+          * This attribute specifies the minimum number of characters that the user can enter.
          */
         "minlength"?: number;
         /**
@@ -2902,13 +3024,13 @@ export namespace Components {
          */
         "rows"?: number;
         /**
-          * Sets blur on the native `textarea` in `ion-textarea`. Use this method instead of the global `textarea.blur()`.
-         */
-        "setBlur": () => Promise<void>;
-        /**
           * Sets focus on the native `textarea` in `ion-textarea`. Use this method instead of the global `textarea.focus()`.
          */
         "setFocus": () => Promise<void>;
+        /**
+          * The shape of the textarea. If "round" it will have an increased border radius.
+         */
+        "shape"?: 'round';
         /**
           * If `true`, the element will have its spelling and grammar checked.
          */
@@ -2951,6 +3073,7 @@ export namespace Components {
           * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
          */
         "cssClass"?: string | string[];
+        "delegate"?: FrameworkDelegate;
         /**
           * Dismiss the toast overlay after it has been presented.
           * @param data Any data to emit in the dismiss events.
@@ -2965,6 +3088,7 @@ export namespace Components {
           * Animation to use when the toast is presented.
          */
         "enterAnimation"?: AnimationBuilder;
+        "hasController": boolean;
         /**
           * Header to be shown in the toast.
          */
@@ -2972,11 +3096,15 @@ export namespace Components {
         /**
           * Additional attributes to pass to the toast.
          */
-        "htmlAttributes"?: ToastAttributes;
+        "htmlAttributes"?: { [key: string]: any };
         /**
           * The name of the icon to display, or the path to a valid SVG file. See `ion-icon`. https://ionic.io/ionicons
          */
         "icon"?: string;
+        /**
+          * If `true`, the toast will open. If `false`, the toast will close. Use this if you need finer grained control over presentation, otherwise just use the toastController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the toast dismisses. You will need to do that in your code.
+         */
+        "isOpen": boolean;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -2990,7 +3118,7 @@ export namespace Components {
          */
         "leaveAnimation"?: AnimationBuilder;
         /**
-          * Message to be shown in the toast.
+          * Message to be shown in the toast. This property accepts custom HTML as a string. Content is parsed as plaintext by default. `innerHTMLTemplatesEnabled` must be set to `true` in the Ionic config before custom HTML can be used.
          */
         "message"?: string | IonicSafeString;
         /**
@@ -3018,6 +3146,10 @@ export namespace Components {
           * If `true`, the toast will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent": boolean;
+        /**
+          * An ID corresponding to the trigger element that causes the toast to open when clicked.
+         */
+        "trigger": string | undefined;
     }
     interface IonToggle {
         /**
@@ -3036,6 +3168,18 @@ export namespace Components {
           * Enables the on/off accessibility switch labels within the toggle.
          */
         "enableOnOffLabels": boolean | undefined;
+        /**
+          * How to pack the label and toggle within a line. `"start"`: The label and toggle will appear on the left in LTR and on the right in RTL. `"end"`: The label and toggle will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and toggle will appear on opposite ends of the line with space between the two elements.
+         */
+        "justify": 'start' | 'end' | 'space-between';
+        /**
+          * Where to place the label relative to the input. `"start"`: The label will appear to the left of the toggle in LTR and to the right in RTL. `"end"`: The label will appear to the right of the toggle in LTR and to the left in RTL. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+         */
+        "labelPlacement": 'start' | 'end' | 'fixed';
+        /**
+          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the default slot that contains the label text. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
+         */
+        "legacy"?: boolean;
         /**
           * The mode determines which platform styles to use.
          */
@@ -3058,73 +3202,6 @@ export namespace Components {
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
-    }
-    interface IonVirtualScroll {
-        /**
-          * The approximate width of each footer template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.
-         */
-        "approxFooterHeight": number;
-        /**
-          * The approximate height of each header template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.
-         */
-        "approxHeaderHeight": number;
-        /**
-          * It is important to provide this if virtual item height will be significantly larger than the default The approximate height of each virtual item template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.
-         */
-        "approxItemHeight": number;
-        /**
-          * This method marks the tail the items array as dirty, so they can be re-rendered.  It's equivalent to calling:  ```js virtualScroll.checkRange(lastItemLen); ```
-         */
-        "checkEnd": () => Promise<void>;
-        /**
-          * This method marks a subset of items as dirty, so they can be re-rendered. Items should be marked as dirty any time the content or their style changes.  The subset of items to be updated can are specifying by an offset and a length.
-         */
-        "checkRange": (offset: number, len?: number) => Promise<void>;
-        "domRender"?: DomRenderFn;
-        /**
-          * Section footers and the data used within its given template can be dynamically created by passing a function to `footerFn`. The logic within the footer function can decide if the footer template should be used, and what data to give to the footer template. The function must return `null` if a footer cell shouldn't be created.
-         */
-        "footerFn"?: HeaderFn;
-        /**
-          * An optional function that maps each item footer within their height.
-         */
-        "footerHeight"?: FooterHeightFn;
-        /**
-          * Section headers and the data used within its given template can be dynamically created by passing a function to `headerFn`. For example, a large list of contacts usually has dividers between each letter in the alphabet. App's can provide their own custom `headerFn` which is called with each record within the dataset. The logic within the header function can decide if the header template should be used, and what data to give to the header template. The function must return `null` if a header cell shouldn't be created.
-         */
-        "headerFn"?: HeaderFn;
-        /**
-          * An optional function that maps each item header within their height.
-         */
-        "headerHeight"?: HeaderHeightFn;
-        /**
-          * An optional function that maps each item within their height. When this function is provides, heavy optimizations and fast path can be taked by `ion-virtual-scroll` leading to massive performance improvements.  This function allows to skip all DOM reads, which can be Doing so leads to massive performance
-         */
-        "itemHeight"?: ItemHeightFn;
-        /**
-          * The data that builds the templates within the virtual scroll. It's important to note that when this data has changed, then the entire virtual scroll is reset, which is an expensive operation and should be avoided if possible.
-         */
-        "items"?: any[];
-        /**
-          * NOTE: only Vanilla JS API.
-         */
-        "nodeRender"?: ItemRenderFn;
-        /**
-          * Returns the position of the virtual item at the given index.
-         */
-        "positionForItem": (index: number) => Promise<number>;
-        /**
-          * NOTE: only JSX API for stencil.  Provide a render function for the footer to be rendered. Returns a JSX virtual-dom.
-         */
-        "renderFooter"?: (item: any, index: number) => any;
-        /**
-          * NOTE: only JSX API for stencil.  Provide a render function for the header to be rendered. Returns a JSX virtual-dom.
-         */
-        "renderHeader"?: (item: any, index: number) => any;
-        /**
-          * NOTE: only JSX API for stencil.  Provide a render function for the items to be rendered. Returns a JSX virtual-dom.
-         */
-        "renderItem"?: (item: any, index: number) => any;
     }
 }
 export interface IonAccordionGroupCustomEvent<T> extends CustomEvent<T> {
@@ -3278,10 +3355,6 @@ export interface IonSegmentCustomEvent<T> extends CustomEvent<T> {
 export interface IonSelectCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIonSelectElement;
-}
-export interface IonSlidesCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLIonSlidesElement;
 }
 export interface IonSplitPaneCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -3784,18 +3857,6 @@ declare global {
         prototype: HTMLIonSkeletonTextElement;
         new (): HTMLIonSkeletonTextElement;
     };
-    interface HTMLIonSlideElement extends Components.IonSlide, HTMLStencilElement {
-    }
-    var HTMLIonSlideElement: {
-        prototype: HTMLIonSlideElement;
-        new (): HTMLIonSlideElement;
-    };
-    interface HTMLIonSlidesElement extends Components.IonSlides, HTMLStencilElement {
-    }
-    var HTMLIonSlidesElement: {
-        prototype: HTMLIonSlidesElement;
-        new (): HTMLIonSlidesElement;
-    };
     interface HTMLIonSpinnerElement extends Components.IonSpinner, HTMLStencilElement {
     }
     var HTMLIonSpinnerElement: {
@@ -3873,12 +3934,6 @@ declare global {
     var HTMLIonToolbarElement: {
         prototype: HTMLIonToolbarElement;
         new (): HTMLIonToolbarElement;
-    };
-    interface HTMLIonVirtualScrollElement extends Components.IonVirtualScroll, HTMLStencilElement {
-    }
-    var HTMLIonVirtualScrollElement: {
-        prototype: HTMLIonVirtualScrollElement;
-        new (): HTMLIonVirtualScrollElement;
     };
     interface HTMLElementTagNameMap {
         "ion-accordion": HTMLIonAccordionElement;
@@ -3959,8 +4014,6 @@ declare global {
         "ion-select-option": HTMLIonSelectOptionElement;
         "ion-select-popover": HTMLIonSelectPopoverElement;
         "ion-skeleton-text": HTMLIonSkeletonTextElement;
-        "ion-slide": HTMLIonSlideElement;
-        "ion-slides": HTMLIonSlidesElement;
         "ion-spinner": HTMLIonSpinnerElement;
         "ion-split-pane": HTMLIonSplitPaneElement;
         "ion-tab": HTMLIonTabElement;
@@ -3974,7 +4027,6 @@ declare global {
         "ion-toast": HTMLIonToastElement;
         "ion-toggle": HTMLIonToggleElement;
         "ion-toolbar": HTMLIonToolbarElement;
-        "ion-virtual-scroll": HTMLIonVirtualScrollElement;
     }
 }
 declare namespace LocalJSX {
@@ -3996,7 +4048,7 @@ declare namespace LocalJSX {
          */
         "toggleIcon"?: string;
         /**
-          * The slot inside of `ion-item` to place the toggle icon. Defaults to `'end'`.
+          * The slot inside of `ion-item` to place the toggle icon. Defaults to `"end"`.
          */
         "toggleIconSlot"?: 'start' | 'end';
         /**
@@ -4026,15 +4078,19 @@ declare namespace LocalJSX {
          */
         "multiple"?: boolean;
         /**
-          * Emitted when the value property has changed.
+          * Emitted when the value property has changed as a result of a user action such as a click. This event will not emit when programmatically setting the value property.
          */
         "onIonChange"?: (event: IonAccordionGroupCustomEvent<AccordionGroupChangeEventDetail>) => void;
+        /**
+          * Emitted when the value property has changed. This is used to ensure that ion-accordion can respond to any value property changes.
+         */
+        "onIonValueChange"?: (event: IonAccordionGroupCustomEvent<AccordionGroupChangeEventDetail>) => void;
         /**
           * If `true`, the accordion group cannot be interacted with, but does not alter the opacity.
          */
         "readonly"?: boolean;
         /**
-          * The value of the accordion group.
+          * The value of the accordion group. This controls which accordions are expanded. This should be an array of strings only when `multiple="true"`
          */
         "value"?: string | string[] | null;
     }
@@ -4055,10 +4111,12 @@ declare namespace LocalJSX {
           * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
          */
         "cssClass"?: string | string[];
+        "delegate"?: FrameworkDelegate;
         /**
           * Animation to use when the action sheet is presented.
          */
         "enterAnimation"?: AnimationBuilder;
+        "hasController"?: boolean;
         /**
           * Title for the action sheet.
          */
@@ -4066,7 +4124,11 @@ declare namespace LocalJSX {
         /**
           * Additional attributes to pass to the action sheet.
          */
-        "htmlAttributes"?: ActionSheetAttributes;
+        "htmlAttributes"?: { [key: string]: any };
+        /**
+          * If `true`, the action sheet will open. If `false`, the action sheet will close. Use this if you need finer grained control over presentation, otherwise just use the actionSheetController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the action sheet dismisses. You will need to do that in your code.
+         */
+        "isOpen"?: boolean;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -4080,21 +4142,37 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         /**
-          * Emitted after the alert has dismissed.
+          * Emitted after the action sheet has dismissed. Shorthand for ionActionSheetDidDismiss.
+         */
+        "onDidDismiss"?: (event: IonActionSheetCustomEvent<OverlayEventDetail>) => void;
+        /**
+          * Emitted after the action sheet has presented. Shorthand for ionActionSheetWillDismiss.
+         */
+        "onDidPresent"?: (event: IonActionSheetCustomEvent<void>) => void;
+        /**
+          * Emitted after the action sheet has dismissed.
          */
         "onIonActionSheetDidDismiss"?: (event: IonActionSheetCustomEvent<OverlayEventDetail>) => void;
         /**
-          * Emitted after the alert has presented.
+          * Emitted after the action sheet has presented.
          */
         "onIonActionSheetDidPresent"?: (event: IonActionSheetCustomEvent<void>) => void;
         /**
-          * Emitted before the alert has dismissed.
+          * Emitted before the action sheet has dismissed.
          */
         "onIonActionSheetWillDismiss"?: (event: IonActionSheetCustomEvent<OverlayEventDetail>) => void;
         /**
-          * Emitted before the alert has presented.
+          * Emitted before the action sheet has presented.
          */
         "onIonActionSheetWillPresent"?: (event: IonActionSheetCustomEvent<void>) => void;
+        /**
+          * Emitted before the action sheet has dismissed. Shorthand for ionActionSheetWillDismiss.
+         */
+        "onWillDismiss"?: (event: IonActionSheetCustomEvent<OverlayEventDetail>) => void;
+        /**
+          * Emitted before the action sheet has presented. Shorthand for ionActionSheetWillPresent.
+         */
+        "onWillPresent"?: (event: IonActionSheetCustomEvent<void>) => void;
         "overlayIndex": number;
         /**
           * Subtitle for the action sheet.
@@ -4104,6 +4182,10 @@ declare namespace LocalJSX {
           * If `true`, the action sheet will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent"?: boolean;
+        /**
+          * An ID corresponding to the trigger element that causes the action sheet to open when clicked.
+         */
+        "trigger"?: string | undefined;
     }
     interface IonAlert {
         /**
@@ -4122,10 +4204,12 @@ declare namespace LocalJSX {
           * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
          */
         "cssClass"?: string | string[];
+        "delegate"?: FrameworkDelegate;
         /**
           * Animation to use when the alert is presented.
          */
         "enterAnimation"?: AnimationBuilder;
+        "hasController"?: boolean;
         /**
           * The main title in the heading of the alert.
          */
@@ -4133,11 +4217,15 @@ declare namespace LocalJSX {
         /**
           * Additional attributes to pass to the alert.
          */
-        "htmlAttributes"?: AlertAttributes;
+        "htmlAttributes"?: { [key: string]: any };
         /**
           * Array of input to show in the alert.
          */
         "inputs"?: AlertInput[];
+        /**
+          * If `true`, the alert will open. If `false`, the alert will close. Use this if you need finer grained control over presentation, otherwise just use the alertController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the alert dismisses. You will need to do that in your code.
+         */
+        "isOpen"?: boolean;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -4147,13 +4235,21 @@ declare namespace LocalJSX {
          */
         "leaveAnimation"?: AnimationBuilder;
         /**
-          * The main message to be displayed in the alert. `message` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
+          * The main message to be displayed in the alert. `message` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)  This property accepts custom HTML as a string. Content is parsed as plaintext by default. `innerHTMLTemplatesEnabled` must be set to `true` in the Ionic config before custom HTML can be used.
          */
         "message"?: string | IonicSafeString;
         /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
+        /**
+          * Emitted after the alert has dismissed. Shorthand for ionAlertDidDismiss.
+         */
+        "onDidDismiss"?: (event: IonAlertCustomEvent<OverlayEventDetail>) => void;
+        /**
+          * Emitted after the alert has presented. Shorthand for ionAlertWillDismiss.
+         */
+        "onDidPresent"?: (event: IonAlertCustomEvent<void>) => void;
         /**
           * Emitted after the alert has dismissed.
          */
@@ -4170,6 +4266,14 @@ declare namespace LocalJSX {
           * Emitted before the alert has presented.
          */
         "onIonAlertWillPresent"?: (event: IonAlertCustomEvent<void>) => void;
+        /**
+          * Emitted before the alert has dismissed. Shorthand for ionAlertWillDismiss.
+         */
+        "onWillDismiss"?: (event: IonAlertCustomEvent<OverlayEventDetail>) => void;
+        /**
+          * Emitted before the alert has presented. Shorthand for ionAlertWillPresent.
+         */
+        "onWillPresent"?: (event: IonAlertCustomEvent<void>) => void;
         "overlayIndex": number;
         /**
           * The subtitle in the heading of the alert. Displayed under the title.
@@ -4179,6 +4283,10 @@ declare namespace LocalJSX {
           * If `true`, the alert will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent"?: boolean;
+        /**
+          * An ID corresponding to the trigger element that causes the alert to open when clicked.
+         */
+        "trigger"?: string | undefined;
     }
     interface IonApp {
     }
@@ -4521,6 +4629,18 @@ declare namespace LocalJSX {
          */
         "indeterminate"?: boolean;
         /**
+          * How to pack the label and checkbox within a line. `"start"`: The label and checkbox will appear on the left in LTR and on the right in RTL. `"end"`: The label and checkbox will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and checkbox will appear on opposite ends of the line with space between the two elements.
+         */
+        "justify"?: 'start' | 'end' | 'space-between';
+        /**
+          * Where to place the label relative to the checkbox. `"start"`: The label will appear to the left of the checkbox in LTR and to the right in RTL. `"end"`: The label will appear to the right of the checkbox in LTR and to the left in RTL. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+         */
+        "labelPlacement"?: 'start' | 'end' | 'fixed';
+        /**
+          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt checkboxes in to the modern form markup when they are using either the `aria-label` attribute or have text in the default slot. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior.  Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
+         */
+        "legacy"?: boolean;
+        /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
@@ -4533,7 +4653,7 @@ declare namespace LocalJSX {
          */
         "onIonBlur"?: (event: IonCheckboxCustomEvent<void>) => void;
         /**
-          * Emitted when the checked property has changed.
+          * Emitted when the checked property has changed as a result of a user action such as a click. This event will not emit when programmatically setting the checked property.
          */
         "onIonChange"?: (event: IonCheckboxCustomEvent<CheckboxChangeEventDetail>) => void;
         /**
@@ -4671,7 +4791,7 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * If `true` and the content does not cause an overflow scroll, the scroll interaction will cause a bounce. If the content exceeds the bounds of ionContent, nothing will change. Note, the does not disable the system bounce on iOS. That is an OS level setting.
+          * If `true` and the content does not cause an overflow scroll, the scroll interaction will cause a bounce. If the content exceeds the bounds of ionContent, nothing will change. Note, this does not disable the system bounce on iOS. That is an OS level setting.
          */
         "forceOverscroll"?: boolean;
         /**
@@ -4749,7 +4869,7 @@ declare namespace LocalJSX {
          */
         "isDateEnabled"?: (dateIsoString: string) => boolean;
         /**
-          * The locale to use for `ion-datetime`. This impacts month and day name formatting. The `'default'` value refers to the default locale set by your device.
+          * The locale to use for `ion-datetime`. This impacts month and day name formatting. The `"default"` value refers to the default locale set by your device.
          */
         "locale"?: string;
         /**
@@ -4805,11 +4925,15 @@ declare namespace LocalJSX {
          */
         "onIonStyle"?: (event: IonDatetimeCustomEvent<StyleEventDetail>) => void;
         /**
-          * If `true`, a wheel picker will be rendered instead of a calendar grid where possible. If `false`, a calendar grid will be rendered instead of a wheel picker where possible.  A wheel picker can be rendered instead of a grid when `presentation` is one of the following values: `'date'`, `'date-time'`, or `'time-date'`.  A wheel picker will always be rendered regardless of the `preferWheel` value when `presentation` is one of the following values: `'time'`, `'month'`, `'month-year'`, or `'year'`.
+          * Emitted when the value property has changed. This is used to ensure that ion-datetime-button can respond to any value property changes.
+         */
+        "onIonValueChange"?: (event: IonDatetimeCustomEvent<DatetimeChangeEventDetail>) => void;
+        /**
+          * If `true`, a wheel picker will be rendered instead of a calendar grid where possible. If `false`, a calendar grid will be rendered instead of a wheel picker where possible.  A wheel picker can be rendered instead of a grid when `presentation` is one of the following values: `"date"`, `"date-time"`, or `"time-date"`.  A wheel picker will always be rendered regardless of the `preferWheel` value when `presentation` is one of the following values: `"time"`, `"month"`, `"month-year"`, or `"year"`.
          */
         "preferWheel"?: boolean;
         /**
-          * Which values you want to select. `'date'` will show a calendar picker to select the month, day, and year. `'time'` will show a time picker to select the hour, minute, and (optionally) AM/PM. `'date-time'` will show the date picker first and time picker second. `'time-date'` will show the time picker first and date picker second.
+          * Which values you want to select. `"date"` will show a calendar picker to select the month, day, and year. `"time"` will show a time picker to select the hour, minute, and (optionally) AM/PM. `"date-time"` will show the date picker first and time picker second. `"time-date"` will show the time picker first and date picker second.
          */
         "presentation"?: DatetimePresentation;
         /**
@@ -4841,7 +4965,7 @@ declare namespace LocalJSX {
          */
         "titleSelectedDatesFormatter"?: TitleSelectedDatesFormatter;
         /**
-          * The value of the datetime as a valid ISO 8601 datetime string. Should be an array of strings if `multiple="true"`.
+          * The value of the datetime as a valid ISO 8601 datetime string. This should be an array of strings only when `multiple="true"`.
          */
         "value"?: string | string[] | null;
         /**
@@ -5045,7 +5169,7 @@ declare namespace LocalJSX {
          */
         "loadingSpinner"?: SpinnerTypes | null;
         /**
-          * Optional text to display while loading. `loadingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
+          * Optional text to display while loading. `loadingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)  This property accepts custom HTML as a string. Content is parsed as plaintext by default. `innerHTMLTemplatesEnabled` must be set to `true` in the Ionic config before custom HTML can be used.
          */
         "loadingText"?: string | IonicSafeString;
     }
@@ -5084,7 +5208,15 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. This also impacts form bindings such as `ngModel` or `v-model`.
+          * If `true`, a character counter will display the ratio of characters used and the total character limit. Developers must also set the `maxlength` property for the counter to be calculated correctly.
+         */
+        "counter"?: boolean;
+        /**
+          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".
+         */
+        "counterFormatter"?: (inputLength: number, maxLength: number) => string;
+        /**
+          * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
          */
         "debounce"?: number;
         /**
@@ -5096,13 +5228,33 @@ declare namespace LocalJSX {
          */
         "enterkeyhint"?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
         /**
-          * This is required for a WebKit bug which requires us to blur and focus an input to properly focus the input in an item with delegatesFocus. It will no longer be needed with iOS 14.
+          * Text that is placed under the input and displayed when an error is detected.
          */
-        "fireFocusEvents"?: boolean;
+        "errorText"?: string;
+        /**
+          * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available in `md` mode.
+         */
+        "fill"?: 'outline' | 'solid';
+        /**
+          * Text that is placed under the input and displayed when no error is detected.
+         */
+        "helperText"?: string;
         /**
           * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
          */
         "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
+        /**
+          * The visible label associated with the input.
+         */
+        "label"?: string;
+        /**
+          * Where to place the label relative to the input. `"start"`: The label will appear to the left of the input in LTR and to the right in RTL. `"end"`: The label will appear to the right of the input in LTR and to the left in RTL. `"floating"`: The label will appear smaller and above the input when the input is focused or it has a value. Otherwise it will appear on top of the input. `"stacked"`: The label will appear smaller and above the input regardless even when the input is blurred or has no value. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+         */
+        "labelPlacement"?: 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
+        /**
+          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the `label` property. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
+         */
+        "legacy"?: boolean;
         /**
           * The maximum value, which must not be less than its minimum (min attribute) value.
          */
@@ -5136,7 +5288,7 @@ declare namespace LocalJSX {
          */
         "onIonBlur"?: (event: IonInputCustomEvent<FocusEvent>) => void;
         /**
-          * Emitted when the value has changed.
+          * The `ionChange` event is fired for `<ion-input>` elements when the user modifies the element's value. Unlike the `ionInput` event, the `ionChange` event is not necessarily fired for each alteration to an element's value.  Depending on the way the users interacts with the element, the `ionChange` event fires at a different moment: - When the user commits the change explicitly (e.g. by selecting a date from a date picker for `<ion-input type="date">`, pressing the "Enter" key, etc.). - When the element loses focus after its value has changed: for elements where the user's interaction is typing.
          */
         "onIonChange"?: (event: IonInputCustomEvent<InputChangeEventDetail>) => void;
         /**
@@ -5144,9 +5296,9 @@ declare namespace LocalJSX {
          */
         "onIonFocus"?: (event: IonInputCustomEvent<FocusEvent>) => void;
         /**
-          * Emitted when a keyboard input occurred.
+          * The `ionInput` event fires when the `value` of an `<ion-input>` element has been changed.  For elements that accept text input (`type=text`, `type=tel`, etc.), the interface is [`InputEvent`](https://developer.mozilla.org/en-US/docs/Web/API/InputEvent); for others, the interface is [`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event). If the input is cleared on edit, the type is `null`.
          */
-        "onIonInput"?: (event: IonInputCustomEvent<InputEvent>) => void;
+        "onIonInput"?: (event: IonInputCustomEvent<InputInputEventDetail>) => void;
         /**
           * Emitted when the styles change.
          */
@@ -5167,6 +5319,10 @@ declare namespace LocalJSX {
           * If `true`, the user must fill in a value before submitting a form.
          */
         "required"?: boolean;
+        /**
+          * The shape of the input. If "round" it will have an increased border radius.
+         */
+        "shape"?: 'round';
         /**
           * The initial size of the control. This value is in pixels unless the value of the type attribute is `"text"` or `"password"`, in which case it is an integer number of characters. This attribute applies only when the `type` attribute is set to `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, or `"password"`, otherwise it is ignored.
          */
@@ -5199,10 +5355,12 @@ declare namespace LocalJSX {
         "color"?: Color;
         /**
           * If `true`, a character counter will display the ratio of characters used and the total character limit. Only applies when the `maxlength` property is set on the inner `ion-input` or `ion-textarea`.
+          * @deprecated Use the `counter` property on `ion-input` or `ion-textarea` instead.
          */
         "counter"?: boolean;
         /**
           * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".
+          * @deprecated Use the `counterFormatter` property on `ion-input` or `ion-textarea` instead.
          */
         "counterFormatter"?: CounterFormatter;
         /**
@@ -5222,7 +5380,7 @@ declare namespace LocalJSX {
          */
         "download"?: string | undefined;
         /**
-          * The fill for the item. If `'solid'` the item will have a background. If `'outline'` the item will be transparent with a border. Only available in `md` mode.
+          * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available in `md` mode.
          */
         "fill"?: 'outline' | 'solid';
         /**
@@ -5399,6 +5557,7 @@ declare namespace LocalJSX {
           * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
          */
         "cssClass"?: string | string[];
+        "delegate"?: FrameworkDelegate;
         /**
           * Number of milliseconds to wait before dismissing the loading indicator.
          */
@@ -5407,10 +5566,15 @@ declare namespace LocalJSX {
           * Animation to use when the loading indicator is presented.
          */
         "enterAnimation"?: AnimationBuilder;
+        "hasController"?: boolean;
         /**
           * Additional attributes to pass to the loader.
          */
-        "htmlAttributes"?: LoadingAttributes;
+        "htmlAttributes"?: { [key: string]: any };
+        /**
+          * If `true`, the loading indicator will open. If `false`, the loading indicator will close. Use this if you need finer grained control over presentation, otherwise just use the loadingController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the loading indicator dismisses. You will need to do that in your code.
+         */
+        "isOpen"?: boolean;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -5420,13 +5584,21 @@ declare namespace LocalJSX {
          */
         "leaveAnimation"?: AnimationBuilder;
         /**
-          * Optional text content to display in the loading indicator.
+          * Optional text content to display in the loading indicator.  This property accepts custom HTML as a string. Content is parsed as plaintext by default. `innerHTMLTemplatesEnabled` must be set to `true` in the Ionic config before custom HTML can be used.
          */
         "message"?: string | IonicSafeString;
         /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
+        /**
+          * Emitted after the loading indicator has dismissed. Shorthand for ionLoadingDidDismiss.
+         */
+        "onDidDismiss"?: (event: IonLoadingCustomEvent<OverlayEventDetail>) => void;
+        /**
+          * Emitted after the loading indicator has presented. Shorthand for ionLoadingWillDismiss.
+         */
+        "onDidPresent"?: (event: IonLoadingCustomEvent<void>) => void;
         /**
           * Emitted after the loading has dismissed.
          */
@@ -5443,6 +5615,14 @@ declare namespace LocalJSX {
           * Emitted before the loading has presented.
          */
         "onIonLoadingWillPresent"?: (event: IonLoadingCustomEvent<void>) => void;
+        /**
+          * Emitted before the loading indicator has dismissed. Shorthand for ionLoadingWillDismiss.
+         */
+        "onWillDismiss"?: (event: IonLoadingCustomEvent<OverlayEventDetail>) => void;
+        /**
+          * Emitted before the loading indicator has presented. Shorthand for ionLoadingWillPresent.
+         */
+        "onWillPresent"?: (event: IonLoadingCustomEvent<void>) => void;
         "overlayIndex": number;
         /**
           * If `true`, a backdrop will be displayed behind the loading indicator.
@@ -5456,6 +5636,10 @@ declare namespace LocalJSX {
           * If `true`, the loading indicator will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent"?: boolean;
+        /**
+          * An ID corresponding to the trigger element that causes the loading indicator to open when clicked.
+         */
+        "trigger"?: string | undefined;
     }
     interface IonMenu {
         /**
@@ -5563,7 +5747,7 @@ declare namespace LocalJSX {
         /**
           * Determines whether or not a modal can dismiss when calling the `dismiss` method.  If the value is `true` or the value's function returns `true`, the modal will close when trying to dismiss. If the value is `false` or the value's function returns `false`, the modal will not close when trying to dismiss.
          */
-        "canDismiss"?: undefined | boolean | ((data?: any, role?: string) => Promise<boolean>);
+        "canDismiss"?: boolean | ((data?: any, role?: string) => Promise<boolean>);
         /**
           * The component to display inside of the modal.
          */
@@ -5593,7 +5777,7 @@ declare namespace LocalJSX {
         /**
           * Additional attributes to pass to the modal.
          */
-        "htmlAttributes"?: ModalAttributes;
+        "htmlAttributes"?: { [key: string]: any };
         /**
           * A decimal value between 0 and 1 that indicates the initial point the modal will open at when creating a sheet modal. This value must also be listed in the `breakpoints` array.
          */
@@ -5623,7 +5807,7 @@ declare namespace LocalJSX {
          */
         "onDidDismiss"?: (event: IonModalCustomEvent<OverlayEventDetail>) => void;
         /**
-          * Emitted after the modal has presented. Shorthand for ionModalWillDismiss.
+          * Emitted after the modal has presented. Shorthand for ionModalDidPresent.
          */
         "onDidPresent"?: (event: IonModalCustomEvent<void>) => void;
         /**
@@ -5663,11 +5847,6 @@ declare namespace LocalJSX {
           * If `true`, a backdrop will be displayed behind the modal. This property controls whether or not the backdrop darkens the screen when the modal is presented. It does not control whether or not the backdrop is active or present in the DOM.
          */
         "showBackdrop"?: boolean;
-        /**
-          * If `true`, the modal can be swiped to dismiss. Only applies in iOS mode.
-          * @deprecated - To prevent modals from dismissing, use canDismiss instead.
-         */
-        "swipeToClose"?: boolean;
         /**
           * An ID corresponding to the trigger element that causes the modal to open when clicked.
          */
@@ -5757,6 +5936,7 @@ declare namespace LocalJSX {
           * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
          */
         "cssClass"?: string | string[];
+        "delegate"?: FrameworkDelegate;
         /**
           * Number of milliseconds to wait before dismissing the picker.
          */
@@ -5765,10 +5945,15 @@ declare namespace LocalJSX {
           * Animation to use when the picker is presented.
          */
         "enterAnimation"?: AnimationBuilder;
+        "hasController"?: boolean;
         /**
           * Additional attributes to pass to the picker.
          */
-        "htmlAttributes"?: PickerAttributes;
+        "htmlAttributes"?: { [key: string]: any };
+        /**
+          * If `true`, the picker will open. If `false`, the picker will close. Use this if you need finer grained control over presentation, otherwise just use the pickerController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the picker dismisses. You will need to do that in your code.
+         */
+        "isOpen"?: boolean;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -5781,6 +5966,14 @@ declare namespace LocalJSX {
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
+        /**
+          * Emitted after the picker has dismissed. Shorthand for ionPickerDidDismiss.
+         */
+        "onDidDismiss"?: (event: IonPickerCustomEvent<OverlayEventDetail>) => void;
+        /**
+          * Emitted after the picker has presented. Shorthand for ionPickerWillDismiss.
+         */
+        "onDidPresent"?: (event: IonPickerCustomEvent<void>) => void;
         /**
           * Emitted after the picker has dismissed.
          */
@@ -5797,11 +5990,23 @@ declare namespace LocalJSX {
           * Emitted before the picker has presented.
          */
         "onIonPickerWillPresent"?: (event: IonPickerCustomEvent<void>) => void;
+        /**
+          * Emitted before the picker has dismissed. Shorthand for ionPickerWillDismiss.
+         */
+        "onWillDismiss"?: (event: IonPickerCustomEvent<OverlayEventDetail>) => void;
+        /**
+          * Emitted before the picker has presented. Shorthand for ionPickerWillPresent.
+         */
+        "onWillPresent"?: (event: IonPickerCustomEvent<void>) => void;
         "overlayIndex": number;
         /**
           * If `true`, a backdrop will be displayed behind the picker.
          */
         "showBackdrop"?: boolean;
+        /**
+          * An ID corresponding to the trigger element that causes the picker to open when clicked.
+         */
+        "trigger"?: string | undefined;
     }
     interface IonPickerColumn {
         /**
@@ -5848,7 +6053,7 @@ declare namespace LocalJSX {
     }
     interface IonPopover {
         /**
-          * Describes how to align the popover content with the `reference` point. Defaults to `'center'` for `ios` mode, and `'start'` for `md` mode.
+          * Describes how to align the popover content with the `reference` point. Defaults to `"center"` for `ios` mode, and `"start"` for `md` mode.
          */
         "alignment"?: PositionAlign;
         /**
@@ -5892,7 +6097,7 @@ declare namespace LocalJSX {
         /**
           * Additional attributes to pass to the popover.
          */
-        "htmlAttributes"?: PopoverAttributes;
+        "htmlAttributes"?: { [key: string]: any };
         /**
           * If `true`, the popover will open. If `false`, the popover will close. Use this if you need finer grained control over presentation, otherwise just use the popoverController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the popover dismisses. You will need to do that in your code.
          */
@@ -5952,7 +6157,7 @@ declare namespace LocalJSX {
         "onWillPresent"?: (event: IonPopoverCustomEvent<void>) => void;
         "overlayIndex": number;
         /**
-          * Describes what to position the popover relative to. If `'trigger'`, the popover will be positioned relative to the trigger button. If passing in an event, this is determined via event.target. If `'event'`, the popover will be positioned relative to the x/y coordinates of the trigger action. If passing in an event, this is determined via event.clientX and event.clientY.
+          * Describes what to position the popover relative to. If `"trigger"`, the popover will be positioned relative to the trigger button. If passing in an event, this is determined via event.target. If `"event"`, the popover will be positioned relative to the x/y coordinates of the trigger action. If passing in an event, this is determined via event.clientX and event.clientY.
          */
         "reference"?: PositionReference;
         /**
@@ -5960,11 +6165,11 @@ declare namespace LocalJSX {
          */
         "showBackdrop"?: boolean;
         /**
-          * Describes which side of the `reference` point to position the popover on. The `'start'` and `'end'` values are RTL-aware, and the `'left'` and `'right'` values are not.
+          * Describes which side of the `reference` point to position the popover on. The `"start"` and `"end"` values are RTL-aware, and the `"left"` and `"right"` values are not.
          */
         "side"?: PositionSide;
         /**
-          * Describes how to calculate the popover width. If `'cover'`, the popover width will match the width of the trigger. If `'auto'`, the popover width will be determined by the content in the popover.
+          * Describes how to calculate the popover width. If `"cover"`, the popover width will match the width of the trigger. If `"auto"`, the popover width will be determined by the content in the popover.
          */
         "size"?: PopoverSize;
         /**
@@ -5976,7 +6181,7 @@ declare namespace LocalJSX {
          */
         "trigger"?: string | undefined;
         /**
-          * Describes what kind of interaction with the trigger that should cause the popover to open. Does not apply when the `trigger` property is `undefined`. If `'click'`, the popover will be presented when the trigger is left clicked. If `'hover'`, the popover will be presented when a pointer hovers over the trigger. If `'context-menu'`, the popover will be presented when the trigger is right clicked on desktop and long pressed on mobile. This will also prevent your device's normal context menu from appearing.
+          * Describes what kind of interaction with the trigger that should cause the popover to open. Does not apply when the `trigger` property is `undefined`. If `"click"`, the popover will be presented when the trigger is left clicked. If `"hover"`, the popover will be presented when a pointer hovers over the trigger. If `"context-menu"`, the popover will be presented when the trigger is right clicked on desktop and long pressed on mobile. This will also prevent your device's normal context menu from appearing.
          */
         "triggerAction"?: TriggerAction;
     }
@@ -6016,6 +6221,18 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * How to pack the label and radio within a line. `"start"`: The label and radio will appear on the left in LTR and on the right in RTL. `"end"`: The label and radio will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and radio will appear on opposite ends of the line with space between the two elements.
+         */
+        "justify"?: 'start' | 'end' | 'space-between';
+        /**
+          * Where to place the label relative to the radio. `"start"`: The label will appear to the left of the radio in LTR and to the right in RTL. `"end"`: The label will appear to the right of the radio in LTR and to the left in RTL. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+         */
+        "labelPlacement"?: 'start' | 'end' | 'fixed';
+        /**
+          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the default slot that contains the label text. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
+         */
+        "legacy"?: boolean;
+        /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
@@ -6054,6 +6271,10 @@ declare namespace LocalJSX {
          */
         "onIonChange"?: (event: IonRadioGroupCustomEvent<RadioGroupChangeEventDetail>) => void;
         /**
+          * Emitted when the `value` property has changed. This is used to ensure that `ion-radio` can respond to any value property changes from the group.
+         */
+        "onIonValueChange"?: (event: IonRadioGroupCustomEvent<RadioGroupChangeEventDetail>) => void;
+        /**
           * the value of the radio group.
          */
         "value"?: any | null;
@@ -6068,7 +6289,7 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * How long, in milliseconds, to wait to trigger the `ionChange` event after each change in the range value. This also impacts form bindings such as `ngModel` or `v-model`.
+          * How long, in milliseconds, to wait to trigger the `ionInput` event after each change in the range value.
          */
         "debounce"?: number;
         /**
@@ -6079,6 +6300,14 @@ declare namespace LocalJSX {
           * Show two knobs.
          */
         "dualKnobs"?: boolean;
+        /**
+          * Where to place the label relative to the range. `"start"`: The label will appear to the left of the range in LTR and to the right in RTL. `"end"`: The label will appear to the right of the range in LTR and to the left in RTL. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+         */
+        "labelPlacement"?: 'start' | 'end' | 'fixed';
+        /**
+          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the `label` property. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
+         */
+        "legacy"?: boolean;
         /**
           * Maximum integer value of the range.
          */
@@ -6100,13 +6329,17 @@ declare namespace LocalJSX {
          */
         "onIonBlur"?: (event: IonRangeCustomEvent<void>) => void;
         /**
-          * Emitted when the value property has changed.
+          * The `ionChange` event is fired for `<ion-range>` elements when the user modifies the element's value: - When the user releases the knob after dragging; - When the user moves the knob with keyboard arrows  `ionChange` is not fired when the value is changed programmatically.
          */
         "onIonChange"?: (event: IonRangeCustomEvent<RangeChangeEventDetail>) => void;
         /**
           * Emitted when the range has focus.
          */
         "onIonFocus"?: (event: IonRangeCustomEvent<void>) => void;
+        /**
+          * The `ionInput` event is fired for `<ion-range>` elements when the value is modified. Unlike `ionChange`, `ionInput` is fired continuously while the user is dragging the knob.
+         */
+        "onIonInput"?: (event: IonRangeCustomEvent<RangeChangeEventDetail>) => void;
         /**
           * Emitted when the user finishes moving the range knob, whether through mouse drag, touch gesture, or keyboard interaction.
          */
@@ -6188,7 +6421,7 @@ declare namespace LocalJSX {
          */
         "pullingIcon"?: SpinnerTypes | string | null;
         /**
-          * The text you want to display when you begin to pull down. `pullingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
+          * The text you want to display when you begin to pull down. `pullingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)  Content is parsed as plaintext by default. `innerHTMLTemplatesEnabled` must be set to `true` in the Ionic config before custom HTML can be used.
          */
         "pullingText"?: string | IonicSafeString;
         /**
@@ -6196,7 +6429,7 @@ declare namespace LocalJSX {
          */
         "refreshingSpinner"?: SpinnerTypes | null;
         /**
-          * The text you want to display when performing a refresh. `refreshingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
+          * The text you want to display when performing a refresh. `refreshingText` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)  Content is parsed as plaintext by default. `innerHTMLTemplatesEnabled` must be set to `true` in the Ionic config before custom HTML can be used.
          */
         "refreshingText"?: string | IonicSafeString;
     }
@@ -6353,7 +6586,7 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. This also impacts form bindings such as `ngModel` or `v-model`.
+          * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
          */
         "debounce"?: number;
         /**
@@ -6381,7 +6614,7 @@ declare namespace LocalJSX {
          */
         "onIonCancel"?: (event: IonSearchbarCustomEvent<void>) => void;
         /**
-          * Emitted when the value has changed.
+          * The `ionChange` event is fired for `<ion-searchbar>` elements when the user modifies the element's value. Unlike the `ionInput` event, the `ionChange` event is not necessarily fired for each alteration to an element's value.  The `ionChange` event is fired when the value has been committed by the user. This can happen when the element loses focus or when the "Enter" key is pressed. `ionChange` can also fire when clicking the clear or cancel buttons.
          */
         "onIonChange"?: (event: IonSearchbarCustomEvent<SearchbarChangeEventDetail>) => void;
         /**
@@ -6393,9 +6626,9 @@ declare namespace LocalJSX {
          */
         "onIonFocus"?: (event: IonSearchbarCustomEvent<void>) => void;
         /**
-          * Emitted when a keyboard input occurred.
+          * Emitted when the `value` of the `ion-searchbar` element has changed.
          */
-        "onIonInput"?: (event: IonSearchbarCustomEvent<KeyboardEvent>) => void;
+        "onIonInput"?: (event: IonSearchbarCustomEvent<SearchbarInputEventDetail>) => void;
         /**
           * Emitted when the styles change.
          */
@@ -6447,7 +6680,7 @@ declare namespace LocalJSX {
          */
         "onIonChange"?: (event: IonSegmentCustomEvent<SegmentChangeEventDetail>) => void;
         /**
-          * Emitted when user has dragged over a new button
+          * Emitted when the value of the segment changes from user committed actions or from externally assigning a value.
          */
         "onIonSelect"?: (event: IonSegmentCustomEvent<SegmentChangeEventDetail>) => void;
         /**
@@ -6469,7 +6702,7 @@ declare namespace LocalJSX {
         /**
           * the value of the segment.
          */
-        "value"?: string | null;
+        "value"?: string;
     }
     interface IonSegmentButton {
         /**
@@ -6499,6 +6732,10 @@ declare namespace LocalJSX {
          */
         "cancelText"?: string;
         /**
+          * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).  This property is only available when using the modern select syntax.
+         */
+        "color"?: Color;
+        /**
           * A property name or function used to compare object values
          */
         "compareWith"?: string | SelectCompareFn | null;
@@ -6507,6 +6744,10 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available in `md` mode.
+         */
+        "fill"?: 'outline' | 'solid';
+        /**
           * The interface the select should use: `action-sheet`, `popover` or `alert`.
          */
         "interface"?: SelectInterface;
@@ -6514,6 +6755,22 @@ declare namespace LocalJSX {
           * Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [ion-alert docs](./alert), the [ion-action-sheet docs](./action-sheet) and the [ion-popover docs](./popover) for the create options for each interface.  Note: `interfaceOptions` will not override `inputs` or `buttons` with the `alert` interface.
          */
         "interfaceOptions"?: any;
+        /**
+          * How to pack the label and select within a line. `justify` does not apply when the label and select are on different lines when `labelPlacement` is set to `"floating"` or `"stacked"`. `"start"`: The label and select will appear on the left in LTR and on the right in RTL. `"end"`: The label and select will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and select will appear on opposite ends of the line with space between the two elements.
+         */
+        "justify"?: 'start' | 'end' | 'space-between';
+        /**
+          * The visible label associated with the select.
+         */
+        "label"?: string;
+        /**
+          * Where to place the label relative to the select. `"start"`: The label will appear to the left of the select in LTR and to the right in RTL. `"end"`: The label will appear to the right of the select in LTR and to the left in RTL. `"floating"`: The label will appear smaller and above the select when the select is focused or it has a value. Otherwise it will appear on top of the select. `"stacked"`: The label will appear smaller and above the select regardless even when the select is blurred or has no value. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("..."). When using `"floating"` or `"stacked"` we recommend initializing the select with either a `value` or a `placeholder`.
+         */
+        "labelPlacement"?: 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
+        /**
+          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the `label` property. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
+         */
+        "legacy"?: boolean;
         /**
           * The mode determines which platform styles to use.
          */
@@ -6563,7 +6820,11 @@ declare namespace LocalJSX {
          */
         "selectedText"?: string | null;
         /**
-          * the value of the select.
+          * The shape of the select. If "round" it will have an increased border radius.
+         */
+        "shape"?: 'round';
+        /**
+          * The value of the select.
          */
         "value"?: any | null;
     }
@@ -6604,90 +6865,6 @@ declare namespace LocalJSX {
           * If `true`, the skeleton text will animate.
          */
         "animated"?: boolean;
-    }
-    interface IonSlide {
-    }
-    interface IonSlides {
-        /**
-          * The mode determines which platform styles to use.
-         */
-        "mode"?: "ios" | "md";
-        /**
-          * Emitted after the active slide has changed.
-         */
-        "onIonSlideDidChange"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the user double taps on the slide's container.
-         */
-        "onIonSlideDoubleTap"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the slider is actively being moved.
-         */
-        "onIonSlideDrag"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the next slide has ended.
-         */
-        "onIonSlideNextEnd"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the next slide has started.
-         */
-        "onIonSlideNextStart"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the previous slide has ended.
-         */
-        "onIonSlidePrevEnd"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the previous slide has started.
-         */
-        "onIonSlidePrevStart"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the slider is at the last slide.
-         */
-        "onIonSlideReachEnd"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the slider is at its initial position.
-         */
-        "onIonSlideReachStart"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the user taps/clicks on the slide's container.
-         */
-        "onIonSlideTap"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the user releases the touch.
-         */
-        "onIonSlideTouchEnd"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the user first touches the slider.
-         */
-        "onIonSlideTouchStart"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the slide transition has ended.
-         */
-        "onIonSlideTransitionEnd"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted when the slide transition has started.
-         */
-        "onIonSlideTransitionStart"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted before the active slide has changed.
-         */
-        "onIonSlideWillChange"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Emitted after Swiper initialization
-         */
-        "onIonSlidesDidLoad"?: (event: IonSlidesCustomEvent<void>) => void;
-        /**
-          * Options to pass to the swiper instance. See https://swiperjs.com/swiper-api for valid options
-         */
-        "options"?: any;
-        /**
-          * If `true`, show the pagination.
-         */
-        "pager"?: boolean;
-        /**
-          * If `true`, show the scrollbar.
-         */
-        "scrollbar"?: boolean;
     }
     interface IonSpinner {
         /**
@@ -6770,7 +6947,7 @@ declare namespace LocalJSX {
          */
         "href"?: string | undefined;
         /**
-          * Set the layout of the text and icon in the tab bar. It defaults to `'icon-top'`.
+          * Set the layout of the text and icon in the tab bar. It defaults to `"icon-top"`.
          */
         "layout"?: TabButtonLayout;
         /**
@@ -6837,7 +7014,7 @@ declare namespace LocalJSX {
          */
         "autofocus"?: boolean;
         /**
-          * If `true`, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
+          * If `true`, the value will be cleared after focus upon edit.
          */
         "clearOnEdit"?: boolean;
         /**
@@ -6849,7 +7026,15 @@ declare namespace LocalJSX {
          */
         "cols"?: number;
         /**
-          * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. This also impacts form bindings such as `ngModel` or `v-model`.
+          * If `true`, a character counter will display the ratio of characters used and the total character limit. Developers must also set the `maxlength` property for the counter to be calculated correctly.
+         */
+        "counter"?: boolean;
+        /**
+          * A callback used to format the counter text. By default the counter text is set to "itemLength / maxLength".
+         */
+        "counterFormatter"?: (inputLength: number, maxLength: number) => string;
+        /**
+          * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
          */
         "debounce"?: number;
         /**
@@ -6861,19 +7046,39 @@ declare namespace LocalJSX {
          */
         "enterkeyhint"?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
         /**
-          * This is required for a WebKit bug which requires us to blur and focus an input to properly focus the input in an item with delegatesFocus. It will no longer be needed with iOS 14.
+          * Text that is placed under the textarea and displayed when an error is detected.
          */
-        "fireFocusEvents"?: boolean;
+        "errorText"?: string;
+        /**
+          * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available in `md` mode.
+         */
+        "fill"?: 'outline' | 'solid';
+        /**
+          * Text that is placed under the textarea and displayed when no error is detected.
+         */
+        "helperText"?: string;
         /**
           * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
          */
         "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
         /**
-          * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
+          * The visible label associated with the textarea.
+         */
+        "label"?: string;
+        /**
+          * Where to place the label relative to the textarea. `"start"`: The label will appear to the left of the textarea in LTR and to the right in RTL. `"end"`: The label will appear to the right of the textarea in LTR and to the left in RTL. `"floating"`: The label will appear smaller and above the textarea when the textarea is focused or it has a value. Otherwise it will appear on top of the textarea. `"stacked"`: The label will appear smaller and above the textarea regardless even when the textarea is blurred or has no value. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+         */
+        "labelPlacement"?: 'start' | 'end' | 'floating' | 'stacked' | 'fixed';
+        /**
+          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the default slot that contains the label text. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
+         */
+        "legacy"?: boolean;
+        /**
+          * This attribute specifies the maximum number of characters that the user can enter.
          */
         "maxlength"?: number;
         /**
-          * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the minimum number of characters that the user can enter.
+          * This attribute specifies the minimum number of characters that the user can enter.
          */
         "minlength"?: number;
         /**
@@ -6889,7 +7094,7 @@ declare namespace LocalJSX {
          */
         "onIonBlur"?: (event: IonTextareaCustomEvent<FocusEvent>) => void;
         /**
-          * Emitted when the input value has changed.
+          * The `ionChange` event is fired for `<ion-textarea>` elements when the user modifies the element's value. Unlike the `ionInput` event, the `ionChange` event is not necessarily fired for each alteration to an element's value.  The `ionChange` event is fired when the element loses focus after its value has been modified.
          */
         "onIonChange"?: (event: IonTextareaCustomEvent<TextareaChangeEventDetail>) => void;
         /**
@@ -6897,9 +7102,9 @@ declare namespace LocalJSX {
          */
         "onIonFocus"?: (event: IonTextareaCustomEvent<FocusEvent>) => void;
         /**
-          * Emitted when a keyboard input occurred.
+          * The `ionInput` event fires when the `value` of an `<ion-textarea>` element has been changed.  When `clearOnEdit` is enabled, the `ionInput` event will be fired when the user clears the textarea by performing a keydown event.
          */
-        "onIonInput"?: (event: IonTextareaCustomEvent<InputEvent>) => void;
+        "onIonInput"?: (event: IonTextareaCustomEvent<TextareaInputEventDetail>) => void;
         /**
           * Emitted when the styles change.
          */
@@ -6920,6 +7125,10 @@ declare namespace LocalJSX {
           * The number of visible text lines for the control.
          */
         "rows"?: number;
+        /**
+          * The shape of the textarea. If "round" it will have an increased border radius.
+         */
+        "shape"?: 'round';
         /**
           * If `true`, the element will have its spelling and grammar checked.
          */
@@ -6966,6 +7175,7 @@ declare namespace LocalJSX {
           * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
          */
         "cssClass"?: string | string[];
+        "delegate"?: FrameworkDelegate;
         /**
           * How many milliseconds to wait before hiding the toast. By default, it will show until `dismiss()` is called.
          */
@@ -6974,6 +7184,7 @@ declare namespace LocalJSX {
           * Animation to use when the toast is presented.
          */
         "enterAnimation"?: AnimationBuilder;
+        "hasController"?: boolean;
         /**
           * Header to be shown in the toast.
          */
@@ -6981,11 +7192,15 @@ declare namespace LocalJSX {
         /**
           * Additional attributes to pass to the toast.
          */
-        "htmlAttributes"?: ToastAttributes;
+        "htmlAttributes"?: { [key: string]: any };
         /**
           * The name of the icon to display, or the path to a valid SVG file. See `ion-icon`. https://ionic.io/ionicons
          */
         "icon"?: string;
+        /**
+          * If `true`, the toast will open. If `false`, the toast will close. Use this if you need finer grained control over presentation, otherwise just use the toastController or the `trigger` property. Note: `isOpen` will not automatically be set back to `false` when the toast dismisses. You will need to do that in your code.
+         */
+        "isOpen"?: boolean;
         /**
           * If `true`, the keyboard will be automatically dismissed when the overlay is presented.
          */
@@ -6999,13 +7214,21 @@ declare namespace LocalJSX {
          */
         "leaveAnimation"?: AnimationBuilder;
         /**
-          * Message to be shown in the toast.
+          * Message to be shown in the toast. This property accepts custom HTML as a string. Content is parsed as plaintext by default. `innerHTMLTemplatesEnabled` must be set to `true` in the Ionic config before custom HTML can be used.
          */
         "message"?: string | IonicSafeString;
         /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
+        /**
+          * Emitted after the toast has dismissed. Shorthand for ionToastDidDismiss.
+         */
+        "onDidDismiss"?: (event: IonToastCustomEvent<OverlayEventDetail>) => void;
+        /**
+          * Emitted after the toast has presented. Shorthand for ionToastWillDismiss.
+         */
+        "onDidPresent"?: (event: IonToastCustomEvent<void>) => void;
         /**
           * Emitted after the toast has dismissed.
          */
@@ -7022,6 +7245,14 @@ declare namespace LocalJSX {
           * Emitted before the toast has presented.
          */
         "onIonToastWillPresent"?: (event: IonToastCustomEvent<void>) => void;
+        /**
+          * Emitted before the toast has dismissed. Shorthand for ionToastWillDismiss.
+         */
+        "onWillDismiss"?: (event: IonToastCustomEvent<OverlayEventDetail>) => void;
+        /**
+          * Emitted before the toast has presented. Shorthand for ionToastWillPresent.
+         */
+        "onWillPresent"?: (event: IonToastCustomEvent<void>) => void;
         "overlayIndex": number;
         /**
           * The position of the toast on the screen.
@@ -7031,6 +7262,10 @@ declare namespace LocalJSX {
           * If `true`, the toast will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */
         "translucent"?: boolean;
+        /**
+          * An ID corresponding to the trigger element that causes the toast to open when clicked.
+         */
+        "trigger"?: string | undefined;
     }
     interface IonToggle {
         /**
@@ -7050,6 +7285,18 @@ declare namespace LocalJSX {
          */
         "enableOnOffLabels"?: boolean | undefined;
         /**
+          * How to pack the label and toggle within a line. `"start"`: The label and toggle will appear on the left in LTR and on the right in RTL. `"end"`: The label and toggle will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and toggle will appear on opposite ends of the line with space between the two elements.
+         */
+        "justify"?: 'start' | 'end' | 'space-between';
+        /**
+          * Where to place the label relative to the input. `"start"`: The label will appear to the left of the toggle in LTR and to the right in RTL. `"end"`: The label will appear to the right of the toggle in LTR and to the left in RTL. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+         */
+        "labelPlacement"?: 'start' | 'end' | 'fixed';
+        /**
+          * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the default slot that contains the label text. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
+         */
+        "legacy"?: boolean;
+        /**
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
@@ -7062,7 +7309,7 @@ declare namespace LocalJSX {
          */
         "onIonBlur"?: (event: IonToggleCustomEvent<void>) => void;
         /**
-          * Emitted when the value property has changed.
+          * Emitted when the user switches the toggle on or off. Does not emit when programmatically changing the value of the `checked` property.
          */
         "onIonChange"?: (event: IonToggleCustomEvent<ToggleChangeEventDetail>) => void;
         /**
@@ -7087,61 +7334,6 @@ declare namespace LocalJSX {
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
-    }
-    interface IonVirtualScroll {
-        /**
-          * The approximate width of each footer template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.
-         */
-        "approxFooterHeight"?: number;
-        /**
-          * The approximate height of each header template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.
-         */
-        "approxHeaderHeight"?: number;
-        /**
-          * It is important to provide this if virtual item height will be significantly larger than the default The approximate height of each virtual item template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered.
-         */
-        "approxItemHeight"?: number;
-        "domRender"?: DomRenderFn;
-        /**
-          * Section footers and the data used within its given template can be dynamically created by passing a function to `footerFn`. The logic within the footer function can decide if the footer template should be used, and what data to give to the footer template. The function must return `null` if a footer cell shouldn't be created.
-         */
-        "footerFn"?: HeaderFn;
-        /**
-          * An optional function that maps each item footer within their height.
-         */
-        "footerHeight"?: FooterHeightFn;
-        /**
-          * Section headers and the data used within its given template can be dynamically created by passing a function to `headerFn`. For example, a large list of contacts usually has dividers between each letter in the alphabet. App's can provide their own custom `headerFn` which is called with each record within the dataset. The logic within the header function can decide if the header template should be used, and what data to give to the header template. The function must return `null` if a header cell shouldn't be created.
-         */
-        "headerFn"?: HeaderFn;
-        /**
-          * An optional function that maps each item header within their height.
-         */
-        "headerHeight"?: HeaderHeightFn;
-        /**
-          * An optional function that maps each item within their height. When this function is provides, heavy optimizations and fast path can be taked by `ion-virtual-scroll` leading to massive performance improvements.  This function allows to skip all DOM reads, which can be Doing so leads to massive performance
-         */
-        "itemHeight"?: ItemHeightFn;
-        /**
-          * The data that builds the templates within the virtual scroll. It's important to note that when this data has changed, then the entire virtual scroll is reset, which is an expensive operation and should be avoided if possible.
-         */
-        "items"?: any[];
-        /**
-          * NOTE: only Vanilla JS API.
-         */
-        "nodeRender"?: ItemRenderFn;
-        /**
-          * NOTE: only JSX API for stencil.  Provide a render function for the footer to be rendered. Returns a JSX virtual-dom.
-         */
-        "renderFooter"?: (item: any, index: number) => any;
-        /**
-          * NOTE: only JSX API for stencil.  Provide a render function for the header to be rendered. Returns a JSX virtual-dom.
-         */
-        "renderHeader"?: (item: any, index: number) => any;
-        /**
-          * NOTE: only JSX API for stencil.  Provide a render function for the items to be rendered. Returns a JSX virtual-dom.
-         */
-        "renderItem"?: (item: any, index: number) => any;
     }
     interface IntrinsicElements {
         "ion-accordion": IonAccordion;
@@ -7222,8 +7414,6 @@ declare namespace LocalJSX {
         "ion-select-option": IonSelectOption;
         "ion-select-popover": IonSelectPopover;
         "ion-skeleton-text": IonSkeletonText;
-        "ion-slide": IonSlide;
-        "ion-slides": IonSlides;
         "ion-spinner": IonSpinner;
         "ion-split-pane": IonSplitPane;
         "ion-tab": IonTab;
@@ -7237,7 +7427,6 @@ declare namespace LocalJSX {
         "ion-toast": IonToast;
         "ion-toggle": IonToggle;
         "ion-toolbar": IonToolbar;
-        "ion-virtual-scroll": IonVirtualScroll;
     }
 }
 export { LocalJSX as JSX };
@@ -7322,8 +7511,6 @@ declare module "@stencil/core" {
             "ion-select-option": LocalJSX.IonSelectOption & JSXBase.HTMLAttributes<HTMLIonSelectOptionElement>;
             "ion-select-popover": LocalJSX.IonSelectPopover & JSXBase.HTMLAttributes<HTMLIonSelectPopoverElement>;
             "ion-skeleton-text": LocalJSX.IonSkeletonText & JSXBase.HTMLAttributes<HTMLIonSkeletonTextElement>;
-            "ion-slide": LocalJSX.IonSlide & JSXBase.HTMLAttributes<HTMLIonSlideElement>;
-            "ion-slides": LocalJSX.IonSlides & JSXBase.HTMLAttributes<HTMLIonSlidesElement>;
             "ion-spinner": LocalJSX.IonSpinner & JSXBase.HTMLAttributes<HTMLIonSpinnerElement>;
             "ion-split-pane": LocalJSX.IonSplitPane & JSXBase.HTMLAttributes<HTMLIonSplitPaneElement>;
             "ion-tab": LocalJSX.IonTab & JSXBase.HTMLAttributes<HTMLIonTabElement>;
@@ -7337,7 +7524,6 @@ declare module "@stencil/core" {
             "ion-toast": LocalJSX.IonToast & JSXBase.HTMLAttributes<HTMLIonToastElement>;
             "ion-toggle": LocalJSX.IonToggle & JSXBase.HTMLAttributes<HTMLIonToggleElement>;
             "ion-toolbar": LocalJSX.IonToolbar & JSXBase.HTMLAttributes<HTMLIonToolbarElement>;
-            "ion-virtual-scroll": LocalJSX.IonVirtualScroll & JSXBase.HTMLAttributes<HTMLIonVirtualScrollElement>;
         }
     }
 }

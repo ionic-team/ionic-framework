@@ -11,14 +11,28 @@ on:
           - patch
           - minor
           - major
+          - prepatch
+          - preminor
+          - premajor
+          - prerelease
       tag:
         required: true
         type: choice
         description: Which npm tag should this be published to?
         options:
           - latest
+          - next
           - v5-lts
           - v4-lts
+      preid:
+        type: choice
+        description: Which prerelease identifier should be used? This is only needed when version is "prepatch", "preminor", "premajor", or "prerelease".
+        options:
+          - ''
+          - alpha
+          - beta
+          - rc
+          - next
 
 jobs:
   release-ionic:
@@ -26,6 +40,7 @@ jobs:
     with:
       tag: ${{ inputs.tag }}
       version: ${{ inputs.version }}
+      preid: ${{ inputs.preid }}
     secrets:
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
@@ -48,7 +63,7 @@ jobs:
         git config user.email hi@ionicframework.com
       shell: bash
     - name: Create GitHub Release
-      run: lerna version ${{ inputs.version }} --yes --force-publish='*' --conventional-commits --create-release github
+      run: lerna version ${{ inputs.version }} --yes --force-publish='*' --conventional-commits --create-release github --preid=${{ inputs.preid }}
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       shell: bash

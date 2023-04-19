@@ -90,7 +90,7 @@
                 <ion-button fill="outline">Outline</ion-button>
               </ion-buttons>
 
-              <ion-title>Lists</ion-title>
+              <ion-title>Default Buttons</ion-title>
 
               <ion-buttons slot="primary">
                 <ion-back-button color="secondary" default-href="/"></ion-back-button>
@@ -101,6 +101,7 @@
                 <ion-button color="secondary" fill="outline">Outline</ion-button>
               </ion-buttons>
             </ion-toolbar>
+
             <ion-toolbar>
               <ion-buttons slot="start">
                 <ion-back-button class="ion-focused" default-href="/"></ion-back-button>
@@ -111,7 +112,7 @@
                 <ion-button class="ion-focused" fill="outline">Outline</ion-button>
               </ion-buttons>
 
-              <ion-title>Lists</ion-title>
+              <ion-title>Focused Buttons</ion-title>
 
               <ion-buttons slot="primary">
                 <ion-back-button color="secondary" class="ion-focused" default-href="/"></ion-back-button>
@@ -122,6 +123,29 @@
                 <ion-button color="secondary" class="ion-focused" fill="outline">Outline</ion-button>
               </ion-buttons>
             </ion-toolbar>
+
+            <ion-toolbar>
+              <ion-buttons slot="start">
+                <ion-back-button class="ion-activated" default-href="/"></ion-back-button>
+                <ion-menu-button class="ion-activated" auto-hide="false"></ion-menu-button>
+                <ion-button class="ion-activated">Default</ion-button>
+                <ion-button class="ion-activated" fill="solid">Solid</ion-button>
+                <ion-button class="ion-activated" fill="clear">Clear</ion-button>
+                <ion-button class="ion-activated" fill="outline">Outline</ion-button>
+              </ion-buttons>
+
+              <ion-title>Activated Buttons</ion-title>
+
+              <ion-buttons slot="primary">
+                <ion-back-button color="secondary" class="ion-activated" default-href="/"></ion-back-button>
+                <ion-menu-button color="secondary" class="ion-activated" auto-hide="false"></ion-menu-button>
+                <ion-button color="secondary" class="ion-activated">Default</ion-button>
+                <ion-button color="secondary" class="ion-activated" fill="solid">Solid</ion-button>
+                <ion-button color="secondary" class="ion-activated" fill="clear">Clear</ion-button>
+                <ion-button color="secondary" class="ion-activated" fill="outline">Outline</ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+
             <ion-toolbar>
               <ion-segment value="default" class="theme-picker">
                 <ion-segment-button value="default">
@@ -1059,7 +1083,6 @@
         // present the modal
         const modalElement = Object.assign(document.createElement('ion-modal'), {
           component: element,
-          swipeToClose: true,
           presentingElement: document.querySelector('ion-tabs'),
         });
 

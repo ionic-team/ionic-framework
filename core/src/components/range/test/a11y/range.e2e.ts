@@ -1,7 +1,23 @@
+import AxeBuilder from '@axe-core/playwright';
 import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
 test.describe('range: a11y', () => {
+  test('should not have accessibility violations', async ({ page, skip }) => {
+    skip.rtl();
+    skip.mode('md');
+
+    await page.goto(`/src/components/range/test/a11y`);
+
+    /**
+     * Axe does not take <slot> elements into account
+     * when checking color-contrast. As a result, it will
+     * incorrectly report color-contrast issues: https://github.com/dequelabs/axe-core/issues/3329
+     */
+    const results = await new AxeBuilder({ page }).disableRules('color-contrast').analyze();
+    expect(results.violations).toEqual([]);
+  });
+
   test('should not have visual regressions', async ({ page, skip }) => {
     skip.rtl();
     skip.mode('ios', 'iOS mode does not display hover/active/focus styles.');
@@ -9,7 +25,7 @@ test.describe('range: a11y', () => {
     await page.setContent(
       `<ion-app>
         <ion-content>
-          <ion-range min="0" max="100" value="80"></ion-range>
+          <ion-range min="0" max="100" value="80" legacy="true"></ion-range>
         </ion-content>
       </ion-app>
         `
@@ -41,7 +57,7 @@ test.describe('range: a11y', () => {
       await page.setContent(
         `<ion-app>
           <ion-content>
-            <ion-range min="0" max="100" value="50" pin="true"></ion-range>
+            <ion-range min="0" max="100" value="50" pin="true" legacy="true"></ion-range>
           </ion-content>
         </ion-app>
         `

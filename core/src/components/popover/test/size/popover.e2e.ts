@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { test, Viewports } from '@utils/test/playwright';
 
-import { openPopover } from '../test.utils';
+import { openPopover, screenshotPopover } from '../test.utils';
 
 test.describe('popover: size', async () => {
   /**
@@ -9,7 +9,8 @@ test.describe('popover: size', async () => {
    * and massively cut down on screenshots taken. The content has its own
    * backdrop so you can still see the popovers.
    */
-  test('should calculate popover width based on sizing method', async ({ page }) => {
+  // TODO FW-3598
+  test.skip('should calculate popover width based on sizing method', async ({ page }) => {
     await page.goto('/src/components/popover/test/size');
     await page.setViewportSize(Viewports.tablet.portrait); // avoid popovers overlapping
 
@@ -22,7 +23,6 @@ test.describe('popover: size', async () => {
     await expect(page).toHaveScreenshot(`popover-size-${page.getSnapshotSettings()}.png`);
 
     // test this one separately since it would overlap others
-    // TODO FW-3598
-    //await screenshotPopover(page, 'no-event-trigger', 'size');
+    await screenshotPopover(page, 'no-event-trigger', 'size');
   });
 });

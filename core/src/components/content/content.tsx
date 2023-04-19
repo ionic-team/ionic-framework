@@ -2,11 +2,13 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Listen, Method, Prop, forceUpdate, h, readTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { Color, ScrollBaseDetail, ScrollDetail } from '../../interface';
+import type { Color } from '../../interface';
 import { componentOnReady } from '../../utils/helpers';
 import { isPlatform } from '../../utils/platform';
 import { isRTL } from '../../utils/rtl';
 import { createColorClasses, hostContext } from '../../utils/theme';
+
+import type { ScrollBaseDetail, ScrollDetail } from './content-interface';
 
 /**
  * @slot - Content is placed in the scrollable area if provided without a slot.
@@ -73,7 +75,7 @@ export class Content implements ComponentInterface {
   /**
    * If `true` and the content does not cause an overflow scroll, the scroll interaction will cause a bounce.
    * If the content exceeds the bounds of ionContent, nothing will change.
-   * Note, the does not disable the system bounce on iOS. That is an OS level setting.
+   * Note, this does not disable the system bounce on iOS. That is an OS level setting.
    */
   @Prop({ mutable: true }) forceOverscroll?: boolean;
 

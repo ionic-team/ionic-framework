@@ -3,13 +3,15 @@ import { Build, Component, Element, Event, Host, Listen, Method, Prop, State, Wa
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import type { Animation, Gesture, GestureDetail, MenuChangeEventDetail, MenuI, Side } from '../../interface';
+import type { Animation, Gesture, GestureDetail } from '../../interface';
 import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import { GESTURE_CONTROLLER } from '../../utils/gesture';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes, assert, clamp, isEndSide as isEnd } from '../../utils/helpers';
 import { menuController } from '../../utils/menu-controller';
 import { getOverlay } from '../../utils/overlays';
+
+import type { MenuChangeEventDetail, MenuI, Side } from './menu-interface';
 
 const iosEasing = 'cubic-bezier(0.32,0.72,0,1)';
 const mdEasing = 'cubic-bezier(0.0,0.0,0.2,1)';
@@ -128,6 +130,11 @@ export class Menu implements ComponentInterface, MenuI {
   @Watch('side')
   protected sideChanged() {
     this.isEndSide = isEnd(this.side);
+    /**
+     * Menu direction animation is calculated based on the document direction.
+     * If the document direction changes, we need to create a new animation.
+     */
+    this.animation = undefined;
   }
 
   /**
@@ -234,7 +241,16 @@ export class Menu implements ComponentInterface, MenuI {
     this.updateState();
   }
 
-  disconnectedCallback() {
+  async disconnectedCallback() {
+    /**
+     * The menu should be closed when it is
+     * unmounted from the DOM.
+     * This is an async call, so we need to wait for
+     * this to finish otherwise contentEl
+     * will not have MENU_CONTENT_OPEN removed.
+     */
+    await this.close(false);
+
     this.blocker.destroy();
     menuController._unregister(this);
     if (this.animation) {
@@ -246,7 +262,7 @@ export class Menu implements ComponentInterface, MenuI {
     }
 
     this.animation = undefined;
-    this.contentEl = this.backdropEl = this.menuInnerEl = undefined;
+    this.contentEl = undefined;
   }
 
   @Listen('ionSplitPaneVisible', { target: 'body' })
@@ -411,10 +427,16 @@ export class Menu implements ComponentInterface, MenuI {
     // Menu swipe animation takes the menu's inner width as parameter,
     // If `offsetWidth` changes, we need to create a new animation.
     const width = this.menuInnerEl!.offsetWidth;
-    if (width === this.width && this.animation !== undefined) {
+    /**
+     * Menu direction animation is calculated based on the document direction.
+     * If the document direction changes, we need to create a new animation.
+     */
+    const isEndSide = isEnd(this.side);
+    if (width === this.width && this.animation !== undefined && isEndSide === this.isEndSide) {
       return;
     }
     this.width = width;
+    this.isEndSide = isEndSide;
 
     // Destroy existing animation
     if (this.animation) {
@@ -578,6 +600,25 @@ export class Menu implements ComponentInterface, MenuI {
     if (this.backdropEl) {
       this.backdropEl.classList.add(SHOW_BACKDROP);
     }
+
+    // add css class and hide content behind menu from screen readers
+    if (this.contentEl) {
+      this.contentEl.classList.add(MENU_CONTENT_OPEN);
+
+      /**
+       * When the menu is open and overlaying the main
+       * content, the main content should not be announced
+       * by the screenreader as the menu is the main
+       * focus. This is useful with screenreaders that have
+       * "read from top" gestures that read the entire
+       * page from top to bottom when activated.
+       * This should be done before the animation starts
+       * so that users cannot accidentally scroll
+       * the content while dragging a menu open.
+       */
+      this.contentEl.setAttribute('aria-hidden', 'true');
+    }
+
     this.blocker.block();
     this.isAnimating = true;
     if (shouldOpen) {
@@ -601,21 +642,6 @@ export class Menu implements ComponentInterface, MenuI {
     }
 
     if (isOpen) {
-      // add css class and hide content behind menu from screen readers
-      if (this.contentEl) {
-        this.contentEl.classList.add(MENU_CONTENT_OPEN);
-
-        /**
-         * When the menu is open and overlaying the main
-         * content, the main content should not be announced
-         * by the screenreader as the menu is the main
-         * focus. This is useful with screenreaders that have
-         * "read from top" gestures that read the entire
-         * page from top to bottom when activated.
-         */
-        this.contentEl.setAttribute('aria-hidden', 'true');
-      }
-
       // emit open event
       this.ionDidOpen.emit();
 
@@ -697,7 +723,7 @@ export class Menu implements ComponentInterface, MenuI {
   }
 
   render() {
-    const { isEndSide, type, disabled, isPaneVisible, inheritedAttributes } = this;
+    const { type, disabled, isPaneVisible, inheritedAttributes, side } = this;
     const mode = getIonMode(this);
 
     return (
@@ -708,8 +734,7 @@ export class Menu implements ComponentInterface, MenuI {
           [mode]: true,
           [`menu-type-${type}`]: true,
           'menu-enabled': !disabled,
-          'menu-side-end': isEndSide,
-          'menu-side-start': !isEndSide,
+          [`menu-side-${side}`]: true,
           'menu-pane-visible': isPaneVisible,
         }}
       >

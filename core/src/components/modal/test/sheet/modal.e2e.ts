@@ -33,6 +33,7 @@ test.describe('sheet modal: backdrop', () => {
   });
   test('should present another sheet modal when clicking an inactive backdrop', async ({ page }) => {
     const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+    const modal = page.locator('.custom-height');
 
     await page.click('#backdrop-inactive');
     await ionModalDidPresent.next();
@@ -40,7 +41,7 @@ test.describe('sheet modal: backdrop', () => {
     await page.click('#custom-height-modal');
     await ionModalDidPresent.next();
 
-    await page.waitForSelector('.custom-height', { state: 'visible' });
+    await expect(modal).toBeVisible();
   });
   test('input outside sheet modal should be focusable when backdrop is inactive', async ({ page }) => {
     const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
@@ -49,7 +50,7 @@ test.describe('sheet modal: backdrop', () => {
 
     await ionModalDidPresent.next();
 
-    const input = await page.locator('#root-input input');
+    const input = page.locator('#root-input input').first();
     await input.click();
     await expect(input).toBeFocused();
   });

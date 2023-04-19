@@ -34,12 +34,12 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/OverlaysKeepContentsMounted.vue')
   },
   {
-    path: '/inputs',
-    component: () => import('@/views/Inputs.vue')
+    path: '/icons',
+    component: () => import('@/views/Icons.vue')
   },
   {
-    path: '/slides',
-    component: () => import('@/views/Slides.vue')
+    path: '/inputs',
+    component: () => import('@/views/Inputs.vue')
   },
   {
     path: '/default-href',
@@ -69,6 +69,10 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/components',
     component: () => import('@/views/Components.vue'),
+  },
+  {
+    path: '/components/breadcrumbs',
+    component: () => import('@/views/Breadcrumbs.vue')
   },
   {
     path: '/components/select',
@@ -152,7 +156,7 @@ const routes: Array<RouteRecordRaw> = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes
 });
 

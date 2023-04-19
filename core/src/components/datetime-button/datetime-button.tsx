@@ -2,10 +2,11 @@ import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, State, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { Color, DatetimePresentation } from '../../interface';
+import type { Color } from '../../interface';
 import { componentOnReady, addEventListener } from '../../utils/helpers';
 import { printIonError } from '../../utils/logging';
 import { createColorClasses } from '../../utils/theme';
+import type { DatetimePresentation } from '../datetime/datetime-interface';
 import { getToday } from '../datetime/utils/data';
 import { getMonthAndYear, getMonthDayAndYear, getLocalizedDateTime, getLocalizedTime } from '../datetime/utils/format';
 import { is24Hour } from '../datetime/utils/helpers';
@@ -126,7 +127,7 @@ export class DatetimeButton implements ComponentInterface {
        * text in the buttons.
        */
       this.setDateTimeText();
-      addEventListener(datetimeEl, 'ionChange', this.setDateTimeText);
+      addEventListener(datetimeEl, 'ionValueChange', this.setDateTimeText);
 
       /**
        * Configure the initial selected button
@@ -160,8 +161,7 @@ export class DatetimeButton implements ComponentInterface {
    * to keep checking if the datetime value is `string` or `string[]`.
    */
   private getParsedDateValues = (value?: string[] | string | null): string[] => {
-    // TODO FW-2646 Remove value === ''
-    if (value === '' || value === undefined || value === null) {
+    if (value === undefined || value === null) {
       return [];
     }
 
@@ -203,11 +203,6 @@ export class DatetimeButton implements ComponentInterface {
      */
     const firstParsedDatetime = parsedDatetimes[0];
     const use24Hour = is24Hour(locale, hourCycle);
-
-    // TODO(FW-1865) - Remove once FW-1831 is fixed.
-    parsedDatetimes.forEach((parsedDatetime) => {
-      parsedDatetime.tzOffset = undefined;
-    });
 
     this.dateText = this.timeText = undefined;
 

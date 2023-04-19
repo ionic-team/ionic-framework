@@ -2,7 +2,7 @@ import type { DatetimeParts } from '../datetime-interface';
 
 import { isSameDay } from './comparison';
 import { getNumDaysInMonth } from './helpers';
-import { parseAmPm } from './parse';
+import { clampDate, parseAmPm } from './parse';
 
 const twoDigit = (val: number | undefined): string => {
   return ('0' + (val !== undefined ? Math.abs(val) : '0')).slice(-2);
@@ -37,18 +37,6 @@ export function convertDataToISO(data: DatetimeParts | DatetimeParts[]): string 
         if (data.hour !== undefined) {
           // YYYY-MM-DDTHH:mm:SS
           rtn += `T${twoDigit(data.hour)}:${twoDigit(data.minute)}:00`;
-
-          if (data.tzOffset === undefined) {
-            // YYYY-MM-DDTHH:mm:SSZ
-            rtn += 'Z';
-          } else {
-            // YYYY-MM-DDTHH:mm:SS+/-HH:mm
-            rtn +=
-              (data.tzOffset > 0 ? '+' : '-') +
-              twoDigit(Math.floor(Math.abs(data.tzOffset / 60))) +
-              ':' +
-              twoDigit(data.tzOffset % 60);
-          }
         }
       }
     }
@@ -345,7 +333,8 @@ export const calculateHourFromAMPM = (currentParts: DatetimeParts, newAMPM: 'am'
 /**
  * Updates parts to ensure that month and day
  * values are valid. For days that do not exist,
- * the closest valid day is used.
+ * or are outside the min/max bounds, the closest
+ * valid day is used.
  */
 export const validateParts = (
   parts: DatetimeParts,
@@ -353,7 +342,7 @@ export const validateParts = (
   maxParts?: DatetimeParts
 ): DatetimeParts => {
   const { month, day, year } = parts;
-  const partsCopy = { ...parts };
+  const partsCopy = clampDate({ ...parts }, minParts, maxParts);
 
   const numDays = getNumDaysInMonth(month, year);
 

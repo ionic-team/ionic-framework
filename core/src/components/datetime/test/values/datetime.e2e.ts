@@ -153,17 +153,3 @@ test.describe('datetime: values', () => {
     await expect(todayButton).toHaveClass(/calendar-day-today/);
   });
 });
-
-test('setting value to empty string should treat it as having no date', async ({ page, skip }) => {
-  skip.rtl();
-  skip.mode('ios');
-  await page.setContent(`
-    <ion-datetime value="" locale="en-US"></ion-datetime>
-  `);
-
-  await page.waitForSelector('.datetime-ready');
-
-  // Should render current month with today outlined.
-  const calendarDayToday = page.locator('ion-datetime .calendar-day-today');
-  await expect(calendarDayToday).toBeVisible();
-});

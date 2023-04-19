@@ -1,12 +1,13 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Element, Host, Prop, Method, State, forceUpdate, h } from '@stencil/core';
+import { Component, Element, Host, Prop, Method, State, Watch, forceUpdate, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { SegmentButtonLayout } from '../../interface';
 import type { ButtonInterface } from '../../utils/element-interface';
 import type { Attributes } from '../../utils/helpers';
 import { addEventListener, removeEventListener, inheritAttributes } from '../../utils/helpers';
 import { hostContext } from '../../utils/theme';
+
+import type { SegmentButtonLayout } from './segment-button-interface';
 
 let ids = 0;
 
@@ -37,7 +38,7 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
   /**
    * If `true`, the user cannot interact with the segment button.
    */
-  @Prop() disabled = false;
+  @Prop({ mutable: true }) disabled = false;
 
   /**
    * Set the layout of the text and icon in the segment.
@@ -53,6 +54,10 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
    * The value of the segment button.
    */
   @Prop() value: string = 'ion-sb-' + ids++;
+  @Watch('value')
+  valueChanged() {
+    this.updateState();
+  }
 
   connectedCallback() {
     const segmentEl = (this.segmentEl = this.el.closest('ion-segment'));
@@ -91,8 +96,14 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
   };
 
   private updateState = () => {
-    if (this.segmentEl) {
-      this.checked = this.segmentEl.value === this.value;
+    const { segmentEl } = this;
+
+    if (segmentEl) {
+      this.checked = segmentEl.value === this.value;
+
+      if (segmentEl.disabled) {
+        this.disabled = true;
+      }
     }
   };
 

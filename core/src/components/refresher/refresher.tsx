@@ -2,7 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, readTask, writeTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
-import type { Animation, Gesture, GestureDetail, RefresherEventDetail } from '../../interface';
+import type { Animation, Gesture, GestureDetail } from '../../interface';
 import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
 import {
   getScrollElement,
@@ -13,6 +13,7 @@ import {
 import { clamp, componentOnReady, getElementRoot, raf, transitionEndAsync } from '../../utils/helpers';
 import { hapticImpact } from '../../utils/native/haptic';
 
+import type { RefresherEventDetail } from './refresher-interface';
 import {
   createPullingAnimation,
   createSnapBackAnimation,
@@ -353,7 +354,10 @@ export class Refresher implements ComponentInterface {
 
           this.state = RefresherState.Pulling;
 
-          writeTask(() => this.scrollEl!.style.setProperty('--overflow', 'hidden'));
+          // When ion-refresher is being used with a custom scroll target, the overflow styles need to be applied directly instead of via a css variable
+          const { scrollEl } = this;
+          const overflowProperty = scrollEl!.matches(ION_CONTENT_CLASS_SELECTOR) ? 'overflow' : '--overflow';
+          writeTask(() => scrollEl!.style.setProperty(overflowProperty, 'hidden'));
 
           const animationType = getRefresherAnimationType(contentEl);
           const animation = createPullingAnimation(animationType, pullingRefresherIcon, this.el);
@@ -377,7 +381,10 @@ export class Refresher implements ComponentInterface {
 
         this.gesture!.enable(false);
 
-        writeTask(() => this.scrollEl!.style.removeProperty('--overflow'));
+        const { scrollEl } = this;
+        const overflowProperty = scrollEl!.matches(ION_CONTENT_CLASS_SELECTOR) ? 'overflow' : '--overflow';
+        writeTask(() => scrollEl!.style.removeProperty(overflowProperty));
+
         if (this.progress <= 0.4) {
           ev.data.animation.progressEnd(0, this.progress, 500).onFinish(() => {
             this.animations.forEach((ani) => ani.destroy());

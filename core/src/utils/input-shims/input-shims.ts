@@ -1,18 +1,17 @@
 import type { Config } from '../../interface';
 import { findClosestIonContent } from '../content';
 import { componentOnReady } from '../helpers';
+import { Keyboard } from '../native/keyboard';
 
 import { enableHideCaretOnScroll } from './hacks/hide-caret';
 import { enableInputBlurring } from './hacks/input-blurring';
 import { enableScrollAssist } from './hacks/scroll-assist';
-import { enableScrollPadding } from './hacks/scroll-padding';
 
 const INPUT_BLURRING = true;
 const SCROLL_ASSIST = true;
-const SCROLL_PADDING = true;
 const HIDE_CARET = true;
 
-export const startInputShims = (config: Config, platform: 'ios' | 'android') => {
+export const startInputShims = async (config: Config, platform: 'ios' | 'android') => {
   const doc = document;
   const isIOS = platform === 'ios';
   const isAndroid = platform === 'android';
@@ -31,6 +30,16 @@ export const startInputShims = (config: Config, platform: 'ios' | 'android') => 
 
   const hideCaretMap = new WeakMap<HTMLElement, () => void>();
   const scrollAssistMap = new WeakMap<HTMLElement, () => void>();
+
+  /**
+   * Grab the native keyboard resize configuration
+   * and pass it to scroll assist. Scroll assist requires
+   * that we adjust the input right before the input
+   * is about to be focused. If we called `Keyboard.getResizeMode`
+   * on focusin in scroll assist, we could potentially adjust the
+   * input too late since this call is async.
+   */
+  const keyboardResizeMode = await Keyboard.getResizeMode();
 
   const registerInput = async (componentEl: HTMLElement) => {
     await new Promise((resolve) => componentOnReady(componentEl, resolve));
@@ -63,7 +72,16 @@ export const startInputShims = (config: Config, platform: 'ios' | 'android') => 
       scrollAssist &&
       !scrollAssistMap.has(componentEl)
     ) {
-      const rmFn = enableScrollAssist(componentEl, inputEl, scrollEl, footerEl, keyboardHeight, isAndroid);
+      const rmFn = enableScrollAssist(
+        componentEl,
+        inputEl,
+        scrollEl,
+        footerEl,
+        keyboardHeight,
+        scrollPadding,
+        keyboardResizeMode,
+        isAndroid
+      );
       scrollAssistMap.set(componentEl, rmFn);
     }
   };
@@ -88,10 +106,6 @@ export const startInputShims = (config: Config, platform: 'ios' | 'android') => 
 
   if (inputBlurring && INPUT_BLURRING) {
     enableInputBlurring();
-  }
-
-  if (scrollPadding && SCROLL_PADDING) {
-    enableScrollPadding(keyboardHeight);
   }
 
   // Input might be already loaded in the DOM before ion-device-hacks did.
