@@ -206,6 +206,107 @@ configs().forEach(({ config, screenshot, title }) => {
 });
 ```
 
+## Generators
+
+Ionic generates tests to test different modes (iOS or MD), layouts (LTR or RTL), and themes (default or dark).
+
+### Customizing the test configs
+
+The `configs` function accepts an object containing all the configurations you want to test. It then returns an array of each individual configuration combination. This result is iterated over and one or more tests are generated in each iteration.
+
+**Example 1: Default config**
+```typescript
+import { configs, test } from '@utils/test/playwright';
+
+/**
+ * This will generate the following test configs
+ * iOS, LTR
+ * iOS, RTL
+ * Material Design, LTR
+ * Material Design, RTL
+ */
+configs().forEach(({ config, title }) => {
+  test(title('my custom test'), ({ page }) => {
+    ...
+  });
+});
+```
+
+**Example 2: Configuring the mode**
+```typescript
+import { configs, test } from '@utils/test/playwright';
+
+/**
+ * This will generate the following test configs
+ * iOS, LTR
+ * iOS, RTL
+ */
+configs({ mode: ['ios'] }).forEach(({ config, title }) => {
+  test(title('my custom test'), ({ page }) => {
+    ...
+  });
+});
+```
+
+**Example 3: Configuring the direction**
+```typescript
+import { configs, test } from '@utils/test/playwright';
+
+/**
+ * This will generate the following test configs
+ * Material Design, RTL
+ * iOS, RTL
+ */
+configs({ directions: ['rtl'] }).forEach(({ config, title }) => {
+  test(title('my custom test'), ({ page }) => {
+    ...
+  });
+});
+```
+
+### Using the return value from each configuration
+
+Each value in the array returns by `configs` contains the following information:
+
+| Name | Description |
+| `config` | An object containing a single test configuration. This gets passed to `page.goto` or `page.setContent`. |
+| `screenshot` | A helper function that generates a unique screenshot name based on the test configuration. |
+| `title` | A helper function that generates a unique test title based on the test configuration. Playwright requires that each test has a unique title since it uses that to generate a test ID. |
+
+**Example**
+```typescript
+import { configs, test } from '@utils/test/playwright';
+
+configs().forEach(({ config, title }) => {
+  
+  /**
+   * Use the "title" function to generate 
+   * a "my custom test" title with the test 
+   * config appended to make it unique.
+   * Example: my custom test ios/ltr
+   */
+  test(title('my custom test'), ({ page }) => {
+    
+    /**
+     * Pass a single config object to
+     * load the page with the correct mode,
+     * text direction, and theme.
+     */
+    await page.goto('/src/components/alert/test/basic', config);
+    
+    /**
+     * Use the "screenshot" function to generate
+     * a "alert" screenshot title with the test
+     * config appended to make it unique. Playwright
+     * will also append the browser and platform.
+     * Example: alert-ios-ltr-chrome-linux.png
+     */
+    await expect(page).toHaveScreenshot(screenshot('alert'));  
+  });
+});
+```
+
+
 ## Matchers
 
 Playwright comes with [a set of matchers to do test assertions](https://playwright.dev/docs/test-assertions). However, Ionic has additional custom assertions.
