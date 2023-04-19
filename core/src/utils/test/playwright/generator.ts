@@ -1,14 +1,17 @@
 export type Mode = 'ios' | 'md';
 export type Direction = 'ltr' | 'rtl';
 
+export type TitleFn = (title: string) => string;
+export type ScreenshotFn = (fileName: string) => string;
+
 export interface TestConfig {
   mode: Mode;
   direction: Direction;
 }
 
 interface TestUtilities {
-  title: (title: string) => string;
-  screenshot: (fileName: string) => string;
+  title: TitleFn;
+  screenshot: ScreenshotFn;
   config: TestConfig;
 }
 
