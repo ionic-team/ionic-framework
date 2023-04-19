@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, VERSION } from '@angular/core';
 import { AnimationBuilder, AnimationController } from '@ionic/angular';
 
 @Component({
@@ -6,6 +6,9 @@ import { AnimationBuilder, AnimationController } from '@ionic/angular';
   templateUrl: './home-page.component.html',
 })
 export class HomePageComponent {
+
+  angularVersion = VERSION;
+
   routerAnimation: AnimationBuilder = (_, opts) => {
     const { direction, enteringEl, leavingEl } = opts;
     const animation = this.animationCtrl.create().duration(500).easing('ease-out');
