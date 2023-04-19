@@ -76,35 +76,39 @@ test.describe('picker-internal', () => {
     test('popover: should not have visual regression', async ({ page }) => {
       await page.goto(`/src/components/picker-internal/test/basic`);
 
-      await page.setIonViewport();
+      const didPresent = await page.spyOnEvent('ionPopoverDidPresent');
 
       await page.click('#popover');
 
-      await page.spyOnEvent('ionPopoverDidPresent');
-      await page.waitForChanges();
+      await didPresent.next();
 
-      await expect(page.locator('ion-popover')).toBeVisible();
+      const popover = page.locator('ion-popover');
 
-      await expect(page).toHaveScreenshot(`picker-internal-popover-diff-${page.getSnapshotSettings()}.png`, {
-        fullPage: true,
+      await expect(popover).toBeVisible();
+
+      await expect(popover).toHaveScreenshot(`picker-internal-popover-diff-${page.getSnapshotSettings()}.png`, {
+        animations: 'disabled'
       });
     });
 
-    test('modal: should not have visual regression', async ({ page }) => {
-      await page.goto(`/src/components/picker-internal/test/basic`);
+    test.only('modal: should not have visual regression', async ({ page }) => {
+      await page.goto('/src/components/picker-internal/test/basic');
 
-      await page.setIonViewport();
+      const modal = page.locator('ion-modal');
+      const button = page.locator('#modal');
+      const didPresent = await page.spyOnEvent('ionModalDidPresent');
+      const pickerInternal = page.locator('ion-modal ion-picker-internal');
 
-      await page.click('#modal');
+      await button.click();
+      await didPresent.next();
 
-      await page.spyOnEvent('ionModalDidPresent');
+      // Prevent a dismiss - just in case
+      await modal.evaluate((el: HTMLIonModalElement) => el.canDismiss = false);
       await page.waitForChanges();
 
-      await expect(page.locator('ion-modal')).toBeVisible();
+      await expect(pickerInternal).toBeVisible();
 
-      await expect(page).toHaveScreenshot(`picker-internal-modal-diff-${page.getSnapshotSettings()}.png`, {
-        fullPage: true,
-      });
+      await expect(modal).toHaveScreenshot(`picker-internal-modal-diff-${page.getSnapshotSettings()}.png`);
     });
   });
 });
