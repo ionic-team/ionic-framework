@@ -9,7 +9,7 @@ export const ReactDelegate = (
   addView: (view: React.ReactElement) => void,
   removeView: (view: React.ReactElement) => void
 ): FrameworkDelegate => {
-  const refMap = new WeakMap<ReactComponent, React.ReactElement>();
+  const refMap = new WeakMap<HTMLElement, React.ReactElement>();
 
   const attachViewToDom = async (
     parentElement: HTMLElement,
@@ -24,16 +24,18 @@ export const ReactDelegate = (
     const componentWithProps = component(propsOrDataObj);
     const hostComponent = createPortal(componentWithProps, div);
 
-    refMap.set(component, hostComponent);
+    refMap.set(div, hostComponent);
 
     addView(hostComponent);
 
     return Promise.resolve(div);
   };
 
-  const removeViewFromDom = (_container: any, component: ReactComponent): Promise<void> => {
+  const removeViewFromDom = (_container: any, component: HTMLElement): Promise<void> => {
     const hostComponent = refMap.get(component);
     hostComponent && removeView(hostComponent);
+
+    component.remove();
 
     return Promise.resolve();
   };
