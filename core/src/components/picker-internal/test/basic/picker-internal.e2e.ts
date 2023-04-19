@@ -76,25 +76,32 @@ test.describe('picker-internal', () => {
     test('popover: should not have visual regression', async ({ page }) => {
       await page.goto(`/src/components/picker-internal/test/basic`);
 
+      const button = page.locator('#popover');
       const didPresent = await page.spyOnEvent('ionPopoverDidPresent');
+      const pickerInternal = page.locator('ion-popover ion-picker-internal');
 
-      await page.click('#popover');
-
+      await button.click();
       await didPresent.next();
 
-      const popover = page.locator('ion-popover');
+      await expect(pickerInternal).toBeVisible();
 
-      await expect(popover).toBeVisible();
+      const popoverContent = page.locator('ion-popover .ion-delegate-host');
 
-      await expect(popover).toHaveScreenshot(`picker-internal-popover-diff-${page.getSnapshotSettings()}.png`, {
-        animations: 'disabled'
+      await expect(popoverContent).toHaveScreenshot(`picker-internal-popover-diff-${page.getSnapshotSettings()}.png`, {
+        /**
+         * Animations must be enabled to capture the screenshot.
+         * By default, animations are disabled with toHaveScreenshot,
+         * and when capturing the screenshot will call animation.finish().
+         * This will cause the popover to close and the screenshot capture
+         * to be invalid.
+         */
+        animations: 'allow',
       });
     });
 
-    test.only('modal: should not have visual regression', async ({ page }) => {
+    test('modal: should not have visual regression', async ({ page }) => {
       await page.goto('/src/components/picker-internal/test/basic');
 
-      const modal = page.locator('ion-modal');
       const button = page.locator('#modal');
       const didPresent = await page.spyOnEvent('ionModalDidPresent');
       const pickerInternal = page.locator('ion-modal ion-picker-internal');
@@ -102,13 +109,20 @@ test.describe('picker-internal', () => {
       await button.click();
       await didPresent.next();
 
-      // Prevent a dismiss - just in case
-      await modal.evaluate((el: HTMLIonModalElement) => el.canDismiss = false);
-      await page.waitForChanges();
-
       await expect(pickerInternal).toBeVisible();
 
-      await expect(modal).toHaveScreenshot(`picker-internal-modal-diff-${page.getSnapshotSettings()}.png`);
+      const modalContent = page.locator('ion-modal .ion-delegate-host');
+
+      await expect(modalContent).toHaveScreenshot(`picker-internal-modal-diff-${page.getSnapshotSettings()}.png`, {
+        /**
+         * Animations must be enabled to capture the screenshot.
+         * By default, animations are disabled with toHaveScreenshot,
+         * and when capturing the screenshot will call animation.finish().
+         * This will cause the modal to close and the screenshot capture
+         * to be invalid.
+         */
+        animations: 'allow',
+      });
     });
   });
 });
