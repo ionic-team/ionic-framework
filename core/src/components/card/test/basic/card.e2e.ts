@@ -155,12 +155,5 @@ test.describe('card: basic', () => {
       const card = page.locator('ion-card');
       await expect(card).toHaveScreenshot(`card-no-content-or-header-${page.getSnapshotSettings()}.png`);
     });
-    test('should not have visual regressions with form elements inside card', async ({ page }) => {
-      await page.goto(`/src/components/card/test/form`);
-
-      await page.setIonViewport();
-
-      await expect(page).toHaveScreenshot(`card-form-${page.getSnapshotSettings()}.png`);
-    });
   });
 });
