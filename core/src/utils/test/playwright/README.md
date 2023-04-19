@@ -4,10 +4,10 @@ This directory contains utilities that can be used to more easily test Stencil p
 
 ## Table of Contents
 
-[`test` function](#test-function)
-[`page` fixture](#page-fixture)
-[Generators](#generators)
-[Matchers](#matchers)
+- [`test` function](#test-function)
+- [`page` fixture](#page-fixture)
+- [Generators](#generators)
+- [Matchers](#matchers)
 
 ## `test` Function
 
