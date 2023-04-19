@@ -668,7 +668,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
     const desktop = isPlatform('desktop');
     const enableArrow = arrow && !parentPopover;
     const rtl = isRTL(el) ? 'rtl' : 'ltr';
-    console.log(`popover-side-${rtl}`);
+
     return (
       <Host
         aria-modal="true"
