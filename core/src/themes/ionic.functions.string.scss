@@ -158,7 +158,7 @@
     // or normal element so append both the dir check and the rtl selector
     // @include add-root-selector("ion-component", "[dir=rtl]")
     // --> [dir=rtl] ion-component
-    // Important: This will not work if the component is using shadow DOM.
+    // Important: This will not work if the component is using shadow DOM or is scoped.
     // --> @include add-root-selector(":host(.popover-side-left) .popover-arrow", "[dir=rtl]") 
     } @else {
       $list: append($list, "#{$addHostSelector} #{$selector}", comma);
