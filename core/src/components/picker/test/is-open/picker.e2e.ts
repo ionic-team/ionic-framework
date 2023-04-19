@@ -5,7 +5,7 @@ test.describe('picker: isOpen', () => {
   test.beforeEach(async ({ page, skip }) => {
     skip.rtl('isOpen does not behave differently in RTL');
     skip.mode('md', 'isOpen does not behave differently in MD');
-    await page.goto('/src/components/picker/test/isOpen');
+    await page.goto('/src/components/picker/test/is-open');
   });
 
   test('should open the picker', async ({ page }) => {

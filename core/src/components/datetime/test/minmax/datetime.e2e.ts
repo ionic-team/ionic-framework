@@ -240,6 +240,7 @@ test.describe('datetime: minmax', () => {
       skip.rtl();
       skip.mode('ios', 'This implementation is the same across modes.');
     });
+
     test('should reset to min time if out of bounds', async ({ page }) => {
       await page.setContent(`
         <ion-datetime
@@ -259,6 +260,7 @@ test.describe('datetime: minmax', () => {
 
       await expect(datetime).toHaveJSProperty('value', '2022-10-10T08:00:00');
     });
+
     test('should reset to max time if out of bounds', async ({ page }) => {
       await page.setContent(`
         <ion-datetime
@@ -277,6 +279,28 @@ test.describe('datetime: minmax', () => {
       await ionChange.next();
 
       await expect(datetime).toHaveJSProperty('value', '2022-10-10T08:00:00');
+    });
+
+    test('should adjust to in-bounds when using month picker', async ({ page }) => {
+      await page.setContent(`
+        <ion-datetime
+          min="2022-01-15"
+          value="2022-02-01"
+          presentation="date"
+        ></ion-datetime>
+      `);
+
+      const datetime = page.locator('ion-datetime');
+      const monthYearToggle = page.locator('ion-datetime .calendar-month-year');
+      const monthColumnItems = page.locator('ion-datetime .month-column .picker-item:not(.picker-item-empty)');
+
+      await monthYearToggle.click();
+      await page.waitForChanges();
+
+      await monthColumnItems.nth(0).click(); // switch to January
+      await page.waitForChanges();
+
+      await expect(datetime).toHaveJSProperty('value', '2022-01-15T00:00:00');
     });
   });
 

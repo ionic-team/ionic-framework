@@ -5,7 +5,7 @@ test.describe('alert: isOpen', () => {
   test.beforeEach(async ({ page, skip }) => {
     skip.rtl('isOpen does not behave differently in RTL');
     skip.mode('md', 'isOpen does not behave differently in MD');
-    await page.goto('/src/components/alert/test/isOpen');
+    await page.goto('/src/components/alert/test/is-open');
   });
 
   test('should open the alert', async ({ page }) => {
