@@ -2,7 +2,14 @@
 
 This directory contains utilities that can be used to more easily test Stencil projects with Playwright.
 
-## Test Function
+## Table of Contents
+
+[`test` function](#test-function)
+[`page` fixture](#page-fixture)
+[Generators](#generators)
+[Matchers](#matchers)
+
+## `test` Function
 
 The default `test` function has been extended to provide two custom options.
 
