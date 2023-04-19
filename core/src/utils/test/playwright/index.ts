@@ -5,3 +5,4 @@ export * from './page/utils';
 export * from './drag-element';
 export * from './matchers';
 export * from './viewports';
+export * from './generator';
