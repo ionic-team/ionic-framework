@@ -11,7 +11,7 @@ This directory contains utilities that can be used to more easily test Stencil p
 
 ## `test` Function
 
-The default `test` function has been extended to provide two custom options.
+The default [`test` function](https://playwright.dev/docs/api/class-test) has been extended to provide two custom options.
 
 | Fixture | Type | Description |
 | ------- | ---- | ----------- |
