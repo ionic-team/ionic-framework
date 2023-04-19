@@ -276,6 +276,7 @@ configs({ directions: ['rtl'] }).forEach(({ config, title }) => {
 Each value in the array returns by `configs` contains the following information:
 
 | Name | Description |
+| - | - |
 | `config` | An object containing a single test configuration. This gets passed to `page.goto` or `page.setContent`. |
 | `screenshot` | A helper function that generates a unique screenshot name based on the test configuration. |
 | `title` | A helper function that generates a unique test title based on the test configuration. Playwright requires that each test has a unique title since it uses that to generate a test ID. |
