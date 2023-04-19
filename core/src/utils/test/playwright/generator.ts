@@ -13,8 +13,8 @@ interface TestUtilities {
 }
 
 interface TestConfigOption {
-  mode?: Mode[];
-  direction?: Direction[];
+  modes?: Mode[];
+  directions?: Direction[];
 }
 
 /**
@@ -43,7 +43,7 @@ const generateScreenshotName = (fileName: string, config: TestConfig): string =>
  * Given a config generate an array of test variants.
  */
 export const configs = (testConfig: TestConfigOption = DEFAULT_TEST_CONFIG_OPTION): TestUtilities[] => {
-  const { mode, direction } = testConfig;
+  const { modes, directions } = testConfig;
 
   const configs: TestConfig[] = [];
 
@@ -51,8 +51,8 @@ export const configs = (testConfig: TestConfigOption = DEFAULT_TEST_CONFIG_OPTIO
    * If certain options are not provided,
    * fall back to the defaults.
    */
-  const processedMode: Mode[] = mode ?? DEFAULT_MODE;
-  const processedDirection: Direction[] = direction ?? DEFAULT_DIRECTION;
+  const processedMode: Mode[] = modes ?? DEFAULT_MODES;
+  const processedDirection: Direction[] = directions ?? DEFAULT_DIRECTIONS;
 
   processedMode.forEach((mode: Mode) => {
     processedDirection.forEach((direction: Direction) => {
@@ -69,10 +69,10 @@ export const configs = (testConfig: TestConfigOption = DEFAULT_TEST_CONFIG_OPTIO
   });
 };
 
-const DEFAULT_MODE: Mode[] = ['ios', 'md'];
-const DEFAULT_DIRECTION: Direction[] = ['ltr', 'rtl'];
+const DEFAULT_MODES: Mode[] = ['ios', 'md'];
+const DEFAULT_DIRECTIONS: Direction[] = ['ltr', 'rtl'];
 
 const DEFAULT_TEST_CONFIG_OPTION = {
-  mode: DEFAULT_MODE,
-  direction: DEFAULT_DIRECTION,
+  modes: DEFAULT_MODES,
+  directions: DEFAULT_DIRECTIONS,
 };
