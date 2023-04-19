@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.7.4](https://github.com/ionic-team/ionic-framework/compare/v6.7.3...v6.7.4) (2023-04-19)
+
+
+### Bug Fixes
+
+* **segment-button:** update checked state on render ([#27183](https://github.com/ionic-team/ionic-framework/issues/27183)) ([ae9689b](https://github.com/ionic-team/ionic-framework/commit/ae9689bf3e185749dd2e0b27864b1c99b129820e))
+
+
+
+
+
 ## [6.7.3](https://github.com/ionic-team/ionic-framework/compare/v6.7.2...v6.7.3) (2023-04-12)
 
 
