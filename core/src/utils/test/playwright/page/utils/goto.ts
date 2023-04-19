@@ -1,5 +1,5 @@
 import type { Page, TestInfo } from '@playwright/test';
-import type { E2EPageOptions } from '@utils/test/playwright';
+import type { E2EPageOptions, Mode, Direction } from '@utils/test/playwright';
 
 /**
  * This is an extended version of Playwright's
@@ -26,7 +26,9 @@ configs().forEach(({ config, title }) => {
 });`);
   }
 
-  let mode, direction;
+  let mode: Mode;
+  let direction: Direction;
+
   if (options == undefined) {
     mode = testInfo.project.metadata.mode;
     direction = testInfo.project.metadata.rtl ? 'rtl' : 'ltr';

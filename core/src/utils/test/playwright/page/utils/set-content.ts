@@ -1,5 +1,5 @@
 import type { Page, TestInfo } from '@playwright/test';
-import type { E2EPageOptions } from '@utils/test/playwright';
+import type { E2EPageOptions, Mode, Direction } from '@utils/test/playwright';
 
 /**
  * Overwrites the default Playwright page.setContent method.
@@ -17,7 +17,9 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
     throw new Error('setContent unavailable: page is already closed');
   }
 
-  let mode, direction;
+  let mode: Mode;
+  let direction: Direction;
+
   if (options == undefined) {
     mode = testInfo.project.metadata.mode;
     direction = testInfo.project.metadata.rtl ? 'rtl' : 'ltr';
