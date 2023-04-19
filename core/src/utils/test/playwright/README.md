@@ -205,3 +205,84 @@ configs().forEach(({ config, screenshot, title }) => {
   });
 });
 ```
+
+## Matchers
+
+Playwright comes with [a set of matchers to do test assertions](https://playwright.dev/docs/test-assertions). However, Ionic has additional custom assertions.
+
+| Assertion | Description |
+| - | - |
+| `toHaveReceivedEvent` | Ensures an event has received an event at least once. |
+| `toHaveReceviedEventDetail` | Ensures an event has been received with a specified [CustomEvent.detail](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/detail) payload. |
+| `toHaveReceivedEventTimes` | Ensures an event has been received a certain number of times. |
+
+### Using `toHaveReceivedEvent`
+
+```typescript
+import { configs, test } from '@utils/test/playwright';
+
+configs().forEach(({ config, screenshot, title }) => {
+  test(title('my custom test'), ({ page }) => {
+    await page.setContent(`
+      <ion-input label="Email"></ion-input>
+    `, config);
+    
+    const ionChange = await page.spyOnEvent('ionChange');
+    const input = page.locator('ion-input');
+    
+    await input.type('hi@ionic.io');
+
+    // In this case you can also use await ionChange.next();
+    await expect(ionChange).toHaveReceivedEvent();
+  });
+});
+```
+
+### Using `toHaveReceivedEventDetail`
+
+```typescript
+import { configs, test } from '@utils/test/playwright';
+
+configs().forEach(({ config, screenshot, title }) => {
+  test(title('my custom test'), ({ page }) => {
+    await page.setContent(`
+      <ion-input label="Email"></ion-input>
+    `, config);
+    
+    const ionChange = await page.spyOnEvent('ionChange');
+    const input = page.locator('ion-input');
+    
+    await input.type('hi@ionic.io');
+
+    await ionChange.next();
+    await expect(ionChange).toHaveReceivedEventDetail({ value: 'hi@ionic.io' });
+  });
+});
+```
+
+### Using `toHaveReceivedEventTimes`
+
+```typescript
+import { configs, test } from '@utils/test/playwright';
+
+configs().forEach(({ config, screenshot, title }) => {
+  test(title('my custom test'), ({ page }) => {
+    await page.setContent(`
+      <ion-input label="Email"></ion-input>
+    `, config);
+    
+    const ionChange = await page.spyOnEvent('ionChange');
+    const input = page.locator('ion-input');
+    
+    await input.type('hi@ionic.io');
+
+    await ionChange.next();
+    
+    await input.type('goodbye@ionic.io');
+    
+    await ionChange.next();
+    
+    await expect(ionChange).toHaveReceivedEventTimes(2);
+  });
+});
+```
