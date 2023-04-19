@@ -25,10 +25,8 @@ const IonNavInternal: React.FC<IonNavProps> = ({ children, forwardedRef, ...rest
    * Allows us to create React components that are rendered within
    * the context of the IonNav component.
    */
-  const addView = (view: React.ReactElement) =>
-    setViews((existingViews) => [...existingViews, view]);
-  const removeView = (view: React.ReactElement) =>
-    setViews((existingViews) => existingViews.filter((v) => v !== view));
+  const addView = (view: React.ReactElement) => setViews((existingViews) => [...existingViews, view]);
+  const removeView = (view: React.ReactElement) => setViews((existingViews) => existingViews.filter((v) => v !== view));
 
   const delegate = useMemo(() => ReactDelegate(addView, removeView), []);
 
