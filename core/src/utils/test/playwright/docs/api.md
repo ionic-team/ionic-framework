@@ -22,8 +22,6 @@ The default [`test` function](https://playwright.dev/docs/api/class-test) has be
   
 <summary>Usage</summary>
 
-### Usage
-
 **`page`**
 
 ```typescript
@@ -104,6 +102,10 @@ The [page fixture](https://playwright.dev/docs/test-fixtures) has been extended 
 | `waitForChanges` | Waits for Stencil to re-render before proceeeding. This is typically only needed when you update a property on a component. |
 | `spyOnEvent` | Creates an event spy that can be used to wait for a [CustomEvent](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent) to be emitted. |
 | `getSnapshotSettings` (DEPRECATED) | Returns information about the current test (such as mode or direction) to generate a unique screenshot name. Deprecated: Use the `screenshot` function provided by the test [generator](#generator) instead. |
+
+<details>
+  
+<summary>Usage</summary>
 
 ### Using `goto`
 
@@ -219,6 +221,8 @@ configs().forEach(({ config, screenshot, title }) => {
 });
 ```
 
+</details>
+
 ## Generators
 
 Ionic generates tests to test different modes (iOS or MD), layouts (LTR or RTL), and themes (default or dark).
@@ -331,6 +335,10 @@ Playwright comes with [a set of matchers to do test assertions](https://playwrig
 | `toHaveReceviedEventDetail` | Ensures an event has been received with a specified [CustomEvent.detail](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/detail) payload. |
 | `toHaveReceivedEventTimes` | Ensures an event has been received a certain number of times. |
 
+<details>
+  
+<summary>Usage</summary>
+
 ### Using `toHaveReceivedEvent`
 
 ```typescript
@@ -401,3 +409,5 @@ configs().forEach(({ config, screenshot, title }) => {
   });
 });
 ```
+
+</details>
