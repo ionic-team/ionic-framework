@@ -1,6 +1,6 @@
 # Playwright Test Utils
 
-This directory contains utilities that can be used to more easily test Stencil projects with Playwright.
+The testing directory within Ionic's codebase contains utilities that can be used to more easily test Stencil projects with Playwright.
 
 ## Table of Contents
 
@@ -17,6 +17,10 @@ The default [`test` function](https://playwright.dev/docs/api/class-test) has be
 | ------- | ---- | ----------- |
 | page    | [E2EPage](https://github.com/ionic-team/ionic-framework/blob/main/core/src/utils/test/playwright/playwright-declarations.ts) | An extension of the base `page` test fixture within Playwright |
 | skip    | [E2ESkip](https://github.com/ionic-team/ionic-framework/blob/main/core/src/utils/test/playwright/playwright-declarations.ts) | Used to skip tests based on text direction, mode, or browser |
+
+<details>
+  
+<summary>Usage</summary>
 
 ### Usage
 
@@ -84,6 +88,8 @@ configs().forEach(({ config, title }) => {
   });
 });
 ```
+
+</details>
 
 ## `page` fixture
 
