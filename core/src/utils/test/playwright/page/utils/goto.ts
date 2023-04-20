@@ -74,7 +74,7 @@ configs().forEach(({ config, title }) => {
   });
 
   testInfo.annotations.push({
-    type: 'rtl',
+    type: 'direction',
     description: formattedRtl === 'true' ? 'rtl' : 'ltr',
   });
 
