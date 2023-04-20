@@ -1,6 +1,6 @@
 # Ionic E2E Tests Guide
 
-This directory contains information on how to get the most out of Ionic's E2E test infrastructure when writing test.
+This directory contains information on how to get the most out of Ionic's E2E test infrastructure when writing tests.
 
 ## Directory
 
