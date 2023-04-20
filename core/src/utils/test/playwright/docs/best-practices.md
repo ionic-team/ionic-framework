@@ -9,6 +9,8 @@ This guide details best practices that should be followed when writing E2E tests
 - [Follow the file format](#practice-file-format)
 - [Use `test.describe` blocks to describe groups of tests](#practice-test-describe)
 - [Place `configs` generator outside the `test.describe` block](#practice-config-describe)
+- [Test rendering and functionality in separate `test.describe` blocks](#practice-describe-type)
+- [Break up large or slow-running tests across multiple files](#practice-slow-tests)
 - [Use standard viewport sizes](#practice-viewport)
 - [Avoid using screenshots as a way of verifying functionality](#practice-screenshot-functionality)
 - [Avoid tests that compare computed values](#practice-test-computed)
@@ -167,6 +169,15 @@ configs().forEach(({ config, title }) => {
   });
 });
 ```
+<h2 id="practice-describe-type">Test rendering and functionality in separate `test.describe` blocks</h2>
+
+Avoid mixing tests that take screenshots with tests that check functionality. These types of tests often have different requirements that can make a single `test.describe` block hard to understand. For example, a screenshot test might check both iOS and MD modes with LTR and RTL text directions, but a functionality test may not need that if the functionality is consistent across modes and directions.
+
+If using multiple `test.describe` blocks creates a large test file, consider breaking up these tests across multiple files.
+
+<h2 id="practice-slow-tests">Break up large or slow-running tests across multiple files</h2>
+
+Tests are distributed across many test runners on continuous integration (CI) to improve performance. However, Playwright [distributes tests](https://playwright.dev/docs/test-parallel) based on test file, not individual test. This means test files that are particularly slow will negatively impact the overall CI performance.
 
 <h2 id="practice-viewport">Use standard viewport sizes</h2>
 
