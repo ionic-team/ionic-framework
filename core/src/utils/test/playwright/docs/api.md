@@ -38,6 +38,8 @@ configs().forEach(({ config, title }) => {
 
 **`skip.mode` (DEPRECATED)**
 
+Deprecated: Use a [generator](#generators) instead.
+
 ```typescript
 import { test } from '@utils/test/playwright';
 
@@ -48,9 +50,10 @@ test('my custom test', ({ page, skip }) => {
 });
 ```
 
+**`skip.rtl` (DEPRECATED)**
+
 Deprecated: Use a [generator](#generators) instead.
 
-**`skip.rtl` (DEPRECATED)**
 ```typescript
 import { test } from '@utils/test/playwright';
 
@@ -60,8 +63,6 @@ test('my custom test', ({ page, skip }) => {
   await page.goto('path/to/file');
 });
 ```
-
-Deprecated: Use a [generator](#generators) instead.
 
 **`skip.browser`**
 ```typescript
