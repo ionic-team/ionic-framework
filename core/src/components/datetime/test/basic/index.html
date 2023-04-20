@@ -267,23 +267,24 @@
           </div>
 
           <div class="grid-item">
+            <h2>Inline - Custom</h2>
+            <ion-datetime
+              show-default-buttons="true"
+              color="danger"
+              id="custom-datetime"
+              show-clear-button="true"
+              value="2023-03-01T14:23:00.000Z"
+            >
+              <span slot="title">Select Date</span>
+            </ion-datetime>
+          </div>
+
+          <div class="grid-item">
             <h2>Popover</h2>
             <ion-button onclick="presentPopover(defaultPopover, event)">Present Popover</ion-button>
             <ion-popover class="datetime-popover" id="default-popover">
               <ion-datetime></ion-datetime>
             </ion-popover>
-          </div>
-
-          <div class="grid-item">
-            <h2>Modal</h2>
-            <ion-button id="open-modal-basic" onclick="presentModal()">Present Modal</ion-button>
-          </div>
-
-          <div class="grid-item">
-            <h2>Inline - Custom</h2>
-            <ion-datetime show-default-buttons="true" color="danger" id="custom-datetime" show-clear-button="true">
-              <span slot="title">Select Date</span>
-            </ion-datetime>
           </div>
 
           <div class="grid-item">
@@ -298,6 +299,11 @@
                 </ion-buttons>
               </ion-datetime>
             </ion-popover>
+          </div>
+
+          <div class="grid-item">
+            <h2>Modal</h2>
+            <ion-button id="open-modal-basic" onclick="presentModal()">Present Modal</ion-button>
           </div>
 
           <div class="grid-item">

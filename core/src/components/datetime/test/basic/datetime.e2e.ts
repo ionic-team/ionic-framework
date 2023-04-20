@@ -55,7 +55,7 @@ test.describe('datetime: selecting a day', () => {
   });
 
   test('should not highlight a day until one is selected, with default-buttons', async ({ page }) => {
-    await testHighlight(page, 'custom-datetime');
+    await testHighlight(page, 'inline-datetime-no-value');
   });
   test('should update the active day', async ({ page }) => {
     await page.setContent(`
@@ -107,7 +107,7 @@ test.describe('datetime: confirm date', () => {
   test('should not update value if Done was clicked without selecting a day first', async ({ page }) => {
     await page.goto('/src/components/datetime/test/basic');
 
-    const datetime = page.locator('#custom-datetime');
+    const datetime = page.locator('#inline-datetime-no-value');
 
     const value = await datetime.evaluate((el: HTMLIonDatetimeElement) => el.value);
     expect(value).toBeUndefined();
