@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Watch, Component, Element, Event, h, Host, Method, Prop } from '@stencil/core';
+import { Watch, Component, Element, Event, h, Host, Method, Prop, State } from '@stencil/core';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
@@ -54,6 +54,13 @@ export class Toast implements ComponentInterface, OverlayInterface {
   private durationTimeout?: ReturnType<typeof setTimeout>;
 
   presented = false;
+
+  /**
+   * When `true`, content inside of .toast-content
+   * will have aria-hidden elements removed causing
+   * screen readers to announce the remaining content.
+   */
+  @State() revealContentToScreenReader = false;
 
   @Element() el!: HTMLIonToastElement;
 
@@ -268,6 +275,14 @@ export class Toast implements ComponentInterface, OverlayInterface {
       this.position
     );
     await this.currentTransition;
+
+    /**
+     * Content is revealed to screen readers after
+     * the transition to avoid jank since this
+     * state updates will cause a re-render.
+     */
+    this.revealContentToScreenReader = true;
+
     this.currentTransition = undefined;
 
     if (this.duration > 0) {
@@ -303,6 +318,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
 
     if (dismissed) {
       this.delegateController.removeViewFromDom();
+      this.revealContentToScreenReader = false;
     }
 
     return dismissed;
@@ -407,21 +423,47 @@ export class Toast implements ComponentInterface, OverlayInterface {
     );
   }
 
-  private renderToastMessage() {
+  /**
+   * Render the `message` property.
+   * @param key - A key to give the element a stable identity. This is used to improve compatibility with screen readers.
+   * @param ariaHidden - If "true" then content will be hidden from screen readers.
+   */
+  private renderToastMessage(key: string, ariaHidden: 'true' | null = null) {
     const { customHTMLEnabled, message } = this;
     if (customHTMLEnabled) {
-      return <div class="toast-message" part="message" innerHTML={sanitizeDOMString(message)}></div>;
+      return (
+        <div
+          key={key}
+          aria-hidden={ariaHidden}
+          class="toast-message"
+          part="message"
+          innerHTML={sanitizeDOMString(message)}
+        ></div>
+      );
     }
 
     return (
-      <div class="toast-message" part="message">
+      <div key={key} aria-hidden={ariaHidden} class="toast-message" part="message">
         {message}
       </div>
     );
   }
 
+  /**
+   * Render the `header` property.
+   * @param key - A key to give the element a stable identity. This is used to improve compatibility with screen readers.
+   * @param ariaHidden - If "true" then content will be hidden from screen readers.
+   */
+  private renderHeader(key: string, ariaHidden: 'true' | null = null) {
+    return (
+      <div key={key} class="toast-header" aria-hidden={ariaHidden} part="header">
+        {this.header}
+      </div>
+    );
+  }
+
   render() {
-    const { layout, el } = this;
+    const { layout, el, revealContentToScreenReader, header, message } = this;
     const allButtons = this.getButtons();
     const startButtons = allButtons.filter((b) => b.side === 'start');
     const endButtons = allButtons.filter((b) => b.side !== 'start');
@@ -431,7 +473,6 @@ export class Toast implements ComponentInterface, OverlayInterface {
       [`toast-${this.position}`]: true,
       [`toast-layout-${layout}`]: true,
     };
-    const role = allButtons.length > 0 ? 'dialog' : 'status';
 
     /**
      * Stacked buttons are only meant to be
@@ -446,9 +487,6 @@ export class Toast implements ComponentInterface, OverlayInterface {
 
     return (
       <Host
-        aria-live="polite"
-        aria-atomic="true"
-        role={role}
         tabindex="-1"
         {...(this.htmlAttributes as any)}
         style={{
@@ -470,13 +508,40 @@ export class Toast implements ComponentInterface, OverlayInterface {
               <ion-icon class="toast-icon" part="icon" icon={this.icon} lazy={false} aria-hidden="true"></ion-icon>
             )}
 
-            <div class="toast-content">
-              {this.header !== undefined && (
-                <div class="toast-header" part="header">
-                  {this.header}
-                </div>
-              )}
-              {this.message !== undefined && this.renderToastMessage()}
+            {/*
+              This creates a live region where screen readers
+              only announce the header and the message. Elements
+              such as icons and buttons should not be announced.
+              aria-live and aria-atomic here are redundant, but we
+              add them to maximize browser compatibility.
+
+              Toasts are meant to be subtle notifications that do
+              not interrupt the user which is why this has
+              a "status" role and a "polite" presentation.
+            */}
+            <div class="toast-content" role="status" aria-atomic="true" aria-live="polite">
+              {/*
+                This logic below is done to improve consistency
+                across platforms when showing and updating live regions.
+
+                TalkBack and VoiceOver announce the live region content
+                when the toast is shown, but NVDA does not. As a result,
+                we need to trigger a DOM update so NVDA detects changes and
+                announces an update to the live region. We do this after
+                the toast is fully visible to avoid jank during the presenting
+                animation.
+
+                The "key" attribute is used here to force Stencil to render
+                new nodes and not re-use nodes. Otherwise, NVDA would not
+                detect any changes to the live region.
+
+                The "old" content is hidden using aria-hidden otherwise
+                VoiceOver will announce the toast content twice when presenting.
+              */}
+              {!revealContentToScreenReader && header !== undefined && this.renderHeader('oldHeader', 'true')}
+              {!revealContentToScreenReader && message !== undefined && this.renderToastMessage('oldMessage', 'true')}
+              {revealContentToScreenReader && header !== undefined && this.renderHeader('header')}
+              {revealContentToScreenReader && message !== undefined && this.renderToastMessage('header')}
             </div>
 
             {this.renderButtons(endButtons, 'end')}

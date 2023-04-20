@@ -3,7 +3,7 @@ import { test } from '@utils/test/playwright';
 
 test.describe('range: activeBarStart', () => {
   test('should not have visual regressions', async ({ page }) => {
-    await page.goto(`/src/components/range/test/activeBarStart`);
+    await page.goto(`/src/components/range/test/active-bar-start`);
 
     await page.setIonViewport();
 

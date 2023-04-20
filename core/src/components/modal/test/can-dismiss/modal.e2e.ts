@@ -5,7 +5,7 @@ test.describe('modal: canDismiss', () => {
   test.describe('regular modal', () => {
     test.beforeEach(async ({ page, skip }) => {
       skip.rtl();
-      await page.goto('/src/components/modal/test/canDismiss');
+      await page.goto('/src/components/modal/test/can-dismiss');
     });
     test('should dismiss when canDismiss is true', async ({ page }) => {
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
@@ -80,7 +80,7 @@ test.describe('modal: canDismiss', () => {
     test.beforeEach(async ({ page, skip }) => {
       skip.rtl();
       skip.mode('md');
-      await page.goto('/src/components/modal/test/canDismiss');
+      await page.goto('/src/components/modal/test/can-dismiss');
       await page.click('#radio-card');
     });
     test('should dismiss when canDismiss is true', async ({ page }) => {
@@ -139,7 +139,7 @@ test.describe('modal: canDismiss', () => {
     test.beforeEach(async ({ page, skip }) => {
       skip.rtl();
       skip.mode('md');
-      await page.goto('/src/components/modal/test/canDismiss');
+      await page.goto('/src/components/modal/test/can-dismiss');
       await page.click('#radio-card');
     });
 
@@ -224,7 +224,7 @@ test.describe('modal: canDismiss', () => {
   test.describe('sheet modal', () => {
     test.beforeEach(async ({ page, skip }) => {
       skip.rtl();
-      await page.goto('/src/components/modal/test/canDismiss');
+      await page.goto('/src/components/modal/test/can-dismiss');
       await page.click('#radio-sheet');
     });
     test('should dismiss when canDismiss is true', async ({ page }) => {
@@ -388,7 +388,7 @@ test.describe('modal: canDismiss', () => {
     test.beforeEach(async ({ page, skip }) => {
       skip.mode('md');
       skip.rtl();
-      await page.goto('/src/components/modal/test/canDismiss');
+      await page.goto('/src/components/modal/test/can-dismiss');
     });
     test('should pass data and role when calling dismiss', async ({ page }) => {
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');

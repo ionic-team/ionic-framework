@@ -1,6 +1,6 @@
 import type { FrameworkDelegate, JSX } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-nav.js';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
 import { ReactDelegate } from '../../framework-delegate';
 import { createReactComponent } from '../react-component-lib';
@@ -25,10 +25,10 @@ const IonNavInternal: React.FC<IonNavProps> = ({ children, forwardedRef, ...rest
    * Allows us to create React components that are rendered within
    * the context of the IonNav component.
    */
-  const addView = (view: React.ReactElement) => setViews([...views, view]);
-  const removeView = (view: React.ReactElement) => setViews(views.filter((v) => v !== view));
+  const addView = (view: React.ReactElement) => setViews((existingViews) => [...existingViews, view]);
+  const removeView = (view: React.ReactElement) => setViews((existingViews) => existingViews.filter((v) => v !== view));
 
-  const delegate = ReactDelegate(addView, removeView);
+  const delegate = useMemo(() => ReactDelegate(addView, removeView), []);
 
   return (
     <IonNavInner delegate={delegate} ref={forwardedRef} {...restOfProps}>
