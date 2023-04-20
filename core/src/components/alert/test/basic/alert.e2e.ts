@@ -3,11 +3,12 @@ import type { Locator } from '@playwright/test';
 import type { E2EPage } from '@utils/test/playwright';
 import { configs, test } from '@utils/test/playwright';
 
-test.describe('alert: basic', () => {
-  configs({ directions: ['ltr'] }).forEach(({ config, screenshot, title }) => {
-    test(title('focus trap should work correctly'), async ({ page, browserName }) => {
+configs({ directions: ['ltr'] }).forEach(({ config, screenshot, title }) => {
+  test.describe(title('alert: basic'), () => {
+    test.beforeEach(async ({ page }) => {
       await page.goto('/src/components/alert/test/basic', config);
-
+    });
+    test('focus trap should work correctly', async ({ page, browserName }) => {
       const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
 
       const alertFixture = new AlertFixture(page, screenshot);
@@ -25,18 +26,14 @@ test.describe('alert: basic', () => {
       await expect(alertBtns.nth(0)).toBeFocused();
     });
 
-    test(title('should set custom attributes'), async ({ page }) => {
-      await page.goto('/src/components/alert/test/basic', config);
-
+    test('should set custom attributes', async ({ page }) => {
       const alertFixture = new AlertFixture(page, screenshot);
 
       const alert = await alertFixture.open('#basic');
       await expect(alert).toHaveAttribute('data-testid', 'basic-alert');
     });
 
-    test(title('should dismiss when async handler resolves'), async ({ page }) => {
-      await page.goto('/src/components/alert/test/basic', config);
-
+    test('should dismiss when async handler resolves', async ({ page }) => {
       const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
       const ionAlertDidDismiss = await page.spyOnEvent('ionAlertDidDismiss');
       const ionLoadingDidDismiss = await page.spyOnEvent('ionLoadingDidDismiss');
@@ -58,76 +55,50 @@ test.describe('alert: basic', () => {
   });
 });
 
-test.describe('should not have visual regressions', () => {
-  configs().forEach(({ config, screenshot, title }) => {
-    test(title('header, subheader, message'), async ({ page }) => {
+configs().forEach(({ config, screenshot, title }) => {
+  test.describe(title('should not have visual regressions'), () => {
+    let alertFixture!: AlertFixture;
+
+    test.beforeEach(async ({ page }) => {
       await page.goto('/src/components/alert/test/basic', config);
-
-      const alertFixture = new AlertFixture(page, screenshot);
-
+      alertFixture = new AlertFixture(page, screenshot);
+    });
+    test('header, subheader, message', async () => {
       await alertFixture.open('#basic');
       await alertFixture.screenshot('basic');
     });
 
-    test(title('long message'), async ({ page }) => {
-      await page.goto('/src/components/alert/test/basic', config);
-
-      const alertFixture = new AlertFixture(page, screenshot);
-
+    test('long message', async () => {
       await alertFixture.open('#longMessage');
       await alertFixture.screenshot('longMessage');
     });
 
-    test(title('more than two buttons'), async ({ page }) => {
-      await page.goto('/src/components/alert/test/basic', config);
-
-      const alertFixture = new AlertFixture(page, screenshot);
-
+    test('more than two buttons', async () => {
       await alertFixture.open('#multipleButtons');
       await alertFixture.screenshot('multipleButtons');
     });
 
-    test(title('no message'), async ({ page }) => {
-      await page.goto('/src/components/alert/test/basic', config);
-
-      const alertFixture = new AlertFixture(page, screenshot);
-
+    test('no message', async () => {
       await alertFixture.open('#noMessage');
       await alertFixture.screenshot('noMessage');
     });
 
-    test(title('two buttons'), async ({ page }) => {
-      await page.goto('/src/components/alert/test/basic', config);
-
-      const alertFixture = new AlertFixture(page, screenshot);
-
+    test('two buttons', async () => {
       await alertFixture.open('#confirm');
       await alertFixture.screenshot('confirm');
     });
 
-    test(title('form prompt'), async ({ page }) => {
-      await page.goto('/src/components/alert/test/basic', config);
-
-      const alertFixture = new AlertFixture(page, screenshot);
-
+    test('form prompt', async () => {
       await alertFixture.open('#prompt');
       await alertFixture.screenshot('prompt');
     });
 
-    test(title('radios'), async ({ page }) => {
-      await page.goto('/src/components/alert/test/basic', config);
-
-      const alertFixture = new AlertFixture(page, screenshot);
-
+    test('radios', async () => {
       await alertFixture.open('#radio');
       await alertFixture.screenshot('radio');
     });
 
-    test(title('checkboxes'), async ({ page }) => {
-      await page.goto('/src/components/alert/test/basic', config);
-
-      const alertFixture = new AlertFixture(page, screenshot);
-
+    test('checkboxes', async () => {
       await alertFixture.open('#checkbox');
       await alertFixture.screenshot('checkbox');
     });
