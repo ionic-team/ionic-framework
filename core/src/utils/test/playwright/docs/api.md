@@ -231,6 +231,10 @@ Ionic generates tests to test different modes (iOS or MD), layouts (LTR or RTL),
 
 The `configs` function accepts an object containing all the configurations you want to test. It then returns an array of each individual configuration combination. This result is iterated over and one or more tests are generated in each iteration.
 
+<details>
+  
+<summary>Usage</summary>
+
 **Example 1: Default config**
 ```typescript
 import { configs, test } from '@utils/test/playwright';
@@ -281,6 +285,8 @@ configs({ directions: ['rtl'] }).forEach(({ config, title }) => {
 });
 ```
 
+</details>
+
 ### Using the return value from each configuration
 
 Each value in the array returns by `configs` contains the following information:
@@ -290,6 +296,10 @@ Each value in the array returns by `configs` contains the following information:
 | `config` | An object containing a single test configuration. This gets passed to `page.goto` or `page.setContent`. |
 | `screenshot` | A helper function that generates a unique screenshot name based on the test configuration. |
 | `title` | A helper function that generates a unique test title based on the test configuration. Playwright requires that each test has a unique title since it uses that to generate a test ID. |
+
+<details>
+  
+<summary>Usage</summary>
 
 **Example**
 ```typescript
@@ -324,6 +334,7 @@ configs().forEach(({ config, title }) => {
 });
 ```
 
+</details>
 
 ## Matchers
 
