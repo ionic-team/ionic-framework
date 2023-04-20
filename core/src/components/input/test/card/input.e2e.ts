@@ -9,7 +9,7 @@ test.describe('input: card', () => {
     await page.setContent(`
       <ion-card>
         <ion-card-content>
-          <ion-item style="border: 1px solid grey; margin: 16px">
+          <ion-item style="border: 1px solid grey" lines="none">
             <ion-input label="input" label-placement="stacked"></ion-input>
           </ion-item>
         </ion-card-content>

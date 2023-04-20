@@ -9,7 +9,7 @@ test.describe('select: card', () => {
     await page.setContent(`
       <ion-card>
         <ion-card-content>
-          <ion-item style="border: 1px solid grey; margin: 16px">
+          <ion-item style="border: 1px solid grey" lines="none">
             <ion-select label="select" label-placement="stacked"></ion-select>
           </ion-item>
         </ion-card-content>
