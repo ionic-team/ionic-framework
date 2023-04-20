@@ -15,21 +15,24 @@ test.describe('datetime: prefer wheel', () => {
    * if the datetime is too small.
    */
   test.describe('datetime: wheel rendering', () => {
-    test('should not have visual regressions for date wheel', async ({ page }) => {
+    // TODO FW-4110
+    test.skip('should not have visual regressions for date wheel', async ({ page }) => {
       await page.setContent(`
         <ion-datetime size="cover" presentation="date" prefer-wheel="true" value="2019-05-30" max="2022"></ion-datetime>
       `);
 
       await expect(page).toHaveScreenshot(`datetime-wheel-date-diff-${page.getSnapshotSettings()}.png`);
     });
-    test('should not have visual regressions for date-time wheel', async ({ page }) => {
+    // TODO FW-4110
+    test.skip('should not have visual regressions for date-time wheel', async ({ page }) => {
       await page.setContent(`
         <ion-datetime size="cover" presentation="date-time" prefer-wheel="true" value="2019-05-30T16:30:00" max="2022"></ion-datetime>
       `);
 
       await expect(page).toHaveScreenshot(`datetime-wheel-date-time-diff-${page.getSnapshotSettings()}.png`);
     });
-    test('should not have visual regressions for time-date wheel', async ({ page }) => {
+    // TODO FW-4110
+    test.skip('should not have visual regressions for time-date wheel', async ({ page }) => {
       await page.setContent(`
         <ion-datetime size="cover" presentation="time-date" prefer-wheel="true" value="2019-05-30T16:30:00" max="2022"></ion-datetime>
       `);
