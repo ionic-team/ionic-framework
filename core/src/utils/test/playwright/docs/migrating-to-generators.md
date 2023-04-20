@@ -14,13 +14,13 @@ This guide shows how to migrate an E2E test to use the new generator architectur
 import { configs, test } from '@utils/test/playwright';
 ```
 
-2. Inside of the `test.describe` block, call `configs` and pass in any of your configuration. This should replace any `skip.rtl` or `skip.mode` calls. `skip.browser` calls can remain in place. If you are not using `skip.rtl` or `skip.mode` then you can call `configs` without passing an options (i.e. `configs().forEach(...)`).
+2. Call `configs` outside of the `test.describe` block, and pass in any of your configuration. This should replace any `skip.rtl` or `skip.mode` calls. `skip.browser` calls can remain in place. If you are not using `skip.rtl` or `skip.mode` then you can call `configs` without passing an options (i.e. `configs().forEach(...)`).
 
 ```typescript
 import { configs, test } from '@utils/test/playwright';
 
-test.describe('accordion: basic', () => {
-  configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ config, title, screenshot }) => {
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ config, title, screenshot }) => {
+  test.describe('accordion: basic', () => {
     ...
   });
 });
@@ -28,16 +28,14 @@ test.describe('accordion: basic', () => {
 
 :warning: Be careful when replacing `skip.rtl` and `skip.mode` with `configs`. For example, `skip.mode('md')` means that the test should _skip_ MD mode and only run in iOS mode **not** that the test should only run in MD mode. Similarly, `skip.rtl()` means that the test should only run in the LTR direction.
 
-3. Update the title of each test to use the `title` function.
+3. Update the title of the describe block to use the `title` function.
 
 ```typescript
 import { configs, test } from '@utils/test/playwright';
 
-test.describe('accordion: basic', () => {
-  configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ config, title, screenshot }) => {
-    test(title('should not have visual regressions'), async ({ page }) => {
-      ...
-    });
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ config, title, screenshot }) => {
+  test.describe(title('accordion: basic'), () => {
+    ...
   });
 });
 ```
@@ -47,9 +45,9 @@ test.describe('accordion: basic', () => {
 ```typescript
 import { configs, test } from '@utils/test/playwright';
 
-test.describe('accordion: basic', () => {
-  configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ config, title, screenshot }) => {
-    test(title('should not have visual regressions'), async ({ page }) => {
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ config, title, screenshot }) => {
+  test.describe(title('accordion: basic'), () => {
+    test('should not have visual regressions', async ({ page }) => {
       await page.goto('/src/components/accordion/test/basic', config);
       
       /**
@@ -66,9 +64,9 @@ test.describe('accordion: basic', () => {
 ```typescript
 import { configs, test } from '@utils/test/playwright';
 
-test.describe('accordion: basic', () => {
-  configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ config, title, screenshot }) => {
-    test(title('should not have visual regressions'), async ({ page }) => {
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ config, title, screenshot }) => {
+  test.describe(title('accordion: basic'), () => {
+    test('should not have visual regressions', async ({ page }) => {
       await page.goto('/src/components/accordion/test/basic', config);
       
       /**
