@@ -190,7 +190,7 @@
 // otherwise the .input-cover will not be rendered at all
 // The input cover is not clickable when the input is disabled
 .cloned-input {
-  @include position(0, null, null, 0);
+  @include position(0, null, 0, 0);
 
   position: absolute;
 
@@ -268,6 +268,8 @@
 
 .native-wrapper {
   display: flex;
+
+  position: relative;
 
   flex-grow: 1;
 
