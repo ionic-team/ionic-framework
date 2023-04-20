@@ -191,16 +191,18 @@ For this scenario, developers must write tests that target the tablet viewport. 
 **Example:** 
 
 ```javascript
-import { test, TabletViewport } from '@utils/test/playwright';
+import { configs, test, TabletViewport } from '@utils/test/playwright';
 
-...
+configs().forEach(({ config, title }) => {
+  test.describe(title('thing: rendering'), () => {
+    test('it should do a thing on tablet viewports', async ({ page }) => {
+      await page.setViewportSize(TabletViewport);
 
-test('it should do a thing on tablet viewports', async ({ page }) => {
-  await page.setViewportSize(TabletViewport);
+      ...
 
-  ...
-
-  // test logic goes here
+      // test logic goes here
+    });
+  });
 });
 ````
 
@@ -226,7 +228,7 @@ configs().forEach(({ config, title }) => {
 
 ✅ Correct
 
-Instead, we cam use a `toBeVisible` assertion to verify that `isOpen` does present a modal when `true`.
+Instead, we can use a `toBeVisible` assertion to verify that `isOpen` does present a modal when `true`.
 
 ```typescript
 configs().forEach(({ config, title }) => {
@@ -243,7 +245,7 @@ configs().forEach(({ config, title }) => {
 
 <h2 id="practice-test-computed">Avoid tests that compare computed values</h2>
 
-All browsers render web content in slightly different manners. Instead of testing computed values, screenshots are a great way to ensure that elements are being rendered in a consistent manner across browsers.
+All browsers render web content in slightly different manners. Instead of testing computed values such as exact pixel values, screenshots are a great way to ensure that elements are being rendered in a consistent manner across browsers.
 
 <h2 id="practice-positive-negative">Test for positive and negative cases</h2>
 
@@ -251,4 +253,4 @@ It’s important to test that your code works when the API is used as intended, 
 
 <h2 id="practice-test-config">Start your test with the configuration or layout in place if possible</h2>
 
-This allows tests to remain fast on continuous integration (CI) as we can focus on the test itself instead of navigating to the state where the test begins. For example, a simple [scrollIntoViewIfNeeded in Playwright](https://playwright.dev/docs/api/class-locator#locator-scroll-into-view-if-needed) can take around 300ms on CI. Since we run a single test for multiple configurations, that 300ms can add up quickly. Consider setting up your test in a way that the element you want to test is already in view when the test starts.
+This allows tests to remain fast on CI as we can focus on the test itself instead of navigating to the state where the test begins. For example, a simple [scrollIntoViewIfNeeded in Playwright](https://playwright.dev/docs/api/class-locator#locator-scroll-into-view-if-needed) can take around 300ms on CI. Since we run a single test for multiple configurations, that 300ms can add up quickly. Consider setting up your test in a way that the element you want to test is already in view when the test starts.
