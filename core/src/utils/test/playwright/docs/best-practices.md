@@ -32,8 +32,6 @@ This is the only custom fixture you need. All of the other fixtures such as `exp
 
 Tests should be broken up per-feature. This makes it easy for team members to quickly find tests for a particular feature. Additionally, the names of test directories should use kebab-case.
 
-At a minimum, each component with a `tests` directory must also have a `basic` directory with an `index.html` file. This is done so team members can easily paste usage examples to test out when developing or reviewing PRs. The `basic` directory may have E2E tests, but they should be limited to testing the default (or basic) behavior of a component.
-
 ```diff
 basic/component.e2e.ts
 feature-a/component.e2e.ts
@@ -83,7 +81,7 @@ In the event you need multiple E2E files per directory, add a modifier to the fi
 
 <h2 id="practice-basic">Ensure each component has a `basic` test directory with an `index.html` file</h2>
 
-Each component should have a `basic` test directory with an `index.html` file to let developers easily test components in their browser.
+At a minimum, each component with a `tests` directory must also have a `basic` directory with an `index.html` file. This is done so team members can easily paste usage examples to test out when developing or reviewing PRs. The `basic` directory may have E2E tests, but they should be limited to testing the default (or basic) behavior of a component.
 
 <h2 id="practice-test-describe">Use `test.describe` blocks to describe groups of tests</h2>
 
