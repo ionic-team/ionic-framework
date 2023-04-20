@@ -28,10 +28,12 @@ const testAria = async (
   expect(ariaDescribedBy).toBe(expectedAriaDescribedBy);
 };
 
-test.describe('alert: a11y', () => {
-  configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
-    test(title('should not have accessibility violations when header and message are defined'), async ({ page }) => {
+configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
+  test.describe(title('alert: a11y'), () => {
+    test.beforeEach(async ({ page }) => {
       await page.goto(`/src/components/alert/test/a11y`, config);
+    });
+    test('should not have accessibility violations when header and message are defined', async ({ page }) => {
       const didPresent = await page.spyOnEvent('ionAlertDidPresent');
       const button = page.locator('#bothHeaders');
       await button.click();
@@ -42,23 +44,19 @@ test.describe('alert: a11y', () => {
       expect(results.violations).toEqual([]);
     });
 
-    test(title('should have aria-labelledby when header is set'), async ({ page }) => {
-      await page.goto(`/src/components/alert/test/a11y`, config);
+    test('should have aria-labelledby when header is set', async ({ page }) => {
       await testAria(page, 'noMessage', 'alert-1-hdr', null);
     });
 
-    test(title('should have aria-describedby when message is set'), async ({ page }) => {
-      await page.goto(`/src/components/alert/test/a11y`, config);
+    test('should have aria-describedby when message is set', async ({ page }) => {
       await testAria(page, 'noHeaders', null, 'alert-1-msg');
     });
 
-    test(title('should fall back to subHeader for aria-labelledby if header is not defined'), async ({ page }) => {
-      await page.goto(`/src/components/alert/test/a11y`, config);
+    test('should fall back to subHeader for aria-labelledby if header is not defined', async ({ page }) => {
       await testAria(page, 'subHeaderOnly', 'alert-1-sub-hdr', 'alert-1-msg');
     });
 
-    test(title('should allow for manually specifying aria attributes'), async ({ page }) => {
-      await page.goto(`/src/components/alert/test/a11y`, config);
+    test('should allow for manually specifying aria attributes', async ({ page }) => {
       await testAria(page, 'customAria', 'Custom title', 'Custom description');
     });
   });
