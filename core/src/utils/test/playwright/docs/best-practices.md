@@ -99,21 +99,28 @@ test.describe('button: disabled state', () => {
 });
 ```
 
-## Place `configs` generator inside `test.describe` block
+## Place `configs` generator outside the `test.describe` block
 
-The `configs()` generator should be done inside of `test.describe` block. Putting the `test.describe` block in the `forEach` callback of your generator configs will cause multiple `test.describe` calls to be made.
+The `configs()` generator should be done outside of the `test.describe` block. The benefit of this is it lets you use `test.beforeEach` to run a common `page.goto` or `page.setContent` while passing in the correct config.
 
 ❌ Incorrect
 
 ```typescript
 import { configs test } from '@utils/test/playwright';
 
-// This causes one `test.describe` block to be generated for each config
-configs().forEach(({ config, title }) => {
-  test.describe('button: disabled state', () => {
-      test(title('should not have any visual regressions'), async ({ page }) => {
-        ...
-      });
+test.describe('button: disabled state', () => {
+  configs().forEach(({ config, title }) => {
+    /**
+     * This will generate a `test.beforeEach` for each test
+     * config, and all of the generated `test.beforeEach` blocks
+     * will be run on each test.
+     */
+    test.beforeEach(async ({ page }) => {
+      await page.goto('/src/components/button/test', config);
+    });
+    
+    test(title('should not have any visual regressions'), async ({ page }) => {
+      ...
     });
   });
 });
@@ -124,18 +131,23 @@ configs().forEach(({ config, title }) => {
 ```typescript
 import { configs test } from '@utils/test/playwright';
 
-test.describe('button: disabled state', () => {
-  configs().forEach(({ config, title }) => {
+configs().forEach(({ config, title }) => {
+  test.describe('button: disabled state', () => {
+    /**
+     * This will generate one `test.beforeEach` for
+     * each `test.describe` block rather than for
+     * each `test` inside of the `test.describe` block.
+     */
+    test.beforeEach(async ({ page }) => {
+      await page.goto('/src/components/button/test', config);
+    });
+    
     test(title('should not have any visual regressions'), async ({ page }) => {
       ...
     });
   });
 });
 ```
-
-## Do not place `beforeEach` calls inside of a `configs()` callback
-
-Placing `beforeEach` inside of 
 
 ## Use standard viewport sizes
 
