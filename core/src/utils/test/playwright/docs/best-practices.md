@@ -237,6 +237,4 @@ It’s important to test that your code works when the API is used as intended, 
 
 <h2 id="practice-test-config">Start your test with the configuration or layout in place if possible</h2>
 
-## Start your test with the configuration or layout in place if possible
-
 This allows tests to remain fast on continuous integration (CI) as we can focus on the test itself instead of navigating to the state where the test begins. For example, a simple [scrollIntoViewIfNeeded in Playwright](https://playwright.dev/docs/api/class-locator#locator-scroll-into-view-if-needed) can take around 300ms on CI. Since we run a single test for multiple configurations, that 300ms can add up quickly. Consider setting up your test in a way that the element you want to test is already in view when the test starts.
