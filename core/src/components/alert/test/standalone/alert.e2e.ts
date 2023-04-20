@@ -1,9 +1,9 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-test.describe('alert: standalone', () => {
-  configs().forEach(({ config, screenshot, title }) => {
-    test(title('should not have visual regressions'), async ({ page }) => {
+configs().forEach(({ config, screenshot, title }) => {
+  test.describe(title('alert: standalone'), () => {
+    test('should not have visual regressions', async ({ page }) => {
       await page.goto(`/src/components/alert/test/standalone`, config);
 
       const alert = page.locator('ion-alert');
