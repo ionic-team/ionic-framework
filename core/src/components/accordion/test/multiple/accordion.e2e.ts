@@ -1,9 +1,9 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-test.describe('accordion: multiple', () => {
-  configs({ directions: ['ltr'] }).forEach(({ config, screenshot, title }) => {
-    test(title('should update value and visually expand items'), async ({ page }) => {
+configs({ directions: ['ltr'] }).forEach(({ config, screenshot, title }) => {
+  test.describe(title('accordion: multiple'), () => {
+    test('should update value and visually expand items', async ({ page }) => {
       await page.goto(`/src/components/accordion/test/multiple`, config);
       const accordionGroup = page.locator('ion-accordion-group');
       const diningHeader = page.locator('ion-accordion[value="dining"] ion-item[slot="header"]');

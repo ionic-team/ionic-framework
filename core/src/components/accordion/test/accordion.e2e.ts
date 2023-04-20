@@ -1,21 +1,22 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-test.describe('accordion: states', () => {
-  configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ config, title }) => {
-    test(title('should properly set readonly on child accordions'), async ({ page }) => {
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ config, title }) => {
+  test.describe(title('accordion: states'), () => {
+    test.beforeEach(async ({ page }) => {
       await page.setContent(
         `
-        <ion-accordion-group animated="false">
-          <ion-accordion>
-            <ion-item slot="header">Label</ion-item>
-            <div slot="content">Content</div>
-          </ion-accordion>
-        </ion-accordion-group>
-      `,
+      <ion-accordion-group animated="false">
+        <ion-accordion>
+          <ion-item slot="header">Label</ion-item>
+          <div slot="content">Content</div>
+        </ion-accordion>
+      </ion-accordion-group>
+    `,
         config
       );
-
+    });
+    test('should properly set readonly on child accordions', async ({ page }) => {
       const accordionGroup = page.locator('ion-accordion-group');
       const accordion = page.locator('ion-accordion');
 
@@ -30,19 +31,7 @@ test.describe('accordion: states', () => {
       await expect(accordion).toHaveJSProperty('readonly', true);
     });
 
-    test(title('should properly set disabled on child accordions'), async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-accordion-group animated="false">
-          <ion-accordion>
-            <ion-item slot="header">Label</ion-item>
-            <div slot="content">Content</div>
-          </ion-accordion>
-        </ion-accordion-group>
-      `,
-        config
-      );
-
+    test('should properly set disabled on child accordions', async ({ page }) => {
       const accordionGroup = page.locator('ion-accordion-group');
       const accordion = page.locator('ion-accordion');
 
