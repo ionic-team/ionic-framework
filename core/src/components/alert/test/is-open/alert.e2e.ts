@@ -1,10 +1,12 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-test.describe('alert: isOpen', () => {
-  configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ config, title }) => {
-    test(title('should open the alert'), async ({ page }) => {
+configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ config, title }) => {
+  test.describe(title('alert: isOpen'), () => {
+    test.beforeEach(async ({ page }) => {
       await page.goto('/src/components/alert/test/isOpen', config);
+    });
+    test('should open the alert', async ({ page }) => {
       const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
       const alert = page.locator('ion-alert');
 
@@ -14,8 +16,7 @@ test.describe('alert: isOpen', () => {
       await expect(alert).toBeVisible();
     });
 
-    test(title('should open the alert then close after a timeout'), async ({ page }) => {
-      await page.goto('/src/components/alert/test/isOpen', config);
+    test('should open the alert then close after a timeout', async ({ page }) => {
       const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
       const ionAlertDidDismiss = await page.spyOnEvent('ionAlertDidDismiss');
       const alert = page.locator('ion-alert');
