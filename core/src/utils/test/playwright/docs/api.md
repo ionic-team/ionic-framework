@@ -28,8 +28,10 @@ The default [`test` function](https://playwright.dev/docs/api/class-test) has be
 import { configs, test } from '@utils/test/playwright';
 
 configs().forEach(({ config, title }) => {
-  test(title('my custom test'), ({ page }) => {
-    await page.goto('path/to/file', config);
+  test.describe(title('my test block'), () => {
+    test('my custom test', ({ page }) => {
+      await page.goto('path/to/file', config);
+    });
   });
 });
 ```
@@ -66,10 +68,12 @@ Deprecated: Use a [generator](#generators) instead.
 import { configs, test } from '@utils/test/playwright';
 
 configs().forEach(({ config, title }) => {
-  test(title('my custom test'), ({ page, skip }) => {
-    skip.browser('webkit', 'This test does not work in WebKit yet.');
-
-    await page.goto('path/to/file', config);
+  test.describe(title('my test block'), () => {
+    test('my custom test', ({ page, skip }) => {
+      skip.browser('webkit', 'This test does not work in WebKit yet.');
+  
+      await page.goto('path/to/file', config);
+    });
   });
 });
 ```
@@ -79,10 +83,12 @@ configs().forEach(({ config, title }) => {
 import { configs, test } from '@utils/test/playwright';
 
 configs().forEach(({ config, title }) => {
-  test(title('my custom test'), ({ page, skip }) => {
-    skip.browser((browserName: string) => browserName !== 'webkit', 'This tests a WebKit-specific behavior.');
-
-    await page.goto('path/to/file', config);
+  test.describe(title('my test block'), () => {
+    test('my custom test', ({ page, skip }) => {
+      skip.browser((browserName: string) => browserName !== 'webkit', 'This tests a WebKit-specific behavior.');
+  
+      await page.goto('path/to/file', config);
+    });
   });
 });
 ```
@@ -113,8 +119,10 @@ The [page fixture](https://playwright.dev/docs/test-fixtures) has been extended 
 import { configs, test } from '@utils/test/playwright';
 
 configs().forEach(({ config, title }) => {
-  test(title('my custom test'), ({ page }) => {
-    await page.goto('src/components/test/alert/test/basic', config);
+  test.describe(title('my test block'), () => {
+    test('my custom test', ({ page }) => {
+      await page.goto('src/components/test/alert/test/basic', config);
+    });
   });
 });
 ```
@@ -127,15 +135,17 @@ configs().forEach(({ config, title }) => {
 import { configs, test } from '@utils/test/playwright';
 
 configs().forEach(({ config, title }) => {
-  test(title('my custom test'), ({ page }) => {
-    await page.setContenet(`
-      <ion-button>My Button</ion-button>
-      <style>
-        ion-button {
-          --background: green;
-        }
-      </style>
-    `, config);
+  test.describe(title('my test block'), () => {
+    test('my custom test', ({ page }) => {
+      await page.setContent(`
+        <ion-button>My Button</ion-button>
+        <style>
+          ion-button {
+            --background: green;
+          }
+        </style>
+      `, config);
+    });
   });
 });
 ```
@@ -148,16 +158,18 @@ Locators can be used even if the target element is not in the DOM yet.
 import { configs, test } from '@utils/test/playwright';
 
 configs().forEach(({ config, title }) => {
-  test(title('my custom test'), ({ page }) => {
-    await page.goto('src/components/test/alert/test/basic', config);
-    
-    // Alert is not in the DOM yet
-    const alert = page.locator('ion-alert');
-    
-    await page.click('#open-alert');
-    
-    // Alert is in the DOM
-    await expect(alert).toBeVisible();
+  test.describe(title('my test block'), () => {
+    test('my custom test', ({ page }) => {
+      await page.goto('src/components/test/alert/test/basic', config);
+      
+      // Alert is not in the DOM yet
+      const alert = page.locator('ion-alert');
+      
+      await page.click('#open-alert');
+      
+      // Alert is in the DOM
+      await expect(alert).toBeVisible();
+    });
   });
 });
 ```
@@ -170,12 +182,14 @@ configs().forEach(({ config, title }) => {
 import { configs, test } from '@utils/test/playwright';
 
 configs().forEach(({ config, screenshot, title }) => {
-  test(title('my custom test'), ({ page }) => {
-    await page.goto('src/components/test/alert/test/basic', config);
-    
-    await page.setIonViewport();
-    
-    await expect(page).toHaveScreenshot(screenshot('alert'));  
+  test.describe(title('my test block'), () => {
+    test('my custom test', ({ page }) => {
+      await page.goto('src/components/test/alert/test/basic', config);
+      
+      await page.setIonViewport();
+      
+      await expect(page).toHaveScreenshot(screenshot('alert'));  
+    });
   });
 });
 ```
@@ -188,15 +202,17 @@ configs().forEach(({ config, screenshot, title }) => {
 import { configs, test } from '@utils/test/playwright';
 
 configs().forEach(({ config, title }) => {
-  test(title('my custom test'), ({ page }) => {
-    await page.goto('src/components/test/modal/test/basic', config);
-    
-    const modal = page.locator('ion-modal');
-    
-    await modal.evaluate((el: HTMLIonModalElement) => el.canDismiss = false);
-    
-    // Wait for Stencil to re-render with the canDismiss changes
-    await page.waitForChanges();
+  test.describe(title('my test block'), () => {
+    test('my custom test', ({ page }) => {
+      await page.goto('src/components/test/modal/test/basic', config);
+      
+      const modal = page.locator('ion-modal');
+      
+      await modal.evaluate((el: HTMLIonModalElement) => el.canDismiss = false);
+      
+      // Wait for Stencil to re-render with the canDismiss changes
+      await page.waitForChanges();
+    });
   });
 });
 ```
@@ -207,16 +223,18 @@ configs().forEach(({ config, title }) => {
 import { configs, test } from '@utils/test/playwright';
 
 configs().forEach(({ config, screenshot, title }) => {
-  test(title('my custom test'), ({ page }) => {
-    await page.goto('src/components/test/modal/test/basic', config);
-    
-    // Create spy to listen for event
-    const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
-    
-    await page.click('#present-modal');
-    
-    // Wait for the next emission of `ionModalDidPresent`
-    await ionModalDidPresent.next();
+  test.describe(title('my test block'), () => {
+    test('my custom test', ({ page }) => {
+      await page.goto('src/components/test/modal/test/basic', config);
+      
+      // Create spy to listen for event
+      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
+      
+      await page.click('#present-modal');
+      
+      // Wait for the next emission of `ionModalDidPresent`
+      await ionModalDidPresent.next();
+    });
   });
 });
 ```
@@ -247,8 +265,10 @@ import { configs, test } from '@utils/test/playwright';
  * Material Design, RTL
  */
 configs().forEach(({ config, title }) => {
-  test(title('my custom test'), ({ page }) => {
-    ...
+  test.describe(title('my test block'), () => {
+    test('my custom test', ({ page }) => {
+      ...
+    });
   });
 });
 ```
@@ -263,8 +283,10 @@ import { configs, test } from '@utils/test/playwright';
  * iOS, RTL
  */
 configs({ mode: ['ios'] }).forEach(({ config, title }) => {
-  test(title('my custom test'), ({ page }) => {
-    ...
+  test.describe(title('my test block'), () => {
+    test('my custom test', ({ page }) => {
+      ...
+    });
   });
 });
 ```
@@ -279,8 +301,10 @@ import { configs, test } from '@utils/test/playwright';
  * iOS, RTL
  */
 configs({ directions: ['rtl'] }).forEach(({ config, title }) => {
-  test(title('my custom test'), ({ page }) => {
-    ...
+  test.describe(title('my test block'), () => {
+    test('my custom test', ({ page }) => {
+      ...
+    });
   });
 });
 ```
@@ -306,30 +330,34 @@ Each value in the array returns by `configs` contains the following information:
 import { configs, test } from '@utils/test/playwright';
 
 configs().forEach(({ config, title }) => {
-  
   /**
    * Use the "title" function to generate 
-   * a "my custom test" title with the test 
+   * a "my test block" title with the test 
    * config appended to make it unique.
-   * Example: my custom test ios/ltr
+   * Example: my test block ios/ltr
+   * Using "title" on the describe block
+   * avoids the need to use "title" on each
+   * inner test block.
    */
-  test(title('my custom test'), ({ page }) => {
-    
-    /**
-     * Pass a single config object to
-     * load the page with the correct mode,
-     * text direction, and theme.
-     */
-    await page.goto('/src/components/alert/test/basic', config);
-    
-    /**
-     * Use the "screenshot" function to generate
-     * a "alert" screenshot title with the test
-     * config appended to make it unique. Playwright
-     * will also append the browser and platform.
-     * Example: alert-ios-ltr-chrome-linux.png
-     */
-    await expect(page).toHaveScreenshot(screenshot('alert'));  
+  test.describe(title('my test block'), () => {
+    test('my custom test', ({ page }) => {
+      
+      /**
+       * Pass a single config object to
+       * load the page with the correct mode,
+       * text direction, and theme.
+       */
+      await page.goto('/src/components/alert/test/basic', config);
+      
+      /**
+       * Use the "screenshot" function to generate
+       * a "alert" screenshot title with the test
+       * config appended to make it unique. Playwright
+       * will also append the browser and platform.
+       * Example: alert-ios-ltr-chrome-linux.png
+       */
+      await expect(page).toHaveScreenshot(screenshot('alert'));  
+    });
   });
 });
 ```
@@ -356,18 +384,20 @@ Playwright comes with [a set of matchers to do test assertions](https://playwrig
 import { configs, test } from '@utils/test/playwright';
 
 configs().forEach(({ config, screenshot, title }) => {
-  test(title('my custom test'), ({ page }) => {
-    await page.setContent(`
-      <ion-input label="Email"></ion-input>
-    `, config);
-    
-    const ionChange = await page.spyOnEvent('ionChange');
-    const input = page.locator('ion-input');
-    
-    await input.type('hi@ionic.io');
-
-    // In this case you can also use await ionChange.next();
-    await expect(ionChange).toHaveReceivedEvent();
+  test.describe(title('my test block'), () => {
+    test('my custom test', ({ page }) => {
+      await page.setContent(`
+        <ion-input label="Email"></ion-input>
+      `, config);
+      
+      const ionChange = await page.spyOnEvent('ionChange');
+      const input = page.locator('ion-input');
+      
+      await input.type('hi@ionic.io');
+  
+      // In this case you can also use await ionChange.next();
+      await expect(ionChange).toHaveReceivedEvent();
+    });
   });
 });
 ```
@@ -378,18 +408,20 @@ configs().forEach(({ config, screenshot, title }) => {
 import { configs, test } from '@utils/test/playwright';
 
 configs().forEach(({ config, screenshot, title }) => {
-  test(title('my custom test'), ({ page }) => {
-    await page.setContent(`
-      <ion-input label="Email"></ion-input>
-    `, config);
-    
-    const ionChange = await page.spyOnEvent('ionChange');
-    const input = page.locator('ion-input');
-    
-    await input.type('hi@ionic.io');
-
-    await ionChange.next();
-    await expect(ionChange).toHaveReceivedEventDetail({ value: 'hi@ionic.io' });
+  test.describe(title('my test block'), () => {
+    test('my custom test', ({ page }) => {
+      await page.setContent(`
+        <ion-input label="Email"></ion-input>
+      `, config);
+      
+      const ionChange = await page.spyOnEvent('ionChange');
+      const input = page.locator('ion-input');
+      
+      await input.type('hi@ionic.io');
+  
+      await ionChange.next();
+      await expect(ionChange).toHaveReceivedEventDetail({ value: 'hi@ionic.io' });
+    });
   });
 });
 ```
@@ -400,23 +432,25 @@ configs().forEach(({ config, screenshot, title }) => {
 import { configs, test } from '@utils/test/playwright';
 
 configs().forEach(({ config, screenshot, title }) => {
-  test(title('my custom test'), ({ page }) => {
-    await page.setContent(`
-      <ion-input label="Email"></ion-input>
-    `, config);
-    
-    const ionChange = await page.spyOnEvent('ionChange');
-    const input = page.locator('ion-input');
-    
-    await input.type('hi@ionic.io');
-
-    await ionChange.next();
-    
-    await input.type('goodbye@ionic.io');
-    
-    await ionChange.next();
-    
-    await expect(ionChange).toHaveReceivedEventTimes(2);
+  test.describe(title('my test block'), () => {
+    test('my custom test', ({ page }) => {
+      await page.setContent(`
+        <ion-input label="Email"></ion-input>
+      `, config);
+      
+      const ionChange = await page.spyOnEvent('ionChange');
+      const input = page.locator('ion-input');
+      
+      await input.type('hi@ionic.io');
+  
+      await ionChange.next();
+      
+      await input.type('goodbye@ionic.io');
+      
+      await ionChange.next();
+      
+      await expect(ionChange).toHaveReceivedEventTimes(2);
+    });
   });
 });
 ```

@@ -7,6 +7,7 @@ This guide details best practices that should be followed when writing E2E tests
 - [Use the customized `test` function](#practice-test)
 - [Break up test directories per-feature](#practice-per-feature)
 - [Follow the file format](#practice-file-format)
+- [Ensure each component has a `basic` test directory with an `index.html` file](#practice-basic)
 - [Use `test.describe` blocks to describe groups of tests](#practice-test-describe)
 - [Place `configs` generator outside the `test.describe` block](#practice-config-describe)
 - [Test rendering and functionality in separate `test.describe` blocks](#practice-describe-type)
@@ -79,6 +80,10 @@ In the event you need multiple E2E files per directory, add a modifier to the fi
   modal-controller.e2e.ts // E2E tests for ion-modal via modalController
   modal-inline.e2e.ts  // E2E tests for ion-modal via <ion-modal>
 ```
+
+<h2 id="practice-basic">Ensure each component has a `basic` test directory with an `index.html` file</h2>
+
+Each component should have a `basic` test directory with an `index.html` file to let developers easily test components in their browser.
 
 <h2 id="practice-test-describe">Use `test.describe` blocks to describe groups of tests</h2>
 
