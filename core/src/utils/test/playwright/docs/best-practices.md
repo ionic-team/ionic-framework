@@ -74,12 +74,13 @@ Each E2E test file should have at least 1 `test.describe` block which defines th
 ```tsx
 // src/components/button/test/basic/button.e2e.ts
 
-import { test } from '@utils/test/playwright';
+import { configs, test } from '@utils/test/playwright';
 
-test.describe('button: disabled state', () => {
-  ...
+configs().forEach(({ title }) => {
+  test.describe(title('button: disabled state'), () => {
+    ...
+  });
 });
-
 ```
 
 There should be one or more `test` blocks which have individual tests. The test name describes what the test should do.
@@ -89,19 +90,20 @@ There should be one or more `test` blocks which have individual tests. The test 
 ```jsx
  // src/components/button/test/basic/button.e2e.ts
 
-import { test } from '@utils/test/playwright';
-import { expect } from '@playwright/test';
+import { configs, test } from '@utils/test/playwright';
 
-test.describe('button: disabled state', () => {
-  test('should not have any visual regressions', async ({ page }) => {
-    ...
+configs().forEach(({ title }) => {
+  test.describe(title('button: disabled state'), () => {
+    test('should not have any visual regressions', async ({ page }) => {
+      ...
+    });
   });
 });
 ```
 
 ## Place `configs` generator outside the `test.describe` block
 
-The `configs()` generator should be done outside of the `test.describe` block. The benefit of this is it lets you use `test.beforeEach` to run a common `page.goto` or `page.setContent` while passing in the correct config.
+The `configs()` generator should be done outside of the `test.describe` block. The benefit of this is it lets you use `test.beforeEach` to run a common `page.goto` or `page.setContent` while passing in the correct config. It also lets you use the `title` function just on the `test.describe` block instead of each `test` inside the block.
 
 ❌ Incorrect
 
@@ -132,7 +134,7 @@ test.describe('button: disabled state', () => {
 import { configs test } from '@utils/test/playwright';
 
 configs().forEach(({ config, title }) => {
-  test.describe('button: disabled state', () => {
+  test.describe(title('button: disabled state'), () => {
     /**
      * This will generate one `test.beforeEach` for
      * each `test.describe` block rather than for
@@ -142,7 +144,11 @@ configs().forEach(({ config, title }) => {
       await page.goto('/src/components/button/test', config);
     });
     
-    test(title('should not have any visual regressions'), async ({ page }) => {
+    /**
+     * Test title is still unique because of our use of title()
+     * on the test.describe block.
+     */
+    test('should not have any visual regressions', async ({ page }) => {
       ...
     });
   });
@@ -159,6 +165,8 @@ For this scenario, developers must write tests that target the tablet viewport. 
 
 ```javascript
 import { test, TabletViewport } from '@utils/test/playwright';
+
+...
 
 test('it should do a thing on tablet viewports', async ({ page }) => {
   await page.setViewportSize(TabletViewport);
