@@ -1,11 +1,12 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-test.describe('action sheet: isOpen', () => {
-  configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ config, title }) => {
-    test(title('should open the action sheet'), async ({ page }) => {
+configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ config, title }) => {
+  test.describe(title('action sheet: isOpen'), () => {
+    test.beforeEach(async ({ page }) => {
       await page.goto('/src/components/action-sheet/test/isOpen', config);
-
+    });
+    test('should open the action sheet', async ({ page }) => {
       const ionActionSheetDidPresent = await page.spyOnEvent('ionActionSheetDidPresent');
       const actionSheet = page.locator('ion-action-sheet');
 
@@ -15,9 +16,7 @@ test.describe('action sheet: isOpen', () => {
       await expect(actionSheet).toBeVisible();
     });
 
-    test(title('should open the action sheet then close after a timeout'), async ({ page }) => {
-      await page.goto('/src/components/action-sheet/test/isOpen', config);
-
+    test('should open the action sheet then close after a timeout', async ({ page }) => {
       const ionActionSheetDidPresent = await page.spyOnEvent('ionActionSheetDidPresent');
       const ionActionSheetDidDismiss = await page.spyOnEvent('ionActionSheetDidDismiss');
       const actionSheet = page.locator('ion-action-sheet');
