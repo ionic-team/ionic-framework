@@ -42,20 +42,14 @@ configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
     });
 
     test('should have aria-labelledby when header is set', async ({ page }) => {
-      await page.goto(`/src/components/action-sheet/test/a11y`, config);
-
       await testAria(page, 'bothHeaders', 'action-sheet-1-header');
     });
 
     test('should not have aria-labelledby when header is not set', async ({ page }) => {
-      await page.goto(`/src/components/action-sheet/test/a11y`, config);
-
       await testAria(page, 'noHeaders', null);
     });
 
     test('should allow for manually specifying aria attributes', async ({ page }) => {
-      await page.goto(`/src/components/action-sheet/test/a11y`, config);
-
       await testAria(page, 'customAria', 'Custom title');
     });
   });
