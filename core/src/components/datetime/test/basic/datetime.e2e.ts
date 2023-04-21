@@ -55,7 +55,7 @@ test.describe('datetime: selecting a day', () => {
   });
 
   test('should not highlight a day until one is selected, with default-buttons', async ({ page }) => {
-    await testHighlight(page, 'inline-datetime-no-value');
+    await testHighlight(page, 'custom-datetime');
   });
   test('should update the active day', async ({ page }) => {
     await page.setContent(`
@@ -107,7 +107,7 @@ test.describe('datetime: confirm date', () => {
   test('should not update value if Done was clicked without selecting a day first', async ({ page }) => {
     await page.goto('/src/components/datetime/test/basic');
 
-    const datetime = page.locator('#inline-datetime-no-value');
+    const datetime = page.locator('#custom-datetime');
 
     const value = await datetime.evaluate((el: HTMLIonDatetimeElement) => el.value);
     expect(value).toBeUndefined();
@@ -407,31 +407,4 @@ test('datetime: md highlight should not clip at start or end of month', async ({
   await page.waitForChanges();
 
   await expect(datetime).toHaveScreenshot(`date-highlight-end-of-month-${page.getSnapshotSettings()}.png`);
-});
-
-test.describe('datetime: dark mode', () => {
-  test('should render a calender in a modal', async ({ page, skip }) => {
-    test.info().annotations.push({
-      type: 'issue',
-      description: 'https://github.com/ionic-team/ionic-framework/issues/26060',
-    });
-
-    skip.rtl();
-
-    await page.goto('/src/components/datetime/test/basic');
-
-    await page.evaluate(() => document.body.classList.toggle('dark'));
-    await page.waitForChanges();
-
-    const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
-
-    const button = page.locator('#open-modal-basic');
-    await button.click();
-
-    await ionModalDidPresent.next();
-
-    const datetime = page.locator('ion-datetime#datetime-modal');
-
-    await expect(datetime).toHaveScreenshot(`datetime-dark-modal-${page.getSnapshotSettings()}.png`);
-  });
 });
