@@ -9,6 +9,8 @@ import { setScrollPadding, setClearScrollPaddingListener } from './scroll-paddin
 
 let currentPadding = 0;
 
+const SKIP_SCROLL_ASSIST = 'data-ionic-skip-scroll-assist';
+
 export const enableScrollAssist = (
   componentEl: HTMLElement,
   inputEl: HTMLInputElement | HTMLTextAreaElement,
@@ -37,6 +39,16 @@ export const enableScrollAssist = (
    * mobile Safari from adjusting the viewport.
    */
   const focusIn = async () => {
+    /**
+     * Scroll assist should not run again
+     * on inputs that have been manually
+     * focused inside of the scroll assist
+     * implementation.
+     */
+    if (inputEl.hasAttribute(SKIP_SCROLL_ASSIST)) {
+      inputEl.removeAttribute(SKIP_SCROLL_ASSIST);
+      return;
+    }
     jsSetFocus(componentEl, inputEl, contentEl, footerEl, keyboardHeight, addScrollPadding, disableClonedInput);
   };
   componentEl.addEventListener('focusin', focusIn, true);
@@ -44,6 +56,15 @@ export const enableScrollAssist = (
   return () => {
     componentEl.removeEventListener('focusin', focusIn, true);
   };
+};
+
+/**
+ * Use this function when you want to manually
+ * focus an input but not have scroll assist run again.
+ */
+const setManualFocus = (el: HTMLElement) => {
+  el.setAttribute(SKIP_SCROLL_ASSIST, 'true');
+  el.focus();
 };
 
 const jsSetFocus = async (
@@ -63,7 +84,7 @@ const jsSetFocus = async (
   if (contentEl && Math.abs(scrollData.scrollAmount) < 4) {
     // the text input is in a safe position that doesn't
     // require it to be scrolled into view, just set focus now
-    inputEl.focus();
+    setManualFocus(inputEl);
 
     /**
      * Even though the input does not need
@@ -75,7 +96,6 @@ const jsSetFocus = async (
      * see the page jump.
      */
     if (enableScrollPadding && contentEl !== null) {
-      currentPadding += scrollData.scrollPadding;
       setScrollPadding(contentEl, currentPadding);
       setClearScrollPaddingListener(inputEl, contentEl, () => (currentPadding = 0));
     }
@@ -87,7 +107,7 @@ const jsSetFocus = async (
   // doesn't freak out while it's trying to get the input in place
   // at this point the native text input still does not have focus
   relocateInput(componentEl, inputEl, true, scrollData.inputSafeY, disableClonedInput);
-  inputEl.focus();
+  setManualFocus(inputEl);
 
   /**
    * Relocating/Focusing input causes the
@@ -103,7 +123,7 @@ const jsSetFocus = async (
    * the keyboard.
    */
   if (enableScrollPadding && contentEl) {
-    currentPadding += scrollData.scrollPadding;
+    currentPadding = scrollData.scrollPadding;
     setScrollPadding(contentEl, currentPadding);
   }
 
@@ -128,7 +148,7 @@ const jsSetFocus = async (
       relocateInput(componentEl, inputEl, false, scrollData.inputSafeY);
 
       // ensure this is the focused input
-      inputEl.focus();
+      setManualFocus(inputEl);
 
       /**
        * When the input is about to be blurred
