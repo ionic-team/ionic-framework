@@ -17,6 +17,7 @@ This guide details best practices that should be followed when writing E2E tests
 - [Avoid tests that compare computed values](#practice-test-computed)
 - [Test for positive and negative cases](#practice-positive-negative)
 - [Start your test with the configuration or layout in place if possible](#practice-test-config)
+- [Place your test closest to the fix or feature](#practice-test-close)
 
 <h2 id="practice-test">Use the customized `test` function</h2>
 
@@ -254,3 +255,7 @@ It’s important to test that your code works when the API is used as intended, 
 <h2 id="practice-test-config">Start your test with the configuration or layout in place if possible</h2>
 
 This allows tests to remain fast on CI as we can focus on the test itself instead of navigating to the state where the test begins. For example, a simple [scrollIntoViewIfNeeded in Playwright](https://playwright.dev/docs/api/class-locator#locator-scroll-into-view-if-needed) can take around 300ms on CI. Since we run a single test for multiple configurations, that 300ms can add up quickly. Consider setting up your test in a way that the element you want to test is already in view when the test starts.
+
+<h2 id="practice-test-close">Place your test closest to the fix or feature</h2>
+
+Tests should be placed closest to where the fix or feature was implemented. This means that if a fix was written for `ion-button`, then the test should be placed in `src/components/button/tests`.
