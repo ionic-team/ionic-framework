@@ -29,6 +29,8 @@ jobs:
 
   release-ionic:
     needs: [create-nightly-hash]
+    permissions:
+      id-token: write
     uses: ./.github/workflows/release-ionic.yml
     with:
       tag: nightly

@@ -24,6 +24,8 @@ jobs:
 
   release-ionic:
     needs: [create-dev-hash]
+    permissions:
+      id-token: write
     uses: ./.github/workflows/release-ionic.yml
     with:
       tag: dev
