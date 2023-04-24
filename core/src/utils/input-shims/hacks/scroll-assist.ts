@@ -63,6 +63,13 @@ export const enableScrollAssist = (
  * focus an input but not have scroll assist run again.
  */
 const setManualFocus = (el: HTMLElement) => {
+  /**
+   * If element is already focused then
+   * a new focusin event will not be dispatched
+   * to remove the SKIL_SCROLL_ASSIST attribute.
+   */
+  if (document.activeElement === el) { return; }
+
   el.setAttribute(SKIP_SCROLL_ASSIST, 'true');
   el.focus();
 };
