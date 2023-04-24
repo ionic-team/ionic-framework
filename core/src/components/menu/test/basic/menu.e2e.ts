@@ -28,7 +28,7 @@ test.describe('menu: basic', () => {
     await page.click('#open-start');
     await ionDidOpen.next();
 
-    const button = await page.locator('#start-menu-button');
+    const button = page.locator('#start-menu-button');
 
     if (browserName === 'webkit') {
       await page.keyboard.down('Alt');

@@ -16,7 +16,7 @@ test.describe('card modal - scroll target', () => {
       await page.click('#card');
       await ionModalDidPresent.next();
 
-      const content = await page.locator('ion-modal .ion-content-scroll-host');
+      const content = page.locator('ion-modal .ion-content-scroll-host');
       await dragElementBy(content, page, 0, 500);
 
       await ionModalDidDismiss.next();
@@ -27,7 +27,7 @@ test.describe('card modal - scroll target', () => {
       await page.click('#card');
       await ionModalDidPresent.next();
 
-      const modal = await page.locator('ion-modal');
+      const modal = page.locator('ion-modal');
       const content = (await page.$('ion-modal .ion-content-scroll-host'))!;
 
       await content.evaluate((el: HTMLElement) => (el.scrollTop = 500));
@@ -44,7 +44,7 @@ test.describe('card modal - scroll target', () => {
       await page.click('#card');
       await ionModalDidPresent.next();
 
-      const content = await page.locator('ion-modal .ion-content-scroll-host');
+      const content = page.locator('ion-modal .ion-content-scroll-host');
       await dragElementBy(content, page, 0, 20);
 
       await expect(content).not.toHaveCSS('overflow', 'hidden');

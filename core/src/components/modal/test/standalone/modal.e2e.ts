@@ -11,7 +11,7 @@ test.describe('modal: standalone', () => {
     await page.click('#basic-modal');
     await ionModalDidPresent.next();
 
-    const modal = await page.locator('ion-modal');
+    const modal = page.locator('ion-modal');
     await modal.evaluate((el: HTMLIonModalElement) => el.dismiss());
 
     await ionModalDidDismiss.next();

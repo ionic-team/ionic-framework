@@ -8,7 +8,7 @@ test.describe.skip('select: async', () => {
     await page.goto(`/src/components/select/test/legacy/async`);
     const selectValueSet = await page.spyOnEvent('selectValueSet');
 
-    const select = await page.locator('#default');
+    const select = page.locator('#default');
 
     await selectValueSet.next();
 

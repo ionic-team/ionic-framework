@@ -17,14 +17,14 @@ test.describe('menu: focus trap', () => {
     await page.click('#open-menu-button');
     await ionDidOpen.next();
 
-    const menu = await page.locator('#menu');
+    const menu = page.locator('#menu');
     await expect(menu).toBeFocused();
 
-    const openModalButton = await page.locator('#open-modal-button');
+    const openModalButton = page.locator('#open-modal-button');
     await openModalButton.click();
     await ionModalDidPresent.next();
 
-    const modal = await page.locator('#modal');
+    const modal = page.locator('#modal');
     await expect(modal).toBeFocused();
 
     await modal.evaluate(async (el: HTMLIonModalElement) => {
@@ -45,13 +45,13 @@ test.describe('menu: focus trap', () => {
     await page.click('#open-menu-button');
     await ionDidOpen.next();
 
-    const menu = await page.locator('#menu');
+    const menu = page.locator('#menu');
     await expect(menu).toBeFocused();
 
     await page.click('#open-modal-button');
     await ionModalDidPresent.next();
 
-    const modal = await page.locator('#modal');
+    const modal = page.locator('#modal');
     await expect(modal).toBeFocused();
   });
 
@@ -63,13 +63,13 @@ test.describe('menu: focus trap', () => {
     await page.click('#open-menu-button');
     await ionDidOpen.next();
 
-    const menu = await page.locator('#menu');
+    const menu = page.locator('#menu');
     await expect(menu).toBeFocused();
 
     await page.click('#open-modal-button');
     await ionModalDidPresent.next();
 
-    const modal = await page.locator('#modal');
+    const modal = page.locator('#modal');
 
     await modal.evaluate(async (el: HTMLIonModalElement) => {
       await el.dismiss();
