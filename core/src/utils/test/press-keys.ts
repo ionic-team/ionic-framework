@@ -5,20 +5,16 @@ const CTRL = 'ctrl';
 const ALT = 'alt';
 const COMMAND = 'meta';
 
-let clipboardDataHolder: {
-  plainText: string;
-  html: string;
-} = {
-  plainText: '',
-  html: '',
-};
-
+/**
+ * Source: https://github.com/WordPress/gutenberg/blob/f0d0d569a06c42833670c9b5285d04a63968a220/packages/e2e-test-utils-playwright/src/page-utils/press-keys.ts
+ * Slimmed down version of WordPress' pressKeys utility.
+ */
 export class PageUtils {
   browser: Browser;
   page: Page;
   context: BrowserContext;
 
-  constructor({ page }: any) {
+  constructor({ page }: { page: Page }) {
     this.page = page;
     this.context = page.context();
     this.browser = this.context.browser()!;
@@ -41,51 +37,15 @@ const baseModifiers = {
   undefined: () => [],
 };
 
-async function emulateClipboard(page: Page, type: 'copy' | 'cut' | 'paste') {
-  clipboardDataHolder = await page.evaluate(
-    ([_type, _clipboardData]) => {
-      const clipboardDataTransfer = new DataTransfer();
-
-      if (_type === 'paste') {
-        clipboardDataTransfer.setData('text/plain', _clipboardData.plainText);
-        clipboardDataTransfer.setData('text/html', _clipboardData.html);
-      } else {
-        const selection = window.getSelection()!;
-        const plainText = selection.toString();
-        let html = plainText;
-        if (selection.rangeCount) {
-          const range = selection.getRangeAt(0);
-          const fragment = range.cloneContents();
-          html = Array.from(fragment.childNodes)
-            .map((node) => (node as Element).outerHTML ?? node.nodeValue)
-            .join('');
-        }
-        clipboardDataTransfer.setData('text/plain', plainText);
-        clipboardDataTransfer.setData('text/html', html);
-      }
-
-      document.activeElement?.dispatchEvent(
-        new ClipboardEvent(_type, {
-          bubbles: true,
-          cancelable: true,
-          clipboardData: clipboardDataTransfer,
-        })
-      );
-
-      return {
-        plainText: clipboardDataTransfer.getData('text/plain'),
-        html: clipboardDataTransfer.getData('text/html'),
-      };
-    },
-    [type, clipboardDataHolder] as const
-  );
-}
-
 const isAppleOS = () => process.platform === 'darwin';
-
 const isWebkit = (page: Page) => page.context().browser()!.browserType().name() === 'webkit';
-
 const browserCache = new WeakMap();
+
+/**
+ * Detects if the browser has natural tab navigation.
+ * Natural tab navigation means that the browser will focus the next element
+ * in the DOM when the tab key is pressed.
+ */
 const getHasNaturalTabNavigation = async (page: Page) => {
   if (!isAppleOS() || !isWebkit(page)) {
     return true;
@@ -116,28 +76,18 @@ const modifiers = {
 export async function pressKeys(this: PageUtils, key: string, { times, ...pressOptions }: Options = {}) {
   const hasNaturalTabNavigation = await getHasNaturalTabNavigation(this.page);
 
-  let command: () => Promise<void>;
-
-  if (key.toLowerCase() === 'primary+c') {
-    command = () => emulateClipboard(this.page, 'copy');
-  } else if (key.toLowerCase() === 'primary+x') {
-    command = () => emulateClipboard(this.page, 'cut');
-  } else if (key.toLowerCase() === 'primary+v') {
-    command = () => emulateClipboard(this.page, 'paste');
-  } else {
-    const keys = key.split('+').flatMap((keyCode) => {
-      if (Object.prototype.hasOwnProperty.call(modifiers, keyCode)) {
-        return modifiers[keyCode as keyof typeof modifiers](isAppleOS).map((modifier: any) =>
-          modifier === CTRL ? 'Control' : capitalCase(modifier)
-        );
-      } else if (keyCode === 'Tab' && !hasNaturalTabNavigation) {
-        return ['Alt', 'Tab'];
-      }
-      return keyCode;
-    });
-    const normalizedKeys = keys.join('+');
-    command = () => this.page.keyboard.press(normalizedKeys);
-  }
+  const keys = key.split('+').flatMap((keyCode) => {
+    if (Object.prototype.hasOwnProperty.call(modifiers, keyCode)) {
+      return modifiers[keyCode as keyof typeof modifiers](isAppleOS).map((modifier) =>
+        modifier === CTRL ? 'Control' : capitalCase(modifier)
+      );
+    } else if (keyCode === 'Tab' && !hasNaturalTabNavigation) {
+      return ['Alt', 'Tab'];
+    }
+    return keyCode;
+  });
+  const normalizedKeys = keys.join('+');
+  const command = () => this.page.keyboard.press(normalizedKeys);
 
   times = times ?? 1;
   for (let i = 0; i < times; i += 1) {
@@ -149,7 +99,6 @@ export async function pressKeys(this: PageUtils, key: string, { times, ...pressO
   }
 }
 
-// Function to convert a string to capital case
 function capitalCase(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
