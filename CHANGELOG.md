@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.4-nightly.20230424](https://github.com/ionic-team/ionic-framework/compare/v7.0.3...v7.0.4-nightly.20230424) (2023-04-24)
+
+
+### Bug Fixes
+
+* **ios:** scroll assist sizes input correctly ([#27253](https://github.com/ionic-team/ionic-framework/issues/27253)) ([a874992](https://github.com/ionic-team/ionic-framework/commit/a8749929e01b07043631fbc8c522d39cbc3ae798)), closes [#27249](https://github.com/ionic-team/ionic-framework/issues/27249)
+* **react:** nav will remove components from the DOM ([#25763](https://github.com/ionic-team/ionic-framework/issues/25763)) ([beb46bf](https://github.com/ionic-team/ionic-framework/commit/beb46bf9def466c4bf54aeed2b5ccdcfcf5cd579)), closes [#25753](https://github.com/ionic-team/ionic-framework/issues/25753)
+* **select:** adjust label alignment when in a card ([#27202](https://github.com/ionic-team/ionic-framework/issues/27202)) ([5a2b87c](https://github.com/ionic-team/ionic-framework/commit/5a2b87cbcc5c789d02b29e776e2b9768d7ad5631)), closes [#27086](https://github.com/ionic-team/ionic-framework/issues/27086)
+
+
+
+
+
 ## [7.0.3](https://github.com/ionic-team/ionic-framework/compare/v7.0.2...v7.0.3) (2023-04-19)
 
 

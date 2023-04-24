@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.4-nightly.20230424](https://github.com/ionic-team/ionic/compare/v7.0.3...v7.0.4-nightly.20230424) (2023-04-24)
+
+
+### Bug Fixes
+
+* **ios:** scroll assist sizes input correctly ([#27253](https://github.com/ionic-team/ionic/issues/27253)) ([a874992](https://github.com/ionic-team/ionic/commit/a8749929e01b07043631fbc8c522d39cbc3ae798)), closes [#27249](https://github.com/ionic-team/ionic/issues/27249)
+* **select:** adjust label alignment when in a card ([#27202](https://github.com/ionic-team/ionic/issues/27202)) ([5a2b87c](https://github.com/ionic-team/ionic/commit/5a2b87cbcc5c789d02b29e776e2b9768d7ad5631)), closes [#27086](https://github.com/ionic-team/ionic/issues/27086)
+
+
+
+
+
 ## [7.0.3](https://github.com/ionic-team/ionic/compare/v7.0.1...v7.0.3) (2023-04-19)
 
 
