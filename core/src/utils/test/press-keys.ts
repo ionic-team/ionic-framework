@@ -64,7 +64,13 @@ const getHasNaturalTabNavigation = async (page: Page) => {
 };
 
 type Options = {
+  /**
+   * Number of times to press the key.
+   */
   times?: number;
+  /**
+   * Delay between each key press in milliseconds.
+   */
   delay?: number;
 };
 
@@ -73,15 +79,30 @@ const modifiers = {
   shiftAlt: (_isApple: () => boolean) => (_isApple() ? [SHIFT, ALT] : [SHIFT, CTRL]),
 };
 
+/**
+ * Presses a key combination.
+ * @param key - Key combination to press.
+ * @param options - Options for the key press.
+ * @example
+ * ```ts
+ * await pressKeys('a');
+ * await pressKeys('a', { times: 2 });
+ * await pressKeys('a', { delay: 100 });
+ * await pressKeys('Shift+Tab');
+ * ```
+ */
 export async function pressKeys(this: PageUtils, key: string, { times, ...pressOptions }: Options = {}) {
   const hasNaturalTabNavigation = await getHasNaturalTabNavigation(this.page);
-
   const keys = key.split('+').flatMap((keyCode) => {
     if (Object.prototype.hasOwnProperty.call(modifiers, keyCode)) {
       return modifiers[keyCode as keyof typeof modifiers](isAppleOS).map((modifier) =>
         modifier === CTRL ? 'Control' : capitalCase(modifier)
       );
     } else if (keyCode === 'Tab' && !hasNaturalTabNavigation) {
+      /**
+       * If the browser does not have natural tab navigation, we need to
+       * simulate the tab key press by pressing the Alt key and the Tab key.
+       */
       return ['Alt', 'Tab'];
     }
     return keyCode;
@@ -99,6 +120,9 @@ export async function pressKeys(this: PageUtils, key: string, { times, ...pressO
   }
 }
 
+/**
+ * Capitalizes the first letter of a string.
+ */
 function capitalCase(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
