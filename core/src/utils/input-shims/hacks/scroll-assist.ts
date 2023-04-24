@@ -68,7 +68,9 @@ const setManualFocus = (el: HTMLElement) => {
    * a new focusin event will not be dispatched
    * to remove the SKIL_SCROLL_ASSIST attribute.
    */
-  if (document.activeElement === el) { return; }
+  if (document.activeElement === el) {
+    return;
+  }
 
   el.setAttribute(SKIP_SCROLL_ASSIST, 'true');
   el.focus();
