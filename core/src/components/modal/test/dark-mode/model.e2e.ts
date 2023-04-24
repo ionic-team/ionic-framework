@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
-test.describe.only('modal: dark mode', () => {
+test.describe('modal: dark mode', () => {
   test('should render the correct text color when outside ion-content', async ({ page, skip }) => {
     test.info().annotations.push({
       type: 'issue',
