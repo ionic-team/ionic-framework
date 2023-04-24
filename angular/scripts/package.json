@@ -5,7 +5,7 @@
   "keywords": [],
   "repository": {
     "type": "git",
-    "url": "https://github.com/ionic-team/ionic.git"
+    "url": "git+https://github.com/ionic-team/ionic-framework.git"
   },
   "license": "MIT",
   "main": "umd/index.js",

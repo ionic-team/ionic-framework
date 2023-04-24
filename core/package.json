@@ -99,7 +99,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ionic-team/ionic.git"
+    "url": "git+https://github.com/ionic-team/ionic-framework.git"
   },
   "bugs": {
     "url": "https://github.com/ionic-team/ionic/issues"
