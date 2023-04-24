@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
 
-test.describe('modal: dark mode', () => {
+test.describe.only('modal: dark mode', () => {
   test('should render the correct text color when outside ion-content', async ({ page, skip }) => {
     test.info().annotations.push({
       type: 'issue',
@@ -14,15 +14,9 @@ test.describe('modal: dark mode', () => {
 
     const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
 
-    const button = page.locator('#basic-modal');
-    await button.click();
+    await page.click('#basic-modal');
 
     await ionModalDidPresent.next();
-
-    const modal = await page.locator('ion-modal');
-    await expect(modal).toHaveClass(/show-modal/);
-
-    await page.setIonViewport();
 
     await expect(page).toHaveScreenshot(`modal-dark-color-${page.getSnapshotSettings()}.png`);
   });

@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
-    <title>Modal - Basic</title>
+    <title>Modal - Dark Mode</title>
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
@@ -201,7 +201,7 @@
       <div class="ion-page">
         <ion-header>
           <ion-toolbar>
-            <ion-title>Modal - Basic</ion-title>
+            <ion-title>Modal - Dark Mode</ion-title>
           </ion-toolbar>
         </ion-header>
 
@@ -209,7 +209,12 @@
           <div class="grid">
             <div class="grid-item">
               <h2>Outside "ion-content"</h2>
-              <ion-button id="basic-modal" onclick="presentModal()">Present modal</ion-button>
+              <ion-button id="basic-modal">Present modal</ion-button>
+              <ion-modal trigger="basic-modal">
+                <h1>Content of doom</h1>
+                <div>Here's some more content</div>
+                <ion-button class="dismiss">Dismiss Modal</ion-button>
+              </ion-modal>
             </div>
           </div>
         </ion-content>
@@ -223,38 +228,6 @@
       window.addEventListener('ionModalWillDismiss', function (e) {
         console.log('WillDismiss', e);
       });
-
-      function createModal() {
-        // create component to open
-        const element = document.createElement('div');
-
-        element.innerHTML = `
-          <h1>Content of doom</h1>
-          <div>Here's some more content</div>
-          <ion-button class="dismiss">Dismiss Modal</ion-button>
-        `;
-
-        // present the modal
-        const modalElement = Object.assign(document.createElement('ion-modal'), {
-          component: element,
-          htmlAttributes: {
-            'data-testid': 'basic-modal',
-          },
-        });
-        // listen for close event
-        const button = element.querySelector('ion-button');
-        button.addEventListener('click', () => {
-          modalElement.dismiss();
-        });
-        document.body.appendChild(modalElement);
-        return modalElement;
-      }
-
-      async function presentModal() {
-        const presentingEl = document.querySelectorAll('.ion-page')[1];
-        const modal = createModal();
-        await modal.present(presentingEl);
-      }
     </script>
   </body>
 </html>
