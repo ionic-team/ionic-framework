@@ -10,8 +10,7 @@ test.describe('segment: a11y', () => {
     expect(results.violations).toEqual([]);
   });
 
-  // TODO FW-3710
-  test.skip('segment buttons should be keyboard navigable', async ({ page, browserName, skip }, testInfo) => {
+  test('segment buttons should be keyboard navigable', async ({ page, browserName, skip }, testInfo) => {
     // TODO (FW-2979)
     skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
     const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
