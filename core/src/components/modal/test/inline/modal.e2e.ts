@@ -44,7 +44,7 @@ test.describe('modal: inline', () => {
     const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
     const modal = page.locator('ion-modal');
 
-    await page.locator('#date-button').click();
+    await page.click('#date-button');
     await ionModalDidPresent.next();
 
     // Verifies that the host element exists with the .ion-page class
@@ -53,7 +53,7 @@ test.describe('modal: inline', () => {
     await modal.evaluate((el: HTMLIonModalElement) => el.dismiss());
     await ionModalDidDismiss.next();
 
-    await page.locator('#date-button').click();
+    await page.click('#date-button');
     await ionModalDidPresent.next();
 
     // Verifies that presenting the overlay again does not create a new host element

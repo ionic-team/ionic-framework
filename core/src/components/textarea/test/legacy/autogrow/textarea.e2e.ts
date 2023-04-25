@@ -67,7 +67,7 @@ test.describe('textarea: autogrow', () => {
       </ion-app>`
     );
 
-    const textarea = await page.locator('ion-textarea');
+    const textarea = page.locator('ion-textarea');
 
     expect(await textarea.screenshot()).toMatchSnapshot(
       `textarea-autogrow-word-break-${page.getSnapshotSettings()}.png`

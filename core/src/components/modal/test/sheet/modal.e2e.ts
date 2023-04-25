@@ -76,11 +76,11 @@ test.describe('sheet modal: setting the breakpoint', () => {
       await page.click('#sheet-modal');
       await ionModalDidPresent.next();
 
-      const modal = await page.locator('ion-modal');
+      const modal = page.locator('ion-modal');
       await modal.evaluate((el: HTMLIonModalElement) => el.setCurrentBreakpoint(0.01));
     });
     test('it should not change the breakpoint when setting to an invalid value', async ({ page }) => {
-      const modal = await page.locator('ion-modal');
+      const modal = page.locator('ion-modal');
       const breakpoint = await modal.evaluate((el: HTMLIonModalElement) => el.getCurrentBreakpoint());
       expect(breakpoint).toBe(0.25);
     });
@@ -102,7 +102,7 @@ test.describe('sheet modal: setting the breakpoint', () => {
     });
     test('should update the current breakpoint', async ({ page }) => {
       const ionBreakpointDidChange = await page.spyOnEvent('ionBreakpointDidChange');
-      const modal = await page.locator('.modal-sheet');
+      const modal = page.locator('.modal-sheet');
 
       await modal.evaluate((el: HTMLIonModalElement) => el.setCurrentBreakpoint(0.5));
       await ionBreakpointDidChange.next();
@@ -112,7 +112,7 @@ test.describe('sheet modal: setting the breakpoint', () => {
     });
     test('should emit ionBreakpointDidChange', async ({ page }) => {
       const ionBreakpointDidChange = await page.spyOnEvent('ionBreakpointDidChange');
-      const modal = await page.locator('.modal-sheet');
+      const modal = page.locator('.modal-sheet');
 
       await modal.evaluate((el: HTMLIonModalElement) => el.setCurrentBreakpoint(0.5));
       await ionBreakpointDidChange.next();
@@ -120,7 +120,7 @@ test.describe('sheet modal: setting the breakpoint', () => {
     });
     test('should emit ionBreakpointDidChange when breakpoint is set to 0', async ({ page }) => {
       const ionBreakpointDidChange = await page.spyOnEvent('ionBreakpointDidChange');
-      const modal = await page.locator('.modal-sheet');
+      const modal = page.locator('.modal-sheet');
 
       await modal.evaluate((el: HTMLIonModalElement) => el.setCurrentBreakpoint(0));
       await ionBreakpointDidChange.next();
@@ -128,7 +128,7 @@ test.describe('sheet modal: setting the breakpoint', () => {
     });
     test('should emit ionBreakpointDidChange when the sheet is swiped to breakpoint 0', async ({ page }) => {
       const ionBreakpointDidChange = await page.spyOnEvent('ionBreakpointDidChange');
-      const header = await page.locator('.modal-sheet ion-header');
+      const header = page.locator('.modal-sheet ion-header');
 
       await dragElementBy(header, page, 0, 500);
 

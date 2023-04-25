@@ -14,7 +14,7 @@ test.describe('card modal - with refresher', () => {
     await page.click('#card');
     await ionModalDidPresent.next();
 
-    const modal = await page.locator('ion-modal');
+    const modal = page.locator('ion-modal');
     const content = (await page.$('ion-modal ion-content'))!;
 
     await dragElementBy(content, page, 0, 500);

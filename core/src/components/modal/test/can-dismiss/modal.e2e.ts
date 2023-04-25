@@ -14,7 +14,7 @@ test.describe('modal: canDismiss', () => {
 
       await ionModalDidPresent.next();
 
-      const modal = await page.locator('ion-modal');
+      const modal = page.locator('ion-modal');
       const returnValue = await modal.evaluate((el: HTMLIonModalElement) => el.dismiss());
 
       expect(returnValue).toBe(true);
@@ -27,7 +27,7 @@ test.describe('modal: canDismiss', () => {
 
       await ionModalDidPresent.next();
 
-      const modal = await page.locator('ion-modal');
+      const modal = page.locator('ion-modal');
       const returnValue = await modal.evaluate((el: HTMLIonModalElement) => el.dismiss());
 
       expect(returnValue).toBe(false);
@@ -40,7 +40,7 @@ test.describe('modal: canDismiss', () => {
 
       await ionModalDidPresent.next();
 
-      const modal = await page.locator('ion-modal');
+      const modal = page.locator('ion-modal');
       const returnValue = await modal.evaluate((el: HTMLIonModalElement) => el.dismiss());
 
       expect(returnValue).toBe(true);
@@ -53,7 +53,7 @@ test.describe('modal: canDismiss', () => {
 
       await ionModalDidPresent.next();
 
-      const modal = await page.locator('ion-modal');
+      const modal = page.locator('ion-modal');
       const returnValue = await modal.evaluate((el: HTMLIonModalElement) => el.dismiss());
 
       expect(returnValue).toBe(false);
@@ -90,7 +90,7 @@ test.describe('modal: canDismiss', () => {
 
       await ionModalDidPresent.next();
 
-      const modal = await page.locator('ion-modal');
+      const modal = page.locator('ion-modal');
       const returnValue = await modal.evaluate((el: HTMLIonModalElement) => el.dismiss());
 
       expect(returnValue).toBe(true);
@@ -103,7 +103,7 @@ test.describe('modal: canDismiss', () => {
 
       await ionModalDidPresent.next();
 
-      const modal = await page.locator('ion-modal');
+      const modal = page.locator('ion-modal');
       const returnValue = await modal.evaluate((el: HTMLIonModalElement) => el.dismiss());
 
       expect(returnValue).toBe(false);
@@ -116,7 +116,7 @@ test.describe('modal: canDismiss', () => {
 
       await ionModalDidPresent.next();
 
-      const modal = await page.locator('ion-modal');
+      const modal = page.locator('ion-modal');
       const returnValue = await modal.evaluate((el: HTMLIonModalElement) => el.dismiss());
 
       expect(returnValue).toBe(true);
@@ -129,7 +129,7 @@ test.describe('modal: canDismiss', () => {
 
       await ionModalDidPresent.next();
 
-      const modal = await page.locator('ion-modal');
+      const modal = page.locator('ion-modal');
       const returnValue = await modal.evaluate((el: HTMLIonModalElement) => el.dismiss());
 
       expect(returnValue).toBe(false);
@@ -151,7 +151,7 @@ test.describe('modal: canDismiss', () => {
 
       await ionModalDidPresent.next();
 
-      const modalHeader = await page.locator('ion-modal #modal-header');
+      const modalHeader = page.locator('ion-modal #modal-header');
       await dragElementBy(modalHeader, page, 0, 500);
 
       await ionModalDidDismiss.next();
@@ -164,10 +164,10 @@ test.describe('modal: canDismiss', () => {
 
       await ionModalDidPresent.next();
 
-      const modalHeader = await page.locator('#modal-header');
+      const modalHeader = page.locator('#modal-header');
       await dragElementBy(modalHeader, page, 0, 500);
 
-      const modal = await page.locator('ion-modal');
+      const modal = page.locator('ion-modal');
       expect(modal).not.toBe(null);
     });
     test('should dismiss on swipe when canDismiss is Promise<true>', async ({ page }) => {
@@ -179,7 +179,7 @@ test.describe('modal: canDismiss', () => {
 
       await ionModalDidPresent.next();
 
-      const modalHeader = await page.locator('#modal-header');
+      const modalHeader = page.locator('#modal-header');
       await dragElementBy(modalHeader, page, 0, 500);
 
       await ionModalDidDismiss.next();
@@ -193,12 +193,12 @@ test.describe('modal: canDismiss', () => {
 
       await ionModalDidPresent.next();
 
-      const modalHeader = await page.locator('#modal-header');
+      const modalHeader = page.locator('#modal-header');
       await dragElementBy(modalHeader, page, 0, 500);
 
       await ionHandlerDone.next();
 
-      const modal = await page.locator('ion-modal');
+      const modal = page.locator('ion-modal');
       expect(modal).not.toBe(null);
     });
     test('should dismiss when canDismiss is Action Sheet and user clicks confirm', async ({ page }) => {
@@ -211,7 +211,7 @@ test.describe('modal: canDismiss', () => {
 
       await ionModalDidPresent.next();
 
-      const modalHeader = await page.locator('#modal-header');
+      const modalHeader = page.locator('#modal-header');
       await dragElementBy(modalHeader, page, 0, 500);
 
       await ionActionSheetDidPresent.next();
@@ -234,7 +234,7 @@ test.describe('modal: canDismiss', () => {
 
       await ionModalDidPresent.next();
 
-      const modal = await page.locator('ion-modal');
+      const modal = page.locator('ion-modal');
       const returnValue = await modal.evaluate((el: HTMLIonModalElement) => el.dismiss());
 
       expect(returnValue).toBe(true);
@@ -247,7 +247,7 @@ test.describe('modal: canDismiss', () => {
 
       await ionModalDidPresent.next();
 
-      const modal = await page.locator('ion-modal');
+      const modal = page.locator('ion-modal');
       const returnValue = await modal.evaluate((el: HTMLIonModalElement) => el.dismiss());
 
       expect(returnValue).toBe(false);
@@ -260,7 +260,7 @@ test.describe('modal: canDismiss', () => {
 
       await ionModalDidPresent.next();
 
-      const modal = await page.locator('ion-modal');
+      const modal = page.locator('ion-modal');
       const returnValue = await modal.evaluate((el: HTMLIonModalElement) => el.dismiss());
 
       expect(returnValue).toBe(true);
@@ -273,7 +273,7 @@ test.describe('modal: canDismiss', () => {
 
       await ionModalDidPresent.next();
 
-      const modal = await page.locator('ion-modal');
+      const modal = page.locator('ion-modal');
       const returnValue = await modal.evaluate((el: HTMLIonModalElement) => el.dismiss());
 
       expect(returnValue).toBe(false);
@@ -286,7 +286,7 @@ test.describe('modal: canDismiss', () => {
 
       await ionModalDidPresent.next();
 
-      const modalHeader = await page.locator('#modal-header');
+      const modalHeader = page.locator('#modal-header');
       await dragElementBy(modalHeader, page, 0, 500);
 
       await ionModalDidDismiss.next();
@@ -299,10 +299,10 @@ test.describe('modal: canDismiss', () => {
 
       await ionModalDidPresent.next();
 
-      const modalHeader = await page.locator('#modal-header');
+      const modalHeader = page.locator('#modal-header');
       await dragElementBy(modalHeader, page, 0, 500);
 
-      const modal = await page.locator('ion-modal');
+      const modal = page.locator('ion-modal');
       expect(modal).not.toBe(null);
     });
     test('should dismiss on swipe when canDismiss is Promise<true>', async ({ page }) => {
@@ -314,7 +314,7 @@ test.describe('modal: canDismiss', () => {
 
       await ionModalDidPresent.next();
 
-      const modalHeader = await page.locator('#modal-header');
+      const modalHeader = page.locator('#modal-header');
       await dragElementBy(modalHeader, page, 0, 500);
 
       await ionModalDidDismiss.next();
@@ -328,12 +328,12 @@ test.describe('modal: canDismiss', () => {
 
       await ionModalDidPresent.next();
 
-      const modalHeader = await page.locator('#modal-header');
+      const modalHeader = page.locator('#modal-header');
       await dragElementBy(modalHeader, page, 0, 500);
 
       await ionHandlerDone.next();
 
-      const modal = await page.locator('ion-modal');
+      const modal = page.locator('ion-modal');
       expect(modal).not.toBe(null);
     });
     test('should not dismiss on swipe when not attempting to close', async ({ page }) => {
@@ -344,10 +344,10 @@ test.describe('modal: canDismiss', () => {
 
       await ionModalDidPresent.next();
 
-      const modalHeader = await page.locator('#modal-header');
+      const modalHeader = page.locator('#modal-header');
       await dragElementBy(modalHeader, page, 0, -500);
 
-      const modal = await page.locator('ion-modal');
+      const modal = page.locator('ion-modal');
       expect(modal).not.toBe(null);
     });
     test('should hit the dismiss threshold when swiping', async ({ page }) => {
@@ -359,7 +359,7 @@ test.describe('modal: canDismiss', () => {
 
       await ionModalDidPresent.next();
 
-      const modalHeader = await page.locator('#modal-header');
+      const modalHeader = page.locator('#modal-header');
       await dragElementBy(modalHeader, page, 0, 100);
 
       await ionModalDidDismiss.next();
@@ -374,7 +374,7 @@ test.describe('modal: canDismiss', () => {
 
       await ionModalDidPresent.next();
 
-      const modalHeader = await page.locator('#modal-header');
+      const modalHeader = page.locator('#modal-header');
       await dragElementBy(modalHeader, page, 0, 500);
 
       await ionActionSheetDidPresent.next();
@@ -399,7 +399,7 @@ test.describe('modal: canDismiss', () => {
 
       await ionModalDidPresent.next();
 
-      const modal = await page.locator('ion-modal');
+      const modal = page.locator('ion-modal');
       await modal.evaluate((el: HTMLIonModalElement) => el.dismiss('my data', 'my role'));
 
       await ionHandlerDone.next();
@@ -415,7 +415,7 @@ test.describe('modal: canDismiss', () => {
 
       await ionModalDidPresent.next();
 
-      const modalHeader = await page.locator('#modal-header');
+      const modalHeader = page.locator('#modal-header');
       await dragElementBy(modalHeader, page, 0, 500);
 
       await ionHandlerDone.next();

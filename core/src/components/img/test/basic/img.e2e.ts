@@ -40,7 +40,7 @@ test.describe('img: basic', () => {
       ionImgDidLoad = await page.spyOnEvent('ionImgDidLoad');
       ionImgWillLoad = await page.spyOnEvent('ionImgWillLoad');
 
-      const ionImg = await page.locator('ion-img');
+      const ionImg = page.locator('ion-img');
       await ionImg.evaluate((el: HTMLIonImgElement) => {
         el.src = 'https://via.placeholder.com/150';
         return el;
@@ -79,7 +79,7 @@ test.describe('img: basic', () => {
 
       ionError = await page.spyOnEvent('ionError');
 
-      const ionImg = await page.locator('ion-img');
+      const ionImg = page.locator('ion-img');
       await ionImg.evaluate((el: HTMLIonImgElement) => {
         el.src = 'https://via.placeholder.com/150';
         return el;

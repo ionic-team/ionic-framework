@@ -45,7 +45,7 @@ test.describe('select: basic', () => {
         animations: 'disabled',
       });
 
-      const alert = await page.locator('ion-alert');
+      const alert = page.locator('ion-alert');
       await alert.evaluate((el: HTMLIonAlertElement) => el.dismiss());
 
       await ionDismiss.next();
@@ -65,7 +65,7 @@ test.describe('select: basic', () => {
         animations: 'disabled',
       });
 
-      const actionSheet = await page.locator('ion-action-sheet');
+      const actionSheet = page.locator('ion-action-sheet');
       await actionSheet.evaluate((el: HTMLIonActionSheetElement) => el.dismiss());
 
       await ionDismiss.next();

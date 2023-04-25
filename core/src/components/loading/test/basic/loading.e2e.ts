@@ -17,7 +17,7 @@ test.describe('loading: basic', () => {
 
       await expect(page).toHaveScreenshot(`loading-${screenshotModifier}-diff-${page.getSnapshotSettings()}.png`);
 
-      const loading = await page.locator('ion-loading');
+      const loading = page.locator('ion-loading');
       await loading.evaluate((el: HTMLIonLoadingElement) => el.dismiss());
 
       await ionLoadingDidDismiss.next();
@@ -51,7 +51,7 @@ test.describe('loading: basic', () => {
 
       await ionLoadingDidPresent.next();
 
-      const loading = await page.locator('ion-loading');
+      const loading = page.locator('ion-loading');
       await expect(loading).toHaveAttribute('data-testid', 'basic-loading');
     });
   });
@@ -63,7 +63,7 @@ test.describe('loading: basic', () => {
 
       await ionLoadingDidPresent.next();
 
-      const button = await page.locator('ion-loading ion-button');
+      const button = page.locator('ion-loading ion-button');
 
       if (browserName === 'webkit') {
         await page.keyboard.down('Alt');
