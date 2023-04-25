@@ -1,5 +1,17 @@
 import type { Browser, BrowserContext, Page } from '@playwright/test';
 
+/**
+ * The purpose of this utility is to provide a way to press keys in a way that
+ * is consistent across browsers and platforms. Playwright does not automatically
+ * normalize key presses, so we need to do it ourselves.
+ *
+ * In certain environments, such as Webkit on macOS, the browser will not focus
+ * the correct element in the DOM when the tab key is pressed.
+ * This utility will detect if the browser has natural tab navigation and
+ * will use the appropriate key combination to simulate a tab press.
+ * The utility will normalize key presses for other combinations as well.
+ */
+
 const SHIFT = 'shift';
 const CTRL = 'ctrl';
 const ALT = 'alt';
