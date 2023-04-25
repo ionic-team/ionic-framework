@@ -108,6 +108,12 @@
   border-color: current-color(shade);
 }
 
+// Testing
+
+:host(.item-has-modern-control) {
+  --item-inner-padding-end: calc(var(--ion-safe-area-right, 0px) + var(--inner-padding-end));
+  --item-inner-padding-start: calc(var(--padding-start) + var(--ion-safe-area-left, 0px));
+}
 
 // Item: Activated
 // --------------------------------------------------
@@ -125,7 +131,6 @@
 :host(.ion-color.ion-activated) .item-native {
   color: current-color(contrast);
 }
-
 
 // Item: Focused
 // --------------------------------------------------
@@ -147,7 +152,6 @@
     background: current-color(contrast);
   }
 }
-
 
 // Item: Hover
 // --------------------------------------------------
@@ -172,7 +176,6 @@
   }
 }
 
-
 // Item: Disabled
 // --------------------------------------------------
 
@@ -183,23 +186,27 @@
 
 :host(.item-disabled) {
   cursor: default;
-  opacity: .3;
+  opacity: 0.3;
   pointer-events: none;
 }
-
 
 // Native Item
 // --------------------------------------------------
 
+:host:not(.item-has-modern-control) {
+  .item-native {
+    @include padding(
+      var(--padding-top),
+      var(--padding-end),
+      var(--padding-bottom),
+      calc(var(--padding-start) + var(--ion-safe-area-left, 0px))
+    );
+  }
+}
+
 .item-native {
   @include border-radius(var(--border-radius));
   @include margin(0);
-  @include padding(
-    var(--padding-top),
-    var(--padding-end),
-    var(--padding-bottom),
-    calc(var(--padding-start) + var(--ion-safe-area-left, 0px))
-  );
   @include text-inherit();
 
   display: flex;
@@ -239,25 +246,28 @@
   z-index: -1;
 }
 
-button, a {
+button,
+a {
   cursor: pointer;
   user-select: none;
 
   -webkit-user-drag: none;
 }
 
-
 // Inner Item
 // --------------------------------------------------
 
-.item-inner {
-  @include margin(0);
+:host:not(.item-has-modern-control) {
   @include padding(
     var(--inner-padding-top),
     calc(var(--ion-safe-area-right, 0px) + var(--inner-padding-end)),
     var(--inner-padding-bottom),
     var(--inner-padding-start)
   );
+}
+
+.item-inner {
+  @include margin(0);
 
   display: flex;
 
@@ -280,25 +290,17 @@ button, a {
   box-sizing: border-box;
 }
 
-
 // Item Bottom
 // --------------------------------------------------
 
 .item-bottom {
   @include margin(0);
-  @include padding(
-    0,
-    var(--inner-padding-end),
-    0,
-    calc(var(--padding-start) + var(--ion-safe-area-left, 0px))
-  );
+  @include padding(0, var(--inner-padding-end), 0, calc(var(--padding-start) + var(--ion-safe-area-left, 0px)));
 
   display: flex;
 
   justify-content: space-between;
-
 }
-
 
 // Item Detail Icon
 // --------------------------------------------------
@@ -320,7 +322,6 @@ button, a {
 
   opacity: var(--detail-icon-opacity);
 }
-
 
 // Item Slots
 // --------------------------------------------------
@@ -374,7 +375,6 @@ button, a {
   flex: 1;
   flex-direction: column;
 }
-
 
 // Item Input Highlight
 // --------------------------------------------------
@@ -450,7 +450,6 @@ button, a {
   border-left: none;
 }
 
-
 // Item Input Focus
 // --------------------------------------------------
 
@@ -509,7 +508,6 @@ button, a {
   max-width: 100%;
 }
 
-
 // Item Datetime
 // --------------------------------------------------
 
@@ -523,7 +521,6 @@ button, a {
 
   width: 100%;
 }
-
 
 // Item w/ Multiple Inputs
 // --------------------------------------------------
@@ -544,14 +541,12 @@ button, a {
   align-items: stretch;
 }
 
-
 // Item Reorder
 // --------------------------------------------------
 
 ::slotted(ion-reorder[slot]) {
   @include margin(0, null);
 }
-
 
 // Item Button Ripple effect
 // --------------------------------------------------

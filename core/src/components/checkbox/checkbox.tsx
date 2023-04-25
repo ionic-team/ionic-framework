@@ -147,6 +147,14 @@ export class Checkbox implements ComponentInterface {
         ...inheritAriaAttributes(this.el),
       };
     }
+
+    // Get the nearest `ion-item`.
+    const item = this.el.closest('ion-item');
+    if (item) {
+      if (!item.classList.contains('item-has-modern-control') && !this.legacyFormController.hasLegacyControl()) {
+        item.classList.add('item-has-modern-control');
+      }
+    }
   }
 
   @Watch('checked')

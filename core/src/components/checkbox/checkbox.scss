@@ -80,6 +80,8 @@
   height: inherit;
 
   cursor: inherit;
+
+  @include padding(null, var(--item-inner-padding-end), null, var(--item-inner-padding-start));
 }
 
 .label-text-wrapper {
@@ -154,7 +156,6 @@ input {
   opacity: 0;
 }
 
-
 // Justify Content
 // ---------------------------------------------
 
@@ -169,7 +170,6 @@ input {
 :host(.checkbox-justify-end) .checkbox-wrapper {
   justify-content: end;
 }
-
 
 // Label Placement - Start
 // ----------------------------------------------------------------
@@ -191,7 +191,6 @@ input {
   @include margin(0, 8px, 0, 0);
 }
 
-
 // Label Placement - End
 // ----------------------------------------------------------------
 
@@ -211,7 +210,6 @@ input {
 :host(.checkbox-label-placement-end) .label-text-wrapper {
   @include margin(0, 0, 0, 8px);
 }
-
 
 // Label Placement - Fixed
 // ----------------------------------------------------------------
@@ -237,7 +235,6 @@ input {
   max-width: 200px;
 }
 
-
 // Checked / Indeterminate Checkbox
 // ---------------------------------------------
 
@@ -252,7 +249,6 @@ input {
 :host(.checkbox-indeterminate) .checkbox-icon path {
   opacity: 1;
 }
-
 
 // Disabled Checkbox
 // ---------------------------------------------
