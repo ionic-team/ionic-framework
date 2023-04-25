@@ -1,13 +1,11 @@
 import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
-import { PageUtils } from '@utils/test/press-keys';
 
 test.describe('radio: a11y', () => {
   test.beforeEach(({ skip }) => {
     skip.rtl();
   });
-  test('tabbing should switch between radio groups', async ({ page }) => {
-    const pageUtils = new PageUtils({ page });
+  test('tabbing should switch between radio groups', async ({ page, pageUtils }) => {
     await page.goto(`/src/components/radio/test/legacy/a11y`);
 
     const firstGroupRadios = page.locator('#first-group ion-radio');
@@ -22,8 +20,7 @@ test.describe('radio: a11y', () => {
     await pageUtils.pressKeys('shift+Tab');
     await expect(firstGroupRadios.nth(0)).toBeFocused();
   });
-  test('using arrow keys should move between enabled radios within group', async ({ page }) => {
-    const pageUtils = new PageUtils({ page });
+  test('using arrow keys should move between enabled radios within group', async ({ page, pageUtils }) => {
     await page.goto(`/src/components/radio/test/legacy/a11y`);
 
     const firstGroupRadios = page.locator('#first-group ion-radio');

@@ -1,7 +1,6 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect } from '@playwright/test';
 import { test } from '@utils/test/playwright';
-import { PageUtils } from '@utils/test/press-keys';
 
 test.describe('radio: a11y', () => {
   test.beforeEach(async ({ skip }) => {
@@ -62,8 +61,7 @@ test.describe.skip('radio: keyboard navigation', () => {
   `);
   });
 
-  test('tabbing should switch between radio groups', async ({ page }) => {
-    const pageUtils = new PageUtils({ page });
+  test('tabbing should switch between radio groups', async ({ page, pageUtils }) => {
     const firstGroupRadios = page.locator('#first-group ion-radio');
     const secondGroupRadios = page.locator('#second-group ion-radio');
 
@@ -76,8 +74,7 @@ test.describe.skip('radio: keyboard navigation', () => {
     await pageUtils.pressKeys('shift+Tab');
     await expect(firstGroupRadios.nth(0)).toBeFocused();
   });
-  test('using arrow keys should move between enabled radios within group', async ({ page }) => {
-    const pageUtils = new PageUtils({ page });
+  test('using arrow keys should move between enabled radios within group', async ({ page, pageUtils }) => {
     const firstGroupRadios = page.locator('#first-group ion-radio');
 
     await pageUtils.pressKeys('Tab');
