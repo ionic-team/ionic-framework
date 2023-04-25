@@ -7,8 +7,8 @@ test.describe('select: compare-with', () => {
 
     await page.goto('/src/components/select/test/legacy/compare-with');
 
-    const multipleSelect = await page.locator('#multiple');
-    const singleSelect = await page.locator('#single');
+    const multipleSelect = page.locator('#multiple');
+    const singleSelect = page.locator('#single');
 
     await expect(multipleSelect).toHaveJSProperty('value', [
       {

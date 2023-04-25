@@ -85,7 +85,7 @@ test.describe('action sheet: basic', () => {
       const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
       await actionSheetFixture.open('#alertFromActionSheet');
 
-      await page.locator('#open-alert').click();
+      await page.click('#open-alert');
 
       await ionAlertDidPresent.next();
     });

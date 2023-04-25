@@ -65,40 +65,40 @@ test.describe('datetime-button: popover', () => {
     ionPopoverDidDismiss = await page.spyOnEvent('ionPopoverDidDismiss');
   });
   test('should open the date popover', async ({ page }) => {
-    await page.locator('#date-button').click();
+    await page.click('#date-button');
 
     await ionPopoverDidPresent.next();
 
     await expect(datetime).toBeVisible();
   });
   test('should open the time popover', async ({ page }) => {
-    await page.locator('#time-button').click();
+    await page.click('#time-button');
 
     await ionPopoverDidPresent.next();
 
     await expect(datetime).toBeVisible();
   });
   test('should open the date popover then the time popover', async ({ page }) => {
-    await page.locator('#date-button').click();
+    await page.click('#date-button');
     await ionPopoverDidPresent.next();
     await expect(datetime).toBeVisible();
 
     await popover.evaluate((el: HTMLIonPopoverElement) => el.dismiss());
     await ionPopoverDidDismiss.next();
 
-    await page.locator('#time-button').click();
+    await page.click('#time-button');
     await ionPopoverDidPresent.next();
     await expect(datetime).toBeVisible();
   });
   test('should open the time popover then the date popover', async ({ page }) => {
-    await page.locator('#time-button').click();
+    await page.click('#time-button');
     await ionPopoverDidPresent.next();
     await expect(datetime).toBeVisible();
 
     await popover.evaluate((el: HTMLIonPopoverElement) => el.dismiss());
     await ionPopoverDidDismiss.next();
 
-    await page.locator('#date-button').click();
+    await page.click('#date-button');
     await ionPopoverDidPresent.next();
     await expect(datetime).toBeVisible();
   });
@@ -127,40 +127,40 @@ test.describe('datetime-button: modal', () => {
     ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
   });
   test('should open the date modal', async ({ page }) => {
-    await page.locator('#date-button').click();
+    await page.click('#date-button');
 
     await ionModalDidPresent.next();
 
     await expect(datetime).toBeVisible();
   });
   test('should open the time modal', async ({ page }) => {
-    await page.locator('#time-button').click();
+    await page.click('#time-button');
 
     await ionModalDidPresent.next();
 
     await expect(datetime).toBeVisible();
   });
   test('should open the date modal then the time modal', async ({ page }) => {
-    await page.locator('#date-button').click();
+    await page.click('#date-button');
     await ionModalDidPresent.next();
     await expect(datetime).toBeVisible();
 
     await modal.evaluate((el: HTMLIonModalElement) => el.dismiss());
     await ionModalDidDismiss.next();
 
-    await page.locator('#time-button').click();
+    await page.click('#time-button');
     await ionModalDidPresent.next();
     await expect(datetime).toBeVisible();
   });
   test('should open the time modal then the date modal', async ({ page }) => {
-    await page.locator('#time-button').click();
+    await page.click('#time-button');
     await ionModalDidPresent.next();
     await expect(datetime).toBeVisible();
 
     await modal.evaluate((el: HTMLIonModalElement) => el.dismiss());
     await ionModalDidDismiss.next();
 
-    await page.locator('#date-button').click();
+    await page.click('#date-button');
     await ionModalDidPresent.next();
     await expect(datetime).toBeVisible();
   });

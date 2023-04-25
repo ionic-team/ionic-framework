@@ -43,7 +43,7 @@ test.describe('modal: focus trapping', () => {
     await page.goto('/src/components/modal/test/basic');
     const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
     const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
-    const modalButton = await page.locator('#basic-modal');
+    const modalButton = page.locator('#basic-modal');
     const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
 
     // Focus #basic-modal button
@@ -74,7 +74,7 @@ test.describe('modal: rendering', () => {
     await ionModalWillPresent.next();
     await ionModalDidPresent.next();
 
-    const modal = await page.locator('ion-modal');
+    const modal = page.locator('ion-modal');
     await expect(modal).toHaveClass(/show-modal/);
 
     await page.setIonViewport();
@@ -112,7 +112,7 @@ test.describe('modal: htmlAttributes inheritance', () => {
 
     await ionModalDidPresent.next();
 
-    const modal = await page.locator('ion-modal');
+    const modal = page.locator('ion-modal');
 
     const attribute = await modal.getAttribute('data-testid');
     expect(attribute).toBe('basic-modal');
@@ -161,7 +161,7 @@ test.describe('modal: incorrect usage', () => {
     await page.click('#basic-modal');
     await ionModalDidPresent.next();
 
-    const modal = await page.locator('ion-modal');
+    const modal = page.locator('ion-modal');
     await modal.evaluate((el: HTMLIonModalElement) => el.setCurrentBreakpoint(0.5));
 
     expect(warnings.length).toBe(1);
@@ -174,7 +174,7 @@ test.describe('modal: incorrect usage', () => {
     await page.click('#basic-modal');
     await ionModalDidPresent.next();
 
-    const modal = await page.locator('ion-modal');
+    const modal = page.locator('ion-modal');
     const breakpoint = await modal.evaluate((el: HTMLIonModalElement) => {
       return el.getCurrentBreakpoint();
     });

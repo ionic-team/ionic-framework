@@ -16,7 +16,7 @@ test.describe('datetime-button: switching to correct view', () => {
     const datetime = page.locator('ion-datetime');
     await expect(datetime).toHaveJSProperty('presentation', 'date-time');
 
-    await page.locator('#date-button').click();
+    await page.click('#date-button');
     await page.waitForChanges();
 
     await expect(datetime).toHaveJSProperty('presentation', 'date');
@@ -25,7 +25,7 @@ test.describe('datetime-button: switching to correct view', () => {
     const datetime = page.locator('ion-datetime');
     await expect(datetime).toHaveJSProperty('presentation', 'date-time');
 
-    await page.locator('#time-button').click();
+    await page.click('#time-button');
     await page.waitForChanges();
 
     await expect(datetime).toHaveJSProperty('presentation', 'time');

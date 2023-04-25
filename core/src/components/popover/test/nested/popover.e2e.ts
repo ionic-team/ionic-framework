@@ -40,7 +40,7 @@ test.describe('popover: nested', async () => {
     await backdrop.click({ position: { x: 5, y: 5 } });
     await ionPopoverDidDismiss.next();
 
-    const nestedPopover = await page.locator('.child-popover-one');
+    const nestedPopover = page.locator('.child-popover-one');
     await expect(nestedPopover).toHaveClass(/overlay-hidden/);
   });
 

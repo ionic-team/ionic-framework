@@ -10,7 +10,7 @@ test.describe('select: standalone', () => {
 
     await ionAlertDidPresent.next();
 
-    const alert = await page.locator('ion-alert');
+    const alert = page.locator('ion-alert');
     await alert.evaluate((el: HTMLIonAlertElement) => el.dismiss());
 
     await ionAlertDidDismiss.next();

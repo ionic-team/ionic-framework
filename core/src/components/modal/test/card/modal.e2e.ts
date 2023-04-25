@@ -82,7 +82,7 @@ test.describe('card modal', () => {
         await cardModalPage.openModalByTrigger('#card');
         await cardModalPage.swipeToCloseModal('ion-modal ion-content', false, 20);
 
-        const content = await page.locator('ion-modal ion-content');
+        const content = page.locator('ion-modal ion-content');
         await expect(content).toHaveJSProperty('scrollY', true);
       });
     });
@@ -157,7 +157,7 @@ test.describe('card modal', () => {
         await cardModalPage.openModalByTrigger('#card');
         await cardModalPage.swipeToCloseModal('ion-modal ion-content', false, 20);
 
-        const content = await page.locator('ion-modal ion-content');
+        const content = page.locator('ion-modal ion-content');
         await expect(content).toHaveJSProperty('scrollY', true);
       });
     });
