@@ -9,7 +9,6 @@ import { printIonWarning } from '../../utils/logging';
 import { BACKDROP, dismiss, eventMethod, focusFirstDescendant, prepareOverlay, present } from '../../utils/overlays';
 import type { OverlayEventDetail } from '../../utils/overlays-interface';
 import { isPlatform } from '../../utils/platform';
-import { isRTL } from '../../utils/rtl';
 import { getClassMap } from '../../utils/theme';
 import { deepReady } from '../../utils/transition';
 
@@ -664,10 +663,9 @@ export class Popover implements ComponentInterface, PopoverInterface {
 
   render() {
     const mode = getIonMode(this);
-    const { onLifecycle, popoverId, parentPopover, dismissOnSelect, side, arrow, htmlAttributes, el } = this;
+    const { onLifecycle, popoverId, parentPopover, dismissOnSelect, side, arrow, htmlAttributes } = this;
     const desktop = isPlatform('desktop');
     const enableArrow = arrow && !parentPopover;
-    const rtl = isRTL(el) ? 'rtl' : 'ltr';
 
     return (
       <Host
@@ -686,7 +684,6 @@ export class Popover implements ComponentInterface, PopoverInterface {
           'overlay-hidden': true,
           'popover-desktop': desktop,
           [`popover-side-${side}`]: true,
-          [`popover-${rtl}`]: true,
           'popover-nested': !!parentPopover,
         }}
         onIonPopoverDidPresent={onLifecycle}

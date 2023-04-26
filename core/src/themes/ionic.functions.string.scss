@@ -96,72 +96,89 @@
     // If the selector contains :host( it means it is targeting a class on the host
     // element so we need to change how we target it:
     // @include add-root-selector(":host(.fixed)", "[dir=rtl]")
-    // --> [dir=rtl] :host(.fixed)
+    // --> :host-context([dir=rtl]):host(.fixed)
+    // --> :host-context([dir=rtl]).fixed
     @if str-contains($selector, ":host(") {
+      // @include add-root-selector(":host(.fixed)", "[dir=rtl]")
+      // --> :host-context([dir=rtl]):host(.fixed)
+      $shadow-element: str-replace($selector, ":host(", ":host-context(#{$addHostSelector}):host(");
+      $list: append($list, $shadow-element, comma);
+
       $new-element: ();
       $elements: str-split($selector, " ");
 
       @each $element in $elements {
         @if str-contains($element, ":host(") {
+          $scoped-element: $element;
+
           // Replace the :host( and ) so all we have left is the class
           // inside of it:
           // :host(.fixed) -> .fixed
-          $updated-element: str-replace($element, ")", "");
-          $updated-element: str-replace($updated-element, ":host(", "");
+          $scoped-element: str-replace($scoped-element, ")", "");
+          $scoped-element: str-replace($scoped-element, ":host(", "");
 
           // Add the class back inside of host with the rtl selector:
-          // .fixed -> [dir=rtl] :host(.fixed)
-          $updated-element: str-replace($updated-element, $updated-element, "#{$addHostSelector} :host(#{$updated-element})");
+          // .fixed -> :host-context([dir=rtl]).fixed
+          $scoped-element: str-replace($scoped-element, $scoped-element, ":host-context(#{$addHostSelector})#{$scoped-element}");
 
-          // Add the final selector after all transformations:
-          // :host(.fixed) -> [dir=rtl] :host(.fixed)
-          $new-element: append($new-element, $updated-element, space);
+          // @include add-root-selector(":host(.fixed)", "[dir=rtl]")
+          // --> :host-context([dir=rtl]).fixed
+          $new-element: append($new-element, $scoped-element, space);
         } @else {
           // Add back any selectors that followed the host after transforming the
           // first selector:
-          // :host(.fixed) ::slotted(ion-icon) -> [dir=rtl] :host(.fixed) ::slotted(ion-icon)
+          // :host(.fixed) ::slotted(ion-icon)
+          // --> :host-context([dir=rtl]):host(.fixed) ::slotted(ion-icon)
+          // --> :host-context([dir=rtl]).fixed ::slotted(ion-icon)
           $new-element: append($new-element, $element, space);
         }
       }
 
       $list: append($list, $new-element, comma);
-
     // If the selector contains :host without a parantheses
     // it means it is targeting just the host
-    // element so we can change it to add on the rtl selector:
+    // element so we can change it to look for host-context
     // @include add-root-selector(":host", "[dir=rtl]")
-    // --> [dir=rtl] :host
+    // --> :host-context([dir=rtl])
+    // --> :host:dir(rtl)
     } @else if str-contains($selector, ":host") {
+      // Check to see if addHostSelector is a dir selector
+      // @include add-root-selector(":host", "[dir=rtl]")
+      // --> :host:dir(rtl)
+      @if str-contains($addHostSelector, "[dir=") {
+        $direction: str-extract($addHostSelector, "[dir=", "]");
+        $list: append($list, "#{$selector}:dir(#{$direction})", comma);
+      }
+
       $new-element: ();
       $elements: str-split($selector, " ");
 
       @each $element in $elements {
         @if str-contains($element, ":host") {
-          // Replace the :host with the rtl selector:
-          // :host -> [dir=rtl] :host
-          $updated-element: str-replace($element, ":host", "#{$addHostSelector} :host");
+          // Replace the :host with the addHostSelector:
+          // :host -> :host-context([dir=rtl])
+          $updated-element: str-replace($element, ":host", ":host-context(#{$addHostSelector})");
 
           // Add the final selector after all transformations:
-          // :host -> [dir=rtl] :host
+          // :host -> :host-context([dir=rtl])
           $new-element: append($new-element, $updated-element, space);
         } @else {
           // Add back any selectors that followed the host after transforming the
           // first selector:
-          // :host ::slotted(ion-icon) -> [dir=rtl] :host ::slotted(ion-icon)
+          // :host ::slotted(ion-icon) -> :host-context([dir=rtl]) ::slotted(ion-icon)
           $new-element: append($new-element, $element, space);
         }
       }
-
+      
       $list: append($list, $new-element, comma);
-
-    // If the selector does not contain host at all it is either a component
-    // or normal element so append both the dir check and the rtl selector
+    // If the selector does not contain host at all it is either a shadow
+    // or normal element so append both the addHostSelector and host-context
     // @include add-root-selector("ion-component", "[dir=rtl]")
+    // --> :host-context([dir=rtl]) ion-component
     // --> [dir=rtl] ion-component
-    // Important: This will not work if the component is using shadow DOM or is scoped.
-    // --> @include add-root-selector(":host(.popover-side-left) .popover-arrow", "[dir=rtl]") 
     } @else {
       $list: append($list, "#{$addHostSelector} #{$selector}", comma);
+      $list: append($list, ":host-context(#{$addHostSelector}) #{$selector}", comma);
     }
   }
 

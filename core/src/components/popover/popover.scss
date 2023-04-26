@@ -116,12 +116,18 @@
   --offset-x: -5px;
 }
 
-:host(.popover-nested.popover-side-start.popover-ltr),
-:host(.popover-nested.popover-side-end.popover-rtl) {
+:host(.popover-nested.popover-side-start) {
   --offset-x: 5px;
+
+  @include rtl() {
+    --offset-x: -5px;
+  }
 }
 
-:host(.popover-nested.popover-side-end.popover-ltr),
-:host(.popover-nested.popover-side-start.popover-rtl) {
+:host(.popover-nested.popover-side-end) {
   --offset-x: -5px;
+
+  @include rtl() {
+    --offset-x: 5px;
+  }
 }
