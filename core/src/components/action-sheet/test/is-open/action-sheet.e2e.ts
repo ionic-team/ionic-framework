@@ -4,7 +4,7 @@ import { configs, test } from '@utils/test/playwright';
 configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ config, title }) => {
   test.describe(title('action sheet: isOpen'), () => {
     test.beforeEach(async ({ page }) => {
-      await page.goto('/src/components/action-sheet/test/isOpen', config);
+      await page.goto('/src/components/action-sheet/test/is-open', config);
     });
     test('should open the action sheet', async ({ page }) => {
       const ionActionSheetDidPresent = await page.spyOnEvent('ionActionSheetDidPresent');
