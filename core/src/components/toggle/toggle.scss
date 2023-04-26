@@ -33,7 +33,6 @@
   outline: none;
 
   cursor: pointer;
-  touch-action: none;
   user-select: none;
   z-index: $z-index-item-input;
 }
@@ -50,6 +49,8 @@
 
 :host(.legacy-toggle) {
   contain: content;
+
+  touch-action: none;
 }
 
 :host(.ion-focused) input {
@@ -239,8 +240,6 @@ input {
   height: 100%;
 
   background: var(--track-background);
-
-  pointer-events: none;
 
   overflow: inherit;
 }
