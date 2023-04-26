@@ -6,7 +6,15 @@ import type { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate 
 import { CoreDelegate, attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { addEventListener, raf, hasLazyBuild } from '../../utils/helpers';
 import { printIonWarning } from '../../utils/logging';
-import { BACKDROP, dismiss, eventMethod, focusFirstDescendant, prepareOverlay, present } from '../../utils/overlays';
+import {
+  BACKDROP,
+  dismiss,
+  eventMethod,
+  focusFirstDescendant,
+  prepareOverlay,
+  present,
+  setOverlayId,
+} from '../../utils/overlays';
 import type { OverlayEventDetail } from '../../utils/overlays-interface';
 import { isPlatform } from '../../utils/platform';
 import { getClassMap } from '../../utils/theme';
@@ -49,8 +57,6 @@ export class Popover implements ComponentInterface, PopoverInterface {
   private usersElement?: HTMLElement;
   private triggerEl?: HTMLElement | null;
   private parentPopover: HTMLIonPopoverElement | null = null;
-  private popoverIndex = popoverIds++;
-  private popoverId?: string;
   private coreDelegate: FrameworkDelegate = CoreDelegate();
   private currentTransition?: Promise<any>;
   private destroyTriggerInteraction?: () => void;
@@ -338,13 +344,10 @@ export class Popover implements ComponentInterface, PopoverInterface {
   }
 
   componentWillLoad() {
-    /**
-     * If user has custom ID set then we should
-     * not assign the default incrementing ID.
-     */
-    this.popoverId = this.el.hasAttribute('id') ? this.el.getAttribute('id')! : `ion-popover-${this.popoverIndex}`;
+    const { el } = this;
+    const popoverId = setOverlayId(el);
 
-    this.parentPopover = this.el.closest(`ion-popover:not(#${this.popoverId})`) as HTMLIonPopoverElement | null;
+    this.parentPopover = el.closest(`ion-popover:not(#${popoverId})`) as HTMLIonPopoverElement | null;
 
     if (this.alignment === undefined) {
       this.alignment = getIonMode(this) === 'ios' ? 'center' : 'start';
@@ -663,7 +666,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
 
   render() {
     const mode = getIonMode(this);
-    const { onLifecycle, popoverId, parentPopover, dismissOnSelect, side, arrow, htmlAttributes } = this;
+    const { onLifecycle, parentPopover, dismissOnSelect, side, arrow, htmlAttributes } = this;
     const desktop = isPlatform('desktop');
     const enableArrow = arrow && !parentPopover;
 
@@ -676,7 +679,6 @@ export class Popover implements ComponentInterface, PopoverInterface {
         style={{
           zIndex: `${20000 + this.overlayIndex}`,
         }}
-        id={popoverId}
         class={{
           ...getClassMap(this.cssClass),
           [mode]: true,
@@ -711,8 +713,6 @@ const LIFECYCLE_MAP: any = {
   ionPopoverWillDismiss: 'ionViewWillLeave',
   ionPopoverDidDismiss: 'ionViewDidLeave',
 };
-
-let popoverIds = 0;
 
 interface PopoverPresentOptions {
   /**
