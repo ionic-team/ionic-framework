@@ -15,7 +15,7 @@ configs({ directions: ['ltr'] }).forEach(({ config, title, screenshot }) => {
 
       await expect(page).toHaveScreenshot(screenshot(`app-${screenshotModifier}-diff`));
     };
-    test.beforeEach(async ({ page, skip }) => {
+    test.beforeEach(async ({ page }) => {
       await page.goto(`/src/components/app/test/safe-area`, config);
     });
     test('should not have visual regressions with action sheet', async ({ page }) => {
