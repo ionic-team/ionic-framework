@@ -1,15 +1,16 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { Loading } from '../loading';
-import { config } from '../../../global/config';
 
-describe('alert: custom html', () => {
+import { config } from '../../../global/config';
+import { Loading } from '../loading';
+
+describe('loading: custom html', () => {
   it('should not allow for custom html by default', async () => {
     const page = await newSpecPage({
       components: [Loading],
       html: `<ion-loading message="<button class='custom-html'>Custom Text</button>"></ion-loading>`,
     });
 
-    const content = page.body.querySelector('.loading-content');
+    const content = page.body.querySelector('.loading-content')!;
     expect(content.textContent).toContain('Custom Text');
     expect(content.querySelector('button.custom-html')).toBe(null);
   });
@@ -21,7 +22,7 @@ describe('alert: custom html', () => {
       html: `<ion-loading message="<button class='custom-html'>Custom Text</button>"></ion-loading>`,
     });
 
-    const content = page.body.querySelector('.loading-content');
+    const content = page.body.querySelector('.loading-content')!;
     expect(content.textContent).toContain('Custom Text');
     expect(content.querySelector('button.custom-html')).not.toBe(null);
   });
@@ -33,7 +34,7 @@ describe('alert: custom html', () => {
       html: `<ion-loading message="<button class='custom-html'>Custom Text</button>"></ion-loading>`,
     });
 
-    const content = page.body.querySelector('.loading-content');
+    const content = page.body.querySelector('.loading-content')!;
     expect(content.textContent).toContain('Custom Text');
     expect(content.querySelector('button.custom-html')).toBe(null);
   });
