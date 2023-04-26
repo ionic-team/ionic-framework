@@ -22,6 +22,7 @@ import { OVERLAY_BACK_BUTTON_PRIORITY } from './hardware-back-button';
 import { addEventListener, componentOnReady, focusElement, getElementRoot, removeEventListener } from './helpers';
 import { printIonWarning } from './logging';
 
+let lastOverlayIndex = 0;
 let lastId = 0;
 
 export const activeAnimations = new WeakMap<OverlayInterface, Animation[]>();
@@ -54,11 +55,15 @@ export const prepareOverlay = <T extends HTMLIonOverlayElement>(el: T) => {
   if (typeof document !== 'undefined') {
     connectListeners(document);
   }
-  const overlayIndex = lastId++;
+  const overlayIndex = lastOverlayIndex++;
   el.overlayIndex = overlayIndex;
+};
+
+export const setOverlayId = <T extends HTMLIonOverlayElement>(el: T) => {
   if (!el.hasAttribute('id')) {
-    el.id = `ion-overlay-${overlayIndex}`;
+    el.id = `ion-overlay-${++lastId}`;
   }
+  return el.id;
 };
 
 export const createOverlay = <T extends HTMLIonOverlayElement>(
@@ -301,8 +306,8 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
 };
 
 const connectListeners = (doc: Document) => {
-  if (lastId === 0) {
-    lastId = 1;
+  if (lastOverlayIndex === 0) {
+    lastOverlayIndex = 1;
     doc.addEventListener(
       'focus',
       (ev: FocusEvent) => {
