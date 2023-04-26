@@ -105,18 +105,28 @@ const modifiers = {
  */
 export async function pressKeys(this: PageUtils, key: string, { times, ...pressOptions }: Options = {}) {
   const hasNaturalTabNavigation = await getHasNaturalTabNavigation(this.page);
+  /**
+   * Split the key combination into individual keys and map each key to its
+   * corresponding modifier.
+   */
   const keys = key.split('+').flatMap((keyCode) => {
-    if (Object.prototype.hasOwnProperty.call(modifiers, keyCode)) {
+    /**
+     * If the key is a modifier, we need to map it to the correct modifier for
+     * the current platform.
+     */
+    if (keyCode in modifiers) {
       return modifiers[keyCode as keyof typeof modifiers](isAppleOS).map((modifier) =>
         modifier === CTRL ? 'Control' : capitalCase(modifier)
       );
     } else if (keyCode === 'Tab' && !hasNaturalTabNavigation) {
       /**
-       * If the browser does not have natural tab navigation, we need to
-       * simulate the tab key press by pressing the Alt key and the Tab key.
+       * If the key is the tab key and the browser does not have natural tab
+       * navigation, we need to simulate the tab key press by pressing the Alt key
+       * and the Tab key.
        */
       return ['Alt', 'Tab'];
     }
+    // If the key is not a modifier, we can just return the key.
     return keyCode;
   });
   const normalizedKeys = keys.join('+');
@@ -127,6 +137,10 @@ export async function pressKeys(this: PageUtils, key: string, { times, ...pressO
     await command();
 
     if (times > 1 && pressOptions.delay !== undefined) {
+      /**
+       * If we are pressing the key multiple times, we need to wait for the
+       * delay between each key press.
+       */
       await this.page.waitForTimeout(pressOptions.delay);
     }
   }
