@@ -11,5 +11,4 @@ configs().forEach(({ config, screenshot, title }) => {
       await expect(page).toHaveScreenshot(screenshot(`back-button-toolbar`));
     });
   });
-
-})
+});
