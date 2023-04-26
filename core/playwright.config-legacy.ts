@@ -42,11 +42,40 @@ const projects: Project<PlaywrightTestOptions, PlaywrightWorkerOptions>[] = [
   }
 ];
 
+const modes = ['ios', 'md'];
+
+const generateProjects = () => {
+  const projectsWithMetadata: Project<PlaywrightTestOptions, PlaywrightWorkerOptions>[] = [];
+
+  modes.forEach(mode => {
+    projects.forEach(project => {
+      projectsWithMetadata.push({
+        ...project,
+        metadata: {
+          mode,
+          rtl: false,
+          _testing: true
+        }
+      });
+      projectsWithMetadata.push({
+        ...project,
+        metadata: {
+          mode,
+          rtl: true,
+          _testing: true
+        }
+      });
+    });
+  });
+
+  return projectsWithMetadata;
+}
+
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
 const config: PlaywrightTestConfig = {
-  testMatch: '*.e2e.ts',
+  testMatch: '*.e2e-legacy.ts',
   expect: {
     /**
      * Maximum time expect() should wait for the condition to be met.
@@ -79,7 +108,7 @@ const config: PlaywrightTestConfig = {
   },
 
   /* Configure projects for major browsers */
-  projects,
+  projects: generateProjects(),
   webServer: {
     command: 'serve -p 3333',
     port: 3333,
