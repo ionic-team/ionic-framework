@@ -191,15 +191,6 @@
   // }
 }
 
-@mixin split-rules($selector) {
-  @each $complex in selector-parse($selector) {
-    #{$complex} {
-      @content;
-    }
-  }
-}
-
-
 @mixin rtl() {
   $root: #{&};
   $selectors: str-split(#{add-root-selector($root, "[dir=rtl]")}, ",");
