@@ -104,7 +104,7 @@ const showModal = async () => {
 * [Ionic Forum](https://forum.ionicframework.com/)
 * [Ionicons](http://ionicons.com/)
 * [Stencil](https://stenciljs.com/)
-* [Stencil Worldwide Slack](https://stencil-worldwide.herokuapp.com/)
+* [Stencil Worldwide Slack](https://stencil-worldwide.slack.com/)
 * [Capacitor](https://capacitor.ionicframework.com/)
 
 
