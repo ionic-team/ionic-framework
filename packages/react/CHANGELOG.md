@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.4-nightly.20230426](https://github.com/ionic-team/ionic-framework/compare/v7.0.3...v7.0.4-nightly.20230426) (2023-04-26)
+
+
+### Bug Fixes
+
+* **react:** nav will remove components from the DOM ([#25763](https://github.com/ionic-team/ionic-framework/issues/25763)) ([beb46bf](https://github.com/ionic-team/ionic-framework/commit/beb46bf9def466c4bf54aeed2b5ccdcfcf5cd579)), closes [#25753](https://github.com/ionic-team/ionic-framework/issues/25753)
+
+
+
+
+
 ## [7.0.3](https://github.com/ionic-team/ionic/compare/v7.0.2...v7.0.3) (2023-04-19)
 
 **Note:** Version bump only for package @ionic/react

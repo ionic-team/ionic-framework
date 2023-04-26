@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.4-nightly.20230426](https://github.com/ionic-team/ionic-framework/compare/v7.0.3...v7.0.4-nightly.20230426) (2023-04-26)
+
+
+### Bug Fixes
+
+* **breadcumb:** set background when focused on md ([#27274](https://github.com/ionic-team/ionic-framework/issues/27274)) ([01e028b](https://github.com/ionic-team/ionic-framework/commit/01e028b789f84e80f20ce2be7be7f8519f925211)), closes [#27273](https://github.com/ionic-team/ionic-framework/issues/27273)
+* **ios:** scroll assist sizes input correctly ([#27253](https://github.com/ionic-team/ionic-framework/issues/27253)) ([a874992](https://github.com/ionic-team/ionic-framework/commit/a8749929e01b07043631fbc8c522d39cbc3ae798)), closes [#27249](https://github.com/ionic-team/ionic-framework/issues/27249)
+* **modal:** set default text color ([#27207](https://github.com/ionic-team/ionic-framework/issues/27207)) ([c267b43](https://github.com/ionic-team/ionic-framework/commit/c267b43396057d9fab344a30bd83d00523911dc1)), closes [#26060](https://github.com/ionic-team/ionic-framework/issues/26060) [/github.com/ionic-team/ionic-framework/blob/main/core/src/components/popover/popover.scss#L42](https://github.com//github.com/ionic-team/ionic-framework/blob/main/core/src/components/popover/popover.scss/issues/L42)
+* **select:** adjust label alignment when in a card ([#27202](https://github.com/ionic-team/ionic-framework/issues/27202)) ([5a2b87c](https://github.com/ionic-team/ionic-framework/commit/5a2b87cbcc5c789d02b29e776e2b9768d7ad5631)), closes [#27086](https://github.com/ionic-team/ionic-framework/issues/27086)
+
+
+
+
+
 ## [7.0.3](https://github.com/ionic-team/ionic/compare/v7.0.1...v7.0.3) (2023-04-19)
 
 
