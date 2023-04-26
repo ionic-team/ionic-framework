@@ -15,6 +15,8 @@ export class ModalInlineComponent implements AfterViewInit {
 
   breakpointDidChangeCounter = 0;
 
+  showModal = false;
+
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.items = ['A', 'B', 'C', 'D'];
@@ -23,5 +25,13 @@ export class ModalInlineComponent implements AfterViewInit {
 
   onBreakpointDidChange() {
     this.breakpointDidChangeCounter++;
+  }
+
+  toggleModal() {
+    this.showModal = !this.showModal;
+  }
+
+  onDidDismiss() {
+    this.showModal = false;
   }
 }

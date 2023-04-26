@@ -122,3 +122,25 @@ describe('when in a modal', () => {
     cy.get('#inputWithFloatingLabel').should('not.have.class', 'item-has-value');
   });
 });
+
+it('conditionally rendering a modal should increment the modal id', () => {
+  cy.visit('/modal-inline');
+
+  cy.get('#toggle-modal').click();
+
+  cy.get('ion-modal.conditional-modal')
+    .should('exist')
+    .should('be.visible')
+    .should('have.id', 'ion-overlay-2');
+
+  cy.contains('ion-modal.conditional-modal ion-button', 'Dismiss').click();
+
+  cy.get('ion-modal.conditional-modal').should('not.exist');
+
+  cy.get('#toggle-modal').click();
+
+  cy.get('ion-modal.conditional-modal')
+    .should('exist')
+    .should('be.visible')
+    .should('have.id', 'ion-overlay-3');
+});
