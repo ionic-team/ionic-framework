@@ -142,14 +142,6 @@
     // --> :host-context([dir=rtl])
     // --> :host:dir(rtl)
     } @else if str-contains($selector, ":host") {
-      // Check to see if addHostSelector is a dir selector
-      // @include add-root-selector(":host", "[dir=rtl]")
-      // --> :host:dir(rtl)
-      @if str-contains($addHostSelector, "[dir=") {
-        $direction: str-extract($addHostSelector, "[dir=", "]");
-        $list: append($list, "#{$selector}:dir(#{$direction})", comma);
-      }
-
       $new-element: ();
       $elements: str-split($selector, " ");
 
