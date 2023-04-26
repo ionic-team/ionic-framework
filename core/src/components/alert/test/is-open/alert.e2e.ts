@@ -4,7 +4,7 @@ import { configs, test } from '@utils/test/playwright';
 configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ config, title }) => {
   test.describe(title('alert: isOpen'), () => {
     test.beforeEach(async ({ page }) => {
-      await page.goto('/src/components/alert/test/isOpen', config);
+      await page.goto('/src/components/alert/test/is-open', config);
     });
     test('should open the alert', async ({ page }) => {
       const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
