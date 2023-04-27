@@ -462,7 +462,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
  * The calendar day highlight does not render
  * on iOS and has the same behavior across directions.
  */
-configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('datetime: MD highlight rendering'), () => {
     test('datetime: md highlight should not clip at start or end of month', async ({ page }, testInfo) => {
       testInfo.annotations.push({
@@ -481,12 +481,12 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
       await page.waitForSelector('.datetime-ready');
 
-      await expect(datetime).toHaveScreenshot(`date-highlight-start-of-month-${page.getSnapshotSettings()}.png`);
+      await expect(datetime).toHaveScreenshot(screenshot(`date-highlight-start-of-month`));
 
       await datetime.evaluate((el: HTMLIonDatetimeElement) => (el.value = '2021-01-31'));
       await page.waitForChanges();
 
-      await expect(datetime).toHaveScreenshot(`date-highlight-end-of-month-${page.getSnapshotSettings()}.png`);
+      await expect(datetime).toHaveScreenshot(screenshot(`date-highlight-end-of-month`));
     });
   });
 });
