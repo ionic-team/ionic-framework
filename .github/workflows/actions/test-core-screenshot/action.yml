@@ -17,7 +17,7 @@ runs:
       with:
         node-version: 16.x
     - name: Install zip
-      run: apt-get install zip gzip tar
+      run: apt-get update && apt-get install zip gzip tar
       shell: bash
     - uses: ./.github/workflows/actions/download-archive
       with:
