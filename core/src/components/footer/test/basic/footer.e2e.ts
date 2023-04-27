@@ -49,7 +49,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
  * This behavior only exists on
  * iOS mode and does not vary across directions.
  */
-configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('footer: translucent'), () => {
     test('should not have visual regressions with translucent footer', async ({ page }) => {
       await page.setContent(
