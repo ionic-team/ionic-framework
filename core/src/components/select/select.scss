@@ -95,6 +95,12 @@
 }
 
 // TODO FW-3194 - Remove :not(.legacy-select) piece
+/**
+ * Select can be slotted
+ * in components such as item and
+ * toolbar which is why we do not
+ * limit the below behavior to just ion-item.
+ */
 :host([slot="start"]:not(.legacy-select)),
 :host([slot="end"]:not(.legacy-select)) {
   width: auto;
