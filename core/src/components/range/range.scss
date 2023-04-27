@@ -168,8 +168,14 @@
   width: 100%;
 }
 
-:host(.in-item[slot="start"]),
-:host(.in-item[slot="end"]) {
+/**
+ * Select can be slotted
+ * in components such as item and
+ * toolbar which is why we do not
+ * limit the below behavior to just ion-item.
+ */
+:host([slot="start"]),
+:host([slot="end"]) {
   width: auto;
 }
 

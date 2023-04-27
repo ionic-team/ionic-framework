@@ -42,8 +42,14 @@
   height: 100%;
 }
 
-:host(.in-item[slot="start"]:not(.legacy-toggle)),
-:host(.in-item[slot="end"]:not(.legacy-toggle)) {
+/**
+ * Select can be slotted
+ * in components such as item and
+ * toolbar which is why we do not
+ * limit the below behavior to just ion-item.
+ */
+:host([slot="start"]:not(.legacy-toggle)),
+:host([slot="end"]:not(.legacy-toggle)) {
   width: auto;
 }
 
