@@ -33,10 +33,6 @@
           padding: 0;
         }
       }
-
-      ion-select {
-        width: 100%;
-      }
     </style>
   </head>
 
@@ -49,6 +45,20 @@
       </ion-header>
 
       <ion-content id="content" class="ion-padding">
+
+        <ion-select
+          label="Favorite Fruit"
+          placeholder="Select a fruit"
+          label-placement="start"
+          justify="start"
+        ></ion-select>
+
+        <ion-label>abc123</ion-label>
+        <ion-select
+          placeholder="Select a fruit"
+          legacy="true"
+        ></ion-select>
+
         <h1>Placement Start</h1>
         <div class="grid">
           <div class="grid-item">

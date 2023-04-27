@@ -95,8 +95,8 @@
 }
 
 // TODO FW-3194 - Remove :not(.legacy-select) piece
-:host(.in-item[slot="start"]:not(.legacy-select)),
-:host(.in-item[slot="end"]:not(.legacy-select)) {
+:host([slot="start"]:not(.legacy-select)),
+:host([slot="end"]:not(.legacy-select)) {
   width: auto;
 }
 
