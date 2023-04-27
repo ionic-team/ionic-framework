@@ -1,6 +1,10 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
+/**
+ * Avatar does not test RTL behaviors. 
+ * Usages of Avatar in slots are tested in components that use Avatar.
+ */
 configs({ directions: ['ltr'] }).forEach(({ config, screenshot, title }) => {
   test.describe(title('avatar: basic'), () => {
     test('should not have visual regressions', async ({ page }) => {
