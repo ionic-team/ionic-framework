@@ -1,40 +1,56 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { configs, test } from '@utils/test/playwright';
 
-test.describe('datetime: display', () => {
-  test.describe('datetime: rendering', () => {
+/**
+ * This behavior does not vary across directions
+ * since it is texting fixed vs fluid widths.
+ */
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('datetime: rendering'), () => {
     test.describe('fixed sizes', () => {
       test('date-time should not have any visual regressions', async ({ page }) => {
-        await page.setContent(`
+        await page.setContent(
+          `
           <ion-datetime value="2022-02-22T16:30:00" presentation="date-time"></ion-datetime>
-        `);
+        `,
+          config
+        );
         await page.waitForSelector('.datetime-ready');
         const datetime = page.locator('ion-datetime');
-        await expect(datetime).toHaveScreenshot(`datetime-display-date-time-${page.getSnapshotSettings()}.png`);
+        await expect(datetime).toHaveScreenshot(screenshot(`datetime-display-date-time`));
       });
       test('time-date should not have any visual regressions', async ({ page }) => {
-        await page.setContent(`
+        await page.setContent(
+          `
           <ion-datetime value="2022-02-22T16:30:00" presentation="time-date"></ion-datetime>
-        `);
+        `,
+          config
+        );
         await page.waitForSelector('.datetime-ready');
         const datetime = page.locator('ion-datetime');
-        await expect(datetime).toHaveScreenshot(`datetime-display-time-date-${page.getSnapshotSettings()}.png`);
+        await expect(datetime).toHaveScreenshot(screenshot(`datetime-display-time-date`));
       });
       test('time should not have any visual regressions', async ({ page }) => {
-        await page.setContent(`
+        await page.setContent(
+          `
           <ion-datetime value="2022-02-22T16:30:00" presentation="time"></ion-datetime>
-        `);
+        `,
+          config
+        );
         await page.waitForSelector('.datetime-ready');
         const datetime = page.locator('ion-datetime');
-        await expect(datetime).toHaveScreenshot(`datetime-display-time-${page.getSnapshotSettings()}.png`);
+        await expect(datetime).toHaveScreenshot(screenshot(`datetime-display-time`));
       });
       test('date should not have any visual regressions', async ({ page }) => {
-        await page.setContent(`
+        await page.setContent(
+          `
           <ion-datetime value="2022-02-22T16:30:00" presentation="date"></ion-datetime>
-        `);
+        `,
+          config
+        );
         await page.waitForSelector('.datetime-ready');
         const datetime = page.locator('ion-datetime');
-        await expect(datetime).toHaveScreenshot(`datetime-display-date-${page.getSnapshotSettings()}.png`);
+        await expect(datetime).toHaveScreenshot(screenshot(`datetime-display-date`));
       });
     });
     test.describe('cover sizes', () => {
@@ -47,42 +63,61 @@ test.describe('datetime: display', () => {
         await page.setViewportSize({ width: 500, height: 500 });
       });
       test('date-time should not have any visual regressions', async ({ page }) => {
-        await page.setContent(`
+        await page.setContent(
+          `
           <ion-datetime size="cover" value="2022-02-22T16:30:00" presentation="date-time"></ion-datetime>
-        `);
+        `,
+          config
+        );
         await page.waitForSelector('.datetime-ready');
         const datetime = page.locator('ion-datetime');
-        await expect(datetime).toHaveScreenshot(`datetime-display-cover-date-time-${page.getSnapshotSettings()}.png`);
+        await expect(datetime).toHaveScreenshot(screenshot(`datetime-display-cover-date-time`));
       });
       test('time-date should not have any visual regressions', async ({ page }) => {
-        await page.setContent(`
+        await page.setContent(
+          `
           <ion-datetime size="cover" value="2022-02-22T16:30:00" presentation="time-date"></ion-datetime>
-        `);
+        `,
+          config
+        );
         await page.waitForSelector('.datetime-ready');
         const datetime = page.locator('ion-datetime');
-        await expect(datetime).toHaveScreenshot(`datetime-display-cover-time-date-${page.getSnapshotSettings()}.png`);
+        await expect(datetime).toHaveScreenshot(screenshot(`datetime-display-cover-time-date`));
       });
       test('time should not have any visual regressions', async ({ page }) => {
-        await page.setContent(`
+        await page.setContent(
+          `
           <ion-datetime size="cover" value="2022-02-22T16:30:00" presentation="time"></ion-datetime>
-        `);
+        `,
+          config
+        );
         await page.waitForSelector('.datetime-ready');
         const datetime = page.locator('ion-datetime');
-        await expect(datetime).toHaveScreenshot(`datetime-display-cover-time-${page.getSnapshotSettings()}.png`);
+        await expect(datetime).toHaveScreenshot(screenshot(`datetime-display-cover-time`));
       });
       test('date should not have any visual regressions', async ({ page }) => {
-        await page.setContent(`
+        await page.setContent(
+          `
           <ion-datetime size="cover" value="2022-02-22T16:30:00" presentation="date"></ion-datetime>
-        `);
+        `,
+          config
+        );
         await page.waitForSelector('.datetime-ready');
         const datetime = page.locator('ion-datetime');
-        await expect(datetime).toHaveScreenshot(`datetime-display-cover-date-${page.getSnapshotSettings()}.png`);
+        await expect(datetime).toHaveScreenshot(screenshot(`datetime-display-cover-date`));
       });
     });
   });
-  test.describe('datetime: switch presentations', () => {
+});
+
+/**
+ * This is testing functionality
+ * and does not vary across modes/directions.
+ */
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('datetime: switch presentations'), () => {
     test('month selection should work after changing presentation', async ({ page }) => {
-      await page.goto('/src/components/datetime/test/display');
+      await page.goto('/src/components/datetime/test/display', config);
       const ionWorkingPartsDidChange = await page.spyOnEvent('ionWorkingPartsDidChange');
       await page.waitForSelector('.datetime-ready');
 
