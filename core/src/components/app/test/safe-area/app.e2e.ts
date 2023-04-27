@@ -2,6 +2,9 @@ import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 import type { E2EPage } from '@utils/test/playwright';
 
+/**
+ * Safe area tests only check top and bottom edges. RTL checks are not required here.
+ */
 configs({ directions: ['ltr'] }).forEach(({ config, title, screenshot }) => {
   test.describe(title('app: safe-area'), () => {
     const testOverlay = async (page: E2EPage, trigger: string, event: string, screenshotModifier: string) => {
