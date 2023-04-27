@@ -38,6 +38,9 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, title }) => {
   });
 });
 
+/**
+ * Ripple effect is only available in MD mode.
+ */
 configs({ modes: ['md'] }).forEach(({ config, screenshot, title }) => {
   test.describe(title('button: ripple effect'), () => {
     test('should not have visual regressions', async ({ page }) => {
