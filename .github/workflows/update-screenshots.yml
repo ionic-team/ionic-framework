@@ -6,8 +6,6 @@ on:
 jobs:
   build-core:
     runs-on: ubuntu-22.04
-    container:
-      image: mcr.microsoft.com/playwright:v1.32.3-jammy
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/workflows/actions/build-core
@@ -29,6 +27,8 @@ jobs:
         totalShards: [20]
     needs: [build-core]
     runs-on: ubuntu-22.04
+    container:
+      image: mcr.microsoft.com/playwright:v1.32.3-jammy
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/workflows/actions/test-core-screenshot
