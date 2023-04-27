@@ -8,7 +8,7 @@ on:
 
 jobs:
   create-nightly-hash:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     outputs:
       nightly-hash: ${{ steps.create-nightly-hash.outputs.NIGHTLY_HASH }}
     steps:
@@ -40,7 +40,7 @@ jobs:
 
   finalize-release:
     needs: [create-nightly-hash, release-ionic]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
       with:
