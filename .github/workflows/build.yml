@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   build-core:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
         with:
@@ -24,21 +24,21 @@ jobs:
 
   test-core-clean-build:
     needs: [build-core]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/workflows/actions/test-core-clean-build
 
   test-core-lint:
     needs: [build-core]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/workflows/actions/test-core-lint
 
   test-core-spec:
     needs: [build-core]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/workflows/actions/test-core-spec
@@ -55,7 +55,7 @@ jobs:
         shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
         totalShards: [20]
     needs: [build-core]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/workflows/actions/test-core-screenshot
@@ -75,7 +75,7 @@ jobs:
   verify-screenshots:
     if: ${{ always() }}
     needs: test-core-screenshot
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Check build matrix status
         if: ${{ needs.test-core-screenshot.result != 'success' }}
@@ -93,7 +93,7 @@ jobs:
         shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
         totalShards: [20]
     needs: [build-core]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/workflows/actions/test-core-screenshot
@@ -114,7 +114,7 @@ jobs:
   verify-screenshots-legacy:
     if: ${{ always() }}
     needs: test-core-screenshot-legacy
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Check build matrix status
         if: ${{ needs.test-core-screenshot-legacy.result != 'success' }}
@@ -122,14 +122,14 @@ jobs:
 
   build-vue:
     needs: [build-core]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
     - uses: ./.github/workflows/actions/build-vue
 
   build-vue-router:
     needs: [build-vue]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
     - uses: ./.github/workflows/actions/build-vue-router
@@ -140,7 +140,7 @@ jobs:
       matrix:
         apps: [vue3]
     needs: [build-vue, build-vue-router]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
     - uses: ./.github/workflows/actions/test-vue-e2e
@@ -150,7 +150,7 @@ jobs:
   verify-test-vue-e2e:
     if: ${{ always() }}
     needs: test-vue-e2e
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Check build matrix status
         if: ${{ needs.test-vue-e2e.result != 'success' }}
@@ -158,14 +158,14 @@ jobs:
 
   build-angular:
     needs: [build-core]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
     - uses: ./.github/workflows/actions/build-angular
 
   build-angular-server:
     needs: [build-angular]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
     - uses: ./.github/workflows/actions/build-angular-server
@@ -176,7 +176,7 @@ jobs:
       matrix:
         apps: [ng14, ng15, ng16]
     needs: [build-angular, build-angular-server]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
     - uses: ./.github/workflows/actions/test-angular-e2e
@@ -186,7 +186,7 @@ jobs:
   verify-test-angular-e2e:
     if: ${{ always() }}
     needs: test-angular-e2e
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Check build matrix status
         if: ${{ needs.test-angular-e2e.result != 'success' }}
@@ -194,14 +194,14 @@ jobs:
 
   build-react:
     needs: [build-core]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
     - uses: ./.github/workflows/actions/build-react
 
   build-react-router:
     needs: [build-react]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
     - uses: ./.github/workflows/actions/build-react-router
@@ -212,7 +212,7 @@ jobs:
       matrix:
         apps: [reactrouter5]
     needs: [build-react, build-react-router]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
     - uses: ./.github/workflows/actions/test-react-router-e2e
@@ -222,7 +222,7 @@ jobs:
   verify-test-react-router-e2e:
     if: ${{ always() }}
     needs: test-react-router-e2e
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Check build matrix status
         if: ${{ needs.test-react-router-e2e.result != 'success' }}
@@ -234,7 +234,7 @@ jobs:
       matrix:
         apps: [react17, react18]
     needs: [build-react, build-react-router]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
     - uses: ./.github/workflows/actions/test-react-e2e
@@ -244,7 +244,7 @@ jobs:
   verify-test-react-e2e:
     if: ${{ always() }}
     needs: test-react-e2e
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Check build matrix status
         if: ${{ needs.test-react-e2e.result != 'success' }}
