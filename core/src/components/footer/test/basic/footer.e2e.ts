@@ -40,7 +40,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       );
 
       const footer = page.locator('ion-footer');
-      await expect(footer).toHaveScreenshot(screenshot(`footer-no-border-diff-${page.getSnapshotSettings()}.png`));
+      await expect(footer).toHaveScreenshot(screenshot(`footer-no-border-diff`));
     });
   });
 });
