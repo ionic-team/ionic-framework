@@ -16,6 +16,9 @@ runs:
     - uses: actions/setup-node@v3
       with:
         node-version: 16.x
+    - name: Install zip
+      run: sudo apt-get install zip gzip tar
+      shell: bash
     - uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-core
