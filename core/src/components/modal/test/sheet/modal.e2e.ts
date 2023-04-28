@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import { configs, test, dragElementBy } from '@utils/test/playwright';
+import { configs, test } from '@utils/test/playwright';
 
 /**
  * Sheet does not have any additional RTL behaviors
