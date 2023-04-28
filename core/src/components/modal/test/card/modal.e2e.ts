@@ -109,7 +109,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
         await cardModalPage.openModalByTrigger('#card-custom');
         await cardModalPage.openModalByTrigger('.add');
 
-        await expect(page).toHaveScreenshot(`modal-card-custom-stacked-present-tablet`);
+        await expect(page).toHaveScreenshot(screenshot(`modal-card-custom-stacked-present-tablet`));
       });
     });
     test.describe(title('card modal: swipe to close - tablet'), () => {
