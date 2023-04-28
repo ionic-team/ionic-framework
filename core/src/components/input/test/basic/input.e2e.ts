@@ -127,7 +127,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       );
 
       const item = page.locator('ion-item');
-      await expect(item).toHaveScreenshot(`input-with-clear-button-item-color-${page.getSnapshotSettings()}.png`);
+      await expect(item).toHaveScreenshot(screenshot(`input-with-clear-button-item-color`));
     });
   });
 });
