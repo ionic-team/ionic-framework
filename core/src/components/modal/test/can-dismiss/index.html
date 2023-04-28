@@ -84,19 +84,24 @@
       const BREAKPOINTS = [0, 1];
       const PROMISE_TRUE = (data, role) => {
         return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve(true);
+
           setTimeout(() => {
             const event = new CustomEvent('ionHandlerDone', { detail: { data, role } });
             window.dispatchEvent(event);
-            resolve(true);
-          }, 250);
-        });
+          }, 1000);
+        }, 250
       };
       const PROMISE_FALSE = (data, role) => {
         return new Promise((resolve) => {
-          setTimeout(() => {
-            const event = new CustomEvent('ionHandlerDone', { detail: { data, role } });
-            window.dispatchEvent(event);
+          setTimeout((data, role) => {
             resolve(false);
+
+            setTimeout(() => {
+              const event = new CustomEvent('ionHandlerDone', { detail: { data, role } });
+              window.dispatchEvent(event);
+            }, 1000);
           }, 250);
         });
       };
