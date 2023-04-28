@@ -22,7 +22,7 @@ configs().forEach(({ title, screenshot, config }) => {
 
     test('should not have visual regressions with tablet viewport', async ({ page }) => {
       await page.setViewportSize(Viewports.tablet.portrait);
-      await runVisualTests(page, 'tablet-');
+      await runVisualTests(page, '-tablet');
     });
   });
 });
