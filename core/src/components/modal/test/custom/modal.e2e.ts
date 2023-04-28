@@ -14,7 +14,7 @@ configs().forEach(({ title, screenshot, config }) => {
 
       await page.setIonViewport();
 
-      await expect(page).toHaveScreenshot(screenshot(`modal-custom-present-${screenshotModifier}`));
+      await expect(page).toHaveScreenshot(screenshot(`modal-custom-present${screenshotModifier}`));
     };
     test('should not have visual regressions', async ({ page }) => {
       await runVisualTests(page);
