@@ -38,7 +38,12 @@ configs({ modes: ['ios'] }).forEach(({ title, screenshot, config }) => {
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('card modal: functionality'), () => {
     let cardModalPage: CardModalPage;
-    test.beforeEach(async ({ page }) => {
+    test.beforeEach(async ({ page, skip }) => {
+      skip.browser(
+        (browserName: string) => browserName !== 'chromium',
+        'dragElementBy is flaky outside of Chrome browsers.'
+      );
+
       cardModalPage = new CardModalPage(page);
       await cardModalPage.navigate('/src/components/modal/test/card', config);
     });

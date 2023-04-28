@@ -73,7 +73,12 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         await ionBreakpointDidChange.next();
         expect(ionBreakpointDidChange.events.length).toBe(1);
       });
-      test('should emit ionBreakpointDidChange when the sheet is swiped to breakpoint 0', async ({ page }) => {
+      test('should emit ionBreakpointDidChange when the sheet is swiped to breakpoint 0', async ({ page, skip }) => {
+        skip.browser(
+          (browserName: string) => browserName !== 'chromium',
+          'dragElementBy is flaky outside of Chrome browsers.'
+        );
+
         const ionBreakpointDidChange = await page.spyOnEvent('ionBreakpointDidChange');
         const header = page.locator('.modal-sheet ion-header');
 

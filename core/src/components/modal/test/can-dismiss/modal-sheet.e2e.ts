@@ -7,7 +7,12 @@ import { configs, test, dragElementBy } from '@utils/test/playwright';
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('modal: canDismiss'), () => {
     test.describe('sheet modal', () => {
-      test.beforeEach(async ({ page }) => {
+      test.beforeEach(async ({ page, skip }) => {
+        skip.browser(
+          (browserName: string) => browserName !== 'chromium',
+          'dragElementBy is flaky outside of Chrome browsers.'
+        );
+
         await page.goto('/src/components/modal/test/can-dismiss', config);
       });
       test('should dismiss on swipe when canDismiss is true', async ({ page }) => {
