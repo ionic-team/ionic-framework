@@ -13,14 +13,14 @@ configs().forEach(({ title, screenshot, config }) => {
     test('lines="inset" should render correctly', async ({ page }) => {
       await page.goto(`/src/components/list/test/lines`, config);
 
-      const list = page.locator('ion-list[lines="inset"]', config);
+      const list = page.locator('ion-list[lines="inset"]');
 
       await expect(list).toHaveScreenshot(screenshot(`list-lines-inset`));
     });
     test('lines="none" should render correctly', async ({ page }) => {
       await page.goto(`/src/components/list/test/lines`, config);
 
-      const list = page.locator('ion-list[lines="none"]', config);
+      const list = page.locator('ion-list[lines="none"]');
 
       await expect(list).toHaveScreenshot(screenshot(`list-lines-none`));
     });
