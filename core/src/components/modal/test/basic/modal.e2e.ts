@@ -80,7 +80,7 @@ configs().forEach(({ title, screenshot, config }) => {
 
       await page.setIonViewport();
 
-      await expect(page).toHaveScreenshot(screenshot(`modal-basic-present-${screenshotModifier}`));
+      await expect(page).toHaveScreenshot(screenshot(`modal-basic-present${screenshotModifier}`));
 
       await modal.evaluate((el: HTMLIonModalElement) => {
         el.dismiss();
@@ -98,7 +98,7 @@ configs().forEach(({ title, screenshot, config }) => {
     });
     test('should not have visual regressions with tablet viewport', async ({ page }) => {
       await page.setViewportSize(Viewports.tablet.portrait);
-      await runVisualTests(page, 'tablet-');
+      await runVisualTests(page, '-tablet');
     });
   });
 });
