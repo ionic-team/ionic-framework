@@ -56,7 +56,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
         );
 
         const input = page.locator('ion-input');
-        expect(await input.screenshot()).toMatchSnapshot(`input-no-fill-color-floating`);
+        expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-no-fill-color-floating`);
       });
       test('should set label and highlight color on focus with stacked label placement', async ({ page }) => {
         await page.setContent(
@@ -170,7 +170,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
         );
 
         const input = page.locator('ion-input');
-        expect(await input.screenshot()).toMatchSnapshot(`input-outline-color-floating`);
+        expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-outline-color-floating`));
       });
       test('should set label and highlight color on focus with stacked label placement', async ({ page }) => {
         await page.setContent(
