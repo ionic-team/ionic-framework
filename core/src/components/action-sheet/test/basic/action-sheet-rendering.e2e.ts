@@ -1,5 +1,5 @@
-import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
+
 import { ActionSheetFixture } from './fixture';
 
 configs().forEach(({ config, screenshot, title }) => {
@@ -40,4 +40,3 @@ configs().forEach(({ config, screenshot, title }) => {
     });
   });
 });
-
