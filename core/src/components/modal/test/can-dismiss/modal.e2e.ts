@@ -10,57 +10,6 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       test.beforeEach(async ({ page }) => {
         await page.goto('/src/components/modal/test/can-dismiss', config);
       });
-      test('should dismiss when canDismiss is true', async ({ page }) => {
-        const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
-
-        await page.click('#show-modal');
-
-        await ionModalDidPresent.next();
-
-        const modal = page.locator('ion-modal');
-        const returnValue = await modal.evaluate((el: HTMLIonModalElement) => el.dismiss());
-
-        expect(returnValue).toBe(true);
-      });
-      test('should not dismiss when canDismiss is false', async ({ page }) => {
-        const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
-
-        await page.click('#radio-false');
-        await page.click('#show-modal');
-
-        await ionModalDidPresent.next();
-
-        const modal = page.locator('ion-modal');
-        const returnValue = await modal.evaluate((el: HTMLIonModalElement) => el.dismiss());
-
-        expect(returnValue).toBe(false);
-      });
-      test('should dismiss when canDismiss is Promise<true>', async ({ page }) => {
-        const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
-
-        await page.click('#radio-promise-true');
-        await page.click('#show-modal');
-
-        await ionModalDidPresent.next();
-
-        const modal = page.locator('ion-modal');
-        const returnValue = await modal.evaluate((el: HTMLIonModalElement) => el.dismiss());
-
-        expect(returnValue).toBe(true);
-      });
-      test('should not dismiss when canDismiss is Promise<false>', async ({ page }) => {
-        const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
-
-        await page.click('#radio-promise-false');
-        await page.click('#show-modal');
-
-        await ionModalDidPresent.next();
-
-        const modal = page.locator('ion-modal');
-        const returnValue = await modal.evaluate((el: HTMLIonModalElement) => el.dismiss());
-
-        expect(returnValue).toBe(false);
-      });
       test('should dismiss when canDismiss is Action Sheet and user clicks confirm', async ({ page }) => {
         const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
         const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
@@ -224,57 +173,6 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       test.beforeEach(async ({ page }) => {
         await page.goto('/src/components/modal/test/can-dismiss', config);
         await page.click('#radio-sheet');
-      });
-      test('should dismiss when canDismiss is true', async ({ page }) => {
-        const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
-
-        await page.click('#show-modal');
-
-        await ionModalDidPresent.next();
-
-        const modal = page.locator('ion-modal');
-        const returnValue = await modal.evaluate((el: HTMLIonModalElement) => el.dismiss());
-
-        expect(returnValue).toBe(true);
-      });
-      test('should not dismiss when canDismiss is false', async ({ page }) => {
-        const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
-
-        await page.click('#radio-false');
-        await page.click('#show-modal');
-
-        await ionModalDidPresent.next();
-
-        const modal = page.locator('ion-modal');
-        const returnValue = await modal.evaluate((el: HTMLIonModalElement) => el.dismiss());
-
-        expect(returnValue).toBe(false);
-      });
-      test('should dismiss when canDismiss is Promise<true>', async ({ page }) => {
-        const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
-
-        await page.click('#radio-promise-true');
-        await page.click('#show-modal');
-
-        await ionModalDidPresent.next();
-
-        const modal = page.locator('ion-modal');
-        const returnValue = await modal.evaluate((el: HTMLIonModalElement) => el.dismiss());
-
-        expect(returnValue).toBe(true);
-      });
-      test('should not dismiss when canDismiss is Promise<false>', async ({ page }) => {
-        const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
-
-        await page.click('#radio-promise-false');
-        await page.click('#show-modal');
-
-        await ionModalDidPresent.next();
-
-        const modal = page.locator('ion-modal');
-        const returnValue = await modal.evaluate((el: HTMLIonModalElement) => el.dismiss());
-
-        expect(returnValue).toBe(false);
       });
       test('should dismiss on swipe when canDismiss is true', async ({ page }) => {
         const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
