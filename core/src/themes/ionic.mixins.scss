@@ -193,23 +193,33 @@
 
 @mixin rtl() {
   $root: #{&};
-  $selectors: str-split(#{add-root-selector($root, "[dir=rtl]")}, ",");
-  $dirSelector: "#{$root}:dir(rtl)";
+
+  $rootSplit: str-split($root, ",");
+  $selectorsSplit: str-split(#{add-root-selector($root, "[dir=rtl]")}, ",");
 
   // Selectors must be split into individual selectors in case the browser
   // doesn't support a specific selector.
-  // For example, Firefox and Safari doesn't support :host-context().
+  // For example, Firefox and Safari doesn't support `:host-context()`.
   // If an invalid selector is used, then the entire group of selectors
   // will be ignored.
   // @link https://www.w3.org/TR/selectors-3/#grouping
-  @each $selector in $selectors {
+  @each $selector in $selectorsSplit {
     @at-root #{$selector} {
       @content;
     }
   }
 
-  @at-root #{$dirSelector} {
-    @content;
+  // Adding :dir() in case the browser doesn't support `:host-context()` and does support `:dir()`.
+  // `:host-context()` is added:
+  // - through the `add-root-selector()` function.
+  // - first so that it takes precedence over `:dir()`.
+  // For example, Firefox doesn't support `:host-context()`, but does support `:dir()`.
+  // MDN says that `:dir()` is supported by Safari, but it doesn't seem to work.
+  @each $selector in $rootSplit {
+    $dirSelector: "#{$selector}:dir(rtl)";
+    @at-root #{$dirSelector} {
+      @content;
+    }
   }
 }
 
