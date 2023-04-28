@@ -2,7 +2,7 @@ import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
-  test.describe('modal: inline', () => {
+  test.describe(title('modal: inline'), () => {
     test('it should present and then remain in the dom on dismiss', async ({ page }) => {
       await page.goto('/src/components/modal/test/inline', config);
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
