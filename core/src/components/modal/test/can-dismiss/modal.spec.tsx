@@ -20,7 +20,7 @@ describe('modal: canDismiss', () => {
 
       const returnValue = await modal.dismiss();
 
-      await expect(returnValue).toBe(true);
+      expect(returnValue).toBe(true);
     });
 
     it('should not dismiss when canDismiss is false', async () => {
@@ -36,7 +36,7 @@ describe('modal: canDismiss', () => {
 
       const returnValue = await modal.dismiss();
 
-      await expect(returnValue).toBe(false);
+      expect(returnValue).toBe(false);
     });
 
     it('should dismiss when canDismiss is Promise<true>', async () => {
@@ -61,7 +61,7 @@ describe('modal: canDismiss', () => {
 
       const returnValue = await modal.dismiss();
 
-      await expect(returnValue).toBe(true);
+      expect(returnValue).toBe(true);
     });
 
     it('should not dismiss when canDismiss is Promise<false>', async () => {
@@ -86,7 +86,7 @@ describe('modal: canDismiss', () => {
 
       const returnValue = await modal.dismiss();
 
-      await expect(returnValue).toBe(false);
+      expect(returnValue).toBe(false);
     });
   });
   describe('modal: card modal', () => {
@@ -113,7 +113,7 @@ describe('modal: canDismiss', () => {
 
       const returnValue = await modal.dismiss();
 
-      await expect(returnValue).toBe(true);
+      expect(returnValue).toBe(true);
     });
 
     it('should not dismiss when canDismiss is false', async () => {
@@ -133,7 +133,7 @@ describe('modal: canDismiss', () => {
 
       const returnValue = await modal.dismiss();
 
-      await expect(returnValue).toBe(false);
+      expect(returnValue).toBe(false);
     });
 
     it('should dismiss when canDismiss is Promise<true>', async () => {
@@ -161,7 +161,7 @@ describe('modal: canDismiss', () => {
 
       const returnValue = await modal.dismiss();
 
-      await expect(returnValue).toBe(true);
+      expect(returnValue).toBe(true);
     });
 
     it('should not dismiss when canDismiss is Promise<false>', async () => {
@@ -189,7 +189,7 @@ describe('modal: canDismiss', () => {
 
       const returnValue = await modal.dismiss();
 
-      await expect(returnValue).toBe(false);
+      expect(returnValue).toBe(false);
     });
   });
   describe('modal: sheet modal', () => {
@@ -208,7 +208,7 @@ describe('modal: canDismiss', () => {
 
       const returnValue = await modal.dismiss();
 
-      await expect(returnValue).toBe(true);
+      expect(returnValue).toBe(true);
     });
 
     it('should not dismiss when canDismiss is false', async () => {
@@ -226,7 +226,7 @@ describe('modal: canDismiss', () => {
 
       const returnValue = await modal.dismiss();
 
-      await expect(returnValue).toBe(false);
+      expect(returnValue).toBe(false);
     });
 
     it('should dismiss when canDismiss is Promise<true>', async () => {
@@ -253,7 +253,7 @@ describe('modal: canDismiss', () => {
 
       const returnValue = await modal.dismiss();
 
-      await expect(returnValue).toBe(true);
+      expect(returnValue).toBe(true);
     });
 
     it('should not dismiss when canDismiss is Promise<false>', async () => {
@@ -280,7 +280,7 @@ describe('modal: canDismiss', () => {
 
       const returnValue = await modal.dismiss();
 
-      await expect(returnValue).toBe(false);
+      expect(returnValue).toBe(false);
     });
   });
   describe('modal: data and role', () => {
