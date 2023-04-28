@@ -4,7 +4,7 @@ import { configs, test } from '@utils/test/playwright';
 configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('input: a11y'), () => {
     test('does not set a default aria-labelledby when there is not a neighboring ion-label', async ({ page }) => {
-      await page.setContent('<ion-input legacy="true"></ion-input>',config);
+      await page.setContent('<ion-input legacy="true"></ion-input>', config);
 
       const input = page.locator('ion-input > input');
       const ariaLabelledBy = await input.getAttribute('aria-labelledby');
@@ -19,8 +19,9 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
             <ion-label>A11y Test</ion-label>
             <ion-input></ion-input>
           </ion-item>
-        `
-      ,config);
+        `,
+        config
+      );
 
       const label = page.locator('ion-label');
       const input = page.locator('ion-input > input');
@@ -31,5 +32,4 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(ariaLabelledBy).toBe(labelId);
     });
   });
-
 });
