@@ -42,7 +42,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const input = page.locator('ion-input');
-        expect(await input.screenshot()).toMatchSnapshot(`input-fill-solid-label-floating`);
+        expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-fill-solid-label-floating`));
       });
       test('should not have visual regressions with shaped solid', async ({ page }) => {
         await page.setContent(
@@ -89,7 +89,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const input = page.locator('ion-input');
-        expect(await input.screenshot()).toMatchSnapshot(`input-fill-shaped-solid-custom`);
+        expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-fill-shaped-solid-custom`));
       });
     });
     test.describe('input: fill outline', () => {
@@ -128,7 +128,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const input = page.locator('ion-input');
-        expect(await input.screenshot()).toMatchSnapshot(`input-fill-outline-label-floating`);
+        expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-fill-outline-label-floating`));
       });
       test('should not have visual regressions with shaped outline', async ({ page }) => {
         await page.setContent(
@@ -175,7 +175,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const input = page.locator('ion-input');
-        expect(await input.screenshot()).toMatchSnapshot(`input-fill-shaped-outline-custom`);
+        expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-fill-shaped-outline-custom`));
       });
     });
   });
