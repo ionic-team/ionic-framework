@@ -35,7 +35,7 @@ configs({ modes: ['ios'] }).forEach(({ title, screenshot, config }) => {
   });
 });
 
-configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('card modal: functionality'), () => {
     let cardModalPage: CardModalPage;
     test.beforeEach(async ({ page }) => {
