@@ -7,6 +7,8 @@ import type {
 } from '@playwright/test';
 import { test as base } from '@playwright/test';
 
+import { PageUtils } from '../press-keys';
+
 import { initPageEvents } from './page/event-spy';
 import {
   getSnapshotSettings,
@@ -36,6 +38,7 @@ type CustomTestArgs = PlaywrightTestArgs &
 type CustomFixtures = {
   page: E2EPage;
   skip: E2ESkip;
+  pageUtils: PageUtils;
 };
 
 /**
@@ -90,5 +93,8 @@ export const test = base.extend<CustomFixtures>({
     mode: (mode: string, reason = `The functionality that is being tested is not applicable to ${mode} mode`) => {
       base.skip(base.info().project.metadata.mode === mode, reason);
     },
+  },
+  pageUtils: async ({ page }, use) => {
+    await use(new PageUtils({ page }));
   },
 });
