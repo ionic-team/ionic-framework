@@ -69,7 +69,7 @@ configs().forEach(({ title, screenshot, config }) => {
 /**
  * This behavior does not vary across modes/directions.
  */
-configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('input: clear button'), () => {
     test('should clear the input when pressed', async ({ page }) => {
       await page.setContent(
