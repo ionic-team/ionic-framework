@@ -88,7 +88,7 @@
             const event = new CustomEvent('ionHandlerDone', { detail: { data, role } });
             window.dispatchEvent(event);
             resolve(true);
-          }, 50);
+          }, 100);
         });
       };
       const PROMISE_FALSE = (data, role) => {
@@ -97,7 +97,7 @@
             const event = new CustomEvent('ionHandlerDone', { detail: { data, role } });
             window.dispatchEvent(event);
             resolve(false);
-          }, 50);
+          }, 100);
         });
       };
       const rootPage = document.querySelector('.root-page');
