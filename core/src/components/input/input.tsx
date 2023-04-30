@@ -9,6 +9,7 @@ import { createLegacyFormController } from '../../utils/forms';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes, debounceEvent, findItemLabel, inheritAttributes } from '../../utils/helpers';
 import type { MaskFormat, MaskPlaceholder, MaskVisibility } from '../../utils/input-masking';
+import { validateMaskPlaceholder, validateMaskMaxLength } from '../../utils/input-masking';
 import { printIonWarning } from '../../utils/logging';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
@@ -367,10 +368,15 @@ export class Input implements ComponentInterface {
   }
 
   componentWillLoad() {
+    const { el, mask } = this;
+
     this.inheritedAttributes = {
-      ...inheritAriaAttributes(this.el),
-      ...inheritAttributes(this.el, ['tabindex', 'title', 'data-form-type']),
+      ...inheritAriaAttributes(el),
+      ...inheritAttributes(el, ['tabindex', 'title', 'data-form-type']),
     };
+
+    validateMaskMaxLength(this.maxlength, mask);
+    validateMaskPlaceholder(this.maskPlaceholder, mask);
   }
 
   connectedCallback() {
