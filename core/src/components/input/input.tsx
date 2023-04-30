@@ -373,10 +373,15 @@ export class Input implements ComponentInterface {
   }
 
   componentWillLoad() {
+    const { el, mask } = this;
+
     this.inheritedAttributes = {
-      ...inheritAriaAttributes(this.el),
-      ...inheritAttributes(this.el, ['tabindex', 'title', 'data-form-type']),
+      ...inheritAriaAttributes(el),
+      ...inheritAttributes(el, ['tabindex', 'title', 'data-form-type']),
     };
+
+    validateMaskMaxLength(this.maxlength, mask);
+    validateMaskPlaceholder(this.maskPlaceholder, mask);
   }
 
   connectedCallback() {
