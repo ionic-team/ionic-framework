@@ -17,6 +17,7 @@ import { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interf
 import { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
 import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimePresentation, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 import { SpinnerTypes } from "./components/spinner/spinner-configs";
+import { MaskFormat, MaskPlaceholder, MaskVisibility } from "./utils/input-masking";
 import { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
 import { CounterFormatter } from "./components/item/item-interface";
 import { MenuChangeEventDetail, Side } from "./components/menu/menu-interface";
@@ -53,6 +54,7 @@ export { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interf
 export { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
 export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimePresentation, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 export { SpinnerTypes } from "./components/spinner/spinner-configs";
+export { MaskFormat, MaskPlaceholder, MaskVisibility } from "./utils/input-masking";
 export { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
 export { CounterFormatter } from "./components/item/item-interface";
 export { MenuChangeEventDetail, Side } from "./components/menu/menu-interface";
@@ -1225,6 +1227,18 @@ export namespace Components {
           * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the `label` property. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
          */
         "legacy"?: boolean;
+        /**
+          * Mask format. Can be either a string or array of characters and regular expressions.  More complex masks can be defined as an array of regular expressions and constant characters. Each index of the mask array, defines the mask for the corresponding index in the input’s string.
+         */
+        "mask"?: MaskFormat;
+        /**
+          * Character or string to cover unfilled parts of the mask. Default character is `_`. If set to `null`, `undefined` or an empty string, unfilled parts will be empty as in a regular input.
+         */
+        "maskPlaceholder"?: MaskPlaceholder;
+        /**
+          * The visibility of the mask placeholder. With `always`, the placeholder will be visible even when the control does not have focus. With `focus`, the placeholder will only be visible when the control has focus. With `never`, the placeholder will never be visibly displayed.
+         */
+        "maskVisibility"?: MaskVisibility;
         /**
           * The maximum value, which must not be less than its minimum (min attribute) value.
          */
@@ -5255,6 +5269,18 @@ declare namespace LocalJSX {
           * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the `label` property. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
          */
         "legacy"?: boolean;
+        /**
+          * Mask format. Can be either a string or array of characters and regular expressions.  More complex masks can be defined as an array of regular expressions and constant characters. Each index of the mask array, defines the mask for the corresponding index in the input’s string.
+         */
+        "mask"?: MaskFormat;
+        /**
+          * Character or string to cover unfilled parts of the mask. Default character is `_`. If set to `null`, `undefined` or an empty string, unfilled parts will be empty as in a regular input.
+         */
+        "maskPlaceholder"?: MaskPlaceholder;
+        /**
+          * The visibility of the mask placeholder. With `always`, the placeholder will be visible even when the control does not have focus. With `focus`, the placeholder will only be visible when the control has focus. With `never`, the placeholder will never be visibly displayed.
+         */
+        "maskVisibility"?: MaskVisibility;
         /**
           * The maximum value, which must not be less than its minimum (min attribute) value.
          */

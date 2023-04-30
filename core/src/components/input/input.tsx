@@ -8,6 +8,7 @@ import type { LegacyFormController } from '../../utils/forms';
 import { createLegacyFormController } from '../../utils/forms';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes, debounceEvent, findItemLabel, inheritAttributes } from '../../utils/helpers';
+import type { MaskFormat, MaskPlaceholder, MaskVisibility } from '../../utils/input-masking';
 import { printIonWarning } from '../../utils/logging';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
@@ -271,6 +272,29 @@ export class Input implements ComponentInterface {
    * The value of the input.
    */
   @Prop({ mutable: true }) value?: string | number | null = '';
+
+  /**
+   * Mask format. Can be either a string or array of characters and regular expressions.
+   *
+   * More complex masks can be defined as an array of regular expressions and
+   * constant characters. Each index of the mask array, defines the mask for
+   * the corresponding index in the input’s string.
+   */
+  @Prop() mask?: MaskFormat;
+
+  /**
+   * The visibility of the mask placeholder. With `always`, the placeholder will be
+   * visible even when the control does not have focus. With `focus`, the placeholder
+   * will only be visible when the control has focus. With `never`, the placeholder will
+   * never be visibly displayed.
+   */
+  @Prop() maskVisibility?: MaskVisibility = 'always';
+
+  /**
+   * Character or string to cover unfilled parts of the mask. Default character is `_`.
+   * If set to `null`, `undefined` or an empty string, unfilled parts will be empty as in a regular input.
+   */
+  @Prop() maskPlaceholder?: MaskPlaceholder = '_';
 
   /**
    * The `ionInput` event fires when the `value` of an `<ion-input>` element

@@ -43,6 +43,7 @@ export {
   AnimationKeyFrames,
   AnimationLifecycle,
 } from './utils/animation/animation-interface';
+export { MaskFormat, MaskPlaceholder, MaskVisibility } from './utils/input-masking';
 export { HTMLIonOverlayElement, OverlayController, OverlayInterface } from './utils/overlays-interface';
 export { Config, config } from './global/config';
 export { Gesture, GestureConfig, GestureDetail } from './utils/gesture';
