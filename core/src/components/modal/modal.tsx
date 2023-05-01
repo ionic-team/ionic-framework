@@ -454,6 +454,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
     const { inline, delegate } = this.getDelegate(true);
     this.usersElement = await attachComponent(delegate, el, this.component, ['ion-page'], this.componentProps, inline);
 
+    this.ionMount.emit();
+
     /**
      * When using the lazy loaded build of Stencil, we need to wait
      * for every Stencil component instance to be ready before presenting
@@ -473,7 +475,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
        * of this component.
        */
     } else if (!this.keepContentsMounted) {
-      this.ionMount.emit();
       await waitForMount();
     }
 
