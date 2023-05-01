@@ -12,7 +12,7 @@ configs().forEach(({ title, screenshot, config }) => {
       );
 
       const textarea = page.locator('ion-textarea');
-      expect(await textarea.screenshot()).toMatchSnapshot(screenshot(screenshot(`textarea-placement-start`)));
+      expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-placement-start`));
     });
     test('textarea should render multiple lines of text', async ({ page }) => {
       await page.setContent(
@@ -51,7 +51,7 @@ configs().forEach(({ title, screenshot, config }) => {
       );
 
       const textarea = page.locator('ion-textarea');
-      expect(await textarea.screenshot()).toMatchSnapshot(screenshot(screenshot(`textarea-placement-end`)));
+      expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-placement-end`));
     });
     test('textarea should render multiple lines of text', async ({ page }) => {
       await page.setContent(
