@@ -9,6 +9,7 @@ import { createLegacyFormController } from '../../utils/forms';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes, debounceEvent, findItemLabel, inheritAttributes } from '../../utils/helpers';
 import type { MaskExpression, MaskPlaceholder, MaskVisibility } from '../../utils/input-masking';
+import { MaskController, formatMask } from '../../utils/input-masking';
 import { printIonWarning } from '../../utils/logging';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
@@ -32,6 +33,7 @@ export class Input implements ComponentInterface {
   private inheritedAttributes: Attributes = {};
   private isComposing = false;
   private legacyFormController!: LegacyFormController;
+  private maskController?: MaskController;
 
   // This flag ensures we log the deprecation warning at most once.
   private hasLoggedDeprecationWarning = false;
@@ -373,15 +375,12 @@ export class Input implements ComponentInterface {
   }
 
   componentWillLoad() {
-    const { el, mask } = this;
+    const { el } = this;
 
     this.inheritedAttributes = {
       ...inheritAriaAttributes(el),
       ...inheritAttributes(el, ['tabindex', 'title', 'data-form-type']),
     };
-
-    validateMaskMaxLength(this.maxlength, mask);
-    validateMaskPlaceholder(this.maskPlaceholder, mask);
   }
 
   connectedCallback() {
@@ -401,7 +400,23 @@ export class Input implements ComponentInterface {
   }
 
   componentDidLoad() {
+    const { mask, nativeInput } = this;
+
     this.originalIonInput = this.ionInput;
+
+    if (mask !== undefined && nativeInput) {
+      const formattedMask = formatMask(mask);
+
+      if (formattedMask) {
+        this.maskController = new MaskController(nativeInput, {
+          mask: formattedMask,
+        });
+      } else {
+        printIonWarning('ion-input: Invalid mask format', {
+          mask,
+        });
+      }
+    }
   }
 
   disconnectedCallback() {
@@ -412,6 +427,9 @@ export class Input implements ComponentInterface {
         })
       );
     }
+
+    // Todo - need to evaluate if I need to recreate this in connectedCallback after first load
+    this.maskController?.destroy();
   }
 
   /**
@@ -497,6 +515,39 @@ export class Input implements ComponentInterface {
   };
 
   private onChange = (ev: Event) => {
+    // if (this.isMasked) {
+    //   const currentValue = this.getValue();
+    //   const currentSelection = getInputSelection(this.nativeInput!);
+
+    //   // TODO get last value and last selection
+
+    //   const newInputState = this.maskUtils.processChange(
+    //     {
+    //       value: currentValue,
+    //       selection: currentSelection,
+    //     },
+    //     {
+    //       value: '',
+    //       selection: {
+    //         start: 0,
+    //         end: 0,
+    //         length: 0,
+    //       },
+    //     }
+    //   );
+
+    //   // Set Value
+    //   this.nativeInput!.value = newInputState.value;
+    //   this.nativeInput!.setSelectionRange(newInputState.selection.start, newInputState.selection.end);
+
+    //   // TODO wait a frame raf
+
+    //   console.log('currentValue', currentValue);
+    //   console.log('currentSelection', currentSelection);
+
+    //   console.log('newInputState', newInputState);
+    // }
+
     this.emitValueChange(ev);
   };
 

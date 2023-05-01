@@ -1,4 +1,5 @@
 import { newSpecPage } from '@stencil/core/testing';
+
 import { Input } from '../input';
 
 it('should render bottom content when helper text is defined', async () => {
