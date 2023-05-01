@@ -19,7 +19,7 @@ export interface TypedInputEvent extends InputEvent {
   | 'insertText';
 }
 
-export type SelectionRange = [from: number, to: number];
+export type SelectionRange = readonly [from: number, to: number];
 
 export interface ElementState {
   readonly value: string;
