@@ -26,8 +26,6 @@ configs().forEach(({ title, screenshot, config }) => {
       expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-placement-start-long-label`));
     });
   });
-});
-configs().forEach(({ title, screenshot, config }) => {
   test.describe(title('input: label placement end'), () => {
     test('label should appear on the ending side of the input', async ({ page }) => {
       await page.setContent(
@@ -51,9 +49,6 @@ configs().forEach(({ title, screenshot, config }) => {
       expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-placement-end-long-label`));
     });
   });
-});
-
-configs().forEach(({ title, screenshot, config }) => {
   test.describe(title('input: label placement fixed'), () => {
     test('label should appear on the starting side of the input, have a fixed width, and show ellipses', async ({
       page,
@@ -69,9 +64,6 @@ configs().forEach(({ title, screenshot, config }) => {
       expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-placement-fixed`));
     });
   });
-});
-
-configs().forEach(({ title, screenshot, config }) => {
   test.describe(title('input: label placement stacked'), () => {
     test('label should appear above the input when there is a value', async ({ page }) => {
       await page.setContent(
@@ -106,9 +98,6 @@ configs().forEach(({ title, screenshot, config }) => {
       expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-placement-stacked-long-label`));
     });
   });
-});
-
-configs().forEach(({ title, screenshot, config }) => {
   test.describe(title('input: label placement floating'), () => {
     test('label should appear above the input when there is a value', async ({ page }) => {
       await page.setContent(
