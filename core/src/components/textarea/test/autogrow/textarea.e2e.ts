@@ -25,7 +25,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       await nativeTextarea.type('Now, this is a story all about how');
 
-      await expect(ionTextarea).toHaveScreenshot(screenshot(`textarea-autogrow-initial.png`));
+      await expect(ionTextarea).toHaveScreenshot(screenshot(`textarea-autogrow-initial`));
 
       await nativeTextarea.type(
         [
@@ -37,7 +37,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       );
 
       await page.waitForChanges();
-      await expect(ionTextarea).toHaveScreenshot(screenshot(`textarea-autogrow-after.png`));
+      await expect(ionTextarea).toHaveScreenshot(screenshot(`textarea-autogrow-after`));
     });
 
     test('should break long lines without white space', async ({ page }) => {
@@ -61,7 +61,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       const textarea = page.locator('ion-textarea');
 
-      await expect(textarea).toHaveScreenshot(screenshot(`textarea-autogrow-word-break.png`));
+      await expect(textarea).toHaveScreenshot(screenshot(`textarea-autogrow-word-break`));
     });
   });
 });
