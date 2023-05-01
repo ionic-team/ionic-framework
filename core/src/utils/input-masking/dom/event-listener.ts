@@ -4,6 +4,9 @@ import type { TypedInputEvent } from "../types/mask-interface";
  * Event listener utility class that simplifies teardown of
  * manually added event listeners.
  * @internal
+ *
+ * Original design by Tinkoff:
+ * @see https://github.com/Tinkoff/maskito/blob/main/projects/core/src/lib/utils/dom/event-listener.ts
  */
 export class EventListener {
   private readonly listeners: (() => void)[] = [];

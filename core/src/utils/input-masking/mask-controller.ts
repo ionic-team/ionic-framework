@@ -2,7 +2,7 @@ import { MaskHistory } from "./classes";
 import { MASK_DEFAULT_OPTIONS } from "./constants";
 import { isBeforeInputEventSupported, isEventProducingCharacter, EventListener } from "./dom";
 import type { ElementState, MaskOptions, SelectionRange, TypedInputEvent } from "./types/mask-interface";
-import { getLineSelection, getNotEmptySelection, getWordSelection } from "./utils";
+import { getNotEmptySelection } from "./utils";
 
 /**
  * The mask controller class. It is used to control the mask of the element.
@@ -26,77 +26,21 @@ export class MaskController extends MaskHistory {
     private readonly maskOptions: MaskOptions
   ) {
     super();
+    console.debug('MaskController', {
+      element,
+      maskOptions,
+      options: this.options
+    });
     this.ensureValueFitsMask();
     this.updateHistory(this.elementState);
 
     this.eventListener.listen('keydown', event => {
-      const { ctrlKey, key, metaKey, shiftKey } = event;
-
-      // CTRL/CMD + z or CTRL + y (Windows shortcut)
-      if ((metaKey && shiftKey && key === 'z') || (ctrlKey && key === 'y')) {
-        event.preventDefault();
-
-        return this.redo();
-      }
-
-      // CTRL/CMD + Z
-      if ((ctrlKey || metaKey) && key === 'z') {
-        event.preventDefault();
-
-        return this.undo();
-      }
+      console.debug('keydown', event);
     });
 
     if (isBeforeInputEventSupported(element)) {
       this.eventListener.listen('beforeinput', event => {
-        const isForward = event.inputType.includes('Forward');
-
-        this.updateHistory(this.elementState);
-
-        switch (event.inputType) {
-          case 'historyUndo':
-            event.preventDefault();
-            return this.undo();
-          case 'historyRedo':
-            event.preventDefault();
-            return this.redo();
-          case 'deleteByCut':
-          case 'deleteContentBackward':
-          case 'deleteContentForward':
-            return this.handleDelete({
-              event,
-              isForward,
-              selection: getNotEmptySelection(this.elementState, isForward)
-            });
-          case 'deleteWordForward':
-          case 'deleteWordBackward':
-            return this.handleDelete({
-              event,
-              isForward,
-              selection: getWordSelection(this.elementState, isForward),
-              force: true
-            });
-          case 'deleteSoftLineBackward':
-          case 'deleteSoftLineForward':
-          case 'deleteHardLineBackward':
-          case 'deleteHardLineForward':
-            return this.handleDelete({
-              event,
-              isForward,
-              selection: getLineSelection(this.elementState, isForward),
-              force: true,
-            });
-          case 'insertFromDrop':
-            // We don't know caret position at this moment
-            // (inserted content will be handled later in "input"-event)
-            return;
-          case 'insertLineBreak':
-            return this.handleEnter(event);
-          case 'insertFromPaste':
-          case 'insertText':
-          default:
-            return this.handleInsert(event, event.data || '');
-        }
+        console.debug('beforeinput', event);
       });
     } else {
       /**
@@ -113,8 +57,7 @@ export class MaskController extends MaskHistory {
     }
 
     this.eventListener.listen('input', () => {
-      this.ensureValueFitsMask();
-      this.updateHistory(this.elementState);
+      console.debug('input');
     });
   }
 
@@ -159,9 +102,7 @@ export class MaskController extends MaskHistory {
           event,
           isForward,
           selection: getNotEmptySelection(this.elementState, isForward)
-        })
-      case 'Enter':
-        return this.handleEnter(event);
+        });
     }
 
     if (!isEventProducingCharacter(event)) {
@@ -172,7 +113,7 @@ export class MaskController extends MaskHistory {
   }
 
   private ensureValueFitsMask(): void {
-    // TODO this.updateElementState(transform(this.elementState, this.options))
+    // TODO implementation
   }
 
   private handleDelete({
@@ -198,11 +139,6 @@ export class MaskController extends MaskHistory {
   private handleInsert(event: Event | TypedInputEvent, data: string): void {
     // TODO implementation
     console.debug('handleInsert', event, data);
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  private handleEnter(_event: Event): void {
-    // Stubbed out if we support textarea in the future.
   }
 
   private updateSelectionRange([from, to]: SelectionRange): void {

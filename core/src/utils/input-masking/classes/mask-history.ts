@@ -3,6 +3,9 @@ import type { ElementState, TypedInputEvent } from "../types/mask-interface";
 /**
  * The mask history class. It is used to store the previous and next states of the element.
  * @internal
+ *
+ * Original design by Tinkoff:
+ * @see https://github.com/Tinkoff/maskito/blob/main/projects/core/src/lib/classes/mask-history.ts
  */
 export abstract class MaskHistory {
   private now: ElementState | null = null;
