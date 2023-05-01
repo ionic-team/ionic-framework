@@ -116,7 +116,7 @@ export class IonModal {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     this.el = r.nativeElement;
 
-    this.el.addEventListener('willPresent', () => {
+    this.el.addEventListener('ionMount', () => {
       this.isCmpOpen = true;
       c.detectChanges();
     });
@@ -124,7 +124,6 @@ export class IonModal {
       this.isCmpOpen = false;
       c.detectChanges();
     });
-
     proxyOutputs(this, this.el, [
       'ionModalDidPresent',
       'ionModalWillPresent',
