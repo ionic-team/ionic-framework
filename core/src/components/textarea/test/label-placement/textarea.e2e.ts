@@ -38,9 +38,6 @@ configs().forEach(({ title, screenshot, config }) => {
       expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-placement-start-label-truncated`));
     });
   });
-});
-
-configs().forEach(({ title, screenshot, config }) => {
   test.describe(title('textarea: label placement end'), () => {
     test('label should appear on the ending side of the textarea', async ({ page }) => {
       await page.setContent(
@@ -76,9 +73,6 @@ configs().forEach(({ title, screenshot, config }) => {
       expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-placement-end-label-truncated`));
     });
   });
-});
-
-configs().forEach(({ title, screenshot, config }) => {
   test.describe(title('textarea: label placement fixed'), () => {
     test('label should appear on the starting side of the textarea and have a fixed width', async ({ page }) => {
       await page.setContent(
@@ -114,9 +108,6 @@ configs().forEach(({ title, screenshot, config }) => {
       expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-placement-fixed-label-truncated`));
     });
   });
-});
-
-configs().forEach(({ title, screenshot, config }) => {
   test.describe(title('textarea: label placement stacked'), () => {
     test('label should appear above the textarea when there is a value', async ({ page }) => {
       await page.setContent(
@@ -163,9 +154,6 @@ configs().forEach(({ title, screenshot, config }) => {
       expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-placement-stacked-label-truncated`));
     });
   });
-});
-
-configs().forEach(({ title, screenshot, config }) => {
   test.describe(title('textarea: label placement floating'), () => {
     test('label should appear above the textarea when there is a value', async ({ page }) => {
       await page.setContent(
