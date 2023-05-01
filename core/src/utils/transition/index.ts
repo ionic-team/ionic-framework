@@ -211,8 +211,8 @@ export const lifecycle = (el: HTMLElement | undefined, eventName: string) => {
  * we need to wait two rafs. As a result we are using two rafs for
  * all frameworks to ensure contents are mounted.
  */
-export const waitForMount = () => {
-  return new Promise((resolve) => raf(raf(resolve)));
+export const waitForMount = (): Promise<void> => {
+  return new Promise((resolve) => raf(() => raf(() => resolve())));
 };
 
 export const deepReady = async (el: any | undefined): Promise<void> => {
