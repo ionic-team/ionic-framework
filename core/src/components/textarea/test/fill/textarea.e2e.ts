@@ -42,7 +42,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const textarea = page.locator('ion-textarea');
-        expect(await textarea.screenshot()).toMatchSnapshot(`textarea-fill-solid-label-floating`);
+        expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-fill-solid-label-floating`));
       });
       test('should not have visual regressions with shaped solid', async ({ page }) => {
         await page.setContent(
@@ -61,7 +61,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const textarea = page.locator('ion-textarea');
-        expect(await textarea.screenshot()).toMatchSnapshot(`textarea-fill-shaped-solid`);
+        expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-fill-shaped-solid`));
       });
       test('padding and border radius should be customizable', async ({ page }) => {
         await page.setContent(
@@ -89,7 +89,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const textarea = page.locator('ion-textarea');
-        expect(await textarea.screenshot()).toMatchSnapshot(`textarea-fill-shaped-solid-custom`);
+        expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-fill-shaped-solid-custom`));
       });
     });
     test.describe('textarea: fill outline', () => {
@@ -128,7 +128,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const textarea = page.locator('ion-textarea');
-        expect(await textarea.screenshot()).toMatchSnapshot(`textarea-fill-outline-label-floating`);
+        expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-fill-outline-label-floating`));
       });
       test('should not have visual regressions with shaped outline', async ({ page }) => {
         await page.setContent(
@@ -147,7 +147,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const textarea = page.locator('ion-textarea');
-        expect(await textarea.screenshot()).toMatchSnapshot(`textarea-fill-shaped-outline`);
+        expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-fill-shaped-outline`));
       });
       test('padding and border radius should be customizable', async ({ page }) => {
         await page.setContent(
@@ -175,7 +175,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const textarea = page.locator('ion-textarea');
-        expect(await textarea.screenshot()).toMatchSnapshot(`textarea-fill-shaped-outline-custom`);
+        expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-fill-shaped-outline-custom`));
       });
     });
   });
