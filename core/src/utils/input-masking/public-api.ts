@@ -1,5 +1,1 @@
-export {
-  MaskVisibility,
-  MaskFormat,
-  MaskPlaceholder
-} from './types/mask-interface';
+export { MaskVisibility, MaskFormat, MaskPlaceholder } from './types/mask-interface';

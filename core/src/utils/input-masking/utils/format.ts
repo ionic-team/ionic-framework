@@ -1,5 +1,5 @@
-import type { MaskFormat } from "../public-api";
-import type { MaskExpression } from "../types/mask-interface";
+import type { MaskFormat } from '../public-api';
+import type { MaskExpression } from '../types/mask-interface';
 
 /**
  * Formats the mask between the consumer API format and the internal
@@ -15,4 +15,4 @@ export const formatMask = (mask: MaskFormat): MaskExpression | null => {
     return mask;
   }
   return null;
-}
+};

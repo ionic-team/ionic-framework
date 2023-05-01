@@ -1,7 +1,6 @@
 import { formatMask } from './format';
 
 describe('formatMask', () => {
-
   it('should convert a string to a RegExp', () => {
     const mask = formatMask('0');
     expect(mask).toBeInstanceOf(RegExp);
@@ -16,5 +15,4 @@ describe('formatMask', () => {
     const mask = formatMask(null as any);
     expect(mask).toBeNull();
   });
-
 });

@@ -1,8 +1,8 @@
-import { MaskHistory } from "./classes";
-import { MASK_DEFAULT_OPTIONS } from "./constants";
-import { isBeforeInputEventSupported, isEventProducingCharacter, EventListener } from "./dom";
-import type { ElementState, MaskOptions, SelectionRange, TypedInputEvent } from "./types/mask-interface";
-import { getNotEmptySelection } from "./utils";
+import { MaskHistory } from './classes';
+import { MASK_DEFAULT_OPTIONS } from './constants';
+import { isBeforeInputEventSupported, isEventProducingCharacter, EventListener } from './dom';
+import type { ElementState, MaskOptions, SelectionRange, TypedInputEvent } from './types/mask-interface';
+import { getNotEmptySelection } from './utils';
 
 /**
  * The mask controller class. It is used to control the mask of the element.
@@ -13,33 +13,29 @@ import { getNotEmptySelection } from "./utils";
  * @see https://github.com/Tinkoff/maskito/blob/main/projects/core/src/lib/mask.ts
  */
 export class MaskController extends MaskHistory {
-
   private readonly eventListener = new EventListener(this.element);
 
   private readonly options: Required<MaskOptions> = {
     ...MASK_DEFAULT_OPTIONS,
     ...this.maskOptions,
-  }
+  };
 
-  constructor(
-    private readonly element: HTMLInputElement,
-    private readonly maskOptions: MaskOptions
-  ) {
+  constructor(private readonly element: HTMLInputElement, private readonly maskOptions: MaskOptions) {
     super();
     console.debug('MaskController', {
       element,
       maskOptions,
-      options: this.options
+      options: this.options,
     });
     this.ensureValueFitsMask();
     this.updateHistory(this.elementState);
 
-    this.eventListener.listen('keydown', event => {
+    this.eventListener.listen('keydown', (event) => {
       console.debug('keydown', event);
     });
 
     if (isBeforeInputEventSupported(element)) {
-      this.eventListener.listen('beforeinput', event => {
+      this.eventListener.listen('beforeinput', (event) => {
         console.debug('beforeinput', event);
       });
     } else {
@@ -49,11 +45,10 @@ export class MaskController extends MaskHistory {
        *** {@link handleDelete}
        *** {@link handleInsert}
        */
-      this.eventListener.listen('keydown', event => this.handleKeyDown(event));
-      this.eventListener.listen('paste', event => this.handleInsert(
-        event,
-        event.clipboardData?.getData('text/plain') || ''
-      ));
+      this.eventListener.listen('keydown', (event) => this.handleKeyDown(event));
+      this.eventListener.listen('paste', (event) =>
+        this.handleInsert(event, event.clipboardData?.getData('text/plain') || '')
+      );
     }
 
     this.eventListener.listen('input', () => {
@@ -65,7 +60,7 @@ export class MaskController extends MaskHistory {
     const { value, selectionStart, selectionEnd } = this.element;
     return {
       value,
-      selection: [selectionStart ?? 0, selectionEnd ?? 0]
+      selection: [selectionStart ?? 0, selectionEnd ?? 0],
     };
   }
 
@@ -78,7 +73,7 @@ export class MaskController extends MaskHistory {
     { value, selection }: ElementState,
     eventInit: Pick<TypedInputEvent, 'data' | 'inputType'> = {
       inputType: 'insertText',
-      data: null
+      data: null,
     }
   ): void {
     const initialValue = this.elementState.value;
@@ -101,7 +96,7 @@ export class MaskController extends MaskHistory {
         return this.handleDelete({
           event,
           isForward,
-          selection: getNotEmptySelection(this.elementState, isForward)
+          selection: getNotEmptySelection(this.elementState, isForward),
         });
     }
 
@@ -120,19 +115,19 @@ export class MaskController extends MaskHistory {
     event,
     selection,
     isForward,
-    force = false
+    force = false,
   }: {
     event: Event | TypedInputEvent;
     selection: SelectionRange;
     isForward: boolean;
-    force?: boolean
+    force?: boolean;
   }): void {
     // TODO implementation
     console.debug('handleDelete', {
       event,
       selection,
       isForward,
-      force
+      force,
     });
   }
 
@@ -154,11 +149,10 @@ export class MaskController extends MaskHistory {
   private dispatchInputEvent(
     eventInit: Pick<TypedInputEvent, 'data' | 'inputType'> = {
       inputType: 'insertText',
-      data: null
+      data: null,
     }
   ): void {
     // TODO implementation
     console.debug('dispatchInputEvent', eventInit);
   }
-
 }

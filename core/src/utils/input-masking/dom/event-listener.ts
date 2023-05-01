@@ -1,4 +1,4 @@
-import type { TypedInputEvent } from "../types/mask-interface";
+import type { TypedInputEvent } from '../types/mask-interface';
 
 /**
  * Event listener utility class that simplifies teardown of
@@ -11,14 +11,12 @@ import type { TypedInputEvent } from "../types/mask-interface";
 export class EventListener {
   private readonly listeners: (() => void)[] = [];
 
-  constructor(private readonly element: HTMLElement) { }
+  constructor(private readonly element: HTMLElement) {}
 
   listen<E extends keyof HTMLElementEventMap>(
     eventType: E,
-    fn: (
-      event: E extends 'beforeinput' ? TypedInputEvent : HTMLElementEventMap[E],
-    ) => unknown,
-    options?: AddEventListenerOptions,
+    fn: (event: E extends 'beforeinput' ? TypedInputEvent : HTMLElementEventMap[E]) => unknown,
+    options?: AddEventListenerOptions
   ): void {
     const untypedFn = fn as (event: HTMLElementEventMap[E]) => unknown;
 
@@ -27,6 +25,6 @@ export class EventListener {
   }
 
   destroy(): void {
-    this.listeners.forEach(removeListener => removeListener());
+    this.listeners.forEach((removeListener) => removeListener());
   }
 }

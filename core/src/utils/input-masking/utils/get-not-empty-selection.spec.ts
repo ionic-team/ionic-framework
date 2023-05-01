@@ -1,4 +1,3 @@
-
 import type { ElementState } from '../types/mask-interface';
 
 import { getNotEmptySelection } from './get-not-empty-selection';
@@ -10,12 +9,8 @@ describe('getNotEmptySelection', () => {
       selection: [1, 3],
     };
 
-    expect(getNotEmptySelection(elementStateStub, true)).toEqual(
-      elementStateStub.selection,
-    );
-    expect(getNotEmptySelection(elementStateStub, false)).toEqual(
-      elementStateStub.selection,
-    );
+    expect(getNotEmptySelection(elementStateStub, true)).toEqual(elementStateStub.selection);
+    expect(getNotEmptySelection(elementStateStub, false)).toEqual(elementStateStub.selection);
   });
 
   describe('backward direction', () => {

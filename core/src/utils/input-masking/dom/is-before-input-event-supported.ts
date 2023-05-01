@@ -9,8 +9,6 @@
  * @see https://caniuse.com/?search=beforeinput
  * @see https://ionicframework.com/docs/reference/browser-support
  */
-export function isBeforeInputEventSupported(
-  element: HTMLInputElement | HTMLTextAreaElement,
-): boolean {
+export function isBeforeInputEventSupported(element: HTMLInputElement | HTMLTextAreaElement): boolean {
   return 'onbeforeinput' in element;
 }
