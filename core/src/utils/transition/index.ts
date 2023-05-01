@@ -198,6 +198,23 @@ export const lifecycle = (el: HTMLElement | undefined, eventName: string) => {
   }
 };
 
+/**
+ * Wait two request animation frame loops.
+ * This allows the framework implementations enough time to mount
+ * the user-defined contents. This is often needed when using inline
+ * modals and popovers that accept user components. For popover,
+ * the contents must be mounted for the popover to be sized correctly.
+ * For modals, the contents must be mounted for iOS to run the
+ * transition correctly.
+ *
+ * On Angular and React, a single raf is enough time, but for Vue
+ * we need to wait two rafs. As a result we are using two rafs for
+ * all frameworks to ensure contents are mounted.
+ */
+export const waitForMount = () => {
+  return new Promise((resolve) => raf(raf(resolve)));
+};
+
 export const deepReady = async (el: any | undefined): Promise<void> => {
   const element = el as any;
   if (element) {
