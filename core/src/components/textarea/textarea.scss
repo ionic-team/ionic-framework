@@ -296,7 +296,9 @@
  * However, they trigger a WebKit issue where
  * the textarea height takes up the entire page.
  * As a result, we scope those styles to only match
- * autogrow textareas.
+ * autogrow textareas. This bug does not trigger
+ * with autogrow textareas because the height of
+ * the textarea is set to a specific pixel value.
  */
 :host([auto-grow]) .native-wrapper,
 // TODO: FW-2876 - Remove this selector, keep :host([auto-grow]) .native-wrapper
