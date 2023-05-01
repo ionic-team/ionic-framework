@@ -291,8 +291,15 @@
   @include padding(var(--padding-top), 0px, var(--padding-bottom), 0px);
 }
 
-.native-wrapper,
-// TODO: FW-2876 - Remove this selector, keep .native-wrapper
+/**
+ * The below styles are only required for autogrow.
+ * However, they trigger a WebKit issue where
+ * the textarea height takes up the entire page.
+ * As a result, we scope those styles to only match
+ * autogrow textareas.
+ */
+:host([auto-grow]) .native-wrapper,
+// TODO: FW-2876 - Remove this selector, keep :host([auto-grow]) .native-wrapper
 .textarea-legacy-wrapper {
   display: grid;
 
