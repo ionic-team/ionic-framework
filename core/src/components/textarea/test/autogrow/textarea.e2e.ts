@@ -8,7 +8,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       await page.setIonViewport();
 
-      await expect(page).toHaveScreenshot(screenshot(`textarea-autogrow-diff.png`));
+      await expect(page).toHaveScreenshot(screenshot(`textarea-autogrow-diff`));
     });
 
     // TODO(FW-3920): Autogrow test is flaky
