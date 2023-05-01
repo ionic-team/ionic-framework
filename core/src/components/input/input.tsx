@@ -515,39 +515,6 @@ export class Input implements ComponentInterface {
   };
 
   private onChange = (ev: Event) => {
-    // if (this.isMasked) {
-    //   const currentValue = this.getValue();
-    //   const currentSelection = getInputSelection(this.nativeInput!);
-
-    //   // TODO get last value and last selection
-
-    //   const newInputState = this.maskUtils.processChange(
-    //     {
-    //       value: currentValue,
-    //       selection: currentSelection,
-    //     },
-    //     {
-    //       value: '',
-    //       selection: {
-    //         start: 0,
-    //         end: 0,
-    //         length: 0,
-    //       },
-    //     }
-    //   );
-
-    //   // Set Value
-    //   this.nativeInput!.value = newInputState.value;
-    //   this.nativeInput!.setSelectionRange(newInputState.selection.start, newInputState.selection.end);
-
-    //   // TODO wait a frame raf
-
-    //   console.log('currentValue', currentValue);
-    //   console.log('currentSelection', currentSelection);
-
-    //   console.log('newInputState', newInputState);
-    // }
-
     this.emitValueChange(ev);
   };
 
