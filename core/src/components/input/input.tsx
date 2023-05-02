@@ -291,7 +291,7 @@ export class Input implements ComponentInterface {
   @Prop() maskVisibility?: MaskVisibility = 'always';
 
   /**
-   * Character or string to cover unfilled parts of the mask. Default character is `_`.
+   * Character or string to cover unfilled parts of the mask. The default character is `_`.
    * If set to `null`, `undefined` or an empty string, unfilled parts will be empty as in a regular input.
    */
   @Prop() maskPlaceholder?: MaskPlaceholder = '_';
