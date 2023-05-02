@@ -12,6 +12,13 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      ion-radio {
+        display: block;
+        margin-bottom: 8px;
+      }
+    </style>
   </head>
 
   <body>
@@ -23,11 +30,20 @@
       </ion-header>
 
       <ion-content class="ion-padding">
-        <ion-radio
-          >Enable Notifications Enable Notifications Enable Notifications Enable Notifications Enable Notifications
-          Enable Notifications Enable Notifications Enable Notifications Enable Notifications Enable
-          Notifications</ion-radio
-        >
+        <div id="radios">
+          <ion-radio-group>
+            <ion-radio  value="radio" justify="start" label-placement="end">Unchecked</ion-radio>
+          </ion-radio-group>
+          <ion-radio-group value="radio">
+            <ion-radio  value="radio" justify="start" label-placement="end">Checked</ion-radio>
+          </ion-radio-group>
+          <ion-radio-group>
+            <ion-radio  value="radio" justify="start" label-placement="end" disabled>Disabled</ion-radio>
+          </ion-radio-group>
+          <ion-radio-group value="radio">
+            <ion-radio  value="radio" justify="start" label-placement="end" disabled>Disabled, Checked</ion-radio>
+          </ion-radio-group>
+        </div>
       </ion-content>
     </ion-app>
   </body>
