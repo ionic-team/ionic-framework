@@ -34,5 +34,4 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(picker).toBeHidden();
     });
   });
-
 });
