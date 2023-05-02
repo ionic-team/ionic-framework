@@ -11,7 +11,7 @@ $radio-md-color-on:                  current-color(base) !default;
 $radio-md-background-color-focused:  ion-color(primary, tint) !default;
 
 /// @prop - Color of the unchecked radio
-$radio-md-color-off:                 $text-color-step-600 !default;
+$radio-md-color-off:                 $text-color-step-400 !default;
 
 /// @prop - Width of the radio icon
 $radio-md-icon-width:                20px !default;
@@ -35,7 +35,7 @@ $radio-md-transition-duration:       280ms !default;
 $radio-md-transition-easing:         cubic-bezier(.4, 0, .2, 1) !default;
 
 /// @prop - Opacity of the disabled radio
-$radio-md-disabled-opacity:          .3 !default;
+$radio-md-disabled-opacity:          .63 !default;
 
 /// @prop - Margin top of the item-start in a radio
 $radio-md-item-start-margin-top:     11px !default;
