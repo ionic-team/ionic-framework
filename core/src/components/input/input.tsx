@@ -277,7 +277,7 @@ export class Input implements ComponentInterface {
    * Mask format. Can be either a string or array of characters and regular expressions.
    *
    * More complex masks can be defined as an array of regular expressions and
-   * constant characters. Each index of the mask array, defines the mask for
+   * constant characters. Each index of the mask array defines the mask for
    * the corresponding index in the input’s string.
    */
   @Prop() mask?: MaskFormat;
