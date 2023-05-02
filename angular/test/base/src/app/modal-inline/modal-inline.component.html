@@ -1,5 +1,4 @@
 <ion-button id="open-modal">Open Modal</ion-button>
-<ion-button id="toggle-modal" (click)="toggleModal()">Toggle Modal</ion-button>
 
 <ul>
   <li>
@@ -7,28 +6,10 @@
   </li>
 </ul>
 
-<ion-modal
-  [animated]="false"
-  trigger="open-modal"
-  [breakpoints]="[0.1, 0.5, 1]"
-  [initialBreakpoint]="0.5"
-  (ionBreakpointDidChange)="onBreakpointDidChange()"
->
+<ion-modal [animated]="false" trigger="open-modal" [breakpoints]="[0.1, 0.5, 1]" [initialBreakpoint]="0.5"
+  (ionBreakpointDidChange)="onBreakpointDidChange()">
   <ng-template>
     <ion-content>
-      <ion-list>
-        <ion-item *ngFor="let item of items">
-          <ion-label>{{ item }}</ion-label>
-        </ion-item>
-      </ion-list>
-    </ion-content>
-  </ng-template>
-</ion-modal>
-
-<ion-modal *ngIf="showModal" class="conditional-modal" [isOpen]="true" (didDismiss)="onDidDismiss()">
-  <ng-template>
-    <ion-content>
-      <ion-button (click)="toggleModal()">Dismiss</ion-button>
       <ion-list>
         <ion-item *ngFor="let item of items">
           <ion-label>{{ item }}</ion-label>
