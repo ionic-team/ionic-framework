@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.5-nightly.20230502](https://github.com/ionic-team/ionic-framework/compare/v7.0.4...v7.0.5-nightly.20230502) (2023-05-02)
+
+
+### Bug Fixes
+
+* **many:** form components do not take up full width in slot ([#27306](https://github.com/ionic-team/ionic-framework/issues/27306)) ([bfe7b38](https://github.com/ionic-team/ionic-framework/commit/bfe7b388318aca98014a0748f678e41a0f3910ae)), closes [#27305](https://github.com/ionic-team/ionic-framework/issues/27305)
+* **scroll-assist:** set correct scroll padding ([#27261](https://github.com/ionic-team/ionic-framework/issues/27261)) ([7e1f996](https://github.com/ionic-team/ionic-framework/commit/7e1f996dc63cd414b30b22aebbfc09b0b6b4f6fc)), closes [#27257](https://github.com/ionic-team/ionic-framework/issues/27257)
+* **toggle:** swipe gesture applies to knob ([#27255](https://github.com/ionic-team/ionic-framework/issues/27255)) ([6524582](https://github.com/ionic-team/ionic-framework/commit/65245826e3a775bcb8a5d6cfd05230f53470fc66)), closes [#27254](https://github.com/ionic-team/ionic-framework/issues/27254)
+
+
+
+
+
 ## [7.0.4](https://github.com/ionic-team/ionic-framework/compare/v7.0.3...v7.0.4) (2023-04-26)
 
 
