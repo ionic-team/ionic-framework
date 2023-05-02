@@ -32,7 +32,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
           </ion-tab-button>
         </ion-tab-bar>
       `,
-        configs
+        config
       );
 
       const tabBar = page.locator('ion-tab-bar');
