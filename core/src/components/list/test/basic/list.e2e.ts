@@ -1,12 +1,14 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { configs, test } from '@utils/test/playwright';
 
-test.describe('list: basic', () => {
-  test('should not have visual regressions', async ({ page }) => {
-    await page.goto(`/src/components/list/test/basic`);
+configs().forEach(({ title, screenshot, config }) => {
+  test.describe(title('list: basic'), () => {
+    test('should not have visual regressions', async ({ page }) => {
+      await page.goto(`/src/components/list/test/basic`, config);
 
-    const list = page.locator('ion-list');
+      const list = page.locator('ion-list');
 
-    await expect(list).toHaveScreenshot(`list-basic-diff-${page.getSnapshotSettings()}.png`);
+      await expect(list).toHaveScreenshot(screenshot(`list-basic-diff`));
+    });
   });
 });

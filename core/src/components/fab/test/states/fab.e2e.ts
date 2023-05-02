@@ -1,11 +1,14 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { configs, test } from '@utils/test/playwright';
 
-test('should not have visual regressions', async ({ page, skip }) => {
-  skip.rtl();
-  await page.goto(`/src/components/fab/test/states`);
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('fab: states'), () => {
+    test('should not have visual regressions', async ({ page }) => {
+      await page.goto(`/src/components/fab/test/states`, config);
 
-  await page.setIonViewport();
+      await page.setIonViewport();
 
-  await expect(page).toHaveScreenshot(`fab-states-${page.getSnapshotSettings()}.png`);
+      await expect(page).toHaveScreenshot(screenshot(`fab-states`));
+    });
+  });
 });

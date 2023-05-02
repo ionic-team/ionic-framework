@@ -1,12 +1,14 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { configs, test } from '@utils/test/playwright';
 
-test.describe('item: form', () => {
-  test('should not have visual regressions', async ({ page }) => {
-    await page.goto(`/src/components/item/test/legacy/form`);
+configs().forEach(({ title, screenshot, config }) => {
+  test.describe(title('item: form'), () => {
+    test('should not have visual regressions', async ({ page }) => {
+      await page.goto(`/src/components/item/test/legacy/form`, config);
 
-    await page.setIonViewport({ resizeViewportWidth: true });
+      await page.setIonViewport({ resizeViewportWidth: true });
 
-    await expect(page).toHaveScreenshot(`item-form-diff-${page.getSnapshotSettings()}.png`);
+      await expect(page).toHaveScreenshot(screenshot(`item-form-diff`));
+    });
   });
 });

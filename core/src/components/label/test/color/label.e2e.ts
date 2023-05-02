@@ -1,46 +1,54 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { configs, test } from '@utils/test/playwright';
 
-test.describe('label: rendering', () => {
-  test.beforeEach(({ skip }) => {
-    skip.rtl();
-  });
-  test('should not inherit color from content', async ({ page }) => {
-    await page.goto(`/src/components/label/test/color`);
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('label: rendering'), () => {
+    test('should not inherit color from content', async ({ page }) => {
+      await page.goto(`/src/components/label/test/color`, config);
 
-    const item = page.locator('ion-item');
+      const item = page.locator('ion-item');
 
-    await expect(item).toHaveScreenshot(`item-color-inherit-${page.getSnapshotSettings()}.png`);
-  });
-  test('should set color directly', async ({ page }) => {
-    await page.setContent(`
-      <ion-label color="danger">Label Text</ion-label>
-    `);
+      await expect(item).toHaveScreenshot(screenshot(`item-color-inherit`));
+    });
+    test('should set color directly', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-label color="danger">Label Text</ion-label>
+      `,
+        config
+      );
 
-    const labelEl = page.locator('ion-label');
+      const labelEl = page.locator('ion-label');
 
-    await expect(labelEl).toHaveScreenshot(`label-color-${page.getSnapshotSettings()}.png`);
-  });
-  test('should use contrast color when color is set on item', async ({ page }) => {
-    await page.setContent(`
-      <ion-item color="danger">
-        <ion-label>Label Text</ion-label>
-      </ion-item>
-    `);
+      await expect(labelEl).toHaveScreenshot(screenshot(`label-color`));
+    });
+    test('should use contrast color when color is set on item', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-item color="danger">
+          <ion-label>Label Text</ion-label>
+        </ion-item>
+      `,
+        config
+      );
 
-    const labelEl = page.locator('ion-label');
+      const labelEl = page.locator('ion-label');
 
-    await expect(labelEl).toHaveScreenshot(`label-color-contrast-${page.getSnapshotSettings()}.png`);
-  });
-  test('should override color even if color set on item', async ({ page }) => {
-    await page.setContent(`
-      <ion-item color="danger">
-        <ion-label color="dark">Label Text</ion-label>
-      </ion-item>
-    `);
+      await expect(labelEl).toHaveScreenshot(screenshot(`label-color-contrast`));
+    });
+    test('should override color even if color set on item', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-item color="danger">
+          <ion-label color="dark">Label Text</ion-label>
+        </ion-item>
+      `,
+        config
+      );
 
-    const labelEl = page.locator('ion-label');
+      const labelEl = page.locator('ion-label');
 
-    await expect(labelEl).toHaveScreenshot(`label-color-override-${page.getSnapshotSettings()}.png`);
+      await expect(labelEl).toHaveScreenshot(screenshot(`label-color-override`));
+    });
   });
 });

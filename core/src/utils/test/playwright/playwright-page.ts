@@ -7,6 +7,8 @@ import type {
 } from '@playwright/test';
 import { test as base } from '@playwright/test';
 
+import { PageUtils } from '../press-keys';
+
 import { initPageEvents } from './page/event-spy';
 import {
   getSnapshotSettings,
@@ -18,7 +20,13 @@ import {
   locator,
 } from './page/utils';
 import type { LocatorOptions } from './page/utils';
-import type { E2EPage, E2ESkip, BrowserNameOrCallback, SetIonViewportOptions } from './playwright-declarations';
+import type {
+  E2EPage,
+  E2ESkip,
+  BrowserNameOrCallback,
+  SetIonViewportOptions,
+  E2EPageOptions,
+} from './playwright-declarations';
 
 type CustomTestArgs = PlaywrightTestArgs &
   PlaywrightTestOptions &
@@ -30,6 +38,7 @@ type CustomTestArgs = PlaywrightTestArgs &
 type CustomFixtures = {
   page: E2EPage;
   skip: E2ESkip;
+  pageUtils: PageUtils;
 };
 
 /**
@@ -43,8 +52,8 @@ export async function extendPageFixture(page: E2EPage, testInfo: TestInfo) {
   const originalLocator = page.locator.bind(page);
 
   // Overridden Playwright methods
-  page.goto = (url: string, options) => goToPage(page, url, options, testInfo, originalGoto);
-  page.setContent = (html: string) => setContent(page, html, testInfo);
+  page.goto = (url: string, options?: E2EPageOptions) => goToPage(page, url, testInfo, originalGoto, options);
+  page.setContent = (html: string, options?: E2EPageOptions) => setContent(page, html, testInfo, options);
   page.locator = (selector: string, options?: LocatorOptions) => locator(page, originalLocator, selector, options);
 
   // Custom Ionic methods
@@ -84,5 +93,8 @@ export const test = base.extend<CustomFixtures>({
     mode: (mode: string, reason = `The functionality that is being tested is not applicable to ${mode} mode`) => {
       base.skip(base.info().project.metadata.mode === mode, reason);
     },
+  },
+  pageUtils: async ({ page }, use) => {
+    await use(new PageUtils({ page }));
   },
 });

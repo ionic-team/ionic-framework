@@ -63,7 +63,7 @@ export class Tabs implements NavOutlet {
   }
 
   /**
-   * Select a tab by the value of its `tab` property or an element reference.
+   * Select a tab by the value of its `tab` property or an element reference. This method is only available for vanilla JavaScript projects. The Angular, React, and Vue implementations of tabs are coupled to each framework's router.
    *
    * @param tab The tab instance to select. If passed a string, it should be the value of the tab's `tab` property.
    */
@@ -81,7 +81,7 @@ export class Tabs implements NavOutlet {
   }
 
   /**
-   * Get a specific tab by the value of its `tab` property or an element reference.
+   * Get a specific tab by the value of its `tab` property or an element reference. This method is only available for vanilla JavaScript projects. The Angular, React, and Vue implementations of tabs are coupled to each framework's router.
    *
    * @param tab The tab instance to select. If passed a string, it should be the value of the tab's `tab` property.
    */
@@ -91,7 +91,7 @@ export class Tabs implements NavOutlet {
   }
 
   /**
-   * Get the currently selected tab.
+   * Get the currently selected tab. This method is only available for vanilla JavaScript projects. The Angular, React, and Vue implementations of tabs are coupled to each framework's router.
    */
   @Method()
   getSelected(): Promise<string | undefined> {

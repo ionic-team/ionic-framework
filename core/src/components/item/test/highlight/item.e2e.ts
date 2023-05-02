@@ -1,14 +1,14 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { configs, test } from '@utils/test/playwright';
 
-test.describe('item: highlight', () => {
-  test('should not have visual regressions', async ({ page }) => {
-    await page.goto(`/src/components/item/test/highlight`);
+configs().forEach(({ title, screenshot, config }) => {
+  test.describe(title('item: highlight'), () => {
+    test('should not have visual regressions', async ({ page }) => {
+      await page.goto(`/src/components/item/test/highlight`, config);
 
-    await page.setIonViewport();
+      await page.setIonViewport();
 
-    await expect(page).toHaveScreenshot(`item-highlight-diff-${page.getSnapshotSettings()}.png`, {
-      animations: 'disabled',
+      await expect(page).toHaveScreenshot(screenshot(`item-highlight-diff`));
     });
   });
 });

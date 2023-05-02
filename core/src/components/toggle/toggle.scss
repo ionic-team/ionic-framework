@@ -33,7 +33,6 @@
   outline: none;
 
   cursor: pointer;
-  touch-action: none;
   user-select: none;
   z-index: $z-index-item-input;
 }
@@ -43,13 +42,21 @@
   height: 100%;
 }
 
-:host(.in-item[slot="start"]:not(.legacy-toggle)),
-:host(.in-item[slot="end"]:not(.legacy-toggle)) {
+/**
+ * Toggle can be slotted
+ * in components such as item and
+ * toolbar which is why we do not
+ * limit the below behavior to just ion-item.
+ */
+:host([slot="start"]:not(.legacy-toggle)),
+:host([slot="end"]:not(.legacy-toggle)) {
   width: auto;
 }
 
 :host(.legacy-toggle) {
   contain: content;
+
+  touch-action: none;
 }
 
 :host(.ion-focused) input {
@@ -239,8 +246,6 @@ input {
   height: 100%;
 
   background: var(--track-background);
-
-  pointer-events: none;
 
   overflow: inherit;
 }

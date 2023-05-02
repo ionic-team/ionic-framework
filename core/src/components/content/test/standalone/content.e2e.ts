@@ -1,13 +1,15 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { configs, test } from '@utils/test/playwright';
 
-test.describe('content: standalone', () => {
-  test('should not have visual regressions', async ({ page, skip }) => {
-    skip.rtl();
-    skip.mode('ios', 'ion-content does not have mode-specific styling');
+/**
+ * ion-content does not have mode-specific styling
+ */
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('content: standalone'), () => {
+    test('should not have visual regressions', async ({ page }) => {
+      await page.goto(`/src/components/content/test/standalone`, config);
 
-    await page.goto(`/src/components/content/test/standalone`);
-
-    await expect(page).toHaveScreenshot(`content-standalone-${page.getSnapshotSettings()}.png`, { fullPage: true });
+      await expect(page).toHaveScreenshot(screenshot(`content-standalone`), { fullPage: true });
+    });
   });
 });

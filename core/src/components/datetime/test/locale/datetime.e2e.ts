@@ -1,112 +1,122 @@
 import { expect } from '@playwright/test';
 import type { Locator } from '@playwright/test';
-import type { E2EPage } from '@utils/test/playwright';
-import { test } from '@utils/test/playwright';
+import type { E2EPage, E2EPageOptions, ScreenshotFn } from '@utils/test/playwright';
+import { configs, test } from '@utils/test/playwright';
 
-test.describe('datetime: locale', () => {
-  let datetimeFixture: DatetimeLocaleFixture;
+/**
+ * This is testing text content of the
+ * datetime and not layout, so we skip
+ * direction tests.
+ */
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('datetime: locale'), () => {
+    let datetimeFixture: DatetimeLocaleFixture;
 
-  test.beforeEach(async ({ page }) => {
-    datetimeFixture = new DatetimeLocaleFixture(page);
-  });
-
-  test.describe('en-US', () => {
-    test('should not have visual regressions', async () => {
-      await datetimeFixture.goto('en-US', 'date');
-      await datetimeFixture.expectLocalizedDatePicker();
+    test.beforeEach(async ({ page }) => {
+      datetimeFixture = new DatetimeLocaleFixture(page);
     });
 
-    test('month/year picker should not have visual regressions', async () => {
-      await datetimeFixture.goto('en-US', 'month-year');
-      await datetimeFixture.expectLocalizedMonthYearPicker();
+    test.describe('en-US', () => {
+      test('should not have visual regressions', async () => {
+        await datetimeFixture.goto(config, 'en-US', 'date');
+        await datetimeFixture.expectLocalizedDatePicker(screenshot);
+      });
+
+      test('month/year picker should not have visual regressions', async () => {
+        await datetimeFixture.goto(config, 'en-US', 'month-year');
+        await datetimeFixture.expectLocalizedMonthYearPicker(screenshot);
+      });
+
+      test('time picker should not have visual regressions', async () => {
+        await datetimeFixture.goto(config, 'en-US', 'time');
+        await datetimeFixture.expectLocalizedTimePicker(screenshot);
+      });
     });
 
-    test('time picker should not have visual regressions', async () => {
-      await datetimeFixture.goto('en-US', 'time');
-      await datetimeFixture.expectLocalizedTimePicker();
-    });
-  });
+    test.describe('ja-JP', () => {
+      test('should not have visual regressions', async () => {
+        await datetimeFixture.goto(config, 'ja-JP', 'date');
+        await datetimeFixture.expectLocalizedDatePicker(screenshot);
+      });
 
-  test.describe('ja-JP', () => {
-    test('should not have visual regressions', async () => {
-      await datetimeFixture.goto('ja-JP', 'date');
-      await datetimeFixture.expectLocalizedDatePicker();
-    });
+      test('month/year picker should not have visual regressions', async () => {
+        await datetimeFixture.goto(config, 'ja-JP', 'month-year');
+        await datetimeFixture.expectLocalizedMonthYearPicker(screenshot);
+      });
 
-    test('month/year picker should not have visual regressions', async () => {
-      await datetimeFixture.goto('ja-JP', 'month-year');
-      await datetimeFixture.expectLocalizedMonthYearPicker();
-    });
+      test('time picker should not have visual regressions', async () => {
+        await datetimeFixture.goto(config, 'ja-JP', 'time');
+        await datetimeFixture.expectLocalizedTimePicker(screenshot);
+      });
 
-    test('time picker should not have visual regressions', async () => {
-      await datetimeFixture.goto('ja-JP', 'time');
-      await datetimeFixture.expectLocalizedTimePicker();
-    });
+      test('should correctly localize calendar day buttons without literal', async ({ page }) => {
+        await datetimeFixture.goto(config, 'ja-JP', 'date');
 
-    test('should correctly localize calendar day buttons without literal', async ({ page }) => {
-      await datetimeFixture.goto('ja-JP', 'date');
+        const datetimeButtons = page.locator('ion-datetime .calendar-day:not([disabled])');
 
-      const datetimeButtons = page.locator('ion-datetime .calendar-day:not([disabled])');
-
-      /**
-       * Note: The Intl.DateTimeFormat typically adds literals
-       * for certain languages. For Japanese, that could look
-       * something like "29日". However, we only want the "29"
-       * to be shown.
-       */
-      await expect(datetimeButtons.nth(0)).toHaveText('1');
-      await expect(datetimeButtons.nth(1)).toHaveText('2');
-      await expect(datetimeButtons.nth(2)).toHaveText('3');
-    });
-  });
-
-  test.describe('es-ES', () => {
-    test('should not have visual regressions', async () => {
-      await datetimeFixture.goto('es-ES', 'date');
-      await datetimeFixture.expectLocalizedDatePicker();
+        /**
+         * Note: The Intl.DateTimeFormat typically adds literals
+         * for certain languages. For Japanese, that could look
+         * something like "29日". However, we only want the "29"
+         * to be shown.
+         */
+        await expect(datetimeButtons.nth(0)).toHaveText('1');
+        await expect(datetimeButtons.nth(1)).toHaveText('2');
+        await expect(datetimeButtons.nth(2)).toHaveText('3');
+      });
     });
 
-    test('month/year picker should not have visual regressions', async () => {
-      await datetimeFixture.goto('es-ES', 'month-year');
-      await datetimeFixture.expectLocalizedMonthYearPicker();
-    });
+    test.describe('es-ES', () => {
+      test('should not have visual regressions', async () => {
+        await datetimeFixture.goto(config, 'es-ES', 'date');
+        await datetimeFixture.expectLocalizedDatePicker(screenshot);
+      });
 
-    test('time picker should not have visual regressions', async () => {
-      await datetimeFixture.goto('es-ES', 'time');
-      await datetimeFixture.expectLocalizedTimePicker();
+      test('month/year picker should not have visual regressions', async () => {
+        await datetimeFixture.goto(config, 'es-ES', 'month-year');
+        await datetimeFixture.expectLocalizedMonthYearPicker(screenshot);
+      });
+
+      test('time picker should not have visual regressions', async () => {
+        await datetimeFixture.goto(config, 'es-ES', 'time');
+        await datetimeFixture.expectLocalizedTimePicker(screenshot);
+      });
     });
   });
 });
 
-test.describe('ar-EG', () => {
-  test.beforeEach(async ({ skip }) => {
-    skip.rtl();
-    skip.mode('md');
-  });
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('ar-EG'), () => {
+    test('should correctly localize calendar day buttons', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime locale="ar-EG" presentation="date" value="2022-01-01"></ion-datetime>
+      `,
+        config
+      );
 
-  test('should correctly localize calendar day buttons', async ({ page }) => {
-    await page.setContent(`
-      <ion-datetime locale="ar-EG" presentation="date" value="2022-01-01"></ion-datetime>
-    `);
+      await page.waitForSelector('.datetime-ready');
 
-    await page.waitForSelector('.datetime-ready');
+      const datetimeButtons = page.locator('ion-datetime .calendar-day:not([disabled])');
 
-    const datetimeButtons = page.locator('ion-datetime .calendar-day:not([disabled])');
+      await expect(datetimeButtons.nth(0)).toHaveText('١');
+      await expect(datetimeButtons.nth(1)).toHaveText('٢');
+      await expect(datetimeButtons.nth(2)).toHaveText('٣');
+    });
 
-    await expect(datetimeButtons.nth(0)).toHaveText('١');
-    await expect(datetimeButtons.nth(1)).toHaveText('٢');
-    await expect(datetimeButtons.nth(2)).toHaveText('٣');
-  });
+    test('should correctly localize year column data', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime prefer-wheel="true" locale="ar-EG" presentation="date" value="2022-01-01"></ion-datetime>
+      `,
+        config
+      );
+      await page.waitForSelector('.datetime-ready');
 
-  test('should correctly localize year column data', async ({ page }) => {
-    await page.setContent(`
-      <ion-datetime prefer-wheel="true" locale="ar-EG" presentation="date" value="2022-01-01"></ion-datetime>
-    `);
-    await page.waitForSelector('.datetime-ready');
+      const datetimeYear = page.locator('ion-datetime .year-column .picker-item[data-value="2022"]');
 
-    const datetimeYear = page.locator('ion-datetime .year-column .picker-item[data-value="2022"]');
-
-    await expect(datetimeYear).toHaveText('٢٠٢٢');
+      await expect(datetimeYear).toHaveText('٢٠٢٢');
+    });
   });
 });
 
@@ -119,9 +129,10 @@ class DatetimeLocaleFixture {
     this.page = page;
   }
 
-  async goto(locale = 'en-US', presentation = 'date') {
+  async goto(config: E2EPageOptions, locale = 'en-US', presentation = 'date') {
     this.locale = locale;
-    await this.page.setContent(`
+    await this.page.setContent(
+      `
       <ion-datetime
         show-default-title="true"
         show-default-buttons="true"
@@ -130,29 +141,29 @@ class DatetimeLocaleFixture {
         value="2022-04-19T04:20:00"
         max="2022"
       ></ion-datetime>
-    `);
+    `,
+      config
+    );
 
     this.datetime = this.page.locator('ion-datetime');
 
     await this.page.waitForSelector('.datetime-ready');
   }
 
-  async expectLocalizedDatePicker() {
-    await this.expectLocalizedPicker();
+  async expectLocalizedDatePicker(screenshot: ScreenshotFn) {
+    await this.expectLocalizedPicker(screenshot);
   }
 
-  async expectLocalizedMonthYearPicker() {
-    await this.expectLocalizedPicker('month-year');
+  async expectLocalizedMonthYearPicker(screenshot: ScreenshotFn) {
+    await this.expectLocalizedPicker(screenshot, 'month-year');
   }
 
-  async expectLocalizedTimePicker() {
-    await this.expectLocalizedPicker('time');
+  async expectLocalizedTimePicker(screenshot: ScreenshotFn) {
+    await this.expectLocalizedPicker(screenshot, 'time');
   }
 
-  async expectLocalizedPicker(modifier?: string) {
+  async expectLocalizedPicker(screenshot: ScreenshotFn, modifier?: string) {
     const modifierString = modifier === undefined ? '' : `-${modifier}`;
-    await expect(this.datetime).toHaveScreenshot(
-      `datetime-locale-${this.locale}${modifierString}-diff-${this.page.getSnapshotSettings()}.png`
-    );
+    await expect(this.datetime).toHaveScreenshot(screenshot(`datetime-locale-${this.locale}${modifierString}-diff`));
   }
 }

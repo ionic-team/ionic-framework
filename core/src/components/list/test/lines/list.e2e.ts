@@ -1,26 +1,28 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { configs, test } from '@utils/test/playwright';
 
-test.describe('list: lines', () => {
-  test('lines="full" should render correctly', async ({ page }) => {
-    await page.goto(`/src/components/list/test/lines`);
+configs().forEach(({ title, screenshot, config }) => {
+  test.describe(title('list: lines'), () => {
+    test('lines="full" should render correctly', async ({ page }) => {
+      await page.goto(`/src/components/list/test/lines`, config);
 
-    const list = page.locator('ion-list[lines="full"]');
+      const list = page.locator('ion-list[lines="full"]');
 
-    await expect(list).toHaveScreenshot(`list-lines-full-${page.getSnapshotSettings()}.png`);
-  });
-  test('lines="inset" should render correctly', async ({ page }) => {
-    await page.goto(`/src/components/list/test/lines`);
+      await expect(list).toHaveScreenshot(screenshot(`list-lines-full`));
+    });
+    test('lines="inset" should render correctly', async ({ page }) => {
+      await page.goto(`/src/components/list/test/lines`, config);
 
-    const list = page.locator('ion-list[lines="inset"]');
+      const list = page.locator('ion-list[lines="inset"]');
 
-    await expect(list).toHaveScreenshot(`list-lines-inset-${page.getSnapshotSettings()}.png`);
-  });
-  test('lines="none" should render correctly', async ({ page }) => {
-    await page.goto(`/src/components/list/test/lines`);
+      await expect(list).toHaveScreenshot(screenshot(`list-lines-inset`));
+    });
+    test('lines="none" should render correctly', async ({ page }) => {
+      await page.goto(`/src/components/list/test/lines`, config);
 
-    const list = page.locator('ion-list[lines="none"]');
+      const list = page.locator('ion-list[lines="none"]');
 
-    await expect(list).toHaveScreenshot(`list-lines-none-${page.getSnapshotSettings()}.png`);
+      await expect(list).toHaveScreenshot(screenshot(`list-lines-none`));
+    });
   });
 });

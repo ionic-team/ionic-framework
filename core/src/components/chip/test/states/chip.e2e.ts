@@ -1,12 +1,14 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { configs, test } from '@utils/test/playwright';
 
-test.describe('chip: states', () => {
-  test('should not have visual regressions', async ({ page }) => {
-    await page.goto('/src/components/chip/test/states');
+configs().forEach(({ title, screenshot, config }) => {
+  test.describe(title('chip: states'), () => {
+    test('should not have visual regressions', async ({ page }) => {
+      await page.goto('/src/components/chip/test/states', config);
 
-    await page.setIonViewport();
+      await page.setIonViewport();
 
-    await expect(page).toHaveScreenshot(`chip-states-${page.getSnapshotSettings()}.png`);
+      await expect(page).toHaveScreenshot(screenshot(`chip-states`));
+    });
   });
 });

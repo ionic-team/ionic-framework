@@ -1,34 +1,33 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { configs, test } from '@utils/test/playwright';
 
-test.describe('alert: isOpen', () => {
-  test.beforeEach(async ({ page, skip }) => {
-    skip.rtl('isOpen does not behave differently in RTL');
-    skip.mode('md', 'isOpen does not behave differently in MD');
-    await page.goto('/src/components/alert/test/is-open');
-  });
+configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ config, title }) => {
+  test.describe(title('alert: isOpen'), () => {
+    test.beforeEach(async ({ page }) => {
+      await page.goto('/src/components/alert/test/is-open', config);
+    });
+    test('should open the alert', async ({ page }) => {
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+      const alert = page.locator('ion-alert');
 
-  test('should open the alert', async ({ page }) => {
-    const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
-    const alert = page.locator('ion-alert');
+      await page.click('#default');
 
-    await page.click('#default');
+      await ionAlertDidPresent.next();
+      await expect(alert).toBeVisible();
+    });
 
-    await ionAlertDidPresent.next();
-    await expect(alert).toBeVisible();
-  });
+    test('should open the alert then close after a timeout', async ({ page }) => {
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+      const ionAlertDidDismiss = await page.spyOnEvent('ionAlertDidDismiss');
+      const alert = page.locator('ion-alert');
 
-  test('should open the alert then close after a timeout', async ({ page }) => {
-    const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
-    const ionAlertDidDismiss = await page.spyOnEvent('ionAlertDidDismiss');
-    const alert = page.locator('ion-alert');
+      await page.click('#timeout');
 
-    await page.click('#timeout');
+      await ionAlertDidPresent.next();
+      await expect(alert).toBeVisible();
 
-    await ionAlertDidPresent.next();
-    await expect(alert).toBeVisible();
-
-    await ionAlertDidDismiss.next();
-    await expect(alert).toBeHidden();
+      await ionAlertDidDismiss.next();
+      await expect(alert).toBeHidden();
+    });
   });
 });

@@ -1,35 +1,34 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { configs, test } from '@utils/test/playwright';
 
-test.describe('action sheet: isOpen', () => {
-  test.beforeEach(async ({ page, skip }) => {
-    skip.rtl('isOpen does not behave differently in RTL');
-    skip.mode('md', 'isOpen does not behave differently in MD');
-    await page.goto('/src/components/action-sheet/test/is-open');
-  });
+configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ config, title }) => {
+  test.describe(title('action sheet: isOpen'), () => {
+    test.beforeEach(async ({ page }) => {
+      await page.goto('/src/components/action-sheet/test/is-open', config);
+    });
+    test('should open the action sheet', async ({ page }) => {
+      const ionActionSheetDidPresent = await page.spyOnEvent('ionActionSheetDidPresent');
+      const actionSheet = page.locator('ion-action-sheet');
 
-  test('should open the action sheet', async ({ page }) => {
-    const ionActionSheetDidPresent = await page.spyOnEvent('ionActionSheetDidPresent');
-    const actionSheet = page.locator('ion-action-sheet');
+      await page.click('#default');
 
-    await page.click('#default');
+      await ionActionSheetDidPresent.next();
+      await expect(actionSheet).toBeVisible();
+    });
 
-    await ionActionSheetDidPresent.next();
-    await expect(actionSheet).toBeVisible();
-  });
+    test('should open the action sheet then close after a timeout', async ({ page }) => {
+      const ionActionSheetDidPresent = await page.spyOnEvent('ionActionSheetDidPresent');
+      const ionActionSheetDidDismiss = await page.spyOnEvent('ionActionSheetDidDismiss');
+      const actionSheet = page.locator('ion-action-sheet');
 
-  test('should open the action sheet then close after a timeout', async ({ page }) => {
-    const ionActionSheetDidPresent = await page.spyOnEvent('ionActionSheetDidPresent');
-    const ionActionSheetDidDismiss = await page.spyOnEvent('ionActionSheetDidDismiss');
-    const actionSheet = page.locator('ion-action-sheet');
+      await page.click('#timeout');
 
-    await page.click('#timeout');
+      await ionActionSheetDidPresent.next();
+      await expect(actionSheet).toBeVisible();
 
-    await ionActionSheetDidPresent.next();
-    await expect(actionSheet).toBeVisible();
+      await ionActionSheetDidDismiss.next();
 
-    await ionActionSheetDidDismiss.next();
-
-    await expect(actionSheet).toBeHidden();
+      await expect(actionSheet).toBeHidden();
+    });
   });
 });

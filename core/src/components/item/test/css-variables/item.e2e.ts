@@ -1,12 +1,17 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { configs, test } from '@utils/test/playwright';
 
-test.describe('item: CSS variables', () => {
-  test('should not have visual regressions', async ({ page }) => {
-    await page.goto(`/src/components/item/test/css-variables`);
+/**
+ * This behavior does not vary across directions
+ */
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('item: CSS variables'), () => {
+    test('should not have visual regressions', async ({ page }) => {
+      await page.goto(`/src/components/item/test/css-variables`, config);
 
-    await page.setIonViewport();
+      await page.setIonViewport();
 
-    await expect(page).toHaveScreenshot(`item-css-vars-diff-${page.getSnapshotSettings()}.png`);
+      await expect(page).toHaveScreenshot(screenshot(`item-css-vars-diff`));
+    });
   });
 });

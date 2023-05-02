@@ -1,26 +1,30 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { configs, test } from '@utils/test/playwright';
 
-test.describe('input: states', () => {
-  test.beforeEach(({ skip }) => {
-    skip.rtl();
-  });
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('input: states'), () => {
+    test('should render readonly input correctly', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-input label="Email" value="hi@ionic.io" readonly="true"></ion-input>
+      `,
+        config
+      );
 
-  test('should render readonly input correctly', async ({ page }) => {
-    await page.setContent(`
-      <ion-input label="Email" value="hi@ionic.io" readonly="true"></ion-input>
-    `);
+      const input = page.locator('ion-input');
+      expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-readonly`));
+    });
 
-    const input = page.locator('ion-input');
-    expect(await input.screenshot()).toMatchSnapshot(`input-readonly-${page.getSnapshotSettings()}.png`);
-  });
+    test('should render disabled input correctly', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-input label="Email" value="hi@ionic.io" disabled="true"></ion-input>
+      `,
+        config
+      );
 
-  test('should render disabled input correctly', async ({ page }) => {
-    await page.setContent(`
-      <ion-input label="Email" value="hi@ionic.io" disabled="true"></ion-input>
-    `);
-
-    const input = page.locator('ion-input');
-    expect(await input.screenshot()).toMatchSnapshot(`input-disabled-${page.getSnapshotSettings()}.png`);
+      const input = page.locator('ion-input');
+      expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-disabled`));
+    });
   });
 });

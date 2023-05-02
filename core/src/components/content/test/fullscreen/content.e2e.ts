@@ -1,15 +1,17 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { configs, test } from '@utils/test/playwright';
 
-test.describe('content: fullscreen', () => {
-  test('should not have visual regressions', async ({ page, skip }) => {
-    skip.rtl();
-    skip.mode('ios', 'ion-content does not have mode-specific styling');
+/**
+ * ion-content does not have mode-specific styling
+ */
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('content: fullscreen'), () => {
+    test('should not have visual regressions', async ({ page }) => {
+      await page.goto(`/src/components/content/test/fullscreen`, config);
 
-    await page.goto(`/src/components/content/test/fullscreen`);
+      await page.setIonViewport();
 
-    await page.setIonViewport();
-
-    await expect(page).toHaveScreenshot(`content-fullscreen-${page.getSnapshotSettings()}.png`);
+      await expect(page).toHaveScreenshot(screenshot(`content-fullscreen`));
+    });
   });
 });

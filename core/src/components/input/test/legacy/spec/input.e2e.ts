@@ -1,14 +1,16 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { configs, test } from '@utils/test/playwright';
 
-test.describe('input: spec', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto('/src/components/input/test/legacy/spec');
-  });
+configs().forEach(({ title, screenshot, config }) => {
+  test.describe(title('input: spec'), () => {
+    test.beforeEach(async ({ page }) => {
+      await page.goto('/src/components/input/test/legacy/spec', config);
+    });
 
-  test('should not have visual regressions', async ({ page }) => {
-    await page.setIonViewport();
+    test('should not have visual regressions', async ({ page }) => {
+      await page.setIonViewport();
 
-    await expect(page).toHaveScreenshot(`input-spec-diff-${page.getSnapshotSettings()}.png`);
+      await expect(page).toHaveScreenshot(screenshot(`input-spec-diff`));
+    });
   });
 });

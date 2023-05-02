@@ -9,15 +9,21 @@ export class IonRouteInner extends React.PureComponent<IonRouteProps> {
         path={this.props.path}
         exact={this.props.exact}
         render={this.props.render}
-        /**
-         * `computedMatch` is a private API in react-router v5 that
-         * has been removed in v6.
-         *
-         * This needs to be removed when we support v6.
-         *
-         * TODO: FW-647
-         */
-        computedMatch={(this.props as any).computedMatch}
+        {
+          /**
+           * `computedMatch` is a private API in react-router v5 that
+           * has been removed in v6.
+           *
+           * This needs to be removed when we support v6.
+           *
+           * TODO: FW-647
+           */
+          ...((this.props as any).computedMatch !== undefined
+            ? {
+                computedMatch: (this.props as any).computedMatch,
+              }
+            : {})
+        }
       />
     );
   }
