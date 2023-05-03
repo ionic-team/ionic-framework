@@ -8,8 +8,8 @@ import type { LegacyFormController } from '../../utils/forms';
 import { createLegacyFormController } from '../../utils/forms';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes, debounceEvent, findItemLabel, inheritAttributes } from '../../utils/helpers';
-import type { MaskExpression, MaskPlaceholder, MaskVisibility } from '../../utils/input-masking';
-import { MaskController, formatMask } from '../../utils/input-masking';
+import { MaskController } from '../../utils/input-masking';
+import type { MaskExpression, MaskPlaceholder, MaskVisibility } from '../../utils/input-masking/public-api';
 import { printIonWarning } from '../../utils/logging';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
@@ -405,17 +405,9 @@ export class Input implements ComponentInterface {
     this.originalIonInput = this.ionInput;
 
     if (mask !== undefined && nativeInput) {
-      const formattedMask = formatMask(mask);
-
-      if (formattedMask) {
-        this.maskController = new MaskController(nativeInput, {
-          mask: formattedMask,
-        });
-      } else {
-        printIonWarning('ion-input: Invalid mask format', {
-          mask,
-        });
-      }
+      this.maskController = new MaskController(nativeInput, {
+        mask,
+      });
     }
   }
 

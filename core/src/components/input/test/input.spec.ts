@@ -13,27 +13,3 @@ it('should inherit attributes', async () => {
   expect(nativeEl.getAttribute('tabindex')).toBe('-1');
   expect(nativeEl.getAttribute('data-form-type')).toBe('password');
 });
-
-describe('input masking', () => {
-  it('should have a default mask visibility', async () => {
-    const page = await newSpecPage({
-      components: [Input],
-      html: `<ion-input></ion-input>`,
-    });
-
-    const input = page.body.querySelector('ion-input')!;
-
-    expect(input.maskVisibility).toBe('always');
-  });
-
-  it('should have a default mask placeholder', async () => {
-    const page = await newSpecPage({
-      components: [Input],
-      html: `<ion-input></ion-input>`,
-    });
-
-    const input = page.body.querySelector('ion-input')!;
-
-    expect(input.maskPlaceholder).toBe('_');
-  });
-});

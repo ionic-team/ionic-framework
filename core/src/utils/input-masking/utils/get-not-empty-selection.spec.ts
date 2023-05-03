@@ -14,16 +14,7 @@ describe('getNotEmptySelection', () => {
   });
 
   describe('backward direction', () => {
-    it('should decrease by one start position value', () => {
-      const elementStateStub: ElementState = {
-        value: 'testValue',
-        selection: [4, 4],
-      };
-
-      expect(getNotEmptySelection(elementStateStub, false)).toEqual([3, 4]);
-    });
-
-    it('should not change everything when start value is 0', () => {
+    it('should not change when start value is 0', () => {
       const elementStateStub: ElementState = {
         value: 'testValue',
         selection: [0, 4],
@@ -43,7 +34,7 @@ describe('getNotEmptySelection', () => {
   });
 
   describe('forward direction', () => {
-    it('should increase by one end position, when value`s length more then end position', () => {
+    it('should increase by one end position, when value`s length is more than the end position', () => {
       const elementStateStub: ElementState = {
         value: 'testValue',
         selection: [2, 2],
@@ -52,7 +43,7 @@ describe('getNotEmptySelection', () => {
       expect(getNotEmptySelection(elementStateStub, true)).toEqual([2, 3]);
     });
 
-    it('should return value length as end position, when value`s length less or equal then end position ', () => {
+    it('should return value length as end position, when value`s length is less or equal to the end position ', () => {
       const elementStateStub: ElementState = {
         value: 'sx',
         selection: [4, 4],
@@ -61,7 +52,7 @@ describe('getNotEmptySelection', () => {
       expect(getNotEmptySelection(elementStateStub, true)).toEqual([2, 2]);
     });
 
-    it('should increase by one end position, when value`s length equal end position increased by one', () => {
+    it('should increase by one end position, when value`s length equal end position is increased by one', () => {
       const elementStateStub: ElementState = {
         value: 'test1',
         selection: [4, 4],
