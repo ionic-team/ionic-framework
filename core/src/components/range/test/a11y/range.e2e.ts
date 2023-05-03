@@ -45,27 +45,29 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
 
       await expect(range).toHaveScreenshot(screenshot(`range-active`));
     });
+  });
+});
 
-    test.describe('with pin', () => {
-      test('should not have visual regressions', async ({ page }) => {
-        await page.setContent(
-          `<ion-app>
-            <ion-content>
-              <ion-range min="0" max="100" value="50" pin="true" legacy="true"></ion-range>
-            </ion-content>
-          </ion-app>
-          `,
-          config
-        );
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('with pin'), () => {
+    test('should not have visual regressions', async ({ page }) => {
+      await page.setContent(
+        `<ion-app>
+          <ion-content>
+            <ion-range min="0" max="100" value="50" pin="true" legacy="true"></ion-range>
+          </ion-content>
+        </ion-app>
+        `,
+        config
+      );
 
-        const range = page.locator('ion-range');
-        const rangeHandle = range.locator('.range-knob-handle');
+      const range = page.locator('ion-range');
+      const rangeHandle = range.locator('.range-knob-handle');
 
-        await rangeHandle.evaluate((el) => el.classList.add('ion-focused'));
-        await page.waitForChanges();
+      await rangeHandle.evaluate((el) => el.classList.add('ion-focused'));
+      await page.waitForChanges();
 
-        await expect(range).toHaveScreenshot(screenshot(`range-focus-with-pin`));
-      });
+      await expect(range).toHaveScreenshot(screenshot(`range-focus-with-pin`));
     });
   });
 });
