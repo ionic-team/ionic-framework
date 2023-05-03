@@ -195,7 +195,12 @@
   $root: #{&};
 
   $rootSplit: str-split($root, ",");
-  $selectorsSplit: str-split(#{add-root-selector($root, "[dir=rtl]")}, ",");
+  $selectors: #{add-root-selector($root, "[dir=rtl]")};
+  $selectorsSplit: str-split($selectors, ",");
+
+  $hostContextSelectors: ();
+  $restSelectors: ();
+  $dirSelectors: ();
 
   // Selectors must be split into individual selectors in case the browser
   // doesn't support a specific selector.
@@ -204,21 +209,50 @@
   // will be ignored.
   // @link https://www.w3.org/TR/selectors-3/#grouping
   @each $selector in $selectorsSplit {
-    @at-root #{$selector} {
+    // Group the selectors back into a single selector to optimize the output.
+    @if str-index($selector, ":host-context") {
+      $hostContextSelectors: append($hostContextSelectors, $selector, comma);
+    } @else {
+      // Group the selectors back into a single selector to optimize the output.
+      $restSelectors: append($restSelectors, $selector, comma);
+    }
+  }
+  
+  // Supported by Chrome.
+  @if length($hostContextSelectors) > 0 {
+    @at-root #{$hostContextSelectors} {
       @content;
     }
   }
 
-  // Adding :dir() in case the browser doesn't support `:host-context()` and does support `:dir()`.
-  // `:host-context()` is added:
-  // - through the `add-root-selector()` function.
-  // - first so that it takes precedence over `:dir()`.
-  // For example, Firefox doesn't support `:host-context()`, but does support `:dir()`.
-  // MDN says that `:dir()` is supported by Safari, but it doesn't seem to work.
-  @each $selector in $rootSplit {
-    $dirSelector: "#{$selector}:dir(rtl)";
-    @at-root #{$dirSelector} {
+  // Supported by all browsers.
+  @if length($restSelectors) > 0 {
+    @at-root #{$restSelectors} {
       @content;
+    }
+  }
+
+  // If browser can support `:dir()`, then add the `:dir()` selectors.
+  @supports selector(:dir(rtl)) {
+    // Adding :dir() in case the browser doesn't support `:host-context()` and does support `:dir()`.
+    // `:host-context()` is added:
+    // - through the `add-root-selector()` function.
+    // - first so that it takes precedence over `:dir()`.
+    // For example,
+    // - Firefox doesn't support `:host-context()`, but does support `:dir()`.
+    // - Safari doesn't support `:host-context()`, but Safari 16.4+ supports `:dir()`
+    // @link https://webkit.org/blog/13966/webkit-features-in-safari-16-4/
+    @each $selector in $rootSplit {
+      $dirSelector: "#{$selector}:dir(rtl)";
+      // Group the selectors back into a single selector to optimize the output.
+      $dirSelectors: append($dirSelectors, $dirSelector, comma);
+    }
+
+    // Supported by Firefox.
+    @if length($dirSelectors) > 0 {
+      @at-root #{$dirSelectors} {
+        @content;
+      }
     }
   }
 }
