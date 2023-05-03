@@ -14,7 +14,7 @@ configs().forEach(({ title, screenshot, config }) => {
 });
 
 /**
- * this behavior does not vary across modes/directions.
+ * This behavior does not vary across modes/directions.
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('range: behavior'), () => {
@@ -30,7 +30,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       const rangeEl = page.locator('ion-range');
 
-      await dragElementBy(rangeEl, page, testInfo.project.metadata.rtl ? -300 : 300, 0);
+      await dragElementBy(rangeEl, page, 300, 0);
       await page.waitForChanges();
 
       /**
