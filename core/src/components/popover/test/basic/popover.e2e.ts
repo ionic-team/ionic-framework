@@ -1,14 +1,15 @@
-import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-import { openPopover, screenshotPopover } from '../test.utils';
+import { PopoverFixture } from '../fixture';
 
 configs().forEach(({ title, screenshot, config }) => {
   test.describe(title('popover: rendering'), async () => {
     test('should not have visual regressions', async ({ page }) => {
-      await page.goto(`src/components/popover/test/basic`, config);
+      const popoverFixture = new PopoverFixture(page);
 
-      await screenshotPopover(page, screenshot, 'basic-popover', 'basic');
+      await popoverFixture.goto(`src/components/popover/test/basic`, config);
+      await popoverFixture.open('#basic-popover');
+      await popoverFixture.screenshot('basic-basic-popover', screenshot);
     });
   });
 });
@@ -18,14 +19,26 @@ configs().forEach(({ title, screenshot, config }) => {
  */
 configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('popover: rendering variants'), async () => {
-    test('should not have visual regressions', async ({ page }) => {
-      await page.goto(`src/components/popover/test/basic`, config);
-
-      const buttonIDs = ['long-list-popover', 'no-event-popover', 'custom-class-popover', 'header-popover'];
-
-      for (const id of buttonIDs) {
-        await screenshotPopover(page, screenshot, id, 'basic');
-      }
+    let popoverFixture!: PopoverFixture;
+    test.beforeEach(async ({ page }) => {
+      popoverFixture = new PopoverFixture(page);
+      await popoverFixture.goto(`src/components/popover/test/basic`, config);
+    });
+    test('should render long list popover', async () => {
+      await popoverFixture.open('#long-list-popover');
+      await popoverFixture.screenshot('basic-long-list-popover', screenshot);
+    });
+    test('should render no event popover', async () => {
+      await popoverFixture.open('#no-event-popover');
+      await popoverFixture.screenshot('basic-no-event-popover', screenshot);
+    });
+    test('should render custom class popover', async () => {
+      await popoverFixture.open('#custom-class-popover');
+      await popoverFixture.screenshot('basic-custom-class-popover', screenshot);
+    });
+    test('should render header popover', async () => {
+      await popoverFixture.open('#header-popover');
+      await popoverFixture.screenshot('basic-header-popover', screenshot);
     });
   });
 });
@@ -34,15 +47,19 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
  * Translucent popovers are only available on iOS
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('popover: translucent variants'), async () => {
-    test('should not have visual regressions', async ({ page }) => {
-      await page.goto(`src/components/popover/test/basic`, config);
-
-      const buttonIDs = ['translucent-popover', 'translucent-header-popover'];
-
-      for (const id of buttonIDs) {
-        await screenshotPopover(page, screenshot, id, 'basic');
-      }
+  test.describe.only(title('popover: translucent variants'), async () => {
+    let popoverFixture!: PopoverFixture;
+    test.beforeEach(async ({ page }) => {
+      popoverFixture = new PopoverFixture(page);
+      await popoverFixture.goto(`src/components/popover/test/basic`, config);
+    });
+    test('should render translucent popover', async () => {
+      await popoverFixture.open('#translucent-popover');
+      await popoverFixture.screenshot('basic-translucent-popover', screenshot);
+    });
+    test('should render translucent header popover', async () => {
+      await popoverFixture.open('#translucent-header-popover');
+      await popoverFixture.screenshot('basic-translucent-header-popover', screenshot);
     });
   });
 });
