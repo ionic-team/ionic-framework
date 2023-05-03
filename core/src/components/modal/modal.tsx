@@ -4,7 +4,6 @@ import { findIonContent, printIonContentErrorMsg } from '@utils/content';
 import { CoreDelegate, attachComponent, detachComponent } from '@utils/framework-delegate';
 import { raf, inheritAttributes, hasLazyBuild } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
-import { KEYBOARD_DID_OPEN } from '@utils/keyboard/keyboard';
 import { printIonWarning } from '@utils/logging';
 import { Style as StatusBarStyle, StatusBar } from '@utils/native/status-bar';
 import {
@@ -17,7 +16,6 @@ import {
   present,
   createTriggerController,
 } from '@utils/overlays';
-import type { OverlayEventDetail } from '@utils/overlays-interface';
 import { getClassMap } from '@utils/theme';
 import { deepReady, waitForMount } from '@utils/transition';
 
@@ -32,6 +30,8 @@ import type {
   Gesture,
   OverlayInterface,
 } from '../../interface';
+import { KEYBOARD_DID_OPEN } from '../../utils/keyboard/keyboard';
+import type { OverlayEventDetail } from '../../utils/overlays-interface';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
