@@ -1,3 +1,4 @@
+import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
 import { PopoverFixture } from '../fixture';
@@ -69,14 +70,16 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('popover: focus trap'), async () => {
+    let popoverFixture!: PopoverFixture;
     test.beforeEach(async ({ page }) => {
-      await page.goto('/src/components/popover/test/basic', config);
+      popoverFixture = new PopoverFixture(page);
+      await popoverFixture.goto('/src/components/popover/test/basic', config);
     });
 
     test('should focus the first ion-item on ArrowDown', async ({ page }) => {
       const item0 = page.locator('ion-popover ion-item:nth-of-type(1)');
 
-      await openPopover(page, 'basic-popover');
+      await popoverFixture.open('#basic-popover');
 
       await page.keyboard.press('ArrowDown');
       await expect(item0).toBeFocused();
@@ -86,7 +89,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
       const items = page.locator('ion-popover ion-item');
 
-      await openPopover(page, 'basic-popover');
+      await popoverFixture.open('#basic-popover');
 
       await page.keyboard.press(tabKey);
       await expect(items.nth(0)).toBeFocused();
@@ -116,7 +119,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       const innerNativeTextarea = page.locator('ion-textarea textarea').nth(0);
       const vanillaTextarea = page.locator('ion-textarea + textarea');
 
-      await openPopover(page, 'popover-with-textarea');
+      await popoverFixture.open('#popover-with-textarea');
 
       /**
        * Focusing happens async inside of popover so we need
