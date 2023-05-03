@@ -8,7 +8,7 @@ configs().forEach(({ title, screenshot, config }) => {
 
       await page.setIonViewport();
 
-      await expect(page).toMatchSnapshot(screenshot(`skeleton-text-basic`));
+      await expect(page).toHaveScreenshot(screenshot(`skeleton-text-basic`));
     });
   });
 });
