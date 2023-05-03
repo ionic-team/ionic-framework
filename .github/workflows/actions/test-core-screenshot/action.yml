@@ -54,7 +54,7 @@ runs:
         mkdir updated-screenshots
         cd ../ && rsync -R --progress $(git diff --name-only --cached) core/updated-screenshots
         if [ -d core/updated-screenshots/core ]; then
-          echo "::set-output name=hasUpdatedScreenshots::$(echo 'true')"
+          echo "hasUpdatedScreenshots=$(echo 'true')" >> $GITHUB_OUTPUT
           cd core/updated-screenshots
           zip -q -r ../../UpdatedScreenshots${{ inputs.commandModifier }}-${{ inputs.shard }}-${{ inputs.totalShards }}.zip core
         fi

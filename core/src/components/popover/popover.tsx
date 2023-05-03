@@ -6,11 +6,19 @@ import type { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate 
 import { CoreDelegate, attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { addEventListener, raf, hasLazyBuild } from '../../utils/helpers';
 import { printIonWarning } from '../../utils/logging';
-import { BACKDROP, dismiss, eventMethod, focusFirstDescendant, prepareOverlay, present } from '../../utils/overlays';
+import {
+  BACKDROP,
+  dismiss,
+  eventMethod,
+  focusFirstDescendant,
+  prepareOverlay,
+  present,
+  setOverlayId,
+} from '../../utils/overlays';
 import type { OverlayEventDetail } from '../../utils/overlays-interface';
 import { isPlatform } from '../../utils/platform';
 import { getClassMap } from '../../utils/theme';
-import { deepReady } from '../../utils/transition';
+import { deepReady, waitForMount } from '../../utils/transition';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
@@ -49,8 +57,6 @@ export class Popover implements ComponentInterface, PopoverInterface {
   private usersElement?: HTMLElement;
   private triggerEl?: HTMLElement | null;
   private parentPopover: HTMLIonPopoverElement | null = null;
-  private popoverIndex = popoverIds++;
-  private popoverId?: string;
   private coreDelegate: FrameworkDelegate = CoreDelegate();
   private currentTransition?: Promise<any>;
   private destroyTriggerInteraction?: () => void;
@@ -338,13 +344,10 @@ export class Popover implements ComponentInterface, PopoverInterface {
   }
 
   componentWillLoad() {
-    /**
-     * If user has custom ID set then we should
-     * not assign the default incrementing ID.
-     */
-    this.popoverId = this.el.hasAttribute('id') ? this.el.getAttribute('id')! : `ion-popover-${this.popoverIndex}`;
+    const { el } = this;
+    const popoverId = setOverlayId(el);
 
-    this.parentPopover = this.el.closest(`ion-popover:not(#${this.popoverId})`) as HTMLIonPopoverElement | null;
+    this.parentPopover = el.closest(`ion-popover:not(#${popoverId})`) as HTMLIonPopoverElement | null;
 
     if (this.alignment === undefined) {
       this.alignment = getIonMode(this) === 'ios' ? 'center' : 'start';
@@ -455,7 +458,6 @@ export class Popover implements ComponentInterface, PopoverInterface {
       this.componentProps,
       inline
     );
-    hasLazyBuild(el) && (await deepReady(this.usersElement));
 
     if (!this.keyboardEvents) {
       this.configureKeyboardInteraction();
@@ -464,52 +466,50 @@ export class Popover implements ComponentInterface, PopoverInterface {
 
     this.ionMount.emit();
 
-    return new Promise((resolve) => {
+    /**
+     * When using the lazy loaded build of Stencil, we need to wait
+     * for every Stencil component instance to be ready before presenting
+     * otherwise there can be a flash of unstyled content. With the
+     * custom elements bundle we need to wait for the JS framework
+     * mount the inner contents of the overlay otherwise WebKit may
+     * get the transition incorrect.
+     */
+    if (hasLazyBuild(el)) {
+      await deepReady(this.usersElement);
       /**
-       * Wait two request animation frame loops before presenting the popover.
-       * This allows the framework implementations enough time to mount
-       * the popover contents, so the bounding box is set when the popover
-       * transition starts.
-       *
-       * On Angular and React, a single raf is enough time, but for Vue
-       * we need to wait two rafs. As a result we are using two rafs for
-       * all frameworks to ensure the popover is presented correctly.
+       * If keepContentsMounted="true" then the
+       * JS Framework has already mounted the inner
+       * contents so there is no need to wait.
+       * Otherwise, we need to wait for the JS
+       * Framework to mount the inner contents
+       * of this component.
        */
-      raf(() => {
-        raf(async () => {
-          this.currentTransition = present<PopoverPresentOptions>(
-            this,
-            'popoverEnter',
-            iosEnterAnimation,
-            mdEnterAnimation,
-            {
-              event: event || this.event,
-              size: this.size,
-              trigger: this.triggerEl,
-              reference: this.reference,
-              side: this.side,
-              align: this.alignment,
-            }
-          );
+    } else if (!this.keepContentsMounted) {
+      await waitForMount();
+    }
 
-          await this.currentTransition;
-
-          this.currentTransition = undefined;
-
-          /**
-           * If popover is nested and was
-           * presented using the "Right" arrow key,
-           * we need to move focus to the first
-           * descendant inside of the popover.
-           */
-          if (this.focusDescendantOnPresent) {
-            focusFirstDescendant(this.el, this.el);
-          }
-
-          resolve();
-        });
-      });
+    this.currentTransition = present<PopoverPresentOptions>(this, 'popoverEnter', iosEnterAnimation, mdEnterAnimation, {
+      event: event || this.event,
+      size: this.size,
+      trigger: this.triggerEl,
+      reference: this.reference,
+      side: this.side,
+      align: this.alignment,
     });
+
+    await this.currentTransition;
+
+    this.currentTransition = undefined;
+
+    /**
+     * If popover is nested and was
+     * presented using the "Right" arrow key,
+     * we need to move focus to the first
+     * descendant inside of the popover.
+     */
+    if (this.focusDescendantOnPresent) {
+      focusFirstDescendant(this.el, this.el);
+    }
   }
 
   /**
@@ -663,7 +663,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
 
   render() {
     const mode = getIonMode(this);
-    const { onLifecycle, popoverId, parentPopover, dismissOnSelect, side, arrow, htmlAttributes } = this;
+    const { onLifecycle, parentPopover, dismissOnSelect, side, arrow, htmlAttributes } = this;
     const desktop = isPlatform('desktop');
     const enableArrow = arrow && !parentPopover;
 
@@ -676,7 +676,6 @@ export class Popover implements ComponentInterface, PopoverInterface {
         style={{
           zIndex: `${20000 + this.overlayIndex}`,
         }}
-        id={popoverId}
         class={{
           ...getClassMap(this.cssClass),
           [mode]: true,
@@ -711,8 +710,6 @@ const LIFECYCLE_MAP: any = {
   ionPopoverWillDismiss: 'ionViewWillLeave',
   ionPopoverDidDismiss: 'ionViewDidLeave',
 };
-
-let popoverIds = 0;
 
 interface PopoverPresentOptions {
   /**

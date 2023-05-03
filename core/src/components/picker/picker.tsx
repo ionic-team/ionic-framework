@@ -13,6 +13,7 @@ import {
   prepareOverlay,
   present,
   safeCall,
+  setOverlayId,
 } from '../../utils/overlays';
 import type { OverlayEventDetail } from '../../utils/overlays-interface';
 import { getClassMap } from '../../utils/theme';
@@ -192,6 +193,10 @@ export class Picker implements ComponentInterface, OverlayInterface {
 
   disconnectedCallback() {
     this.triggerController.removeClickListener();
+  }
+
+  componentWillLoad() {
+    setOverlayId(this.el);
   }
 
   /**
