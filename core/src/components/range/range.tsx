@@ -902,10 +902,26 @@ const renderKnob = (
 
 const ratioToValue = (ratio: number, min: number, max: number, step: number): number => {
   let value = (max - min) * ratio;
+
   if (step > 0) {
+    // round to nearest multiple of step, then add min
     value = Math.round(value / step) * step + min;
   }
-  return clamp(min, value, max);
+  const clampedValue = clamp(min, value, max);
+
+  const getDecimalPlaces = (n: number) => {
+    if (n % 1 === 0) return 0;
+    return n.toString().split('.')[1].length;
+  };
+
+  const maxPlaces = Math.max(getDecimalPlaces(min), getDecimalPlaces(max), getDecimalPlaces(step));
+
+  /**
+   * Avoid floating point rounding errors like 0.3 becoming
+   * 0.300000004. Note that it isn't possible for the "correct"
+   * value to have more decimal places than all three props.
+   */
+  return Number(clampedValue.toFixed(maxPlaces));
 };
 
 const valueToRatio = (value: number, min: number, max: number): number => {
