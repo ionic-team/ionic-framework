@@ -17,7 +17,7 @@ import { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interf
 import { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
 import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimePresentation, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 import { SpinnerTypes } from "./components/spinner/spinner-configs";
-import { MaskFormat, MaskPlaceholder, MaskVisibility } from "./utils/input-masking";
+import { MaskExpression, MaskPlaceholder, MaskVisibility } from "./utils/input-masking";
 import { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
 import { CounterFormatter } from "./components/item/item-interface";
 import { MenuChangeEventDetail, Side } from "./components/menu/menu-interface";
@@ -54,7 +54,7 @@ export { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interf
 export { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
 export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimePresentation, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 export { SpinnerTypes } from "./components/spinner/spinner-configs";
-export { MaskFormat, MaskPlaceholder, MaskVisibility } from "./utils/input-masking";
+export { MaskExpression, MaskPlaceholder, MaskVisibility } from "./utils/input-masking";
 export { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
 export { CounterFormatter } from "./components/item/item-interface";
 export { MenuChangeEventDetail, Side } from "./components/menu/menu-interface";
@@ -1228,11 +1228,11 @@ export namespace Components {
          */
         "legacy"?: boolean;
         /**
-          * Mask format. Can be either a string or array of characters and regular expressions.  More complex masks can be defined as an array of regular expressions and constant characters. Each index of the mask array, defines the mask for the corresponding index in the input’s string.
+          * The predefined format of the user's input. For example, you can set a mask that only accepts digits, or you can configure a more complex pattern like a phone number or credit card number.  The mask supports two formats: 1. A valid [regular expression pattern](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions) 2. An array containing regular expression and fixed character patterns  Each string in the mask array format is a fixed character in the mask. They cannot be erased or replaced by the user. For example in a phone number mask, the `(`, `)` and `-` are examples of fixed characters.
          */
-        "mask"?: MaskFormat;
+        "mask"?: MaskExpression;
         /**
-          * Character or string to cover unfilled parts of the mask. Default character is `_`. If set to `null`, `undefined` or an empty string, unfilled parts will be empty as in a regular input.
+          * Character or string to cover unfilled parts of the mask. The default character is `_`. If set to `null`, `undefined` or an empty string, unfilled parts will be empty as in a regular input.
          */
         "maskPlaceholder"?: MaskPlaceholder;
         /**
@@ -5270,11 +5270,11 @@ declare namespace LocalJSX {
          */
         "legacy"?: boolean;
         /**
-          * Mask format. Can be either a string or array of characters and regular expressions.  More complex masks can be defined as an array of regular expressions and constant characters. Each index of the mask array, defines the mask for the corresponding index in the input’s string.
+          * The predefined format of the user's input. For example, you can set a mask that only accepts digits, or you can configure a more complex pattern like a phone number or credit card number.  The mask supports two formats: 1. A valid [regular expression pattern](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions) 2. An array containing regular expression and fixed character patterns  Each string in the mask array format is a fixed character in the mask. They cannot be erased or replaced by the user. For example in a phone number mask, the `(`, `)` and `-` are examples of fixed characters.
          */
-        "mask"?: MaskFormat;
+        "mask"?: MaskExpression;
         /**
-          * Character or string to cover unfilled parts of the mask. Default character is `_`. If set to `null`, `undefined` or an empty string, unfilled parts will be empty as in a regular input.
+          * Character or string to cover unfilled parts of the mask. The default character is `_`. If set to `null`, `undefined` or an empty string, unfilled parts will be empty as in a regular input.
          */
         "maskPlaceholder"?: MaskPlaceholder;
         /**

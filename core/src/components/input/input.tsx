@@ -8,7 +8,7 @@ import type { LegacyFormController } from '../../utils/forms';
 import { createLegacyFormController } from '../../utils/forms';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes, debounceEvent, findItemLabel, inheritAttributes } from '../../utils/helpers';
-import type { MaskFormat, MaskPlaceholder, MaskVisibility } from '../../utils/input-masking';
+import type { MaskExpression, MaskPlaceholder, MaskVisibility } from '../../utils/input-masking';
 import { printIonWarning } from '../../utils/logging';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
@@ -274,13 +274,20 @@ export class Input implements ComponentInterface {
   @Prop({ mutable: true }) value?: string | number | null = '';
 
   /**
-   * Mask format. Can be either a string or array of characters and regular expressions.
+   * The predefined format of the user's input. For example, you can set a mask
+   * that only accepts digits, or you can configure a more complex pattern like
+   * a phone number or credit card number.
    *
-   * More complex masks can be defined as an array of regular expressions and
-   * constant characters. Each index of the mask array defines the mask for
-   * the corresponding index in the input’s string.
+   * The mask supports two formats:
+   * 1. A valid [regular expression pattern](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions)
+   * 2. An array containing regular expression and fixed character patterns
+   *
+   * Each string in the mask array format is a fixed character in the mask.
+   * They cannot be erased or replaced by the user. For example in a phone number mask,
+   * the `(`, `)` and `-` are examples of fixed characters.
+   *
    */
-  @Prop() mask?: MaskFormat;
+  @Prop() mask?: MaskExpression;
 
   /**
    * The visibility of the mask placeholder. With `always`, the placeholder will be
