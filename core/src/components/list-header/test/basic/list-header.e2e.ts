@@ -1,12 +1,14 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { configs, test } from '@utils/test/playwright';
 
-test.describe('list-header: basic', () => {
-  test('should not have visual regressions', async ({ page }) => {
-    await page.goto(`/src/components/list-header/test/basic`);
+configs().forEach(({ title, screenshot, config }) => {
+  test.describe(title('list-header: basic'), () => {
+    test('should not have visual regressions', async ({ page }) => {
+      await page.goto(`/src/components/list-header/test/basic`, config);
 
-    await page.setIonViewport();
+      await page.setIonViewport();
 
-    await expect(page).toHaveScreenshot(`list-header-${page.getSnapshotSettings()}.png`);
+      await expect(page).toHaveScreenshot(screenshot(`list-header`));
+    });
   });
 });

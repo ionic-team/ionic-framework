@@ -1,16 +1,18 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { configs, test } from '@utils/test/playwright';
 
-test.describe('icon: basic', () => {
-  test('should render icon when passed', async ({ page, skip }) => {
-    skip.rtl();
-    skip.mode('ios');
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('icon: basic'), () => {
+    test('should render icon when passed', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-icon name="star"></ion-icon>
+      `,
+        config
+      );
 
-    await page.setContent(`
-      <ion-icon name="star"></ion-icon>
-    `);
-
-    const icon = page.locator('ion-icon');
-    await expect(icon).toHaveScreenshot(`icon-${page.getSnapshotSettings()}.png`);
+      const icon = page.locator('ion-icon');
+      await expect(icon).toHaveScreenshot(screenshot(`icon`));
+    });
   });
 });

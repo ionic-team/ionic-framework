@@ -15,7 +15,7 @@ export { InputCustomEvent } from './components/input/input-interface';
 export { CounterFormatter } from './components/item/item-interface';
 export { ItemSlidingCustomEvent } from './components/item-sliding/item-sliding-interface';
 export { LoadingOptions } from './components/loading/loading-interface';
-export { MenuCustomEvent } from './components/menu/menu-interface';
+export { MenuCustomEvent, MenuI, MenuControllerI } from './components/menu/menu-interface';
 export { ModalOptions, ModalCustomEvent } from './components/modal/modal-interface';
 export { NavDirection, NavCustomEvent } from './components/nav/nav-interface';
 export { PickerOptions, PickerColumnOption } from './components/picker/picker-interface';

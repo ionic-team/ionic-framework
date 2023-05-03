@@ -2888,16 +2888,16 @@ export namespace Components {
     interface IonTabs {
         "getRouteId": () => Promise<RouteID | undefined>;
         /**
-          * Get the currently selected tab.
+          * Get the currently selected tab. This method is only available for vanilla JavaScript projects. The Angular, React, and Vue implementations of tabs are coupled to each framework's router.
          */
         "getSelected": () => Promise<string | undefined>;
         /**
-          * Get a specific tab by the value of its `tab` property or an element reference.
+          * Get a specific tab by the value of its `tab` property or an element reference. This method is only available for vanilla JavaScript projects. The Angular, React, and Vue implementations of tabs are coupled to each framework's router.
           * @param tab The tab instance to select. If passed a string, it should be the value of the tab's `tab` property.
          */
         "getTab": (tab: string | HTMLIonTabElement) => Promise<HTMLIonTabElement | undefined>;
         /**
-          * Select a tab by the value of its `tab` property or an element reference.
+          * Select a tab by the value of its `tab` property or an element reference. This method is only available for vanilla JavaScript projects. The Angular, React, and Vue implementations of tabs are coupled to each framework's router.
           * @param tab The tab instance to select. If passed a string, it should be the value of the tab's `tab` property.
          */
         "select": (tab: string | HTMLIonTabElement) => Promise<boolean>;
@@ -5830,6 +5830,10 @@ declare namespace LocalJSX {
           * Emitted before the modal has presented.
          */
         "onIonModalWillPresent"?: (event: IonModalCustomEvent<void>) => void;
+        /**
+          * Emitted before the modal has presented, but after the component has been mounted in the DOM. This event exists so iOS can run the entering transition properly
+         */
+        "onIonMount"?: (event: IonModalCustomEvent<void>) => void;
         /**
           * Emitted before the modal has dismissed. Shorthand for ionModalWillDismiss.
          */

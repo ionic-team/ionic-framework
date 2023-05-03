@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.5](https://github.com/ionic-team/ionic-framework/compare/v7.0.4...v7.0.5) (2023-05-03)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [7.0.4](https://github.com/ionic-team/ionic-framework/compare/v7.0.3...v7.0.4) (2023-04-26)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [7.0.3](https://github.com/ionic-team/ionic/compare/v7.0.2...v7.0.3) (2023-04-19)
+
+
+### Bug Fixes
+
+* **vue:** components have correct name in Vue Dev Tools ([#27180](https://github.com/ionic-team/ionic/issues/27180)) ([07941a5](https://github.com/ionic-team/ionic/commit/07941a59ba68a46d1345fecec6df82fb4655a0b5)), closes [#25199](https://github.com/ionic-team/ionic/issues/25199)
+
+
+
+
+
 ## [7.0.2](https://github.com/ionic-team/ionic/compare/v7.0.1...v7.0.2) (2023-04-12)
 
 **Note:** Version bump only for package @ionic/vue

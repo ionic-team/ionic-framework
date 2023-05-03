@@ -4,6 +4,7 @@ import { findIonContent, printIonContentErrorMsg } from '@utils/content';
 import { CoreDelegate, attachComponent, detachComponent } from '@utils/framework-delegate';
 import { raf, inheritAttributes, hasLazyBuild } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
+import { KEYBOARD_DID_OPEN } from '@utils/keyboard/keyboard';
 import { printIonWarning } from '@utils/logging';
 import { Style as StatusBarStyle, StatusBar } from '@utils/native/status-bar';
 import {
@@ -16,8 +17,9 @@ import {
   present,
   createTriggerController,
 } from '@utils/overlays';
+import type { OverlayEventDetail } from '@utils/overlays-interface';
 import { getClassMap } from '@utils/theme';
-import { deepReady } from '@utils/transition';
+import { deepReady, waitForMount } from '@utils/transition';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
@@ -30,8 +32,6 @@ import type {
   Gesture,
   OverlayInterface,
 } from '../../interface';
-import { KEYBOARD_DID_OPEN } from '../../utils/keyboard/keyboard';
-import type { OverlayEventDetail } from '../../utils/overlays-interface';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
@@ -316,6 +316,16 @@ export class Modal implements ComponentInterface, OverlayInterface {
    */
   @Event({ eventName: 'didDismiss' }) didDismissShorthand!: EventEmitter<OverlayEventDetail>;
 
+  /**
+   * Emitted before the modal has presented, but after the component
+   * has been mounted in the DOM.
+   * This event exists so iOS can run the entering
+   * transition properly
+   *
+   * @internal
+   */
+  @Event() ionMount!: EventEmitter<void>;
+
   breakpointsChanged(breakpoints: number[] | undefined) {
     if (breakpoints !== undefined) {
       this.sortedBreakpoints = breakpoints.sort((a, b) => a - b);
@@ -443,7 +453,30 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     const { inline, delegate } = this.getDelegate(true);
     this.usersElement = await attachComponent(delegate, el, this.component, ['ion-page'], this.componentProps, inline);
-    hasLazyBuild(el) && (await deepReady(this.usersElement));
+
+    this.ionMount.emit();
+
+    /**
+     * When using the lazy loaded build of Stencil, we need to wait
+     * for every Stencil component instance to be ready before presenting
+     * otherwise there can be a flash of unstyled content. With the
+     * custom elements bundle we need to wait for the JS framework
+     * mount the inner contents of the overlay otherwise WebKit may
+     * get the transition incorrect.
+     */
+    if (hasLazyBuild(el)) {
+      await deepReady(this.usersElement);
+      /**
+       * If keepContentsMounted="true" then the
+       * JS Framework has already mounted the inner
+       * contents so there is no need to wait.
+       * Otherwise, we need to wait for the JS
+       * Framework to mount the inner contents
+       * of this component.
+       */
+    } else if (!this.keepContentsMounted) {
+      await waitForMount();
+    }
 
     writeTask(() => this.el.classList.add('show-modal'));
 

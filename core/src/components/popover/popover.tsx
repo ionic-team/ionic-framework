@@ -4,13 +4,13 @@ import { CoreDelegate, attachComponent, detachComponent } from '@utils/framework
 import { addEventListener, raf, hasLazyBuild } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 import { BACKDROP, dismiss, eventMethod, focusFirstDescendant, prepareOverlay, present } from '@utils/overlays';
+import type { OverlayEventDetail } from '@utils/overlays-interface';
 import { isPlatform } from '@utils/platform';
 import { getClassMap } from '@utils/theme';
-import { deepReady } from '@utils/transition';
+import { deepReady, waitForMount } from '@utils/transition';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate } from '../../interface';
-import type { OverlayEventDetail } from '../../utils/overlays-interface';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
@@ -455,7 +455,6 @@ export class Popover implements ComponentInterface, PopoverInterface {
       this.componentProps,
       inline
     );
-    hasLazyBuild(el) && (await deepReady(this.usersElement));
 
     if (!this.keyboardEvents) {
       this.configureKeyboardInteraction();
@@ -464,52 +463,50 @@ export class Popover implements ComponentInterface, PopoverInterface {
 
     this.ionMount.emit();
 
-    return new Promise((resolve) => {
+    /**
+     * When using the lazy loaded build of Stencil, we need to wait
+     * for every Stencil component instance to be ready before presenting
+     * otherwise there can be a flash of unstyled content. With the
+     * custom elements bundle we need to wait for the JS framework
+     * mount the inner contents of the overlay otherwise WebKit may
+     * get the transition incorrect.
+     */
+    if (hasLazyBuild(el)) {
+      await deepReady(this.usersElement);
       /**
-       * Wait two request animation frame loops before presenting the popover.
-       * This allows the framework implementations enough time to mount
-       * the popover contents, so the bounding box is set when the popover
-       * transition starts.
-       *
-       * On Angular and React, a single raf is enough time, but for Vue
-       * we need to wait two rafs. As a result we are using two rafs for
-       * all frameworks to ensure the popover is presented correctly.
+       * If keepContentsMounted="true" then the
+       * JS Framework has already mounted the inner
+       * contents so there is no need to wait.
+       * Otherwise, we need to wait for the JS
+       * Framework to mount the inner contents
+       * of this component.
        */
-      raf(() => {
-        raf(async () => {
-          this.currentTransition = present<PopoverPresentOptions>(
-            this,
-            'popoverEnter',
-            iosEnterAnimation,
-            mdEnterAnimation,
-            {
-              event: event || this.event,
-              size: this.size,
-              trigger: this.triggerEl,
-              reference: this.reference,
-              side: this.side,
-              align: this.alignment,
-            }
-          );
+    } else if (!this.keepContentsMounted) {
+      await waitForMount();
+    }
 
-          await this.currentTransition;
-
-          this.currentTransition = undefined;
-
-          /**
-           * If popover is nested and was
-           * presented using the "Right" arrow key,
-           * we need to move focus to the first
-           * descendant inside of the popover.
-           */
-          if (this.focusDescendantOnPresent) {
-            focusFirstDescendant(this.el, this.el);
-          }
-
-          resolve();
-        });
-      });
+    this.currentTransition = present<PopoverPresentOptions>(this, 'popoverEnter', iosEnterAnimation, mdEnterAnimation, {
+      event: event || this.event,
+      size: this.size,
+      trigger: this.triggerEl,
+      reference: this.reference,
+      side: this.side,
+      align: this.alignment,
     });
+
+    await this.currentTransition;
+
+    this.currentTransition = undefined;
+
+    /**
+     * If popover is nested and was
+     * presented using the "Right" arrow key,
+     * we need to move focus to the first
+     * descendant inside of the popover.
+     */
+    if (this.focusDescendantOnPresent) {
+      focusFirstDescendant(this.el, this.el);
+    }
   }
 
   /**

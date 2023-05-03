@@ -1,26 +1,30 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { configs, test } from '@utils/test/playwright';
 
-test.describe('textarea: states', () => {
-  test.beforeEach(({ skip }) => {
-    skip.rtl();
-  });
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('textarea: states'), () => {
+    test('should render readonly textarea correctly', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-textarea label="Email" value="hi@ionic.io" readonly="true"></ion-textarea>
+      `,
+        config
+      );
 
-  test('should render readonly textarea correctly', async ({ page }) => {
-    await page.setContent(`
-      <ion-textarea label="Email" value="hi@ionic.io" readonly="true"></ion-textarea>
-    `);
+      const textarea = page.locator('ion-textarea');
+      expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-readonly`));
+    });
 
-    const textarea = page.locator('ion-textarea');
-    expect(await textarea.screenshot()).toMatchSnapshot(`textarea-readonly-${page.getSnapshotSettings()}.png`);
-  });
+    test('should render disabled textarea correctly', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-textarea label="Email" value="hi@ionic.io" disabled="true"></ion-textarea>
+      `,
+        config
+      );
 
-  test('should render disabled textarea correctly', async ({ page }) => {
-    await page.setContent(`
-      <ion-textarea label="Email" value="hi@ionic.io" disabled="true"></ion-textarea>
-    `);
-
-    const textarea = page.locator('ion-textarea');
-    expect(await textarea.screenshot()).toMatchSnapshot(`textarea-disabled-${page.getSnapshotSettings()}.png`);
+      const textarea = page.locator('ion-textarea');
+      expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-disabled`));
+    });
   });
 });

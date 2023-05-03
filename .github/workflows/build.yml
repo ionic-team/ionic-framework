@@ -81,6 +81,45 @@ jobs:
         if: ${{ needs.test-core-screenshot.result != 'success' }}
         run: exit 1
 
+  test-core-screenshot-legacy:
+    strategy:
+      matrix:
+        # Divide the tests into n buckets
+        # and run those buckets in parallel.
+        # To increase the number of shards,
+        # add new items to the shard array
+        # and change the value of totalShards
+        # to be the length of the shard array.
+        shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+        totalShards: [20]
+    needs: [build-core]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/workflows/actions/test-core-screenshot
+        with:
+          shard: ${{ matrix.shard }}
+          totalShards: ${{ matrix.totalShards }}
+          commandModifier: '.legacy'
+
+  # Screenshots are required to pass
+  # in order for the branch to be merge
+  # eligible. However, the screenshot tests
+  # are run on n runners where n can change
+  # over time. The verify-screenshots step allows
+  # us to have a required status check for screenshot
+  # results without having to manually add each
+  # matrix run in the branch protection rules
+  # Source: https://github.community/t/status-check-for-a-matrix-jobs/127354
+  verify-screenshots-legacy:
+    if: ${{ always() }}
+    needs: test-core-screenshot-legacy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check build matrix status
+        if: ${{ needs.test-core-screenshot-legacy.result != 'success' }}
+        run: exit 1
+
   build-vue:
     needs: [build-core]
     runs-on: ubuntu-latest
@@ -135,7 +174,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        apps: [ng14, ng15]
+        apps: [ng14, ng15, ng16]
     needs: [build-angular, build-angular-server]
     runs-on: ubuntu-latest
     steps:

@@ -1,44 +1,59 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { configs, test } from '@utils/test/playwright';
 
-test.describe('footer: basic', () => {
-  test.describe('footer: rendering', () => {
+configs().forEach(({ title, screenshot, config }) => {
+  test.describe(title('footer: rendering'), () => {
     test('should not have visual regressions with basic footer', async ({ page }) => {
-      await page.setContent(`
-        <ion-footer>
-          <ion-toolbar>
-            <ion-title>Footer - Default</ion-title>
-          </ion-toolbar>
-        </ion-footer>
-      `);
+      await page.setContent(
+        `
+          <ion-footer>
+            <ion-toolbar>
+              <ion-title>Footer - Default</ion-title>
+            </ion-toolbar>
+          </ion-footer>
+        `,
+        config
+      );
 
       const footer = page.locator('ion-footer');
-      await expect(footer).toHaveScreenshot(`footer-diff-${page.getSnapshotSettings()}.png`);
+      await expect(footer).toHaveScreenshot(screenshot(`footer-diff`));
     });
   });
+});
 
-  test.describe('footer: feature rendering', () => {
-    test.beforeEach(({ skip }) => {
-      skip.rtl();
-    });
-
+/**
+ * This behavior does not vary
+ * across directions.
+ */
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('footer: feature rendering'), () => {
     test('should not have visual regressions with no border', async ({ page }) => {
-      await page.setContent(`
+      await page.setContent(
+        `
         <ion-footer class="ion-no-border">
           <ion-toolbar>
             <ion-title>Footer - No Border</ion-title>
           </ion-toolbar>
         </ion-footer>
-      `);
+      `,
+        config
+      );
 
       const footer = page.locator('ion-footer');
-      await expect(footer).toHaveScreenshot(`footer-no-border-diff-${page.getSnapshotSettings()}.png`);
+      await expect(footer).toHaveScreenshot(screenshot(`footer-no-border-diff`));
     });
+  });
+});
 
-    test('should not have visual regressions with translucent footer', async ({ page, skip }) => {
-      skip.mode('md', 'Translucent effect is only available in iOS mode.');
-
-      await page.setContent(`
+/**
+ * This behavior only exists on
+ * iOS mode and does not vary across directions.
+ */
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('footer: translucent'), () => {
+    test('should not have visual regressions with translucent footer', async ({ page }) => {
+      await page.setContent(
+        `
         <ion-footer translucent="true">
           <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0">
             <img style="transform: rotate(145deg) scale(1.5)" src="/src/components/footer/test/img.jpg" />
@@ -47,10 +62,12 @@ test.describe('footer: basic', () => {
             <ion-title>Footer - Translucent</ion-title>
           </ion-toolbar>
         </ion-footer>
-      `);
+      `,
+        config
+      );
 
       const footer = page.locator('ion-footer');
-      await expect(footer).toHaveScreenshot(`footer-translucent-diff-${page.getSnapshotSettings()}.png`);
+      await expect(footer).toHaveScreenshot(screenshot(`footer-translucent-diff`));
     });
   });
 });

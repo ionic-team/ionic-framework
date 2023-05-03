@@ -1,130 +1,161 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { configs, test } from '@utils/test/playwright';
 
-test.describe('picker-column-internal: disabled', () => {
-  test('should not have visual regressions', async ({ page }) => {
-    await page.setContent(`
-      <ion-picker-internal>
-        <ion-picker-column-internal value="b"></ion-picker-column-internal>
-      </ion-picker-internal>
+/**
+ * This behavior does not vary across directions.
+ */
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('picker-column-internal: disabled rendering'), () => {
+    test('should not have visual regressions', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-picker-internal>
+          <ion-picker-column-internal value="b"></ion-picker-column-internal>
+        </ion-picker-internal>
 
-      <script>
-        const column = document.querySelector('ion-picker-column-internal');
-        column.items = [
-          { text: 'A', value: 'a', disabled: true },
-          { text: 'B', value: 'b' },
-          { text: 'C', value: 'c', disabled: true }
-        ]
-      </script>
-    `);
+        <script>
+          const column = document.querySelector('ion-picker-column-internal');
+          column.items = [
+            { text: 'A', value: 'a', disabled: true },
+            { text: 'B', value: 'b' },
+            { text: 'C', value: 'c', disabled: true }
+          ]
+        </script>
+      `,
+        config
+      );
 
-    const picker = page.locator('ion-picker-internal');
-    await expect(picker).toHaveScreenshot(`picker-internal-disabled-${page.getSnapshotSettings()}.png`);
+      const picker = page.locator('ion-picker-internal');
+      await expect(picker).toHaveScreenshot(screenshot(`picker-internal-disabled`));
+    });
   });
-  test('all picker items should be enabled by default', async ({ page }) => {
-    await page.setContent(`
-      <ion-picker-internal>
-        <ion-picker-column-internal></ion-picker-column-internal>
-      </ion-picker-internal>
+});
 
-      <script>
-        const column = document.querySelector('ion-picker-column-internal');
-        column.items = [
-          { text: 'A', value: 'a' },
-          { text: 'B', value: 'b' },
-          { text: 'C', value: 'c' }
-        ]
-      </script>
-    `);
+/**
+ * This behavior does not vary across modes/directions.
+ */
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('picker-column-internal: disabled'), () => {
+    test('all picker items should be enabled by default', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-picker-internal>
+          <ion-picker-column-internal></ion-picker-column-internal>
+        </ion-picker-internal>
 
-    const pickerItems = page.locator(
-      'ion-picker-column-internal .picker-item:not(.picker-item-empty, .picker-item-disabled)'
-    );
+        <script>
+          const column = document.querySelector('ion-picker-column-internal');
+          column.items = [
+            { text: 'A', value: 'a' },
+            { text: 'B', value: 'b' },
+            { text: 'C', value: 'c' }
+          ]
+        </script>
+      `,
+        config
+      );
 
-    expect(await pickerItems.count()).toBe(3);
-  });
-  test('disabled picker item should not be interactive', async ({ page }) => {
-    await page.setContent(`
-      <ion-picker-internal>
-        <ion-picker-column-internal></ion-picker-column-internal>
-      </ion-picker-internal>
+      const pickerItems = page.locator(
+        'ion-picker-column-internal .picker-item:not(.picker-item-empty, .picker-item-disabled)'
+      );
 
-      <script>
-        const column = document.querySelector('ion-picker-column-internal');
-        column.items = [
-          { text: 'A', value: 'a' },
-          { text: 'B', value: 'b', disabled: true },
-          { text: 'C', value: 'c' }
-        ]
-      </script>
-    `);
+      expect(await pickerItems.count()).toBe(3);
+    });
+    test('disabled picker item should not be interactive', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-picker-internal>
+          <ion-picker-column-internal></ion-picker-column-internal>
+        </ion-picker-internal>
 
-    const disabledItem = page.locator('ion-picker-column-internal .picker-item.picker-item-disabled');
-    await expect(disabledItem).not.toBeEnabled();
-  });
-  test('disabled picker item should not be considered active', async ({ page }) => {
-    await page.setContent(`
-      <ion-picker-internal>
-        <ion-picker-column-internal value="b"></ion-picker-column-internal>
-      </ion-picker-internal>
+        <script>
+          const column = document.querySelector('ion-picker-column-internal');
+          column.items = [
+            { text: 'A', value: 'a' },
+            { text: 'B', value: 'b', disabled: true },
+            { text: 'C', value: 'c' }
+          ]
+        </script>
+      `,
+        config
+      );
 
-      <script>
-        const column = document.querySelector('ion-picker-column-internal');
-        column.items = [
-          { text: 'A', value: 'a' },
-          { text: 'B', value: 'b', disabled: true },
-          { text: 'C', value: 'c' }
-        ]
-      </script>
-    `);
+      const disabledItem = page.locator('ion-picker-column-internal .picker-item.picker-item-disabled');
+      await expect(disabledItem).not.toBeEnabled();
+    });
+    test('disabled picker item should not be considered active', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-picker-internal>
+          <ion-picker-column-internal value="b"></ion-picker-column-internal>
+        </ion-picker-internal>
 
-    const disabledItem = page.locator('ion-picker-column-internal .picker-item[data-value="b"]');
-    await expect(disabledItem).not.toHaveClass(/picker-item-active/);
-  });
-  test('setting the value to a disabled item should not cause that item to be active', async ({ page }) => {
-    await page.setContent(`
-      <ion-picker-internal>
-        <ion-picker-column-internal></ion-picker-column-internal>
-      </ion-picker-internal>
+        <script>
+          const column = document.querySelector('ion-picker-column-internal');
+          column.items = [
+            { text: 'A', value: 'a' },
+            { text: 'B', value: 'b', disabled: true },
+            { text: 'C', value: 'c' }
+          ]
+        </script>
+      `,
+        config
+      );
 
-      <script>
-        const column = document.querySelector('ion-picker-column-internal');
-        column.items = [
-          { text: 'A', value: 'a' },
-          { text: 'B', value: 'b', disabled: true },
-          { text: 'C', value: 'c' }
-        ]
-      </script>
-    `);
+      const disabledItem = page.locator('ion-picker-column-internal .picker-item[data-value="b"]');
+      await expect(disabledItem).not.toHaveClass(/picker-item-active/);
+    });
+    test('setting the value to a disabled item should not cause that item to be active', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-picker-internal>
+          <ion-picker-column-internal></ion-picker-column-internal>
+        </ion-picker-internal>
 
-    const pickerColumn = page.locator('ion-picker-column-internal');
-    await pickerColumn.evaluate((el: HTMLIonPickerColumnInternalElement) => (el.value = 'b'));
+        <script>
+          const column = document.querySelector('ion-picker-column-internal');
+          column.items = [
+            { text: 'A', value: 'a' },
+            { text: 'B', value: 'b', disabled: true },
+            { text: 'C', value: 'c' }
+          ]
+        </script>
+      `,
+        config
+      );
 
-    await page.waitForChanges();
+      const pickerColumn = page.locator('ion-picker-column-internal');
+      await pickerColumn.evaluate((el: HTMLIonPickerColumnInternalElement) => (el.value = 'b'));
 
-    const disabledItem = page.locator('ion-picker-column-internal .picker-item[data-value="b"]');
-    await expect(disabledItem).toHaveClass(/picker-item-disabled/);
-    await expect(disabledItem).not.toHaveClass(/picker-item-active/);
-  });
-  test('defaulting the value to a disabled item should not cause that item to be active', async ({ page }) => {
-    await page.setContent(`
-      <ion-picker-internal>
-        <ion-picker-column-internal></ion-picker-column-internal>
-      </ion-picker-internal>
+      await page.waitForChanges();
 
-      <script>
-        const column = document.querySelector('ion-picker-column-internal');
-        column.items = [
-          { text: 'A', value: 'a' },
-          { text: 'B', value: 'b', disabled: true },
-          { text: 'C', value: 'c' }
-        ]
-        column.value = 'b'
-      </script>
-    `);
+      const disabledItem = page.locator('ion-picker-column-internal .picker-item[data-value="b"]');
+      await expect(disabledItem).toHaveClass(/picker-item-disabled/);
+      await expect(disabledItem).not.toHaveClass(/picker-item-active/);
+    });
+    test('defaulting the value to a disabled item should not cause that item to be active', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-picker-internal>
+          <ion-picker-column-internal></ion-picker-column-internal>
+        </ion-picker-internal>
 
-    const disabledItem = page.locator('ion-picker-column-internal .picker-item[data-value="b"]');
-    await expect(disabledItem).toHaveClass(/picker-item-disabled/);
-    await expect(disabledItem).not.toHaveClass(/picker-item-active/);
+        <script>
+          const column = document.querySelector('ion-picker-column-internal');
+          column.items = [
+            { text: 'A', value: 'a' },
+            { text: 'B', value: 'b', disabled: true },
+            { text: 'C', value: 'c' }
+          ]
+          column.value = 'b'
+        </script>
+      `,
+        config
+      );
+
+      const disabledItem = page.locator('ion-picker-column-internal .picker-item[data-value="b"]');
+      await expect(disabledItem).toHaveClass(/picker-item-disabled/);
+      await expect(disabledItem).not.toHaveClass(/picker-item-active/);
+    });
   });
 });
