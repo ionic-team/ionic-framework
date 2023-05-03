@@ -3,7 +3,7 @@ import type { Locator } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 import type { E2EPage } from '@utils/test/playwright';
 
-configs().forEach(({ title, config }) => {
+configs().forEach(({ title, screenshot, config }) => {
   test.describe(title('radio-group: basic'), () => {
     test('should not have visual regressions', async ({ page }) => {
       await page.goto(`/src/components/radio-group/test/basic`, config);
