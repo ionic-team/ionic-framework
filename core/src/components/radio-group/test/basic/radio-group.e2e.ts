@@ -19,7 +19,7 @@ configs().forEach(({ title, screenshot, config }) => {
  * This behavior does not vary across modes/directions.
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
-  test.describe('radio-group: interaction', () => {
+  test.describe(title('radio-group: interaction'), () => {
     let radioFixture: RadioFixture;
 
     test.beforeEach(({ page }) => {
