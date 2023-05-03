@@ -47,7 +47,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
  * Translucent popovers are only available on iOS
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
-  test.describe.only(title('popover: translucent variants'), async () => {
+  test.describe(title('popover: translucent variants'), async () => {
     let popoverFixture!: PopoverFixture;
     test.beforeEach(async ({ page }) => {
       popoverFixture = new PopoverFixture(page);
