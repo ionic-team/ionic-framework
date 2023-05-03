@@ -282,9 +282,8 @@ export class Input implements ComponentInterface {
    * 1. A valid [regular expression pattern](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions)
    * 2. An array containing regular expression and fixed character patterns
    *
-   * Each string in the mask array format is a fixed character in the mask.
-   * They cannot be erased or replaced by the user. For example in a phone number mask,
-   * the `(`, `)` and `-` are examples of fixed characters.
+   * The fixed characters in the mask cannot be erased or replaced by the user. For example
+   * in a phone number mask, the `(`, `)` and `-` are examples of fixed characters.
    *
    */
   @Prop() mask?: MaskExpression;

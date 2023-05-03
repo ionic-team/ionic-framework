@@ -1228,7 +1228,7 @@ export namespace Components {
          */
         "legacy"?: boolean;
         /**
-          * The predefined format of the user's input. For example, you can set a mask that only accepts digits, or you can configure a more complex pattern like a phone number or credit card number.  The mask supports two formats: 1. A valid [regular expression pattern](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions) 2. An array containing regular expression and fixed character patterns  Each string in the mask array format is a fixed character in the mask. They cannot be erased or replaced by the user. For example in a phone number mask, the `(`, `)` and `-` are examples of fixed characters.
+          * The predefined format of the user's input. For example, you can set a mask that only accepts digits, or you can configure a more complex pattern like a phone number or credit card number.  The mask supports two formats: 1. A valid [regular expression pattern](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions) 2. An array containing regular expression and fixed character patterns  The fixed characters in the mask cannot be erased or replaced by the user. For example in a phone number mask, the `(`, `)` and `-` are examples of fixed characters.
          */
         "mask"?: MaskExpression;
         /**
@@ -5270,7 +5270,7 @@ declare namespace LocalJSX {
          */
         "legacy"?: boolean;
         /**
-          * The predefined format of the user's input. For example, you can set a mask that only accepts digits, or you can configure a more complex pattern like a phone number or credit card number.  The mask supports two formats: 1. A valid [regular expression pattern](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions) 2. An array containing regular expression and fixed character patterns  Each string in the mask array format is a fixed character in the mask. They cannot be erased or replaced by the user. For example in a phone number mask, the `(`, `)` and `-` are examples of fixed characters.
+          * The predefined format of the user's input. For example, you can set a mask that only accepts digits, or you can configure a more complex pattern like a phone number or credit card number.  The mask supports two formats: 1. A valid [regular expression pattern](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions) 2. An array containing regular expression and fixed character patterns  The fixed characters in the mask cannot be erased or replaced by the user. For example in a phone number mask, the `(`, `)` and `-` are examples of fixed characters.
          */
         "mask"?: MaskExpression;
         /**
