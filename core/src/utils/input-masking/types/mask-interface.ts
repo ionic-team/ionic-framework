@@ -1,22 +1,22 @@
 export interface TypedInputEvent extends InputEvent {
   inputType:
-    | 'deleteByCut' // Ctrl (Command) + X
-    | 'deleteContentBackward' // Backspace
-    | 'deleteContentForward' // Delete (Fn + Backspace)
-    | 'deleteHardLineBackward' // Ctrl (Command) + Backspace
-    | 'deleteHardLineForward'
-    | 'deleteSoftLineBackward' // Ctrl (Command) + Backspace
-    | 'deleteSoftLineForward'
-    | 'deleteWordBackward' // Alt (Option) + Backspace
-    | 'deleteWordForward' // Alt (Option) + Delete (Fn + Backspace)
-    | 'historyRedo' // Ctrl (Command) + Shift + Z
-    | 'historyUndo' // Ctrl (Command) + Z
-    | 'insertCompositionText'
-    | 'insertFromDrop'
-    | 'insertFromPaste' // Ctrl (Command) + V
-    | 'insertLineBreak'
-    | 'insertReplacementText'
-    | 'insertText';
+  | 'deleteByCut' // Ctrl (Command) + X
+  | 'deleteContentBackward' // Backspace
+  | 'deleteContentForward' // Delete (Fn + Backspace)
+  | 'deleteHardLineBackward' // Ctrl (Command) + Backspace
+  | 'deleteHardLineForward'
+  | 'deleteSoftLineBackward' // Ctrl (Command) + Backspace
+  | 'deleteSoftLineForward'
+  | 'deleteWordBackward' // Alt (Option) + Backspace
+  | 'deleteWordForward' // Alt (Option) + Delete (Fn + Backspace)
+  | 'historyRedo' // Ctrl (Command) + Shift + Z
+  | 'historyUndo' // Ctrl (Command) + Z
+  | 'insertCompositionText'
+  | 'insertFromDrop'
+  | 'insertFromPaste' // Ctrl (Command) + V
+  | 'insertLineBreak'
+  | 'insertReplacementText'
+  | 'insertText';
 }
 
 export type SelectionRange = [from: number, to: number];
@@ -48,10 +48,6 @@ export interface MaskOptions {
   readonly overwriteMode?: 'replace' | 'shift' | ((elementState: ElementState) => 'replace' | 'shift');
 }
 
-// Consumer types (not used in the library itself)
-
 export type MaskVisibility = 'always' | 'focus' | 'never';
-
-export type MaskFormat = string | (string | RegExp)[];
 
 export type MaskPlaceholder = string | null | undefined;
