@@ -58,7 +58,6 @@
           picker.addEventListener('ionPickerColChange', async (event) => {
             const newCols = JSON.parse(JSON.stringify(picker.columns));
             const selectedIndex = event.detail.selectedIndex;
-            console.log('event.detail.name', event.detail.name, event.detail.options[selectedIndex]);
             const column = event.detail.options[selectedIndex];
 
             // The first column was selected
