@@ -109,7 +109,6 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       });
     });
   });
-
 });
 
 class ScrollAssistFixture {
