@@ -123,7 +123,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check build matrix status
-        if: ${{ needs.test-core-screenshot.result != 'success' }}
+        if: ${{ needs.test-core-screenshot-legacy.result != 'success' }}
         run: exit 1
 
   build-vue:

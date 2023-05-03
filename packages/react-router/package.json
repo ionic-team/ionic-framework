@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react-router",
-  "version": "7.0.4",
+  "version": "7.0.5",
   "description": "React Router wrapper for @ionic/react",
   "keywords": [
     "ionic",
@@ -37,7 +37,7 @@
     "dist/"
   ],
   "dependencies": {
-    "@ionic/react": "^7.0.4",
+    "@ionic/react": "^7.0.5",
     "tslib": "*"
   },
   "peerDependencies": {
@@ -66,7 +66,7 @@
     "rimraf": "^3.0.2",
     "rollup": "^2.26.4",
     "rollup-plugin-sourcemaps": "^0.6.2",
-    "typescript": "^3.9.5"
+    "typescript": "^4.0.5"
   },
   "prettier": "@ionic/prettier-config"
 }

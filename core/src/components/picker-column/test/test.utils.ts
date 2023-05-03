@@ -1,13 +1,19 @@
 import { expect } from '@playwright/test';
-import type { E2EPage } from '@utils/test/playwright';
+import type { E2EPage, ScreenshotFn } from '@utils/test/playwright';
 
 /**
  * Visual regression tests for picker-column.
  * @param page - The page to run the tests on.
+ * @param screenshot - The screenshot function to generate unique screenshot names
  * @param buttonSelector - The selector for the button that opens the picker.
  * @param description - The description to amend to the screenshot names (typically 'single' or 'multiple').
  */
-export async function testPickerColumn(page: E2EPage, buttonSelector: string, description: string) {
+export async function testPickerColumn(
+  page: E2EPage,
+  screenshot: ScreenshotFn,
+  buttonSelector: string,
+  description: string
+) {
   const ionPickerDidPresentSpy = await page.spyOnEvent('ionPickerDidPresent');
 
   await page.click(buttonSelector);
@@ -15,7 +21,7 @@ export async function testPickerColumn(page: E2EPage, buttonSelector: string, de
 
   await page.waitForChanges();
 
-  await expect(page).toHaveScreenshot(`picker-${description}-column-initial-${page.getSnapshotSettings()}.png`);
+  await expect(page).toHaveScreenshot(screenshot(`picker-${description}-column-initial`));
 
   // TODO FW-3403
   /*
