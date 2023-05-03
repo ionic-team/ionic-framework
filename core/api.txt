@@ -553,6 +553,9 @@ ion-input,prop,inputmode,"decimal" | "email" | "none" | "numeric" | "search" | "
 ion-input,prop,label,string | undefined,undefined,false,false
 ion-input,prop,labelPlacement,"end" | "fixed" | "floating" | "stacked" | "start",'start',false,false
 ion-input,prop,legacy,boolean | undefined,undefined,false,false
+ion-input,prop,mask,(string | RegExp)[] | RegExp | undefined,undefined,false,false
+ion-input,prop,maskPlaceholder,null | string | undefined,'_',false,false
+ion-input,prop,maskVisibility,"always" | "focus" | "never" | undefined,'always',false,false
 ion-input,prop,max,number | string | undefined,undefined,false,false
 ion-input,prop,maxlength,number | undefined,undefined,false,false
 ion-input,prop,min,number | string | undefined,undefined,false,false

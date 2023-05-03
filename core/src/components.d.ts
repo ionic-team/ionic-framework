@@ -17,6 +17,7 @@ import { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interf
 import { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
 import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimePresentation, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 import { SpinnerTypes } from "./components/spinner/spinner-configs";
+import { MaskExpression, MaskPlaceholder, MaskVisibility } from "./utils/input-masking";
 import { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
 import { CounterFormatter } from "./components/item/item-interface";
 import { MenuChangeEventDetail, Side } from "./components/menu/menu-interface";
@@ -53,6 +54,7 @@ export { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interf
 export { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
 export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimePresentation, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 export { SpinnerTypes } from "./components/spinner/spinner-configs";
+export { MaskExpression, MaskPlaceholder, MaskVisibility } from "./utils/input-masking";
 export { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
 export { CounterFormatter } from "./components/item/item-interface";
 export { MenuChangeEventDetail, Side } from "./components/menu/menu-interface";
@@ -1225,6 +1227,18 @@ export namespace Components {
           * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the `label` property. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
          */
         "legacy"?: boolean;
+        /**
+          * The predefined format of the user's input. For example, you can set a mask that only accepts digits, or you can configure a more complex pattern like a phone number or credit card number.  The mask supports two formats: 1. A valid [regular expression pattern](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions) 2. An array containing regular expression and fixed character patterns  The fixed characters in the mask cannot be erased or replaced by the user. For example in a phone number mask, the `(`, `)` and `-` are examples of fixed characters.
+         */
+        "mask"?: MaskExpression;
+        /**
+          * Character or string to cover unfilled parts of the mask. The default character is `_`. If set to `null`, `undefined` or an empty string, unfilled parts will be empty as in a regular input.
+         */
+        "maskPlaceholder"?: MaskPlaceholder;
+        /**
+          * The visibility of the mask placeholder. With `always`, the placeholder will be visible even when the control does not have focus. With `focus`, the placeholder will only be visible when the control has focus. With `never`, the placeholder will never be visibly displayed.
+         */
+        "maskVisibility"?: MaskVisibility;
         /**
           * The maximum value, which must not be less than its minimum (min attribute) value.
          */
@@ -5255,6 +5269,18 @@ declare namespace LocalJSX {
           * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the `label` property. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
          */
         "legacy"?: boolean;
+        /**
+          * The predefined format of the user's input. For example, you can set a mask that only accepts digits, or you can configure a more complex pattern like a phone number or credit card number.  The mask supports two formats: 1. A valid [regular expression pattern](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions) 2. An array containing regular expression and fixed character patterns  The fixed characters in the mask cannot be erased or replaced by the user. For example in a phone number mask, the `(`, `)` and `-` are examples of fixed characters.
+         */
+        "mask"?: MaskExpression;
+        /**
+          * Character or string to cover unfilled parts of the mask. The default character is `_`. If set to `null`, `undefined` or an empty string, unfilled parts will be empty as in a regular input.
+         */
+        "maskPlaceholder"?: MaskPlaceholder;
+        /**
+          * The visibility of the mask placeholder. With `always`, the placeholder will be visible even when the control does not have focus. With `focus`, the placeholder will only be visible when the control has focus. With `never`, the placeholder will never be visibly displayed.
+         */
+        "maskVisibility"?: MaskVisibility;
         /**
           * The maximum value, which must not be less than its minimum (min attribute) value.
          */

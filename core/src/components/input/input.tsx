@@ -8,6 +8,7 @@ import type { LegacyFormController } from '../../utils/forms';
 import { createLegacyFormController } from '../../utils/forms';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes, debounceEvent, findItemLabel, inheritAttributes } from '../../utils/helpers';
+import type { MaskExpression, MaskPlaceholder, MaskVisibility } from '../../utils/input-masking';
 import { printIonWarning } from '../../utils/logging';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
@@ -271,6 +272,35 @@ export class Input implements ComponentInterface {
    * The value of the input.
    */
   @Prop({ mutable: true }) value?: string | number | null = '';
+
+  /**
+   * The predefined format of the user's input. For example, you can set a mask
+   * that only accepts digits, or you can configure a more complex pattern like
+   * a phone number or credit card number.
+   *
+   * The mask supports two formats:
+   * 1. A valid [regular expression pattern](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions)
+   * 2. An array containing regular expression and fixed character patterns
+   *
+   * The fixed characters in the mask cannot be erased or replaced by the user. For example
+   * in a phone number mask, the `(`, `)` and `-` are examples of fixed characters.
+   *
+   */
+  @Prop() mask?: MaskExpression;
+
+  /**
+   * The visibility of the mask placeholder. With `always`, the placeholder will be
+   * visible even when the control does not have focus. With `focus`, the placeholder
+   * will only be visible when the control has focus. With `never`, the placeholder will
+   * never be visibly displayed.
+   */
+  @Prop() maskVisibility?: MaskVisibility = 'always';
+
+  /**
+   * Character or string to cover unfilled parts of the mask. The default character is `_`.
+   * If set to `null`, `undefined` or an empty string, unfilled parts will be empty as in a regular input.
+   */
+  @Prop() maskPlaceholder?: MaskPlaceholder = '_';
 
   /**
    * The `ionInput` event fires when the `value` of an `<ion-input>` element
