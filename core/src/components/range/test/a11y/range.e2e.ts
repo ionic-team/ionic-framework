@@ -2,7 +2,7 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('range: a11y'), () => {
     test('should not have accessibility violations', async ({ page }) => {
       await page.goto(`/src/components/range/test/a11y`, config);
