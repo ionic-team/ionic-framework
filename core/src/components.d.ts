@@ -5831,6 +5831,10 @@ declare namespace LocalJSX {
          */
         "onIonModalWillPresent"?: (event: IonModalCustomEvent<void>) => void;
         /**
+          * Emitted before the modal has presented, but after the component has been mounted in the DOM. This event exists so iOS can run the entering transition properly
+         */
+        "onIonMount"?: (event: IonModalCustomEvent<void>) => void;
+        /**
           * Emitted before the modal has dismissed. Shorthand for ionModalWillDismiss.
          */
         "onWillDismiss"?: (event: IonModalCustomEvent<OverlayEventDetail>) => void;

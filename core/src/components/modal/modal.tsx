@@ -28,10 +28,11 @@ import {
   prepareOverlay,
   present,
   createTriggerController,
+  setOverlayId,
 } from '../../utils/overlays';
 import type { OverlayEventDetail } from '../../utils/overlays-interface';
 import { getClassMap } from '../../utils/theme';
-import { deepReady } from '../../utils/transition';
+import { deepReady, waitForMount } from '../../utils/transition';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
@@ -65,8 +66,6 @@ import { setCardStatusBarDark, setCardStatusBarDefault } from './utils';
 export class Modal implements ComponentInterface, OverlayInterface {
   private readonly triggerController = createTriggerController();
   private gesture?: Gesture;
-  private modalIndex = modalIds++;
-  private modalId?: string;
   private coreDelegate: FrameworkDelegate = CoreDelegate();
   private currentTransition?: Promise<any>;
   private sheetTransition?: Promise<any>;
@@ -316,6 +315,16 @@ export class Modal implements ComponentInterface, OverlayInterface {
    */
   @Event({ eventName: 'didDismiss' }) didDismissShorthand!: EventEmitter<OverlayEventDetail>;
 
+  /**
+   * Emitted before the modal has presented, but after the component
+   * has been mounted in the DOM.
+   * This event exists so iOS can run the entering
+   * transition properly
+   *
+   * @internal
+   */
+  @Event() ionMount!: EventEmitter<void>;
+
   breakpointsChanged(breakpoints: number[] | undefined) {
     if (breakpoints !== undefined) {
       this.sortedBreakpoints = breakpoints.sort((a, b) => a - b);
@@ -334,15 +343,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   componentWillLoad() {
     const { breakpoints, initialBreakpoint, el } = this;
+    const isSheetModal = (this.isSheetModal = breakpoints !== undefined && initialBreakpoint !== undefined);
 
     this.inheritedAttributes = inheritAttributes(el, ['aria-label', 'role']);
-
-    /**
-     * If user has custom ID set then we should
-     * not assign the default incrementing ID.
-     */
-    this.modalId = this.el.hasAttribute('id') ? this.el.getAttribute('id')! : `ion-modal-${this.modalIndex}`;
-    const isSheetModal = (this.isSheetModal = breakpoints !== undefined && initialBreakpoint !== undefined);
 
     if (isSheetModal) {
       this.currentBreakpoint = this.initialBreakpoint;
@@ -351,6 +354,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
     if (breakpoints !== undefined && initialBreakpoint !== undefined && !breakpoints.includes(initialBreakpoint)) {
       printIonWarning('Your breakpoints array must include the initialBreakpoint value.');
     }
+
+    setOverlayId(el);
   }
 
   componentDidLoad() {
@@ -443,7 +448,30 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     const { inline, delegate } = this.getDelegate(true);
     this.usersElement = await attachComponent(delegate, el, this.component, ['ion-page'], this.componentProps, inline);
-    hasLazyBuild(el) && (await deepReady(this.usersElement));
+
+    this.ionMount.emit();
+
+    /**
+     * When using the lazy loaded build of Stencil, we need to wait
+     * for every Stencil component instance to be ready before presenting
+     * otherwise there can be a flash of unstyled content. With the
+     * custom elements bundle we need to wait for the JS framework
+     * mount the inner contents of the overlay otherwise WebKit may
+     * get the transition incorrect.
+     */
+    if (hasLazyBuild(el)) {
+      await deepReady(this.usersElement);
+      /**
+       * If keepContentsMounted="true" then the
+       * JS Framework has already mounted the inner
+       * contents so there is no need to wait.
+       * Otherwise, we need to wait for the JS
+       * Framework to mount the inner contents
+       * of this component.
+       */
+    } else if (!this.keepContentsMounted) {
+      await waitForMount();
+    }
 
     writeTask(() => this.el.classList.add('show-modal'));
 
@@ -828,7 +856,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     const showHandle = handle !== false && isSheetModal;
     const mode = getIonMode(this);
-    const { modalId } = this;
     const isCardModal = presentingElement !== undefined && mode === 'ios';
     const isHandleCycle = handleBehavior === 'cycle';
 
@@ -848,7 +875,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
           'overlay-hidden': true,
           ...getClassMap(this.cssClass),
         }}
-        id={modalId}
         onIonBackdropTap={this.onBackdropTap}
         onIonModalDidPresent={this.onLifecycle}
         onIonModalWillPresent={this.onLifecycle}
@@ -901,8 +927,6 @@ const LIFECYCLE_MAP: any = {
   ionModalWillDismiss: 'ionViewWillLeave',
   ionModalDidDismiss: 'ionViewDidLeave',
 };
-
-let modalIds = 0;
 
 interface ModalOverlayOptions {
   /**

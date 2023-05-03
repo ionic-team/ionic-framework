@@ -22,6 +22,7 @@ import { OVERLAY_BACK_BUTTON_PRIORITY } from './hardware-back-button';
 import { addEventListener, componentOnReady, focusElement, getElementRoot, removeEventListener } from './helpers';
 import { printIonWarning } from './logging';
 
+let lastOverlayIndex = 0;
 let lastId = 0;
 
 export const activeAnimations = new WeakMap<OverlayInterface, Animation[]>();
@@ -50,15 +51,42 @@ export const pickerController = /*@__PURE__*/ createController<PickerOptions, HT
 export const popoverController = /*@__PURE__*/ createController<PopoverOptions, HTMLIonPopoverElement>('ion-popover');
 export const toastController = /*@__PURE__*/ createController<ToastOptions, HTMLIonToastElement>('ion-toast');
 
+/**
+ * Prepares the overlay element to be presented.
+ */
 export const prepareOverlay = <T extends HTMLIonOverlayElement>(el: T) => {
   if (typeof document !== 'undefined') {
+    /**
+     * Adds a single instance of event listeners for application behaviors:
+     *
+     * - Escape Key behavior to dismiss an overlay
+     * - Trapping focus within an overlay
+     * - Back button behavior to dismiss an overlay
+     *
+     * This only occurs when the first overlay is created.
+     */
     connectListeners(document);
   }
-  const overlayIndex = lastId++;
+  const overlayIndex = lastOverlayIndex++;
+  /**
+   * overlayIndex is used in the overlay components to set a zIndex.
+   * This ensures that the most recently presented overlay will be
+   * on top.
+   */
   el.overlayIndex = overlayIndex;
+};
+
+/**
+ * Assigns an incrementing id to an overlay element, that does not
+ * already have an id assigned to it.
+ *
+ * Used to track unique instances of an overlay element.
+ */
+export const setOverlayId = <T extends HTMLIonOverlayElement>(el: T) => {
   if (!el.hasAttribute('id')) {
-    el.id = `ion-overlay-${overlayIndex}`;
+    el.id = `ion-overlay-${++lastId}`;
   }
+  return el.id;
 };
 
 export const createOverlay = <T extends HTMLIonOverlayElement>(
@@ -301,8 +329,8 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
 };
 
 const connectListeners = (doc: Document) => {
-  if (lastId === 0) {
-    lastId = 1;
+  if (lastOverlayIndex === 0) {
+    lastOverlayIndex = 1;
     doc.addEventListener(
       'focus',
       (ev: FocusEvent) => {
