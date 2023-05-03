@@ -201,14 +201,6 @@
 // Range Label
 // ----------------------------------------------------------------
 
-/**
- * When the range is disabled, only the text
- * receives an opacity. The range changes color instead.
- */
-:host(.range-disabled) .label-text-wrapper {
-  opacity: 0.3;
-}
-
 ::slotted([slot="label"]) {
   /**
    * Label text should not extend
