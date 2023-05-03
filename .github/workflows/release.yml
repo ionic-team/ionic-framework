@@ -36,6 +36,8 @@ on:
 
 jobs:
   release-ionic:
+    permissions:
+      id-token: write
     uses: ./.github/workflows/release-ionic.yml
     with:
       tag: ${{ inputs.tag }}

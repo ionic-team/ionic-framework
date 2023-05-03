@@ -1,24 +1,29 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { configs, test } from '@utils/test/playwright';
 
-test('should not have visual regressions', async ({ page, skip }) => {
-  skip.rtl();
-  skip.mode('md', 'Translucency is only available on ios mode');
-  await page.goto(`/src/components/fab/test/translucent`);
+/**
+ * Translucency is only available on ios mode
+ */
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('fab: translucent'), () => {
+    test('should not have visual regressions', async ({ page }) => {
+      await page.goto(`/src/components/fab/test/translucent`, config);
 
-  const fab = page.locator('#fab5');
-  await fab.click();
-  await page.waitForChanges();
+      const fab = page.locator('#fab5');
+      await fab.click();
+      await page.waitForChanges();
 
-  /**
-   * fab.screenshot doesn't work since ion-fab's bounding box only covers the
-   * central button. This viewport size crops extra white space while also
-   * containing all the buttons in the open fab.
-   */
-  await page.setViewportSize({
-    width: 235,
-    height: 310,
+      /**
+       * fab.screenshot doesn't work since ion-fab's bounding box only covers the
+       * central button. This viewport size crops extra white space while also
+       * containing all the buttons in the open fab.
+       */
+      await page.setViewportSize({
+        width: 235,
+        height: 310,
+      });
+
+      await expect(page).toHaveScreenshot(screenshot(`fab-translucent`));
+    });
   });
-
-  await expect(page).toHaveScreenshot(`fab-translucent-${page.getSnapshotSettings()}.png`, { animations: 'disabled' });
 });

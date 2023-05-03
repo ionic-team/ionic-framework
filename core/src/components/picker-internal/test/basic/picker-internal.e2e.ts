@@ -1,21 +1,88 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { configs, test } from '@utils/test/playwright';
 
-test.describe('picker-internal', () => {
-  // TODO: FW-3020
-  test.skip('inline pickers should not have visual regression', async ({ page }) => {
-    await page.goto(`/src/components/picker-internal/test/basic`);
+// TODO: FW-3020
+configs().forEach(({ title, screenshot, config }) => {
+  test.describe(title('picker-internal: rendering'), () => {
+    test.skip('inline pickers should not have visual regression', async ({ page }) => {
+      await page.goto(`/src/components/picker-internal/test/basic`, config);
 
-    await page.setIonViewport();
+      await page.setIonViewport();
 
-    await expect(page).toHaveScreenshot(`picker-internal-inline-diff-${page.getSnapshotSettings()}.png`, {
-      fullPage: true,
+      await expect(page).toHaveScreenshot(screenshot(`picker-internal-inline-diff`), {
+        fullPage: true,
+      });
     });
   });
+});
 
-  test.describe('picker-internal: focus', () => {
+/**
+ * This behavior does not vary across modes.
+ */
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('picker-internal: overlay rendering'), () => {
+    test('popover: should not have visual regression', async ({ page }) => {
+      await page.goto(`/src/components/picker-internal/test/basic`, config);
+
+      const button = page.locator('#popover');
+      const didPresent = await page.spyOnEvent('ionPopoverDidPresent');
+      const pickerInternal = page.locator('ion-popover ion-picker-internal');
+
+      await button.click();
+      await didPresent.next();
+
+      await expect(pickerInternal).toBeVisible();
+
+      const popoverContent = page.locator('ion-popover .ion-delegate-host');
+
+      await expect(popoverContent).toHaveScreenshot(screenshot(`picker-internal-popover-diff`), {
+        /**
+         * Animations must be enabled to capture the screenshot.
+         * By default, animations are disabled with toHaveScreenshot,
+         * and when capturing the screenshot will call animation.finish().
+         * This will cause the popover to close and the screenshot capture
+         * to be invalid.
+         */
+        animations: 'allow',
+      });
+    });
+
+    test('modal: should not have visual regression', async ({ page }) => {
+      await page.goto('/src/components/picker-internal/test/basic', config);
+
+      const button = page.locator('#modal');
+      const didPresent = await page.spyOnEvent('ionModalDidPresent');
+      const pickerInternal = page.locator('ion-modal ion-picker-internal');
+
+      await button.click();
+      await didPresent.next();
+
+      await expect(pickerInternal).toBeVisible();
+
+      const modalContent = page.locator('ion-modal .ion-delegate-host');
+
+      await expect(modalContent).toHaveScreenshot(screenshot(`picker-internal-modal-diff`), {
+        /**
+         * Animations must be enabled to capture the screenshot.
+         * By default, animations are disabled with toHaveScreenshot,
+         * and when capturing the screenshot will call animation.finish().
+         * This will cause the modal to close and the screenshot capture
+         * to be invalid.
+         */
+        animations: 'allow',
+      });
+    });
+  });
+});
+
+/**
+ * This behavior does not vary across modes/directions.
+ */
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('picker-internal: focus'), () => {
     test.beforeEach(async ({ page }) => {
-      await page.setContent(`
+      await page.setContent(
+        `
         <ion-picker-internal>
           <ion-picker-column-internal value="full-stack" id="first"></ion-picker-column-internal>
           <ion-picker-column-internal value="onion" id="second"></ion-picker-column-internal>
@@ -39,7 +106,9 @@ test.describe('picker-internal', () => {
             { text: 'Artichoke', value: 'artichoke' },
           ];
         </script>
-      `);
+      `,
+        config
+      );
     });
 
     test('tabbing should correctly move focus between columns', async ({ page }) => {
@@ -69,41 +138,6 @@ test.describe('picker-internal', () => {
       // Focus first column
       await page.keyboard.press('Shift+Tab');
       await expect(firstColumn).toBeFocused();
-    });
-  });
-
-  test.describe('within overlay:', () => {
-    // TODO (FW-1397): Remove this test.skip when the issue is fixed.
-    test.skip(true, 'Mobile Safari and Chrome on Linux renders the selected option incorrectly');
-
-    test('popover: should not have visual regression', async ({ page }) => {
-      await page.goto(`/src/components/picker-internal/test/basic`);
-
-      await page.setIonViewport();
-
-      await page.click('#popover');
-
-      await page.spyOnEvent('ionPopoverDidPresent');
-      await page.waitForChanges();
-
-      await expect(page).toHaveScreenshot(`picker-internal-popover-diff-${page.getSnapshotSettings()}.png`, {
-        fullPage: true,
-      });
-    });
-
-    test('modal: should not have visual regression', async ({ page }) => {
-      await page.goto(`/src/components/picker-internal/test/basic`);
-
-      await page.setIonViewport();
-
-      await page.click('#modal');
-
-      await page.spyOnEvent('ionModalDidPresent');
-      await page.waitForChanges();
-
-      await expect(page).toHaveScreenshot(`picker-internal-modal-diff-${page.getSnapshotSettings()}.png`, {
-        fullPage: true,
-      });
     });
   });
 });

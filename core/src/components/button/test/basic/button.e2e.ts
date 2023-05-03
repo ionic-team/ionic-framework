@@ -1,56 +1,65 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { configs, test } from '@utils/test/playwright';
 
-test.describe('button: basic', () => {
-  test('should not have visual regressions', async ({ page }) => {
-    await page.goto(`/src/components/button/test/basic`);
+configs().forEach(({ config, screenshot, title }) => {
+  test.describe(title('button: basic'), () => {
+    test('should not have visual regressions', async ({ page }) => {
+      await page.goto(`/src/components/button/test/basic`, config);
 
-    await page.setIonViewport();
+      await page.setIonViewport();
 
-    await expect(page).toHaveScreenshot(`button-diff-${page.getSnapshotSettings()}.png`);
-  });
-  test('should correctly set fill to undefined', async ({ page, skip }) => {
-    test.info().annotations.push({
-      type: 'issue',
-      description: 'https://github.com/ionic-team/ionic-framework/issues/25886',
+      await expect(page).toHaveScreenshot(screenshot(`button-diff`));
     });
-    skip.rtl();
-    skip.mode('ios', 'This behavior does not differ across modes');
-    await page.setContent(`
-      <ion-button fill="outline"></ion-button>
-    `);
-
-    const button = page.locator('ion-button');
-    await expect(button).toHaveClass(/button-outline/);
-
-    await button.evaluate((el: HTMLIonButtonElement) => (el.fill = undefined));
-    await page.waitForChanges();
-
-    await expect(button).toHaveClass(/button-solid/);
   });
 });
 
-test.describe('button: ripple effect', () => {
-  test('should not have visual regressions', async ({ page, skip }) => {
-    skip.mode('ios', 'Ripple effect is only available in MD mode.');
+configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ config, title }) => {
+  test.describe(title('button: basic'), () => {
+    test('should correctly set fill to undefined', async ({ page }) => {
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/25886',
+      });
+      await page.setContent(
+        `
+        <ion-button fill="outline"></ion-button>
+      `,
+        config
+      );
 
-    await page.goto(`/src/components/button/test/basic?ionic:_testing=false`);
+      const button = page.locator('ion-button');
+      await expect(button).toHaveClass(/button-outline/);
 
-    const button = page.locator('#default');
+      await button.evaluate((el: HTMLIonButtonElement) => (el.fill = undefined));
+      await page.waitForChanges();
 
-    await button.scrollIntoViewIfNeeded();
+      await expect(button).toHaveClass(/button-solid/);
+    });
+  });
+});
 
-    const boundingBox = await button.boundingBox();
+/**
+ * Ripple effect is only available in MD mode.
+ */
+configs({ modes: ['md'] }).forEach(({ config, screenshot, title }) => {
+  test.describe(title('button: ripple effect'), () => {
+    test('should not have visual regressions', async ({ page }) => {
+      await page.goto(`/src/components/button/test/basic?ionic:_testing=false`, config);
 
-    if (boundingBox) {
-      await page.mouse.move(boundingBox.x + boundingBox.width / 2, boundingBox.y + boundingBox.height / 2);
-      await page.mouse.down();
-    }
+      const button = page.locator('#default');
 
-    await page.waitForSelector('#default.ion-activated');
+      await button.scrollIntoViewIfNeeded();
 
-    await expect(button).toHaveScreenshot(`button-ripple-effect-${page.getSnapshotSettings()}.png`, {
-      animations: 'disabled',
+      const boundingBox = await button.boundingBox();
+
+      if (boundingBox) {
+        await page.mouse.move(boundingBox.x + boundingBox.width / 2, boundingBox.y + boundingBox.height / 2);
+        await page.mouse.down();
+      }
+
+      await page.waitForSelector('#default.ion-activated');
+
+      await expect(button).toHaveScreenshot(screenshot(`button-ripple-effect`));
     });
   });
 });

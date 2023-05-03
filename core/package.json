@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "7.0.2",
+  "version": "7.0.5",
   "description": "Base components for Ionic",
   "keywords": [
     "ionic",
@@ -31,7 +31,7 @@
     "loader/"
   ],
   "dependencies": {
-    "@stencil/core": "^3.2.1",
+    "@stencil/core": "^3.2.2",
     "ionicons": "^7.1.0",
     "tslib": "^2.1.0"
   },
@@ -90,7 +90,8 @@
     "test": "npm run test.spec && npm run test.e2e",
     "test.spec": "stencil test --spec --max-workers=2",
     "test.spec.debug": "npx --node-arg=\"--inspect-brk\" stencil test --spec",
-    "test.e2e": "npx playwright test",
+    "test.e2e": "npx playwright test --config playwright.config.ts",
+    "test.e2e.legacy": "npx playwright test --config playwright.config-legacy.ts",
     "test.watch": "jest --watch --no-cache",
     "test.treeshake": "node scripts/treeshaking.js dist/index.js",
     "validate": "npm run lint && npm run test && npm run build && npm run test.treeshake"
@@ -99,7 +100,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ionic-team/ionic.git"
+    "url": "git+https://github.com/ionic-team/ionic-framework.git"
   },
   "bugs": {
     "url": "https://github.com/ionic-team/ionic/issues"

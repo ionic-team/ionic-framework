@@ -1,6 +1,6 @@
 {
   "name": "@ionic/vue-router",
-  "version": "7.0.2",
+  "version": "7.0.5",
   "description": "Vue Router integration for @ionic/vue",
   "scripts": {
     "test.spec": "jest",
@@ -22,7 +22,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ionic-team/ionic.git"
+    "url": "git+https://github.com/ionic-team/ionic-framework.git"
   },
   "keywords": [
     "ionic",
@@ -45,7 +45,7 @@
   },
   "homepage": "https://github.com/ionic-team/ionic#readme",
   "dependencies": {
-    "@ionic/vue": "^7.0.2"
+    "@ionic/vue": "^7.0.5"
   },
   "devDependencies": {
     "@ionic/eslint-config": "^0.3.0",

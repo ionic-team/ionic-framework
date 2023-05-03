@@ -1,7 +1,7 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect } from '@playwright/test';
 import type { E2EPage } from '@utils/test/playwright';
-import { test } from '@utils/test/playwright';
+import { configs, test } from '@utils/test/playwright';
 
 const testAria = async (page: E2EPage, buttonID: string, expectedAriaLabelledBy: string | null) => {
   const didPresent = await page.spyOnEvent('ionActionSheetDidPresent');
@@ -20,38 +20,37 @@ const testAria = async (page: E2EPage, buttonID: string, expectedAriaLabelledBy:
 
   expect(ariaLabelledBy).toBe(expectedAriaLabelledBy);
 };
+configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
+  test.describe(title('action-sheet: a11y'), () => {
+    test.beforeEach(async ({ page }) => {
+      await page.goto(`/src/components/action-sheet/test/a11y`, config);
+    });
+    test('should not have accessibility violations when header is defined', async ({ page }) => {
+      const button = page.locator('#bothHeaders');
+      const didPresent = await page.spyOnEvent('ionActionSheetDidPresent');
 
-test.describe('action-sheet: a11y', () => {
-  test.beforeEach(async ({ page, skip }) => {
-    skip.rtl();
-    await page.goto(`/src/components/action-sheet/test/a11y`);
-  });
+      await button.click();
+      await didPresent.next();
 
-  test('should not have accessibility violations when header is defined', async ({ page }) => {
-    const button = page.locator('#bothHeaders');
-    const didPresent = await page.spyOnEvent('ionActionSheetDidPresent');
+      /**
+       * action-sheet overlays the entire screen, so
+       * Axe will be unable to verify color contrast
+       * on elements under the backdrop.
+       */
+      const results = await new AxeBuilder({ page }).disableRules('color-contrast').analyze();
+      expect(results.violations).toEqual([]);
+    });
 
-    await button.click();
-    await didPresent.next();
+    test('should have aria-labelledby when header is set', async ({ page }) => {
+      await testAria(page, 'bothHeaders', 'action-sheet-1-header');
+    });
 
-    /**
-     * action-sheet overlays the entire screen, so
-     * Axe will be unable to verify color contrast
-     * on elements under the backdrop.
-     */
-    const results = await new AxeBuilder({ page }).disableRules('color-contrast').analyze();
-    expect(results.violations).toEqual([]);
-  });
+    test('should not have aria-labelledby when header is not set', async ({ page }) => {
+      await testAria(page, 'noHeaders', null);
+    });
 
-  test('should have aria-labelledby when header is set', async ({ page }) => {
-    await testAria(page, 'bothHeaders', 'action-sheet-1-header');
-  });
-
-  test('should not have aria-labelledby when header is not set', async ({ page }) => {
-    await testAria(page, 'noHeaders', null);
-  });
-
-  test('should allow for manually specifying aria attributes', async ({ page }) => {
-    await testAria(page, 'customAria', 'Custom title');
+    test('should allow for manually specifying aria attributes', async ({ page }) => {
+      await testAria(page, 'customAria', 'Custom title');
+    });
   });
 });

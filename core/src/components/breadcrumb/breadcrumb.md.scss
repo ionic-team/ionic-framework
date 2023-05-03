@@ -9,7 +9,7 @@
   --color-active: #{$breadcrumb-md-color-active};
   --color-hover: #{$breadcrumb-md-color-active};
   --color-focused: #{$breadcrumb-md-color-focused};
-  --background-focused: $breadcrumb-md-background-focused;
+  --background-focused: #{$breadcrumb-md-background-focused};
 }
 
 :host(.breadcrumb-active) {

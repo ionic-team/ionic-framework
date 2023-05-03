@@ -1,12 +1,14 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { configs, test } from '@utils/test/playwright';
 
-test.describe('button: clear', () => {
-  test('should not have visual regressions', async ({ page }) => {
-    await page.goto(`/src/components/button/test/clear`);
+configs().forEach(({ title, config, screenshot }) => {
+  test.describe(title('button: clear'), () => {
+    test('should not have visual regressions', async ({ page }) => {
+      await page.goto(`/src/components/button/test/clear`, config);
 
-    await page.setIonViewport();
+      await page.setIonViewport();
 
-    await expect(page).toHaveScreenshot(`button-clear-${page.getSnapshotSettings()}.png`);
+      await expect(page).toHaveScreenshot(screenshot(`button-clear`));
+    });
   });
 });

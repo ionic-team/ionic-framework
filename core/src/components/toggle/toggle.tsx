@@ -39,6 +39,8 @@ export class Toggle implements ComponentInterface {
   private lastDrag = 0;
   private legacyFormController!: LegacyFormController;
   private inheritedAttributes: Attributes = {};
+  private toggleTrack?: HTMLElement;
+  private didLoad = false;
 
   // This flag ensures we log the deprecation warning at most once.
   private hasLoggedDeprecationWarning = false;
@@ -156,22 +158,41 @@ export class Toggle implements ComponentInterface {
   }
 
   async connectedCallback() {
-    const { el } = this;
+    this.legacyFormController = createLegacyFormController(this.el);
 
-    this.legacyFormController = createLegacyFormController(el);
-
-    this.gesture = (await import('../../utils/gesture')).createGesture({
-      el,
-      gestureName: 'toggle',
-      gesturePriority: 100,
-      threshold: 5,
-      passive: false,
-      onStart: () => this.onStart(),
-      onMove: (ev) => this.onMove(ev),
-      onEnd: (ev) => this.onEnd(ev),
-    });
-    this.disabledChanged();
+    /**
+     * If we have not yet rendered
+     * ion-toggle, then toggleTrack is not defined.
+     * But if we are moving ion-toggle via appendChild,
+     * then toggleTrack will be defined.
+     */
+    if (this.didLoad) {
+      this.setupGesture();
+    }
   }
+
+  componentDidLoad() {
+    this.setupGesture();
+    this.didLoad = true;
+  }
+
+  private setupGesture = async () => {
+    const { toggleTrack } = this;
+
+    if (toggleTrack) {
+      this.gesture = (await import('../../utils/gesture')).createGesture({
+        el: toggleTrack,
+        gestureName: 'toggle',
+        gesturePriority: 100,
+        threshold: 5,
+        passive: false,
+        onStart: () => this.onStart(),
+        onMove: (ev) => this.onMove(ev),
+        onEnd: (ev) => this.onEnd(ev),
+      });
+      this.disabledChanged();
+    }
+  };
 
   disconnectedCallback() {
     if (this.gesture) {
@@ -272,7 +293,7 @@ export class Toggle implements ComponentInterface {
 
     const { enableOnOffLabels, checked } = this;
     return (
-      <div class="toggle-icon" part="track">
+      <div class="toggle-icon" part="track" ref={(el) => (this.toggleTrack = el)}>
         {/* The iOS on/off labels are rendered outside of .toggle-icon-wrapper,
          since the wrapper is translated when the handle is interacted with and
          this would move the on/off labels outside of the view box */}

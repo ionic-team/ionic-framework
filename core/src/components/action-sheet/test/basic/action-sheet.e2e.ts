@@ -1,17 +1,17 @@
 import { expect } from '@playwright/test';
 import type { Locator } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { configs, test } from '@utils/test/playwright';
 import type { E2EPage } from '@utils/test/playwright';
 
-test.describe('action sheet: basic', () => {
-  let actionSheetFixture: ActionSheetFixture;
-  test.beforeEach(async ({ page }) => {
-    await page.goto(`/src/components/action-sheet/test/basic`);
-    actionSheetFixture = new ActionSheetFixture(page);
-  });
-  test.describe('action sheet: data', () => {
-    test('should return data', async ({ page, skip }) => {
-      skip.rtl();
+configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
+  test.describe(title('action sheet: data'), () => {
+    let actionSheetFixture!: ActionSheetFixture;
+    test.beforeEach(async ({ page }) => {
+      actionSheetFixture = new ActionSheetFixture(page);
+
+      await page.goto(`/src/components/action-sheet/test/basic`, config);
+    });
+    test('should return data', async ({ page }) => {
       const ionActionSheetDidDismiss = await page.spyOnEvent('ionActionSheetDidDismiss');
 
       await actionSheetFixture.open('#buttonData');
@@ -22,8 +22,7 @@ test.describe('action sheet: basic', () => {
       await ionActionSheetDidDismiss.next();
       expect(ionActionSheetDidDismiss).toHaveReceivedEventDetail({ data: { type: '1' }, role: undefined });
     });
-    test('should return cancel button data', async ({ page, skip }) => {
-      skip.rtl();
+    test('should return cancel button data', async ({ page }) => {
       const ionActionSheetDidDismiss = await page.spyOnEvent('ionActionSheetDidDismiss');
 
       await actionSheetFixture.open('#buttonData');
@@ -35,16 +34,28 @@ test.describe('action sheet: basic', () => {
       expect(ionActionSheetDidDismiss).toHaveReceivedEventDetail({ data: { type: 'cancel' }, role: 'cancel' });
     });
   });
-  test.describe('action sheet: attributes', () => {
-    test('should set htmlAttributes', async ({ page, skip }) => {
-      skip.rtl();
+});
+configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
+  test.describe(title('action sheet: attributes'), () => {
+    test('should set htmlAttributes', async ({ page }) => {
+      await page.goto(`/src/components/action-sheet/test/basic`, config);
+      const actionSheetFixture = new ActionSheetFixture(page);
+
       await actionSheetFixture.open('#basic');
 
       const actionSheet = page.locator('ion-action-sheet');
       await expect(actionSheet).toHaveAttribute('data-testid', 'basic-action-sheet');
     });
   });
-  test.describe('action sheet: variants', () => {
+});
+configs().forEach(({ config, screenshot, title }) => {
+  test.describe(title('action sheet: variant rendering'), () => {
+    let actionSheetFixture!: ActionSheetFixture;
+    test.beforeEach(async ({ page }) => {
+      actionSheetFixture = new ActionSheetFixture(page, screenshot);
+
+      await page.goto(`/src/components/action-sheet/test/basic`, config);
+    });
     test('should open basic action sheet', async () => {
       await actionSheetFixture.open('#basic');
       await actionSheetFixture.screenshot('basic');
@@ -73,24 +84,31 @@ test.describe('action sheet: basic', () => {
       await actionSheetFixture.open('#scrollWithoutCancel');
       await actionSheetFixture.screenshot('scroll-without-cancel');
     });
-    test('should open custom backdrop action sheet', async ({ page, skip }) => {
-      skip.rtl();
+  });
+});
+configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
+  test.describe(title('action sheet: variant functionality'), () => {
+    let actionSheetFixture!: ActionSheetFixture;
+    test.beforeEach(async ({ page }) => {
+      actionSheetFixture = new ActionSheetFixture(page);
+
+      await page.goto(`/src/components/action-sheet/test/basic`, config);
+    });
+    test('should open custom backdrop action sheet', async ({ page }) => {
       await actionSheetFixture.open('#customBackdrop');
 
       const backdrop = page.locator('ion-action-sheet ion-backdrop');
       await expect(backdrop).toHaveCSS('opacity', '1');
     });
-    test('should open alert from action sheet', async ({ page, skip }) => {
-      skip.rtl();
+    test('should open alert from action sheet', async ({ page }) => {
       const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
       await actionSheetFixture.open('#alertFromActionSheet');
 
-      await page.locator('#open-alert').click();
+      await page.click('#open-alert');
 
       await ionAlertDidPresent.next();
     });
-    test('should not dismiss action sheet when backdropDismiss: false', async ({ page, skip }) => {
-      skip.rtl();
+    test('should not dismiss action sheet when backdropDismiss: false', async ({ page }) => {
       await actionSheetFixture.open('#noBackdropDismiss');
 
       const actionSheet = page.locator('ion-action-sheet');
@@ -99,9 +117,13 @@ test.describe('action sheet: basic', () => {
       await expect(actionSheet).toBeVisible();
     });
   });
-  test.describe('action sheet: focus trap', () => {
-    test('it should trap focus in action sheet', async ({ page, skip, browserName }) => {
-      skip.rtl();
+});
+configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
+  test.describe(title('action sheet: focus trap'), () => {
+    test('it should trap focus in action sheet', async ({ page, browserName }) => {
+      await page.goto(`/src/components/action-sheet/test/basic`, config);
+      const actionSheetFixture = new ActionSheetFixture(page);
+
       const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
 
       await actionSheetFixture.open('#basic');
@@ -121,11 +143,13 @@ test.describe('action sheet: basic', () => {
 
 class ActionSheetFixture {
   readonly page: E2EPage;
+  readonly screenshotFn?: (file: string) => string;
 
   private actionSheet!: Locator;
 
-  constructor(page: E2EPage) {
+  constructor(page: E2EPage, screenshot?: (file: string) => string) {
     this.page = page;
+    this.screenshotFn = screenshot;
   }
 
   async open(selector: string) {
@@ -144,8 +168,14 @@ class ActionSheetFixture {
   }
 
   async screenshot(modifier: string) {
-    await expect(this.actionSheet).toHaveScreenshot(
-      `action-sheet-${modifier}-diff-${this.page.getSnapshotSettings()}.png`
-    );
+    const { screenshotFn } = this;
+
+    if (!screenshotFn) {
+      throw new Error(
+        'A screenshot function is required to take a screenshot. Pass one in when creating ActionSheetFixture.'
+      );
+    }
+
+    await expect(this.actionSheet).toHaveScreenshot(screenshotFn(`action-sheet-${modifier}-diff`));
   }
 }

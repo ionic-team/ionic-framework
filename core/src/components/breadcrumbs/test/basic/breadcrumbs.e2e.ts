@@ -1,12 +1,14 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { configs, test } from '@utils/test/playwright';
 
-test.describe('breadcrumbs: basic', () => {
-  test('should not have visual regressions', async ({ page }) => {
-    await page.goto(`/src/components/breadcrumbs/test/basic`);
+configs().forEach(({ config, screenshot, title }) => {
+  test.describe(title('breadcrumbs: basic'), () => {
+    test('should not have visual regressions', async ({ page }) => {
+      await page.goto(`/src/components/breadcrumbs/test/basic`, config);
 
-    await page.setIonViewport();
+      await page.setIonViewport();
 
-    await expect(page).toHaveScreenshot(`breadcrumb-diff-${page.getSnapshotSettings()}.png`);
+      await expect(page).toHaveScreenshot(screenshot(`breadcrumb-diff`));
+    });
   });
 });

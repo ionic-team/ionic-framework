@@ -24,7 +24,7 @@ export class CardModalPage {
 
   async swipeToCloseModal(selector: string, waitForDismiss = true, swipeY = 500) {
     const { page } = this;
-    const elementRef = await page.locator(selector);
+    const elementRef = page.locator(selector);
     await dragElementBy(elementRef, page, 0, swipeY);
 
     if (waitForDismiss) {

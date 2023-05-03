@@ -1,12 +1,18 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { configs, test } from '@utils/test/playwright';
 
-test.describe('item: disabled state', () => {
-  test('should not have visual regressions', async ({ page }) => {
-    await page.goto(`/src/components/item/test/disabled`);
+/**
+ * This behavior does not vary across directions
+ */
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('item: disabled state'), () => {
+    test('should not have visual regressions', async ({ page }) => {
+      await page.goto(`/src/components/item/test/disabled`, config);
 
-    await page.setIonViewport();
+      await page.setIonViewport();
 
-    await expect(page).toHaveScreenshot(`item-disabled-diff-${page.getSnapshotSettings()}.png`);
+      // TODO: FW-4037 - Fix label color inconsistency between disabled controls
+      await expect(page).toHaveScreenshot(screenshot(`item-disabled-diff`));
+    });
   });
 });

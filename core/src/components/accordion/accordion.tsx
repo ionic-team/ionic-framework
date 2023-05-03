@@ -417,7 +417,7 @@ export class Accordion implements ComponentInterface {
           'accordion-disabled': disabled,
           'accordion-readonly': readonly,
 
-          'accordion-animated': config.getBoolean('animated', true),
+          'accordion-animated': this.shouldAnimate(),
         }}
       >
         <div

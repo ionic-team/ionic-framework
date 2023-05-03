@@ -17,7 +17,7 @@ jobs:
       # as lerna will fail when there is a leading 0
       # See https://github.com/lerna/lerna/issues/2840
       - name: Install Dependencies
-        run: npm ci --no-package-lock
+        run: npm ci
         shell: bash
       - id: create-nightly-hash
         name: Create Nightly Hash
@@ -29,6 +29,8 @@ jobs:
 
   release-ionic:
     needs: [create-nightly-hash]
+    permissions:
+      id-token: write
     uses: ./.github/workflows/release-ionic.yml
     with:
       tag: nightly

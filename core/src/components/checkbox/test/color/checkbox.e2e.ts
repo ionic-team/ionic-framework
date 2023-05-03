@@ -1,26 +1,30 @@
 import { expect } from '@playwright/test';
-import { test } from '@utils/test/playwright';
+import { configs, test } from '@utils/test/playwright';
 
-test.describe('checkbox: color', () => {
-  test.beforeEach(({ skip }) => {
-    skip.rtl();
-  });
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('checkbox: color'), () => {
+    test('should apply color when checked', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-checkbox color="danger" checked="true">Label</ion-checkbox>
+      `,
+        config
+      );
 
-  test('should apply color when checked', async ({ page }) => {
-    await page.setContent(`
-      <ion-checkbox color="danger" checked="true">Label</ion-checkbox>
-    `);
+      const checkbox = page.locator('ion-checkbox');
+      expect(await checkbox.screenshot()).toMatchSnapshot(screenshot(`checkbox-color-checked`));
+    });
 
-    const checkbox = page.locator('ion-checkbox');
-    expect(await checkbox.screenshot()).toMatchSnapshot(`checkbox-color-checked-${page.getSnapshotSettings()}.png`);
-  });
+    test('should not apply color when unchecked', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-checkbox color="danger">Label</ion-checkbox>
+      `,
+        config
+      );
 
-  test('should not apply color when unchecked', async ({ page }) => {
-    await page.setContent(`
-      <ion-checkbox color="danger">Label</ion-checkbox>
-    `);
-
-    const checkbox = page.locator('ion-checkbox');
-    expect(await checkbox.screenshot()).toMatchSnapshot(`checkbox-color-unchecked-${page.getSnapshotSettings()}.png`);
+      const checkbox = page.locator('ion-checkbox');
+      expect(await checkbox.screenshot()).toMatchSnapshot(screenshot(`checkbox-color-unchecked`));
+    });
   });
 });
