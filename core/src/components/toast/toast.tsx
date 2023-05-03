@@ -15,6 +15,7 @@ import {
   prepareOverlay,
   present,
   safeCall,
+  setOverlayId,
 } from '../../utils/overlays';
 import type { OverlayEventDetail } from '../../utils/overlays-interface';
 import type { IonicSafeString } from '../../utils/sanitization';
@@ -246,6 +247,10 @@ export class Toast implements ComponentInterface, OverlayInterface {
 
   disconnectedCallback() {
     this.triggerController.removeClickListener();
+  }
+
+  componentWillLoad() {
+    setOverlayId(this.el);
   }
 
   /**
