@@ -33,6 +33,7 @@ export class PickerColumnCmp implements ComponentInterface {
   private rafId?: ReturnType<typeof requestAnimationFrame>;
   private tmrId?: ReturnType<typeof setTimeout>;
   private noAnimate = true;
+  private shouldAnimteOnRender = true;
 
   @Element() el!: HTMLElement;
 
@@ -87,8 +88,33 @@ export class PickerColumnCmp implements ComponentInterface {
       // We perfom a DOM read over a rendered item, this needs to happen after the first render
       this.optHeight = colEl.firstElementChild ? colEl.firstElementChild.clientHeight : 0;
     }
-
     this.refresh();
+  }
+
+  componentShouldUpdate(newVal: any, oldVal: any, propName: string): boolean | void {
+    // Check if the options have changed so `refresh()` isn't called on
+    // each column change (ex: `setSelected()` method)
+    // The change is most likely triggered by an outside source
+    // For example, when adding or removing an option dynamically, etc.
+    // If the dynamic option was added then it needs to be added to the DOM
+    // without animation
+    // Otherwise the animation will be render the option
+    // at the top of the column and then it will fall down to its place
+    if (propName === 'col' && JSON.stringify(newVal.options) !== JSON.stringify(oldVal.options)) {
+      this.shouldAnimteOnRender = false;
+    }
+  }
+
+  componentDidUpdate(): void | Promise<void> {
+    if (!this.shouldAnimteOnRender) {
+      const colEl = this.optsEl;
+      if (colEl) {
+        // DOM READ
+        // We perfom a DOM read over a rendered item, this needs to happen after the the column options have changed
+        this.optHeight = colEl.firstElementChild ? colEl.firstElementChild.clientHeight : 0;
+      }
+      this.refresh(true);
+    }
   }
 
   disconnectedCallback() {
@@ -159,7 +185,7 @@ export class PickerColumnCmp implements ComponentInterface {
       }
 
       // Update transition duration
-      if (this.noAnimate) {
+      if (this.noAnimate || !this.shouldAnimteOnRender) {
         opt.duration = 0;
         button.style.transitionDuration = '';
       } else if (duration !== opt.duration) {
@@ -185,6 +211,8 @@ export class PickerColumnCmp implements ComponentInterface {
         button.classList.remove(PICKER_OPT_SELECTED);
       }
     }
+
+    this.shouldAnimteOnRender = true;
     this.col.prevSelected = selectedIndex;
 
     if (saveY) {
