@@ -95,11 +95,12 @@
   @include transform(translate3d(0, 0, 0), scale(1));
 }
 
-/**
- * When the range is disabled, the entire range,
- * range label, any slotted labels, and any slotted
- * icons need to receive the same opacity.
- */
+// iOS Range: Disabled
+// --------------------------------------------------
+// When the range is disabled, the entire range,
+// range label, any slotted labels, and any slotted
+// icons need to receive the same opacity.
+
 :host(.range-disabled) {
   opacity: .3;
 }

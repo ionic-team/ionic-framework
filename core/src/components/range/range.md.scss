@@ -197,6 +197,13 @@
   transform: scale(1);
 }
 
+// Material Design Range: Disabled
+// --------------------------------------------------
+// When the range is disabled, the range label,
+// any slotted labels, and any slotted icons
+// need to receive the same opacity.
+// The range itself does not as it changes color.
+
 :host(.range-disabled) .range-bar-active,
 :host(.range-disabled) .range-bar,
 :host(.range-disabled) .range-tick {
@@ -209,4 +216,10 @@
   outline: 5px solid #fff;
 
   background-color: $range-md-bar-background-color;
+}
+
+:host(.range-disabled) .label-text-wrapper,
+:host(.range-disabled) ::slotted([slot=start]),
+:host(.range-disabled) ::slotted([slot=end]) {
+  opacity: .4;
 }
