@@ -180,7 +180,9 @@ configs().forEach(({ title, screenshot, config }) => {
 
         const select = page.locator('ion-select');
 
-        expect(await select.screenshot({ animations: 'disabled' })).toMatchSnapshot(screenshot(`select-label-floating-expanded`));
+        expect(await select.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+          screenshot(`select-label-floating-expanded`)
+        );
       });
       test('long text should truncate', async ({ page }) => {
         await page.setContent(
@@ -194,7 +196,9 @@ configs().forEach(({ title, screenshot, config }) => {
 
         const select = page.locator('ion-select');
 
-        expect(await select.screenshot({ animations: 'disabled' })).toMatchSnapshot(screenshot(`select-label-floating-long-text`));
+        expect(await select.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+          screenshot(`select-label-floating-long-text`)
+        );
       });
     });
 
@@ -237,7 +241,9 @@ configs().forEach(({ title, screenshot, config }) => {
 
         const select = page.locator('ion-select');
 
-        expect(await select.screenshot({ animations: 'disabled' })).toMatchSnapshot(screenshot(`select-label-stacked-expanded`));
+        expect(await select.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+          screenshot(`select-label-stacked-expanded`)
+        );
       });
       test('long text should truncate', async ({ page }) => {
         await page.setContent(
@@ -251,7 +257,9 @@ configs().forEach(({ title, screenshot, config }) => {
 
         const select = page.locator('ion-select');
 
-        expect(await select.screenshot({ animations: 'disabled' })).toMatchSnapshot(screenshot(`select-label-stacked-long-text`));
+        expect(await select.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+          screenshot(`select-label-stacked-long-text`)
+        );
       });
     });
   });
