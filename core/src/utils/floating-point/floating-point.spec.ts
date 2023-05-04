@@ -13,7 +13,7 @@ describe('floating point utils', () => {
     });
   });
 
-  describe('fixRoundingErrors', () => {
+  describe('roundToMaxDecimalPlaces', () => {
     it('should round to the highest number of places as references', async () => {
       const n = roundToMaxDecimalPlaces(5.12345, 1.12, 2.123);
       expect(n).toBe(5.123);
