@@ -87,7 +87,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         await ionModalDidPresent.next();
 
         const modalHeader = page.locator('#modal-header');
-        await dragElementBy(modalHeader, page, 0, 100);
+        await dragElementBy(modalHeader, page, 0, 500);
 
         await ionModalDidDismiss.next();
       });
