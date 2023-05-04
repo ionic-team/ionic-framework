@@ -40,9 +40,16 @@
 
 // Material Design Checkbox: Disabled
 // --------------------------------------------------------
+// The checkbox itself should use the disabled
+// opacity set by its spec, while the label
+// should match the other form controls
 
-:host(.checkbox-disabled) {
+:host(.checkbox-disabled) .native-wrapper {
   opacity: $checkbox-md-disabled-opacity;
+}
+
+:host(.checkbox-disabled) .label-text-wrapper {
+  opacity: .4;
 }
 
 
