@@ -27,7 +27,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
       await expect(page).toHaveScreenshot(screenshot(`popover-size`));
 
       // test this one separately since it would overlap others
-      await screenshotPopover(page, 'no-event-trigger', 'size');
+      await screenshotPopover(page, screenshot, 'no-event-trigger', 'size');
     });
   });
 });
