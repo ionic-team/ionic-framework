@@ -15,6 +15,4 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(page).toHaveScreenshot(screenshot(`select-single-value-diff`));
     });
   });
-
 });
-
