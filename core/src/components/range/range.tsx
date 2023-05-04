@@ -4,7 +4,7 @@ import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil
 import { getIonMode } from '../../global/ionic-global';
 import type { Color, Gesture, GestureDetail, StyleEventDetail } from '../../interface';
 import { findClosestIonContent, disableContentScrollY, resetContentScrollY } from '../../utils/content';
-import { fixRoundingErrors } from '../../utils/floating-point';
+import { roundToMaxDecimalPlaces } from '../../utils/floating-point';
 import type { LegacyFormController } from '../../utils/forms';
 import { createLegacyFormController } from '../../utils/forms';
 import type { Attributes } from '../../utils/helpers';
@@ -910,7 +910,7 @@ const ratioToValue = (ratio: number, min: number, max: number, step: number): nu
   }
   const clampedValue = clamp(min, value, max);
 
-  return fixRoundingErrors(clampedValue, min, max, step);
+  return roundToMaxDecimalPlaces(clampedValue, min, max, step);
 };
 
 const valueToRatio = (value: number, min: number, max: number): number => {

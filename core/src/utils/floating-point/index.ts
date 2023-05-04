@@ -19,14 +19,14 @@ export function getDecimalPlaces(n: number) {
  * If multiplication, division, or other operations were used to
  * calculate n, the rounded result may have less specificity than
  * desired. For example, 1 / 3 = 0.33333(...), but
- * fixRoundingErrors((1 / 3), 1, 3) will return 0, since both 1 and 3
- * are whole numbers.
+ * roundToMaxDecimalPlaces((1 / 3), 1, 3) will return 0, since both
+ * 1 and 3 are whole numbers.
  *
  * @param n The number to round.
  * @param references Number(s) used to calculate n, or that should otherwise
  * be used as a reference for the desired specificity.
  */
-export function fixRoundingErrors(n: number, ...references: number[]) {
+export function roundToMaxDecimalPlaces(n: number, ...references: number[]) {
   const maxPlaces = Math.max(...references.map((r) => getDecimalPlaces(r)));
   return Number(n.toFixed(maxPlaces));
 }
