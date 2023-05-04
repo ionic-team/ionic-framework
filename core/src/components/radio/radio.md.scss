@@ -74,12 +74,12 @@
 // opacity set by its spec, while the label
 // should match the other form controls
 
-:host(.radio-disabled) .native-wrapper {
+:host(.radio-disabled) .label-text-wrapper {
   opacity: $radio-md-disabled-opacity;
 }
 
-:host(.radio-disabled) .label-text-wrapper {
-  opacity: .4;
+:host(.radio-disabled) .native-wrapper {
+  opacity: .63;
 }
 
 // Material Design Radio: Keyboard Focus

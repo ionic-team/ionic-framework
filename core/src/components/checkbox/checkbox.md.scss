@@ -44,12 +44,12 @@
 // opacity set by its spec, while the label
 // should match the other form controls
 
-:host(.checkbox-disabled) .native-wrapper {
+:host(.checkbox-disabled) .label-text-wrapper {
   opacity: $checkbox-md-disabled-opacity;
 }
 
-:host(.checkbox-disabled) .label-text-wrapper {
-  opacity: .4;
+:host(.checkbox-disabled) .native-wrapper {
+  opacity: .63;
 }
 
 
