@@ -42,6 +42,9 @@
 
 // iOS Radio: Disabled
 // -----------------------------------------
+// The radio and label should use the
+// same opacity and match the other form
+// controls
 
 :host(.radio-disabled) {
   opacity: $radio-ios-disabled-opacity;
