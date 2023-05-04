@@ -265,7 +265,7 @@ configs().forEach(({ title, screenshot, config }) => {
   });
 });
 
-configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('select: label overflow'), () => {
     test('label should be truncated with ellipses', async ({ page }) => {
       await page.setContent(
