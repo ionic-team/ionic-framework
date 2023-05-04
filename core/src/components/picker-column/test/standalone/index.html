@@ -23,9 +23,6 @@
     <ion-button onclick="openPicker(2, 5, multiColumnOptions)" id="multiple-column-button"
       >Open Multi Column Picker</ion-button
     >
-    <ion-button onclick="openPicker(2, 5, multiColumnOptions, true)" id="dynamic-column-button"
-      >Open Dynamic Column Picker</ion-button
-    >
     <script>
       const defaultColumnOptions = [['Dog', 'Cat', 'Bird', 'Lizard', 'Chinchilla']];
 
@@ -34,7 +31,7 @@
         ['Tomato', 'Avocado', 'Onion', 'Potato', 'Artichoke'],
       ];
 
-      async function openPicker(numColumns = 1, numOptions = 5, columnOptions = defaultColumnOptions, dynamic = false) {
+      async function openPicker(numColumns = 1, numOptions = 5, columnOptions = defaultColumnOptions) {
         const picker = await pickerController.create({
           columns: this.getColumns(numColumns, numOptions, columnOptions),
           buttons: [
@@ -50,36 +47,6 @@
             },
           ],
         });
-
-        // If dynamic then the second column's options depend on the first column's selection
-        // Selecting 'Responsive' will remove 'Tomato' from the second column
-        // Selecting any other option will add 'Carrot' to the second column
-        if (dynamic) {
-          picker.addEventListener('ionPickerColChange', async (event) => {
-            const newCols = JSON.parse(JSON.stringify(picker.columns));
-            const selectedIndex = event.detail.selectedIndex;
-            const column = event.detail.options[selectedIndex];
-
-            // The first column was selected
-            if (event.detail.name === 'col-0') {
-              // 'Responsive' was selected
-              if (column.value === 1) {
-                // Remove 'Tomato' from the second column
-                newCols[1].options = newCols[1].options.filter((o) => o.value !== 0);
-              } else {
-                // If 'Responsive' is not selected, then add 'Carrot' to the second column if it doesn't exist
-                if (!newCols[1].options.find((o) => o.value === 'Carrot')) {
-                  newCols[1].options.push({
-                    text: 'Carrot',
-                    value: 'Carrot',
-                  });
-                }
-              }
-            }
-
-            picker.columns = newCols;
-          });
-        }
 
         await picker.present();
       }
