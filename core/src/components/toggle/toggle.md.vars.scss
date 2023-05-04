@@ -62,7 +62,7 @@ $toggle-md-transition-duration:                   160ms !default;
 $toggle-md-transition:                            transform $toggle-md-transition-duration cubic-bezier(0.4, 0.0, 0.2, 1), background-color $toggle-md-transition-duration cubic-bezier(0.4, 0.0, 0.2, 1) !default;
 
 /// @prop - Opacity of the disabled toggle
-$toggle-md-disabled-opacity:                      .3 !default;
+$toggle-md-disabled-opacity:                      .4 !default;
 
 /// @prop - Padding top of standalone toggle
 $toggle-md-padding-top:                           12px !default;
