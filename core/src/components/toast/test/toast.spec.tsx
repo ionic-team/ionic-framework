@@ -1,6 +1,8 @@
+import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { Toast } from '../toast';
 import { config } from '../../../global/config';
+import { toastController } from '../../../utils/overlays';
 
 describe('toast: custom html', () => {
   it('should not allow for custom html by default', async () => {
@@ -86,5 +88,44 @@ describe('toast: a11y smoke test', () => {
 
     expect(header.getAttribute('aria-hidden')).toBe(null);
     expect(message.getAttribute('aria-hidden')).toBe(null);
+  });
+});
+
+describe('toast: duration config', () => {
+  it('should have duration set to 0', async () => {
+    const page = await newSpecPage({
+      components: [Toast],
+      html: `<ion-toast></ion-toast>`,
+    });
+
+    const toast = page.body.querySelector('ion-toast');
+
+    expect(toast.duration).toBe(0);
+  });
+
+  it('should have duration set to 5000', async () => {
+    config.reset({ toastDuration: 5000 });
+
+    const page = await newSpecPage({
+      components: [Toast],
+      html: `<ion-toast></ion-toast>`,
+    });
+
+    const toast = page.body.querySelector('ion-toast');
+
+    expect(toast.duration).toBe(5000);
+  });
+});
+
+describe('toast: htmlAttributes', () => {
+  it('should correctly inherit attributes on host', async () => {
+    const page = await newSpecPage({
+      components: [Toast],
+      template: () => <ion-toast htmlAttributes={{ 'data-testid': 'basic-toast' }}></ion-toast>,
+    });
+
+    const toast = page.body.querySelector('ion-toast');
+
+    await expect(toast.getAttribute('data-testid')).toBe('basic-toast');
   });
 });
