@@ -6,7 +6,7 @@ import { testSlidingItem } from '../test.utils';
 /**
  * item-sliding doesn't have mode-specific styling
  */
-configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('item-sliding: basic'), () => {
     // TODO FW-3006
     test.skip('should not have visual regressions', async ({ page, browserName }, testInfo) => {

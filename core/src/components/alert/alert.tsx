@@ -17,6 +17,7 @@ import {
   prepareOverlay,
   present,
   safeCall,
+  setOverlayId,
 } from '../../utils/overlays';
 import type { OverlayEventDetail } from '../../utils/overlays-interface';
 import type { IonicSafeString } from '../../utils/sanitization';
@@ -329,6 +330,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
   }
 
   componentWillLoad() {
+    setOverlayId(this.el);
     this.inputsChanged();
     this.buttonsChanged();
   }
