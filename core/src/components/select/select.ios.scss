@@ -43,3 +43,13 @@
 :host(.select-label-placement-floating) .native-wrapper {
   width: calc(100% - $select-ios-icon-size - $select-icon-margin-start);
 }
+
+// Select: Disabled
+// ----------------------------------------------------------------
+// The select and label should use the
+// same opacity and match the other form
+// controls
+
+:host(.select-disabled) {
+  opacity: .3;
+}
