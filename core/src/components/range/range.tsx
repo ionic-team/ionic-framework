@@ -4,6 +4,7 @@ import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil
 import { getIonMode } from '../../global/ionic-global';
 import type { Color, Gesture, GestureDetail, StyleEventDetail } from '../../interface';
 import { findClosestIonContent, disableContentScrollY, resetContentScrollY } from '../../utils/content';
+import { fixRoundingErrors } from '../../utils/floating-point';
 import type { LegacyFormController } from '../../utils/forms';
 import { createLegacyFormController } from '../../utils/forms';
 import type { Attributes } from '../../utils/helpers';
@@ -909,19 +910,7 @@ const ratioToValue = (ratio: number, min: number, max: number, step: number): nu
   }
   const clampedValue = clamp(min, value, max);
 
-  const getDecimalPlaces = (n: number) => {
-    if (n % 1 === 0) return 0;
-    return n.toString().split('.')[1].length;
-  };
-
-  const maxPlaces = Math.max(getDecimalPlaces(min), getDecimalPlaces(max), getDecimalPlaces(step));
-
-  /**
-   * Avoid floating point rounding errors like 0.3 becoming
-   * 0.300000004. Note that it isn't possible for the "correct"
-   * value to have more decimal places than all three props.
-   */
-  return Number(clampedValue.toFixed(maxPlaces));
+  return fixRoundingErrors(clampedValue, min, max, step);
 };
 
 const valueToRatio = (value: number, min: number, max: number): number => {
