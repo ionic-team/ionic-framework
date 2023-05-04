@@ -70,7 +70,7 @@ $input-md-inset-margin-start: $item-md-padding-start !default;
 /// @prop - The amount of whitespace to display on either side of the floating label
 $input-md-floating-label-padding: 4px !default;
 
-/// @prop - The disabled opacity of the input text, the label, helper text, char counter and placeholder of a disabled input.
+/// @prop - The opacity of the input text, label, helper text, char counter and placeholder of a disabled input
 /// This value comes from the Material Design spec:
-/// - https://github.com/material-components/material-web/pull/549
-$input-md-disabled-opacity: 0.37 !default;
+/// - https://m2.material.io/components/text-fields#outlined-text-field
+$input-md-disabled-opacity: 0.4 !default;

@@ -161,13 +161,6 @@
   }
 }
 
-
-:host(.legacy-input) .native-input[disabled],
-:host(.input-disabled) {
-  opacity: .3;
-}
-
-
 // Input Cover: Unfocused
 // --------------------------------------------------
 // The input cover is the div that actually receives the
@@ -192,7 +185,6 @@
 .cloned-input:disabled {
   opacity: 1;
 }
-
 
 // Clear Input Icon
 // --------------------------------------------------
