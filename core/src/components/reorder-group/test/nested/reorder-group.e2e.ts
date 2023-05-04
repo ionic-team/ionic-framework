@@ -7,7 +7,7 @@ import { configs, test, dragElementBy } from '@utils/test/playwright';
  */
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe.skip(title('reorder group: nested'), () => {
-    test.beforeEach(async ({ skip }) => {
+    test.beforeEach(async ({ page, skip }) => {
       skip.browser(
         (browserName: string) => browserName !== 'chromium',
         'dragElementBy is flaky outside of Chrome browsers.'
