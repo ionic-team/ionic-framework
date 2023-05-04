@@ -313,7 +313,9 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
           <span class="button-inner">
             <slot name="icon-only"></slot>
             <slot name="start"></slot>
-            <slot></slot>
+            <span class="button-text">
+              <slot></slot>
+            </span>
             <slot name="end"></slot>
           </span>
           {mode === 'md' && <ion-ripple-effect type={this.rippleType}></ion-ripple-effect>}

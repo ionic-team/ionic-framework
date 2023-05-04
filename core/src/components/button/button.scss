@@ -209,6 +209,15 @@
   z-index: 1;
 }
 
+.button-text {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+::slotted([slot=start]),
+::slotted([slot=end]) {
+  flex-shrink: 0;
+}
 
 // Button Icons
 // --------------------------------------------------
