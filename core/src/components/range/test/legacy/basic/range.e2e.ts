@@ -23,7 +23,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
      * TODO FW-2873
      */
     test.fixme('should emit start/end events', async ({ page }) => {
-      await page.setContent(`<ion-range value="20" legacy="true"></ion-range>, config`);
+      await page.setContent(`<ion-range value="20" legacy="true"></ion-range>`, config);
 
       const rangeStart = await page.spyOnEvent('ionKnobMoveStart');
       const rangeEnd = await page.spyOnEvent('ionKnobMoveEnd');
