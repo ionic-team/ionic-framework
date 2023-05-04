@@ -15,6 +15,19 @@ configs({ modes: ['ios'] }).forEach(({ title, screenshot, config }) => {
 
       await expect(page).toHaveScreenshot(screenshot(`modal-card-present`));
     });
+  });
+});
+
+/**
+ * This behavior does not vary across directions.
+ */
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('card modal: scenario rendering'), () => {
+    let cardModalPage: CardModalPage;
+    test.beforeEach(async ({ page }) => {
+      cardModalPage = new CardModalPage(page);
+      await cardModalPage.navigate('/src/components/modal/test/card', config);
+    });
     test('should not have visual regressions with custom modal', async ({ page }) => {
       await cardModalPage.openModalByTrigger('#card-custom');
 
@@ -33,9 +46,39 @@ configs({ modes: ['ios'] }).forEach(({ title, screenshot, config }) => {
       await expect(page).toHaveScreenshot(screenshot(`modal-card-custom-stacked-present`));
     });
   });
+  test.describe(title('card modal: rendering - tablet'), () => {
+    let cardModalPage: CardModalPage;
+    test.beforeEach(async ({ page }) => {
+      cardModalPage = new CardModalPage(page);
+      await page.setViewportSize(Viewports.tablet.portrait);
+      await cardModalPage.navigate('/src/components/modal/test/card', config);
+    });
+    test('should not have visual regressions', async ({ page }) => {
+      await cardModalPage.openModalByTrigger('#card');
+
+      await expect(page).toHaveScreenshot(screenshot(`modal-card-present-tablet`));
+    });
+    test('should not have visual regressions with custom modal', async ({ page }) => {
+      await cardModalPage.openModalByTrigger('#card-custom');
+
+      await expect(page).toHaveScreenshot(screenshot(`modal-card-custom-present-tablet`));
+    });
+    test('should not have visual regressions with stacked cards', async ({ page }) => {
+      await cardModalPage.openModalByTrigger('#card');
+      await cardModalPage.openModalByTrigger('.add');
+
+      await expect(page).toHaveScreenshot(screenshot(`modal-card-stacked-present-tablet`));
+    });
+    test('should not have visual regressions with stacked custom cards', async ({ page }) => {
+      await cardModalPage.openModalByTrigger('#card-custom');
+      await cardModalPage.openModalByTrigger('.add');
+
+      await expect(page).toHaveScreenshot(screenshot(`modal-card-custom-stacked-present-tablet`));
+    });
+  });
 });
 
-configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('card modal: functionality'), () => {
     let cardModalPage: CardModalPage;
     test.beforeEach(async ({ page }) => {
@@ -83,33 +126,6 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
 
         const content = page.locator('ion-modal ion-content');
         await expect(content).toHaveJSProperty('scrollY', true);
-      });
-    });
-    test.describe(title('card modal: rendering - tablet'), () => {
-      test.beforeEach(async ({ page }) => {
-        await page.setViewportSize(Viewports.tablet.portrait);
-      });
-      test('should not have visual regressions', async ({ page }) => {
-        await cardModalPage.openModalByTrigger('#card');
-
-        await expect(page).toHaveScreenshot(screenshot(`modal-card-present-tablet`));
-      });
-      test('should not have visual regressions with custom modal', async ({ page }) => {
-        await cardModalPage.openModalByTrigger('#card-custom');
-
-        await expect(page).toHaveScreenshot(screenshot(`modal-card-custom-present-tablet`));
-      });
-      test('should not have visual regressions with stacked cards', async ({ page }) => {
-        await cardModalPage.openModalByTrigger('#card');
-        await cardModalPage.openModalByTrigger('.add');
-
-        await expect(page).toHaveScreenshot(screenshot(`modal-card-stacked-present-tablet`));
-      });
-      test('should not have visual regressions with stacked custom cards', async ({ page }) => {
-        await cardModalPage.openModalByTrigger('#card-custom');
-        await cardModalPage.openModalByTrigger('.add');
-
-        await expect(page).toHaveScreenshot(screenshot(`modal-card-custom-stacked-present-tablet`));
       });
     });
     test.describe(title('card modal: swipe to close - tablet'), () => {
