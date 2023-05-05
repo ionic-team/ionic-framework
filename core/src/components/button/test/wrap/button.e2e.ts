@@ -11,9 +11,9 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         config
       );
 
-      const wrapper = page.locator('ion-button');
+      const button = page.locator('ion-button');
 
-      await expect(wrapper).toHaveScreenshot(screenshot(`button-wrap`));
+      await expect(button).toHaveScreenshot(screenshot(`button-wrap`));
     });
 
     test('should render button with long text and icons', async ({ page }) => {
@@ -28,9 +28,9 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         config
       );
 
-      const wrapper = page.locator('ion-button');
+      const button = page.locator('ion-button');
 
-      await expect(wrapper).toHaveScreenshot(screenshot(`button-wrap-icons`));
+      await expect(button).toHaveScreenshot(screenshot(`button-wrap-icons`));
     });
 
     test('should render block button with long text', async ({ page }) => {
@@ -41,9 +41,9 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         config
       );
 
-      const wrapper = page.locator('ion-button');
+      const button = page.locator('ion-button');
 
-      await expect(wrapper).toHaveScreenshot(screenshot(`button-wrap-block`));
+      await expect(button).toHaveScreenshot(screenshot(`button-wrap-block`));
     });
 
     test('should render block button with long text and icons', async ({ page }) => {
@@ -58,9 +58,9 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         config
       );
 
-      const wrapper = page.locator('ion-button');
+      const button = page.locator('ion-button');
 
-      await expect(wrapper).toHaveScreenshot(screenshot(`button-wrap-block-icons`));
+      await expect(button).toHaveScreenshot(screenshot(`button-wrap-block-icons`));
     });
 
     test('should render full button with long text', async ({ page }) => {
@@ -71,9 +71,9 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         config
       );
 
-      const wrapper = page.locator('ion-button');
+      const button = page.locator('ion-button');
 
-      await expect(wrapper).toHaveScreenshot(screenshot(`button-wrap-full`));
+      await expect(button).toHaveScreenshot(screenshot(`button-wrap-full`));
     });
 
     test('should render full button with long text and icons', async ({ page }) => {
@@ -88,10 +88,9 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         config
       );
 
-      const wrapper = page.locator('ion-button');
+      const button = page.locator('ion-button');
 
-      await expect(wrapper).toHaveScreenshot(screenshot(`button-wrap-full-icons`));
+      await expect(button).toHaveScreenshot(screenshot(`button-wrap-full-icons`));
     });
-
   });
 });
