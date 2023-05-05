@@ -24,4 +24,5 @@ export class ModalInlineComponent implements AfterViewInit {
   onBreakpointDidChange() {
     this.breakpointDidChangeCounter++;
   }
+
 }

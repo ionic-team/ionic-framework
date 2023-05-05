@@ -13,6 +13,7 @@ import {
   prepareOverlay,
   present,
   safeCall,
+  setOverlayId,
 } from '@utils/overlays';
 import { sanitizeDOMString } from '@utils/sanitization';
 import { getClassMap } from '@utils/theme';
@@ -329,6 +330,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
   }
 
   componentWillLoad() {
+    setOverlayId(this.el);
     this.inputsChanged();
     this.buttonsChanged();
   }

@@ -15,6 +15,7 @@ import {
   prepareOverlay,
   present,
   createTriggerController,
+  setOverlayId,
 } from '@utils/overlays';
 import { getClassMap } from '@utils/theme';
 import { deepReady, waitForMount } from '@utils/transition';
@@ -65,8 +66,6 @@ import { setCardStatusBarDark, setCardStatusBarDefault } from './utils';
 export class Modal implements ComponentInterface, OverlayInterface {
   private readonly triggerController = createTriggerController();
   private gesture?: Gesture;
-  private modalIndex = modalIds++;
-  private modalId?: string;
   private coreDelegate: FrameworkDelegate = CoreDelegate();
   private currentTransition?: Promise<any>;
   private sheetTransition?: Promise<any>;
@@ -344,15 +343,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   componentWillLoad() {
     const { breakpoints, initialBreakpoint, el } = this;
+    const isSheetModal = (this.isSheetModal = breakpoints !== undefined && initialBreakpoint !== undefined);
 
     this.inheritedAttributes = inheritAttributes(el, ['aria-label', 'role']);
-
-    /**
-     * If user has custom ID set then we should
-     * not assign the default incrementing ID.
-     */
-    this.modalId = this.el.hasAttribute('id') ? this.el.getAttribute('id')! : `ion-modal-${this.modalIndex}`;
-    const isSheetModal = (this.isSheetModal = breakpoints !== undefined && initialBreakpoint !== undefined);
 
     if (isSheetModal) {
       this.currentBreakpoint = this.initialBreakpoint;
@@ -361,6 +354,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
     if (breakpoints !== undefined && initialBreakpoint !== undefined && !breakpoints.includes(initialBreakpoint)) {
       printIonWarning('Your breakpoints array must include the initialBreakpoint value.');
     }
+
+    setOverlayId(el);
   }
 
   componentDidLoad() {
@@ -861,7 +856,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     const showHandle = handle !== false && isSheetModal;
     const mode = getIonMode(this);
-    const { modalId } = this;
     const isCardModal = presentingElement !== undefined && mode === 'ios';
     const isHandleCycle = handleBehavior === 'cycle';
 
@@ -881,7 +875,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
           'overlay-hidden': true,
           ...getClassMap(this.cssClass),
         }}
-        id={modalId}
         onIonBackdropTap={this.onBackdropTap}
         onIonModalDidPresent={this.onLifecycle}
         onIonModalWillPresent={this.onLifecycle}
@@ -934,8 +927,6 @@ const LIFECYCLE_MAP: any = {
   ionModalWillDismiss: 'ionViewWillLeave',
   ionModalDidDismiss: 'ionViewDidLeave',
 };
-
-let modalIds = 0;
 
 interface ModalOverlayOptions {
   /**
