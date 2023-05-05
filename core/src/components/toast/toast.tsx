@@ -11,6 +11,7 @@ import {
   prepareOverlay,
   present,
   safeCall,
+  setOverlayId
 } from '@utils/overlays';
 import { sanitizeDOMString } from '@utils/sanitization';
 import { createColorClasses, getClassMap } from '@utils/theme';
@@ -246,6 +247,10 @@ export class Toast implements ComponentInterface, OverlayInterface {
 
   disconnectedCallback() {
     this.triggerController.removeClickListener();
+  }
+
+  componentWillLoad() {
+    setOverlayId(this.el);
   }
 
   /**

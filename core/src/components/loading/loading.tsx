@@ -10,6 +10,7 @@ import {
   present,
   createDelegateController,
   createTriggerController,
+  setOverlayId
 } from '@utils/overlays';
 import { sanitizeDOMString } from '@utils/sanitization';
 import { getClassMap } from '@utils/theme';
@@ -212,6 +213,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
       const mode = getIonMode(this);
       this.spinner = config.get('loadingSpinner', config.get('spinner', mode === 'ios' ? 'lines' : 'crescent'));
     }
+    setOverlayId(this.el);
   }
 
   componentDidLoad() {

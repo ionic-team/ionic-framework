@@ -12,6 +12,7 @@ import {
   prepareOverlay,
   present,
   safeCall,
+  setOverlayId
 } from '@utils/overlays';
 import { getClassMap } from '@utils/theme';
 
@@ -309,6 +310,10 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
       this.gesture = undefined;
     }
     this.triggerController.removeClickListener();
+  }
+
+  componentWillLoad() {
+    setOverlayId(this.el);
   }
 
   componentDidLoad() {
