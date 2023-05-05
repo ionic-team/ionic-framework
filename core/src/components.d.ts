@@ -2290,6 +2290,10 @@ export namespace Components {
          */
         "dualKnobs": boolean;
         /**
+          * The text to display as the control's label. Use this over the `label` slot if you only need plain text. If both this and the slot are used, this property takes priority.
+         */
+        "label"?: string;
+        /**
           * Where to place the label relative to the range. `"start"`: The label will appear to the left of the range in LTR and to the right in RTL. `"end"`: The label will appear to the right of the range in LTR and to the left in RTL. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
          */
         "labelPlacement": 'start' | 'end' | 'fixed';
@@ -6304,6 +6308,10 @@ declare namespace LocalJSX {
           * Show two knobs.
          */
         "dualKnobs"?: boolean;
+        /**
+          * The text to display as the control's label. Use this over the `label` slot if you only need plain text. If both this and the slot are used, this property takes priority.
+         */
+        "label"?: string;
         /**
           * Where to place the label relative to the range. `"start"`: The label will appear to the left of the range in LTR and to the right in RTL. `"end"`: The label will appear to the right of the range in LTR and to the left in RTL. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
          */

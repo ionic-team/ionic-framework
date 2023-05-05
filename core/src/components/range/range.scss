@@ -209,7 +209,7 @@
   opacity: 0.3;
 }
 
-::slotted([slot="label"]) {
+::slotted([slot="label"]), .label-text {
   /**
    * Label text should not extend
    * beyond the bounds of the range.
