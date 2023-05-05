@@ -8,7 +8,8 @@ import type { LegacyFormController } from '../../utils/forms';
 import { createLegacyFormController } from '../../utils/forms';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes, debounceEvent, findItemLabel, inheritAttributes } from '../../utils/helpers';
-import type { MaskExpression, MaskPlaceholder, MaskVisibility } from '../../utils/input-masking';
+import { MaskController } from '../../utils/input-masking';
+import type { MaskExpression, MaskPlaceholder, MaskVisibility } from '../../utils/input-masking/public-api';
 import { printIonWarning } from '../../utils/logging';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
@@ -32,6 +33,7 @@ export class Input implements ComponentInterface {
   private inheritedAttributes: Attributes = {};
   private isComposing = false;
   private legacyFormController!: LegacyFormController;
+  private maskController?: MaskController;
 
   // This flag ensures we log the deprecation warning at most once.
   private hasLoggedDeprecationWarning = false;
@@ -373,9 +375,11 @@ export class Input implements ComponentInterface {
   }
 
   componentWillLoad() {
+    const { el } = this;
+
     this.inheritedAttributes = {
-      ...inheritAriaAttributes(this.el),
-      ...inheritAttributes(this.el, ['tabindex', 'title', 'data-form-type']),
+      ...inheritAriaAttributes(el),
+      ...inheritAttributes(el, ['tabindex', 'title', 'data-form-type']),
     };
   }
 
@@ -396,7 +400,15 @@ export class Input implements ComponentInterface {
   }
 
   componentDidLoad() {
+    const { mask, nativeInput } = this;
+
     this.originalIonInput = this.ionInput;
+
+    if (mask !== undefined && nativeInput) {
+      this.maskController = new MaskController(nativeInput, {
+        mask,
+      });
+    }
   }
 
   disconnectedCallback() {
@@ -407,6 +419,9 @@ export class Input implements ComponentInterface {
         })
       );
     }
+
+    // Todo - need to evaluate if I need to recreate this in connectedCallback after first load
+    this.maskController?.destroy();
   }
 
   /**

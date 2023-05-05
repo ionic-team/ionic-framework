@@ -1,1 +1,1 @@
-export * from './input-masking-interface';
+export { MaskController } from './mask-controller';

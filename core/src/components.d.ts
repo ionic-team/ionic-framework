@@ -17,7 +17,7 @@ import { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interf
 import { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
 import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimePresentation, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 import { SpinnerTypes } from "./components/spinner/spinner-configs";
-import { MaskExpression, MaskPlaceholder, MaskVisibility } from "./utils/input-masking";
+import { MaskExpression, MaskPlaceholder, MaskVisibility } from "./utils/input-masking/public-api";
 import { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
 import { CounterFormatter } from "./components/item/item-interface";
 import { MenuChangeEventDetail, Side } from "./components/menu/menu-interface";
@@ -54,7 +54,7 @@ export { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interf
 export { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
 export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimePresentation, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 export { SpinnerTypes } from "./components/spinner/spinner-configs";
-export { MaskExpression, MaskPlaceholder, MaskVisibility } from "./utils/input-masking";
+export { MaskExpression, MaskPlaceholder, MaskVisibility } from "./utils/input-masking/public-api";
 export { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
 export { CounterFormatter } from "./components/item/item-interface";
 export { MenuChangeEventDetail, Side } from "./components/menu/menu-interface";
