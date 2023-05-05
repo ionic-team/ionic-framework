@@ -75,7 +75,14 @@ export class PickerColumnCmp implements ComponentInterface {
       onEnd: (ev) => this.onEnd(ev),
     });
     this.gesture.enable();
+    // Options have not been initialized yet
+    // Animation must be disabled through the `noAnimate` flag
+    // Otherwise, the options will will render
+    // at the top of the column and transition down
     this.tmrId = setTimeout(() => {
+      // After initialization, `refresh()` will be called
+      // At this point, animation will be enabled. The options will
+      // animate as they are being selected.
       this.refresh(true);
     }, 250);
   }
@@ -85,6 +92,7 @@ export class PickerColumnCmp implements ComponentInterface {
   }
 
   componentDidUpdate(): void | Promise<void> {
+    // Options have changed since last update.
     if (this.noAnimate) {
       this.onDomChange(true);
     }
@@ -132,8 +140,8 @@ export class PickerColumnCmp implements ComponentInterface {
 
     const children = this.optsEl.children;
 
-    // `this.col` might have been changed
-    // ex: adding or removing an option
+    // Options might have been changed
+    // ex: adding or removing
     // `this.optsEl` children will not match the new `this.col` order
     // until after `componentDidUpdate()`
     // Skip this update cycle
@@ -372,14 +380,14 @@ export class PickerColumnCmp implements ComponentInterface {
     }
   }
 
-  private onDomChange(refresh = false) {
+  private onDomChange(forceRefresh?: boolean) {
     const colEl = this.optsEl;
     if (colEl) {
       // DOM READ
       // We perfom a DOM read over a rendered item, this needs to happen after the first render or after the the column options have changed
       this.optHeight = colEl.firstElementChild ? colEl.firstElementChild.clientHeight : 0;
     }
-    this.refresh(refresh);
+    this.refresh(forceRefresh);
   }
 
   render() {

@@ -38,6 +38,11 @@
   <body>
     <div class="grid ion-padding">
       <div class="grid-item">
+        <h2>Single Column</h2>
+        <ion-button onclick="removeOption()" id="single-column-remove-button">Remove Option</ion-button>
+        <ion-button onclick="addOption()" id="single-column-add-button">Add Option</ion-button>
+      </div>
+      <div class="grid-item">
         <h2>Multiple Columns</h2>
         <ion-button onclick="removeOption(2, 5, multiColumnOptions)" id="multiple-column-remove-button"
           >Remove Option</ion-button
@@ -45,11 +50,6 @@
         <ion-button onclick="addOption(2, 5, multiColumnOptions)" id="multiple-column-add-button"
           >Add Option</ion-button
         >
-      </div>
-      <div class="grid-item">
-        <h2>Single Column</h2>
-        <ion-button onclick="removeOption()" id="single-column-remove-button">Remove Option</ion-button>
-        <ion-button onclick="addOption()" id="single-column-add-button">Add Option</ion-button>
       </div>
     </div>
     <script>
@@ -64,6 +64,7 @@
         const picker = await pickerController.create({
           columns: this.getColumns(numColumns, numOptions, columnOptions),
           buttons: this.getButtons(),
+          animated: false,
         });
 
         // Selecting the first column's second option will remove the second column's first option
@@ -96,6 +97,7 @@
         const picker = await pickerController.create({
           columns: this.getColumns(numColumns, numOptions, columnOptions),
           buttons: this.getButtons(),
+          animated: false,
         });
 
         // Selecting the first column's second option will add an option to the second column
