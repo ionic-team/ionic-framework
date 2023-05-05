@@ -12,7 +12,7 @@ import {
   prepareOverlay,
   present,
   safeCall,
-  setOverlayId
+  setOverlayId,
 } from '@utils/overlays';
 import { getClassMap } from '@utils/theme';
 

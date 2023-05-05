@@ -3,7 +3,15 @@ import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '
 import { CoreDelegate, attachComponent, detachComponent } from '@utils/framework-delegate';
 import { addEventListener, raf, hasLazyBuild } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
-import { BACKDROP, dismiss, eventMethod, focusFirstDescendant, prepareOverlay, present, setOverlayId } from '@utils/overlays';
+import {
+  BACKDROP,
+  dismiss,
+  eventMethod,
+  focusFirstDescendant,
+  prepareOverlay,
+  present,
+  setOverlayId,
+} from '@utils/overlays';
 import { isPlatform } from '@utils/platform';
 import { getClassMap } from '@utils/theme';
 import { deepReady, waitForMount } from '@utils/transition';

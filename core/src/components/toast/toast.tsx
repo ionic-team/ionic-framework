@@ -11,7 +11,7 @@ import {
   prepareOverlay,
   present,
   safeCall,
-  setOverlayId
+  setOverlayId,
 } from '@utils/overlays';
 import { sanitizeDOMString } from '@utils/sanitization';
 import { createColorClasses, getClassMap } from '@utils/theme';

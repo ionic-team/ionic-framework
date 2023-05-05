@@ -10,7 +10,7 @@ import {
   present,
   createDelegateController,
   createTriggerController,
-  setOverlayId
+  setOverlayId,
 } from '@utils/overlays';
 import { sanitizeDOMString } from '@utils/sanitization';
 import { getClassMap } from '@utils/theme';

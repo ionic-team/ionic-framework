@@ -15,7 +15,7 @@ import {
   prepareOverlay,
   present,
   createTriggerController,
-  setOverlayId
+  setOverlayId,
 } from '@utils/overlays';
 import { getClassMap } from '@utils/theme';
 import { deepReady, waitForMount } from '@utils/transition';
