@@ -6,7 +6,7 @@ import { ActionSheetFixture } from './fixture';
 /**
  * This behavior does not vary across modes/directions
  */
-configs({ mode: ['ios'], directions: ['ltr'] }).forEach(({ config, title }) => {
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ config, title }) => {
   test.describe(title('action sheet: data'), () => {
     let actionSheetFixture!: ActionSheetFixture;
     test.beforeEach(async ({ page }) => {
@@ -42,7 +42,7 @@ configs({ mode: ['ios'], directions: ['ltr'] }).forEach(({ config, title }) => {
 /**
  * This behavior does not vary across modes/directions
  */
-configs({ mode: ['ios'], directions: ['ltr'] }).forEach(({ config, title }) => {
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ config, title }) => {
   test.describe(title('action sheet: variant functionality'), () => {
     let actionSheetFixture!: ActionSheetFixture;
     test.beforeEach(async ({ page }) => {
@@ -78,7 +78,7 @@ configs({ mode: ['ios'], directions: ['ltr'] }).forEach(({ config, title }) => {
 /**
  * This behavior does not vary across modes/directions
  */
-configs({ mode: ['ios'], directions: ['ltr'] }).forEach(({ config, title }) => {
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ config, title }) => {
   test.describe(title('action sheet: focus trap'), () => {
     test('it should trap focus in action sheet', async ({ page, browserName }) => {
       await page.goto(`/src/components/action-sheet/test/basic`, config);
