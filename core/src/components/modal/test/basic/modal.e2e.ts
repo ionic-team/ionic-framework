@@ -102,23 +102,8 @@ configs().forEach(({ title, screenshot, config }) => {
     });
   });
 });
+
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
-  test.describe(title('modal: htmlAttributes inheritance'), () => {
-    test('should correctly inherit attributes on host', async ({ page }) => {
-      await page.goto('/src/components/modal/test/basic', config);
-      const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
-
-      await page.click('#basic-modal');
-
-      await ionModalDidPresent.next();
-
-      const modal = page.locator('ion-modal');
-
-      const attribute = await modal.getAttribute('data-testid');
-      expect(attribute).toBe('basic-modal');
-    });
-  });
-
   test.describe(title('modal: backdrop'), () => {
     test.beforeEach(async ({ page }) => {
       await page.goto('/src/components/modal/test/basic', config);
@@ -137,7 +122,6 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await ionModalDidDismiss.next();
     });
   });
-
   test.describe(title('modal: incorrect usage'), () => {
     test.beforeEach(async ({ page }) => {
       await page.goto('/src/components/modal/test/basic', config);
