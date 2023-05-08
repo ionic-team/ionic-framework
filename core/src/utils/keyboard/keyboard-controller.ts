@@ -1,6 +1,6 @@
-import { KeyboardResize, Keyboard } from '../native/keyboard';
-import { win } from '../window';
 import { raf } from '@utils/helpers';
+import { KeyboardResize, Keyboard } from '@utils/native/keyboard';
+import { win } from '@utils/window';
 
 /**
  * Creates a controller that tracks and reacts to opening or closing the keyboard.
@@ -14,7 +14,7 @@ export const createKeyboardController = async (
   let keyboardWillShowHandler: (() => void) | undefined;
   let keyboardWillHideHandler: (() => void) | undefined;
   let keyboardVisible: boolean;
-  let windowHeight = win?.innerHeight;
+  const windowHeight = win?.innerHeight;
 
   const init = async () => {
     const resizeOptions = await Keyboard.getResizeMode();
@@ -48,7 +48,9 @@ export const createKeyboardController = async (
        * as the native Capacitor keyboard plugin will not be available.
        */
       const resizePromise =
-        hasResized === false || resizeMode === undefined || resizeMode === KeyboardResize.None ? undefined : createResizePromise();
+        hasResized === false || resizeMode === undefined || resizeMode === KeyboardResize.None
+          ? undefined
+          : createResizePromise();
 
       keyboardChangeCallback(state, resizePromise);
     }
