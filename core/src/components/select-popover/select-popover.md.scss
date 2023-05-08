@@ -2,7 +2,7 @@
 @import "./select-popover.md.vars";
 
 ion-list ion-radio::part(container) {
-  display: none;
+  opacity: 0;
 }
 
 ion-item {
