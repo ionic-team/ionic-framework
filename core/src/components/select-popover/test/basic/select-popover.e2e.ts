@@ -75,10 +75,18 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
  */
 configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('select-popover: rendering'), () => {
-    test('should not have visual regressions', async ({ page }) => {
-      const selectPopoverPage = new SelectPopoverPage(page);
+    let selectPopoverPage: SelectPopoverPage;
+
+    test.beforeEach(async ({ page }) => {
+      selectPopoverPage = new SelectPopoverPage(page);
+    });
+    test('should not have visual regressions with single selection', async () => {
       await selectPopoverPage.setup(config, options, false);
       await selectPopoverPage.screenshot(screenshot, 'select-popover-diff');
+    });
+    test('should not have visual regressions with multiple selection', async () => {
+      await selectPopoverPage.setup(checkedOptions, options, true);
+      await selectPopoverPage.screenshot(screenshot, 'select-popover-multiple-diff');
     });
   });
 });
