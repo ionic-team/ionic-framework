@@ -29,7 +29,7 @@ runs:
       shell: bash
       working-directory: ./angular/test
     - name: Install Dependencies
-      run: npm install --legacy-peer-deps
+      run: npm install
       shell: bash
       working-directory: ./angular/test/build/${{ inputs.app }}
     - name: Sync Built Changes

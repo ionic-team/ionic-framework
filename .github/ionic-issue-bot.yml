@@ -34,6 +34,15 @@ comment:
 
 
         For a guide on how to create a good reproduction, see our [Contributing Guide](https://ionicframework.com/docs/contributing/how-to-contribute#creating-a-good-code-reproduction).
+    - label: "community feedback wanted"
+      message: >
+        This issue has been labeled as `community feedback wanted`. This label is added to issues that we would like to hear from the community on before moving forward with any final decision on the feature request.
+
+        If the requested feature is something you would find useful for your applications, please react to the original post with 👍 (`+1`). If you would like to provide an additional use case for the feature, please post a comment.
+        
+        The team will review this feedback and make a final decision. Any decision will be posted on this thread, but please note that we may ultimately decide not to pursue this feature.
+
+        Thank you!
   dryRun: false
 
 closeAndLock:

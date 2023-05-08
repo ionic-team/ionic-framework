@@ -75,8 +75,14 @@ input {
   height: 100%;
 }
 
-:host(.in-item[slot="start"]:not(.legacy-radio)),
-:host(.in-item[slot="end"]:not(.legacy-radio)) {
+/**
+ * Radio can be slotted
+ * in components such as item and
+ * toolbar which is why we do not
+ * limit the below behavior to just ion-item.
+ */
+:host([slot="start"]:not(.legacy-radio)),
+:host([slot="end"]:not(.legacy-radio)) {
   width: auto;
 }
 
