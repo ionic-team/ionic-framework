@@ -78,7 +78,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
     test('should not have visual regressions', async ({ page }) => {
       const selectPopoverPage = new SelectPopoverPage(page);
       await selectPopoverPage.setup(config, options, false);
-      await screenshot.screenshot(screenshot, 'select-popover-diff');
+      await selectPopoverPage.screenshot(screenshot, 'select-popover-diff');
     });
   });
 });
