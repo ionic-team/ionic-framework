@@ -649,7 +649,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
   }
 
   private get hasLabel() {
-    return this.el.querySelector('[slot="label"]') !== null || this.label !== undefined;
+    return this.label !== undefined || this.el.querySelector('[slot="label"]') !== null;
   }
 
   private renderRangeSlider() {
