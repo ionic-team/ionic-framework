@@ -1,6 +1,7 @@
 import { raf } from '@utils/helpers';
-import { KeyboardResize, Keyboard } from '@utils/native/keyboard';
 import { win } from '@utils/window';
+
+import { KeyboardResize, Keyboard } from '../native/keyboard';
 
 /**
  * Creates a controller that tracks and reacts to opening or closing the keyboard.
@@ -46,6 +47,9 @@ export const createKeyboardController = async (
        * assume that the web content will resize. This will
        * be the case if an app is deployed to a mobile browser/PWA
        * as the native Capacitor keyboard plugin will not be available.
+       *
+       * If the resize mode is "None" then the webview is configured
+       * to never resize when the keyboard opens/closes.
        */
       const resizePromise =
         hasResized === false || resizeMode === undefined || resizeMode === KeyboardResize.None
