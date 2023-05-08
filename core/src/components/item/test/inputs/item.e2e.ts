@@ -1,48 +1,67 @@
 import type { Locator } from '@playwright/test';
 import { expect } from '@playwright/test';
 import type { EventSpy } from '@utils/test/playwright';
-import { test } from '@utils/test/playwright';
+import { configs, test } from '@utils/test/playwright';
 
-test.describe('item: inputs', () => {
-  let ionPopoverDidPresent: EventSpy;
-  let ionPopoverDidDismiss: EventSpy;
-  let formData: EventSpy;
+configs().forEach(({ title, screenshot, config }) => {
+  test.describe(title('item: inputs'), () => {
+    test('should not have visual regressions', async ({ page }) => {
+      await page.goto(`/src/components/item/test/inputs`, config);
 
-  let popover: Locator;
-
-  test.beforeEach(async ({ page }) => {
-    await page.goto(`/src/components/item/test/inputs`);
-
-    ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
-    ionPopoverDidDismiss = await page.spyOnEvent('ionPopoverDidDismiss');
-    formData = await page.spyOnEvent('formData');
-
-    popover = page.locator('ion-popover#optionsPopover');
+      await page.setIonViewport();
+      await expect(page).toHaveScreenshot(screenshot(`item-inputs`));
+    });
   });
+});
 
-  test('should not have visual regressions', async ({ page }) => {
-    await page.setIonViewport();
-    await expect(page).toHaveScreenshot(`item-inputs-${page.getSnapshotSettings()}.png`);
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('disabled state rendering'), () => {
+    let ionPopoverDidPresent: EventSpy;
+    let ionPopoverDidDismiss: EventSpy;
+
+    let popover: Locator;
+
+    test.beforeEach(async ({ page }) => {
+      await page.goto(`/src/components/item/test/inputs`, config);
+
+      ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
+      ionPopoverDidDismiss = await page.spyOnEvent('ionPopoverDidDismiss');
+
+      popover = page.locator('ion-popover#optionsPopover');
+    });
+    test('disabled controls should not have visual regressions', async ({ page }) => {
+      await page.click('#popover-trigger');
+      await ionPopoverDidPresent.next();
+
+      await page.click('#btnDisabled');
+
+      await page.waitForChanges();
+
+      await popover.evaluateHandle((el: HTMLIonPopoverElement) => el.dismiss());
+      await ionPopoverDidDismiss.next();
+
+      await page.setIonViewport();
+      await expect(page).toHaveScreenshot(screenshot(`item-inputs-disabled`));
+    });
   });
+});
 
-  test('disabled controls should not have visual regressions', async ({ page }) => {
-    await page.click('#popover-trigger');
-    await ionPopoverDidPresent.next();
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe(title('form data'), () => {
+    let ionPopoverDidPresent: EventSpy;
+    let ionPopoverDidDismiss: EventSpy;
+    let formData: EventSpy;
 
-    await page.click('#btnDisabled');
+    let popover: Locator;
 
-    await page.waitForChanges();
+    test.beforeEach(async ({ page }) => {
+      await page.goto(`/src/components/item/test/inputs`, config);
 
-    await popover.evaluateHandle((el: HTMLIonPopoverElement) => el.dismiss());
-    await ionPopoverDidDismiss.next();
+      ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
+      ionPopoverDidDismiss = await page.spyOnEvent('ionPopoverDidDismiss');
+      formData = await page.spyOnEvent('formData');
 
-    await page.setIonViewport();
-    await expect(page).toHaveScreenshot(`item-inputs-disabled-${page.getSnapshotSettings()}.png`);
-  });
-
-  test.describe('form data', () => {
-    test.beforeEach(async ({ skip }) => {
-      skip.rtl();
+      popover = page.locator('ion-popover#optionsPopover');
     });
 
     test('initial form data should be empty', async ({ page }) => {
