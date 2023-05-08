@@ -16,7 +16,7 @@ configs().forEach(({ title, screenshot, config }) => {
   });
 });
 
-configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
+configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('sheet modal: backdrop'), () => {
     test.beforeEach(async ({ page }) => {
       await page.goto('/src/components/modal/test/sheet', config);
