@@ -37,26 +37,7 @@ export const createKeyboardController = async (
 
   const fireChangeCallback = (state: boolean, resizeMode: KeyboardResize | undefined) => {
     if (keyboardChangeCallback) {
-      /**
-       * If the keyboard is closed before the webview resizes initially then no "resize"
-       * event will be fired when the keyboard begins to close.
-       */
-      const hasResized = win === undefined || windowHeight === undefined ? false : windowHeight !== win!.innerHeight;
-      /**
-       * If the resize mode is undefined then we cannot safely
-       * assume that the web content will resize. This will
-       * be the case if an app is deployed to a mobile browser/PWA
-       * as the native Capacitor keyboard plugin will not be available.
-       *
-       * If the resize mode is "None" then the webview is configured
-       * to never resize when the keyboard opens/closes.
-       */
-      const resizePromise =
-        hasResized === false || resizeMode === undefined || resizeMode === KeyboardResize.None
-          ? undefined
-          : createResizePromise();
-
-      keyboardChangeCallback(state, resizePromise);
+      keyboardChangeCallback(state, createResizePromiseIfNeeded(resizeMode));
     }
   };
 
@@ -67,7 +48,38 @@ export const createKeyboardController = async (
    * resizePromise provides a way for code to wait for the
    * resize event that was triggered as a result of the keyboard.
    */
-  const createResizePromise = (): Promise<void> => {
+  const createResizePromiseIfNeeded = (resizeMode: KeyboardResize | undefined): Promise<void> | undefined => {
+    if (
+      /**
+       * If the resize mode is undefined then we cannot safely
+       * assume that the web content will resize. This will
+       * be the case if an app is deployed to a mobile browser/PWA
+       * as the native Capacitor keyboard plugin will not be available.
+       *
+       * If the resize mode is "None" then the webview is configured
+       * to never resize when the keyboard opens/closes.
+       */
+      resizeMode === undefined ||
+      resizeMode === KeyboardResize.None ||
+      /**
+       * If we are in an SSR environment then there is
+       * no window to resize.
+       */
+      win === undefined ||
+      windowHeight === undefined ||
+      /**
+       * If the keyboard is closed before the webview resizes initially
+       *  then the webview will never resize.
+       */
+      windowHeight === win!.innerHeight
+    ) {
+      return;
+    }
+
+    /**
+     * Otherwise, the webview should resize
+     * and we need to listen for that event.
+     */
     return new Promise((resolve) => {
       let timeout: ReturnType<typeof setTimeout> | undefined;
       const callback = () => {
