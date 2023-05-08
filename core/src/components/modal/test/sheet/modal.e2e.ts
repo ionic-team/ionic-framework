@@ -57,9 +57,6 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(input).toBeFocused();
     });
   });
-});
-
-configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('sheet modal: setting the breakpoint'), () => {
     test.describe('sheet modal: invalid values', () => {
       let warnings: string[] = [];
@@ -205,9 +202,6 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
       expect(updatedBreakpoint).toBe(0.5);
     });
   });
-});
-
-configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('sheet modal: clicking the handle'), () => {
     test.beforeEach(async ({ page }) => {
       await page.goto('/src/components/modal/test/sheet', config);

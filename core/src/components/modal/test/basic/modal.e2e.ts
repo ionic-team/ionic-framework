@@ -118,9 +118,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       expect(attribute).toBe('basic-modal');
     });
   });
-});
 
-configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('modal: backdrop'), () => {
     test.beforeEach(async ({ page }) => {
       await page.goto('/src/components/modal/test/basic', config);
@@ -139,9 +137,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await ionModalDidDismiss.next();
     });
   });
-});
 
-configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('modal: incorrect usage'), () => {
     test.beforeEach(async ({ page }) => {
       await page.goto('/src/components/modal/test/basic', config);
