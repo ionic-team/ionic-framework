@@ -1,4 +1,5 @@
-import type { E2EPage, E2ELocator, EventSpy, E2EPageOptions } from '@utils/test/playwright';
+import { expect } from '@playwright/test';
+import type { E2EPage, E2ELocator, EventSpy, E2EPageOptions, ScreenshotFn } from '@utils/test/playwright';
 
 import type { SelectPopoverOption } from '../select-popover-interface';
 
@@ -46,6 +47,10 @@ export class SelectPopoverPage {
     await this.popover.evaluate((popover: HTMLIonPopoverElement) => popover.present());
 
     await ionPopoverDidPresent.next();
+  }
+
+  async screenshot(screenshot: ScreenshotFn, name: string) {
+    await expect(this.selectPopover).toHaveScreenshot(screenshot(name));
   }
 
   async clickOption(value: string) {

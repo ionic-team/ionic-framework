@@ -66,3 +66,19 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     });
   });
 });
+
+/**
+ * This behavior does not vary across directions.
+ * The components used inside of `ion-select-popover`
+ * do have RTL logic, but those are tested in their
+ * respective component test files.
+ */
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('select-popover: rendering'), () => {
+    test('should not have visual regressions', async ({ page }) => {
+      const selectPopoverPage = new SelectPopoverPage(page);
+      await selectPopoverPage.setup(config, options, false);
+      await screenshot.screenshot(screenshot, 'select-popover-diff');
+    });
+  });
+});
