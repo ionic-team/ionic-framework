@@ -15,7 +15,7 @@ npm pack ../../../dist
 npm pack ../../../../packages/angular-server/dist
 
 # Install Dependencies
-npm install *.tgz --no-save --legacy-peer-deps
+npm install *.tgz --no-save
 
 # Delete Angular cache directory
 rm -rf .angular/
