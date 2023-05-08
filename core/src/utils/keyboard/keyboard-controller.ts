@@ -1,5 +1,6 @@
 import { KeyboardResize, Keyboard } from '../native/keyboard';
 import { win } from '../window';
+import { raf } from '@utils/helpers';
 
 /**
  * Creates a controller that tracks and reacts to opening or closing the keyboard.
@@ -62,7 +63,12 @@ export const createKeyboardController = async (
           clearTimeout(timeout);
           timeout = undefined;
         }
-        resolve();
+        /**
+         * The raf ensures that this resolves the
+         * frame after resizing has completed otherwise
+         * there may still be a flicker.
+         */
+        raf(() => resolve());
       };
       win?.addEventListener('resize', callback, { once: true });
 
