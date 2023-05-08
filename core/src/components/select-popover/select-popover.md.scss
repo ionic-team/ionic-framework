@@ -1,12 +1,22 @@
 @import "./select-popover";
 @import "./select-popover.md.vars";
 
-ion-list ion-radio {
-  opacity: 0;
+ion-list ion-radio::part(container) {
+  display: none;
 }
 
 ion-item {
   --inner-border-width: 0;
+}
+
+// multiple selection only
+// avoids ion-items wrapped in ion-radio-group
+ion-list > ion-item::part(native) {
+  --padding-start: 8px;
+}
+
+ion-list ion-checkbox::part(container) {
+  @include margin(18px, 24px, 18px, 12px);
 }
 
 .item-radio-checked {

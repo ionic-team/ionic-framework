@@ -122,13 +122,13 @@ export class SelectPopover implements ComponentInterface {
           value={option.value}
           disabled={option.disabled}
           checked={option.checked}
-          legacy={true}
+          labelPlacement="end"
+          justify="start"
           onIonChange={(ev) => {
             this.setChecked(ev);
             this.callOptionHandler(ev);
           }}
-        ></ion-checkbox>
-        <ion-label>{option.text}</ion-label>
+        >{option.text}</ion-checkbox>
       </ion-item>
     ));
   }
@@ -140,11 +140,11 @@ export class SelectPopover implements ComponentInterface {
       <ion-radio-group value={checked} onIonChange={(ev) => this.callOptionHandler(ev)}>
         {options.map((option) => (
           <ion-item class={getClassMap(option.cssClass)}>
-            <ion-label>{option.text}</ion-label>
             <ion-radio
               value={option.value}
               disabled={option.disabled}
-              legacy={true}
+              labelPlacement="start"
+              justify="space-between"
               onClick={() => this.dismissParentPopover()}
               onKeyUp={(ev) => {
                 if (ev.key === ' ') {
@@ -156,7 +156,7 @@ export class SelectPopover implements ComponentInterface {
                   this.dismissParentPopover();
                 }
               }}
-            ></ion-radio>
+            >{option.text}</ion-radio>
           </ion-item>
         ))}
       </ion-radio-group>

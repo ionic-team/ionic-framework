@@ -8,3 +8,8 @@ ion-list-header,
 ion-label {
   @include margin(0);
 }
+
+ion-checkbox {
+  width: 100%;
+  margin-inline-end: 0;
+}
