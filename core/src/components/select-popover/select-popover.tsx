@@ -128,7 +128,9 @@ export class SelectPopover implements ComponentInterface {
             this.setChecked(ev);
             this.callOptionHandler(ev);
           }}
-        >{option.text}</ion-checkbox>
+        >
+          {option.text}
+        </ion-checkbox>
       </ion-item>
     ));
   }
@@ -156,7 +158,9 @@ export class SelectPopover implements ComponentInterface {
                   this.dismissParentPopover();
                 }
               }}
-            >{option.text}</ion-radio>
+            >
+              {option.text}
+            </ion-radio>
           </ion-item>
         ))}
       </ion-radio-group>
