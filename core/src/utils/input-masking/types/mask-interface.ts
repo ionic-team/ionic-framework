@@ -43,8 +43,17 @@ export type MaskPostprocessor = (elementState: ElementState, initialElementState
 
 export interface MaskOptions {
   readonly mask: MaskExpression | ((elementState: ElementState) => MaskExpression);
+  /**
+   * @internal
+   */
   readonly preprocessor?: MaskPreprocessor;
+  /**
+   * @internal
+   */
   readonly postprocessor?: MaskPostprocessor;
+  /**
+   * @internal
+   */
   readonly overwriteMode?: 'replace' | 'shift' | ((elementState: ElementState) => 'replace' | 'shift');
 }
 

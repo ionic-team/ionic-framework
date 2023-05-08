@@ -1230,7 +1230,7 @@ export namespace Components {
         /**
           * The predefined format of the user's input. For example, you can set a mask that only accepts digits, or you can configure a more complex pattern like a phone number or credit card number.  The mask supports two formats: 1. A valid [regular expression pattern](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions) 2. An array containing regular expression and fixed character patterns  The fixed characters in the mask cannot be erased or replaced by the user. For example in a phone number mask, the `(`, `)` and `-` are examples of fixed characters.
          */
-        "mask"?: MaskExpression;
+        "mask"?: MaskExpression | string;
         /**
           * Character or string to cover unfilled parts of the mask. The default character is `_`. If set to `null`, `undefined` or an empty string, unfilled parts will be empty as in a regular input.
          */
@@ -5272,7 +5272,7 @@ declare namespace LocalJSX {
         /**
           * The predefined format of the user's input. For example, you can set a mask that only accepts digits, or you can configure a more complex pattern like a phone number or credit card number.  The mask supports two formats: 1. A valid [regular expression pattern](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions) 2. An array containing regular expression and fixed character patterns  The fixed characters in the mask cannot be erased or replaced by the user. For example in a phone number mask, the `(`, `)` and `-` are examples of fixed characters.
          */
-        "mask"?: MaskExpression;
+        "mask"?: MaskExpression | string;
         /**
           * Character or string to cover unfilled parts of the mask. The default character is `_`. If set to `null`, `undefined` or an empty string, unfilled parts will be empty as in a regular input.
          */

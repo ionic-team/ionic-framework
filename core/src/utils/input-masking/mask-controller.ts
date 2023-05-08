@@ -1,8 +1,9 @@
-import { MaskHistory } from './classes';
+import { MaskHistory, MaskModel } from './classes';
 import { MASK_DEFAULT_OPTIONS } from './constants';
 import { isBeforeInputEventSupported, isEventProducingCharacter, EventListener } from './dom';
 import type { ElementState, MaskOptions, SelectionRange, TypedInputEvent } from './types/mask-interface';
 import { getNotEmptySelection } from './utils';
+import { maskTransform } from './utils/transform';
 
 /**
  * The mask controller class. It is used to control the mask of the element.
@@ -22,21 +23,21 @@ export class MaskController extends MaskHistory {
 
   constructor(private readonly element: HTMLInputElement, private readonly maskOptions: MaskOptions) {
     super();
-    console.debug('MaskController', {
-      element,
-      maskOptions,
-      options: this.options,
-    });
     this.ensureValueFitsMask();
     this.updateHistory(this.elementState);
 
-    this.eventListener.listen('keydown', (event) => {
-      console.debug('keydown', event);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    this.eventListener.listen('keydown', (_event) => {
+      // TODO handle undo and redo
     });
 
     if (isBeforeInputEventSupported(element)) {
       this.eventListener.listen('beforeinput', (event) => {
-        console.debug('beforeinput', event);
+        switch (event.type) {
+          case 'insertText':
+          default:
+            return this.handleInsert(event, event.data || '');
+        }
       });
     } else {
       /**
@@ -52,7 +53,8 @@ export class MaskController extends MaskHistory {
     }
 
     this.eventListener.listen('input', () => {
-      console.debug('input');
+      this.ensureValueFitsMask();
+      this.updateHistory(this.elementState);
     });
   }
 
@@ -108,7 +110,7 @@ export class MaskController extends MaskHistory {
   }
 
   private ensureValueFitsMask(): void {
-    // TODO implementation
+    this.updateElementState(maskTransform(this.elementState, this.options));
   }
 
   private handleDelete({
@@ -132,18 +134,58 @@ export class MaskController extends MaskHistory {
   }
 
   private handleInsert(event: Event | TypedInputEvent, data: string): void {
-    // TODO implementation
-    console.debug('handleInsert', event, data);
+    // Store the initial element state before processing the input.
+    const initialElementState = this.elementState;
+
+    // Preprocess the input using the preprocessor function.
+    const { elementState, data: insertedText = data } = this.options.preprocessor(
+      {
+        data,
+        elementState: initialElementState,
+      },
+      'insert'
+    );
+
+    // Create a new MaskModel object and attempt to add new characters to the input.
+    const maskModel = new MaskModel(elementState, this.options);
+    try {
+      maskModel.addCharacters(elementState.selection, insertedText);
+    } catch {
+      // If adding new characters fails, prevent the default behavior of the input event.
+      return event.preventDefault();
+    }
+
+    // Compute the new input value and element state after adding the new characters.
+    const [from, to] = elementState.selection;
+    const newPossibleValue = elementState.value.slice(0, from) + data + elementState.value.slice(to);
+
+    // Postprocess the input using the postprocessor function.
+    const newElementState = this.options.postprocessor(maskModel, initialElementState);
+
+    // If the new input value is different from the computed value, update the input element and history.
+    if (newPossibleValue !== newElementState.value) {
+      event.preventDefault();
+
+      // Update the element state and trigger a new input event with updated data.
+      this.updateElementState(newElementState, {
+        data,
+        inputType: 'inputType' in event ? event.inputType : 'insertText',
+      });
+      this.updateHistory(newElementState);
+    }
   }
 
   private updateSelectionRange([from, to]: SelectionRange): void {
-    // TODO implementation
-    console.debug('updateSelectionRange', [from, to]);
+    const { element } = this;
+    if (element.selectionStart !== from || element.selectionEnd !== to) {
+      element.setSelectionRange?.(from, to);
+    }
   }
 
   private updateValue(newValue: string): void {
-    // TODO implementation
-    console.debug('updateValue', newValue);
+    if (this.element.value !== newValue) {
+      this.element.value = newValue;
+    }
   }
 
   private dispatchInputEvent(
@@ -152,7 +194,14 @@ export class MaskController extends MaskHistory {
       data: null,
     }
   ): void {
-    // TODO implementation
-    console.debug('dispatchInputEvent', eventInit);
+    if (globalThis?.InputEvent !== undefined) {
+      this.element.dispatchEvent(
+        new InputEvent('input', {
+          ...eventInit,
+          bubbles: true,
+          cancelable: false,
+        })
+      );
+    }
   }
 }

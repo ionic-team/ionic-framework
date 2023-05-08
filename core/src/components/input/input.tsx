@@ -8,7 +8,7 @@ import type { LegacyFormController } from '../../utils/forms';
 import { createLegacyFormController } from '../../utils/forms';
 import type { Attributes } from '../../utils/helpers';
 import { inheritAriaAttributes, debounceEvent, findItemLabel, inheritAttributes } from '../../utils/helpers';
-import { MaskController } from '../../utils/input-masking';
+import { MaskController, formatMask } from '../../utils/input-masking';
 import type { MaskExpression, MaskPlaceholder, MaskVisibility } from '../../utils/input-masking/public-api';
 import { printIonWarning } from '../../utils/logging';
 import { createColorClasses, hostContext } from '../../utils/theme';
@@ -288,7 +288,7 @@ export class Input implements ComponentInterface {
    * in a phone number mask, the `(`, `)` and `-` are examples of fixed characters.
    *
    */
-  @Prop() mask?: MaskExpression;
+  @Prop() mask?: MaskExpression | string;
 
   /**
    * The visibility of the mask placeholder. With `always`, the placeholder will be
@@ -405,9 +405,12 @@ export class Input implements ComponentInterface {
     this.originalIonInput = this.ionInput;
 
     if (mask !== undefined && nativeInput) {
-      this.maskController = new MaskController(nativeInput, {
-        mask,
-      });
+      const formattedMask = formatMask(mask);
+      if (formattedMask) {
+        this.maskController = new MaskController(nativeInput, {
+          mask: formattedMask,
+        });
+      }
     }
   }
 
