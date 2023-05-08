@@ -98,8 +98,8 @@ export class Range implements ComponentInterface {
 
   /**
    * The text to display as the control's label. Use this over the `label` slot if
-   * you only need plain text. If both this and the slot are used, this property
-   * takes priority.
+   * you only need plain text. The `label` property will take priority over the
+   * `label` slot if both are used.
    */
   @Prop() label?: string;
 

@@ -2290,7 +2290,7 @@ export namespace Components {
          */
         "dualKnobs": boolean;
         /**
-          * The text to display as the control's label. Use this over the `label` slot if you only need plain text. If both this and the slot are used, this property takes priority.
+          * The text to display as the control's label. Use this over the `label` slot if you only need plain text. The `label` property will take priority over the `label` slot if both are used.
          */
         "label"?: string;
         /**
@@ -6309,7 +6309,7 @@ declare namespace LocalJSX {
          */
         "dualKnobs"?: boolean;
         /**
-          * The text to display as the control's label. Use this over the `label` slot if you only need plain text. If both this and the slot are used, this property takes priority.
+          * The text to display as the control's label. Use this over the `label` slot if you only need plain text. The `label` property will take priority over the `label` slot if both are used.
          */
         "label"?: string;
         /**
