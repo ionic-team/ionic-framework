@@ -21,7 +21,7 @@ export function getDecimalPlaces(n: number) {
  * desired. For example, 1 / 3 = 0.33333(...), but
  * roundToMaxDecimalPlaces((1 / 3), 1, 3) will return 0, since both
  * 1 and 3 are whole numbers.
- * 
+ *
  * Note that extremely precise reference numbers may lead to rounding
  * errors not being trimmed, due to the error result having the same or
  * fewer decimal places as the reference(s). This is acceptable as we
