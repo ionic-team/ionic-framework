@@ -85,7 +85,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       await selectPopoverPage.screenshot(screenshot, 'select-popover-diff');
     });
     test('should not have visual regressions with multiple selection', async () => {
-      await selectPopoverPage.setup(checkedOptions, options, true);
+      await selectPopoverPage.setup(config, options, true);
       await selectPopoverPage.screenshot(screenshot, 'select-popover-multiple-diff');
     });
   });
