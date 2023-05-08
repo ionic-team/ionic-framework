@@ -4,7 +4,7 @@ import { configs, test } from '@utils/test/playwright';
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('picker-column'), () => {
     test.beforeEach(async ({ page }) => {
-      await page.goto('/src/components/picker-column/test/columns', config);
+      await page.goto('/src/components/picker-column/test/dynamic-options', config);
     });
     test.describe('single column', () => {
       test('should remove option after first render', async ({ page }) => {

@@ -33,6 +33,7 @@ export class PickerColumnCmp implements ComponentInterface {
   private rafId?: ReturnType<typeof requestAnimationFrame>;
   private tmrId?: ReturnType<typeof setTimeout>;
   private noAnimate = true;
+  private didColChange = false;
 
   @Element() el!: HTMLElement;
 
@@ -46,7 +47,7 @@ export class PickerColumnCmp implements ComponentInterface {
   @Prop() col!: PickerColumn;
   @Watch('col')
   protected colChanged() {
-    this.noAnimate = true;
+    this.didColChange = true;
     this.refresh();
   }
 
@@ -80,6 +81,7 @@ export class PickerColumnCmp implements ComponentInterface {
     // Otherwise, the options will will render
     // at the top of the column and transition down
     this.tmrId = setTimeout(() => {
+      this.noAnimate = false;
       // After initialization, `refresh()` will be called
       // At this point, animation will be enabled. The options will
       // animate as they are being selected.
@@ -92,8 +94,8 @@ export class PickerColumnCmp implements ComponentInterface {
   }
 
   componentDidUpdate(): void | Promise<void> {
-    // Options have changed since last update.
-    if (this.noAnimate) {
+    // Options may have changed since last update.
+    if (this.didColChange) {
       this.onDomChange(true);
     }
   }
@@ -176,7 +178,7 @@ export class PickerColumnCmp implements ComponentInterface {
       }
 
       // Update transition duration
-      if (this.noAnimate) {
+      if (this.noAnimate || this.didColChange) {
         opt.duration = 0;
         button.style.transitionDuration = '';
       } else if (duration !== opt.duration) {
@@ -203,7 +205,7 @@ export class PickerColumnCmp implements ComponentInterface {
       }
     }
 
-    this.noAnimate = false;
+    this.didColChange = false;
     this.col.prevSelected = selectedIndex;
 
     if (saveY) {
@@ -384,7 +386,7 @@ export class PickerColumnCmp implements ComponentInterface {
     const colEl = this.optsEl;
     if (colEl) {
       // DOM READ
-      // We perfom a DOM read over a rendered item, this needs to happen after the first render or after the the column options have changed
+      // We perfom a DOM read over a rendered item, this needs to happen after the first render or after the the column has changed
       this.optHeight = colEl.firstElementChild ? colEl.firstElementChild.clientHeight : 0;
     }
     this.refresh(forceRefresh);

@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
-    <title>Picker Column - Standalone</title>
+    <title>Picker Column - Dynamic Options</title>
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
@@ -97,7 +97,6 @@
         const picker = await pickerController.create({
           columns: this.getColumns(numColumns, numOptions, columnOptions),
           buttons: this.getButtons(),
-          animated: false,
         });
 
         // Selecting the first column's second option will add an option to the second column
