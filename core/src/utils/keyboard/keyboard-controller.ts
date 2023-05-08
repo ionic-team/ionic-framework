@@ -14,6 +14,7 @@ export const createKeyboardController = async (
   let keyboardWillShowHandler: (() => void) | undefined;
   let keyboardWillHideHandler: (() => void) | undefined;
   let keyboardVisible: boolean;
+  let windowHeight = win?.innerHeight;
 
   const init = async () => {
     const resizeOptions = await Keyboard.getResizeMode();
@@ -36,13 +37,18 @@ export const createKeyboardController = async (
   const fireChangeCallback = (state: boolean, resizeMode: KeyboardResize | undefined) => {
     if (keyboardChangeCallback) {
       /**
+       * If the keyboard is closed before the webview resizes initially then no "resize"
+       * event will be fired when the keyboard begins to close.
+       */
+      const hasResized = win === undefined || windowHeight === undefined ? false : windowHeight !== win!.innerHeight;
+      /**
        * If the resize mode is undefined then we cannot safely
        * assume that the web content will resize. This will
        * be the case if an app is deployed to a mobile browser/PWA
        * as the native Capacitor keyboard plugin will not be available.
        */
       const resizePromise =
-        resizeMode === undefined || resizeMode === KeyboardResize.None ? undefined : createResizePromise();
+        hasResized === false || resizeMode === undefined || resizeMode === KeyboardResize.None ? undefined : createResizePromise();
 
       keyboardChangeCallback(state, resizePromise);
     }
