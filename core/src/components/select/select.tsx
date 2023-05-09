@@ -573,7 +573,7 @@ export class Select implements ComponentInterface {
      * TODO FW-3194
      * Remove legacyFormController logic.
      * Remove label and labelText vars
-     * Pass `this.label` instead of `labelText`
+     * Pass `this.labelText` instead of `labelText`
      * when setting the header.
      */
     let label: HTMLElement | null;
@@ -583,7 +583,7 @@ export class Select implements ComponentInterface {
       label = this.getLabel();
       labelText = label ? label.textContent : null;
     } else {
-      labelText = this.label;
+      labelText = this.labelText;
     }
 
     const interfaceOptions = this.interfaceOptions;
@@ -654,6 +654,22 @@ export class Select implements ComponentInterface {
 
   private get childOpts() {
     return Array.from(this.el.querySelectorAll('ion-select-option'));
+  }
+
+  private get labelText() {
+    const { el, label } = this;
+
+    if (label !== undefined) {
+      return label;
+    }
+
+    const labelSlot = el.querySelector('[slot="label"]');
+
+    if (labelSlot !== null) {
+      return labelSlot.textContent;
+    }
+
+    return;
   }
 
   private getText(): string {
