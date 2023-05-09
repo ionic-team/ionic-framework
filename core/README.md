@@ -40,7 +40,7 @@ The `@ionic/core` package can be used in simple HTML, or by vanilla JavaScript w
 * [@ionic/angular](https://www.npmjs.com/package/@ionic/angular)
 
 
-## Custom Elements Build (Experimental)
+## Custom Elements Build
 
 In addition to the default, self lazy-loading components built by Stencil, this package also comes with each component exported as a stand-alone custom element within `@ionic/core/components`. Each component extends `HTMLElement`, and does not lazy-load itself. Instead, this package is useful for projects already using a bundler such as Webpack or Rollup. While all components are available to be imported, the custom elements build also ensures bundlers only import what's used, and tree-shakes any unused components.
 

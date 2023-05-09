@@ -9,7 +9,7 @@ export { ActionSheetOptions } from './components/action-sheet/action-sheet-inter
 export { BreadcrumbCustomEvent } from './components/breadcrumb/breadcrumb-interface';
 export { ScrollBaseCustomEvent, ScrollCallback, ScrollCustomEvent } from './components/content/content-interface';
 export { CheckboxCustomEvent } from './components/checkbox/checkbox-interface';
-export { DatetimeCustomEvent } from './components/datetime/datetime-interface';
+export { DatetimeCustomEvent, DatetimeHighlightStyle } from './components/datetime/datetime-interface';
 export { InfiniteScrollCustomEvent } from './components/infinite-scroll/infinite-scroll-interface';
 export { InputCustomEvent } from './components/input/input-interface';
 export { CounterFormatter } from './components/item/item-interface';
