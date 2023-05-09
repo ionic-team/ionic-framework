@@ -3,7 +3,10 @@ import { configs, test } from '@utils/test/playwright';
 
 import { CardModalPage } from '../fixtures';
 
-configs({ modes: ['ios'] }).forEach(({ title, screenshot, config }) => {
+/**
+ * This behavior does not vary across directions.
+ */
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('card modal: rendering'), () => {
     let cardModalPage: CardModalPage;
     test.beforeEach(async ({ page }) => {
@@ -16,12 +19,7 @@ configs({ modes: ['ios'] }).forEach(({ title, screenshot, config }) => {
       await expect(page).toHaveScreenshot(screenshot(`modal-card-present`));
     });
   });
-});
 
-/**
- * This behavior does not vary across directions.
- */
-configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('card modal: scenario rendering'), () => {
     let cardModalPage: CardModalPage;
     test.beforeEach(async ({ page }) => {
@@ -46,9 +44,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
       await expect(page).toHaveScreenshot(screenshot(`modal-card-custom-stacked-present`));
     });
   });
-});
 
-configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('card modal: functionality'), () => {
     let cardModalPage: CardModalPage;
     test.beforeEach(async ({ page }) => {
