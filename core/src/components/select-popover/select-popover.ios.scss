@@ -1,13 +1,6 @@
 @import "./select-popover";
 @import "./select-popover.ios.vars";
 
-// TODO: remove and make ion-items lines="full" instead once
-// https://github.com/ionic-team/ionic-framework/issues/26955 is fixed
-ion-list ion-item {
-  --inner-border-width: 0;
-  border-bottom: 0.55px var(--border-style) var(--border-color);
-}
-
 ion-list ion-checkbox::part(container) {
   @include margin(2px, 8px, 0, 0);
 }

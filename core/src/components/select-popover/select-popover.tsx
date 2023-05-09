@@ -118,7 +118,6 @@ export class SelectPopover implements ComponentInterface {
     return options.map((option) => (
       <ion-item class={getClassMap(option.cssClass)}>
         <ion-checkbox
-          slot="start"
           value={option.value}
           disabled={option.disabled}
           checked={option.checked}
