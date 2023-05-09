@@ -175,6 +175,10 @@ export class Content implements ComponentInterface {
     /**
      * Only force update if the component is rendered in a browser context.
      * Using `forceUpdate` in a server context with pre-rendering can lead to an infinite loop.
+     * The `hydrateDocument` function in `@stencil/core` will render the `ion-content`, but
+     * `forceUpdate` will trigger another render, locking up the server.
+     *
+     * TODO: Remove if STENCIL-834 determines Stencil will account for this.
      */
     if (Build.isBrowser) {
       if (this.fullscreen) {
