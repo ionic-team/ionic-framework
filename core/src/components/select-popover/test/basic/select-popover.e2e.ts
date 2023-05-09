@@ -46,7 +46,9 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         await expect(selectPopoverPage.popover).not.toBeVisible();
       });
 
-      test('pressing Space on an unselected option should dismiss the popover', async () => {
+      test('pressing Space on an unselected option should dismiss the popover', async ({ skip }) => {
+        skip.browser('firefox', 'https://github.com/ionic-team/ionic-framework/issues/27438');
+
         await selectPopoverPage.setup(config, options, false);
 
         await selectPopoverPage.pressSpaceOnOption('apple');

@@ -43,6 +43,8 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
         // TODO (FW-2979)
         skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
 
+        skip.browser('firefox', 'https://github.com/ionic-team/ionic-framework/issues/27438');
+
         const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
 
         await page.click('#customPopoverSelect');
