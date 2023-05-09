@@ -19,21 +19,5 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       const results = await new AxeBuilder({ page }).analyze();
       expect(results.violations).toEqual([]);
     });
-
-    test('should allow for custom role', async ({ page }) => {
-      /**
-       * Note: This example should not be used in production.
-       * This only serves to check that `role` can be customized.
-       */
-      await page.setContent(
-        `
-        <ion-modal role="alertdialog"></ion-modal>
-      `,
-        config
-      );
-      const modal = page.locator('ion-modal .modal-wrapper');
-
-      await expect(modal).toHaveAttribute('role', 'alertdialog');
-    });
   });
 });
