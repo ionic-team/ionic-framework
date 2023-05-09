@@ -7,7 +7,9 @@ describe('loading: htmlAttributes inheritance', () => {
   it('should correctly inherit attributes on host', async () => {
     const page = await newSpecPage({
       components: [Loading],
-      template: () => <ion-loading htmlAttributes={{ 'data-testid': 'basic-loading', 'aria-label': 'Loading' }}></ion-loading>,
+      template: () => (
+        <ion-loading htmlAttributes={{ 'data-testid': 'basic-loading', 'aria-label': 'Loading' }}></ion-loading>
+      ),
     });
 
     const loading = page.body.querySelector('ion-loading');

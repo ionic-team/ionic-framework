@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs().forEach(({ title, screenshot, config }) => {
+configs().forEach(({ title, config }) => {
   test.describe(title('loading: standalone'), () => {
     test('should open a basic loader', async ({ page }) => {
       await page.goto('/src/components/loading/test/standalone', config);

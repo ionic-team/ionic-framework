@@ -18,7 +18,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await ionLoadingDidPresent.next();
       await expect(loading).toBeVisible();
 
-      await loading.evaluate((el: HTMLIonLoadingElement) => el.isOpen = false);
+      await loading.evaluate((el: HTMLIonLoadingElement) => (el.isOpen = false));
 
       await ionLoadingDidDismiss.next();
       await expect(loading).toBeHidden();
