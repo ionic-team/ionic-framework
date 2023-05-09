@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Listen, Method, Prop, forceUpdate, h, readTask } from '@stencil/core';
+import { Build, Component, Element, Event, Host, Listen, Method, Prop, forceUpdate, h, readTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Color } from '../../interface';
@@ -172,11 +172,13 @@ export class Content implements ComponentInterface {
   }
 
   private resize() {
-    if (this.fullscreen) {
-      readTask(() => this.readDimensions());
-    } else if (this.cTop !== 0 || this.cBottom !== 0) {
-      this.cTop = this.cBottom = 0;
-      forceUpdate(this);
+    if (Build.isBrowser) {
+      if (this.fullscreen) {
+        readTask(() => this.readDimensions());
+      } else if (this.cTop !== 0 || this.cBottom !== 0) {
+        this.cTop = this.cBottom = 0;
+        forceUpdate(this);
+      }
     }
   }
 
@@ -188,7 +190,9 @@ export class Content implements ComponentInterface {
     if (dirty) {
       this.cTop = top;
       this.cBottom = bottom;
-      forceUpdate(this);
+      if (Build.isBrowser) {
+        forceUpdate(this);
+      }
     }
   }
 
