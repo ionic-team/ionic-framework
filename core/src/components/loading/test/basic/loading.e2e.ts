@@ -4,27 +4,28 @@ import { configs, test } from '@utils/test/playwright';
 
 const runVisualTest = async (page: E2EPage, selector: string, screenshot: ScreenshotFn, screenshotModifier: string) => {
   const ionLoadingDidPresent = await page.spyOnEvent('ionLoadingDidPresent');
-  const ionLoadingDidDismiss = await page.spyOnEvent('ionLoadingDidPresent');
 
   await page.click(selector);
 
   await ionLoadingDidPresent.next();
 
   await expect(page).toHaveScreenshot(screenshot(`loading-${screenshotModifier}-diff`));
-
-  const loading = page.locator('ion-loading');
-  await loading.evaluate((el: HTMLIonLoadingElement) => el.dismiss());
-
-  await ionLoadingDidDismiss.next();
-
-  await expect(loading).toBeHidden();
 };
 
 configs().forEach(({ title, screenshot, config }) => {
   test.describe(title('loading: basic'), () => {
     test('should open a basic loader', async ({ page }) => {
       await page.goto('/src/components/loading/test/basic', config);
+      const loading = page.locator('ion-loading');
+      const ionLoadingDidDismiss = await page.spyOnEvent('ionLoadingDidPresent');
+
       await runVisualTest(page, '#basic-loading', screenshot, 'basic');
+
+      await loading.evaluate((el: HTMLIonLoadingElement) => el.dismiss());
+
+      await ionLoadingDidDismiss.next();
+
+      await expect(loading).toBeHidden();
     });
   });
 });
