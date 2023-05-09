@@ -19,6 +19,7 @@
         grid-row-gap: 20px;
         grid-column-gap: 20px;
       }
+
       h2 {
         font-size: 12px;
         font-weight: normal;
@@ -27,6 +28,7 @@
 
         margin-top: 10px;
       }
+
       @media screen and (max-width: 800px) {
         .grid {
           grid-template-columns: 1fr;
@@ -40,7 +42,7 @@
     <ion-app>
       <ion-header>
         <ion-toolbar>
-          <ion-title>Input - Item</ion-title>
+          <ion-title>Input - Mask</ion-title>
         </ion-toolbar>
       </ion-header>
 
@@ -50,6 +52,17 @@
             <h2>US Phone Number</h2>
 
             <ion-input id="input-phone-us" label="Phone"></ion-input>
+          </div>
+          <div class="grid-item">
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>Dynamic Mask</ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                <ion-input id="dynamicMaskInput" label="Enter a mask"></ion-input>
+                <ion-input id="dynamicExample" label="Example"></ion-input>
+              </ion-card-content>
+            </ion-card>
           </div>
         </div>
       </ion-content>
@@ -76,6 +89,22 @@
         /\d/,
         /\d/,
       ];
+
+      inputPhoneUS.addEventListener('ionInput', (ev) => {
+        console.log('** ionInput event **', ev.detail);
+      });
+
+      inputPhoneUS.addEventListener('ionChange', (ev) => {
+        console.log('** ionChange event **', ev.detail);
+      });
+
+      const dynamicMaskInput = document.querySelector('#dynamicMaskInput');
+      dynamicMaskInput.addEventListener('ionChange', (ev) => {
+        const mask = ev.detail.value;
+        const exampleInput = document.querySelector('#dynamicExample');
+        console.log('setting the mask to: ', mask);
+        exampleInput.mask = mask;
+      });
     </script>
   </body>
 </html>

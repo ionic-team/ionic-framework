@@ -374,6 +374,14 @@ export class Input implements ComponentInterface {
     this.emitStyle();
   }
 
+  @Watch('mask')
+  protected maskChanged() {
+    if (this.maskController) {
+      this.maskController.destroy();
+    }
+    this.initInputMask();
+  }
+
   componentWillLoad() {
     const { el } = this;
 
@@ -400,18 +408,9 @@ export class Input implements ComponentInterface {
   }
 
   componentDidLoad() {
-    const { mask, nativeInput } = this;
-
     this.originalIonInput = this.ionInput;
 
-    if (mask !== undefined && nativeInput) {
-      const formattedMask = formatMask(mask);
-      if (formattedMask) {
-        this.maskController = new MaskController(nativeInput, {
-          mask: formattedMask,
-        });
-      }
-    }
+    this.initInputMask();
   }
 
   disconnectedCallback() {
@@ -482,6 +481,18 @@ export class Input implements ComponentInterface {
   private shouldClearOnEdit() {
     const { type, clearOnEdit } = this;
     return clearOnEdit === undefined ? type === 'password' : clearOnEdit;
+  }
+
+  private initInputMask() {
+    const { mask, nativeInput } = this;
+    if (mask !== undefined && nativeInput) {
+      const formattedMask = formatMask(mask);
+      if (formattedMask) {
+        this.maskController = new MaskController(nativeInput, {
+          mask: formattedMask,
+        });
+      }
+    }
   }
 
   private getValue(): string {
