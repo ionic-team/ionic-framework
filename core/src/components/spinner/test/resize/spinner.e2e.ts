@@ -2,9 +2,9 @@ import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
 /**
- * This behavior does not vary across directions.
+ * The resize behavior does not vary across directions or modes.
  */
-configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('spinner: resize'), () => {
     test.beforeEach(async ({ page }) => {
       await page.goto('/src/components/spinner/test/resize', config);
