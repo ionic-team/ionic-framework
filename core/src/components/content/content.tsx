@@ -172,6 +172,10 @@ export class Content implements ComponentInterface {
   }
 
   private resize() {
+    /**
+     * Only force update if the component is rendered in a browser context.
+     * Using `forceUpdate` in a server context with pre-rendering can lead to an infinite loop.
+     */
     if (Build.isBrowser) {
       if (this.fullscreen) {
         readTask(() => this.readDimensions());
@@ -190,9 +194,7 @@ export class Content implements ComponentInterface {
     if (dirty) {
       this.cTop = top;
       this.cBottom = bottom;
-      if (Build.isBrowser) {
-        forceUpdate(this);
-      }
+      forceUpdate(this);
     }
   }
 
