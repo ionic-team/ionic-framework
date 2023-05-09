@@ -19,7 +19,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await ionToastDidPresent.next();
       await expect(toast).toBeVisible();
 
-      await toast.evalutae((el: HTMLIonToastElement) => el.isOpen = false);
+      await toast.evaluate((el: HTMLIonToastElement) => el.isOpen = false);
 
       await ionToastDidDismiss.next();
       await expect(toast).toBeHidden();
