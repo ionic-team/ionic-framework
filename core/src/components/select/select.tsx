@@ -32,9 +32,12 @@ import type { SelectChangeEventDetail, SelectInterface, SelectCompareFn } from '
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
+ * @slot label - label - The label text to associate with the select. Use the "labelPlacement" property to control where the label is placed relative to the select. Use this if you need to render a label with custom HTML.
+ *
  * @part placeholder - The text displayed in the select when there is no value.
  * @part text - The displayed value of the select.
  * @part icon - The select icon container.
+ *
  */
 @Component({
   tag: 'ion-select',
@@ -122,6 +125,10 @@ export class Select implements ComponentInterface {
 
   /**
    * The visible label associated with the select.
+   *
+   * Use this if you need to render a plaintext label.
+   *
+   * The `label` property will take priority over the `label` slot if both are used.
    */
   @Prop() label?: string;
 
@@ -696,13 +703,10 @@ export class Select implements ComponentInterface {
 
   private renderLabel() {
     const { label } = this;
-    if (label === undefined) {
-      return;
-    }
 
     return (
       <div class="label-text-wrapper">
-        <div class="label-text">{this.label}</div>
+        {label === undefined ? <slot name="label"></slot> : <div class="label-text">{label}</div>}
       </div>
     );
   }
