@@ -6,29 +6,14 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
     test.beforeEach(async ({ page }) => {
       await page.goto('/src/components/picker-column/test/dynamic-options', config);
     });
-    test.describe('single column', () => {
-      test('should remove option after first render', async ({ page }) => {
-        const ionPickerDidPresentSpy = await page.spyOnEvent('ionPickerDidPresent');
 
-        await page.click('#single-column-remove-button');
-        await ionPickerDidPresentSpy.next();
+    test.describe('add option', () => {
+      test('should have the style attribute', async ({ page }) => {
+        test.info().annotations.push({
+          type: 'issue',
+          description: 'https://github.com/ionic-team/ionic-framework/issues/21763',
+        });
 
-        await page.waitForChanges();
-
-        const column = page.locator('ion-picker-column');
-        const secondOption = column.locator('.picker-opt').nth(1);
-
-        await secondOption.click();
-
-        await page.waitForChanges();
-
-        const pickerOpts = column.locator('.picker-opts');
-        const optionsCount = await pickerOpts.locator('.picker-opt').count();
-
-        expect(optionsCount).toBe(4);
-      });
-
-      test('should add option after first render', async ({ page }) => {
         const ionPickerDidPresentSpy = await page.spyOnEvent('ionPickerDidPresent');
 
         await page.click('#single-column-add-button');
@@ -37,62 +22,50 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         await page.waitForChanges();
 
         const column = page.locator('ion-picker-column');
-        const secondOption = column.locator('.picker-opt').nth(1);
 
+        const carrotOption = column.locator('.picker-opt').getByText('Carrot');
+        await expect(carrotOption).toBeHidden();
+
+        const secondOption = column.locator('.picker-opt').nth(1);
         await secondOption.click();
 
-        await page.waitForChanges();
-
-        const pickerOpts = column.locator('.picker-opts');
-        const optionsCount = await pickerOpts.locator('.picker-opt').count();
-
-        expect(optionsCount).toBe(6);
+        const style = await carrotOption.getAttribute('style');
+        expect(style).toContain('transform');
       });
     });
 
-    test.describe('multiple columns', () => {
-      test('should remove option after first render', async ({ page }) => {
+    test.describe('remove option', () => {
+      test('should remove selected last option', async ({ page }) => {
+        test.info().annotations.push({
+          type: 'issue',
+          description: 'https://github.com/ionic-team/ionic-framework/issues/21763',
+        });
+
+        const errors: any[] = [];
+
+        page.on('console', (msg) => {
+          if (msg.type() === 'error') {
+            errors.push(msg);
+          }
+        });
+
         const ionPickerDidPresentSpy = await page.spyOnEvent('ionPickerDidPresent');
 
-        await page.click('#multiple-column-remove-button');
+        await page.click('#single-column-remove-button');
         await ionPickerDidPresentSpy.next();
 
         await page.waitForChanges();
 
-        const firstColumn = page.locator('ion-picker-column').first();
-        const secondOption = firstColumn.locator('.picker-opt').nth(1);
+        const column = page.locator('ion-picker-column');
 
-        await secondOption.click();
+        const middleOption = column.locator('.picker-opt').nth(2);
+        await middleOption.click();
 
-        await page.waitForChanges();
-
-        const secondColumn = page.locator('ion-picker-column').last();
-        const pickerOpts = secondColumn.locator('.picker-opts');
-        const optionsCount = await pickerOpts.locator('.picker-opt').count();
-
-        expect(optionsCount).toBe(4);
-      });
-
-      test('should add option after first render', async ({ page }) => {
-        const ionPickerDidPresentSpy = await page.spyOnEvent('ionPickerDidPresent');
-
-        await page.click('#multiple-column-add-button');
-        await ionPickerDidPresentSpy.next();
+        const lastOption = column.locator('.picker-opt').last();
+        await lastOption.click();
 
         await page.waitForChanges();
-
-        const firstColumn = page.locator('ion-picker-column').first();
-        const secondOption = firstColumn.locator('.picker-opt').nth(1);
-
-        await secondOption.click();
-
-        await page.waitForChanges();
-
-        const secondColumn = page.locator('ion-picker-column').last();
-        const pickerOpts = secondColumn.locator('.picker-opts');
-        const optionsCount = await pickerOpts.locator('.picker-opt').count();
-
-        expect(optionsCount).toBe(6);
+        expect(errors.length).toBe(0);
       });
     });
   });

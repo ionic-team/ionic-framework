@@ -93,10 +93,11 @@ export class PickerColumnCmp implements ComponentInterface {
     this.onDomChange();
   }
 
-  componentDidUpdate(): void | Promise<void> {
+  componentDidUpdate() {
     // Options may have changed since last update.
     if (this.didColChange) {
-      this.onDomChange(true);
+      this.onDomChange(true, false);
+      this.didColChange = false;
     }
   }
 
@@ -143,10 +144,12 @@ export class PickerColumnCmp implements ComponentInterface {
     const children = this.optsEl.children;
 
     // Options might have been changed
-    // ex: adding or removing
     // `this.optsEl` children will not match the new `this.col` order
     // until after `componentDidUpdate()`
     // Skip this update cycle
+    // example:
+    // - Select the last option of the column
+    // - Remove this option dynamically
     if (children.length !== col.options.length) {
       return;
     }
@@ -178,7 +181,7 @@ export class PickerColumnCmp implements ComponentInterface {
       }
 
       // Update transition duration
-      if (this.noAnimate || this.didColChange) {
+      if (this.noAnimate) {
         opt.duration = 0;
         button.style.transitionDuration = '';
       } else if (duration !== opt.duration) {
@@ -205,7 +208,6 @@ export class PickerColumnCmp implements ComponentInterface {
       }
     }
 
-    this.didColChange = false;
     this.col.prevSelected = selectedIndex;
 
     if (saveY) {
@@ -352,7 +354,7 @@ export class PickerColumnCmp implements ComponentInterface {
     }
   }
 
-  private refresh(forceRefresh?: boolean) {
+  private refresh(forceRefresh?: boolean, animated?: boolean) {
     let min = this.col.options.length - 1;
     let max = 0;
     const options = this.col.options;
@@ -377,19 +379,20 @@ export class PickerColumnCmp implements ComponentInterface {
     const selectedIndex = clamp(min, this.col.selectedIndex ?? 0, max);
     if (this.col.prevSelected !== selectedIndex || forceRefresh) {
       const y = selectedIndex * this.optHeight * -1;
+      const duration = animated === false ? 0 : TRANSITION_DURATION;
       this.velocity = 0;
-      this.update(y, TRANSITION_DURATION, true);
+      this.update(y, duration, true);
     }
   }
 
-  private onDomChange(forceRefresh?: boolean) {
+  private onDomChange(forceRefresh?: boolean, animated?: boolean) {
     const colEl = this.optsEl;
     if (colEl) {
       // DOM READ
       // We perfom a DOM read over a rendered item, this needs to happen after the first render or after the the column has changed
       this.optHeight = colEl.firstElementChild ? colEl.firstElementChild.clientHeight : 0;
     }
-    this.refresh(forceRefresh);
+    this.refresh(forceRefresh, animated);
   }
 
   render() {

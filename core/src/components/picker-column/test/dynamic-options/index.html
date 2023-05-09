@@ -64,7 +64,6 @@
         const picker = await pickerController.create({
           columns: this.getColumns(numColumns, numOptions, columnOptions),
           buttons: this.getButtons(),
-          animated: false,
         });
 
         // Selecting the first column's second option will remove the second column's first option
@@ -75,8 +74,8 @@
 
           // The first column was selected
           if (event.detail.name === 'col-0') {
-            // The second option was selected
-            if (column.value === 1) {
+            // The last option was selected
+            if (column.value === 4) {
               const columnIndex = numColumns - 1;
               // Remove the first from the second column
               const filteredOptions = newCols[columnIndex].options.filter((o) => o.value !== 0);
