@@ -81,12 +81,24 @@ export const createKeyboardController = async (
      * and we need to listen for that event.
      */
     return new Promise((resolve) => {
-      let timeout: ReturnType<typeof setTimeout> | undefined;
+      let initialResize = true;
+
       const callback = () => {
-        if (timeout !== undefined) {
-          clearTimeout(timeout);
-          timeout = undefined;
+        /**
+         * As per the spec, the ResizeObserver
+         * will fire when observation starts if
+         * the observed element is rendered and does not
+         * have a size of 0 x 0. As a result, we want to ignore the
+         * initial resize event.
+         * https://www.w3.org/TR/resize-observer/#intro
+         */
+        if (initialResize) {
+          initialResize = false;
+          return;
         }
+
+        ro.disconnect();
+
         /**
          * The raf ensures that this resolves the
          * frame after resizing has completed otherwise
@@ -94,14 +106,15 @@ export const createKeyboardController = async (
          */
         raf(() => resolve());
       };
-      win?.addEventListener('resize', callback, { once: true });
 
       /**
-       * In the event that the `resize` event never fires,
-       * create a fallback of 1000ms so code does not get stuck
-       * in an inconsistent state.
+       * In Capacitor there can be delay between when the window
+       * resizes and when the body resizes, so we cannot
+       * rely on a 'resize' event listener on the window.
+       * Instead, we need to determine when the body resizes.
        */
-      timeout = setTimeout(callback, 1000);
+      const ro = new ResizeObserver(callback);
+      ro.observe(document.body);
     });
   };
 
