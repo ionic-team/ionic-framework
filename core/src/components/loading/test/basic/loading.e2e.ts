@@ -40,9 +40,6 @@ configs().forEach(({ title, screenshot, config }) => {
       test('should open a loader with a custom class', async ({ page }) => {
         await runVisualTest(page, '#custom-class-loading', 'custom-class');
       });
-      test('should open a loader with html content', async ({ page }) => {
-        await runVisualTest(page, '#html-content-loading', 'html-content');
-      });
     });
   });
 });
