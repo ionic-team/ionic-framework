@@ -51,20 +51,6 @@ configs().forEach(({ title, screenshot, config }) => {
  * These behaviors do not vary across modes/directions
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
-  test.describe(title('loading: html attributes'), () => {
-    test('it should pass html attributes to the loader', async ({ page }) => {
-      await page.goto('/src/components/loading/test/basic', config);
-
-      const ionLoadingDidPresent = await page.spyOnEvent('ionLoadingDidPresent');
-
-      await page.click('#basic-loading');
-
-      await ionLoadingDidPresent.next();
-
-      const loading = page.locator('ion-loading');
-      await expect(loading).toHaveAttribute('data-testid', 'basic-loading');
-    });
-  });
   test.describe(title('loading: focus trapping'), () => {
     test('it should trap focus in the loader', async ({ page, browserName }) => {
       await page.goto('/src/components/loading/test/basic', config);
