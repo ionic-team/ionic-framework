@@ -46,6 +46,7 @@ const projects: Project<PlaywrightTestOptions, PlaywrightWorkerOptions>[] = [
  * See https://playwright.dev/docs/test-configuration.
  */
 const config: PlaywrightTestConfig = {
+  fullyParallel: true,
   testMatch: '*.e2e.ts',
   expect: {
     /**
@@ -67,7 +68,7 @@ const config: PlaywrightTestConfig = {
   /* Flaky test should be either addressed or disabled until we can address them */
   retries: 0,
   /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : undefined,
+  workers: process.env.CI ? 2 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
