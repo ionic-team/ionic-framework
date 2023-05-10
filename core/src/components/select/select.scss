@@ -294,7 +294,8 @@ button {
  * works on block-level elements. A flex item is
  * considered blockified (https://www.w3.org/TR/css-display-3/#blockify).
  */
-.label-text {
+.label-text,
+::slotted([slot="label"]) {
   text-overflow: ellipsis;
 
   white-space: nowrap;
