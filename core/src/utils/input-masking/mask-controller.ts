@@ -2,7 +2,7 @@ import { MaskHistory, MaskModel } from './classes';
 import { MASK_DEFAULT_OPTIONS } from './constants';
 import { isBeforeInputEventSupported, isEventProducingCharacter, EventListener } from './dom';
 import type { ElementState, MaskOptions, SelectionRange, TypedInputEvent } from './types/mask-interface';
-import { getNotEmptySelection } from './utils';
+import { areElementValuesEqual, getLineSelection, getNotEmptySelection, getWordSelection } from './utils';
 import { maskTransform } from './utils/transform';
 
 /**
@@ -33,7 +33,37 @@ export class MaskController extends MaskHistory {
 
     if (isBeforeInputEventSupported(element)) {
       this.eventListener.listen('beforeinput', (event) => {
-        switch (event.type) {
+        const isForward = event.inputType.includes('Forward');
+
+        this.updateHistory(this.elementState);
+
+        switch (event.inputType) {
+          case 'deleteByCut':
+          case 'deleteContentBackward':
+          case 'deleteContentForward':
+            return this.handleDelete({
+              event,
+              isForward,
+              selection: getNotEmptySelection(this.elementState, isForward),
+            });
+          case 'deleteWordForward':
+          case 'deleteWordBackward':
+            return this.handleDelete({
+              event,
+              isForward,
+              selection: getWordSelection(this.elementState, isForward),
+              force: true,
+            });
+          case 'deleteSoftLineBackward':
+          case 'deleteSoftLineForward':
+          case 'deleteHardLineBackward':
+          case 'deleteHardLineForward':
+            return this.handleDelete({
+              event,
+              isForward,
+              selection: getLineSelection(this.elementState, isForward),
+              force: true,
+            });
           case 'insertText':
           default:
             return this.handleInsert(event, event.data || '');
@@ -124,13 +154,49 @@ export class MaskController extends MaskHistory {
     isForward: boolean;
     force?: boolean;
   }): void {
-    // TODO implementation
-    console.debug('handleDelete', {
-      event,
+    const initialState: ElementState = {
+      value: this.elementState.value,
       selection,
-      isForward,
-      force,
+    };
+    const [initialFrom, initialTo] = initialState.selection;
+    const { elementState } = this.options.preprocessor(
+      {
+        elementState: initialState,
+        data: '',
+      },
+      isForward ? 'deleteForward' : 'deleteBackward',
+    );
+    const maskModel = new MaskModel(elementState, this.options);
+    const [from, to] = elementState.selection;
+
+    maskModel.deleteCharacters([from, to]);
+
+    const newElementState = this.options.postprocessor(maskModel, initialState);
+    const newPossibleValue =
+      initialState.value.slice(0, initialFrom) +
+      initialState.value.slice(initialTo);
+
+    if (newPossibleValue === newElementState.value && !force) {
+      return;
+    }
+
+    event.preventDefault();
+
+    if (areElementValuesEqual(initialState, elementState, maskModel, newElementState)) {
+      // User presses Backspace/Delete for the fixed value
+      return this.updateSelectionRange(isForward ? [to, to] : [from, from]);
+    }
+
+    // TODO: drop it when `event: Event | TypedInputEvent` => `event: TypedInputEvent`
+    const inputTypeFallback = isForward
+      ? 'deleteContentForward'
+      : 'deleteContentBackward';
+
+    this.updateElementState(newElementState, {
+      inputType: 'inputType' in event ? event.inputType : inputTypeFallback,
+      data: null,
     });
+    this.updateHistory(newElementState);
   }
 
   private handleInsert(event: Event | TypedInputEvent, data: string): void {
