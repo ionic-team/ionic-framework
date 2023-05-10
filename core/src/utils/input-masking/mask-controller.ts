@@ -33,7 +33,7 @@ export class MaskController extends MaskHistory {
 
     if (isBeforeInputEventSupported(element)) {
       this.eventListener.listen('beforeinput', (event) => {
-        switch (event.type) {
+        switch (event.inputType) {
           case 'insertText':
           default:
             return this.handleInsert(event, event.data || '');
