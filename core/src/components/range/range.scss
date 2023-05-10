@@ -18,7 +18,6 @@
    * @prop --pin-color: Color of the range pin (only available in MD mode)
    */
   --knob-handle-size: calc(var(--knob-size) * 2);
-  --margin: #{$form-control-label-margin};
 
   display: flex;
   position: relative;
@@ -271,7 +270,7 @@
    * the range should be on the end
    * when the label sits at the start.
    */
-  @include margin(0, var(--margin), 0, 0);
+  @include margin(0, $form-control-label-margin, 0, 0);
 }
 
 // Range Label Placement - End
@@ -291,7 +290,7 @@
  * when the label sits at the end.
  */
 :host(.range-label-placement-end) .label-text-wrapper {
-  @include margin(0, 0, 0, var(--margin));
+  @include margin(0, 0, 0, $form-control-label-margin);
 }
 
 // Range Label Placement - Fixed
@@ -303,7 +302,7 @@
    * the range should be on the end
    * when the label sits at the start.
    */
-  @include margin(0, var(--margin), 0, 0);
+  @include margin(0, $form-control-label-margin, 0, 0);
 }
 
 /**
