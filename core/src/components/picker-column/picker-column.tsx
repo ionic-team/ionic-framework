@@ -33,7 +33,12 @@ export class PickerColumnCmp implements ComponentInterface {
   private rafId?: ReturnType<typeof requestAnimationFrame>;
   private tmrId?: ReturnType<typeof setTimeout>;
   private noAnimate = true;
-  private didColChange = false;
+  // `colDidChange` is a flag that gets set when the column is changed
+  // dynamically. When this flag is set, the column will refresh
+  // to incorporate the new column data.
+  // Ex: column is created with 3 options. User updates the column data
+  // to have 5 options. The column will still think it only has 3 options.
+  private colDidChange = false;
 
   @Element() el!: HTMLElement;
 
@@ -47,8 +52,7 @@ export class PickerColumnCmp implements ComponentInterface {
   @Prop() col!: PickerColumn;
   @Watch('col')
   protected colChanged() {
-    this.didColChange = true;
-    this.refresh();
+    this.colDidChange = true;
   }
 
   async connectedCallback() {
@@ -95,9 +99,12 @@ export class PickerColumnCmp implements ComponentInterface {
 
   componentDidUpdate() {
     // Options may have changed since last update.
-    if (this.didColChange) {
+    if (this.colDidChange) {
+      // Animation must be disabled through the `onDomChange` parameter.
+      // Otherwise, the recently added options will will render
+      // at the top of the column and transition down
       this.onDomChange(true, false);
-      this.didColChange = false;
+      this.colDidChange = false;
     }
   }
 
@@ -142,17 +149,6 @@ export class PickerColumnCmp implements ComponentInterface {
     const scaleStr = `scale(${this.scaleFactor})`;
 
     const children = this.optsEl.children;
-
-    // Options might have been changed
-    // `this.optsEl` children will not match the new `this.col` order
-    // until after `componentDidUpdate()`
-    // Skip this update cycle
-    // example:
-    // - Select the last option of the column
-    // - Remove this option dynamically
-    if (children.length !== col.options.length) {
-      return;
-    }
 
     for (let i = 0; i < children.length; i++) {
       const button = children[i] as HTMLElement;
@@ -379,7 +375,7 @@ export class PickerColumnCmp implements ComponentInterface {
     const selectedIndex = clamp(min, this.col.selectedIndex ?? 0, max);
     if (this.col.prevSelected !== selectedIndex || forceRefresh) {
       const y = selectedIndex * this.optHeight * -1;
-      const duration = animated === false ? 0 : TRANSITION_DURATION;
+      const duration = animated ? TRANSITION_DURATION : 0;
       this.velocity = 0;
       this.update(y, duration, true);
     }
