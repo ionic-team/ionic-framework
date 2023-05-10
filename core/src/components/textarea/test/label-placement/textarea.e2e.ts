@@ -179,6 +179,19 @@ configs().forEach(({ title, screenshot, config }) => {
       const textarea = page.locator('ion-textarea');
       expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-placement-floating-no-value`));
     });
+    test('label should appear on top of the textarea when there is a placeholder and no value', async ({ page }) => {
+      await page.setContent(
+        `
+         <ion-textarea label="Standard" label-placement="floating" placeholder="Placeholder"></ion-textarea>
+       `,
+        config
+      );
+
+      const textarea = page.locator('ion-textarea');
+      expect(await textarea.screenshot()).toMatchSnapshot(
+        screenshot(`textarea-placement-floating-no-value-placeholder`)
+      );
+    });
     test('label should appear on top of the textarea when the textarea is focused', async ({ page }) => {
       await page.setContent(
         `
