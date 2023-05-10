@@ -35,7 +35,9 @@ export class PickerColumnCmp implements ComponentInterface {
   private noAnimate = true;
   // `colDidChange` is a flag that gets set when the column is changed
   // dynamically. When this flag is set, the column will refresh
-  // to incorporate the new column data.
+  // after the component re-renders to incorporate the new column data.
+  // This is necessary because `this.refresh` queries for the option elements,
+  // so it needs to wait for the latest elements to be available in the DOM.
   // Ex: column is created with 3 options. User updates the column data
   // to have 5 options. The column will still think it only has 3 options.
   private colDidChange = false;
@@ -82,7 +84,7 @@ export class PickerColumnCmp implements ComponentInterface {
     this.gesture.enable();
     // Options have not been initialized yet
     // Animation must be disabled through the `noAnimate` flag
-    // Otherwise, the options will will render
+    // Otherwise, the options will render
     // at the top of the column and transition down
     this.tmrId = setTimeout(() => {
       this.noAnimate = false;
@@ -101,7 +103,7 @@ export class PickerColumnCmp implements ComponentInterface {
     // Options may have changed since last update.
     if (this.colDidChange) {
       // Animation must be disabled through the `onDomChange` parameter.
-      // Otherwise, the recently added options will will render
+      // Otherwise, the recently added options will render
       // at the top of the column and transition down
       this.onDomChange(true, false);
       this.colDidChange = false;
@@ -149,7 +151,6 @@ export class PickerColumnCmp implements ComponentInterface {
     const scaleStr = `scale(${this.scaleFactor})`;
 
     const children = this.optsEl.children;
-
     for (let i = 0; i < children.length; i++) {
       const button = children[i] as HTMLElement;
       const opt = col.options[i];
@@ -203,7 +204,6 @@ export class PickerColumnCmp implements ComponentInterface {
         button.classList.remove(PICKER_OPT_SELECTED);
       }
     }
-
     this.col.prevSelected = selectedIndex;
 
     if (saveY) {
