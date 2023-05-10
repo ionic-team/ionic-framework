@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.6-nightly.20230510](https://github.com/ionic-team/ionic-framework/compare/v7.0.5...v7.0.6-nightly.20230510) (2023-05-10)
+
+
+### Bug Fixes
+
+* **react:** remove incorrect class key from IonicReactProps ([#27432](https://github.com/ionic-team/ionic-framework/issues/27432)) ([415c44c](https://github.com/ionic-team/ionic-framework/commit/415c44c0adc231367727c14f355c982afc385172))
+
+
+
+
+
 ## [7.0.5](https://github.com/ionic-team/ionic-framework/compare/v7.0.4...v7.0.5) (2023-05-03)
 
 **Note:** Version bump only for package @ionic/react
