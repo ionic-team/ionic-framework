@@ -41,7 +41,7 @@ const getResizeContainer = (resizeMode?: KeyboardResize): HTMLElement | null => 
     default:
       return null;
   }
-}
+};
 
 /**
  * Get the height of ion-app or body.
@@ -66,6 +66,10 @@ export const createKeyboardController = async (
   let keyboardWillShowHandler: (() => void) | undefined;
   let keyboardWillHideHandler: (() => void) | undefined;
   let keyboardVisible: boolean;
+  /**
+   * This lets us determine if the webview content
+   * has resized as a result of the keyboard.
+   */
   let initialContainerHeight: number;
 
   const init = async () => {
@@ -97,7 +101,7 @@ export const createKeyboardController = async (
    * Code responding to keyboard lifecycles may need
    * to show/hide content once the webview has
    * resized as a result of the keyboard showing/hiding.
-   * resizePromise provides a way for code to wait for the
+   * createResizePromiseIfNeeded provides a way for code to wait for the
    * resize event that was triggered as a result of the keyboard.
    */
   const createResizePromiseIfNeeded = (resizeMode: KeyboardResize | undefined): Promise<void> | undefined => {
@@ -121,7 +125,7 @@ export const createKeyboardController = async (
       initialContainerHeight === 0 ||
       /**
        * If the keyboard is closed before the webview resizes initially
-       *  then the webview will never resize.
+       * then the webview will never resize.
        */
       initialContainerHeight === getResizeContainerHeight(resizeMode)
     ) {
@@ -139,7 +143,7 @@ export const createKeyboardController = async (
     }
 
     /**
-     * Some part of the web content should resize
+     * Some part of the web content should resize,
      * and we need to listen for a resize.
      */
     return new Promise((resolve) => {
@@ -159,6 +163,10 @@ export const createKeyboardController = async (
           return;
         }
 
+        /**
+         * The resize happened, so stop listening
+         * for resize on this element.
+         */
         ro.disconnect();
 
         /**
@@ -174,7 +182,7 @@ export const createKeyboardController = async (
        * resizes and when the container element resizes, so we cannot
        * rely on a 'resize' event listener on the window.
        * Instead, we need to determine when the container
-       * element resizes.
+       * element resizes using a ResizeObserver.
        */
       const ro = new ResizeObserver(callback);
       ro.observe(containerElement);
