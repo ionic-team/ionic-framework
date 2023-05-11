@@ -127,6 +127,7 @@ export class PickerColumnCmp implements ComponentInterface {
     let translateY = 0;
     let translateZ = 0;
     const { col, rotateFactor } = this;
+    const prevSelected = col.selectedIndex;
     const selectedIndex = (col.selectedIndex = this.indexForY(-y));
     const durationStr = duration === 0 ? '' : duration + 'ms';
     const scaleStr = `scale(${this.scaleFactor})`;
@@ -185,7 +186,7 @@ export class PickerColumnCmp implements ComponentInterface {
         button.classList.remove(PICKER_OPT_SELECTED);
       }
     }
-    this.col.prevSelected = selectedIndex;
+    this.col.prevSelected = prevSelected;
 
     if (saveY) {
       this.y = y;
