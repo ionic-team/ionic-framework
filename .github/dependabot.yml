@@ -8,4 +8,8 @@ updates:
     allow:
       - dependency-name: "@playwright/test"
       - dependency-name: "@axe-core/playwright"
+      - dependency-name: "@stencil/angular-output-target"
       - dependency-name: "@stencil/core"
+      - dependency-name: "@stencil/react-output-target"
+      - dependency-name: "@stencil/sass"
+      - dependency-name: "@stencil/vue-output-target"

@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Listen, Method, Prop, forceUpdate, h, readTask } from '@stencil/core';
+import { Build, Component, Element, Event, Host, Listen, Method, Prop, forceUpdate, h, readTask } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Color } from '../../interface';
@@ -172,11 +172,21 @@ export class Content implements ComponentInterface {
   }
 
   private resize() {
-    if (this.fullscreen) {
-      readTask(() => this.readDimensions());
-    } else if (this.cTop !== 0 || this.cBottom !== 0) {
-      this.cTop = this.cBottom = 0;
-      forceUpdate(this);
+    /**
+     * Only force update if the component is rendered in a browser context.
+     * Using `forceUpdate` in a server context with pre-rendering can lead to an infinite loop.
+     * The `hydrateDocument` function in `@stencil/core` will render the `ion-content`, but
+     * `forceUpdate` will trigger another render, locking up the server.
+     *
+     * TODO: Remove if STENCIL-834 determines Stencil will account for this.
+     */
+    if (Build.isBrowser) {
+      if (this.fullscreen) {
+        readTask(() => this.readDimensions());
+      } else if (this.cTop !== 0 || this.cBottom !== 0) {
+        this.cTop = this.cBottom = 0;
+        forceUpdate(this);
+      }
     }
   }
 

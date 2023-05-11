@@ -1,22 +1,20 @@
+import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-import { testPickerColumn } from '../test.utils';
-
-configs().forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('picker-column'), () => {
-    test.beforeEach(async ({ page }) => {
+    test('should present picker without ion-app', async ({ page }) => {
       await page.goto('/src/components/picker-column/test/standalone', config);
-    });
-    test.describe('single column', () => {
-      test('should not have any visual regressions', async ({ page }) => {
-        await testPickerColumn(page, screenshot, '#single-column-button', 'single');
-      });
-    });
 
-    test.describe('multiple columns', () => {
-      test('should not have any visual regressions', async ({ page }) => {
-        await testPickerColumn(page, screenshot, '#multiple-column-button', 'multiple');
-      });
+      const ionPickerDidPresent = await page.spyOnEvent('ionPickerDidPresent');
+
+      const picker = page.locator('ion-picker');
+
+      await page.click('#single-column-button');
+
+      await ionPickerDidPresent.next();
+
+      await expect(picker).toBeVisible();
     });
   });
 });
