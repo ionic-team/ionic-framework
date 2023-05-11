@@ -177,6 +177,33 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         const textarea = page.locator('ion-textarea');
         expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-fill-shaped-outline-custom`));
       });
+
+      test('border radius should render evenly on both sides', async ({ page }) => {
+        test.info().annotations.push({
+          type: 'issue',
+          description: 'https://github.com/ionic-team/ionic-framework/issues/27116',
+        });
+
+        await page.setContent(
+          `
+            <style>
+              ion-textarea {
+                --border-radius: 30px !important;
+              }
+            </style>
+
+            <ion-textarea
+              fill="outline"
+              label="Email"
+              value="hi@ionic.io"
+            ></ion-textarea>
+          `,
+          config
+        );
+
+        const textarea = page.locator('ion-textarea');
+        expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-outline-border-radius`));
+      });
     });
   });
 });

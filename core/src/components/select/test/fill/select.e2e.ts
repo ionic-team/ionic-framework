@@ -164,6 +164,33 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         const select = page.locator('ion-select');
         expect(await select.screenshot()).toMatchSnapshot(screenshot(`select-fill-shaped-outline-custom`));
       });
+
+      test('border radius should render evenly on both sides', async ({ page }) => {
+        test.info().annotations.push({
+          type: 'issue',
+          description: 'https://github.com/ionic-team/ionic-framework/issues/27116',
+        });
+
+        await page.setContent(
+          `
+            <style>
+              ion-select {
+                --border-radius: 30px !important;
+              }
+            </style>
+
+            <ion-select
+              fill="outline"
+              label="Email"
+              value="hi@ionic.io"
+            ></ion-select>
+          `,
+          config
+        );
+
+        const select = page.locator('ion-select');
+        expect(await select.screenshot()).toMatchSnapshot(screenshot(`select-outline-border-radius`));
+      });
     });
   });
 });
