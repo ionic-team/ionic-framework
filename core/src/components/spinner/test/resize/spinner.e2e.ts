@@ -11,7 +11,7 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, screenshot, co
     });
     test.describe('spinner: visual regression tests', () => {
       test('should not have visual regressions', async ({ page }) => {
-        await page.setIonViewport();
+        await page.setViewportSize({ width: 320, height: 400 });
 
         await expect(page).toHaveScreenshot(screenshot(`spinner-resize-diff`));
       });
