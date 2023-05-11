@@ -19,7 +19,7 @@
    * @prop --highlight-color-valid: The color of the highlight on the select when valid
    *
    * @prop --border-color: Color of the select border
-   * @prop --border-radius: Radius of the select border
+   * @prop --border-radius: Radius of the select border. A large radius may display unevenly when using label-placement="stacked" or "floating"; if needed, use shape="round" instead or increase --padding-start.
    * @prop --border-style: Style of the select border
    * @prop --border-width: Width of the select border
    *

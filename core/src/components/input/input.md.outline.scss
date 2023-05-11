@@ -177,7 +177,10 @@
 :host(.input-fill-outline) .input-outline-start {
   @include border-radius(var(--border-radius), 0px, 0px, var(--border-radius));
   @include border(null, null, null, var(--border-width) var(--border-style) var(--border-color));
+}
 
+:host(.input-fill-outline.input-label-placement-stacked) .input-outline-start,
+:host(.input-fill-outline.input-label-placement-floating) .input-outline-start {
   /**
    * There should be spacing between the translated text
    * and .input-outline-start. However, we can't add this
@@ -187,6 +190,19 @@
    * this element.
    */
   width: calc(var(--padding-start) - #{$input-md-floating-label-padding});
+}
+
+/**
+ * If a large --border-radius is applied through CSS, the
+ * .input-outline-start element will not be wide enough with
+ * default padding, causing the left and right sides of the
+ * border to show different radii. Increasing the width of
+ * this element fixes the issue, but this can't be done with
+ * stacked/floating labels because it pushes the notch spacer
+ * to the side, breaking the visuals when the label floats up.
+ */
+:host(.input-fill-outline:not(.input-label-placement-stacked):not(.input-label-placement-floating)) .input-outline-start {
+  width: 50%;
 }
 
 :host(.input-fill-outline) .input-outline-end {

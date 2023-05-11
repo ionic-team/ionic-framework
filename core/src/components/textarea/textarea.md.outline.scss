@@ -181,16 +181,32 @@
 :host(.textarea-fill-outline) .textarea-outline-start {
   @include border-radius(var(--border-radius), 0px, 0px, var(--border-radius));
   @include border(null, null, null, var(--border-width) var(--border-style) var(--border-color));
+}
 
+:host(.textarea-fill-outline.textarea-label-placement-stacked) .textarea-outline-start,
+:host(.textarea-fill-outline.textarea-label-placement-floating) .textarea-outline-start {
   /**
-   * There should be spacing between the translated text
-   * and .textarea-outline-start. However, we can't add this
-   * spacing onto the notch because it would cause the
-   * label to look like it is not aligned with the
-   * text textarea. Instead, we subtract a few pixels from
-   * this element.
-   */
+  * There should be spacing between the translated text
+  * and .textarea-outline-start. However, we can't add this
+  * spacing onto the notch because it would cause the
+  * label to look like it is not aligned with the
+  * text textarea. Instead, we subtract a few pixels from
+  * this element.
+  */
   width: calc(var(--padding-start) - #{$textarea-md-floating-label-padding});
+}
+
+/**
+ * If a large --border-radius is applied through CSS, the
+ * .textarea-outline-start element will not be wide enough with
+ * default padding, causing the left and right sides of the
+ * border to show different radii. Increasing the width of
+ * this element fixes the issue, but this can't be done with
+ * stacked/floating labels because it pushes the notch spacer
+ * to the side, breaking the visuals when the label floats up.
+ */
+:host(.textarea-fill-outline:not(.textarea-label-placement-stacked):not(.textarea-label-placement-floating)) .textarea-outline-start {
+  width: 50%;
 }
 
 :host(.textarea-fill-outline) .textarea-outline-end {

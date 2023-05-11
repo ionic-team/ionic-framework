@@ -210,7 +210,8 @@
   border-radius: 0px var(--border-radius) var(--border-radius) 0px;
 }
 
-:host(.select-fill-outline) .select-outline-start {
+:host(.select-fill-outline.select-label-placement-stacked) .select-outline-start,
+:host(.select-fill-outline.select-label-placement-floating) .select-outline-start {
   /**
    * There should be spacing between the translated text
    * and .select-outline-start. However, we can't add this
@@ -220,6 +221,19 @@
    * this element.
    */
   width: calc(var(--padding-start) - #{$select-md-floating-label-padding});
+}
+
+/**
+ * If a large --border-radius is applied through CSS, the
+ * .select-outline-start element will not be wide enough with
+ * default padding, causing the left and right sides of the
+ * border to show different radii. Increasing the width of
+ * this element fixes the issue, but this can't be done with
+ * stacked/floating labels because it pushes the notch spacer
+ * to the side, breaking the visuals when the label floats up.
+ */
+:host(.select-fill-outline:not(.select-label-placement-stacked):not(.select-label-placement-floating)) .select-outline-start {
+  width: 50%;
 }
 
 :host(.select-ltr.select-fill-outline) .select-outline-end {
