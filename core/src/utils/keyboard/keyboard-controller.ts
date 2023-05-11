@@ -1,7 +1,58 @@
+import { doc, win } from '@utils/browser';
 import { raf } from '@utils/helpers';
-import { win } from '@utils/window';
 
 import { KeyboardResize, Keyboard } from '../native/keyboard';
+
+/**
+ * The element that resizes when the keyboard opens
+ * is going to depend on the resize mode
+ * which is why we check that here.
+ */
+const getResizeContainer = (resizeMode?: KeyboardResize): HTMLElement | null => {
+  /**
+   * If doc is undefined then we are
+   * in an SSR environment, so the keyboard
+   * adjustment does not apply.
+   **/
+  if (doc === undefined) {
+    return null;
+  }
+
+  switch (resizeMode) {
+    /**
+     * We could pass `ion-app` as the resize
+     * container for Body and Native resizes too,
+     * but `ion-app` is not always defined.
+     */
+    case KeyboardResize.Ionic:
+      return doc.querySelector('ion-app');
+    case KeyboardResize.Body:
+    /**
+     * KeyboardResize.Native causes the window
+     * to resize, but that means the body resizes too.
+     */
+    case KeyboardResize.Native:
+      return doc.body;
+    /**
+     * There is no resize container if
+     * webview resizing is disabled.
+     */
+    case KeyboardResize.None:
+    default:
+      return null;
+  }
+}
+
+/**
+ * Get the height of ion-app or body.
+ * This is used for determining if the webview
+ * has resized before the keyboard closed.
+ * */
+const getResizeContainerHeight = (resizeMode?: KeyboardResize) => {
+  const containerElement = getResizeContainer(resizeMode);
+
+  return containerElement === null ? 0 : containerElement.clientHeight;
+};
 
 /**
  * Creates a controller that tracks and reacts to opening or closing the keyboard.
@@ -15,11 +66,12 @@ export const createKeyboardController = async (
   let keyboardWillShowHandler: (() => void) | undefined;
   let keyboardWillHideHandler: (() => void) | undefined;
   let keyboardVisible: boolean;
-  const windowHeight = win?.innerHeight;
+  let initialContainerHeight: number;
 
   const init = async () => {
     const resizeOptions = await Keyboard.getResizeMode();
     const resizeMode = resizeOptions == undefined ? undefined : resizeOptions.mode;
+    initialContainerHeight = getResizeContainerHeight(resizeMode);
 
     keyboardWillShowHandler = () => {
       keyboardVisible = true;
@@ -66,19 +118,29 @@ export const createKeyboardController = async (
        * no window to resize.
        */
       win === undefined ||
-      windowHeight === undefined ||
+      initialContainerHeight === 0 ||
       /**
        * If the keyboard is closed before the webview resizes initially
        *  then the webview will never resize.
        */
-      windowHeight === win!.innerHeight
+      initialContainerHeight === getResizeContainerHeight(resizeMode)
     ) {
       return;
     }
 
     /**
-     * Otherwise, the webview should resize
-     * and we need to listen for that event.
+     * Get the resize container so we can
+     * attach the ResizeObserver below to
+     * the correct element.
+     */
+    const containerElement = getResizeContainer(resizeMode);
+    if (containerElement === null) {
+      return;
+    }
+
+    /**
+     * Some part of the web content should resize
+     * and we need to listen for a resize.
      */
     return new Promise((resolve) => {
       let initialResize = true;
@@ -109,12 +171,13 @@ export const createKeyboardController = async (
 
       /**
        * In Capacitor there can be delay between when the window
-       * resizes and when the body resizes, so we cannot
+       * resizes and when the container element resizes, so we cannot
        * rely on a 'resize' event listener on the window.
-       * Instead, we need to determine when the body resizes.
+       * Instead, we need to determine when the container
+       * element resizes.
        */
       const ro = new ResizeObserver(callback);
-      ro.observe(document.body);
+      ro.observe(containerElement);
     });
   };
 
