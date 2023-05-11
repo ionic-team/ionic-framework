@@ -6,29 +6,19 @@ import { configs, test } from '@utils/test/playwright';
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('loading: isOpen'), () => {
-    test.beforeEach(async ({ page }) => {
+    test('should open and close the loading indicator', async ({ page }) => {
       await page.goto('/src/components/loading/test/is-open', config);
-    });
 
-    test('should open the loading indicator', async ({ page }) => {
       const ionLoadingDidPresent = await page.spyOnEvent('ionLoadingDidPresent');
+      const ionLoadingDidDismiss = await page.spyOnEvent('ionLoadingDidDismiss');
       const loading = page.locator('ion-loading');
 
       await page.click('#default');
 
       await ionLoadingDidPresent.next();
       await expect(loading).toBeVisible();
-    });
 
-    test('should open the loading indicator then close after a timeout', async ({ page }) => {
-      const ionLoadingDidPresent = await page.spyOnEvent('ionLoadingDidPresent');
-      const ionLoadingDidDismiss = await page.spyOnEvent('ionLoadingDidDismiss');
-      const loading = page.locator('ion-loading');
-
-      await page.click('#timeout');
-
-      await ionLoadingDidPresent.next();
-      await expect(loading).toBeVisible();
+      await loading.evaluate((el: HTMLIonLoadingElement) => (el.isOpen = false));
 
       await ionLoadingDidDismiss.next();
       await expect(loading).toBeHidden();
