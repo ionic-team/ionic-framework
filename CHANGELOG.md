@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.6](https://github.com/ionic-team/ionic-framework/compare/v7.0.5...v7.0.6) (2023-05-11)
+
+
+### Bug Fixes
+
+* **content:** prevent forceUpdate in SSR ([#27440](https://github.com/ionic-team/ionic-framework/issues/27440)) ([e930988](https://github.com/ionic-team/ionic-framework/commit/e9309880d18cf03c1c139b00fe4b80794804e3de)), closes [#27411](https://github.com/ionic-team/ionic-framework/issues/27411)
+* **item-sliding:** options display on rtl ([#27203](https://github.com/ionic-team/ionic-framework/issues/27203)) ([b16fd1d](https://github.com/ionic-team/ionic-framework/commit/b16fd1d6f962f8fb6a57eb8301ecd904e1ca2153)), closes [#26103](https://github.com/ionic-team/ionic-framework/issues/26103) [#25285](https://github.com/ionic-team/ionic-framework/issues/25285)
+* **modal, popover:** wait for contents to mount ([#27344](https://github.com/ionic-team/ionic-framework/issues/27344)) ([c98ad6f](https://github.com/ionic-team/ionic-framework/commit/c98ad6f16ab147024fb74c179218fd8ff7f87db1)), closes [#27343](https://github.com/ionic-team/ionic-framework/issues/27343)
+* **overlays:** assign incremental id to overlay host ([#27278](https://github.com/ionic-team/ionic-framework/issues/27278)) ([9313a91](https://github.com/ionic-team/ionic-framework/commit/9313a914b7802dd4327caa970906ea18e882a3ce))
+* **range:** round value to same number of decimal places as props to avoid floating point rounding errors ([#27375](https://github.com/ionic-team/ionic-framework/issues/27375)) ([6e83ba4](https://github.com/ionic-team/ionic-framework/commit/6e83ba4051922da0a179a370d5baa0c57df8b01d)), closes [#21968](https://github.com/ionic-team/ionic-framework/issues/21968)
+* **react:** remove incorrect class key from IonicReactProps ([#27432](https://github.com/ionic-team/ionic-framework/issues/27432)) ([415c44c](https://github.com/ionic-team/ionic-framework/commit/415c44c0adc231367727c14f355c982afc385172))
+* **types:** export DatetimeHighlightStyle ([#27360](https://github.com/ionic-team/ionic-framework/issues/27360)) ([a37cdb1](https://github.com/ionic-team/ionic-framework/commit/a37cdb1c5ddab96e2e95369cc4e4b04a5ef0c5c7)), closes [#27353](https://github.com/ionic-team/ionic-framework/issues/27353)
+
+
+
+
+
 ## [7.0.5](https://github.com/ionic-team/ionic-framework/compare/v7.0.4...v7.0.5) (2023-05-03)
 
 
