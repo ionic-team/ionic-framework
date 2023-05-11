@@ -578,7 +578,7 @@
 :host(.textarea-label-placement-floating) textarea,
 :host(.textarea-label-placement-stacked[auto-grow]) .native-wrapper::after,
 :host(.textarea-label-placement-floating[auto-grow]) .native-wrapper::after {
-  @include margin($form-control-label-margin, 0px, 0px, 0px);
+  @include margin(8px, 0px, 0px, 0px);
 }
 
 /**
