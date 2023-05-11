@@ -11,6 +11,7 @@ import { createColorClasses, hostContext } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Color, Gesture, GestureDetail, StyleEventDetail } from '../../interface';
+import { roundToMaxDecimalPlaces } from '../../utils/floating-point';
 
 import type {
   KnobName,
@@ -909,10 +910,14 @@ const renderKnob = (
 
 const ratioToValue = (ratio: number, min: number, max: number, step: number): number => {
   let value = (max - min) * ratio;
+
   if (step > 0) {
+    // round to nearest multiple of step, then add min
     value = Math.round(value / step) * step + min;
   }
-  return clamp(min, value, max);
+  const clampedValue = clamp(min, value, max);
+
+  return roundToMaxDecimalPlaces(clampedValue, min, max, step);
 };
 
 const valueToRatio = (value: number, min: number, max: number): number => {
