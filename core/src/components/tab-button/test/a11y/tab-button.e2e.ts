@@ -7,8 +7,7 @@ configs().forEach(({ title, config }) => {
     test('should not have any axe violations', async ({ page }) => {
       await page.goto('/src/components/tab-button/test/a11y', config);
 
-      // TODO FW-3604
-      const results = await new AxeBuilder({ page }).disableRules('color-contrast').analyze();
+      const results = await new AxeBuilder({ page }).analyze();
       expect(results.violations).toEqual([]);
     });
   });
