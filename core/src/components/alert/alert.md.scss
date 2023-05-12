@@ -8,6 +8,8 @@
   --background: #{$alert-md-background-color};
   --max-width: #{$alert-md-max-width};
   --backdrop-opacity: var(--ion-backdrop-opacity, 0.32);
+  padding-inline-start: #{$alert-md-padding-start};
+  padding-inline-end: #{$alert-md-padding-end};
 
   font-size: $alert-md-font-size;
 }

@@ -8,7 +8,13 @@
 $alert-md-font-size:                          14px !default;
 
 /// @prop - Max width of the alert
-$alert-md-max-width:                          280px !default;
+$alert-md-max-width:                          560px !default;
+
+/// @prop - Padding end of the alert head
+$alert-md-padding-end:                        16px !default;
+
+/// @prop - Padding start of the alert
+$alert-md-padding-start:                      $alert-md-padding-end !default;
 
 /// @prop - Border radius of the alert
 $alert-md-border-radius:                      4px !default;
