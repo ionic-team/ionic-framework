@@ -7,14 +7,27 @@ import { configs, test } from '@utils/test/playwright';
 configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('spinner: resize'), () => {
     test.beforeEach(async ({ page }) => {
-      await page.goto('/src/components/spinner/test/resize', config);
+      await page.setViewportSize({ width: 320, height: 340 });
     });
-    test.describe('spinner: visual regression tests', () => {
-      test('should not have visual regressions', async ({ page }) => {
-        await page.setViewportSize({ width: 320, height: 400 });
+    test('should not have visual regressions', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-content id="content">
+          <ion-spinner name="lines"></ion-spinner>
+          <ion-spinner name="lines-small"></ion-spinner>
+          <ion-spinner name="lines-sharp"></ion-spinner>
+          <ion-spinner name="lines-sharp-small"></ion-spinner>
+          <ion-spinner name="circular"></ion-spinner>
+          <ion-spinner name="dots"></ion-spinner>
+          <ion-spinner name="bubbles"></ion-spinner>
+          <ion-spinner name="circles"></ion-spinner>
+          <ion-spinner name="crescent"></ion-spinner>
+        </ion-content>
+      `,
+        config
+      );
 
-        await expect(page).toHaveScreenshot(screenshot(`spinner-resize-diff`));
-      });
+      await expect(page.locator('#content')).toHaveScreenshot(screenshot(`spinner-resize-diff`));
     });
   });
 });
