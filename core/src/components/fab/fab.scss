@@ -4,6 +4,8 @@
 // --------------------------------------------------
 
 :host {
+  --ion-safe-area-top: 20px;
+
   position: absolute;
 
   z-index: $z-index-fixed-content;
@@ -35,6 +37,7 @@
 // --------------------------------------------------
 
 :host(.fab-vertical-top) {
+  padding-top: var(--ion-safe-area-top, 0);
   top: $fab-content-margin;
 }
 
