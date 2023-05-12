@@ -133,6 +133,8 @@ export const createKeyboardController = async (
          * may or may not have resized by the time this first
          * callback is fired. As a result, we need to check
          * the dimensions of the element.
+         *
+         * https://www.w3.org/TR/resize-observer/#intro
          */
         if (containerElement.clientHeight === initialResizeContainerHeight) {
           /**
