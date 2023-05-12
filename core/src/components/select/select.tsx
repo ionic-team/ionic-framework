@@ -656,6 +656,14 @@ export class Select implements ComponentInterface {
     return Array.from(this.el.querySelectorAll('ion-select-option'));
   }
 
+  /**
+   * Returns any plaintext associated with
+   * the label (either prop or slot).
+   * Note: This will not return any custom
+   * HTML. Use the `hasLabel` getter if you
+   * want to know if any slotted label content
+   * was passed.
+   */
   private get labelText() {
     const { el, label } = this;
 
@@ -732,6 +740,12 @@ export class Select implements ComponentInterface {
     );
   }
 
+  /**
+   * Returns `true` if label content is provided
+   * either by a prop or a content. If you want
+   * to get the plaintext value of the label use
+   * the `labelText` getter instead.
+   */
   private get hasLabel() {
     return this.label !== undefined || this.el.querySelector('[slot="label"]') !== null;
   }
