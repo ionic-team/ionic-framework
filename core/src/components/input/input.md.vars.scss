@@ -71,6 +71,4 @@ $input-md-inset-margin-start: $item-md-padding-start !default;
 $input-md-floating-label-padding: 4px !default;
 
 /// @prop - The opacity of the input text, label, helper text, char counter and placeholder of a disabled input
-/// This value comes from the Material Design spec:
-/// - https://m2.material.io/components/text-fields#outlined-text-field
-$input-md-disabled-opacity: 0.4 !default;
+$input-md-disabled-opacity: $form-control-md-disabled-opacity !default;

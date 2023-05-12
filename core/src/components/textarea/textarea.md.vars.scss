@@ -26,4 +26,4 @@ $textarea-md-placeholder-color: $placeholder-text-color !default;
 $textarea-md-floating-label-padding: 4px !default;
 
 /// @prop - The opacity of the input text, label, helper text, char counter and placeholder of a disabled textarea
-$textarea-md-disabled-opacity: 0.4 !default;
+$textarea-md-disabled-opacity: $form-control-md-disabled-opacity !default;

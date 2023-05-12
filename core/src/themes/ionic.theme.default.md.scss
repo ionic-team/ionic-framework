@@ -36,3 +36,9 @@ $item-md-color:                             var(--ion-item-color, $text-color) !
 // --------------------------------------------------
 $card-md-background:                        var(--ion-card-background, $item-md-background) !default;
 $card-md-color:                             var(--ion-card-color, var(--ion-item-color, $text-color-step-450)) !default;
+
+// Material Design Form Controls
+// --------------------------------------------------
+/// This value comes from the Material Design spec:
+/// https://m2.material.io/components/text-fields#outlined-text-field
+$form-control-md-disabled-opacity:          0.4;

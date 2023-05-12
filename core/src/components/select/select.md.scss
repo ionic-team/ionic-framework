@@ -158,5 +158,5 @@
 // controls
 
 :host(.select-disabled) {
-  opacity: .4;
+  opacity: $select-md-disabled-opacity;
 }

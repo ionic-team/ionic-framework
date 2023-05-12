@@ -56,3 +56,6 @@ $range-md-knob-indicator-opacity-focus: 0.13 !default;
 
 /// @prop - Opacity of the indicator shown when the range knob is active
 $range-md-knob-indicator-opacity-active: 0.25 !default;
+
+/// @prop - Opacity of the disabled range
+$range-md-disabled-opacity: $form-control-md-disabled-opacity !default;

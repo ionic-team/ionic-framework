@@ -221,5 +221,5 @@
 :host(.range-disabled) .label-text-wrapper,
 :host(.range-disabled) ::slotted([slot=start]),
 :host(.range-disabled) ::slotted([slot=end]) {
-  opacity: .4;
+  opacity: $range-md-disabled-opacity;
 }

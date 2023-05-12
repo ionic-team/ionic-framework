@@ -5,7 +5,7 @@
 // --------------------------------------------------
 
 /// @prop - Opacity of the disabled checkbox
-$checkbox-md-disabled-opacity:           .4 !default;
+$checkbox-md-disabled-opacity:           $form-control-md-disabled-opacity !default;
 
 /// @prop - Background color of the checkbox icon when off
 $checkbox-md-icon-background-color-off:  $item-md-background !default;
