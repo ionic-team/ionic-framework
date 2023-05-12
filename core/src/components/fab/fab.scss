@@ -4,7 +4,7 @@
 // --------------------------------------------------
 
 :host {
-  --ion-safe-area-top: 20px;
+  --ion-safe-area-top: 60px;
 
   position: absolute;
 
@@ -37,7 +37,6 @@
 // --------------------------------------------------
 
 :host(.fab-vertical-top) {
-  padding-top: var(--ion-safe-area-top, 0);
   top: $fab-content-margin;
 }
 
@@ -59,4 +58,8 @@
   @include margin(-$fab-size * 0.5, null, null, null);
 
   top: 50%;
+}
+
+:host(.fab-vertical-top:not(.fab-edge)) {
+  padding-top: var(--ion-safe-area-top, 0);
 }
