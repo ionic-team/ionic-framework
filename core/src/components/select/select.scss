@@ -19,7 +19,7 @@
    * @prop --highlight-color-valid: The color of the highlight on the select when valid
    *
    * @prop --border-color: Color of the select border
-   * @prop --border-radius: Radius of the select border
+   * @prop --border-radius: Radius of the select border. A large radius may display unevenly when using fill="outline"; if needed, use shape="round" instead or increase --padding-start.
    * @prop --border-style: Style of the select border
    * @prop --border-width: Width of the select border
    *
@@ -225,6 +225,15 @@ button {
   cursor: inherit;
 
   box-sizing: border-box;
+}
+
+.select-wrapper .select-placeholder {
+  /**
+   * When the floating label appears on top of the
+   * select, we need to fade the text out so that the
+   * label does not overlap with the placeholder.
+   */
+  transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 // Select Highlight
@@ -473,16 +482,17 @@ button {
 }
 
 /**
- * The select should be hidden when the label
+ * The placeholder should be hidden when the label
  * is on top of the select. This prevents the label
  * from overlapping any placeholder value.
  */
-:host(.select-label-placement-floating:not(.has-placeholder)) .native-wrapper .select-text {
+:host(.select-label-placement-floating) .native-wrapper .select-placeholder {
   opacity: 0;
 }
 
-:host(.select-expanded.select-label-placement-floating) .native-wrapper .select-text,
-:host(.has-value.select-label-placement-floating) .native-wrapper .select-text {
+:host(.select-expanded.select-label-placement-floating) .native-wrapper .select-placeholder,
+:host(.ion-focused.select-label-placement-floating) .native-wrapper .select-placeholder,
+:host(.has-value.select-label-placement-floating) .native-wrapper .select-placeholder {
   opacity: 1;
 }
 
@@ -492,8 +502,7 @@ button {
 :host(.select-label-placement-stacked) .label-text-wrapper,
 :host(.select-expanded.select-label-placement-floating) .label-text-wrapper,
 :host(.ion-focused.select-label-placement-floating) .label-text-wrapper,
-:host(.has-value.select-label-placement-floating) .label-text-wrapper,
-:host(.has-placeholder.select-label-placement-floating) .label-text-wrapper {
+:host(.has-value.select-label-placement-floating) .label-text-wrapper {
   @include transform(translateY(50%), scale(#{$select-floating-label-scale}));
 
   /**
