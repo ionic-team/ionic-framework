@@ -210,6 +210,8 @@
 }
 
 .button-text {
+  display: flex;
+
   text-overflow: ellipsis;
 
   overflow: hidden;
