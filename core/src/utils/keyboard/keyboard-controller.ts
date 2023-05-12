@@ -1,5 +1,4 @@
 import { doc, win } from '@utils/browser';
-import { raf } from '@utils/helpers';
 
 import { KeyboardResize, Keyboard } from '../native/keyboard';
 
@@ -125,34 +124,25 @@ export const createKeyboardController = async (
      * and we need to listen for a resize.
      */
     return new Promise((resolve) => {
-      let initialResize = true;
-
       const callback = () => {
         /**
          * As per the spec, the ResizeObserver
          * will fire when observation starts if
          * the observed element is rendered and does not
-         * have a size of 0 x 0. As a result, we want to ignore the
-         * initial resize event.
-         * https://www.w3.org/TR/resize-observer/#intro
+         * have a size of 0 x 0. However, the watched element
+         * may or may not have resized by the time this first
+         * callback is fired. As a result, we need to check
+         * the dimensions of the element.
          */
-        if (initialResize) {
-          initialResize = false;
-          return;
+        if (containerElement.clientHeight === initialResizeContainerHeight) {
+          /**
+           * The resize happened, so stop listening
+           * for resize on this element.
+           */
+          ro.disconnect();
+
+          resolve();
         }
-
-        /**
-         * The resize happened, so stop listening
-         * for resize on this element.
-         */
-        ro.disconnect();
-
-        /**
-         * The raf ensures that this resolves the
-         * frame after resizing has completed otherwise
-         * there may still be a flicker.
-         */
-        raf(() => resolve());
       };
 
       /**
