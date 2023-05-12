@@ -13,34 +13,22 @@ const getResizeContainer = (resizeMode?: KeyboardResize): HTMLElement | null => 
    * If doc is undefined then we are
    * in an SSR environment, so the keyboard
    * adjustment does not apply.
-   **/
-  if (doc === undefined) {
+   * If the webview does not resize then there
+   * is no container to resize.
+   */
+  if (doc === undefined || resizeMode === KeyboardResize.None || resizeMode === undefined) {
     return null;
   }
 
-  switch (resizeMode) {
-    /**
-     * We could pass `ion-app` as the resize
-     * container for Body and Native resizes too,
-     * but `ion-app` is not always defined.
-     */
-    case KeyboardResize.Ionic:
-      return doc.querySelector('ion-app');
-    case KeyboardResize.Body:
-    /**
-     * KeyboardResize.Native causes the window
-     * to resize, but that means the body resizes too.
-     */
-    case KeyboardResize.Native:
-      return doc.body;
-    /**
-     * There is no resize container if
-     * webview resizing is disabled.
-     */
-    case KeyboardResize.None:
-    default:
-      return null;
-  }
+  /**
+   * The three remaining resize modes: Native, Ionic, and Body
+   * all cause `ion-app` to resize, so we can listen for changes
+   * on that. In the event `ion-app` is not available then
+   * we can fall back to `body`.
+   */
+  const ionApp = doc.querySelector('ion-app');
+
+  return ionApp ?? doc.body;
 };
 
 /**
@@ -70,12 +58,12 @@ export const createKeyboardController = async (
    * This lets us determine if the webview content
    * has resized as a result of the keyboard.
    */
-  let initialContainerHeight: number;
+  let initialResizeContainerHeight: number;
 
   const init = async () => {
     const resizeOptions = await Keyboard.getResizeMode();
     const resizeMode = resizeOptions == undefined ? undefined : resizeOptions.mode;
-    initialContainerHeight = getResizeContainerHeight(resizeMode);
+    initialResizeContainerHeight = getResizeContainerHeight(resizeMode);
 
     keyboardWillShowHandler = () => {
       keyboardVisible = true;
@@ -107,27 +95,17 @@ export const createKeyboardController = async (
   const createResizePromiseIfNeeded = (resizeMode: KeyboardResize | undefined): Promise<void> | undefined => {
     if (
       /**
-       * If the resize mode is undefined then we cannot safely
-       * assume that the web content will resize. This will
-       * be the case if an app is deployed to a mobile browser/PWA
-       * as the native Capacitor keyboard plugin will not be available.
-       *
-       * If the resize mode is "None" then the webview is configured
-       * to never resize when the keyboard opens/closes.
-       */
-      resizeMode === undefined ||
-      resizeMode === KeyboardResize.None ||
-      /**
        * If we are in an SSR environment then there is
-       * no window to resize.
+       * no window to resize. Additionally, if there
+       * is no resize mode or the resize mode is "None"
+       * then initialResizeContainerHeight will be 0
        */
-      win === undefined ||
-      initialContainerHeight === 0 ||
+      initialResizeContainerHeight === 0 ||
       /**
        * If the keyboard is closed before the webview resizes initially
        * then the webview will never resize.
        */
-      initialContainerHeight === getResizeContainerHeight(resizeMode)
+      initialResizeContainerHeight === getResizeContainerHeight(resizeMode)
     ) {
       return;
     }
