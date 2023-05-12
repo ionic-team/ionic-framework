@@ -303,6 +303,15 @@ button {
   overflow: hidden;
 }
 
+/**
+ * If no label text is placed into the slot
+ * then the element should be hidden otherwise
+ * there will be additional margins added.
+ */
+.label-text-wrapper-hidden {
+  display: none;
+}
+
 // Select Native Wrapper
 // ----------------------------------------------------------------
 

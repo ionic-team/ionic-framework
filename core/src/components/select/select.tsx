@@ -721,10 +721,19 @@ export class Select implements ComponentInterface {
     const { label } = this;
 
     return (
-      <div class="label-text-wrapper">
+      <div
+        class={{
+          'label-text-wrapper': true,
+          'label-text-wrapper-hidden': !this.hasLabel,
+        }}
+      >
         {label === undefined ? <slot name="label"></slot> : <div class="label-text">{label}</div>}
       </div>
     );
+  }
+
+  private get hasLabel() {
+    return this.label !== undefined || this.el.querySelector('[slot="label"]') !== null;
   }
 
   /**
