@@ -4,7 +4,7 @@ import { AccordionGroup } from '../../accordion-group/accordion-group.tsx';
 import { Item } from '../../item/item.tsx';
 import { Accordion } from '../accordion.tsx';
 
-it('should open correct accordions', async () => {
+it('should open correct accordions when accordion group value is set', async () => {
   const page = await newSpecPage({
     components: [Item, Accordion, AccordionGroup],
     html: `
@@ -37,6 +37,42 @@ it('should open correct accordions', async () => {
 
   expect(accordions[0].classList.contains('accordion-collapsed')).toEqual(true);
   expect(accordions[1].classList.contains('accordion-collapsed')).toEqual(false);
+  expect(accordions[2].classList.contains('accordion-collapsed')).toEqual(true);
+});
+
+it('should open correct accordions when accordion value is set', async () => {
+  const page = await newSpecPage({
+    components: [Item, Accordion, AccordionGroup],
+    html: `
+      <ion-accordion-group animated="false" value="first">
+        <ion-accordion>
+          <ion-item slot="header">Label</ion-item>
+          <div slot="content">Content</div>
+        </ion-accordion>
+        <ion-accordion value="second">
+          <ion-item slot="header">Label</ion-item>
+          <div slot="content">Content</div>
+        </ion-accordion>
+        <ion-accordion value="third">
+          <ion-item slot="header">Label</ion-item>
+          <div slot="content">Content</div>
+        </ion-accordion>
+      </ion-accordion-group>
+    `,
+  });
+
+  const accordionGroup = page.body.querySelector('ion-accordion-group');
+  const accordions = accordionGroup.querySelectorAll('ion-accordion');
+
+  accordions.forEach((accordion) => {
+    expect(accordion.classList.contains('accordion-collapsed')).toEqual(true);
+  });
+
+  accordions[0].value = 'first'
+  await page.waitForChanges();
+
+  expect(accordions[0].classList.contains('accordion-collapsed')).toEqual(false);
+  expect(accordions[1].classList.contains('accordion-collapsed')).toEqual(true);
   expect(accordions[2].classList.contains('accordion-collapsed')).toEqual(true);
 });
 
