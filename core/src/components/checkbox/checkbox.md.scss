@@ -49,7 +49,7 @@
 }
 
 :host(.checkbox-disabled) .native-wrapper {
-  opacity: .63;
+  opacity: $checkbox-md-icon-disabled-opacity;
 }
 
 

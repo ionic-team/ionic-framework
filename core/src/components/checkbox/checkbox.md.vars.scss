@@ -4,7 +4,7 @@
 // Material Design Checkbox
 // --------------------------------------------------
 
-/// @prop - Opacity of the disabled checkbox
+/// @prop - Opacity of the disabled checkbox label
 $checkbox-md-disabled-opacity:           $form-control-md-disabled-opacity !default;
 
 /// @prop - Background color of the checkbox icon when off
@@ -72,3 +72,6 @@ $checkbox-md-item-end-margin-bottom:     $checkbox-md-item-end-margin-top !defau
 
 /// @prop - Margin start of the end checkbox item
 $checkbox-md-item-end-margin-start:      0 !default;
+
+/// @prop - Opacity of the disabled checkbox
+$checkbox-md-icon-disabled-opacity:      0.63 !default;

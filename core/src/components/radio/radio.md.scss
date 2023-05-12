@@ -79,7 +79,7 @@
 }
 
 :host(.radio-disabled) .native-wrapper {
-  opacity: .63;
+  opacity: $radio-md-icon-disabled-opacity;
 }
 
 // Material Design Radio: Keyboard Focus
