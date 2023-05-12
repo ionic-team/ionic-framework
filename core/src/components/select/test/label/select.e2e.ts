@@ -321,7 +321,9 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       await expect(alert.locator('.alert-title')).toHaveText('My Alert');
     });
-    test.only('should use the label prop to set the default header in an alert if both prop and slot are set', async ({ page }) => {
+    test('should use the label prop to set the default header in an alert if both prop and slot are set', async ({
+      page,
+    }) => {
       await page.setContent(
         `
          <ion-select label="My Prop Alert" interface="alert">
