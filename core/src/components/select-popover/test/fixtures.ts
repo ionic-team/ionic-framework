@@ -1,4 +1,5 @@
-import type { E2EPage, E2ELocator, EventSpy } from '@utils/test/playwright';
+import { expect } from '@playwright/test';
+import type { E2EPage, E2ELocator, EventSpy, E2EPageOptions, ScreenshotFn } from '@utils/test/playwright';
 
 import type { SelectPopoverOption } from '../select-popover-interface';
 
@@ -18,10 +19,11 @@ export class SelectPopoverPage {
     this.page = page;
   }
 
-  async setup(options: SelectPopoverOption[], multiple = false) {
+  async setup(config: E2EPageOptions, options: SelectPopoverOption[], multiple = false) {
     const { page } = this;
 
-    await page.setContent(`
+    await page.setContent(
+      `
     <ion-popover>
       <ion-select-popover></ion-select-popover>
     </ion-popover>
@@ -30,7 +32,9 @@ export class SelectPopoverPage {
       selectPopover.options = ${JSON.stringify(options)};
       selectPopover.multiple = ${multiple};
     </script>
-    `);
+    `,
+      config
+    );
 
     const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
     this.ionPopoverDidDismiss = await page.spyOnEvent('ionPopoverDidDismiss');
@@ -43,6 +47,10 @@ export class SelectPopoverPage {
     await this.popover.evaluate((popover: HTMLIonPopoverElement) => popover.present());
 
     await ionPopoverDidPresent.next();
+  }
+
+  async screenshot(screenshot: ScreenshotFn, name: string) {
+    await expect(this.selectPopover).toHaveScreenshot(screenshot(name));
   }
 
   async clickOption(value: string) {
