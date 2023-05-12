@@ -945,10 +945,10 @@ Developers can use the "legacy" property to continue using the legacy form marku
   }
 
   private get ariaLabel() {
-    const { placeholder, label, el, inputId, inheritedAttributes } = this;
+    const { placeholder, el, inputId, inheritedAttributes } = this;
     const displayValue = this.getText();
     const { labelText } = getAriaLabel(el, inputId);
-    const definedLabel = label ?? inheritedAttributes['aria-label'] ?? labelText;
+    const definedLabel = this.labelText ?? inheritedAttributes['aria-label'] ?? labelText;
 
     /**
      * If developer has specified a placeholder
