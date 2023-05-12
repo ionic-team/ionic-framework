@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.7-nightly.20230512](https://github.com/ionic-team/ionic-framework/compare/v7.0.6...v7.0.7-nightly.20230512) (2023-05-12)
+
+
+### Bug Fixes
+
+* **checkbox, radio:** update border colors to match MD2 spec ([#27357](https://github.com/ionic-team/ionic-framework/issues/27357)) ([eabc6f3](https://github.com/ionic-team/ionic-framework/commit/eabc6f357675919dd82bea29a1776c0ca1bf89fd)), closes [#27170](https://github.com/ionic-team/ionic-framework/issues/27170)
+* **picker-column:** dynamically change options ([#27359](https://github.com/ionic-team/ionic-framework/issues/27359)) ([7c7fb2b](https://github.com/ionic-team/ionic-framework/commit/7c7fb2b1a3bf35b123716b2f975231ceb01dcc07)), closes [#21763](https://github.com/ionic-team/ionic-framework/issues/21763)
+* **tab-button:** use darker text to pass a11y ([#27355](https://github.com/ionic-team/ionic-framework/issues/27355)) ([0b23814](https://github.com/ionic-team/ionic-framework/commit/0b23814e0ba167ee6b2a2e430c47823d312d8c3c))
+
+
+
+
+
 ## [7.0.6](https://github.com/ionic-team/ionic-framework/compare/v7.0.5...v7.0.6) (2023-05-11)
 
 
