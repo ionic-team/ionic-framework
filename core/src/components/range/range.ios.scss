@@ -102,5 +102,5 @@
 // icons need to receive the same opacity.
 
 :host(.range-disabled) {
-  opacity: .3;
+  opacity: $range-ios-disabled-opacity;
 }

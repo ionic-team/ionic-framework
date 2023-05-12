@@ -23,7 +23,7 @@ $radio-ios-icon-border-width:         2px !default;
 $radio-ios-icon-border-style:         solid !default;
 
 /// @prop - Opacity of the disabled radio
-$radio-ios-disabled-opacity:          .3 !default;
+$radio-ios-disabled-opacity:          $form-control-ios-disabled-opacity !default;
 
 /// @prop - Margin top of the item-start in a radio
 $radio-ios-item-start-margin-top:     8px !default;
