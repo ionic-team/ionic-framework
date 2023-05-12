@@ -24,7 +24,7 @@
    * @prop --highlight-color-invalid: The color of the highlight on the input when invalid
    *
    * @prop --border-color: Color of the border below the input when using helper text, error text, or counter
-   * @prop --border-radius: Radius of the input
+   * @prop --border-radius: Radius of the input. A large radius may display unevenly when using fill="outline"; if needed, use shape="round" instead or increase --padding-start.
    * @prop --border-style: Style of the border below the input when using helper text, error text, or counter
    * @prop --border-width: Width of the border below the input when using helper text, error text, or counter
    */
