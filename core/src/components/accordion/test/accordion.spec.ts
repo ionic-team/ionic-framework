@@ -68,7 +68,7 @@ it('should open correct accordions when accordion value is set', async () => {
     expect(accordion.classList.contains('accordion-collapsed')).toEqual(true);
   });
 
-  accordions[0].value = 'first'
+  accordions[0].value = 'first';
   await page.waitForChanges();
 
   expect(accordions[0].classList.contains('accordion-collapsed')).toEqual(false);
