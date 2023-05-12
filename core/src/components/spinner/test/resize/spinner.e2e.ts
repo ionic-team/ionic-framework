@@ -12,22 +12,26 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, screenshot, co
     test('should not have visual regressions', async ({ page }) => {
       await page.setContent(
         `
-        <ion-content id="content">
-          <ion-spinner name="lines"></ion-spinner>
-          <ion-spinner name="lines-small"></ion-spinner>
-          <ion-spinner name="lines-sharp"></ion-spinner>
-          <ion-spinner name="lines-sharp-small"></ion-spinner>
-          <ion-spinner name="circular"></ion-spinner>
-          <ion-spinner name="dots"></ion-spinner>
-          <ion-spinner name="bubbles"></ion-spinner>
-          <ion-spinner name="circles"></ion-spinner>
-          <ion-spinner name="crescent"></ion-spinner>
-        </ion-content>
+        <style>
+          ion-spinner {
+            width: 100px;
+            height: 100px;
+          }
+        </style>
+        <ion-spinner name="lines"></ion-spinner>
+        <ion-spinner name="lines-small"></ion-spinner>
+        <ion-spinner name="lines-sharp"></ion-spinner>
+        <ion-spinner name="lines-sharp-small"></ion-spinner>
+        <ion-spinner name="circular"></ion-spinner>
+        <ion-spinner name="dots"></ion-spinner>
+        <ion-spinner name="bubbles"></ion-spinner>
+        <ion-spinner name="circles"></ion-spinner>
+        <ion-spinner name="crescent"></ion-spinner>
       `,
         config
       );
 
-      await expect(page.locator('#content')).toHaveScreenshot(screenshot(`spinner-resize-diff`));
+      await expect(page).toHaveScreenshot(screenshot(`spinner-resize-diff`));
     });
   });
 });
