@@ -321,5 +321,25 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       await expect(alert.locator('.alert-title')).toHaveText('My Alert');
     });
+    test.only('should use the label prop to set the default header in an alert if both prop and slot are set', async ({ page }) => {
+      await page.setContent(
+        `
+         <ion-select label="My Prop Alert" interface="alert">
+            <div slot="label">My Slot Alert</div>
+           <ion-select-option value="a">A</ion-select-option>
+         </ion-select>
+       `,
+        config
+      );
+
+      const select = page.locator('ion-select');
+      const alert = page.locator('ion-alert');
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+
+      await select.click();
+      await ionAlertDidPresent.next();
+
+      await expect(alert.locator('.alert-title')).toHaveText('My Prop Alert');
+    });
   });
 });
