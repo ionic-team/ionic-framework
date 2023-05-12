@@ -282,10 +282,30 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
 });
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('select: alert label'), () => {
-    test('should use the label to set the default header in an alert', async ({ page }) => {
+    test('should use the label prop to set the default header in an alert', async ({ page }) => {
       await page.setContent(
         `
          <ion-select label="My Alert" interface="alert">
+           <ion-select-option value="a">A</ion-select-option>
+         </ion-select>
+       `,
+        config
+      );
+
+      const select = page.locator('ion-select');
+      const alert = page.locator('ion-alert');
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+
+      await select.click();
+      await ionAlertDidPresent.next();
+
+      await expect(alert.locator('.alert-title')).toHaveText('My Alert');
+    });
+    test('should use the label slot to set the default header in an alert', async ({ page }) => {
+      await page.setContent(
+        `
+         <ion-select interface="alert">
+            <div slot="label">My Alert</div>
            <ion-select-option value="a">A</ion-select-option>
          </ion-select>
        `,
