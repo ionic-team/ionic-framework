@@ -62,9 +62,20 @@ export const createKeyboardController = async (
   const init = async () => {
     const resizeOptions = await Keyboard.getResizeMode();
     const resizeMode = resizeOptions == undefined ? undefined : resizeOptions.mode;
-    initialResizeContainerHeight = getResizeContainerHeight(resizeMode);
 
     keyboardWillShowHandler = () => {
+      /**
+       * We need to compute initialResizeContainerHeight right before
+       * the keyboard opens to guarantee the resize container is visible.
+       * The resize container may not be visible if we compute this
+       * as soon as the keyboard controller is created.
+       * We should only need to do this once to avoid additional clientHeight
+       * computations.
+       */
+      if (initialResizeContainerHeight === undefined) {
+        initialResizeContainerHeight = getResizeContainerHeight(resizeMode);
+      }
+
       keyboardVisible = true;
       fireChangeCallback(keyboardVisible, resizeMode);
     };
