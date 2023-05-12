@@ -1,7 +1,10 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs().forEach(({ title, screenshot, config }) => {
+configs({ modes: ['ios'] }).forEach(({ title, screenshot, config }) => {
+  /**
+   * Chip rendering does not vary across modes.
+   */
   test.describe(title('chip: rendering'), () => {
     test('should not have visual regressions', async ({ page }) => {
       await page.setContent(
