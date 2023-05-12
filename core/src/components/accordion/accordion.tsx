@@ -1,5 +1,5 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Element, Host, Prop, State, h } from '@stencil/core';
+import { Component, Element, Host, Prop, State, Watch, h } from '@stencil/core';
 import { chevronDown } from 'ionicons/icons';
 
 import { config } from '../../global/config';
@@ -56,6 +56,10 @@ export class Accordion implements ComponentInterface {
    * value.
    */
   @Prop() value = `ion-accordion-${accordionIds++}`;
+  @Watch('value')
+  valueChanged() {
+    this.updateState();
+  }
 
   /**
    * If `true`, the accordion cannot be interacted with.
