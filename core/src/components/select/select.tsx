@@ -765,22 +765,6 @@ export class Select implements ComponentInterface {
     return this.label !== undefined || this.labelSlot !== null;
   }
 
-  private isLabelStacked() {
-    const { labelPlacement, el } = this;
-
-    if (labelPlacement === 'stacked') { return true; }
-
-    if (labelPlacement === 'floating') {
-      console.log(this.isExpanded)
-      if (this.isExpanded || this.hasValue() || el.classList.contains('ion-focused')) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-
   private estimateNotchWidth() {
     const { notchSpacerEl } = this;
 
@@ -805,11 +789,26 @@ export class Select implements ComponentInterface {
       return;
     }
 
-    const computedDimensions = this.labelSlot!.getBoundingClientRect();
-    const SCALE = this.isLabelStacked() ? 1 : 0.75;
-    console.log('scale',SCALE, this.el)
+    const width = this.labelSlot!.scrollWidth;
+    if (width === 0) {
 
-    notchSpacerEl.style.setProperty('width', `${computedDimensions.width * SCALE}px`);
+      // select is hidden
+      if (this.el.offsetParent === null) {
+        const io = new IntersectionObserver((ev) => {
+          if (ev[0].intersectionRatio === 1) {
+            console.log('visible!!!!')
+            this.estimateNotchWidth();
+          }
+         //this.estimateNotchWidth()
+        }, { threshold: 0.01, root: this.el.parentElement })
+
+        io.observe(this.el);
+      }
+      console.log(this.el,'is hidden');
+
+    }
+
+    notchSpacerEl.style.setProperty('width', `${width * 0.75}px`);
   }
 
   /**
