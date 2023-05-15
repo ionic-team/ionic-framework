@@ -147,6 +147,7 @@ export const attachView = (
 
   const instance = componentRef.instance;
   const hostElement = componentRef.location.nativeElement;
+  console.log("attachView:", { instance, hostElement, params });
   if (params) {
     Object.assign(instance, params);
   }
