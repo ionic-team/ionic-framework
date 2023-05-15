@@ -55,6 +55,7 @@ export class AngularFrameworkDelegate implements FrameworkDelegate {
   ) {}
 
   attachViewToDom(container: any, component: any, params?: any, cssClasses?: string[]): Promise<any> {
+    console.log("container, component, params:", container, component, params);
     return this.zone.run(() => {
       return new Promise((resolve) => {
         const componentProps = {
