@@ -116,6 +116,25 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
         style,
       };
 
+      /**
+       * `ion-modal` needs a wrapper element so content
+       * takes up the full size of the parent modal.
+       */
+      const renderChildren = () => {
+        if (tagName === 'ion-modal') {
+          return createElement(
+            'div',
+            {
+              ref: this.wrapperRef,
+              className: 'ion-delegate-host ion-page',
+            },
+            children
+          )
+        }
+
+        return children;
+      }
+
       return createElement(
         'template',
         {},
@@ -128,16 +147,7 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
            * so conditionally render the component
            * based on the isOpen state.
            */
-          this.state.isOpen || this.props.keepContentsMounted
-            ? createElement(
-                'div',
-                {
-                  ref: this.wrapperRef,
-                  className: 'ion-delegate-host ion-page',
-                },
-                children
-              )
-            : null
+          this.state.isOpen || this.props.keepContentsMounted ? renderChildren() : null
         )
       );
     }
