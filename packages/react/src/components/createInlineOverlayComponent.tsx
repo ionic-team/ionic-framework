@@ -132,14 +132,8 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
             ? createElement(
                 'div',
                 {
-                  id: 'ion-react-wrapper',
                   ref: this.wrapperRef,
-                  className: 'ion-delegate-host',
-                  style: {
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: '100%',
-                  },
+                  className: 'ion-delegate-host ion-page',
                 },
                 children
               )
