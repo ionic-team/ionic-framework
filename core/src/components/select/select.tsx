@@ -2,7 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, forceUpdate } from '@stencil/core';
 import type { LegacyFormController } from '@utils/forms';
 import { createLegacyFormController } from '@utils/forms';
-import { findItemLabel, focusElement, getAriaLabel, renderHiddenInput, inheritAttributes } from '@utils/helpers';
+import { findItemLabel, focusElement, getAriaLabel, renderHiddenInput, inheritAttributes, raf } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 import { actionSheetController, alertController, popoverController } from '@utils/overlays';
@@ -55,6 +55,7 @@ export class Select implements ComponentInterface {
   private legacyFormController!: LegacyFormController;
   private inheritedAttributes: Attributes = {};
   private nativeWrapperEl: HTMLElement | undefined;
+  private notchSpacerEl: HTMLElement | undefined;
 
   // This flag ensures we log the deprecation warning at most once.
   private hasLoggedDeprecationWarning = false;
@@ -665,13 +666,13 @@ export class Select implements ComponentInterface {
    * was passed.
    */
   private get labelText() {
-    const { el, label } = this;
+    const { label } = this;
 
     if (label !== undefined) {
       return label;
     }
 
-    const labelSlot = el.querySelector('[slot="label"]');
+    const labelSlot = this.labelSlot;
 
     if (labelSlot !== null) {
       return labelSlot.textContent;
@@ -740,6 +741,20 @@ export class Select implements ComponentInterface {
     );
   }
 
+  componentDidRender() {
+    raf(() => {
+      this.estimateNotchWidth();
+    });
+  }
+
+  /**
+   * Gets any content passed into the `label` slot,
+   * not the <slot> definition.
+   */
+  private get labelSlot() {
+    return this.el.querySelector('[slot="label"]');
+  }
+
   /**
    * Returns `true` if label content is provided
    * either by a prop or a content. If you want
@@ -747,7 +762,54 @@ export class Select implements ComponentInterface {
    * the `labelText` getter instead.
    */
   private get hasLabel() {
-    return this.label !== undefined || this.el.querySelector('[slot="label"]') !== null;
+    return this.label !== undefined || this.labelSlot !== null;
+  }
+
+  private isLabelStacked() {
+    const { labelPlacement, el } = this;
+
+    if (labelPlacement === 'stacked') { return true; }
+
+    if (labelPlacement === 'floating') {
+      console.log(this.isExpanded)
+      if (this.isExpanded || this.hasValue() || el.classList.contains('ion-focused')) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+
+  private estimateNotchWidth() {
+    const { notchSpacerEl } = this;
+
+    if (notchSpacerEl === undefined) { return; }
+
+    if (
+      /**
+       * If no label is being used, then we
+       * do not need to estimate the notch width.
+       */
+      !this.hasLabel ||
+
+      /**
+       * If the label property is being used
+       * then we can render the label text inside
+       * of the notch and let the browser
+       * determine the notch size for us.
+       */
+      this.label !== undefined
+    ) {
+      notchSpacerEl.style.removeProperty('width');
+      return;
+    }
+
+    const computedDimensions = this.labelSlot!.getBoundingClientRect();
+    const SCALE = this.isLabelStacked() ? 1 : 0.75;
+    console.log('scale',SCALE, this.el)
+
+    notchSpacerEl.style.setProperty('width', `${computedDimensions.width * SCALE}px`);
   }
 
   /**
@@ -770,9 +832,7 @@ export class Select implements ComponentInterface {
         <div class="select-outline-container">
           <div class="select-outline-start"></div>
           <div class="select-outline-notch">
-            <div class="notch-spacer" aria-hidden="true">
-              {this.label}
-            </div>
+            <div class="notch-spacer" aria-hidden="true" ref={(el) => this.notchSpacerEl = el}>{this.label}</div>
           </div>
           <div class="select-outline-end"></div>
         </div>,

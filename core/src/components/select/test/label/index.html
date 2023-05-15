@@ -50,11 +50,21 @@
           <div class="grid-item">
             <h2>Justify Start</h2>
             <ion-select
-              label="Favorite Fruit"
+              fill="outline"
               placeholder="Select a fruit"
-              label-placement="start"
+              label-placement="stacked"
               justify="start"
-            ></ion-select>
+            >
+            <div slot="label">This is my label content</div>
+          </ion-select> <br />
+          <ion-select
+              fill="outline"
+              placeholder="Select a fruit"
+              label-placement="floating"
+              justify="start"
+            >
+            <div slot="label">This is my label content</div>
+          </ion-select>
           </div>
 
           <div class="grid-item">
