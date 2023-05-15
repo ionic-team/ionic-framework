@@ -70,17 +70,12 @@
 
 // Material Design Radio: Disabled
 // -----------------------------------------
-// The radio itself should use the disabled
-// opacity set by its spec, while the label
-// should match the other form controls
+// The radio and label should use the
+// same opacity and match the other form
+// controls
 
-:host(.legacy-radio.radio-disabled),
-:host(.radio-disabled) .label-text-wrapper {
+:host(.radio-disabled) {
   opacity: $radio-md-disabled-opacity;
-}
-
-:host(.radio-disabled) .native-wrapper {
-  opacity: $radio-md-icon-disabled-opacity;
 }
 
 // Material Design Radio: Keyboard Focus
