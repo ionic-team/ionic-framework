@@ -85,7 +85,7 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation =>
 
   const baseAnimation = createAnimation();
   const backdropAnimation = createAnimation();
-  const wrapperAnimation = createAnimation();
+  const contentAnimation = createAnimation();
 
   backdropAnimation
     .addElement(root.querySelector('ion-backdrop')!)
@@ -95,7 +95,10 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation =>
     })
     .afterClearStyles(['pointer-events']);
 
-  wrapperAnimation.addElement(root.querySelector('.popover-wrapper')!).fromTo('opacity', 0.01, 1);
+  contentAnimation
+    .addElement(root.querySelector('.popover-arrow')!)
+    .addElement(root.querySelector('.popover-content')!)
+    .fromTo('opacity', 0.01, 1);
 
   return baseAnimation
     .easing('ease')
@@ -141,5 +144,5 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation =>
         }
       }
     })
-    .addAnimation([backdropAnimation, wrapperAnimation]);
+    .addAnimation([backdropAnimation, contentAnimation]);
 };
