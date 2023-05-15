@@ -129,11 +129,11 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
               className: 'ion-delegate-host ion-page',
             },
             children
-          )
+          );
         }
 
         return children;
-      }
+      };
 
       return createElement(
         'template',
