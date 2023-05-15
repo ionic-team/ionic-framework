@@ -32,9 +32,12 @@ import type { SelectChangeEventDetail, SelectInterface, SelectCompareFn } from '
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
+ * @slot label - label - The label text to associate with the select. Use the "labelPlacement" property to control where the label is placed relative to the select. Use this if you need to render a label with custom HTML.
+ *
  * @part placeholder - The text displayed in the select when there is no value.
  * @part text - The displayed value of the select.
  * @part icon - The select icon container.
+ *
  */
 @Component({
   tag: 'ion-select',
@@ -122,6 +125,10 @@ export class Select implements ComponentInterface {
 
   /**
    * The visible label associated with the select.
+   *
+   * Use this if you need to render a plaintext label.
+   *
+   * The `label` property will take priority over the `label` slot if both are used.
    */
   @Prop() label?: string;
 
@@ -566,7 +573,7 @@ export class Select implements ComponentInterface {
      * TODO FW-3194
      * Remove legacyFormController logic.
      * Remove label and labelText vars
-     * Pass `this.label` instead of `labelText`
+     * Pass `this.labelText` instead of `labelText`
      * when setting the header.
      */
     let label: HTMLElement | null;
@@ -576,7 +583,7 @@ export class Select implements ComponentInterface {
       label = this.getLabel();
       labelText = label ? label.textContent : null;
     } else {
-      labelText = this.label;
+      labelText = this.labelText;
     }
 
     const interfaceOptions = this.interfaceOptions;
@@ -649,6 +656,30 @@ export class Select implements ComponentInterface {
     return Array.from(this.el.querySelectorAll('ion-select-option'));
   }
 
+  /**
+   * Returns any plaintext associated with
+   * the label (either prop or slot).
+   * Note: This will not return any custom
+   * HTML. Use the `hasLabel` getter if you
+   * want to know if any slotted label content
+   * was passed.
+   */
+  private get labelText() {
+    const { el, label } = this;
+
+    if (label !== undefined) {
+      return label;
+    }
+
+    const labelSlot = el.querySelector('[slot="label"]');
+
+    if (labelSlot !== null) {
+      return labelSlot.textContent;
+    }
+
+    return;
+  }
+
   private getText(): string {
     const selectedText = this.selectedText;
     if (selectedText != null && selectedText !== '') {
@@ -696,15 +727,27 @@ export class Select implements ComponentInterface {
 
   private renderLabel() {
     const { label } = this;
-    if (label === undefined) {
-      return;
-    }
 
     return (
-      <div class="label-text-wrapper">
-        <div class="label-text">{this.label}</div>
+      <div
+        class={{
+          'label-text-wrapper': true,
+          'label-text-wrapper-hidden': !this.hasLabel,
+        }}
+      >
+        {label === undefined ? <slot name="label"></slot> : <div class="label-text">{label}</div>}
       </div>
     );
+  }
+
+  /**
+   * Returns `true` if label content is provided
+   * either by a prop or a content. If you want
+   * to get the plaintext value of the label use
+   * the `labelText` getter instead.
+   */
+  private get hasLabel() {
+    return this.label !== undefined || this.el.querySelector('[slot="label"]') !== null;
   }
 
   /**
@@ -902,10 +945,10 @@ Developers can use the "legacy" property to continue using the legacy form marku
   }
 
   private get ariaLabel() {
-    const { placeholder, label, el, inputId, inheritedAttributes } = this;
+    const { placeholder, el, inputId, inheritedAttributes } = this;
     const displayValue = this.getText();
     const { labelText } = getAriaLabel(el, inputId);
-    const definedLabel = label ?? inheritedAttributes['aria-label'] ?? labelText;
+    const definedLabel = this.labelText ?? inheritedAttributes['aria-label'] ?? labelText;
 
     /**
      * If developer has specified a placeholder
