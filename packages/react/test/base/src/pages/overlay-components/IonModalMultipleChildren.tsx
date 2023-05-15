@@ -15,4 +15,4 @@ const IonModalMultipleChildren = () => {
   );
 };
 
-export default IonModalConditional;
+export default IonModalMultipleChildren;
