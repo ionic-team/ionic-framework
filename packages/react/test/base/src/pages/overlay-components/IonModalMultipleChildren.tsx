@@ -7,12 +7,10 @@ const IonModalMultipleChildren = () => {
   return (
     <IonContent>
       <IonButton id="show-modal">Show Modal</IonButton>
-      {showIonModal && (
-        <IonModal trigger="show-modal">
-          <div class="child-content">Content A</div>
-          <div class="child-content">Content B</div>
-        </IonModal>
-      )}
+      <IonModal trigger="show-modal">
+        <div class="child-content">Content A</div>
+        <div class="child-content">Content B</div>
+      </IonModal>
     </IonContent>
   );
 };
