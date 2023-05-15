@@ -25,6 +25,7 @@ export const attachComponent = async (
     cssClasses.forEach((c) => el.classList.add(c));
   }
   if (componentProps) {
+    console.log("Core, componentProps:", componentProps);
     Object.assign(el, componentProps);
   }
 

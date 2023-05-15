@@ -55,9 +55,9 @@ export class AngularFrameworkDelegate implements FrameworkDelegate {
   ) {}
 
   attachViewToDom(container: any, component: any, params?: any, cssClasses?: string[]): Promise<any> {
-    console.log("container, component, params:", container, component, params);
     return this.zone.run(() => {
       return new Promise((resolve) => {
+        console.log("Angular attachViewToDom:", { container, component, params });
         const componentProps = {
           ...params,
         };
@@ -70,6 +70,7 @@ export class AngularFrameworkDelegate implements FrameworkDelegate {
          * pass a reference to the component using
          * elementReferenceKey as the key.
          */
+        console.log("Angular, this.elementReferenceKey:", this.elementReferenceKey);
         if (this.elementReferenceKey !== undefined) {
           componentProps[this.elementReferenceKey] = container;
         }
