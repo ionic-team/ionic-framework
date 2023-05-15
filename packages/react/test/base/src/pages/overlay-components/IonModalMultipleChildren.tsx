@@ -8,8 +8,8 @@ const IonModalMultipleChildren = () => {
     <IonContent>
       <IonButton id="show-modal">Show Modal</IonButton>
       <IonModal trigger="show-modal">
-        <div class="child-content">Content A</div>
-        <div class="child-content">Content B</div>
+        <div className="child-content">Content A</div>
+        <div className="child-content">Content B</div>
       </IonModal>
     </IonContent>
   );
