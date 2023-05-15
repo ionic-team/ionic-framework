@@ -162,14 +162,22 @@ export const defineOverlayContainer = <Props extends object>(name: string, defin
           }
         }
 
+        /**
+         * `ion-modal` needs a wrapper element so content
+         * takes up the full size of the parent modal.
+         */
+        const renderChildren = () => {
+          if (name === 'ion-modal') {
+            return h('div', { className: 'ion-delegate-host ion-page' }, slots)
+          }
+
+          return slots;
+        }
+
         return h(
           name,
           { ...restOfProps, ref: elementRef },
-          (isOpen.value || restOfProps.keepContentsMounted) ? h(
-            'div',
-            { className: 'ion-delegate-host ion-page' },
-            slots
-          ) : undefined
+          (isOpen.value || restOfProps.keepContentsMounted) ? renderChildren() : undefined
         )
       }
     });
