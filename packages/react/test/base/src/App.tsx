@@ -32,6 +32,7 @@ import IonModalConditionalSibling from './pages/overlay-components/IonModalCondi
 import IonModalConditional from './pages/overlay-components/IonModalConditional';
 import IonModalDatetimeButton from './pages/overlay-components/IonModalDatetimeButton';
 import IonPopoverNested from './pages/overlay-components/IonPopoverNested';
+import IonModalMultipleChildren from './pages/overlay-components/IonModalMultipleChildren';
 
 setupIonicReact();
 
@@ -51,6 +52,10 @@ const App: React.FC = () => (
         <Route
           path="/overlay-components/modal-datetime-button"
           component={IonModalDatetimeButton}
+        />
+        <Route
+          path="/overlay-components/modal-multiple-children"
+          component={IonModalMultipleChildren}
         />
         <Route path="/keep-contents-mounted" component={KeepContentsMounted} />
         <Route path="/navigation" component={NavComponent} />
