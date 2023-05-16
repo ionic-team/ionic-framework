@@ -30,12 +30,14 @@
   @include padding($range-md-padding-vertical, $range-md-padding-horizontal);
 }
 
+// TODO FW-2997 Remove the .legacy-range selector
 :host(.in-item:not(.range-has-label):not(.range-has-start-icon):not(.range-has-end-icon):not(.legacy-range)) .range-slider {
   // Add margins on both sides of the range slider
   // to prevent the range knob from being cut off.
   @include margin(null, $range-md-padding-horizontal);
 }
 
+// TODO FW-2997 Remove the .legacy-range selector
 :host(.in-item.range-has-label.range-label-placement-start:not(.legacy-range):not(.range-has-end-icon)) .range-slider,
 :host(.in-item.range-has-start-icon:not(.legacy-range):not(.range-has-end-icon)) .range-slider {
   // Only add margin to the right if the range has
@@ -44,6 +46,7 @@
   @include margin(null, $range-md-padding-horizontal, null, 0);
 }
 
+// TODO FW-2997 Remove the .legacy-range selector
 :host(.in-item.range-has-label.range-label-placement-end:not(.legacy-range):not(.range-has-start-icon)) .range-slider,
 :host(.in-item.range-has-end-icon:not(.legacy-range):not(.range-has-start-icon)) .range-slider {
   // Only add margin to the left if the range has
