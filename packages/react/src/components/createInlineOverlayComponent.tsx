@@ -117,22 +117,15 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
       };
 
       /**
-       * `ion-modal` needs a wrapper element so content
+       * `ion-modal` needs `.ion-page` so content
        * takes up the full size of the parent modal.
        */
-      const renderChildren = () => {
+      const getWrapperClasses = () => {
         if (tagName === 'ion-modal') {
-          return createElement(
-            'div',
-            {
-              ref: this.wrapperRef,
-              className: 'ion-delegate-host ion-page',
-            },
-            children
-          );
+          return `${DELEGATE_HOST} ion-page`;
         }
 
-        return children;
+        return DELEGATE_HOST;
       };
 
       return createElement(
@@ -147,7 +140,16 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
            * so conditionally render the component
            * based on the isOpen state.
            */
-          this.state.isOpen || this.props.keepContentsMounted ? renderChildren() : null
+          this.state.isOpen || this.props.keepContentsMounted
+            ? createElement(
+                'div',
+                {
+                  ref: this.wrapperRef,
+                  className: getWrapperClasses(),
+                },
+                children
+              )
+            : null
         )
       );
     }
@@ -198,3 +200,5 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
   };
   return createForwardRef<PropType, ElementType>(ReactComponent, displayName);
 };
+
+const DELEGATE_HOST = 'ion-delegate-host';
