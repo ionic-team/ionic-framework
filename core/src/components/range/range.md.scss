@@ -201,7 +201,7 @@
 // When the range is disabled, the range label,
 // any slotted labels, and any slotted icons
 // need to receive the same opacity. The range
-// changes color instead of becoming opaque.
+// changes color instead of becoming transparent.
 
 :host(.range-disabled) .range-bar-active,
 :host(.range-disabled) .range-bar,
