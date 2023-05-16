@@ -74,4 +74,10 @@ $checkbox-md-item-end-margin-bottom:     $checkbox-md-item-end-margin-top !defau
 $checkbox-md-item-end-margin-start:      0 !default;
 
 /// @prop - Opacity of the disabled checkbox
+/// This value is used because the checkbox color is set to
+/// `rgb(0, 0, 0, 0.60)` when enabled and we need it to be
+/// `rgb(0, 0, 0, 0.38)` when disabled but the disabled
+/// opacity is applied on top of the transparent color so
+/// this opacity gets us the equivalent of applying `0.38`
+/// on top of an opaque checkbox `rgb(0, 0, 0, 1.0)`
 $checkbox-md-icon-disabled-opacity:      0.63 !default;

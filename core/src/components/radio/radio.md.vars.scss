@@ -62,4 +62,10 @@ $radio-md-item-end-margin-bottom:    $radio-md-item-end-margin-top !default;
 $radio-md-item-end-margin-start:     0 !default;
 
 /// @prop - Opacity of the disabled radio
+/// This value is used because the radio color is set to
+/// `rgb(0, 0, 0, 0.60)` when enabled and we need it to be
+/// `rgb(0, 0, 0, 0.38)` when disabled but the disabled
+/// opacity is applied on top of the transparent color so
+/// this opacity gets us the equivalent of applying `0.38`
+/// on top of an opaque radio `rgb(0, 0, 0, 1.0)`///
 $radio-md-icon-disabled-opacity:     0.63 !default;
