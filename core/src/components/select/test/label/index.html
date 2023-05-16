@@ -49,55 +49,13 @@
         <div class="grid">
           <div class="grid-item">
             <h2>Justify Start</h2>
-            <ion-button id="show-modal">show modal</ion-button>
-            <ion-modal trigger="show-modal">
-              <ion-content class="ion-padding">
-                <ion-select
-                  mode="md"
-                  id="hidden"
-                  fill="outline"
-                  placeholder="Select a fruit"
-                  label-placement="stacked"
-                  justify="start"
-                >
-                  <div slot="label">Content is hidden initially</div>
-                </ion-select>
-                <br />
-              </ion-content>
-            </ion-modal>
             <ion-select
-              id="update"
+              label="Favorite Fruit"
               fill="outline"
               placeholder="Select a fruit"
-              label-placement="stacked"
+              label-placement="start"
               justify="start"
-            >
-              <div slot="label">Content to be updated</div>
-            </ion-select>
-            <br />
-
-            <ion-select
-              id="replace"
-              fill="outline"
-              placeholder="Select a fruit"
-              label-placement="stacked"
-              justify="start"
-            >
-              <div slot="label">Content to be replaced</div>
-            </ion-select>
-            <br />
-
-            <script>
-              const updateSelect = document.querySelector('#update');
-              const replaceSelect = document.querySelector('#replace');
-
-              setTimeout(() => {
-                updateSlot = updateSelect.querySelector('[slot]');
-                updateSlot.innerText = 'Updated Content';
-
-                replaceSelect.innerHTML = `<div slot="label">Replaced Content</div>`;
-              }, 1000);
-            </script>
+            ></ion-select>
           </div>
 
           <div class="grid-item">

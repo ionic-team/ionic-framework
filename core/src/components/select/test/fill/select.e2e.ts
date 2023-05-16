@@ -194,7 +194,9 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       const select = page.locator('ion-select');
       expect(await select.screenshot()).toMatchSnapshot(screenshot(`select-fill-outline-slotted-label`));
     });
-    test('should render the notch correctly with a slotted label after the select was originally hidden', async ({ page }) => {
+    test('should render the notch correctly with a slotted label after the select was originally hidden', async ({
+      page,
+    }) => {
       await page.setContent(
         `
         <style>
