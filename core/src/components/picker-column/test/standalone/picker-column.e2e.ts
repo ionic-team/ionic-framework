@@ -19,7 +19,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(picker).toBeVisible();
     });
 
-    test('should have the correct selectedIndex and prevSelected', async ({ page }) => {
+    test.only('should have the correct selectedIndex and prevSelected', async ({ page }) => {
       test.info().annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/21764',
@@ -35,7 +35,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       await ionPickerDidPresent.next();
 
-      secondOption.click();
+      await secondOption.click();
 
       await ionPickerColChangeEvent.next();
 
