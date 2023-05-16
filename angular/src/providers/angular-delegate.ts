@@ -149,10 +149,17 @@ export const attachView = (
   const hostElement = componentRef.location.nativeElement;
 
   if (params) {
+    /**
+     * For modals and popovers, a reference to the component is
+     * added to `params` during the call to attachViewToDom. If
+     * a referencing using this name is already set, this means
+     * the app is trying to use the name as a component prop,
+     * which will cause collisions.
+     */
     if (elementReferenceKey && instance[elementReferenceKey] !== undefined) {
-      console.log("Error!");
-    } else {
-      console.log("No error");
+      console.error(
+        `[Ionic Error]: ${elementReferenceKey} is a reserved property name when using ${container.tagName}. Check the component properties of ${component.name} and ensure none of them are named "${elementReferenceKey}".`
+      );
     }
 
     Object.assign(instance, params);
