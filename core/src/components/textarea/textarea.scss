@@ -9,7 +9,7 @@
    *
    * @prop --border-radius: Border radius of the textarea
    * @prop --border-color: Color of the border below the textarea when using helper text, error text, or counter
-   * @prop --border-radius: Radius of the textarea border
+   * @prop --border-radius: Radius of the textarea border. A large radius may display unevenly when using fill="outline"; if needed, use shape="round" instead or increase --padding-start.
    * @prop --border-style: Style of the border below the textarea when using helper text, error text, or counter
    * @prop --border-width: Width of the border below the textarea when using helper text, error text, or counter
    *
@@ -494,7 +494,7 @@
    * the textarea should be on the end
    * when the label sits at the start.
    */
-  @include margin(0, 8px, 0, 0);
+  @include margin(0, $form-control-label-margin, 0, 0);
 }
 
 // Textarea Label Placement - End
@@ -514,7 +514,7 @@
  * when the label sits at the end.
  */
 :host(.textarea-label-placement-end) .label-text-wrapper {
-  @include margin(0, 0, 0, 8px);
+  @include margin(0, 0, 0, $form-control-label-margin);
 }
 
 // Textarea Label Placement - Fixed
@@ -526,7 +526,7 @@
    * the textarea should be on the end
    * when the label sits at the start.
    */
-  @include margin(0, 8px, 0, 0);
+  @include margin(0, $form-control-label-margin, 0, 0);
 }
 
 /**
