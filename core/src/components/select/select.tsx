@@ -10,6 +10,7 @@ import type { OverlaySelect } from '@utils/overlays-interface';
 import { isRTL } from '@utils/rtl';
 import { createColorClasses, hostContext } from '@utils/theme';
 import { watchForOptions } from '@utils/watch-options';
+import { win } from '@utils/window';
 import { caretDownSharp, chevronExpand } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -811,7 +812,7 @@ export class Select implements ComponentInterface {
      * As a result, we need to wait for the element
      * to become visible before setting the notch width.
      */
-    if (width === 0 && this.el.offsetParent === null) {
+    if (width === 0 && this.el.offsetParent === null && win !== undefined && 'IntersectionObserver' in win) {
       const io = new IntersectionObserver(
         (ev) => {
           /**
