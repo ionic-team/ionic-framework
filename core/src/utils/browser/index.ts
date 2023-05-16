@@ -1,5 +1,5 @@
 /**
- * When accessing the window, it is important
+ * When accessing the document or window, it is important
  * to account for SSR applications where the
  * window is not available. Code that accesses
  * window when it is not available will crash.
@@ -21,3 +21,5 @@
  * not run in an SSR environment.
  */
 export const win: Window | undefined = typeof window !== 'undefined' ? window : undefined;
+
+export const doc: Document | undefined = typeof document !== 'undefined' ? document : undefined;
