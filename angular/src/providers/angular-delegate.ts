@@ -152,7 +152,7 @@ export const attachView = (
     /**
      * For modals and popovers, a reference to the component is
      * added to `params` during the call to attachViewToDom. If
-     * a referencing using this name is already set, this means
+     * a reference using this name is already set, this means
      * the app is trying to use the name as a component prop,
      * which will cause collisions.
      */
