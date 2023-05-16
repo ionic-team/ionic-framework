@@ -57,6 +57,7 @@ export class Select implements ComponentInterface {
   private inheritedAttributes: Attributes = {};
   private nativeWrapperEl: HTMLElement | undefined;
   private notchSpacerEl: HTMLElement | undefined;
+  private notchVisibilityIO: IntersectionObserver | undefined;
 
   // This flag ensures we log the deprecation warning at most once.
   private hasLoggedDeprecationWarning = false;
@@ -743,6 +744,12 @@ export class Select implements ComponentInterface {
   }
 
   componentDidRender() {
+    /**
+     * Run this the frame after
+     * the browser has re-painted the select.
+     * Otherwise, the label element may have a width
+     * of 0 and the IntersectionObserver will be used.
+     */
     raf(() => {
       this.setNotchWidth();
     });
@@ -780,7 +787,7 @@ export class Select implements ComponentInterface {
    * intrinsic size of the label text.
    */
   private setNotchWidth() {
-    const { notchSpacerEl } = this;
+    const { el, notchSpacerEl } = this;
 
     if (notchSpacerEl === undefined) {
       return;
@@ -805,15 +812,30 @@ export class Select implements ComponentInterface {
     }
 
     const width = this.labelSlot!.scrollWidth;
+    if (
+      /**
+       * If the computed width is 0 and offsetParent
+       * is null then that means the element is hidden.
+       * As a result, we need to wait for the element
+       * to become visible before setting the notch width.
+       */
+      width === 0 &&
+      el.offsetParent === null &&
+      win !== undefined &&
+      'IntersectionObserver' in win
+    ) {
+      /**
+       * If there is an IO already attached
+       * then that will update the notch
+       * once the element becomes visible.
+       * As a result, there is no need to create
+       * another one.
+       */
+      if (this.notchVisibilityIO !== undefined) {
+        return;
+      }
 
-    /**
-     * If the computed width is 0 and offsetParent
-     * is null then that means the element is hidden.
-     * As a result, we need to wait for the element
-     * to become visible before setting the notch width.
-     */
-    if (width === 0 && this.el.offsetParent === null && win !== undefined && 'IntersectionObserver' in win) {
-      const io = new IntersectionObserver(
+      const io = (this.notchVisibilityIO = new IntersectionObserver(
         (ev) => {
           /**
            * If the element is visible then we
@@ -822,6 +844,7 @@ export class Select implements ComponentInterface {
           if (ev[0].intersectionRatio === 1) {
             this.setNotchWidth();
             io.disconnect();
+            this.notchVisibilityIO = undefined;
           }
         },
         /**
@@ -834,8 +857,8 @@ export class Select implements ComponentInterface {
          * after any animations (such as a modal transition)
          * finished, and there would potentially be a flicker.
          */
-        { threshold: 0.01, root: this.el.parentElement }
-      );
+        { threshold: 0.01, root: el.parentElement }
+      ));
 
       io.observe(this.el);
       return;
