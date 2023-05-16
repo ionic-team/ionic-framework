@@ -170,7 +170,7 @@ input {
    * the input should be on the end
    * when the label sits at the start.
    */
-  @include margin(0, 8px, 0, 0);
+  @include margin(0, $form-control-label-margin, 0, 0);
 }
 
 // Toggle Label Placement - End
@@ -190,7 +190,7 @@ input {
  * when the label sits at the end.
  */
 :host(.toggle-label-placement-end) .label-text-wrapper {
-  @include margin(0, 0, 0, 8px);
+  @include margin(0, 0, 0, $form-control-label-margin);
 }
 
 // Input Label Placement - Fixed
@@ -202,7 +202,7 @@ input {
    * the input should be on the end
    * when the label sits at the start.
    */
-  @include margin(0, 8px, 0, 0);
+  @include margin(0, $form-control-label-margin, 0, 0);
 }
 
 /**

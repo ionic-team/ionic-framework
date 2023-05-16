@@ -76,6 +76,18 @@ export class DatetimeButton implements ComponentInterface {
     }
 
     /**
+     * The element reference must be an ion-datetime. Print an error
+     * if a non-datetime element was provided.
+     */
+    if (datetimeEl.tagName !== 'ION-DATETIME') {
+      printIonError(
+        `Expected an ion-datetime instance for ID '${datetime}' but received '${datetimeEl.tagName.toLowerCase()}' instead.`,
+        datetimeEl
+      );
+      return;
+    }
+
+    /**
      * Since the datetime can be used in any context (overlays, accordion, etc)
      * we track when it is visible to determine when it is active.
      * This informs which button is highlighted as well as the
