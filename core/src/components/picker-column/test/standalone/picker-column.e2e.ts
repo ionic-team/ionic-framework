@@ -19,7 +19,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(picker).toBeVisible();
     });
 
-    test.only('should have the correct selectedIndex and prevSelected', async ({ page }) => {
+    test('should have the correct selectedIndex and prevSelected', async ({ page }) => {
       test.info().annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/21764',
