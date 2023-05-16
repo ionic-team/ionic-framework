@@ -814,13 +814,19 @@ export class Select implements ComponentInterface {
     const width = this.labelSlot!.scrollWidth;
     if (
       /**
-       * If the computed width is 0 and offsetParent
-       * is null then that means the element is hidden.
+       * If the computed width of the label is 0
+       * and notchSpacerEl's offsetParent is null
+       * then that means the element is hidden.
        * As a result, we need to wait for the element
        * to become visible before setting the notch width.
+       *
+       * We do not check el.offsetParent because
+       * that can be null if ion-select has
+       * position: fixed applied to it.
+       * notchSpacerEl does not have position: fixed.
        */
       width === 0 &&
-      el.offsetParent === null &&
+      notchSpacerEl.offsetParent === null &&
       win !== undefined &&
       'IntersectionObserver' in win
     ) {
@@ -857,10 +863,10 @@ export class Select implements ComponentInterface {
          * after any animations (such as a modal transition)
          * finished, and there would potentially be a flicker.
          */
-        { threshold: 0.01, root: el.parentElement }
+        { threshold: 0.01, root: el }
       ));
 
-      io.observe(this.el);
+      io.observe(notchSpacerEl);
       return;
     }
 
