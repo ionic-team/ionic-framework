@@ -172,7 +172,7 @@ input {
    * the radio should be on the end
    * when the label sits at the start.
    */
-  @include margin(0, 8px, 0, 0);
+  @include margin(0, $form-control-label-margin, 0, 0);
 }
 
 // Radio Label Placement - End
@@ -192,7 +192,7 @@ input {
  * when the label sits at the end.
  */
 :host(.radio-label-placement-end) .label-text-wrapper {
-  @include margin(0, 0, 0, 8px);
+  @include margin(0, 0, 0, $form-control-label-margin);
 }
 
 // Radio Label Placement - Fixed
@@ -204,7 +204,7 @@ input {
    * the radio should be on the end
    * when the label sits at the start.
    */
-  @include margin(0, 8px, 0, 0);
+  @include margin(0, $form-control-label-margin, 0, 0);
 }
 
 /**
