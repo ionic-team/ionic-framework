@@ -743,7 +743,7 @@ export class Select implements ComponentInterface {
 
   componentDidRender() {
     raf(() => {
-      this.estimateNotchWidth();
+      this.setNotchWidth();
     });
   }
 
@@ -765,7 +765,20 @@ export class Select implements ComponentInterface {
     return this.label !== undefined || this.labelSlot !== null;
   }
 
-  private estimateNotchWidth() {
+  /**
+   * When using a label prop we can render
+   * the label value inside of the notch and
+   * let the browser calculate the size of the notch.
+   * However, we cannot render the label slot in multiple
+   * places so we need to manually calculate the notch dimension
+   * based on the size of the slotted content.
+   *
+   * This function should only be used to set the notch width
+   * on slotted label content. The notch width for label prop
+   * content is automatically calculated based on the
+   * intrinsic size of the label text.
+   */
+  private setNotchWidth() {
     const { notchSpacerEl } = this;
 
     if (notchSpacerEl === undefined) {
@@ -791,25 +804,49 @@ export class Select implements ComponentInterface {
     }
 
     const width = this.labelSlot!.scrollWidth;
-    if (width === 0) {
-      // select is hidden
-      if (this.el.offsetParent === null) {
-        const io = new IntersectionObserver(
-          (ev) => {
-            if (ev[0].intersectionRatio === 1) {
-              console.log('visible!!!!');
-              this.estimateNotchWidth();
-            }
-            //this.estimateNotchWidth()
-          },
-          { threshold: 0.01, root: this.el.parentElement }
-        );
 
-        io.observe(this.el);
-      }
-      console.log(this.el, 'is hidden');
+    /**
+     * If the computed width is 0 and offsetParent
+     * is null then that means the element is hidden.
+     * As a result, we need to wait for the element
+     * to become visible before setting the notch width.
+     */
+    if (width === 0 && this.el.offsetParent === null) {
+      const io = new IntersectionObserver(
+        (ev) => {
+          /**
+           * If the element is visible then we
+           * can try setting the notch width again.
+           */
+          if (ev[0].intersectionRatio === 1) {
+            this.setNotchWidth();
+            io.disconnect();
+          }
+        },
+        /**
+         * Set the root to be the parent element
+         * which can be an ion-content or other
+         * DOM node. This causes the IO callback
+         * to be fired in WebKit as soon as the element
+         * is visible. If we used the default root value
+         * then WebKit would only fire the IO callback
+         * after any animations (such as a modal transition)
+         * finished, and there would potentially be a flicker.
+         */
+        { threshold: 0.01, root: this.el.parentElement }
+      );
+
+      io.observe(this.el);
+      return;
     }
 
+    /**
+     * If the element is visible then we can set the notch width.
+     * The notch is only visible when the label is scaled,
+     * which is why we multiply the width by 0.75 as this is
+     * the same amount the label element is scaled by in the
+     * select CSS (See $select-floating-label-scale in select.vars.scss).
+     */
     notchSpacerEl.style.setProperty('width', `${width * 0.75}px`);
   }
 
