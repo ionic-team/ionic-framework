@@ -854,9 +854,8 @@ export class Select implements ComponentInterface {
           }
         },
         /**
-         * Set the root to be the parent element
-         * which can be an ion-content or other
-         * DOM node. This causes the IO callback
+         * Set the root to be the select
+         * This causes the IO callback
          * to be fired in WebKit as soon as the element
          * is visible. If we used the default root value
          * then WebKit would only fire the IO callback
