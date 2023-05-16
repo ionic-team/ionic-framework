@@ -1,5 +1,5 @@
+import { win } from '../../utils/browser';
 import { StatusBar, Style } from '../../utils/native/status-bar';
-import { win } from '../../utils/window';
 
 /**
  * Use y = mx + b to
