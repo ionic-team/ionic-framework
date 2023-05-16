@@ -19,7 +19,7 @@
    * @prop --highlight-color-valid: The color of the highlight on the select when valid
    *
    * @prop --border-color: Color of the select border
-   * @prop --border-radius: Radius of the select border
+   * @prop --border-radius: Radius of the select border. A large radius may display unevenly when using fill="outline"; if needed, use shape="round" instead or increase --padding-start.
    * @prop --border-style: Style of the select border
    * @prop --border-width: Width of the select border
    *
@@ -366,7 +366,7 @@ button {
    * the select should be on the end
    * when the label sits at the start.
    */
-  @include margin(0, 8px, 0, 0);
+  @include margin(0, $form-control-label-margin, 0, 0);
 }
 
 // Select Label Placement - End
@@ -386,7 +386,7 @@ button {
  * when the label sits at the end.
  */
 :host(.select-label-placement-end) .label-text-wrapper {
-  @include margin(0, 0, 0, 8px);
+  @include margin(0, 0, 0, $form-control-label-margin);
 }
 
 // Select Label Placement - Fixed
@@ -398,7 +398,7 @@ button {
    * the select should be on the end
    * when the label sits at the start.
    */
-  @include margin(0, 8px, 0, 0);
+  @include margin(0, $form-control-label-margin, 0, 0);
 }
 
 /**
