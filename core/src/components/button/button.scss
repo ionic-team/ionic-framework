@@ -210,8 +210,6 @@
 }
 
 .button-text {
-  display: flex;
-
   text-overflow: ellipsis;
 
   overflow: hidden;
@@ -226,6 +224,8 @@
 // --------------------------------------------------
 
 ::slotted(ion-icon) {
+  display: flex;
+
   font-size: 1.4em;
   pointer-events: none;
 }
