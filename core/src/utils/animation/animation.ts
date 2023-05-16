@@ -1,5 +1,5 @@
+import { win } from '../browser';
 import { raf } from '../helpers';
-import { win } from '../window';
 
 import type {
   Animation,
