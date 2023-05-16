@@ -788,13 +788,15 @@ export class Select implements ComponentInterface {
   }
 
   private renderSelect() {
-    const { disabled, el, isExpanded, labelPlacement, justify, placeholder, fill, shape } = this;
+    const { disabled, el, isExpanded, labelPlacement, justify, placeholder, fill, shape, name, value } = this;
     const mode = getIonMode(this);
     const hasFloatingOrStackedLabel = labelPlacement === 'floating' || labelPlacement === 'stacked';
     const justifyEnabled = !hasFloatingOrStackedLabel;
     const rtl = isRTL(el) ? 'rtl' : 'ltr';
     const inItem = hostContext('ion-item', this.el);
     const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;
+
+    renderHiddenInput(true, el, name, parseValue(value), disabled);
 
     return (
       <Host

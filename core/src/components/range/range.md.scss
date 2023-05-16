@@ -16,7 +16,6 @@
   --height: #{$range-md-slider-height};
   --pin-background: #{ion-color(primary, base)};
   --pin-color: #{ion-color(primary, contrast)};
-  --margin: 14px;
 
   // TODO FW-2997 Apply this to the start/end slots, and the native wrapper
   font-size: $range-md-pin-font-size;
@@ -46,11 +45,11 @@
 }
 
 ::slotted([slot="start"]) {
-  @include margin(0, var(--margin), 0, 0);
+  @include margin(0, 14px, 0, 0);
 }
 
 ::slotted([slot="end"]) {
-  @include margin(0, 0, 0, var(--margin));
+  @include margin(0, 0, 0, 14px);
 }
 
 :host(.range-has-pin) {
