@@ -267,7 +267,7 @@ configs().forEach(({ title, screenshot, config }) => {
 
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('select: label overflow'), () => {
-    test('label should be truncated with ellipses', async ({ page }) => {
+    test('label property should be truncated with ellipses', async ({ page }) => {
       await page.setContent(
         `
             <ion-select label="Label Label Label Label Label" placeholder="Select an Item"></ion-select>
@@ -277,6 +277,19 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
 
       const select = page.locator('ion-select');
       expect(await select.screenshot()).toMatchSnapshot(screenshot(`select-label-truncate`));
+    });
+    test('label slot should be truncated with ellipses', async ({ page }) => {
+      await page.setContent(
+        `
+            <ion-select placeholder="Select an Item">
+              <div slot="label">Label Label Label Label Label</div>
+            </ion-select>
+          `,
+        config
+      );
+
+      const select = page.locator('ion-select');
+      expect(await select.screenshot()).toMatchSnapshot(screenshot(`select-label-slot-truncate`));
     });
   });
 });

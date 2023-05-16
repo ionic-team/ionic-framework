@@ -52,16 +52,17 @@
             <ion-button id="show-modal">show modal</ion-button>
             <ion-modal trigger="show-modal">
               <ion-content class="ion-padding">
-              <ion-select
-              mode="md"
+                <ion-select
+                  mode="md"
                   id="hidden"
                   fill="outline"
                   placeholder="Select a fruit"
                   label-placement="stacked"
                   justify="start"
                 >
-                <div slot="label">Content is hidden initially</div>
-              </ion-select> <br />
+                  <div slot="label">Content is hidden initially</div>
+                </ion-select>
+                <br />
               </ion-content>
             </ion-modal>
             <ion-select
@@ -71,30 +72,32 @@
               label-placement="stacked"
               justify="start"
             >
-            <div slot="label">Content to be updated</div>
-          </ion-select> <br />
+              <div slot="label">Content to be updated</div>
+            </ion-select>
+            <br />
 
-          <ion-select
+            <ion-select
               id="replace"
               fill="outline"
               placeholder="Select a fruit"
               label-placement="stacked"
               justify="start"
             >
-            <div slot="label">Content to be replaced</div>
-          </ion-select> <br />
+              <div slot="label">Content to be replaced</div>
+            </ion-select>
+            <br />
 
-          <script>
-            const updateSelect = document.querySelector('#update');
-            const replaceSelect = document.querySelector('#replace');
+            <script>
+              const updateSelect = document.querySelector('#update');
+              const replaceSelect = document.querySelector('#replace');
 
-            setTimeout(() => {
-              updateSlot = updateSelect.querySelector('[slot]');
-              updateSlot.innerText = 'Updated Content';
+              setTimeout(() => {
+                updateSlot = updateSelect.querySelector('[slot]');
+                updateSlot.innerText = 'Updated Content';
 
-              replaceSelect.innerHTML = `<div slot="label">Replaced Content</div>`;
-            }, 1000);
-          </script>
+                replaceSelect.innerHTML = `<div slot="label">Replaced Content</div>`;
+              }, 1000);
+            </script>
           </div>
 
           <div class="grid-item">

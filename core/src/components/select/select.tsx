@@ -768,7 +768,9 @@ export class Select implements ComponentInterface {
   private estimateNotchWidth() {
     const { notchSpacerEl } = this;
 
-    if (notchSpacerEl === undefined) { return; }
+    if (notchSpacerEl === undefined) {
+      return;
+    }
 
     if (
       /**
@@ -776,7 +778,6 @@ export class Select implements ComponentInterface {
        * do not need to estimate the notch width.
        */
       !this.hasLabel ||
-
       /**
        * If the label property is being used
        * then we can render the label text inside
@@ -791,21 +792,22 @@ export class Select implements ComponentInterface {
 
     const width = this.labelSlot!.scrollWidth;
     if (width === 0) {
-
       // select is hidden
       if (this.el.offsetParent === null) {
-        const io = new IntersectionObserver((ev) => {
-          if (ev[0].intersectionRatio === 1) {
-            console.log('visible!!!!')
-            this.estimateNotchWidth();
-          }
-         //this.estimateNotchWidth()
-        }, { threshold: 0.01, root: this.el.parentElement })
+        const io = new IntersectionObserver(
+          (ev) => {
+            if (ev[0].intersectionRatio === 1) {
+              console.log('visible!!!!');
+              this.estimateNotchWidth();
+            }
+            //this.estimateNotchWidth()
+          },
+          { threshold: 0.01, root: this.el.parentElement }
+        );
 
         io.observe(this.el);
       }
-      console.log(this.el,'is hidden');
-
+      console.log(this.el, 'is hidden');
     }
 
     notchSpacerEl.style.setProperty('width', `${width * 0.75}px`);
@@ -831,7 +833,9 @@ export class Select implements ComponentInterface {
         <div class="select-outline-container">
           <div class="select-outline-start"></div>
           <div class="select-outline-notch">
-            <div class="notch-spacer" aria-hidden="true" ref={(el) => this.notchSpacerEl = el}>{this.label}</div>
+            <div class="notch-spacer" aria-hidden="true" ref={(el) => (this.notchSpacerEl = el)}>
+              {this.label}
+            </div>
           </div>
           <div class="select-outline-end"></div>
         </div>,
