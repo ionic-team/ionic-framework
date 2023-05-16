@@ -1,8 +1,8 @@
 import { createKeyboardController } from '../keyboard-controller';
 
 describe('Keyboard Controller', () => {
-  it('should update isKeyboardVisible', () => {
-    const keyboardCtrl = createKeyboardController();
+  it('should update isKeyboardVisible', async () => {
+    const keyboardCtrl = await createKeyboardController();
 
     window.dispatchEvent(new Event('keyboardWillShow'));
     expect(keyboardCtrl.isKeyboardVisible()).toBe(true);
@@ -11,14 +11,14 @@ describe('Keyboard Controller', () => {
     expect(keyboardCtrl.isKeyboardVisible()).toBe(false);
   });
 
-  it('should run the callback', () => {
+  it('should run the callback', async () => {
     const callbackMock = jest.fn();
-    createKeyboardController(callbackMock);
+    await createKeyboardController(callbackMock);
 
     window.dispatchEvent(new Event('keyboardWillShow'));
-    expect(callbackMock).toHaveBeenCalledWith(true);
+    expect(callbackMock).toHaveBeenCalledWith(true, undefined);
 
     window.dispatchEvent(new Event('keyboardWillHide'));
-    expect(callbackMock).toHaveBeenCalledWith(false);
+    expect(callbackMock).toHaveBeenCalledWith(false, undefined);
   });
 });
