@@ -95,6 +95,9 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation =>
     })
     .afterClearStyles(['pointer-events']);
 
+  // if the wrapper animates, the backdrop filter doesn't work
+  // instead, animate both the arrow and content
+  // https://bugs.chromium.org/p/chromium/issues/detail?id=1148826
   contentAnimation
     .addElement(root.querySelector('.popover-arrow')!)
     .addElement(root.querySelector('.popover-content')!)

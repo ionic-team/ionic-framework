@@ -71,11 +71,6 @@
   z-index: $z-index-overlay-wrapper;
 }
 
-.popover-arrow,
-.popover-content {
-  opacity: 0;
-}
-
 .popover-content {
   display: flex;
   position: absolute;
