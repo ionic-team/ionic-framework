@@ -61,7 +61,7 @@ export const createKeyboardController = async (
 
   const init = async () => {
     const resizeOptions = await Keyboard.getResizeMode();
-    const resizeMode = resizeOptions == undefined ? undefined : resizeOptions.mode;
+    const resizeMode = resizeOptions === undefined ? undefined : resizeOptions.mode;
 
     keyboardWillShowHandler = () => {
       /**
