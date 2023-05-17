@@ -54,7 +54,7 @@ $checkbox-ios-checkmark-width:            math.div($checkbox-ios-icon-size, 6) +
 $checkbox-ios-checkmark-height:           $checkbox-ios-icon-size * 0.5 !default;
 
 /// @prop - Opacity of the disabled checkbox
-$checkbox-ios-disabled-opacity:           .3 !default;
+$checkbox-ios-disabled-opacity:           $form-control-ios-disabled-opacity !default;
 
 /// @prop - Margin top of the left checkbox item
 $checkbox-ios-item-start-margin-top:      8px !default;

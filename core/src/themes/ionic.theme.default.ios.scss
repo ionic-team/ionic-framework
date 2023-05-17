@@ -33,5 +33,9 @@ $item-ios-color:                            var(--ion-item-color, $text-color) !
 
 // iOS Card
 // --------------------------------------------------
-$card-ios-background:                        var(--ion-card-background, $item-ios-background) !default;
-$card-ios-color:                             var(--ion-card-color, var(--ion-item-color, $text-color-step-400)) !default;
+$card-ios-background:                       var(--ion-card-background, $item-ios-background) !default;
+$card-ios-color:                            var(--ion-card-color, var(--ion-item-color, $text-color-step-400)) !default;
+
+// iOS Form Controls
+// --------------------------------------------------
+$form-control-ios-disabled-opacity:         0.3;
