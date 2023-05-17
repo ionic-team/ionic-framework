@@ -21,6 +21,9 @@
 
 // iOS Checkbox: Disabled
 // -----------------------------------------
+// The checkbox and label should use the
+// same opacity and match the other form
+// controls
 
 :host(.checkbox-disabled) {
   opacity: $checkbox-ios-disabled-opacity;

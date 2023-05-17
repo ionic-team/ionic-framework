@@ -44,3 +44,14 @@
 :host(.input-label-placement-stacked) {
   min-height: 56px;
 }
+
+
+// Input - Disabled
+// ----------------------------------------------------------------
+// The input, label, helper text, char counter and placeholder
+// should use the same opacity and match the other form controls
+
+:host(.legacy-input) .native-input[disabled],
+:host(.input-disabled) {
+  opacity: #{$input-ios-disabled-opacity};
+}

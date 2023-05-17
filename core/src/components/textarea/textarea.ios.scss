@@ -31,6 +31,16 @@
   --padding-start: 0px;
 }
 
+// Textarea - Disabled
+// ----------------------------------------------------------------
+// The textarea, label, helper text, char counter and placeholder
+// should use the same opacity and match the other form controls
+
+:host(.legacy-textarea) .native-textarea[disabled],
+:host(.textarea-disabled) {
+  opacity: #{$textarea-ios-disabled-opacity};
+}
+
 // Textarea Wrapper
 // ----------------------------------------------------------------
 
