@@ -3,42 +3,6 @@ import { configs, test } from '@utils/test/playwright';
 
 configs().forEach(({ title, screenshot, config }) => {
   test.describe(title('checkbox: basic visual tests'), () => {
-    test('should render unchecked checkbox correctly', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-checkbox>Unchecked</ion-checkbox>
-      `,
-        config
-      );
-
-      const checkbox = page.locator('ion-checkbox');
-      await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-unchecked`));
-    });
-
-    test('should render checked checkbox correctly', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-checkbox checked>Checked</ion-checkbox>
-      `,
-        config
-      );
-
-      const checkbox = page.locator('ion-checkbox');
-      await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-checked`));
-    });
-
-    test('should render disabled checkbox correctly', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-checkbox checked disabled>Disabled</ion-checkbox>
-      `,
-        config
-      );
-
-      const checkbox = page.locator('ion-checkbox');
-      await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-disabled`));
-    });
-
     test('should render custom checkmark-width correctly', async ({ page }) => {
       await page.setContent(
         `

@@ -27,3 +27,6 @@ $select-ios-placeholder-color:      $select-ios-icon-color !default;
 
 /// @prop - Text Color of the selected item
 $select-ios-text-color:             $text-color !default;
+
+/// @prop - Opacity of the disabled select
+$select-ios-disabled-opacity: $form-control-ios-disabled-opacity !default;

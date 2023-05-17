@@ -176,11 +176,6 @@
   word-break: break-word;
 }
 
-:host(.legacy-textarea) .native-textarea[disabled],
-:host(.textarea-disabled) {
-  opacity: 0.4;
-}
-
 // Input Cover: Unfocused
 // --------------------------------------------------
 // The input cover is the div that actually receives the

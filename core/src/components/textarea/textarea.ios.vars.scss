@@ -24,3 +24,6 @@ $textarea-ios-padding-start:                  0 !default;
 
 /// @prop - Placeholder text color of the textarea
 $textarea-ios-placeholder-color:            $placeholder-text-color !default;
+
+/// @prop - The opacity of the input text, label, helper text, char counter and placeholder of a disabled textarea
+$textarea-ios-disabled-opacity: $form-control-ios-disabled-opacity !default;
