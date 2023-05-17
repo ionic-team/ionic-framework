@@ -158,9 +158,9 @@ export const attachView = (
      */
     if (elementReferenceKey && instance[elementReferenceKey] !== undefined) {
       console.error(
-        `[Ionic Error]: ${elementReferenceKey} is a reserved property name when using ${container.tagName.toLowerCase()}. Check the component properties of ${
+        `[Ionic Error]: ${elementReferenceKey} is a reserved property when using ${container.tagName.toLowerCase()}. Rename or remove the "${elementReferenceKey}" property from ${
           component.name
-        } and ensure none of them are named "${elementReferenceKey}".`
+        }.`
       );
     }
 
