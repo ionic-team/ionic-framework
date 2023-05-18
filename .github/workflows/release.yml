@@ -48,7 +48,7 @@ jobs:
 
   finalize-release:
     needs: [release-ionic]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
       with:
@@ -82,7 +82,7 @@ jobs:
 
   purge-cdn-cache:
     needs: [release-ionic]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Purge JSDelivr Cache
         run: |
