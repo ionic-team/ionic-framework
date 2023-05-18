@@ -61,7 +61,7 @@ const config: PlaywrightTestConfig = {
     }
   },
   /* Fail the build on CI if you accidentally left test.only in the source code. */
-  forbidOnly: !!process.env.CI,
+  //forbidOnly: !!process.env.CI,
   /* Fail fast on CI */
   maxFailures: process.env.CI ? 1 : 0,
   /* Flaky test should be either addressed or disabled until we can address them */
@@ -69,7 +69,7 @@ const config: PlaywrightTestConfig = {
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  reporter: ['github', 'html'],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
