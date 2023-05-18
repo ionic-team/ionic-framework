@@ -1,11 +1,11 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title }) => {
   test.describe.only(title('my describe block'), () => {
     test('test', () => {
       if (Math.random() > 0.6) {
-        throw new Error('flaky')
+        throw new Error('flaky');
       }
     });
   });
