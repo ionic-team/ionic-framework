@@ -28,7 +28,8 @@ runs:
       working-directory: ./core
     - name: Test
       if: inputs.update != 'true'
-      run: npm run test.e2e -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }}
+      # HOME=/root is needed to work around a Firefox/GitHub bug: https://github.com/microsoft/playwright/issues/6500
+      run: HOME=/root npm run test.e2e -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }}
       shell: bash
       working-directory: ./core
     - name: Test and Update
@@ -49,8 +50,10 @@ runs:
       # Note that we need to unzip directory to be "core"
       # which is why we not using the upload-archive
       # composite step here.
+      #
+      # HOME=/root is needed to work around a Firefox/GitHub bug: https://github.com/microsoft/playwright/issues/6500
       run: |
-        npm run test.e2e -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }} --update-snapshots
+        HOME=/root npm run test.e2e -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }} --update-snapshots
         git add src/\*.png --force
         mkdir updated-screenshots
         cd ../ && rsync -R --progress $(git diff --name-only --cached) core/updated-screenshots
