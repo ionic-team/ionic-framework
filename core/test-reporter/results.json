@@ -1,0 +1,357 @@
+{
+  "config": {
+    "configFile": "/Users/liamdebeasi/Ionic/ionic/core/playwright.config.ts",
+    "rootDir": "/Users/liamdebeasi/Ionic/ionic/core",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {},
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "json",
+        {
+          "outputFile": "results.json"
+        }
+      ],
+      [
+        "html",
+        null
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 15000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/Users/liamdebeasi/Ionic/ionic/core/test-results",
+        "repeatEach": 1,
+        "retries": 3,
+        "id": "Mobile Firefox",
+        "name": "Mobile Firefox",
+        "testDir": "/Users/liamdebeasi/Ionic/ionic/core",
+        "testIgnore": [],
+        "testMatch": [
+          "*.e2e.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/liamdebeasi/Ionic/ionic/core/test-results",
+        "repeatEach": 1,
+        "retries": 3,
+        "id": "Mobile Chrome",
+        "name": "Mobile Chrome",
+        "testDir": "/Users/liamdebeasi/Ionic/ionic/core",
+        "testIgnore": [],
+        "testMatch": [
+          "*.e2e.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/liamdebeasi/Ionic/ionic/core/test-results",
+        "repeatEach": 1,
+        "retries": 3,
+        "id": "Mobile Safari",
+        "name": "Mobile Safari",
+        "testDir": "/Users/liamdebeasi/Ionic/ionic/core",
+        "testIgnore": [],
+        "testMatch": [
+          "*.e2e.ts"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "version": "1.33.0",
+    "workers": 3,
+    "webServer": {
+      "command": "serve -p 3333",
+      "port": 3333,
+      "reuseExistingServer": true
+    }
+  },
+  "suites": [
+    {
+      "title": "src/components/button/test/basic/button.e2e.ts",
+      "file": "src/components/button/test/basic/button.e2e.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "my describe block - ios/ltr",
+          "file": "src/components/button/test/basic/button.e2e.ts",
+          "line": 5,
+          "column": 17,
+          "specs": [
+            {
+              "title": "test",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Firefox",
+                  "projectName": "Mobile Firefox",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "status": "failed",
+                      "duration": 5,
+                      "error": {
+                        "message": "flaky",
+                        "stack": "Error: flaky\n    at /Users/liamdebeasi/Ionic/ionic/core/src/components/button/test/basic/button.e2e.ts:8:15",
+                        "snippet": "\u001b[0m \u001b[90m  6 |\u001b[39m     test(\u001b[32m'test'\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m=>\u001b[39m {\u001b[0m\n\u001b[0m \u001b[90m  7 |\u001b[39m       \u001b[36mif\u001b[39m (\u001b[33mMath\u001b[39m\u001b[33m.\u001b[39mrandom() \u001b[33m>\u001b[39m \u001b[35m0.6\u001b[39m) {\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m  8 |\u001b[39m         \u001b[36mthrow\u001b[39m \u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m'flaky'\u001b[39m)\u001b[0m\n\u001b[0m \u001b[90m    |\u001b[39m               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m  9 |\u001b[39m       }\u001b[0m\n\u001b[0m \u001b[90m 10 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 11 |\u001b[39m   })\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/liamdebeasi/Ionic/ionic/core/src/components/button/test/basic/button.e2e.ts",
+                            "column": 15,
+                            "line": 8
+                          },
+                          "message": "Error: flaky\n\n\u001b[0m \u001b[90m  6 |\u001b[39m     test(\u001b[32m'test'\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m=>\u001b[39m {\u001b[0m\n\u001b[0m \u001b[90m  7 |\u001b[39m       \u001b[36mif\u001b[39m (\u001b[33mMath\u001b[39m\u001b[33m.\u001b[39mrandom() \u001b[33m>\u001b[39m \u001b[35m0.6\u001b[39m) {\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m  8 |\u001b[39m         \u001b[36mthrow\u001b[39m \u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m'flaky'\u001b[39m)\u001b[0m\n\u001b[0m \u001b[90m    |\u001b[39m               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m  9 |\u001b[39m       }\u001b[0m\n\u001b[0m \u001b[90m 10 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 11 |\u001b[39m   })\u001b[33m;\u001b[39m\u001b[0m\n\n\u001b[2m    at /Users/liamdebeasi/Ionic/ionic/core/src/components/button/test/basic/button.e2e.ts:8:15\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2023-05-18T16:25:35.326Z",
+                      "attachments": [],
+                      "errorLocation": {
+                        "file": "/Users/liamdebeasi/Ionic/ionic/core/src/components/button/test/basic/button.e2e.ts",
+                        "column": 15,
+                        "line": 8
+                      }
+                    },
+                    {
+                      "workerIndex": 4,
+                      "status": "failed",
+                      "duration": 4,
+                      "error": {
+                        "message": "flaky",
+                        "stack": "Error: flaky\n    at /Users/liamdebeasi/Ionic/ionic/core/src/components/button/test/basic/button.e2e.ts:8:15",
+                        "snippet": "\u001b[0m \u001b[90m  6 |\u001b[39m     test(\u001b[32m'test'\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m=>\u001b[39m {\u001b[0m\n\u001b[0m \u001b[90m  7 |\u001b[39m       \u001b[36mif\u001b[39m (\u001b[33mMath\u001b[39m\u001b[33m.\u001b[39mrandom() \u001b[33m>\u001b[39m \u001b[35m0.6\u001b[39m) {\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m  8 |\u001b[39m         \u001b[36mthrow\u001b[39m \u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m'flaky'\u001b[39m)\u001b[0m\n\u001b[0m \u001b[90m    |\u001b[39m               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m  9 |\u001b[39m       }\u001b[0m\n\u001b[0m \u001b[90m 10 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 11 |\u001b[39m   })\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/liamdebeasi/Ionic/ionic/core/src/components/button/test/basic/button.e2e.ts",
+                            "column": 15,
+                            "line": 8
+                          },
+                          "message": "Error: flaky\n\n\u001b[0m \u001b[90m  6 |\u001b[39m     test(\u001b[32m'test'\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m=>\u001b[39m {\u001b[0m\n\u001b[0m \u001b[90m  7 |\u001b[39m       \u001b[36mif\u001b[39m (\u001b[33mMath\u001b[39m\u001b[33m.\u001b[39mrandom() \u001b[33m>\u001b[39m \u001b[35m0.6\u001b[39m) {\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m  8 |\u001b[39m         \u001b[36mthrow\u001b[39m \u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m'flaky'\u001b[39m)\u001b[0m\n\u001b[0m \u001b[90m    |\u001b[39m               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m  9 |\u001b[39m       }\u001b[0m\n\u001b[0m \u001b[90m 10 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 11 |\u001b[39m   })\u001b[33m;\u001b[39m\u001b[0m\n\n\u001b[2m    at /Users/liamdebeasi/Ionic/ionic/core/src/components/button/test/basic/button.e2e.ts:8:15\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 1,
+                      "startTime": "2023-05-18T16:25:35.609Z",
+                      "attachments": [],
+                      "errorLocation": {
+                        "file": "/Users/liamdebeasi/Ionic/ionic/core/src/components/button/test/basic/button.e2e.ts",
+                        "column": 15,
+                        "line": 8
+                      }
+                    },
+                    {
+                      "workerIndex": 7,
+                      "status": "passed",
+                      "duration": 4,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 2,
+                      "startTime": "2023-05-18T16:25:35.876Z",
+                      "attachments": []
+                    }
+                  ],
+                  "status": "flaky"
+                },
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "status": "failed",
+                      "duration": 5,
+                      "error": {
+                        "message": "flaky",
+                        "stack": "Error: flaky\n    at /Users/liamdebeasi/Ionic/ionic/core/src/components/button/test/basic/button.e2e.ts:8:15",
+                        "snippet": "\u001b[0m \u001b[90m  6 |\u001b[39m     test(\u001b[32m'test'\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m=>\u001b[39m {\u001b[0m\n\u001b[0m \u001b[90m  7 |\u001b[39m       \u001b[36mif\u001b[39m (\u001b[33mMath\u001b[39m\u001b[33m.\u001b[39mrandom() \u001b[33m>\u001b[39m \u001b[35m0.6\u001b[39m) {\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m  8 |\u001b[39m         \u001b[36mthrow\u001b[39m \u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m'flaky'\u001b[39m)\u001b[0m\n\u001b[0m \u001b[90m    |\u001b[39m               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m  9 |\u001b[39m       }\u001b[0m\n\u001b[0m \u001b[90m 10 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 11 |\u001b[39m   })\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/liamdebeasi/Ionic/ionic/core/src/components/button/test/basic/button.e2e.ts",
+                            "column": 15,
+                            "line": 8
+                          },
+                          "message": "Error: flaky\n\n\u001b[0m \u001b[90m  6 |\u001b[39m     test(\u001b[32m'test'\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m=>\u001b[39m {\u001b[0m\n\u001b[0m \u001b[90m  7 |\u001b[39m       \u001b[36mif\u001b[39m (\u001b[33mMath\u001b[39m\u001b[33m.\u001b[39mrandom() \u001b[33m>\u001b[39m \u001b[35m0.6\u001b[39m) {\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m  8 |\u001b[39m         \u001b[36mthrow\u001b[39m \u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m'flaky'\u001b[39m)\u001b[0m\n\u001b[0m \u001b[90m    |\u001b[39m               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m  9 |\u001b[39m       }\u001b[0m\n\u001b[0m \u001b[90m 10 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 11 |\u001b[39m   })\u001b[33m;\u001b[39m\u001b[0m\n\n\u001b[2m    at /Users/liamdebeasi/Ionic/ionic/core/src/components/button/test/basic/button.e2e.ts:8:15\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2023-05-18T16:25:35.327Z",
+                      "attachments": [],
+                      "errorLocation": {
+                        "file": "/Users/liamdebeasi/Ionic/ionic/core/src/components/button/test/basic/button.e2e.ts",
+                        "column": 15,
+                        "line": 8
+                      }
+                    },
+                    {
+                      "workerIndex": 5,
+                      "status": "failed",
+                      "duration": 4,
+                      "error": {
+                        "message": "flaky",
+                        "stack": "Error: flaky\n    at /Users/liamdebeasi/Ionic/ionic/core/src/components/button/test/basic/button.e2e.ts:8:15",
+                        "snippet": "\u001b[0m \u001b[90m  6 |\u001b[39m     test(\u001b[32m'test'\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m=>\u001b[39m {\u001b[0m\n\u001b[0m \u001b[90m  7 |\u001b[39m       \u001b[36mif\u001b[39m (\u001b[33mMath\u001b[39m\u001b[33m.\u001b[39mrandom() \u001b[33m>\u001b[39m \u001b[35m0.6\u001b[39m) {\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m  8 |\u001b[39m         \u001b[36mthrow\u001b[39m \u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m'flaky'\u001b[39m)\u001b[0m\n\u001b[0m \u001b[90m    |\u001b[39m               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m  9 |\u001b[39m       }\u001b[0m\n\u001b[0m \u001b[90m 10 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 11 |\u001b[39m   })\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/liamdebeasi/Ionic/ionic/core/src/components/button/test/basic/button.e2e.ts",
+                            "column": 15,
+                            "line": 8
+                          },
+                          "message": "Error: flaky\n\n\u001b[0m \u001b[90m  6 |\u001b[39m     test(\u001b[32m'test'\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m=>\u001b[39m {\u001b[0m\n\u001b[0m \u001b[90m  7 |\u001b[39m       \u001b[36mif\u001b[39m (\u001b[33mMath\u001b[39m\u001b[33m.\u001b[39mrandom() \u001b[33m>\u001b[39m \u001b[35m0.6\u001b[39m) {\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m  8 |\u001b[39m         \u001b[36mthrow\u001b[39m \u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m'flaky'\u001b[39m)\u001b[0m\n\u001b[0m \u001b[90m    |\u001b[39m               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m  9 |\u001b[39m       }\u001b[0m\n\u001b[0m \u001b[90m 10 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 11 |\u001b[39m   })\u001b[33m;\u001b[39m\u001b[0m\n\n\u001b[2m    at /Users/liamdebeasi/Ionic/ionic/core/src/components/button/test/basic/button.e2e.ts:8:15\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 1,
+                      "startTime": "2023-05-18T16:25:35.607Z",
+                      "attachments": [],
+                      "errorLocation": {
+                        "file": "/Users/liamdebeasi/Ionic/ionic/core/src/components/button/test/basic/button.e2e.ts",
+                        "column": 15,
+                        "line": 8
+                      }
+                    },
+                    {
+                      "workerIndex": 6,
+                      "status": "failed",
+                      "duration": 5,
+                      "error": {
+                        "message": "flaky",
+                        "stack": "Error: flaky\n    at /Users/liamdebeasi/Ionic/ionic/core/src/components/button/test/basic/button.e2e.ts:8:15",
+                        "snippet": "\u001b[0m \u001b[90m  6 |\u001b[39m     test(\u001b[32m'test'\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m=>\u001b[39m {\u001b[0m\n\u001b[0m \u001b[90m  7 |\u001b[39m       \u001b[36mif\u001b[39m (\u001b[33mMath\u001b[39m\u001b[33m.\u001b[39mrandom() \u001b[33m>\u001b[39m \u001b[35m0.6\u001b[39m) {\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m  8 |\u001b[39m         \u001b[36mthrow\u001b[39m \u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m'flaky'\u001b[39m)\u001b[0m\n\u001b[0m \u001b[90m    |\u001b[39m               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m  9 |\u001b[39m       }\u001b[0m\n\u001b[0m \u001b[90m 10 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 11 |\u001b[39m   })\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/liamdebeasi/Ionic/ionic/core/src/components/button/test/basic/button.e2e.ts",
+                            "column": 15,
+                            "line": 8
+                          },
+                          "message": "Error: flaky\n\n\u001b[0m \u001b[90m  6 |\u001b[39m     test(\u001b[32m'test'\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m=>\u001b[39m {\u001b[0m\n\u001b[0m \u001b[90m  7 |\u001b[39m       \u001b[36mif\u001b[39m (\u001b[33mMath\u001b[39m\u001b[33m.\u001b[39mrandom() \u001b[33m>\u001b[39m \u001b[35m0.6\u001b[39m) {\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m  8 |\u001b[39m         \u001b[36mthrow\u001b[39m \u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m'flaky'\u001b[39m)\u001b[0m\n\u001b[0m \u001b[90m    |\u001b[39m               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m  9 |\u001b[39m       }\u001b[0m\n\u001b[0m \u001b[90m 10 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 11 |\u001b[39m   })\u001b[33m;\u001b[39m\u001b[0m\n\n\u001b[2m    at /Users/liamdebeasi/Ionic/ionic/core/src/components/button/test/basic/button.e2e.ts:8:15\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 2,
+                      "startTime": "2023-05-18T16:25:35.877Z",
+                      "attachments": [],
+                      "errorLocation": {
+                        "file": "/Users/liamdebeasi/Ionic/ionic/core/src/components/button/test/basic/button.e2e.ts",
+                        "column": 15,
+                        "line": 8
+                      }
+                    },
+                    {
+                      "workerIndex": 8,
+                      "status": "passed",
+                      "duration": 4,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 3,
+                      "startTime": "2023-05-18T16:25:36.140Z",
+                      "attachments": []
+                    }
+                  ],
+                  "status": "flaky"
+                },
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "status": "failed",
+                      "duration": 5,
+                      "error": {
+                        "message": "flaky",
+                        "stack": "Error: flaky\n    at /Users/liamdebeasi/Ionic/ionic/core/src/components/button/test/basic/button.e2e.ts:8:15",
+                        "snippet": "\u001b[0m \u001b[90m  6 |\u001b[39m     test(\u001b[32m'test'\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m=>\u001b[39m {\u001b[0m\n\u001b[0m \u001b[90m  7 |\u001b[39m       \u001b[36mif\u001b[39m (\u001b[33mMath\u001b[39m\u001b[33m.\u001b[39mrandom() \u001b[33m>\u001b[39m \u001b[35m0.6\u001b[39m) {\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m  8 |\u001b[39m         \u001b[36mthrow\u001b[39m \u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m'flaky'\u001b[39m)\u001b[0m\n\u001b[0m \u001b[90m    |\u001b[39m               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m  9 |\u001b[39m       }\u001b[0m\n\u001b[0m \u001b[90m 10 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 11 |\u001b[39m   })\u001b[33m;\u001b[39m\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/liamdebeasi/Ionic/ionic/core/src/components/button/test/basic/button.e2e.ts",
+                            "column": 15,
+                            "line": 8
+                          },
+                          "message": "Error: flaky\n\n\u001b[0m \u001b[90m  6 |\u001b[39m     test(\u001b[32m'test'\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m=>\u001b[39m {\u001b[0m\n\u001b[0m \u001b[90m  7 |\u001b[39m       \u001b[36mif\u001b[39m (\u001b[33mMath\u001b[39m\u001b[33m.\u001b[39mrandom() \u001b[33m>\u001b[39m \u001b[35m0.6\u001b[39m) {\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m  8 |\u001b[39m         \u001b[36mthrow\u001b[39m \u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m'flaky'\u001b[39m)\u001b[0m\n\u001b[0m \u001b[90m    |\u001b[39m               \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m  9 |\u001b[39m       }\u001b[0m\n\u001b[0m \u001b[90m 10 |\u001b[39m     })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 11 |\u001b[39m   })\u001b[33m;\u001b[39m\u001b[0m\n\n\u001b[2m    at /Users/liamdebeasi/Ionic/ionic/core/src/components/button/test/basic/button.e2e.ts:8:15\u001b[22m"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2023-05-18T16:25:35.324Z",
+                      "attachments": [],
+                      "errorLocation": {
+                        "file": "/Users/liamdebeasi/Ionic/ionic/core/src/components/button/test/basic/button.e2e.ts",
+                        "column": 15,
+                        "line": 8
+                      }
+                    },
+                    {
+                      "workerIndex": 3,
+                      "status": "passed",
+                      "duration": 4,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 1,
+                      "startTime": "2023-05-18T16:25:35.613Z",
+                      "attachments": []
+                    }
+                  ],
+                  "status": "flaky"
+                }
+              ],
+              "id": "0b16d681917abe293c0c-d41bbee68ee5b6c232b9",
+              "file": "src/components/button/test/basic/button.e2e.ts",
+              "line": 6,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": []
+}

@@ -15,7 +15,7 @@ runs:
       # directory, including nested directories.
       # It then unzips every .zip to the root directory
       run: |
-        find . -type f -name 'TestReport-*.zip' -exec unzip -q -o -d ../ {} \;
+        find . -type f -name 'test-report-*.zip' -exec unzip -q -o -d ../ {} \;
         cd ../ && ls;
       shell: bash
       working-directory: ./artifacts

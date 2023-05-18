@@ -1,0 +1,20 @@
+{
+  "name": "flaky-reporter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "watch": "npm run build -- --watch"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.2.1",
+    "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "glob": "^10.2.5"
+  }
+}
