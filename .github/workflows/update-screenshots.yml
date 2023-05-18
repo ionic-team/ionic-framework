@@ -29,7 +29,7 @@ jobs:
     runs-on: ubuntu-22.04
     container:
       # Jammy is Ubuntu 22.04 https://playwright.dev/docs/docker#base-images
-      image: mcr.microsoft.com/playwright:v1.32.3-jammy
+      image: mcr.microsoft.com/playwright:v1.33.0-jammy
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/workflows/actions/test-core-screenshot
