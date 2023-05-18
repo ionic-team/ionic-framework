@@ -20,7 +20,7 @@ export const Keyboard = {
   },
   getResizeMode(): Promise<KeyboardResizeOptions | undefined> {
     const engine = this.getEngine();
-    if (!engine || !isPlatform('ios') || !engine.getResizeMode) {
+    if (!isPlatform('ios') || !engine?.getResizeMode) {
       // getResizeMode is only available on iOS
       // see: https://ionicframework.com/docs/native/keyboard#getresizemode
       return Promise.resolve(undefined);
