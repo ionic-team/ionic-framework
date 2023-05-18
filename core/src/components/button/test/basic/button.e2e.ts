@@ -1,6 +1,16 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe.only(title('my describe block'), () => {
+    test('test', () => {
+      if (Math.random() > 0.6) {
+        throw new Error('flaky')
+      }
+    });
+  });
+});
+
 configs().forEach(({ config, screenshot, title }) => {
   test.describe(title('button: basic'), () => {
     test('should not have visual regressions', async ({ page }) => {
