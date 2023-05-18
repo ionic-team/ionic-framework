@@ -78,6 +78,13 @@ jobs:
         if: ${{ needs.test-core-screenshot.result != 'success' }}
         run: exit 1
 
+  build-test-report:
+    needs: verify-screenshots
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/workflows/actions/generate-test-report
+
   build-vue:
     needs: [build-core]
     runs-on: ubuntu-latest

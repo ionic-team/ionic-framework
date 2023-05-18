@@ -1,0 +1,30 @@
+name: 'Generate Test Report'
+description: 'Generate Test Report'
+
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16.x
+    - uses: actions/download-artifact@v3
+      with:
+        path: ./artifacts
+    - name: Extract Archives
+      # This finds all .zip files in the ./artifacts
+      # directory, including nested directories.
+      # It then unzips every .zip to the root directory
+      run: |
+        find . -type f -name 'TestReport-*.zip' -exec unzip -q -o -d ../ {} \;
+        cd ../ && ls;
+      shell: bash
+      working-directory: ./artifacts
+    - uses: actions/github-script@v6
+      with:
+        script: |
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: 'This is a test'
+          });

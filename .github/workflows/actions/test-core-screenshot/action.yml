@@ -77,3 +77,10 @@ runs:
         name: test-results-${{ inputs.shard }}-${{ inputs.totalShards }}
         output: core/TestResults-${{ inputs.shard }}-${{ inputs.totalShards }}.zip
         paths: core/playwright-report
+    - name: Archive Report
+      if: always()
+      uses: ./.github/workflows/actions/upload-archive
+      with:
+        name: test-report-${{ inputs.shard }}-${{ inputs.totalShards }}
+        output: core/TestReport-${{ inputs.shard }}-${{ inputs.totalShards }}.zip
+        paths: core/results.json
