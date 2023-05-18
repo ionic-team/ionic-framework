@@ -71,9 +71,9 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       await page.goto('/src/components/select/test/basic', config);
 
-      const select = page.locator('#gender');
+      const select = page.locator('#alert-select');
 
-      await select.evaluate((el: HTMLSelectElement) => {
+      await select.evaluate((el: HTMLIonSelectElement) => {
         /*
          * Playwright's click() method attempts to scroll to the handle
          * to perform the action. That is problematic when the overlay
