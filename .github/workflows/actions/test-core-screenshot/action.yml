@@ -20,7 +20,7 @@ runs:
         path: ./core
         filename: CoreBuild.zip
     - name: Install Playwright Dependencies
-      run: npm install && npx playwright install && npx playwright install-deps
+      run: npm ci
       shell: bash
       working-directory: ./core
     - name: Test
