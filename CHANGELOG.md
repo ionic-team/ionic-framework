@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.8-nightly.20230518](https://github.com/ionic-team/ionic-framework/compare/v7.0.7...v7.0.8-nightly.20230518) (2023-05-18)
+
+
+### Bug Fixes
+
+* **many:** update form controls (radio, checkbox, toggle, input, select) to have consistent disabled opacity ([#27396](https://github.com/ionic-team/ionic-framework/issues/27396)) ([995a848](https://github.com/ionic-team/ionic-framework/commit/995a8485751bb4058a59c7e958b1200f8f6539fa)), closes [#27184](https://github.com/ionic-team/ionic-framework/issues/27184)
+
+
+
+
+
 ## [7.0.7](https://github.com/ionic-team/ionic-framework/compare/v7.0.6...v7.0.7) (2023-05-17)
 
 
