@@ -3,8 +3,8 @@ import { configs, test } from '@utils/test/playwright';
 
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title }) => {
   test.describe.only(title('my describe block'), () => {
-    test('test', () => {
-      if (Math.random() > 0.6) {
+    test('test', ({}, testInfo) => {
+      if (testInfo.retry === 0) {
         expect(false).toBe(true);
       }
     });
