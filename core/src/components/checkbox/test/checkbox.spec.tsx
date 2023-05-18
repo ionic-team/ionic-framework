@@ -1,7 +1,7 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 
-import { Checkbox } from '../Checkbox';
+import { Checkbox } from '../checkbox';
 
 describe('ion-checkbox', () => {
   it('click event is triggered once', async () => {

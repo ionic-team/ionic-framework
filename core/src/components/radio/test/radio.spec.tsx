@@ -2,7 +2,7 @@ import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 
 import { RadioGroup } from '../../radio-group/radio-group.tsx';
-import { Radio } from '../radio.tsx';
+import { Radio } from '../radio';
 
 describe('ion-radio', () => {
   it('should set a default value', async () => {
