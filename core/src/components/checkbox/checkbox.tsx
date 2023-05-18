@@ -204,6 +204,14 @@ export class Checkbox implements ComponentInterface {
     this.ionBlur.emit();
   };
 
+  private onClick = (ev: MouseEvent) => {
+    // The modern control syntax renders a label as a parent element
+    // to the checkbox, which means when the label is clicked, the
+    // checkbox receives this event. To prevent a duplicate click event,
+    // we need to stop the event from bubbling.
+    ev.stopPropagation();
+  };
+
   // TODO(FW-3100): run contents of renderCheckbox directly instead
   render() {
     const { legacyFormController } = this;
@@ -256,6 +264,7 @@ export class Checkbox implements ComponentInterface {
             id={inputId}
             onChange={this.toggleChecked}
             onFocus={() => this.onFocus()}
+            onClick={this.onClick}
             onBlur={() => this.onBlur()}
             ref={(focusEl) => (this.focusEl = focusEl)}
             {...inheritedAttributes}

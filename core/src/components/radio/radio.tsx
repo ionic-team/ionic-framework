@@ -200,7 +200,7 @@ export class Radio implements ComponentInterface {
   };
 
   private onClick = () => {
-    this.checked = this.nativeInput.checked;
+    this.setChecked();
   };
 
   private onFocus = () => {
@@ -210,6 +210,14 @@ export class Radio implements ComponentInterface {
   private onBlur = () => {
     this.ionBlur.emit();
   };
+
+  private toggleChecked = () => {
+    this.setChecked();
+  };
+
+  private setChecked() {
+    this.checked = this.nativeInput.checked;
+  }
 
   private get hasLabel() {
     return this.el.textContent !== '';
@@ -262,6 +270,14 @@ export class Radio implements ComponentInterface {
             id={inputId}
             ref={(nativeEl) => (this.nativeInput = nativeEl as HTMLInputElement)}
             {...inheritedAttributes}
+            onChange={this.toggleChecked}
+            onClick={(ev) => {
+              // The modern control syntax renders a label as a parent element
+              // to the radio, which means when the label is clicked, the
+              // radio receives this event. To prevent a duplicate click event,
+              // we need to stop the event from bubbling.
+              ev.stopPropagation();
+            }}
           />
           <div
             class={{
