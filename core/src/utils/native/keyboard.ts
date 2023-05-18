@@ -1,3 +1,5 @@
+import { isPlatform } from '@utils/platform';
+
 import { win } from '../browser';
 
 // Interfaces source: https://capacitorjs.com/docs/apis/keyboard#interfaces
@@ -18,7 +20,9 @@ export const Keyboard = {
   },
   getResizeMode(): Promise<KeyboardResizeOptions | undefined> {
     const engine = this.getEngine();
-    if (!engine || !engine.getResizeMode) {
+    if (!engine || !isPlatform('ios') || !engine.getResizeMode) {
+      // getResizeMode is only available on iOS
+      // see: https://ionicframework.com/docs/native/keyboard#getresizemode
       return Promise.resolve(undefined);
     }
 
