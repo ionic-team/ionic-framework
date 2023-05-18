@@ -8,6 +8,12 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
+      # Checkout runs this on a --global level, but the global
+      # .gitconfig does not exist, so the command is a no-op.
+      # See: https://github.com/actions/checkout/issues/1169
+      # This leads to the following error:
+      # fatal: detected dubious ownership in repository at '/__w/ionic-framework/ionic-framework'
+      - run: git config --system --add safe.directory /__w/ionic-framework/ionic-framework
       - uses: ./.github/workflows/actions/build-core
 
   test-core-screenshot:
