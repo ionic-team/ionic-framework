@@ -37,7 +37,7 @@ jobs:
       # See: https://github.com/actions/checkout/issues/1169
       # This leads to the following error:
       # fatal: detected dubious ownership in repository at '/__w/ionic-framework/ionic-framework'
-      - run: sudo git config --system --add safe.directory /__w/ionic-framework/ionic-framework
+      - run: git config --system --add safe.directory /__w/ionic-framework/ionic-framework
       - uses: ./.github/workflows/actions/test-core-screenshot
         with:
           shard: ${{ matrix.shard }}
