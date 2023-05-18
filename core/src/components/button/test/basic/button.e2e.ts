@@ -3,6 +3,7 @@ import { configs, test } from '@utils/test/playwright';
 
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title }) => {
   test.describe.only(title('my describe block'), () => {
+    // eslint-disable-next-line no-empty-pattern
     test('test', ({}, testInfo) => {
       if (testInfo.retry === 0) {
         expect(false).toBe(true);
