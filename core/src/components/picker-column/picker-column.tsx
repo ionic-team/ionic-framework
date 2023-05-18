@@ -1,11 +1,11 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, Watch, h } from '@stencil/core';
+import { clamp } from '@utils/helpers';
+import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '@utils/native/haptic';
+import { getClassMap } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Gesture, GestureDetail } from '../../interface';
-import { clamp } from '../../utils/helpers';
-import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/native/haptic';
-import { getClassMap } from '../../utils/theme';
 import type { PickerColumn } from '../picker/picker-interface';
 
 /**
@@ -33,6 +33,14 @@ export class PickerColumnCmp implements ComponentInterface {
   private rafId?: ReturnType<typeof requestAnimationFrame>;
   private tmrId?: ReturnType<typeof setTimeout>;
   private noAnimate = true;
+  // `colDidChange` is a flag that gets set when the column is changed
+  // dynamically. When this flag is set, the column will refresh
+  // after the component re-renders to incorporate the new column data.
+  // This is necessary because `this.refresh` queries for the option elements,
+  // so it needs to wait for the latest elements to be available in the DOM.
+  // Ex: column is created with 3 options. User updates the column data
+  // to have 5 options. The column will still think it only has 3 options.
+  private colDidChange = false;
 
   @Element() el!: HTMLElement;
 
@@ -46,7 +54,7 @@ export class PickerColumnCmp implements ComponentInterface {
   @Prop() col!: PickerColumn;
   @Watch('col')
   protected colChanged() {
-    this.refresh();
+    this.colDidChange = true;
   }
 
   async connectedCallback() {
@@ -74,21 +82,32 @@ export class PickerColumnCmp implements ComponentInterface {
       onEnd: (ev) => this.onEnd(ev),
     });
     this.gesture.enable();
+    // Options have not been initialized yet
+    // Animation must be disabled through the `noAnimate` flag
+    // Otherwise, the options will render
+    // at the top of the column and transition down
     this.tmrId = setTimeout(() => {
       this.noAnimate = false;
+      // After initialization, `refresh()` will be called
+      // At this point, animation will be enabled. The options will
+      // animate as they are being selected.
       this.refresh(true);
     }, 250);
   }
 
   componentDidLoad() {
-    const colEl = this.optsEl;
-    if (colEl) {
-      // DOM READ
-      // We perfom a DOM read over a rendered item, this needs to happen after the first render
-      this.optHeight = colEl.firstElementChild ? colEl.firstElementChild.clientHeight : 0;
-    }
+    this.onDomChange();
+  }
 
-    this.refresh();
+  componentDidUpdate() {
+    // Options may have changed since last update.
+    if (this.colDidChange) {
+      // Animation must be disabled through the `onDomChange` parameter.
+      // Otherwise, the recently added options will render
+      // at the top of the column and transition down
+      this.onDomChange(true, false);
+      this.colDidChange = false;
+    }
   }
 
   disconnectedCallback() {
@@ -331,7 +350,7 @@ export class PickerColumnCmp implements ComponentInterface {
     }
   }
 
-  private refresh(forceRefresh?: boolean) {
+  private refresh(forceRefresh?: boolean, animated?: boolean) {
     let min = this.col.options.length - 1;
     let max = 0;
     const options = this.col.options;
@@ -356,9 +375,20 @@ export class PickerColumnCmp implements ComponentInterface {
     const selectedIndex = clamp(min, this.col.selectedIndex ?? 0, max);
     if (this.col.prevSelected !== selectedIndex || forceRefresh) {
       const y = selectedIndex * this.optHeight * -1;
+      const duration = animated ? TRANSITION_DURATION : 0;
       this.velocity = 0;
-      this.update(y, TRANSITION_DURATION, true);
+      this.update(y, duration, true);
     }
+  }
+
+  private onDomChange(forceRefresh?: boolean, animated?: boolean) {
+    const colEl = this.optsEl;
+    if (colEl) {
+      // DOM READ
+      // We perfom a DOM read over a rendered item, this needs to happen after the first render or after the the column has changed
+      this.optHeight = colEl.firstElementChild ? colEl.firstElementChild.clientHeight : 0;
+    }
+    this.refresh(forceRefresh, animated);
   }
 
   render() {

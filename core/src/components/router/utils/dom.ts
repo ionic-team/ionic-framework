@@ -1,5 +1,6 @@
+import { componentOnReady } from '@utils/helpers';
+
 import type { AnimationBuilder } from '../../../interface';
-import { componentOnReady } from '../../../utils/helpers';
 
 import { ROUTER_INTENT_NONE } from './constants';
 import type { NavOutletElement, RouteChain, RouteID, RouterDirection } from './interface';

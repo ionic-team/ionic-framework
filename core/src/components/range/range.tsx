@@ -1,16 +1,17 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
+import { findClosestIonContent, disableContentScrollY, resetContentScrollY } from '@utils/content';
+import type { LegacyFormController } from '@utils/forms';
+import { createLegacyFormController } from '@utils/forms';
+import type { Attributes } from '@utils/helpers';
+import { inheritAriaAttributes, clamp, debounceEvent, getAriaLabel, renderHiddenInput } from '@utils/helpers';
+import { printIonWarning } from '@utils/logging';
+import { isRTL } from '@utils/rtl';
+import { createColorClasses, hostContext } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Color, Gesture, GestureDetail, StyleEventDetail } from '../../interface';
-import { findClosestIonContent, disableContentScrollY, resetContentScrollY } from '../../utils/content';
-import type { LegacyFormController } from '../../utils/forms';
-import { createLegacyFormController } from '../../utils/forms';
-import type { Attributes } from '../../utils/helpers';
-import { inheritAriaAttributes, clamp, debounceEvent, getAriaLabel, renderHiddenInput } from '../../utils/helpers';
-import { printIonWarning } from '../../utils/logging';
-import { isRTL } from '../../utils/rtl';
-import { createColorClasses, hostContext } from '../../utils/theme';
+import { roundToMaxDecimalPlaces } from '../../utils/floating-point';
 
 import type {
   KnobName,
@@ -95,6 +96,13 @@ export class Range implements ComponentInterface {
    * The name of the control, which is submitted with the form data.
    */
   @Prop() name = this.rangeId;
+
+  /**
+   * The text to display as the control's label. Use this over the `label` slot if
+   * you only need plain text. The `label` property will take priority over the
+   * `label` slot if both are used.
+   */
+  @Prop() label?: string;
 
   /**
    * Show two knobs.
@@ -602,7 +610,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
   }
 
   private renderRange() {
-    const { disabled, el, rangeId, pin, pressedKnob, labelPlacement } = this;
+    const { disabled, el, rangeId, pin, pressedKnob, labelPlacement, label } = this;
 
     const mode = getIonMode(this);
 
@@ -629,7 +637,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
               'label-text-wrapper-hidden': !this.hasLabel,
             }}
           >
-            <slot name="label"></slot>
+            {label !== undefined ? <div class="label-text">{label}</div> : <slot name="label"></slot>}
           </div>
           <div class="native-wrapper">
             <slot name="start"></slot>
@@ -642,7 +650,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
   }
 
   private get hasLabel() {
-    return this.el.querySelector('[slot="label"]') !== null;
+    return this.label !== undefined || this.el.querySelector('[slot="label"]') !== null;
   }
 
   private renderRangeSlider() {
@@ -902,10 +910,14 @@ const renderKnob = (
 
 const ratioToValue = (ratio: number, min: number, max: number, step: number): number => {
   let value = (max - min) * ratio;
+
   if (step > 0) {
+    // round to nearest multiple of step, then add min
     value = Math.round(value / step) * step + min;
   }
-  return clamp(min, value, max);
+  const clampedValue = clamp(min, value, max);
+
+  return roundToMaxDecimalPlaces(clampedValue, min, max, step);
 };
 
 const valueToRatio = (value: number, min: number, max: number): number => {

@@ -10,8 +10,8 @@ const spinners = {
       return {
         r: 5,
         style: {
-          top: `${9 * Math.sin(angle)}px`,
-          left: `${9 * Math.cos(angle)}px`,
+          top: `${32 * Math.sin(angle)}%`,
+          left: `${32 * Math.cos(angle)}%`,
           'animation-delay': animationDelay,
         },
       };
@@ -28,8 +28,8 @@ const spinners = {
       return {
         r: 5,
         style: {
-          top: `${9 * Math.sin(angle)}px`,
-          left: `${9 * Math.cos(angle)}px`,
+          top: `${32 * Math.sin(angle)}%`,
+          left: `${32 * Math.cos(angle)}%`,
           'animation-delay': animationDelay,
         },
       };
@@ -72,7 +72,7 @@ const spinners = {
       return {
         r: 6,
         style: {
-          left: `${9 - 9 * index}px`,
+          left: `${32 - 32 * index}%`,
           'animation-delay': animationDelay,
         },
       };

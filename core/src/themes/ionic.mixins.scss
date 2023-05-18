@@ -194,8 +194,66 @@
 @mixin rtl() {
   $root: #{&};
 
-  @at-root #{add-root-selector($root, "[dir=rtl]")} {
-    @content;
+  $rootSplit: str-split($root, ",");
+  $selectors: #{add-root-selector($root, "[dir=rtl]")};
+  $selectorsSplit: str-split($selectors, ",");
+
+  $hostContextSelectors: ();
+  $restSelectors: ();
+  $dirSelectors: ();
+
+  // Selectors must be split into individual selectors in case the browser
+  // doesn't support a specific selector.
+  // For example, Firefox and Safari doesn't support `:host-context()`.
+  // If an invalid selector is used, then the entire group of selectors
+  // will be ignored.
+  // @link https://www.w3.org/TR/selectors-3/#grouping
+  @each $selector in $selectorsSplit {
+    // Group the selectors back into a single selector to optimize the output.
+    @if str-index($selector, ":host-context") {
+      $hostContextSelectors: append($hostContextSelectors, $selector, comma);
+    } @else {
+      // Group the selectors back into a single selector to optimize the output.
+      $restSelectors: append($restSelectors, $selector, comma);
+    }
+  }
+  
+  // Supported by Chrome.
+  @if length($hostContextSelectors) > 0 {
+    @at-root #{$hostContextSelectors} {
+      @content;
+    }
+  }
+
+  // Supported by all browsers.
+  @if length($restSelectors) > 0 {
+    @at-root #{$restSelectors} {
+      @content;
+    }
+  }
+
+  // If browser can support `:dir()`, then add the `:dir()` selectors.
+  @supports selector(:dir(rtl)) {
+    // Adding :dir() in case the browser doesn't support `:host-context()` and does support `:dir()`.
+    // `:host-context()` is added:
+    // - through the `add-root-selector()` function.
+    // - first so that it takes precedence over `:dir()`.
+    // For example,
+    // - Firefox doesn't support `:host-context()`, but does support `:dir()`.
+    // - Safari doesn't support `:host-context()`, but Safari 16.4+ supports `:dir()`
+    // @link https://webkit.org/blog/13966/webkit-features-in-safari-16-4/
+    @each $selector in $rootSplit {
+      $dirSelector: "#{$selector}:dir(rtl)";
+      // Group the selectors back into a single selector to optimize the output.
+      $dirSelectors: append($dirSelectors, $dirSelector, comma);
+    }
+
+    // Supported by Firefox.
+    @if length($dirSelectors) > 0 {
+      @at-root #{$dirSelectors} {
+        @content;
+      }
+    }
   }
 }
 

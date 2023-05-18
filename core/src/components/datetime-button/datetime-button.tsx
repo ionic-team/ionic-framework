@@ -1,11 +1,11 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, State, h } from '@stencil/core';
+import { componentOnReady, addEventListener } from '@utils/helpers';
+import { printIonError } from '@utils/logging';
+import { createColorClasses } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Color } from '../../interface';
-import { componentOnReady, addEventListener } from '../../utils/helpers';
-import { printIonError } from '../../utils/logging';
-import { createColorClasses } from '../../utils/theme';
 import type { DatetimePresentation } from '../datetime/datetime-interface';
 import { getToday } from '../datetime/utils/data';
 import { getMonthAndYear, getMonthDayAndYear, getLocalizedDateTime, getLocalizedTime } from '../datetime/utils/format';
@@ -72,6 +72,18 @@ export class DatetimeButton implements ComponentInterface {
     const datetimeEl = (this.datetimeEl = document.getElementById(datetime) as HTMLIonDatetimeElement | null);
     if (!datetimeEl) {
       printIonError(`No ion-datetime instance found for ID '${datetime}'.`, this.el);
+      return;
+    }
+
+    /**
+     * The element reference must be an ion-datetime. Print an error
+     * if a non-datetime element was provided.
+     */
+    if (datetimeEl.tagName !== 'ION-DATETIME') {
+      printIonError(
+        `Expected an ion-datetime instance for ID '${datetime}' but received '${datetimeEl.tagName.toLowerCase()}' instead.`,
+        datetimeEl
+      );
       return;
     }
 

@@ -1,10 +1,10 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import { findClosestIonContent, disableContentScrollY, resetContentScrollY } from '@utils/content';
+import { isEndSide } from '@utils/helpers';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Gesture, GestureDetail } from '../../interface';
-import { findClosestIonContent, disableContentScrollY, resetContentScrollY } from '../../utils/content';
-import { isEndSide } from '../../utils/helpers';
 import type { Side } from '../menu/menu-interface';
 
 const SWIPE_MARGIN = 30;

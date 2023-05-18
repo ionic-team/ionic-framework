@@ -1,8 +1,8 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Host, Listen, Prop, State, h } from '@stencil/core';
+import { menuController } from '@utils/menu-controller';
 
 import { getIonMode } from '../../global/ionic-global';
-import { menuController } from '../../utils/menu-controller';
 
 import { updateVisibility } from './menu-toggle-util';
 

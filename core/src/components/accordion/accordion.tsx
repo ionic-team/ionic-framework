@@ -1,10 +1,10 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Element, Host, Prop, State, h } from '@stencil/core';
+import { Component, Element, Host, Prop, State, Watch, h } from '@stencil/core';
+import { addEventListener, getElementRoot, raf, removeEventListener, transitionEndAsync } from '@utils/helpers';
 import { chevronDown } from 'ionicons/icons';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { addEventListener, getElementRoot, raf, removeEventListener, transitionEndAsync } from '../../utils/helpers';
 
 const enum AccordionState {
   Collapsed = 1 << 0,
@@ -56,6 +56,10 @@ export class Accordion implements ComponentInterface {
    * value.
    */
   @Prop() value = `ion-accordion-${accordionIds++}`;
+  @Watch('value')
+  valueChanged() {
+    this.updateState();
+  }
 
   /**
    * If `true`, the accordion cannot be interacted with.
