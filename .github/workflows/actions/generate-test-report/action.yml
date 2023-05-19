@@ -30,6 +30,7 @@ runs:
     - name: test
       run: ls && cd test-report-1-20 && ls
       shell: bash
+      working-directory: ./artifacts
     - name: Build Reporter
       run: npm ci && npm run build
       shell: bash
