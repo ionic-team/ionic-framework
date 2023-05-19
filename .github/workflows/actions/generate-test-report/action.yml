@@ -18,12 +18,20 @@ runs:
         find . -type f -name 'TestReport-*.zip' -exec unzip -q -o -d ../ {} \;
       shell: bash
       working-directory: ./artifacts
+    - name: test
+      run: ls && cd test-report-1-20 && ls
+      shell: bash
     - name: Build Reporter
       run: npm ci && npm run build
       shell: bash
       working-directory: ./core/test-reporter
     - name: Generate Report
       run: node dist/index.js ../../../test-report-*/*.json
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        REPO_NAME: ${{ github.repository.repo }}
+        OWNER: ${{ github.repository.owner }}
+        ISSUE_NUMBER: ${{ github.event.number }}
       shell: bash
       working-directory: ./core/test-reporter
     - uses: actions/github-script@v6

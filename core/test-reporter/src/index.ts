@@ -1,6 +1,11 @@
 import { glob } from 'glob';
 import * as fs from 'fs/promises';
+import { Octokit } from 'octokit';
 import type { PlaywrightTest, PlaywrightSpec, PlaywrightSuite, PlaywrightResults, FlakySuite, FlakySpec } from './types';
+
+const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
+
+console.log(process.env.REPO_NAME, process.env.OWNER, process.env.ISSUE_NUMBER);
 
 /**
  * Find all of the flaky files within a
@@ -60,7 +65,7 @@ const findFlakyTestsInSpec = (spec: PlaywrightSpec, title: string): FlakySpec =>
 const generateReport = async () => {
   const files = await glob(__dirname + '/' + process.argv[2]);
 
-console.log('got files',files, __dirname, process.argv[2])
+console.log('got files',files, __dirname + '/' + process.argv[2])
   const flakyDict = {}
 
   let flakyFiles = [];
@@ -82,7 +87,9 @@ console.log('got files',files, __dirname, process.argv[2])
 
   console.log('done processing, generating table')
 
-  return generateTable(flakyDict);
+  const table = generateTable(flakyDict);
+
+  console.log('generated table, posting comment to PR')
 }
 
 

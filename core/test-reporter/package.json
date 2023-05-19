@@ -15,6 +15,7 @@
     "typescript": "^5.0.4"
   },
   "dependencies": {
-    "glob": "^10.2.5"
+    "glob": "^10.2.5",
+    "octokit": "^2.0.16"
   }
 }
