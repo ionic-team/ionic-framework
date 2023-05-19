@@ -34,7 +34,7 @@ runs:
       shell: bash
       working-directory: ./core/test-reporter
     - name: Generate Report
-      run: node dist/index.js "../../report.json"
+      run: node dist/index.js "../../results-*.json"
       env:
         GITHUB_TOKEN: ${{ inputs.token }}
         REPO: ${{ inputs.repo }}

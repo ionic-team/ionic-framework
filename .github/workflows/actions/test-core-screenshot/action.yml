@@ -77,6 +77,11 @@ runs:
         name: test-results-${{ inputs.shard }}-${{ inputs.totalShards }}
         output: core/TestResults-${{ inputs.shard }}-${{ inputs.totalShards }}.zip
         paths: core/playwright-report
+    - name: Make Report Unique
+      if: always()
+      run: mv results.json results-${{ inputs.shard }}-${{ inputs.totalShards }}.json
+      shell: bash
+      working-directory: ./core
     - name: Archive Report
       if: always()
       uses: ./.github/workflows/actions/upload-archive
