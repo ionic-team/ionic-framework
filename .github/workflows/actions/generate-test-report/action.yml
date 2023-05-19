@@ -34,5 +34,5 @@ runs:
             issue_number: context.issue.number,
             owner: context.repo.owner,
             repo: context.repo.repo,
-            body: ${{ needs.generate-report.outputs.REPORT_CONTENTS }}
+            body: ${{ steps.generate-report.outputs.REPORT_CONTENTS }}
           });
