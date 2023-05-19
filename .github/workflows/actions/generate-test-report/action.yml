@@ -24,7 +24,7 @@ runs:
       working-directory: ./core/test-reporter
     - name: Generate Report
       id: generate-report
-      run: echo "REPORT_CONTENTS=$(node dist/index.js ../../test-report-*/*.json)" >> $GITHUB_OUTPUT
+      run: echo "REPORT_CONTENTS=$(node dist/index.js ../../../test-report-*/*.json)" >> $GITHUB_OUTPUT
       shell: bash
       working-directory: ./core/test-reporter
     - uses: actions/github-script@v6
