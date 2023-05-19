@@ -16,14 +16,16 @@ runs:
       # It then unzips every .zip to the root directory
       run: |
         find . -type f -name 'TestReport-*.zip' -exec unzip -q -o -d ../ {} \;
-        ls;
-        cd ../ && ls;
       shell: bash
       working-directory: ./artifacts
-    - name: Generate Report Text
-      run: cd test-reporter && npm ci && npm run build && node dist/index.js ../test-report-*/*.json
+    - name: Build Reporter
+      run: npm ci && npm run build
       shell: bash
-      working-directory: ./core
+      working-directory: ./core/test-reporter
+    - name: Generate Report
+      run: node dist/index.js ../../test-report-*/*.json
+      shell: bash
+      working-directory: ./core/test-reporter
     - uses: actions/github-script@v6
       with:
         script: |
