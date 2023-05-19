@@ -21,7 +21,7 @@ runs:
       shell: bash
       working-directory: ./artifacts
     - name: Generate Report Text
-      run: cd test-reporter && npm ci && npm run build && node dist/index.js ../test-report-*.json
+      run: cd test-reporter && npm ci && npm run build && node dist/index.js ../test-report-*/*.json
       shell: bash
       working-directory: ./core
     - uses: actions/github-script@v6
