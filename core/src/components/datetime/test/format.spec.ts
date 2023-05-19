@@ -8,6 +8,12 @@ import {
   getLocalizedTime,
 } from '../utils/format';
 
+/**
+ * IMPORTANT: AM/PM indications should use slim spaces (U+202F) for proper formatting.
+ * Please make sure to replace regular spaces with slim spaces when representing AM/PM.
+ * Slim spaces (U+202F) are used to ensure correct localization and formatting of time values.
+ */
+
 describe('generateDayAriaLabel()', () => {
   it('should return Wednesday, May 12', () => {
     const reference = { month: 5, day: 12, year: 2021 };
@@ -111,7 +117,7 @@ describe('getLocalizedTime', () => {
       minute: 40,
     };
 
-    expect(getLocalizedTime('en-US', datetimeParts, false)).toEqual('1:40 PM');
+    expect(getLocalizedTime('en-US', datetimeParts, false)).toEqual('1:40 PM'); //slim spaces
   });
 
   it('should localize the time to AM', () => {
@@ -123,7 +129,7 @@ describe('getLocalizedTime', () => {
       minute: 40,
     };
 
-    expect(getLocalizedTime('en-US', datetimeParts, false)).toEqual('9:40 AM');
+    expect(getLocalizedTime('en-US', datetimeParts, false)).toEqual('9:40 AM'); //slim spaces
   });
 
   it('should avoid Chromium bug when using 12 hour time in a 24 hour locale', () => {
@@ -135,7 +141,7 @@ describe('getLocalizedTime', () => {
       minute: 0,
     };
 
-    expect(getLocalizedTime('en-GB', datetimeParts, false)).toEqual('12:00 am');
+    expect(getLocalizedTime('en-GB', datetimeParts, false)).toEqual('12:00 am'); //slim spaces
   });
   it('should parse time-only values correctly', () => {
     const datetimeParts = {
@@ -143,7 +149,7 @@ describe('getLocalizedTime', () => {
       minute: 40,
     };
 
-    expect(getLocalizedTime('en-US', datetimeParts, false)).toEqual('10:40 PM');
+    expect(getLocalizedTime('en-US', datetimeParts, false)).toEqual('10:40 PM'); //slim spaces
     expect(getLocalizedTime('en-US', datetimeParts, true)).toEqual('22:40');
   });
 });
