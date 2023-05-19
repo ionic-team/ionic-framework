@@ -28,12 +28,13 @@ runs:
     - name: test
       run: ls
       shell: bash
+      working-directory: ./core
     - name: Build Reporter
       run: npm ci && npm run build
       shell: bash
       working-directory: ./core/test-reporter
     - name: Generate Report
-      run: node dist/index.js "../../../test-report-*/*.json"
+      run: node dist/index.js "../../report.json"
       env:
         GITHUB_TOKEN: ${{ inputs.token }}
         REPO: ${{ inputs.repo }}
