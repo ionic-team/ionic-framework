@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.8-nightly.20230519](https://github.com/ionic-team/ionic-framework/compare/v7.0.7...v7.0.8-nightly.20230519) (2023-05-19)
+
+
+### Bug Fixes
+
+* **many:** update form controls (radio, checkbox, toggle, input, select) to have consistent disabled opacity ([#27396](https://github.com/ionic-team/ionic-framework/issues/27396)) ([995a848](https://github.com/ionic-team/ionic-framework/commit/995a8485751bb4058a59c7e958b1200f8f6539fa)), closes [#27184](https://github.com/ionic-team/ionic-framework/issues/27184)
+* **popover:** blur translucent popover in chromium ([#27484](https://github.com/ionic-team/ionic-framework/issues/27484)) ([a59eefb](https://github.com/ionic-team/ionic-framework/commit/a59eefb6a312d338895c46d80320ebe91cccac23)), closes [#22176](https://github.com/ionic-team/ionic-framework/issues/22176)
+
+
+
+
+
 ## [7.0.7](https://github.com/ionic-team/ionic-framework/compare/v7.0.6...v7.0.7) (2023-05-17)
 
 
