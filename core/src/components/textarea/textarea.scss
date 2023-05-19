@@ -62,8 +62,6 @@
 
   font-family: $font-family-base;
 
-  white-space: pre-wrap;
-
   z-index: $z-index-item-input;
 
   box-sizing: border-box;
@@ -74,6 +72,9 @@
   flex: 1;
 
   background: var(--background);
+
+  white-space: pre-wrap;
+
 }
 
 // TODO: FW-2876 - Remove this selector
@@ -84,6 +85,8 @@
 // TODO: FW-2876 - Remove this selector, move styles to :host
 :host(:not(.legacy-textarea)) {
   --padding-bottom: #{$textarea-padding-bottom};
+
+  white-space: nowrap;
 }
 
 :host(.ion-color) {
@@ -458,7 +461,7 @@
 .label-text {
   text-overflow: ellipsis;
 
-  white-space: nowrap;
+  white-space: inherit;
 
   overflow: hidden;
 }

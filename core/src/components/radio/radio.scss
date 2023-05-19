@@ -14,15 +14,17 @@
 
   display: inline-block;
   position: relative;
-  box-sizing: border-box;
 
   max-width: 100%;
 
   min-height: inherit;
 
+  white-space: nowrap;
+
   user-select: none;
 
   z-index: $z-index-item-input;
+  box-sizing: border-box;
 }
 
 // TODO FW-3125: Remove :not selector and move styles to host
@@ -117,7 +119,7 @@ input {
 
   text-overflow: ellipsis;
 
-  white-space: nowrap;
+  white-space: inherit;
 
   overflow: hidden;
 }

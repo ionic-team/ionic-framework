@@ -64,6 +64,8 @@
 
   font-family: $font-family-base;
 
+  white-space: nowrap;
+
   z-index: $z-index-item-input;
 }
 
@@ -466,7 +468,7 @@
 .label-text {
   text-overflow: ellipsis;
 
-  white-space: nowrap;
+  white-space: inherit;
 
   overflow: hidden;
 }

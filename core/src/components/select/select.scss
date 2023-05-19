@@ -305,7 +305,7 @@ button {
 .label-text {
   text-overflow: ellipsis;
 
-  white-space: nowrap;
+  white-space: inherit;
 
   overflow: hidden;
 }

@@ -31,6 +31,8 @@
 
   position: relative;
 
+  white-space: nowrap;
+
   cursor: pointer;
 
   user-select: none;
@@ -98,7 +100,7 @@
 
   text-overflow: ellipsis;
 
-  white-space: nowrap;
+  white-space: inherit;
 
   overflow: hidden;
 }

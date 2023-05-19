@@ -4,6 +4,19 @@
 // --------------------------------------------------
 
 :host {
+  display: inline-block;
+
+  position: relative;
+
+  max-width: 100%;
+
+  outline: none;
+
+  white-space: nowrap;
+
+  cursor: pointer;
+  user-select: none;
+  z-index: $z-index-item-input;
   /**
    * @prop --track-background: Background of the toggle track
    * @prop --track-background-checked: Background of the toggle track when checked
@@ -23,18 +36,6 @@
 
   /* stylelint-disable-next-line declaration-no-important */
   box-sizing: content-box !important;
-
-  display: inline-block;
-
-  position: relative;
-
-  max-width: 100%;
-
-  outline: none;
-
-  cursor: pointer;
-  user-select: none;
-  z-index: $z-index-item-input;
 }
 
 :host(.in-item:not(.legacy-toggle)) {
@@ -115,7 +116,7 @@ input {
 
   text-overflow: ellipsis;
 
-  white-space: nowrap;
+  white-space: inherit;
 
   overflow: hidden;
 }
