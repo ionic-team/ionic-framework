@@ -87,8 +87,7 @@ jobs:
       - uses: ./.github/workflows/actions/generate-test-report
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          repo: ${{ github.repository.repo }}
-          owner: ${{ github.repository.owner }}
+          repo: ${{ github.repository }}
           issue_number: ${{ github.event.number }}
 
   build-vue:

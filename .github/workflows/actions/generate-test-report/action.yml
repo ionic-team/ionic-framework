@@ -4,9 +4,7 @@ inputs:
   token:
     description: 'GitHub token'
   repo:
-    description: 'Repo name'
-  owner:
-    description: 'Repo owner'
+    description: 'Repo owner and name'
   issue_number:
     description: 'Issue number'
 
@@ -28,9 +26,8 @@ runs:
       shell: bash
       working-directory: ./artifacts
     - name: test
-      run: ls && cd test-report-1-20 && ls
+      run: ls
       shell: bash
-      working-directory: ./artifacts
     - name: Build Reporter
       run: npm ci && npm run build
       shell: bash
@@ -40,7 +37,6 @@ runs:
       env:
         GITHUB_TOKEN: ${{ inputs.token }}
         REPO: ${{ inputs.repo }}
-        OWNER: ${{ inputs.owner }}
         ISSUE_NUMBER: ${{ inputs.issue_number }}
       shell: bash
       working-directory: ./core/test-reporter
