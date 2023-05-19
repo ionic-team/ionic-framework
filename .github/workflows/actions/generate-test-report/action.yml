@@ -23,7 +23,8 @@ runs:
       shell: bash
       working-directory: ./core/test-reporter
     - name: Generate Report
-      run: node dist/index.js ../../test-report-*/*.json
+      id: generate-report
+      run: echo "REPORT_CONTENTS=$(node dist/index.js ../../test-report-*/*.json)" >> $GITHUB_OUTPUT
       shell: bash
       working-directory: ./core/test-reporter
     - uses: actions/github-script@v6
@@ -33,5 +34,5 @@ runs:
             issue_number: context.issue.number,
             owner: context.repo.owner,
             repo: context.repo.repo,
-            body: 'This is a test'
+            body: ${{ needs.generate-report.outputs.REPORT_CONTENTS }}
           });
