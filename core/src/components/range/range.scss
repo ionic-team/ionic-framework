@@ -27,6 +27,8 @@
 
   font-family: $font-family-base;
 
+  white-space: nowrap;
+
   user-select: none;
   z-index: $z-index-item-input;
 }
@@ -220,7 +222,7 @@
 
   text-overflow: ellipsis;
 
-  white-space: nowrap;
+  white-space: inherit;
 
   overflow: hidden;
 }
