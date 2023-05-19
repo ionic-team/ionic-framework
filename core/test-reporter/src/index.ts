@@ -137,4 +137,4 @@ const generateRows = (specs: any) => {
   return template;
 }
 
-generateReport();
+console.log(generateReport());
