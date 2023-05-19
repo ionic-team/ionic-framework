@@ -77,7 +77,7 @@ const generateReport = async () => {
     });
   }
 
-  console.log(generateTable(flakyDict));
+  return generateTable(flakyDict);
 }
 
 
@@ -137,4 +137,6 @@ const generateRows = (specs: any) => {
   return template;
 }
 
-console.log(generateReport());
+generateReport().then((res) => {
+  console.log(res);
+});
