@@ -16,6 +16,7 @@ runs:
       # It then unzips every .zip to the root directory
       run: |
         find . -type f -name 'test-report-*.zip' -exec unzip -q -o -d ../ {} \;
+        ls;
         cd ../ && ls;
       shell: bash
       working-directory: ./artifacts
