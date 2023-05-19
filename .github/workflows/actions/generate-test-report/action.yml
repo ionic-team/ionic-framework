@@ -1,5 +1,14 @@
 name: 'Generate Test Report'
 description: 'Generate Test Report'
+inputs:
+  token:
+    description: 'GitHub token'
+  repo:
+    description: 'Repo name'
+  owner:
+    description: 'Repo owner'
+  issue_number:
+    description: 'Issue number'
 
 runs:
   using: 'composite'
@@ -28,9 +37,9 @@ runs:
     - name: Generate Report
       run: node dist/index.js "../../../test-report-*/*.json"
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        REPO: ${{ github.repository.repo }}
-        OWNER: ${{ github.repository.owner }}
-        ISSUE_NUMBER: ${{ github.event.number }}
+        GITHUB_TOKEN: ${{ inputs.token }}
+        REPO: ${{ inputs.repo }}
+        OWNER: ${{ inputs.owner }}
+        ISSUE_NUMBER: ${{ inputs.issue_number }}
       shell: bash
       working-directory: ./core/test-reporter

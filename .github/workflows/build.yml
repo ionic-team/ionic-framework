@@ -84,6 +84,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/workflows/actions/generate-test-report
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repo: ${{ github.repository.repo }}
+          owner: ${{ github.repository.owner }}
+          issue_number: ${{ github.event.number }}
 
   build-vue:
     needs: [build-core]
