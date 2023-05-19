@@ -69,15 +69,12 @@ const findFlakyTestsInSpec = (spec: PlaywrightSpec, title: string): FlakySpec =>
 const generateReport = async () => {
   const files = await glob(__dirname + '/' + process.argv[2]);
 
-console.log('got files',files, __dirname + '/' + process.argv[2])
   const flakyDict = {}
 
   let flakyFiles = [];
 
   for (const file of files) {
-    console.log('iter')
     const result = await fs.readFile(file, 'utf8');
-    console.log('iter read')
 
     // TODO stream json since this can tie up the main thread
     const json = JSON.parse(result);
@@ -89,11 +86,7 @@ console.log('got files',files, __dirname + '/' + process.argv[2])
     });
   }
 
-  console.log('done processing, generating table')
-
   const table = generateTable(flakyDict);
-
-  console.log('generated table, posting comment to PR')
 
   await octokit.request(`POST /repos/${REPO_OWNER}/${REPO_NAME}/issues/${ISSUE_NUMBER}/comments`, {
     owner: REPO_OWNER,
@@ -104,9 +97,6 @@ console.log('got files',files, __dirname + '/' + process.argv[2])
       'X-GitHub-Api-Version': '2022-11-28'
     }
   });
-
-
-  console.log('sent request')
 }
 
 
@@ -166,7 +156,4 @@ const generateRows = (specs: any) => {
   return template;
 }
 
-console.log('starting')
-generateReport().then((res) => {
-  console.log(res);
-});
+generateReport();
