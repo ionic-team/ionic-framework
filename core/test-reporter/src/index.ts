@@ -60,12 +60,15 @@ const findFlakyTestsInSpec = (spec: PlaywrightSpec, title: string): FlakySpec =>
 const generateReport = async () => {
   const files = await glob(process.argv[2]);
 
+console.log('got files',files)
   const flakyDict = {}
 
   let flakyFiles = [];
 
   for (const file of files) {
+    console.log('iter')
     const result = await fs.readFile(file, 'utf8');
+    console.log('iter read')
 
     // TODO stream json since this can tie up the main thread
     const json = JSON.parse(result);
@@ -76,6 +79,8 @@ const generateReport = async () => {
       mergeFlakyFile(flakyDict, flakyFile);
     });
   }
+
+  console.log('done processing, generating table')
 
   return generateTable(flakyDict);
 }

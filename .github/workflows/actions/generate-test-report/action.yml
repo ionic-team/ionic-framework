@@ -23,7 +23,7 @@ runs:
       shell: bash
       working-directory: ./core/test-reporter
     - name: Generate Report
-      run: ls && cd dist && ls && cd ../ && node dist/index.js ../../test-report-*/*.json
+      run: node dist/index.js ../../test-report-*/*.json
       shell: bash
       working-directory: ./core/test-reporter
     - uses: actions/github-script@v6
