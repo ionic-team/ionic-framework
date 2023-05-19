@@ -3,7 +3,7 @@ import * as fs from 'fs/promises';
 import { Octokit } from 'octokit';
 import type { PlaywrightTest, PlaywrightSpec, PlaywrightSuite, PlaywrightResults, FlakySuite, FlakySpec } from './types';
 
-const { REPO_NAME, OWNER, ISSUE_NUMBER, GITHUB_TOKEN } = process.env;
+const { REPO, OWNER, ISSUE_NUMBER, GITHUB_TOKEN } = process.env;
 
 const octokit = new Octokit({ auth: GITHUB_TOKEN });
 
@@ -91,9 +91,9 @@ console.log('got files',files, __dirname + '/' + process.argv[2])
 
   console.log('generated table, posting comment to PR')
 
-  await octokit.request(`POST /repos/${OWNER}/${REPO_NAME}/issues/${ISSUE_NUMBER}/comments`, {
+  await octokit.request(`POST /repos/${OWNER}/${REPO}/issues/${ISSUE_NUMBER}/comments`, {
     owner: OWNER,
-    repo: REPO_NAME,
+    repo: REPO,
     issue_number: ISSUE_NUMBER,
     body: table,
     headers: {

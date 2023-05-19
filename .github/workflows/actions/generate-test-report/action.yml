@@ -29,7 +29,7 @@ runs:
       run: node dist/index.js ../../../test-report-*/*.json
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        REPO_NAME: ${{ github.repository.repo }}
+        REPO: ${{ github.repository.repo }}
         OWNER: ${{ github.repository.owner }}
         ISSUE_NUMBER: ${{ github.event.number }}
       shell: bash
