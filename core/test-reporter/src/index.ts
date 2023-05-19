@@ -3,9 +3,9 @@ import * as fs from 'fs/promises';
 import { Octokit } from 'octokit';
 import type { PlaywrightTest, PlaywrightSpec, PlaywrightSuite, PlaywrightResults, FlakySuite, FlakySpec } from './types';
 
-const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
+const { REPO_NAME, OWNER, ISSUE_NUMBER, GITHUB_TOKEN } = process.env;
 
-console.log(process.env.REPO_NAME, process.env.OWNER, process.env.ISSUE_NUMBER);
+const octokit = new Octokit({ auth: GITHUB_TOKEN });
 
 /**
  * Find all of the flaky files within a
@@ -90,6 +90,19 @@ console.log('got files',files, __dirname + '/' + process.argv[2])
   const table = generateTable(flakyDict);
 
   console.log('generated table, posting comment to PR')
+
+  await octokit.request(`POST /repos/${OWNER}/${REPO_NAME}/issues/${ISSUE_NUMBER}/comments`, {
+    owner: OWNER,
+    repo: REPO_NAME,
+    issue_number: ISSUE_NUMBER,
+    body: table,
+    headers: {
+      'X-GitHub-Api-Version': '2022-11-28'
+    }
+  });
+
+
+  console.log('sent request')
 }
 
 
