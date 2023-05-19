@@ -58,7 +58,7 @@ const findFlakyTestsInSpec = (spec: PlaywrightSpec, title: string): FlakySpec =>
 }
 
 const generateReport = async () => {
-  const files = await glob(__dirname + process.argv[2]);
+  const files = await glob(__dirname + '/' + process.argv[2]);
 
 console.log('got files',files, __dirname, process.argv[2])
   const flakyDict = {}
