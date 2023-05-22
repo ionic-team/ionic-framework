@@ -425,6 +425,8 @@ ion-datetime,event,ionFocus,void,true
 ion-datetime,css-prop,--background
 ion-datetime,css-prop,--background-rgb
 ion-datetime,css-prop,--title-color
+ion-datetime,part,picker-item
+ion-datetime,part,picker-item active
 
 ion-datetime-button,shadow
 ion-datetime-button,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,'primary',false,true

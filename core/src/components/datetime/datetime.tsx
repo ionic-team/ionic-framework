@@ -74,6 +74,10 @@ import {
  * @slot title - The title of the datetime.
  * @slot buttons - The buttons in the datetime.
  * @slot time-label - The label for the time selector in the datetime.
+ * 
+ * @part picker-item - The individual items when using a wheel style layout, or in the
+ * month/year picker when using a grid style layout.
+ * @part picker-item active - The currently selected picker-item.
  */
 @Component({
   tag: 'ion-datetime',
