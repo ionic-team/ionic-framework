@@ -424,6 +424,8 @@ ion-datetime,event,ionChange,DatetimeChangeEventDetail,true
 ion-datetime,event,ionFocus,void,true
 ion-datetime,css-prop,--background
 ion-datetime,css-prop,--background-rgb
+ion-datetime,css-prop,--picker-fade-background
+ion-datetime,css-prop,--picker-highlight-background
 ion-datetime,css-prop,--title-color
 ion-datetime,part,picker-item
 ion-datetime,part,picker-item active
