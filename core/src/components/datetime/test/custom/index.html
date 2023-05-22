@@ -34,12 +34,12 @@
       }
     }
 
-    ion-datetime::part(picker-item) {
-      color: pink;
+    ion-datetime.custom-wheel::part(picker-item) {
+      color: rgb(255, 134, 154);
     }
 
-    ion-datetime::part(picker-item active) {
-      color: purple;
+    ion-datetime.custom-wheel::part(picker-item active) {
+      color: rgb(128, 30, 171);
     }
   </style>
 </head>
@@ -54,8 +54,12 @@
     <ion-content class="ion-padding">
       <div class="grid">
         <div class="grid-item">
-          <h2>Inline</h2>
-          <ion-datetime value="2020-03-14T14:23:00.000Z" id="inline-datetime"></ion-datetime>
+          <h2>Custom Month/Year Picker</h2>
+          <ion-datetime class="custom-wheel" value="2020-03-14T14:23:00.000Z"></ion-datetime>
+        </div>
+        <div class="grid-item">
+          <h2>Custom Wheel Picker</h2>
+          <ion-datetime class="custom-wheel" prefer-wheel="true" value="2020-03-14T14:23:00.000Z"></ion-datetime>
         </div>
       </div>
     </ion-content>
