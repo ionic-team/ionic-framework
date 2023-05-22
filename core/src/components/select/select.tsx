@@ -674,7 +674,7 @@ export class Select implements ComponentInterface {
       return label;
     }
 
-    const labelSlot = this.labelSlot;
+    const { labelSlot } = this;
 
     if (labelSlot !== null) {
       return labelSlot.textContent;
