@@ -231,13 +231,25 @@ export class Radio implements ComponentInterface {
   }
 
   private renderRadio() {
-    const { checked, disabled, inputId, color, el, justify, labelPlacement, inheritedAttributes, hasLabel } = this;
+    const {
+      checked,
+      disabled,
+      inputId,
+      color,
+      el,
+      justify,
+      labelPlacement,
+      inheritedAttributes,
+      hasLabel,
+      buttonTabindex,
+    } = this;
     const mode = getIonMode(this);
     const inItem = hostContext('ion-item', el);
 
     return (
       <Host
         onClick={this.onClick}
+        tabindex={buttonTabindex}
         class={createColorClasses(color, {
           [mode]: true,
           'in-item': inItem,
@@ -260,6 +272,7 @@ export class Radio implements ComponentInterface {
             checked={checked}
             disabled={disabled}
             id={inputId}
+            tabindex="-1"
             ref={(nativeEl) => (this.nativeInput = nativeEl as HTMLInputElement)}
             {...inheritedAttributes}
           />

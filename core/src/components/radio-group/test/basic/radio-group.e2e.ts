@@ -128,6 +128,45 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(radioOne).not.toHaveClass(/radio-checked/);
       await expect(radioTwo).toHaveClass(/radio-checked/);
     });
+
+    test('tab should focus the next radio of the group', async ({ page, browserName }) => {
+      await page.setContent(
+        `
+        <ion-list>
+          <ion-radio-group name="first-group" value="1">
+            <ion-item>
+              <ion-radio value="1">First Option</ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-radio value="2">Second Option</ion-radio>
+            </ion-item>
+          </ion-radio-group>
+        </ion-list>
+        <ion-list>
+          <ion-radio-group name="second-group" value="3">
+            <ion-item>
+              <ion-radio value="3">Third Option</ion-radio>
+            </ion-item>
+          </ion-radio-group>
+        </ion-list>
+      `,
+        config
+      );
+
+      const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
+
+      const firstGroup = page.locator('ion-radio-group[name="first-group"]');
+      const secondGroup = page.locator('ion-radio-group[name="second-group"]');
+
+      const firstOption = firstGroup.locator('ion-radio[value="1"]');
+      const thirdOption = secondGroup.locator('ion-radio[value="3"]');
+
+      await page.keyboard.press(tabKey);
+      await expect(firstOption).toBeFocused();
+
+      await page.keyboard.press(tabKey);
+      await expect(thirdOption).toBeFocused();
+    });
   });
 });
 
