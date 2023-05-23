@@ -24,3 +24,6 @@ $textarea-md-placeholder-color: $placeholder-text-color !default;
 
 /// @prop - The amount of whitespace to display on either side of the floating label
 $textarea-md-floating-label-padding: 4px !default;
+
+/// @prop - The opacity of the input text, label, helper text, char counter and placeholder of a disabled textarea
+$textarea-md-disabled-opacity: $form-control-md-disabled-opacity !default;

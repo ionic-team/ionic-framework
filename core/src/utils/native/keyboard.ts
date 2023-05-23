@@ -1,4 +1,4 @@
-import { win } from '../window';
+import { win } from '../browser';
 
 // Interfaces source: https://capacitorjs.com/docs/apis/keyboard#interfaces
 export interface KeyboardResizeOptions {

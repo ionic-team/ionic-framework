@@ -16,9 +16,10 @@
       .grid {
         display: grid;
         grid-template-columns: repeat(4, minmax(250px, 1fr));
-        grid-row-gap: 20px;
+        grid-row-gap: 10px;
         grid-column-gap: 20px;
       }
+
       h2 {
         font-size: 12px;
         font-weight: normal;
@@ -26,7 +27,9 @@
         color: #6f7378;
 
         margin-top: 10px;
+        margin-bottom: 0;
       }
+
       @media screen and (max-width: 800px) {
         .grid {
           grid-template-columns: 1fr;
@@ -56,8 +59,44 @@
           </div>
 
           <div class="grid-item">
+            <h2>Value</h2>
+            <ion-range value="40%">
+              <ion-icon name="volume-off" slot="start"></ion-icon>
+              <ion-icon name="volume-high" slot="end"></ion-icon>
+              <span slot="label">Temperature</span>
+            </ion-range>
+          </div>
+
+          <div class="grid-item">
+            <h2>Ticks</h2>
+            <ion-range snaps="true" ticks="true" step="10" value="10%">
+              <ion-icon name="volume-off" slot="start"></ion-icon>
+              <ion-icon name="volume-high" slot="end"></ion-icon>
+              <span slot="label">Temperature</span>
+            </ion-range>
+          </div>
+
+          <div class="grid-item">
             <h2>Disabled</h2>
             <ion-range disabled="true">
+              <ion-icon name="volume-off" slot="start"></ion-icon>
+              <ion-icon name="volume-high" slot="end"></ion-icon>
+              <span slot="label">Temperature</span>
+            </ion-range>
+          </div>
+
+          <div class="grid-item">
+            <h2>Disabled, Value</h2>
+            <ion-range disabled="true" value="40%">
+              <ion-icon name="volume-off" slot="start"></ion-icon>
+              <ion-icon name="volume-high" slot="end"></ion-icon>
+              <span slot="label">Temperature</span>
+            </ion-range>
+          </div>
+
+          <div class="grid-item">
+            <h2>Disabled, Ticks</h2>
+            <ion-range snaps="true" ticks="true" step="10" value="10%" disabled>
               <ion-icon name="volume-off" slot="start"></ion-icon>
               <ion-icon name="volume-high" slot="end"></ion-icon>
               <span slot="label">Temperature</span>

@@ -36,6 +36,9 @@
 
 // Input - Disabled
 // ----------------------------------------------------------------
+// The input, label, helper text, char counter and placeholder
+// should use the same opacity and match the other form controls
+
 :host(.legacy-input) .native-input[disabled],
 :host(.input-disabled) {
   opacity: #{$input-md-disabled-opacity};
@@ -43,6 +46,7 @@
 
 // Input Bottom
 // ----------------------------------------------------------------
+
 /**
  * If the input has a validity state, the
  * border and label should reflect that as a color.

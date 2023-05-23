@@ -89,6 +89,11 @@
   transform: rotate(-90deg);
 }
 
+.popover-arrow,
+.popover-content {
+  opacity: 0;
+}
+
 // Translucent Popover
 // -----------------------------------------
 

@@ -16,7 +16,7 @@ $overlay-ios-background-color:              var(--ion-overlay-background-color, 
 $tabbar-ios-background:                     var(--ion-tab-bar-background, var(--ion-color-step-50, #f7f7f7)) !default;
 $tabbar-ios-background-focused:             var(--ion-tab-bar-background-focused, get-color-shade(#fff)) !default;
 $tabbar-ios-border-color:                   var(--ion-tab-bar-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, .2)))) !default;
-$tabbar-ios-color:                          var(--ion-tab-bar-color, $text-color-step-600) !default;
+$tabbar-ios-color:                          var(--ion-tab-bar-color, $text-color-step-400) !default;
 $tabbar-ios-color-selected:                 var(--ion-tab-bar-color-selected, ion-color(primary, base)) !default;
 
 // iOS Toolbar
@@ -33,5 +33,9 @@ $item-ios-color:                            var(--ion-item-color, $text-color) !
 
 // iOS Card
 // --------------------------------------------------
-$card-ios-background:                        var(--ion-card-background, $item-ios-background) !default;
-$card-ios-color:                             var(--ion-card-color, var(--ion-item-color, $text-color-step-400)) !default;
+$card-ios-background:                       var(--ion-card-background, $item-ios-background) !default;
+$card-ios-color:                            var(--ion-card-color, var(--ion-item-color, $text-color-step-400)) !default;
+
+// iOS Form Controls
+// --------------------------------------------------
+$form-control-ios-disabled-opacity:         0.3;

@@ -173,6 +173,9 @@
 
 // iOS Toggle: Disabled
 // ----------------------------------------------------------
+// The toggle and label should use the
+// same opacity and match the other form
+// controls
 
 :host(.toggle-disabled) {
   opacity: $toggle-ios-disabled-opacity;

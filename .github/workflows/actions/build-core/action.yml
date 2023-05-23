@@ -4,9 +4,6 @@ runs:
   using: 'composite'
   steps:
     - uses: actions/checkout@v3
-      with:
-        # Checkout the latest commit in this branch
-        ref: ${{ github.event.pull_request.head.sha }}
     - uses: actions/setup-node@v3
       with:
         node-version: 16.x

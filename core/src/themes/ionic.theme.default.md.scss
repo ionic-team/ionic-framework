@@ -17,7 +17,7 @@ $overlay-md-background-color:               var(--ion-overlay-background-color, 
 $tabbar-md-background:                      var(--ion-tab-bar-background, $background-color) !default;
 $tabbar-md-background-focused:              var(--ion-tab-bar-background-focused, get-color-shade(#fff)) !default;
 $tabbar-md-border-color:                    var(--ion-tab-bar-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, .07)))) !default;
-$tabbar-md-color:                           var(--ion-tab-bar-color, $text-color-step-400) !default;
+$tabbar-md-color:                           var(--ion-tab-bar-color, $text-color-step-350) !default;
 $tabbar-md-color-selected:                  var(--ion-tab-bar-color-selected, ion-color(primary, base)) !default;
 
 // Material Design Toolbar
@@ -36,3 +36,9 @@ $item-md-color:                             var(--ion-item-color, $text-color) !
 // --------------------------------------------------
 $card-md-background:                        var(--ion-card-background, $item-md-background) !default;
 $card-md-color:                             var(--ion-card-color, var(--ion-item-color, $text-color-step-450)) !default;
+
+// Material Design Form Controls
+// --------------------------------------------------
+/// This value comes from the Material Design spec:
+/// https://m3.material.io/components/text-fields/specs
+$form-control-md-disabled-opacity:          0.38;

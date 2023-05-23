@@ -24,7 +24,7 @@
    * @prop --highlight-color-invalid: The color of the highlight on the input when invalid
    *
    * @prop --border-color: Color of the border below the input when using helper text, error text, or counter
-   * @prop --border-radius: Radius of the input
+   * @prop --border-radius: Radius of the input. A large radius may display unevenly when using fill="outline"; if needed, use shape="round" instead or increase --padding-start.
    * @prop --border-style: Style of the border below the input when using helper text, error text, or counter
    * @prop --border-width: Width of the border below the input when using helper text, error text, or counter
    */
@@ -161,13 +161,6 @@
   }
 }
 
-
-:host(.legacy-input) .native-input[disabled],
-:host(.input-disabled) {
-  opacity: 0.4;
-}
-
-
 // Input Cover: Unfocused
 // --------------------------------------------------
 // The input cover is the div that actually receives the
@@ -192,7 +185,6 @@
 .cloned-input:disabled {
   opacity: 1;
 }
-
 
 // Clear Input Icon
 // --------------------------------------------------
@@ -505,7 +497,7 @@
    * the input should be on the end
    * when the label sits at the start.
    */
-  @include margin(0, 8px, 0, 0);
+  @include margin(0, $form-control-label-margin, 0, 0);
 }
 
 // Input Label Placement - End
@@ -525,7 +517,7 @@
  * when the label sits at the end.
  */
 :host(.input-label-placement-end) .label-text-wrapper {
-  @include margin(0, 0, 0, 8px);
+  @include margin(0, 0, 0, $form-control-label-margin);
 }
 
 // Input Label Placement - Fixed
@@ -537,7 +529,7 @@
    * the input should be on the end
    * when the label sits at the start.
    */
-  @include margin(0, 8px, 0, 0);
+  @include margin(0, $form-control-label-margin, 0, 0);
 }
 
 /**

@@ -12,11 +12,14 @@ export const iosLeaveAnimation = (baseEl: HTMLElement): Animation => {
 
   const baseAnimation = createAnimation();
   const backdropAnimation = createAnimation();
-  const wrapperAnimation = createAnimation();
+  const contentAnimation = createAnimation();
 
   backdropAnimation.addElement(root.querySelector('ion-backdrop')!).fromTo('opacity', 'var(--backdrop-opacity)', 0);
 
-  wrapperAnimation.addElement(root.querySelector('.popover-wrapper')!).fromTo('opacity', 0.99, 0);
+  contentAnimation
+    .addElement(root.querySelector('.popover-arrow')!)
+    .addElement(root.querySelector('.popover-content')!)
+    .fromTo('opacity', 0.99, 0);
 
   return baseAnimation
     .easing('ease')
@@ -36,5 +39,5 @@ export const iosLeaveAnimation = (baseEl: HTMLElement): Animation => {
       }
     })
     .duration(300)
-    .addAnimation([backdropAnimation, wrapperAnimation]);
+    .addAnimation([backdropAnimation, contentAnimation]);
 };

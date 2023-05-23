@@ -14,7 +14,6 @@
   --bar-background-active: #{ion-color(primary, base)};
   --bar-border-radius: #{$range-ios-bar-border-radius};
   --height: #{$range-ios-slider-height};
-  --margin: 16px;
 }
 
 // TODO FW-2997 remove this
@@ -28,11 +27,11 @@
 }
 
 ::slotted([slot="start"]) {
-  @include margin(0, var(--margin), 0, 0);
+  @include margin(0, 16px, 0, 0);
 }
 
 ::slotted([slot="end"]) {
-  @include margin(0, 0, 0, var(--margin));
+  @include margin(0, 0, 0, 16px);
 }
 
 :host(.range-has-pin) {
@@ -95,6 +94,12 @@
   @include transform(translate3d(0, 0, 0), scale(1));
 }
 
+// iOS Range: Disabled
+// --------------------------------------------------
+// When the range is disabled, the entire range,
+// range label, any slotted labels, and any slotted
+// icons need to receive the same opacity.
+
 :host(.range-disabled) {
-  opacity: .5;
+  opacity: $range-ios-disabled-opacity;
 }
