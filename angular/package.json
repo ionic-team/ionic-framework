@@ -1,6 +1,6 @@
 {
   "name": "@ionic/angular",
-  "version": "7.0.7",
+  "version": "7.0.8-nightly.20230523",
   "description": "Angular specific wrappers for @ionic/core",
   "keywords": [
     "ionic",
@@ -47,7 +47,7 @@
     }
   },
   "dependencies": {
-    "@ionic/core": "^7.0.7",
+    "@ionic/core": "^7.0.8-nightly.20230523",
     "ionicons": "^7.0.0",
     "jsonc-parser": "^3.0.0",
     "tslib": "^2.3.0"
