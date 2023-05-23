@@ -194,6 +194,8 @@ export class Segment implements ComponentInterface {
 
     detail.event.stopImmediatePropagation();
 
+    this.setNextIndex(detail, true);
+
     const value = this.value;
     if (value !== undefined) {
       if (this.valueBeforeGesture !== value) {
