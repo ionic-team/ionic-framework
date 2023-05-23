@@ -9,7 +9,7 @@ export interface OverlayProps {
 const EMPTY_PROP = Symbol();
 const DEFAULT_EMPTY_PROP = { default: EMPTY_PROP };
 
-export const defineOverlayContainer = <Props extends object>(name: string, defineCustomElement: () => void, componentProps: string[] = [], controller?: any) => {
+export const defineOverlayContainer = <Props extends object>(name: string, defineCustomElement: () => void, componentProps: string[] = [], hasDelegateHost: boolean, controller?: any) => {
 
   const createControllerComponent = () => {
     return defineComponent<Props & OverlayProps>((props, { slots, emit }) => {
@@ -163,12 +163,12 @@ export const defineOverlayContainer = <Props extends object>(name: string, defin
         }
 
         /**
-         * `ion-modal` needs a wrapper element so content
-         * takes up the full size of the parent modal.
+         * Some overlays need a wrapper element so content
+         * takes up the full size of the parent overlay.
          */
         const renderChildren = () => {
-          if (name === 'ion-modal') {
-            return h('div', { className: 'ion-delegate-host ion-page' }, slots)
+          if (hasDelegateHost) {
+            return h('div', { className: 'ion-delegate-host ion-page' }, slots);
           }
 
           return slots;

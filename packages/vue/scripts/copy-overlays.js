@@ -5,31 +5,38 @@ function generateOverlays() {
   const components = [
     {
       tag: 'ion-action-sheet',
-      name: 'IonActionSheet'
+      name: 'IonActionSheet',
+      hasDelegateHost: false
     },
     {
       tag: 'ion-alert',
-      name: 'IonAlert'
+      name: 'IonAlert',
+      hasDelegateHost: false
     },
     {
       tag: 'ion-loading',
-      name: 'IonLoading'
+      name: 'IonLoading',
+      hasDelegateHost: false
     },
     {
       tag: 'ion-picker',
-      name: 'IonPicker'
+      name: 'IonPicker',
+      hasDelegateHost: false
     },
     {
       tag: 'ion-toast',
-      name: 'IonToast'
+      name: 'IonToast',
+      hasDelegateHost: false
     },
     {
       tag: 'ion-modal',
-      name: 'IonModal'
+      name: 'IonModal',
+      hasDelegateHost: true
     },
     {
       tag: 'ion-popover',
-      name: 'IonPopover'
+      name: 'IonPopover',
+      hasDelegateHost: false
     }
   ]
 
@@ -45,7 +52,7 @@ function generateOverlays() {
     componentImports.push(`import { defineCustomElement as ${defineCustomElementFn} } from '@ionic/core/components/${component.tag}.js'`);
 
     componentDefinitions.push(`
-export const ${component.name} = /*@__PURE__*/ defineOverlayContainer<JSX.${component.name}>('${component.tag}', ${defineCustomElementFn}, [${props.join(', ')}]);
+export const ${component.name} = /*@__PURE__*/ defineOverlayContainer<JSX.${component.name}>('${component.tag}', ${defineCustomElementFn}, [${props.join(', ')}], ${component.hasDelegateHost});
     `);
   });
 
