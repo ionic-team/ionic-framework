@@ -78,6 +78,10 @@ import {
  * @part picker-item - The individual items when using a wheel style layout, or in the
  * month/year picker when using a grid style layout.
  * @part picker-item active - The currently selected picker-item.
+ * 
+ * @part time-button - The button that opens the time picker when using a grid style
+ * layout with `presentation="date-time"` or `"time-date"`.
+ * @part time-button active - The time picker button when the picker is open.
  */
 @Component({
   tag: 'ion-datetime',
@@ -2181,6 +2185,7 @@ export class Datetime implements ComponentInterface {
           'time-body': true,
           'time-body-active': this.isTimePopoverOpen,
         }}
+        part={`time-button${this.isTimePopoverOpen ? ' active' : ''}`}
         aria-expanded="false"
         aria-haspopup="true"
         onClick={async (ev) => {
