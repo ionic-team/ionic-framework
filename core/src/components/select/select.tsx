@@ -35,6 +35,8 @@ import type { SelectChangeEventDetail, SelectInterface, SelectCompareFn } from '
  * @part placeholder - The text displayed in the select when there is no value.
  * @part text - The displayed value of the select.
  * @part icon - The select icon container.
+ * @part container - The container for the selected text or placeholder.
+ * @part label - The label text describing the select.
  */
 @Component({
   tag: 'ion-select',
@@ -701,7 +703,7 @@ export class Select implements ComponentInterface {
     }
 
     return (
-      <div class="label-text-wrapper">
+      <div class="label-text-wrapper" part="label">
         <div class="label-text">{this.label}</div>
       </div>
     );
@@ -776,7 +778,7 @@ export class Select implements ComponentInterface {
       >
         <label class="select-wrapper" id="select-label">
           {this.renderLabelContainer()}
-          <div class="native-wrapper" ref={(el) => (this.nativeWrapperEl = el)}>
+          <div class="native-wrapper" ref={(el) => (this.nativeWrapperEl = el)} part="container">
             {this.renderSelectText()}
             {!hasFloatingOrStackedLabel && this.renderSelectIcon()}
             {this.renderListbox()}
