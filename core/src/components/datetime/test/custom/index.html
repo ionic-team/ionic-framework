@@ -40,20 +40,28 @@
       undocumented usage.
     */
 
-    ion-datetime.custom-wheel,
+    ion-datetime,
     ion-picker-internal {
       --picker-highlight-background: rgb(218, 216, 255);
       --picker-fade-background: rgb(245, 235, 247);
     }
 
-    ion-datetime.custom-wheel::part(picker-item),
+    ion-datetime::part(picker-item),
     ion-picker-column-internal::part(picker-item) {
       color: rgb(255, 134, 154);
     }
 
-    ion-datetime.custom-wheel::part(picker-item active),
+    ion-datetime::part(picker-item active),
     ion-picker-column-internal::part(picker-item active) {
       color: rgb(128, 30, 171);
+    }
+
+    ion-datetime::part(time-button) {
+      color: rgb(128, 30, 171);
+    }
+
+    ion-datetime::part(time-button active) {
+      background-color: rgb(248, 215, 255);
     }
   </style>
 </head>
@@ -68,12 +76,12 @@
     <ion-content class="ion-padding">
       <div class="grid">
         <div class="grid-item">
-          <h2>Custom Month/Year + Time Pickers</h2>
-          <ion-datetime id="custom-month-year" class="custom-wheel" value="2020-03-14T14:23:00.000Z"></ion-datetime>
+          <h2>Grid Style</h2>
+          <ion-datetime id="custom-grid" value="2020-03-14T14:23:00.000Z"></ion-datetime>
         </div>
         <div class="grid-item">
-          <h2>Custom Wheel Picker</h2>
-          <ion-datetime id="custom-wheel" class="custom-wheel" prefer-wheel="true" value="2020-03-14T14:23:00.000Z"></ion-datetime>
+          <h2>Wheel Style</h2>
+          <ion-datetime id="custom-wheel" prefer-wheel="true" value="2020-03-14T14:23:00.000Z"></ion-datetime>
         </div>
       </div>
     </ion-content>
