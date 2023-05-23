@@ -744,15 +744,17 @@ export class Select implements ComponentInterface {
   }
 
   componentDidRender() {
-    /**
-     * Run this the frame after
-     * the browser has re-painted the select.
-     * Otherwise, the label element may have a width
-     * of 0 and the IntersectionObserver will be used.
-     */
-    raf(() => {
-      this.setNotchWidth();
-    });
+    if (this.needsExplicitNotchWidth()) {
+      /**
+       * Run this the frame after
+       * the browser has re-painted the select.
+       * Otherwise, the label element may have a width
+       * of 0 and the IntersectionObserver will be used.
+       */
+      raf(() => {
+        this.setNotchWidth();
+      });
+    }
   }
 
   /**
@@ -773,6 +775,32 @@ export class Select implements ComponentInterface {
     return this.label !== undefined || this.labelSlot !== null;
   }
 
+  private needsExplicitNotchWidth() {
+    if (
+      /**
+       * If the notch is not being used
+       * then we do not need to set the notch width.
+       */
+      this.notchSpacerEl === undefined ||
+      /**
+       * If no label is being used, then we
+       * do not need to estimate the notch width.
+       */
+      !this.hasLabel ||
+      /**
+       * If the label property is being used
+       * then we can render the label text inside
+       * of the notch and let the browser
+       * determine the notch size for us.
+       */
+      this.label !== undefined
+    ) {
+      return false;
+    }
+
+    return true;
+  }
+
   /**
    * When using a label prop we can render
    * the label value inside of the notch and
@@ -787,26 +815,14 @@ export class Select implements ComponentInterface {
    * intrinsic size of the label text.
    */
   private setNotchWidth() {
+    console.log('setting notch width')
     const { el, notchSpacerEl } = this;
 
     if (notchSpacerEl === undefined) {
       return;
     }
 
-    if (
-      /**
-       * If no label is being used, then we
-       * do not need to estimate the notch width.
-       */
-      !this.hasLabel ||
-      /**
-       * If the label property is being used
-       * then we can render the label text inside
-       * of the notch and let the browser
-       * determine the notch size for us.
-       */
-      this.label !== undefined
-    ) {
+    if (!this.needsExplicitNotchWidth()) {
       notchSpacerEl.style.removeProperty('width');
       return;
     }
