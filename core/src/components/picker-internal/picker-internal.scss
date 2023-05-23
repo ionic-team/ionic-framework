@@ -68,14 +68,14 @@
   @include position(50%, 0, 0, 0);
   @include margin(0, auto, 0, auto);
 
-  background: var(--picker-highlight-background);
-
   position: absolute;
 
   width: calc(100% - 16px);
   height: 34px;
 
   transform: translateY(-50%);
+  
+  background: var(--picker-highlight-background);
 
   z-index: -1;
 }
