@@ -29,7 +29,8 @@ interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<Elem
 
 export const createInlineOverlayComponent = <PropType, ElementType>(
   tagName: string,
-  defineCustomElement?: () => void
+  defineCustomElement?: () => void,
+  hasDelegateHost?: boolean
 ) => {
   if (defineCustomElement) {
     defineCustomElement();
@@ -117,11 +118,11 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
       };
 
       /**
-       * `ion-modal` needs `.ion-page` so content
-       * takes up the full size of the parent modal.
+       * Some overlays need `.ion-page` so content
+       * takes up the full size of the parent overlay.
        */
       const getWrapperClasses = () => {
-        if (tagName === 'ion-modal') {
+        if (hasDelegateHost) {
           return `${DELEGATE_HOST} ion-page`;
         }
 
