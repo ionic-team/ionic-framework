@@ -192,9 +192,9 @@ export class Segment implements ComponentInterface {
   onEnd(detail: GestureDetail) {
     this.setActivated(false);
 
-    detail.event.stopImmediatePropagation();
-
     this.setNextIndex(detail, true);
+
+    detail.event.stopImmediatePropagation();
 
     const value = this.value;
     if (value !== undefined) {
