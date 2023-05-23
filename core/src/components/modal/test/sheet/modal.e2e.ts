@@ -129,7 +129,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         const ionBreakpointDidChange = await page.spyOnEvent('ionBreakpointDidChange');
         const header = page.locator('.modal-sheet ion-header');
 
-        await dragElementBy(header, page, 0, 500);
+        await dragElementBy(header, page, 0, 500, undefined, 0);
 
         await ionBreakpointDidChange.next();
 
