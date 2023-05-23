@@ -29,10 +29,10 @@ configs().forEach(({ title, screenshot, config }) => {
             <ion-label>Seventh</ion-label>
           </ion-segment-button>
           <ion-segment-button value="8">
-            <ion-label>Eigth</ion-label>
+            <ion-label>Eighth</ion-label>
           </ion-segment-button>
           <ion-segment-button value="9">
-            <ion-label>Nineth</ion-label>
+            <ion-label>Ninth</ion-label>
           </ion-segment-button>
         </ion-segment>
       `,

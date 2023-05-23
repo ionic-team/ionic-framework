@@ -43,6 +43,8 @@
   width: auto;
 
   overflow-x: auto;
+
+  grid-auto-columns: min-content;
 }
 
 :host(.segment-scrollable::-webkit-scrollbar) {
