@@ -34,16 +34,25 @@
       }
     }
 
-    ion-datetime {
+    /*
+      The second selectors that target ion-picker(-column)-internal
+      directly are for styling the time picker. This is currently
+      undocumented usage.
+    */
+
+    ion-datetime.custom-wheel,
+    ion-picker-internal {
       --picker-highlight-background: rgb(218, 216, 255);
       --picker-fade-background: rgb(245, 235, 247);
     }
 
-    ion-datetime.custom-wheel::part(picker-item) {
+    ion-datetime.custom-wheel::part(picker-item),
+    ion-picker-column-internal::part(picker-item) {
       color: rgb(255, 134, 154);
     }
 
-    ion-datetime.custom-wheel::part(picker-item active) {
+    ion-datetime.custom-wheel::part(picker-item active),
+    ion-picker-column-internal::part(picker-item active) {
       color: rgb(128, 30, 171);
     }
   </style>
@@ -59,7 +68,7 @@
     <ion-content class="ion-padding">
       <div class="grid">
         <div class="grid-item">
-          <h2>Custom Month/Year Picker</h2>
+          <h2>Custom Month/Year + Time Pickers</h2>
           <ion-datetime id="custom-month-year" class="custom-wheel" value="2020-03-14T14:23:00.000Z"></ion-datetime>
         </div>
         <div class="grid-item">
