@@ -13,3 +13,4 @@ updates:
       - dependency-name: "@stencil/react-output-target"
       - dependency-name: "@stencil/sass"
       - dependency-name: "@stencil/vue-output-target"
+      - dependency-name: "ionicons"
