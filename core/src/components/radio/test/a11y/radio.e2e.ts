@@ -15,8 +15,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     });
   });
 
-  // TODO: FW-4155 - Enable tests once tab behavior is fixed for modern syntax.
-  test.describe.skip(title('radio: keyboard navigation'), () => {
+  test.describe.only(title('radio: keyboard navigation'), () => {
     test.beforeEach(async ({ page }) => {
       await page.setContent(
         `
