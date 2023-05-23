@@ -15,7 +15,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     });
   });
 
-  test.describe.only(title('radio: keyboard navigation'), () => {
+  test.describe(title('radio: keyboard navigation'), () => {
     test.beforeEach(async ({ page }) => {
       await page.setContent(
         `

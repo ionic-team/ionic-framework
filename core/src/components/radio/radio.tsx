@@ -249,6 +249,9 @@ export class Radio implements ComponentInterface {
     return (
       <Host
         onClick={this.onClick}
+        aria-checked={`${checked}`}
+        aria-hidden={disabled ? 'true' : null}
+        role="radio"
         tabindex={buttonTabindex}
         class={createColorClasses(color, {
           [mode]: true,
@@ -273,6 +276,7 @@ export class Radio implements ComponentInterface {
             disabled={disabled}
             id={inputId}
             tabindex="-1"
+            aria-hidden="true"
             ref={(nativeEl) => (this.nativeInput = nativeEl as HTMLInputElement)}
             {...inheritedAttributes}
           />
@@ -344,6 +348,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
           checked={checked}
           disabled={disabled}
           tabindex="-1"
+          aria-hidden="true"
           id={inputId}
           ref={(nativeEl) => (this.nativeInput = nativeEl as HTMLInputElement)}
         />
