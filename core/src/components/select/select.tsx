@@ -815,7 +815,6 @@ export class Select implements ComponentInterface {
    * intrinsic size of the label text.
    */
   private setNotchWidth() {
-    console.log('setting notch width')
     const { el, notchSpacerEl } = this;
 
     if (notchSpacerEl === undefined) {
