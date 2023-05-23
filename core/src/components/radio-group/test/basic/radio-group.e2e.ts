@@ -128,7 +128,6 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(radioOne).not.toHaveClass(/radio-checked/);
       await expect(radioTwo).toHaveClass(/radio-checked/);
     });
-    
   });
 });
 
