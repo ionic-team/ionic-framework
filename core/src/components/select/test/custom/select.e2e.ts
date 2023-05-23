@@ -46,13 +46,15 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       await page.setContent(
         `
-        <ion-select label="Select" label-placement="stacked" placeholder="Fruits">
-          <ion-select-option value="a">Apple</ion-select-option>
-        </ion-select>
+        <div class="wrapper">
+          <ion-select label="Select" label-placement="stacked" placeholder="Fruits">
+            <ion-select-option value="a">Apple</ion-select-option>
+          </ion-select>
 
-        <ion-select label="Select" label-placement="stacked" value="a">
-          <ion-select-option value="a">Apple</ion-select-option>
-        </ion-select>
+          <ion-select label="Select" label-placement="stacked" value="a">
+            <ion-select-option value="a">Apple</ion-select-option>
+          </ion-select>
+        </div>
 
         <style>
           ion-select::part(container) {
@@ -67,8 +69,8 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         config
       );
 
-      const select = page.locator('ion-select');
-      await expect(select).toHaveScreenshot(screenshot(`select-custom-parts-diff`));
+      const wrapper = page.locator('.wrapper');
+      await expect(wrapper).toHaveScreenshot(screenshot(`select-custom-parts-diff`));
     });
   });
 });
