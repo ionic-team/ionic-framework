@@ -56,7 +56,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       });
       test('it should swipe to close when swiped on the content', async () => {
         await cardModalPage.openModalByTrigger('#card');
-        await cardModalPage.swipeToCloseModal('ion-modal ion-content');
+        await cardModalPage.swipeToCloseModal('ion-modal ion-content', true, 500, 0);
       });
       test('it should not swipe to close when swiped on the content but the content is scrolled', async ({ page }) => {
         const modal = await cardModalPage.openModalByTrigger('#card');

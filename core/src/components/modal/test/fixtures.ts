@@ -22,10 +22,10 @@ export class CardModalPage {
     return this.page.locator('ion-modal');
   }
 
-  async swipeToCloseModal(selector: string, waitForDismiss = true, swipeY = 500) {
+  async swipeToCloseModal(selector: string, waitForDismiss = true, swipeY = 500, startSwipeY?: number) {
     const { page } = this;
     const elementRef = page.locator(selector);
-    await dragElementBy(elementRef, page, 0, swipeY, undefined, 0);
+    await dragElementBy(elementRef, page, 0, swipeY, undefined, startSwipeY);
 
     if (waitForDismiss) {
       await this.ionModalDidDismiss.next();
