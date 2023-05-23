@@ -9,7 +9,7 @@ export interface OverlayProps {
 const EMPTY_PROP = Symbol();
 const DEFAULT_EMPTY_PROP = { default: EMPTY_PROP };
 
-export const defineOverlayContainer = <Props extends object>(name: string, defineCustomElement: () => void, componentProps: string[] = [], hasDelegateHost: boolean, controller?: any) => {
+export const defineOverlayContainer = <Props extends object>(name: string, defineCustomElement: () => void, componentProps: string[] = [], hasDelegateHost?: boolean, controller?: any) => {
 
   const createControllerComponent = () => {
     return defineComponent<Props & OverlayProps>((props, { slots, emit }) => {
