@@ -16,8 +16,7 @@ configs().forEach(({ title, screenshot, config }) => {
       });
     });
 
-    // TODO FW-4110
-    test.skip('should not have visual regressions for date wheel', async ({ page }) => {
+    test('should not have visual regressions for date wheel', async ({ page }) => {
       await page.setContent(
         `
         <ion-datetime size="cover" presentation="date" prefer-wheel="true" value="2019-05-30" max="2022"></ion-datetime>
@@ -27,8 +26,7 @@ configs().forEach(({ title, screenshot, config }) => {
 
       await expect(page).toHaveScreenshot(screenshot(`datetime-wheel-date-diff`));
     });
-    // TODO FW-4110
-    test.skip('should not have visual regressions for date-time wheel', async ({ page }) => {
+    test('should not have visual regressions for date-time wheel', async ({ page }) => {
       await page.setContent(
         `
         <ion-datetime size="cover" presentation="date-time" prefer-wheel="true" value="2019-05-30T16:30:00" max="2022"></ion-datetime>
@@ -38,8 +36,7 @@ configs().forEach(({ title, screenshot, config }) => {
 
       await expect(page).toHaveScreenshot(screenshot(`datetime-wheel-date-time-diff`));
     });
-    // TODO FW-4110
-    test.skip('should not have visual regressions for time-date wheel', async ({ page }) => {
+    test('should not have visual regressions for time-date wheel', async ({ page }) => {
       await page.setContent(
         `
         <ion-datetime size="cover" presentation="time-date" prefer-wheel="true" value="2019-05-30T16:30:00" max="2022"></ion-datetime>
