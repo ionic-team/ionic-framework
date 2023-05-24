@@ -24,7 +24,9 @@ import { createColorClasses, hostContext } from '../../utils/theme';
     ios: 'radio.ios.scss',
     md: 'radio.md.scss',
   },
-  shadow: true,
+  shadow: {
+    delegatesFocus: true,
+  },
 })
 export class Radio implements ComponentInterface {
   private inputId = `ion-rb-${radioButtonIds++}`;
@@ -249,10 +251,6 @@ export class Radio implements ComponentInterface {
     return (
       <Host
         onClick={this.onClick}
-        aria-checked={`${checked}`}
-        aria-hidden={disabled ? 'true' : null}
-        role="radio"
-        tabindex={buttonTabindex}
         class={createColorClasses(color, {
           [mode]: true,
           'in-item': inItem,
@@ -275,8 +273,7 @@ export class Radio implements ComponentInterface {
             checked={checked}
             disabled={disabled}
             id={inputId}
-            tabindex="-1"
-            aria-hidden="true"
+            tabindex={buttonTabindex}
             ref={(nativeEl) => (this.nativeInput = nativeEl as HTMLInputElement)}
             {...inheritedAttributes}
           />
@@ -348,7 +345,6 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
           checked={checked}
           disabled={disabled}
           tabindex="-1"
-          aria-hidden="true"
           id={inputId}
           ref={(nativeEl) => (this.nativeInput = nativeEl as HTMLInputElement)}
         />
