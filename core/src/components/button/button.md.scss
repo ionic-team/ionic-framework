@@ -97,7 +97,7 @@
   --padding-end: #{$button-md-large-padding-end};
   --padding-bottom: #{$button-md-large-padding-bottom};
 
-  height: #{$button-md-large-height};
+  min-height: #{$button-md-large-height};
 
   font-size: #{$button-md-large-font-size};
 }
@@ -108,7 +108,7 @@
   --padding-end: #{$button-md-small-padding-end};
   --padding-bottom: #{$button-md-small-padding-bottom};
 
-  height: #{$button-md-small-height};
+  min-height: #{$button-md-small-height};
 
   font-size: #{$button-md-small-font-size};
 }

@@ -16,6 +16,32 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       await expect(button).toHaveScreenshot(screenshot(`button-wrap`));
     });
 
+    test('should render small button with long text', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-button size="small">This is the button that never ends it just goes on and on and on and on and on and on and on and on my friends</ion-button>
+      `,
+        config
+      );
+
+      const button = page.locator('ion-button');
+
+      await expect(button).toHaveScreenshot(screenshot(`button-wrap-small`));
+    });
+
+    test('should render large button with long text', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-button size="large">This is the button that never ends it just goes on and on and on and on and on and on and on and on my friends</ion-button>
+      `,
+        config
+      );
+
+      const button = page.locator('ion-button');
+
+      await expect(button).toHaveScreenshot(screenshot(`button-wrap-large`));
+    });
+
     test('should render button with long text and icons', async ({ page }) => {
       await page.setContent(
         `
