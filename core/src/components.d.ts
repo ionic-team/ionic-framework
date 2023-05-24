@@ -33,7 +33,7 @@ import { RefresherEventDetail } from "./components/refresher/refresher-interface
 import { ItemReorderEventDetail } from "./components/reorder-group/reorder-group-interface";
 import { NavigationHookCallback } from "./components/route/route-interface";
 import { SearchbarChangeEventDetail, SearchbarInputEventDetail } from "./components/searchbar/searchbar-interface";
-import { SegmentChangeEventDetail } from "./components/segment/segment-interface";
+import { SegmentChangeEventDetail, SegmentValue } from "./components/segment/segment-interface";
 import { SegmentButtonLayout } from "./components/segment-button/segment-button-interface";
 import { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./components/select/select-interface";
 import { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
@@ -69,7 +69,7 @@ export { RefresherEventDetail } from "./components/refresher/refresher-interface
 export { ItemReorderEventDetail } from "./components/reorder-group/reorder-group-interface";
 export { NavigationHookCallback } from "./components/route/route-interface";
 export { SearchbarChangeEventDetail, SearchbarInputEventDetail } from "./components/searchbar/searchbar-interface";
-export { SegmentChangeEventDetail } from "./components/segment/segment-interface";
+export { SegmentChangeEventDetail, SegmentValue } from "./components/segment/segment-interface";
 export { SegmentButtonLayout } from "./components/segment-button/segment-button-interface";
 export { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./components/select/select-interface";
 export { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
@@ -2639,7 +2639,7 @@ export namespace Components {
         /**
           * the value of the segment.
          */
-        "value"?: string;
+        "value"?: SegmentValue;
     }
     interface IonSegmentButton {
         /**
@@ -2662,7 +2662,7 @@ export namespace Components {
         /**
           * The value of the segment button.
          */
-        "value": string;
+        "value": SegmentValue;
     }
     interface IonSelect {
         /**
@@ -6714,7 +6714,7 @@ declare namespace LocalJSX {
         /**
           * the value of the segment.
          */
-        "value"?: string;
+        "value"?: SegmentValue;
     }
     interface IonSegmentButton {
         /**
@@ -6736,7 +6736,7 @@ declare namespace LocalJSX {
         /**
           * The value of the segment button.
          */
-        "value"?: string;
+        "value"?: SegmentValue;
     }
     interface IonSelect {
         /**
