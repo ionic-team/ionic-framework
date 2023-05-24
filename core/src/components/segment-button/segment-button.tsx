@@ -6,6 +6,7 @@ import { addEventListener, removeEventListener, inheritAttributes } from '@utils
 import { hostContext } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
+import type { SegmentValue } from '../segment/segment-interface';
 
 import type { SegmentButtonLayout } from './segment-button-interface';
 
@@ -53,7 +54,7 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
   /**
    * The value of the segment button.
    */
-  @Prop() value: string = 'ion-sb-' + ids++;
+  @Prop() value: SegmentValue = 'ion-sb-' + ids++;
   @Watch('value')
   valueChanged() {
     this.updateState();
