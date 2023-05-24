@@ -3,10 +3,7 @@
 // Picker Internal
 // --------------------------------------------------
 
-:host {
-  --picker-highlight-background: inherit;
-  --picker-fade-background: inherit;
-  
+:host { 
   display: flex;
 
   position: relative;
