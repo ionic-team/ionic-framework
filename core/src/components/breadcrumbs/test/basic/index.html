@@ -200,7 +200,7 @@
 
         <h1>
           Breadcrumbs: collapsed middle / expand on click
-          <ion-button size="small" fill="clear" onClick="collapseBreadcrumbs()">Re-collapse</ion-button>
+          <button onClick="collapseBreadcrumbs()">Re-collapse</button>
         </h1>
 
         <ion-breadcrumbs id="expandOnClick" max-items="4">
@@ -391,6 +391,47 @@
 
       ion-content ion-breadcrumbs {
         padding: 3px 5px;
+      }
+
+      button {
+        background: none;
+        color: var(--ion-color-primary, #3880ff);
+
+        width: auto;
+
+        -webkit-margin-start: 2px;
+        margin-inline-start: 2px;
+        -webkit-margin-end: 2px;
+        margin-inline-end: 2px;
+        margin-top: 4px;
+        margin-bottom: 4px;
+
+        -webkit-padding-start: 0.9em;
+        padding-inline-start: 0.9em;
+        -webkit-padding-end: 0.9em;
+        padding-inline-end: 0.9em;
+        padding-top: 6px;
+        padding-bottom: 7px;
+
+        white-space: nowrap;
+
+        box-sizing: border-box;
+      }
+
+      .ios button {
+        min-height: 2.1em;
+        font-size: 13px;
+
+        letter-spacing: 0;
+      }
+
+      .md button {
+        min-height: 2.1em;
+        font-size: 13px;
+
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
       }
     </style>
   </body>
