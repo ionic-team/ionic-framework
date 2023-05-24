@@ -97,7 +97,7 @@ export class PickerColumnInternal implements ComponentInterface {
          * Because this initial call to scrollActiveItemIntoView has to fire before
          * the scroll listener is set up, we need to manage the active class manually.
          */
-        const oldActive = getElementRoot(el).querySelector(`.${PICKER_COL_ACTIVE}`);
+        const oldActive = getElementRoot(el).querySelector(`.${PICKER_ITEM_ACTIVE_CLASS}`);
         if (oldActive) {
           this.setPickerItemActiveState(oldActive, false);
         }
@@ -197,11 +197,11 @@ export class PickerColumnInternal implements ComponentInterface {
 
   private setPickerItemActiveState = (item: Element, isActive: boolean) => {
     if (isActive) {
-      item.classList.add(PICKER_COL_ACTIVE);
-      item.part.add(PICKER_COL_ACTIVE_PART);
+      item.classList.add(PICKER_ITEM_ACTIVE_CLASS);
+      item.part.add(PICKER_ITEM_ACTIVE_PART);
     } else {
-      item.classList.remove(PICKER_COL_ACTIVE);
-      item.part.remove(PICKER_COL_ACTIVE_PART);
+      item.classList.remove(PICKER_ITEM_ACTIVE_CLASS);
+      item.part.remove(PICKER_ITEM_ACTIVE_PART);
     }
   };
 
@@ -425,7 +425,7 @@ export class PickerColumnInternal implements ComponentInterface {
      */
     return (
       <Host
-        exportparts="picker-item, active"
+        exportparts={`${PICKER_ITEM_PART}, ${PICKER_ITEM_ACTIVE_PART}`}
         tabindex={0}
         class={createColorClasses(color, {
           [mode]: true,
@@ -466,7 +466,7 @@ export class PickerColumnInternal implements ComponentInterface {
                 this.centerPickerItemInView(ev.target as HTMLElement, true);
               }}
               disabled={item.disabled}
-              part="picker-item"
+              part={PICKER_ITEM_PART}
             >
               {item.text}
             </button>
@@ -486,5 +486,6 @@ export class PickerColumnInternal implements ComponentInterface {
   }
 }
 
-const PICKER_COL_ACTIVE = 'picker-item-active';
-const PICKER_COL_ACTIVE_PART = 'active';
+const PICKER_ITEM_ACTIVE_CLASS = 'picker-item-active';
+const PICKER_ITEM_PART = 'picker-item';
+const PICKER_ITEM_ACTIVE_PART = 'active';
