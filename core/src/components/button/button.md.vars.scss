@@ -74,8 +74,8 @@ $button-md-large-padding-bottom:                        $button-md-large-padding
 /// @prop - Padding start of the large button
 $button-md-large-padding-start:                         $button-md-large-padding-end !default;
 
-/// @prop - Height of the large button
-$button-md-large-height:                                2.8em !default;
+/// @prop - Minimum height of the large button
+$button-md-large-min-height:                            2.8em !default;
 
 /// @prop - Font size of the large button
 $button-md-large-font-size:                             20px !default;
@@ -96,8 +96,8 @@ $button-md-small-padding-bottom:                        $button-md-small-padding
 /// @prop - Padding start of the small button
 $button-md-small-padding-start:                         $button-md-small-padding-end !default;
 
-/// @prop - Height of the small button
-$button-md-small-height:                                2.1em !default;
+/// @prop - Minimum height of the small button
+$button-md-small-min-height:                            2.1em !default;
 
 /// @prop - Font size of the small button
 $button-md-small-font-size:                             13px !default;
