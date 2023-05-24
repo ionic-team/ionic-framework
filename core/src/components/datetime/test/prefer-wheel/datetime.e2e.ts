@@ -23,6 +23,7 @@ configs().forEach(({ title, screenshot, config }) => {
       `,
         config
       );
+      await page.waitForSelector('.datetime-ready');
 
       await expect(page).toHaveScreenshot(screenshot(`datetime-wheel-date-diff`));
     });
@@ -33,6 +34,7 @@ configs().forEach(({ title, screenshot, config }) => {
       `,
         config
       );
+      await page.waitForSelector('.datetime-ready');
 
       await expect(page).toHaveScreenshot(screenshot(`datetime-wheel-date-time-diff`));
     });
@@ -43,6 +45,7 @@ configs().forEach(({ title, screenshot, config }) => {
       `,
         config
       );
+      await page.waitForSelector('.datetime-ready');
 
       await expect(page).toHaveScreenshot(screenshot(`datetime-wheel-time-date-diff`));
     });
