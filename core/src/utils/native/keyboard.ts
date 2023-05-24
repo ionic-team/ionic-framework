@@ -1,5 +1,7 @@
 import { win } from '../browser';
 
+import type { NativePluginError } from './native-interface';
+
 // Interfaces source: https://capacitorjs.com/docs/apis/keyboard#interfaces
 export interface KeyboardResizeOptions {
   mode: KeyboardResize;
@@ -21,7 +23,7 @@ export const Keyboard = {
     if (!engine?.getResizeMode) {
       return Promise.resolve(undefined);
     }
-    return engine.getResizeMode().catch((e: any) => {
+    return engine.getResizeMode().catch((e: NativePluginError) => {
       if (e.code === 'UNIMPLEMENTED') {
         // If the native implementation is not available
         // we treat it the same as if the plugin is not available.
