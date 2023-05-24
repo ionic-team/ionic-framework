@@ -1184,7 +1184,7 @@ ion-segment,prop,mode,"ios" | "md",undefined,false,false
 ion-segment,prop,scrollable,boolean,false,false,false
 ion-segment,prop,selectOnFocus,boolean,false,false,false
 ion-segment,prop,swipeGesture,boolean,true,false,false
-ion-segment,prop,value,string | undefined,undefined,false,false
+ion-segment,prop,value,number | string | undefined,undefined,false,false
 ion-segment,event,ionChange,SegmentChangeEventDetail,true
 ion-segment,css-prop,--background
 
@@ -1193,7 +1193,7 @@ ion-segment-button,prop,disabled,boolean,false,false,false
 ion-segment-button,prop,layout,"icon-bottom" | "icon-end" | "icon-hide" | "icon-start" | "icon-top" | "label-hide" | undefined,'icon-top',false,false
 ion-segment-button,prop,mode,"ios" | "md",undefined,false,false
 ion-segment-button,prop,type,"button" | "reset" | "submit",'button',false,false
-ion-segment-button,prop,value,string,'ion-sb-' + ids++,false,false
+ion-segment-button,prop,value,number | string,'ion-sb-' + ids++,false,false
 ion-segment-button,css-prop,--background
 ion-segment-button,css-prop,--background-checked
 ion-segment-button,css-prop,--background-focused
