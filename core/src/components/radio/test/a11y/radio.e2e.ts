@@ -16,7 +16,10 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
   });
 
   test.describe(title('radio: keyboard navigation'), () => {
-    test.beforeEach(async ({ page }) => {
+    test.beforeEach(async ({ page, skip }) => {
+      // Related to TODO (FW-2979)
+      skip.browser('webkit', 'Safari does not support delegated focus');
+
       await page.setContent(
         `
       <ion-app>

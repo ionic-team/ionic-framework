@@ -6,7 +6,10 @@ import { configs, test } from '@utils/test/playwright';
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('radio: a11y'), () => {
-    test('tabbing should switch between radio groups', async ({ page, pageUtils }) => {
+    test('tabbing should switch between radio groups', async ({ page, pageUtils, skip }) => {
+      // Related to TODO (FW-2979)
+      skip.browser('webkit', 'Safari does not support delegated focus');
+
       await page.goto(`/src/components/radio/test/legacy/a11y`, config);
 
       const firstGroupRadios = page.locator('#first-group ion-radio');

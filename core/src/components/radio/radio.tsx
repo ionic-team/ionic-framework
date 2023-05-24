@@ -325,7 +325,6 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
         aria-hidden={disabled ? 'true' : null}
         aria-labelledby={label ? labelId : null}
         role="radio"
-        tabindex={buttonTabindex}
         onFocus={this.onFocus}
         onBlur={this.onBlur}
         onClick={this.onClick}
@@ -344,7 +343,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
           type="radio"
           checked={checked}
           disabled={disabled}
-          tabindex="-1"
+          tabindex={buttonTabindex}
           id={inputId}
           ref={(nativeEl) => (this.nativeInput = nativeEl as HTMLInputElement)}
         />
