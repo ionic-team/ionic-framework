@@ -16,7 +16,7 @@ $button-ios-margin-bottom:                            4px !default;
 $button-ios-margin-start:                             2px !default;
 
 /// @prop - Padding top of the button
-$button-ios-padding-top:                              0 !default;
+$button-ios-padding-top:                              13px !default;
 
 /// @prop - Padding end of the button
 $button-ios-padding-end:                              1em !default;
@@ -27,8 +27,8 @@ $button-ios-padding-bottom:                           $button-ios-padding-top !d
 /// @prop - Padding start of the button
 $button-ios-padding-start:                            $button-ios-padding-end !default;
 
-/// @prop - Height of the button
-$button-ios-height:                                   3.1em !default;
+/// @prop - Minimum height of the button
+$button-ios-min-height:                               3.1em !default;
 
 /// @prop - Border radius of the button
 $button-ios-border-radius:                            14px !default;

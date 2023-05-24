@@ -16,7 +16,7 @@
 
   @include margin($button-ios-margin-top, $button-ios-margin-end, $button-ios-margin-bottom, $button-ios-margin-start);
 
-  height: #{$button-ios-height};
+  min-height: #{$button-ios-min-height};
 
   font-size: #{$button-ios-font-size};
   font-weight: #{$button-ios-font-weight};

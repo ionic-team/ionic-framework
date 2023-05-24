@@ -16,7 +16,7 @@
 
   @include margin($button-md-margin-top, $button-md-margin-end, $button-md-margin-bottom, $button-md-margin-start);
 
-  height: #{$button-md-height};
+  min-height: #{$button-md-min-height};
 
   font-size: #{$button-md-font-size};
   font-weight: #{$button-md-font-weight};
