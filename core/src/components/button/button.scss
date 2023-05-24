@@ -158,7 +158,9 @@
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
   @include text-inherit();
 
-  display: block;
+  display: flex;
+  align-items: center;
+
   position: relative;
 
   width: 100%;
