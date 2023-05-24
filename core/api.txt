@@ -1273,7 +1273,9 @@ ion-select,css-prop,--padding-top
 ion-select,css-prop,--placeholder-color
 ion-select,css-prop,--placeholder-opacity
 ion-select,css-prop,--ripple-color
+ion-select,part,container
 ion-select,part,icon
+ion-select,part,label
 ion-select,part,placeholder
 ion-select,part,text
 

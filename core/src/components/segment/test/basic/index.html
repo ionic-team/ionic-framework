@@ -23,53 +23,91 @@
 
         <ion-toolbar>
           <ion-segment class="event-tester" value="Free">
-            <ion-segment-button value="Paid"> PaidPaidPaid </ion-segment-button>
-            <ion-segment-button value="Free"> Free </ion-segment-button>
-            <ion-segment-button value="Top"> Top </ion-segment-button>
+            <ion-segment-button value="Paid">
+              <ion-label>PaidPaidPaid</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="Free">
+              <ion-label>Free</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="Top">
+              <ion-label>Top</ion-label>
+            </ion-segment-button>
           </ion-segment>
         </ion-toolbar>
 
         <ion-toolbar>
           <ion-segment value="2" scrollable="true">
-            <ion-segment-button value="1">Button 1</ion-segment-button>
-            <ion-segment-button value="2">Button 3</ion-segment-button>
-            <ion-segment-button value="3">Button 3</ion-segment-button>
-            <ion-segment-button value="4">Button 4</ion-segment-button>
-            <ion-segment-button value="5">Button 5</ion-segment-button>
-            <ion-segment-button value="6">Button 6</ion-segment-button>
+            <ion-segment-button value="1">
+              <ion-label>Button 1</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="2">
+              <ion-label>Button 2</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="3">
+              <ion-label>Button 3</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="4">
+              <ion-label>Button 4</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="5">
+              <ion-label>Button 5</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="6">
+              <ion-label>Button 6</ion-label>
+            </ion-segment-button>
           </ion-segment>
         </ion-toolbar>
 
         <ion-toolbar>
           <ion-segment name="dynamicPropDisable" disabled color="danger">
-            <ion-segment-button value="Bookmarks"> Bookmarks </ion-segment-button>
-            <ion-segment-button value="Reading List"> Reading List </ion-segment-button>
-            <ion-segment-button value="Shared Links"> Shared Links </ion-segment-button>
+            <ion-segment-button value="Bookmarks">
+              <ion-label>Bookmarks</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="Reading List">
+              <ion-label>Reading List</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="Shared Links">
+              <ion-label>Shared Links</ion-label>
+            </ion-segment-button>
           </ion-segment>
         </ion-toolbar>
 
         <ion-toolbar>
           <ion-segment name="dynamicAttrElem" color="secondary" value="active">
-            <ion-segment-button value="active"> Active </ion-segment-button>
-            <ion-segment-button name="dynamicAttrDisable" value="disabled" disabled="true">
-              Disabled
+            <ion-segment-button value="active">
+              <ion-label>Active</ion-label>
             </ion-segment-button>
-            <ion-segment-button value="inactive" disabled="false"> Inactive </ion-segment-button>
+            <ion-segment-button name="dynamicAttrDisable" value="disabled" disabled="true">
+              <ion-label>Disabled</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="inactive" disabled="false">
+              <ion-label>Inactive</ion-label>
+            </ion-segment-button>
           </ion-segment>
         </ion-toolbar>
 
         <ion-toolbar>
           <ion-segment value="all">
-            <ion-segment-button value="all"> All </ion-segment-button>
-            <ion-segment-button value="missed"> Missed </ion-segment-button>
+            <ion-segment-button value="all">
+              <ion-label>All</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="missed">
+              <ion-label>Missed</ion-label>
+            </ion-segment-button>
           </ion-segment>
         </ion-toolbar>
       </ion-header>
 
       <ion-segment value="segment">
-        <ion-segment-button value="segment"> Segment </ion-segment-button>
-        <ion-segment-button value="outside"> Outside </ion-segment-button>
-        <ion-segment-button value="content"> Content </ion-segment-button>
+        <ion-segment-button value="segment">
+          <ion-label>Segment</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="outside">
+          <ion-label>Outside</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="content">
+          <ion-label>Content</ion-label>
+        </ion-segment-button>
       </ion-segment>
 
       <ion-content>
