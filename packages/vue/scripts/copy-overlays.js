@@ -25,7 +25,8 @@ function generateOverlays() {
     },
     {
       tag: 'ion-modal',
-      name: 'IonModal'
+      name: 'IonModal',
+      hasDelegateHost: true
     },
     {
       tag: 'ion-popover',
@@ -44,8 +45,10 @@ function generateOverlays() {
 
     componentImports.push(`import { defineCustomElement as ${defineCustomElementFn} } from '@ionic/core/components/${component.tag}.js'`);
 
+    const delegateHostString = component.hasDelegateHost ? ', true' : '';
+
     componentDefinitions.push(`
-export const ${component.name} = /*@__PURE__*/ defineOverlayContainer<JSX.${component.name}>('${component.tag}', ${defineCustomElementFn}, [${props.join(', ')}]);
+export const ${component.name} = /*@__PURE__*/ defineOverlayContainer<JSX.${component.name}>('${component.tag}', ${defineCustomElementFn}, [${props.join(', ')}]${delegateHostString});
     `);
   });
 

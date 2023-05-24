@@ -5,5 +5,6 @@ import { createInlineOverlayComponent } from './createInlineOverlayComponent';
 
 export const IonModal = /*@__PURE__*/ createInlineOverlayComponent<JSX.IonModal, HTMLIonModalElement>(
   'ion-modal',
-  defineCustomElement
+  defineCustomElement,
+  true
 );
