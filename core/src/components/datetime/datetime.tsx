@@ -2175,7 +2175,8 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderTimeOverlay() {
-    const use24Hour = is24Hour(this.locale, this.hourCycle);
+    const { hourCycle, isTimePopoverOpen, locale } = this;
+    const use24Hour = is24Hour(locale, hourCycle);
     const activePart = this.getActivePartsWithFallback();
 
     return [
@@ -2183,9 +2184,9 @@ export class Datetime implements ComponentInterface {
       <button
         class={{
           'time-body': true,
-          'time-body-active': this.isTimePopoverOpen,
+          'time-body-active': isTimePopoverOpen,
         }}
-        part={`time-button${this.isTimePopoverOpen ? ' active' : ''}`}
+        part={`time-button${isTimePopoverOpen ? ' active' : ''}`}
         aria-expanded="false"
         aria-haspopup="true"
         onClick={async (ev) => {
@@ -2208,7 +2209,7 @@ export class Datetime implements ComponentInterface {
           }
         }}
       >
-        {getLocalizedTime(this.locale, activePart, use24Hour)}
+        {getLocalizedTime(locale, activePart, use24Hour)}
       </button>,
       <ion-popover
         alignment="center"

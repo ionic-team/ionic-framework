@@ -90,18 +90,20 @@ export class PickerColumnInternal implements ComponentInterface {
       const ev = entries[0];
 
       if (ev.isIntersecting) {
+        const { activeItem, el } = this;
+
         this.isColumnVisible = true;
         /**
          * Because this initial call to scrollActiveItemIntoView has to fire before
          * the scroll listener is set up, we need to manage the active class manually.
          */
-        const oldActive = getElementRoot(this.el).querySelector(`.${PICKER_COL_ACTIVE}`);
+        const oldActive = getElementRoot(el).querySelector(`.${PICKER_COL_ACTIVE}`);
         if (oldActive) {
           this.setPickerItemActiveState(oldActive, false);
         }
         this.scrollActiveItemIntoView();
-        if (this.activeItem) {
-          this.setPickerItemActiveState(this.activeItem, true);
+        if (activeItem) {
+          this.setPickerItemActiveState(activeItem, true);
         }
 
         this.initializeScrollListener();
