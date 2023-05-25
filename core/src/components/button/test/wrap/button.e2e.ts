@@ -118,5 +118,41 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       await expect(button).toHaveScreenshot(screenshot(`button-wrap-full-icons`));
     });
+
+    test('should render an item button with long text', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-item>
+          <ion-button slot="end">
+            This is the button that never ends it just goes on and on and on and on and on and on and on and on my friends
+          </ion-button>
+        </ion-item>
+      `,
+        config
+      );
+
+      const item = page.locator('ion-item');
+
+      await expect(item).toHaveScreenshot(screenshot(`button-wrap-item-button`));
+    });
+
+    test('should render an item button with long text and icons', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-item>
+          <ion-button slot="end">
+            <ion-icon slot="start" name="heart"></ion-icon>
+            This is the button that never ends it just goes on and on and on and on and on and on and on and on my friends
+            <ion-icon slot="end" name="star"></ion-icon>
+          </ion-button>
+        </ion-item>
+      `,
+        config
+      );
+
+      const item = page.locator('ion-item');
+
+      await expect(item).toHaveScreenshot(screenshot(`button-wrap-item-button-icons`));
+    });
   });
 });
