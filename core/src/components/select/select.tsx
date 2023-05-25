@@ -785,17 +785,12 @@ export class Select implements ComponentInterface {
        */
       this.notchSpacerEl === undefined ||
       /**
-       * If no label is being used, then we
-       * do not need to estimate the notch width.
+       * If either the label property is being
+       * used or the label slot is not defined,
+       * then we do not need to estimate the notch width.
        */
-      !this.hasLabel ||
-      /**
-       * If the label property is being used
-       * then we can render the label text inside
-       * of the notch and let the browser
-       * determine the notch size for us.
-       */
-      this.label !== undefined
+      this.label !== undefined ||
+      this.labelSlot === null
     ) {
       return false;
     }
