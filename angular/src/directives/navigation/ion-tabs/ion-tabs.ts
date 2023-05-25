@@ -1,45 +1,14 @@
 import { Component, ContentChild, EventEmitter, HostListener, Output, ViewChild } from '@angular/core';
 
-import { NavController } from '../../providers/nav-controller';
-import { IonTabBar } from '../proxies';
-
-import { IonRouterOutlet } from './ion-router-outlet';
-import { StackEvent } from './stack-utils';
+import { NavController } from '../../../providers/nav-controller';
+import { IonTabBar } from '../../proxies';
+import { IonRouterOutlet } from '../ion-router-outlet';
+import { StackEvent } from '../stack-utils';
 
 @Component({
   selector: 'ion-tabs',
-  template: ` <ng-content select="[slot=top]"></ng-content>
-    <div class="tabs-inner">
-      <ion-router-outlet #outlet tabs="true" (stackEvents)="onPageSelected($event)"></ion-router-outlet>
-    </div>
-    <ng-content></ng-content>`,
-  styles: [
-    `
-      :host {
-        display: flex;
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-
-        flex-direction: column;
-
-        width: 100%;
-        height: 100%;
-
-        contain: layout size style;
-        z-index: $z-index-page-container;
-      }
-      .tabs-inner {
-        position: relative;
-
-        flex: 1;
-
-        contain: layout size style;
-      }
-    `,
-  ],
+  templateUrl: './ion-tabs.html',
+  styleUrls: ['./ion-tabs.scss'],
 })
 // eslint-disable-next-line @angular-eslint/component-class-suffix
 export class IonTabs {

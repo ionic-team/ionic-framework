@@ -12,7 +12,7 @@ import {
 } from './directives/control-value-accessors';
 import { IonBackButtonDelegateDirective } from './directives/navigation/ion-back-button';
 import { IonRouterOutlet } from './directives/navigation/ion-router-outlet';
-import { IonTabs } from './directives/navigation/ion-tabs';
+import { IonTabs } from './directives/navigation/ion-tabs/ion-tabs';
 import { NavDelegate } from './directives/navigation/nav-delegate';
 import {
   RouterLinkDelegateDirective,
