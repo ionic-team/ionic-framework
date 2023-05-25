@@ -109,6 +109,11 @@
   font-size: #{$button-ios-small-font-size};
 }
 
+:host(.button-has-icon-only) {
+  --padding-top: 0;
+  --padding-bottom: 0;
+}
+
 
 // iOS Round Button
 // --------------------------------------------------
