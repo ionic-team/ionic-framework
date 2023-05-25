@@ -34,15 +34,24 @@
       }
 
       /*
-      The second selectors that target ion-picker(-column)-internal
-      directly are for styling the time picker. This is currently
-      undocumented usage.
-    */
+        The second selectors that target ion-picker(-column)-internal
+        directly are for styling the time picker. This is currently
+        undocumented usage.
+      */
 
       ion-datetime,
       ion-picker-internal {
         --picker-highlight-background: rgb(218, 216, 255);
-        --picker-fade-background: rgb(245, 235, 247);
+        --picker-fade-background-rgb: 245, 235, 247;
+      }
+
+      ion-datetime {
+        --background: rgb(245, 235, 247);
+        --background-rgb: 245, 235, 247;
+      }
+
+      ion-picker-internal {
+        background-color: rgb(245, 235, 247);
       }
 
       ion-datetime::part(picker-item),
