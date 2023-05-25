@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.9](https://github.com/ionic-team/ionic-framework/compare/v7.0.8...v7.0.9) (2023-05-25)
+
+
+### Bug Fixes
+
+* **core:** handle uncaught native keyboard exceptions ([#27514](https://github.com/ionic-team/ionic-framework/issues/27514)) ([0e7359c](https://github.com/ionic-team/ionic-framework/commit/0e7359c07f53eccb362ff2bf331396c0376ba6f3)), closes [#27503](https://github.com/ionic-team/ionic-framework/issues/27503)
+* **segment:** remove duplicate ripple effect on pointerup ([#27448](https://github.com/ionic-team/ionic-framework/issues/27448)) ([01f9959](https://github.com/ionic-team/ionic-framework/commit/01f99597f71b35a60a70f6d76c1e3e1917978d6d)), closes [#27338](https://github.com/ionic-team/ionic-framework/issues/27338)
+
+
+
+
+
 ## [7.0.8](https://github.com/ionic-team/ionic-framework/compare/v7.0.7...v7.0.8) (2023-05-24)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.9](https://github.com/ionic-team/ionic-framework/compare/v7.0.8...v7.0.9) (2023-05-25)
+
+
+### Bug Fixes
+
+* **react, vue:** inline modals apply ion-page class ([#27481](https://github.com/ionic-team/ionic-framework/issues/27481)) ([02678f3](https://github.com/ionic-team/ionic-framework/commit/02678f3652be5139cf0c17d0f1260c145acd1a48)), closes [#27470](https://github.com/ionic-team/ionic-framework/issues/27470)
+
+
+
+
+
 ## [7.0.8](https://github.com/ionic-team/ionic-framework/compare/v7.0.7...v7.0.8) (2023-05-24)
 
 **Note:** Version bump only for package @ionic/vue
