@@ -172,5 +172,24 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       await expect(listHeader).toHaveScreenshot(screenshot(`button-wrap-list-header-button`));
     });
+
+    test('should render a toolbar button with long text', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-toolbar>
+          <ion-buttons slot="end">
+            <ion-button>
+              This is the button that never ends it just goes on and on and on and on and on and on and on and on my friends
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      `,
+        config
+      );
+
+      const toolbar = page.locator('ion-toolbar');
+
+      await expect(toolbar).toHaveScreenshot(screenshot(`button-wrap-toolbar-button`));
+    });
   });
 });
