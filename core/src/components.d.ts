@@ -2698,7 +2698,7 @@ export namespace Components {
          */
         "justify": 'start' | 'end' | 'space-between';
         /**
-          * The visible label associated with the select.
+          * The visible label associated with the select.  Use this if you need to render a plaintext label.  The `label` property will take priority over the `label` slot if both are used.
          */
         "label"?: string;
         /**
@@ -6772,7 +6772,7 @@ declare namespace LocalJSX {
          */
         "justify"?: 'start' | 'end' | 'space-between';
         /**
-          * The visible label associated with the select.
+          * The visible label associated with the select.  Use this if you need to render a plaintext label.  The `label` property will take priority over the `label` slot if both are used.
          */
         "label"?: string;
         /**
