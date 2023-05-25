@@ -154,5 +154,23 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       await expect(item).toHaveScreenshot(screenshot(`button-wrap-item-button-icons`));
     });
+
+    test('should render a list header button with long text', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-list-header>
+          <ion-label>List Header</ion-label>
+          <ion-button>
+            This is the button that never ends it just goes on and on and on and on and on and on and on and on my friends
+          </ion-button>
+        </ion-list-header>
+      `,
+        config
+      );
+
+      const listHeader = page.locator('ion-list-header');
+
+      await expect(listHeader).toHaveScreenshot(screenshot(`button-wrap-list-header-button`));
+    });
   });
 });
