@@ -2,7 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, forceUpdate } from '@stencil/core';
 import type { LegacyFormController } from '@utils/forms';
 import { createLegacyFormController } from '@utils/forms';
-import { findItemLabel, focusElement, getAriaLabel, renderHiddenInput, inheritAttributes } from '@utils/helpers';
+import { findItemLabel, focusElement, getAriaLabel, renderHiddenInput, inheritAttributes, raf } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 import { actionSheetController, alertController, popoverController } from '@utils/overlays';
@@ -10,6 +10,7 @@ import type { OverlaySelect } from '@utils/overlays-interface';
 import { isRTL } from '@utils/rtl';
 import { createColorClasses, hostContext } from '@utils/theme';
 import { watchForOptions } from '@utils/watch-options';
+import { win } from '@utils/window';
 import { caretDownSharp, chevronExpand } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -31,6 +32,8 @@ import type { SelectChangeEventDetail, SelectInterface, SelectCompareFn } from '
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
+ * @slot label - The label text to associate with the select. Use the "labelPlacement" property to control where the label is placed relative to the select. Use this if you need to render a label with custom HTML.
  *
  * @part placeholder - The text displayed in the select when there is no value.
  * @part text - The displayed value of the select.
@@ -54,6 +57,8 @@ export class Select implements ComponentInterface {
   private legacyFormController!: LegacyFormController;
   private inheritedAttributes: Attributes = {};
   private nativeWrapperEl: HTMLElement | undefined;
+  private notchSpacerEl: HTMLElement | undefined;
+  private notchVisibilityIO: IntersectionObserver | undefined;
 
   // This flag ensures we log the deprecation warning at most once.
   private hasLoggedDeprecationWarning = false;
@@ -124,6 +129,10 @@ export class Select implements ComponentInterface {
 
   /**
    * The visible label associated with the select.
+   *
+   * Use this if you need to render a plaintext label.
+   *
+   * The `label` property will take priority over the `label` slot if both are used.
    */
   @Prop() label?: string;
 
@@ -568,7 +577,7 @@ export class Select implements ComponentInterface {
      * TODO FW-3194
      * Remove legacyFormController logic.
      * Remove label and labelText vars
-     * Pass `this.label` instead of `labelText`
+     * Pass `this.labelText` instead of `labelText`
      * when setting the header.
      */
     let label: HTMLElement | null;
@@ -578,7 +587,7 @@ export class Select implements ComponentInterface {
       label = this.getLabel();
       labelText = label ? label.textContent : null;
     } else {
-      labelText = this.label;
+      labelText = this.labelText;
     }
 
     const interfaceOptions = this.interfaceOptions;
@@ -651,6 +660,30 @@ export class Select implements ComponentInterface {
     return Array.from(this.el.querySelectorAll('ion-select-option'));
   }
 
+  /**
+   * Returns any plaintext associated with
+   * the label (either prop or slot).
+   * Note: This will not return any custom
+   * HTML. Use the `hasLabel` getter if you
+   * want to know if any slotted label content
+   * was passed.
+   */
+  private get labelText() {
+    const { label } = this;
+
+    if (label !== undefined) {
+      return label;
+    }
+
+    const { labelSlot } = this;
+
+    if (labelSlot !== null) {
+      return labelSlot.textContent;
+    }
+
+    return;
+  }
+
   private getText(): string {
     const selectedText = this.selectedText;
     if (selectedText != null && selectedText !== '') {
@@ -698,15 +731,164 @@ export class Select implements ComponentInterface {
 
   private renderLabel() {
     const { label } = this;
-    if (label === undefined) {
+
+    return (
+      <div
+        class={{
+          'label-text-wrapper': true,
+          'label-text-wrapper-hidden': !this.hasLabel,
+        }}
+        part="label"
+      >
+        {label === undefined ? <slot name="label"></slot> : <div class="label-text">{label}</div>}
+      </div>
+    );
+  }
+
+  componentDidRender() {
+    if (this.needsExplicitNotchWidth()) {
+      /**
+       * Run this the frame after
+       * the browser has re-painted the select.
+       * Otherwise, the label element may have a width
+       * of 0 and the IntersectionObserver will be used.
+       */
+      raf(() => {
+        this.setNotchWidth();
+      });
+    }
+  }
+
+  /**
+   * Gets any content passed into the `label` slot,
+   * not the <slot> definition.
+   */
+  private get labelSlot() {
+    return this.el.querySelector('[slot="label"]');
+  }
+
+  /**
+   * Returns `true` if label content is provided
+   * either by a prop or a content. If you want
+   * to get the plaintext value of the label use
+   * the `labelText` getter instead.
+   */
+  private get hasLabel() {
+    return this.label !== undefined || this.labelSlot !== null;
+  }
+
+  private needsExplicitNotchWidth() {
+    if (
+      /**
+       * If the notch is not being used
+       * then we do not need to set the notch width.
+       */
+      this.notchSpacerEl === undefined ||
+      /**
+       * If either the label property is being
+       * used or the label slot is not defined,
+       * then we do not need to estimate the notch width.
+       */
+      this.label !== undefined ||
+      this.labelSlot === null
+    ) {
+      return false;
+    }
+
+    return true;
+  }
+
+  /**
+   * When using a label prop we can render
+   * the label value inside of the notch and
+   * let the browser calculate the size of the notch.
+   * However, we cannot render the label slot in multiple
+   * places so we need to manually calculate the notch dimension
+   * based on the size of the slotted content.
+   *
+   * This function should only be used to set the notch width
+   * on slotted label content. The notch width for label prop
+   * content is automatically calculated based on the
+   * intrinsic size of the label text.
+   */
+  private setNotchWidth() {
+    const { el, notchSpacerEl } = this;
+
+    if (notchSpacerEl === undefined) {
       return;
     }
 
-    return (
-      <div class="label-text-wrapper" part="label">
-        <div class="label-text">{this.label}</div>
-      </div>
-    );
+    if (!this.needsExplicitNotchWidth()) {
+      notchSpacerEl.style.removeProperty('width');
+      return;
+    }
+
+    const width = this.labelSlot!.scrollWidth;
+    if (
+      /**
+       * If the computed width of the label is 0
+       * and notchSpacerEl's offsetParent is null
+       * then that means the element is hidden.
+       * As a result, we need to wait for the element
+       * to become visible before setting the notch width.
+       *
+       * We do not check el.offsetParent because
+       * that can be null if ion-select has
+       * position: fixed applied to it.
+       * notchSpacerEl does not have position: fixed.
+       */
+      width === 0 &&
+      notchSpacerEl.offsetParent === null &&
+      win !== undefined &&
+      'IntersectionObserver' in win
+    ) {
+      /**
+       * If there is an IO already attached
+       * then that will update the notch
+       * once the element becomes visible.
+       * As a result, there is no need to create
+       * another one.
+       */
+      if (this.notchVisibilityIO !== undefined) {
+        return;
+      }
+
+      const io = (this.notchVisibilityIO = new IntersectionObserver(
+        (ev) => {
+          /**
+           * If the element is visible then we
+           * can try setting the notch width again.
+           */
+          if (ev[0].intersectionRatio === 1) {
+            this.setNotchWidth();
+            io.disconnect();
+            this.notchVisibilityIO = undefined;
+          }
+        },
+        /**
+         * Set the root to be the select
+         * This causes the IO callback
+         * to be fired in WebKit as soon as the element
+         * is visible. If we used the default root value
+         * then WebKit would only fire the IO callback
+         * after any animations (such as a modal transition)
+         * finished, and there would potentially be a flicker.
+         */
+        { threshold: 0.01, root: el }
+      ));
+
+      io.observe(notchSpacerEl);
+      return;
+    }
+
+    /**
+     * If the element is visible then we can set the notch width.
+     * The notch is only visible when the label is scaled,
+     * which is why we multiply the width by 0.75 as this is
+     * the same amount the label element is scaled by in the
+     * select CSS (See $select-floating-label-scale in select.vars.scss).
+     */
+    notchSpacerEl.style.setProperty('width', `${width * 0.75}px`);
   }
 
   /**
@@ -729,7 +911,7 @@ export class Select implements ComponentInterface {
         <div class="select-outline-container">
           <div class="select-outline-start"></div>
           <div class="select-outline-notch">
-            <div class="notch-spacer" aria-hidden="true">
+            <div class="notch-spacer" aria-hidden="true" ref={(el) => (this.notchSpacerEl = el)}>
               {this.label}
             </div>
           </div>
@@ -906,10 +1088,10 @@ Developers can use the "legacy" property to continue using the legacy form marku
   }
 
   private get ariaLabel() {
-    const { placeholder, label, el, inputId, inheritedAttributes } = this;
+    const { placeholder, el, inputId, inheritedAttributes } = this;
     const displayValue = this.getText();
     const { labelText } = getAriaLabel(el, inputId);
-    const definedLabel = label ?? inheritedAttributes['aria-label'] ?? labelText;
+    const definedLabel = this.labelText ?? inheritedAttributes['aria-label'] ?? labelText;
 
     /**
      * If developer has specified a placeholder
