@@ -90,52 +90,65 @@
             <ion-input id="root-input"></ion-input>
           </ion-item>
 
-          <ion-button id="sheet-modal" onclick="presentModal()">Present Sheet Modal</ion-button>
+          <ion-button class="ion-text-nowrap" id="sheet-modal" onclick="presentModal()">Present Sheet Modal</ion-button>
           <ion-button
+            class="ion-text-nowrap"
             id="custom-breakpoint-modal"
             onclick="presentModal({ initialBreakpoint: 0.5, breakpoints: [0, 0.5, 1] })"
             >Present Sheet Modal (Custom Breakpoints)</ion-button
           >
           <ion-button
+            class="ion-text-nowrap"
             id="custom-breakpoint-modal"
             onclick="presentModal({ initialBreakpoint: 0.5, breakpoints: [0, 0.5, 0.75] })"
             >Present Sheet Modal (Max breakpoint is not 1)</ion-button
           >
           <ion-button
+            class="ion-text-nowrap"
             id="custom-backdrop-modal"
             onclick="presentModal({ backdropBreakpoint: 0.5, initialBreakpoint: 0.5 })"
             >Present Sheet Modal (Custom Backdrop Breakpoint)</ion-button
           >
           <ion-button
+            class="ion-text-nowrap"
             id="custom-backdrop-off-center-modal"
             onClick="presentModal({ backdropBreakpoint: 0.3, initialBreakpoint: 0.3, breakpoints: [0.3, 0.5, 0.7, 1] })"
           >
             Present Sheet Modal (Backdrop breakpoint is off-center)</ion-button
           >
-          <ion-button id="custom-height-modal" onclick="presentModal({ cssClass: 'custom-height' })"
+          <ion-button
+            class="ion-text-nowrap"
+            id="custom-height-modal"
+            onclick="presentModal({ cssClass: 'custom-height' })"
             >Present Sheet Modal (Custom Height)</ion-button
           >
 
           <ion-button
+            class="ion-text-nowrap"
             id="handle-behavior-cycle-modal"
             onclick="presentModal({ handleBehavior: 'cycle', initialBreakpoint: 0.25, breakpoints: [0, 0.25, 0.5, 0.75, 1] })"
           >
             Present Sheet Modal (HandleBehavior: Cycle)</ion-button
           >
 
-          <ion-button id="custom-handle-modal" onclick="presentModal({ cssClass: 'custom-handle' })"
+          <ion-button
+            class="ion-text-nowrap"
+            id="custom-handle-modal"
+            onclick="presentModal({ cssClass: 'custom-handle' })"
             >Present Sheet Modal (Custom Handle)</ion-button
           >
-          <ion-button id="no-handle-modal" onclick="presentModal({ handle: false })"
+          <ion-button class="ion-text-nowrap" id="no-handle-modal" onclick="presentModal({ handle: false })"
             >Present Sheet Modal (No Handle)
           </ion-button>
           <ion-button
+            class="ion-text-nowrap"
             id="backdrop-active"
             onclick="presentModal({ backdropBreakpoint: 0.3, initialBreakpoint: 0.5, breakpoints: [0.3, 0.5, 0.7, 1] })"
           >
             Backdrop is active</ion-button
           >
           <ion-button
+            class="ion-text-nowrap"
             id="backdrop-inactive"
             onclick="presentModal({ cssClass: 'backdrop-inactive', backdropBreakpoint: 0.5, initialBreakpoint: 0.3, breakpoints: [0.3, 0.5, 0.7, 1] })"
           >
@@ -169,8 +182,8 @@
       <ion-header>
         <ion-toolbar>
           <ion-title>Super Modal</ion-title>
-          <ion-buttons slot="end">
-            <ion-button class="dismiss">Dismiss Modal</ion-button>
+          <ion-button class="ion-text-nowrap"s slot="end">
+            <ion-button class="ion-text-nowrap" class="dismiss">Dismiss Modal</ion-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
