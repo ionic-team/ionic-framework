@@ -78,10 +78,23 @@ configs().forEach(({ config, title }) => {
     description: formattedRtl === 'true' ? 'rtl' : 'ltr',
   });
 
-  const result = await Promise.all([
-    page.waitForFunction(() => (window as any).testAppLoaded === true, { timeout: 4750 }),
-    originalFn(formattedUrl, options),
-  ]);
+  const res = await originalFn(formattedUrl, options);
 
-  return result[1];
+  /**
+   * Set the direction before the tests start
+   * to avoid https://bugs.webkit.org/show_bug.cgi?id=257133
+   * from showing up in screenshots.
+   */
+  await page.evaluate(
+    ([direction]) => {
+      if (direction === 'rtl') {
+        document.documentElement.setAttribute('dir', 'rtl');
+      }
+    },
+    [direction]
+  );
+
+  await page.waitForFunction(() => (window as any).testAppLoaded === true, { timeout: 4750 });
+
+  return res;
 };
