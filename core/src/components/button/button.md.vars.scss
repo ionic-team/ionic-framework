@@ -22,7 +22,7 @@ $button-md-padding-top:                                 8px !default;
 $button-md-padding-end:                                 1.1em !default;
 
 /// @prop - Padding bottom of the button
-$button-md-padding-bottom:                              9px !default;
+$button-md-padding-bottom:                              $button-md-padding-top !default;
 
 /// @prop - Padding start of the button
 $button-md-padding-start:                               1.1em !default;
