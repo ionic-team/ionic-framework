@@ -85,14 +85,9 @@ configs().forEach(({ config, title }) => {
    * to avoid https://bugs.webkit.org/show_bug.cgi?id=257133
    * from showing up in screenshots.
    */
-  await page.evaluate(
-    ([direction]) => {
-      if (direction === 'rtl') {
-        document.documentElement.setAttribute('dir', 'rtl');
-      }
-    },
-    [direction]
-  );
+  if (direction === 'rtl') {
+    await page.evaluate(() => document.documentElement.setAttribute('dir', 'rtl'));
+  }
 
   await page.waitForFunction(() => (window as any).testAppLoaded === true, { timeout: 4750 });
 
