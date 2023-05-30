@@ -1,3 +1,5 @@
+import { Keyboard } from '../native/keyboard';
+
 export const KEYBOARD_DID_OPEN = 'ionKeyboardDidShow';
 export const KEYBOARD_DID_CLOSE = 'ionKeyboardDidHide';
 const KEYBOARD_THRESHOLD = 150;
@@ -19,23 +21,35 @@ export const resetKeyboardAssist = () => {
 };
 
 export const startKeyboardAssist = (win: Window) => {
-  startNativeListeners(win);
+  const nativeEngine = Keyboard.getEngine();
 
-  if (!(win as any).visualViewport) {
-    return;
-  }
-
-  currentVisualViewport = copyVisualViewport((win as any).visualViewport);
-
-  (win as any).visualViewport.onresize = () => {
-    trackViewportChanges(win);
-
-    if (keyboardDidOpen() || keyboardDidResize(win)) {
-      setKeyboardOpen(win);
-    } else if (keyboardDidClose(win)) {
-      setKeyboardClose(win);
+  /**
+   * If the native keyboard plugin is available
+   * then we are running in Capacitor/Cordova. As a result
+   * we should only listen on the native events instead of
+   * using the Visual Viewport as the Ionic webview manipulates
+   * how it resizes such that the Visual Viewport API is not
+   * reliable here.
+   */
+  if (nativeEngine !== undefined) {
+    startNativeListeners(win);
+  } else {
+    if (!(win as any).visualViewport) {
+      return;
     }
-  };
+
+    currentVisualViewport = copyVisualViewport((win as any).visualViewport);
+
+    (win as any).visualViewport.onresize = () => {
+      trackViewportChanges(win);
+
+      if (keyboardDidOpen() || keyboardDidResize(win)) {
+        setKeyboardOpen(win);
+      } else if (keyboardDidClose(win)) {
+        setKeyboardClose(win);
+      }
+    };
+  }
 };
 
 /**
