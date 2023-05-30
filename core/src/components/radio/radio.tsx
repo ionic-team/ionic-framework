@@ -24,9 +24,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
     ios: 'radio.ios.scss',
     md: 'radio.md.scss',
   },
-  shadow: {
-    delegatesFocus: true,
-  },
+  shadow: true,
 })
 export class Radio implements ComponentInterface {
   private inputId = `ion-rb-${radioButtonIds++}`;
@@ -137,7 +135,7 @@ export class Radio implements ComponentInterface {
     ev.stopPropagation();
     ev.preventDefault();
 
-    this.el.focus();
+    this.nativeInput.focus();
   }
 
   /** @internal */
@@ -325,6 +323,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
         aria-hidden={disabled ? 'true' : null}
         aria-labelledby={label ? labelId : null}
         role="radio"
+        tabindex={buttonTabindex}
         onFocus={this.onFocus}
         onBlur={this.onBlur}
         onClick={this.onClick}
@@ -343,7 +342,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
           type="radio"
           checked={checked}
           disabled={disabled}
-          tabindex={buttonTabindex}
+          tabindex="-1"
           id={inputId}
           ref={(nativeEl) => (this.nativeInput = nativeEl as HTMLInputElement)}
         />
