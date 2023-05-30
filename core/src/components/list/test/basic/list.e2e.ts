@@ -6,7 +6,6 @@ configs().forEach(({ title, screenshot, config }) => {
     test('should not have visual regressions', async ({ page }) => {
       await page.setContent(
         `
-      <ion-app>
         <ion-content>
           <ion-list>
             <ion-item>Pokémon Yellow</ion-item>
@@ -16,7 +15,6 @@ configs().forEach(({ title, screenshot, config }) => {
             <ion-item lines="full">Halo</ion-item>
           </ion-list>
         </ion-content>
-      </ion-app>
       `,
         config
       );
