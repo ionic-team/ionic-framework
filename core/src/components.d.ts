@@ -94,7 +94,7 @@ export namespace Components {
         /**
           * The toggle icon to use. This icon will be rotated when the accordion is expanded or collapsed.
          */
-        "toggleIcon": string;
+        "toggleIcon": any;
         /**
           * The slot inside of `ion-item` to place the toggle icon. Defaults to `"end"`.
          */
@@ -1003,7 +1003,7 @@ export namespace Components {
         /**
           * The icon name to use for the close icon. This will appear when the fab button is pressed. Only applies if it is the main button inside of a fab containing a fab list.
          */
-        "closeIcon": string;
+        "closeIcon": any;
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
@@ -1324,7 +1324,7 @@ export namespace Components {
         /**
           * The icon to use when `detail` is set to `true`.
          */
-        "detailIcon": string;
+        "detailIcon": any;
         /**
           * If `true`, the user cannot interact with the item.
          */
@@ -4046,7 +4046,7 @@ declare namespace LocalJSX {
         /**
           * The toggle icon to use. This icon will be rotated when the accordion is expanded or collapsed.
          */
-        "toggleIcon"?: string;
+        "toggleIcon"?: any;
         /**
           * The slot inside of `ion-item` to place the toggle icon. Defaults to `"end"`.
          */
@@ -5017,7 +5017,7 @@ declare namespace LocalJSX {
         /**
           * The icon name to use for the close icon. This will appear when the fab button is pressed. Only applies if it is the main button inside of a fab containing a fab list.
          */
-        "closeIcon"?: string;
+        "closeIcon"?: any;
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
@@ -5370,7 +5370,7 @@ declare namespace LocalJSX {
         /**
           * The icon to use when `detail` is set to `true`.
          */
-        "detailIcon"?: string;
+        "detailIcon"?: any;
         /**
           * If `true`, the user cannot interact with the item.
          */
