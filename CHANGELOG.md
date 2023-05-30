@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.9](https://github.com/ionic-team/ionic-framework/compare/v7.0.8...v7.0.9) (2023-05-25)
+
+
+### Bug Fixes
+
+* **core:** handle uncaught native keyboard exceptions ([#27514](https://github.com/ionic-team/ionic-framework/issues/27514)) ([0e7359c](https://github.com/ionic-team/ionic-framework/commit/0e7359c07f53eccb362ff2bf331396c0376ba6f3)), closes [#27503](https://github.com/ionic-team/ionic-framework/issues/27503)
+* **react, vue:** inline modals apply ion-page class ([#27481](https://github.com/ionic-team/ionic-framework/issues/27481)) ([02678f3](https://github.com/ionic-team/ionic-framework/commit/02678f3652be5139cf0c17d0f1260c145acd1a48)), closes [#27470](https://github.com/ionic-team/ionic-framework/issues/27470)
+* **segment:** remove duplicate ripple effect on pointerup ([#27448](https://github.com/ionic-team/ionic-framework/issues/27448)) ([01f9959](https://github.com/ionic-team/ionic-framework/commit/01f99597f71b35a60a70f6d76c1e3e1917978d6d)), closes [#27338](https://github.com/ionic-team/ionic-framework/issues/27338)
+
+
+
+
+
+## [7.0.8](https://github.com/ionic-team/ionic-framework/compare/v7.0.7...v7.0.8) (2023-05-24)
+
+
+### Bug Fixes
+
+* **many:** update form controls (radio, checkbox, toggle, input, select) to have consistent disabled opacity ([#27396](https://github.com/ionic-team/ionic-framework/issues/27396)) ([995a848](https://github.com/ionic-team/ionic-framework/commit/995a8485751bb4058a59c7e958b1200f8f6539fa)), closes [#27184](https://github.com/ionic-team/ionic-framework/issues/27184)
+* **picker-column:** correct RTL direction ([#27460](https://github.com/ionic-team/ionic-framework/issues/27460)) ([d3dd72f](https://github.com/ionic-team/ionic-framework/commit/d3dd72fff67b3b437106e187e75f798653d105e2)), closes [#21205](https://github.com/ionic-team/ionic-framework/issues/21205)
+* **popover:** blur translucent popover in chromium ([#27484](https://github.com/ionic-team/ionic-framework/issues/27484)) ([a59eefb](https://github.com/ionic-team/ionic-framework/commit/a59eefb6a312d338895c46d80320ebe91cccac23)), closes [#22176](https://github.com/ionic-team/ionic-framework/issues/22176)
+
+
+
+
+
 ## [7.0.7](https://github.com/ionic-team/ionic-framework/compare/v7.0.6...v7.0.7) (2023-05-17)
 
 

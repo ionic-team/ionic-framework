@@ -15,7 +15,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         await ionModalDidPresent.next();
 
         const content = page.locator('ion-modal .ion-content-scroll-host');
-        await dragElementBy(content, page, 0, 500);
+        await dragElementBy(content, page, 0, 300);
 
         await ionModalDidDismiss.next();
       });

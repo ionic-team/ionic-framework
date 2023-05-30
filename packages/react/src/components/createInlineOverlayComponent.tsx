@@ -29,7 +29,8 @@ interface IonicReactInternalProps<ElementType> extends React.HTMLAttributes<Elem
 
 export const createInlineOverlayComponent = <PropType, ElementType>(
   tagName: string,
-  defineCustomElement?: () => void
+  defineCustomElement?: () => void,
+  hasDelegateHost?: boolean
 ) => {
   if (defineCustomElement) {
     defineCustomElement();
@@ -116,6 +117,18 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
         style,
       };
 
+      /**
+       * Some overlays need `.ion-page` so content
+       * takes up the full size of the parent overlay.
+       */
+      const getWrapperClasses = () => {
+        if (hasDelegateHost) {
+          return `${DELEGATE_HOST} ion-page`;
+        }
+
+        return DELEGATE_HOST;
+      };
+
       return createElement(
         'template',
         {},
@@ -132,14 +145,8 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
             ? createElement(
                 'div',
                 {
-                  id: 'ion-react-wrapper',
                   ref: this.wrapperRef,
-                  className: 'ion-delegate-host',
-                  style: {
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: '100%',
-                  },
+                  className: getWrapperClasses(),
                 },
                 children
               )
@@ -194,3 +201,5 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
   };
   return createForwardRef<PropType, ElementType>(ReactComponent, displayName);
 };
+
+const DELEGATE_HOST = 'ion-delegate-host';
