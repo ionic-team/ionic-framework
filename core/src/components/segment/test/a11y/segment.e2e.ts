@@ -12,11 +12,11 @@ configs().forEach(({ title, config }) => {
     });
 
     // TODO FW-3710
-    test.skip('segment buttons should be keyboard navigable', async ({ page, browserName, skip }, testInfo) => {
+    test('segment buttons should be keyboard navigable', async ({ page, skip, pageUtils }) => {
       // TODO (FW-2979)
       skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
-      const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
-      const isRTL = testInfo.project.metadata.rtl === true;
+
+      const isRTL = config.direction === 'rtl';
       const nextKey = isRTL ? 'ArrowLeft' : 'ArrowRight';
       const previousKey = isRTL ? 'ArrowRight' : 'ArrowLeft';
 
@@ -24,7 +24,7 @@ configs().forEach(({ title, config }) => {
 
       const segmentButtons = page.locator('ion-segment-button');
 
-      await page.keyboard.press(tabKey);
+      await pageUtils.pressKeys('Tab');
       await expect(segmentButtons.nth(0)).toBeFocused();
 
       await page.keyboard.press(nextKey);
