@@ -8,7 +8,7 @@ import { StackEvent } from './stack-utils';
 
 @Component({
   selector: 'ion-tabs',
-  template: ` <ng-content select="[slot=top]"></ng-content>
+  template: `<ng-content select="[slot=top]"></ng-content>
     <div class="tabs-inner">
       <ion-router-outlet #outlet tabs="true" (stackEvents)="onPageSelected($event)"></ion-router-outlet>
     </div>
@@ -29,7 +29,6 @@ import { StackEvent } from './stack-utils';
         height: 100%;
 
         contain: layout size style;
-        z-index: $z-index-page-container;
       }
       .tabs-inner {
         position: relative;
