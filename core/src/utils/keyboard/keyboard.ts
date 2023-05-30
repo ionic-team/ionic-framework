@@ -25,7 +25,7 @@ export const startKeyboardAssist = (win: Window) => {
 
   /**
    * If the native keyboard plugin is available
-   * then we are running in Capacitor/Cordova. As a result
+   * then we are running in a native environment. As a result
    * we should only listen on the native events instead of
    * using the Visual Viewport as the Ionic webview manipulates
    * how it resizes such that the Visual Viewport API is not
