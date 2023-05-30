@@ -41,8 +41,8 @@
 
       ion-datetime,
       ion-picker-internal {
-        --picker-highlight-background: rgb(218, 216, 255);
-        --picker-fade-background-rgb: 245, 235, 247;
+        --wheel-highlight-background: rgb(218, 216, 255);
+        --wheel-fade-background-rgb: 245, 235, 247;
       }
 
       ion-datetime {
@@ -54,13 +54,13 @@
         background-color: rgb(245, 235, 247);
       }
 
-      ion-datetime::part(picker-item),
-      ion-picker-column-internal::part(picker-item) {
+      ion-datetime::part(wheel-item),
+      ion-picker-column-internal::part(wheel-item) {
         color: rgb(255, 134, 154);
       }
 
-      ion-datetime::part(picker-item active),
-      ion-picker-column-internal::part(picker-item active) {
+      ion-datetime::part(wheel-item active),
+      ion-picker-column-internal::part(wheel-item active) {
         color: rgb(128, 30, 171);
       }
 

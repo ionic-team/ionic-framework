@@ -75,9 +75,9 @@ import {
  * @slot buttons - The buttons in the datetime.
  * @slot time-label - The label for the time selector in the datetime.
  *
- * @part picker-item - The individual items when using a wheel style layout, or in the
+ * @part wheel-item - The individual items when using a wheel style layout, or in the
  * month/year picker when using a grid style layout.
- * @part picker-item active - The currently selected picker-item.
+ * @part wheel-item active - The currently selected wheel-item.
  *
  * @part time-button - The button that opens the time picker when using a grid style
  * layout with `presentation="date-time"` or `"time-date"`.

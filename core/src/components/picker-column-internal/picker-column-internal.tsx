@@ -487,5 +487,5 @@ export class PickerColumnInternal implements ComponentInterface {
 }
 
 const PICKER_ITEM_ACTIVE_CLASS = 'picker-item-active';
-const PICKER_ITEM_PART = 'picker-item';
+const PICKER_ITEM_PART = 'wheel-item';
 const PICKER_ITEM_ACTIVE_PART = 'active';
