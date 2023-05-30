@@ -46,7 +46,7 @@
           const slidingAsyncOptionsAdded = document.querySelector('#async-options-added');
           const slidingAsyncOptionsRemoved = document.querySelector('#async-options-removed');
 
-          [slidingAsyncOptionsAdded, slidingAsyncOptionsRemoved].forEach(itemSliding => {
+          [slidingAsyncOptionsAdded, slidingAsyncOptionsRemoved].forEach((itemSliding) => {
             itemSliding.querySelector('ion-item').onclick = () => {
               itemSliding.open('end');
             };
