@@ -23,8 +23,18 @@
       </ion-header>
 
       <ion-content>
+        <ion-button id="toggle-button" onclick="toggle()">Make async changes</ion-button>
         <ion-list>
-          <ion-item-sliding>
+          <ion-item-sliding id="async-item">
+            <ion-item-options side="end">
+              <ion-item-option>Option</ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+          <ion-item-sliding id="async-options-added">
+            <ion-item>ion-item-options added async</ion-item>
+          </ion-item-sliding>
+          <ion-item-sliding id="async-options-removed">
+            <ion-item>ion-item-options removed async</ion-item>
             <ion-item-options side="end">
               <ion-item-option>Option</ion-item-option>
             </ion-item-options>
@@ -32,16 +42,37 @@
         </ion-list>
 
         <script>
-          const itemSliding = document.querySelector('ion-item-sliding');
-          setTimeout(() => {
-            const item = document.createElement('ion-item');
-            item.innerText = 'Item Sliding Option';
-            itemSliding.appendChild(item);
+          const slidingAsyncItem = document.querySelector('#async-item');
+          const slidingAsyncOptionsAdded = document.querySelector('#async-options-added');
+          const slidingAsyncOptionsRemoved = document.querySelector('#async-options-removed');
 
-            item.onclick = () => {
+          [slidingAsyncOptionsAdded, slidingAsyncOptionsRemoved].forEach(itemSliding => {
+            itemSliding.querySelector('ion-item').onclick = () => {
               itemSliding.open('end');
             };
-          }, 250);
+          });
+
+          /**
+           * Function used rather than setTimeout to ensure ion-item-slidings
+           * are fully inited before making changes. Otherwise some bugs would
+           * not appear or be flaky.
+           */
+          function toggle() {
+            const asyncItem = document.createElement('ion-item');
+            asyncItem.innerText = 'ion-item added async';
+            slidingAsyncItem.appendChild(asyncItem);
+
+            asyncItem.onclick = () => {
+              slidingAsyncItem.open('end');
+            };
+
+            const asyncOptions = document.createElement('ion-item-options');
+            asyncOptions.setAttribute('side', 'end');
+            asyncOptions.innerHTML = `<ion-item-option>Option</ion-item-option>`;
+            slidingAsyncOptionsAdded.appendChild(asyncOptions);
+
+            slidingAsyncOptionsRemoved.querySelector('ion-item-options').remove();
+          }
         </script>
       </ion-content>
     </ion-app>
