@@ -12,6 +12,12 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      .hidden {
+        display: none;
+      }
+    </style>
   </head>
 
   <body>
@@ -72,6 +78,9 @@
             slidingAsyncOptionsAdded.appendChild(asyncOptions);
 
             slidingAsyncOptionsRemoved.querySelector('ion-item-options').remove();
+
+            const toggleButton = document.querySelector('#toggle-button');
+            toggleButton.classList.add('hidden');
           }
         </script>
       </ion-content>

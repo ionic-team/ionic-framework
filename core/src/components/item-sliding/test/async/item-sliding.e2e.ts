@@ -5,9 +5,10 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
   test.describe(title('item-sliding: async'), () => {
     test.beforeEach(async ({ page }) => {
       await page.goto(`/src/components/item-sliding/test/async`, config);
+      const toggleButton = page.locator('#toggle-button');
 
-      await page.click('#toggle-button');
-      await page.waitForChanges();
+      await toggleButton.click();
+      await expect(toggleButton).toHaveClass(/hidden/); // class is added when everything is ready
     });
 
     test('should open even when item is added async', async ({ page }) => {
