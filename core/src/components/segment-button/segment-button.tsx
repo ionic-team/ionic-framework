@@ -99,6 +99,7 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
     const { segmentEl } = this;
 
     if (segmentEl) {
+      console.log('updateState', segmentEl.value, this.value)
       this.checked = segmentEl.value === this.value;
 
       if (segmentEl.disabled) {
@@ -123,6 +124,7 @@ export class SegmentButton implements ComponentInterface, ButtonInterface {
 
   render() {
     const { checked, type, disabled, hasIcon, hasLabel, layout, segmentEl } = this;
+    console.log('render checked', checked)
     const mode = getIonMode(this);
     const hasSegmentColor = () => segmentEl?.color !== undefined;
     return (

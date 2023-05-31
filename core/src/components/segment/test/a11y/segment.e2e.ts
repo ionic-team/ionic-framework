@@ -11,15 +11,25 @@ configs().forEach(({ title, config }) => {
       expect(results.violations).toEqual([]);
     });
 
-    // TODO FW-3710
-    test('segment buttons should be keyboard navigable', async ({ page, pageUtils, skip }) => {
-      // TODO (FW-2979)
-      skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
+    test('segment buttons should be keyboard navigable', async ({ page, pageUtils }) => {
       const isRTL = config.direction === 'rtl';
       const nextKey = isRTL ? 'ArrowLeft' : 'ArrowRight';
       const previousKey = isRTL ? 'ArrowRight' : 'ArrowLeft';
 
-      await page.goto('/src/components/segment/test/a11y', config);
+      // In order to avoid flaky tests, we need to make sure the page does
+      // not have another segment group.
+      // Otherwise, the focus state may get stuck in the middle of transition.
+      await page.setContent(`<ion-segment aria-label="Tab Options" color="dark" select-on-focus>
+      <ion-segment-button value="bookmarks">
+        <ion-label>Bookmarks</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="reading-list">
+        <ion-label>Reading List</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="shared-links">
+        <ion-label>Shared Links</ion-label>
+      </ion-segment-button>
+    </ion-segment>`, config);
 
       const segmentButtons = page.locator('ion-segment-button');
 
@@ -38,11 +48,11 @@ configs().forEach(({ title, config }) => {
       await page.keyboard.press('Home');
       await expect(segmentButtons.nth(0)).toBeFocused();
 
-      // Loop to the end from the start
+      // // Loop to the end from the start
       await page.keyboard.press(previousKey);
       await expect(segmentButtons.nth(2)).toBeFocused();
 
-      // Loop to the start from the end
+      // // Loop to the start from the end
       await page.keyboard.press(nextKey);
       await expect(segmentButtons.nth(0)).toBeFocused();
     });
