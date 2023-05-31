@@ -135,7 +135,8 @@ export class Radio implements ComponentInterface {
     ev.stopPropagation();
     ev.preventDefault();
 
-    this.nativeInput.focus();
+    const element = this.legacyFormController.hasLegacyControl() ? this.el : this.nativeInput;
+    element.focus();
   }
 
   /** @internal */
