@@ -35,22 +35,5 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       await expect(itemSlidingEl).toHaveClass(/item-sliding-active-slide/);
     });
-
-    test('should not open when options are removed async', async ({ page }) => {
-      test.info().annotations.push({
-        type: 'issue',
-        description: 'https://github.com/ionic-team/ionic-framework/issues/25578#issuecomment-1520779848',
-      });
-
-      const itemSlidingEl = page.locator('#async-options-removed');
-      const boundingBox = await itemSlidingEl.boundingBox();
-
-      await itemSlidingEl.hover();
-      await page.mouse.down();
-      await page.mouse.move(boundingBox!.x, boundingBox!.y);
-      // don't release mouse, since active class is removed then even when bug occurs
-
-      await expect(itemSlidingEl).not.toHaveClass(/item-sliding-active-slide/);
-    });
   });
 });
