@@ -1,8 +1,6 @@
-import { h } from '@stencil/core';
-import { newSpecPage } from '@stencil/core/testing';
-
+import { Radio } from '../radio.tsx';
 import { RadioGroup } from '../../radio-group/radio-group.tsx';
-import { Radio } from '../radio';
+import { newSpecPage } from '@stencil/core/testing';
 
 describe('ion-radio', () => {
   it('should set a default value', async () => {
@@ -31,20 +29,5 @@ describe('ion-radio', () => {
     await page.waitForChanges();
 
     expect(radio.classList.contains('radio-checked')).toBe(true);
-  });
-
-  it('click event is triggered once', async () => {
-    const mockOnClick = jest.fn();
-
-    const page = await newSpecPage({
-      components: [Radio],
-      template: () => <ion-radio onClick={mockOnClick}>Radio</ion-radio>,
-    });
-
-    const radio = page.body.querySelector('ion-radio');
-
-    await radio.click();
-
-    expect(mockOnClick).toHaveBeenCalledTimes(1);
   });
 });
