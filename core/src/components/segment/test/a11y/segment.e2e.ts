@@ -11,7 +11,7 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, config }) => 
       expect(results.violations).toEqual([]);
     });
 
-    test.only('segment buttons should be keyboard navigable', async ({ page, pageUtils }) => {
+    test('segment buttons should be keyboard navigable', async ({ page, pageUtils }) => {
       const isRTL = config.direction === 'rtl';
       const nextKey = isRTL ? 'ArrowLeft' : 'ArrowRight';
       const previousKey = isRTL ? 'ArrowRight' : 'ArrowLeft';
