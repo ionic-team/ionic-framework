@@ -1,14 +1,14 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
+import { startFocusVisible } from '@utils/focus-visible';
+import { getElementRoot, raf, renderHiddenInput } from '@utils/helpers';
+import { printIonError, printIonWarning } from '@utils/logging';
+import { isRTL } from '@utils/rtl';
+import { createColorClasses } from '@utils/theme';
 import { caretDownSharp, caretUpSharp, chevronBack, chevronDown, chevronForward } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Color, Mode, StyleEventDetail } from '../../interface';
-import { startFocusVisible } from '../../utils/focus-visible';
-import { getElementRoot, raf, renderHiddenInput } from '../../utils/helpers';
-import { printIonError, printIonWarning } from '../../utils/logging';
-import { isRTL } from '../../utils/rtl';
-import { createColorClasses } from '../../utils/theme';
 import type { PickerColumnItem } from '../picker-column-internal/picker-column-internal-interfaces';
 
 import type {
@@ -231,7 +231,7 @@ export class Datetime implements ComponentInterface {
    * the year values range between the `min` and `max` datetime inputs. However, to
    * control exactly which years to display, the `yearValues` input can take a number, an array
    * of numbers, or string of comma separated numbers. For example, to show upcoming and
-   * recent leap years, then this input's value would be `yearValues="2024,2020,2016,2012,2008"`.
+   * recent leap years, then this input's value would be `yearValues="2008,2012,2016,2020,2024"`.
    */
   @Prop() yearValues?: number[] | number | string;
   @Watch('yearValues')

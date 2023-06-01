@@ -606,6 +606,7 @@ export const IonRange = /*@__PURE__*/ defineContainer<JSX.IonRange, JSX.IonRange
   'color',
   'debounce',
   'name',
+  'label',
   'dualKnobs',
   'min',
   'max',

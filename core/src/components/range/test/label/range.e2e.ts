@@ -125,6 +125,32 @@ configs().forEach(({ title, screenshot, config }) => {
         expect(await range.screenshot()).toMatchSnapshot(screenshot(`range-items-fixed`));
       });
     });
+
+    test.describe('range: label prop', () => {
+      test('should render label in the start placement', async ({ page }) => {
+        await page.setContent(`<ion-range label-placement="start" label="Volume"></ion-range>`, config);
+
+        const range = page.locator('ion-range');
+
+        expect(await range.screenshot()).toMatchSnapshot(screenshot(`range-label-prop-start`));
+      });
+
+      test('should render label in the end placement', async ({ page }) => {
+        await page.setContent(`<ion-range label-placement="end" label="Volume"></ion-range>`, config);
+
+        const range = page.locator('ion-range');
+
+        expect(await range.screenshot()).toMatchSnapshot(screenshot(`range-label-prop-end`));
+      });
+
+      test('should render label in the fixed placement', async ({ page }) => {
+        await page.setContent(`<ion-range label-placement="fixed" label="Volume"></ion-range>`, config);
+
+        const range = page.locator('ion-range');
+
+        expect(await range.screenshot()).toMatchSnapshot(screenshot(`range-label-prop-fixed`));
+      });
+    });
   });
 });
 

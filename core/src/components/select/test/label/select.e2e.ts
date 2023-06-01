@@ -267,7 +267,7 @@ configs().forEach(({ title, screenshot, config }) => {
 
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('select: label overflow'), () => {
-    test('label should be truncated with ellipses', async ({ page }) => {
+    test('label property should be truncated with ellipses', async ({ page }) => {
       await page.setContent(
         `
             <ion-select label="Label Label Label Label Label" placeholder="Select an Item"></ion-select>
@@ -278,11 +278,24 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       const select = page.locator('ion-select');
       expect(await select.screenshot()).toMatchSnapshot(screenshot(`select-label-truncate`));
     });
+    test('label slot should be truncated with ellipses', async ({ page }) => {
+      await page.setContent(
+        `
+            <ion-select placeholder="Select an Item">
+              <div slot="label">Label Label Label Label Label</div>
+            </ion-select>
+          `,
+        config
+      );
+
+      const select = page.locator('ion-select');
+      expect(await select.screenshot()).toMatchSnapshot(screenshot(`select-label-slot-truncate`));
+    });
   });
 });
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('select: alert label'), () => {
-    test('should use the label to set the default header in an alert', async ({ page }) => {
+    test('should use the label prop to set the default header in an alert', async ({ page }) => {
       await page.setContent(
         `
          <ion-select label="My Alert" interface="alert">
@@ -300,6 +313,48 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await ionAlertDidPresent.next();
 
       await expect(alert.locator('.alert-title')).toHaveText('My Alert');
+    });
+    test('should use the label slot to set the default header in an alert', async ({ page }) => {
+      await page.setContent(
+        `
+         <ion-select interface="alert">
+            <div slot="label">My Alert</div>
+           <ion-select-option value="a">A</ion-select-option>
+         </ion-select>
+       `,
+        config
+      );
+
+      const select = page.locator('ion-select');
+      const alert = page.locator('ion-alert');
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+
+      await select.click();
+      await ionAlertDidPresent.next();
+
+      await expect(alert.locator('.alert-title')).toHaveText('My Alert');
+    });
+    test('should use the label prop to set the default header in an alert if both prop and slot are set', async ({
+      page,
+    }) => {
+      await page.setContent(
+        `
+         <ion-select label="My Prop Alert" interface="alert">
+            <div slot="label">My Slot Alert</div>
+           <ion-select-option value="a">A</ion-select-option>
+         </ion-select>
+       `,
+        config
+      );
+
+      const select = page.locator('ion-select');
+      const alert = page.locator('ion-alert');
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+
+      await select.click();
+      await ionAlertDidPresent.next();
+
+      await expect(alert.locator('.alert-title')).toHaveText('My Prop Alert');
     });
   });
 });

@@ -21,8 +21,7 @@
   font-size: $range-md-pin-font-size;
 }
 
-// TODO FW-2997 Remove this
-::slotted([slot="label"]) {
+::slotted([slot="label"]), .label-text {
   font-size: initial;
 }
 

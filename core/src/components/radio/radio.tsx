@@ -1,14 +1,14 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import type { LegacyFormController } from '@utils/forms';
+import { createLegacyFormController } from '@utils/forms';
+import type { Attributes } from '@utils/helpers';
+import { addEventListener, getAriaLabel, inheritAriaAttributes, removeEventListener } from '@utils/helpers';
+import { printIonWarning } from '@utils/logging';
+import { createColorClasses, hostContext } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Color, StyleEventDetail } from '../../interface';
-import type { LegacyFormController } from '../../utils/forms';
-import { createLegacyFormController } from '../../utils/forms';
-import type { Attributes } from '../../utils/helpers';
-import { addEventListener, getAriaLabel, inheritAriaAttributes, removeEventListener } from '../../utils/helpers';
-import { printIonWarning } from '../../utils/logging';
-import { createColorClasses, hostContext } from '../../utils/theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -135,7 +135,8 @@ export class Radio implements ComponentInterface {
     ev.stopPropagation();
     ev.preventDefault();
 
-    this.el.focus();
+    const element = this.legacyFormController.hasLegacyControl() ? this.el : this.nativeInput;
+    element.focus();
   }
 
   /** @internal */
@@ -231,7 +232,18 @@ export class Radio implements ComponentInterface {
   }
 
   private renderRadio() {
-    const { checked, disabled, inputId, color, el, justify, labelPlacement, inheritedAttributes, hasLabel } = this;
+    const {
+      checked,
+      disabled,
+      inputId,
+      color,
+      el,
+      justify,
+      labelPlacement,
+      inheritedAttributes,
+      hasLabel,
+      buttonTabindex,
+    } = this;
     const mode = getIonMode(this);
     const inItem = hostContext('ion-item', el);
 
@@ -260,6 +272,7 @@ export class Radio implements ComponentInterface {
             checked={checked}
             disabled={disabled}
             id={inputId}
+            tabindex={buttonTabindex}
             ref={(nativeEl) => (this.nativeInput = nativeEl as HTMLInputElement)}
             {...inheritedAttributes}
           />
