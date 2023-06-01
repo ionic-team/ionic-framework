@@ -101,10 +101,10 @@ const showModal = async () => {
 ## Related
 
 * [Ionic Documentation](https://ionicframework.com/docs/)
+* [Ionic Discord](https://ionic.link/discord)
 * [Ionic Forum](https://forum.ionicframework.com/)
 * [Ionicons](http://ionicons.com/)
 * [Stencil](https://stenciljs.com/)
-* [Stencil Worldwide Slack](https://stencil-worldwide.slack.com/)
 * [Capacitor](https://capacitor.ionicframework.com/)
 
 

@@ -1,4 +1,4 @@
-import { win } from '../window';
+import { win } from '../browser';
 
 interface StyleOptions {
   style: Style;

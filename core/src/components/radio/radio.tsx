@@ -135,7 +135,8 @@ export class Radio implements ComponentInterface {
     ev.stopPropagation();
     ev.preventDefault();
 
-    this.el.focus();
+    const element = this.legacyFormController.hasLegacyControl() ? this.el : this.nativeInput;
+    element.focus();
   }
 
   /** @internal */
@@ -231,7 +232,18 @@ export class Radio implements ComponentInterface {
   }
 
   private renderRadio() {
-    const { checked, disabled, inputId, color, el, justify, labelPlacement, inheritedAttributes, hasLabel } = this;
+    const {
+      checked,
+      disabled,
+      inputId,
+      color,
+      el,
+      justify,
+      labelPlacement,
+      inheritedAttributes,
+      hasLabel,
+      buttonTabindex,
+    } = this;
     const mode = getIonMode(this);
     const inItem = hostContext('ion-item', el);
 
@@ -260,6 +272,7 @@ export class Radio implements ComponentInterface {
             checked={checked}
             disabled={disabled}
             id={inputId}
+            tabindex={buttonTabindex}
             ref={(nativeEl) => (this.nativeInput = nativeEl as HTMLInputElement)}
             {...inheritedAttributes}
           />

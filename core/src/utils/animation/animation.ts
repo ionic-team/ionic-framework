@@ -1,5 +1,5 @@
+import { win } from '../browser';
 import { raf } from '../helpers';
-import { win } from '../window';
 
 import type {
   Animation,
@@ -30,20 +30,6 @@ interface AnimationOnFinishCallback {
   o?: AnimationCallbackOptions;
 }
 
-interface AnimationInternal extends Animation {
-  /**
-   * Sets the parent animation.
-   */
-  parent(animation: Animation): Animation;
-
-  /**
-   * Updates any existing animations.
-   */
-  update(deep: boolean, toggleAnimationName: boolean, step?: number): Animation;
-
-  animationFinish(): void;
-}
-
 export const createAnimation = (animationId?: string): Animation => {
   let _delay: number | undefined;
   let _duration: number | undefined;
@@ -55,7 +41,7 @@ export const createAnimation = (animationId?: string): Animation => {
   let beforeAddClasses: string[] = [];
   let beforeRemoveClasses: string[] = [];
   let initialized = false;
-  let parentAnimation: AnimationInternal | undefined;
+  let parentAnimation: Animation | undefined;
   let beforeStylesValue: { [property: string]: any } = {};
   let afterAddClasses: string[] = [];
   let afterRemoveClasses: string[] = [];
@@ -71,14 +57,14 @@ export const createAnimation = (animationId?: string): Animation => {
   let finished = false;
   let shouldCalculateNumAnimations = true;
   let keyframeName: string | undefined;
-  let ani: AnimationInternal;
+  let ani: Animation;
   let paused = false;
 
   const id: string | undefined = animationId;
   const onFinishCallbacks: AnimationOnFinishCallback[] = [];
   const onFinishOneTimeCallbacks: AnimationOnFinishCallback[] = [];
   const elements: HTMLElement[] = [];
-  const childAnimations: AnimationInternal[] = [];
+  const childAnimations: Animation[] = [];
   const stylesheets: HTMLElement[] = [];
   const _beforeAddReadFunctions: any[] = [];
   const _beforeAddWriteFunctions: any[] = [];
@@ -436,7 +422,7 @@ export const createAnimation = (animationId?: string): Animation => {
     return ani;
   };
 
-  const parent = (animation: AnimationInternal) => {
+  const parent = (animation: Animation) => {
     parentAnimation = animation;
 
     return ani;
@@ -458,7 +444,7 @@ export const createAnimation = (animationId?: string): Animation => {
     return ani;
   };
 
-  const addAnimation = (animationToAdd: AnimationInternal | AnimationInternal[]) => {
+  const addAnimation = (animationToAdd: Animation | Animation[]) => {
     if ((animationToAdd as any) != null) {
       if (Array.isArray(animationToAdd)) {
         for (const animation of animationToAdd) {

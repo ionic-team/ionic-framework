@@ -83,7 +83,8 @@ export class AngularFrameworkDelegate implements FrameworkDelegate {
           container,
           component,
           componentProps,
-          cssClasses
+          cssClasses,
+          this.elementReferenceKey
         );
         resolve(el);
       });
@@ -119,7 +120,8 @@ export const attachView = (
   container: any,
   component: any,
   params: any,
-  cssClasses: string[] | undefined
+  cssClasses: string[] | undefined,
+  elementReferenceKey: string | undefined
 ): any => {
   /**
    * Wraps the injector with a custom injector that
@@ -145,7 +147,23 @@ export const attachView = (
 
   const instance = componentRef.instance;
   const hostElement = componentRef.location.nativeElement;
+
   if (params) {
+    /**
+     * For modals and popovers, a reference to the component is
+     * added to `params` during the call to attachViewToDom. If
+     * a reference using this name is already set, this means
+     * the app is trying to use the name as a component prop,
+     * which will cause collisions.
+     */
+    if (elementReferenceKey && instance[elementReferenceKey] !== undefined) {
+      console.error(
+        `[Ionic Error]: ${elementReferenceKey} is a reserved property when using ${container.tagName.toLowerCase()}. Rename or remove the "${elementReferenceKey}" property from ${
+          component.name
+        }.`
+      );
+    }
+
     Object.assign(instance, params);
   }
   if (cssClasses) {

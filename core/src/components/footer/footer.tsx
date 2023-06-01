@@ -51,8 +51,17 @@ export class Footer implements ComponentInterface {
     this.checkCollapsibleFooter();
   }
 
-  connectedCallback() {
-    this.keyboardCtrl = createKeyboardController((keyboardOpen) => {
+  async connectedCallback() {
+    this.keyboardCtrl = await createKeyboardController(async (keyboardOpen, waitForResize) => {
+      /**
+       * If the keyboard is hiding, then we need to wait
+       * for the webview to resize. Otherwise, the footer
+       * will flicker before the webview resizes.
+       */
+      if (keyboardOpen === false && waitForResize !== undefined) {
+        await waitForResize;
+      }
+
       this.keyboardVisible = keyboardOpen; // trigger re-render by updating state
     });
   }
