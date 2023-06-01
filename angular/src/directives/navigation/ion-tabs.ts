@@ -12,7 +12,8 @@ import { StackEvent } from './stack-utils';
     <div class="tabs-inner">
       <ion-router-outlet #outlet tabs="true" (stackEvents)="onPageSelected($event)"></ion-router-outlet>
     </div>
-    <ng-content></ng-content>`,
+    <ng-content></ng-content>
+    <ng-content select="[slot=bottom]"></ng-content>`,
   styles: [
     `
       :host {
