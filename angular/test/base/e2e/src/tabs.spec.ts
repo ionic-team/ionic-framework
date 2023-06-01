@@ -435,6 +435,30 @@ describe('Tabs', () => {
   })
 })
 
+it('Tabs should support conditional slots', () => {
+  cy.visit('/tabs-slots');
+
+  cy.get('ion-tabs .tabs-inner + ion-tab-bar').should('have.length', 1);
+
+  // Click the button to change the slot to the top
+  cy.get('#set-slot-top').click();
+
+  // The tab bar should be removed from the bottom
+  cy.get('ion-tabs .tabs-inner + ion-tab-bar').should('have.length', 0);
+
+  // The tab bar should be added to the top
+  cy.get('ion-tabs ion-tab-bar + .tabs-inner').should('have.length', 1);
+
+  // Click the button to change the slot to the bottom
+  cy.get('#set-slot-bottom').click();
+
+  // The tab bar should be removed from the top
+  cy.get('ion-tabs ion-tab-bar + .tabs-inner').should('have.length', 0);
+
+  // The tab bar should be added to the bottom
+  cy.get('ion-tabs .tabs-inner + ion-tab-bar').should('have.length', 1);
+});
+
 
 function testTabTitle(title) {
   const tab = getSelectedTab();
