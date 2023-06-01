@@ -70,10 +70,17 @@
 
 // Material Design Radio: Disabled
 // -----------------------------------------
+// The radio itself should use the disabled
+// opacity set by its spec, while the label
+// should match the other form controls
 
-// .item-md.item-radio-disabled ion-label {
-:host(.radio-disabled) {
+:host(.legacy-radio.radio-disabled),
+:host(.radio-disabled) .label-text-wrapper {
   opacity: $radio-md-disabled-opacity;
+}
+
+:host(.radio-disabled) .native-wrapper {
+  opacity: $radio-md-icon-disabled-opacity;
 }
 
 // Material Design Radio: Keyboard Focus

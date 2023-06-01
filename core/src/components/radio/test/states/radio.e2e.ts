@@ -3,6 +3,20 @@ import { configs, test } from '@utils/test/playwright';
 
 configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('radio: states'), () => {
+    test('should render disabled radio correctly', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-radio-group>
+          <ion-radio disabled="true">Label</ion-radio>
+        </ion-radio-group>
+      `,
+        config
+      );
+
+      const radio = page.locator('ion-radio');
+      expect(await radio.screenshot()).toMatchSnapshot(screenshot(`radio-disabled`));
+    });
+
     test('should render disabled checked radio correctly', async ({ page }) => {
       await page.setContent(
         `
