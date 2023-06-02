@@ -187,6 +187,11 @@ export class IonTabs implements AfterContentInit, AfterContentChecked {
    * Relocates the tab bar to the new slot position.
    */
   private relocateTabBar(): void {
+    /**
+     * `el` is a protected attribute from the generated component wrapper.
+     * To avoid having to manually create the wrapper for tab bar, we
+     * cast the tab bar to any and access the protected attribute.
+     */
     const tabBar = (this.tabBar as any).el as HTMLElement;
 
     if (this.tabBarSlot === 'top') {
