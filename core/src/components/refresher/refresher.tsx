@@ -686,7 +686,7 @@ export class Refresher implements ComponentInterface {
     if (this.state === RefresherState.Ready) {
       // they pulled down far enough, so it's ready to refresh
       this.beginRefresh();
-    } else if (this.state === RefresherState.Pulling) {
+    } else if ([RefresherState.Pulling, RefresherState.Inactive].includes(this.state)) {
       // they were pulling down, but didn't pull down far enough
       // set the content back to it's original location
       // and close the refresher
@@ -723,6 +723,9 @@ export class Refresher implements ComponentInterface {
     // set that the refresh is actively cancelling/completing
     this.state = state;
     this.setCss(0, this.closeDuration, true, delay);
+    writeTask(() => {
+      this.restoreOverflowStyle();
+    })
   }
 
   private setCss(y: number, duration: string, overflowVisible: boolean, delay: string) {
@@ -740,8 +743,6 @@ export class Refresher implements ComponentInterface {
         scrollStyle.transitionDelay = backgroundStyle.transitionDelay = delay;
         if (overflowVisible) {
           scrollStyle.overflow = 'hidden';
-        } else {
-          this.restoreOverflowStyle();
         }
       }
     });
