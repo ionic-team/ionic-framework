@@ -224,6 +224,8 @@ button {
   cursor: inherit;
 
   box-sizing: border-box;
+
+  pointer-events: none;
 }
 
 .select-wrapper .select-placeholder {

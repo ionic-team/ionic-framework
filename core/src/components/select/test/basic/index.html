@@ -124,6 +124,19 @@
               <ion-select-option value="onions">Onions</ion-select-option>
             </ion-select>
           </ion-item>
+
+          <ion-item>
+            <ion-select
+              id="eventPropagation"
+              label="Stop Immediate Event Propagation"
+              placeholder="Select one"
+              interface="alert"
+            >
+              <ion-select-option value="apples">Apples</ion-select-option>
+              <ion-select-option value="oranges">Oranges</ion-select-option>
+              <ion-select-option value="pears">Pears</ion-select-option>
+            </ion-select>
+          </ion-item>
         </ion-list>
       </ion-content>
 
@@ -152,6 +165,11 @@
           message: '$1.50 charge for every topping',
         };
         customActionSheetSelect.interfaceOptions = customActionSheetOptions;
+
+        document.getElementById('eventPropagation').addEventListener('click', (evt) => {
+          evt.stopImmediatePropagation();
+          console.log('clicked');
+        });
       </script>
     </ion-app>
   </body>
