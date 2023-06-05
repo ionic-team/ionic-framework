@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.11-nightly.20230605](https://github.com/ionic-team/ionic-framework/compare/v7.0.9...v7.0.11-nightly.20230605) (2023-06-05)
+
+
+### Bug Fixes
+
+* **keyboard:** listen on correct events for keyboard lifecycle ([#27569](https://github.com/ionic-team/ionic-framework/issues/27569)) ([7871210](https://github.com/ionic-team/ionic-framework/commit/7871210e9e4ecc09353b821b60f977498a01ee8d)), closes [#27558](https://github.com/ionic-team/ionic-framework/issues/27558)
+* **radio:** radio with modern syntax is keyboard navigable ([#27530](https://github.com/ionic-team/ionic-framework/issues/27530)) ([d87e692](https://github.com/ionic-team/ionic-framework/commit/d87e692c6c2c3d146514b093853d5e262137a9e5)), closes [#27268](https://github.com/ionic-team/ionic-framework/issues/27268)
+
+
+### Performance Improvements
+
+* passive event listener for focus visible ([#27568](https://github.com/ionic-team/ionic-framework/issues/27568)) ([e54bf14](https://github.com/ionic-team/ionic-framework/commit/e54bf142c39743913d982a1f1709629b4b034969)), closes [#27566](https://github.com/ionic-team/ionic-framework/issues/27566)
+
+
+
+
+
 ## [7.0.10](https://github.com/ionic-team/ionic-framework/compare/v7.0.9...v7.0.10) (2023-05-31)
 
 
