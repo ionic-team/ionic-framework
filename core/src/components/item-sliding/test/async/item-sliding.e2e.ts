@@ -11,7 +11,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(toggleButton).toHaveClass(/hidden/); // class is added when everything is ready
     });
 
-    test('should open even when item is added async', async ({ page }) => {
+    test('should open even when ion-item is added async', async ({ page }) => {
       const itemSlidingEl = page.locator('#async-item');
       const itemEl = itemSlidingEl.locator('ion-item');
 
@@ -22,7 +22,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(itemSlidingEl).toHaveClass(/item-sliding-active-slide/);
     });
 
-    test('should open when options are added async', async ({ page }) => {
+    test('should open when ion-item-options are added async', async ({ page }) => {
       test.info().annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/25578',
