@@ -74,6 +74,14 @@ import {
  * @slot title - The title of the datetime.
  * @slot buttons - The buttons in the datetime.
  * @slot time-label - The label for the time selector in the datetime.
+ *
+ * @part wheel-item - The individual items when using a wheel style layout, or in the
+ * month/year picker when using a grid style layout.
+ * @part wheel-item active - The currently selected wheel-item.
+ *
+ * @part time-button - The button that opens the time picker when using a grid style
+ * layout with `presentation="date-time"` or `"time-date"`.
+ * @part time-button active - The time picker button when the picker is open.
  */
 @Component({
   tag: 'ion-datetime',
@@ -2167,7 +2175,8 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderTimeOverlay() {
-    const use24Hour = is24Hour(this.locale, this.hourCycle);
+    const { hourCycle, isTimePopoverOpen, locale } = this;
+    const use24Hour = is24Hour(locale, hourCycle);
     const activePart = this.getActivePartsWithFallback();
 
     return [
@@ -2175,8 +2184,9 @@ export class Datetime implements ComponentInterface {
       <button
         class={{
           'time-body': true,
-          'time-body-active': this.isTimePopoverOpen,
+          'time-body-active': isTimePopoverOpen,
         }}
+        part={`time-button${isTimePopoverOpen ? ' active' : ''}`}
         aria-expanded="false"
         aria-haspopup="true"
         onClick={async (ev) => {
@@ -2199,7 +2209,7 @@ export class Datetime implements ComponentInterface {
           }
         }}
       >
-        {getLocalizedTime(this.locale, activePart, use24Hour)}
+        {getLocalizedTime(locale, activePart, use24Hour)}
       </button>,
       <ion-popover
         alignment="center"
