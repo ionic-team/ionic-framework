@@ -693,6 +693,8 @@ export class Refresher implements ComponentInterface {
       // set that the refresh is actively cancelling
       this.cancel();
     }
+
+    this.restoreOverflowStyle();
   }
 
   private beginRefresh() {
@@ -738,11 +740,7 @@ export class Refresher implements ComponentInterface {
         scrollStyle.transform = backgroundStyle.transform = y > 0 ? `translateY(${y}px) translateZ(0px)` : '';
         scrollStyle.transitionDuration = backgroundStyle.transitionDuration = duration;
         scrollStyle.transitionDelay = backgroundStyle.transitionDelay = delay;
-        if (overflowVisible) {
-          scrollStyle.overflow = 'hidden';
-        } else {
-          this.restoreOverflowStyle();
-        }
+        scrollStyle.overflow = overflowVisible ? 'hidden' : '';
       }
     });
   }
