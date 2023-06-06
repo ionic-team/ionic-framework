@@ -425,6 +425,12 @@ ion-datetime,event,ionFocus,void,true
 ion-datetime,css-prop,--background
 ion-datetime,css-prop,--background-rgb
 ion-datetime,css-prop,--title-color
+ion-datetime,css-prop,--wheel-fade-background-rgb
+ion-datetime,css-prop,--wheel-highlight-background
+ion-datetime,part,time-button
+ion-datetime,part,time-button active
+ion-datetime,part,wheel-item
+ion-datetime,part,wheel-item active
 
 ion-datetime-button,shadow
 ion-datetime-button,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,'primary',false,true
