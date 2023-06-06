@@ -64,7 +64,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         description: 'https://github.com/ionic-team/ionic-framework/issues/25126',
       });
 
-      await page.goto('/src/components/select/test/basic', config);
+      await page.goto('/src/components/select/test/legacy/basic', config);
 
       const select = page.locator('#gender');
 

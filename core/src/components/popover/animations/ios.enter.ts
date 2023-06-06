@@ -86,7 +86,7 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation =>
 
   const baseAnimation = createAnimation();
   const backdropAnimation = createAnimation();
-  const wrapperAnimation = createAnimation();
+  const contentAnimation = createAnimation();
 
   backdropAnimation
     .addElement(root.querySelector('ion-backdrop')!)
@@ -96,7 +96,15 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation =>
     })
     .afterClearStyles(['pointer-events']);
 
-  wrapperAnimation.addElement(root.querySelector('.popover-wrapper')!).fromTo('opacity', 0.01, 1);
+  // In Chromium, if the wrapper animates, the backdrop filter doesn't work.
+  // The Chromium team stated that this behavior is expected and not a bug. The element animating opacity creates a backdrop root for the backdrop-filter.
+  // To get around this, instead of animating the wrapper, animate both the arrow and content.
+  // https://bugs.chromium.org/p/chromium/issues/detail?id=1148826
+  contentAnimation
+    .addElement(root.querySelector('.popover-arrow')!)
+    .addElement(root.querySelector('.popover-content')!)
+    .fromTo('opacity', 0.01, 1);
+  // TODO(FW-4376) Ensure that arrow also blurs when translucent
 
   return baseAnimation
     .easing('ease')
@@ -142,5 +150,5 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts?: any): Animation =>
         }
       }
     })
-    .addAnimation([backdropAnimation, wrapperAnimation]);
+    .addAnimation([backdropAnimation, contentAnimation]);
 };

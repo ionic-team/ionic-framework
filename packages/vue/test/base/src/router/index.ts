@@ -30,6 +30,10 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/Overlays.vue')
   },
   {
+    path: '/modal-multiple-children',
+    component: () => import('@/views/ModalMultipleChildren.vue')
+  },
+  {
     path: '/keep-contents-mounted',
     component: () => import('@/views/OverlaysKeepContentsMounted.vue')
   },

@@ -220,6 +220,24 @@ export interface Animation {
    * Returns `false` otherwise.
    */
   isRunning(): boolean;
+
+  /**
+   * Sets the parent animation.
+   * @internal
+   */
+  parent(animation: Animation): Animation;
+
+  /**
+   * Updates any existing animations.
+   * @internal
+   */
+  update(deep: boolean, toggleAnimationName: boolean, step?: number): Animation;
+
+  /**
+   * Forcibly finishes the animation.
+   * @internal
+   */
+  animationFinish(): void;
 }
 
 export type AnimationLifecycle = (currentStep: 0 | 1, animation: Animation) => void;

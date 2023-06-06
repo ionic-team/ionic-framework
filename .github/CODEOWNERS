@@ -11,9 +11,6 @@
 # In each subsection folders are ordered first by depth, then alphabetically.
 # This should make it easy to add new rules without breaking existing ones.
 
-# Global owners
-* @ionic-team/framework
-
 # Frameworks
 
 ## Angular
@@ -55,9 +52,6 @@
 
 /core/src/components/refresher/ @liamdebeasi
 /core/src/components/refresher-content/ @liamdebeasi
-
-# Codeowner should own the source, but everyone should own the tests
-/core/src/components/**/test/ @ionic-team/framework
 
 # Utilities
 

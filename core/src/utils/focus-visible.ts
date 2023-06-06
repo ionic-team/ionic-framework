@@ -59,7 +59,7 @@ export const startFocusVisible = (rootEl?: HTMLElement) => {
   ref.addEventListener('keydown', onKeydown);
   ref.addEventListener('focusin', onFocusin);
   ref.addEventListener('focusout', onFocusout);
-  ref.addEventListener('touchstart', pointerDown);
+  ref.addEventListener('touchstart', pointerDown, { passive: true });
   ref.addEventListener('mousedown', pointerDown);
 
   const destroy = () => {

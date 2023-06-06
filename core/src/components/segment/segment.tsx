@@ -1,11 +1,9 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Listen, Prop, State, Watch, h, writeTask } from '@stencil/core';
 import type { Gesture, GestureDetail } from '@utils/gesture';
-import { pointerCoord } from '@utils/helpers';
 import { isRTL } from '@utils/rtl';
 import { createColorClasses, hostContext } from '@utils/theme';
 
-import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import type { Color, StyleEventDetail } from '../../interface';
 
@@ -194,13 +192,9 @@ export class Segment implements ComponentInterface {
   onEnd(detail: GestureDetail) {
     this.setActivated(false);
 
-    const checkedValidButton = this.setNextIndex(detail, true);
+    this.setNextIndex(detail, true);
 
     detail.event.stopImmediatePropagation();
-
-    if (checkedValidButton) {
-      this.addRipple(detail);
-    }
 
     const value = this.value;
     if (value !== undefined) {
@@ -228,32 +222,6 @@ export class Segment implements ComponentInterface {
 
   private get checked() {
     return this.getButtons().find((button) => button.value === this.value);
-  }
-
-  /**
-   * The gesture blocks the segment button ripple. This
-   * function adds the ripple based on the checked segment
-   * and where the cursor ended.
-   */
-  private addRipple(detail: GestureDetail) {
-    const useRippleEffect = config.getBoolean('animated', true) && config.getBoolean('rippleEffect', true);
-    if (!useRippleEffect) {
-      return;
-    }
-
-    const buttons = this.getButtons();
-    const checked = buttons.find((button) => button.value === this.value)!;
-
-    const root = checked.shadowRoot || checked;
-    const ripple = root.querySelector('ion-ripple-effect');
-
-    if (!ripple) {
-      return;
-    }
-
-    const { x, y } = pointerCoord(detail.event);
-
-    ripple.addRipple(x, y).then((remove) => remove());
   }
 
   /*
