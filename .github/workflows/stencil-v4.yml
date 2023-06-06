@@ -1,6 +1,6 @@
 # This workflow is intended to run against the `HEAD` of Stencil's primary branch.
 # See https://github.com/ionic-team/stencil for contents of the repository
-name: 'Stencil Nightly Build'
+name: 'Stencil v4 Build'
 
 on:
   schedule:
@@ -18,30 +18,30 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build-core-with-stencil-nightly:
+  build-core-with-stencil-v4:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/workflows/actions/build-core-stencil-prerelease
         with:
-          stencil-version: nightly
+          stencil-version: v4-next
 
   test-core-clean-build:
-    needs: [build-core-with-stencil-nightly]
+    needs: [build-core-with-stencil-v4]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/workflows/actions/test-core-clean-build
 
   test-core-lint:
-    needs: [build-core-with-stencil-nightly]
+    needs: [build-core-with-stencil-v4]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/workflows/actions/test-core-lint
 
   test-core-spec:
-    needs: [build-core-with-stencil-nightly]
+    needs: [build-core-with-stencil-v4]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -62,7 +62,7 @@ jobs:
         # to be the length of the shard array.
         shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
         totalShards: [20]
-    needs: [build-core-with-stencil-nightly]
+    needs: [build-core-with-stencil-v4]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -90,7 +90,7 @@ jobs:
         run: exit 1
 
   build-vue:
-    needs: [build-core-with-stencil-nightly]
+    needs: [build-core-with-stencil-v4]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -126,7 +126,7 @@ jobs:
         run: exit 1
 
   build-angular:
-    needs: [build-core-with-stencil-nightly]
+    needs: [build-core-with-stencil-v4]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -162,7 +162,7 @@ jobs:
         run: exit 1
 
   build-react:
-    needs: [build-core-with-stencil-nightly]
+    needs: [build-core-with-stencil-v4]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
