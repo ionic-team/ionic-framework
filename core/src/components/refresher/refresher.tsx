@@ -692,9 +692,14 @@ export class Refresher implements ComponentInterface {
       // and close the refresher
       // set that the refresh is actively cancelling
       this.cancel();
+    } else if (this.state === RefresherState.Inactive) {
+      /**
+       * The pull to refresh gesture was aborted
+       * so we should restore any overflow styles
+       * that have been modified.
+       */
+      this.restoreOverflowStyle();
     }
-
-    this.restoreOverflowStyle();
   }
 
   private beginRefresh() {
@@ -718,7 +723,12 @@ export class Refresher implements ComponentInterface {
       this.state = RefresherState.Inactive;
       this.progress = 0;
       this.didStart = false;
-      this.setCss(0, '0ms', false, '');
+
+      /**
+       * Reset any overflow styles so the
+       * user can scroll again.
+       */
+      this.setCss(0, '0ms', false, '', true);
     }, 600);
 
     // reset the styles on the scroll element
@@ -727,7 +737,13 @@ export class Refresher implements ComponentInterface {
     this.setCss(0, this.closeDuration, true, delay);
   }
 
-  private setCss(y: number, duration: string, overflowVisible: boolean, delay: string) {
+  private setCss(
+    y: number,
+    duration: string,
+    overflowVisible: boolean,
+    delay: string,
+    shouldRestoreOverflowStyle = false
+  ) {
     if (this.nativeRefresher) {
       return;
     }
@@ -741,6 +757,17 @@ export class Refresher implements ComponentInterface {
         scrollStyle.transitionDuration = backgroundStyle.transitionDuration = duration;
         scrollStyle.transitionDelay = backgroundStyle.transitionDelay = delay;
         scrollStyle.overflow = overflowVisible ? 'hidden' : '';
+      }
+
+      /**
+       * Reset the overflow styles only once
+       * the pull to refresh effect has been closed.
+       * This ensures that the gesture is done
+       * and the refresh operation has either
+       * been aborted or has completed.
+       */
+      if (shouldRestoreOverflowStyle) {
+        this.restoreOverflowStyle();
       }
     });
   }
