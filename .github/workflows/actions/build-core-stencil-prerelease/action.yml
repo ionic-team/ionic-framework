@@ -1,5 +1,10 @@
-name: 'Build Ionic Core with Stencil Nightly'
-description: 'Build Ionic Core with a Nightly Build of Stencil'
+name: 'Build Ionic Core with Stencil Prerelease'
+description: 'Build Ionic Core with a Prerelease Build of Stencil'
+inputs:
+  stencil-version:
+    description: 'The NPM tag of @stencil/core to install.'
+    type: string
+    required: true
 runs:
   using: 'composite'
   steps:
@@ -12,9 +17,9 @@ runs:
       run: npm ci
       working-directory: ./core
       shell: bash
-    - name: Install Stencil Nightly
+    - name: Install Stencil ${{ inputs.stencil-version }}
       working-directory: ./core
-      run: npm i @stencil/core@nightly
+      run: npm i @stencil/core@${{ inputs.stencil-version }}
       shell: bash
     - name: Build Core
       run: npm run build -- --ci
