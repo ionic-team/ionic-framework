@@ -1092,6 +1092,7 @@ ion-reorder,part,icon
 ion-reorder-group,none
 ion-reorder-group,prop,disabled,boolean,true,false,false
 ion-reorder-group,method,complete,complete(listOrReorder?: boolean | any[]) => Promise<any>
+ion-reorder-group,event,ionItemMove,ItemMoveEventDetail,true
 ion-reorder-group,event,ionItemReorder,ItemReorderEventDetail,true
 
 ion-ripple-effect,shadow

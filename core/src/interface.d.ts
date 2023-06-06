@@ -24,7 +24,7 @@ export { RadioGroupCustomEvent } from './components/radio-group/radio-group-inte
 export { RangeCustomEvent, PinFormatter } from './components/range/range-interface';
 export { HTMLStencilElement, RouterCustomEvent } from './components/router/utils/interface';
 export { RefresherCustomEvent } from './components/refresher/refresher-interface';
-export { ItemReorderCustomEvent } from './components/reorder-group/reorder-group-interface';
+export { ItemMoveEventDetail, ItemReorderCustomEvent } from './components/reorder-group/reorder-group-interface';
 export { SearchbarCustomEvent } from './components/searchbar/searchbar-interface';
 export { SegmentCustomEvent } from './components/segment/segment-interface';
 export { SelectCustomEvent, SelectCompareFn } from './components/select/select-interface';

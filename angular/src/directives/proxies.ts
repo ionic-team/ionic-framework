@@ -1780,12 +1780,13 @@ export class IonReorderGroup {
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionItemReorder']);
+    proxyOutputs(this, this.el, ['ionItemReorder', 'ionItemMove']);
   }
 }
 
 
 import type { ItemReorderEventDetail as IIonReorderGroupItemReorderEventDetail } from '@ionic/core';
+import type { ItemMoveEventDetail as IIonReorderGroupItemMoveEventDetail } from '@ionic/core';
 
 export declare interface IonReorderGroup extends Components.IonReorderGroup {
   /**
@@ -1794,6 +1795,8 @@ Once the event has been emitted, the `complete()` method then needs
 to be called in order to finalize the reorder action.
    */
   ionItemReorder: EventEmitter<CustomEvent<IIonReorderGroupItemReorderEventDetail>>;
+
+  ionItemMove: EventEmitter<CustomEvent<IIonReorderGroupItemMoveEventDetail>>;
 }
 
 

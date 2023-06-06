@@ -30,7 +30,7 @@ import { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAct
 import { RadioGroupChangeEventDetail } from "./components/radio-group/radio-group-interface";
 import { PinFormatter, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue } from "./components/range/range-interface";
 import { RefresherEventDetail } from "./components/refresher/refresher-interface";
-import { ItemReorderEventDetail } from "./components/reorder-group/reorder-group-interface";
+import { ItemMoveEventDetail, ItemReorderEventDetail } from "./components/reorder-group/reorder-group-interface";
 import { NavigationHookCallback } from "./components/route/route-interface";
 import { SearchbarChangeEventDetail, SearchbarInputEventDetail } from "./components/searchbar/searchbar-interface";
 import { SegmentChangeEventDetail } from "./components/segment/segment-interface";
@@ -66,7 +66,7 @@ export { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAct
 export { RadioGroupChangeEventDetail } from "./components/radio-group/radio-group-interface";
 export { PinFormatter, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue } from "./components/range/range-interface";
 export { RefresherEventDetail } from "./components/refresher/refresher-interface";
-export { ItemReorderEventDetail } from "./components/reorder-group/reorder-group-interface";
+export { ItemMoveEventDetail, ItemReorderEventDetail } from "./components/reorder-group/reorder-group-interface";
 export { NavigationHookCallback } from "./components/route/route-interface";
 export { SearchbarChangeEventDetail, SearchbarInputEventDetail } from "./components/searchbar/searchbar-interface";
 export { SegmentChangeEventDetail } from "./components/segment/segment-interface";
@@ -6444,6 +6444,7 @@ declare namespace LocalJSX {
           * If `true`, the reorder will be hidden.
          */
         "disabled"?: boolean;
+        "onIonItemMove"?: (event: IonReorderGroupCustomEvent<ItemMoveEventDetail>) => void;
         /**
           * Event that needs to be listened to in order to complete the reorder action. Once the event has been emitted, the `complete()` method then needs to be called in order to finalize the reorder action.
          */
