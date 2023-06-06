@@ -695,8 +695,11 @@ export class Refresher implements ComponentInterface {
     } else if (this.state === RefresherState.Inactive) {
       /**
        * The pull to refresh gesture was aborted
-       * so we should restore any overflow styles
-       * that have been modified.
+       * so we should immediately restore any overflow styles
+       * that have been modified. Do not call this.cancel
+       * because the styles will only be reset after a timeout.
+       * If the gesture is aborted then scrolling should be
+       * available right away.
        */
       this.restoreOverflowStyle();
     }
