@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.11](https://github.com/ionic-team/ionic-framework/compare/v7.0.9...v7.0.11) (2023-06-07)
+
+
+### Bug Fixes
+
+* **angular:** remove invalid z-index style ([#27559](https://github.com/ionic-team/ionic-framework/issues/27559)) ([2ce00cf](https://github.com/ionic-team/ionic-framework/commit/2ce00cf292e01664e02ecaf64af229d6a371c480))
+
+
+
+
+
 ## [7.0.10](https://github.com/ionic-team/ionic-framework/compare/v7.0.9...v7.0.10) (2023-05-31)
 
 
