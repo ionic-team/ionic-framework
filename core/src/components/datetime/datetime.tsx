@@ -84,7 +84,7 @@ import {
  * @part time-button active - The time picker button when the picker is open.
  *
  * @part month-year-button - The button that opens the month/year picker when
- * using a grid style layout with `presentation="date-time"` or `"time-date"`.
+ * using a grid style layout.
  */
 @Component({
   tag: 'ion-datetime',
