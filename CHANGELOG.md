@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.7.5](https://github.com/ionic-team/ionic-framework/compare/v6.7.4...v6.7.5) (2023-06-08)
+
+
+### Bug Fixes
+
+* **refresher:** scroll styles are reset when using non-native refresher ([#27619](https://github.com/ionic-team/ionic-framework/issues/27619)) ([3f5e893](https://github.com/ionic-team/ionic-framework/commit/3f5e8934448c728318056be841e30bff8b4294a4)), closes [#27601](https://github.com/ionic-team/ionic-framework/issues/27601)
+
+
+
+
+
 ## [6.7.4](https://github.com/ionic-team/ionic-framework/compare/v6.7.3...v6.7.4) (2023-04-19)
 
 

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [6.7.5](https://github.com/ionic-team/ionic/compare/v6.7.4...v6.7.5) (2023-06-08)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
 ## [6.7.4](https://github.com/ionic-team/ionic/compare/v6.7.3...v6.7.4) (2023-04-19)
 
 **Note:** Version bump only for package @ionic/vue
