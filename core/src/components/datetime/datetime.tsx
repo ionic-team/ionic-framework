@@ -82,6 +82,9 @@ import {
  * @part time-button - The button that opens the time picker when using a grid style
  * layout with `presentation="date-time"` or `"time-date"`.
  * @part time-button active - The time picker button when the picker is open.
+ *
+ * @part month-year-button - The button that opens the month/year picker when
+ * using a grid style layout.
  */
 @Component({
   tag: 'ion-datetime',
@@ -1928,6 +1931,7 @@ export class Datetime implements ComponentInterface {
         <div class="calendar-action-buttons">
           <div class="calendar-month-year">
             <ion-item
+              part="month-year-button"
               ref={(el) => (this.monthYearToggleItemRef = el)}
               button
               aria-label="Show year picker"

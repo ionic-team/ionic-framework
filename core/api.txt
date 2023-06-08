@@ -427,6 +427,7 @@ ion-datetime,css-prop,--background-rgb
 ion-datetime,css-prop,--title-color
 ion-datetime,css-prop,--wheel-fade-background-rgb
 ion-datetime,css-prop,--wheel-highlight-background
+ion-datetime,part,month-year-button
 ion-datetime,part,time-button
 ion-datetime,part,time-button active
 ion-datetime,part,wheel-item
