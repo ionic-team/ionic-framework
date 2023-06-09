@@ -33,6 +33,11 @@
         margin-left: 5px;
       }
     </style>
+    <script type="module">
+      import * as motion from 'https://esm.run/motion';
+
+      window.motionOne = motion;
+    </script>
   </head>
   <body>
     <ion-app>
@@ -47,12 +52,50 @@
           <div class="grid-item">
             <h2>Click</h2>
             <ion-button id="left-click-trigger">Trigger</ion-button>
-            <ion-modal class="left-click-modal" trigger="left-click-trigger">
+            <ion-modal id="custom-modal" trigger="left-click-trigger">
               <ion-content class="ion-padding"> Modal Content </ion-content>
             </ion-modal>
           </div>
         </div>
       </ion-content>
     </ion-app>
+
+    <script>
+      const customModal = document.querySelector('#custom-modal');
+
+      customModal.enterAnimation = async (el, opts, done) => {
+        const { backdropElement, wrapperElement } = opts;
+        const { animate } = window.motionOne;
+        const backdropAni = animate(backdropElement, {
+          opacity: 'var(--backdrop-opacity)'
+        });
+
+        const wrapperAni = animate(wrapperElement, {
+          opacity: 1,
+          transform: ['scale(1.5)', 'scale(1)']
+        })
+
+        await Promise.all([wrapperAni.finished, backdropAni.finished]);
+
+        done();
+      }
+
+      customModal.leaveAnimation = async (el, opts, done) => {
+        const { backdropElement, wrapperElement } = opts;
+        const { animate } = window.motionOne;
+        const backdropAni = animate(backdropElement, {
+          opacity: 0
+        });
+
+        const wrapperAni = animate(wrapperElement, {
+          opacity: 0,
+          transform: 'scale(0.5)'
+        })
+
+        await Promise.all([wrapperAni.finished, backdropAni.finished]);
+
+        done();
+      }
+    </script>
   </body>
 </html>

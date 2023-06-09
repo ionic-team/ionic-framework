@@ -479,7 +479,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
       presentingEl: presentingElement,
       currentBreakpoint: this.initialBreakpoint,
       backdropBreakpoint: this.backdropBreakpoint,
-    });
+      backdropElement: this.backdropEl,
+      wrapperElement: this.wrapperEl
+    } as any);
 
     /* tslint:disable-next-line */
     if (typeof window !== 'undefined') {
@@ -702,7 +704,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
         presentingEl: presentingElement,
         currentBreakpoint: this.currentBreakpoint ?? this.initialBreakpoint,
         backdropBreakpoint: this.backdropBreakpoint,
-      }
+        backdropElement: this.backdropEl,
+        wrapperElement: this.wrapperEl
+      } as any
     );
 
     const dismissed = await this.currentTransition;
