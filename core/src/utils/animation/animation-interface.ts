@@ -264,4 +264,4 @@ export type AnimationPlayTo = 'start' | 'end';
 export type AnimationDirection = 'normal' | 'reverse' | 'alternate' | 'alternate-reverse';
 export type AnimationFill = 'auto' | 'none' | 'forwards' | 'backwards' | 'both';
 
-export type AnimationBuilder = (baseEl: any, opts?: any) => Animation;
+export type AnimationBuilder = (baseEl: any, opts?: any, done?: () => void) => Animation;

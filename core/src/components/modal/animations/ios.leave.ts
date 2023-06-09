@@ -17,7 +17,8 @@ const createLeaveAnimation = () => {
 /**
  * iOS Modal Leave Animation
  */
-export const iosLeaveAnimation = (baseEl: HTMLElement, opts: ModalAnimationOptions, duration = 500): Animation => {
+export const iosLeaveAnimation = (baseEl: HTMLElement, opts: ModalAnimationOptions): Animation => {
+  const duration = 500;
   const { presentingEl, currentBreakpoint } = opts;
   const root = getElementRoot(baseEl);
   const { wrapperAnimation, backdropAnimation } =

@@ -583,25 +583,34 @@ const overlayAnimation = async (
   baseEl.classList.remove('overlay-hidden');
 
   const aniRoot = overlay.el;
-  const animation = animationBuilder(aniRoot, opts);
 
-  if (!overlay.animated || !config.getBoolean('animated', true)) {
-    animation.duration(0);
+  let resolvePromise;
+  let promise = new Promise((resolve) => {
+    resolvePromise = () => { resolve(true) };
+  })
+
+  const animation = animationBuilder(aniRoot, opts, resolvePromise);
+  if (animation.beforeAddWrite === undefined) {
+    await promise;
+  } else {
+    if (!overlay.animated || !config.getBoolean('animated', true)) {
+      animation.duration(0);
+    }
+
+    if (overlay.keyboardClose) {
+      animation.beforeAddWrite(() => {
+        const activeElement = baseEl.ownerDocument!.activeElement as HTMLElement;
+        if (activeElement?.matches('input,ion-input, ion-textarea')) {
+          activeElement.blur();
+        }
+      });
+    }
+
+    const activeAni = activeAnimations.get(overlay) || [];
+    activeAnimations.set(overlay, [...activeAni, animation]);
+
+    await animation.play();
   }
-
-  if (overlay.keyboardClose) {
-    animation.beforeAddWrite(() => {
-      const activeElement = baseEl.ownerDocument!.activeElement as HTMLElement;
-      if (activeElement?.matches('input,ion-input, ion-textarea')) {
-        activeElement.blur();
-      }
-    });
-  }
-
-  const activeAni = activeAnimations.get(overlay) || [];
-  activeAnimations.set(overlay, [...activeAni, animation]);
-
-  await animation.play();
 
   return true;
 };

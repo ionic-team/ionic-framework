@@ -11,6 +11,13 @@
     <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <script type="module">
+      import * as motion from 'https://esm.run/motion';
+
+      window.motionOne = motion;
+    </script>
+
   </head>
 
   <body>
@@ -23,25 +30,47 @@
 
       <ion-content class="ion-padding">
         <ion-button id="default">Open Alert</ion-button>
-        <ion-button id="timeout">Open Alert, Close After 500ms</ion-button>
 
-        <ion-alert id="default-alert" trigger="default" header="Alert" message="Hello World!"></ion-alert>
-        <ion-alert id="timeout-alert" trigger="timeout" header="Alert" message="Hello World!"></ion-alert>
+        <ion-alert id="custom-alert" trigger="default" header="Alert" message="Hello World!"></ion-alert>
       </ion-content>
     </ion-app>
 
     <script>
-      const defaultAlert = document.querySelector('#default-alert');
-      const timeoutAlert = document.querySelector('#timeout-alert');
+      const customAlert = document.querySelector('#custom-alert');
 
-      defaultAlert.buttons = ['OK'];
-      timeoutAlert.buttons = ['OK'];
+      customAlert.enterAnimation = async (el, opts, done) => {
+        const { animate } = window.motionOne;
+        const backdropAni = animate('#custom-alert ion-backdrop', {
+          opacity: 'var(--backdrop-opacity)'
+        });
 
-      timeoutAlert.addEventListener('didPresent', () => {
-        setTimeout(() => {
-          timeoutAlert.dismiss();
-        }, 500);
-      });
+        const wrapperAni = animate('#custom-alert .alert-wrapper', {
+          opacity: 1,
+          transform: ['scale(1.5)', 'scale(1)']
+        })
+
+        await Promise.all([wrapperAni.finished, backdropAni.finished]);
+
+        done();
+      }
+
+      customAlert.leaveAnimation = async (el, opts, done) => {
+        const { animate } = window.motionOne;
+        const backdropAni = animate('#custom-alert ion-backdrop', {
+          opacity: 0
+        });
+
+        const wrapperAni = animate('#custom-alert .alert-wrapper', {
+          opacity: 0,
+          transform: 'scale(0.5)'
+        })
+
+        await Promise.all([wrapperAni.finished, backdropAni.finished]);
+
+        done();
+      }
+
+      customAlert.buttons = ['OK'];
     </script>
   </body>
 </html>
