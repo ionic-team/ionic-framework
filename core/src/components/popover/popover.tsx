@@ -137,11 +137,7 @@ export class Popover implements ComponentInterface, OverlayInterface {
     if (!container) {
       throw new Error('container is undefined');
     }
-    const data = {
-      ...this.componentProps,
-      popover: this.el
-    };
-    this.usersElement = await attachComponent(this.delegate, container, this.component, ['popover-viewport', (this.el as any)['s-sc']], data);
+    this.usersElement = await attachComponent(this.delegate, container, this.component, ['popover-viewport', (this.el as any)['s-sc']], this.componentProps);
     await deepReady(this.usersElement);
     return present(this, 'popoverEnter', iosEnterAnimation, mdEnterAnimation, this.event);
   }

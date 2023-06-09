@@ -152,11 +152,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     if (!container) {
       throw new Error('container is undefined');
     }
-    const componentProps = {
-      ...this.componentProps,
-      modal: this.el
-    };
-    this.usersElement = await attachComponent(this.delegate, container, this.component, ['ion-page'], componentProps);
+    this.usersElement = await attachComponent(this.delegate, container, this.component, ['ion-page'], this.componentProps);
     await deepReady(this.usersElement);
 
     writeTask(() => this.el.classList.add('show-modal'));
