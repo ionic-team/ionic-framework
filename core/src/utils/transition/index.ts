@@ -21,7 +21,7 @@ export const transition = (opts: TransitionOptions): Promise<TransitionResult> =
       beforeTransition(opts);
       runTransition(opts).then(
         (result) => {
-          if (result.animation) {
+          if (result.animation && result.animation.destroy) {
             result.animation.destroy();
           }
           afterTransition(opts);
@@ -102,11 +102,9 @@ const getAnimationBuilder = async (opts: TransitionOptions): Promise<AnimationBu
 const animation = async (animationBuilder: AnimationBuilder, opts: TransitionOptions): Promise<TransitionResult> => {
   await waitForReady(opts, true);
 
-  const trans = animationBuilder(opts.baseEl, opts);
-
   fireWillEvents(opts.enteringEl, opts.leavingEl);
 
-  const didComplete = await playTransition(trans, opts);
+  const { animation, didComplete } = await playTransition(animationBuilder, opts);
 
   if (opts.progressCallback) {
     opts.progressCallback(undefined);
@@ -118,7 +116,7 @@ const animation = async (animationBuilder: AnimationBuilder, opts: TransitionOpt
 
   return {
     hasCompleted: didComplete,
-    animation: trans,
+    animation,
   };
 };
 
@@ -155,27 +153,42 @@ const notifyViewReady = async (
   }
 };
 
-const playTransition = (trans: Animation, opts: TransitionOptions): Promise<boolean> => {
-  const progressCallback = opts.progressCallback;
+const playTransition = async (animationBuilder: AnimationBuilder, opts: TransitionOptions): Promise<{ animation: Animation, didComplete: boolean}> => {
 
-  const promise = new Promise<boolean>((resolve) => {
-    trans.onFinish((currentStep: any) => resolve(currentStep === 1));
-  });
+  let resolvePromise;
+  let promise: Promise<boolean> = new Promise((resolve) => {
+    resolvePromise = () => { resolve(true) };
+  })
 
-  // cool, let's do this, start the transition
-  if (progressCallback) {
-    // this is a swipe to go back, just get the transition progress ready
-    // kick off the swipe animation start
-    trans.progressStart(true);
-    progressCallback(trans);
+  const animation = animationBuilder(opts.baseEl, opts, resolvePromise);
+
+  let didComplete = false;
+  if (animation.beforeAddWrite === undefined) {
+    didComplete = await promise;
   } else {
-    // only the top level transition should actually start "play"
-    // kick it off and let it play through
-    // ******** DOM WRITE ****************
-    trans.play();
+    const progressCallback = opts.progressCallback;
+
+    promise = new Promise<boolean>((resolve) => {
+      animation.onFinish((currentStep: any) => resolve(currentStep === 1));
+    });
+
+    // cool, let's do this, start the transition
+    if (progressCallback) {
+      // this is a swipe to go back, just get the transition progress ready
+      // kick off the swipe animation start
+      animation.progressStart(true);
+      progressCallback(animation);
+    } else {
+      // only the top level transition should actually start "play"
+      // kick it off and let it play through
+      // ******** DOM WRITE ****************
+      animation.play();
+      didComplete = await promise;
+    }
   }
+
   // create a callback for when the animation is done
-  return promise;
+  return { didComplete, animation };
 };
 
 const fireWillEvents = (enteringEl: HTMLElement | undefined, leavingEl: HTMLElement | undefined) => {

@@ -12,6 +12,11 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <script type="module">
+      import * as motion from 'https://esm.run/motion';
+
+      window.motionOne = motion;
+    </script>
     <script>
       class PageOne extends HTMLElement {
         connectedCallback() {
@@ -127,5 +132,26 @@
 
   <script>
     document.querySelector('ion-route[component=page-three]').componentProps = { param: 'route' };
+
+    const routerOutlet = document.querySelector('ion-router-outlet');
+
+    routerOutlet.animation = async (el, opts, done) => {
+      const { enteringEl, leavingEl, direction } = opts;
+      const { animate, spring } = window.motionOne;
+      const enteringAni = animate(enteringEl, {
+        opacity: [1, 1],
+        x: ['100%', '0%']
+      }, {  easing: spring() });
+
+      const leavingAni = animate(leavingEl, {
+        opacity: [1, 1],
+        easing: spring(),
+        x: '-100%'
+      }, {  easing: spring() })
+
+      await Promise.all([enteringAni.finished, leavingAni.finished]);
+
+      done();
+    }
   </script>
 </html>
