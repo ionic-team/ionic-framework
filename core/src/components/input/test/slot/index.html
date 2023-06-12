@@ -99,6 +99,7 @@
         </div>
 
         <ion-button onclick="addSlot()">Add Slotted Content</ion-button>
+        <ion-button onclick="updateSlot()">Update Slotted Content</ion-button>
         <ion-button onclick="removeSlot()">Remove Slotted Content</ion-button>
       </ion-content>
     </ion-app>
@@ -106,19 +107,31 @@
     <script>
       const solidAsync = document.querySelector('#solid-async');
 
+      const getSlottedContent = () => {
+        return solidAsync.querySelector('[slot="label"]');
+      };
+
       const addSlot = () => {
-        if (solidAsync.querySelector('[slot="label"]') === null) {
+        if (getSlottedContent() === null) {
           const labelEl = document.createElement('div');
           labelEl.slot = 'label';
-          labelEl.innerHTML = 'Email <span class="required">*</span';
+          labelEl.innerHTML = 'Email <span class="required">*</span>';
 
           solidAsync.appendChild(labelEl);
         }
       };
 
       const removeSlot = () => {
-        if (solidAsync.querySelector('[slot="label"]') !== null) {
+        if (getSlottedContent() !== null) {
           solidAsync.querySelector('[slot="label"]').remove();
+        }
+      };
+
+      const updateSlot = () => {
+        const slottedContent = getSlottedContent();
+
+        if (slottedContent !== null) {
+          slottedContent.textContent = 'This is my really really really long text';
         }
       };
     </script>
