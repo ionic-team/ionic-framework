@@ -3,6 +3,23 @@ import { raf } from '@utils/helpers';
 
 type NotchElement = HTMLIonInputElement | HTMLIonSelectElement;
 
+/**
+ * A utility to calculate the size of an outline notch
+ * width relative to the content passed. This is used in
+ * components such as `ion-select` with `fill="outline"`
+ * where we need to pass slotted HTML content. This is not
+ * needed when rendering plaintext content because we can
+ * render the plaintext again hidden with `opacity: 0` inside
+ * of the notch. As a result we can rely on the intrinsic size
+ * of the element to correctly compute the notch width. We
+ * cannot do this with slotted content because we cannot project
+ * it into 2 places at once.
+ *
+ * @internal
+ * @param el: The host element
+ * @param getNotchSpacerEl: A function that returns a reference to the notch spacer element inside of the component template.
+ * @param getLabelSlot: A function that returns a reference to the slotted content.
+ */
 export const createNotchController = (
   el: NotchElement,
   getNotchSpacerEl: () => HTMLElement | undefined,
@@ -37,7 +54,7 @@ export const createNotchController = (
     if (needsExplicitNotchWidth()) {
       /**
        * Run this the frame after
-       * the browser has re-painted the select.
+       * the browser has re-painted the host element.
        * Otherwise, the label element may have a width
        * of 0 and the IntersectionObserver will be used.
        */
@@ -83,7 +100,7 @@ export const createNotchController = (
        * to become visible before setting the notch width.
        *
        * We do not check el.offsetParent because
-       * that can be null if ion-select has
+       * that can be null if the host element has
        * position: fixed applied to it.
        * notchSpacerEl does not have position: fixed.
        */
@@ -116,7 +133,7 @@ export const createNotchController = (
           }
         },
         /**
-         * Set the root to be the select
+         * Set the root to be the host element
          * This causes the IO callback
          * to be fired in WebKit as soon as the element
          * is visible. If we used the default root value
@@ -135,8 +152,8 @@ export const createNotchController = (
      * If the element is visible then we can set the notch width.
      * The notch is only visible when the label is scaled,
      * which is why we multiply the width by 0.75 as this is
-     * the same amount the label element is scaled by in the
-     * select CSS (See $select-floating-label-scale in select.vars.scss).
+     * the same amount the label element is scaled by in the host CSS.
+     * (For ion-select, see $select-floating-label-scale in select.vars.scss).
      */
     notchSpacerEl.style.setProperty('width', `${width * 0.75}px`);
   };
