@@ -2664,6 +2664,9 @@ export namespace Components {
          */
         "value": SegmentValue;
     }
+    /**
+     * @experimental The label text to associate with the select. Use the "labelPlacement" property to control where the label is placed relative to the select. Use this if you need to render a label with custom HTML.
+     */
     interface IonSelect {
         /**
           * The text to display on the cancel button.
@@ -3837,6 +3840,9 @@ declare global {
         prototype: HTMLIonSegmentButtonElement;
         new (): HTMLIonSegmentButtonElement;
     };
+    /**
+     * @experimental The label text to associate with the select. Use the "labelPlacement" property to control where the label is placed relative to the select. Use this if you need to render a label with custom HTML.
+     */
     interface HTMLIonSelectElement extends Components.IonSelect, HTMLStencilElement {
     }
     var HTMLIonSelectElement: {
@@ -6738,6 +6744,9 @@ declare namespace LocalJSX {
          */
         "value"?: SegmentValue;
     }
+    /**
+     * @experimental The label text to associate with the select. Use the "labelPlacement" property to control where the label is placed relative to the select. Use this if you need to render a label with custom HTML.
+     */
     interface IonSelect {
         /**
           * The text to display on the cancel button.
@@ -7519,6 +7528,9 @@ declare module "@stencil/core" {
             "ion-searchbar": LocalJSX.IonSearchbar & JSXBase.HTMLAttributes<HTMLIonSearchbarElement>;
             "ion-segment": LocalJSX.IonSegment & JSXBase.HTMLAttributes<HTMLIonSegmentElement>;
             "ion-segment-button": LocalJSX.IonSegmentButton & JSXBase.HTMLAttributes<HTMLIonSegmentButtonElement>;
+            /**
+             * @experimental The label text to associate with the select. Use the "labelPlacement" property to control where the label is placed relative to the select. Use this if you need to render a label with custom HTML.
+             */
             "ion-select": LocalJSX.IonSelect & JSXBase.HTMLAttributes<HTMLIonSelectElement>;
             "ion-select-option": LocalJSX.IonSelectOption & JSXBase.HTMLAttributes<HTMLIonSelectOptionElement>;
             "ion-select-popover": LocalJSX.IonSelectPopover & JSXBase.HTMLAttributes<HTMLIonSelectPopoverElement>;
