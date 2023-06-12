@@ -14,17 +14,6 @@ configs().forEach(({ title, screenshot, config }) => {
       const input = page.locator('ion-input');
       expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-placement-start`));
     });
-
-    test('long label should truncate', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-input label="Email Email Email Email Email Email Email Email Email Email Email Email" value="example@ionic.io" label-placement="start"></ion-input>
-      `,
-        config
-      );
-      const input = page.locator('ion-input');
-      expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-placement-start-long-label`));
-    });
   });
   test.describe(title('input: label placement end'), () => {
     test('label should appear on the ending side of the input', async ({ page }) => {
@@ -37,16 +26,6 @@ configs().forEach(({ title, screenshot, config }) => {
 
       const input = page.locator('ion-input');
       expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-placement-end`));
-    });
-    test('long label should truncate', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-input label="Email Email Email Email Email Email Email Email Email Email Email Email" value="example@ionic.io" label-placement="end"></ion-input>
-      `,
-        config
-      );
-      const input = page.locator('ion-input');
-      expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-placement-end-long-label`));
     });
   });
   test.describe(title('input: label placement fixed'), () => {
@@ -176,6 +155,35 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
       );
       const input = page.locator('ion-input');
       expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-placement-floating-long-label-solid`));
+    });
+  });
+});
+
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('input: label overflow'), () => {
+    test('label property should be truncated with ellipses', async ({ page }) => {
+      await page.setContent(
+        `
+            <ion-input label="Label Label Label Label Label" placeholder="Text Input"></ion-input>
+          `,
+        config
+      );
+
+      const input = page.locator('ion-input');
+      expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-label-truncate`));
+    });
+    test('label slot should be truncated with ellipses', async ({ page }) => {
+      await page.setContent(
+        `
+            <ion-input placeholder="Text Input">
+              <div slot="label">Label Label Label Label Label</div>
+            </ion-input>
+          `,
+        config
+      );
+
+      const input = page.locator('ion-input');
+      expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-label-slot-truncate`));
     });
   });
 });
