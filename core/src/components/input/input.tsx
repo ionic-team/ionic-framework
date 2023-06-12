@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
-import type { LegacyFormController } from '@utils/forms';
-import { createLegacyFormController } from '@utils/forms';
+import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
+import type { LegacyFormController, SlotMutationController } from '@utils/forms';
+import { createLegacyFormController, createSlotMutationController } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, debounceEvent, findItemLabel, inheritAttributes } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
@@ -33,6 +33,7 @@ export class Input implements ComponentInterface {
   private inheritedAttributes: Attributes = {};
   private isComposing = false;
   private legacyFormController!: LegacyFormController;
+  private slotMutationController?: SlotMutationController;
 
   // This flag ensures we log the deprecation warning at most once.
   private hasLoggedDeprecationWarning = false;
@@ -359,6 +360,7 @@ export class Input implements ComponentInterface {
     const { el } = this;
 
     this.legacyFormController = createLegacyFormController(el);
+    this.slotMutationController = createSlotMutationController(el, () => forceUpdate(this));
 
     this.emitStyle();
     this.debounceChanged();
@@ -382,6 +384,11 @@ export class Input implements ComponentInterface {
           detail: this.el,
         })
       );
+    }
+
+    if (this.slotMutationController) {
+      this.slotMutationController.destroy();
+      this.slotMutationController = undefined;
     }
   }
 
