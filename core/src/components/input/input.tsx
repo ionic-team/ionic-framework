@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
-import type { LegacyFormController } from '@utils/forms';
-import { createLegacyFormController } from '@utils/forms';
+import type { LegacyFormController, NotchController } from '@utils/forms';
+import { createLegacyFormController, createNotchController } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, debounceEvent, findItemLabel, inheritAttributes } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
@@ -33,6 +33,9 @@ export class Input implements ComponentInterface {
   private inheritedAttributes: Attributes = {};
   private isComposing = false;
   private legacyFormController!: LegacyFormController;
+  private notchSpacerEl: HTMLElement | undefined;
+
+  private notchController?: NotchController;
 
   // This flag ensures we log the deprecation warning at most once.
   private hasLoggedDeprecationWarning = false;
@@ -359,6 +362,11 @@ export class Input implements ComponentInterface {
     const { el } = this;
 
     this.legacyFormController = createLegacyFormController(el);
+    this.notchController = createNotchController(
+      el,
+      () => this.notchSpacerEl,
+      () => this.labelSlot
+    );
 
     this.emitStyle();
     this.debounceChanged();
@@ -375,6 +383,10 @@ export class Input implements ComponentInterface {
     this.originalIonInput = this.ionInput;
   }
 
+  componentDidRender() {
+    this.notchController?.calculateNotchWidth();
+  }
+
   disconnectedCallback() {
     if (Build.isBrowser) {
       document.dispatchEvent(
@@ -382,6 +394,11 @@ export class Input implements ComponentInterface {
           detail: this.el,
         })
       );
+    }
+
+    if (this.notchController) {
+      this.notchController.destroy();
+      this.notchController = undefined;
     }
   }
 
@@ -635,7 +652,7 @@ export class Input implements ComponentInterface {
         <div class="input-outline-container">
           <div class="input-outline-start"></div>
           <div class="input-outline-notch">
-            <div class="notch-spacer" aria-hidden="true">
+            <div class="notch-spacer" aria-hidden="true" ref={(el) => (this.notchSpacerEl = el)}>
               {this.label}
             </div>
           </div>
