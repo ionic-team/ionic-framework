@@ -33,7 +33,7 @@ import type { SelectChangeEventDetail, SelectInterface, SelectCompareFn } from '
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
- * @slot label - @experimental The label text to associate with the select. Use the "labelPlacement" property to control where the label is placed relative to the select. Use this if you need to render a label with custom HTML.
+ * @slot label - The label text to associate with the select. Use the `labelPlacement` property to control where the label is placed relative to the select. Use this if you need to render a label with custom HTML.
  *
  * @part placeholder - The text displayed in the select when there is no value.
  * @part text - The displayed value of the select.
