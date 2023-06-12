@@ -1,12 +1,13 @@
-import { win } from '@utils/window';
+import { win } from '@utils/browser';
+import { raf } from '@utils/helpers';
 
 type NotchElement = HTMLIonInputElement | HTMLIonSelectElement;
 
 export const createNotchController = (
   el: NotchElement,
   getNotchSpacerEl: () => HTMLElement | undefined,
-  getLabelSlot: () => HTMLElement | undefined
-) => {
+  getLabelSlot: () => Element | null
+): NotchController => {
   let notchVisibilityIO: IntersectionObserver | undefined;
 
   const needsExplicitNotchWidth = () => {
@@ -32,6 +33,33 @@ export const createNotchController = (
     return true;
   };
 
+  const calculateNotchWidth = () => {
+    if (needsExplicitNotchWidth()) {
+      /**
+       * Run this the frame after
+       * the browser has re-painted the select.
+       * Otherwise, the label element may have a width
+       * of 0 and the IntersectionObserver will be used.
+       */
+      raf(() => {
+        setNotchWidth();
+      });
+    }
+  };
+
+  /**
+   * When using a label prop we can render
+   * the label value inside of the notch and
+   * let the browser calculate the size of the notch.
+   * However, we cannot render the label slot in multiple
+   * places so we need to manually calculate the notch dimension
+   * based on the size of the slotted content.
+   *
+   * This function should only be used to set the notch width
+   * on slotted label content. The notch width for label prop
+   * content is automatically calculated based on the
+   * intrinsic size of the label text.
+   */
   const setNotchWidth = () => {
     const notchSpacerEl = getNotchSpacerEl();
 
@@ -113,7 +141,20 @@ export const createNotchController = (
     notchSpacerEl.style.setProperty('width', `${width * 0.75}px`);
   };
 
-  return {
-    setNotchWidth,
+  const destroy = () => {
+    if (notchVisibilityIO) {
+      notchVisibilityIO.disconnect();
+      notchVisibilityIO = undefined;
+    }
   };
+
+  return {
+    calculateNotchWidth,
+    destroy,
+  };
+};
+
+export type NotchController = {
+  calculateNotchWidth: () => void;
+  destroy: () => void;
 };
