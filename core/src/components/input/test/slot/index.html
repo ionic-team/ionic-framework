@@ -93,8 +93,8 @@
           </div>
 
           <div class="grid-item">
-            <h2>Solid / Floating / Async</h2>
-            <ion-input id="solid-async" label-placement="floating" fill="solid" value="hi@ionic.io"></ion-input>
+            <h2>Outline / Floating / Async</h2>
+            <ion-input id="solid-async" label-placement="floating" fill="outline" value="hi@ionic.io"></ion-input>
           </div>
         </div>
 
@@ -107,15 +107,19 @@
       const solidAsync = document.querySelector('#solid-async');
 
       const addSlot = () => {
-        const labelEl = document.createElement('div');
-        labelEl.slot = 'label';
-        labelEl.innerHTML = 'Email <span class="required">*</span';
+        if (solidAsync.querySelector('[slot="label"]') === null) {
+          const labelEl = document.createElement('div');
+          labelEl.slot = 'label';
+          labelEl.innerHTML = 'Email <span class="required">*</span';
 
-        solidAsync.appendChild(labelEl);
+          solidAsync.appendChild(labelEl);
+        }
       };
 
       const removeSlot = () => {
-        solidAsync.querySelector('[slot="label"]').remove();
+        if (solidAsync.querySelector('[slot="label"]') !== null) {
+          solidAsync.querySelector('[slot="label"]').remove();
+        }
       };
     </script>
   </body>
