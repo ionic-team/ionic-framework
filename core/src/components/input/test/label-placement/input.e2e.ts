@@ -187,3 +187,30 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
     });
   });
 });
+
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('input: async label'), () => {
+    test('input should re-render when label slot is added async', async ({ page }) => {
+      await page.setContent(
+        `
+            <ion-input fill="solid" label-placement="stacked" placeholder="Text Input"></ion-input>
+          `,
+        config
+      );
+
+      const input = page.locator('ion-input');
+
+      await input.evaluate((el: HTMLIonInputElement) => {
+        const labelEl = document.createElement('div');
+        labelEl.slot = 'label';
+        labelEl.innerHTML = 'Email <span class="required" style="color: red">*</span';
+
+        el.appendChild(labelEl);
+      });
+
+      await page.waitForChanges();
+
+      expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-async-label`));
+    });
+  });
+});
