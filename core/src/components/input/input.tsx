@@ -360,7 +360,7 @@ export class Input implements ComponentInterface {
     const { el } = this;
 
     this.legacyFormController = createLegacyFormController(el);
-    this.slotMutationController = createSlotMutationController(el, () => forceUpdate(this));
+    this.slotMutationController = createSlotMutationController(el, 'label', () => forceUpdate(this));
 
     this.emitStyle();
     this.debounceChanged();

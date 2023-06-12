@@ -93,18 +93,8 @@
           </div>
 
           <div class="grid-item">
-            <h2>No Fill / Floating / Async</h2>
-            <ion-input id="no-fill-async" label-placement="floating" value="hi@ionic.io"></ion-input>
-          </div>
-
-          <div class="grid-item">
             <h2>Solid / Floating / Async</h2>
             <ion-input id="solid-async" label-placement="floating" fill="solid" value="hi@ionic.io"></ion-input>
-          </div>
-
-          <div class="grid-item">
-            <h2>Outline / Floating / Async</h2>
-            <ion-input id="outline-async" label-placement="floating" fill="outline" value="hi@ionic.io"></ion-input>
           </div>
         </div>
 
@@ -114,24 +104,18 @@
     </ion-app>
 
     <script>
-      const noFillAsync = document.querySelector('#no-fill-async');
       const solidAsync = document.querySelector('#solid-async');
-      const outlineAsync = document.querySelector('#outline-async');
 
       const addSlot = () => {
         const labelEl = document.createElement('div');
         labelEl.slot = 'label';
         labelEl.innerHTML = 'Email <span class="required">*</span';
 
-        noFillAsync.appendChild(labelEl);
         solidAsync.appendChild(labelEl.cloneNode(true));
-        outlineAsync.appendChild(labelEl.cloneNode(true));
       };
 
       const removeSlot = () => {
-        noFillAsync.querySelector('[slot="label"]').remove();
         solidAsync.querySelector('[slot="label"]').remove();
-        outlineAsync.querySelector('[slot="label"]').remove();
       };
     </script>
   </body>
