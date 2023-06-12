@@ -180,3 +180,58 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
     });
   });
 });
+
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('input: label slot'), () => {
+    test('should render the notch correctly with a slotted label', async ({ page }) => {
+      await page.setContent(
+        `
+        <style>
+          .custom-label {
+            font-size: 30px;
+          }
+        </style>
+        <ion-input
+          fill="outline"
+          label-placement="stacked"
+          value="apple"
+        >
+          <div slot="label" class="custom-label">My Label Content</div>
+        </ion-input>
+      `,
+        config
+      );
+
+      const input = page.locator('ion-input');
+      expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-fill-outline-slotted-label`));
+    });
+    test('should render the notch correctly with a slotted label after the input was originally hidden', async ({
+      page,
+    }) => {
+      await page.setContent(
+        `
+        <style>
+          .custom-label {
+            font-size: 30px;
+          }
+        </style>
+        <ion-input
+          fill="outline"
+          label-placement="stacked"
+          value="apple"
+          style="display: none"
+        >
+          <div slot="label" class="custom-label">My Label Content</div>
+        </ion-input>
+      `,
+        config
+      );
+
+      const input = page.locator('ion-input');
+
+      await input.evaluate((el: HTMLIonSelectElement) => el.style.removeProperty('display'));
+
+      expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-fill-outline-hidden-slotted-label`));
+    });
+  });
+});
