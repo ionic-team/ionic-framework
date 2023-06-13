@@ -17,7 +17,7 @@ export const createSlotMutationController = (
   let hostMutationObserver: MutationObserver | undefined;
   let slottedContentMutationObserver: MutationObserver | undefined;
 
-  if (win !== undefined && 'IntersectionObserver' in win) {
+  if (win !== undefined && 'MutationObserver' in win) {
     hostMutationObserver = new MutationObserver((entries) => {
       for (const entry of entries) {
         for (const node of entry.addedNodes) {
