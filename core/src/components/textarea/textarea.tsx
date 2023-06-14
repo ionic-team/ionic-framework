@@ -585,10 +585,12 @@ Developers can use the "legacy" property to continue using the legacy form marku
       return [
         <div class="textarea-outline-container">
           <div class="textarea-outline-start"></div>
-          <div class={{
-            'textarea-outline-notch': true,
-            'textarea-outline-notch-hidden': !this.hasLabel,
-          }}>
+          <div
+            class={{
+              'textarea-outline-notch': true,
+              'textarea-outline-notch-hidden': !this.hasLabel,
+            }}
+          >
             <div class="notch-spacer" aria-hidden="true">
               {this.label}
             </div>
