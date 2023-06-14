@@ -659,7 +659,12 @@ export class Input implements ComponentInterface {
       return [
         <div class="input-outline-container">
           <div class="input-outline-start"></div>
-          <div class="input-outline-notch">
+          <div
+            class={{
+              'input-outline-notch': true,
+              'input-outline-notch-hidden': !this.hasLabel,
+            }}
+          >
             <div class="notch-spacer" aria-hidden="true" ref={(el) => (this.notchSpacerEl = el)}>
               {this.label}
             </div>
