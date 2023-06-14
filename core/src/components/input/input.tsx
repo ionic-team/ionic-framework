@@ -1,12 +1,12 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
-import type { SlotMutationController } from '@utils/slot-mutation-controller';
-import { createSlotMutationController } from '@utils/slot-mutation-controller';
 import type { LegacyFormController, NotchController } from '@utils/forms';
 import { createLegacyFormController, createNotchController } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, debounceEvent, findItemLabel, inheritAttributes } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
+import { createSlotMutationController } from '@utils/slot-mutation-controller';
+import type { SlotMutationController } from '@utils/slot-mutation-controller';
 import { createColorClasses, hostContext } from '@utils/theme';
 import { closeCircle, closeSharp } from 'ionicons/icons';
 
