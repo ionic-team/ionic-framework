@@ -180,3 +180,19 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
     });
   });
 });
+
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+  test.describe.only(title('textarea: notch cutout'), () => {
+    test('notch cutout should be hidden when no label is passed', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-textarea fill="outline" label-placement="stacked" aria-label="my textarea"></ion-textarea>
+      `,
+        config
+      );
+
+      const notchCutout = page.locator('ion-textarea .textarea-outline-notch');
+      await expect(notchCutout).toBeHidden();
+    });
+  });
+});
