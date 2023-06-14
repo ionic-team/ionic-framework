@@ -194,7 +194,7 @@ export class Select implements ComponentInterface {
    * rotation behavior in `md` mode will be disabled. If undefined, `toggleIcon`
    * will be used for when the select is both open and closed.
    */
-  @Prop() toggleIconWhenOpen?: string
+  @Prop() toggleIconWhenOpen?: string;
 
   /**
    * The shape of the select. If "round" it will have an increased border radius.
@@ -942,7 +942,19 @@ export class Select implements ComponentInterface {
   }
 
   private renderSelect() {
-    const { disabled, el, isExpanded, toggleIconWhenOpen, labelPlacement, justify, placeholder, fill, shape, name, value } = this;
+    const {
+      disabled,
+      el,
+      isExpanded,
+      toggleIconWhenOpen,
+      labelPlacement,
+      justify,
+      placeholder,
+      fill,
+      shape,
+      name,
+      value,
+    } = this;
     const mode = getIonMode(this);
     const hasFloatingOrStackedLabel = labelPlacement === 'floating' || labelPlacement === 'stacked';
     const justifyEnabled = !hasFloatingOrStackedLabel;
