@@ -182,7 +182,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
 });
 
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
-  test.describe.only(title('textarea: notch cutout'), () => {
+  test.describe(title('textarea: notch cutout'), () => {
     test('notch cutout should be hidden when no label is passed', async ({ page }) => {
       await page.setContent(
         `
