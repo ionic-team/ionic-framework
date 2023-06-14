@@ -184,6 +184,19 @@ export class Select implements ComponentInterface {
   @Prop() selectedText?: string | null;
 
   /**
+   * The toggle icon to use. Defaults to `chevronExpand` for `ios` mode,
+   * or `caretDownSharp` for `md` mode.
+   */
+  @Prop() toggleIcon?: string;
+
+  /**
+   * The toggle icon to show when the select is open. If defined, the icon
+   * rotation behavior in `md` mode will be disabled. If undefined, `toggleIcon`
+   * will be used for when the select is both open and closed.
+   */
+  @Prop() toggleIconWhenOpen?: string
+
+  /**
    * The shape of the select. If "round" it will have an increased border radius.
    */
   @Prop() shape?: 'round';
@@ -929,7 +942,7 @@ export class Select implements ComponentInterface {
   }
 
   private renderSelect() {
-    const { disabled, el, isExpanded, labelPlacement, justify, placeholder, fill, shape, name, value } = this;
+    const { disabled, el, isExpanded, toggleIconWhenOpen, labelPlacement, justify, placeholder, fill, shape, name, value } = this;
     const mode = getIonMode(this);
     const hasFloatingOrStackedLabel = labelPlacement === 'floating' || labelPlacement === 'stacked';
     const justifyEnabled = !hasFloatingOrStackedLabel;
@@ -948,6 +961,7 @@ export class Select implements ComponentInterface {
           'in-item-color': hostContext('ion-item.ion-color', el),
           'select-disabled': disabled,
           'select-expanded': isExpanded,
+          'has-open-icon': toggleIconWhenOpen !== undefined,
           'has-value': this.hasValue(),
           'has-placeholder': placeholder !== undefined,
           'ion-focusable': true,
@@ -1002,7 +1016,7 @@ Developers can use the "legacy" property to continue using the legacy form marku
       this.hasLoggedDeprecationWarning = true;
     }
 
-    const { disabled, el, inputId, isExpanded, name, placeholder, value } = this;
+    const { disabled, el, inputId, isExpanded, toggleIconWhenOpen, name, placeholder, value } = this;
     const mode = getIonMode(this);
     const { labelText, labelId } = getAriaLabel(el, inputId);
 
@@ -1035,6 +1049,7 @@ Developers can use the "legacy" property to continue using the legacy form marku
           'in-item-color': hostContext('ion-item.ion-color', el),
           'select-disabled': disabled,
           'select-expanded': isExpanded,
+          'has-open-icon': toggleIconWhenOpen !== undefined,
           'legacy-select': true,
         }}
       >
@@ -1083,7 +1098,16 @@ Developers can use the "legacy" property to continue using the legacy form marku
    */
   private renderSelectIcon() {
     const mode = getIonMode(this);
-    const icon = mode === 'ios' ? chevronExpand : caretDownSharp;
+    const { isExpanded, toggleIcon, toggleIconWhenOpen } = this;
+    let icon;
+
+    if (isExpanded && toggleIconWhenOpen !== undefined) {
+      icon = toggleIconWhenOpen;
+    } else {
+      const defaultIcon = mode === 'ios' ? chevronExpand : caretDownSharp;
+      icon = toggleIcon ?? defaultIcon;
+    }
+
     return <ion-icon class="select-icon" part="icon" aria-hidden="true" icon={icon}></ion-icon>;
   }
 

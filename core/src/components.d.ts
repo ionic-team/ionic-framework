@@ -2743,6 +2743,14 @@ export namespace Components {
          */
         "shape"?: 'round';
         /**
+          * The toggle icon to use. Defaults to `chevronExpand` for `ios` mode, or `caretDownSharp` for `md` mode.
+         */
+        "toggleIcon"?: string;
+        /**
+          * The toggle icon to show when the select is open. If defined, the icon rotation behavior in `md` mode will be disabled. If undefined, `toggleIcon` will be used for when the select is both open and closed.
+         */
+        "toggleIconWhenOpen"?: string;
+        /**
           * The value of the select.
          */
         "value"?: any | null;
@@ -6835,6 +6843,14 @@ declare namespace LocalJSX {
           * The shape of the select. If "round" it will have an increased border radius.
          */
         "shape"?: 'round';
+        /**
+          * The toggle icon to use. Defaults to `chevronExpand` for `ios` mode, or `caretDownSharp` for `md` mode.
+         */
+        "toggleIcon"?: string;
+        /**
+          * The toggle icon to show when the select is open. If defined, the icon rotation behavior in `md` mode will be disabled. If undefined, `toggleIcon` will be used for when the select is both open and closed.
+         */
+        "toggleIconWhenOpen"?: string;
         /**
           * The value of the select.
          */
