@@ -304,6 +304,18 @@
           colorName.innerHTML = ev.detail.value;
         });
 
+        // Mock the current day to always have the same screenshots
+        const mockToday = '2023-06-10T16:22';
+        Date = class extends Date {
+          constructor(...args) {
+            if (args.length === 0) {
+              super(mockToday)
+            } else {
+              super(...args);
+            }
+          }
+        }
+
         customDatetime.highlightedDates = [
           {
             date: '2023-06-02',
