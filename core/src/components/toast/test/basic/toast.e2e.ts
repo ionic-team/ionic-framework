@@ -98,6 +98,19 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
   });
 
   /**
+   * Translucency only works on iOS
+   */
+  test.describe(title('toast: translucency with color'), () => {
+    test('should set translucency correctly when color is provided', async ({ page }) => {
+      const toastFixture = new ToastFixture(page);
+      await toastFixture.goto(config);
+
+      const { container } = await toastFixture.openToast('#translucent-color-toast');
+      await toastFixture.screenshot('translucent-color', screenshot, container);
+    });
+  });
+
+  /**
    * This functionality has no mode specific logic.
    */
   test.describe(title('toast: properties'), () => {

@@ -30,6 +30,10 @@
     background: $toast-ios-translucent-background-color;
     backdrop-filter: $toast-ios-translucent-filter;
   }
+
+  :host(.ion-color.toast-translucent) .toast-wrapper {
+    background: rgba(var(--ion-color-base-rgb, 255, 255, 255), $toast-ios-translucent-background-color-alpha);
+  }
 }
 
 .toast-wrapper.toast-top {
