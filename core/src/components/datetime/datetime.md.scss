@@ -70,7 +70,6 @@
 // Individual day button in month
 :host .calendar-day {
   @include padding(13px, 0, 13px, 0px);
-  @include margin(0.25px, null);
 
   width: 42px;
   height: 42px;
