@@ -91,8 +91,49 @@
               <div slot="label">Email <span class="required">*</span></div>
             </ion-input>
           </div>
+
+          <div class="grid-item">
+            <h2>Outline / Floating / Async</h2>
+            <ion-input id="solid-async" label-placement="floating" fill="outline" value="hi@ionic.io"></ion-input>
+          </div>
         </div>
+
+        <ion-button onclick="addSlot()">Add Slotted Content</ion-button>
+        <ion-button onclick="updateSlot()">Update Slotted Content</ion-button>
+        <ion-button onclick="removeSlot()">Remove Slotted Content</ion-button>
       </ion-content>
     </ion-app>
+
+    <script>
+      const solidAsync = document.querySelector('#solid-async');
+
+      const getSlottedContent = () => {
+        return solidAsync.querySelector('[slot="label"]');
+      };
+
+      const addSlot = () => {
+        if (getSlottedContent() === null) {
+          const labelEl = document.createElement('div');
+          labelEl.slot = 'label';
+          labelEl.innerHTML = 'Email <span class="required">*</span>';
+
+          solidAsync.appendChild(labelEl);
+        }
+      };
+
+      const removeSlot = () => {
+        if (getSlottedContent() !== null) {
+          solidAsync.querySelector('[slot="label"]').remove();
+        }
+      };
+
+      const updateSlot = () => {
+        const slottedContent = getSlottedContent();
+
+        if (slottedContent !== null) {
+          slottedContent.textContent = 'This is my really really really long text';
+        }
+      };
+    </script>
   </body>
 </html>
