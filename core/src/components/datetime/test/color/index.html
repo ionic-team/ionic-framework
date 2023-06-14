@@ -309,12 +309,12 @@
         Date = class extends Date {
           constructor(...args) {
             if (args.length === 0) {
-              super(mockToday)
+              super(mockToday);
             } else {
               super(...args);
             }
           }
-        }
+        };
 
         customDatetime.highlightedDates = [
           {
