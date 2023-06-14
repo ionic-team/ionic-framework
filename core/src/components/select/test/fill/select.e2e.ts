@@ -224,4 +224,17 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       expect(await select.screenshot()).toMatchSnapshot(screenshot(`select-fill-outline-hidden-slotted-label`));
     });
   });
+  test.describe(title('select: notch cutout'), () => {
+    test('notch cutout should be hidden when no label is passed', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-select fill="outline" label-placement="stacked" aria-label="my select"></ion-select>
+      `,
+        config
+      );
+
+      const notchCutout = page.locator('ion-select .select-outline-notch');
+      await expect(notchCutout).toBeHidden();
+    });
+  });
 });
