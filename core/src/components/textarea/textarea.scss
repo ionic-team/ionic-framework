@@ -62,8 +62,6 @@
 
   font-family: $font-family-base;
 
-  white-space: pre-wrap;
-
   z-index: $z-index-item-input;
 
   box-sizing: border-box;
@@ -74,6 +72,8 @@
   flex: 1;
 
   background: var(--background);
+
+  white-space: pre-wrap;
 }
 
 // TODO: FW-2876 - Remove this selector
@@ -131,9 +131,8 @@
   outline: none;
 
   background: transparent;
-  box-sizing: border-box;
-  resize: none;
-  appearance: none;
+
+  white-space: pre-wrap;
 
   /**
    * This ensures the textarea
@@ -145,6 +144,9 @@
    * contrast of the textarea.
    */
   z-index: 1;
+  box-sizing: border-box;
+  resize: none;
+  appearance: none;
 
   &::placeholder {
     @include padding(0);
@@ -157,6 +159,11 @@
 
     opacity: var(--placeholder-opacity);
   }
+}
+
+// TODO: FW-2876 - Remove this selector
+:host(.legacy-textarea) .native-textarea {
+  white-space: inherit;
 }
 
 // TODO: FW-2876 - Remove this selector
