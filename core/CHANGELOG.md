@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.13-nightly.20230614](https://github.com/ionic-team/ionic-framework/compare/v7.0.12...v7.0.13-nightly.20230614) (2023-06-14)
+
+
+### Bug Fixes
+
+* **react:** onDoubleClick fires on components ([#27611](https://github.com/ionic-team/ionic-framework/issues/27611)) ([3e191df](https://github.com/ionic-team/ionic-framework/commit/3e191df3dd43dcdd5a5f717166d4db9834340a2b)), closes [#21320](https://github.com/ionic-team/ionic-framework/issues/21320)
+
+
+
+
+
 ## [7.0.12](https://github.com/ionic-team/ionic-framework/compare/v7.0.11...v7.0.12) (2023-06-08)
 
 
