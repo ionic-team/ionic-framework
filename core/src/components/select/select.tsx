@@ -910,7 +910,12 @@ export class Select implements ComponentInterface {
       return [
         <div class="select-outline-container">
           <div class="select-outline-start"></div>
-          <div class="select-outline-notch">
+          <div
+            class={{
+              'select-outline-notch': true,
+              'select-outline-notch-hidden': !this.hasLabel,
+            }}
+          >
             <div class="notch-spacer" aria-hidden="true" ref={(el) => (this.notchSpacerEl = el)}>
               {this.label}
             </div>
