@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.14](https://github.com/ionic-team/ionic-framework/compare/v7.0.13...v7.0.14) (2023-06-15)
+
+
+### Bug Fixes
+
+* **keyboard:** keyboard events emit correctly when Capacitor is available but the Keyboard plugin is not ([#27655](https://github.com/ionic-team/ionic-framework/issues/27655)) ([7a38a00](https://github.com/ionic-team/ionic-framework/commit/7a38a006a94f1240d93102f2f42bbfc4d76a679e)), closes [#27654](https://github.com/ionic-team/ionic-framework/issues/27654)
+* **toast:** allow color for translucent toast ([#27652](https://github.com/ionic-team/ionic-framework/issues/27652)) ([d555375](https://github.com/ionic-team/ionic-framework/commit/d555375c146639b32e85c57a8cdd4d52313ef4cf)), closes [#27567](https://github.com/ionic-team/ionic-framework/issues/27567)
+
+
+
+
+
 ## [7.0.13](https://github.com/ionic-team/ionic-framework/compare/v7.0.12...v7.0.13) (2023-06-14)
 
 
