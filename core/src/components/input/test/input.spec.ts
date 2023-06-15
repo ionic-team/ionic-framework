@@ -81,13 +81,13 @@ describe('input: label rendering', () => {
 
     const labelText = input.querySelector('.label-text-wrapper');
 
-    expect(labelText.textContent).toBe('Label Prop Slot');
+    expect(labelText.textContent).toBe('Label Slot Text');
   });
   it('should render label prop if both prop and slot provided', async () => {
     const page = await newSpecPage({
       components: [Input],
       html: `
-        <ion-input label="Label Prop Text"><div slot="label">Label Prop Slot</div></ion-input>
+        <ion-input label="Label Prop Text"><div slot="label">Label Slot Text</div></ion-input>
       `,
     });
 
