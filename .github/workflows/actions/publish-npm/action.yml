@@ -22,8 +22,8 @@ runs:
     - uses: actions/setup-node@v3
       with:
         node-version: 16.x
-    - name: Install root dependencies
-      run: npm ci
+    - name: Install latest npm
+      run: npm install -g npm@latest
       shell: bash
     - name: Install Dependencies
       run: npx lerna bootstrap --include-dependencies --scope ${{ inputs.scope }} --ignore-scripts -- --legacy-peer-deps
