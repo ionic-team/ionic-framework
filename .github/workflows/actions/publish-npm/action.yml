@@ -23,14 +23,14 @@ runs:
       with:
         node-version: 16.x
     - name: Install root dependencies
-      run: npm i lerna@5
+      run: npm ci
       shell: bash
     - name: Install Dependencies
-      run: lerna bootstrap --include-dependencies --scope ${{ inputs.scope }} --ignore-scripts -- --legacy-peer-deps
+      run: npx lerna bootstrap --include-dependencies --scope ${{ inputs.scope }} --ignore-scripts -- --legacy-peer-deps
       shell: bash
       working-directory: ${{ inputs.working-directory }}
     - name: Update Version
-      run: lerna version ${{ inputs.version }} --yes --exact --no-changelog --no-push --no-git-tag-version --preid=${{ inputs.preid }}
+      run: npx lerna version ${{ inputs.version }} --yes --exact --no-changelog --no-push --no-git-tag-version --preid=${{ inputs.preid }}
       shell: bash
       working-directory: ${{ inputs.working-directory }}
     - name: Run Build
