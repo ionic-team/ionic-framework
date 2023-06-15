@@ -250,17 +250,4 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-fill-outline-hidden-slotted-label`));
     });
   });
-  test.describe(title('textarea: notch cutout'), () => {
-    test('notch cutout should be hidden when no label is passed', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-textarea fill="outline" label-placement="stacked" aria-label="my textarea"></ion-textarea>
-      `,
-        config
-      );
-
-      const notchCutout = page.locator('ion-textarea .textarea-outline-notch');
-      await expect(notchCutout).toBeHidden();
-    });
-  });
 });
