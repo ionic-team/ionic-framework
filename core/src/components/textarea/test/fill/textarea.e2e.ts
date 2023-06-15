@@ -17,7 +17,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
             helper-text="Enter your email"
             maxlength="20"
             counter="true"
-          ></ion-input>
+          ></ion-textarea>
         `,
           config
         );
@@ -193,6 +193,61 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
       const notchCutout = page.locator('ion-textarea .textarea-outline-notch');
       await expect(notchCutout).toBeHidden();
+    });
+  });
+});
+
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('textarea: label slot'), () => {
+    test('should render the notch correctly with a slotted label', async ({ page }) => {
+      await page.setContent(
+        `
+        <style>
+          .custom-label {
+            font-size: 30px;
+          }
+        </style>
+        <ion-textarea
+          fill="outline"
+          label-placement="stacked"
+          value="apple"
+        >
+          <div slot="label" class="custom-label">My Label Content</div>
+        </ion-textarea>
+      `,
+        config
+      );
+
+      const textarea = page.locator('ion-textarea');
+      expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-fill-outline-slotted-label`));
+    });
+    test('should render the notch correctly with a slotted label after the textarea was originally hidden', async ({
+      page,
+    }) => {
+      await page.setContent(
+        `
+        <style>
+          .custom-label {
+            font-size: 30px;
+          }
+        </style>
+        <ion-textarea
+          fill="outline"
+          label-placement="stacked"
+          value="apple"
+          style="display: none"
+        >
+          <div slot="label" class="custom-label">My Label Content</div>
+        </ion-textarea>
+      `,
+        config
+      );
+
+      const textarea = page.locator('ion-textarea');
+
+      await textarea.evaluate((el: HTMLIonSelectElement) => el.style.removeProperty('display'));
+
+      expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-fill-outline-hidden-slotted-label`));
     });
   });
 });
