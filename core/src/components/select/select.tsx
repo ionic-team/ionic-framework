@@ -1111,7 +1111,7 @@ Developers can use the "legacy" property to continue using the legacy form marku
   private renderSelectIcon() {
     const mode = getIonMode(this);
     const { isExpanded, toggleIcon, toggleIconWhenOpen } = this;
-    let icon;
+    let icon: string;
 
     if (isExpanded && toggleIconWhenOpen !== undefined) {
       icon = toggleIconWhenOpen;
