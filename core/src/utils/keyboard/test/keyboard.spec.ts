@@ -38,6 +38,14 @@ const mockVisualViewport = (
   return win;
 };
 
+const mockCapacitor = (win: Window) => {
+  win.Capacitor = {
+    isPluginAvailable: () => false,
+  };
+
+  console.log('mocking', win.Capacitor);
+};
+
 const resizeVisualViewport = (win: Window, visualViewport: any = {}) => {
   win.visualViewport = Object.assign(win.visualViewport, visualViewport);
 
@@ -249,5 +257,21 @@ describe('Keyboard Assist Integration', () => {
   it('should not set keyboard open on orientation change', () => {
     resizeVisualViewport(window, { width: 568, height: 320 });
     expect(window.dispatchEvent.mock.calls.length).toEqual(0);
+  });
+});
+
+describe('Keyboard Assist with Capacitor', () => {
+  beforeEach(() => {
+    resetKeyboardAssist(window);
+    mockCapacitor(window);
+    mockVisualViewport(window);
+    startKeyboardAssist(window);
+  });
+
+  it('should attach visual viewport listeners when Capacitor is available but the Keyboard plugin is not', () => {
+    resizeVisualViewport(window, { width: 320, height: 350 });
+
+    expect(window.dispatchEvent.mock.calls.length).toEqual(1);
+    expect(window.dispatchEvent.mock.calls[0][0].type).toEqual(KEYBOARD_DID_OPEN);
   });
 });
