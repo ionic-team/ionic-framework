@@ -31,7 +31,7 @@ export const startKeyboardAssist = (win: Window) => {
    * how it resizes such that the Visual Viewport API is not
    * reliable here.
    */
-  if (nativeEngine !== undefined) {
+  if (!!nativeEngine) {
     startNativeListeners(win);
   } else {
     if (!(win as any).visualViewport) {
