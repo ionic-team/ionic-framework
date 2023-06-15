@@ -316,7 +316,8 @@ button {
  * then the element should be hidden otherwise
  * there will be additional margins added.
  */
-.label-text-wrapper-hidden {
+.label-text-wrapper-hidden,
+.select-outline-notch-hidden {
   display: none;
 }
 
