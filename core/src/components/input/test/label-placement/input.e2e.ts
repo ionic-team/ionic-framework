@@ -161,7 +161,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
 
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('input: label overflow'), () => {
-    test('label property should be truncated with ellipses', async ({ page }) => {
+    test('label property should be truncated with an ellipsis', async ({ page }) => {
       await page.setContent(
         `
             <ion-input label="Label Label Label Label Label" placeholder="Text Input"></ion-input>
