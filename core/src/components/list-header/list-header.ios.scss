@@ -32,7 +32,7 @@
 ::slotted(ion-button) {
   @include margin(null, 3px);
 
-  height: 1.4em;
+  min-height: 1.4em;
 }
 
 
