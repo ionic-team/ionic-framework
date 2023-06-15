@@ -42,8 +42,6 @@ const mockCapacitor = (win: Window) => {
   win.Capacitor = {
     isPluginAvailable: () => false,
   };
-
-  console.log('mocking', win.Capacitor);
 };
 
 const resizeVisualViewport = (win: Window, visualViewport: any = {}) => {
