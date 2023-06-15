@@ -95,12 +95,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
       const { container } = await toastFixture.openToast('#translucent-toast');
       await toastFixture.screenshot('translucent', screenshot, container);
     });
-  });
 
-  /**
-   * Translucency only works on iOS
-   */
-  test.describe(title('toast: translucency with color'), () => {
     test('should set translucency correctly when color is provided', async ({ page }) => {
       const toastFixture = new ToastFixture(page);
       await toastFixture.goto(config);

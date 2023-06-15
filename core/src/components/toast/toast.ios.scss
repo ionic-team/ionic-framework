@@ -32,7 +32,7 @@
   }
 
   :host(.ion-color.toast-translucent) .toast-wrapper {
-    background: rgba(var(--ion-color-base-rgb, 255, 255, 255), $toast-ios-translucent-background-color-alpha);
+    background: #{current-color(base, $toast-ios-translucent-background-color-alpha)};
   }
 }
 
