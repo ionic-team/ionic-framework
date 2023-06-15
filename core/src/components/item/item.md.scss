@@ -336,7 +336,8 @@
   --padding-start: .6em;
   --padding-end: .6em;
 
-  min-height: 25px;
+  // 25.19 avoids a chrome quirk
+  min-height: 25.19px;
 
   font-size: 12px;
 }
