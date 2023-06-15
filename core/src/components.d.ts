@@ -1139,9 +1139,6 @@ export namespace Components {
          */
         "loadingText"?: string | IonicSafeString;
     }
-    /**
-     * @experimental The label text to associate with the input. Use the `labelPlacement` property to control where the label is placed relative to the input. Use this if you need to render a label with custom HTML.
-     */
     interface IonInput {
         /**
           * This attribute is ignored.
@@ -3594,9 +3591,6 @@ declare global {
         prototype: HTMLIonInfiniteScrollContentElement;
         new (): HTMLIonInfiniteScrollContentElement;
     };
-    /**
-     * @experimental The label text to associate with the input. Use the `labelPlacement` property to control where the label is placed relative to the input. Use this if you need to render a label with custom HTML.
-     */
     interface HTMLIonInputElement extends Components.IonInput, HTMLStencilElement {
     }
     var HTMLIonInputElement: {
@@ -5183,9 +5177,6 @@ declare namespace LocalJSX {
          */
         "loadingText"?: string | IonicSafeString;
     }
-    /**
-     * @experimental The label text to associate with the input. Use the `labelPlacement` property to control where the label is placed relative to the input. Use this if you need to render a label with custom HTML.
-     */
     interface IonInput {
         /**
           * This attribute is ignored.
@@ -7487,9 +7478,6 @@ declare module "@stencil/core" {
             "ion-img": LocalJSX.IonImg & JSXBase.HTMLAttributes<HTMLIonImgElement>;
             "ion-infinite-scroll": LocalJSX.IonInfiniteScroll & JSXBase.HTMLAttributes<HTMLIonInfiniteScrollElement>;
             "ion-infinite-scroll-content": LocalJSX.IonInfiniteScrollContent & JSXBase.HTMLAttributes<HTMLIonInfiniteScrollContentElement>;
-            /**
-             * @experimental The label text to associate with the input. Use the `labelPlacement` property to control where the label is placed relative to the input. Use this if you need to render a label with custom HTML.
-             */
             "ion-input": LocalJSX.IonInput & JSXBase.HTMLAttributes<HTMLIonInputElement>;
             "ion-item": LocalJSX.IonItem & JSXBase.HTMLAttributes<HTMLIonItemElement>;
             "ion-item-divider": LocalJSX.IonItemDivider & JSXBase.HTMLAttributes<HTMLIonItemDividerElement>;
