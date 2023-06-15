@@ -2921,9 +2921,6 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
     }
-    /**
-     * @experimental The label text to associate with the textarea. Use the `labelPlacement` property to control where the label is placed relative to the textarea. Use this if you need to render a label with custom HTML.
-     */
     interface IonTextarea {
         /**
           * If `true`, the textarea container will grow and shrink based on the contents of the textarea.
@@ -3912,9 +3909,6 @@ declare global {
         prototype: HTMLIonTextElement;
         new (): HTMLIonTextElement;
     };
-    /**
-     * @experimental The label text to associate with the textarea. Use the `labelPlacement` property to control where the label is placed relative to the textarea. Use this if you need to render a label with custom HTML.
-     */
     interface HTMLIonTextareaElement extends Components.IonTextarea, HTMLStencilElement {
     }
     var HTMLIonTextareaElement: {
@@ -7027,9 +7021,6 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
     }
-    /**
-     * @experimental The label text to associate with the textarea. Use the `labelPlacement` property to control where the label is placed relative to the textarea. Use this if you need to render a label with custom HTML.
-     */
     interface IonTextarea {
         /**
           * If `true`, the textarea container will grow and shrink based on the contents of the textarea.
@@ -7551,9 +7542,6 @@ declare module "@stencil/core" {
             "ion-tab-button": LocalJSX.IonTabButton & JSXBase.HTMLAttributes<HTMLIonTabButtonElement>;
             "ion-tabs": LocalJSX.IonTabs & JSXBase.HTMLAttributes<HTMLIonTabsElement>;
             "ion-text": LocalJSX.IonText & JSXBase.HTMLAttributes<HTMLIonTextElement>;
-            /**
-             * @experimental The label text to associate with the textarea. Use the `labelPlacement` property to control where the label is placed relative to the textarea. Use this if you need to render a label with custom HTML.
-             */
             "ion-textarea": LocalJSX.IonTextarea & JSXBase.HTMLAttributes<HTMLIonTextareaElement>;
             "ion-thumbnail": LocalJSX.IonThumbnail & JSXBase.HTMLAttributes<HTMLIonThumbnailElement>;
             "ion-title": LocalJSX.IonTitle & JSXBase.HTMLAttributes<HTMLIonTitleElement>;

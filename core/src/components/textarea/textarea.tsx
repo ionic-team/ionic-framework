@@ -16,7 +16,7 @@ import type { TextareaChangeEventDetail, TextareaInputEventDetail } from './text
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
- * @slot label - @experimental The label text to associate with the textarea. Use the `labelPlacement` property to control where the label is placed relative to the textarea. Use this if you need to render a label with custom HTML.
+ * @slot label - The label text to associate with the textarea. Use the `labelPlacement` property to control where the label is placed relative to the textarea. Use this if you need to render a label with custom HTML. (EXPERIMENTAL)
  */
 @Component({
   tag: 'ion-textarea',
