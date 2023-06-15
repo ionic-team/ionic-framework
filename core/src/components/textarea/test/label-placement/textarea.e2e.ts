@@ -225,7 +225,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       const textarea = page.locator('ion-textarea');
       expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-label-truncate`));
     });
-    test('label slot should be truncated with ellipses', async ({ page }) => {
+    test('label slot should be truncated with an ellipsis', async ({ page }) => {
       await page.setContent(
         `
             <ion-textarea placeholder="Text Input">
