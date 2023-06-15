@@ -336,7 +336,9 @@
   --padding-start: .6em;
   --padding-end: .6em;
 
-  // 25.19 avoids a chrome quirk
+  // 25.19 avoids a chrome quirk with sizing
+  // and avoids a firefox quirk where icons in buttons
+  // were not centered
   min-height: 25.19px;
 
   font-size: 12px;
