@@ -240,3 +240,30 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
     });
   });
 });
+
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('textarea: async label'), () => {
+    test('textarea should re-render when label slot is added async', async ({ page }) => {
+      await page.setContent(
+        `
+            <ion-textarea fill="solid" label-placement="stacked" placeholder="Text Input"></ion-textarea>
+          `,
+        config
+      );
+
+      const textarea = page.locator('ion-textarea');
+
+      await textarea.evaluate((el: HTMLIonInputElement) => {
+        const labelEl = document.createElement('div');
+        labelEl.slot = 'label';
+        labelEl.innerHTML = 'Comments <span class="required" style="color: red">*</span';
+
+        el.appendChild(labelEl);
+      });
+
+      await page.waitForChanges();
+
+      expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-async-label`));
+    });
+  });
+});
