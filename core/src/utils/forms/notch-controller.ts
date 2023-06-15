@@ -1,7 +1,7 @@
 import { win } from '@utils/browser';
 import { raf } from '@utils/helpers';
 
-type NotchElement = HTMLIonInputElement | HTMLIonSelectElement;
+type NotchElement = HTMLIonInputElement | HTMLIonSelectElement | HTMLIonTextareaElement;
 
 /**
  * A utility to calculate the size of an outline notch

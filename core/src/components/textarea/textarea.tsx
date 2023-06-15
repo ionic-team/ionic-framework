@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
-import type { LegacyFormController } from '@utils/forms';
-import { createLegacyFormController } from '@utils/forms';
+import type { LegacyFormController, NotchController } from '@utils/forms';
+import { createLegacyFormController, createNotchController } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, debounceEvent, findItemLabel, inheritAttributes } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
@@ -40,6 +40,9 @@ export class Textarea implements ComponentInterface {
   private inheritedAttributes: Attributes = {};
   private originalIonInput?: EventEmitter<TextareaInputEventDetail>;
   private legacyFormController!: LegacyFormController;
+  private notchSpacerEl: HTMLElement | undefined;
+
+  private notchController?: NotchController;
 
   // This flag ensures we log the deprecation warning at most once.
   private hasLoggedDeprecationWarning = false;
@@ -292,6 +295,11 @@ export class Textarea implements ComponentInterface {
   connectedCallback() {
     const { el } = this;
     this.legacyFormController = createLegacyFormController(el);
+    this.notchController = createNotchController(
+      el,
+      () => this.notchSpacerEl,
+      () => this.labelSlot
+    );
     this.emitStyle();
     this.debounceChanged();
     if (Build.isBrowser) {
@@ -311,6 +319,11 @@ export class Textarea implements ComponentInterface {
         })
       );
     }
+
+    if (this.notchController) {
+      this.notchController.destroy();
+      this.notchController = undefined;
+    }
   }
 
   componentWillLoad() {
@@ -323,6 +336,10 @@ export class Textarea implements ComponentInterface {
   componentDidLoad() {
     this.originalIonInput = this.ionInput;
     this.runAutoGrow();
+  }
+
+  componentDidRender() {
+    this.notchController?.calculateNotchWidth();
   }
 
   /**
@@ -591,7 +608,7 @@ Developers can use the "legacy" property to continue using the legacy form marku
               'textarea-outline-notch-hidden': !this.hasLabel,
             }}
           >
-            <div class="notch-spacer" aria-hidden="true">
+            <div class="notch-spacer" aria-hidden="true" ref={(el) => (this.notchSpacerEl = el)}>
               {this.label}
             </div>
           </div>
