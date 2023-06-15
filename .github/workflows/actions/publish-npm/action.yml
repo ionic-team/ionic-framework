@@ -22,11 +22,9 @@ runs:
     - uses: actions/setup-node@v3
       with:
         node-version: 16.x
+    - name: test123
       run: npm ls lerna
       shell: bash
-      run: lerna bootstrap --include-dependencies --scope ${{ inputs.scope }} --ignore-scripts -- --legacy-peer-deps
-      shell: bash
-      working-directory: ${{ inputs.working-directory }}
     - name: Update Version
       run: lerna version ${{ inputs.version }} --yes --exact --no-changelog --no-push --no-git-tag-version --preid=${{ inputs.preid }}
       shell: bash
