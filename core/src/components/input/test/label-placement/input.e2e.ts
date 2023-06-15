@@ -172,7 +172,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       const input = page.locator('ion-input');
       expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-label-truncate`));
     });
-    test('label slot should be truncated with ellipses', async ({ page }) => {
+    test('label slot should be truncated with an ellipsis', async ({ page }) => {
       await page.setContent(
         `
             <ion-input placeholder="Text Input">
