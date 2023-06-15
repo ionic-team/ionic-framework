@@ -47,7 +47,7 @@ describe('input: rendering', () => {
 
 /**
  * Input uses emulated slots, so the internal
- * behavior will not exactly match IonSelect's slots.
+ * behavior will not exactly match Select's slots.
  * For example, Input does not render an actual `<slot>` element
  * internally, so we do not check for that here. Instead,
  * we check to see which label text is being used.
