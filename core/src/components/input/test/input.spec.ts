@@ -73,7 +73,7 @@ describe('input: label rendering', () => {
     const page = await newSpecPage({
       components: [Input],
       html: `
-        <ion-input><div slot="label">Label Prop Slot</div></ion-input>
+        <ion-input><div slot="label">Label Slot Text</div></ion-input>
       `,
     });
 
