@@ -22,7 +22,10 @@ runs:
     - uses: actions/setup-node@v3
       with:
         node-version: 16.x
-    - name: test123
+    - name: Install Dependencies
+      run: npm ci
+      shell: bash
+    - name: Test Deps!
       run: npm ls lerna
       shell: bash
     - name: Update Version
