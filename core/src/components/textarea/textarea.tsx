@@ -15,6 +15,8 @@ import type { TextareaChangeEventDetail, TextareaInputEventDetail } from './text
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
+ * @slot label - The label text to associate with the textarea. Use the `labelPlacement` property to control where the label is placed relative to the textarea. Use this if you need to render a label with custom HTML. (EXPERIMENTAL)
  */
 @Component({
   tag: 'ion-textarea',
@@ -205,6 +207,10 @@ export class Textarea implements ComponentInterface {
 
   /**
    * The visible label associated with the textarea.
+   *
+   * Use this if you need to render a plaintext label.
+   *
+   * The `label` property will take priority over the `label` slot if both are used.
    */
   @Prop() label?: string;
 
@@ -530,15 +536,35 @@ Developers can use the "legacy" property to continue using the legacy form marku
 
   private renderLabel() {
     const { label } = this;
-    if (label === undefined) {
-      return;
-    }
 
     return (
-      <div class="label-text-wrapper">
-        <div class="label-text">{this.label}</div>
+      <div
+        class={{
+          'label-text-wrapper': true,
+          'label-text-wrapper-hidden': !this.hasLabel,
+        }}
+      >
+        {label === undefined ? <slot name="label"></slot> : <div class="label-text">{label}</div>}
       </div>
     );
+  }
+
+  /**
+   * Gets any content passed into the `label` slot,
+   * not the <slot> definition.
+   */
+  private get labelSlot() {
+    return this.el.querySelector('[slot="label"]');
+  }
+
+  /**
+   * Returns `true` if label content is provided
+   * either by a prop or a content. If you want
+   * to get the plaintext value of the label use
+   * the `labelText` getter instead.
+   */
+  private get hasLabel() {
+    return this.label !== undefined || this.labelSlot !== null;
   }
 
   /**
@@ -559,7 +585,12 @@ Developers can use the "legacy" property to continue using the legacy form marku
       return [
         <div class="textarea-outline-container">
           <div class="textarea-outline-start"></div>
-          <div class="textarea-outline-notch">
+          <div
+            class={{
+              'textarea-outline-notch': true,
+              'textarea-outline-notch-hidden': !this.hasLabel,
+            }}
+          >
             <div class="notch-spacer" aria-hidden="true">
               {this.label}
             </div>

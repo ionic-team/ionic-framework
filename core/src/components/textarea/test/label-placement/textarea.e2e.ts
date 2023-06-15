@@ -25,18 +25,6 @@ configs().forEach(({ title, screenshot, config }) => {
       const textarea = page.locator('ion-textarea');
       expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-placement-start-multi-line-value`));
     });
-
-    test('label should be truncated', async ({ page }) => {
-      await page.setContent(
-        `
-      <ion-textarea label="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur." label-placement="start"></ion-textarea>
-    `,
-        config
-      );
-
-      const textarea = page.locator('ion-textarea');
-      expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-placement-start-label-truncated`));
-    });
   });
   test.describe(title('textarea: label placement end'), () => {
     test('label should appear on the ending side of the textarea', async ({ page }) => {
@@ -60,17 +48,6 @@ configs().forEach(({ title, screenshot, config }) => {
 
       const textarea = page.locator('ion-textarea');
       expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-placement-end-multi-line-value`));
-    });
-    test('label should be truncated', async ({ page }) => {
-      await page.setContent(
-        `
-      <ion-textarea label="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur." label-placement="end"></ion-textarea>
-    `,
-        config
-      );
-
-      const textarea = page.locator('ion-textarea');
-      expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-placement-end-label-truncated`));
     });
   });
   test.describe(title('textarea: label placement fixed'), () => {
@@ -231,6 +208,35 @@ configs().forEach(({ title, screenshot, config }) => {
 
       const textarea = page.locator('ion-textarea');
       expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-placement-floating-label-truncated`));
+    });
+  });
+});
+
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('textarea: label overflow'), () => {
+    test('label property should be truncated with an ellipsis', async ({ page }) => {
+      await page.setContent(
+        `
+            <ion-textarea label="Label Label Label Label Label" placeholder="Text Input"></ion-textarea>
+          `,
+        config
+      );
+
+      const textarea = page.locator('ion-textarea');
+      expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-label-truncate`));
+    });
+    test('label slot should be truncated with an ellipsis', async ({ page }) => {
+      await page.setContent(
+        `
+            <ion-textarea placeholder="Text Input">
+              <div slot="label">Label Label Label Label Label</div>
+            </ion-textarea>
+          `,
+        config
+      );
+
+      const textarea = page.locator('ion-textarea');
+      expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-label-slot-truncate`));
     });
   });
 });

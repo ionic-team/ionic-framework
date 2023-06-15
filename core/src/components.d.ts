@@ -2987,7 +2987,7 @@ export namespace Components {
          */
         "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
         /**
-          * The visible label associated with the textarea.
+          * The visible label associated with the textarea.  Use this if you need to render a plaintext label.  The `label` property will take priority over the `label` slot if both are used.
          */
         "label"?: string;
         /**
@@ -7083,7 +7083,7 @@ declare namespace LocalJSX {
          */
         "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
         /**
-          * The visible label associated with the textarea.
+          * The visible label associated with the textarea.  Use this if you need to render a plaintext label.  The `label` property will take priority over the `label` slot if both are used.
          */
         "label"?: string;
         /**
