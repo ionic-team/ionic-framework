@@ -79,7 +79,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         config
       );
 
-      const activeDay = page.locator('ion-datetime .calendar-day-active');
+      const activeDay = page.locator('ion-datetime .calendar-day-active .calendar-day-highlight');
 
       await expect(activeDay).toHaveText('25');
 
