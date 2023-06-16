@@ -12,7 +12,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       );
       await page.waitForSelector('.datetime-ready');
 
-      const items = page.locator('.calendar-day:not([disabled])');
+      const items = page.locator('.calendar-day:not([disabled]) .calendar-day-highlight');
 
       /**
        * Datetime calendar grid renders 3 months by default,

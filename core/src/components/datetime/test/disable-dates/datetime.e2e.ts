@@ -2,7 +2,7 @@ import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 import type { E2EPage } from '@utils/test/playwright';
 
-const DISABLED_CALENDAR_DAY_SELECTOR = '.calendar-day[disabled]:not(.calendar-day-padding)';
+const DISABLED_CALENDAR_DAY_SELECTOR = '.calendar-day[disabled]:not(.calendar-day-padding) .calendar-day-highlight';
 
 const queryAllDisabledDays = (page: E2EPage, datetimeSelector = 'ion-datetime') => {
   return page.locator(`${datetimeSelector} ${DISABLED_CALENDAR_DAY_SELECTOR}`);

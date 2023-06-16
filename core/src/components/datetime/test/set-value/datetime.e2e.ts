@@ -12,7 +12,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       await page.waitForChanges();
 
-      const activeDate = page.locator('ion-datetime .calendar-day-active');
+      const activeDate = page.locator('ion-datetime .calendar-day-active .calendar-day-highlight');
       await expect(activeDate).toHaveText('25');
     });
     test('should update the active time when value is initially set', async ({ page }) => {

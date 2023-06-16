@@ -52,7 +52,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       test('should correctly localize calendar day buttons without literal', async ({ page }) => {
         await datetimeFixture.goto(config, 'ja-JP', 'date');
 
-        const datetimeButtons = page.locator('ion-datetime .calendar-day:not([disabled])');
+        const datetimeButtons = page.locator('ion-datetime .calendar-day:not([disabled]) .calendar-day-highlight');
 
         /**
          * Note: The Intl.DateTimeFormat typically adds literals
@@ -97,7 +97,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       await page.waitForSelector('.datetime-ready');
 
-      const datetimeButtons = page.locator('ion-datetime .calendar-day:not([disabled])');
+      const datetimeButtons = page.locator('ion-datetime .calendar-day:not([disabled]) .calendar-day-highlight');
 
       await expect(datetimeButtons.nth(0)).toHaveText('١');
       await expect(datetimeButtons.nth(1)).toHaveText('٢');
