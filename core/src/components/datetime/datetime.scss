@@ -366,7 +366,12 @@ ion-picker-column-internal {
   @include border-radius(32px, 32px, 32px, 32px);
   @include padding(4px, 4px, 4px, 4px);
 
+  display: flex;
+
   position: absolute;
+
+  align-items: center;
+  justify-content: center;
 
   width: 32px;
   height: 32px;

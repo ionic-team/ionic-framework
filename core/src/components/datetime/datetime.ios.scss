@@ -20,7 +20,7 @@
   @include padding($datetime-ios-padding, $datetime-ios-padding, $datetime-ios-padding, $datetime-ios-padding);
 
   border-bottom: $datetime-ios-border-color;
-  
+
   font-size: 14px;
 }
 
@@ -92,20 +92,20 @@
   font-size: 20px;
 }
 
-.calendar-day:focus .calendar-day-highlight,
-.calendar-day.calendar-day-active .calendar-day-highlight {
-  opacity: 0.2;
-}
-
-.calendar-day.calendar-day-active .calendar-day-highlight {
-  background: current-color(base);
-}
-
-// !important is needed here to overwrite custom highlight background, which is inline.
-// Does not apply to the active state because highlights aren't applied at all there.
-.calendar-day:focus .calendar-day-highlight {
+/**
+ * !important is needed here to override custom highlight background, which is inline.
+ *  Does not apply to the active state because highlights aren't applied at all there.
+ */
+.calendar-day:not(.calendar-day-active):focus .calendar-day-highlight {
   /* stylelint-disable-next-line declaration-no-important */
-  background: current-color(base) !important;
+  background: current-color(base, 0.2) !important;
+}
+
+/**
+ * Active days have a background opacity of 0.2,.
+ */
+.calendar-day.calendar-day-active .calendar-day-highlight {
+  background: current-color(base, 0.2);
 }
 
 /**
@@ -135,10 +135,12 @@
   color: current-color(contrast);
 }
 
+/**
+ * If today's date is active then it should
+ * not have a background opacity.
+ */
 .calendar-day.calendar-day-today.calendar-day-active .calendar-day-highlight {
   background: current-color(base);
-
-  opacity: 1;
 }
 
 // Time / Header

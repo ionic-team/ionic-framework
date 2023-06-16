@@ -85,6 +85,11 @@ import {
  *
  * @part month-year-button - The button that opens the month/year picker when
  * using a grid style layout.
+ *
+ * @part calendar-day - The individual buttons that display a day inside of the datetime
+ * calendar.
+ * @part calendar-day active - The currently selected calendar day.
+ * @part calendar-day today - The calendar day that contains the current day.
  */
 @Component({
   tag: 'ion-datetime',
@@ -2098,11 +2103,6 @@ export class Datetime implements ComponentInterface {
                   'calendar-day-active': isActive,
                   'calendar-day-today': isToday,
                 }}
-                style={
-                  dateStyle && {
-                    color: dateStyle.textColor,
-                  }
-                }
                 aria-hidden={isCalendarPadding ? 'true' : null}
                 aria-selected={ariaSelected}
                 aria-label={ariaLabel}
@@ -2139,12 +2139,16 @@ export class Datetime implements ComponentInterface {
                 }}
               >
                 <div
+                  part={`calendar-day${isActive ? ' active' : ''}${isToday ? ' today' : ''}`}
                   class="calendar-day-highlight"
                   style={{
                     backgroundColor: dateStyle?.backgroundColor,
+                    color: dateStyle?.textColor,
                   }}
-                ></div>
-                {text}
+                >
+                  {text}
+                </div>
+                <span style={{ opacity: '0' }}>{text}</span>
               </button>
             );
           })}
