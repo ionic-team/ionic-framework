@@ -344,6 +344,10 @@ button {
   justify-content: start;
 }
 
+:host(.select-justify-center) .select-wrapper {
+  justify-content: center;
+}
+
 :host(.select-justify-end) .select-wrapper {
   justify-content: end;
 }

@@ -113,12 +113,13 @@ export class Select implements ComponentInterface {
    * `"floating"` or `"stacked"`.
    * `"start"`: The label and select will appear on the left in LTR and
    * on the right in RTL.
+   * `"center"`: The label and select will appear on the center.
    * `"end"`: The label and select will appear on the right in LTR and
    * on the left in RTL.
    * `"space-between"`: The label and select will appear on opposite
    * ends of the line with space between the two elements.
    */
-  @Prop() justify: 'start' | 'end' | 'space-between' = 'space-between';
+  @Prop() justify: 'start' | 'center' | 'end' | 'space-between' = 'space-between';
 
   /**
    * The visible label associated with the select.
