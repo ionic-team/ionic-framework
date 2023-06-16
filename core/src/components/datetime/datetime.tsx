@@ -2148,7 +2148,7 @@ export class Datetime implements ComponentInterface {
                 >
                   {text}
                 </div>
-                <span style={{ opacity: '0' }}>{text}</span>
+                <span style={{ opacity: '0' }} aria-hidden="true">{text}</span>
               </button>
             );
           })}
