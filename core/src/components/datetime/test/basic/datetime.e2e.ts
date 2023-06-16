@@ -401,7 +401,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       await page.waitForSelector('.datetime-ready');
 
-      const selectedDay = page.locator('ion-datetime .calendar-day-active');
+      const selectedDay = page.locator('ion-datetime .calendar-day-active .calendar-day-highlight');
 
       await expect(selectedDay).toHaveText('10');
 
