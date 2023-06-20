@@ -1,10 +1,25 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
+import {
+  Build,
+  Component,
+  Element,
+  Event,
+  Host,
+  Method,
+  Prop,
+  State,
+  Watch,
+  forceUpdate,
+  h,
+  writeTask,
+} from '@stencil/core';
 import type { LegacyFormController, NotchController } from '@utils/forms';
 import { createLegacyFormController, createNotchController } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, debounceEvent, findItemLabel, inheritAttributes } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
+import { createSlotMutationController } from '@utils/slot-mutation-controller';
+import type { SlotMutationController } from '@utils/slot-mutation-controller';
 import { createColorClasses, hostContext } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -41,6 +56,8 @@ export class Textarea implements ComponentInterface {
   private originalIonInput?: EventEmitter<TextareaInputEventDetail>;
   private legacyFormController!: LegacyFormController;
   private notchSpacerEl: HTMLElement | undefined;
+
+  private slotMutationController?: SlotMutationController;
 
   private notchController?: NotchController;
 
@@ -295,6 +312,7 @@ export class Textarea implements ComponentInterface {
   connectedCallback() {
     const { el } = this;
     this.legacyFormController = createLegacyFormController(el);
+    this.slotMutationController = createSlotMutationController(el, 'label', () => forceUpdate(this));
     this.notchController = createNotchController(
       el,
       () => this.notchSpacerEl,
@@ -318,6 +336,11 @@ export class Textarea implements ComponentInterface {
           detail: this.el,
         })
       );
+    }
+
+    if (this.slotMutationController) {
+      this.slotMutationController.destroy();
+      this.slotMutationController = undefined;
     }
 
     if (this.notchController) {
