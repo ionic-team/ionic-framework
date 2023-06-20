@@ -19,7 +19,7 @@ import { getCounterText } from './input.utils';
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
- * @slot label - @experimental The label text to associate with the input. Use the `labelPlacement` property to control where the label is placed relative to the input. Use this if you need to render a label with custom HTML.
+ * @slot label - The label text to associate with the input. Use the `labelPlacement` property to control where the label is placed relative to the input. Use this if you need to render a label with custom HTML. (EXPERIMENTAL)
  */
 @Component({
   tag: 'ion-input',
@@ -659,7 +659,12 @@ export class Input implements ComponentInterface {
       return [
         <div class="input-outline-container">
           <div class="input-outline-start"></div>
-          <div class="input-outline-notch">
+          <div
+            class={{
+              'input-outline-notch': true,
+              'input-outline-notch-hidden': !this.hasLabel,
+            }}
+          >
             <div class="notch-spacer" aria-hidden="true" ref={(el) => (this.notchSpacerEl = el)}>
               {this.label}
             </div>
