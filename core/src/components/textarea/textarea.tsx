@@ -58,6 +58,7 @@ export class Textarea implements ComponentInterface {
   private notchSpacerEl: HTMLElement | undefined;
 
   private slotMutationController?: SlotMutationController;
+
   private notchController?: NotchController;
 
   // This flag ensures we log the deprecation warning at most once.
