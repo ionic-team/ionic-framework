@@ -2,6 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 import { findClosestIonContent, disableContentScrollY, resetContentScrollY } from '@utils/content';
 import { isEndSide } from '@utils/helpers';
+import { watchForOptions } from '@utils/watch-options';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Gesture, GestureDetail } from '../../interface';
@@ -47,6 +48,7 @@ export class ItemSliding implements ComponentInterface {
   private gesture?: Gesture;
   private contentEl: HTMLElement | null = null;
   private initialContentScrollY = true;
+  private mutationObserver?: MutationObserver;
 
   @Element() el!: HTMLIonItemSlidingElement;
 
@@ -69,13 +71,19 @@ export class ItemSliding implements ComponentInterface {
   @Event() ionDrag!: EventEmitter;
 
   async connectedCallback() {
-    this.item = this.el.querySelector('ion-item');
-    this.contentEl = findClosestIonContent(this.el);
+    const { el } = this;
+
+    this.item = el.querySelector('ion-item');
+    this.contentEl = findClosestIonContent(el);
 
     await this.updateOptions();
 
+    this.mutationObserver = watchForOptions<HTMLIonItemOptionElement>(el, 'ion-item-option', async () => {
+      await this.updateOptions();
+    });
+
     this.gesture = (await import('../../utils/gesture')).createGesture({
-      el: this.el,
+      el,
       gestureName: 'item-swipe',
       gesturePriority: 100,
       threshold: 5,
@@ -98,6 +106,11 @@ export class ItemSliding implements ComponentInterface {
 
     if (openSlidingItem === this.el) {
       openSlidingItem = undefined;
+    }
+
+    if (this.mutationObserver) {
+      this.mutationObserver.disconnect();
+      this.mutationObserver = undefined;
     }
   }
 
