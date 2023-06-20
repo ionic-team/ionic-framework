@@ -740,7 +740,7 @@ export const IonSelect = /*@__PURE__*/ defineContainer<JSX.IonSelect, JSX.IonSel
   'placeholder',
   'selectedText',
   'toggleIcon',
-  'toggleIconWhenOpen',
+  'expandedIcon',
   'shape',
   'value',
   'ionChange',

@@ -2749,7 +2749,7 @@ export namespace Components {
         /**
           * The toggle icon to show when the select is open. If defined, the icon rotation behavior in `md` mode will be disabled. If undefined, `toggleIcon` will be used for when the select is both open and closed.
          */
-        "toggleIconWhenOpen"?: string;
+        "expandedIcon"?: string;
         /**
           * The value of the select.
          */
@@ -6850,7 +6850,7 @@ declare namespace LocalJSX {
         /**
           * The toggle icon to show when the select is open. If defined, the icon rotation behavior in `md` mode will be disabled. If undefined, `toggleIcon` will be used for when the select is both open and closed.
          */
-        "toggleIconWhenOpen"?: string;
+        "expandedIcon"?: string;
         /**
           * The value of the select.
          */

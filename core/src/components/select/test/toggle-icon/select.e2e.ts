@@ -17,7 +17,7 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, screenshot, co
       await expect(select).toHaveScreenshot(screenshot(`select-toggle-icon`));
     });
 
-    test('should render a custom toggleIconWhenOpen', async ({ page }) => {
+    test('should render a custom expandedIcon', async ({ page }) => {
       await page.setContent(
         `
           <ion-select toggle-icon-when-open="pizza" interface="popover" label="Select" value="a">
