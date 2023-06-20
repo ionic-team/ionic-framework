@@ -95,6 +95,14 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
       const { container } = await toastFixture.openToast('#translucent-toast');
       await toastFixture.screenshot('translucent', screenshot, container);
     });
+
+    test('should set translucency correctly when color is provided', async ({ page }) => {
+      const toastFixture = new ToastFixture(page);
+      await toastFixture.goto(config);
+
+      const { container } = await toastFixture.openToast('#translucent-color-toast');
+      await toastFixture.screenshot('translucent-color', screenshot, container);
+    });
   });
 
   /**
