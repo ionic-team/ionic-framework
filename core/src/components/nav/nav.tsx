@@ -1,11 +1,12 @@
 import type { EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Method, Prop, Watch, h } from '@stencil/core';
+import { printIonWarning } from '@utils/logging';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import type { Animation, AnimationBuilder, ComponentProps, FrameworkDelegate, Gesture } from '../../interface';
 import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
-import { assert } from '../../utils/helpers';
+import { assert, raf } from '../../utils/helpers';
 import type { TransitionOptions } from '../../utils/transition';
 import { lifecycle, setPageHidden, transition } from '../../utils/transition';
 import type { NavOutlet, RouteID, RouteWrite, RouterDirection } from '../router/utils/interface';
@@ -77,12 +78,19 @@ export class Nav implements NavOutlet {
   @Watch('root')
   rootChanged() {
     const isDev = Build.isDev;
-    if (this.root !== undefined) {
-      if (!this.useRouter) {
-        this.setRoot(this.root, this.rootParams);
-      } else if (isDev) {
-        console.warn('<ion-nav> does not support a root attribute when using ion-router.');
-      }
+
+    if (this.root === undefined) {
+      return;
+    }
+
+    if (!this.useRouter) {
+      raf(() => {
+        if (this.root !== undefined) {
+          this.setRoot(this.root, this.rootParams);
+        }
+      });
+    } else if (isDev) {
+      printIonWarning('<ion-nav> does not support a root attribute when using ion-router.', this.el);
     }
   }
 
