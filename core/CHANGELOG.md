@@ -3,6 +3,60 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.14](https://github.com/ionic-team/ionic-framework/compare/v7.0.13...v7.0.14) (2023-06-15)
+
+
+### Bug Fixes
+
+* **keyboard:** keyboard events emit correctly when Capacitor is available but the Keyboard plugin is not ([#27655](https://github.com/ionic-team/ionic-framework/issues/27655)) ([7a38a00](https://github.com/ionic-team/ionic-framework/commit/7a38a006a94f1240d93102f2f42bbfc4d76a679e)), closes [#27654](https://github.com/ionic-team/ionic-framework/issues/27654)
+* **toast:** allow color for translucent toast ([#27652](https://github.com/ionic-team/ionic-framework/issues/27652)) ([d555375](https://github.com/ionic-team/ionic-framework/commit/d555375c146639b32e85c57a8cdd4d52313ef4cf)), closes [#27567](https://github.com/ionic-team/ionic-framework/issues/27567)
+
+
+
+
+
+## [7.0.13](https://github.com/ionic-team/ionic-framework/compare/v7.0.12...v7.0.13) (2023-06-14)
+
+
+### Bug Fixes
+
+* **react:** onDoubleClick fires on components ([#27611](https://github.com/ionic-team/ionic-framework/issues/27611)) ([3e191df](https://github.com/ionic-team/ionic-framework/commit/3e191df3dd43dcdd5a5f717166d4db9834340a2b)), closes [#21320](https://github.com/ionic-team/ionic-framework/issues/21320)
+
+
+
+
+
+## [7.0.12](https://github.com/ionic-team/ionic-framework/compare/v7.0.11...v7.0.12) (2023-06-08)
+
+
+### Bug Fixes
+
+* **refresher:** scroll styles are reset when using non-native refresher ([#27602](https://github.com/ionic-team/ionic-framework/issues/27602)) ([92c5545](https://github.com/ionic-team/ionic-framework/commit/92c55452fdf4ac7b8d15ce75a4e867aab9321cfb)), closes [#27601](https://github.com/ionic-team/ionic-framework/issues/27601)
+
+
+
+
+
+## [7.0.11](https://github.com/ionic-team/ionic-framework/compare/v7.0.9...v7.0.11) (2023-06-07)
+
+
+### Bug Fixes
+
+* **header, footer:** resolve CSP violations with box shadow ([#27560](https://github.com/ionic-team/ionic-framework/issues/27560)) ([e75fa58](https://github.com/ionic-team/ionic-framework/commit/e75fa582c4ca507b09f62bbce649f02ca49da7a0))
+* **item-sliding:** refresh sliding behavior when options are added or removed asynchronously ([#27572](https://github.com/ionic-team/ionic-framework/issues/27572)) ([b2a226a](https://github.com/ionic-team/ionic-framework/commit/b2a226ae663695be0666cd862510d8d843c80b9a)), closes [#25578](https://github.com/ionic-team/ionic-framework/issues/25578)
+* **keyboard:** listen on correct events for keyboard lifecycle ([#27569](https://github.com/ionic-team/ionic-framework/issues/27569)) ([7871210](https://github.com/ionic-team/ionic-framework/commit/7871210e9e4ecc09353b821b60f977498a01ee8d)), closes [#27558](https://github.com/ionic-team/ionic-framework/issues/27558)
+* **radio:** radio with modern syntax is keyboard navigable ([#27530](https://github.com/ionic-team/ionic-framework/issues/27530)) ([d87e692](https://github.com/ionic-team/ionic-framework/commit/d87e692c6c2c3d146514b093853d5e262137a9e5)), closes [#27268](https://github.com/ionic-team/ionic-framework/issues/27268)
+* **select:** prevent click event from firing twice ([#27570](https://github.com/ionic-team/ionic-framework/issues/27570)) ([ba7e60e](https://github.com/ionic-team/ionic-framework/commit/ba7e60e8669b1980b9a0c6267617894e16b4a2d4))
+
+
+### Performance Improvements
+
+* passive event listener for focus visible ([#27568](https://github.com/ionic-team/ionic-framework/issues/27568)) ([e54bf14](https://github.com/ionic-team/ionic-framework/commit/e54bf142c39743913d982a1f1709629b4b034969)), closes [#27566](https://github.com/ionic-team/ionic-framework/issues/27566)
+
+
+
+
+
 ## [7.0.10](https://github.com/ionic-team/ionic-framework/compare/v7.0.9...v7.0.10) (2023-05-31)
 
 

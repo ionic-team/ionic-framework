@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.14](https://github.com/ionic-team/ionic-framework/compare/v7.0.13...v7.0.14) (2023-06-15)
+
+**Note:** Version bump only for package @ionic/docs
+
+
+
+
+
+## [7.0.13](https://github.com/ionic-team/ionic-framework/compare/v7.0.12...v7.0.13) (2023-06-14)
+
+**Note:** Version bump only for package @ionic/docs
+
+
+
+
+
+## [7.0.12](https://github.com/ionic-team/ionic-framework/compare/v7.0.11...v7.0.12) (2023-06-08)
+
+**Note:** Version bump only for package @ionic/docs
+
+
+
+
+
+## [7.0.11](https://github.com/ionic-team/ionic-framework/compare/v7.0.9...v7.0.11) (2023-06-07)
+
+**Note:** Version bump only for package @ionic/docs
+
+
+
+
+
 ## [7.0.10](https://github.com/ionic-team/ionic-framework/compare/v7.0.9...v7.0.10) (2023-05-31)
 
 **Note:** Version bump only for package @ionic/docs
