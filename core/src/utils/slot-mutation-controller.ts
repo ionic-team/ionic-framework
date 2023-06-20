@@ -1,5 +1,5 @@
 import { win } from '@utils/browser';
-
+import { raf } from '@utils/helpers';
 /**
  * Used to update a scoped component that uses emulated slots. This fires when
  * content is passed into the slot or when the content inside of a slot changes.
@@ -31,8 +31,15 @@ export const createSlotMutationController = (
              * content itself for changes. This lets us
              * detect when content inside of the slot changes.
              */
-            watchForSlotChange(node as HTMLElement);
             mutationCallback();
+
+            /**
+             * Adding the listener in an raf
+             * waits until Stencil moves the slotted element
+             * into the correct place in the event that
+             * slotted content is being added.
+             */
+            raf(() => watchForSlotChange(node as HTMLElement));
             return;
           }
         }
@@ -59,15 +66,30 @@ export const createSlotMutationController = (
       slottedContentMutationObserver = undefined;
     }
 
-    slottedContentMutationObserver = new MutationObserver(() => {
+    slottedContentMutationObserver = new MutationObserver((entries) => {
       mutationCallback();
+
+      for (const entry of entries) {
+        for (const node of entry.removedNodes) {
+          /**
+           * If the element was removed then we
+           * need to destroy the MutationObserver
+           * so the element can be garbage collected.
+           */
+          if (node.nodeType === Node.ELEMENT_NODE && (node as HTMLElement).slot === slotName) {
+            destroySlottedContentObserver();
+          }
+        }
+      }
     });
 
     /**
      * Listen for changes inside of the element
      * as well as anything deep in the tree.
+     * We listen on the parentElement so that we can
+     * detect when slotted element itself is removed.
      */
-    slottedContentMutationObserver.observe(slottedEl, { subtree: true, childList: true });
+    slottedContentMutationObserver.observe(slottedEl.parentElement ?? slottedEl, { subtree: true, childList: true });
   };
 
   const destroy = () => {
@@ -76,6 +98,10 @@ export const createSlotMutationController = (
       hostMutationObserver = undefined;
     }
 
+    destroySlottedContentObserver();
+  };
+
+  const destroySlottedContentObserver = () => {
     if (slottedContentMutationObserver) {
       slottedContentMutationObserver.disconnect();
       slottedContentMutationObserver = undefined;

@@ -47,7 +47,7 @@ describe('input: rendering', () => {
 
 /**
  * Input uses emulated slots, so the internal
- * behavior will not exactly match IonSelect's slots.
+ * behavior will not exactly match Select's slots.
  * For example, Input does not render an actual `<slot>` element
  * internally, so we do not check for that here. Instead,
  * we check to see which label text is being used.
@@ -73,7 +73,7 @@ describe('input: label rendering', () => {
     const page = await newSpecPage({
       components: [Input],
       html: `
-        <ion-input><div slot="label">Label Prop Slot</div></ion-input>
+        <ion-input><div slot="label">Label Slot Text</div></ion-input>
       `,
     });
 
@@ -81,13 +81,13 @@ describe('input: label rendering', () => {
 
     const labelText = input.querySelector('.label-text-wrapper');
 
-    expect(labelText.textContent).toBe('Label Prop Slot');
+    expect(labelText.textContent).toBe('Label Slot Text');
   });
   it('should render label prop if both prop and slot provided', async () => {
     const page = await newSpecPage({
       components: [Input],
       html: `
-        <ion-input label="Label Prop Text"><div slot="label">Label Prop Slot</div></ion-input>
+        <ion-input label="Label Prop Text"><div slot="label">Label Slot Text</div></ion-input>
       `,
     });
 
