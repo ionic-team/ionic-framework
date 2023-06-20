@@ -973,7 +973,7 @@ export class Select implements ComponentInterface {
           'in-item-color': hostContext('ion-item.ion-color', el),
           'select-disabled': disabled,
           'select-expanded': isExpanded,
-          'has-open-icon': expandedIcon !== undefined,
+          'has-expanded-icon': expandedIcon !== undefined,
           'has-value': this.hasValue(),
           'has-placeholder': placeholder !== undefined,
           'ion-focusable': true,
@@ -1061,7 +1061,7 @@ Developers can use the "legacy" property to continue using the legacy form marku
           'in-item-color': hostContext('ion-item.ion-color', el),
           'select-disabled': disabled,
           'select-expanded': isExpanded,
-          'has-open-icon': expandedIcon !== undefined,
+          'has-expanded-icon': expandedIcon !== undefined,
           'legacy-select': true,
         }}
       >
