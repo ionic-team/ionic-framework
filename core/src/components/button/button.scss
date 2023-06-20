@@ -56,7 +56,8 @@
   text-align: center;
   text-decoration: none;
 
-  white-space: normal;
+  // TODO(FW-4599): change to normal
+  white-space: nowrap;
 
   user-select: none;
   vertical-align: top; // the better option for most scenarios
