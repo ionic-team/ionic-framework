@@ -40,8 +40,7 @@ configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
 
       await didPresent.next();
 
-      // TODO FW-4375
-      const results = await new AxeBuilder({ page }).disableRules('color-contrast').analyze();
+      const results = await new AxeBuilder({ page }).analyze();
       expect(results.violations).toEqual([]);
     });
 
