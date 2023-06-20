@@ -30,6 +30,10 @@
     background: $toast-ios-translucent-background-color;
     backdrop-filter: $toast-ios-translucent-filter;
   }
+
+  :host(.ion-color.toast-translucent) .toast-wrapper {
+    background: #{current-color(base, $toast-ios-translucent-background-color-alpha)};
+  }
 }
 
 .toast-wrapper.toast-top {
