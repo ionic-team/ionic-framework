@@ -20,7 +20,7 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, screenshot, co
     test('should render a custom expandedIcon', async ({ page }) => {
       await page.setContent(
         `
-          <ion-select toggle-icon-when-open="pizza" interface="popover" label="Select" value="a">
+          <ion-select expanded-icon="pizza" interface="popover" label="Select" value="a">
             <ion-select-option value="a">Apple</ion-select-option>
           </ion-select>
         `,
@@ -33,7 +33,7 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, screenshot, co
       await select.click();
       await popoverDidPresent.next();
 
-      await expect(select).toHaveScreenshot(screenshot(`select-toggle-icon-when-open`));
+      await expect(select).toHaveScreenshot(screenshot(`select-expanded-icon`));
     });
   });
 });
