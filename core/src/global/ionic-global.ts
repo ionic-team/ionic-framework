@@ -7,8 +7,6 @@ import { config, configFromSession, configFromURL, saveConfig } from './config';
 
 // TODO(FW-2832): types
 
-declare const Context: any;
-
 let defaultMode: Mode;
 
 export const getIonMode = (ref?: any): Mode => {
@@ -22,7 +20,6 @@ export const initialize = (userConfig: IonicConfig = {}) => {
 
   const doc = window.document;
   const win = window;
-  Context.config = config;
   const Ionic = ((win as any).Ionic = (win as any).Ionic || {});
 
   const platformHelpers: any = {};

@@ -11,12 +11,8 @@ configs().forEach(({ title, config }) => {
       expect(results.violations).toEqual([]);
     });
 
-    // TODO FW-3710
-    test.skip('segment buttons should be keyboard navigable', async ({ page, browserName, skip }, testInfo) => {
-      // TODO (FW-2979)
-      skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
-      const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
-      const isRTL = testInfo.project.metadata.rtl === true;
+    test('segment buttons should be keyboard navigable', async ({ page, pageUtils }) => {
+      const isRTL = config.direction === 'rtl';
       const nextKey = isRTL ? 'ArrowLeft' : 'ArrowRight';
       const previousKey = isRTL ? 'ArrowRight' : 'ArrowLeft';
 
@@ -24,7 +20,16 @@ configs().forEach(({ title, config }) => {
 
       const segmentButtons = page.locator('ion-segment-button');
 
-      await page.keyboard.press(tabKey);
+      // A flaky test only occurs on "Mobile Chrome"
+      // If it occurs, the elements are not visible yet
+      // when the test presses the any key on the keyboard
+      // This may be due to the fact that the elements are
+      // still updating their state before the render method
+      // The workaround is to wait for the first element to be visible
+      // If the first element is visible, then the rest of the elements are visible
+      await segmentButtons.nth(0).waitFor();
+
+      await pageUtils.pressKeys('Tab');
       await expect(segmentButtons.nth(0)).toBeFocused();
 
       await page.keyboard.press(nextKey);
