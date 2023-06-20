@@ -2682,6 +2682,10 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * The toggle icon to show when the select is open. If defined, the icon rotation behavior in `md` mode will be disabled. If undefined, `toggleIcon` will be used for when the select is both open and closed.
+         */
+        "expandedIcon"?: string;
+        /**
           * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available in `md` mode.
          */
         "fill"?: 'outline' | 'solid';
@@ -2746,10 +2750,6 @@ export namespace Components {
           * The toggle icon to use. Defaults to `chevronExpand` for `ios` mode, or `caretDownSharp` for `md` mode.
          */
         "toggleIcon"?: string;
-        /**
-          * The toggle icon to show when the select is open. If defined, the icon rotation behavior in `md` mode will be disabled. If undefined, `toggleIcon` will be used for when the select is both open and closed.
-         */
-        "expandedIcon"?: string;
         /**
           * The value of the select.
          */
@@ -6764,6 +6764,10 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * The toggle icon to show when the select is open. If defined, the icon rotation behavior in `md` mode will be disabled. If undefined, `toggleIcon` will be used for when the select is both open and closed.
+         */
+        "expandedIcon"?: string;
+        /**
           * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available in `md` mode.
          */
         "fill"?: 'outline' | 'solid';
@@ -6847,10 +6851,6 @@ declare namespace LocalJSX {
           * The toggle icon to use. Defaults to `chevronExpand` for `ios` mode, or `caretDownSharp` for `md` mode.
          */
         "toggleIcon"?: string;
-        /**
-          * The toggle icon to show when the select is open. If defined, the icon rotation behavior in `md` mode will be disabled. If undefined, `toggleIcon` will be used for when the select is both open and closed.
-         */
-        "expandedIcon"?: string;
         /**
           * The value of the select.
          */
