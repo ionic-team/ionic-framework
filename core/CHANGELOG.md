@@ -9,7 +9,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Bug Fixes
 
 * **datetime:** ascending order for years ([#27551](https://github.com/ionic-team/ionic-framework/issues/27551)) ([2098806](https://github.com/ionic-team/ionic-framework/commit/209880622a4600f88c4878e82975ad0492bd55db)), closes [#27422](https://github.com/ionic-team/ionic-framework/issues/27422)
-* import paths ([d10509f](https://github.com/ionic-team/ionic-framework/commit/d10509f84099515f62c895dcd736cc387e382bde))
 * **select:** hide notch cutout if no visible label provided ([#27649](https://github.com/ionic-team/ionic-framework/issues/27649)) ([606a892](https://github.com/ionic-team/ionic-framework/commit/606a892e400a531cac5c413dc7492a54ae0e1fea))
 
 
