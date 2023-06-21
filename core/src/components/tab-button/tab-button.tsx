@@ -1,11 +1,11 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Listen, Prop, h } from '@stencil/core';
+import type { AnchorInterface } from '@utils/element-interface';
+import type { Attributes } from '@utils/helpers';
+import { inheritAttributes } from '@utils/helpers';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import type { AnchorInterface } from '../../utils/element-interface';
-import type { Attributes } from '../../utils/helpers';
-import { inheritAttributes } from '../../utils/helpers';
 import type {
   TabBarChangedEventDetail,
   TabButtonClickEventDetail,

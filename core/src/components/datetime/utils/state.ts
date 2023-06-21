@@ -1,4 +1,5 @@
-import { printIonError } from '../../../utils/logging';
+import { printIonError } from '@utils/logging';
+
 import type {
   DatetimeHighlight,
   DatetimeHighlightCallback,

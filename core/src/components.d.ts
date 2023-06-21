@@ -33,7 +33,7 @@ import { RefresherEventDetail } from "./components/refresher/refresher-interface
 import { ItemReorderEventDetail } from "./components/reorder-group/reorder-group-interface";
 import { NavigationHookCallback } from "./components/route/route-interface";
 import { SearchbarChangeEventDetail, SearchbarInputEventDetail } from "./components/searchbar/searchbar-interface";
-import { SegmentChangeEventDetail } from "./components/segment/segment-interface";
+import { SegmentChangeEventDetail, SegmentValue } from "./components/segment/segment-interface";
 import { SegmentButtonLayout } from "./components/segment-button/segment-button-interface";
 import { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./components/select/select-interface";
 import { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
@@ -69,7 +69,7 @@ export { RefresherEventDetail } from "./components/refresher/refresher-interface
 export { ItemReorderEventDetail } from "./components/reorder-group/reorder-group-interface";
 export { NavigationHookCallback } from "./components/route/route-interface";
 export { SearchbarChangeEventDetail, SearchbarInputEventDetail } from "./components/searchbar/searchbar-interface";
-export { SegmentChangeEventDetail } from "./components/segment/segment-interface";
+export { SegmentChangeEventDetail, SegmentValue } from "./components/segment/segment-interface";
 export { SegmentButtonLayout } from "./components/segment-button/segment-button-interface";
 export { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./components/select/select-interface";
 export { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
@@ -947,7 +947,7 @@ export namespace Components {
          */
         "value"?: string | string[] | null;
         /**
-          * Values used to create the list of selectable years. By default the year values range between the `min` and `max` datetime inputs. However, to control exactly which years to display, the `yearValues` input can take a number, an array of numbers, or string of comma separated numbers. For example, to show upcoming and recent leap years, then this input's value would be `yearValues="2024,2020,2016,2012,2008"`.
+          * Values used to create the list of selectable years. By default the year values range between the `min` and `max` datetime inputs. However, to control exactly which years to display, the `yearValues` input can take a number, an array of numbers, or string of comma separated numbers. For example, to show upcoming and recent leap years, then this input's value would be `yearValues="2008,2012,2016,2020,2024"`.
          */
         "yearValues"?: number[] | number | string;
     }
@@ -1214,7 +1214,7 @@ export namespace Components {
          */
         "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
         /**
-          * The visible label associated with the input.
+          * The visible label associated with the input.  Use this if you need to render a plaintext label.  The `label` property will take priority over the `label` slot if both are used.
          */
         "label"?: string;
         /**
@@ -2290,6 +2290,10 @@ export namespace Components {
          */
         "dualKnobs": boolean;
         /**
+          * The text to display as the control's label. Use this over the `label` slot if you only need plain text. The `label` property will take priority over the `label` slot if both are used.
+         */
+        "label"?: string;
+        /**
           * Where to place the label relative to the range. `"start"`: The label will appear to the left of the range in LTR and to the right in RTL. `"end"`: The label will appear to the right of the range in LTR and to the left in RTL. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
          */
         "labelPlacement": 'start' | 'end' | 'fixed';
@@ -2635,7 +2639,7 @@ export namespace Components {
         /**
           * the value of the segment.
          */
-        "value"?: string;
+        "value"?: SegmentValue;
     }
     interface IonSegmentButton {
         /**
@@ -2658,7 +2662,7 @@ export namespace Components {
         /**
           * The value of the segment button.
          */
-        "value": string;
+        "value": SegmentValue;
     }
     interface IonSelect {
         /**
@@ -2678,6 +2682,10 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * The toggle icon to show when the select is open. If defined, the icon rotation behavior in `md` mode will be disabled. If undefined, `toggleIcon` will be used for when the select is both open and closed.
+         */
+        "expandedIcon"?: string;
+        /**
           * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available in `md` mode.
          */
         "fill"?: 'outline' | 'solid';
@@ -2694,7 +2702,7 @@ export namespace Components {
          */
         "justify": 'start' | 'end' | 'space-between';
         /**
-          * The visible label associated with the select.
+          * The visible label associated with the select.  Use this if you need to render a plaintext label.  The `label` property will take priority over the `label` slot if both are used.
          */
         "label"?: string;
         /**
@@ -2738,6 +2746,10 @@ export namespace Components {
           * The shape of the select. If "round" it will have an increased border radius.
          */
         "shape"?: 'round';
+        /**
+          * The toggle icon to use. Defaults to `chevronExpand` for `ios` mode, or `caretDownSharp` for `md` mode.
+         */
+        "toggleIcon"?: string;
         /**
           * The value of the select.
          */
@@ -2980,7 +2992,7 @@ export namespace Components {
          */
         "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
         /**
-          * The visible label associated with the textarea.
+          * The visible label associated with the textarea.  Use this if you need to render a plaintext label.  The `label` property will take priority over the `label` slot if both are used.
          */
         "label"?: string;
         /**
@@ -4969,7 +4981,7 @@ declare namespace LocalJSX {
          */
         "value"?: string | string[] | null;
         /**
-          * Values used to create the list of selectable years. By default the year values range between the `min` and `max` datetime inputs. However, to control exactly which years to display, the `yearValues` input can take a number, an array of numbers, or string of comma separated numbers. For example, to show upcoming and recent leap years, then this input's value would be `yearValues="2024,2020,2016,2012,2008"`.
+          * Values used to create the list of selectable years. By default the year values range between the `min` and `max` datetime inputs. However, to control exactly which years to display, the `yearValues` input can take a number, an array of numbers, or string of comma separated numbers. For example, to show upcoming and recent leap years, then this input's value would be `yearValues="2008,2012,2016,2020,2024"`.
          */
         "yearValues"?: number[] | number | string;
     }
@@ -5244,7 +5256,7 @@ declare namespace LocalJSX {
          */
         "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
         /**
-          * The visible label associated with the input.
+          * The visible label associated with the input.  Use this if you need to render a plaintext label.  The `label` property will take priority over the `label` slot if both are used.
          */
         "label"?: string;
         /**
@@ -6305,6 +6317,10 @@ declare namespace LocalJSX {
          */
         "dualKnobs"?: boolean;
         /**
+          * The text to display as the control's label. Use this over the `label` slot if you only need plain text. The `label` property will take priority over the `label` slot if both are used.
+         */
+        "label"?: string;
+        /**
           * Where to place the label relative to the range. `"start"`: The label will appear to the left of the range in LTR and to the right in RTL. `"end"`: The label will appear to the right of the range in LTR and to the left in RTL. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
          */
         "labelPlacement"?: 'start' | 'end' | 'fixed';
@@ -6706,7 +6722,7 @@ declare namespace LocalJSX {
         /**
           * the value of the segment.
          */
-        "value"?: string;
+        "value"?: SegmentValue;
     }
     interface IonSegmentButton {
         /**
@@ -6728,7 +6744,7 @@ declare namespace LocalJSX {
         /**
           * The value of the segment button.
          */
-        "value"?: string;
+        "value"?: SegmentValue;
     }
     interface IonSelect {
         /**
@@ -6748,6 +6764,10 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
+          * The toggle icon to show when the select is open. If defined, the icon rotation behavior in `md` mode will be disabled. If undefined, `toggleIcon` will be used for when the select is both open and closed.
+         */
+        "expandedIcon"?: string;
+        /**
           * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available in `md` mode.
          */
         "fill"?: 'outline' | 'solid';
@@ -6764,7 +6784,7 @@ declare namespace LocalJSX {
          */
         "justify"?: 'start' | 'end' | 'space-between';
         /**
-          * The visible label associated with the select.
+          * The visible label associated with the select.  Use this if you need to render a plaintext label.  The `label` property will take priority over the `label` slot if both are used.
          */
         "label"?: string;
         /**
@@ -6827,6 +6847,10 @@ declare namespace LocalJSX {
           * The shape of the select. If "round" it will have an increased border radius.
          */
         "shape"?: 'round';
+        /**
+          * The toggle icon to use. Defaults to `chevronExpand` for `ios` mode, or `caretDownSharp` for `md` mode.
+         */
+        "toggleIcon"?: string;
         /**
           * The value of the select.
          */
@@ -7066,7 +7090,7 @@ declare namespace LocalJSX {
          */
         "inputmode"?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
         /**
-          * The visible label associated with the textarea.
+          * The visible label associated with the textarea.  Use this if you need to render a plaintext label.  The `label` property will take priority over the `label` slot if both are used.
          */
         "label"?: string;
         /**

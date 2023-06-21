@@ -1,8 +1,8 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, h } from '@stencil/core';
+import { isEndSide } from '@utils/helpers';
 
 import { getIonMode } from '../../global/ionic-global';
-import { isEndSide } from '../../utils/helpers';
 import type { Side } from '../menu/menu-interface';
 
 @Component({

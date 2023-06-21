@@ -1619,14 +1619,14 @@ export declare interface IonRadioGroup extends Components.IonRadioGroup {
 
 
 @ProxyCmp({
-  inputs: ['activeBarStart', 'color', 'debounce', 'disabled', 'dualKnobs', 'labelPlacement', 'legacy', 'max', 'min', 'mode', 'name', 'pin', 'pinFormatter', 'snaps', 'step', 'ticks', 'value']
+  inputs: ['activeBarStart', 'color', 'debounce', 'disabled', 'dualKnobs', 'label', 'labelPlacement', 'legacy', 'max', 'min', 'mode', 'name', 'pin', 'pinFormatter', 'snaps', 'step', 'ticks', 'value']
 })
 @Component({
   selector: 'ion-range',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['activeBarStart', 'color', 'debounce', 'disabled', 'dualKnobs', 'labelPlacement', 'legacy', 'max', 'min', 'mode', 'name', 'pin', 'pinFormatter', 'snaps', 'step', 'ticks', 'value'],
+  inputs: ['activeBarStart', 'color', 'debounce', 'disabled', 'dualKnobs', 'label', 'labelPlacement', 'legacy', 'max', 'min', 'mode', 'name', 'pin', 'pinFormatter', 'snaps', 'step', 'ticks', 'value'],
 })
 export class IonRange {
   protected el: HTMLElement;
@@ -1954,7 +1954,7 @@ export declare interface IonSegmentButton extends Components.IonSegmentButton {}
 
 
 @ProxyCmp({
-  inputs: ['cancelText', 'color', 'compareWith', 'disabled', 'fill', 'interface', 'interfaceOptions', 'justify', 'label', 'labelPlacement', 'legacy', 'mode', 'multiple', 'name', 'okText', 'placeholder', 'selectedText', 'shape', 'value'],
+  inputs: ['cancelText', 'color', 'compareWith', 'disabled', 'expandedIcon', 'fill', 'interface', 'interfaceOptions', 'justify', 'label', 'labelPlacement', 'legacy', 'mode', 'multiple', 'name', 'okText', 'placeholder', 'selectedText', 'shape', 'toggleIcon', 'value'],
   methods: ['open']
 })
 @Component({
@@ -1962,7 +1962,7 @@ export declare interface IonSegmentButton extends Components.IonSegmentButton {}
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['cancelText', 'color', 'compareWith', 'disabled', 'fill', 'interface', 'interfaceOptions', 'justify', 'label', 'labelPlacement', 'legacy', 'mode', 'multiple', 'name', 'okText', 'placeholder', 'selectedText', 'shape', 'value'],
+  inputs: ['cancelText', 'color', 'compareWith', 'disabled', 'expandedIcon', 'fill', 'interface', 'interfaceOptions', 'justify', 'label', 'labelPlacement', 'legacy', 'mode', 'multiple', 'name', 'okText', 'placeholder', 'selectedText', 'shape', 'toggleIcon', 'value'],
 })
 export class IonSelect {
   protected el: HTMLElement;

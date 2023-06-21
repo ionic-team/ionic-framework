@@ -6,6 +6,8 @@
 
 :host {
   --background: transparent;
+
+  grid-auto-columns: minmax(auto, $segment-button-md-max-width);
 }
 
 // Segment: In Toolbar

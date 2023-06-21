@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Datetime - Custom</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(250px, 1fr));
+        grid-row-gap: 20px;
+        grid-column-gap: 20px;
+      }
+
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+
+        color: #6f7378;
+
+        margin-top: 10px;
+        margin-left: 5px;
+      }
+
+      @media screen and (max-width: 800px) {
+        .grid {
+          grid-template-columns: 1fr;
+          padding: 0;
+        }
+      }
+
+      /*
+        The second selectors that target ion-picker(-column)-internal
+        directly are for styling the time picker. This is currently
+        undocumented usage.
+      */
+
+      ion-datetime,
+      ion-picker-internal {
+        --wheel-highlight-background: rgb(218, 216, 255);
+        --wheel-fade-background-rgb: 245, 235, 247;
+      }
+
+      ion-datetime {
+        --background: rgb(245, 235, 247);
+        --background-rgb: 245, 235, 247;
+      }
+
+      ion-picker-internal {
+        background-color: rgb(245, 235, 247);
+      }
+
+      ion-datetime::part(wheel-item),
+      ion-picker-column-internal::part(wheel-item) {
+        color: rgb(255, 134, 154);
+      }
+
+      ion-datetime::part(wheel-item active),
+      ion-picker-column-internal::part(wheel-item active) {
+        color: rgb(128, 30, 171);
+      }
+
+      ion-datetime::part(time-button) {
+        color: rgb(128, 30, 171);
+      }
+
+      ion-datetime::part(time-button active) {
+        background-color: rgb(248, 215, 255);
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header translucent="true">
+        <ion-toolbar>
+          <ion-title>Datetime - Custom</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Grid Style</h2>
+            <ion-datetime id="custom-grid" value="2020-03-14T14:23:00.000Z"></ion-datetime>
+          </div>
+          <div class="grid-item">
+            <h2>Wheel Style</h2>
+            <ion-datetime id="custom-wheel" prefer-wheel="true" value="2020-03-14T14:23:00.000Z"></ion-datetime>
+          </div>
+        </div>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>
