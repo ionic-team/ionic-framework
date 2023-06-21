@@ -1,15 +1,15 @@
 
 // Global Utility Functions
-@import "./ionic.functions.string";
+@use "ionic.functions.string" as stringFunctions;
 
 // Global Color Functions
-@import "./ionic.functions.color";
+@use "ionic.functions.color" as colorFunctions;
 
 // Global Mixins
-@import "./ionic.mixins";
+@use "ionic.mixins" as mixins;
 
 // Default Theme
-@import "./ionic.theme.default";
+@use "ionic.theme.default" as defaultTheme;
 
 
 // Default General

@@ -1,17 +1,20 @@
-@import "../../themes/ionic.globals";
+@use "../../themes-migrated/ionic.globals" as globals;
+@use "../../themes-migrated/ionic.functions.color" as colorFunctions;
+@use "../../themes-migrated/ionic.mixins" as mixins;
+@use "../../themes-migrated/ionic.theme.default" as defaultTheme;
 
 :host {
   /**
    * @prop --background: Background of the chip
    * @prop --color: Color of the chip
    */
-  --background: #{rgba($text-color-rgb, .12)};
-  --color: #{rgba($text-color-rgb, .87)};
+  --background: #{rgba(defaultTheme.$text-color-rgb, .12)};
+  --color: #{rgba(defaultTheme.$text-color-rgb, .87)};
 
-  @include border-radius(16px);
-  @include font-smoothing();
-  @include margin(4px);
-  @include padding(7px, 12px);
+  @include mixins.border-radius(16px);
+  @include mixins.font-smoothing();
+  @include mixins.margin(4px);
+  @include mixins.padding(7px, 12px);
 
   display: inline-flex;
 
@@ -24,7 +27,7 @@
   background: var(--background);
   color: var(--color);
 
-  font-family: $font-family-base;
+  font-family: globals.$font-family-base;
   font-size: 14px;
 
   cursor: pointer;
@@ -45,16 +48,16 @@
 // ---------------------------------------------
 
 :host(.ion-color) {
-  background: current-color(base, .08);
-  color: current-color(shade);
+  background: colorFunctions.current-color(base, .08);
+  color: colorFunctions.current-color(shade);
 }
 
 :host(.ion-color:focus) {
-  background: current-color(base, .12);
+  background: colorFunctions.current-color(base, .12);
 }
 
 :host(.ion-color.ion-activated) {
-  background: current-color(base, .16);
+  background: colorFunctions.current-color(base, .16);
 }
 
 
@@ -67,21 +70,21 @@
 }
 
 :host(.chip-outline) {
-  border-color: rgba($text-color-rgb, .32);
+  border-color: rgba(defaultTheme.$text-color-rgb, .32);
 
   background: transparent;
 }
 
 :host(.chip-outline.ion-color) {
-  border-color: current-color(base, .32);
+  border-color: colorFunctions.current-color(base, .32);
 }
 
 :host(.chip-outline:not(.ion-color):focus) {
-  background: rgba($text-color-rgb, .04);
+  background: rgba(defaultTheme.$text-color-rgb, .04);
 }
 
 :host(.chip-outline.ion-activated:not(.ion-color)) {
-  background: rgba($text-color-rgb, .08);
+  background: rgba(defaultTheme.$text-color-rgb, .08);
 }
 
 
@@ -93,15 +96,15 @@
 }
 
 :host(:not(.ion-color)) ::slotted(ion-icon) {
-  color: rgba($text-color-rgb, .54);
+  color: rgba(defaultTheme.$text-color-rgb, .54);
 }
 
 ::slotted(ion-icon:first-child) {
-  @include margin(-4px, 8px, -4px, -4px);
+  @include mixins.margin(-4px, 8px, -4px, -4px);
 }
 
 ::slotted(ion-icon:last-child) {
-  @include margin(-4px, -4px, -4px, 8px);
+  @include mixins.margin(-4px, -4px, -4px, 8px);
 }
 
 
@@ -114,11 +117,11 @@
 }
 
 ::slotted(ion-avatar:first-child) {
-  @include margin(-4px, 8px, -4px, -8px);
+  @include mixins.margin(-4px, 8px, -4px, -8px);
 }
 
 ::slotted(ion-avatar:last-child) {
-  @include margin(-4px, -8px, -4px, 8px);
+  @include mixins.margin(-4px, -8px, -4px, 8px);
 }
 
 
@@ -130,7 +133,7 @@
 }
 
 :host(:focus) {
-  --background: #{rgba($text-color-rgb, .16)};
+  --background: #{rgba(defaultTheme.$text-color-rgb, .16)};
 }
 
 
@@ -138,7 +141,7 @@
 // ---------------------------------------------
 
 :host(.ion-activated) {
-  --background: #{rgba($text-color-rgb, .20)};
+  --background: #{rgba(defaultTheme.$text-color-rgb, .20)};
 }
 
 
@@ -147,14 +150,14 @@
 
 @media (any-hover: hover) {
   :host(:hover) {
-    --background: #{rgba($text-color-rgb, .16)};
+    --background: #{rgba(defaultTheme.$text-color-rgb, .16)};
   }
 
   :host(.ion-color:hover) {
-    background: current-color(base, .12);
+    background: colorFunctions.current-color(base, .12);
   }
 
   :host(.chip-outline:not(.ion-color):hover) {
-    background: rgba($text-color-rgb, .04);
+    background: rgba(defaultTheme.$text-color-rgb, .04);
   }
 }
