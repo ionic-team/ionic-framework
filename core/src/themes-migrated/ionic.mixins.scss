@@ -3,7 +3,6 @@
 @use "sass:string";
 
 @use "ionic.functions.string" as stringFunctions;
-@use "ionic.globals" as globals;
 
 @mixin input-cover() {
   @include position(0, null, null, 0);
