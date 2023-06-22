@@ -1,3 +1,6 @@
+@use "sass:list";
+@use "sass:meta";
+@use "sass:string";
 // String Utility Functions
 // --------------------------------------------------------------------------------
 
@@ -5,10 +8,10 @@
 // --------------------------------------------------------------------------------
 
 @function str-replace($string, $search, $replace: "") {
-  $index: str-index($string, $search);
+  $index: string.index($string, $search);
 
   @if $index {
-    @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+    @return string.slice($string, 1, $index - 1) + $replace + str-replace(string.slice($string, $index + string.length($search)), $search, $replace);
   }
 
   @return $string;
@@ -22,20 +25,20 @@
   // empty array/list
   $split-arr: ();
   // first index of separator in string
-  $index: str-index($string, $separator);
+  $index: string.index($string, $separator);
   // loop through string
   @while $index != null {
     // get the substring from the first character to the separator
-    $item: str-slice($string, 1, $index - 1);
+    $item: string.slice($string, 1, $index - 1);
     // push item to array
-    $split-arr: append($split-arr, $item);
+    $split-arr: list.append($split-arr, $item);
     // remove item and separator from string
-    $string: str-slice($string, $index + 1);
+    $string: string.slice($string, $index + 1);
     // find new index of separator
-    $index: str-index($string, $separator);
+    $index: string.index($string, $separator);
   }
   // add the remaining string to list (the last item)
-  $split-arr: append($split-arr, $string);
+  $split-arr: list.append($split-arr, $string);
 
   @return $split-arr;
 }
@@ -45,14 +48,14 @@
 // --------------------------------------------------------------------------------
 
 @function str-extract($string, $start, $end) {
-  $start-index: str-index($string, $start);
+  $start-index: string.index($string, $start);
 
   @if $start-index {
-    $post: str-slice($string, $start-index + str-length($start));
-    $end-index: str-index($post, $end);
+    $post: string.slice($string, $start-index + string.length($start));
+    $end-index: string.index($post, $end);
 
     @if $end-index {
-      @return str-slice($post, 1, $end-index - 1);
+      @return string.slice($post, 1, $end-index - 1);
     }
   }
 
@@ -64,8 +67,8 @@
 // --------------------------------------------------------------------------------
 
 @function str-contains($string, $needle) {
-  @if (type-of($string) == string) {
-    @return str-index($string, $needle) != null;
+  @if (meta.type-of($string) == string) {
+    @return string.index($string, $needle) != null;
   }
 
   @return false;
@@ -102,7 +105,7 @@
       // @include add-root-selector(":host(.fixed)", "[dir=rtl]")
       // --> :host-context([dir=rtl]):host(.fixed)
       $shadow-element: str-replace($selector, ":host(", ":host-context(#{$addHostSelector}):host(");
-      $list: append($list, $shadow-element, comma);
+      $list: list.append($list, $shadow-element, comma);
 
       $new-element: ();
       $elements: str-split($selector, " ");
@@ -123,18 +126,18 @@
 
           // @include add-root-selector(":host(.fixed)", "[dir=rtl]")
           // --> :host-context([dir=rtl]).fixed
-          $new-element: append($new-element, $scoped-element, space);
+          $new-element: list.append($new-element, $scoped-element, space);
         } @else {
           // Add back any selectors that followed the host after transforming the
           // first selector:
           // :host(.fixed) ::slotted(ion-icon)
           // --> :host-context([dir=rtl]):host(.fixed) ::slotted(ion-icon)
           // --> :host-context([dir=rtl]).fixed ::slotted(ion-icon)
-          $new-element: append($new-element, $element, space);
+          $new-element: list.append($new-element, $element, space);
         }
       }
 
-      $list: append($list, $new-element, comma);
+      $list: list.append($list, $new-element, comma);
     // If the selector contains :host without a parantheses
     // it means it is targeting just the host
     // element so we can change it to look for host-context
@@ -153,24 +156,24 @@
 
           // Add the final selector after all transformations:
           // :host -> :host-context([dir=rtl])
-          $new-element: append($new-element, $updated-element, space);
+          $new-element: list.append($new-element, $updated-element, space);
         } @else {
           // Add back any selectors that followed the host after transforming the
           // first selector:
           // :host ::slotted(ion-icon) -> :host-context([dir=rtl]) ::slotted(ion-icon)
-          $new-element: append($new-element, $element, space);
+          $new-element: list.append($new-element, $element, space);
         }
       }
       
-      $list: append($list, $new-element, comma);
+      $list: list.append($list, $new-element, comma);
     // If the selector does not contain host at all it is either a shadow
     // or normal element so append both the addHostSelector and host-context
     // @include add-root-selector("ion-component", "[dir=rtl]")
     // --> :host-context([dir=rtl]) ion-component
     // --> [dir=rtl] ion-component
     } @else {
-      $list: append($list, "#{$addHostSelector} #{$selector}", comma);
-      $list: append($list, ":host-context(#{$addHostSelector}) #{$selector}", comma);
+      $list: list.append($list, "#{$addHostSelector} #{$selector}", comma);
+      $list: list.append($list, ":host-context(#{$addHostSelector}) #{$selector}", comma);
     }
   }
 

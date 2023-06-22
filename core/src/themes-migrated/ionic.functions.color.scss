@@ -1,3 +1,7 @@
+@use "sass:color";
+@use "sass:map";
+@use "ionic.theme.default";
+
 // Gets the active color's css variable from a variation. Alpha is optional.
 // --------------------------------------------------------------------------------------------
 // Example usage:
@@ -20,8 +24,8 @@
 // ion-color(primary, base, 0.5) => rgba(var(--ion-color-primary-rgb, 56, 128, 255), 0.5)
 // --------------------------------------------------------------------------------------------
 @function ion-color($name, $variation, $alpha: null, $rgb: null) {
-  $values: map-get($colors, $name);
-  $value: map-get($values, $variation);
+  $values: map.get(ionic.$colors, $name);
+  $value: map.get($values, $variation);
   $variable: --ion-color-#{$name}-#{$variation};
 
   @if ($variation == base) {
@@ -43,17 +47,17 @@
 // Mixes a color with black to create its shade.
 // --------------------------------------------------------------------------------------------
 @function get-color-shade($color) {
-  @return mix(#000, $color, 12%);
+  @return color.mix(#000, $color, 12%);
 }
 
 // Mixes a color with white to create its tint.
 // --------------------------------------------------------------------------------------------
 @function get-color-tint($color) {
-  @return mix(#fff, $color, 10%);
+  @return color.mix(#fff, $color, 10%);
 }
 
 // Converts a color to a comma separated rgb.
 // --------------------------------------------------------------------------------------------
 @function color-to-rgb-list($color) {
-  @return #{red($color)},#{green($color)},#{blue($color)};
+  @return #{color.red($color)},#{color.green($color)},#{color.blue($color)};
 }
