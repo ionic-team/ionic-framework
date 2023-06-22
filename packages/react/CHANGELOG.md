@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.1.1-nightly.20230622](https://github.com/ionic-team/ionic-framework/compare/v7.1.0...v7.1.1-nightly.20230622) (2023-06-22)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
 # [7.1.0](https://github.com/ionic-team/ionic-framework/compare/v7.0.14...v7.1.0) (2023-06-21)
 
 
