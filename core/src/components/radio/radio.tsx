@@ -192,7 +192,34 @@ export class Radio implements ComponentInterface {
   };
 
   private onClick = () => {
-    this.checked = this.nativeInput.checked;
+    const { radioGroup, checked } = this;
+
+    /**
+     * The legacy control uses a native input inside
+     * of the radio host, so we can set this.checked
+     * to the state of the nativeInput. RadioGroup
+     * will prevent the native input from checking if
+     * allowEmptySelection="false" by calling ev.preventDefault().
+     */
+    if (this.legacyFormController.hasLegacyControl()) {
+      this.checked = this.nativeInput.checked;
+      return;
+    }
+
+    /**
+     * The modern control does not use a native input
+     * inside of the radio host, so we cannot rely on the
+     * ev.preventDefault() behavior above. If the radio
+     * is checked and the parent radio group allows for empty
+     * selection, then we can set the checked state to false.
+     * Otherwise, the checked state should always be set
+     * to true because the checked state cannot be toggled.
+     */
+    if (checked && radioGroup?.allowEmptySelection) {
+      this.checked = false;
+    } else {
+      this.checked = true;
+    }
   };
 
   private onFocus = () => {
