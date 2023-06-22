@@ -1,6 +1,6 @@
 
 // Core Globals
-@use "ionic.globals";
+@use "ionic.globals" as globals;
 
 // Material Design Globals
-@use "ionic.theme.default.md" as ionic2;
+@use "ionic.theme.default.md" as mdDefaultTheme;

@@ -1,9 +1,9 @@
-@use "badge" as badge2;
-@use "badge.ios.vars";
+@use "badge";
+@use "badge.ios.vars" as iosVars;
 
 // iOS Badge
 // --------------------------------------------------
 
 :host {
-  @include border-radius(badge.$badge-ios-border-radius);
+  @include border-radius(iosVars.$badge-ios-border-radius);
 }

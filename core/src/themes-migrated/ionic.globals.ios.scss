@@ -1,6 +1,6 @@
 
 // Global Core
-@use "ionic.globals";
+@use "ionic.globals" as globals;
 
 // Global iOS
-@use "ionic.theme.default.ios" as ionic2;
+@use "ionic.theme.default.ios" as iosDefaultTheme;
