@@ -1,5 +1,5 @@
-@import "./badge";
-@import "./badge.md.vars";
+@use "badge" as badge2;
+@use "badge.md.vars";
 
 // Material Design Badge
 // --------------------------------------------------
@@ -10,5 +10,5 @@
   --padding-bottom: 4px;
   --padding-start: 4px;
 
-  @include border-radius($badge-md-border-radius);
+  @include border-radius(badge.$badge-md-border-radius);
 }

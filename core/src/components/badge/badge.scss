@@ -1,4 +1,5 @@
-@import "./badge.vars";
+@use "badge.vars";
+@use "../../themes-migrated/ionic.globals";
 
 // Badge
 // --------------------------------------------------
@@ -15,24 +16,24 @@
    */
   --background: #{ion-color(primary, base)};
   --color: #{ion-color(primary, contrast)};
-  --padding-top: #{$badge-padding-top};
-  --padding-end: #{$badge-padding-end};
-  --padding-bottom: #{$badge-padding-bottom};
-  --padding-start: #{$badge-padding-start};
+  --padding-top: #{badge.$badge-padding-top};
+  --padding-end: #{badge.$badge-padding-end};
+  --padding-bottom: #{badge.$badge-padding-bottom};
+  --padding-start: #{badge.$badge-padding-start};
 
   @include font-smoothing();
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
   display: inline-block;
 
-  min-width: $badge-min-width;
+  min-width: badge.$badge-min-width;
 
   background: var(--background);
   color: var(--color);
 
-  font-family: $font-family-base;
-  font-size: $badge-font-size;
-  font-weight: $badge-font-weight;
+  font-family: ionic.$font-family-base;
+  font-size: badge.$badge-font-size;
+  font-weight: badge.$badge-font-weight;
 
   line-height: 1;
 
