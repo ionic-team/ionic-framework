@@ -16,10 +16,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
   });
 
   test.describe(title('radio: keyboard navigation'), () => {
-    test.beforeEach(async ({ page, skip }) => {
-      // TODO (FW-2979)
-      skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
-
+    test.beforeEach(async ({ page }) => {
       await page.setContent(
         `
       <ion-app>
