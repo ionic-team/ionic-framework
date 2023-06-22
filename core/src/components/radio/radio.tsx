@@ -2,8 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 import type { LegacyFormController } from '@utils/forms';
 import { createLegacyFormController } from '@utils/forms';
-import type { Attributes } from '@utils/helpers';
-import { addEventListener, getAriaLabel, inheritAriaAttributes, removeEventListener } from '@utils/helpers';
+import { addEventListener, getAriaLabel, removeEventListener } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 import { createColorClasses, hostContext } from '@utils/theme';
 
@@ -29,9 +28,8 @@ import type { Color, StyleEventDetail } from '../../interface';
 export class Radio implements ComponentInterface {
   private inputId = `ion-rb-${radioButtonIds++}`;
   private radioGroup: HTMLIonRadioGroupElement | null = null;
-  private nativeInput!: HTMLInputElement;
   private legacyFormController!: LegacyFormController;
-  private inheritedAttributes: Attributes = {};
+  private nativeInput!: HTMLInputElement;
 
   // This flag ensures we log the deprecation warning at most once.
   private hasLoggedDeprecationWarning = false;
@@ -135,8 +133,7 @@ export class Radio implements ComponentInterface {
     ev.stopPropagation();
     ev.preventDefault();
 
-    const element = this.legacyFormController.hasLegacyControl() ? this.el : this.nativeInput;
-    element.focus();
+    this.el.focus();
   }
 
   /** @internal */
@@ -167,12 +164,6 @@ export class Radio implements ComponentInterface {
 
   componentWillLoad() {
     this.emitStyle();
-
-    if (!this.legacyFormController.hasLegacyControl()) {
-      this.inheritedAttributes = {
-        ...inheritAriaAttributes(this.el),
-      };
-    }
   }
 
   @Watch('checked')
@@ -232,23 +223,14 @@ export class Radio implements ComponentInterface {
   }
 
   private renderRadio() {
-    const {
-      checked,
-      disabled,
-      inputId,
-      color,
-      el,
-      justify,
-      labelPlacement,
-      inheritedAttributes,
-      hasLabel,
-      buttonTabindex,
-    } = this;
+    const { checked, disabled, color, el, justify, labelPlacement, hasLabel, buttonTabindex } = this;
     const mode = getIonMode(this);
     const inItem = hostContext('ion-item', el);
 
     return (
       <Host
+        onFocus={this.onFocus}
+        onBlur={this.onBlur}
         onClick={this.onClick}
         class={createColorClasses(color, {
           [mode]: true,
@@ -261,21 +243,24 @@ export class Radio implements ComponentInterface {
           'ion-activatable': !inItem,
           'ion-focusable': !inItem,
         })}
+        role="radio"
+        aria-checked={checked ? 'true' : 'false'}
+        aria-disabled={disabled ? 'true' : null}
+        tabindex={buttonTabindex}
       >
+        {/*
+          The native control must be rendered
+          before the visible label text due to https://bugs.webkit.org/show_bug.cgi?id=251951
+        */}
+        <input
+          type="radio"
+          checked={checked}
+          disabled={disabled}
+          tabindex={-1}
+          ref={(nativeEl) => (this.nativeInput = nativeEl as HTMLInputElement)}
+          aria-hidden="true"
+        />
         <label class="radio-wrapper">
-          {/*
-            The native control must be rendered
-            before the visible label text due to https://bugs.webkit.org/show_bug.cgi?id=251951
-          */}
-          <input
-            type="radio"
-            checked={checked}
-            disabled={disabled}
-            id={inputId}
-            tabindex={buttonTabindex}
-            ref={(nativeEl) => (this.nativeInput = nativeEl as HTMLInputElement)}
-            {...inheritedAttributes}
-          />
           <div
             class={{
               'label-text-wrapper': true,
