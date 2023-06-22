@@ -248,19 +248,19 @@ export class Radio implements ComponentInterface {
         aria-disabled={disabled ? 'true' : null}
         tabindex={buttonTabindex}
       >
-        {/*
-          The native control must be rendered
-          before the visible label text due to https://bugs.webkit.org/show_bug.cgi?id=251951
-        */}
-        <input
-          type="radio"
-          checked={checked}
-          disabled={disabled}
-          tabindex={-1}
-          ref={(nativeEl) => (this.nativeInput = nativeEl as HTMLInputElement)}
-          aria-hidden="true"
-        />
         <label class="radio-wrapper">
+          {/*
+            The native control must be rendered
+            before the visible label text due to https://bugs.webkit.org/show_bug.cgi?id=251951
+          */}
+          <input
+            type="radio"
+            checked={checked}
+            disabled={disabled}
+            tabindex={-1}
+            ref={(nativeEl) => (this.nativeInput = nativeEl as HTMLInputElement)}
+            aria-hidden="true"
+          />
           <div
             class={{
               'label-text-wrapper': true,
