@@ -1,20 +1,20 @@
-@use "../../themes-migrated/ionic.globals" as ionic4;
-@use "../../themes-migrated/ionic.functions.color" as ionic3;
-@use "../../themes-migrated/ionic.mixins" as ionic2;
-@use "../../themes-migrated/ionic.theme.default";
+@use "../../themes-migrated/ionic.globals" as globals;
+@use "../../themes-migrated/ionic.functions.color" as colorFunctions;
+@use "../../themes-migrated/ionic.mixins" as mixins;
+@use "../../themes-migrated/ionic.theme.default" as defaultTheme;
 
 :host {
   /**
    * @prop --background: Background of the chip
    * @prop --color: Color of the chip
    */
-  --background: #{rgba(ionic.$text-color-rgb, .12)};
-  --color: #{rgba(ionic.$text-color-rgb, .87)};
+  --background: #{rgba(defaultTheme.$text-color-rgb, .12)};
+  --color: #{rgba(defaultTheme.$text-color-rgb, .87)};
 
-  @include ionic2.border-radius(16px);
-  @include ionic2.font-smoothing();
-  @include ionic2.margin(4px);
-  @include ionic2.padding(7px, 12px);
+  @include mixins.border-radius(16px);
+  @include mixins.font-smoothing();
+  @include mixins.margin(4px);
+  @include mixins.padding(7px, 12px);
 
   display: inline-flex;
 
@@ -27,7 +27,7 @@
   background: var(--background);
   color: var(--color);
 
-  font-family: ionic4.$font-family-base;
+  font-family: globals.$font-family-base;
   font-size: 14px;
 
   cursor: pointer;
@@ -48,16 +48,16 @@
 // ---------------------------------------------
 
 :host(.ion-color) {
-  background: ionic3.current-color(base, .08);
-  color: ionic3.current-color(shade);
+  background: colorFunctions.current-color(base, .08);
+  color: colorFunctions.current-color(shade);
 }
 
 :host(.ion-color:focus) {
-  background: ionic3.current-color(base, .12);
+  background: colorFunctions.current-color(base, .12);
 }
 
 :host(.ion-color.ion-activated) {
-  background: ionic3.current-color(base, .16);
+  background: colorFunctions.current-color(base, .16);
 }
 
 
@@ -70,21 +70,21 @@
 }
 
 :host(.chip-outline) {
-  border-color: rgba(ionic.$text-color-rgb, .32);
+  border-color: rgba(defaultTheme.$text-color-rgb, .32);
 
   background: transparent;
 }
 
 :host(.chip-outline.ion-color) {
-  border-color: ionic3.current-color(base, .32);
+  border-color: colorFunctions.current-color(base, .32);
 }
 
 :host(.chip-outline:not(.ion-color):focus) {
-  background: rgba(ionic.$text-color-rgb, .04);
+  background: rgba(defaultTheme.$text-color-rgb, .04);
 }
 
 :host(.chip-outline.ion-activated:not(.ion-color)) {
-  background: rgba(ionic.$text-color-rgb, .08);
+  background: rgba(defaultTheme.$text-color-rgb, .08);
 }
 
 
@@ -96,15 +96,15 @@
 }
 
 :host(:not(.ion-color)) ::slotted(ion-icon) {
-  color: rgba(ionic.$text-color-rgb, .54);
+  color: rgba(defaultTheme.$text-color-rgb, .54);
 }
 
 ::slotted(ion-icon:first-child) {
-  @include ionic2.margin(-4px, 8px, -4px, -4px);
+  @include mixins.margin(-4px, 8px, -4px, -4px);
 }
 
 ::slotted(ion-icon:last-child) {
-  @include ionic2.margin(-4px, -4px, -4px, 8px);
+  @include mixins.margin(-4px, -4px, -4px, 8px);
 }
 
 
@@ -117,11 +117,11 @@
 }
 
 ::slotted(ion-avatar:first-child) {
-  @include ionic2.margin(-4px, 8px, -4px, -8px);
+  @include mixins.margin(-4px, 8px, -4px, -8px);
 }
 
 ::slotted(ion-avatar:last-child) {
-  @include ionic2.margin(-4px, -8px, -4px, 8px);
+  @include mixins.margin(-4px, -8px, -4px, 8px);
 }
 
 
@@ -133,7 +133,7 @@
 }
 
 :host(:focus) {
-  --background: #{rgba(ionic.$text-color-rgb, .16)};
+  --background: #{rgba(defaultTheme.$text-color-rgb, .16)};
 }
 
 
@@ -141,7 +141,7 @@
 // ---------------------------------------------
 
 :host(.ion-activated) {
-  --background: #{rgba(ionic.$text-color-rgb, .20)};
+  --background: #{rgba(defaultTheme.$text-color-rgb, .20)};
 }
 
 
@@ -150,14 +150,14 @@
 
 @media (any-hover: hover) {
   :host(:hover) {
-    --background: #{rgba(ionic.$text-color-rgb, .16)};
+    --background: #{rgba(defaultTheme.$text-color-rgb, .16)};
   }
 
   :host(.ion-color:hover) {
-    background: ionic3.current-color(base, .12);
+    background: colorFunctions.current-color(base, .12);
   }
 
   :host(.chip-outline:not(.ion-color):hover) {
-    background: rgba(ionic.$text-color-rgb, .04);
+    background: rgba(defaultTheme.$text-color-rgb, .04);
   }
 }

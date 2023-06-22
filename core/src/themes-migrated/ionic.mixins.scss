@@ -1,8 +1,9 @@
 @use "sass:list";
 @use "sass:map";
 @use "sass:string";
-@use "ionic.functions.string";
-@use "ionic.globals" as ionic3;
+
+@use "ionic.functions.string" as stringFunctions;
+@use "ionic.globals" as globals;
 
 @mixin input-cover() {
   @include position(0, null, null, 0);
@@ -108,7 +109,7 @@
 //
 //    >> breakpoint-min(sm, (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px))
 //    576px
-@function breakpoint-min($name, $breakpoints: ionic3.$screen-breakpoints) {
+@function breakpoint-min($name, $breakpoints: globals.$screen-breakpoints) {
   $min: map.get($breakpoints, $name);
 
   @return if($name != index-to-key($breakpoints, 1), $min, null);
@@ -121,13 +122,13 @@
 //    ""  (Returns a blank string)
 //    >> breakpoint-infix(sm, (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px))
 //    "-sm"
-@function breakpoint-infix($name, $breakpoints: ionic3.$screen-breakpoints) {
+@function breakpoint-infix($name, $breakpoints: globals.$screen-breakpoints) {
   @return if(breakpoint-min($name, $breakpoints) == null, "", "-#{$name}");
 }
 
 // Media of at least the minimum breakpoint width. No query for the smallest breakpoint.
 // Makes the @content apply to the given breakpoint and wider.
-@mixin media-breakpoint-up($name, $breakpoints: ionic3.$screen-breakpoints) {
+@mixin media-breakpoint-up($name, $breakpoints: globals.$screen-breakpoints) {
   $min: breakpoint-min($name, $breakpoints);
   @if $min {
     @media (min-width: $min) {
@@ -146,7 +147,7 @@
 //    md
 //    >> breakpoint-next(sm, $breakpoint-names: (xs sm md lg xl))
 //    md
-@function breakpoint-next($name, $breakpoints: ionic3.$screen-breakpoints, $breakpoint-names: map.keys($breakpoints)) {
+@function breakpoint-next($name, $breakpoints: globals.$screen-breakpoints, $breakpoint-names: map.keys($breakpoints)) {
   $n: list.index($breakpoint-names, $name);
   @return if($n < list.length($breakpoint-names), list.nth($breakpoint-names, $n + 1), null);
 }
@@ -161,14 +162,14 @@
 //
 //    >> breakpoint-max(md, (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px))
 //    767.98px
-@function breakpoint-max($name, $breakpoints: ionic3.$screen-breakpoints) {
+@function breakpoint-max($name, $breakpoints: globals.$screen-breakpoints) {
   $max: map.get($breakpoints, $name);
   @return if($max and $max > 0, $max - .02, null);
 }
 
 // Media of at most the maximum breakpoint width. No query for the largest breakpoint.
 // Makes the @content apply to the given breakpoint and narrower.
-@mixin media-breakpoint-down($name, $breakpoints: ionic3.$screen-breakpoints) {
+@mixin media-breakpoint-down($name, $breakpoints: globals.$screen-breakpoints) {
   $max: breakpoint-max($name, $breakpoints);
   @if $max {
     @media (max-width: $max) {
@@ -200,9 +201,9 @@
 @mixin rtl() {
   $root: #{&};
 
-  $rootSplit: ionic.str-split($root, ",");
-  $selectors: #{ionic.add-root-selector($root, "[dir=rtl]")};
-  $selectorsSplit: ionic.str-split($selectors, ",");
+  $rootSplit: stringFunctions.str-split($root, ",");
+  $selectors: #{stringFunctions.add-root-selector($root, "[dir=rtl]")};
+  $selectorsSplit: stringFunctions.str-split($selectors, ",");
 
   $hostContextSelectors: ();
   $restSelectors: ();
@@ -223,7 +224,7 @@
       $restSelectors: list.append($restSelectors, $selector, comma);
     }
   }
-  
+
   // Supported by Chrome.
   @if list.length($hostContextSelectors) > 0 {
     @at-root #{$hostContextSelectors} {
@@ -272,8 +273,8 @@
 // @param {string} $svg
 // ----------------------------------------------------------
 @mixin svg-background-image($svg, $flip-rtl: false) {
-  $url: ionic.url-encode($svg);
-  $viewBox: ionic.str-split(ionic.str-extract($svg, "viewBox='", "'"), " ");
+  $url: stringFunctions.url-encode($svg);
+  $viewBox: stringFunctions.str-split(stringFunctions.str-extract($svg, "viewBox='", "'"), " ");
 
   @if $flip-rtl != true or $viewBox == null {
     @include multi-dir() {
@@ -282,10 +283,10 @@
   } @else {
     $transform: "transform='translate(#{list.nth($viewBox, 3)}, 0) scale(-1, 1)'";
     $flipped-url: $svg;
-    $flipped-url: ionic.str-replace($flipped-url, "<path", "<path #{$transform}");
-    $flipped-url: ionic.str-replace($flipped-url, "<line", "<line #{$transform}");
-    $flipped-url: ionic.str-replace($flipped-url, "<polygon", "<polygon #{$transform}");
-    $flipped-url: ionic.url-encode($flipped-url);
+    $flipped-url: stringFunctions.str-replace($flipped-url, "<path", "<path #{$transform}");
+    $flipped-url: stringFunctions.str-replace($flipped-url, "<line", "<line #{$transform}");
+    $flipped-url: stringFunctions.str-replace($flipped-url, "<polygon", "<polygon #{$transform}");
+    $flipped-url: stringFunctions.url-encode($flipped-url);
 
     @include ltr () {
       background-image: url("data:image/svg+xml;charset=utf-8,#{$url}");
@@ -563,10 +564,10 @@
 
   @each $transform in $transforms {
     @if (string.index($transform, translate3d)) {
-      $transform: ionic.str-replace($transform, 'translate3d(');
-      $transform: ionic.str-replace($transform, ')');
+      $transform: stringFunctions.str-replace($transform, 'translate3d(');
+      $transform: stringFunctions.str-replace($transform, ')');
 
-      $coordinates: ionic.str-split($transform, ',');
+      $coordinates: stringFunctions.str-split($transform, ',');
 
       $x: list.nth($coordinates, 1);
       $y: list.nth($coordinates, 2);

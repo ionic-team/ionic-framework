@@ -1,5 +1,6 @@
 @use "sass:color";
-@use "ionic.functions.color";
+
+@use "ionic.functions.color" as colorFunctions;
 
 // Ionic Theme
 // -------------------------------------------------------------------------------------------
@@ -29,56 +30,56 @@ $colors:  (
   primary: (
     base:             $primary,
     contrast:         #fff,
-    shade:            ionic.get-color-shade($primary),
-    tint:             ionic.get-color-tint($primary)
+    shade:            colorFunctions.get-color-shade($primary),
+    tint:             colorFunctions.get-color-tint($primary)
   ),
   secondary: (
     base:             $secondary,
     contrast:         #fff,
-    shade:            ionic.get-color-shade($secondary),
-    tint:             ionic.get-color-tint($secondary)
+    shade:            colorFunctions.get-color-shade($secondary),
+    tint:             colorFunctions.get-color-tint($secondary)
   ),
   tertiary: (
     base:             $tertiary,
     contrast:         #fff,
-    shade:            ionic.get-color-shade($tertiary),
-    tint:             ionic.get-color-tint($tertiary)
+    shade:            colorFunctions.get-color-shade($tertiary),
+    tint:             colorFunctions.get-color-tint($tertiary)
   ),
   success: (
     base:             $success,
     contrast:         #fff,
-    shade:            ionic.get-color-shade($success),
-    tint:             ionic.get-color-tint($success)
+    shade:            colorFunctions.get-color-shade($success),
+    tint:             colorFunctions.get-color-tint($success)
   ),
   warning: (
     base:             $warning,
     contrast:         #000,
-    shade:            ionic.get-color-shade($warning),
-    tint:             ionic.get-color-tint($warning)
+    shade:            colorFunctions.get-color-shade($warning),
+    tint:             colorFunctions.get-color-tint($warning)
   ),
   danger: (
     base:             $danger,
     contrast:         #fff,
-    shade:            ionic.get-color-shade($danger),
-    tint:             ionic.get-color-tint($danger)
+    shade:            colorFunctions.get-color-shade($danger),
+    tint:             colorFunctions.get-color-tint($danger)
   ),
   light: (
     base:             $light,
     contrast:         #000,
-    shade:            ionic.get-color-shade($light),
-    tint:             ionic.get-color-tint($light)
+    shade:            colorFunctions.get-color-shade($light),
+    tint:             colorFunctions.get-color-tint($light)
   ),
   medium: (
     base:             $medium,
     contrast:         #fff,
-    shade:            ionic.get-color-shade($medium),
-    tint:             ionic.get-color-tint($medium)
+    shade:            colorFunctions.get-color-shade($medium),
+    tint:             colorFunctions.get-color-tint($medium)
   ),
   dark: (
     base:             $dark,
     contrast:         #fff,
-    shade:            ionic.get-color-shade($dark),
-    tint:             ionic.get-color-tint($dark)
+    shade:            colorFunctions.get-color-shade($dark),
+    tint:             colorFunctions.get-color-tint($dark)
   )
 ) !default;
 
