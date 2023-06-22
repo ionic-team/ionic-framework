@@ -1,6 +1,8 @@
 @use "badge";
 @use "badge.md.vars" as mdVars;
 
+@use "../../themes-migrated/ionic.mixins" as mixins;
+
 // Material Design Badge
 // --------------------------------------------------
 
@@ -10,5 +12,5 @@
   --padding-bottom: 4px;
   --padding-start: 4px;
 
-  @include border-radius(mdVars.$badge-md-border-radius);
+  @include mixins.border-radius(mdVars.$badge-md-border-radius);
 }

@@ -1,6 +1,7 @@
 @use "badge.vars" as vars;
 
 @use "../../themes-migrated/ionic.globals" as globals;
+@use "../../themes-migrated/ionic.mixins" as mixins;
 
 // Badge
 // --------------------------------------------------
@@ -22,8 +23,8 @@
   --padding-bottom: #{vars.$badge-padding-bottom};
   --padding-start: #{vars.$badge-padding-start};
 
-  @include font-smoothing();
-  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+  @include mixins.font-smoothing();
+  @include mixins.padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
   display: inline-block;
 
