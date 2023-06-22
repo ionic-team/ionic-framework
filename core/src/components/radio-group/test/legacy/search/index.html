@@ -63,7 +63,12 @@
 
           data.forEach((d) => {
             if (d.value.includes(query)) {
-              html += `<ion-radio value="${d.value}">Item ${d.value}</ion-radio>`;
+              html += `
+              <ion-item>
+                <ion-label>Item ${d.value}</ion-label>
+                <ion-radio value="${d.value}"></ion-radio>
+              </ion-item>
+            `;
             }
           });
 
