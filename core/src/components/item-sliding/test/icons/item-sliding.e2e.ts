@@ -3,21 +3,17 @@ import { configs, test } from '@utils/test/playwright';
 import { testSlidingItem } from '../test.utils';
 
 // TODO FW-3006
-configs().forEach(({ title, config }) => {
+/**
+ * item-sliding doesn't have mode-specific styling
+ */
+configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
   test.describe.skip(title('item-sliding: icons'), () => {
-    test('should not have visual regressions', async ({ page, browserName, skip }, testInfo) => {
-      // TODO(FW-2608)
-      test.fixme(
-        testInfo.project.metadata.rtl === true && (browserName === 'firefox' || browserName === 'webkit'),
-        'https://github.com/ionic-team/ionic-framework/issues/26103'
-      );
-
-      skip.mode('ios', "item-sliding doesn't have mode-specific styling");
+    test('should not have visual regressions', async ({ page }) => {
       await page.goto(`/src/components/item-sliding/test/icons`, config);
 
       const itemIDs = ['iconsOnly', 'iconsStart', 'iconsEnd', 'iconsTop', 'iconsBottom'];
       for (const itemID of itemIDs) {
-        await testSlidingItem(page, page.locator(`#${itemID}`), itemID);
+        await testSlidingItem(page, itemID, itemID, screenshot);
       }
     });
   });
