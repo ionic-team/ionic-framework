@@ -319,8 +319,27 @@
 .native-wrapper::after {
   @include padding(var(--padding-top), 0, var(--padding-bottom), 0);
   @include margin(0, 0, 0, 0);
-  @include text-inherit();
   @include border-radius(var(--border-radius));
+
+  /**
+   * Note: Do not use @include text-inherit()
+   * as that sets white-space: inherit
+   * Instead, we use white-space: pre-wrap above.
+   */
+  color: inherit;
+
+  font-family: inherit;
+  font-size: inherit;
+  font-style: inherit;
+  font-weight: inherit;
+
+  letter-spacing: inherit;
+
+  text-align: inherit;
+  text-decoration: inherit;
+  text-indent: inherit;
+  text-overflow: inherit;
+  text-transform: inherit;
 
   grid-area: 1 / 1 / 2 / 2;
 
