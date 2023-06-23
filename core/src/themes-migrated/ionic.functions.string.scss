@@ -1,0 +1,178 @@
+// String Utility Functions
+// --------------------------------------------------------------------------------
+
+// String Replace Function
+// --------------------------------------------------------------------------------
+
+@function str-replace($string, $search, $replace: "") {
+  $index: str-index($string, $search);
+
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+  }
+
+  @return $string;
+}
+
+// String Split Function
+// --------------------------------------------------------------------------------
+
+
+@function str-split($string, $separator) {
+  // empty array/list
+  $split-arr: ();
+  // first index of separator in string
+  $index: str-index($string, $separator);
+  // loop through string
+  @while $index != null {
+    // get the substring from the first character to the separator
+    $item: str-slice($string, 1, $index - 1);
+    // push item to array
+    $split-arr: append($split-arr, $item);
+    // remove item and separator from string
+    $string: str-slice($string, $index + 1);
+    // find new index of separator
+    $index: str-index($string, $separator);
+  }
+  // add the remaining string to list (the last item)
+  $split-arr: append($split-arr, $string);
+
+  @return $split-arr;
+}
+
+
+// String Extract Function
+// --------------------------------------------------------------------------------
+
+@function str-extract($string, $start, $end) {
+  $start-index: str-index($string, $start);
+
+  @if $start-index {
+    $post: str-slice($string, $start-index + str-length($start));
+    $end-index: str-index($post, $end);
+
+    @if $end-index {
+      @return str-slice($post, 1, $end-index - 1);
+    }
+  }
+
+  @return null;
+}
+
+
+// String Contains Function
+// --------------------------------------------------------------------------------
+
+@function str-contains($string, $needle) {
+  @if (type-of($string) == string) {
+    @return str-index($string, $needle) != null;
+  }
+
+  @return false;
+}
+
+
+// URL Encode Function
+// --------------------------------------------------------------------------------
+
+@function url-encode($val) {
+  $spaces: str-replace($val, " ", "%20");
+  $encoded: str-replace($spaces, "#", "%23");
+  @return $encoded;
+}
+
+
+// Add Root Selector
+// --------------------------------------------------------------------------------
+// Adds a root selector using host based on the selector passed
+// --------------------------------------------------------------------------------
+
+@function add-root-selector($root, $addHostSelector) {
+  $selectors: str-split($root, ",");
+
+  $list: ();
+
+  @each $selector in $selectors {
+    // If the selector contains :host( it means it is targeting a class on the host
+    // element so we need to change how we target it:
+    // @include add-root-selector(":host(.fixed)", "[dir=rtl]")
+    // --> :host-context([dir=rtl]):host(.fixed)
+    // --> :host-context([dir=rtl]).fixed
+    @if str-contains($selector, ":host(") {
+      // @include add-root-selector(":host(.fixed)", "[dir=rtl]")
+      // --> :host-context([dir=rtl]):host(.fixed)
+      $shadow-element: str-replace($selector, ":host(", ":host-context(#{$addHostSelector}):host(");
+      $list: append($list, $shadow-element, comma);
+
+      $new-element: ();
+      $elements: str-split($selector, " ");
+
+      @each $element in $elements {
+        @if str-contains($element, ":host(") {
+          $scoped-element: $element;
+
+          // Replace the :host( and ) so all we have left is the class
+          // inside of it:
+          // :host(.fixed) -> .fixed
+          $scoped-element: str-replace($scoped-element, ")", "");
+          $scoped-element: str-replace($scoped-element, ":host(", "");
+
+          // Add the class back inside of host with the rtl selector:
+          // .fixed -> :host-context([dir=rtl]).fixed
+          $scoped-element: str-replace($scoped-element, $scoped-element, ":host-context(#{$addHostSelector})#{$scoped-element}");
+
+          // @include add-root-selector(":host(.fixed)", "[dir=rtl]")
+          // --> :host-context([dir=rtl]).fixed
+          $new-element: append($new-element, $scoped-element, space);
+        } @else {
+          // Add back any selectors that followed the host after transforming the
+          // first selector:
+          // :host(.fixed) ::slotted(ion-icon)
+          // --> :host-context([dir=rtl]):host(.fixed) ::slotted(ion-icon)
+          // --> :host-context([dir=rtl]).fixed ::slotted(ion-icon)
+          $new-element: append($new-element, $element, space);
+        }
+      }
+
+      $list: append($list, $new-element, comma);
+    // If the selector contains :host without a parantheses
+    // it means it is targeting just the host
+    // element so we can change it to look for host-context
+    // @include add-root-selector(":host", "[dir=rtl]")
+    // --> :host-context([dir=rtl])
+    // --> :host:dir(rtl)
+    } @else if str-contains($selector, ":host") {
+      $new-element: ();
+      $elements: str-split($selector, " ");
+
+      @each $element in $elements {
+        @if str-contains($element, ":host") {
+          // Replace the :host with the addHostSelector:
+          // :host -> :host-context([dir=rtl])
+          $updated-element: str-replace($element, ":host", ":host-context(#{$addHostSelector})");
+
+          // Add the final selector after all transformations:
+          // :host -> :host-context([dir=rtl])
+          $new-element: append($new-element, $updated-element, space);
+        } @else {
+          // Add back any selectors that followed the host after transforming the
+          // first selector:
+          // :host ::slotted(ion-icon) -> :host-context([dir=rtl]) ::slotted(ion-icon)
+          $new-element: append($new-element, $element, space);
+        }
+      }
+      
+      $list: append($list, $new-element, comma);
+    // If the selector does not contain host at all it is either a shadow
+    // or normal element so append both the addHostSelector and host-context
+    // @include add-root-selector("ion-component", "[dir=rtl]")
+    // --> :host-context([dir=rtl]) ion-component
+    // --> [dir=rtl] ion-component
+    } @else {
+      $list: append($list, "#{$addHostSelector} #{$selector}", comma);
+      $list: append($list, ":host-context(#{$addHostSelector}) #{$selector}", comma);
+    }
+  }
+
+  @return $list;
+}

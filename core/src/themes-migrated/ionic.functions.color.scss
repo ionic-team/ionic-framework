@@ -1,0 +1,59 @@
+// Gets the active color's css variable from a variation. Alpha is optional.
+// --------------------------------------------------------------------------------------------
+// Example usage:
+// current-color(base) => var(--ion-color-base)
+// current-color(contrast, 0.1) => rgba(var(--ion-color-contrast-rgb), 0.1)
+// --------------------------------------------------------------------------------------------
+@function current-color($variation, $alpha: null) {
+  @if $alpha == null {
+    @return var(--ion-color-#{$variation});
+  } @else {
+    @return rgba(var(--ion-color-#{$variation}-rgb), #{$alpha});
+  }
+}
+
+// Gets the specific color's css variable from the name and variation. Alpha/rgb are optional.
+// --------------------------------------------------------------------------------------------
+// Example usage:
+// ion-color(primary, base) => var(--ion-color-primary, #3880ff)
+// ion-color(secondary, contrast) => var(--ion-color-secondary-contrast)
+// ion-color(primary, base, 0.5) => rgba(var(--ion-color-primary-rgb, 56, 128, 255), 0.5)
+// --------------------------------------------------------------------------------------------
+@function ion-color($name, $variation, $alpha: null, $rgb: null) {
+  $values: map-get($colors, $name);
+  $value: map-get($values, $variation);
+  $variable: --ion-color-#{$name}-#{$variation};
+
+  @if ($variation == base) {
+    $variable: --ion-color-#{$name};
+  }
+
+  @if ($alpha) {
+    $value: color-to-rgb-list($value);
+    @return rgba(var(#{$variable}-rgb, $value), $alpha);
+  }
+  @if ($rgb) {
+    $value: color-to-rgb-list($value);
+    $variable: #{$variable}-rgb;
+  }
+
+  @return var(#{$variable}, $value);
+}
+
+// Mixes a color with black to create its shade.
+// --------------------------------------------------------------------------------------------
+@function get-color-shade($color) {
+  @return mix(#000, $color, 12%);
+}
+
+// Mixes a color with white to create its tint.
+// --------------------------------------------------------------------------------------------
+@function get-color-tint($color) {
+  @return mix(#fff, $color, 10%);
+}
+
+// Converts a color to a comma separated rgb.
+// --------------------------------------------------------------------------------------------
+@function color-to-rgb-list($color) {
+  @return #{red($color)},#{green($color)},#{blue($color)};
+}
