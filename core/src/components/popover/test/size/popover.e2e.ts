@@ -7,7 +7,7 @@ import { openPopover, screenshotPopover } from '../test.utils';
  * This behavior does not vary across modes/directions.
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('popover: size with no backdrop'), async () => {
+  test.describe(title('popover: size'), async () => {
     test.beforeEach(async ({ page }) => {
       await page.goto('/src/components/popover/test/size', config);
     });
