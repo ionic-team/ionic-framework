@@ -453,7 +453,7 @@ export const INPUT_BINDER = new InjectionToken<RoutedComponentInputBinder>('');
  */
 @Injectable()
 export class RoutedComponentInputBinder {
-  private outletDataSubscriptions = new Map<IonRouterOutlet, Subscription>;
+  private outletDataSubscriptions = new Map<IonRouterOutlet, Subscription>();
 
   bindActivatedRouteToOutletComponent(outlet: IonRouterOutlet): void {
     this.unsubscribeFromRouteData(outlet);
