@@ -28,6 +28,7 @@ import { NavigationPage3Component } from './navigation-page3/navigation-page3.co
 import { AlertComponent } from './alert/alert.component';
 import { AccordionComponent } from './accordion/accordion.component';
 import { AccordionModalComponent } from './accordion/accordion-modal/accordion-modal.component';
+import { IONIC_CONFIG } from './ionic-config';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,7 @@ import { AccordionModalComponent } from './accordion/accordion-modal/accordion-m
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    IonicModule.forRoot({ keyboardHeight: 12345 }),
+    IonicModule.forRoot(IONIC_CONFIG),
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

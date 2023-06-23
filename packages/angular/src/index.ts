@@ -7,7 +7,7 @@ export { TextValueAccessorDirective as TextValueAccessor } from './directives/co
 export { IonTabs } from './directives/navigation/ion-tabs';
 export { IonBackButtonDelegateDirective as IonBackButtonDelegate } from './directives/navigation/ion-back-button';
 export { NavDelegate } from './directives/navigation/nav-delegate';
-export { IonRouterOutlet } from './directives/navigation/ion-router-outlet';
+export { IonRouterOutlet, withComponentInputBinding } from './directives/navigation/ion-router-outlet';
 export {
   RouterLinkDelegateDirective as RouterLinkDelegate,
   RouterLinkWithHrefDelegateDirective as RouterLinkWithHrefDelegate,
@@ -42,7 +42,7 @@ export { IonicRouteStrategy } from './util/ionic-router-reuse-strategy';
 export * from './types/ionic-lifecycle-hooks';
 
 // PACKAGE MODULE
-export { IonicModule } from './ionic-module';
+export { IonicModule, IonicAngularConfig } from './ionic-module';
 
 export {
   // UTILS

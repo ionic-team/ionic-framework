@@ -11,7 +11,7 @@ import {
   TextValueAccessorDirective,
 } from './directives/control-value-accessors';
 import { IonBackButtonDelegateDirective } from './directives/navigation/ion-back-button';
-import { IonRouterOutlet } from './directives/navigation/ion-router-outlet';
+import { IonRouterOutlet, withComponentInputBinding } from './directives/navigation/ion-router-outlet';
 import { IonTabs } from './directives/navigation/ion-tabs';
 import { NavDelegate } from './directives/navigation/nav-delegate';
 import {
@@ -50,6 +50,17 @@ const DECLARATIONS = [
   RouterLinkWithHrefDelegateDirective,
 ];
 
+export interface IonicAngularConfig extends IonicConfig {
+  /**
+   * When true, enables binding information from the Router state directly to the inputs of the component in Route configurations.
+   *
+   * @experimental
+   *
+   * @see https://angular.io/api/router/ExtraOptions#bindToComponentInputs
+   */
+  bindToComponentInputs?: boolean;
+}
+
 @NgModule({
   declarations: DECLARATIONS,
   exports: DECLARATIONS,
@@ -57,7 +68,7 @@ const DECLARATIONS = [
   imports: [CommonModule],
 })
 export class IonicModule {
-  static forRoot(config?: IonicConfig): ModuleWithProviders<IonicModule> {
+  static forRoot(config?: IonicAngularConfig): ModuleWithProviders<IonicModule> {
     return {
       ngModule: IonicModule,
       providers: [
@@ -71,6 +82,7 @@ export class IonicModule {
           multi: true,
           deps: [ConfigToken, DOCUMENT, NgZone],
         },
+        config?.bindToComponentInputs ? withComponentInputBinding().ɵproviders : [],
       ],
     };
   }
