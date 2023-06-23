@@ -99,10 +99,10 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
 
     this.nativeEl.swipeHandler = swipe
       ? {
-        canStart: () => this.stackCtrl.canGoBack(1) && !this.stackCtrl.hasRunningTask(),
-        onStart: () => this.stackCtrl.startBackTransition(),
-        onEnd: (shouldContinue) => this.stackCtrl.endBackTransition(shouldContinue),
-      }
+          canStart: () => this.stackCtrl.canGoBack(1) && !this.stackCtrl.hasRunningTask(),
+          onStart: () => this.stackCtrl.startBackTransition(),
+          onEnd: (shouldContinue) => this.stackCtrl.endBackTransition(shouldContinue),
+        }
       : undefined;
   }
 
@@ -420,7 +420,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
 }
 
 class OutletInjector implements Injector {
-  constructor(private route: ActivatedRoute, private childContexts: ChildrenOutletContexts, private parent: Injector) { }
+  constructor(private route: ActivatedRoute, private childContexts: ChildrenOutletContexts, private parent: Injector) {}
 
   get(token: any, notFoundValue?: any): any {
     if (token === ActivatedRoute) {
@@ -467,13 +467,9 @@ export class RoutedComponentInputBinder {
 
   private subscribeToRouteData(outlet: IonRouterOutlet) {
     const { activatedRoute } = outlet;
-    const dataSubscription =
-      combineLatest([
-        activatedRoute.queryParams,
-        activatedRoute.params,
-        activatedRoute.data,
-      ])
-        .pipe(switchMap(([queryParams, params, data], index) => {
+    const dataSubscription = combineLatest([activatedRoute.queryParams, activatedRoute.params, activatedRoute.data])
+      .pipe(
+        switchMap(([queryParams, params, data], index) => {
           data = { ...queryParams, ...params, ...data };
           // Get the first result from the data subscription synchronously so it's available to
           // the component as soon as possible (and doesn't require a second change detection).
@@ -484,26 +480,31 @@ export class RoutedComponentInputBinder {
           // two of the Observables in the `combineLatest` stream emit one after
           // another.
           return Promise.resolve(data);
-        }))
-        .subscribe(data => {
-          // Outlet may have been deactivated or changed names to be associated with a different
-          // route
-          if (!outlet.isActivated || !outlet.activatedComponentRef ||
-            outlet.activatedRoute !== activatedRoute || activatedRoute.component === null) {
-            this.unsubscribeFromRouteData(outlet);
-            return;
-          }
+        })
+      )
+      .subscribe((data) => {
+        // Outlet may have been deactivated or changed names to be associated with a different
+        // route
+        if (
+          !outlet.isActivated ||
+          !outlet.activatedComponentRef ||
+          outlet.activatedRoute !== activatedRoute ||
+          activatedRoute.component === null
+        ) {
+          this.unsubscribeFromRouteData(outlet);
+          return;
+        }
 
-          const mirror = reflectComponentType(activatedRoute.component);
-          if (!mirror) {
-            this.unsubscribeFromRouteData(outlet);
-            return;
-          }
+        const mirror = reflectComponentType(activatedRoute.component);
+        if (!mirror) {
+          this.unsubscribeFromRouteData(outlet);
+          return;
+        }
 
-          for (const { templateName } of mirror.inputs) {
-            outlet.activatedComponentRef.setInput(templateName, data[templateName]);
-          }
-        });
+        for (const { templateName } of mirror.inputs) {
+          outlet.activatedComponentRef.setInput(templateName, data[templateName]);
+        }
+      });
 
     this.outletDataSubscriptions.set(outlet, dataSubscription);
   }
@@ -518,15 +519,12 @@ export function withComponentInputBinding(): {
   ɵkind: number;
   ɵproviders: Provider[];
 } {
-  const providers = [
-    RoutedComponentInputBinder,
-    { provide: INPUT_BINDER, useExisting: RoutedComponentInputBinder },
-  ];
+  const providers = [RoutedComponentInputBinder, { provide: INPUT_BINDER, useExisting: RoutedComponentInputBinder }];
 
   return {
     ɵkind: RouterFeatureKind.ComponentInputBindingFeature,
-    ɵproviders: providers
-  }
+    ɵproviders: providers,
+  };
 }
 
 /**
