@@ -173,8 +173,25 @@
   @include border-radius(var(--border-radius));
 }
 
-.native-textarea,
-// TODO: FW-2876 - Remove this selector, keep .native-textarea
+.native-textarea {
+  font-family: inherit;
+  font-size: inherit;
+  font-style: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  text-decoration: inherit;
+  text-indent: inherit;
+  text-overflow: inherit;
+  text-transform: inherit;
+  text-align: inherit;
+  color: inherit;
+
+  grid-area: 1 / 1 / 2 / 2;
+
+  word-break: break-word;
+}
+
+// TODO: FW-2876 - Remove this selector
 :host(.legacy-textarea) .textarea-legacy-wrapper::after {
   @include text-inherit();
 
