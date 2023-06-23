@@ -64,6 +64,8 @@
 
   z-index: $z-index-item-input;
 
+  white-space: pre-wrap;
+
   box-sizing: border-box;
 }
 
@@ -72,8 +74,6 @@
   flex: 1;
 
   background: var(--background);
-
-  white-space: pre-wrap;
 }
 
 // TODO: FW-2876 - Remove this selector
@@ -131,8 +131,6 @@
   outline: none;
 
   background: transparent;
-
-  white-space: pre-wrap;
 
   /**
    * This ensures the textarea
