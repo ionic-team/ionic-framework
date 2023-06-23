@@ -174,17 +174,20 @@
 }
 
 .native-textarea {
+  color: inherit;
+
   font-family: inherit;
   font-size: inherit;
   font-style: inherit;
   font-weight: inherit;
+
   letter-spacing: inherit;
+
+  text-align: inherit;
   text-decoration: inherit;
   text-indent: inherit;
   text-overflow: inherit;
   text-transform: inherit;
-  text-align: inherit;
-  color: inherit;
 
   grid-area: 1 / 1 / 2 / 2;
 
