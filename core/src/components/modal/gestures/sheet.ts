@@ -41,7 +41,6 @@ export const createSheetGesture = (
   backdropBreakpoint: number,
   animation: Animation,
   breakpoints: number[] = [],
-  getCurrentBreakpoint: () => number,
   onDismiss: () => void,
   onBreakpointChange: (breakpoint: number) => void
 ) => {
@@ -134,24 +133,24 @@ export const createSheetGesture = (
     contentEl.scrollY = false;
   }
 
-  const canStart = (detail: GestureDetail) => {
-    /**
-     * If the sheet is fully expanded and
-     * the user is swiping on the content,
-     * the gesture should not start to
-     * allow for scrolling on the content.
-     */
-    const content = (detail.event.target! as HTMLElement).closest('ion-content');
-    currentBreakpoint = getCurrentBreakpoint();
+  let hasSwitchFromScrollToSwipe = false;
+  let hasComputedDeltaYOffset = false;
+  let deltaYWhenSwitched = 0;
+  let lastScrollTopValue = 0;
+  if (contentEl) {
+    contentEl.getScrollElement().then((scrollEl) => {
+      lastScrollTopValue = scrollEl.scrollTop;
+      scrollEl.onscroll = () => {
+        lastScrollTopValue = scrollEl.scrollTop;
+        if (scrollEl.scrollTop <= 0) {
+          contentEl.scrollY = false;
+          hasSwitchFromScrollToSwipe = true;
+        }
+      };
+    });
+  }
 
-    if (currentBreakpoint === 1 && content) {
-      return false;
-    }
-
-    return true;
-  };
-
-  const onStart = () => {
+  const onStart = (detail: GestureDetail) => {
     /**
      * If canDismiss is anything other than `true`
      * then users should be able to swipe down
@@ -165,14 +164,9 @@ export const createSheetGesture = (
      * Remove undefined check
      */
     canDismissBlocksGesture = baseEl.canDismiss !== undefined && baseEl.canDismiss !== true && minBreakpoint === 0;
-
-    /**
-     * If swiping on the content
-     * we should disable scrolling otherwise
-     * the sheet will expand and the content will scroll.
-     */
-    if (contentEl) {
+    if (contentEl && lastScrollTopValue <= 0 && detail.deltaY > 0) {
       contentEl.scrollY = false;
+      hasSwitchFromScrollToSwipe = true;
     }
 
     raf(() => {
@@ -188,13 +182,25 @@ export const createSheetGesture = (
 
   const onMove = (detail: GestureDetail) => {
     /**
+     * Prevent the drag gesture on the Y axis if scrolling is possible and if user is touching the content.
+     */
+    const isTouchEventInContent =
+      contentEl?.scrollY && detail.event.target && contentEl.contains(detail.event.target as HTMLElement);
+    if (contentEl?.scrollY && isTouchEventInContent) return;
+
+    if (hasSwitchFromScrollToSwipe && !hasComputedDeltaYOffset) {
+      hasComputedDeltaYOffset = true;
+      deltaYWhenSwitched = detail.deltaY;
+    }
+
+    /**
      * Given the change in gesture position on the Y axis,
      * compute where the offset of the animation should be
      * relative to where the user dragged.
      */
     const initialStep = 1 - currentBreakpoint;
     const secondToLastBreakpoint = breakpoints.length > 1 ? 1 - breakpoints[1] : undefined;
-    const step = initialStep + detail.deltaY / height;
+    const step = initialStep + (detail.deltaY - deltaYWhenSwitched) / height;
     const isAttemptingDismissWithCanDismiss =
       secondToLastBreakpoint !== undefined && step >= secondToLastBreakpoint && canDismissBlocksGesture;
 
@@ -231,16 +237,26 @@ export const createSheetGesture = (
 
   const onEnd = (detail: GestureDetail) => {
     /**
+     * Prevent the drag gesture on the Y axis if scrolling is possible and if user is touching the content.
+     */
+    const isTouchEventInContent =
+      contentEl?.scrollY && detail.event.target && contentEl.contains(detail.event.target as HTMLElement);
+    if (contentEl?.scrollY && isTouchEventInContent) return;
+    /**
      * When the gesture releases, we need to determine
      * the closest breakpoint to snap to.
      */
     const velocity = detail.velocityY;
-    const threshold = (detail.deltaY + velocity * 350) / height;
+    const threshold = (detail.deltaY - deltaYWhenSwitched + velocity * 350) / height;
 
     const diff = currentBreakpoint - threshold;
     const closest = breakpoints.reduce((a, b) => {
       return Math.abs(b - diff) < Math.abs(a - diff) ? b : a;
     });
+
+    deltaYWhenSwitched = 0;
+    hasSwitchFromScrollToSwipe = false;
+    hasComputedDeltaYOffset = false;
 
     moveSheetToBreakpoint({
       breakpoint: closest,
@@ -328,6 +344,8 @@ export const createSheetGesture = (
                    */
                   if (contentEl && currentBreakpoint === breakpoints[breakpoints.length - 1]) {
                     contentEl.scrollY = true;
+                  } else if (contentEl) {
+                    contentEl.scrollY = false;
                   }
 
                   /**
@@ -370,7 +388,6 @@ export const createSheetGesture = (
     gesturePriority: 40,
     direction: 'y',
     threshold: 10,
-    canStart,
     onStart,
     onMove,
     onEnd,

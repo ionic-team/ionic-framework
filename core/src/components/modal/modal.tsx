@@ -602,7 +602,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
       backdropBreakpoint,
       ani,
       this.sortedBreakpoints,
-      () => this.currentBreakpoint ?? 0,
       () => this.sheetOnDismiss(),
       (breakpoint: number) => {
         if (this.currentBreakpoint !== breakpoint) {
