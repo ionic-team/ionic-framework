@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.1.1-nightly.20230626](https://github.com/ionic-team/ionic-framework/compare/v7.1.0...v7.1.1-nightly.20230626) (2023-06-26)
+
+
+### Bug Fixes
+
+* **textarea:** autogrow resizes correctly ([#27691](https://github.com/ionic-team/ionic-framework/issues/27691)) ([f263611](https://github.com/ionic-team/ionic-framework/commit/f263611260c465bfeefc2db7b1ea04bfa5b54303)), closes [#27688](https://github.com/ionic-team/ionic-framework/issues/27688)
+
+
+
+
+
 # [7.1.0](https://github.com/ionic-team/ionic-framework/compare/v7.0.14...v7.1.0) (2023-06-21)
 
 
