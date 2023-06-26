@@ -7,7 +7,7 @@ import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from
 import { getIonMode } from '../../global/ionic-global';
 import type { Gesture, GestureDetail } from '../../interface';
 
-import type { ItemReorderEventDetail } from './reorder-group-interface';
+import type { ItemReorderEventDetail, ItemMoveEventDetail } from './reorder-group-interface';
 
 // TODO(FW-2832): types
 
@@ -57,6 +57,8 @@ export class ReorderGroup implements ComponentInterface {
    * to be called in order to finalize the reorder action.
    */
   @Event() ionItemReorder!: EventEmitter<ItemReorderEventDetail>;
+
+  @Event() ionItemMove!: EventEmitter<ItemMoveEventDetail>;
 
   async connectedCallback() {
     const contentEl = findClosestIonContent(this.el);
@@ -183,6 +185,13 @@ export class ReorderGroup implements ComponentInterface {
     const toIndex = this.itemIndexForTop(normalizedY);
     if (toIndex !== this.lastToIndex) {
       const fromIndex = indexForItem(selectedItem);
+
+      this.ionItemMove.emit({
+        from: fromIndex,
+        lastTo: this.lastToIndex,
+        to: toIndex,
+      });
+
       this.lastToIndex = toIndex;
 
       hapticSelectionChanged();
