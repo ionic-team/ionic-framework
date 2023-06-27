@@ -275,18 +275,16 @@ export class Textarea implements ComponentInterface {
   }
 
   /**
-   * The `ionChange` event is fired for `<ion-textarea>` elements when the user
-   * modifies the element's value. Unlike the `ionInput` event, the `ionChange`
-   * event is not necessarily fired for each alteration to an element's value.
-   *
-   * The `ionChange` event is fired when the element loses focus after its value
-   * has been modified.
+   * The `ionChange` event is fired when the user modifies the textarea's value.
+   * Unlike the `ionInput` event, the `ionChange` event is fired when
+   * the element loses focus after its value has been modified.
    */
   @Event() ionChange!: EventEmitter<TextareaChangeEventDetail>;
 
   /**
-   * The `ionInput` event fires when the `value` of an `<ion-textarea>` element
-   * has been changed.
+   * The `ionInput` event is fired each time the user modifies the textarea's value.
+   * Unlike the `ionChange` event, the `ionInput` event is fired for each alteration
+   * to the textarea's value. This typically happens for each keystroke as the user types.
    *
    * When `clearOnEdit` is enabled, the `ionInput` event will be fired when
    * the user clears the textarea by performing a keydown event.

@@ -284,8 +284,9 @@ export class Input implements ComponentInterface {
   @Prop({ mutable: true }) value?: string | number | null = '';
 
   /**
-   * The `ionInput` event fires when the `value` of an `<ion-input>` element
-   * has been changed.
+   * The `ionInput` event is fired each time the user modifies the input's value.
+   * Unlike the `ionChange` event, the `ionInput` event is fired for each alteration
+   * to the input's value. This typically happens for each keystroke as the user types.
    *
    * For elements that accept text input (`type=text`, `type=tel`, etc.), the interface
    * is [`InputEvent`](https://developer.mozilla.org/en-US/docs/Web/API/InputEvent); for others,
@@ -295,9 +296,9 @@ export class Input implements ComponentInterface {
   @Event() ionInput!: EventEmitter<InputInputEventDetail>;
 
   /**
-   * The `ionChange` event is fired for `<ion-input>` elements when the user
-   * modifies the element's value. Unlike the `ionInput` event, the `ionChange`
-   * event is not necessarily fired for each alteration to an element's value.
+   * The `ionChange` event is fired when the user modifies the input's value.
+   * Unlike the `ionInput` event, the `ionChange` event is only fired when changes
+   * are committed, not as the user types.
    *
    * Depending on the way the users interacts with the element, the `ionChange`
    * event fires at a different moment:
