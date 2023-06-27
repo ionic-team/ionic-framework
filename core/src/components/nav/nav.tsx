@@ -6,7 +6,7 @@ import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import type { Animation, AnimationBuilder, ComponentProps, FrameworkDelegate, Gesture } from '../../interface';
 import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
-import { assert, raf } from '../../utils/helpers';
+import { assert } from '../../utils/helpers';
 import type { TransitionOptions } from '../../utils/transition';
 import { lifecycle, setPageHidden, transition } from '../../utils/transition';
 import type { NavOutlet, RouteID, RouteWrite, RouterDirection } from '../router/utils/interface';
@@ -37,6 +37,7 @@ export class Nav implements NavOutlet {
   private destroyed = false;
   private views: ViewController[] = [];
   private gesture?: Gesture;
+  private didLoad = false;
 
   @Element() el!: HTMLElement;
 
@@ -83,12 +84,18 @@ export class Nav implements NavOutlet {
       return;
     }
 
+    if (this.didLoad === false) {
+      /**
+       * If the component has not loaded yet, we can skip setting up the root component.
+       * It will be called when `componentDidLoad` fires.
+       */
+      return;
+    }
+
     if (!this.useRouter) {
-      raf(() => {
-        if (this.root !== undefined) {
-          this.setRoot(this.root, this.rootParams);
-        }
-      });
+      if (this.root !== undefined) {
+        this.setRoot(this.root, this.rootParams);
+      }
     } else if (isDev) {
       printIonWarning('<ion-nav> does not support a root attribute when using ion-router.', this.el);
     }
@@ -120,6 +127,9 @@ export class Nav implements NavOutlet {
   }
 
   async componentDidLoad() {
+    // We want to set this flag before any watch callbacks are manually called
+    this.didLoad = true;
+
     this.rootChanged();
 
     this.gesture = (await import('../../utils/gesture/swipe-back')).createSwipeBackGesture(
