@@ -18,7 +18,6 @@ import { NavigationPage2Component } from './navigation-page2/navigation-page2.co
 import { NavigationPage3Component } from './navigation-page3/navigation-page3.component';
 import { AlertComponent } from './alert/alert.component';
 import { AccordionComponent } from './accordion/accordion.component';
-import { ModalNavComponent } from './modal-nav/modal-nav.component';
 
 const routes: Routes = [
   { path: '', component: HomePageComponent },
@@ -31,7 +30,6 @@ const routes: Routes = [
   { path: 'form', component: FormComponent },
   { path: 'modals', component: ModalComponent },
   { path: 'modal-inline', loadChildren: () => import('./modal-inline').then(m => m.ModalInlineModule) },
-  { path: 'modal-nav', component: ModalNavComponent },
   { path: 'view-child', component: ViewChildComponent },
   { path: 'keep-contents-mounted', loadChildren: () => import('./keep-contents-mounted').then(m => m.OverlayAutoMountModule) },
   { path: 'overlays-inline', loadChildren: () => import('./overlays-inline').then(m => m.OverlaysInlineModule) },

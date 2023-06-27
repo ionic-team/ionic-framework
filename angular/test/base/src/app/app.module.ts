@@ -28,7 +28,6 @@ import { NavigationPage3Component } from './navigation-page3/navigation-page3.co
 import { AlertComponent } from './alert/alert.component';
 import { AccordionComponent } from './accordion/accordion.component';
 import { AccordionModalComponent } from './accordion/accordion-modal/accordion-modal.component';
-import { ModalNavComponent } from './modal-nav/modal-nav.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +35,6 @@ import { ModalNavComponent } from './modal-nav/modal-nav.component';
     InputsComponent,
     ModalComponent,
     ModalExampleComponent,
-    ModalNavComponent,
     RouterLinkComponent,
     RouterLinkPageComponent,
     RouterLinkPage2Component,
