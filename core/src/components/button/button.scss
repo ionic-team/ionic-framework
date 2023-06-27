@@ -224,7 +224,7 @@
 // --------------------------------------------------
 
 ::slotted(ion-icon) {
-  width: 1.4em;
+  font-size: 1.4em;
   pointer-events: none;
 }
 
@@ -237,7 +237,7 @@
 }
 
 ::slotted(ion-icon[slot="icon-only"]) {
-  width: 1.8em;
+  font-size: 1.8em;
 }
 
 
