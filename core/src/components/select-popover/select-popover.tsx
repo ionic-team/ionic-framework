@@ -1,9 +1,9 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Element, Component, Host, Prop, h } from '@stencil/core';
+import { safeCall } from '@utils/overlays';
+import { getClassMap } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
-import { safeCall } from '../../utils/overlays';
-import { getClassMap } from '../../utils/theme';
 import type { CheckboxCustomEvent } from '../checkbox/checkbox-interface';
 import type { RadioGroupCustomEvent } from '../radio-group/radio-group-interface';
 

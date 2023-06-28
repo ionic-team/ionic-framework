@@ -117,6 +117,7 @@ export {
   SearchbarInputEventDetail,
   SegmentChangeEventDetail,
   SegmentCustomEvent,
+  SegmentValue,
   SelectChangeEventDetail,
   SelectCustomEvent,
   TabsCustomEvent,

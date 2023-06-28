@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.1.1](https://github.com/ionic-team/ionic-framework/compare/v7.1.0...v7.1.1) (2023-06-26)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+# [7.1.0](https://github.com/ionic-team/ionic-framework/compare/v7.0.14...v7.1.0) (2023-06-21)
+
+
+### Features
+
+* **segment, segment-button:** update segment value property to accept numbers ([#27222](https://github.com/ionic-team/ionic-framework/issues/27222)) ([ec95ae5](https://github.com/ionic-team/ionic-framework/commit/ec95ae5cd38e3d2b9ec9fdbc9e237fa1241f7a4e)), closes [#27221](https://github.com/ionic-team/ionic-framework/issues/27221)
+
+
+
+
+
 ## [7.0.14](https://github.com/ionic-team/ionic-framework/compare/v7.0.13...v7.0.14) (2023-06-15)
 
 **Note:** Version bump only for package @ionic/react

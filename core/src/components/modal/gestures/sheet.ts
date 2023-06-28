@@ -1,7 +1,8 @@
+import { createGesture } from '@utils/gesture';
+import { clamp, raf } from '@utils/helpers';
+
 import type { Animation } from '../../../interface';
 import type { GestureDetail } from '../../../utils/gesture';
-import { createGesture } from '../../../utils/gesture';
-import { clamp, raf } from '../../../utils/helpers';
 import { getBackdropValueForSheet } from '../utils';
 
 import { calculateSpringStep, handleCanDismiss } from './utils';

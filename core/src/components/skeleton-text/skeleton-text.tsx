@@ -1,9 +1,9 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, h } from '@stencil/core';
+import { hostContext } from '@utils/theme';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { hostContext } from '../../utils/theme';
 
 @Component({
   tag: 'ion-skeleton-text',

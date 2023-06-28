@@ -302,12 +302,23 @@ button {
  * works on block-level elements. A flex item is
  * considered blockified (https://www.w3.org/TR/css-display-3/#blockify).
  */
-.label-text {
+.label-text,
+::slotted([slot="label"]) {
   text-overflow: ellipsis;
 
   white-space: nowrap;
 
   overflow: hidden;
+}
+
+/**
+ * If no label text is placed into the slot
+ * then the element should be hidden otherwise
+ * there will be additional margins added.
+ */
+.label-text-wrapper-hidden,
+.select-outline-notch-hidden {
+  display: none;
 }
 
 // Select Native Wrapper
