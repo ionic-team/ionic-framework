@@ -29,7 +29,7 @@ export class ReactRouterViewStack extends ViewStacks {
       component: reactElement.props.component,
     };
 
-    const match = matchPath(routeInfo.pathname, matchProps);
+    const match = matchPath(matchProps, routeInfo.pathname);
 
     if (reactElement.type === IonRoute) {
       viewItem.ionRoute = true;
@@ -145,7 +145,7 @@ export class ReactRouterViewStack extends ViewStacks {
         path: v.routeData.childProps.path || v.routeData.childProps.from,
         component: v.routeData.childProps.component,
       };
-      const myMatch = matchPath(pathname, matchProps);
+      const myMatch = matchPath(matchProps, pathname);
       if (myMatch) {
         viewItem = v;
         match = myMatch;
@@ -158,11 +158,12 @@ export class ReactRouterViewStack extends ViewStacks {
       // try to find a route that doesn't have a path or from prop, that will be our default route
       if (!v.routeData.childProps.path && !v.routeData.childProps.from) {
         match = {
-          path: pathname,
-          url: pathname,
-          isExact: true,
+          pathname,
           params: {},
-        };
+          // url: pathname,
+          // isExact: true,
+          // params: {},
+        } as any; // TODO @sean review what this is doing
         viewItem = v;
         return true;
       }
@@ -177,7 +178,7 @@ function matchComponent(node: React.ReactElement, pathname: string, forceExact?:
     path: node.props.path || node.props.from,
     component: node.props.component,
   };
-  const match = matchPath(pathname, matchProps);
+  const match = matchPath(matchProps, pathname);
 
   return match;
 }
