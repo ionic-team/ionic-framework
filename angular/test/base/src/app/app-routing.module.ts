@@ -58,6 +58,10 @@ const routes: Routes = [
     loadChildren: () => import('./tabs-global/tabs-global.module').then(m => m.TabsGlobalModule)
   },
   {
+    path: 'tabs-slots',
+    loadComponent: () => import('./tabs-slots.component').then(c => c.TabsSlotsComponent)
+  },
+  {
     path: 'nested-outlet',
     component: NestedOutletComponent,
     children: [

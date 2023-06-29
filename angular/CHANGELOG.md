@@ -3,6 +3,66 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.1.1](https://github.com/ionic-team/ionic-framework/compare/v7.1.0...v7.1.1) (2023-06-26)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+# [7.1.0](https://github.com/ionic-team/ionic-framework/compare/v7.0.14...v7.1.0) (2023-06-21)
+
+
+### Bug Fixes
+
+* **angular:** tabs supports conditional slot bindings ([#27582](https://github.com/ionic-team/ionic-framework/issues/27582)) ([d20bea5](https://github.com/ionic-team/ionic-framework/commit/d20bea561c362eacd250cdedbc9b79159eb2c95f)), closes [#19484](https://github.com/ionic-team/ionic-framework/issues/19484)
+
+
+### Features
+
+* **range:** add label prop ([#27408](https://github.com/ionic-team/ionic-framework/issues/27408)) ([368add2](https://github.com/ionic-team/ionic-framework/commit/368add2a5ca3820a1f9623c96d29bcccfa693fdc))
+* return if the pop on NavController was successful ([#27404](https://github.com/ionic-team/ionic-framework/issues/27404)) ([e80f0b2](https://github.com/ionic-team/ionic-framework/commit/e80f0b240968de0d642463e95a35adf8dbffd2e1)), closes [#27403](https://github.com/ionic-team/ionic-framework/issues/27403)
+* **segment, segment-button:** update segment value property to accept numbers ([#27222](https://github.com/ionic-team/ionic-framework/issues/27222)) ([ec95ae5](https://github.com/ionic-team/ionic-framework/commit/ec95ae5cd38e3d2b9ec9fdbc9e237fa1241f7a4e)), closes [#27221](https://github.com/ionic-team/ionic-framework/issues/27221)
+* **segment:** display segment as a grid and add an ellipsis to overflowing text in a segment button  ([#27457](https://github.com/ionic-team/ionic-framework/issues/27457)) ([448e63f](https://github.com/ionic-team/ionic-framework/commit/448e63fef0aca603214cb357dec37e1db2a0f052)), closes [#16532](https://github.com/ionic-team/ionic-framework/issues/16532)
+* **select:** add props to customize toggle icons ([#27648](https://github.com/ionic-team/ionic-framework/issues/27648)) ([95e28b6](https://github.com/ionic-team/ionic-framework/commit/95e28b6629843af7dce62f20bc8e31adfb391990)), closes [#17248](https://github.com/ionic-team/ionic-framework/issues/17248)
+
+
+
+
+
+## [7.0.14](https://github.com/ionic-team/ionic-framework/compare/v7.0.13...v7.0.14) (2023-06-15)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [7.0.13](https://github.com/ionic-team/ionic-framework/compare/v7.0.12...v7.0.13) (2023-06-14)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [7.0.12](https://github.com/ionic-team/ionic-framework/compare/v7.0.11...v7.0.12) (2023-06-08)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [7.0.11](https://github.com/ionic-team/ionic-framework/compare/v7.0.10...v7.0.11) (2023-06-07)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
 ## [7.0.10](https://github.com/ionic-team/ionic-framework/compare/v7.0.9...v7.0.10) (2023-05-31)
 
 

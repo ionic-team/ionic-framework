@@ -1,5 +1,6 @@
+import { createAnimation } from '@utils/animation/animation';
+
 import type { Animation } from '../../../interface';
-import { createAnimation } from '../../../utils/animation/animation';
 
 /**
  * iOS Picker Enter Animation

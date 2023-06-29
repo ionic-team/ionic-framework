@@ -118,6 +118,14 @@
 
         <ion-button
           expand="block"
+          id="translucent-color-toast"
+          onclick="openToast({message: 'click to close', buttons: ['Close'], translucent: true, color: 'success'})"
+        >
+          Translucent Color Toast
+        </ion-button>
+
+        <ion-button
+          expand="block"
           id="custom-class-toast"
           onclick="openToast({message: 'click to close', buttons: ['Close'], cssClass: 'my-custom-class'})"
         >

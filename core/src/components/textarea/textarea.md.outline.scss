@@ -176,6 +176,16 @@
 
   opacity: 0;
   pointer-events: none;
+
+  /**
+   * The spacer currently inherits
+   * border-box sizing from the Ionic reset styles.
+   * However, we do not want to include padding in
+   * the calculation of the element dimensions.
+   * This code can be removed if textarea is updated
+   * to use the Shadow DOM.
+   */
+  box-sizing: content-box;
 }
 
 :host(.textarea-fill-outline) .textarea-outline-start {

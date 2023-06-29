@@ -1,17 +1,17 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, readTask, writeTask } from '@stencil/core';
-
-import { getIonMode } from '../../global/ionic-global';
-import type { Animation, Gesture, GestureDetail } from '../../interface';
-import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
+import { getTimeGivenProgression } from '@utils/animation/cubic-bezier';
 import {
   getScrollElement,
   ION_CONTENT_CLASS_SELECTOR,
   ION_CONTENT_ELEMENT_SELECTOR,
   printIonContentErrorMsg,
-} from '../../utils/content';
-import { clamp, componentOnReady, getElementRoot, raf, transitionEndAsync } from '../../utils/helpers';
-import { hapticImpact } from '../../utils/native/haptic';
+} from '@utils/content';
+import { clamp, componentOnReady, getElementRoot, raf, transitionEndAsync } from '@utils/helpers';
+import { hapticImpact } from '@utils/native/haptic';
+
+import { getIonMode } from '../../global/ionic-global';
+import type { Animation, Gesture, GestureDetail } from '../../interface';
 
 import type { RefresherEventDetail } from './refresher-interface';
 import {
@@ -692,6 +692,16 @@ export class Refresher implements ComponentInterface {
       // and close the refresher
       // set that the refresh is actively cancelling
       this.cancel();
+    } else if (this.state === RefresherState.Inactive) {
+      /**
+       * The pull to refresh gesture was aborted
+       * so we should immediately restore any overflow styles
+       * that have been modified. Do not call this.cancel
+       * because the styles will only be reset after a timeout.
+       * If the gesture is aborted then scrolling should be
+       * available right away.
+       */
+      this.restoreOverflowStyle();
     }
   }
 
@@ -716,7 +726,12 @@ export class Refresher implements ComponentInterface {
       this.state = RefresherState.Inactive;
       this.progress = 0;
       this.didStart = false;
-      this.setCss(0, '0ms', false, '');
+
+      /**
+       * Reset any overflow styles so the
+       * user can scroll again.
+       */
+      this.setCss(0, '0ms', false, '', true);
     }, 600);
 
     // reset the styles on the scroll element
@@ -725,7 +740,13 @@ export class Refresher implements ComponentInterface {
     this.setCss(0, this.closeDuration, true, delay);
   }
 
-  private setCss(y: number, duration: string, overflowVisible: boolean, delay: string) {
+  private setCss(
+    y: number,
+    duration: string,
+    overflowVisible: boolean,
+    delay: string,
+    shouldRestoreOverflowStyle = false
+  ) {
     if (this.nativeRefresher) {
       return;
     }
@@ -738,11 +759,18 @@ export class Refresher implements ComponentInterface {
         scrollStyle.transform = backgroundStyle.transform = y > 0 ? `translateY(${y}px) translateZ(0px)` : '';
         scrollStyle.transitionDuration = backgroundStyle.transitionDuration = duration;
         scrollStyle.transitionDelay = backgroundStyle.transitionDelay = delay;
-        if (overflowVisible) {
-          scrollStyle.overflow = 'hidden';
-        } else {
-          this.restoreOverflowStyle();
-        }
+        scrollStyle.overflow = overflowVisible ? 'hidden' : '';
+      }
+
+      /**
+       * Reset the overflow styles only once
+       * the pull to refresh effect has been closed.
+       * This ensures that the gesture is done
+       * and the refresh operation has either
+       * been aborted or has completed.
+       */
+      if (shouldRestoreOverflowStyle) {
+        this.restoreOverflowStyle();
       }
     });
   }

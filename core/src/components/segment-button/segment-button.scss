@@ -57,7 +57,6 @@
 
   position: relative;
 
-  flex: 1 1 auto;
   flex-direction: column;
 
   height: auto;
@@ -71,9 +70,11 @@
 
   white-space: nowrap;
 
-  font-kerning: none;
-
   cursor: pointer;
+
+  grid-row: 1;
+
+  font-kerning: none;
 }
 
 .button-native {
@@ -210,11 +211,15 @@
 
   align-self: center;
 
+  max-width: 100%;
+
   line-height: 22px;
 
   text-overflow: ellipsis;
 
   white-space: nowrap;
+
+  overflow: hidden;
 
   box-sizing: border-box;
 

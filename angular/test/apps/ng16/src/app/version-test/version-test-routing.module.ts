@@ -3,7 +3,12 @@ import { RouterModule } from "@angular/router";
 
 @NgModule({
   imports: [
-    RouterModule.forChild([])
+    RouterModule.forChild([
+      {
+        path: 'modal-nav-params',
+        loadComponent: () => import('./modal-nav-params/modal-nav-params.component').then(m => m.ModalNavParamsComponent)
+      }
+    ])
   ],
   exports: [RouterModule]
 })

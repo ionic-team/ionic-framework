@@ -1,4 +1,16 @@
-import { Component, ContentChild, EventEmitter, HostListener, Output, ViewChild } from '@angular/core';
+import {
+  AfterContentChecked,
+  AfterContentInit,
+  Component,
+  ContentChild,
+  ContentChildren,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Output,
+  QueryList,
+  ViewChild,
+} from '@angular/core';
 
 import { NavController } from '../../providers/nav-controller';
 import { IonTabBar } from '../proxies';
@@ -8,11 +20,13 @@ import { StackEvent } from './stack-utils';
 
 @Component({
   selector: 'ion-tabs',
-  template: `<ng-content select="[slot=top]"></ng-content>
-    <div class="tabs-inner">
+  template: `
+    <ng-content select="[slot=top]"></ng-content>
+    <div class="tabs-inner" #tabsInner>
       <ion-router-outlet #outlet tabs="true" (stackEvents)="onPageSelected($event)"></ion-router-outlet>
     </div>
-    <ng-content></ng-content>`,
+    <ng-content></ng-content>
+  `,
   styles: [
     `
       :host {
@@ -41,14 +55,27 @@ import { StackEvent } from './stack-utils';
   ],
 })
 // eslint-disable-next-line @angular-eslint/component-class-suffix
-export class IonTabs {
+export class IonTabs implements AfterContentInit, AfterContentChecked {
   @ViewChild('outlet', { read: IonRouterOutlet, static: false }) outlet: IonRouterOutlet;
+  @ViewChild('tabsInner', { read: ElementRef, static: true }) tabsInner: ElementRef<HTMLDivElement>;
+
   @ContentChild(IonTabBar, { static: false }) tabBar: IonTabBar | undefined;
+  @ContentChildren(IonTabBar) tabBars: QueryList<IonTabBar>;
 
   @Output() ionTabsWillChange = new EventEmitter<{ tab: string }>();
   @Output() ionTabsDidChange = new EventEmitter<{ tab: string }>();
 
+  private tabBarSlot = 'bottom';
+
   constructor(private navCtrl: NavController) {}
+
+  ngAfterContentInit(): void {
+    this.detectSlotChanges();
+  }
+
+  ngAfterContentChecked(): void {
+    this.detectSlotChanges();
+  }
 
   /**
    * @internal
@@ -136,5 +163,49 @@ export class IonTabs {
 
   getSelected(): string | undefined {
     return this.outlet.getActiveStackId();
+  }
+
+  /**
+   * Detects changes to the slot attribute of the tab bar.
+   *
+   * If the slot attribute has changed, then the tab bar
+   * should be relocated to the new slot position.
+   */
+  private detectSlotChanges(): void {
+    this.tabBars.forEach((tabBar: any) => {
+      // el is a protected attribute from the generated component wrapper
+      const currentSlot = tabBar.el.getAttribute('slot');
+
+      if (currentSlot !== this.tabBarSlot) {
+        this.tabBarSlot = currentSlot;
+        this.relocateTabBar();
+      }
+    });
+  }
+
+  /**
+   * Relocates the tab bar to the new slot position.
+   */
+  private relocateTabBar(): void {
+    /**
+     * `el` is a protected attribute from the generated component wrapper.
+     * To avoid having to manually create the wrapper for tab bar, we
+     * cast the tab bar to any and access the protected attribute.
+     */
+    const tabBar = (this.tabBar as any).el as HTMLElement;
+
+    if (this.tabBarSlot === 'top') {
+      /**
+       * A tab bar with a slot of "top" should be inserted
+       * at the top of the container.
+       */
+      this.tabsInner.nativeElement.before(tabBar);
+    } else {
+      /**
+       * A tab bar with a slot of "bottom" or without a slot
+       * should be inserted at the end of the container.
+       */
+      this.tabsInner.nativeElement.after(tabBar);
+    }
   }
 }
