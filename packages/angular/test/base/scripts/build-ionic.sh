@@ -14,7 +14,7 @@ npm link
 popd
 
 # Build angular-server
-pushd angular-server
+pushd packages/angular-server
 npm link @ionic/core
 npm link @ionic/angular
 npm run build
