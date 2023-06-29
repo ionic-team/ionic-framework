@@ -9,21 +9,6 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
     <style>
-      .grid {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(250px, 1fr));
-        grid-gap: 60px 20px;
-      }
-      h2 {
-        font-size: 12px;
-        font-weight: normal;
-
-        color: #6f7378;
-
-        margin-top: 10px;
-        margin-left: 5px;
-      }
-
       ion-datetime {
         box-shadow: 0px 16px 32px rgba(0, 0, 0, 0.25), 0px 8px 16px rgba(0, 0, 0, 0.25);
         border-radius: 8px;
@@ -38,7 +23,7 @@
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
-        <div class="grid">
+        <div class="grid three-col">
           <div class="grid-item">
             <h2>Default Hour cycle</h2>
             <ion-datetime></ion-datetime>

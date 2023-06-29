@@ -11,28 +11,6 @@
     <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
-    <style>
-      .grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        grid-row-gap: 20px;
-        grid-column-gap: 20px;
-
-        padding: 200px;
-      }
-      .grid-item {
-        margin: 0 auto;
-      }
-      h2 {
-        font-size: 12px;
-        font-weight: normal;
-
-        color: #6f7378;
-
-        margin-top: 10px;
-        margin-left: 5px;
-      }
-    </style>
   </head>
   <body>
     <ion-app>
@@ -43,7 +21,7 @@
       </ion-header>
 
       <ion-content class="ion-padding">
-        <div class="grid">
+        <div class="grid four-col">
           <div class="grid-item">
             <h2>Left Click</h2>
             <ion-button id="left-click-trigger">Trigger</ion-button>

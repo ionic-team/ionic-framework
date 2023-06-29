@@ -9,28 +9,6 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
     <style>
-      .grid {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(250px, 1fr));
-        grid-row-gap: 20px;
-        grid-column-gap: 20px;
-      }
-      h2 {
-        font-size: 12px;
-        font-weight: normal;
-
-        color: #6f7378;
-
-        margin-top: 10px;
-        margin-left: 5px;
-      }
-      @media screen and (max-width: 800px) {
-        .grid {
-          grid-template-columns: 1fr;
-          padding: 0;
-        }
-      }
-
       .options-popover {
         --width: 300px;
       }
@@ -255,7 +233,7 @@
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
-        <div class="grid">
+        <div class="grid three-col">
           <div class="grid-item">
             <h2>Inline</h2>
             <ion-datetime value="2020-03-14T14:23:00.000Z" id="inline-datetime"></ion-datetime>

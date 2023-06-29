@@ -8,27 +8,7 @@
     <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
-    <style>
-      .grid {
-        display: flex;
-        flex-wrap: wrap;
-      }
-
-      .grid-item {
-        margin-bottom: 20px;
-        margin-right: 20px;
-      }
-
-      h2 {
-        font-size: 12px;
-        font-weight: normal;
-
-        color: #6f7378;
-
-        margin-top: 10px;
-        margin-left: 5px;
-      }
-
+    <style>  
       ion-datetime {
         box-shadow: 0px 8px 16px 0 rgba(0, 0, 0, 0.25);
         border-radius: 8px;
@@ -44,7 +24,7 @@
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
-        <div class="grid">
+        <div class="grid three-col">
           <div class="grid-item">
             <h2>With Array</h2>
             <ion-datetime locale="en-US" id="withArray" presentation="date" value="2023-01-01"></ion-datetime>

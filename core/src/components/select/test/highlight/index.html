@@ -12,28 +12,6 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
-    <style>
-      .grid {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(250px, 1fr));
-        grid-row-gap: 20px;
-        grid-column-gap: 20px;
-      }
-      h2 {
-        font-size: 12px;
-        font-weight: normal;
-
-        color: #6f7378;
-
-        margin-top: 10px;
-      }
-      @media screen and (max-width: 800px) {
-        .grid {
-          grid-template-columns: 1fr;
-          padding: 0;
-        }
-      }
-    </style>
   </head>
 
   <body>
@@ -46,7 +24,7 @@
 
       <ion-content id="content" class="ion-padding">
         <h1>No Fill, Default</h1>
-        <div class="grid">
+        <div class="grid three-col">
           <div class="grid-item">
             <h2>Focus</h2>
             <ion-select label-placement="start" value="hi@ionic.io" class="ion-focused" label="Fruit">
@@ -70,7 +48,7 @@
         </div>
 
         <h1>No Fill, Floating</h1>
-        <div class="grid">
+        <div class="grid three-col">
           <div class="grid-item">
             <h2>Focus</h2>
             <ion-select label-placement="floating" value="hi@ionic.io" class="ion-focused" label="Fruit">
@@ -94,7 +72,7 @@
         </div>
 
         <h1>No Fill, Stacked</h1>
-        <div class="grid">
+        <div class="grid three-col">
           <div class="grid-item">
             <h2>Focus</h2>
             <ion-select label-placement="stacked" value="hi@ionic.io" class="ion-focused" label="Fruit">
@@ -118,7 +96,7 @@
         </div>
 
         <h1>Solid, Default</h1>
-        <div class="grid">
+        <div class="grid three-col">
           <div class="grid-item">
             <h2>Focus</h2>
             <ion-select fill="solid" label-placement="start" value="hi@ionic.io" class="ion-focused" label="Fruit">
@@ -142,7 +120,7 @@
         </div>
 
         <h1>Solid, Floating</h1>
-        <div class="grid">
+        <div class="grid three-col">
           <div class="grid-item">
             <h2>Focus</h2>
             <ion-select fill="solid" label-placement="floating" value="hi@ionic.io" class="ion-focused" label="Fruit">
@@ -166,7 +144,7 @@
         </div>
 
         <h1>Solid, Stacked</h1>
-        <div class="grid">
+        <div class="grid three-col">
           <div class="grid-item">
             <h2>Focus</h2>
             <ion-select fill="solid" label-placement="stacked" value="hi@ionic.io" class="ion-focused" label="Fruit">
@@ -190,7 +168,7 @@
         </div>
 
         <h1>Outline, Default</h1>
-        <div class="grid">
+        <div class="grid three-col">
           <div class="grid-item">
             <h2>Focus</h2>
             <ion-select fill="outline" label-placement="start" value="hi@ionic.io" class="ion-focused" label="Fruit">
@@ -214,7 +192,7 @@
         </div>
 
         <h1>Outline, Floating</h1>
-        <div class="grid">
+        <div class="grid three-col">
           <div class="grid-item">
             <h2>Focus</h2>
             <ion-select fill="outline" label-placement="floating" value="hi@ionic.io" class="ion-focused" label="Fruit">
@@ -238,7 +216,7 @@
         </div>
 
         <h1>Outline, Stacked</h1>
-        <div class="grid">
+        <div class="grid three-col">
           <div class="grid-item">
             <h2>Focus</h2>
             <ion-select fill="outline" label-placement="stacked" value="hi@ionic.io" class="ion-focused" label="Fruit">

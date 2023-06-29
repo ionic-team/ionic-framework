@@ -20,23 +20,6 @@
         --ion-safe-area-left: 20px;
       }
 
-      .grid {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(250px, 1fr));
-        grid-row-gap: 20px;
-        grid-column-gap: 20px;
-      }
-
-      h2 {
-        font-size: 16px;
-        font-weight: normal;
-
-        color: #6f7378;
-
-        margin-top: 10px;
-        margin-left: 5px;
-      }
-
       /*
        * Dark Colors
        * -------------------------------------------
@@ -206,7 +189,7 @@
         </ion-header>
 
         <ion-content class="ion-padding">
-          <div class="grid">
+          <div class="grid three-col">
             <div class="grid-item">
               <h2>Outside "ion-content"</h2>
               <ion-button id="basic-modal">Present modal</ion-button>

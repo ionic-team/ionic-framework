@@ -45,3 +45,38 @@ html.ios.ios {
   --ion-font-family: -apple-system, BlinkMacSystemFont, "iosTestingFont", sans-serif;
   font-family: -apple-system, BlinkMacSystemFont, "iosTestingFont", sans-serif;
 }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-row-gap: 20px;
+  grid-column-gap: 20px;
+}
+
+.grid h2 {
+  font-size: 12px;
+  font-weight: normal;
+
+  color: #6f7378;
+
+  margin-top: 10px;
+}
+
+.grid.four-col {
+  grid-template-columns: repeat(4, minmax(250px, 1fr));
+}
+
+.grid.three-col {
+  grid-template-columns: repeat(3, minmax(250px, 1fr));
+}
+
+.grid.two-col {
+  grid-template-columns: repeat(2, minmax(250px, 1fr));
+}
+
+@media screen and (max-width: 800px) {
+  .grid.four-col, .grid.three-col, .grid.two-col {
+    grid-template-columns: 1fr;
+    padding: 0;
+  }
+}
