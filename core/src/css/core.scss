@@ -200,6 +200,8 @@ ion-toast-controller,
 
 .ion-page-invisible {
   opacity: 0;
+
+  pointer-events: none;
 }
 
 .can-go-back > ion-header ion-back-button {
