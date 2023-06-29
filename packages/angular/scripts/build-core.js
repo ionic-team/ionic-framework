@@ -5,7 +5,7 @@ const spawn = require('child_process').spawn;
 const typescriptPath = path.join(__dirname, '..', 'node_modules', '.bin');
 
 function copyCSS() {
-  const src = path.join(__dirname, '..', '..', 'core', 'css');
+  const src = path.join(__dirname, '..', '..', '..', 'core', 'css');
   const dst = path.join(__dirname, '..','dist', 'css');
 
   fs.removeSync(dst);

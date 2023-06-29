@@ -184,8 +184,8 @@ export const config: Config = {
     // },
     angularOutputTarget({
       componentCorePackage: '@ionic/core',
-      directivesProxyFile: '../angular/src/directives/proxies.ts',
-      directivesArrayFile: '../angular/src/directives/proxies-list.ts',
+      directivesProxyFile: '../packages/angular/src/directives/proxies.ts',
+      directivesArrayFile: '../packages/angular/src/directives/proxies-list.ts',
       excludeComponents: [
         // overlays that accept user components
         'ion-modal',
