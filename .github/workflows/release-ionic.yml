@@ -144,7 +144,7 @@ jobs:
         paths: packages/vue/dist packages/vue/css
 
   release-angular-server:
-    needs: [release-angular]
+    needs: [release-core]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
