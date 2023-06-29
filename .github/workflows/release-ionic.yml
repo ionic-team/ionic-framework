@@ -144,7 +144,7 @@ jobs:
         paths: packages/vue/dist packages/vue/css
 
   release-angular-server:
-    needs: [release-angular]
+    needs: [release-core]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -154,12 +154,6 @@ jobs:
         name: ionic-core
         path: ./core
         filename: CoreBuild.zip
-    - name: Restore @ionic/angular built cache
-      uses: ./.github/workflows/actions/download-archive
-      with:
-        name: ionic-angular
-        path: ./angular
-        filename: AngularBuild.zip
     - uses: ./.github/workflows/actions/publish-npm
       with:
         scope: '@ionic/angular-server'
