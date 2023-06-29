@@ -1,4 +1,4 @@
-pushd ../../../../
+pushd ../../../
 
 # Build core
 pushd core
