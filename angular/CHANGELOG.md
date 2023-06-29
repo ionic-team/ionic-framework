@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.1.2-nightly.20230629](https://github.com/ionic-team/ionic-framework/compare/v7.1.1...v7.1.2-nightly.20230629) (2023-06-29)
+
+
+### Bug Fixes
+
+* **nav:** root component is mounted with root params ([#27676](https://github.com/ionic-team/ionic-framework/issues/27676)) ([1f06be4](https://github.com/ionic-team/ionic-framework/commit/1f06be4a31965f2a949b4866a585aee6af0af29d)), closes [#27146](https://github.com/ionic-team/ionic-framework/issues/27146)
+
+
+
+
+
 ## [7.1.1](https://github.com/ionic-team/ionic-framework/compare/v7.1.0...v7.1.1) (2023-06-26)
 
 **Note:** Version bump only for package @ionic/angular
