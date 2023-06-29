@@ -154,12 +154,6 @@ jobs:
         name: ionic-core
         path: ./core
         filename: CoreBuild.zip
-    - name: Restore @ionic/angular built cache
-      uses: ./.github/workflows/actions/download-archive
-      with:
-        name: ionic-angular
-        path: ./angular
-        filename: AngularBuild.zip
     - uses: ./.github/workflows/actions/publish-npm
       with:
         scope: '@ionic/angular-server'
