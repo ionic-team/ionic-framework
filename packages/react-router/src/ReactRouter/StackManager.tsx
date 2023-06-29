@@ -438,7 +438,7 @@ function matchRoute(node: React.ReactNode, routeInfo: RouteInfo) {
       path: child.props.path || child.props.from,
       component: child.props.component,
     };
-    const match = matchPath(routeInfo.pathname, matchProps);
+    const match = matchPath(matchProps, routeInfo.pathname);
     if (match) {
       matchedNode = child;
     }
@@ -464,7 +464,7 @@ function matchComponent(node: React.ReactElement, pathname: string, forceExact?:
     path: node.props.path || node.props.from,
     component: node.props.component,
   };
-  const match = matchPath(pathname, matchProps);
+  const match = matchPath(matchProps, pathname);
 
   return match;
 }
