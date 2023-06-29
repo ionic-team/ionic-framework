@@ -34,6 +34,8 @@ function IonRouterInner(props: PropsWithChildren<any>) {
       search: location.search,
     };
 
+    locationHistory.current.add(routeInfo);
+
     setRouteInfo(routeInfo);
   }, []);
 
