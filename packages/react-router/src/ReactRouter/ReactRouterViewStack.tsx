@@ -1,7 +1,7 @@
 import type { RouteInfo, ViewItem } from '@ionic/react';
 import { IonRoute, ViewLifeCycleManager, ViewStacks, generateId } from '@ionic/react';
 import React from 'react';
-import { matchPath } from 'react-router';
+import { Route, Routes, matchPath } from 'react-router';
 
 export class ReactRouterViewStack extends ViewStacks {
   constructor() {
@@ -23,13 +23,11 @@ export class ReactRouterViewStack extends ViewStacks {
       ionRoute: false,
     };
 
-    const matchProps = {
-      exact: reactElement.props.exact,
-      path: reactElement.props.path || reactElement.props.from,
-      component: reactElement.props.component,
-    };
+    if (reactElement.type !== Route) {
+      console.warn('something is wrong, reactElement is not a Route', reactElement);
+    }
 
-    const match = matchPath(matchProps, routeInfo.pathname);
+    const match = matchPath(reactElement.props, routeInfo.pathname);
 
     if (reactElement.type === IonRoute) {
       viewItem.ionRoute = true;
@@ -47,8 +45,10 @@ export class ReactRouterViewStack extends ViewStacks {
   getChildrenToRender(outletId: string, ionRouterOutlet: React.ReactElement, routeInfo: RouteInfo) {
     const viewItems = this.getViewItemsForOutlet(outletId);
 
+    const routesNode = findRoutesNode(ionRouterOutlet.props.children);
+
     // Sync latest routes with viewItems
-    React.Children.forEach(ionRouterOutlet.props.children, (child: React.ReactElement) => {
+    React.Children.forEach(routesNode, (child: React.ReactElement) => {
       const viewItem = viewItems.find((v) => {
         return matchComponent(child, v.routeData.childProps.path || v.routeData.childProps.from);
       });
@@ -58,38 +58,24 @@ export class ReactRouterViewStack extends ViewStacks {
     });
 
     const children = viewItems.map((viewItem) => {
-      let clonedChild;
-      if (viewItem.ionRoute && !viewItem.disableIonPageManagement) {
-        clonedChild = (
-          <ViewLifeCycleManager
-            key={`view-${viewItem.id}`}
-            mount={viewItem.mount}
-            removeView={() => this.remove(viewItem)}
-          >
-            {React.cloneElement(viewItem.reactElement, {
-              computedMatch: viewItem.routeData.match,
-            })}
-          </ViewLifeCycleManager>
-        );
-      } else {
+      if (!viewItem.ionRoute || viewItem.disableIonPageManagement) {
         const match = matchComponent(viewItem.reactElement, routeInfo.pathname);
-        clonedChild = (
-          <ViewLifeCycleManager
-            key={`view-${viewItem.id}`}
-            mount={viewItem.mount}
-            removeView={() => this.remove(viewItem)}
-          >
-            {React.cloneElement(viewItem.reactElement, {
-              computedMatch: viewItem.routeData.match,
-            })}
-          </ViewLifeCycleManager>
-        );
 
         if (!match && viewItem.routeData.match) {
           viewItem.routeData.match = undefined;
           viewItem.mount = false;
         }
       }
+
+      const clonedChild = (
+        <ViewLifeCycleManager
+          key={`view-${viewItem.id}`}
+          mount={viewItem.mount}
+          removeView={() => this.remove(viewItem)}
+        >
+          <Routes>{React.cloneElement(viewItem.reactElement)}</Routes>
+        </ViewLifeCycleManager>
+      );
 
       return clonedChild;
     });
@@ -140,10 +126,18 @@ export class ReactRouterViewStack extends ViewStacks {
       if (mustBeIonRoute && !v.ionRoute) {
         return false;
       }
+
+      if (pathname === undefined) {
+        // This wasn't needed in react router v5
+        // it is possible we are re-rendering or calling something too early.
+        return false;
+      }
+
       const matchProps = {
         exact: forceExact ? true : v.routeData.childProps.exact,
         path: v.routeData.childProps.path || v.routeData.childProps.from,
-        component: v.routeData.childProps.component,
+        // component: v.routeData.childProps.component, // TODO removed in v6
+        element: v.routeData.childProps.element,
       };
       const myMatch = matchPath(matchProps, pathname);
       if (myMatch) {
@@ -172,11 +166,25 @@ export class ReactRouterViewStack extends ViewStacks {
   }
 }
 
+const findRoutesNode = (node: React.ReactNode) => {
+  // Finds the <Routes /> component node
+  let routesNode: React.ReactNode;
+  React.Children.forEach(node as React.ReactElement, (child: React.ReactElement) => {
+    if (child.type === Routes) {
+      routesNode = child;
+    }
+  });
+  if (routesNode) {
+    return (routesNode as React.ReactElement).props.children;
+  }
+  return undefined;
+};
+
 function matchComponent(node: React.ReactElement, pathname: string, forceExact?: boolean) {
   const matchProps = {
     exact: forceExact ? true : node.props.exact,
     path: node.props.path || node.props.from,
-    component: node.props.component,
+    element: node.props.element,
   };
   const match = matchPath(matchProps, pathname);
 

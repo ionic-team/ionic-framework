@@ -1,15 +1,8 @@
-import React from 'react';
 import { IonIcon, IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs } from '@ionic/react';
-import { Route, Redirect } from 'react-router';
-import {
-  addCircleOutline,
-  alarm,
-  alertCircle,
-  logoGoogle,
-  logoIonic,
-  newspaper,
-  star,
-} from 'ionicons/icons';
+import { addCircleOutline, alarm, alertCircle, logoGoogle, logoIonic, newspaper, star } from 'ionicons/icons';
+import React from 'react';
+import { Route, Routes, Navigate } from 'react-router';
+
 import ActionSheetComponent from './ActionSheetComponent';
 import AlertComponent from './AlertComponent';
 import LoadingComponent from './LoadingComponent';
@@ -24,14 +17,16 @@ const OverlayHooks: React.FC<OverlayHooksProps> = () => {
   return (
     <IonTabs>
       <IonRouterOutlet>
-        <Redirect from="/overlay-components" to="/overlay-components/actionsheet" exact />
-        <Route path="/overlay-components/actionsheet" component={ActionSheetComponent} />
-        <Route path="/overlay-components/alert" component={AlertComponent} />
-        <Route path="/overlay-components/loading" component={LoadingComponent} />
-        <Route path="/overlay-components/modal" component={ModalComponent} />
-        <Route path="/overlay-components/picker" component={PickerComponent} />
-        <Route path="/overlay-components/popover" component={PopoverComponent} />
-        <Route path="/overlay-components/toast" component={ToastComponent} />
+        <Routes>
+          <Route path="/overlay-components/actionsheet" element={<ActionSheetComponent />} />
+          <Route path="/overlay-components/alert" element={<AlertComponent />} />
+          <Route path="/overlay-components/loading" element={<LoadingComponent />} />
+          <Route path="/overlay-components/modal" element={<ModalComponent />} />
+          <Route path="/overlay-components/picker" element={<PickerComponent />} />
+          <Route path="/overlay-components/popover" element={<PopoverComponent />} />
+          <Route path="/overlay-components/toast" element={<ToastComponent />} />
+          <Route path="/overlay-components/*" element={<Navigate to="/overlay-components/actionsheet" />} />
+        </Routes>
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
         <IonTabButton tab="actionsheet" href="/overlay-components/actionsheet">

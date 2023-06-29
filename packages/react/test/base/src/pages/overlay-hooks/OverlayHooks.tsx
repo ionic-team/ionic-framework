@@ -1,16 +1,9 @@
-import React from 'react';
 import { IonIcon, IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs } from '@ionic/react';
-import { Route, Redirect } from 'react-router';
+import { addCircleOutline, alarm, alertCircle, logoGoogle, logoIonic, newspaper, star } from 'ionicons/icons';
+import React from 'react';
+import { Route, Navigate, Routes } from 'react-router';
+
 import ActionSheetHook from './ActionSheetHook';
-import {
-  addCircleOutline,
-  alarm,
-  alertCircle,
-  logoGoogle,
-  logoIonic,
-  newspaper,
-  star,
-} from 'ionicons/icons';
 import AlertHook from './AlertHook';
 import LoadingHook from './LoadingHook';
 import ModalHook from './ModalHook';
@@ -24,14 +17,16 @@ const OverlayHooks: React.FC<OverlayHooksProps> = () => {
   return (
     <IonTabs>
       <IonRouterOutlet>
-        <Redirect from="/overlay-hooks" to="/overlay-hooks/actionsheet" exact />
-        <Route path="/overlay-hooks/actionsheet" component={ActionSheetHook} />
-        <Route path="/overlay-hooks/alert" component={AlertHook} />
-        <Route path="/overlay-hooks/loading" component={LoadingHook} />
-        <Route path="/overlay-hooks/modal" component={ModalHook} />
-        <Route path="/overlay-hooks/picker" component={PickerHook} />
-        <Route path="/overlay-hooks/popover" component={PopoverHook} />
-        <Route path="/overlay-hooks/toast" component={ToastHook} />
+        <Routes>
+          <Route path="/overlay-hooks/actionsheet" element={<ActionSheetHook />} />
+          <Route path="/overlay-hooks/alert" element={<AlertHook />} />
+          <Route path="/overlay-hooks/loading" element={<LoadingHook />} />
+          <Route path="/overlay-hooks/modal" element={<ModalHook />} />
+          <Route path="/overlay-hooks/picker" element={<PickerHook />} />
+          <Route path="/overlay-hooks/popover" element={<PopoverHook />} />
+          <Route path="/overlay-hooks/toast" element={<ToastHook />} />
+          <Route path="/overlay-hooks/*" element={<Navigate to="/overlay-hooks/actionsheet" />} />
+        </Routes>
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
         <IonTabButton tab="actionsheet" href="/overlay-hooks/actionsheet">

@@ -22,21 +22,17 @@ function IonRouterInner(props: PropsWithChildren<any>) {
 
   const [currentTab, setCurrentTab] = useState<string>();
   const [incomingRouteParams, setIncomingRouteParams] = useState<Partial<RouteInfo>>({});
-  const [routeInfo, setRouteInfo] = useState<any>(null);
+  const [routeInfo, setRouteInfo] = useState({
+    id: generateId('routeInfo'),
+    pathname: location.pathname,
+    search: location.search,
+  });
   const locationHistory = useRef(new LocationHistory());
 
   const viewStack = useRef(new ReactRouterViewStack());
 
   useEffect(() => {
-    const routeInfo = {
-      id: generateId('routeInfo'),
-      pathname: location.pathname,
-      search: location.search,
-    };
-
     locationHistory.current.add(routeInfo);
-
-    setRouteInfo(routeInfo);
   }, []);
 
   useEffect(() => {
@@ -180,10 +176,10 @@ function IonRouterInner(props: PropsWithChildren<any>) {
         }
         locationHistory.current.add(routeInfo);
       }
-      // setState({ routeInfo });
+      setRouteInfo(routeInfo);
     }
 
-    setIncomingRouteParams({}); // TODO @sean was undefined
+    setIncomingRouteParams({});
   };
 
   const handleNativeBack = () => {

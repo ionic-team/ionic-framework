@@ -43,22 +43,22 @@
   "peerDependencies": {
     "react": ">=16.8.6",
     "react-dom": ">=16.8.6",
-    "react-router": "^5.0.1 || ^6.0.0",
-    "react-router-dom": "^5.0.1 || ^6.0.0"
+    "react-router": "^6.0.0",
+    "react-router-dom": "^6.0.0"
   },
   "devDependencies": {
     "@ionic/eslint-config": "^0.3.0",
     "@ionic/prettier-config": "^2.0.0",
     "@rollup/plugin-node-resolve": "^8.1.0",
     "@types/node": "^14.0.14",
-    "@types/react": "16.14.0",
-    "@types/react-dom": "^16.9.0",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
     "@typescript-eslint/eslint-plugin": "^5.48.2",
     "@typescript-eslint/parser": "^5.48.2",
     "eslint": "^7.32.0",
     "prettier": "^2.8.3",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
     "react-router": "^6.0.0",
     "react-router-dom": "^6.0.0",
     "rimraf": "^3.0.2",

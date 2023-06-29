@@ -1,7 +1,7 @@
 import type { RouteInfo, StackContextState, ViewItem } from '@ionic/react';
 import { RouteManagerContext, StackContext, generateId, getConfig } from '@ionic/react';
 import React from 'react';
-import { matchPath } from 'react-router-dom';
+import { Route, Routes, matchPath } from 'react-router-dom';
 
 import { clonePageElement } from './clonePageElement';
 
@@ -430,17 +430,35 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
 
 export default StackManager;
 
+const findRoutesNode = (node: React.ReactNode) => {
+  // Finds the <Routes /> component node
+  let routesNode: React.ReactNode;
+  React.Children.forEach(node as React.ReactElement, (child: React.ReactElement) => {
+    if (child.type === Routes) {
+      routesNode = child;
+    }
+  });
+  if (routesNode) {
+    return (routesNode as React.ReactElement).props.children;
+  }
+  return undefined;
+};
+
 function matchRoute(node: React.ReactNode, routeInfo: RouteInfo) {
   let matchedNode: React.ReactNode;
-  React.Children.forEach(node as React.ReactElement, (child: React.ReactElement) => {
-    const matchProps = {
-      exact: child.props.exact,
-      path: child.props.path || child.props.from,
-      component: child.props.component,
-    };
-    const match = matchPath(matchProps, routeInfo.pathname);
-    if (match) {
-      matchedNode = child;
+
+  const routesNode = findRoutesNode(node);
+
+  if (!routesNode) {
+    console.error('No <Routes /> component found in the stack');
+  }
+
+  React.Children.forEach(routesNode as React.ReactElement, (child: React.ReactElement) => {
+    if (child.type === Route) {
+      const match = matchPath(child.props, routeInfo.pathname);
+      if (match) {
+        matchedNode = child;
+      }
     }
   });
 

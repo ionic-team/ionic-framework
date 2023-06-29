@@ -1,7 +1,7 @@
-import React from 'react';
-import { Route } from 'react-router-dom';
 import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -21,18 +21,18 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import Main from './pages/Main';
-import OverlayHooks from './pages/overlay-hooks/OverlayHooks';
-import OverlayComponents from './pages/overlay-components/OverlayComponents';
-import KeepContentsMounted from './pages/overlay-components/KeepContentsMounted';
-import Tabs from './pages/Tabs';
 import Icons from './pages/Icons';
+import Main from './pages/Main';
+import Tabs from './pages/Tabs';
 import NavComponent from './pages/navigation/NavComponent';
-import IonModalConditionalSibling from './pages/overlay-components/IonModalConditionalSibling';
 import IonModalConditional from './pages/overlay-components/IonModalConditional';
+import IonModalConditionalSibling from './pages/overlay-components/IonModalConditionalSibling';
 import IonModalDatetimeButton from './pages/overlay-components/IonModalDatetimeButton';
-import IonPopoverNested from './pages/overlay-components/IonPopoverNested';
 import IonModalMultipleChildren from './pages/overlay-components/IonModalMultipleChildren';
+import IonPopoverNested from './pages/overlay-components/IonPopoverNested';
+import KeepContentsMounted from './pages/overlay-components/KeepContentsMounted';
+import OverlayComponents from './pages/overlay-components/OverlayComponents';
+import OverlayHooks from './pages/overlay-hooks/OverlayHooks';
 
 setupIonicReact();
 
@@ -40,27 +40,20 @@ const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>
-        <Route path="/" component={Main} />
-        <Route path="/overlay-hooks" component={OverlayHooks} />
-        <Route path="/overlay-components" component={OverlayComponents} />
-        <Route path="/overlay-components/nested-popover" component={IonPopoverNested} />
-        <Route
-          path="/overlay-components/modal-conditional-sibling"
-          component={IonModalConditionalSibling}
-        />
-        <Route path="/overlay-components/modal-conditional" component={IonModalConditional} />
-        <Route
-          path="/overlay-components/modal-datetime-button"
-          component={IonModalDatetimeButton}
-        />
-        <Route
-          path="/overlay-components/modal-multiple-children"
-          component={IonModalMultipleChildren}
-        />
-        <Route path="/keep-contents-mounted" component={KeepContentsMounted} />
-        <Route path="/navigation" component={NavComponent} />
-        <Route path="/tabs" component={Tabs} />
-        <Route path="/icons" component={Icons} />
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/overlay-hooks" element={<OverlayHooks />} />
+          <Route path="/overlay-components" element={<OverlayComponents />} />
+          <Route path="/overlay-components/nested-popover" element={<IonPopoverNested />} />
+          <Route path="/overlay-components/modal-conditional-sibling" element={<IonModalConditionalSibling />} />
+          <Route path="/overlay-components/modal-conditional" element={<IonModalConditional />} />
+          <Route path="/overlay-components/modal-datetime-button" element={<IonModalDatetimeButton />} />
+          <Route path="/overlay-components/modal-multiple-children" element={<IonModalMultipleChildren />} />
+          <Route path="/keep-contents-mounted" element={<KeepContentsMounted />} />
+          <Route path="/navigation" element={<NavComponent />} />
+          <Route path="/tabs" element={<Tabs />} />
+          <Route path="/icons" element={<Icons />} />
+        </Routes>
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>
