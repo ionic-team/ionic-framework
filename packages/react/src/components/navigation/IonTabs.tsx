@@ -1,5 +1,5 @@
 import type { JSX as LocalJSX } from '@ionic/core/components';
-import React, { Fragment } from 'react';
+import React, { Fragment, cloneElement, useContext, useEffect, useRef } from 'react';
 
 import { NavContext } from '../../contexts/NavContext';
 import PageManager from '../../routing/PageManager';
@@ -60,123 +60,102 @@ const tabsInner: React.CSSProperties = {
   contain: 'layout size style',
 };
 
-export const IonTabs = /*@__PURE__*/ (() =>
-  class extends React.Component<Props> {
-    context!: React.ContextType<typeof NavContext>;
-    routerOutletRef: React.Ref<HTMLIonRouterOutletElement> = React.createRef();
-    selectTabHandler?: (tag: string) => boolean;
-    tabBarRef = React.createRef<any>();
+export const IonTabs = (props: Props) => {
+  const { hasIonicRouter, routeInfo } = useContext(NavContext);
+  const tabBarRef = useRef<any>(null); // TODO @sean find the type for this
 
-    ionTabContextState: IonTabsContextState = {
-      activeTab: undefined,
-      selectTab: () => false,
+  const ionTabContextState: IonTabsContextState = {
+    activeTab: undefined,
+    selectTab: () => false,
+  };
+
+  useEffect(() => {
+    if (tabBarRef.current) {
+      ionTabContextState.activeTab = tabBarRef.current.state.activeTab;
+      // Overrides the web component implementation of this method
+      tabBarRef.current.setActiveTabOnContext = (tab: string) => {
+        ionTabContextState.activeTab = tab;
+      };
+      ionTabContextState.selectTab = tabBarRef.current.selectTab;
+    }
+  }, []);
+
+  let outlet: React.ReactElement | undefined;
+  let tabBar: React.ReactElement | undefined;
+  const { className, onIonTabsDidChange, onIonTabsWillChange, ...restProps } = props;
+
+  const children =
+    typeof props.children === 'function' ? (props.children as ChildFunction)(ionTabContextState) : props.children;
+
+  React.Children.forEach(children, (child: any) => {
+    // eslint-disable-next-line no-prototype-builtins
+    if (child == null || typeof child !== 'object' || !child.hasOwnProperty('type')) {
+      return;
+    }
+    if (child.type === IonRouterOutlet || child.type.isRouterOutlet) {
+      outlet = cloneElement(child);
+    } else if (child.type === Fragment && child.props.children[0].type === IonRouterOutlet) {
+      outlet = child.props.children[0]; // TODO @sean why do we cloneElement everywhere but here?
+    }
+
+    let childProps: any = {
+      ref: tabBarRef,
     };
 
-    constructor(props: Props) {
-      super(props);
+    /**
+     * Only pass these props down from IonTabs to
+     * IonTabsBar if they are defined. Otherwise if you have
+     * a handler set on IonTabBar it will be overridden.
+     */
+    if (onIonTabsDidChange !== undefined) {
+      childProps = {
+        ...childProps,
+        onIonTabsDidChange,
+      };
     }
 
-    componentDidMount() {
-      if (this.tabBarRef.current) {
-        // Grab initial value
-        this.ionTabContextState.activeTab = this.tabBarRef.current.state.activeTab;
-        // Override method
-        this.tabBarRef.current.setActiveTabOnContext = (tab: string) => {
-          this.ionTabContextState.activeTab = tab;
-        };
-        this.ionTabContextState.selectTab = this.tabBarRef.current.selectTab;
-      }
+    if (onIonTabsWillChange !== undefined) {
+      childProps = {
+        ...childProps,
+        onIonTabsWillChange,
+      };
     }
 
-    render() {
-      let outlet: React.ReactElement<{}> | undefined;
-      let tabBar: React.ReactElement | undefined;
-      const { className, onIonTabsDidChange, onIonTabsWillChange, ...props } = this.props;
+    if (child.type === IonTabBar || child.type.isTabBar) {
+      tabBar = cloneElement(child, childProps);
+    } else if (child.type === Fragment && child.props.children[1].type === IonTabBar) {
+      tabBar = cloneElement(child.props.children[1], childProps);
+    }
+  });
 
-      const children =
-        typeof this.props.children === 'function'
-          ? (this.props.children as ChildFunction)(this.ionTabContextState)
-          : this.props.children;
+  if (!outlet) {
+    throw new Error('[Ionic Error]: IonTabs must contain an <IonRouterOutlet />');
+  }
 
-      React.Children.forEach(children, (child: any) => {
-        // eslint-disable-next-line no-prototype-builtins
-        if (child == null || typeof child !== 'object' || !child.hasOwnProperty('type')) {
-          return;
-        }
-        if (child.type === IonRouterOutlet || child.type.isRouterOutlet) {
-          outlet = React.cloneElement(child);
-        } else if (child.type === Fragment && child.props.children[0].type === IonRouterOutlet) {
-          outlet = child.props.children[0];
-        }
-
-        let childProps: any = {
-          ref: this.tabBarRef,
-        };
-
-        /**
-         * Only pass these props
-         * down from IonTabs to IonTabBar
-         * if they are defined, otherwise
-         * if you have a handler set on
-         * IonTabBar it will be overridden.
-         */
-        if (onIonTabsDidChange !== undefined) {
-          childProps = {
-            ...childProps,
-            onIonTabsDidChange,
-          };
-        }
-
-        if (onIonTabsWillChange !== undefined) {
-          childProps = {
-            ...childProps,
-            onIonTabsWillChange,
-          };
-        }
-
-        if (child.type === IonTabBar || child.type.isTabBar) {
-          tabBar = React.cloneElement(child, childProps);
-        } else if (
-          child.type === Fragment &&
-          (child.props.children[1].type === IonTabBar || child.props.children[1].type.isTabBar)
-        ) {
-          tabBar = React.cloneElement(child.props.children[1], childProps);
-        }
-      });
-
-      if (!outlet) {
-        throw new Error('IonTabs must contain an IonRouterOutlet');
-      }
-      if (!tabBar) {
-        throw new Error('IonTabs needs a IonTabBar');
-      }
-
-      return (
-        <IonTabsContext.Provider value={this.ionTabContextState}>
-          {this.context.hasIonicRouter() ? (
-            <PageManager className={className ? `${className}` : ''} routeInfo={this.context.routeInfo} {...props}>
-              <ion-tabs className="ion-tabs" style={hostStyles}>
-                {tabBar.props.slot === 'top' ? tabBar : null}
-                <div style={tabsInner} className="tabs-inner">
-                  {outlet}
-                </div>
-                {tabBar.props.slot === 'bottom' ? tabBar : null}
-              </ion-tabs>
-            </PageManager>
-          ) : (
-            <div className={className ? `${className}` : 'ion-tabs'} {...props} style={hostStyles}>
-              {tabBar.props.slot === 'top' ? tabBar : null}
-              <div style={tabsInner} className="tabs-inner">
-                {outlet}
-              </div>
-              {tabBar.props.slot === 'bottom' ? tabBar : null}
+  if (!tabBar) {
+    throw new Error('[Ionic Error]: IonTabs must contain an <IonTabBar />');
+  }
+  return (
+    <IonTabsContext.Provider value={ionTabContextState}>
+      {hasIonicRouter() ? (
+        <PageManager className={className ? `${className}` : ''} routeInfo={routeInfo} {...restProps}>
+          <ion-tabs className="ion-tabs" style={hostStyles}>
+            {tabBar.props.slot === 'top' ? tabBar : null}
+            <div style={tabsInner} className="tabs-inner">
+              {outlet}
             </div>
-          )}
-        </IonTabsContext.Provider>
-      );
-    }
-
-    static get contextType() {
-      return NavContext;
-    }
-  })();
+            {tabBar.props.slot === 'bottom' ? tabBar : null}
+          </ion-tabs>
+        </PageManager>
+      ) : (
+        <div className={className ? `${className}` : 'ion-tabs'} {...restProps} style={hostStyles}>
+          {tabBar.props.slot === 'top' ? tabBar : null}
+          <div style={tabsInner} className="tabs-inner">
+            {outlet}
+          </div>
+          {tabBar.props.slot === 'bottom' ? tabBar : null}
+        </div>
+      )}
+    </IonTabsContext.Provider>
+  );
+};
