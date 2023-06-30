@@ -1,7 +1,9 @@
 import { componentOnReady } from '@ionic/core/components';
-import React from 'react';
+import type { PropsWithChildren } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 
 import { IonRouterOutletInner } from '../components/inner-proxies';
+import type { IonLifeCycleContextInterface } from '../contexts/IonLifeCycleContext';
 import { IonLifeCycleContext } from '../contexts/IonLifeCycleContext';
 import type { RouteInfo } from '../models';
 
@@ -11,89 +13,81 @@ interface OutletPageManagerProps {
   className?: string;
   forwardedRef?: React.ForwardedRef<HTMLIonRouterOutletElement>;
   routeInfo?: RouteInfo;
+  // TODO @sean I don't think we can get the type, it comes from @ionic/react, but we don't have a dep against it for react-router
   StackManager: any; // TODO(FW-2959): type
 }
 
-export class OutletPageManager extends React.Component<OutletPageManagerProps> {
-  ionLifeCycleContext!: React.ContextType<typeof IonLifeCycleContext>;
-  context!: React.ContextType<typeof StackContext>;
-  ionRouterOutlet: HTMLIonRouterOutletElement | undefined;
-  outletIsReady: boolean;
+const OutletPageManager = ({ children, ...props }: PropsWithChildren<OutletPageManagerProps>) => {
+  const { registerIonPage } = useContext(StackContext);
 
-  constructor(props: OutletPageManagerProps) {
-    super(props);
+  const ionRouterOutlet = useRef<HTMLIonRouterOutletElement>(null);
+  const ionLifeCycleContext = useRef<IonLifeCycleContextInterface>();
 
-    this.outletIsReady = false;
-  }
+  const [outletIsReady, setOutletIsReady] = useState(false);
 
-  componentDidMount() {
-    if (this.ionRouterOutlet) {
+  const { routeInfo, StackManager } = props;
+
+  useEffect(() => {
+    const routerOutlet = ionRouterOutlet.current;
+
+    if (routerOutlet) {
       /**
        * This avoids multiple raf calls
        * when React unmounts + remounts components.
        */
-      if (!this.outletIsReady) {
-        componentOnReady(this.ionRouterOutlet, () => {
-          this.outletIsReady = true;
-          this.context.registerIonPage(this.ionRouterOutlet!, this.props.routeInfo!);
+      if (!outletIsReady) {
+        componentOnReady(routerOutlet, () => {
+          registerIonPage(routerOutlet!, routeInfo!);
+          setOutletIsReady(true);
         });
       }
 
-      this.ionRouterOutlet.addEventListener('ionViewWillEnter', this.ionViewWillEnterHandler.bind(this));
-      this.ionRouterOutlet.addEventListener('ionViewDidEnter', this.ionViewDidEnterHandler.bind(this));
-      this.ionRouterOutlet.addEventListener('ionViewWillLeave', this.ionViewWillLeaveHandler.bind(this));
-      this.ionRouterOutlet.addEventListener('ionViewDidLeave', this.ionViewDidLeaveHandler.bind(this));
+      routerOutlet.addEventListener('ionViewWillEnter', ionViewWillEnterHandler);
+      routerOutlet.addEventListener('ionViewDidEnter', ionViewDidEnterHandler);
+      routerOutlet.addEventListener('ionViewWillLeave', ionViewWillLeaveHandler);
+      routerOutlet.addEventListener('ionViewDidLeave', ionViewDidLeaveHandler);
     }
-  }
 
-  componentWillUnmount() {
-    if (this.ionRouterOutlet) {
-      this.ionRouterOutlet.removeEventListener('ionViewWillEnter', this.ionViewWillEnterHandler.bind(this));
-      this.ionRouterOutlet.removeEventListener('ionViewDidEnter', this.ionViewDidEnterHandler.bind(this));
-      this.ionRouterOutlet.removeEventListener('ionViewWillLeave', this.ionViewWillLeaveHandler.bind(this));
-      this.ionRouterOutlet.removeEventListener('ionViewDidLeave', this.ionViewDidLeaveHandler.bind(this));
-    }
-  }
+    return () => {
+      if (routerOutlet) {
+        routerOutlet.removeEventListener('ionViewWillEnter', ionViewWillEnterHandler);
+        routerOutlet.removeEventListener('ionViewDidEnter', ionViewDidEnterHandler);
+        routerOutlet.removeEventListener('ionViewWillLeave', ionViewWillLeaveHandler);
+        routerOutlet.removeEventListener('ionViewDidLeave', ionViewDidLeaveHandler);
+      }
+    };
+  }, [ionRouterOutlet, outletIsReady, routeInfo]);
 
-  ionViewWillEnterHandler() {
-    this.ionLifeCycleContext.ionViewWillEnter();
-  }
+  const ionViewWillEnterHandler = () => {
+    ionLifeCycleContext.current!.ionViewWillEnter();
+  };
 
-  ionViewDidEnterHandler() {
-    this.ionLifeCycleContext.ionViewDidEnter();
-  }
+  const ionViewDidEnterHandler = () => {
+    ionLifeCycleContext.current!.ionViewDidEnter();
+  };
 
-  ionViewWillLeaveHandler() {
-    this.ionLifeCycleContext.ionViewWillLeave();
-  }
+  const ionViewWillLeaveHandler = () => {
+    ionLifeCycleContext.current!.ionViewWillLeave();
+  };
 
-  ionViewDidLeaveHandler() {
-    this.ionLifeCycleContext.ionViewDidLeave();
-  }
+  const ionViewDidLeaveHandler = () => {
+    ionLifeCycleContext.current!.ionViewDidLeave();
+  };
 
-  render() {
-    const { StackManager, children, routeInfo, ...props } = this.props;
-    return (
-      <IonLifeCycleContext.Consumer>
-        {(context) => {
-          this.ionLifeCycleContext = context;
-          return (
-            <StackManager routeInfo={routeInfo}>
-              <IonRouterOutletInner
-                setRef={(val: HTMLIonRouterOutletElement) => (this.ionRouterOutlet = val)}
-                {...props}
-              >
-                {children}
-              </IonRouterOutletInner>
-            </StackManager>
-          );
-        }}
-      </IonLifeCycleContext.Consumer>
-    );
-  }
+  return (
+    <IonLifeCycleContext.Consumer>
+      {(context) => {
+        ionLifeCycleContext.current = context;
+        return (
+          <StackManager routeInfo={routeInfo}>
+            <IonRouterOutletInner ref={ionRouterOutlet} {...props}>
+              {children}
+            </IonRouterOutletInner>
+          </StackManager>
+        );
+      }}
+    </IonLifeCycleContext.Consumer>
+  );
+};
 
-  static get contextType() {
-    return StackContext;
-  }
-}
 export default OutletPageManager;
