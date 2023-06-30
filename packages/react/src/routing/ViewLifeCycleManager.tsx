@@ -1,4 +1,5 @@
-import React from 'react';
+import type { PropsWithChildren } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { DefaultIonLifeCycleContext, IonLifeCycleContext } from '../contexts/IonLifeCycleContext';
 
@@ -7,49 +8,32 @@ interface ViewTransitionManagerProps {
   mount: boolean;
 }
 
-interface ViewTransitionManagerState {
-  show: boolean;
-}
+export const ViewLifeCycleManager = ({ children, ...props }: PropsWithChildren<ViewTransitionManagerProps>) => {
+  const ionLifeCycleContext = useRef(new DefaultIonLifeCycleContext());
 
-export class ViewLifeCycleManager extends React.Component<ViewTransitionManagerProps, ViewTransitionManagerState> {
-  ionLifeCycleContext = new DefaultIonLifeCycleContext();
-  private _isMounted = false;
+  const [isMounted, setIsMounted] = useState(false);
+  const [show, setShow] = useState(true);
 
-  constructor(props: ViewTransitionManagerProps) {
-    super(props);
+  const { mount, removeView } = props;
 
-    this.ionLifeCycleContext.onComponentCanBeDestroyed(() => {
-      if (!this.props.mount) {
-        if (this._isMounted) {
-          this.setState(
-            {
-              show: false,
-            },
-            () => this.props.removeView()
-          );
-        }
+  useEffect(() => {
+    setIsMounted(true);
+
+    return () => {
+      setIsMounted(false);
+    };
+  }, []);
+
+  useEffect(() => {
+    ionLifeCycleContext.current.onComponentCanBeDestroyed(() => {
+      if (!mount && isMounted) {
+        setShow(false);
+        removeView();
       }
     });
+  }, [mount, isMounted, removeView]);
 
-    this.state = {
-      show: true,
-    };
-  }
-
-  componentDidMount() {
-    this._isMounted = true;
-  }
-
-  componentWillUnmount() {
-    this._isMounted = false;
-  }
-
-  render() {
-    const { show } = this.state;
-    return (
-      <IonLifeCycleContext.Provider value={this.ionLifeCycleContext}>
-        {show && this.props.children}
-      </IonLifeCycleContext.Provider>
-    );
-  }
-}
+  return (
+    <IonLifeCycleContext.Provider value={ionLifeCycleContext.current}>{show && children}</IonLifeCycleContext.Provider>
+  );
+};
