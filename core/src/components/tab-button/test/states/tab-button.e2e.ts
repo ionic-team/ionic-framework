@@ -45,13 +45,11 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
       test('should render correct focus state with default theme and translucency', async ({ page }) => {
         await page.setContent(
           `
-          <ion-content color="danger">
-            <ion-tab-bar style="width: 300px" translucent="true">
-              <ion-tab-button href="#" class="ion-focused">
-                <ion-label>Favorites</ion-label>
-              </ion-tab-button>
-            </ion-tab-bar>
-          </ion-content>
+          <ion-tab-bar style="width: 300px" translucent="true">
+            <ion-tab-button href="#" class="ion-focused">
+              <ion-label>Favorites</ion-label>
+            </ion-tab-button>
+          </ion-tab-bar>
         `,
           config
         );
@@ -63,13 +61,11 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
       test('should render correct focus state with custom theme and translucency', async ({ page }) => {
         await page.setContent(
           `
-          <ion-content color="danger">
-            <ion-tab-bar style="width: 300px" color="success" translucent="true">
-              <ion-tab-button href="#" class="ion-focused">
-                <ion-label>Favorites</ion-label>
-              </ion-tab-button>
-            </ion-tab-bar>
-          </ion-content>
+          <ion-tab-bar style="width: 300px" color="success" translucent="true">
+            <ion-tab-button href="#" class="ion-focused">
+              <ion-label>Favorites</ion-label>
+            </ion-tab-button>
+          </ion-tab-bar>
         `,
           config
         );
