@@ -209,7 +209,11 @@ function IonRouterInner(props: PropsWithChildren<any>) {
   const handleNavigateBack = (defaultHref: string | RouteInfo = '/', routeAnimation?: AnimationBuilder) => {
     const config = getConfig();
 
-    defaultHref = defaultHref ? defaultHref : config && config.get('backButtonDefaultHref' as any);
+    if (!defaultHref && config) {
+      // If the defaultHref wasn't passed in, then we should use the configured defaultHref.
+      // Developers can set this on their IonicConfig.
+      defaultHref = config.get('backButtonDefaultHref');
+    }
 
     const routeInfo = locationHistory.current.current();
     if (routeInfo && routeInfo.pushedByRoute) {
