@@ -9,9 +9,11 @@ import { IonRouter } from './IonRouter';
  * Wrapper around react-router-dom's BrowserRouter that provides a context for IonRouterOutlet.
  * Ionic developers should use IonReactRouter instead of BrowserRouter when using React Router.
  */
-export function IonReactRouter({ children, ...props }: PropsWithChildren<BrowserRouterProps>) {
+export function IonReactRouter({ children }: PropsWithChildren<BrowserRouterProps>) {
+  // BrowserRouter is used so that the route state is kept in sync with the browser history.
+  // This reflects the current route in the URL.
   return (
-    <BrowserRouter {...props}>
+    <BrowserRouter>
       <IonRouter>{children}</IonRouter>
     </BrowserRouter>
   );
