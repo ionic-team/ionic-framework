@@ -217,7 +217,7 @@
       $restSelectors: append($restSelectors, $selector, comma);
     }
   }
-  
+
   // Supported by Chrome.
   @if length($hostContextSelectors) > 0 {
     @at-root #{$hostContextSelectors} {
@@ -432,19 +432,10 @@
       border-radius: $top-start;
     }
   } @else {
-    @include ltr() {
-      border-top-left-radius: $top-start;
-      border-top-right-radius: $top-end;
-      border-bottom-right-radius: $bottom-end;
-      border-bottom-left-radius: $bottom-start;
-    }
-
-    @include rtl() {
-      border-top-left-radius: $top-end;
-      border-top-right-radius: $top-start;
-      border-bottom-right-radius: $bottom-start;
-      border-bottom-left-radius: $bottom-end;
-    }
+    border-start-start-radius: $top-start;
+    border-end-start-radius: $bottom-start;
+    border-start-end-radius: $top-end;
+    border-end-end-radius: $bottom-end;
   }
 }
 
