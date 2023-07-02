@@ -112,6 +112,11 @@ export class Searchbar implements ComponentInterface {
   @Prop() enterkeyhint?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
 
   /**
+   * If used in a form, set the name of the control, which is submitted with the form data.
+   */
+  @Prop() name?: string;
+
+  /**
    * Set the input's placeholder.
    * `placeholder` can accept either plaintext or HTML as a string.
    * To display characters normally reserved for HTML, they
@@ -588,6 +593,7 @@ export class Searchbar implements ComponentInterface {
             class="searchbar-input"
             inputMode={this.inputmode}
             enterKeyHint={this.enterkeyhint}
+            name={this.name}
             onInput={this.onInput}
             onChange={this.onChange}
             onBlur={this.onBlur}

@@ -681,6 +681,7 @@ export const IonSearchbar = /*@__PURE__*/ defineContainer<JSX.IonSearchbar, JSX.
   'disabled',
   'inputmode',
   'enterkeyhint',
+  'name',
   'placeholder',
   'searchIcon',
   'showCancelButton',
