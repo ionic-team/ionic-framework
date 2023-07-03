@@ -3,7 +3,7 @@ import React from 'react';
 import type { BrowserRouterProps } from 'react-router-dom';
 import { BrowserRouter } from 'react-router-dom';
 
-import { IonRouter } from './IonRouter';
+import IonRouter from './IonRouter';
 
 /**
  * Wrapper around react-router-dom's BrowserRouter that provides a context for IonRouterOutlet.

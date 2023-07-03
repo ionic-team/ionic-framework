@@ -14,7 +14,7 @@ export interface LocationState {
   routerOptions?: { as?: string; unmount?: boolean };
 }
 
-function IonRouterInner(props: PropsWithChildren<any>) {
+const IonRouter = ({ children }: PropsWithChildren<{}>) => {
   const location = useLocation();
   const params = useParams();
   const navigate = useNavigate();
@@ -299,10 +299,10 @@ function IonRouterInner(props: PropsWithChildren<any>) {
         onResetTab={handleResetTab}
         locationHistory={locationHistory.current}
       >
-        {props.children}
+        {children}
       </NavManager>
     </RouteManagerContext.Provider>
   );
-}
+};
 
-export const IonRouter = IonRouterInner;
+export default IonRouter;
