@@ -1,4 +1,5 @@
-import React from 'react';
+import type { PropsWithChildren } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 
 import { mergeRefs } from '../components/react-component-lib/utils';
 import { IonLifeCycleContext } from '../contexts/IonLifeCycleContext';
@@ -12,77 +13,68 @@ interface PageManagerProps {
   routeInfo?: RouteInfo;
 }
 
-export class PageManager extends React.PureComponent<PageManagerProps> {
-  ionLifeCycleContext!: React.ContextType<typeof IonLifeCycleContext>;
-  context!: React.ContextType<typeof StackContext>;
-  ionPageElementRef: React.RefObject<HTMLDivElement>;
-  stableMergedRefs: React.RefCallback<HTMLDivElement>;
+const PageManager = ({ children, ...props }: PropsWithChildren<PageManagerProps>) => {
+  const { className, forwardedRef, routeInfo, ...restProps } = props;
 
-  constructor(props: PageManagerProps) {
-    super(props);
-    this.ionPageElementRef = React.createRef();
-    // React refs must be stable (not created inline).
-    this.stableMergedRefs = mergeRefs(this.ionPageElementRef, this.props.forwardedRef);
-  }
+  const ionLifeCycleContext = useContext(IonLifeCycleContext);
+  const context = useContext(StackContext);
 
-  componentDidMount() {
-    if (this.ionPageElementRef.current) {
-      if (this.context.isInOutlet()) {
-        this.ionPageElementRef.current.classList.add('ion-page-invisible');
+  const ionPageElementRef = useRef<HTMLDivElement>(null);
+  const stableMergedRefs = mergeRefs(ionPageElementRef, forwardedRef);
+
+  useEffect(() => {
+    const ionPageElement = ionPageElementRef.current;
+
+    if (ionPageElement) {
+      if (context.isInOutlet()) {
+        ionPageElement.classList.add('ion-page-invisible');
       }
-      this.context.registerIonPage(this.ionPageElementRef.current, this.props.routeInfo!);
-      this.ionPageElementRef.current.addEventListener('ionViewWillEnter', this.ionViewWillEnterHandler.bind(this));
-      this.ionPageElementRef.current.addEventListener('ionViewDidEnter', this.ionViewDidEnterHandler.bind(this));
-      this.ionPageElementRef.current.addEventListener('ionViewWillLeave', this.ionViewWillLeaveHandler.bind(this));
-      this.ionPageElementRef.current.addEventListener('ionViewDidLeave', this.ionViewDidLeaveHandler.bind(this));
+
+      context.registerIonPage(ionPageElement, routeInfo!);
+
+      ionPageElement.addEventListener('ionViewWillEnter', ionViewWillEnterHandler);
+      ionPageElement.addEventListener('ionViewDidEnter', ionViewDidEnterHandler);
+      ionPageElement.addEventListener('ionViewWillLeave', ionViewWillLeaveHandler);
+      ionPageElement.addEventListener('ionViewDidLeave', ionViewDidLeaveHandler);
     }
-  }
 
-  componentWillUnmount() {
-    if (this.ionPageElementRef.current) {
-      this.ionPageElementRef.current.removeEventListener('ionViewWillEnter', this.ionViewWillEnterHandler.bind(this));
-      this.ionPageElementRef.current.removeEventListener('ionViewDidEnter', this.ionViewDidEnterHandler.bind(this));
-      this.ionPageElementRef.current.removeEventListener('ionViewWillLeave', this.ionViewWillLeaveHandler.bind(this));
-      this.ionPageElementRef.current.removeEventListener('ionViewDidLeave', this.ionViewDidLeaveHandler.bind(this));
-    }
-  }
+    return () => {
+      if (ionPageElement) {
+        ionPageElement.removeEventListener('ionViewWillEnter', ionViewWillEnterHandler);
+        ionPageElement.removeEventListener('ionViewDidEnter', ionViewDidEnterHandler);
+        ionPageElement.removeEventListener('ionViewWillLeave', ionViewWillLeaveHandler);
+        ionPageElement.removeEventListener('ionViewDidLeave', ionViewDidLeaveHandler);
+      }
+    };
+  }, []);
 
-  ionViewWillEnterHandler() {
-    this.ionLifeCycleContext.ionViewWillEnter();
-  }
+  const ionViewWillEnterHandler = () => {
+    ionLifeCycleContext.ionViewWillEnter();
+  };
 
-  ionViewDidEnterHandler() {
-    this.ionLifeCycleContext.ionViewDidEnter();
-  }
+  const ionViewDidEnterHandler = () => {
+    ionLifeCycleContext.ionViewDidEnter();
+  };
 
-  ionViewWillLeaveHandler() {
-    this.ionLifeCycleContext.ionViewWillLeave();
-  }
+  const ionViewWillLeaveHandler = () => {
+    ionLifeCycleContext.ionViewWillLeave();
+  };
 
-  ionViewDidLeaveHandler() {
-    this.ionLifeCycleContext.ionViewDidLeave();
-  }
+  const ionViewDidLeaveHandler = () => {
+    ionLifeCycleContext.ionViewDidLeave();
+  };
 
-  render() {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { className, children, routeInfo, forwardedRef, ...props } = this.props;
+  return (
+    <IonLifeCycleContext.Consumer>
+      {() => {
+        return (
+          <div className={className ? `${className} ion-page` : 'ion-page'} ref={stableMergedRefs} {...restProps}>
+            {children}
+          </div>
+        );
+      }}
+    </IonLifeCycleContext.Consumer>
+  );
+};
 
-    return (
-      <IonLifeCycleContext.Consumer>
-        {(context) => {
-          this.ionLifeCycleContext = context;
-          return (
-            <div className={className ? `${className} ion-page` : `ion-page`} ref={this.stableMergedRefs} {...props}>
-              {children}
-            </div>
-          );
-        }}
-      </IonLifeCycleContext.Consumer>
-    );
-  }
-
-  static get contextType() {
-    return StackContext;
-  }
-}
 export default PageManager;
