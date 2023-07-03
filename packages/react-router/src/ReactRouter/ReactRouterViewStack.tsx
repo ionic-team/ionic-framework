@@ -73,6 +73,10 @@ export class ReactRouterViewStack extends ViewStacks {
           mount={viewItem.mount}
           removeView={() => this.remove(viewItem)}
         >
+          {/*
+            TODO @sean it is currently required to render a <Routes /> or you will get:
+            Uncaught Error: A <Route> is only ever to be used as the child of <Routes> element, never rendered directly. Please wrap your <Route> in a <Routes>.
+          */}
           <Routes>{React.cloneElement(viewItem.reactElement)}</Routes>
         </ViewLifeCycleManager>
       );
