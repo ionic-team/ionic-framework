@@ -1,7 +1,7 @@
-import type { RouteInfo, ViewItem } from '@ionic/react';
+import type { RouteInfo, StackContextState, ViewItem } from '@ionic/react';
 import { RouteManagerContext, StackContext, generateId, getConfig } from '@ionic/react';
 import type { PropsWithChildren } from 'react';
-import React, { useContext, useEffect, useReducer, useRef, useState } from 'react';
+import React, { cloneElement, useContext, useEffect, useMemo, useReducer, useRef, useState } from 'react';
 import { Route, Routes, matchPath } from 'react-router-dom';
 
 import { clonePageElement } from './clonePageElement';
@@ -40,6 +40,31 @@ export const StackManager = ({ children, ...props }: PropsWithChildren<StackMana
 
   const [id] = useState(generateId('routerOutlet'));
 
+  const stackContextValue: StackContextState = useMemo(
+    () => ({
+      isInOutlet: () => true,
+      registerIonPage: (page: HTMLElement, routeInfo: RouteInfo) => {
+        const foundView = findViewItemByRouteInfo(routeInfo, id);
+        if (foundView) {
+          const oldPageElement = foundView.ionPageElement;
+          foundView.ionPageElement = page;
+          foundView.ionRoute = true;
+
+          /**
+           * React 18 will unmount and remount IonPage
+           * elements in development mode when using createRoot.
+           * This can cause duplicate page transitions to occur.
+           */
+          if (oldPageElement === page) {
+            return;
+          }
+        }
+        handlePageTransition(routeInfo);
+      },
+    }),
+    [routerOutletElement]
+  );
+
   useEffect(() => {
     if (routerOutletElement) {
       // Mount behavior for the initial route
@@ -71,7 +96,6 @@ export const StackManager = ({ children, ...props }: PropsWithChildren<StackMana
   }, []);
 
   const handlePageTransition = (routeInfo: RouteInfo) => {
-    console.log('handlePageTransition for routeInfo', routeInfo, routerOutletElement);
     if (!routerOutletElement || !routerOutletElement.commit) {
       /**
        * The route outlet has not mounted yet. We need to wait for it to render
@@ -103,8 +127,6 @@ export const StackManager = ({ children, ...props }: PropsWithChildren<StackMana
       }
 
       const enteringRoute = matchRoute(ionRouterOutletRef.current?.props.children, routeInfo) as React.ReactElement; // TODO @sean can we return React.ReactElement so we don't need to cast?
-
-      console.log('enteringRoute', enteringRoute);
 
       if (enteringViewItem) {
         // If the entering view is already in the stack, then we need to clone it
@@ -185,25 +207,6 @@ export const StackManager = ({ children, ...props }: PropsWithChildren<StackMana
       // this.forceUpdate();
       forceUpdate();
     }
-  };
-
-  const registerIonPage = (page: HTMLElement, routeInfo: RouteInfo) => {
-    const foundView = findViewItemByRouteInfo(routeInfo, id);
-    if (foundView) {
-      const oldPageElement = foundView.ionPageElement;
-      foundView.ionPageElement = page;
-      foundView.ionRoute = true;
-
-      /**
-       * React 18 will unmount and remount IonPage
-       * elements in development mode when using createRoot.
-       * This can cause duplicate page transitions to occur.
-       */
-      if (oldPageElement === page) {
-        return;
-      }
-    }
-    handlePageTransition(routeInfo);
   };
 
   const setupRouterOutlet = (routerOutlet: HTMLIonRouterOutletElement) => {
@@ -389,9 +392,7 @@ export const StackManager = ({ children, ...props }: PropsWithChildren<StackMana
       forceUpdate();
     });
 
-    console.log('render components', components);
-
-    return React.cloneElement(ionRouterOutlet, {
+    return cloneElement(ionRouterOutlet, {
       ref: (node: HTMLIonRouterOutletElement) => {
         if (ionRouterOutlet.props.setRef) {
           ionRouterOutlet.props.setRef(node);
@@ -409,16 +410,7 @@ export const StackManager = ({ children, ...props }: PropsWithChildren<StackMana
     });
   };
 
-  return (
-    <StackContext.Provider
-      value={{
-        registerIonPage,
-        isInOutlet: () => true,
-      }}
-    >
-      {renderComponents()}
-    </StackContext.Provider>
-  );
+  return <StackContext.Provider value={stackContextValue}>{renderComponents()}</StackContext.Provider>;
 };
 
 export default StackManager;
