@@ -4,7 +4,7 @@ import { configs, test } from '@utils/test/playwright';
 configs().forEach(({ title, screenshot, config }) => {
   test.describe(title('range: label'), () => {
     test.describe('range: no start or end items', () => {
-      test.only('should render a range with no visible label', async ({ page }) => {
+      test('should render a range with no visible label', async ({ page }) => {
         await page.setContent(
           `
           <ion-range style="padding: 0px 20px" aria-label="Volume"></ion-range>
