@@ -17,7 +17,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const tabBar = page.locator('ion-tab-bar');
-        await expect(tabBar).toHaveScreenshot(screenshot('tab-bar-focus-default-theme-no-translucency'));
+        await expect(tabBar).toHaveScreenshot(screenshot('tab-button-focus-default-theme-no-translucency'));
       });
 
       test('should render correct focus state with custom theme and no translucency', async ({ page }) => {
@@ -33,7 +33,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const tabBar = page.locator('ion-tab-bar');
-        await expect(tabBar).toHaveScreenshot(screenshot('tab-bar-focus-custom-theme-no-translucency'));
+        await expect(tabBar).toHaveScreenshot(screenshot('tab-button-focus-custom-theme-no-translucency'));
       });
     });
   });
@@ -55,7 +55,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
         );
 
         const tabBar = page.locator('ion-tab-bar');
-        await expect(tabBar).toHaveScreenshot(screenshot('tab-bar-focus-default-theme-translucency'));
+        await expect(tabBar).toHaveScreenshot(screenshot('tab-button-focus-default-theme-translucency'));
       });
 
       test('should render correct focus state with custom theme and translucency', async ({ page }) => {
@@ -71,7 +71,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
         );
 
         const tabBar = page.locator('ion-tab-bar');
-        await expect(tabBar).toHaveScreenshot(screenshot('tab-bar-focus-custom-theme-translucency'));
+        await expect(tabBar).toHaveScreenshot(screenshot('tab-button-focus-custom-theme-translucency'));
       });
     });
   });
