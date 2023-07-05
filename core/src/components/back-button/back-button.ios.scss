@@ -13,10 +13,21 @@
   --color: #{$back-button-ios-color};
   --icon-margin-end: 1px;
   --icon-margin-start: -4px;
-  --icon-font-size: 1.6em;
+  /**
+   * This value used to be 1.6em which would evaluate
+   * to 1.6em * 17px (the font size of the button) = 27.2px.
+   * As a result, we set that to the minimum font size.
+   */
+  --icon-font-size: clamp(27.2px, 1.6rem, 36px);
   --min-height: 32px;
 
-  font-size: 17px;
+  /**
+   * Main content should be prioritized over the back
+   * button which is why a maximum font size is applied.
+   * Also, we want the text to remain readable
+   * so a minimum font size is applied.
+   */
+  font-size: clamp(17px, 1.0625rem, 22px);
 }
 
 .button-native {
