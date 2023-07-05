@@ -34,7 +34,6 @@
 
 :root, html {
   --ion-dynamic-type: var(--ion-default-dynamic-font);
-  font-family: Papyrus;
 }
 
 :root,
