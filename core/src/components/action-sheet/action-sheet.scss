@@ -126,7 +126,10 @@
   justify-content: flex-end;
 
   height: 100%;
+
+  /* Fallback for browsers that do not support dvh */
   max-height: 100vh;
+  max-height: 100dvh;
 }
 
 .action-sheet-group {
