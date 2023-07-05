@@ -36,8 +36,10 @@ html {
  * Dynamic Type is an iOS-only feature, so
  * this should only be enabled on iOS devices.
  */
-html.plt-ios.plt-mobile {
-  font: var(--ion-dynamic-type);
+@supports (-webkit-touch-callout: none) {
+  html {
+    font: var(--ion-dynamic-type);
+  }
 }
 
 a {
