@@ -29,8 +29,15 @@ $h5-font-size:                 18px !default;
 $h6-font-size:                 16px !default;
 
 html {
-  font: var(--ion-dynamic-type);
   font-family: var(--ion-font-family);
+}
+
+/**
+ * Dynamic Type is an iOS-only feature, so
+ * this should only be enabled on iOS devices.
+ */
+html.plt-ios {
+  font: var(--ion-dynamic-type);
 }
 
 a {
