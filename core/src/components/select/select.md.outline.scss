@@ -196,16 +196,16 @@
   pointer-events: none;
 }
 
+:host(.select-fill-outline) .select-outline-start {
+  @include border(null, null, null, var(--border-width) var(--border-style) var(--border-color));
+}
+
 :host(.select-ltr.select-fill-outline) .select-outline-start {
-  // stylelint-disable-next-line property-disallowed-list
-  border-left: var(--border-width) var(--border-style) var(--border-color);
   // stylelint-disable-next-line property-disallowed-list
   border-radius: var(--border-radius) 0px 0px var(--border-radius);
 }
 
 :host(.select-rtl.select-fill-outline) .select-outline-start {
-  // stylelint-disable-next-line property-disallowed-list
-  border-right: var(--border-width) var(--border-style) var(--border-color);
   // stylelint-disable-next-line property-disallowed-list
   border-radius: 0px var(--border-radius) var(--border-radius) 0px;
 }
@@ -222,16 +222,16 @@
   width: calc(var(--padding-start) - #{$select-md-floating-label-padding});
 }
 
+:host(.select-fill-outline) .select-outline-end {
+  @include border(null, var(--border-width) var(--border-style) var(--border-color), null, null);
+}
+
 :host(.select-ltr.select-fill-outline) .select-outline-end {
-  // stylelint-disable-next-line property-disallowed-list
-  border-right: var(--border-width) var(--border-style) var(--border-color);
   // stylelint-disable-next-line property-disallowed-list
   border-radius: 0px var(--border-radius) var(--border-radius) 0px;
 }
 
 :host(.select-rtl.select-fill-outline) .select-outline-end {
-  // stylelint-disable-next-line property-disallowed-list
-  border-left: var(--border-width) var(--border-style) var(--border-color);
   // stylelint-disable-next-line property-disallowed-list
   border-radius: var(--border-radius) 0px 0px var(--border-radius);
 }
