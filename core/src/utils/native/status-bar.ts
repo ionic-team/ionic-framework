@@ -1,7 +1,12 @@
+import type { StatusBarPlugin, Style as StatusBarStyle } from '@capacitor/status-bar';
+
 import { win } from '../browser';
 
+import { capacitor } from './capacitor';
+
+
 interface StyleOptions {
-  style: Style;
+  style: StatusBarStyle;
 }
 
 export enum Style {
@@ -11,8 +16,11 @@ export enum Style {
 }
 
 export const StatusBar = {
-  getEngine() {
-    return (win as any)?.Capacitor?.isPluginAvailable('StatusBar') && (win as any)?.Capacitor.Plugins.StatusBar;
+  getEngine(): StatusBarPlugin | undefined {
+    if (capacitor?.isPluginAvailable('StatusBar')) {
+      return capacitor.Plugins.StatusBar as StatusBarPlugin;
+    }
+    return undefined;
   },
   supportsDefaultStatusBarStyle() {
     /**
@@ -31,7 +39,7 @@ export const StatusBar = {
 
     engine.setStyle(options);
   },
-  getStyle: async function (): Promise<Style> {
+  getStyle: async function (): Promise<StatusBarStyle> {
     const engine = this.getEngine();
     if (!engine) {
       return Style.Default;
