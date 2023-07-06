@@ -1,3 +1,13 @@
-import type { CapacitorInstance } from '@capacitor/core/types/definitions-internal'
+import type { CapacitorInstance } from '@capacitor/core/types/definitions-internal';
 
-export const capacitor = (window as any)?.Capacitor as CapacitorInstance;
+let capacitor: CapacitorInstance | undefined;
+
+export const getCapacitor = () => {
+  if (capacitor !== undefined) {
+    return capacitor;
+  }
+  if (window !== undefined) {
+    return (window as any)?.Capacitor as CapacitorInstance;
+  }
+  return undefined;
+};

@@ -1,6 +1,6 @@
 import type { StatusBarPlugin, Style as StatusBarStyle } from '@capacitor/status-bar';
 
-import { capacitor } from './capacitor';
+import { getCapacitor } from './capacitor';
 
 interface StyleOptions {
   style: StatusBarStyle;
@@ -14,12 +14,15 @@ export enum Style {
 
 export const StatusBar = {
   getEngine(): StatusBarPlugin | undefined {
+    const capacitor = getCapacitor();
+
     if (capacitor?.isPluginAvailable('StatusBar')) {
       return capacitor.Plugins.StatusBar as StatusBarPlugin;
     }
     return undefined;
   },
   supportsDefaultStatusBarStyle() {
+    const capacitor = getCapacitor();
     /**
      * The 'DEFAULT' status bar style was added
      * to the @capacitor/status-bar plugin in Capacitor 3.

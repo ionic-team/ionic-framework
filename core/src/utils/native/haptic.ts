@@ -4,7 +4,7 @@ import type {
   ImpactStyle as CapacitorImpactStyle,
 } from '@capacitor/haptics';
 
-import { capacitor } from './capacitor';
+import { getCapacitor } from './capacitor';
 
 export enum ImpactStyle {
   /**
@@ -69,6 +69,8 @@ const HapticEngine = {
       // Cordova
       return tapticEngine;
     }
+    const capacitor = getCapacitor();
+
     if (capacitor?.isPluginAvailable('Haptics')) {
       // Capacitor
       return capacitor.Plugins.Haptics as HapticsPlugin;
@@ -80,6 +82,8 @@ const HapticEngine = {
     if (!engine) {
       return false;
     }
+
+    const capacitor = getCapacitor();
 
     /**
      * Developers can manually import the
@@ -100,7 +104,7 @@ const HapticEngine = {
     return (window as any).TapticEngine !== undefined;
   },
   isCapacitor() {
-    return capacitor !== undefined;
+    return getCapacitor() !== undefined;
   },
   impact(options: HapticImpactOptions) {
     const engine = this.getEngine();

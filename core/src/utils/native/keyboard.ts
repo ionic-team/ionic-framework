@@ -1,7 +1,7 @@
 import type { CapacitorException } from '@capacitor/core';
 import type { KeyboardPlugin, KeyboardResize as CapacitorKeyboardResize } from '@capacitor/keyboard';
 
-import { capacitor } from './capacitor';
+import { getCapacitor } from './capacitor';
 import { ExceptionCode } from './native-interface';
 
 export enum KeyboardResize {
@@ -41,6 +41,8 @@ export interface KeyboardResizeOptions {
 
 export const Keyboard = {
   getEngine(): KeyboardPlugin | undefined {
+    const capacitor = getCapacitor();
+
     if (capacitor?.isPluginAvailable('Keyboard')) {
       return capacitor.Plugins.Keyboard as KeyboardPlugin;
     }
