@@ -1,7 +1,5 @@
 import type { StatusBarPlugin, Style as StatusBarStyle } from '@capacitor/status-bar';
 
-import { win } from '../browser';
-
 import { capacitor } from './capacitor';
 
 interface StyleOptions {
@@ -28,7 +26,7 @@ export const StatusBar = {
      * PluginHeaders is only supported in Capacitor 3+,
      * so we can use this to detect Capacitor 3.
      */
-    return !!(win as any)?.Capacitor?.PluginHeaders;
+    return !!capacitor?.PluginHeaders;
   },
   setStyle(options: StyleOptions) {
     const engine = this.getEngine();

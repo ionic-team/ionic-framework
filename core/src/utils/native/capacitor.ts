@@ -1,3 +1,3 @@
-import type { CapacitorGlobal } from '@capacitor/core';
+import type { CapacitorInstance } from '@capacitor/core/types/definitions-internal'
 
-export const capacitor = (window as any).capacitor as CapacitorGlobal;
+export const capacitor = (window as any)?.Capacitor as CapacitorInstance;
