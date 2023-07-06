@@ -13,7 +13,15 @@
   --color: #{$back-button-ios-color};
   --icon-margin-end: 1px;
   --icon-margin-start: -4px;
-  --icon-font-size: clamp(1.6em, 1.6rem, 36px);
+  /**
+   * The icon should be sized relative
+   * to the size of the text which is
+   * why we use em here instead of rem.
+   * This allows developers to override
+   * the text font size while ensuring that
+   * the icon is sized relative to that.
+   */
+  --icon-font-size: min(1.6em, 36px);
   --min-height: 32px;
 
   /**
