@@ -32,6 +32,16 @@ html {
   font-family: var(--ion-font-family);
 }
 
+/**
+ * Dynamic Type is an iOS-only feature, so
+ * this should only be enabled on iOS devices.
+ */
+@supports (-webkit-touch-callout: none) {
+  html {
+    font: var(--ion-dynamic-type);
+  }
+}
+
 a {
   background-color: transparent;
   color: ion-color(primary, base);
