@@ -10,6 +10,12 @@
   --color-hover: #{$breadcrumb-ios-color-active};
   --color-focused: var(--color-active);
   --background-focused: #{$breadcrumb-ios-background-focused};
+
+  /**
+   * Main content should be prioritized
+   * on iOS, so we set max font size for breadcrumbs.
+   */
+  font-size: min(#{$breadcrumb-font-size}, 22px);
 }
 
 :host(.breadcrumb-active) {
@@ -58,7 +64,7 @@
 ::slotted(ion-icon) {
   color: $breadcrumb-ios-icon-color;
 
-  font-size: 18px;
+  font-size: min(1.125rem, 22px);
 }
 
 ::slotted(ion-icon[slot="start"]) {
@@ -91,4 +97,8 @@
 
 .breadcrumbs-collapsed-indicator:focus {
   background: $breadcrumb-ios-indicator-background-focused;
+}
+
+.breadcrumbs-collapsed-indicator ion-icon {
+  font-size: min(1.375rem, 22px);
 }
