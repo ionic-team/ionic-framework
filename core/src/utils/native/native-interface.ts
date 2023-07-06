@@ -5,7 +5,7 @@ export enum ExceptionCode {
    * This usually means the API can't be used because it is not implemented for
    * the current platform.
    */
-  Unimplemented = "UNIMPLEMENTED",
+  Unimplemented = 'UNIMPLEMENTED',
   /**
    * API is not available.
    *
@@ -13,5 +13,5 @@ export enum ExceptionCode {
    *   - it is currently missing a prerequisite, such as network connectivity
    *   - it requires a particular platform or browser version
    */
-  Unavailable = "UNAVAILABLE"
+  Unavailable = 'UNAVAILABLE',
 }

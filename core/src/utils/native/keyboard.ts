@@ -11,34 +11,33 @@ export enum KeyboardResize {
    *
    * @since 1.0.0
    */
-  Body = "body",
+  Body = 'body',
   /**
    * Only the `ion-app` HTML element will be resized.
    * Use it only for Ionic Framework apps.
    *
    * @since 1.0.0
    */
-  Ionic = "ionic",
+  Ionic = 'ionic',
   /**
    * The whole native Web View will be resized when the keyboard shows/hides.
    * This affects the `vh` relative unit.
    *
    * @since 1.0.0
    */
-  Native = "native",
+  Native = 'native',
   /**
    * Neither the app nor the Web View are resized.
    *
    * @since 1.0.0
    */
-  None = "none"
+  None = 'none',
 }
 
 // Interfaces source: https://capacitorjs.com/docs/apis/keyboard#interfaces
 export interface KeyboardResizeOptions {
   mode: CapacitorKeyboardResize;
 }
-
 
 export const Keyboard = {
   getEngine(): KeyboardPlugin | undefined {

@@ -4,7 +4,6 @@ import { win } from '../browser';
 
 import { capacitor } from './capacitor';
 
-
 interface StyleOptions {
   style: StatusBarStyle;
 }
