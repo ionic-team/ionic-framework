@@ -1,5 +1,6 @@
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { ModuleWithProviders, APP_INITIALIZER, NgModule, NgZone } from '@angular/core';
+import { ExtraOptions, ROUTER_CONFIGURATION } from '@angular/router';
 import { IonicConfig } from '@ionic/core';
 
 import { appInitialize } from './app-initialize';
@@ -11,7 +12,7 @@ import {
   TextValueAccessorDirective,
 } from './directives/control-value-accessors';
 import { IonBackButtonDelegateDirective } from './directives/navigation/ion-back-button';
-import { IonRouterOutlet, withComponentInputBinding } from './directives/navigation/ion-router-outlet';
+import { INPUT_BINDER, IonRouterOutlet, RoutedComponentInputBinder } from './directives/navigation/ion-router-outlet';
 import { IonTabs } from './directives/navigation/ion-tabs';
 import { NavDelegate } from './directives/navigation/nav-delegate';
 import {
@@ -50,17 +51,6 @@ const DECLARATIONS = [
   RouterLinkWithHrefDelegateDirective,
 ];
 
-export interface IonicAngularConfig extends IonicConfig {
-  /**
-   * When true, enables binding information from the Router state directly to the inputs of the component in Route configurations.
-   *
-   * @experimental
-   *
-   * @see https://angular.io/api/router/ExtraOptions#bindToComponentInputs
-   */
-  bindToComponentInputs?: boolean;
-}
-
 @NgModule({
   declarations: DECLARATIONS,
   exports: DECLARATIONS,
@@ -68,7 +58,7 @@ export interface IonicAngularConfig extends IonicConfig {
   imports: [CommonModule],
 })
 export class IonicModule {
-  static forRoot(config?: IonicAngularConfig): ModuleWithProviders<IonicModule> {
+  static forRoot(config?: IonicConfig): ModuleWithProviders<IonicModule> {
     return {
       ngModule: IonicModule,
       providers: [
@@ -82,8 +72,19 @@ export class IonicModule {
           multi: true,
           deps: [ConfigToken, DOCUMENT, NgZone],
         },
-        config?.bindToComponentInputs ? withComponentInputBinding().ɵproviders : [],
+        {
+          provide: INPUT_BINDER,
+          useFactory: componentInputBindingFactory,
+          deps: [ROUTER_CONFIGURATION],
+        },
       ],
     };
   }
+}
+
+function componentInputBindingFactory(routerConfig?: ExtraOptions) {
+  if ((routerConfig as any).bindToComponentInputs) {
+    return new RoutedComponentInputBinder();
+  }
+  return null;
 }

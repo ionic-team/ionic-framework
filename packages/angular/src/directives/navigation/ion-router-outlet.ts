@@ -19,7 +19,6 @@ import {
   InjectionToken,
   Injectable,
   reflectComponentType,
-  Provider,
 } from '@angular/core';
 import { OutletContext, Router, ActivatedRoute, ChildrenOutletContexts, PRIMARY_OUTLET, Data } from '@angular/router';
 import { componentOnReady } from '@ionic/core';
@@ -508,23 +507,6 @@ export class RoutedComponentInputBinder {
 
     this.outletDataSubscriptions.set(outlet, dataSubscription);
   }
-}
-
-/**
- * Enables binding information from the `Router` state directly to the inputs of the component in
- * `Route` configurations.
- *
- */
-export function withComponentInputBinding(): {
-  ɵkind: number;
-  ɵproviders: Provider[];
-} {
-  const providers = [RoutedComponentInputBinder, { provide: INPUT_BINDER, useExisting: RoutedComponentInputBinder }];
-
-  return {
-    ɵkind: RouterFeatureKind.ComponentInputBindingFeature,
-    ɵproviders: providers,
-  };
 }
 
 /**
