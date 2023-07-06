@@ -41,7 +41,7 @@ export interface KeyboardResizeOptions {
 
 export const Keyboard = {
   getEngine(): KeyboardPlugin | undefined {
-    if (capacitor.isPluginAvailable('Keyboard')) {
+    if (capacitor?.isPluginAvailable('Keyboard')) {
       return capacitor.Plugins.Keyboard as KeyboardPlugin;
     }
     return undefined;
