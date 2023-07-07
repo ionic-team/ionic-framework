@@ -3,6 +3,49 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.0.14](https://github.com/ionic-team/ionic-framework/compare/v7.0.13...v7.0.14) (2023-06-15)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [7.0.13](https://github.com/ionic-team/ionic-framework/compare/v7.0.12...v7.0.13) (2023-06-14)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [7.0.12](https://github.com/ionic-team/ionic-framework/compare/v7.0.11...v7.0.12) (2023-06-08)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [7.0.11](https://github.com/ionic-team/ionic-framework/compare/v7.0.10...v7.0.11) (2023-06-07)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [7.0.10](https://github.com/ionic-team/ionic-framework/compare/v7.0.9...v7.0.10) (2023-05-31)
+
+
+### Bug Fixes
+
+* **angular:** remove invalid z-index style ([#27559](https://github.com/ionic-team/ionic-framework/issues/27559)) ([2ce00cf](https://github.com/ionic-team/ionic-framework/commit/2ce00cf292e01664e02ecaf64af229d6a371c480))
+
+
+
+
+
 ## [7.0.9](https://github.com/ionic-team/ionic-framework/compare/v7.0.8...v7.0.9) (2023-05-25)
 
 **Note:** Version bump only for package @ionic/angular

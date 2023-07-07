@@ -21,17 +21,13 @@ export const dragElementBy = async (
   const startX = startXCoord === undefined ? boundingBox.x + boundingBox.width / 2 : startXCoord;
   const startY = startYCoord === undefined ? boundingBox.y + boundingBox.height / 2 : startYCoord;
 
-  const midX = startX + dragByX / 2;
-  const midY = startY + dragByY / 2;
-
   const endX = startX + dragByX;
   const endY = startY + dragByY;
 
   await page.mouse.move(startX, startY);
   await page.mouse.down();
 
-  await page.mouse.move(midX, midY);
-  await page.mouse.move(endX, endY);
+  await page.mouse.move(endX, endY, { steps: 10 });
   await page.mouse.up();
 };
 
