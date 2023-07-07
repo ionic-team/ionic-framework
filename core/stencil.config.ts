@@ -156,7 +156,8 @@ export const config: Config = {
     },
     {
       type: 'dist',
-      esmLoaderPath: '../loader'
+      esmLoaderPath: '../loader',
+      transformAliasedImportPathsInCollection: true
     },
     {
       type: 'dist-custom-elements',
