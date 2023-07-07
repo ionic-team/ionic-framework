@@ -266,4 +266,40 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-async-label`));
     });
   });
+  test.describe(title('textarea: flex in grid rendering'), () => {
+    test('should correctly render new lines in stacked textarea', async ({ page }) => {
+      /**
+       * While this bug only impacts Safari, we run this
+       * text on all browsers to make sure the Safari fix
+       * does not negatively impact other browsers.
+       */
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/27345',
+      });
+
+      /**
+       * Add padding to make it easier to see
+       * if the text is incorrectly flowing outside
+       * the container on Safari.
+       */
+      await page.setContent(
+        `
+        <div style="padding: 20px;" class="container">
+          <ion-textarea fill="solid" label="Comments" label-placement="stacked"></ion-textarea>
+        </div>
+      `,
+        config
+      );
+
+      const nativeTextarea = page.locator('ion-textarea textarea');
+
+      await nativeTextarea.type(`Comment
+        With
+        Multiple
+        Lines`);
+
+      await expect(page.locator('.container')).toHaveScreenshot(screenshot(`textarea-multi-line-sizing`));
+    });
+  });
 });
