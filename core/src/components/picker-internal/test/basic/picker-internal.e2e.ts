@@ -5,7 +5,7 @@ import { configs, test } from '@utils/test/playwright';
  * This behavior does not vary across directions.
  */
 configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
-  test.describe.only(title('picker-internal: rendering'), () => {
+  test.describe(title('picker-internal: rendering'), () => {
     test('inline pickers should not have visual regression', async ({ page }) => {
       await page.goto(`/src/components/picker-internal/test/basic`, config);
 
