@@ -50,7 +50,7 @@ $action-sheet-ios-title-padding-start:                            $action-sheet-
 $action-sheet-ios-title-color:                                    $text-color-step-600 !default;
 
 /// @prop - Font size of the action sheet title
-$action-sheet-ios-title-font-size:                                13px !default;
+$action-sheet-ios-title-font-size:                                max(13px, 0.8125rem) !default;
 
 /// @prop - Font weight of the action sheet title
 $action-sheet-ios-title-font-weight:                              400 !default;
@@ -75,7 +75,7 @@ $action-sheet-ios-title-border-color:                             rgba($text-col
 // --------------------------------------------------
 
 /// @prop - Font size of the action sheet sub title
-$action-sheet-ios-sub-title-font-size:                            13px !default;
+$action-sheet-ios-sub-title-font-size:                           max(13px, 0.8125rem) !default;
 
 /// @prop - Padding top of the action sheet sub title
 $action-sheet-ios-sub-title-padding-top:                          6px !default;
@@ -97,19 +97,19 @@ $action-sheet-ios-sub-title-padding-start:                        $action-sheet-
 $action-sheet-ios-button-height:                                  56px !default;
 
 /// @prop - Padding of the action sheet button
-$action-sheet-ios-button-padding:                                 18px !default;
+$action-sheet-ios-button-padding:                                 14px !default;
 
 /// @prop - Text color of the action sheet button
 $action-sheet-ios-button-text-color:                              ion-color(primary, base) !default;
 
 /// @prop - Font size of the action sheet button icon
-$action-sheet-ios-button-icon-font-size:                          28px !default;
+$action-sheet-ios-button-icon-font-size:                          max(28px, 1.75rem) !default;
 
 /// @prop - Padding right of the action sheet button icon
 $action-sheet-ios-button-icon-padding-right:                      .3em !default;
 
 /// @prop - Font size of the action sheet button
-$action-sheet-ios-button-font-size:                               20px !default;
+$action-sheet-ios-button-font-size:                               max(20px, 1.25rem) !default;
 
 /// @prop - Border color alpha of the action sheet button
 $action-sheet-ios-button-border-color-alpha:                      .08 !default;
