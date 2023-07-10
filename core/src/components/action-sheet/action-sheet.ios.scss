@@ -131,11 +131,11 @@
 .action-sheet-button {
   @include padding($action-sheet-ios-button-padding);
 
-  height: $action-sheet-ios-button-height;
+  min-height: $action-sheet-ios-button-height;
 
   font-size: $action-sheet-ios-button-font-size;
 
-  contain: strict;
+  contain: content;
 }
 
 .action-sheet-button .action-sheet-icon {

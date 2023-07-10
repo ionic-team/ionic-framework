@@ -67,13 +67,13 @@
 
   position: relative;
 
-  height: $action-sheet-md-button-height;
+  min-height: $action-sheet-md-button-height;
 
   font-size: $action-sheet-md-button-font-size;
 
   text-align: $action-sheet-md-text-align;
 
-  contain: strict;
+  contain: content;
   overflow: hidden;
 }
 
