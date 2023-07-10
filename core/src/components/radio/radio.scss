@@ -1,4 +1,5 @@
 @import "../../themes/ionic.globals";
+@import "./radio.vars.scss";
 
 // Radio
 // --------------------------------------------------
@@ -122,6 +123,11 @@ input {
   overflow: hidden;
 }
 
+:host(.in-item:not(.legacy-radio)) .label-text-wrapper {
+  margin-top: $radio-item-label-margin-top;
+  margin-bottom: $radio-item-label-margin-bottom;
+}
+
 /**
  * If no label text is placed into the slot
  * then the element should be hidden otherwise
@@ -175,6 +181,10 @@ input {
   @include margin(0, $form-control-label-margin, 0, 0);
 }
 
+:host(.radio-label-placement-start.in-item) .label-text-wrapper {
+  @include margin($radio-item-label-margin-top, $form-control-label-margin, $radio-item-label-margin-bottom, 0);
+}
+
 // Radio Label Placement - End
 // ----------------------------------------------------------------
 
@@ -195,6 +205,10 @@ input {
   @include margin(0, 0, 0, $form-control-label-margin);
 }
 
+:host(.radio-label-placement-end.in-item) .label-text-wrapper {
+  @include margin($radio-item-label-margin-top, 0, $radio-item-label-margin-bottom, $form-control-label-margin);
+}
+
 // Radio Label Placement - Fixed
 // ----------------------------------------------------------------
 
@@ -205,6 +219,10 @@ input {
    * when the label sits at the start.
    */
   @include margin(0, $form-control-label-margin, 0, 0);
+}
+
+:host(.radio-label-placement-fixed.in-item) .label-text-wrapper {
+  @include margin($radio-item-label-margin-top, $form-control-label-margin, $radio-item-label-margin-bottom, 0);
 }
 
 /**
