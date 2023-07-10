@@ -21,8 +21,9 @@ export const StatusBar = {
     }
     return undefined;
   },
+  // TODO FW-4696 Remove supportDefaultStatusBarStyle in Ionic v8
   supportsDefaultStatusBarStyle() {
-    const capacitor = getCapacitor();
+    const capacitor = getCapacitor() as any;
     /**
      * The 'DEFAULT' status bar style was added
      * to the @capacitor/status-bar plugin in Capacitor 3.

@@ -1,13 +1,13 @@
-import type { CapacitorInstance } from '@capacitor/core/types/definitions-internal';
+import type { CapacitorGlobal } from '@capacitor/core';
 
-let capacitor: CapacitorInstance | undefined;
+let capacitor: CapacitorGlobal | undefined;
 
 export const getCapacitor = () => {
   if (capacitor !== undefined) {
     return capacitor;
   }
   if (window !== undefined) {
-    return (window as any)?.Capacitor as CapacitorInstance;
+    return (window as any)?.Capacitor as CapacitorGlobal;
   }
   return undefined;
 };
