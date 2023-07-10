@@ -15,7 +15,7 @@
    * Main content should be prioritized
    * on iOS, so we set max font size for breadcrumbs.
    */
-  font-size: min(#{$breadcrumb-font-size}, 22px);
+  font-size: clamp(16px, #{$breadcrumb-font-size}, 22px);
 }
 
 :host(.breadcrumb-active) {
