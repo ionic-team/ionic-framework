@@ -1,4 +1,5 @@
 import type { CapacitorGlobal } from '@capacitor/core';
+import { win } from '@utils/browser';
 
 let capacitor: CapacitorGlobal | undefined;
 
@@ -6,8 +7,8 @@ export const getCapacitor = () => {
   if (capacitor !== undefined) {
     return capacitor;
   }
-  if (window !== undefined) {
-    return (window as any)?.Capacitor as CapacitorGlobal;
+  if (win !== undefined) {
+    return (win as any).Capacitor as CapacitorGlobal;
   }
   return undefined;
 };
