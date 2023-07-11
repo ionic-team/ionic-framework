@@ -178,11 +178,7 @@ input {
    * the radio should be on the end
    * when the label sits at the start.
    */
-  @include margin(0, $form-control-label-margin, 0, 0);
-}
-
-:host(.radio-label-placement-start.in-item) .label-text-wrapper {
-  @include margin($radio-item-label-margin-top, $form-control-label-margin, $radio-item-label-margin-bottom, 0);
+  @include margin(null, $form-control-label-margin, null, 0);
 }
 
 // Radio Label Placement - End
@@ -202,11 +198,7 @@ input {
  * when the label sits at the end.
  */
 :host(.radio-label-placement-end) .label-text-wrapper {
-  @include margin(0, 0, 0, $form-control-label-margin);
-}
-
-:host(.radio-label-placement-end.in-item) .label-text-wrapper {
-  @include margin($radio-item-label-margin-top, 0, $radio-item-label-margin-bottom, $form-control-label-margin);
+  @include margin(null, 0, null, $form-control-label-margin);
 }
 
 // Radio Label Placement - Fixed
@@ -218,11 +210,7 @@ input {
    * the radio should be on the end
    * when the label sits at the start.
    */
-  @include margin(0, $form-control-label-margin, 0, 0);
-}
-
-:host(.radio-label-placement-fixed.in-item) .label-text-wrapper {
-  @include margin($radio-item-label-margin-top, $form-control-label-margin, $radio-item-label-margin-bottom, 0);
+  @include margin(null, $form-control-label-margin, null, 0);
 }
 
 /**
