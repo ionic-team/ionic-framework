@@ -67,6 +67,7 @@ const HapticEngine = {
     const tapticEngine = (window as any).TapticEngine;
     if (tapticEngine) {
       // Cordova
+      // TODO FW-4707 - Remove this in Ionic 8
       return tapticEngine;
     }
     const capacitor = getCapacitor();
@@ -111,17 +112,38 @@ const HapticEngine = {
     if (!engine) {
       return;
     }
-    engine.impact({ style: options.style });
+    /**
+     * To provide backwards compatibility with Cordova apps,
+     * we convert the style to lowercase.
+     *
+     * TODO: FW-4707 - Remove this in Ionic 8
+     */
+    const style = this.isCapacitor() ? options.style : options.style.toLowerCase() as ImpactStyle;
+    engine.impact({ style });
   },
   notification(options: HapticNotificationOptions) {
     const engine = this.getEngine();
     if (!engine) {
       return;
     }
-    engine.notification({ type: options.type });
+    /**
+     * To provide backwards compatibility with Cordova apps,
+     * we convert the style to lowercase.
+     *
+     * TODO: FW-4707 - Remove this in Ionic 8
+     */
+    const type = this.isCapacitor() ? options.type : options.type.toLowerCase() as NotificationType;
+    engine.notification({ type });
   },
   selection() {
-    this.impact({ style: ImpactStyle.Light });
+    /**
+     * To provide backwards compatibility with Cordova apps,
+     * we convert the style to lowercase.
+     *
+     * TODO: FW-4707 - Remove this in Ionic 8
+     */
+    const style = this.isCapacitor() ? ImpactStyle.Light : 'light' as ImpactStyle;
+    this.impact({ style });
   },
   selectionStart() {
     const engine = this.getEngine();
