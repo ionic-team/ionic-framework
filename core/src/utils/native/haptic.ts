@@ -118,7 +118,7 @@ const HapticEngine = {
      *
      * TODO: FW-4707 - Remove this in Ionic 8
      */
-    const style = this.isCapacitor() ? options.style : options.style.toLowerCase() as ImpactStyle;
+    const style = this.isCapacitor() ? options.style : (options.style.toLowerCase() as ImpactStyle);
     engine.impact({ style });
   },
   notification(options: HapticNotificationOptions) {
@@ -132,7 +132,7 @@ const HapticEngine = {
      *
      * TODO: FW-4707 - Remove this in Ionic 8
      */
-    const type = this.isCapacitor() ? options.type : options.type.toLowerCase() as NotificationType;
+    const type = this.isCapacitor() ? options.type : (options.type.toLowerCase() as NotificationType);
     engine.notification({ type });
   },
   selection() {
@@ -142,7 +142,7 @@ const HapticEngine = {
      *
      * TODO: FW-4707 - Remove this in Ionic 8
      */
-    const style = this.isCapacitor() ? ImpactStyle.Light : 'light' as ImpactStyle;
+    const style = this.isCapacitor() ? ImpactStyle.Light : ('light' as ImpactStyle);
     this.impact({ style });
   },
   selectionStart() {
