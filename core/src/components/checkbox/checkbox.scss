@@ -38,8 +38,14 @@
 }
 
 :host(.in-item) {
+  position: static;
+  
   width: 100%;
   height: 100%;
+}
+
+:host(.in-item) .checkbox-wrapper {
+  @include input-cover();
 }
 
 /**
