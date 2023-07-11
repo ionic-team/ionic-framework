@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.1.3-nightly.20230711](https://github.com/ionic-team/ionic-framework/compare/v7.1.2...v7.1.3-nightly.20230711) (2023-07-11)
+
+
+### Bug Fixes
+
+* avoid unresolved import warning on stencil apps ([#27765](https://github.com/ionic-team/ionic-framework/issues/27765)) ([2085025](https://github.com/ionic-team/ionic-framework/commit/2085025644f075e63d04bece56eca4f2beeadbb6)), closes [#27762](https://github.com/ionic-team/ionic-framework/issues/27762)
+
+
+
+
+
 ## [7.1.2](https://github.com/ionic-team/ionic-framework/compare/v7.1.1...v7.1.2) (2023-07-06)
 
 
