@@ -240,8 +240,11 @@ const trapKeyboardFocus = (ev: Event, doc: Document) => {
       /**
        * If the target is inside the wrapper, let the browser
        * focus as normal and keep a log of the last focused element.
+       * Additionally, if the backdrop was tapped we should not
+       * move focus back inside the wrapper as that could cause
+       * an interactive elements focus state to activate.
        */
-      if (overlayWrapper.contains(target)) {
+      if (overlayWrapper.contains(target) || target === overlayRoot.querySelector('ion-backdrop')) {
         lastOverlay.lastFocus = target;
       } else {
         /**
