@@ -6,4 +6,13 @@
 
 :host {
   @include border-radius($badge-ios-border-radius);
+
+  /**
+   * "-apple-system-body" on iOS never goes smaller than
+   * 14px according to https://developer.apple.com/design/human-interface-guidelines/typography#Specifications.
+   * However, we still keep the max() usage here for consistency
+   * with other components and in case "-apple-system-body" does
+   * go smaller than 14px in the future.
+   */
+  font-size: max(13px, $badge-font-size);
 }
