@@ -134,15 +134,15 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, config }) => 
 
   test.describe(title('should throw a warning if the form cannot be found'), () => {
     test('form is a string selector', async ({ page }) => {
-      await page.setContent(`<ion-button type="submit" form="missingForm">Submit</ion-button>`, config);
-
       const logs: string[] = [];
 
       page.on('console', (msg) => {
-        logs.push(msg.text());
+        if (msg.type() === 'warning') {
+          logs.push(msg.text());
+        }
       });
 
-      await page.click('ion-button');
+      await page.setContent(`<ion-button type="submit" form="missingForm">Submit</ion-button>`, config);
 
       expect(logs.length).toBe(1);
       expect(logs[0]).toContain(
@@ -151,6 +151,14 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, config }) => 
     });
 
     test('form is an element reference', async ({ page }) => {
+      const logs: string[] = [];
+
+      page.on('console', (msg) => {
+        if (msg.type() === 'warning') {
+          logs.push(msg.text());
+        }
+      });
+
       await page.setContent(
         `
         <ion-button type="submit">Submit</ion-button>
@@ -163,14 +171,6 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, config }) => 
       `,
         config
       );
-
-      const logs: string[] = [];
-
-      page.on('console', (msg) => {
-        logs.push(msg.text());
-      });
-
-      await page.click('ion-button');
 
       expect(logs.length).toBe(1);
       expect(logs[0]).toContain(
