@@ -17,9 +17,9 @@
 html {
   width: 100%;
   height: 100%;
+  -webkit-text-size-adjust: 100%;
 
   text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
 }
 
 html:not(.hydrated) body {
@@ -81,7 +81,7 @@ body {
   word-wrap: break-word;
 
   overscroll-behavior-y: none;
+  -webkit-text-size-adjust: none;
 
   text-size-adjust: none;
-  -webkit-text-size-adjust: none;
 }
