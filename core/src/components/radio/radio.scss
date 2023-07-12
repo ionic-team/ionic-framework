@@ -124,8 +124,7 @@ input {
 }
 
 :host(.in-item:not(.legacy-radio)) .label-text-wrapper {
-  margin-top: $radio-item-label-margin-top;
-  margin-bottom: $radio-item-label-margin-bottom;
+  @include margin($radio-item-label-margin-top, null, $radio-item-label-margin-bottom, null);
 }
 
 /**
