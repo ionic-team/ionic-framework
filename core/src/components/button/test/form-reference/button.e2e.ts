@@ -44,7 +44,7 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, config }) => 
       await page.setContent(
         `
         <form>
-           <ion-button type="submit">Submit</ion-button>
+          <ion-button type="submit">Submit</ion-button>
         </form>
       `,
         config
@@ -55,6 +55,80 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, config }) => 
       await page.click('ion-button');
 
       expect(submitEvent).toHaveReceivedEvent();
+    });
+
+    test('should submit the closest form by pressing the `enter` button on a form element', async ({
+      page,
+    }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/19368',
+      });
+
+      await page.setContent(
+        `
+        <form>
+          <input type="text" />
+          <ion-button type="submit">Submit</ion-button>
+        </form>
+      `,
+        config
+      );
+
+      const submitEvent = await page.spyOnEvent('submit');
+
+      await page.press('input', 'Enter');
+
+      expect(submitEvent).toHaveReceivedEvent();
+    });
+
+    test('should submit the closest form with multiple elements by pressing the `enter` button', async ({
+      page,
+    }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/19368',
+      });
+
+      await page.setContent(
+        `
+        <form>
+          <input type="text" />
+          <textarea></textarea>
+          <ion-button type="submit">Submit</ion-button>
+        </form>
+      `,
+        config
+      );
+
+      const submitEvent = await page.spyOnEvent('submit');
+
+      await page.press('input', 'Enter');
+
+      expect(submitEvent).toHaveReceivedEvent();
+    });
+
+    test('should not submit the closest form when button is disabled', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/19368',
+      });
+
+      await page.setContent(
+        `
+        <form>
+          <input type="text" />
+          <ion-button type="submit" disabled>Submit</ion-button>
+        </form>
+      `,
+        config
+      );
+
+      const submitEvent = await page.spyOnEvent('submit');
+
+      await page.press('input', 'Enter');
+
+      expect(submitEvent).not.toHaveReceivedEvent();
     });
   });
 
