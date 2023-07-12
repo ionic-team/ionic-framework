@@ -19,6 +19,7 @@ html {
   height: 100%;
 
   text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
 }
 
 html:not(.hydrated) body {
@@ -82,4 +83,5 @@ body {
   overscroll-behavior-y: none;
 
   text-size-adjust: none;
+  -webkit-text-size-adjust: none;
 }
