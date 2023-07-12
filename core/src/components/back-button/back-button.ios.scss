@@ -13,10 +13,24 @@
   --color: #{$back-button-ios-color};
   --icon-margin-end: 1px;
   --icon-margin-start: -4px;
+  /**
+   * The icon should be sized relative
+   * to the size of the text which is
+   * why we use em here instead of rem.
+   * This allows developers to override
+   * the text font size while ensuring that
+   * the icon is sized relative to that.
+   */
   --icon-font-size: 1.6em;
   --min-height: 32px;
 
-  font-size: 17px;
+  /**
+   * Main content should be prioritized over the back
+   * button which is why a maximum font size is applied.
+   * Also, we want the text to remain readable
+   * so a minimum font size is applied.
+   */
+  font-size: clamp(17px, 1.0625rem, 22px);
 }
 
 .button-native {
