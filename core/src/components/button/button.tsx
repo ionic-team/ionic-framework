@@ -55,7 +55,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
    */
   @Prop({ reflect: true }) disabled = false;
   @Watch('disabled')
-  async disabledChanged() {
+  disabledChanged() {
     const { disabled } = this;
     if (this.formButtonEl) {
       this.formButtonEl.disabled = disabled;
