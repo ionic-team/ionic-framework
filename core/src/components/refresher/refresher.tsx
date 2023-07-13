@@ -760,6 +760,7 @@ export class Refresher implements ComponentInterface {
         scrollStyle.transitionDuration = duration;
         scrollStyle.transitionDelay = backgroundStyle.transitionDelay = delay;
         scrollStyle.overflow = overflowVisible ? 'hidden' : '';
+        this.el.style.setProperty('clip-path', `polygon(0 0, 100% 0, 100% ${y}%, 0 ${y}%)`);
       }
 
       /**
