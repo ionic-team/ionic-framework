@@ -705,8 +705,10 @@ export class Menu implements ComponentInterface, MenuI {
       this.forceClosing();
     }
 
-    if (!this.disabled) {
-      menuController._setActiveMenu(this);
+    if (!Build.isServer) {
+      if (!this.disabled) {
+        menuController._setActiveMenu(this);
+      }
     }
     assert(!this.isAnimating, 'can not be animating');
   }
