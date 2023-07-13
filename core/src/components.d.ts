@@ -2581,7 +2581,7 @@ export namespace Components {
         /**
           * If used in a form, set the name of the control, which is submitted with the form data.
          */
-        "name"?: string;
+        "name": string;
         /**
           * Set the input's placeholder. `placeholder` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
          */

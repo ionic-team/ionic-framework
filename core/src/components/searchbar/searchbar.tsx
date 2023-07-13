@@ -27,6 +27,7 @@ export class Searchbar implements ComponentInterface {
   private isCancelVisible = false;
   private shouldAlignLeft = true;
   private originalIonInput?: EventEmitter<SearchbarInputEventDetail>;
+  private inputId = `ion-searchbar-${searchbarIds++}`;
 
   /**
    * The value of the input when the textarea is focused.
@@ -114,7 +115,7 @@ export class Searchbar implements ComponentInterface {
   /**
    * If used in a form, set the name of the control, which is submitted with the form data.
    */
-  @Prop() name?: string;
+  @Prop() name: string = this.inputId;
 
   /**
    * Set the input's placeholder.
@@ -645,3 +646,5 @@ export class Searchbar implements ComponentInterface {
     );
   }
 }
+
+let searchbarIds = 0;
