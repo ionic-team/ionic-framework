@@ -188,11 +188,6 @@ export class Menu implements ComponentInterface, MenuI {
       this.type = config.get('menuType', 'overlay');
     }
 
-    if (!Build.isBrowser) {
-      this.disabled = true;
-      return;
-    }
-
     const content = this.contentId !== undefined ? document.getElementById(this.contentId) : null;
 
     if (content === null) {
