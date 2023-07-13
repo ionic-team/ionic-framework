@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.1.4-nightly.20230713](https://github.com/ionic-team/ionic-framework/compare/v7.1.3...v7.1.4-nightly.20230713) (2023-07-13)
+
+
+### Bug Fixes
+
+* **radio, checkbox, toggle:** add top and bottom margins when in ion-item ([#27788](https://github.com/ionic-team/ionic-framework/issues/27788)) ([35f0ec5](https://github.com/ionic-team/ionic-framework/commit/35f0ec581a55e0cb080f0793fb94d3e424c06d4d)), closes [#27498](https://github.com/ionic-team/ionic-framework/issues/27498)
+* **textarea:** stacked/floating textarea size is correct on safari ([#27766](https://github.com/ionic-team/ionic-framework/issues/27766)) ([2cb7013](https://github.com/ionic-team/ionic-framework/commit/2cb701395487c6a0304400f6b821659ae6def820)), closes [#27345](https://github.com/ionic-team/ionic-framework/issues/27345)
+
+
+
+
+
 ## [7.1.3](https://github.com/ionic-team/ionic-framework/compare/v7.1.2...v7.1.3) (2023-07-12)
 
 
