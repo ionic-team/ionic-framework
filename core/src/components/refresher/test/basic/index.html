@@ -12,17 +12,31 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      ion-content {
+        --background: linear-gradient(to right, orange, yellow, green, cyan, blue, violet);
+      }
+
+      ion-toolbar {
+        --background: transparent;
+        --color: white;
+      }
+
+      ion-list {
+        background: rgba(255, 255, 255, 0.8) !important;
+      }
+    </style>
   </head>
 
   <body>
     <ion-app>
-      <ion-header>
+      <ion-header class="ion-no-border">
         <ion-toolbar>
           <ion-title>Pull To Refresh</ion-title>
         </ion-toolbar>
       </ion-header>
 
-      <ion-content>
+      <ion-content fullscreen="true">
         <ion-refresher id="refresher" slot="fixed">
           <ion-refresher-content
             pulling-icon="arrow-down-outline"
@@ -33,7 +47,7 @@
           </ion-refresher-content>
         </ion-refresher>
 
-        <ion-list id="list"></ion-list>
+        <div id="list"></div>
       </ion-content>
     </ion-app>
     <ion-menu-controller></ion-menu-controller>
@@ -59,7 +73,7 @@
       function render() {
         let html = '';
         for (let item of items) {
-          html += `<ion-item button>${item}</ion-item>`;
+          html += `<ion-card><ion-card-content>${item}</ion-card-content></ion-card>`;
         }
         list.innerHTML = html;
       }
