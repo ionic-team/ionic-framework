@@ -344,7 +344,9 @@ ion-picker-column-internal {
 :host .calendar-day {
   @include border-radius(50%);
 
-  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   border: none;
 
