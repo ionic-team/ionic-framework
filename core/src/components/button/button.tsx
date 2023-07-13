@@ -202,27 +202,32 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
       return form;
     }
     if (typeof form === 'string') {
+      // Check if the string provided is a form id.
       const el = document.getElementById(form);
       if (el instanceof HTMLFormElement) {
         return el;
       }
+      /**
+       * The developer specified a string for the form attribute, but the
+       * form element with that id does not exist in the DOM.
+       */
+      printIonWarning(
+        `Form with selector: "#${form}" could not be found. Verify that the id is correct and the form is rendered in the DOM.`,
+        this.el
+      );
+      return null;
     }
     if (form !== undefined) {
       /**
-       * The developer specified a form selector for
-       * the button to submit, but it was not found.
+       * The developer specified a HTMLElement for the form attribute,
+       * but the element is not a HTMLFormElement.
+       * This will also catch if the developer tries to pass in null
+       * as the form attribute.
        */
-      if (typeof form === 'string') {
-        printIonWarning(
-          `Form with selector: "#${form}" could not be found. Verify that the id is correct and the form is rendered in the DOM.`,
-          this.el
-        );
-      } else {
-        printIonWarning(
-          `The provided "form" element is invalid. Verify that the form is a HTMLFormElement and rendered in the DOM.`,
-          this.el
-        );
-      }
+      printIonWarning(
+        `The provided "form" element is invalid. Verify that the form is a HTMLFormElement and rendered in the DOM.`,
+        this.el
+      );
       return null;
     }
     /**
