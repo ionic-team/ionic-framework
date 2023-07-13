@@ -1,6 +1,6 @@
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { ModuleWithProviders, APP_INITIALIZER, NgModule, NgZone } from '@angular/core';
-import { ExtraOptions, ROUTER_CONFIGURATION } from '@angular/router';
+import { Router } from '@angular/router';
 import { IonicConfig } from '@ionic/core';
 
 import { appInitialize } from './app-initialize';
@@ -75,15 +75,19 @@ export class IonicModule {
         {
           provide: INPUT_BINDER,
           useFactory: componentInputBindingFactory,
-          deps: [ROUTER_CONFIGURATION],
+          deps: [Router],
         },
       ],
     };
   }
 }
 
-function componentInputBindingFactory(routerConfig?: ExtraOptions) {
-  if ((routerConfig as any).bindToComponentInputs) {
+function componentInputBindingFactory(router?: Router) {
+  /**
+   * We cast the router to any here, since the componentInputBindingEnabled
+   * property is not available until Angular v16.
+   */
+  if ((router as any)?.componentInputBindingEnabled) {
     return new RoutedComponentInputBinder();
   }
   return null;
