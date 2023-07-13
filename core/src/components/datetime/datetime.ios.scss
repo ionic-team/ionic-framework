@@ -88,11 +88,13 @@
   height: calc(100% - #{$datetime-ios-padding});
 }
 
-:host .calendar-day {
+:host .calendar-day-wrapper {
   @include padding(4px);
 
-  position: absolute;
+  min-height: 15px;
+}
 
+:host .calendar-day {
   width: 40px;
   height: 40px;
 

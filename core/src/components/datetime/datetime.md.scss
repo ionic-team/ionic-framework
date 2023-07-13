@@ -67,6 +67,10 @@
 
 }
 
+:host .calendar-day-wrapper {
+  height: 42px;
+}
+
 // Individual day button in month
 :host .calendar-day {
   @include padding(13px, 0);
