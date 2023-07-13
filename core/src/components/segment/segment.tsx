@@ -1,13 +1,13 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Listen, Prop, State, Watch, h, writeTask } from '@stencil/core';
+import type { Gesture, GestureDetail } from '@utils/gesture';
+import { isRTL } from '@utils/rtl';
+import { createColorClasses, hostContext } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Color, StyleEventDetail } from '../../interface';
-import type { Gesture, GestureDetail } from '../../utils/gesture';
-import { isRTL } from '../../utils/rtl';
-import { createColorClasses, hostContext } from '../../utils/theme';
 
-import type { SegmentChangeEventDetail } from './segment-interface';
+import type { SegmentChangeEventDetail, SegmentValue } from './segment-interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -24,7 +24,7 @@ export class Segment implements ComponentInterface {
   private gesture?: Gesture;
 
   // Value before the segment is dragged
-  private valueBeforeGesture?: string;
+  private valueBeforeGesture?: SegmentValue;
 
   @Element() el!: HTMLIonSegmentElement;
 
@@ -74,10 +74,10 @@ export class Segment implements ComponentInterface {
   /**
    * the value of the segment.
    */
-  @Prop({ mutable: true }) value?: string;
+  @Prop({ mutable: true }) value?: SegmentValue;
 
   @Watch('value')
-  protected valueChanged(value: string | undefined) {
+  protected valueChanged(value: SegmentValue | undefined) {
     /**
      * `ionSelect` is emitted every time the value changes (internal or external changes).
      * Used by `ion-segment-button` to determine if the button should be checked.

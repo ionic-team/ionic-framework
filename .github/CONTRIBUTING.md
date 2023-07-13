@@ -295,7 +295,7 @@ See [Ionic's E2E testing guide](../core/src/utils/test/playwright/docs/README.md
 #### Modifying Files
 
 1. Locate the files inside the relevant root directory:
-  - Angular: [`/angular/src`](/angular/src)
+  - Angular: [`/packages/angular/src`](/packages/angular/src)
   - React: [`/packages/react/src`](/packages/react/src)
   - Vue: [`/packages/vue/src`](/packages/vue/src)
 2. Make your changes to the files. If the change is overly complex or out of the ordinary, add comments so we can understand the changes.
@@ -311,7 +311,7 @@ See [Ionic's E2E testing guide](../core/src/utils/test/playwright/docs/README.md
 ##### Previewing in this repository
 
 Follow the steps in the test directory for each framework:
-  - Angular: [`/angular/test`](/angular/test/README.md)
+  - Angular: [`/packages/angular/test`](/packages/angular/test/README.md)
   - React: [`/packages/react/test`](/packages/react/test/README.md)
   - Vue: [`/packages/vue/test`](/packages/vue/test/README.md)
 
@@ -322,7 +322,7 @@ Follow the steps to [preview changes in core](#preview-changes).
 #### Lint Changes
 
 1. Run `npm run lint` to lint the TypeScript in the relevant directory:
-  - Angular: [`/angular/src`](/angular/src)
+  - Angular: [`/packages/angular/src`](/packages/angular/src)
   - React: [`/packages/react/src`](/packages/react/src)
   - Vue: [`/packages/vue/src`](/packages/vue/src)
 2. If there are lint errors, run `npm run lint.fix` to automatically fix any errors. Repeat step 1 to ensure the errors have been fixed, and manually fix them if not.
@@ -330,7 +330,7 @@ Follow the steps to [preview changes in core](#preview-changes).
 #### Modifying Tests
 
 1. Locate the e2e test to modify inside the relevant test app directory:
-  - Angular: [`/angular/test/base/e2e/src`](/angular/test/base/e2e/src)
+  - Angular: [`/packages/angular/test/base/e2e/src`](/packages/angular/test/base/e2e/src)
   - React: [`/packages/react/test/base/tests/e2e/specs`](/packages/react/test/base/tests/e2e/specs)
   - Vue: [`/packages/vue/test/base/tests/e2e/specs`](/packages/vue/test/base/tests/e2e/specs)
 2. If a test exists, modify the test by adding an example to reproduce the problem fixed or feature added.

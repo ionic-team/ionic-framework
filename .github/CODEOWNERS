@@ -15,9 +15,9 @@
 
 ## Angular
 
-/angular/ @sean-perkins
+/packages/angular/ @sean-perkins
 /packages/angular-server @sean-perkins
-/angular/test
+/packages/angular/test
 
 ## React
 
