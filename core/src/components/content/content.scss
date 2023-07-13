@@ -49,8 +49,11 @@
   contain: size style;
 }
 
-:host(.ion-color) .inner-scroll {
+:host(.ion-color) #background-content {
   background: current-color(base);
+}
+
+:host(.ion-color) .inner-scroll {
   color: current-color(contrast);
 }
 
