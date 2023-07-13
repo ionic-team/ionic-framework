@@ -1,5 +1,5 @@
 import type { CapacitorException } from '@capacitor/core';
-import type { KeyboardPlugin, KeyboardResize as CapacitorKeyboardResize } from '@capacitor/keyboard';
+import type { KeyboardPlugin, KeyboardResizeOptions } from '@capacitor/keyboard';
 
 import { getCapacitor } from './capacitor';
 import { ExceptionCode } from './native-interface';
@@ -32,11 +32,6 @@ export enum KeyboardResize {
    * @since 1.0.0
    */
   None = 'none',
-}
-
-// Interfaces source: https://capacitorjs.com/docs/apis/keyboard#interfaces
-export interface KeyboardResizeOptions {
-  mode: CapacitorKeyboardResize;
 }
 
 export const Keyboard = {
