@@ -1,12 +1,12 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import { getElementRoot, raf } from '@utils/helpers';
+import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '@utils/native/haptic';
+import { isPlatform } from '@utils/platform';
+import { createColorClasses } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Color } from '../../interface';
-import { getElementRoot, raf } from '../../utils/helpers';
-import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/native/haptic';
-import { isPlatform } from '../../utils/platform';
-import { createColorClasses } from '../../utils/theme';
 import type { PickerInternalCustomEvent } from '../picker-internal/picker-internal-interfaces';
 
 import type { PickerColumnItem } from './picker-column-internal-interfaces';
@@ -90,15 +90,21 @@ export class PickerColumnInternal implements ComponentInterface {
       const ev = entries[0];
 
       if (ev.isIntersecting) {
+        const { activeItem, el } = this;
+
         this.isColumnVisible = true;
         /**
          * Because this initial call to scrollActiveItemIntoView has to fire before
          * the scroll listener is set up, we need to manage the active class manually.
          */
-        const oldActive = getElementRoot(this.el).querySelector(`.${PICKER_COL_ACTIVE}`);
-        oldActive?.classList.remove(PICKER_COL_ACTIVE);
+        const oldActive = getElementRoot(el).querySelector(`.${PICKER_ITEM_ACTIVE_CLASS}`);
+        if (oldActive) {
+          this.setPickerItemActiveState(oldActive, false);
+        }
         this.scrollActiveItemIntoView();
-        this.activeItem?.classList.add(PICKER_COL_ACTIVE);
+        if (activeItem) {
+          this.setPickerItemActiveState(activeItem, true);
+        }
 
         this.initializeScrollListener();
       } else {
@@ -189,6 +195,16 @@ export class PickerColumnInternal implements ComponentInterface {
     }
   };
 
+  private setPickerItemActiveState = (item: Element, isActive: boolean) => {
+    if (isActive) {
+      item.classList.add(PICKER_ITEM_ACTIVE_CLASS);
+      item.part.add(PICKER_ITEM_ACTIVE_PART);
+    } else {
+      item.classList.remove(PICKER_ITEM_ACTIVE_CLASS);
+      item.part.remove(PICKER_ITEM_ACTIVE_PART);
+    }
+  };
+
   /**
    * When ionInputModeChange is emitted, each column
    * needs to check if it is the one being made available
@@ -275,7 +291,7 @@ export class PickerColumnInternal implements ComponentInterface {
         const activeElement = el.shadowRoot!.elementFromPoint(centerX, centerY) as HTMLButtonElement | null;
 
         if (activeEl !== null) {
-          activeEl.classList.remove(PICKER_COL_ACTIVE);
+          this.setPickerItemActiveState(activeEl, false);
         }
 
         if (activeElement === null || activeElement.disabled) {
@@ -306,7 +322,7 @@ export class PickerColumnInternal implements ComponentInterface {
         }
 
         activeEl = activeElement;
-        activeElement.classList.add(PICKER_COL_ACTIVE);
+        this.setPickerItemActiveState(activeElement, true);
 
         timeout = setTimeout(() => {
           this.isScrolling = false;
@@ -401,8 +417,15 @@ export class PickerColumnInternal implements ComponentInterface {
     const { items, color, isActive, numericInput } = this;
     const mode = getIonMode(this);
 
+    /**
+     * exportparts is needed so ion-datetime can expose the parts
+     * from two layers of shadow nesting. If this causes problems,
+     * the attribute can be moved to datetime.tsx and set on every
+     * instance of ion-picker-column-internal there instead.
+     */
     return (
       <Host
+        exportparts={`${PICKER_ITEM_PART}, ${PICKER_ITEM_ACTIVE_PART}`}
         tabindex={0}
         class={createColorClasses(color, {
           [mode]: true,
@@ -443,6 +466,7 @@ export class PickerColumnInternal implements ComponentInterface {
                 this.centerPickerItemInView(ev.target as HTMLElement, true);
               }}
               disabled={item.disabled}
+              part={PICKER_ITEM_PART}
             >
               {item.text}
             </button>
@@ -462,4 +486,6 @@ export class PickerColumnInternal implements ComponentInterface {
   }
 }
 
-const PICKER_COL_ACTIVE = 'picker-item-active';
+const PICKER_ITEM_ACTIVE_CLASS = 'picker-item-active';
+const PICKER_ITEM_PART = 'wheel-item';
+const PICKER_ITEM_ACTIVE_PART = 'active';

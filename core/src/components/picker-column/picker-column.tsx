@@ -1,11 +1,11 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, Watch, h } from '@stencil/core';
+import { clamp } from '@utils/helpers';
+import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '@utils/native/haptic';
+import { getClassMap } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Gesture, GestureDetail } from '../../interface';
-import { clamp } from '../../utils/helpers';
-import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/native/haptic';
-import { getClassMap } from '../../utils/theme';
 import type { PickerColumn } from '../picker/picker-interface';
 
 /**

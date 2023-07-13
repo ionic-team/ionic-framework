@@ -1,5 +1,15 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, forceUpdate } from '@stencil/core';
+import type { LegacyFormController, NotchController } from '@utils/forms';
+import { createLegacyFormController, createNotchController } from '@utils/forms';
+import { findItemLabel, focusElement, getAriaLabel, renderHiddenInput, inheritAttributes } from '@utils/helpers';
+import type { Attributes } from '@utils/helpers';
+import { printIonWarning } from '@utils/logging';
+import { actionSheetController, alertController, popoverController } from '@utils/overlays';
+import type { OverlaySelect } from '@utils/overlays-interface';
+import { isRTL } from '@utils/rtl';
+import { createColorClasses, hostContext } from '@utils/theme';
+import { watchForOptions } from '@utils/watch-options';
 import { caretDownSharp, chevronExpand } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -11,16 +21,6 @@ import type {
   PopoverOptions,
   StyleEventDetail,
 } from '../../interface';
-import type { LegacyFormController } from '../../utils/forms';
-import { createLegacyFormController } from '../../utils/forms';
-import { findItemLabel, focusElement, getAriaLabel, renderHiddenInput, inheritAttributes } from '../../utils/helpers';
-import type { Attributes } from '../../utils/helpers';
-import { printIonWarning } from '../../utils/logging';
-import { actionSheetController, alertController, popoverController } from '../../utils/overlays';
-import type { OverlaySelect } from '../../utils/overlays-interface';
-import { isRTL } from '../../utils/rtl';
-import { createColorClasses, hostContext } from '../../utils/theme';
-import { watchForOptions } from '../../utils/watch-options';
 import type { ActionSheetButton } from '../action-sheet/action-sheet-interface';
 import type { AlertInput } from '../alert/alert-interface';
 import type { SelectPopoverOption } from '../select-popover/select-popover-interface';
@@ -32,9 +32,13 @@ import type { SelectChangeEventDetail, SelectInterface, SelectCompareFn } from '
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
+ * @slot label - The label text to associate with the select. Use the `labelPlacement` property to control where the label is placed relative to the select. Use this if you need to render a label with custom HTML.
+ *
  * @part placeholder - The text displayed in the select when there is no value.
  * @part text - The displayed value of the select.
  * @part icon - The select icon container.
+ * @part container - The container for the selected text or placeholder.
+ * @part label - The label text describing the select.
  */
 @Component({
   tag: 'ion-select',
@@ -52,6 +56,9 @@ export class Select implements ComponentInterface {
   private legacyFormController!: LegacyFormController;
   private inheritedAttributes: Attributes = {};
   private nativeWrapperEl: HTMLElement | undefined;
+  private notchSpacerEl: HTMLElement | undefined;
+
+  private notchController?: NotchController;
 
   // This flag ensures we log the deprecation warning at most once.
   private hasLoggedDeprecationWarning = false;
@@ -122,6 +129,10 @@ export class Select implements ComponentInterface {
 
   /**
    * The visible label associated with the select.
+   *
+   * Use this if you need to render a plaintext label.
+   *
+   * The `label` property will take priority over the `label` slot if both are used.
    */
   @Prop() label?: string;
 
@@ -171,6 +182,19 @@ export class Select implements ComponentInterface {
    * The text to display instead of the selected option's value.
    */
   @Prop() selectedText?: string | null;
+
+  /**
+   * The toggle icon to use. Defaults to `chevronExpand` for `ios` mode,
+   * or `caretDownSharp` for `md` mode.
+   */
+  @Prop() toggleIcon?: string;
+
+  /**
+   * The toggle icon to show when the select is open. If defined, the icon
+   * rotation behavior in `md` mode will be disabled. If undefined, `toggleIcon`
+   * will be used for when the select is both open and closed.
+   */
+  @Prop() expandedIcon?: string;
 
   /**
    * The shape of the select. If "round" it will have an increased border radius.
@@ -234,6 +258,11 @@ export class Select implements ComponentInterface {
     const { el } = this;
 
     this.legacyFormController = createLegacyFormController(el);
+    this.notchController = createNotchController(
+      el,
+      () => this.notchSpacerEl,
+      () => this.labelSlot
+    );
 
     this.updateOverlayOptions();
     this.emitStyle();
@@ -255,6 +284,11 @@ export class Select implements ComponentInterface {
     if (this.mutationO) {
       this.mutationO.disconnect();
       this.mutationO = undefined;
+    }
+
+    if (this.notchController) {
+      this.notchController.destroy();
+      this.notchController = undefined;
     }
   }
 
@@ -566,7 +600,7 @@ export class Select implements ComponentInterface {
      * TODO FW-3194
      * Remove legacyFormController logic.
      * Remove label and labelText vars
-     * Pass `this.label` instead of `labelText`
+     * Pass `this.labelText` instead of `labelText`
      * when setting the header.
      */
     let label: HTMLElement | null;
@@ -576,7 +610,7 @@ export class Select implements ComponentInterface {
       label = this.getLabel();
       labelText = label ? label.textContent : null;
     } else {
-      labelText = this.label;
+      labelText = this.labelText;
     }
 
     const interfaceOptions = this.interfaceOptions;
@@ -649,6 +683,30 @@ export class Select implements ComponentInterface {
     return Array.from(this.el.querySelectorAll('ion-select-option'));
   }
 
+  /**
+   * Returns any plaintext associated with
+   * the label (either prop or slot).
+   * Note: This will not return any custom
+   * HTML. Use the `hasLabel` getter if you
+   * want to know if any slotted label content
+   * was passed.
+   */
+  private get labelText() {
+    const { label } = this;
+
+    if (label !== undefined) {
+      return label;
+    }
+
+    const { labelSlot } = this;
+
+    if (labelSlot !== null) {
+      return labelSlot.textContent;
+    }
+
+    return;
+  }
+
   private getText(): string {
     const selectedText = this.selectedText;
     if (selectedText != null && selectedText !== '') {
@@ -696,15 +754,40 @@ export class Select implements ComponentInterface {
 
   private renderLabel() {
     const { label } = this;
-    if (label === undefined) {
-      return;
-    }
 
     return (
-      <div class="label-text-wrapper">
-        <div class="label-text">{this.label}</div>
+      <div
+        class={{
+          'label-text-wrapper': true,
+          'label-text-wrapper-hidden': !this.hasLabel,
+        }}
+        part="label"
+      >
+        {label === undefined ? <slot name="label"></slot> : <div class="label-text">{label}</div>}
       </div>
     );
+  }
+
+  componentDidRender() {
+    this.notchController?.calculateNotchWidth();
+  }
+
+  /**
+   * Gets any content passed into the `label` slot,
+   * not the <slot> definition.
+   */
+  private get labelSlot() {
+    return this.el.querySelector('[slot="label"]');
+  }
+
+  /**
+   * Returns `true` if label content is provided
+   * either by a prop or a content. If you want
+   * to get the plaintext value of the label use
+   * the `labelText` getter instead.
+   */
+  private get hasLabel() {
+    return this.label !== undefined || this.labelSlot !== null;
   }
 
   /**
@@ -726,8 +809,13 @@ export class Select implements ComponentInterface {
       return [
         <div class="select-outline-container">
           <div class="select-outline-start"></div>
-          <div class="select-outline-notch">
-            <div class="notch-spacer" aria-hidden="true">
+          <div
+            class={{
+              'select-outline-notch': true,
+              'select-outline-notch-hidden': !this.hasLabel,
+            }}
+          >
+            <div class="notch-spacer" aria-hidden="true" ref={(el) => (this.notchSpacerEl = el)}>
               {this.label}
             </div>
           </div>
@@ -745,7 +833,8 @@ export class Select implements ComponentInterface {
   }
 
   private renderSelect() {
-    const { disabled, el, isExpanded, labelPlacement, justify, placeholder, fill, shape, name, value } = this;
+    const { disabled, el, isExpanded, expandedIcon, labelPlacement, justify, placeholder, fill, shape, name, value } =
+      this;
     const mode = getIonMode(this);
     const hasFloatingOrStackedLabel = labelPlacement === 'floating' || labelPlacement === 'stacked';
     const justifyEnabled = !hasFloatingOrStackedLabel;
@@ -764,6 +853,7 @@ export class Select implements ComponentInterface {
           'in-item-color': hostContext('ion-item.ion-color', el),
           'select-disabled': disabled,
           'select-expanded': isExpanded,
+          'has-expanded-icon': expandedIcon !== undefined,
           'has-value': this.hasValue(),
           'has-placeholder': placeholder !== undefined,
           'ion-focusable': true,
@@ -776,7 +866,7 @@ export class Select implements ComponentInterface {
       >
         <label class="select-wrapper" id="select-label">
           {this.renderLabelContainer()}
-          <div class="native-wrapper" ref={(el) => (this.nativeWrapperEl = el)}>
+          <div class="native-wrapper" ref={(el) => (this.nativeWrapperEl = el)} part="container">
             {this.renderSelectText()}
             {!hasFloatingOrStackedLabel && this.renderSelectIcon()}
             {this.renderListbox()}
@@ -818,7 +908,7 @@ Developers can use the "legacy" property to continue using the legacy form marku
       this.hasLoggedDeprecationWarning = true;
     }
 
-    const { disabled, el, inputId, isExpanded, name, placeholder, value } = this;
+    const { disabled, el, inputId, isExpanded, expandedIcon, name, placeholder, value } = this;
     const mode = getIonMode(this);
     const { labelText, labelId } = getAriaLabel(el, inputId);
 
@@ -851,6 +941,7 @@ Developers can use the "legacy" property to continue using the legacy form marku
           'in-item-color': hostContext('ion-item.ion-color', el),
           'select-disabled': disabled,
           'select-expanded': isExpanded,
+          'has-expanded-icon': expandedIcon !== undefined,
           'legacy-select': true,
         }}
       >
@@ -899,15 +990,24 @@ Developers can use the "legacy" property to continue using the legacy form marku
    */
   private renderSelectIcon() {
     const mode = getIonMode(this);
-    const icon = mode === 'ios' ? chevronExpand : caretDownSharp;
+    const { isExpanded, toggleIcon, expandedIcon } = this;
+    let icon: string;
+
+    if (isExpanded && expandedIcon !== undefined) {
+      icon = expandedIcon;
+    } else {
+      const defaultIcon = mode === 'ios' ? chevronExpand : caretDownSharp;
+      icon = toggleIcon ?? defaultIcon;
+    }
+
     return <ion-icon class="select-icon" part="icon" aria-hidden="true" icon={icon}></ion-icon>;
   }
 
   private get ariaLabel() {
-    const { placeholder, label, el, inputId, inheritedAttributes } = this;
+    const { placeholder, el, inputId, inheritedAttributes } = this;
     const displayValue = this.getText();
     const { labelText } = getAriaLabel(el, inputId);
-    const definedLabel = label ?? inheritedAttributes['aria-label'] ?? labelText;
+    const definedLabel = this.labelText ?? inheritedAttributes['aria-label'] ?? labelText;
 
     /**
      * If developer has specified a placeholder

@@ -81,15 +81,15 @@ jobs:
         tag: ${{ inputs.tag }}
         version: ${{ inputs.version }}
         preid: ${{ inputs.preid }}
-        working-directory: 'angular'
+        working-directory: 'packages/angular'
         folder: './dist'
         token: ${{ secrets.NPM_TOKEN }}
     - name: Cache Built @ionic/angular
       uses: ./.github/workflows/actions/upload-archive
       with:
         name: ionic-angular
-        output: ./angular/AngularBuild.zip
-        paths: ./angular/dist
+        output: packages/angular/AngularBuild.zip
+        paths: packages/angular/dist
 
   release-react:
     needs: [release-core]
@@ -144,7 +144,7 @@ jobs:
         paths: packages/vue/dist packages/vue/css
 
   release-angular-server:
-    needs: [release-angular]
+    needs: [release-core]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -154,12 +154,6 @@ jobs:
         name: ionic-core
         path: ./core
         filename: CoreBuild.zip
-    - name: Restore @ionic/angular built cache
-      uses: ./.github/workflows/actions/download-archive
-      with:
-        name: ionic-angular
-        path: ./angular
-        filename: AngularBuild.zip
     - uses: ./.github/workflows/actions/publish-npm
       with:
         scope: '@ionic/angular-server'

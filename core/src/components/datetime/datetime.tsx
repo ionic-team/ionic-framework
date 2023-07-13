@@ -1,14 +1,14 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
+import { startFocusVisible } from '@utils/focus-visible';
+import { getElementRoot, raf, renderHiddenInput } from '@utils/helpers';
+import { printIonError, printIonWarning } from '@utils/logging';
+import { isRTL } from '@utils/rtl';
+import { createColorClasses } from '@utils/theme';
 import { caretDownSharp, caretUpSharp, chevronBack, chevronDown, chevronForward } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Color, Mode, StyleEventDetail } from '../../interface';
-import { startFocusVisible } from '../../utils/focus-visible';
-import { getElementRoot, raf, renderHiddenInput } from '../../utils/helpers';
-import { printIonError, printIonWarning } from '../../utils/logging';
-import { isRTL } from '../../utils/rtl';
-import { createColorClasses } from '../../utils/theme';
 import type { PickerColumnItem } from '../picker-column-internal/picker-column-internal-interfaces';
 
 import type {
@@ -74,6 +74,17 @@ import {
  * @slot title - The title of the datetime.
  * @slot buttons - The buttons in the datetime.
  * @slot time-label - The label for the time selector in the datetime.
+ *
+ * @part wheel-item - The individual items when using a wheel style layout, or in the
+ * month/year picker when using a grid style layout.
+ * @part wheel-item active - The currently selected wheel-item.
+ *
+ * @part time-button - The button that opens the time picker when using a grid style
+ * layout with `presentation="date-time"` or `"time-date"`.
+ * @part time-button active - The time picker button when the picker is open.
+ *
+ * @part month-year-button - The button that opens the month/year picker when
+ * using a grid style layout.
  */
 @Component({
   tag: 'ion-datetime',
@@ -231,7 +242,7 @@ export class Datetime implements ComponentInterface {
    * the year values range between the `min` and `max` datetime inputs. However, to
    * control exactly which years to display, the `yearValues` input can take a number, an array
    * of numbers, or string of comma separated numbers. For example, to show upcoming and
-   * recent leap years, then this input's value would be `yearValues="2024,2020,2016,2012,2008"`.
+   * recent leap years, then this input's value would be `yearValues="2008,2012,2016,2020,2024"`.
    */
   @Prop() yearValues?: number[] | number | string;
   @Watch('yearValues')
@@ -1920,6 +1931,7 @@ export class Datetime implements ComponentInterface {
         <div class="calendar-action-buttons">
           <div class="calendar-month-year">
             <ion-item
+              part="month-year-button"
               ref={(el) => (this.monthYearToggleItemRef = el)}
               button
               aria-label="Show year picker"
@@ -2167,7 +2179,8 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderTimeOverlay() {
-    const use24Hour = is24Hour(this.locale, this.hourCycle);
+    const { hourCycle, isTimePopoverOpen, locale } = this;
+    const use24Hour = is24Hour(locale, hourCycle);
     const activePart = this.getActivePartsWithFallback();
 
     return [
@@ -2175,8 +2188,9 @@ export class Datetime implements ComponentInterface {
       <button
         class={{
           'time-body': true,
-          'time-body-active': this.isTimePopoverOpen,
+          'time-body-active': isTimePopoverOpen,
         }}
+        part={`time-button${isTimePopoverOpen ? ' active' : ''}`}
         aria-expanded="false"
         aria-haspopup="true"
         onClick={async (ev) => {
@@ -2199,7 +2213,7 @@ export class Datetime implements ComponentInterface {
           }
         }}
       >
-        {getLocalizedTime(this.locale, activePart, use24Hour)}
+        {getLocalizedTime(locale, activePart, use24Hour)}
       </button>,
       <ion-popover
         alignment="center"
