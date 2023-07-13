@@ -20,7 +20,7 @@
   @include padding($datetime-ios-padding, $datetime-ios-padding, $datetime-ios-padding, $datetime-ios-padding);
 
   border-bottom: $datetime-ios-border-color;
-  
+
   font-size: 14px;
 }
 
@@ -89,27 +89,21 @@
 }
 
 :host .calendar-day {
+  @include padding(4px);
+
+  width: 40px;
+  height: 40px;
+
   font-size: 20px;
 }
 
-.calendar-day:focus .calendar-day-highlight,
-.calendar-day.calendar-day-active .calendar-day-highlight {
-  opacity: 0.2;
-}
-
-.calendar-day.calendar-day-active .calendar-day-highlight {
-  background: current-color(base);
-}
-
-// !important is needed here to overwrite custom highlight background, which is inline.
-// Does not apply to the active state because highlights aren't applied at all there.
-.calendar-day:focus .calendar-day-highlight {
-  /* stylelint-disable-next-line declaration-no-important */
-  background: current-color(base) !important;
+.calendar-day:focus,
+.calendar-day.calendar-day-active {
+  background: current-color(base, 0.2);
 }
 
 /**
- * Day that today but not selected
+ * Day that is today but not selected
  * should have ion-color for text color.
  */
 :host .calendar-day.calendar-day-today {
@@ -135,10 +129,8 @@
   color: current-color(contrast);
 }
 
-.calendar-day.calendar-day-today.calendar-day-active .calendar-day-highlight {
+.calendar-day.calendar-day-today.calendar-day-active {
   background: current-color(base);
-
-  opacity: 1;
 }
 
 // Time / Header

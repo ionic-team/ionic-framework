@@ -329,9 +329,9 @@ ion-picker-column-internal {
  * Center the day text vertically
  * and horizontally within its grid cell.
  */
-:host .calendar-day {
-  @include padding(0px, 0px, 0px, 0px);
-  @include margin(0px, 0px, 0px, 0px);
+:host .calendar-day-wrapper {
+  @include padding(0);
+  @include margin(0);
 
   display: flex;
 
@@ -339,6 +339,12 @@ ion-picker-column-internal {
 
   align-items: center;
   justify-content: center;
+}
+
+:host .calendar-day {
+  @include border-radius(50%);
+
+  position: absolute;
 
   border: none;
 
@@ -362,17 +368,6 @@ ion-picker-column-internal {
   opacity: 0.4;
 }
 
-.calendar-day-highlight {
-  @include border-radius(32px, 32px, 32px, 32px);
-  @include padding(4px, 4px, 4px, 4px);
-
-  position: absolute;
-
-  width: 32px;
-  height: 32px;
-
-  z-index: -1;
-}
 
 // Time / Header
 // -----------------------------------
