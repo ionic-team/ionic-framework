@@ -14,3 +14,7 @@ updates:
       - dependency-name: "@stencil/sass"
       - dependency-name: "@stencil/vue-output-target"
       - dependency-name: "ionicons"
+      - dependency-name: "@capacitor/core"
+      - dependency-name: "@capacitor/keyboard"
+      - dependency-name: "@capacitor/haptics"
+      - dependency-name: "@capacitor/status-bar"
