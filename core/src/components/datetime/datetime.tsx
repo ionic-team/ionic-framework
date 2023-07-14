@@ -2084,68 +2084,70 @@ export class Datetime implements ComponentInterface {
             }
 
             return (
-              <button
-                tabindex="-1"
-                data-day={day}
-                data-month={month}
-                data-year={year}
-                data-index={index}
-                data-day-of-week={dayOfWeek}
-                disabled={isCalDayDisabled}
-                class={{
-                  'calendar-day-padding': isCalendarPadding,
-                  'calendar-day': true,
-                  'calendar-day-active': isActive,
-                  'calendar-day-today': isToday,
-                }}
-                style={
-                  dateStyle && {
-                    color: dateStyle.textColor,
+              <div class="calendar-day-wrapper">
+                <button
+                  tabindex="-1"
+                  data-day={day}
+                  data-month={month}
+                  data-year={year}
+                  data-index={index}
+                  data-day-of-week={dayOfWeek}
+                  disabled={isCalDayDisabled}
+                  class={{
+                    'calendar-day-padding': isCalendarPadding,
+                    'calendar-day': true,
+                    'calendar-day-active': isActive,
+                    'calendar-day-today': isToday,
+                  }}
+                  style={
+                    dateStyle && {
+                      color: dateStyle.textColor,
+                    }
                   }
-                }
-                aria-hidden={isCalendarPadding ? 'true' : null}
-                aria-selected={ariaSelected}
-                aria-label={ariaLabel}
-                onClick={() => {
-                  if (isCalendarPadding) {
-                    return;
-                  }
+                  aria-hidden={isCalendarPadding ? 'true' : null}
+                  aria-selected={ariaSelected}
+                  aria-label={ariaLabel}
+                  onClick={() => {
+                    if (isCalendarPadding) {
+                      return;
+                    }
 
-                  this.setWorkingParts({
-                    ...this.workingParts,
-                    month,
-                    day,
-                    year,
-                  });
-
-                  // multiple only needs date info, so we can wipe out other fields like time
-                  if (multiple) {
-                    this.setActiveParts(
-                      {
-                        month,
-                        day,
-                        year,
-                      },
-                      isActive
-                    );
-                  } else {
-                    this.setActiveParts({
-                      ...activePart,
+                    this.setWorkingParts({
+                      ...this.workingParts,
                       month,
                       day,
                       year,
                     });
-                  }
-                }}
-              >
-                <div
-                  class="calendar-day-highlight"
-                  style={{
-                    backgroundColor: dateStyle?.backgroundColor,
+
+                    // multiple only needs date info, so we can wipe out other fields like time
+                    if (multiple) {
+                      this.setActiveParts(
+                        {
+                          month,
+                          day,
+                          year,
+                        },
+                        isActive
+                      );
+                    } else {
+                      this.setActiveParts({
+                        ...activePart,
+                        month,
+                        day,
+                        year,
+                      });
+                    }
                   }}
-                ></div>
-                {text}
-              </button>
+                >
+                  {/* <div
+                    class="calendar-day-highlight"
+                    style={{
+                      backgroundColor: dateStyle?.backgroundColor,
+                    }}
+                  ></div> */}
+                  {text}
+                </button>
+              </div>
             );
           })}
         </div>
