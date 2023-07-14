@@ -117,12 +117,6 @@ export class Datetime implements ComponentInterface {
 
   private prevPresentation: string | null = null;
 
-  /**
-   * Duplicate reference to `activeParts` that does not trigger a re-render of the component.
-   * Allows caching an instance of the `activeParts` in between render cycles.
-   */
-  private activePartsClone: DatetimeParts | DatetimeParts[] = [];
-
   @State() showMonthAndYear = false;
 
   @State() activeParts: DatetimeParts | DatetimeParts[] = [];
@@ -301,11 +295,6 @@ export class Datetime implements ComponentInterface {
   @Watch('minuteValues')
   protected minuteValuesChanged() {
     this.parsedMinuteValues = convertToArrayOfNumbers(this.minuteValues);
-  }
-
-  @Watch('activeParts')
-  protected activePartsChanged() {
-    this.activePartsClone = this.activeParts;
   }
 
   /**
@@ -554,9 +543,9 @@ export class Datetime implements ComponentInterface {
    * data. This should be used when rendering an
    * interface in an environment where the `value`
    * may not be set. This function works
-   * by returning the first selected date in
-   * "activePartsClone" and then falling back to
-   * defaultParts if no active date is selected.
+   * by returning the first selected date and then
+   * falling back to defaultParts if no active date
+   * is selected.
    */
   private getActivePartsWithFallback = () => {
     const { defaultParts } = this;
@@ -564,8 +553,8 @@ export class Datetime implements ComponentInterface {
   };
 
   private getActivePart = () => {
-    const { activePartsClone } = this;
-    return Array.isArray(activePartsClone) ? activePartsClone[0] : activePartsClone;
+    const { activeParts } = this;
+    return Array.isArray(activeParts) ? activeParts[0] : activeParts;
   };
 
   private closeParentOverlay = () => {
@@ -585,7 +574,7 @@ export class Datetime implements ComponentInterface {
   };
 
   private setActiveParts = (parts: DatetimeParts, removeDate = false) => {
-    const { multiple, minParts, maxParts, activePartsClone } = this;
+    const { multiple, minParts, maxParts, activeParts } = this;
 
     /**
      * When setting the active parts, it is possible
@@ -601,16 +590,7 @@ export class Datetime implements ComponentInterface {
     this.setWorkingParts(validatedParts);
 
     if (multiple) {
-      /**
-       * We read from activePartsClone here because valueChanged() only updates that,
-       * so it's the more reliable source of truth. If we read from activeParts, then
-       * if you click July 1, manually set the value to July 2, and then click July 3,
-       * the new value would be [July 1, July 3], ignoring the value set.
-       *
-       * We can then pass the new value to activeParts (rather than activePartsClone)
-       * since the clone will be updated automatically by activePartsChanged().
-       */
-      const activePartsArray = Array.isArray(activePartsClone) ? activePartsClone : [activePartsClone];
+      const activePartsArray = Array.isArray(activeParts) ? activeParts : [activeParts];
       if (removeDate) {
         this.activeParts = activePartsArray.filter((p) => !isSameDay(p, validatedParts));
       } else {
@@ -2003,7 +1983,7 @@ export class Datetime implements ComponentInterface {
             const { isActive, isToday, ariaLabel, ariaSelected, disabled, text } = getCalendarDayState(
               this.locale,
               referenceParts,
-              this.activePartsClone,
+              this.activeParts,
               this.todayParts,
               this.minParts,
               this.maxParts,
