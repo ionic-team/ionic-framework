@@ -358,53 +358,10 @@ export class Datetime implements ComponentInterface {
    */
   @Watch('value')
   protected valueChanged() {
-    const { value, minParts, maxParts, workingParts } = this;
+    const { value } = this;
 
     if (this.hasValue()) {
-      this.warnIfIncorrectValueUsage();
-
-      /**
-       * Clones the value of the `activeParts` to the private clone, to update
-       * the date display on the current render cycle without causing another render.
-       *
-       * This allows us to update the current value's date/time display without
-       * refocusing or shifting the user's display (leaves the user in place).
-       */
-      const valueDateParts = parseDate(value);
-      if (valueDateParts) {
-        warnIfValueOutOfBounds(valueDateParts, minParts, maxParts);
-
-        if (Array.isArray(valueDateParts)) {
-          this.activePartsClone = [...valueDateParts];
-        } else {
-          const { month, day, year, hour, minute } = valueDateParts;
-          const ampm = hour != null ? (hour >= 12 ? 'pm' : 'am') : undefined;
-
-          this.activePartsClone = {
-            ...this.activeParts,
-            month,
-            day,
-            year,
-            hour,
-            minute,
-            ampm,
-          };
-
-          /**
-           * The working parts am/pm value must be updated when the value changes, to
-           * ensure the time picker hour column values are generated correctly.
-           *
-           * Note that we don't need to do this if valueDateParts is an array, since
-           * multiple="true" does not apply to time pickers.
-           */
-          this.setWorkingParts({
-            ...workingParts,
-            ampm,
-          });
-        }
-      } else {
-        printIonWarning(`Unable to parse date string: ${value}. Please provide a valid ISO 8601 datetime string.`);
-      }
+      this.processValue(value);
     }
 
     this.emitStyle();
