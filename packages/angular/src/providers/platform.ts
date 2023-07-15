@@ -1,9 +1,13 @@
 import { DOCUMENT } from '@angular/common';
-import { NgZone, Inject, Injectable } from '@angular/core';
+import { Inject, Injectable, NgZone } from '@angular/core';
 import { BackButtonEventDetail, KeyboardEventDetail, Platforms, getPlatforms, isPlatform } from '@ionic/core';
-import { Subscription, Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 
-// TODO(FW-2827): types
+declare global {
+  interface Window {
+    cordova?: unknown
+  }
+}
 
 export interface BackButtonEmitter extends Subject<BackButtonEventDetail> {
   subscribeWithPriority(
@@ -17,18 +21,18 @@ export interface BackButtonEmitter extends Subject<BackButtonEventDetail> {
 })
 export class Platform {
   private _readyPromise: Promise<string>;
-  private win: any;
+  private win: Window;
 
   /**
    * @hidden
    */
-  backButton: BackButtonEmitter = new Subject<BackButtonEventDetail>() as any;
+  backButton = new Subject<BackButtonEventDetail>() as BackButtonEmitter;
 
   /**
    * The keyboardDidShow event emits when the
    * on-screen keyboard is presented.
    */
-  keyboardDidShow = new Subject<KeyboardEventDetail>() as any;
+  keyboardDidShow = new Subject<KeyboardEventDetail>();
 
   /**
    * The keyboardDidHide event emits when the
@@ -58,9 +62,10 @@ export class Platform {
    */
   resize = new Subject<void>();
 
-  constructor(@Inject(DOCUMENT) private doc: any, zone: NgZone) {
+  constructor(@Inject(DOCUMENT) private doc: Document, zone: NgZone) {
     zone.run(() => {
-      this.win = doc.defaultView;
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      this.win = doc.defaultView!;
       this.backButton.subscribeWithPriority = function (priority, callback) {
         return this.subscribe((ev) => {
           return ev.register(priority, (processNextHandler) => zone.run(() => callback(processNextHandler)));
@@ -78,7 +83,7 @@ export class Platform {
       this._readyPromise = new Promise((res) => {
         readyResolve = res;
       });
-      if (this.win?.['cordova']) {
+      if (this.win?.cordova) {
         doc.addEventListener(
           'deviceready',
           () => {
