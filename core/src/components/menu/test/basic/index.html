@@ -129,7 +129,6 @@
     <script>
       async function openStart() {
         // Open the menu by menu-id
-        await menuController.enable(false, 'custom-menu');
         await menuController.enable(true, 'start-menu');
         await menuController.open('start-menu');
       }
@@ -141,7 +140,6 @@
 
       async function openCustom() {
         // Open the menu by menu-id
-        await menuController.enable(false, 'start-menu');
         await menuController.enable(true, 'custom-menu');
         await menuController.open('custom-menu');
       }
