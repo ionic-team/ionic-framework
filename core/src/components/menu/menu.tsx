@@ -705,11 +705,16 @@ export class Menu implements ComponentInterface, MenuI {
       this.forceClosing();
     }
 
-    if (!Build.isServer) {
-      if (!this.disabled) {
-        menuController._setActiveMenu(this);
-      }
+    if (document.contains(this.el)) {
+      /**
+       * Only set the active menu if the menu element is
+       * present in the DOM. Otherwise if it was destructively
+       * re-hydrated (through Angular Universal), then ignore
+       * setting the removed node as the active menu.
+       */
+      menuController._setActiveMenu(this);
     }
+
     assert(!this.isAnimating, 'can not be animating');
   }
 
