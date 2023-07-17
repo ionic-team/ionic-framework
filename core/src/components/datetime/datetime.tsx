@@ -19,6 +19,7 @@ import type {
   DatetimeHighlight,
   DatetimeHighlightStyle,
   DatetimeHighlightCallback,
+  DatetimeMonth,
 } from './datetime-interface';
 import { isSameDay, warnIfValueOutOfBounds, isBefore, isAfter } from './utils/comparison';
 import {
@@ -134,6 +135,8 @@ export class Datetime implements ComponentInterface {
 
   @State() isPresented = false;
   @State() isTimePopoverOpen = false;
+
+  @State() forceRenderMonth: DatetimeMonth | null = null;
 
   /**
    * The color to use from your application's color palette.
@@ -350,7 +353,7 @@ export class Datetime implements ComponentInterface {
     const { value } = this;
 
     if (this.hasValue()) {
-      this.processValue(value);
+      this.processValue(value, true);
     }
 
     this.emitStyle();
@@ -855,6 +858,14 @@ export class Datetime implements ComponentInterface {
          * If no month was changed, then we can return from
          * the scroll callback early.
          */
+        const { forceRenderMonth } = this;
+        if (forceRenderMonth !== null) {
+          // TODO: some of this is copied from getPrevious/NextMonth, pull into util
+          const numDaysInMonth = getNumDaysInMonth(forceRenderMonth.month, forceRenderMonth.year);
+          const forcedDay = numDaysInMonth < parts.day! ? numDaysInMonth : parts.day;
+          return { month: forceRenderMonth.month, year: forceRenderMonth.year, day: forcedDay };
+        }
+
         if (month === startMonth) {
           return getPreviousMonth(parts);
         } else if (month === endMonth) {
@@ -1133,11 +1144,11 @@ export class Datetime implements ComponentInterface {
     });
   }
 
-  private processValue = (value?: string | string[] | null) => {
+  private processValue = (value?: string | string[] | null, animate = false) => {
     const hasValue = value !== null && value !== undefined;
     const valueToProcess = hasValue ? parseDate(value) : this.defaultParts;
 
-    const { minParts, maxParts } = this;
+    const { minParts, maxParts, presentation, preferWheel, workingParts } = this;
 
     this.warnIfIncorrectValueUsage();
 
@@ -1159,18 +1170,10 @@ export class Datetime implements ComponentInterface {
      * that the values don't necessarily have to be in order.
      */
     const singleValue = Array.isArray(valueToProcess) ? valueToProcess[0] : valueToProcess;
+    const targetValue = clampDate(singleValue, minParts, maxParts);
 
-    const { month, day, year, hour, minute } = clampDate(singleValue, minParts, maxParts);
+    const { month, day, year, hour, minute } = targetValue;
     const ampm = parseAmPm(hour!);
-
-    this.setWorkingParts({
-      month,
-      day,
-      year,
-      hour,
-      minute,
-      ampm,
-    });
 
     /**
      * Since `activeParts` indicates a value that
@@ -1198,6 +1201,47 @@ export class Datetime implements ComponentInterface {
        * performing a clear action or using the reset() method.
        */
       this.activeParts = [];
+    }
+
+    // TODO: pull this and copies from render() into helper gets?
+    const hasDatePresentation = presentation === 'date' || presentation === 'date-time' || presentation === 'time-date';
+    const hasGrid = hasDatePresentation && !preferWheel;
+
+    /**
+     * We only need to animate if we're using a grid presentation
+     * and actually changing months.
+     */
+    if (animate && hasGrid && (month !== workingParts.month || year !== workingParts.year)) {
+      /**
+       * Tell other render functions that we need to force the
+       * target month to appear in place of the actual next/prev month.
+       */
+      this.forceRenderMonth = { month, year };
+      
+      /**
+       * Animate smoothly to the forced month. This will also update
+       * workingParts and correct the surrounding months for us.
+      */
+      const targetMonthIsEarlier = isBefore(targetValue, workingParts);
+      targetMonthIsEarlier ? this.prevMonth() : this.nextMonth();
+
+      // TODO: remove timeout and instead await prevMonth/nextMonth
+      setTimeout(() => {
+        this.forceRenderMonth = null;
+      }, 1000);
+    } else {
+      /**
+       * We only need to do this if we didn't just animate to a new month,
+       * since prevMonth/nextMonth call setWorkingParts for us.
+       */
+      this.setWorkingParts({
+        month,
+        day,
+        year,
+        hour,
+        minute,
+        ampm,
+      });
     }
   };
 
@@ -2092,7 +2136,7 @@ export class Datetime implements ComponentInterface {
   private renderCalendarBody() {
     return (
       <div class="calendar-body ion-focusable" ref={(el) => (this.calendarBodyRef = el)} tabindex="0">
-        {generateMonths(this.workingParts).map(({ month, year }) => {
+        {generateMonths(this.workingParts, this.forceRenderMonth).map(({ month, year }) => {
           return this.renderMonth(month, year);
         })}
       </div>

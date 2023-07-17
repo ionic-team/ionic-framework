@@ -1,6 +1,6 @@
 import type { Mode } from '../../../interface';
 import type { PickerColumnItem } from '../../picker-column-internal/picker-column-internal-interfaces';
-import type { DatetimeParts } from '../datetime-interface';
+import type { DatetimeMonth, DatetimeParts } from '../datetime-interface';
 
 import { isAfter, isBefore, isSameDay } from './comparison';
 import {
@@ -254,7 +254,29 @@ export const generateTime = (
  * Given DatetimeParts, generate the previous,
  * current, and and next months.
  */
-export const generateMonths = (refParts: DatetimeParts): DatetimeParts[] => {
+export const generateMonths = (refParts: DatetimeParts, forcedMonth: DatetimeMonth | null = null): DatetimeParts[] => {
+  console.log('generateMonths called; forcedMonth:', forcedMonth);
+  if (forcedMonth !== null && (refParts.month !== forcedMonth.month || refParts.year !== forcedMonth.year)) {
+    console.log('forcing month');
+    // TODO: some of this is copied from getPrevious/NextMonth, pull into util
+    const numDaysInMonth = getNumDaysInMonth(forcedMonth.month, forcedMonth.year);
+    const forcedDay = numDaysInMonth < refParts.day! ? numDaysInMonth : refParts.day;
+    const currentDate = { month: refParts.month, year: refParts.year, day: refParts.day };
+    const forcedDate = { month: forcedMonth.month, year: forcedMonth.year, day: forcedDay };
+
+    const forcedMonthIsEarlier = forcedMonth.year < refParts.year || (forcedMonth.year === refParts.year && forcedMonth.month < refParts.month);
+
+    return forcedMonthIsEarlier ? [
+      forcedDate,
+      currentDate,
+      getNextMonth(refParts)
+    ] : [
+      getPreviousMonth(refParts),
+      currentDate,
+      forcedDate
+    ];
+  }
+  
   return [
     getPreviousMonth(refParts),
     { month: refParts.month, year: refParts.year, day: refParts.day },
