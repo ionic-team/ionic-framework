@@ -85,19 +85,19 @@
    */
   @include padding($datetime-ios-padding * 0.5, $datetime-ios-padding * 0.5, $datetime-ios-padding * 0.5, $datetime-ios-padding * 0.5);
 
-  height: calc(100% - #{$datetime-ios-padding});
-
   align-items: center;
+
+  height: calc(100% - #{$datetime-ios-padding});
 }
 
 :host .calendar-day-wrapper {
   @include padding(4px);
 
-  min-height: 15px;
-
   // This is required so that the calendar day wrapper
   // will collapse instead of expanding to fill the button
   height: 0;
+
+  min-height: 15px;
 }
 
 :host .calendar-day {
