@@ -2102,6 +2102,7 @@ export class Datetime implements ComponentInterface {
                   style={
                     dateStyle && {
                       color: dateStyle.textColor,
+                      backgroundColor: dateStyle.backgroundColor,
                     }
                   }
                   aria-hidden={isCalendarPadding ? 'true' : null}
@@ -2139,12 +2140,6 @@ export class Datetime implements ComponentInterface {
                     }
                   }}
                 >
-                  {/* <div
-                    class="calendar-day-highlight"
-                    style={{
-                      backgroundColor: dateStyle?.backgroundColor,
-                    }}
-                  ></div> */}
                   {text}
                 </button>
               </div>
