@@ -85,19 +85,19 @@
    */
   @include padding($datetime-ios-padding * 0.5, $datetime-ios-padding * 0.5, $datetime-ios-padding * 0.5, $datetime-ios-padding * 0.5);
 
-  // This is required so that the calendar month grid
-  // will collapse instead of expanding to fill the button
-  flex: 1 0 0;
-
   height: calc(100% - #{$datetime-ios-padding});
 
-  // This is required so that the calendar month grid
-  // will collapse instead of expanding to fill the button
-  min-height: 0;
+  align-items: center;
 }
 
 :host .calendar-day-wrapper {
   @include padding(4px);
+
+  min-height: 15px;
+
+  // This is required so that the calendar day wrapper
+  // will collapse instead of expanding to fill the button
+  height: 0;
 }
 
 :host .calendar-day {
