@@ -711,7 +711,9 @@ export class Menu implements ComponentInterface, MenuI {
        * re-hydrated (through Angular Universal), then ignore
        * setting the removed node as the active menu.
        */
-      menuController._setActiveMenu(this);
+      if (!this.disabled) {
+        menuController._setActiveMenu(this);
+      }
     }
 
     assert(!this.isAnimating, 'can not be animating');
