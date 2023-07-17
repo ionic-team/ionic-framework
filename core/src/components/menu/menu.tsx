@@ -189,7 +189,6 @@ export class Menu implements ComponentInterface, MenuI {
     }
 
     if (!Build.isBrowser) {
-      // this.disabled = true;
       return;
     }
 
