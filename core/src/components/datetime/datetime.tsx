@@ -859,20 +859,18 @@ export class Datetime implements ComponentInterface {
         const monthBox = month.getBoundingClientRect();
         if (Math.abs(monthBox.x - box.x) > 2) return;
 
+        // TODO: also check if we actually scrolled to the forced month, for safety
+        const { forceRenderDate } = this;
+        if (forceRenderDate !== null) {
+          return { month: forceRenderDate.month, year: forceRenderDate.year, day: forceRenderDate.day };
+        }
+
         /**
          * From here, we can determine if the start
          * month or the end month was scrolled into view.
          * If no month was changed, then we can return from
          * the scroll callback early.
          */
-        const { forceRenderDate } = this;
-        if (forceRenderDate !== null) {
-          // TODO: some of this is copied from getPrevious/NextMonth, pull into util
-          const numDaysInMonth = getNumDaysInMonth(forceRenderDate.month, forceRenderDate.year);
-          const forcedDay = numDaysInMonth < parts.day! ? numDaysInMonth : parts.day;
-          return { month: forceRenderDate.month, year: forceRenderDate.year, day: forcedDay };
-        }
-
         if (month === startMonth) {
           return getPreviousMonth(parts);
         } else if (month === endMonth) {
@@ -1218,6 +1216,7 @@ export class Datetime implements ComponentInterface {
      * We only need to animate if we're using a grid presentation
      * and actually changing months.
      */
+    // TODO: the latter check doesn't seem to be working
     if (animate && hasGrid && (month !== workingParts.month || year !== workingParts.year)) {
       /**
        * Tell other render functions that we need to force the
