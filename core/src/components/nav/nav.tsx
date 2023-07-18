@@ -2,6 +2,7 @@ import type { EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Method, Prop, Watch, h } from '@stencil/core';
 import { getTimeGivenProgression } from '@utils/animation/cubic-bezier';
 import { assert } from '@utils/helpers';
+import { printIonWarning } from '@utils/logging';
 import type { TransitionOptions } from '@utils/transition';
 import { lifecycle, setPageHidden, transition } from '@utils/transition';
 
@@ -36,6 +37,7 @@ export class Nav implements NavOutlet {
   private destroyed = false;
   private views: ViewController[] = [];
   private gesture?: Gesture;
+  private didLoad = false;
 
   @Element() el!: HTMLElement;
 
@@ -77,12 +79,25 @@ export class Nav implements NavOutlet {
   @Watch('root')
   rootChanged() {
     const isDev = Build.isDev;
-    if (this.root !== undefined) {
-      if (!this.useRouter) {
+
+    if (this.root === undefined) {
+      return;
+    }
+
+    if (this.didLoad === false) {
+      /**
+       * If the component has not loaded yet, we can skip setting up the root component.
+       * It will be called when `componentDidLoad` fires.
+       */
+      return;
+    }
+
+    if (!this.useRouter) {
+      if (this.root !== undefined) {
         this.setRoot(this.root, this.rootParams);
-      } else if (isDev) {
-        console.warn('<ion-nav> does not support a root attribute when using ion-router.');
       }
+    } else if (isDev) {
+      printIonWarning('<ion-nav> does not support a root attribute when using ion-router.', this.el);
     }
   }
 
@@ -112,6 +127,9 @@ export class Nav implements NavOutlet {
   }
 
   async componentDidLoad() {
+    // We want to set this flag before any watch callbacks are manually called
+    this.didLoad = true;
+
     this.rootChanged();
 
     this.gesture = (await import('../../utils/gesture/swipe-back')).createSwipeBackGesture(

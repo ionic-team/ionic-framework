@@ -14,25 +14,25 @@ runs:
     - name: Install Angular Dependencies
       run: npm ci
       shell: bash
-      working-directory: ./angular
+      working-directory: ./packages/angular
     - name: Sync
       run: npm run sync
       shell: bash
-      working-directory: ./angular
+      working-directory: ./packages/angular
     - name: Lint
       run: npm run lint
       shell: bash
-      working-directory: ./angular
+      working-directory: ./packages/angular
     - name: Build
       run: npm run build
       shell: bash
-      working-directory: ./angular
+      working-directory: ./packages/angular
     - name: Check Diff
       run: git diff --exit-code
       shell: bash
-      working-directory: ./angular
+      working-directory: ./packages/angular
     - uses: ./.github/workflows/actions/upload-archive
       with:
         name: ionic-angular
-        output: ./angular/AngularBuild.zip
-        paths: ./angular/dist
+        output: ./packages/angular/AngularBuild.zip
+        paths: ./packages/angular/dist

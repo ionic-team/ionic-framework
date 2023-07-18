@@ -122,7 +122,7 @@ jobs:
     - uses: ./.github/workflows/actions/build-angular
 
   build-angular-server:
-    needs: [build-angular]
+    needs: [build-core]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3

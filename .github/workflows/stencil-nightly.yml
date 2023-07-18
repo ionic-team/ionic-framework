@@ -22,7 +22,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/workflows/actions/build-core-stencil-nightly
+      - uses: ./.github/workflows/actions/build-core-stencil-prerelease
+        with:
+          stencil-version: nightly
 
   test-core-clean-build:
     needs: [build-core-with-stencil-nightly]
@@ -131,7 +133,7 @@ jobs:
     - uses: ./.github/workflows/actions/build-angular
 
   build-angular-server:
-    needs: [build-angular]
+    needs: [build-core-with-stencil-nightly]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3

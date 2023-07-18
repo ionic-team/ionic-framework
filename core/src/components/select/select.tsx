@@ -1,9 +1,8 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, forceUpdate } from '@stencil/core';
-import { win } from '@utils/browser';
-import type { LegacyFormController } from '@utils/forms';
-import { createLegacyFormController } from '@utils/forms';
-import { findItemLabel, focusElement, getAriaLabel, renderHiddenInput, inheritAttributes, raf } from '@utils/helpers';
+import type { LegacyFormController, NotchController } from '@utils/forms';
+import { createLegacyFormController, createNotchController } from '@utils/forms';
+import { findItemLabel, focusElement, getAriaLabel, renderHiddenInput, inheritAttributes } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 import { actionSheetController, alertController, popoverController } from '@utils/overlays';
@@ -33,7 +32,7 @@ import type { SelectChangeEventDetail, SelectInterface, SelectCompareFn } from '
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
- * @slot label - The label text to associate with the select. Use the "labelPlacement" property to control where the label is placed relative to the select. Use this if you need to render a label with custom HTML.
+ * @slot label - The label text to associate with the select. Use the `labelPlacement` property to control where the label is placed relative to the select. Use this if you need to render a label with custom HTML.
  *
  * @part placeholder - The text displayed in the select when there is no value.
  * @part text - The displayed value of the select.
@@ -58,7 +57,8 @@ export class Select implements ComponentInterface {
   private inheritedAttributes: Attributes = {};
   private nativeWrapperEl: HTMLElement | undefined;
   private notchSpacerEl: HTMLElement | undefined;
-  private notchVisibilityIO: IntersectionObserver | undefined;
+
+  private notchController?: NotchController;
 
   // This flag ensures we log the deprecation warning at most once.
   private hasLoggedDeprecationWarning = false;
@@ -184,6 +184,19 @@ export class Select implements ComponentInterface {
   @Prop() selectedText?: string | null;
 
   /**
+   * The toggle icon to use. Defaults to `chevronExpand` for `ios` mode,
+   * or `caretDownSharp` for `md` mode.
+   */
+  @Prop() toggleIcon?: string;
+
+  /**
+   * The toggle icon to show when the select is open. If defined, the icon
+   * rotation behavior in `md` mode will be disabled. If undefined, `toggleIcon`
+   * will be used for when the select is both open and closed.
+   */
+  @Prop() expandedIcon?: string;
+
+  /**
    * The shape of the select. If "round" it will have an increased border radius.
    */
   @Prop() shape?: 'round';
@@ -245,6 +258,11 @@ export class Select implements ComponentInterface {
     const { el } = this;
 
     this.legacyFormController = createLegacyFormController(el);
+    this.notchController = createNotchController(
+      el,
+      () => this.notchSpacerEl,
+      () => this.labelSlot
+    );
 
     this.updateOverlayOptions();
     this.emitStyle();
@@ -266,6 +284,11 @@ export class Select implements ComponentInterface {
     if (this.mutationO) {
       this.mutationO.disconnect();
       this.mutationO = undefined;
+    }
+
+    if (this.notchController) {
+      this.notchController.destroy();
+      this.notchController = undefined;
     }
   }
 
@@ -746,17 +769,7 @@ export class Select implements ComponentInterface {
   }
 
   componentDidRender() {
-    if (this.needsExplicitNotchWidth()) {
-      /**
-       * Run this the frame after
-       * the browser has re-painted the select.
-       * Otherwise, the label element may have a width
-       * of 0 and the IntersectionObserver will be used.
-       */
-      raf(() => {
-        this.setNotchWidth();
-      });
-    }
+    this.notchController?.calculateNotchWidth();
   }
 
   /**
@@ -775,120 +788,6 @@ export class Select implements ComponentInterface {
    */
   private get hasLabel() {
     return this.label !== undefined || this.labelSlot !== null;
-  }
-
-  private needsExplicitNotchWidth() {
-    if (
-      /**
-       * If the notch is not being used
-       * then we do not need to set the notch width.
-       */
-      this.notchSpacerEl === undefined ||
-      /**
-       * If either the label property is being
-       * used or the label slot is not defined,
-       * then we do not need to estimate the notch width.
-       */
-      this.label !== undefined ||
-      this.labelSlot === null
-    ) {
-      return false;
-    }
-
-    return true;
-  }
-
-  /**
-   * When using a label prop we can render
-   * the label value inside of the notch and
-   * let the browser calculate the size of the notch.
-   * However, we cannot render the label slot in multiple
-   * places so we need to manually calculate the notch dimension
-   * based on the size of the slotted content.
-   *
-   * This function should only be used to set the notch width
-   * on slotted label content. The notch width for label prop
-   * content is automatically calculated based on the
-   * intrinsic size of the label text.
-   */
-  private setNotchWidth() {
-    const { el, notchSpacerEl } = this;
-
-    if (notchSpacerEl === undefined) {
-      return;
-    }
-
-    if (!this.needsExplicitNotchWidth()) {
-      notchSpacerEl.style.removeProperty('width');
-      return;
-    }
-
-    const width = this.labelSlot!.scrollWidth;
-    if (
-      /**
-       * If the computed width of the label is 0
-       * and notchSpacerEl's offsetParent is null
-       * then that means the element is hidden.
-       * As a result, we need to wait for the element
-       * to become visible before setting the notch width.
-       *
-       * We do not check el.offsetParent because
-       * that can be null if ion-select has
-       * position: fixed applied to it.
-       * notchSpacerEl does not have position: fixed.
-       */
-      width === 0 &&
-      notchSpacerEl.offsetParent === null &&
-      win !== undefined &&
-      'IntersectionObserver' in win
-    ) {
-      /**
-       * If there is an IO already attached
-       * then that will update the notch
-       * once the element becomes visible.
-       * As a result, there is no need to create
-       * another one.
-       */
-      if (this.notchVisibilityIO !== undefined) {
-        return;
-      }
-
-      const io = (this.notchVisibilityIO = new IntersectionObserver(
-        (ev) => {
-          /**
-           * If the element is visible then we
-           * can try setting the notch width again.
-           */
-          if (ev[0].intersectionRatio === 1) {
-            this.setNotchWidth();
-            io.disconnect();
-            this.notchVisibilityIO = undefined;
-          }
-        },
-        /**
-         * Set the root to be the select
-         * This causes the IO callback
-         * to be fired in WebKit as soon as the element
-         * is visible. If we used the default root value
-         * then WebKit would only fire the IO callback
-         * after any animations (such as a modal transition)
-         * finished, and there would potentially be a flicker.
-         */
-        { threshold: 0.01, root: el }
-      ));
-
-      io.observe(notchSpacerEl);
-      return;
-    }
-
-    /**
-     * If the element is visible then we can set the notch width.
-     * The notch is only visible when the label is scaled,
-     * which is why we multiply the width by 0.75 as this is
-     * the same amount the label element is scaled by in the
-     * select CSS (See $select-floating-label-scale in select.vars.scss).
-     */
-    notchSpacerEl.style.setProperty('width', `${width * 0.75}px`);
   }
 
   /**
@@ -910,7 +809,12 @@ export class Select implements ComponentInterface {
       return [
         <div class="select-outline-container">
           <div class="select-outline-start"></div>
-          <div class="select-outline-notch">
+          <div
+            class={{
+              'select-outline-notch': true,
+              'select-outline-notch-hidden': !this.hasLabel,
+            }}
+          >
             <div class="notch-spacer" aria-hidden="true" ref={(el) => (this.notchSpacerEl = el)}>
               {this.label}
             </div>
@@ -929,7 +833,8 @@ export class Select implements ComponentInterface {
   }
 
   private renderSelect() {
-    const { disabled, el, isExpanded, labelPlacement, justify, placeholder, fill, shape, name, value } = this;
+    const { disabled, el, isExpanded, expandedIcon, labelPlacement, justify, placeholder, fill, shape, name, value } =
+      this;
     const mode = getIonMode(this);
     const hasFloatingOrStackedLabel = labelPlacement === 'floating' || labelPlacement === 'stacked';
     const justifyEnabled = !hasFloatingOrStackedLabel;
@@ -948,6 +853,7 @@ export class Select implements ComponentInterface {
           'in-item-color': hostContext('ion-item.ion-color', el),
           'select-disabled': disabled,
           'select-expanded': isExpanded,
+          'has-expanded-icon': expandedIcon !== undefined,
           'has-value': this.hasValue(),
           'has-placeholder': placeholder !== undefined,
           'ion-focusable': true,
@@ -1002,7 +908,7 @@ Developers can use the "legacy" property to continue using the legacy form marku
       this.hasLoggedDeprecationWarning = true;
     }
 
-    const { disabled, el, inputId, isExpanded, name, placeholder, value } = this;
+    const { disabled, el, inputId, isExpanded, expandedIcon, name, placeholder, value } = this;
     const mode = getIonMode(this);
     const { labelText, labelId } = getAriaLabel(el, inputId);
 
@@ -1035,6 +941,7 @@ Developers can use the "legacy" property to continue using the legacy form marku
           'in-item-color': hostContext('ion-item.ion-color', el),
           'select-disabled': disabled,
           'select-expanded': isExpanded,
+          'has-expanded-icon': expandedIcon !== undefined,
           'legacy-select': true,
         }}
       >
@@ -1083,7 +990,16 @@ Developers can use the "legacy" property to continue using the legacy form marku
    */
   private renderSelectIcon() {
     const mode = getIonMode(this);
-    const icon = mode === 'ios' ? chevronExpand : caretDownSharp;
+    const { isExpanded, toggleIcon, expandedIcon } = this;
+    let icon: string;
+
+    if (isExpanded && expandedIcon !== undefined) {
+      icon = expandedIcon;
+    } else {
+      const defaultIcon = mode === 'ios' ? chevronExpand : caretDownSharp;
+      icon = toggleIcon ?? defaultIcon;
+    }
+
     return <ion-icon class="select-icon" part="icon" aria-hidden="true" icon={icon}></ion-icon>;
   }
 

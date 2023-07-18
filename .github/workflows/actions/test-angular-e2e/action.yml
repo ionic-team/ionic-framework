@@ -27,16 +27,16 @@ runs:
     - name: Create Test App
       run: ./build.sh ${{ inputs.app }}
       shell: bash
-      working-directory: ./angular/test
+      working-directory: ./packages/angular/test
     - name: Install Dependencies
       run: npm install
       shell: bash
-      working-directory: ./angular/test/build/${{ inputs.app }}
+      working-directory: ./packages/angular/test/build/${{ inputs.app }}
     - name: Sync Built Changes
       run: npm run sync
       shell: bash
-      working-directory: ./angular/test/build/${{ inputs.app }}
+      working-directory: ./packages/angular/test/build/${{ inputs.app }}
     - name: Run Tests
       run: npm run test
       shell: bash
-      working-directory: ./angular/test/build/${{ inputs.app }}
+      working-directory: ./packages/angular/test/build/${{ inputs.app }}

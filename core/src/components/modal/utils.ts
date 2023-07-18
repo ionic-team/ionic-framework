@@ -74,6 +74,7 @@ export const getBackdropValueForSheet = (x: number, backdropBreakpoint: number) 
  * support for Style.Default.
  */
 export const setCardStatusBarDark = () => {
+  // TODO FW-4696 Remove supportDefaultStatusBarStyle in Ionic v8
   if (!win || win.innerWidth >= 768 || !StatusBar.supportsDefaultStatusBarStyle()) {
     return;
   }
@@ -82,6 +83,7 @@ export const setCardStatusBarDark = () => {
 };
 
 export const setCardStatusBarDefault = (defaultStyle = Style.Default) => {
+  // TODO FW-4696 Remove supportDefaultStatusBarStyle in Ionic v8
   if (!win || win.innerWidth >= 768 || !StatusBar.supportsDefaultStatusBarStyle()) {
     return;
   }
