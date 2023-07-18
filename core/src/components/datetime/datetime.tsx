@@ -142,7 +142,7 @@ export class Datetime implements ComponentInterface {
    * containing the specified date. This enables animating the
    * transition to a new value, and should be reset to null once
    * the transition is finished and the forced month is now in view.
-   * 
+   *
    * Applies to grid-style datetimes only.
    */
   @State() forceRenderDate: DatetimeParts | null = null;
@@ -870,7 +870,7 @@ export class Datetime implements ComponentInterface {
         /**
          * If we're force-rendering a month, and we've scrolled to
          * that month, return that.
-         * 
+         *
          * Checking that we've actually scrolled to the forced month
          * is mostly for safety; in theory, if there's a forced month,
          * that means a new value was manually set, so we should have
@@ -880,7 +880,13 @@ export class Datetime implements ComponentInterface {
         const firstDayEl = month.querySelector('.calendar-day');
         const dataMonth = firstDayEl?.getAttribute('data-month');
         const dataYear = firstDayEl?.getAttribute('data-year');
-        if (forceRenderDate !== null && dataMonth && dataYear && parseInt(dataMonth) === forceRenderDate.month && parseInt(dataYear) === forceRenderDate.year) {
+        if (
+          forceRenderDate !== null &&
+          dataMonth &&
+          dataYear &&
+          parseInt(dataMonth) === forceRenderDate.month &&
+          parseInt(dataYear) === forceRenderDate.year
+        ) {
           return { month: forceRenderDate.month, year: forceRenderDate.year, day: forceRenderDate.day };
         }
 
@@ -1247,7 +1253,7 @@ export class Datetime implements ComponentInterface {
        * automatically, updating the rendered months.
        */
       this.forceRenderDate = { month, year, day };
-      
+
       /**
        * Flag that we've started scrolling to the forced date.
        * The resolve function will be called by the datetime's
@@ -1258,7 +1264,7 @@ export class Datetime implements ComponentInterface {
       const forceDateScrollingPromise: Promise<void> = new Promise((resolve) => {
         this.resolveForceDateScrolling = resolve;
       });
-      
+
       /**
        * Animate smoothly to the forced month. This will also update
        * workingParts and correct the surrounding months for us.

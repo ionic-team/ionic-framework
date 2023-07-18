@@ -265,17 +265,11 @@ export const generateMonths = (refParts: DatetimeParts, forcedDate: DatetimePart
 
     const forcedMonthIsEarlier = isBefore(forced, current);
 
-    return forcedMonthIsEarlier ? [
-      forced,
-      current,
-      getNextMonth(refParts)
-    ] : [
-      getPreviousMonth(refParts),
-      current,
-      forced
-    ];
+    return forcedMonthIsEarlier
+      ? [forced, current, getNextMonth(refParts)]
+      : [getPreviousMonth(refParts), current, forced];
   }
-  
+
   return [
     getPreviousMonth(refParts),
     { month: refParts.month, year: refParts.year, day: refParts.day },
