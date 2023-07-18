@@ -229,6 +229,12 @@ export class Datetime implements ComponentInterface {
    */
   @Prop() presentation: DatetimePresentation = 'date-time';
 
+  private get isGridStyle() {
+    const { presentation, preferWheel } = this;
+    const hasDatePresentation = presentation === 'date' || presentation === 'date-time' || presentation === 'time-date';
+    return hasDatePresentation && !preferWheel;
+  }
+
   /**
    * The text to display on the picker's cancel button.
    */
@@ -1226,15 +1232,11 @@ export class Datetime implements ComponentInterface {
       this.activeParts = [];
     }
 
-    // TODO: pull this and copies from render() into helper gets?
-    const hasDatePresentation = presentation === 'date' || presentation === 'date-time' || presentation === 'time-date';
-    const hasGrid = hasDatePresentation && !preferWheel;
-
     /**
      * We only need to animate if we're using a grid presentation
      * and actually changing months.
      */
-    if (animate && hasGrid && (month !== workingParts.month || year !== workingParts.year)) {
+    if (animate && this.isGridStyle && (month !== workingParts.month || year !== workingParts.year)) {
       /**
        * Tell other render functions that we need to force the
        * target month to appear in place of the actual next/prev month.
@@ -2400,7 +2402,6 @@ export class Datetime implements ComponentInterface {
     const monthYearPickerOpen = showMonthAndYear && !isMonthAndYearPresentation;
     const hasDatePresentation = presentation === 'date' || presentation === 'date-time' || presentation === 'time-date';
     const hasWheelVariant = hasDatePresentation && preferWheel;
-    const hasGrid = hasDatePresentation && !preferWheel;
 
     renderHiddenInput(true, el, name, formatValue(value), disabled);
 
@@ -2420,7 +2421,7 @@ export class Datetime implements ComponentInterface {
             [`datetime-presentation-${presentation}`]: true,
             [`datetime-size-${size}`]: true,
             [`datetime-prefer-wheel`]: hasWheelVariant,
-            [`datetime-grid`]: hasGrid,
+            [`datetime-grid`]: this.isGridStyle,
           }),
         }}
       >
