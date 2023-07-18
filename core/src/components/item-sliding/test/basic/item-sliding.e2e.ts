@@ -17,7 +17,6 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
   });
 });
 
-
 /**
  * This behavior does not vary across modes/directions
  */
