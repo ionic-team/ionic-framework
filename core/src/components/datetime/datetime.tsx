@@ -1216,7 +1216,6 @@ export class Datetime implements ComponentInterface {
      * We only need to animate if we're using a grid presentation
      * and actually changing months.
      */
-    // TODO: the latter check doesn't seem to be working
     if (animate && hasGrid && (month !== workingParts.month || year !== workingParts.year)) {
       /**
        * Tell other render functions that we need to force the
