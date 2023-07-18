@@ -6,7 +6,7 @@ import type { E2EPage } from '@utils/test/playwright';
 configs().forEach(({ title, screenshot, config }) => {
   test.describe(title('radio-group: basic'), () => {
     test('should not have visual regressions', async ({ page }) => {
-      await page.goto(`/src/components/radio-group/test/basic`, config);
+      await page.goto(`/src/components/radio-group/test/legacy/basic`, config);
 
       const list = page.locator('ion-list');
 
