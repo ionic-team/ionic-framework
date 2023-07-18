@@ -123,6 +123,11 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(dateTarget).toContainText('May 10, 2023');
     });
     test('should set only month and year when only passing month and year', async ({ page }) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/27797',
+      });
+      
       await page.setContent(
         `
         <ion-datetime-button locale="en-US" datetime="datetime"></ion-datetime-button>
@@ -136,6 +141,11 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await expect(page.locator('#time-button')).toBeHidden();
     });
     test('should set only year when passing only year', async ({ page }) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/27797',
+      });
+      
       await page.setContent(
         `
         <ion-datetime-button locale="en-US" datetime="datetime"></ion-datetime-button>
