@@ -63,8 +63,6 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
 
   /**
    * The name of the outlet
-   *
-   * @see [named outlets](guide/router-tutorial-toh#displaying-multiple-routes-in-named-outlets)
    */
   @Input() name = PRIMARY_OUTLET;
 
@@ -507,19 +505,4 @@ export class RoutedComponentInputBinder {
 
     this.outletDataSubscriptions.set(outlet, dataSubscription);
   }
-}
-
-/**
- * The list of features as an enum to uniquely type each feature.
- */
-export const enum RouterFeatureKind {
-  PreloadingFeature,
-  DebugTracingFeature,
-  EnabledBlockingInitialNavigationFeature,
-  DisabledInitialNavigationFeature,
-  InMemoryScrollingFeature,
-  RouterConfigurationFeature,
-  RouterHashLocationFeature,
-  NavigationErrorHandlerFeature,
-  ComponentInputBindingFeature,
 }
