@@ -1,5 +1,5 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Element, Component, Host, Prop, h } from '@stencil/core';
+import { Element, Component, Host, Prop, h, forceUpdate } from '@stencil/core';
 import { safeCall } from '@utils/overlays';
 import { getClassMap } from '@utils/theme';
 
@@ -21,6 +21,8 @@ import type { SelectPopoverOption } from './select-popover-interface';
   scoped: true,
 })
 export class SelectPopover implements ComponentInterface {
+
+
   @Element() el!: HTMLIonSelectPopoverElement;
   /**
    * The header text of the popover
@@ -117,6 +119,7 @@ export class SelectPopover implements ComponentInterface {
   renderCheckboxOptions(options: SelectPopoverOption[]) {
     return options.map((option) => (
       <ion-item class={{
+        // TODO FW-4784
         'item-checkbox-checked': option.checked,
         ...getClassMap(option.cssClass)
       }}>
@@ -129,6 +132,8 @@ export class SelectPopover implements ComponentInterface {
           onIonChange={(ev) => {
             this.setChecked(ev);
             this.callOptionHandler(ev);
+            // TODO FW-4784
+            forceUpdate(this);
           }}
         >
           {option.text}
@@ -144,6 +149,7 @@ export class SelectPopover implements ComponentInterface {
       <ion-radio-group value={checked} onIonChange={(ev) => this.callOptionHandler(ev)}>
         {options.map((option) => (
           <ion-item class={{
+            // TODO FW-4784
             'item-radio-checked': option.value === checked,
             ...getClassMap(option.cssClass)
           }}>
