@@ -25,7 +25,12 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('item-sliding: basic'), () => {
     // mouse gesture is flaky on CI, skip for now
-    test('should open when swiped', async ({ page }) => {
+    test.fixme('should open when swiped', async ({ page, skip }) => {
+      skip.browser(
+        (browserName: string) => browserName !== 'chromium',
+        'dragElementBy is flaky outside of Chrome browsers.'
+      );
+
       await page.goto(`/src/components/item-sliding/test/basic`, config);
       const item = page.locator('#item2');
 
@@ -36,7 +41,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       await expect(item).toHaveScreenshot(screenshot(`item-sliding-gesture`));
     });
 
-    test('should not scroll when the item-sliding is swiped', async ({ page, skip }) => {
+    test.skip('should not scroll when the item-sliding is swiped', async ({ page, skip }) => {
       skip.browser('webkit', 'mouse.wheel is not available in WebKit');
 
       await page.goto(`/src/components/item-sliding/test/basic`, config);

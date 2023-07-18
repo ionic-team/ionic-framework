@@ -42,21 +42,16 @@ export const dragElementBy = async (
   const steps = 20;
   const browser = page.context().browser()!.browserType().name();
 
-  for (let i = 0; i < steps; i++) {
-    const middleX = startX + (endX - startX) * (i / steps);
-    const middleY = startY + (endY - startY) * (i / steps);
-    await page.mouse.move(middleX, middleY);
-    // Safari needs to wait for a repaint to occur before moving the mouse again.
-    if (browser === 'webkit') {
-      await page.evaluate(() => new Promise(requestAnimationFrame));
-    }
-  }
+  // Navigate the start position.
+  await page.mouse.move(startX, startY);
 
   await page.mouse.down();
 
+  // Drag the element.
   for (let i = 0; i < steps; i++) {
-    const middleX = endX + (startX - endX) * (i / steps);
-    const middleY = endY + (startY - endY) * (i / steps);
+    const middleX = startX + (endX - startX) * (i / steps);
+    const middleY = startY + (endY - startY) * (i / steps);
+
     await page.mouse.move(middleX, middleY);
     // Safari needs to wait for a repaint to occur before moving the mouse again.
     if (browser === 'webkit') {
@@ -98,6 +93,7 @@ export const dragElementByYAxis = async (
     );
   }
 
+  // Navigate to the start position.
   await page.mouse.move(startX, startY);
   await page.mouse.down();
 
@@ -106,8 +102,10 @@ export const dragElementByYAxis = async (
   const steps = 20;
   const browser = page.context().browser()!.browserType().name();
 
+  // Drag the element.
   for (let i = 1; i <= steps; i++) {
     const middleY = startY + (endY - startY) * (i / steps);
+
     await page.mouse.move(startX, middleY);
     // Safari needs to wait for a repaint to occur before moving the mouse again.
     if (browser === 'webkit') {
