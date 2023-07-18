@@ -117,6 +117,9 @@ export class Datetime implements ComponentInterface {
 
   private prevPresentation: string | null = null;
 
+  private forceDateScrollingPromise?: Promise<void>;
+  private resolveForceDateScrolling?: () => void;
+
   @State() showMonthAndYear = false;
 
   @State() activeParts: DatetimeParts | DatetimeParts[] = [];
@@ -933,6 +936,11 @@ export class Datetime implements ComponentInterface {
 
           calendarBodyRef.scrollLeft = workingMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
           calendarBodyRef.style.removeProperty('overflow');
+
+          if (this.resolveForceDateScrolling) {
+            console.log('resolving promise from scroll callback');
+            this.resolveForceDateScrolling();
+          }
         });
       };
 
@@ -1149,7 +1157,7 @@ export class Datetime implements ComponentInterface {
     });
   }
 
-  private processValue = (value?: string | string[] | null, animate = false) => {
+  private processValue = async (value?: string | string[] | null, animate = false) => {
     const hasValue = value !== null && value !== undefined;
     const valueToProcess = hasValue ? parseDate(value) : this.defaultParts;
 
@@ -1225,18 +1233,27 @@ export class Datetime implements ComponentInterface {
        */
       this.forceRenderDate = { month, year, day };
       
+      /**
+       * Flag that we've started scrolling to the forced date.
+       * The resolve function will be called by the datetime's
+       * scroll listener when it's done updating everything.
+       * This is a replacement for making prev/nextMonth async,
+       * since the logic we're waiting on is in a listener.
+       */
+      this.forceDateScrollingPromise = new Promise((resolve) => {
+        this.resolveForceDateScrolling = resolve;
+      });
       
       /**
        * Animate smoothly to the forced month. This will also update
        * workingParts and correct the surrounding months for us.
-      */
+       */
       const targetMonthIsEarlier = isBefore(targetValue, workingParts);
       targetMonthIsEarlier ? this.prevMonth() : this.nextMonth();
-
-      // TODO: remove timeout and instead await prevMonth/nextMonth
-      setTimeout(() => {
-        this.forceRenderDate = null;
-      }, 1000);
+      await this.forceDateScrollingPromise;
+      this.forceDateScrollingPromise = undefined;
+      this.resolveForceDateScrolling = undefined;
+      this.forceRenderDate = null;
     } else {
       /**
        * We only need to do this if we didn't just animate to a new month,
