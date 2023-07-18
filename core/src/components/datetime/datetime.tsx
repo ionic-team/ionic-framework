@@ -135,7 +135,15 @@ export class Datetime implements ComponentInterface {
   @State() isPresented = false;
   @State() isTimePopoverOpen = false;
 
-  @State() forceRenderMonth: DatetimeParts | null = null;
+  /**
+   * When non-null, will force the datetime to render the month
+   * containing the specified date. This enables animating the
+   * transition to a new value, and should be reset to null once
+   * the transition is finished and the forced month is now in view.
+   * 
+   * Applies to grid-style datetimes only.
+   */
+  @State() forceRenderDate: DatetimeParts | null = null;
 
   /**
    * The color to use from your application's color palette.
@@ -857,12 +865,12 @@ export class Datetime implements ComponentInterface {
          * If no month was changed, then we can return from
          * the scroll callback early.
          */
-        const { forceRenderMonth } = this;
-        if (forceRenderMonth !== null) {
+        const { forceRenderDate } = this;
+        if (forceRenderDate !== null) {
           // TODO: some of this is copied from getPrevious/NextMonth, pull into util
-          const numDaysInMonth = getNumDaysInMonth(forceRenderMonth.month, forceRenderMonth.year);
+          const numDaysInMonth = getNumDaysInMonth(forceRenderDate.month, forceRenderDate.year);
           const forcedDay = numDaysInMonth < parts.day! ? numDaysInMonth : parts.day;
-          return { month: forceRenderMonth.month, year: forceRenderMonth.year, day: forcedDay };
+          return { month: forceRenderDate.month, year: forceRenderDate.year, day: forcedDay };
         }
 
         if (month === startMonth) {
@@ -1217,8 +1225,7 @@ export class Datetime implements ComponentInterface {
        * Because this is a State variable, a rerender will be triggered
        * automatically, updating the rendered months.
        */
-      // TODO: if this works, consider renaming variable to "date" instead of "month"
-      this.forceRenderMonth = { month, year, day };
+      this.forceRenderDate = { month, year, day };
       
       
       /**
@@ -1230,7 +1237,7 @@ export class Datetime implements ComponentInterface {
 
       // TODO: remove timeout and instead await prevMonth/nextMonth
       setTimeout(() => {
-        this.forceRenderMonth = null;
+        this.forceRenderDate = null;
       }, 1000);
     } else {
       /**
@@ -2139,7 +2146,7 @@ export class Datetime implements ComponentInterface {
   private renderCalendarBody() {
     return (
       <div class="calendar-body ion-focusable" ref={(el) => (this.calendarBodyRef = el)} tabindex="0">
-        {generateMonths(this.workingParts, this.forceRenderMonth).map(({ month, year }) => {
+        {generateMonths(this.workingParts, this.forceRenderDate).map(({ month, year }) => {
           return this.renderMonth(month, year);
         })}
       </div>

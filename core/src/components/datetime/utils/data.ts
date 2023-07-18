@@ -254,23 +254,23 @@ export const generateTime = (
  * Given DatetimeParts, generate the previous,
  * current, and and next months.
  */
-export const generateMonths = (refParts: DatetimeParts, forcedMonth: DatetimeParts | null = null): DatetimeParts[] => {
-  console.log('generateMonths called; forcedMonth:', forcedMonth);
-  if (forcedMonth !== null && (refParts.month !== forcedMonth.month || refParts.year !== forcedMonth.year)) {
+export const generateMonths = (refParts: DatetimeParts, forcedDate: DatetimeParts | null = null): DatetimeParts[] => {
+  console.log('generateMonths called; forcedDate:', forcedDate);
+  if (forcedDate !== null && (refParts.month !== forcedDate.month || refParts.year !== forcedDate.year)) {
     console.log('forcing month');
-    const currentDate = { month: refParts.month, year: refParts.year, day: refParts.day };
-    const forcedDate = { month: forcedMonth.month, year: forcedMonth.year, day: forcedMonth.day };
+    const current = { month: refParts.month, year: refParts.year, day: refParts.day };
+    const forced = { month: forcedDate.month, year: forcedDate.year, day: forcedDate.day };
 
-    const forcedMonthIsEarlier = isBefore(forcedDate, currentDate);
+    const forcedMonthIsEarlier = isBefore(forced, current);
 
     return forcedMonthIsEarlier ? [
-      forcedDate,
-      currentDate,
+      forced,
+      current,
       getNextMonth(refParts)
     ] : [
       getPreviousMonth(refParts),
-      currentDate,
-      forcedDate
+      current,
+      forced
     ];
   }
   
