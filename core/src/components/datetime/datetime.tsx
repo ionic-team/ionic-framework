@@ -19,7 +19,6 @@ import type {
   DatetimeHighlight,
   DatetimeHighlightStyle,
   DatetimeHighlightCallback,
-  DatetimeMonth,
 } from './datetime-interface';
 import { isSameDay, warnIfValueOutOfBounds, isBefore, isAfter } from './utils/comparison';
 import {
@@ -136,7 +135,7 @@ export class Datetime implements ComponentInterface {
   @State() isPresented = false;
   @State() isTimePopoverOpen = false;
 
-  @State() forceRenderMonth: DatetimeMonth | null = null;
+  @State() forceRenderMonth: DatetimeParts | null = null;
 
   /**
    * The color to use from your application's color palette.
@@ -1215,8 +1214,12 @@ export class Datetime implements ComponentInterface {
       /**
        * Tell other render functions that we need to force the
        * target month to appear in place of the actual next/prev month.
+       * Because this is a State variable, a rerender will be triggered
+       * automatically, updating the rendered months.
        */
-      this.forceRenderMonth = { month, year };
+      // TODO: if this works, consider renaming variable to "date" instead of "month"
+      this.forceRenderMonth = { month, year, day };
+      
       
       /**
        * Animate smoothly to the forced month. This will also update
