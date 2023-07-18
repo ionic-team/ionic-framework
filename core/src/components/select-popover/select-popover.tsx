@@ -116,7 +116,10 @@ export class SelectPopover implements ComponentInterface {
 
   renderCheckboxOptions(options: SelectPopoverOption[]) {
     return options.map((option) => (
-      <ion-item class={getClassMap(option.cssClass)}>
+      <ion-item class={{
+        'item-checkbox-checked': option.checked,
+        ...getClassMap(option.cssClass)
+      }}>
         <ion-checkbox
           value={option.value}
           disabled={option.disabled}
@@ -140,7 +143,10 @@ export class SelectPopover implements ComponentInterface {
     return (
       <ion-radio-group value={checked} onIonChange={(ev) => this.callOptionHandler(ev)}>
         {options.map((option) => (
-          <ion-item class={getClassMap(option.cssClass)}>
+          <ion-item class={{
+            'item-radio-checked': option.value === checked,
+            ...getClassMap(option.cssClass)
+          }}>
             <ion-radio
               value={option.value}
               disabled={option.disabled}
