@@ -201,7 +201,7 @@ export const getNormalizedDate = (refParts: DatetimeParts) => {
    * account for this and still return a valid date. However,
    * this is not a consistent behavior across all browsers.
    */
-  return new Date(`${refParts.month}/${refParts.day}/${refParts.year}${timeString} GMT+0000`);
+  return new Date(`${refParts.month ?? 1}/${refParts.day ?? 1}/${refParts.year ?? 2023}${timeString} GMT+0000`);
 };
 
 /**
