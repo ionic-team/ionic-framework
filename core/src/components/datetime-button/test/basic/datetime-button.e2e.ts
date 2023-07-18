@@ -127,7 +127,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/27797',
       });
-      
+
       await page.setContent(
         `
         <ion-datetime-button locale="en-US" datetime="datetime"></ion-datetime-button>
@@ -145,7 +145,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/27797',
       });
-      
+
       await page.setContent(
         `
         <ion-datetime-button locale="en-US" datetime="datetime"></ion-datetime-button>
