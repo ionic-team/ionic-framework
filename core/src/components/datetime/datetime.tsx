@@ -1177,7 +1177,7 @@ export class Datetime implements ComponentInterface {
     const hasValue = value !== null && value !== undefined;
     const valueToProcess = hasValue ? parseDate(value) : this.defaultParts;
 
-    const { minParts, maxParts, workingParts } = this;
+    const { minParts, maxParts, workingParts, el } = this;
 
     this.warnIfIncorrectValueUsage();
 
@@ -1233,10 +1233,14 @@ export class Datetime implements ComponentInterface {
     }
 
     /**
-     * We only need to animate if we're using a grid presentation
-     * and actually changing months.
+     * Only animate if:
+     * 1. We're using grid style (wheel style pickers should just jump to new value)
+     * 2. The month and/or year actually changed (otherwise there's nothing to animate to)
+     * 3. The datetime is visible (prevents animation when in collapsed datetime-button, for example)
      */
-    if (animate && this.isGridStyle && (month !== workingParts.month || year !== workingParts.year)) {
+    const didChangeMonth = month !== workingParts.month || year !== workingParts.year;
+    const elIsVisible = el.offsetParent !== null;
+    if (animate && this.isGridStyle && didChangeMonth && elIsVisible) {
       /**
        * Tell other render functions that we need to force the
        * target month to appear in place of the actual next/prev month.
