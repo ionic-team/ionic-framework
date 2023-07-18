@@ -432,6 +432,7 @@ class OutletInjector implements Injector {
   }
 }
 
+// TODO: FW-4785 - Remove this once Angular 15 support is dropped
 export const INPUT_BINDER = new InjectionToken<RoutedComponentInputBinder>('');
 
 /**
