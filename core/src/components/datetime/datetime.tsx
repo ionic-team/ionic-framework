@@ -862,9 +862,20 @@ export class Datetime implements ComponentInterface {
         const monthBox = month.getBoundingClientRect();
         if (Math.abs(monthBox.x - box.x) > 2) return;
 
-        // TODO: also check if we actually scrolled to the forced month, for safety
+        /**
+         * If we're force-rendering a month, and we've scrolled to
+         * that month, return that.
+         * 
+         * Checking that we've actually scrolled to the forced month
+         * is mostly for safety; in theory, if there's a forced month,
+         * that means a new value was manually set, so we should have
+         * automatically animated directly to it.
+         */
         const { forceRenderDate } = this;
-        if (forceRenderDate !== null) {
+        const firstDayEl = month.querySelector('.calendar-day');
+        const dataMonth = firstDayEl?.getAttribute('data-month');
+        const dataYear = firstDayEl?.getAttribute('data-year');
+        if (forceRenderDate !== null && dataMonth && dataYear && parseInt(dataMonth) === forceRenderDate.month && parseInt(dataYear) === forceRenderDate.year) {
           return { month: forceRenderDate.month, year: forceRenderDate.year, day: forceRenderDate.day };
         }
 
