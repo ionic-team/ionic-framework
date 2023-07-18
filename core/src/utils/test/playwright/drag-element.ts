@@ -39,11 +39,31 @@ export const dragElementBy = async (
   const endX = calculateEndX(startX, dragByX, viewport.width);
   const endY = calculateEndY(startY, dragByY, viewport.height);
 
-  await page.mouse.move(startX, startY, { steps: 20 });
+  const steps = 20;
+  const browser = page.context().browser()!.browserType().name();
+
+  for (let i = 0; i < steps; i++) {
+    const middleX = startX + (endX - startX) * (i / steps);
+    const middleY = startY + (endY - startY) * (i / steps);
+    await page.mouse.move(middleX, middleY);
+    // Safari needs to wait for a repaint to occur before moving the mouse again.
+    if (browser === 'webkit') {
+      await page.evaluate(() => new Promise(requestAnimationFrame));
+    }
+  }
+
   await page.mouse.down();
 
-  await page.mouse.move(endX, endY, { steps: 20 });
-  await page.waitForChanges();
+  for (let i = 0; i < steps; i++) {
+    const middleX = endX + (startX - endX) * (i / steps);
+    const middleY = endY + (startY - endY) * (i / steps);
+    await page.mouse.move(middleX, middleY);
+    // Safari needs to wait for a repaint to occur before moving the mouse again.
+    if (browser === 'webkit') {
+      await page.evaluate(() => new Promise(requestAnimationFrame));
+    }
+  }
+
   await page.mouse.up();
 };
 
@@ -78,12 +98,22 @@ export const dragElementByYAxis = async (
     );
   }
 
-  const endY = calculateEndY(startY, dragByY, viewport.height);
-
   await page.mouse.move(startX, startY);
   await page.mouse.down();
 
-  await page.mouse.move(startX, endY, { steps: 10 });
+  const endY = calculateEndY(startY, dragByY, viewport.height);
+
+  const steps = 20;
+  const browser = page.context().browser()!.browserType().name();
+
+  for (let i = 1; i <= steps; i++) {
+    const middleY = startY + (endY - startY) * (i / steps);
+    await page.mouse.move(startX, middleY);
+    // Safari needs to wait for a repaint to occur before moving the mouse again.
+    if (browser === 'webkit') {
+      await page.evaluate(() => new Promise(requestAnimationFrame));
+    }
+  }
 
   await page.mouse.up();
 };
