@@ -938,7 +938,6 @@ export class Datetime implements ComponentInterface {
           calendarBodyRef.style.removeProperty('overflow');
 
           if (this.resolveForceDateScrolling) {
-            console.log('resolving promise from scroll callback');
             this.resolveForceDateScrolling();
           }
         });

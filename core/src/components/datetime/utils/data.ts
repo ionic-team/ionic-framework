@@ -255,9 +255,7 @@ export const generateTime = (
  * current, and and next months.
  */
 export const generateMonths = (refParts: DatetimeParts, forcedDate: DatetimeParts | null = null): DatetimeParts[] => {
-  console.log('generateMonths called; forcedDate:', forcedDate);
   if (forcedDate !== null && (refParts.month !== forcedDate.month || refParts.year !== forcedDate.year)) {
-    console.log('forcing month');
     const current = { month: refParts.month, year: refParts.year, day: refParts.day };
     const forced = { month: forcedDate.month, year: forcedDate.year, day: forcedDate.day };
 
