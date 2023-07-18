@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
-import type { Locator } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
-import type { E2EPage } from '@utils/test/playwright';
+
+import { RadioFixture } from '../fixtures';
 
 /**
  * This behavior does not vary across modes/directions.
@@ -111,34 +111,3 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     });
   });
 });
-
-class RadioFixture {
-  readonly page: E2EPage;
-
-  private radio!: Locator;
-
-  constructor(page: E2EPage) {
-    this.page = page;
-  }
-
-  async checkRadio(method: 'keyboard' | 'mouse', selector = 'ion-radio') {
-    const { page } = this;
-    const radio = (this.radio = page.locator(selector));
-
-    if (method === 'keyboard') {
-      await radio.focus();
-      await page.keyboard.press('Space');
-    } else {
-      await radio.click();
-    }
-
-    await page.waitForChanges();
-
-    return radio;
-  }
-
-  async expectChecked(state: boolean) {
-    const { radio } = this;
-    await expect(radio.locator('input')).toHaveJSProperty('checked', state);
-  }
-}
