@@ -1,5 +1,6 @@
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { ModuleWithProviders, APP_INITIALIZER, NgModule, NgZone } from '@angular/core';
+import { Router } from '@angular/router';
 import { IonicConfig } from '@ionic/core';
 
 import { appInitialize } from './app-initialize';
@@ -11,7 +12,7 @@ import {
   TextValueAccessorDirective,
 } from './directives/control-value-accessors';
 import { IonBackButtonDelegateDirective } from './directives/navigation/ion-back-button';
-import { IonRouterOutlet } from './directives/navigation/ion-router-outlet';
+import { INPUT_BINDER, IonRouterOutlet, RoutedComponentInputBinder } from './directives/navigation/ion-router-outlet';
 import { IonTabs } from './directives/navigation/ion-tabs';
 import { NavDelegate } from './directives/navigation/nav-delegate';
 import {
@@ -71,7 +72,23 @@ export class IonicModule {
           multi: true,
           deps: [ConfigToken, DOCUMENT, NgZone],
         },
+        {
+          provide: INPUT_BINDER,
+          useFactory: componentInputBindingFactory,
+          deps: [Router],
+        },
       ],
     };
   }
+}
+
+function componentInputBindingFactory(router?: Router) {
+  /**
+   * We cast the router to any here, since the componentInputBindingEnabled
+   * property is not available until Angular v16.
+   */
+  if ((router as any)?.componentInputBindingEnabled) {
+    return new RoutedComponentInputBinder();
+  }
+  return null;
 }
