@@ -29,35 +29,13 @@ export const dragElementBy = async (
   const startX = startXCoord === undefined ? boundingBox.x + boundingBox.width / 2 : startXCoord;
   const startY = startYCoord === undefined ? boundingBox.y + boundingBox.height / 2 : startYCoord;
 
-  const viewport = page.viewportSize();
-  if (viewport === null) {
-    throw new Error(
-      'Cannot get viewport size. See https://playwright.dev/docs/api/class-page#page-viewport-size for more information'
-    );
-  }
-
-  const endX = calculateEndX(startX, dragByX, viewport.width);
-  const endY = calculateEndY(startY, dragByY, viewport.height);
-
-  const steps = 20;
-  const browser = page.context().browser()!.browserType().name();
-
   // Navigate the start position.
   await page.mouse.move(startX, startY);
 
   await page.mouse.down();
 
   // Drag the element.
-  for (let i = 0; i < steps; i++) {
-    const middleX = startX + (endX - startX) * (i / steps);
-    const middleY = startY + (endY - startY) * (i / steps);
-
-    await page.mouse.move(middleX, middleY);
-    // Safari needs to wait for a repaint to occur before moving the mouse again.
-    if (browser === 'webkit') {
-      await page.evaluate(() => new Promise(requestAnimationFrame));
-    }
-  }
+  await mouseMove(page, startX, startY, dragByX, dragByY);
 
   await page.mouse.up();
 };
@@ -86,32 +64,12 @@ export const dragElementByYAxis = async (
   const startX = boundingBox.x + boundingBox.width / 2;
   const startY = startYCoord === undefined ? boundingBox.y + boundingBox.height / 2 : startYCoord;
 
-  const viewport = page.viewportSize();
-  if (viewport === null) {
-    throw new Error(
-      'Cannot get viewport size. See https://playwright.dev/docs/api/class-page#page-viewport-size for more information'
-    );
-  }
-
   // Navigate to the start position.
   await page.mouse.move(startX, startY);
   await page.mouse.down();
 
-  const endY = calculateEndY(startY, dragByY, viewport.height);
-
-  const steps = 20;
-  const browser = page.context().browser()!.browserType().name();
-
   // Drag the element.
-  for (let i = 1; i <= steps; i++) {
-    const middleY = startY + (endY - startY) * (i / steps);
-
-    await page.mouse.move(startX, middleY);
-    // Safari needs to wait for a repaint to occur before moving the mouse again.
-    if (browser === 'webkit') {
-      await page.evaluate(() => new Promise(requestAnimationFrame));
-    }
-  }
+  await mouseMove(page, startX, startY, 0, dragByY);
 
   await page.mouse.up();
 };
@@ -148,4 +106,33 @@ const calculateEndY = (startY: number, dragByY: number, viewportHeight: number) 
   }
 
   return endY;
+};
+
+const mouseMove = async (page: E2EPage, startX: number, startY: number, dragByX = 0, dragByY = 0) => {
+  const steps = 10;
+  const browser = page.context().browser()!.browserType().name();
+
+  const viewport = page.viewportSize();
+  if (viewport === null) {
+    throw new Error(
+      'Cannot get viewport size. See https://playwright.dev/docs/api/class-page#page-viewport-size for more information'
+    );
+  }
+
+  const endX = calculateEndX(startX, dragByX, viewport.width);
+  const endY = calculateEndY(startY, dragByY, viewport.height);
+
+  // Drag the element.
+  for (let i = 1; i <= steps; i++) {
+    const middleX = startX + (endX - startX) * (i / steps);
+    const middleY = startY + (endY - startY) * (i / steps);
+
+    await page.mouse.move(middleX, middleY);
+    // Safari needs to wait for a repaint to occur before moving the mouse again.
+    if (browser === 'webkit' && i % 2 === 0) {
+      // Repainting every 2 steps is enough to keep the drag gesture smooth.
+      // Anything past 4 steps will cause the drag gesture to be flaky.
+      await page.evaluate(() => new Promise(requestAnimationFrame));
+    }
+  }
 };
