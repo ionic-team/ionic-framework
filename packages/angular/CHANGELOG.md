@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.2.0](https://github.com/ionic-team/ionic-framework/compare/v7.1.4...v7.2.0) (2023-07-19)
+
+
+### Features
+
+* **angular:** support binding routing data to component inputs ([#27694](https://github.com/ionic-team/ionic-framework/issues/27694)) ([90f4124](https://github.com/ionic-team/ionic-framework/commit/90f41243d9404caaad99076965b7cd649ddf7f33)), closes [#27476](https://github.com/ionic-team/ionic-framework/issues/27476)
+* **searchbar:** add name property ([#27737](https://github.com/ionic-team/ionic-framework/issues/27737)) ([7131037](https://github.com/ionic-team/ionic-framework/commit/71310372c94862342d607007ece127340df92a8c)), closes [#27675](https://github.com/ionic-team/ionic-framework/issues/27675)
+
+
+
+
+
 ## [7.1.4](https://github.com/ionic-team/ionic-framework/compare/v7.1.3...v7.1.4) (2023-07-19)
 
 **Note:** Version bump only for package @ionic/angular
