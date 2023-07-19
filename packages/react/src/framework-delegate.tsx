@@ -7,7 +7,8 @@ type ReactComponent = (props?: any) => JSX.Element;
 
 export const ReactDelegate = (
   addView: (view: React.ReactElement) => void,
-  removeView: (view: React.ReactElement) => void
+  removeView: (view: React.ReactElement) => void,
+  nextID?: () => number
 ): FrameworkDelegate => {
   const refMap = new WeakMap<HTMLElement, React.ReactElement>();
 
@@ -22,7 +23,7 @@ export const ReactDelegate = (
     parentElement.appendChild(div);
 
     const componentWithProps = component(propsOrDataObj);
-    const hostComponent = createPortal(componentWithProps, div);
+    const hostComponent = createPortal(componentWithProps, div, nextID?.());
 
     refMap.set(div, hostComponent);
 
