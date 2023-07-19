@@ -15,6 +15,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       const activeDate = page.locator('ion-datetime .calendar-day-active');
       await expect(activeDate).toHaveText('25');
     });
+
     test('should update the active time when value is initially set', async ({ page }) => {
       await page.goto('/src/components/datetime/test/set-value', config);
       await page.waitForSelector('.datetime-ready');
@@ -27,6 +28,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       const activeDate = page.locator('ion-datetime .time-body');
       await expect(activeDate).toHaveText('12:40 PM');
     });
+
     test('should update active item when value is not initially set', async ({ page }) => {
       await page.setContent(
         `
@@ -63,6 +65,18 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(activeDayButton).toHaveAttribute('data-day', '5');
       await expect(activeDayButton).toHaveAttribute('data-month', '10');
       await expect(activeDayButton).toHaveAttribute('data-year', '2021');
+    });
+
+    test('should scroll to new month when value is initially set and then updated', async ({ page }) => {
+      await page.goto('/src/components/datetime/test/set-value', config);
+      await page.waitForSelector('.datetime-ready');
+
+      const datetime = page.locator('ion-datetime');
+      await datetime.evaluate((el: HTMLIonDatetimeElement) => (el.value = '2021-05-25T12:40:00.000Z'));
+      await page.waitForChanges();
+
+      const calendarHeader = datetime.locator('.calendar-month-year');
+      await expect(calendarHeader).toHaveText(/May 2021/);
     });
   });
 });
