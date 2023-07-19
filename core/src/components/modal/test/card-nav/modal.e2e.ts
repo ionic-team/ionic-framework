@@ -9,12 +9,7 @@ import { CardModalPage } from '../fixtures';
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('card modal - nav'), () => {
     let cardModalPage: CardModalPage;
-    test.beforeEach(async ({ page, skip }) => {
-      skip.browser(
-        (browserName: string) => browserName !== 'chromium',
-        'dragElementBy is flaky outside of Chrome browsers.'
-      );
-
+    test.beforeEach(async ({ page }) => {
       cardModalPage = new CardModalPage(page);
       await cardModalPage.navigate('/src/components/modal/test/card-nav?ionic:_testing=false', config);
     });
