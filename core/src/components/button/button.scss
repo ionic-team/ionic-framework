@@ -55,8 +55,8 @@
 
   text-align: center;
   text-decoration: none;
-  text-overflow: ellipsis;
 
+  // TODO(FW-4599): change to normal
   white-space: nowrap;
 
   user-select: none;
@@ -114,8 +114,6 @@
 :host(.button-block) .button-native {
   @include margin-horizontal(0);
 
-  display: block;
-
   width: 100%;
 
   clear: both;
@@ -138,8 +136,6 @@
 :host(.button-full) .button-native {
   @include margin-horizontal(0);
 
-  display: block;
-
   width: 100%;
 
   contain: content;
@@ -159,11 +155,16 @@
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
   @include text-inherit();
 
-  display: block;
+  display: flex;
+
   position: relative;
+
+  align-items: center;
 
   width: 100%;
   height: 100%;
+
+  min-height: inherit;
 
   transition: var(--transition);
 
@@ -210,11 +211,20 @@
 }
 
 
+// Button Slots
+// --------------------------------------------------
+
+::slotted([slot=start]),
+::slotted([slot=end]) {
+  flex-shrink: 0;
+}
+
+
 // Button Icons
 // --------------------------------------------------
 
 ::slotted(ion-icon) {
-  font-size: 1.4em;
+  font-size: 1.35em;
   pointer-events: none;
 }
 
