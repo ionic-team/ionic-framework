@@ -7,18 +7,28 @@ import { configs, dragElementBy, test } from '@utils/test/playwright';
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('range: events:'), () => {
     test.describe('range: knob events', () => {
-      /**
-       * The mouse events are flaky on CI
-       */
-      test.fixme('should emit start/end events', async ({ page }, testInfo) => {
-        await page.setContent(`<ion-range value="20"></ion-range>`, config);
+      test('should emit start/end events', async ({ page }) => {
+        /**
+         * Requires padding to prevent the knob from being clipped.
+         * If it's clipped, then the value might be one off.
+         * For example, if the knob is clipped on the right, then the value
+         * will be 99 instead of 100.
+         */
+        await page.setContent(
+          `
+          <div style="padding: 0 20px">
+            <ion-range value="20"></ion-range>
+          </div>
+        `,
+          config
+        );
 
         const rangeStart = await page.spyOnEvent('ionKnobMoveStart');
         const rangeEnd = await page.spyOnEvent('ionKnobMoveEnd');
 
         const rangeEl = page.locator('ion-range');
 
-        await dragElementBy(rangeEl, page, testInfo.project.metadata.rtl ? -300 : 300, 0);
+        await dragElementBy(rangeEl, page, 300, 0);
         await page.waitForChanges();
 
         /**
@@ -54,8 +64,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         expect(rangeEnd).toHaveReceivedEventDetail({ value: 21 });
       });
 
-      // TODO FW-2873
-      test.skip('should not scroll when the knob is swiped', async ({ page, skip }) => {
+      test('should not scroll when the knob is swiped', async ({ page, skip }) => {
         skip.browser('webkit', 'mouse.wheel is not available in WebKit');
 
         await page.goto(`/src/components/range/test/legacy/basic`, config);
@@ -65,13 +74,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
         expect(await scrollEl.evaluate((el: HTMLElement) => el.scrollTop)).toEqual(0);
 
-        const box = (await knobEl.boundingBox())!;
-        const centerX = box.x + box.width / 2;
-        const centerY = box.y + box.height / 2;
-
-        await page.mouse.move(centerX, centerY);
-        await page.mouse.down();
-        await page.mouse.move(centerX + 30, centerY);
+        await dragElementBy(knobEl, page, 30, 0, undefined, undefined, false);
 
         /**
          * Do not use scrollToBottom() or other scrolling methods
@@ -111,20 +114,13 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         expect(ionChangeSpy).toHaveReceivedEventTimes(0);
       });
 
-      // TODO FW-2873
-      test.skip('should emit when the knob is released', async ({ page }) => {
+      test('should emit when the knob is released', async ({ page }) => {
         await page.setContent(`<ion-range aria-label="range"></ion-range>`, config);
 
         const rangeHandle = page.locator('ion-range .range-knob-handle');
         const ionChangeSpy = await page.spyOnEvent('ionChange');
 
-        const boundingBox = await rangeHandle.boundingBox();
-
-        await rangeHandle.hover();
-        await page.mouse.down();
-        await page.mouse.move(boundingBox!.x + 100, boundingBox!.y);
-
-        await page.mouse.up();
+        await dragElementBy(rangeHandle, page, 100, 0);
 
         await ionChangeSpy.next();
 
@@ -162,18 +158,15 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     });
 
     test.describe('ionInput', () => {
-      // TODO(FW-2873) Enable this test when touch events/gestures are better supported in Playwright
-      test.skip('should emit when the knob is dragged', async ({ page }) => {
+      test('should emit when the knob is dragged', async ({ page }) => {
         await page.setContent(`<ion-range aria-label="range"></ion-range>`, config);
 
         const rangeHandle = page.locator('ion-range .range-knob-handle');
         const ionInputSpy = await page.spyOnEvent('ionInput');
 
-        const boundingBox = await rangeHandle.boundingBox();
-
         await rangeHandle.hover();
-        await page.mouse.down();
-        await page.mouse.move(boundingBox!.x + 100, boundingBox!.y);
+
+        await dragElementBy(rangeHandle, page, 100, 0, undefined, undefined, false);
 
         await ionInputSpy.next();
 

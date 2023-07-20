@@ -18,11 +18,7 @@ configs().forEach(({ title, screenshot, config }) => {
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('range: behavior'), () => {
-    /**
-     * The mouse events are flaky on CI
-     * TODO FW-2873
-     */
-    test.fixme('should emit start/end events', async ({ page }) => {
+    test('should emit start/end events', async ({ page }) => {
       await page.setContent(`<ion-range value="20" legacy="true"></ion-range>`, config);
 
       const rangeStart = await page.spyOnEvent('ionKnobMoveStart');
@@ -66,8 +62,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       expect(rangeEnd).toHaveReceivedEventDetail({ value: 21 });
     });
 
-    // TODO FW-2873
-    test.skip('should not scroll when the knob is swiped', async ({ page, skip }) => {
+    test('should not scroll when the knob is swiped', async ({ page, skip }) => {
       skip.browser('webkit', 'mouse.wheel is not available in WebKit');
 
       await page.goto(`/src/components/range/test/legacy/basic`, config);
@@ -77,13 +72,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       expect(await scrollEl.evaluate((el: HTMLElement) => el.scrollTop)).toEqual(0);
 
-      const box = (await knobEl.boundingBox())!;
-      const centerX = box.x + box.width / 2;
-      const centerY = box.y + box.height / 2;
-
-      await page.mouse.move(centerX, centerY);
-      await page.mouse.down();
-      await page.mouse.move(centerX + 30, centerY);
+      await dragElementBy(knobEl, page, 30, 0, undefined, undefined, false);
 
       /**
        * Do not use scrollToBottom() or other scrolling methods
