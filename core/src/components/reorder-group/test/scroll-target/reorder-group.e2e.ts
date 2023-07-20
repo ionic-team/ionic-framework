@@ -1,17 +1,12 @@
 import { expect } from '@playwright/test';
 import { configs, test, dragElementBy } from '@utils/test/playwright';
 
-// TODO FW-3079
 /**
  * Reorder group does not have per-mode styles
  */
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
-  test.describe.skip(title('reorder group: scroll-target'), () => {
-    test.beforeEach(async ({ page, skip }) => {
-      skip.browser(
-        (browserName: string) => browserName !== 'chromium',
-        'dragElementBy is flaky outside of Chrome browsers.'
-      );
+  test.describe(title('reorder group: scroll-target'), () => {
+    test.beforeEach(async ({ page }) => {
       await page.goto(`/src/components/reorder-group/test/scroll-target`, config);
     });
     test('should drag and drop when ion-reorder wraps ion-item', async ({ page }) => {
