@@ -23,6 +23,7 @@ export const createPointerEvents = (
   let lastTouchEvent = 0;
 
   const handleTouchStart = (ev: any) => {
+    console.log('touch start!!',ev)
     /**
      * Gestures should only activate
      * on user-generated events.
@@ -57,6 +58,14 @@ export const createPointerEvents = (
   };
 
   const handleMouseDown = (ev: any) => {
+    /**
+     * Gestures should only activate
+     * on user-generated events.
+     */
+    if (!ev.isTrusted) {
+      return;
+    }
+
     if (lastTouchEvent > Date.now()) {
       return;
     }
