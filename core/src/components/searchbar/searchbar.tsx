@@ -461,7 +461,13 @@ export class Searchbar implements ComponentInterface {
         const inputLeft = 'calc(50% - ' + textWidth / 2 + 'px)';
 
         // Calculate the icon margin
-        const iconLeft = 'calc(50% - ' + (textWidth / 2 + 30) + 'px)';
+        /**
+         * We take the icon width to account
+         * for any text scales applied to the icon
+         * such as Dynamic Type on iOS as well as 8px
+         * of padding.
+         */
+        const iconLeft = 'calc(50% - ' + (textWidth / 2 + iconEl.clientWidth + 8) + 'px)';
 
         // Set the input padding start and icon margin start
         if (rtl) {
