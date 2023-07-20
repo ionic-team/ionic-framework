@@ -16,7 +16,8 @@ export const dragElementBy = async (
   dragByX = 0,
   dragByY = 0,
   startXCoord?: number,
-  startYCoord?: number
+  startYCoord?: number,
+  releaseDrag = true
 ) => {
   const boundingBox = await el.boundingBox();
 
@@ -35,9 +36,11 @@ export const dragElementBy = async (
   await page.mouse.down();
 
   // Drag the element.
-  await mouseMove(page, startX, startY, dragByX, dragByY);
+  await moveElement(page, startX, startY, dragByX, dragByY);
 
-  await page.mouse.up();
+  if (releaseDrag) {
+    await page.mouse.up();
+  }
 };
 
 /**
@@ -69,7 +72,7 @@ export const dragElementByYAxis = async (
   await page.mouse.down();
 
   // Drag the element.
-  await mouseMove(page, startX, startY, 0, dragByY);
+  await moveElement(page, startX, startY, 0, dragByY);
 
   await page.mouse.up();
 };
@@ -108,7 +111,7 @@ const calculateEndY = (startY: number, dragByY: number, viewportHeight: number) 
   return endY;
 };
 
-const mouseMove = async (page: E2EPage, startX: number, startY: number, dragByX = 0, dragByY = 0) => {
+const moveElement = async (page: E2EPage, startX: number, startY: number, dragByX = 0, dragByY = 0) => {
   const steps = 10;
   const browser = page.context().browser()!.browserType().name();
 
