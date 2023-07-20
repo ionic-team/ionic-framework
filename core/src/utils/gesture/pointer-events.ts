@@ -64,6 +64,14 @@ export const createPointerEvents = (
   };
 
   const handleTouchEnd = (ev: any) => {
+    /**
+     * Gestures should only activate
+     * on user-generated events.
+     */
+    if (!ev.isTrusted) {
+      return;
+    }
+
     stopTouch();
     if (pointerUp) {
       pointerUp(ev);
@@ -71,6 +79,14 @@ export const createPointerEvents = (
   };
 
   const handleMouseUp = (ev: any) => {
+    /**
+     * Gestures should only activate
+     * on user-generated events.
+     */
+    if (!ev.isTrusted) {
+      return;
+    }
+
     stopMouse();
     if (pointerUp) {
       pointerUp(ev);

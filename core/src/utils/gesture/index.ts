@@ -88,6 +88,14 @@ export const createGesture = (config: GestureConfig): Gesture => {
   };
 
   const pointerMove = (ev: UIEvent) => {
+    /**
+     * Gestures should only activate
+     * on user-generated events.
+     */
+    if (!ev.isTrusted) {
+      return;
+    }
+
     // fast path, if gesture is currently captured
     // do minimum job to get user-land even dispatched
     if (hasCapturedPan) {
