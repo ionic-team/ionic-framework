@@ -23,7 +23,6 @@ export const createPointerEvents = (
   let lastTouchEvent = 0;
 
   const handleTouchStart = (ev: any) => {
-    console.log('touch start!!',ev)
     /**
      * Gestures should only activate
      * on user-generated events.
