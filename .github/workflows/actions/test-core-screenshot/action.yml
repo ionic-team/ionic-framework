@@ -28,16 +28,20 @@ runs:
       run: npm install && npx playwright install && npx playwright install-deps
       shell: bash
       working-directory: ./core
+    - name: Clean Component Name
+      # Remove `ion-` prefix from component name if it exists.
+      run: |
+        echo "component=$(echo ${{ inputs.component }} | sed 's/ion-//')" >> $GITHUB_OUTPUT
     - name: Set Test File
       # Screenshots can be updated for all components or a single component.
       # If a single component is specified, then the test has the option to
       # - run all the file paths that have the component name in them. For example: if the component is "item", then the test will run all the file paths that have "item" in them.
       # - run all the file paths that are in the component folder. For example: if the component is "item", then the test will run all the file paths that are in the "src/components/item/" folder.
       run: |
-        if [ -n "${{ inputs.component }}" ] && [ "${{ inputs.component-folder }}" == "true" ]; then
-          echo "testFile=$(echo 'src/components/${{ inputs.component }}/')" >> $GITHUB_OUTPUT
-        elif [ -n "${{ inputs.component }}" ]; then
-          echo "testFile=$(echo '${{ inputs.component }}')" >> $GITHUB_OUTPUT
+        if [ -n "${{ steps.clean-component-name.outputs.component }}" ] && [ "${{ inputs.component-folder }}" == "true" ]; then
+          echo "testFile=$(echo 'src/components/${{ steps.clean-component-name.outputs.component }}/')" >> $GITHUB_OUTPUT
+        elif [ -n "${{ steps.clean-component-name.outputs.component }}" ]; then
+          echo "testFile=$(echo '${{ steps.clean-component-name.outputs.component }}')" >> $GITHUB_OUTPUT
         else
           echo "testFile=$(echo '')" >> $GITHUB_OUTPUT
         fi
