@@ -33,14 +33,14 @@ export const dragElementBy = async (
   // Navigate the start position.
   await el.hover({ position: { x: startX, y: startY } });
 
-  await page.mouse.down();
+  // await page.mouse.down();
 
   // Drag the element.
   await moveElement(page, el, startX, startY, dragByX, dragByY);
 
-  if (releaseDrag) {
-    await page.mouse.up();
-  }
+  // if (releaseDrag) {
+  //   await page.mouse.up();
+  // }
 };
 
 /**
@@ -119,9 +119,6 @@ const moveElement = async (
   dragByX = 0,
   dragByY = 0
 ) => {
-  const steps = 10;
-  const browser = page.context().browser()!.browserType().name();
-
   const viewport = page.viewportSize();
   if (viewport === null) {
     throw new Error(
@@ -133,17 +130,8 @@ const moveElement = async (
   const endY = calculateEndY(startY, dragByY, viewport.height);
 
   // Drag the element.
-  for (let i = 1; i <= steps; i++) {
-    const middleX = startX + (endX - startX) * (i / steps);
-    const middleY = startY + (endY - startY) * (i / steps);
-
-    await el.hover({ position: { x: middleX, y: middleY } });
-
-    // Safari needs to wait for a repaint to occur before moving the mouse again.
-    if (browser === 'webkit' && i % 2 === 0) {
-      // Repainting every 2 steps is enough to keep the drag gesture smooth.
-      // Anything past 4 steps will cause the drag gesture to be flaky.
-      await page.evaluate(() => new Promise(requestAnimationFrame));
-    }
-  }
+  await (el as Locator).dragTo(el as Locator, {
+    sourcePosition: { x: startX, y: startY },
+    targetPosition: { x: endX, y: endY },
+  });
 };
