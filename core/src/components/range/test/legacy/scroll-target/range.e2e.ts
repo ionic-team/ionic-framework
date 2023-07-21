@@ -4,7 +4,7 @@ import { configs, test } from '@utils/test/playwright';
 // TODO FW-2873
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe.skip(title('range: scroll-target'), () => {
-    test('should not scroll when the knob is swiped in custom scroll target', async ({ page, skip }) => {
+    test.skip('should not scroll when the knob is swiped in custom scroll target', async ({ page, skip }) => {
       skip.browser('webkit', 'mouse.wheel is not available in WebKit');
 
       await page.goto(`/src/components/range/test/legacy/scroll-target`, config);
