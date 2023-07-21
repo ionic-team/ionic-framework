@@ -35,9 +35,9 @@ runs:
       # - run all the file paths that are in the component folder. For example: if the component is "item", then the test will run all the file paths that are in the "src/components/item/" folder.
       run: |
         if [ -n "${{ inputs.component }}" ] && [ "${{ inputs.component-folder }}" == "true" ]; then
-          echo "testFile=$(echo '${{ inputs.component }}')" >> $GITHUB_OUTPUT
-        elif [ -n "${{ inputs.component }}" ]; then
           echo "testFile=$(echo 'src/components/${{ inputs.component }}/')" >> $GITHUB_OUTPUT
+        elif [ -n "${{ inputs.component }}" ]; then
+          echo "testFile=$(echo '${{ inputs.component }}')" >> $GITHUB_OUTPUT
         else
           echo "testFile=$(echo '')" >> $GITHUB_OUTPUT
         fi
