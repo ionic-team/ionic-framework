@@ -7,6 +7,11 @@ inputs:
     description: 'Playwright total number of test shards (ex: 4)'
   update:
     description: 'Whether or not to update the reference snapshots'
+  component:
+    description: 'The component to update the reference snapshots'
+  component-folder:
+    description: 'The component folder to update the reference snapshots'
+    type: boolean
 
 runs:
   using: 'composite'
@@ -47,7 +52,13 @@ runs:
       # which is why we not using the upload-archive
       # composite step here.
       run: |
-        npm run test.e2e -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }} --update-snapshots
+        FILE_PATH=""
+        if [ -n "${{ inputs.component }}" ] && [ "${{ inputs.component-folder }}" == "true" ]; then
+          FILE_PATH=${{ inputs.component }}
+        elif [ -n "${{ inputs.component }}" ]; then
+          FILE_PATH="src/components/${{ inputs.component }}/"
+        fi
+        npm run test.e2e ${{FILE_PATH}} -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }} --update-snapshots
         git add src/\*.png --force
         mkdir updated-screenshots
         cd ../ && rsync -R --progress $(git diff --name-only --cached) core/updated-screenshots

@@ -2,6 +2,16 @@ name: 'Update Reference Screenshots'
 
 on:
   workflow_dispatch:
+    inputs:
+      component:
+        description: 'Which component should be updated? (leave blank to update all)'
+        required: false
+        default: ''
+      component-folder:
+        description: 'If a component is selected, should it only update its respective folder? (leave blank to update all)'
+        required: false
+        default: true
+        type: boolean
 
 jobs:
   build-core:
@@ -34,6 +44,8 @@ jobs:
           shard: ${{ matrix.shard }}
           totalShards: ${{ matrix.totalShards }}
           update: true
+          component: ${{ inputs.component}}
+          component-folder: ${{ inputs.component-folder}}
 
   update-reference-screenshots:
     runs-on: ubuntu-latest
