@@ -32,6 +32,7 @@ runs:
       # Remove `ion-` prefix from component name if it exists.
       run: |
         echo "component=$(echo ${{ inputs.component }} | sed 's/ion-//')" >> $GITHUB_OUTPUT
+      shell: bash
     - name: Set Test File
       # Screenshots can be updated for all components or a single component.
       # If a single component is specified, then the test has the option to
