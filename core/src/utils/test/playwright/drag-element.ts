@@ -30,17 +30,12 @@ export const dragElementBy = async (
   const startX = startXCoord === undefined ? boundingBox.x + boundingBox.width / 2 : startXCoord;
   const startY = startYCoord === undefined ? boundingBox.y + boundingBox.height / 2 : startYCoord;
 
-  // Navigate the start position.
-  await el.hover({ position: { x: startX, y: startY } });
-
-  // await page.mouse.down();
-
   // Drag the element.
   await moveElement(page, el, startX, startY, dragByX, dragByY);
 
-  // if (releaseDrag) {
-  //   await page.mouse.up();
-  // }
+  if (releaseDrag) {
+    console.log('releaseDrag');
+  }
 };
 
 /**
