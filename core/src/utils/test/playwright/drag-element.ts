@@ -31,12 +31,12 @@ export const dragElementBy = async (
   const startY = startYCoord === undefined ? boundingBox.y + boundingBox.height / 2 : startYCoord;
 
   // Navigate the start position.
-  await page.mouse.move(startX, startY);
+  await el.hover({ position: { x: startX, y: startY } });
 
   await page.mouse.down();
 
   // Drag the element.
-  await moveElement(page, startX, startY, dragByX, dragByY);
+  await moveElement(page, el, startX, startY, dragByX, dragByY);
 
   if (releaseDrag) {
     await page.mouse.up();
@@ -68,11 +68,11 @@ export const dragElementByYAxis = async (
   const startY = startYCoord === undefined ? boundingBox.y + boundingBox.height / 2 : startYCoord;
 
   // Navigate to the start position.
-  await page.mouse.move(startX, startY);
+  await el.hover({ position: { x: startX, y: startY } });
   await page.mouse.down();
 
   // Drag the element.
-  await moveElement(page, startX, startY, 0, dragByY);
+  await moveElement(page, el, startX, startY, 0, dragByY);
 
   await page.mouse.up();
 };
@@ -111,7 +111,14 @@ const calculateEndY = (startY: number, dragByY: number, viewportHeight: number) 
   return endY;
 };
 
-const moveElement = async (page: E2EPage, startX: number, startY: number, dragByX = 0, dragByY = 0) => {
+const moveElement = async (
+  page: E2EPage,
+  el: Locator | ElementHandle<SVGElement | HTMLElement>,
+  startX: number,
+  startY: number,
+  dragByX = 0,
+  dragByY = 0
+) => {
   const steps = 10;
   const browser = page.context().browser()!.browserType().name();
 
@@ -130,7 +137,8 @@ const moveElement = async (page: E2EPage, startX: number, startY: number, dragBy
     const middleX = startX + (endX - startX) * (i / steps);
     const middleY = startY + (endY - startY) * (i / steps);
 
-    await page.mouse.move(middleX, middleY);
+    await el.hover({ position: { x: middleX, y: middleY } });
+
     // Safari needs to wait for a repaint to occur before moving the mouse again.
     if (browser === 'webkit' && i % 2 === 0) {
       // Repainting every 2 steps is enough to keep the drag gesture smooth.
