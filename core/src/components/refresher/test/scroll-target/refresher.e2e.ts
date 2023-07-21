@@ -18,7 +18,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
 
         expect(await items.count()).toBe(30);
 
-        await pullToRefresh(page, '#inner-scroll');
+        await pullToRefresh(page);
 
         expect(await items.count()).toBe(60);
       });
@@ -38,7 +38,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
 
         expect(await items.count()).toBe(30);
 
-        await pullToRefresh(page, '#inner-scroll');
+        await pullToRefresh(page);
 
         expect(await items.count()).toBe(60);
       });

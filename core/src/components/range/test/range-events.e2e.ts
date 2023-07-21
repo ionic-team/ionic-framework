@@ -64,7 +64,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         expect(rangeEnd).toHaveReceivedEventDetail({ value: 21 });
       });
 
-      test.skip('should not scroll when the knob is swiped', async ({ page, skip }) => {
+      test('should not scroll when the knob is swiped', async ({ page, skip }) => {
         skip.browser('webkit', 'mouse.wheel is not available in WebKit');
 
         await page.goto(`/src/components/range/test/legacy/basic`, config);
