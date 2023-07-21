@@ -28,9 +28,23 @@ runs:
       run: npm install && npx playwright install && npx playwright install-deps
       shell: bash
       working-directory: ./core
+    - name: Set Test File
+      # Screenshots can be updated for all components or a single component.
+      # If a single component is specified, then the test has the option to
+      # - run all the file paths that have the component name in them. For example: if the component is "item", then the test will run all the file paths that have "item" in them.
+      # - run all the file paths that are in the component folder. For example: if the component is "item", then the test will run all the file paths that are in the "src/components/item/" folder.
+      run: |
+        if [ -n "${{ inputs.component }}" ] && [ "${{ inputs.component-folder }}" == "true" ]; then
+          echo "testFile=$(echo '${{ inputs.component }}')" >> $GITHUB_OUTPUT
+        elif [ -n "${{ inputs.component }}" ]; then
+          echo "testFile=$(echo 'src/components/${{ inputs.component }}/')" >> $GITHUB_OUTPUT
+        else
+          echo "testFile=$(echo '')" >> $GITHUB_OUTPUT
+        fi
+      shell: bash
     - name: Test
       if: inputs.update != 'true'
-      run: npm run test.e2e -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }}
+      run: npm run test.e2e ${{steps.set-test-file.outputs.testFile}} -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }}
       shell: bash
       working-directory: ./core
     - name: Test and Update
@@ -52,13 +66,7 @@ runs:
       # which is why we not using the upload-archive
       # composite step here.
       run: |
-        FILE_PATH=""
-        if [ -n "${{ inputs.component }}" ] && [ "${{ inputs.component-folder }}" == "true" ]; then
-          FILE_PATH=${{ inputs.component }}
-        elif [ -n "${{ inputs.component }}" ]; then
-          FILE_PATH="src/components/${{ inputs.component }}/"
-        fi
-        npm run test.e2e ${{FILE_PATH}} -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }} --update-snapshots
+        npm run test.e2e ${{steps.set-test-file.outputs.testFile}} -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }} --update-snapshots
         git add src/\*.png --force
         mkdir updated-screenshots
         cd ../ && rsync -R --progress $(git diff --name-only --cached) core/updated-screenshots
