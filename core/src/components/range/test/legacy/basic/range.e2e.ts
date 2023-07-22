@@ -23,12 +23,14 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       const rangeStart = await page.spyOnEvent('ionKnobMoveStart');
       const rangeEnd = await page.spyOnEvent('ionKnobMoveEnd');
+      const mouseDown = await page.spyOnEvent('mousedown');
 
       const rangeEl = page.locator('ion-range');
 
       await dragElementBy(rangeEl, page, 300, 0);
       await page.waitForChanges();
 
+      expect(mouseDown).toHaveReceivedEventTimes(1);
       /**
        * dragElementBy defaults to starting the drag from the middle of the el,
        * so the start value should jump to 50 despite the range defaulting to 20.
