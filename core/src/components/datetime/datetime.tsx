@@ -364,11 +364,11 @@ export class Datetime implements ComponentInterface {
    * Update the datetime value when the value changes
    */
   @Watch('value')
-  protected valueChanged() {
+  protected async valueChanged() {
     const { value } = this;
 
     if (this.hasValue()) {
-      this.processValue(value, true);
+      await this.processValue(value, true);
     }
 
     this.emitStyle();
@@ -511,7 +511,7 @@ export class Datetime implements ComponentInterface {
    */
   @Method()
   async reset(startDate?: string) {
-    this.processValue(startDate);
+    await this.processValue(startDate);
   }
 
   /**
@@ -1290,7 +1290,7 @@ export class Datetime implements ComponentInterface {
     }
   };
 
-  componentWillLoad() {
+  async componentWillLoad() {
     const { el, highlightedDates, multiple, presentation, preferWheel } = this;
 
     if (multiple) {
@@ -1326,7 +1326,7 @@ export class Datetime implements ComponentInterface {
 
     const todayParts = (this.todayParts = parseDate(getToday()));
     this.defaultParts = getClosestValidDate(todayParts, monthValues, dayValues, yearValues, hourValues, minuteValues);
-    this.processValue(this.value);
+    await this.processValue(this.value);
 
     this.emitStyle();
   }
