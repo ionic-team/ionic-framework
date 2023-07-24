@@ -1269,8 +1269,8 @@ export class Datetime implements ComponentInterface {
        * Animate smoothly to the forced month. This will also update
        * workingParts and correct the surrounding months for us.
        */
-      const targetMonthIsEarlier = isBefore(targetValue, workingParts);
-      targetMonthIsEarlier ? this.prevMonth() : this.nextMonth();
+      const targetMonthIsBefore = isBefore(targetValue, workingParts);
+      targetMonthIsBefore ? this.prevMonth() : this.nextMonth();
       await forceDateScrollingPromise;
       this.resolveForceDateScrolling = undefined;
       this.forceRenderDate = null;
