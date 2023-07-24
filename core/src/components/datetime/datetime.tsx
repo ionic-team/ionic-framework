@@ -1242,10 +1242,12 @@ export class Datetime implements ComponentInterface {
      * 1. We're using grid style (wheel style pickers should just jump to new value)
      * 2. The month and/or year actually changed (otherwise there's nothing to animate to)
      * 3. The datetime is visible (prevents animation when in collapsed datetime-button, for example)
+     * 4. The month/year picker is not open (since you wouldn't see the animation anyway)
      */
     const didChangeMonth = month !== workingParts.month || year !== workingParts.year;
     const elIsVisible = el.offsetParent !== null;
-    if (animate && this.isGridStyle && didChangeMonth && elIsVisible) {
+    const { isGridStyle, showMonthAndYear } = this;
+    if (animate && isGridStyle && didChangeMonth && elIsVisible && !showMonthAndYear) {
       /**
        * Tell other render functions that we need to force the
        * target month to appear in place of the actual next/prev month.
