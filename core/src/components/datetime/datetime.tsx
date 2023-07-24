@@ -1326,8 +1326,6 @@ export class Datetime implements ComponentInterface {
       }
     }
 
-    this.processMinParts();
-    this.processMaxParts();
     const hourValues = (this.parsedHourValues = convertToArrayOfNumbers(this.hourValues));
     const minuteValues = (this.parsedMinuteValues = convertToArrayOfNumbers(this.minuteValues));
     const monthValues = (this.parsedMonthValues = convertToArrayOfNumbers(this.monthValues));
@@ -1336,6 +1334,10 @@ export class Datetime implements ComponentInterface {
 
     const todayParts = (this.todayParts = parseDate(getToday())!);
     this.defaultParts = getClosestValidDate(todayParts, monthValues, dayValues, yearValues, hourValues, minuteValues);
+
+    this.processMinParts();
+    this.processMaxParts();
+    
     await this.processValue(this.value);
 
     this.emitStyle();
