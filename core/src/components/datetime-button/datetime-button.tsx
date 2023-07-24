@@ -206,6 +206,10 @@ export class DatetimeButton implements ComponentInterface {
      */
     const parsedDatetimes = parseDate(parsedValues.length > 0 ? parsedValues : [getToday()]);
 
+    if (!parsedDatetimes) {
+      return;
+    }
+
     /**
      * If developers incorrectly use multiple="true"
      * with non "date" datetimes, then just select
