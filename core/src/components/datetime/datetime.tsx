@@ -1261,7 +1261,7 @@ export class Datetime implements ComponentInterface {
        * This is a replacement for making prev/nextMonth async,
        * since the logic we're waiting on is in a listener.
        */
-      const forceDateScrollingPromise: Promise<void> = new Promise((resolve) => {
+      const forceDateScrollingPromise = new Promise<void>((resolve) => {
         this.resolveForceDateScrolling = resolve;
       });
 
