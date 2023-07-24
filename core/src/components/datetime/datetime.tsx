@@ -1187,6 +1187,14 @@ export class Datetime implements ComponentInterface {
     this.warnIfIncorrectValueUsage();
 
     /**
+     * Return early if the value wasn't parsed correctly, such as
+     * if an improperly formatted date string was provided.
+     */
+    if (!valueToProcess) {
+      return;
+    }
+
+    /**
      * Datetime should only warn of out of bounds values
      * if set by the user. If the `value` is undefined,
      * we will default to today's date which may be out
