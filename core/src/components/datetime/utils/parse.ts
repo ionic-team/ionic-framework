@@ -65,7 +65,21 @@ export function parseDate(val: string | string[]): DatetimeParts | DatetimeParts
 export function parseDate(val: string | string[] | undefined | null): DatetimeParts | DatetimeParts[] | undefined;
 export function parseDate(val: string | string[] | undefined | null): DatetimeParts | DatetimeParts[] | undefined {
   if (Array.isArray(val)) {
-    return val.map((valStr) => parseDate(valStr));
+    // TODO: return early if anything is detected as undefined
+    const parsedArray = val.map((valStr) => parseDate(valStr));
+
+    /**
+     * If any of the values weren't parsed correctly, consider
+     * the entire batch incorrect. This simplifies the type
+     * signatures by having "undefined" be a general error case
+     * instead of returning (Datetime | undefined)[], which is
+     * harder for TS to perform type narrowing on.
+     */
+    if ((parsedArray as (DatetimeParts | undefined)[]).includes(undefined)) {
+      return undefined;
+    } else {
+      return parsedArray;
+    }
   }
 
   // manually parse IS0 cuz Date.parse cannot be trusted
