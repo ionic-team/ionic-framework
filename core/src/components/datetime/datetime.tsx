@@ -1337,7 +1337,7 @@ export class Datetime implements ComponentInterface {
 
     this.processMinParts();
     this.processMaxParts();
-    
+
     await this.processValue(this.value);
 
     this.emitStyle();
