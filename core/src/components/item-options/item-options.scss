@@ -56,20 +56,14 @@ ion-item-options {
   }
 }
 
-[dir="ltr"] .item-options-start ion-item-option:first-child {
+[dir="ltr"] .item-options-start ion-item-option:first-child,
+[dir="rtl"] .item-options-end ion-item-option:first-child {
   @include padding-horizontal(var(--ion-safe-area-left), null);
 }
 
+[dir="ltr"] .item-options-end ion-item-option:last-child,
 [dir="rtl"] .item-options-start ion-item-option:last-child {
-  @include padding-horizontal(null, var(--ion-safe-area-left));
-}
-
-[dir="ltr"] .item-options-end ion-item-option:last-child {
   @include padding-horizontal(null, var(--ion-safe-area-right));
-}
-
-[dir="rtl"] .item-options-end ion-item-option:first-child {
-  @include padding-horizontal(var(--ion-safe-area-right), null);
 }
 
 .item-sliding-active-slide {
