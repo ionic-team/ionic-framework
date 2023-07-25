@@ -11,7 +11,7 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, screenshot, c
         `
         <style>
           html {
-            font-size: 36px;
+            font-size: 28px;
           }
         </style>
         <ion-datetime-button locale="en-US" datetime="datetime"></ion-datetime-button>
