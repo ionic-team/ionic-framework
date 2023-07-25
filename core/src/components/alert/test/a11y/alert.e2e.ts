@@ -61,7 +61,9 @@ configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
       await testAria(page, 'customAria', 'Custom title', 'Custom description');
     });
 
-    test('should have aria-labelledby and aria-label added to the button when htmlAttributes is set', async ({ page }) => {
+    test('should have aria-labelledby and aria-label added to the button when htmlAttributes is set', async ({
+      page,
+    }) => {
       const didPresent = await page.spyOnEvent('ionAlertDidPresent');
 
       const button = page.locator('#ariaLabelButton');

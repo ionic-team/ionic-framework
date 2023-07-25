@@ -83,13 +83,15 @@
           header: 'Header',
           subHeader: 'Subtitle',
           message: 'This is an alert message with custom aria attributes passed to the button.',
-          buttons: [{
-            text: 'Close',
-            htmlAttributes: {
-              ariaLabel: 'close button',
-              'aria-labelledby': 'close-label',
-            }
-          }],
+          buttons: [
+            {
+              text: 'Close',
+              htmlAttributes: {
+                ariaLabel: 'close button',
+                'aria-labelledby': 'close-label',
+              },
+            },
+          ],
         });
       }
     </script>
