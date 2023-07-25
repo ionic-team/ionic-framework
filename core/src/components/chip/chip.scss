@@ -19,7 +19,7 @@
 
   align-items: center;
 
-  height: calc(32 / 14 * 1em);
+  min-height: calc(32 / 14 * 1em);
 
   background: var(--background);
   color: var(--color);
@@ -99,9 +99,12 @@
   @include margin(calc(1 / 3 * -1em), calc(1 / 3 * -1em), calc(1 / 3 * -1em), calc(1 / 3 * 1em));
 }
 
-
 // Chip Avatar
 // ---------------------------------------------
+
+::slotted(ion-avatar) {
+  flex-shrink: 0;
+}
 
 ::slotted(ion-avatar:first-child) {
   @include margin(calc(4 / 14 * -1em), calc(8 / 14 * 1em), calc(4 / 14 * -1em), calc(8 / 14 * -1em));
