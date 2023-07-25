@@ -17,6 +17,12 @@
 
 .reorder-icon {
   display: block;
+}
 
-  font-size: 22px;
+/**
+ * This ensures that custom reorder
+ * icons resize with Dynamic Type.
+ */
+::slotted(ion-icon) {
+  font-size: 1rem;
 }
