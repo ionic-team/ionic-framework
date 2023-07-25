@@ -57,13 +57,11 @@ ion-item-options {
 }
 
 .item-options-start ion-item-option:first-child {
-  @include padding-horizontal(null, var(--ion-safe-area-left));
-
+  @include padding-horizontal(var(--ion-safe-area-left), null);
 }
 
 .item-options-end ion-item-option:last-child {
   @include padding-horizontal(null, var(--ion-safe-area-right));
-
 }
 
 .item-sliding-active-slide {
