@@ -46,14 +46,12 @@ export class ItemOptions implements ComponentInterface {
           [`item-options-${mode}`]: true,
 
           /**
-           * TODO FW-4816
-           * Note: The "start" and "end" terms
-           * in "item-options-*" are misleading because they
-           * are used as "left" and "right" instead of
-           * logical values. For example, if an app is in RTL
-           * <ion-item-options side="end"> will always receive
-           * the "item-options-end" class even though the end edge
-           * in RTL is the left side of the screen.
+           * Note: The "start" and "end" terms refer to the
+           * direction ion-item-option instances within ion-item-options flow.
+           * They do not refer to how ion-item-options flows within ion-item-sliding.
+           * As a result, "item-options-start" means the ion-item-options container
+           * always appears on the left, and "item-options-end" means the ion-item-options
+           * container always appears on the right.
            */
           'item-options-start': !isEnd,
           'item-options-end': isEnd,
