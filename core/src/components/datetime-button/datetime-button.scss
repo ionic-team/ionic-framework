@@ -6,9 +6,13 @@
 :host {
   display: flex;
 
+  flex: 0 1 auto;
+
   align-items: center;
 
   justify-content: center;
+
+  min-width: 0;
 }
 
 :host button {
@@ -17,10 +21,6 @@
   @include margin(0px, 2px, 0px, 2px);
 
   position: relative;
-
-  flex: 0 1 auto;
-
-  min-width: 0;
 
   transition: 150ms color ease-in-out;
 
