@@ -2,9 +2,9 @@ import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
 /**
- * The tested behavior does not vary across directions
+ * The tested behavior does not vary across directions/modes
  */
-configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('loading: font scaling'), () => {
     test('should scale text on larger font sizes', async ({ page }) => {
       await page.setContent(
