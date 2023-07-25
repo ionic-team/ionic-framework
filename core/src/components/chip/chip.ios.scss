@@ -1,1 +1,26 @@
 @import "./chip";
+@import "./chip.ios.vars";
+
+:host {
+  /**
+   * Main content should be prioritized on iOS,
+   * so we set max font size for chips.
+   * We add a min font size to keep the text legible.
+   */
+  font-size: $chip-ios-font-size;
+}
+
+// Chip Avatar
+// ---------------------------------------------
+
+::slotted(ion-avatar) {
+  width: calc($chip-ios-font-size * 24 / 14);
+  height: calc($chip-ios-font-size * 24 / 14);
+}
+
+// Chip Icon
+// ---------------------------------------------
+
+::slotted(ion-icon) {
+  font-size: calc($chip-ios-font-size * 20 / 14);
+}
