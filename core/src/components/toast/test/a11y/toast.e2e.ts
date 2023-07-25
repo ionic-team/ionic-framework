@@ -38,5 +38,24 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
       const results = await new AxeBuilder({ page }).disableRules('color-contrast').analyze();
       expect(results.violations).toEqual([]);
     });
+
+    test('should have aria-labelledby added to the button when htmlAttributes is set', async ({ page }) => {
+      const ionToastDidPresent = await page.spyOnEvent('ionToastDidPresent');
+
+      await page.click('#aria-label-toast-trigger');
+      await ionToastDidPresent.next();
+
+      const toastButton = page.locator('#aria-label-toast .toast-button');
+
+      /**
+       * expect().toHaveAttribute() can't check for a null value, so grab and check
+       * the value manually instead.
+       */
+      const ariaLabelledBy = await toastButton.getAttribute('aria-labelledby');
+      expect(ariaLabelledBy).toBe('close-label');
+
+      const ariaLabel = await toastButton.getAttribute('aria-label');
+      expect(ariaLabel).toBe('close button');
+    });
   });
 });
