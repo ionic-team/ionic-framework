@@ -39,7 +39,9 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
       expect(results.violations).toEqual([]);
     });
 
-    test('should have aria-labelledby and aria-label added to the button when htmlAttributes is set', async ({ page }) => {
+    test('should have aria-labelledby and aria-label added to the button when htmlAttributes is set', async ({
+      page,
+    }) => {
       const ionToastDidPresent = await page.spyOnEvent('ionToastDidPresent');
 
       await page.click('#aria-label-toast-trigger');
