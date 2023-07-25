@@ -841,17 +841,35 @@ export class Datetime implements ComponentInterface {
         const root = this.el!.shadowRoot!;
 
         /**
-         * Get the element that is in the center of the calendar body.
-         * This will be an element inside of the active month.
+         * Get the elements that are in the center of the calendar body.
+         * The topmost of these will be elements inside of the active month.
+         *
+         * We filter out popovers to exclude the time picker, if present,
+         * since it sits on top of the entire screen. This handles the
+         * time picker being open when the datetime's value is changed
+         * programmatically, for example.
          */
-        const elementAtCenter = root.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2);
-        /**
-         * If there is no element then the
-         * component may be re-rendering on a slow device.
-         */
-        if (!elementAtCenter) return;
+        const elementsAtCenter = root
+          .elementsFromPoint(box.x + box.width / 2, box.y + box.height / 2)
+          .filter((el) => el.tagName !== 'ION-POPOVER');
 
-        const month = elementAtCenter.closest('.calendar-month');
+        /**
+         * If there are no elements, then the component may be
+         * re-rendering on a slow device.
+         */
+        if (elementsAtCenter.length === 0) {
+          return;
+        }
+
+        /**
+         * elementsFromPoint always orders the returned elements starting
+         * from the topmost box, so it's safe to just grab the first one.
+         * This ensures we always pick an element inside the active month,
+         * rather than, say, the body element.
+         */
+        const topmostCenterEl = elementsAtCenter[0];
+
+        const month = topmostCenterEl.closest('.calendar-month');
         if (!month) return;
 
         /**
