@@ -1,1 +1,20 @@
 @import "./chip";
+
+:host {
+  font-size: 0.875rem;
+}
+
+// Chip Avatar
+// ---------------------------------------------
+
+::slotted(ion-avatar) {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+// Chip Icon
+// ---------------------------------------------
+
+::slotted(ion-icon) {
+  font-size: 1.25rem;
+}
