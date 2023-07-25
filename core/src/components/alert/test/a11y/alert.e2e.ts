@@ -60,5 +60,26 @@ configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
     test('should allow for manually specifying aria attributes', async ({ page }) => {
       await testAria(page, 'customAria', 'Custom title', 'Custom description');
     });
+
+    test('should have aria-labelledby and aria-label added to the button when htmlAttributes is set', async ({ page }) => {
+      const didPresent = await page.spyOnEvent('ionAlertDidPresent');
+
+      const button = page.locator('#ariaLabelButton');
+      await button.click();
+
+      await didPresent.next();
+
+      const alertButton = page.locator('ion-alert .alert-button');
+
+      /**
+       * expect().toHaveAttribute() can't check for a null value, so grab and check
+       * the value manually instead.
+       */
+      const ariaLabelledBy = await alertButton.getAttribute('aria-labelledby');
+      expect(ariaLabelledBy).toBe('close-label');
+
+      const ariaLabel = await alertButton.getAttribute('aria-label');
+      expect(ariaLabel).toBe('close button');
+    });
   });
 });
