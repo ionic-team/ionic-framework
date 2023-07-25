@@ -3,7 +3,7 @@ import { configs, test } from '@utils/test/playwright';
 
 configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('card: font scaling'), () => {
-    test.only('should scale text on larger font sizes', async ({ page }) => {
+    test('should scale text on larger font sizes', async ({ page }) => {
       await page.setContent(
         `
         <style>
