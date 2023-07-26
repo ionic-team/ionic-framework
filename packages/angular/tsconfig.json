@@ -35,11 +35,8 @@
       {
         "name": "typescript-eslint-language-service"
       }
-    ],
-    "paths": {
-      "@ionic/angular/common": ["common/src"]
-    }
+    ]
   },
   "exclude": ["node_modules", "src/schematics"],
-  "include": ["src/**/*", "standalone/src/**/*", "common/src/**/*"]
+  "files": ["src/index.ts"]
 }
