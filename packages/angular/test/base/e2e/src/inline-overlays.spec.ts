@@ -1,6 +1,6 @@
 describe('Overlays: Inline', () => {
   beforeEach(() => {
-    cy.visit('/overlays-inline');
+    cy.visit('/lazy/overlays-inline');
   });
 
   describe('Alert', () => {

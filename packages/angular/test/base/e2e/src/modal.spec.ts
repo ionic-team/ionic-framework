@@ -1,6 +1,6 @@
 describe('Modals', () => {
   beforeEach(() => {
-    cy.visit('/modals');
+    cy.visit('/lazy/modals');
   })
 
   it('should open standalone modal and close', () => {
@@ -45,7 +45,7 @@ describe('Modals', () => {
 
 describe('Modals: Inline', () => {
   beforeEach(() => {
-    cy.visit('/modal-inline');
+    cy.visit('/lazy/modal-inline');
   });
 
   it('should initially have no items', () => {
@@ -95,7 +95,7 @@ describe('Modals: Inline', () => {
 describe('when in a modal', () => {
 
   beforeEach(() => {
-    cy.visit('/modals');
+    cy.visit('/lazy/modals');
     cy.get('#action-button').click();
     cy.get('#close-modal').click();
     cy.get('#action-button').click();

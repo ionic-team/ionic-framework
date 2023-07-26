@@ -1,6 +1,6 @@
 describe('Accordion', () => {
   beforeEach(() => {
-    cy.visit('/accordions');
+    cy.visit('/lazy/accordions');
   });
 
   it('should correctly expand on multiple modal opens', () => {

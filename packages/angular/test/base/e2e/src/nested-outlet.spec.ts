@@ -1,6 +1,6 @@
 describe('Nested Outlet', () => {
   beforeEach(() => {
-    cy.visit('/nested-outlet/page');
+    cy.visit('/lazy/nested-outlet/page');
   })
 
   it('should navigate correctly', () => {

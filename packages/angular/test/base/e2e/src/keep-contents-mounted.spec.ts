@@ -1,19 +1,19 @@
 describe('overlays - keepContentsMounted', () => {
   describe('modal', () => {
     it('should not mount component if false', () => {
-      cy.visit('/modal-inline');
+      cy.visit('/lazy/modal-inline');
 
       cy.get('ion-modal ion-content').should('not.exist');
     });
 
     it('should mount component if true', () => {
-      cy.visit('/keep-contents-mounted');
+      cy.visit('/lazy/keep-contents-mounted');
 
       cy.get('ion-modal ion-content').should('exist');
     });
 
     it('should keep component mounted after dismissing if true', () => {
-      cy.visit('/keep-contents-mounted');
+      cy.visit('/lazy/keep-contents-mounted');
 
       cy.get('#open-modal').click();
 
@@ -29,26 +29,26 @@ describe('overlays - keepContentsMounted', () => {
     });
 
     it('should has ion-delegate-host on mount', () => {
-      cy.visit('/keep-contents-mounted');
+      cy.visit('/lazy/keep-contents-mounted');
 
       cy.get('ion-modal .ion-delegate-host').should('exist');
     });
   })
   describe('popover', () => {
     it('should not mount component if false', () => {
-      cy.visit('/popover-inline');
+      cy.visit('/lazy/popover-inline');
 
       cy.get('ion-popover ion-content').should('not.exist');
     });
 
     it('should mount component if true', () => {
-      cy.visit('/keep-contents-mounted');
+      cy.visit('/lazy/keep-contents-mounted');
 
       cy.get('ion-popover ion-content').should('exist');
     });
 
     it('should keep component mounted after dismissing if true', () => {
-      cy.visit('/keep-contents-mounted');
+      cy.visit('/lazy/keep-contents-mounted');
 
       cy.get('#open-popover').click();
 

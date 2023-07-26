@@ -1,7 +1,7 @@
 describe('Form Controls: Range', () => {
 
   beforeEach(() => {
-    cy.visit('/form-controls/range');
+    cy.visit('/lazy/form-controls/range');
   });
 
   it('should have form control initial value', () => {

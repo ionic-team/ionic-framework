@@ -1,5 +1,5 @@
 describe('Searchbar', () => {
-  beforeEach(() => cy.visit('/searchbar'));
+  beforeEach(() => cy.visit('/lazy/searchbar'));
 
   it('should become valid', () => {
     cy.get('#status').should('have.text', 'INVALID');

@@ -1,6 +1,6 @@
 describe('Tabs', () => {
   beforeEach(() => {
-    cy.visit('/tabs');
+    cy.visit('/lazy/tabs');
   })
 
   describe('entry url - /tabs', () => {
@@ -288,7 +288,7 @@ describe('Tabs', () => {
 
   describe('entry url - /tabs/account', () => {
     beforeEach(() => {
-      cy.visit('/tabs/account');
+      cy.visit('/lazy/tabs/account');
     });
     it('should pop to previous view when leaving tabs outlet', () => {
 
@@ -322,7 +322,7 @@ describe('Tabs', () => {
 
   describe('entry url - /', () => {
     it('should pop to the root outlet from the tabs outlet', () => {
-      cy.visit('/');
+      cy.visit('/lazy/');
 
       cy.get('ion-title').should('contain.text', 'Test App');
 
@@ -356,7 +356,7 @@ describe('Tabs', () => {
 
   describe('entry url - /tabs/account/nested/1', () => {
     beforeEach(() => {
-      cy.visit('/tabs/account/nested/1');
+      cy.visit('/lazy/tabs/account/nested/1');
     })
 
     it('should only display the back-button when there is a page in the stack', () => {
@@ -401,7 +401,7 @@ describe('Tabs', () => {
 
   describe('entry url - /tabs/lazy', () => {
     beforeEach(() => {
-      cy.visit('/tabs/lazy');
+      cy.visit('/lazy/tabs/lazy');
     });
 
     it('should not display the back-button if coming from a different stack', () => {
@@ -419,7 +419,7 @@ describe('Tabs', () => {
 
   describe('enter url - /tabs/contact/one', () => {
     beforeEach(() => {
-      cy.visit('/tabs/contact/one');
+      cy.visit('/lazy/tabs/contact/one');
     });
 
     it('should return to correct tab after going to page in different outlet', () => {
@@ -436,7 +436,7 @@ describe('Tabs', () => {
 })
 
 it('Tabs should support conditional slots', () => {
-  cy.visit('/tabs-slots');
+  cy.visit('/lazy/tabs-slots');
 
   cy.get('ion-tabs .tabs-inner + ion-tab-bar').should('have.length', 1);
 

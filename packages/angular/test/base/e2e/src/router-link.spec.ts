@@ -1,6 +1,6 @@
 describe('Router Link', () => {
   beforeEach(() => {
-    cy.visit('/router-link');
+    cy.visit('/lazy/router-link');
   });
 
   describe('router-link params and fragments', () => {
@@ -9,7 +9,7 @@ describe('Router Link', () => {
     const id = 'MyPageID==';
 
     it('should go to a page with properly encoded values', () => {
-      cy.visit('/router-link?ionic:_testing=true');
+      cy.visit('/lazy/router-link?ionic:_testing=true');
       cy.get('#queryParamsFragment').click();
 
       const expectedPath = `${encodeURIComponent(id)}`;
@@ -24,7 +24,7 @@ describe('Router Link', () => {
     });
 
     it('should return to a page with preserved query param and fragment', () => {
-      cy.visit('/router-link?ionic:_testing=true');
+      cy.visit('/lazy/router-link?ionic:_testing=true');
       cy.get('#queryParamsFragment').click();
       cy.get('#goToPage3').click();
 
@@ -46,7 +46,7 @@ describe('Router Link', () => {
     });
 
     it('should preserve query param and fragment with defaultHref string', () => {
-      cy.visit('/router-link-page3?ionic:_testing=true');
+      cy.visit('/lazy/router-link-page3?ionic:_testing=true');
 
       cy.get('#goBackFromPage3').click();
 

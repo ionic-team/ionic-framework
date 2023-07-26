@@ -1,6 +1,6 @@
 describe('Inputs', () => {
   beforeEach(() => {
-    cy.visit('/inputs');
+    cy.visit('/lazy/inputs');
   })
 
   it('should have default value', () => {
