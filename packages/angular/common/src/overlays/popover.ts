@@ -4,7 +4,6 @@ import {
   Directive,
   ElementRef,
   EventEmitter,
-  Input,
   NgZone,
   TemplateRef,
 } from '@angular/core';
@@ -77,31 +76,13 @@ export const POPOVER_METHODS = ['present', 'dismiss', 'onDidDismiss', 'onWillDis
   inputs: POPOVER_INPUTS,
   methods: POPOVER_METHODS,
 })
-@Directive()
+@Directive({
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: POPOVER_INPUTS
+})
 export class IonPopover {
   // TODO(FW-2827): type
   @ContentChild(TemplateRef, { static: false }) template: TemplateRef<any>;
-
-  @Input() alignment: any;
-  @Input() animated: any;
-  @Input() arrow: any;
-  @Input() keepContentsMounted: any;
-  @Input() backdropDismiss: any;
-  @Input() cssClass: any;
-  @Input() dismissOnSelect: any;
-  @Input() enterAnimation: any;
-  @Input() event: any;
-  @Input() isOpen: any;
-  @Input() keyboardClose: any;
-  @Input() leaveAnimation: any;
-  @Input() mode: any;
-  @Input() showBackdrop: any;
-  @Input() translucent: any;
-  @Input() trigger: any;
-  @Input() triggerAction: any;
-  @Input() reference: any;
-  @Input() size: any;
-  @Input() side: any;
 
   isCmpOpen = false;
 
