@@ -1,16 +1,17 @@
-/* eslint-disable */
-/* tslint:disable */
 import {
   ChangeDetectorRef,
-  Component,
   ContentChild,
+  Directive,
   ElementRef,
   EventEmitter,
+  Input,
   NgZone,
   TemplateRef,
 } from '@angular/core';
-import { proxyOutputs } from '../utils';
 import { Components } from '@ionic/core';
+
+import { ProxyCmp, proxyOutputs } from '../utils';
+
 export declare interface IonPopover extends Components.IonPopover {
   /**
    * Emitted after the popover has presented.
@@ -46,12 +47,61 @@ export declare interface IonPopover extends Components.IonPopover {
   didDismiss: EventEmitter<CustomEvent>;
 }
 
-@Component({ template: '' })
+
+const POPOVER_INPUTS = [
+  'alignment',
+  'animated',
+  'arrow',
+  'keepContentsMounted',
+  'backdropDismiss',
+  'cssClass',
+  'dismissOnSelect',
+  'enterAnimation',
+  'event',
+  'isOpen',
+  'keyboardClose',
+  'leaveAnimation',
+  'mode',
+  'showBackdrop',
+  'translucent',
+  'trigger',
+  'triggerAction',
+  'reference',
+  'size',
+  'side',
+];
+
+@ProxyCmp({
+  inputs: POPOVER_INPUTS,
+  methods: ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss'],
+})
+@Directive()
 export class IonPopover {
   // TODO(FW-2827): type
   @ContentChild(TemplateRef, { static: false }) template: TemplateRef<any>;
 
-  isCmpOpen: boolean = false;
+  @Input() alignment: any;
+  @Input() animated: any;
+  @Input() arrow: any;
+  @Input() keepContentsMounted: any;
+  @Input() backdropDismiss: any;
+  @Input() cssClass: any;
+  @Input() dismissOnSelect: any;
+  @Input() enterAnimation: any;
+  @Input() event: any;
+  @Input() isOpen: any;
+  @Input() keyboardClose: any;
+  @Input() leaveAnimation: any;
+  @Input() mode: any;
+  @Input() showBackdrop: any;
+  @Input() translucent: any;
+  @Input() trigger: any;
+  @Input() triggerAction: any;
+  @Input() reference: any;
+  @Input() size: any;
+  @Input() side: any;
+
+  isCmpOpen = false;
 
   protected el: HTMLElement;
 
@@ -79,25 +129,3 @@ export class IonPopover {
   }
 }
 
-export const POPOVER_INPUTS = [
-  'alignment',
-  'animated',
-  'arrow',
-  'keepContentsMounted',
-  'backdropDismiss',
-  'cssClass',
-  'dismissOnSelect',
-  'enterAnimation',
-  'event',
-  'isOpen',
-  'keyboardClose',
-  'leaveAnimation',
-  'mode',
-  'showBackdrop',
-  'translucent',
-  'trigger',
-  'triggerAction',
-  'reference',
-  'size',
-  'side',
-];

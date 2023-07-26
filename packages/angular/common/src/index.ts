@@ -1,2 +1,2 @@
-export { IonPopover, POPOVER_INPUTS } from './overlays/popover';
+export { IonPopover } from './overlays/popover';
 export * from './utils';
