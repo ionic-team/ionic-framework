@@ -9,6 +9,8 @@
   align-items: center;
 
   justify-content: center;
+
+  min-width: 0;
 }
 
 :host button {
@@ -27,13 +29,17 @@
   color: $text-color;
 
   font-family: inherit;
-  font-size: inherit;
+  font-size: 1rem;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
 
   cursor: pointer;
 
-  appearance: none;
-
   overflow: hidden;
+
+  appearance: none;
 }
 
 :host(.time-active) #time-button,
