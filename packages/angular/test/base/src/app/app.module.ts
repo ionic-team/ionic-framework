@@ -4,16 +4,24 @@ import { RouteReuseStrategy } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { IonicRouteStrategy } from '@ionic/angular';
+import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+
+const isLazy = window.location.href.includes('lazy');
+
+const imports = [
+  BrowserModule.withServerTransition({ appId: 'serverApp' }),
+  AppRoutingModule,
+];
+
+if (isLazy) {
+  imports.push(IonicModule.forRoot({ keyboardHeight: 12345 }));
+}
 
 @NgModule({
   declarations: [
     AppComponent,
   ],
-  imports: [
-    BrowserModule.withServerTransition({ appId: 'serverApp' }),
-    AppRoutingModule,
-  ],
+  imports,
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   ],
