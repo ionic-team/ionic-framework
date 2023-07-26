@@ -13,7 +13,7 @@ export class NavigationPage1Component {
 
   ionViewDidEnter() {
     if (count < 1) {
-      this.navController.navigateBack('/navigation/page2');
+      this.navController.navigateBack('/lazy/navigation/page2');
     }
     count++;
   }
