@@ -48,7 +48,7 @@ export declare interface IonPopover extends Components.IonPopover {
 }
 
 
-const POPOVER_INPUTS = [
+export const POPOVER_INPUTS = [
   'alignment',
   'animated',
   'arrow',
@@ -71,9 +71,11 @@ const POPOVER_INPUTS = [
   'side',
 ];
 
+export const POPOVER_METHODS = ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss'];
+
 @ProxyCmp({
   inputs: POPOVER_INPUTS,
-  methods: ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss'],
+  methods: POPOVER_METHODS,
 })
 @Directive()
 export class IonPopover {
