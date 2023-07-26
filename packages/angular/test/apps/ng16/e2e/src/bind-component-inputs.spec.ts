@@ -1,5 +1,5 @@
 it("binding route data to inputs should work", () => {
-  cy.visit('/version-test/bind-route/test?query=test');
+  cy.visit('/lazy/version-test/bind-route/test?query=test');
 
   cy.get('#route-params').contains('test');
   cy.get('#query-params').contains('test');
