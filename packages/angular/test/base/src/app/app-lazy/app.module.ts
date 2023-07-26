@@ -1,11 +1,10 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RouteReuseStrategy } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { InputsComponent } from '../inputs/inputs.component';
 import { ModalComponent } from '../modal/modal.component';
@@ -55,14 +54,11 @@ import { AccordionModalComponent } from '../accordion/accordion-modal/accordion-
     AccordionModalComponent
   ],
   imports: [
-    BrowserModule.withServerTransition({ appId: 'serverApp' }),
+    CommonModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    IonicModule.forRoot({ keyboardHeight: 12345 }),
-  ],
-  providers: [
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    IonicModule,
   ],
   bootstrap: [AppComponent]
 })
