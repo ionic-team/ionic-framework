@@ -2,6 +2,7 @@
 /* tslint:disable */
 import { IonPopover as IonPopoverBase, ProxyCmp } from '@ionic/angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @ProxyCmp({
   inputs: [
@@ -54,5 +55,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     'size',
     'side',
   ],
+  standalone: true,
+  imports: [CommonModule]
 })
 export class IonPopover extends IonPopoverBase {}
