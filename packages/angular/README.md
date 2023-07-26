@@ -52,3 +52,23 @@ $ npx schematics @ionic/angular:ng-add
 
 
 You'll now be able to add ionic components to a vanilla Angular app setup.
+
+## Project Structure
+
+**common**
+
+This is where logic that is shared between lazy loaded and standalone components live. For example, the lazy loaded IonPopover and standalone IonPopover components extend from a base IonPopover implementation that exists in this directory.
+
+**Note:** This directory exposes internal APIs and is only accessed in the `standalone` and `src` submodules. Ionic developers should never import directly from `@ionic/angular/common`. Instead, they should import from `@ionic/angular` or `@ionic/angular/standalone`.
+
+**standalone**
+
+This is where the standalone component implementations live. It was added as a separate entry point to avoid any lazy loaded logic from accidentally being pulled in to the final build. Having a separate directory allows the lazy loaded implementation to remain accessible from `@ionic/angular` for backwards compatibility.
+
+Ionic developers can access this by importing from `@ionic/angular/standalone`.
+
+**src**
+
+This is where the lazy loaded component implementations live.
+
+Ionic developers can access this by importing from `@ionic/angular`.
