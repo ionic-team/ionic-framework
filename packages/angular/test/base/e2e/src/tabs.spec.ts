@@ -214,7 +214,7 @@ describe('Tabs', () => {
   describe('entry tab contains navigation extras', () => {
     const expectNestedTabUrlToContain = 'search=hello#fragment';
     const rootUrlParams = 'test=123#rootFragment';
-    const rootUrl = `/tabs/account?${rootUrlParams}`;
+    const rootUrl = `/lazy/tabs/account?${rootUrlParams}`;
 
     beforeEach(() => {
       cy.visit(rootUrl);
