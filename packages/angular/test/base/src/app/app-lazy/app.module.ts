@@ -59,7 +59,6 @@ import { AccordionModalComponent } from '../accordion/accordion-modal/accordion-
     FormsModule,
     ReactiveFormsModule,
     IonicModule.forRoot({ keyboardHeight: 12345 }),
-  ],
-  bootstrap: [AppComponent]
+  ]
 })
 export class AppModule { }
