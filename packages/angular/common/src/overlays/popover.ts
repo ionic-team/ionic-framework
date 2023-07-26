@@ -78,3 +78,26 @@ export class IonPopover {
     ]);
   }
 }
+
+export const POPOVER_INPUTS = [
+  'alignment',
+  'animated',
+  'arrow',
+  'keepContentsMounted',
+  'backdropDismiss',
+  'cssClass',
+  'dismissOnSelect',
+  'enterAnimation',
+  'event',
+  'isOpen',
+  'keyboardClose',
+  'leaveAnimation',
+  'mode',
+  'showBackdrop',
+  'translucent',
+  'trigger',
+  'triggerAction',
+  'reference',
+  'size',
+  'side',
+];
