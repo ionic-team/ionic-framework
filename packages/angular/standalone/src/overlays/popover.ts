@@ -3,8 +3,10 @@
 import { IonPopover as IonPopoverBase, ProxyCmp } from '@ionic/angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { defineCustomElement } from '@ionic/core/components/ion-popover.js';
 
 @ProxyCmp({
+  defineCustomElementFn: defineCustomElement,
   inputs: [
     'alignment',
     'animated',
