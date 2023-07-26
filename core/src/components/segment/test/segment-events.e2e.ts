@@ -11,9 +11,15 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         await page.setContent(
           `
           <ion-segment>
-            <ion-segment-button value="1">One</ion-segment-button>
-            <ion-segment-button value="2">Two</ion-segment-button>
-            <ion-segment-button value="3">Three</ion-segment-button>
+            <ion-segment-button value="1">
+              <ion-label>One</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="2">
+              <ion-label>Two</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="3">
+              <ion-label>Three</ion-label>
+            </ion-segment-button>
           </ion-segment>
       `,
           config
@@ -40,9 +46,15 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         await page.setContent(
           `
             <ion-segment value="1">
-              <ion-segment-button value="1">One</ion-segment-button>
-              <ion-segment-button value="2">Two</ion-segment-button>
-              <ion-segment-button value="3">Three</ion-segment-button>
+              <ion-segment-button value="1">
+                <ion-label>One</ion-label>
+              </ion-segment-button>
+              <ion-segment-button value="2">
+                <ion-label>Two</ion-label>
+              </ion-segment-button>
+              <ion-segment-button value="3">
+                <ion-label>Three</ion-label>
+              </ion-segment-button>
             </ion-segment>
           `,
           config
@@ -65,9 +77,15 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         await page.setContent(
           `
             <ion-segment>
-              <ion-segment-button value="1">One</ion-segment-button>
-              <ion-segment-button value="2">Two</ion-segment-button>
-              <ion-segment-button value="3">Three</ion-segment-button>
+              <ion-segment-button value="1">
+                <ion-label>One</ion-label>
+              </ion-segment-button>
+              <ion-segment-button value="2">
+                <ion-label>Two</ion-label>
+              </ion-segment-button>
+              <ion-segment-button value="3">
+                <ion-label>Three</ion-label>
+              </ion-segment-button>
             </ion-segment>
           `,
           config
@@ -100,9 +118,15 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
           <ion-app>
             <ion-toolbar>
               <ion-segment value="1">
-                <ion-segment-button value="1">One</ion-segment-button>
-                <ion-segment-button value="2">Two</ion-segment-button>
-                <ion-segment-button value="3">Three</ion-segment-button>
+                <ion-segment-button value="1">
+                  <ion-label>One</ion-label>
+                </ion-segment-button>
+                <ion-segment-button value="2">
+                  <ion-label>Two</ion-label>
+                </ion-segment-button>
+                <ion-segment-button value="3">
+                  <ion-label>Three</ion-label>
+                </ion-segment-button>
               </ion-segment>
             </ion-toolbar>
           </ion-app>
@@ -129,9 +153,15 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         await page.setContent(
           `
           <ion-segment value="1">
-            <ion-segment-button value="1">One</ion-segment-button>
-            <ion-segment-button value="2">Two</ion-segment-button>
-            <ion-segment-button value="3">Three</ion-segment-button>
+            <ion-segment-button value="1">
+              <ion-label>One</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="2">
+              <ion-label>Two</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="3">
+              <ion-label>Three</ion-label>
+            </ion-segment-button>
           </ion-segment>
         `,
           config
@@ -158,9 +188,15 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await page.setContent(
         `
         <ion-segment value="1">
-          <ion-segment-button value="1">One</ion-segment-button>
-          <ion-segment-button value="2">Two</ion-segment-button>
-          <ion-segment-button value="3">Three</ion-segment-button>
+          <ion-segment-button value="1">
+            <ion-label>One</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="2">
+            <ion-label>Two</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="3">
+            <ion-label>Three</ion-label>
+          </ion-segment-button>
         </ion-segment>
       `,
         config
@@ -180,9 +216,15 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await page.setContent(
         `
         <ion-segment value="1">
-          <ion-segment-button value="1">One</ion-segment-button>
-          <ion-segment-button value="2">Two</ion-segment-button>
-          <ion-segment-button value="3">Three</ion-segment-button>
+          <ion-segment-button value="1">
+            <ion-label>One</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="2">
+            <ion-label>Two</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="3">
+            <ion-label>Three</ion-label>
+          </ion-segment-button>
         </ion-segment>
       `,
         config
@@ -206,9 +248,15 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await page.setContent(
         `
         <ion-segment value="1" swipe-gesture="false">
-          <ion-segment-button value="1">One</ion-segment-button>
-          <ion-segment-button value="2">Two</ion-segment-button>
-          <ion-segment-button value="3">Three</ion-segment-button>
+          <ion-segment-button value="1">
+            <ion-label>One</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="2">
+            <ion-label>Two</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="3">
+            <ion-label>Three</ion-label>
+          </ion-segment-button>
         </ion-segment>
       `,
         config

@@ -1,9 +1,9 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Listen, Prop, State, Watch, h } from '@stencil/core';
+import { createColorClasses, hostContext } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Color } from '../../interface';
-import { createColorClasses, hostContext } from '../../utils/theme';
 import type { BreadcrumbCollapsedClickEventDetail } from '../breadcrumb/breadcrumb-interface';
 
 /**

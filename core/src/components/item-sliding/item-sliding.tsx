@@ -1,11 +1,11 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import { findClosestIonContent, disableContentScrollY, resetContentScrollY } from '@utils/content';
+import { isEndSide } from '@utils/helpers';
 import { watchForOptions } from '@utils/watch-options';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Gesture, GestureDetail } from '../../interface';
-import { findClosestIonContent, disableContentScrollY, resetContentScrollY } from '../../utils/content';
-import { isEndSide } from '../../utils/helpers';
 import type { Side } from '../menu/menu-interface';
 
 const SWIPE_MARGIN = 30;
@@ -407,6 +407,9 @@ export class ItemSliding implements ComponentInterface {
     if (!this.item) {
       return;
     }
+
+    const { el } = this;
+
     const style = this.item.style;
     this.openAmount = openAmount;
 
@@ -426,6 +429,12 @@ export class ItemSliding implements ComponentInterface {
           : SlidingState.Start;
     } else {
       /**
+       * The sliding options should not be
+       * clickable while the item is closing.
+       */
+      el.classList.add('item-sliding-closing');
+
+      /**
        * Item sliding cannot be interrupted
        * while closing the item. If it did,
        * it would allow the item to get into an
@@ -441,6 +450,7 @@ export class ItemSliding implements ComponentInterface {
         if (this.gesture) {
           this.gesture.enable(!this.disabled);
         }
+        el.classList.remove('item-sliding-closing');
       }, 600);
 
       openSlidingItem = undefined;

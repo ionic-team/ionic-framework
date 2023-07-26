@@ -22,6 +22,10 @@ runs:
     - uses: actions/setup-node@v3
       with:
         node-version: 16.x
+    # Provenance requires npm 9.5.0+
+    - name: Install latest npm
+      run: npm install -g npm@latest
+      shell: bash
     # This ensures the local version of Lerna is installed
     # and that we do not use the global Lerna version
     - name: Install root dependencies

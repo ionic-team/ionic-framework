@@ -1,11 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Watch, Component, Element, Event, h, Host, Method, Prop, State } from '@stencil/core';
-
-import { config } from '../../global/config';
-import { getIonMode } from '../../global/ionic-global';
-import type { AnimationBuilder, Color, CssClassMap, OverlayInterface, FrameworkDelegate } from '../../interface';
-import { ENABLE_HTML_CONTENT_DEFAULT } from '../../utils/config';
-import { printIonWarning } from '../../utils/logging';
+import { State, Watch, Component, Element, Event, h, Host, Method, Prop } from '@stencil/core';
+import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
+import { printIonWarning } from '@utils/logging';
 import {
   createDelegateController,
   createTriggerController,
@@ -16,11 +12,15 @@ import {
   present,
   safeCall,
   setOverlayId,
-} from '../../utils/overlays';
+} from '@utils/overlays';
+import { sanitizeDOMString } from '@utils/sanitization';
+import { createColorClasses, getClassMap } from '@utils/theme';
+
+import { config } from '../../global/config';
+import { getIonMode } from '../../global/ionic-global';
+import type { AnimationBuilder, Color, CssClassMap, OverlayInterface, FrameworkDelegate } from '../../interface';
 import type { OverlayEventDetail } from '../../utils/overlays-interface';
 import type { IonicSafeString } from '../../utils/sanitization';
-import { sanitizeDOMString } from '../../utils/sanitization';
-import { createColorClasses, getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';

@@ -30,9 +30,12 @@
 }
 
 ::slotted(ion-button) {
+  --padding-top: 0;
+  --padding-bottom: 0;
+
   @include margin(null, 3px);
 
-  height: 1.4em;
+  min-height: 1.4em;
 }
 
 

@@ -29,6 +29,9 @@ ion-item-sliding .item {
   will-change: transform;
 }
 
+.item-sliding-closing ion-item-options {
+  pointer-events: none;
+}
 
 .item-sliding-active-swipe-end .item-options-end .item-option-expandable {
   @include multi-dir() {

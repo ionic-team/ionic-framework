@@ -3,6 +3,106 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.2.1](https://github.com/ionic-team/ionic-framework/compare/v7.2.0...v7.2.1) (2023-07-26)
+
+
+### Bug Fixes
+
+* **item-sliding:** buttons are not interactive on close ([#27829](https://github.com/ionic-team/ionic-framework/issues/27829)) ([6e4919c](https://github.com/ionic-team/ionic-framework/commit/6e4919caff90fc60988e5cc85ad7161844eb5b51)), closes [#22722](https://github.com/ionic-team/ionic-framework/issues/22722)
+* **modal:** body background is reset with inline card modals ([#27835](https://github.com/ionic-team/ionic-framework/issues/27835)) ([38626d9](https://github.com/ionic-team/ionic-framework/commit/38626d96809d1c6be523ea62a4fac1dec73ee891)), closes [#27830](https://github.com/ionic-team/ionic-framework/issues/27830)
+
+
+
+
+
+# [7.2.0](https://github.com/ionic-team/ionic-framework/compare/v7.1.4...v7.2.0) (2023-07-19)
+
+
+### Features
+
+* **button:** allow button to increase in height when text wraps ([#27547](https://github.com/ionic-team/ionic-framework/issues/27547)) ([6fe716f](https://github.com/ionic-team/ionic-framework/commit/6fe716fd1320935632854e5d4f741b57801bda92))
+* **searchbar:** add name property ([#27737](https://github.com/ionic-team/ionic-framework/issues/27737)) ([7131037](https://github.com/ionic-team/ionic-framework/commit/71310372c94862342d607007ece127340df92a8c)), closes [#27675](https://github.com/ionic-team/ionic-framework/issues/27675)
+
+
+
+
+
+## [7.1.4](https://github.com/ionic-team/ionic-framework/compare/v7.1.3...v7.1.4) (2023-07-19)
+
+
+### Bug Fixes
+
+* **angular:** menu button is enabled with Angular Universal builds ([#27814](https://github.com/ionic-team/ionic-framework/issues/27814)) ([2cf1a0b](https://github.com/ionic-team/ionic-framework/commit/2cf1a0bcae7d766aa25951c53470876f9569906c)), closes [#27524](https://github.com/ionic-team/ionic-framework/issues/27524) [#22206](https://github.com/ionic-team/ionic-framework/issues/22206)
+* **button:** submit form when pressing enter key ([#27790](https://github.com/ionic-team/ionic-framework/issues/27790)) ([b78af75](https://github.com/ionic-team/ionic-framework/commit/b78af7598f19ca5e1b440ddc0091a62d86321066)), closes [#19368](https://github.com/ionic-team/ionic-framework/issues/19368)
+* **radio, checkbox, toggle:** add top and bottom margins when in ion-item ([#27788](https://github.com/ionic-team/ionic-framework/issues/27788)) ([35f0ec5](https://github.com/ionic-team/ionic-framework/commit/35f0ec581a55e0cb080f0793fb94d3e424c06d4d)), closes [#27498](https://github.com/ionic-team/ionic-framework/issues/27498)
+* safari no longer adjusts text in landscape ([#27787](https://github.com/ionic-team/ionic-framework/issues/27787)) ([66584b0](https://github.com/ionic-team/ionic-framework/commit/66584b03d0b33507170f954009998c72fb3f7755)), closes [#27782](https://github.com/ionic-team/ionic-framework/issues/27782)
+* **textarea:** stacked/floating textarea size is correct on safari ([#27766](https://github.com/ionic-team/ionic-framework/issues/27766)) ([2cb7013](https://github.com/ionic-team/ionic-framework/commit/2cb701395487c6a0304400f6b821659ae6def820)), closes [#27345](https://github.com/ionic-team/ionic-framework/issues/27345)
+
+
+
+
+
+## [7.1.3](https://github.com/ionic-team/ionic-framework/compare/v7.1.2...v7.1.3) (2023-07-12)
+
+
+### Bug Fixes
+
+* avoid unresolved import warning on stencil apps ([#27765](https://github.com/ionic-team/ionic-framework/issues/27765)) ([2085025](https://github.com/ionic-team/ionic-framework/commit/2085025644f075e63d04bece56eca4f2beeadbb6)), closes [#27762](https://github.com/ionic-team/ionic-framework/issues/27762)
+* **overlays:** first button is not focused on backdrop tap ([#27774](https://github.com/ionic-team/ionic-framework/issues/27774)) ([82c568b](https://github.com/ionic-team/ionic-framework/commit/82c568b8c8e1e9934e1928452aa5216619290e7b)), closes [#27773](https://github.com/ionic-team/ionic-framework/issues/27773)
+
+
+
+
+
+## [7.1.2](https://github.com/ionic-team/ionic-framework/compare/v7.1.1...v7.1.2) (2023-07-06)
+
+
+### Bug Fixes
+
+* **back-button:** show correct background on focus + hover with ios ([#27723](https://github.com/ionic-team/ionic-framework/issues/27723)) ([db9a001](https://github.com/ionic-team/ionic-framework/commit/db9a0010df3c7fd0fcd0dbcd8c4ad3b30d022b5c)), closes [#27722](https://github.com/ionic-team/ionic-framework/issues/27722)
+* **nav:** root component is mounted with root params ([#27676](https://github.com/ionic-team/ionic-framework/issues/27676)) ([1f06be4](https://github.com/ionic-team/ionic-framework/commit/1f06be4a31965f2a949b4866a585aee6af0af29d)), closes [#27146](https://github.com/ionic-team/ionic-framework/issues/27146)
+
+
+
+
+
+## [7.1.1](https://github.com/ionic-team/ionic-framework/compare/v7.1.0...v7.1.1) (2023-06-26)
+
+
+### Bug Fixes
+
+* **textarea:** autogrow resizes correctly ([#27691](https://github.com/ionic-team/ionic-framework/issues/27691)) ([f263611](https://github.com/ionic-team/ionic-framework/commit/f263611260c465bfeefc2db7b1ea04bfa5b54303)), closes [#27688](https://github.com/ionic-team/ionic-framework/issues/27688)
+
+
+
+
+
+# [7.1.0](https://github.com/ionic-team/ionic-framework/compare/v7.0.14...v7.1.0) (2023-06-21)
+
+
+### Bug Fixes
+
+* **datetime:** ascending order for years ([#27551](https://github.com/ionic-team/ionic-framework/issues/27551)) ([2098806](https://github.com/ionic-team/ionic-framework/commit/209880622a4600f88c4878e82975ad0492bd55db)), closes [#27422](https://github.com/ionic-team/ionic-framework/issues/27422)
+* **select:** hide notch cutout if no visible label provided ([#27649](https://github.com/ionic-team/ionic-framework/issues/27649)) ([606a892](https://github.com/ionic-team/ionic-framework/commit/606a892e400a531cac5c413dc7492a54ae0e1fea))
+
+
+### Features
+
+* **datetime:** add part for month/year button ([#27618](https://github.com/ionic-team/ionic-framework/issues/27618)) ([d44422e](https://github.com/ionic-team/ionic-framework/commit/d44422e224374804010746a12f398d3c0d6a9f2c)), closes [#26596](https://github.com/ionic-team/ionic-framework/issues/26596)
+* **datetime:** add shadow parts and CSS variables for styling wheel pickers ([#27529](https://github.com/ionic-team/ionic-framework/issues/27529)) ([f2c1845](https://github.com/ionic-team/ionic-framework/commit/f2c1845fba11d8273331c601052f0f34457b6649)), closes [#25945](https://github.com/ionic-team/ionic-framework/issues/25945)
+* **input:** add experimental label slot ([#27650](https://github.com/ionic-team/ionic-framework/issues/27650)) ([a45395c](https://github.com/ionic-team/ionic-framework/commit/a45395cc02b2617b80e6c2389fa745e7c20540fc)), closes [#27061](https://github.com/ionic-team/ionic-framework/issues/27061)
+* **range:** add label prop ([#27408](https://github.com/ionic-team/ionic-framework/issues/27408)) ([368add2](https://github.com/ionic-team/ionic-framework/commit/368add2a5ca3820a1f9623c96d29bcccfa693fdc))
+* **segment, segment-button:** update segment value property to accept numbers ([#27222](https://github.com/ionic-team/ionic-framework/issues/27222)) ([ec95ae5](https://github.com/ionic-team/ionic-framework/commit/ec95ae5cd38e3d2b9ec9fdbc9e237fa1241f7a4e)), closes [#27221](https://github.com/ionic-team/ionic-framework/issues/27221)
+* **segment:** display segment as a grid and add an ellipsis to overflowing text in a segment button  ([#27457](https://github.com/ionic-team/ionic-framework/issues/27457)) ([448e63f](https://github.com/ionic-team/ionic-framework/commit/448e63fef0aca603214cb357dec37e1db2a0f052)), closes [#16532](https://github.com/ionic-team/ionic-framework/issues/16532)
+* **select:** add label slot ([#27545](https://github.com/ionic-team/ionic-framework/issues/27545)) ([af92cb2](https://github.com/ionic-team/ionic-framework/commit/af92cb28c8819c88b40192b5dcbafedc1eb2064a)), closes [#26838](https://github.com/ionic-team/ionic-framework/issues/26838)
+* **select:** add props to customize toggle icons ([#27648](https://github.com/ionic-team/ionic-framework/issues/27648)) ([95e28b6](https://github.com/ionic-team/ionic-framework/commit/95e28b6629843af7dce62f20bc8e31adfb391990)), closes [#17248](https://github.com/ionic-team/ionic-framework/issues/17248)
+* **select:** expose container and label as CSS parts  ([#27541](https://github.com/ionic-team/ionic-framework/issues/27541)) ([5c10f88](https://github.com/ionic-team/ionic-framework/commit/5c10f88b2eb4d869966ea9a6d1db34185cefe676)), closes [#27112](https://github.com/ionic-team/ionic-framework/issues/27112)
+* **textarea:** add experimental label slot ([#27677](https://github.com/ionic-team/ionic-framework/issues/27677)) ([8bcd9e8](https://github.com/ionic-team/ionic-framework/commit/8bcd9e8b35f252a4efaec7a7be7d69a70beefa9f)), closes [#27061](https://github.com/ionic-team/ionic-framework/issues/27061)
+
+
+
+
+
 ## [7.0.14](https://github.com/ionic-team/ionic-framework/compare/v7.0.13...v7.0.14) (2023-06-15)
 
 

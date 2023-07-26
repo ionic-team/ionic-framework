@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Input - Slot</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(250px, 1fr));
+        grid-row-gap: 20px;
+        grid-column-gap: 20px;
+      }
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+
+        color: #6f7378;
+
+        margin-top: 10px;
+      }
+      @media screen and (max-width: 800px) {
+        .grid {
+          grid-template-columns: 1fr;
+          padding: 0;
+        }
+      }
+
+      .required {
+        color: red;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Input - Slot</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content id="content" class="ion-padding">
+        <div class="grid">
+          <div class="grid-item">
+            <h2>No Fill / Start</h2>
+            <ion-input label-placement="start" value="hi@ionic.io">
+              <div slot="label">Email <span class="required">*</span></div>
+            </ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Solid / Start</h2>
+            <ion-input label-placement="start" fill="solid" value="hi@ionic.io">
+              <div slot="label">Email <span class="required">*</span></div>
+            </ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Outline / Start</h2>
+            <ion-input label-placement="start" fill="outline" value="hi@ionic.io">
+              <div slot="label">Email <span class="required">*</span></div>
+            </ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>No Fill / Floating</h2>
+            <ion-input label-placement="floating" value="hi@ionic.io">
+              <div slot="label">Email <span class="required">*</span></div>
+            </ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Solid / Floating</h2>
+            <ion-input label-placement="floating" fill="solid" value="hi@ionic.io">
+              <div slot="label">Email <span class="required">*</span></div>
+            </ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Outline / Floating</h2>
+            <ion-input label-placement="floating" fill="outline" value="hi@ionic.io">
+              <div slot="label">Email <span class="required">*</span></div>
+            </ion-input>
+          </div>
+
+          <div class="grid-item">
+            <h2>Outline / Floating / Async</h2>
+            <ion-input id="solid-async" label-placement="floating" fill="outline" value="hi@ionic.io"></ion-input>
+          </div>
+        </div>
+
+        <ion-button onclick="addSlot()">Add Slotted Content</ion-button>
+        <ion-button onclick="updateSlot()">Update Slotted Content</ion-button>
+        <ion-button onclick="removeSlot()">Remove Slotted Content</ion-button>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      const solidAsync = document.querySelector('#solid-async');
+
+      const getSlottedContent = () => {
+        return solidAsync.querySelector('[slot="label"]');
+      };
+
+      const addSlot = () => {
+        if (getSlottedContent() === null) {
+          const labelEl = document.createElement('div');
+          labelEl.slot = 'label';
+          labelEl.innerHTML = 'Email <span class="required">*</span>';
+
+          solidAsync.appendChild(labelEl);
+        }
+      };
+
+      const removeSlot = () => {
+        if (getSlottedContent() !== null) {
+          solidAsync.querySelector('[slot="label"]').remove();
+        }
+      };
+
+      const updateSlot = () => {
+        const slottedContent = getSlottedContent();
+
+        if (slottedContent !== null) {
+          slottedContent.textContent = 'This is my really really really long text';
+        }
+      };
+    </script>
+  </body>
+</html>

@@ -1,6 +1,7 @@
+import { createAnimation } from '@utils/animation/animation';
+import { getElementRoot } from '@utils/helpers';
+
 import type { Animation } from '../../../interface';
-import { createAnimation } from '../../../utils/animation/animation';
-import { getElementRoot } from '../../../utils/helpers';
 import { SwipeToCloseDefaults } from '../gestures/swipe-to-close';
 import type { ModalAnimationOptions } from '../modal-interface';
 
@@ -50,9 +51,9 @@ export const iosLeaveAnimation = (baseEl: HTMLElement, opts: ModalAnimationOptio
 
         presentingEl.style.setProperty('overflow', '');
 
-        const numModals = Array.from(bodyEl.querySelectorAll('ion-modal')).filter(
-          (m) => m.presentingElement !== undefined
-        ).length;
+        const numModals = (
+          Array.from(bodyEl.querySelectorAll('ion-modal:not(.overlay-hidden)')) as HTMLIonModalElement[]
+        ).filter((m) => m.presentingElement !== undefined).length;
         if (numModals <= 1) {
           bodyEl.style.setProperty('background-color', '');
         }
