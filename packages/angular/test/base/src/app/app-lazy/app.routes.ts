@@ -24,6 +24,7 @@ export const routes: Routes = [
     path: '',
     component: AppComponent,
     children: [
+      { path: '', component: HomePageComponent },
       { path: 'version-test', loadChildren: () => import('../version-test').then(m => m.VersionTestModule) },
       { path: 'accordions', component: AccordionComponent },
       { path: 'alerts', component: AlertComponent },
