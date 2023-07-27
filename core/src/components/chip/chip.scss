@@ -8,10 +8,10 @@
   --background: #{rgba($text-color-rgb, .12)};
   --color: #{rgba($text-color-rgb, .87)};
 
-  @include border-radius(calc(16 / 14 * 1em));
+  @include border-radius(16px);
   @include font-smoothing();
-  @include margin(calc(4 / 14 * 1em));
-  @include padding(0.5em, calc(12 / 14 * 1em));
+  @include margin(4px);
+  @include padding(7px, 12px);
 
   display: inline-flex;
 
@@ -92,11 +92,11 @@
 }
 
 ::slotted(ion-icon:first-child) {
-  @include margin(calc(1 / 5 * -1em), calc(2 / 5 * 1em), calc(1 / 5 * -1em), calc(1 / 5 * -1em));
+  @include margin(-4px, 8px, -4px, -4px);
 }
 
 ::slotted(ion-icon:last-child) {
-  @include margin(calc(1 / 5 * -1em), calc(1 / 5 * -1em), calc(1 / 5 * -1em), calc(2 / 5 * 1em));
+  @include margin(-4px, -4px, -4px, 8px);
 }
 
 // Chip Avatar
@@ -107,13 +107,12 @@
 }
 
 ::slotted(ion-avatar:first-child) {
-  @include margin(calc(4 / 14 * -1em), calc(8 / 14 * 1em), calc(4 / 14 * -1em), calc(8 / 14 * -1em));
+  @include margin(-4px, 8px, -4px, -8px);
 }
 
 ::slotted(ion-avatar:last-child) {
-  @include margin(calc(4 / 14 * -1em), calc(8 / 14 * -1em), calc(4 / 14 * -1em), calc(8 / 14 * 1em));
+  @include margin(-4px, -8px, -4px, 8px);
 }
-
 
 // Chip: Focus
 // ---------------------------------------------
