@@ -25,7 +25,7 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, screenshot, c
       await expect(datetimeButton).toHaveScreenshot(screenshot(`datetime-button-scale`));
     });
 
-    test('should truncate text on larger font sizes', async ({ page }) => {
+    test('should wrap text on larger font sizes', async ({ page }) => {
       await page.setContent(
         `
         <style>
@@ -41,10 +41,10 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, screenshot, c
 
       const datetimeButton = page.locator('ion-datetime-button');
 
-      await expect(datetimeButton).toHaveScreenshot(screenshot(`datetime-button-scale-truncate`));
+      await expect(datetimeButton).toHaveScreenshot(screenshot(`datetime-button-scale-wrap`));
     });
 
-    test('should truncate text on larger font sizes inside of an item', async ({ page }) => {
+    test('should wrap text on larger font sizes inside of an item', async ({ page }) => {
       await page.setContent(
         `
         <style>
@@ -63,7 +63,7 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, screenshot, c
 
       const datetimeButton = page.locator('ion-datetime-button');
 
-      await expect(datetimeButton).toHaveScreenshot(screenshot(`datetime-button-scale-truncate-item`));
+      await expect(datetimeButton).toHaveScreenshot(screenshot(`datetime-button-scale-wrap-item`));
     });
   });
 });
