@@ -6,17 +6,17 @@
 :host {
   display: flex;
 
+  flex-wrap: wrap;
+
   align-items: center;
 
   justify-content: center;
-
-  min-width: 0;
 }
 
 :host button {
   @include border-radius(8px);
   @include padding(6px, 12px, 6px, 12px);
-  @include margin(0px, 2px, 0px, 2px);
+  @include margin(2px);
 
   position: relative;
 
@@ -30,10 +30,6 @@
 
   font-family: inherit;
   font-size: 1rem;
-
-  text-overflow: ellipsis;
-
-  white-space: nowrap;
 
   cursor: pointer;
 
