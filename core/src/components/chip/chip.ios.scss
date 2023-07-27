@@ -8,18 +8,3 @@
    */
   font-size: clamp(13px, 0.875rem, 22px);
 }
-
-// Chip Avatar
-// ---------------------------------------------
-
-::slotted(ion-avatar) {
-  width: 1.5em;
-  height: 1.5em;
-}
-
-// Chip Icon
-// ---------------------------------------------
-
-::slotted(ion-icon) {
-  font-size: 1.25em;
-}

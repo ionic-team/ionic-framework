@@ -87,6 +87,10 @@
 // Chip Icon
 // ---------------------------------------------
 
+::slotted(ion-icon) {
+  font-size: 1.25em;
+}
+
 :host(:not(.ion-color)) ::slotted(ion-icon) {
   color: rgba($text-color-rgb, .54);
 }
@@ -103,6 +107,8 @@
 // ---------------------------------------------
 
 ::slotted(ion-avatar) {
+  width: 1.5em;
+  height: 1.5em;
   flex-shrink: 0;
 }
 
