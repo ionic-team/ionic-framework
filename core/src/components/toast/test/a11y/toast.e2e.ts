@@ -49,15 +49,8 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
 
       const toastButton = page.locator('#aria-label-toast .toast-button');
 
-      /**
-       * expect().toHaveAttribute() can't check for a null value, so grab and check
-       * the value manually instead.
-       */
-      const ariaLabelledBy = await toastButton.getAttribute('aria-labelledby');
-      expect(ariaLabelledBy).toBe('close-label');
-
-      const ariaLabel = await toastButton.getAttribute('aria-label');
-      expect(ariaLabel).toBe('close button');
+      await expect(toastButton).toHaveAttribute('aria-labelledby', 'close-label');
+      await expect(toastButton).toHaveAttribute('aria-label', 'close button');
     });
   });
 });
