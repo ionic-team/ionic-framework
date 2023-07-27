@@ -73,15 +73,8 @@ configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
 
       const alertButton = page.locator('ion-alert .alert-button');
 
-      /**
-       * expect().toHaveAttribute() can't check for a null value, so grab and check
-       * the value manually instead.
-       */
-      const ariaLabelledBy = await alertButton.getAttribute('aria-labelledby');
-      expect(ariaLabelledBy).toBe('close-label');
-
-      const ariaLabel = await alertButton.getAttribute('aria-label');
-      expect(ariaLabel).toBe('close button');
+      await expect(alertButton).toHaveAttribute('aria-labelledby', 'close-label');
+      await expect(alertButton).toHaveAttribute('aria-label', 'close button');
     });
   });
 });
