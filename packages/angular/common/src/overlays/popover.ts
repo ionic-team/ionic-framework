@@ -82,6 +82,7 @@ export const POPOVER_METHODS = ['present', 'dismiss', 'onDidDismiss', 'onWillDis
  * lazy loaded popover.
  */
 @Directive({
+  selector: 'ion-popover',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: POPOVER_INPUTS
 })
