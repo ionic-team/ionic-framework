@@ -24,8 +24,8 @@ const testAria = async (page: E2EPage, buttonID: string, expectedAriaLabelledBy:
 const testAriaButton = async (
   page: E2EPage,
   buttonID: string,
-  expectedAriaLabelledBy: string | null,
-  expectedAriaLabel: string | null
+  expectedAriaLabelledBy: string,
+  expectedAriaLabel: string
 ) => {
   const didPresent = await page.spyOnEvent('ionActionSheetDidPresent');
 
@@ -36,15 +36,8 @@ const testAriaButton = async (
 
   const actionSheetButton = page.locator('ion-action-sheet .action-sheet-button');
 
-  /**
-   * expect().toHaveAttribute() can't check for a null value, so grab and check
-   * the value manually instead.
-   */
-  const ariaLabelledBy = await actionSheetButton.getAttribute('aria-labelledby');
-  expect(ariaLabelledBy).toBe(expectedAriaLabelledBy);
-
-  const ariaLabel = await actionSheetButton.getAttribute('aria-label');
-  expect(ariaLabel).toBe(expectedAriaLabel);
+  await expect(actionSheetButton).toHaveAttribute('aria-labelledby', expectedAriaLabelledBy);
+  await expect(actionSheetButton).toHaveAttribute('aria-label', expectedAriaLabel);
 };
 
 configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
