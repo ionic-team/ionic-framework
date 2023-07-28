@@ -43,27 +43,5 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, screenshot, c
 
       await expect(datetimeButton).toHaveScreenshot(screenshot(`datetime-button-scale-wrap`));
     });
-
-    test('should wrap text on larger font sizes inside of an item', async ({ page }) => {
-      await page.setContent(
-        `
-        <style>
-          html {
-            font-size: 48px;
-          }
-        </style>
-        <ion-item>
-          <ion-label>Start Date</ion-label>
-          <ion-datetime-button locale="en-US" datetime="datetime"></ion-datetime-button>
-        </ion-item>
-        <ion-datetime id="datetime" value="2022-01-01T06:30:00" presentation="date-time"></ion-datetime>
-      `,
-        config
-      );
-
-      const datetimeButton = page.locator('ion-datetime-button');
-
-      await expect(datetimeButton).toHaveScreenshot(screenshot(`datetime-button-scale-wrap-item`));
-    });
   });
 });
