@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Directive, ElementRef, NgZone } from '@angular/core';
+import { Component, Directive } from '@angular/core';
 
 import { IonBackButton as IonBackButtonBase, IonBackButtonDelegate as IonBackButtonDelegateBase } from '@ionic/angular';
 import { defineCustomElement } from '@ionic/core/components/ion-back-button.js';
@@ -11,7 +11,7 @@ import { ProxyCmp } from '@ionic/angular/common';
 class IonBackButtonDelegate extends IonBackButtonDelegateBase {}
 
 @ProxyCmp({
-  inputs: ['color', 'defaultHref', 'disabled', 'icon', 'mode', 'routerAnimation', 'text', 'type']
+  defineCustomElementFn: defineCustomElement
 })
 @Component({
   selector: 'ion-back-button',
@@ -21,9 +21,4 @@ class IonBackButtonDelegate extends IonBackButtonDelegateBase {}
   inputs: ['color', 'defaultHref', 'disabled', 'icon', 'mode', 'routerAnimation', 'text', 'type'],
   imports: [IonBackButtonDelegate]
 })
-export class IonBackButton extends IonBackButtonBase {
-  constructor(c: ChangeDetectorRef, r: ElementRef, z: NgZone) {
-    super(c, r, z);
-    defineCustomElement();
-  }
-}
+export class IonBackButton extends IonBackButtonBase {}
