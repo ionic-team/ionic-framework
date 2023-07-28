@@ -34,7 +34,7 @@ $button-ios-height:                                   3.1em !default;
 $button-ios-border-radius:                            14px !default;
 
 /// @prop - Font size of the button text
-$button-ios-font-size:                                16px !default;
+$button-ios-font-size:                                min(1rem, 23px) !default;
 
 /// @prop - Font weight of the button text
 $button-ios-font-weight:                              500 !default;
@@ -83,7 +83,7 @@ $button-ios-large-height:                             3.1em !default;
 $button-ios-large-border-radius:                      16px !default;
 
 /// @prop - Font size of the large button
-$button-ios-large-font-size:                          20px !default;
+$button-ios-large-font-size:                          1.25rem !default;
 
 
 // iOS Small Button
@@ -108,7 +108,7 @@ $button-ios-small-height:                             2.1em !default;
 $button-ios-small-border-radius:                      6px !default;
 
 /// @prop - Font size of the small button
-$button-ios-small-font-size:                          13px !default;
+$button-ios-small-font-size:                          0.8125rem !default;
 
 
 // iOS Outline Button
@@ -151,13 +151,13 @@ $button-ios-outline-background-color-focused:         ion-color(primary, base, $
 // --------------------------------------------------
 
 /// @prop - Font size of the clear button
-$button-ios-clear-font-size:                          17px !default;
+$button-ios-clear-font-size:                          min(1.0625rem, 23px) !default;
 
 /// @prop - Font weight of the clear button
 $button-ios-clear-font-weight:                        normal !default;
 
 /// @prop - Letter spacing of the button
-$button-ios-letter-spacing:                     0 !default;
+$button-ios-letter-spacing:                           0 !default;
 
 /// @prop - Border color of the clear button
 $button-ios-clear-border-color:                       transparent !default;
