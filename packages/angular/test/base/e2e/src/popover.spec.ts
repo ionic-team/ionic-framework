@@ -1,6 +1,6 @@
 describe('Popovers: Inline', () => {
   beforeEach(() => {
-    cy.visit('/popover-inline');
+    cy.visit('/lazy/popover-inline');
   });
 
   it('should initially have no items', () => {

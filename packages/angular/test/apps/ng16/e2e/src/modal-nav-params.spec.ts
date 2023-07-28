@@ -1,7 +1,7 @@
 describe('Modal Nav Params', () => {
 
   beforeEach(() => {
-    cy.visit('/version-test/modal-nav-params');
+    cy.visit('/lazy/version-test/modal-nav-params');
   });
 
   it('should assign the rootParams when presented in a modal multiple times', () => {

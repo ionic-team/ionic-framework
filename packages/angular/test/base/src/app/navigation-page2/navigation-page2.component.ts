@@ -12,6 +12,6 @@ export class NavigationPage2Component {
   ) {}
 
   ionViewDidEnter() {
-    this.navController.navigateForward('/navigation/page1');
+    this.navController.navigateForward('/lazy/navigation/page1');
   }
 }

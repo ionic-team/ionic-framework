@@ -1,6 +1,6 @@
 describe('Form', () => {
   beforeEach(() => {
-    cy.visit('/form');
+    cy.visit('/lazy/form');
   })
 
   describe('status updates', () => {

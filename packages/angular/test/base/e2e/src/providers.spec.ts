@@ -1,6 +1,6 @@
 describe('Providers', () => {
   beforeEach(() => {
-    cy.visit('/providers');
+    cy.visit('/lazy/providers');
   })
 
   it('should load all providers', () => {
@@ -17,13 +17,13 @@ describe('Providers', () => {
   });
 
   it('should detect testing mode', () => {
-    cy.visit('/providers?ionic:_testing=true');
+    cy.visit('/lazy/providers?ionic:_testing=true');
 
     cy.get('#is-testing').should('have.text', 'true');
   });
 
   it('should get query params', () => {
-    cy.visit('/providers?firstParam=abc&secondParam=true');
+    cy.visit('/lazy/providers?firstParam=abc&secondParam=true');
 
     cy.get('#query-params').should('have.text', 'firstParam: abc, firstParam: true');
   })

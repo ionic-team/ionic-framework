@@ -1,10 +1,10 @@
 describe('Navigation', () => {
   beforeEach(() => {
-    cy.visit('/navigation');
+    cy.visit('/lazy/navigation');
   })
 
   it('should navigate correctly', () => {
-    cy.visit('/navigation/page1');
+    cy.visit('/lazy/navigation/page1');
     cy.wait(2000);
     cy.testStack('ion-router-outlet', ['app-navigation-page2', 'app-navigation-page1']);
 

@@ -21,19 +21,19 @@ export class RouterLinkComponent implements OnInit, ViewWillEnter, ViewDidEnter,
   ) {}
 
   navigate() {
-    this.router.navigateByUrl('/router-link-page');
+    this.router.navigateByUrl('/lazy/router-link-page');
   }
 
   navigateForward() {
-    this.navCtrl.navigateForward('/router-link-page');
+    this.navCtrl.navigateForward('/lazy/router-link-page');
   }
 
   navigateBack() {
-    this.navCtrl.navigateBack('/router-link-page');
+    this.navCtrl.navigateBack('/lazy/router-link-page');
   }
 
   navigateRoot() {
-    this.navCtrl.navigateRoot('/router-link-page');
+    this.navCtrl.navigateRoot('/lazy/router-link-page');
   }
 
   counter() {

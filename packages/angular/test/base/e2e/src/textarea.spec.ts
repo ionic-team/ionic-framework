@@ -1,5 +1,5 @@
 describe('Textarea', () => {
-  beforeEach(() => cy.visit('/textarea'));
+  beforeEach(() => cy.visit('/lazy/textarea'));
 
   it('should become valid', () => {
     cy.get('#status').should('have.text', 'INVALID');

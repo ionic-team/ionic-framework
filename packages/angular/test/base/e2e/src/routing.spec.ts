@@ -1,6 +1,6 @@
 describe('Routing', () => {
   beforeEach(() => {
-    cy.visit('/router-link?ionic:mode=ios');
+    cy.visit('/lazy/router-link?ionic:mode=ios');
   })
 
   it('should swipe and abort', () => {
