@@ -7,6 +7,7 @@ export const routes: Routes = [
     component: AppComponent,
     children: [
       { path: 'test', loadComponent: () => import('../test/test.component').then(m => m.TestComponent) },
+      { path: 'modal', loadComponent: () => import('../modal/modal.component').then(m => m.ModalComponent) },
     ]
   },
 ];
