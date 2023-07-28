@@ -7,7 +7,7 @@ import { RadioFixture } from '../fixtures';
  * This behavior does not var across modes/directions.
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
-  test.describe(title('radio-group: state'), () => {
+  test.describe(title('radio-group: search'), () => {
     test('radio should remain checked after being removed/readded to the dom', async ({ page }) => {
       await page.goto('/src/components/radio-group/test/search', config);
 
