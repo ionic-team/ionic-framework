@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.2.2-nightly.20230728](https://github.com/ionic-team/ionic-framework/compare/v7.2.1...v7.2.2-nightly.20230728) (2023-07-28)
+
+
+### Bug Fixes
+
+* **item-options:** use correct safe area padding ([#27853](https://github.com/ionic-team/ionic-framework/issues/27853)) ([0b8f1bc](https://github.com/ionic-team/ionic-framework/commit/0b8f1bc7dd4170a2a8c9ed3aede173dd489b25ea))
+
+
+
+
+
 ## [7.2.1](https://github.com/ionic-team/ionic-framework/compare/v7.2.0...v7.2.1) (2023-07-26)
 
 
