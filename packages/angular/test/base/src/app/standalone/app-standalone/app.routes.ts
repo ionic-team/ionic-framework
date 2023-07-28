@@ -6,7 +6,7 @@ export const routes: Routes = [
     path: '',
     component: AppComponent,
     children: [
-      { path: 'test', loadComponent: () => import('../test/test.component').then(m => m.TestComponent) },
+      { path: 'popover', loadComponent: () => import('../popover/popover.component').then(m => m.PopoverComponent) },
     ]
   },
 ];
