@@ -1,3 +1,2 @@
-// This is required to get ng-packagr to build.
-// Remove this when you actually have something to export
-export const placeholder = true;
+export { IonModal, MODAL_INPUTS, MODAL_METHODS } from './overlays/modal';
+export { ProxyCmp } from './utils';
