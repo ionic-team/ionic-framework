@@ -129,3 +129,5 @@ export {
   ToggleChangeEventDetail,
   ToggleCustomEvent,
 } from '@ionic/core';
+
+export { ProxyCmp } from './directives/angular-component-lib/utils';
