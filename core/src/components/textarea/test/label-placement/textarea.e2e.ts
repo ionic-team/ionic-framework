@@ -304,6 +304,10 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
   });
   test.describe(title('textarea: floating/stacked label layering'), () => {
     test('label should not be covered by text field', async ({ page }) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/27812',
+      });
       await page.setContent(
         `
         <style>
