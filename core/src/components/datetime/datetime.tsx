@@ -5,7 +5,7 @@ import { getElementRoot, raf, renderHiddenInput } from '@utils/helpers';
 import { printIonError, printIonWarning } from '@utils/logging';
 import { isRTL } from '@utils/rtl';
 import { createColorClasses } from '@utils/theme';
-import { caretDownSharp, caretUpSharp, chevronBack, chevronDown, chevronForward } from 'ionicons/icons';
+import { caretDownSharp, chevronBack, chevronForward } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Color, Mode, StyleEventDetail } from '../../interface';
@@ -1917,7 +1917,6 @@ export class Datetime implements ComponentInterface {
    */
 
   private renderCalendarHeader(mode: Mode) {
-    const expandedIcon = mode === 'ios' ? chevronDown : caretUpSharp;
     const collapsedIcon = mode === 'ios' ? chevronForward : caretDownSharp;
 
     const prevMonthDisabled = isPrevMonthDisabled(this.workingParts, this.minParts, this.maxParts);
@@ -1961,7 +1960,10 @@ export class Datetime implements ComponentInterface {
                 {getMonthAndYear(this.locale, this.workingParts)}
                 <ion-icon
                   aria-hidden="true"
-                  icon={this.showMonthAndYear ? expandedIcon : collapsedIcon}
+                  class={{
+                    'icon-expanded': this.showMonthAndYear,
+                  }}
+                  icon={collapsedIcon}
                   lazy={false}
                   flipRtl={true}
                 ></ion-icon>

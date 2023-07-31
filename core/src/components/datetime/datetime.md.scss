@@ -39,6 +39,14 @@
   --color: #{$text-color-step-350};
 }
 
+.calendar-action-buttons ion-icon {
+  transition: 0.2s transform linear;
+}
+
+.calendar-action-buttons ion-icon.icon-expanded {
+  transform: rotate(180deg);
+}
+
 // Calendar / Header / Days of Week
 // -----------------------------------
 :host .calendar-days-of-week {

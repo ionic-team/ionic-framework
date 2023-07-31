@@ -20,7 +20,7 @@
   @include padding($datetime-ios-padding, $datetime-ios-padding, $datetime-ios-padding, $datetime-ios-padding);
 
   border-bottom: $datetime-ios-border-color;
-  
+
   font-size: 14px;
 }
 
@@ -54,6 +54,14 @@
 
 :host .calendar-action-buttons ion-buttons ion-button {
   @include margin(0, 0, 0, 0);
+}
+
+.calendar-action-buttons ion-icon {
+  transition: 0.2s transform linear;
+}
+
+.calendar-action-buttons ion-icon.icon-expanded {
+  transform: rotate(90deg);
 }
 
 // Calendar / Header / Days of Week
