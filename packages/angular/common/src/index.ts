@@ -9,6 +9,7 @@ export { ToastController } from './providers/toast-controller';
 
 export { AnimationController } from './providers/animation-controller';
 export { GestureController } from './providers/gesture-controller';
+export { DomController } from './providers/dom-controller';
 
 export { Config, ConfigToken } from './providers/config';
 
