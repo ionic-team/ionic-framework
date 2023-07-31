@@ -1917,7 +1917,7 @@ export class Datetime implements ComponentInterface {
    */
 
   private renderCalendarHeader(mode: Mode) {
-    const collapsedIcon = mode === 'ios' ? chevronForward : caretDownSharp;
+    const icon = mode === 'ios' ? chevronForward : caretDownSharp;
 
     const prevMonthDisabled = isPrevMonthDisabled(this.workingParts, this.minParts, this.maxParts);
     const nextMonthDisabled = isNextMonthDisabled(this.workingParts, this.maxParts);
@@ -1963,7 +1963,7 @@ export class Datetime implements ComponentInterface {
                   class={{
                     'icon-expanded': this.showMonthAndYear,
                   }}
-                  icon={collapsedIcon}
+                  icon={icon}
                   lazy={false}
                   flipRtl={true}
                 ></ion-icon>
