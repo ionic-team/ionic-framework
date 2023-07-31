@@ -46,7 +46,7 @@ export declare interface IonPopover extends Components.IonPopover {
   didDismiss: EventEmitter<CustomEvent>;
 }
 
-export const POPOVER_INPUTS = [
+const POPOVER_INPUTS = [
   'alignment',
   'animated',
   'arrow',
@@ -69,7 +69,7 @@ export const POPOVER_INPUTS = [
   'side',
 ];
 
-export const POPOVER_METHODS = ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss'];
+const POPOVER_METHODS = ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss'];
 
 @ProxyCmp({
   inputs: POPOVER_INPUTS,
