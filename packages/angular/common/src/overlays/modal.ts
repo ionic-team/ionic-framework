@@ -50,7 +50,7 @@ export declare interface IonModal extends Components.IonModal {
   didDismiss: EventEmitter<CustomEvent>;
 }
 
-export const MODAL_INPUTS = [
+const MODAL_INPUTS = [
   'animated',
   'keepContentsMounted',
   'backdropBreakpoint',
@@ -73,7 +73,7 @@ export const MODAL_INPUTS = [
   'trigger',
 ];
 
-export const MODAL_METHODS = ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss', 'setCurrentBreakpoint', 'getCurrentBreakpoint'];
+const MODAL_METHODS = ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss', 'setCurrentBreakpoint', 'getCurrentBreakpoint'];
 
 @ProxyCmp({
   inputs: MODAL_INPUTS,
