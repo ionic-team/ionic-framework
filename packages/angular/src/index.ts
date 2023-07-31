@@ -33,7 +33,7 @@ export {
   Config,
   Platform,
   AngularDelegate,
-  NavParams
+  NavParams,
 } from '@ionic/angular/common';
 export { NavController } from './providers/nav-controller';
 
