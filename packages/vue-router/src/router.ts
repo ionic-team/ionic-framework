@@ -186,10 +186,10 @@ export const createIonRouter = (
           router.go(prevInfo.position - routeInfo.position);
         }
       } else {
-        handleNavigate(defaultHref, "pop", "back");
+        handleNavigate(defaultHref, "pop", "back", routerAnimation);
       }
     } else {
-      handleNavigate(defaultHref, "pop", "back");
+      handleNavigate(defaultHref, "pop", "back", routerAnimation);
     }
   };
 
