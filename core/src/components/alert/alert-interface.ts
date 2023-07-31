@@ -48,6 +48,7 @@ export interface AlertButton {
   role?: 'cancel' | 'destructive' | string;
   cssClass?: string | string[];
   id?: string;
+  htmlAttributes?: { [key: string]: any };
   // TODO(FW-2832): type
   handler?: (value: any) => AlertButtonOverlayHandler | Promise<AlertButtonOverlayHandler>;
 }
