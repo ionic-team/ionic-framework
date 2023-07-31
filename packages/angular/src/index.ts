@@ -19,7 +19,6 @@ export { IonPopover } from './directives/overlays/popover';
 export * from './directives/proxies';
 
 // PROVIDERS
-export { AngularDelegate } from './providers/angular-delegate';
 export {
   ActionSheetController,
   AlertController,
@@ -36,6 +35,8 @@ export {
 
   Config,
   Platform,
+
+  AngularDelegate,
 } from '@ionic/angular/common';
 export { NavController } from './providers/nav-controller';
 

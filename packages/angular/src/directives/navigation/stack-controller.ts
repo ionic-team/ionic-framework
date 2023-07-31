@@ -3,7 +3,7 @@ import { ComponentRef, NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AnimationBuilder, RouterDirection } from '@ionic/core';
 
-import { bindLifecycleEvents } from '../../providers/angular-delegate';
+import { bindLifecycleEvents } from '@ionic/angular/common';
 import { NavController } from '../../providers/nav-controller';
 
 import {

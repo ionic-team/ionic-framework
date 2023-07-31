@@ -14,4 +14,6 @@ export { DomController } from './providers/dom-controller';
 export { Config, ConfigToken } from './providers/config';
 export { Platform } from './providers/platform';
 
+export { bindLifecycleEvents, AngularDelegate } from './providers/angular-delegate';
+
 export type { IonicWindow } from './types/interfaces';
