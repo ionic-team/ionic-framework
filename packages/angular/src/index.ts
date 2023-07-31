@@ -35,8 +35,8 @@ export {
   DomController,
 
   Config,
+  Platform,
 } from '@ionic/angular/common';
-export { Platform } from './providers/platform';
 export { NavController } from './providers/nav-controller';
 
 // ROUTER STRATEGY

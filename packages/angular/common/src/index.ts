@@ -12,5 +12,6 @@ export { GestureController } from './providers/gesture-controller';
 export { DomController } from './providers/dom-controller';
 
 export { Config, ConfigToken } from './providers/config';
+export { Platform } from './providers/platform';
 
 export type { IonicWindow } from './types/interfaces';

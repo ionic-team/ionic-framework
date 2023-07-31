@@ -5,7 +5,7 @@ import { AnimationBuilder, NavDirection, RouterDirection } from '@ionic/core';
 
 import { IonRouterOutlet } from '../directives/navigation/ion-router-outlet';
 
-import { Platform } from './platform';
+import { Platform } from '@ionic/angular/common';
 
 export interface AnimationOptions {
   animated?: boolean;
