@@ -65,7 +65,8 @@
             if (d.value.includes(query)) {
               html += `
               <ion-item>
-                <ion-radio value="${d.value}">Item ${d.value}</ion-radio>
+                <ion-label>Item ${d.value}</ion-label>
+                <ion-radio value="${d.value}"></ion-radio>
               </ion-item>
             `;
             }

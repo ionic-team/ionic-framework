@@ -398,7 +398,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     });
     const ariaDisabled = disabled || childStyles['item-interactive-disabled'] ? 'true' : null;
     const fillValue = fill || 'none';
-    const inList = hostContext('ion-list', this.el);
+    const inList = hostContext('ion-list', this.el) && !hostContext('ion-radio-group', this.el);
 
     return (
       <Host
