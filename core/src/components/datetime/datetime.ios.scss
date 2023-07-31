@@ -56,10 +56,6 @@
   @include margin(0, 0, 0, 0);
 }
 
-.calendar-action-buttons ion-icon {
-  transition: 0.2s transform linear;
-}
-
 .calendar-action-buttons ion-icon.icon-expanded {
   transform: rotate(90deg);
 }

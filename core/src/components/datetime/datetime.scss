@@ -244,6 +244,8 @@ ion-picker-column-internal {
 
 :host .calendar-action-buttons ion-item ion-icon {
   @include padding(4px);
+
+  transition: 0.2s transform linear;
 }
 
 // Calendar / Header / Days of Week
