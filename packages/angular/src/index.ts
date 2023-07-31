@@ -13,7 +13,6 @@ export {
   RouterLinkWithHrefDelegateDirective as RouterLinkWithHrefDelegate,
 } from './directives/navigation/router-link-delegate';
 
-export { NavParams } from './directives/navigation/nav-params';
 export { IonModal } from './directives/overlays/modal';
 export { IonPopover } from './directives/overlays/popover';
 export * from './directives/proxies';
@@ -34,6 +33,7 @@ export {
   Config,
   Platform,
   AngularDelegate,
+  NavParams
 } from '@ionic/angular/common';
 export { NavController } from './providers/nav-controller';
 

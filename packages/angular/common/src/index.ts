@@ -17,3 +17,5 @@ export { Platform } from './providers/platform';
 export { bindLifecycleEvents, AngularDelegate } from './providers/angular-delegate';
 
 export type { IonicWindow } from './types/interfaces';
+
+export { NavParams } from './directives/navigation/nav-params';
