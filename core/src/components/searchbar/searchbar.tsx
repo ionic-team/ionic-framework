@@ -27,6 +27,7 @@ export class Searchbar implements ComponentInterface {
   private isCancelVisible = false;
   private shouldAlignLeft = true;
   private originalIonInput?: EventEmitter<SearchbarInputEventDetail>;
+  private inputId = `ion-searchbar-${searchbarIds++}`;
 
   /**
    * The value of the input when the textarea is focused.
@@ -110,6 +111,11 @@ export class Searchbar implements ComponentInterface {
    * `"previous"`, `"search"`, and `"send"`.
    */
   @Prop() enterkeyhint?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
+
+  /**
+   * If used in a form, set the name of the control, which is submitted with the form data.
+   */
+  @Prop() name: string = this.inputId;
 
   /**
    * Set the input's placeholder.
@@ -588,6 +594,7 @@ export class Searchbar implements ComponentInterface {
             class="searchbar-input"
             inputMode={this.inputmode}
             enterKeyHint={this.enterkeyhint}
+            name={this.name}
             onInput={this.onInput}
             onChange={this.onChange}
             onBlur={this.onBlur}
@@ -639,3 +646,5 @@ export class Searchbar implements ComponentInterface {
     );
   }
 }
+
+let searchbarIds = 0;

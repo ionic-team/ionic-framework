@@ -154,12 +154,12 @@
 // --------------------------------------------------
 
 ::slotted(.button-small) {
-  --padding-top: 0px;
-  --padding-bottom: 0px;
+  --padding-top: 1px;
+  --padding-bottom: 1px;
   --padding-start: .5em;
   --padding-end: .5em;
 
-  height: 24px;
+  min-height: 24px;
 
   font-size: 13px;
 }

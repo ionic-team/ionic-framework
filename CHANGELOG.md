@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.2.1](https://github.com/ionic-team/ionic-framework/compare/v7.2.0...v7.2.1) (2023-07-26)
+
+
+### Bug Fixes
+
+* **item-sliding:** buttons are not interactive on close ([#27829](https://github.com/ionic-team/ionic-framework/issues/27829)) ([6e4919c](https://github.com/ionic-team/ionic-framework/commit/6e4919caff90fc60988e5cc85ad7161844eb5b51)), closes [#22722](https://github.com/ionic-team/ionic-framework/issues/22722)
+* **modal:** body background is reset with inline card modals ([#27835](https://github.com/ionic-team/ionic-framework/issues/27835)) ([38626d9](https://github.com/ionic-team/ionic-framework/commit/38626d96809d1c6be523ea62a4fac1dec73ee891)), closes [#27830](https://github.com/ionic-team/ionic-framework/issues/27830)
+
+
+
+
+
+# [7.2.0](https://github.com/ionic-team/ionic-framework/compare/v7.1.4...v7.2.0) (2023-07-19)
+
+
+### Features
+
+* **angular:** support binding routing data to component inputs ([#27694](https://github.com/ionic-team/ionic-framework/issues/27694)) ([90f4124](https://github.com/ionic-team/ionic-framework/commit/90f41243d9404caaad99076965b7cd649ddf7f33)), closes [#27476](https://github.com/ionic-team/ionic-framework/issues/27476)
+* **button:** allow button to increase in height when text wraps ([#27547](https://github.com/ionic-team/ionic-framework/issues/27547)) ([6fe716f](https://github.com/ionic-team/ionic-framework/commit/6fe716fd1320935632854e5d4f741b57801bda92))
+* **searchbar:** add name property ([#27737](https://github.com/ionic-team/ionic-framework/issues/27737)) ([7131037](https://github.com/ionic-team/ionic-framework/commit/71310372c94862342d607007ece127340df92a8c)), closes [#27675](https://github.com/ionic-team/ionic-framework/issues/27675)
+
+
+
+
+
+## [7.1.4](https://github.com/ionic-team/ionic-framework/compare/v7.1.3...v7.1.4) (2023-07-19)
+
+
+### Bug Fixes
+
+* **angular:** menu button is enabled with Angular Universal builds ([#27814](https://github.com/ionic-team/ionic-framework/issues/27814)) ([2cf1a0b](https://github.com/ionic-team/ionic-framework/commit/2cf1a0bcae7d766aa25951c53470876f9569906c)), closes [#27524](https://github.com/ionic-team/ionic-framework/issues/27524) [#22206](https://github.com/ionic-team/ionic-framework/issues/22206)
+* **button:** submit form when pressing enter key ([#27790](https://github.com/ionic-team/ionic-framework/issues/27790)) ([b78af75](https://github.com/ionic-team/ionic-framework/commit/b78af7598f19ca5e1b440ddc0091a62d86321066)), closes [#19368](https://github.com/ionic-team/ionic-framework/issues/19368)
+* **radio, checkbox, toggle:** add top and bottom margins when in ion-item ([#27788](https://github.com/ionic-team/ionic-framework/issues/27788)) ([35f0ec5](https://github.com/ionic-team/ionic-framework/commit/35f0ec581a55e0cb080f0793fb94d3e424c06d4d)), closes [#27498](https://github.com/ionic-team/ionic-framework/issues/27498)
+* safari no longer adjusts text in landscape ([#27787](https://github.com/ionic-team/ionic-framework/issues/27787)) ([66584b0](https://github.com/ionic-team/ionic-framework/commit/66584b03d0b33507170f954009998c72fb3f7755)), closes [#27782](https://github.com/ionic-team/ionic-framework/issues/27782)
+* **textarea:** stacked/floating textarea size is correct on safari ([#27766](https://github.com/ionic-team/ionic-framework/issues/27766)) ([2cb7013](https://github.com/ionic-team/ionic-framework/commit/2cb701395487c6a0304400f6b821659ae6def820)), closes [#27345](https://github.com/ionic-team/ionic-framework/issues/27345)
+
+
+
+
+
 ## [7.1.3](https://github.com/ionic-team/ionic-framework/compare/v7.1.2...v7.1.3) (2023-07-12)
 
 
