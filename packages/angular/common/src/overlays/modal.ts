@@ -73,7 +73,14 @@ const MODAL_INPUTS = [
   'trigger',
 ];
 
-const MODAL_METHODS = ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss', 'setCurrentBreakpoint', 'getCurrentBreakpoint'];
+const MODAL_METHODS = [
+  'present',
+  'dismiss',
+  'onDidDismiss',
+  'onWillDismiss',
+  'setCurrentBreakpoint',
+  'getCurrentBreakpoint',
+];
 
 @ProxyCmp({
   inputs: MODAL_INPUTS,
@@ -88,7 +95,7 @@ const MODAL_METHODS = ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss', 's
 @Directive({
   selector: 'ion-modal',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: MODAL_INPUTS
+  inputs: MODAL_INPUTS,
 })
 
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
