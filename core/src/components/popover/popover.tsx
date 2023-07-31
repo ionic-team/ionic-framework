@@ -180,7 +180,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
   /**
    * Describes how to calculate the popover width.
    * If `"cover"`, the popover width will match the width of the trigger.
-   * If `"auto"`, the popover width will be determined by its mode defaults.
+   * If `"auto"`, the popover width will be set to a static default value.
    */
   @Prop() size: PopoverSize = 'auto';
 
