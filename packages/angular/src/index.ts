@@ -20,13 +20,23 @@ export * from './directives/proxies';
 
 // PROVIDERS
 export { AngularDelegate } from './providers/angular-delegate';
-export { ActionSheetController, AlertController, LoadingController, MenuController, ModalController, PickerController, PopoverController, ToastController } from '@ionic/angular/common';
+export {
+  ActionSheetController,
+  AlertController,
+  LoadingController,
+  MenuController,
+  ModalController,
+  PickerController,
+  PopoverController,
+  ToastController,
+
+  AnimationController,
+  GestureController,
+} from '@ionic/angular/common';
 export { Platform } from './providers/platform';
 export { NavController } from './providers/nav-controller';
 export { DomController } from './providers/dom-controller';
 export { Config } from './providers/config';
-export { AnimationController } from './providers/animation-controller';
-export { GestureController } from './providers/gesture-controller';
 
 // ROUTER STRATEGY
 export { IonicRouteStrategy } from './util/ionic-router-reuse-strategy';
