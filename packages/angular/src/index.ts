@@ -28,14 +28,11 @@ export {
   PickerController,
   PopoverController,
   ToastController,
-
   AnimationController,
   GestureController,
   DomController,
-
   Config,
   Platform,
-
   AngularDelegate,
 } from '@ionic/angular/common';
 export { NavController } from './providers/nav-controller';

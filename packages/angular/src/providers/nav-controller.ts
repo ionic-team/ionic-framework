@@ -6,7 +6,6 @@ import { AnimationBuilder, NavDirection, RouterDirection } from '@ionic/core';
 
 import { IonRouterOutlet } from '../directives/navigation/ion-router-outlet';
 
-
 export interface AnimationOptions {
   animated?: boolean;
   animation?: AnimationBuilder;
