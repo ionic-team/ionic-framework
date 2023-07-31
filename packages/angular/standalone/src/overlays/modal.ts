@@ -9,7 +9,9 @@ import { defineCustomElement } from '@ionic/core/components/ion-modal.js';
 @Component({
   selector: 'ion-modal',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<ng-container [ngTemplateOutlet]="template" *ngIf="isCmpOpen || keepContentsMounted"></ng-container>`,
+  template: `<div class="ion-delegate-host ion-page" *ngIf="isCmpOpen || keepContentsMounted">
+    <ng-container [ngTemplateOutlet]="template"></ng-container>
+  </div>`,
   standalone: true,
   imports: [CommonModule],
 })
