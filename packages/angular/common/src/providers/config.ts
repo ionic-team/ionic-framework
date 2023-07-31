@@ -1,5 +1,5 @@
 import { Injectable, InjectionToken } from '@angular/core';
-import { Config as CoreConfig, IonicConfig } from '@ionic/core';
+import type { Config as CoreConfig, IonicConfig } from '@ionic/core/components';
 
 import { IonicWindow } from '../types/interfaces';
 

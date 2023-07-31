@@ -32,11 +32,12 @@ export {
 
   AnimationController,
   GestureController,
+
+  Config,
 } from '@ionic/angular/common';
 export { Platform } from './providers/platform';
 export { NavController } from './providers/nav-controller';
 export { DomController } from './providers/dom-controller';
-export { Config } from './providers/config';
 
 // ROUTER STRATEGY
 export { IonicRouteStrategy } from './util/ionic-router-reuse-strategy';

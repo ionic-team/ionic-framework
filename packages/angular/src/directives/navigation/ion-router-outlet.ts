@@ -26,7 +26,7 @@ import { Observable, BehaviorSubject, Subscription, combineLatest, of } from 'rx
 import { distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
 
 import { AnimationBuilder } from '../../ionic-core';
-import { Config } from '../../providers/config';
+import { Config } from '@ionic/angular/common';
 import { NavController } from '../../providers/nav-controller';
 
 import { StackController } from './stack-controller';

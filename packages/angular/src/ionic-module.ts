@@ -24,7 +24,7 @@ import { IonModal } from './directives/overlays/modal';
 import { IonPopover } from './directives/overlays/popover';
 import { DIRECTIVES } from './directives/proxies-list';
 import { AngularDelegate } from './providers/angular-delegate';
-import { ConfigToken } from './providers/config';
+import { ConfigToken } from '@ionic/angular/common';
 
 const DECLARATIONS = [
   // generated proxies
