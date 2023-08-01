@@ -34,12 +34,31 @@
           Present Controller Toast
         </ion-button>
 
+        <ion-button id="aria-label-toast-trigger">Present Aria Label Toast</ion-button>
+        <ion-toast
+          id="aria-label-toast"
+          trigger="aria-label-toast-trigger"
+          header="Aria Label Toast Header"
+          message="Aria Label Toast Message"
+        ></ion-toast>
+
         <ion-button onclick="updateContent()">Update Inner Content</ion-button>
       </main>
     </ion-app>
     <script>
       const inlineToast = document.querySelector('#inline-toast');
       inlineToast.buttons = ['Ok'];
+
+      const ariaLabelToast = document.querySelector('#aria-label-toast');
+      ariaLabelToast.buttons = [
+        {
+          icon: 'close',
+          htmlAttributes: {
+            'aria-label': 'close button',
+            'aria-labelledby': 'close-label',
+          },
+        },
+      ];
 
       const presentToast = async (opts) => {
         const toast = await toastController.create(opts);
