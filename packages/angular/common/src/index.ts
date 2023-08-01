@@ -24,4 +24,5 @@ export { IonRouterOutlet, INPUT_BINDER, RoutedComponentInputBinder } from './dir
 export type { StackEvent } from './directives/navigation/stack-utils';
 
 export { IonBackButton } from './directives/navigation/back-button';
+export { RouterLinkDelegateDirective, RouterLinkWithHrefDelegateDirective } from './directives/navigation/router-link-delegate';
 
