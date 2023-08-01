@@ -81,11 +81,11 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       selectPopoverPage = new SelectPopoverPage(page);
     });
     test('should not have visual regressions with single selection', async () => {
-      await selectPopoverPage.setup(config, options, false);
+      await selectPopoverPage.setup(config, checkedOptions, false);
       await selectPopoverPage.screenshot(screenshot, 'select-popover-diff');
     });
     test('should not have visual regressions with multiple selection', async () => {
-      await selectPopoverPage.setup(config, options, true);
+      await selectPopoverPage.setup(config, checkedOptions, true);
       await selectPopoverPage.screenshot(screenshot, 'select-popover-multiple-diff');
     });
   });
