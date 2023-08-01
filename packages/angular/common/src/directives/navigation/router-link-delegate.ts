@@ -1,8 +1,9 @@
 import { LocationStrategy } from '@angular/common';
 import { ElementRef, OnChanges, OnInit, Directive, HostListener, Input, Optional } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { NavController } from '../../providers/nav-controller';
 import type { AnimationBuilder, RouterDirection } from '@ionic/core/components';
+
+import { NavController } from '../../providers/nav-controller';
 
 /**
  * Adds support for Ionic routing directions and animations to the base Angular router link directive.
