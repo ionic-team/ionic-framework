@@ -270,11 +270,7 @@ export const generateMonths = (refParts: DatetimeParts, forcedDate?: DatetimePar
       : [getPreviousMonth(refParts), current, forced];
   }
 
-  return [
-    getPreviousMonth(refParts),
-    current,
-    getNextMonth(refParts),
-  ];
+  return [getPreviousMonth(refParts), current, getNextMonth(refParts)];
 };
 
 export const getMonthColumnData = (
