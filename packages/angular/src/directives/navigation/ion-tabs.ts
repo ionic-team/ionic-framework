@@ -11,9 +11,9 @@ import {
   QueryList,
   ViewChild,
 } from '@angular/core';
-import { NavController, IonRouterOutlet } from '@ionic/angular/common';
+import { NavController } from '@ionic/angular/common';
 import type { StackEvent } from '@ionic/angular/common';
-
+import { IonRouterOutlet } from './ion-router-outlet';
 import { IonTabBar } from '../proxies';
 
 @Component({
