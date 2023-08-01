@@ -1280,7 +1280,7 @@ export class Datetime implements ComponentInterface {
        * Because this is a State variable, a rerender will be triggered
        * automatically, updating the rendered months.
        */
-      this.forceRenderDate = { month, year, day };
+      this.forceRenderDate = targetValue;
 
       /**
        * Flag that we've started scrolling to the forced date.
