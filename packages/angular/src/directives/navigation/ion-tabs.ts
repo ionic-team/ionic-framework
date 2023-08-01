@@ -13,8 +13,10 @@ import {
 } from '@angular/core';
 import { NavController } from '@ionic/angular/common';
 import type { StackEvent } from '@ionic/angular/common';
-import { IonRouterOutlet } from './ion-router-outlet';
+
 import { IonTabBar } from '../proxies';
+
+import { IonRouterOutlet } from './ion-router-outlet';
 
 @Component({
   selector: 'ion-tabs',
