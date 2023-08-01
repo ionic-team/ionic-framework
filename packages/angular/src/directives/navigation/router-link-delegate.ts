@@ -1,5 +1,8 @@
-import { Directive, } from '@angular/core';
-import { RouterLinkDelegateDirective as RouterLinkDelegateBase, RouterLinkWithHrefDelegateDirective as RouterLinkHrefDelegateBase } from '@ionic/angular/common';
+import { Directive } from '@angular/core';
+import {
+  RouterLinkDelegateDirective as RouterLinkDelegateBase,
+  RouterLinkWithHrefDelegateDirective as RouterLinkHrefDelegateBase,
+} from '@ionic/angular/common';
 
 /**
  * Adds support for Ionic routing directions and animations to the base Angular router link directive.

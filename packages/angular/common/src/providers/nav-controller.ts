@@ -7,7 +7,6 @@ import { IonRouterOutlet } from '../directives/navigation/router-outlet';
 
 import { Platform } from './platform';
 
-
 export interface AnimationOptions {
   animated?: boolean;
   animation?: AnimationBuilder;

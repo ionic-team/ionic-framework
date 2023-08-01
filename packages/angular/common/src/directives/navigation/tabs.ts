@@ -14,11 +14,10 @@ import { NavController } from '../../providers/nav-controller';
 import type { StackEvent } from './stack-utils';
 
 @Directive({
-  selector: 'ion-tabs'
+  selector: 'ion-tabs',
 })
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class IonTabs implements AfterContentInit, AfterContentChecked {
-
   /**
    * Note: These must be redeclared on each child class since it needs
    * access to generated components such as IonRouterOutlet and IonTabBar.
