@@ -7,7 +7,7 @@ import { defineCustomElement } from '@ionic/core/components/ion-router-outlet.js
 })
 @Directive({
   selector: 'ion-router-outlet',
-  standalone: true
+  standalone: true,
 })
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class IonRouterOutlet extends IonRouterOutletBase {}
