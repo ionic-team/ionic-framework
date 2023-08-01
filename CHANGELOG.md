@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.2.2-nightly.20230801](https://github.com/ionic-team/ionic-framework/compare/v7.2.1...v7.2.2-nightly.20230801) (2023-08-01)
+
+
+### Bug Fixes
+
+* **item-options:** use correct safe area padding ([#27853](https://github.com/ionic-team/ionic-framework/issues/27853)) ([0b8f1bc](https://github.com/ionic-team/ionic-framework/commit/0b8f1bc7dd4170a2a8c9ed3aede173dd489b25ea))
+* **radio:** radios can be focused and are announced with group ([#27817](https://github.com/ionic-team/ionic-framework/issues/27817)) ([ba2f49b](https://github.com/ionic-team/ionic-framework/commit/ba2f49b8a460520d20ac198db800ea2d9e5b015f)), closes [#27438](https://github.com/ionic-team/ionic-framework/issues/27438)
+* **react, vue:** custom animations are used when going back ([#27895](https://github.com/ionic-team/ionic-framework/issues/27895)) ([824033f](https://github.com/ionic-team/ionic-framework/commit/824033f1d4b4a3e5d4c6a978a39e5bb1f33b5bb4)), closes [#27873](https://github.com/ionic-team/ionic-framework/issues/27873)
+
+
+
+
+
 ## [7.2.1](https://github.com/ionic-team/ionic-framework/compare/v7.2.0...v7.2.1) (2023-07-26)
 
 
