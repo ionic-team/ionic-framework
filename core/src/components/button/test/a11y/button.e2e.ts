@@ -8,7 +8,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         `
         <style>
           html {
-            font-size: 36px;
+            font-size: 310%;
           }
         </style>
 
@@ -27,7 +27,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         `
         <style>
           html {
-            font-size: 36px;
+            font-size: 310%;
           }
         </style>
 
@@ -46,7 +46,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         `
         <style>
           html {
-            font-size: 36px;
+            font-size: 310%;
           }
         </style>
 
@@ -65,7 +65,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         `
         <style>
           html {
-            font-size: 36px;
+            font-size: 310%;
           }
         </style>
 
