@@ -1,6 +1,6 @@
 import { ElementRef, Injector, Directive, EnvironmentInjector } from '@angular/core';
-import { AngularDelegate } from '../../providers/angular-delegate';
 
+import { AngularDelegate } from '../../providers/angular-delegate';
 import { ProxyCmp, proxyOutputs } from '../../utils/proxy';
 
 @ProxyCmp({
