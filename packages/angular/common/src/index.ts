@@ -1,2 +1,2 @@
 export { IonModal } from './overlays/modal';
-export { ProxyCmp } from './utils';
+export { ProxyCmp } from './utils/proxy';
