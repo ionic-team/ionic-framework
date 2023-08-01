@@ -368,7 +368,7 @@ export class Datetime implements ComponentInterface {
     const { value } = this;
 
     if (this.hasValue()) {
-      await this.processValue(value, true);
+      await this.processValue(value);
     }
 
     this.emitStyle();
@@ -1196,7 +1196,7 @@ export class Datetime implements ComponentInterface {
     });
   }
 
-  private processValue = async (value?: string | string[] | null, animate = false) => {
+  private processValue = async (value?: string | string[] | null) => {
     const hasValue = value !== null && value !== undefined && (!Array.isArray(value) || value.length > 0);
     const valueToProcess = hasValue ? parseDate(value) : this.defaultParts;
 
@@ -1273,7 +1273,7 @@ export class Datetime implements ComponentInterface {
     const didChangeMonth = month !== workingParts.month || year !== workingParts.year;
     const elIsVisible = el.offsetParent !== null;
     const { isGridStyle, showMonthAndYear } = this;
-    if (animate && isGridStyle && didChangeMonth && elIsVisible && !showMonthAndYear) {
+    if (isGridStyle && didChangeMonth && elIsVisible && !showMonthAndYear) {
       /**
        * Tell other render functions that we need to force the
        * target month to appear in place of the actual next/prev month.
