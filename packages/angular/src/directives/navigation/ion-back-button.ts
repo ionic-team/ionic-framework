@@ -1,5 +1,6 @@
 import { Directive, Optional } from '@angular/core';
 import { IonBackButton as IonBackButtonBase, NavController, Config } from '@ionic/angular/common';
+
 import { IonRouterOutlet } from './ion-router-outlet';
 
 @Directive({
