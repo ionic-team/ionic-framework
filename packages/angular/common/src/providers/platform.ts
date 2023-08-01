@@ -1,6 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { NgZone, Inject, Injectable } from '@angular/core';
-import { BackButtonEventDetail, KeyboardEventDetail, Platforms, getPlatforms, isPlatform } from '@ionic/core';
+import { getPlatforms, isPlatform } from '@ionic/core/components';
+import type { BackButtonEventDetail, KeyboardEventDetail, Platforms } from '@ionic/core/components';
 import { Subscription, Subject } from 'rxjs';
 
 // TODO(FW-2827): types
