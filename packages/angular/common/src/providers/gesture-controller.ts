@@ -1,5 +1,6 @@
 import { NgZone, Injectable } from '@angular/core';
-import { Gesture, GestureConfig, createGesture } from '@ionic/core';
+import type { Gesture, GestureConfig } from '@ionic/core/components';
+import { createGesture } from '@ionic/core/components';
 
 @Injectable({
   providedIn: 'root',

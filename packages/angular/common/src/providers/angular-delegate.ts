@@ -16,7 +16,7 @@ import {
   LIFECYCLE_WILL_ENTER,
   LIFECYCLE_WILL_LEAVE,
   LIFECYCLE_WILL_UNLOAD,
-} from '@ionic/core';
+} from '@ionic/core/components';
 
 import { NavParams } from '../directives/navigation/nav-params';
 
