@@ -263,9 +263,9 @@ export const generateMonths = (refParts: DatetimeParts, forcedDate?: DatetimePar
    */
   if (forcedDate !== undefined && (refParts.month !== forcedDate.month || refParts.year !== forcedDate.year)) {
     const forced = { month: forcedDate.month, year: forcedDate.year, day: forcedDate.day };
-    const forcedMonthIsEarlier = isBefore(forced, current);
+    const forcedMonthIsBefore = isBefore(forced, current);
 
-    return forcedMonthIsEarlier
+    return forcedMonthIsBefore
       ? [forced, current, getNextMonth(refParts)]
       : [getPreviousMonth(refParts), current, forced];
   }
