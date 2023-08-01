@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { bindLifecycleEvents } from '@ionic/angular/common';
 import { AnimationBuilder, RouterDirection } from '@ionic/core';
 
-import { NavController } from '../../providers/nav-controller';
+import { NavController } from '@ionic/angular/common';
 
 import {
   RouteView,

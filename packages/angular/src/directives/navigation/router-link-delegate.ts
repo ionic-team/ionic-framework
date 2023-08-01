@@ -3,7 +3,7 @@ import { ElementRef, OnChanges, OnInit, Directive, HostListener, Input, Optional
 import { Router, RouterLink } from '@angular/router';
 import { AnimationBuilder, RouterDirection } from '@ionic/core';
 
-import { NavController } from '../../providers/nav-controller';
+import { NavController } from '@ionic/angular/common';
 
 /**
  * Adds support for Ionic routing directions and animations to the base Angular router link directive.
