@@ -23,6 +23,10 @@
       <ion-button id="subHeaderOnly" expand="block" onclick="presentSubHeaderOnly()">Subheader Only</ion-button>
       <ion-button id="noHeaders" expand="block" onclick="presentNoHeaders()">No Headers</ion-button>
       <ion-button id="customAria" expand="block" onclick="presentCustomAria()">Custom Aria</ion-button>
+      <ion-button id="ariaLabelButton" expand="block" onclick="presentAriaLabelButton()">Aria Label Button</ion-button>
+      <ion-button id="ariaLabelCancelButton" expand="block" onclick="presentAriaLabelCancelButton()"
+        >Aria Label Cancel Button</ion-button
+      >
     </main>
 
     <script>
@@ -61,6 +65,39 @@
             'aria-labelledby': 'Custom title',
             'aria-describedby': 'Custom description',
           },
+        });
+      }
+
+      function presentAriaLabelButton() {
+        openActionSheet({
+          header: 'Header',
+          subHeader: 'Subtitle',
+          buttons: [
+            {
+              text: 'Close',
+              htmlAttributes: {
+                'aria-label': 'close button',
+                'aria-labelledby': 'close-label',
+              },
+            },
+          ],
+        });
+      }
+
+      function presentAriaLabelCancelButton() {
+        openActionSheet({
+          header: 'Header',
+          subHeader: 'Subtitle',
+          buttons: [
+            {
+              text: 'Cancel',
+              role: 'cancel',
+              htmlAttributes: {
+                'aria-label': 'cancel button',
+                'aria-labelledby': 'cancel-label',
+              },
+            },
+          ],
         });
       }
     </script>
