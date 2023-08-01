@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { IonRouterOutlet } from '@ionic/angular/standalone';
 
 /**
  * This temporary code initialized Ionic and ensures components are visible.
@@ -15,7 +16,7 @@ document.querySelector('html')!.classList.add('ion-ce')
   selector: 'app-root-standalone',
   templateUrl: './app.component.html',
   standalone: true,
-  imports: [RouterModule]
+  imports: [RouterModule, IonRouterOutlet]
 })
 export class AppComponent {
 }
