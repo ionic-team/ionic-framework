@@ -1,8 +1,9 @@
 import { Location } from '@angular/common';
 import { Injectable, Optional } from '@angular/core';
 import { NavigationExtras, Router, UrlSerializer, UrlTree, NavigationStart } from '@angular/router';
-import { Platform } from './platform';
 import { AnimationBuilder, NavDirection, RouterDirection } from '@ionic/core';
+
+import { Platform } from './platform';
 
 // LIAM TODO
 //import { IonRouterOutlet } from '../directives/navigation/ion-router-outlet';
@@ -171,7 +172,7 @@ export class NavController {
    * @internal
    */
 
-   // LIAM TODO
+  // LIAM TODO
   setTopOutlet(outlet: any): void {
     this.topOutlet = outlet;
   }
