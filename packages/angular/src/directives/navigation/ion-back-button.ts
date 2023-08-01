@@ -1,8 +1,6 @@
 import { Directive, HostListener, Input, Optional } from '@angular/core';
-import { Config } from '@ionic/angular/common';
+import { Config, NavController } from '@ionic/angular/common';
 import { AnimationBuilder } from '@ionic/core';
-
-import { NavController } from '../../providers/nav-controller';
 
 import { IonRouterOutlet } from './ion-router-outlet';
 

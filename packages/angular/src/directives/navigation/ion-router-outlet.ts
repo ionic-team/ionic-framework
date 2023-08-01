@@ -21,13 +21,12 @@ import {
   reflectComponentType,
 } from '@angular/core';
 import { OutletContext, Router, ActivatedRoute, ChildrenOutletContexts, PRIMARY_OUTLET, Data } from '@angular/router';
-import { Config } from '@ionic/angular/common';
+import { Config, NavController } from '@ionic/angular/common';
 import { componentOnReady } from '@ionic/core';
 import { Observable, BehaviorSubject, Subscription, combineLatest, of } from 'rxjs';
 import { distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
 
 import { AnimationBuilder } from '../../ionic-core';
-import { NavController } from '../../providers/nav-controller';
 
 import { StackController } from './stack-controller';
 import { RouteView, getUrl } from './stack-utils';

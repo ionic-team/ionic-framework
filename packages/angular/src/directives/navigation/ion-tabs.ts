@@ -12,7 +12,7 @@ import {
   ViewChild,
 } from '@angular/core';
 
-import { NavController } from '../../providers/nav-controller';
+import { NavController } from '@ionic/angular/common';
 import { IonTabBar } from '../proxies';
 
 import { IonRouterOutlet } from './ion-router-outlet';
