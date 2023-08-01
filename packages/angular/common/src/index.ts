@@ -25,4 +25,4 @@ export type { StackEvent } from './directives/navigation/stack-utils';
 
 export { IonBackButton } from './directives/navigation/back-button';
 export { RouterLinkDelegateDirective, RouterLinkWithHrefDelegateDirective } from './directives/navigation/router-link-delegate';
-
+export { NavDelegate } from './directives/navigation/nav-delegate';
