@@ -11,12 +11,10 @@ import {
   QueryList,
   ViewChild,
 } from '@angular/core';
+import { NavController, IonRouterOutlet } from '@ionic/angular/common';
+import type { StackEvent } from '@ionic/angular/common';
 
-import { NavController } from '@ionic/angular/common';
 import { IonTabBar } from '../proxies';
-
-import { IonRouterOutlet } from './ion-router-outlet';
-import { StackEvent } from './stack-utils';
 
 @Component({
   selector: 'ion-tabs',
