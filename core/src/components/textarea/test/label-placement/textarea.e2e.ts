@@ -302,4 +302,27 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       await expect(page.locator('.container')).toHaveScreenshot(screenshot(`textarea-multi-line-sizing`));
     });
   });
+  test.describe(title('textarea: floating/stacked label layering'), () => {
+    test('label should not be covered by text field', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/27812',
+      });
+      await page.setContent(
+        `
+        <style>
+          .custom-textarea .native-wrapper {
+            background: pink;
+          }
+        </style>
+        <ion-textarea class="custom-textarea" label="My Label" label-placement="stacked"></ion-textarea>
+      `,
+        config
+      );
+
+      const textarea = page.locator('ion-textarea');
+
+      expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-label-layering`));
+    });
+  });
 });
