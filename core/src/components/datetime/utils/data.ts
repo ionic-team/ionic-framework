@@ -254,12 +254,12 @@ export const generateTime = (
  * Given DatetimeParts, generate the previous,
  * current, and and next months.
  */
-export const generateMonths = (refParts: DatetimeParts, forcedDate: DatetimeParts | null = null): DatetimeParts[] => {
+export const generateMonths = (refParts: DatetimeParts, forcedDate?: DatetimeParts): DatetimeParts[] => {
   /**
    * If we're forcing a month to appear, and it's different from the current month,
    * ensure it appears by replacing the next or previous month as appropriate.
    */
-  if (forcedDate !== null && (refParts.month !== forcedDate.month || refParts.year !== forcedDate.year)) {
+  if (forcedDate !== undefined && (refParts.month !== forcedDate.month || refParts.year !== forcedDate.year)) {
     const current = { month: refParts.month, year: refParts.year, day: refParts.day };
     const forced = { month: forcedDate.month, year: forcedDate.year, day: forcedDate.day };
 

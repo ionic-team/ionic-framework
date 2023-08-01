@@ -145,7 +145,7 @@ export class Datetime implements ComponentInterface {
    *
    * Applies to grid-style datetimes only.
    */
-  @State() forceRenderDate: DatetimeParts | null = null;
+  @State() forceRenderDate?: DatetimeParts;
 
   /**
    * The color to use from your application's color palette.
@@ -899,7 +899,7 @@ export class Datetime implements ComponentInterface {
         const dataMonth = firstDayEl?.getAttribute('data-month');
         const dataYear = firstDayEl?.getAttribute('data-year');
         if (
-          forceRenderDate !== null &&
+          forceRenderDate !== undefined &&
           dataMonth &&
           dataYear &&
           parseInt(dataMonth) === forceRenderDate.month &&
@@ -1301,7 +1301,7 @@ export class Datetime implements ComponentInterface {
       targetMonthIsBefore ? this.prevMonth() : this.nextMonth();
       await forceDateScrollingPromise;
       this.resolveForceDateScrolling = undefined;
-      this.forceRenderDate = null;
+      this.forceRenderDate = undefined;
     } else {
       /**
        * We only need to do this if we didn't just animate to a new month,
