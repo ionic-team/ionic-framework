@@ -1,6 +1,10 @@
 import { Directive } from '@angular/core';
-import { IonRouterOutlet as IonRouterOutletBase } from '@ionic/angular/common';
+import { IonRouterOutlet as IonRouterOutletBase, ProxyCmp } from '@ionic/angular/common';
+import { defineCustomElement } from '@ionic/core/components/ion-router-outlet.js';
 
+@ProxyCmp({
+  defineCustomElementFn: defineCustomElement,
+})
 @Directive({
   selector: 'ion-router-outlet',
   standalone: true

@@ -22,3 +22,5 @@ export type { IonicWindow } from './types/interfaces';
 export { NavParams } from './directives/navigation/nav-params';
 export { IonRouterOutlet, INPUT_BINDER, RoutedComponentInputBinder } from './directives/navigation/router-outlet';
 export type { StackEvent } from './directives/navigation/stack-utils';
+
+export { ProxyCmp } from './utils/proxy';
