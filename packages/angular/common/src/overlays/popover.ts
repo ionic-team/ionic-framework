@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { Components } from '@ionic/core';
 
-import { ProxyCmp, proxyOutputs } from '../utils';
+import { ProxyCmp, proxyOutputs } from '../utils/proxy';
 
 export declare interface IonPopover extends Components.IonPopover {
   /**
