@@ -2,6 +2,7 @@ import { Component, ContentChild, ContentChildren, ViewChild, QueryList } from '
 import { IonTabs as IonTabsBase } from '@ionic/angular/common';
 
 import { IonTabBar } from '../proxies';
+
 import { IonRouterOutlet } from './ion-router-outlet';
 
 @Component({

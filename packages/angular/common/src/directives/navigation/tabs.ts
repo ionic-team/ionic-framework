@@ -1,38 +1,33 @@
 import {
   AfterContentChecked,
   AfterContentInit,
- // ContentChild,
- // ContentChildren,
   Directive,
   ElementRef,
   EventEmitter,
   HostListener,
   Output,
-  //QueryList,
   ViewChild,
 } from '@angular/core';
+
 import { NavController } from '../../providers/nav-controller';
+
 import type { StackEvent } from './stack-utils';
-
-// LIAM TODO
-//import { IonTabBar } from '../proxies';
-
-//import { IonRouterOutlet } from './router-outlet';
 
 @Directive({
   selector: 'ion-tabs'
 })
-// eslint-disable-next-line @angular-eslint/component-class-suffix
+// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class IonTabs implements AfterContentInit, AfterContentChecked {
+
+  /**
+   * Note: These must be redeclared on each child class since it needs
+   * access to generated components such as IonRouterOutlet and IonTabBar.
+   */
   outlet: any;
   tabBar: any;
   tabBars: any;
 
-  //@ViewChild('outlet', { read: IonRouterOutlet, static: false }) outlet: IonRouterOutlet;
   @ViewChild('tabsInner', { read: ElementRef, static: true }) tabsInner: ElementRef<HTMLDivElement>;
-
-  //@ContentChild(IonTabBar, { static: false }) tabBar: IonTabBar | undefined;
-  //@ContentChildren(IonTabBar) tabBars: QueryList<IonTabBar>;
 
   @Output() ionTabsWillChange = new EventEmitter<{ tab: string }>();
   @Output() ionTabsDidChange = new EventEmitter<{ tab: string }>();
