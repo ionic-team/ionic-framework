@@ -13,27 +13,29 @@ export {
   RouterLinkWithHrefDelegateDirective as RouterLinkWithHrefDelegate,
 } from './directives/navigation/router-link-delegate';
 
-export { NavParams } from './directives/navigation/nav-params';
 export { IonModal } from './directives/overlays/modal';
 export { IonPopover } from './directives/overlays/popover';
 export * from './directives/proxies';
 
 // PROVIDERS
-export { AngularDelegate } from './providers/angular-delegate';
-export { ActionSheetController } from './providers/action-sheet-controller';
-export { AlertController } from './providers/alert-controller';
-export { LoadingController } from './providers/loading-controller';
-export { MenuController } from './providers/menu-controller';
-export { PickerController } from './providers/picker-controller';
-export { ModalController } from './providers/modal-controller';
-export { Platform } from './providers/platform';
-export { PopoverController } from './providers/popover-controller';
-export { ToastController } from './providers/toast-controller';
+export {
+  ActionSheetController,
+  AlertController,
+  LoadingController,
+  MenuController,
+  ModalController,
+  PickerController,
+  PopoverController,
+  ToastController,
+  AnimationController,
+  GestureController,
+  DomController,
+  Config,
+  Platform,
+  AngularDelegate,
+  NavParams,
+} from '@ionic/angular/common';
 export { NavController } from './providers/nav-controller';
-export { DomController } from './providers/dom-controller';
-export { Config } from './providers/config';
-export { AnimationController } from './providers/animation-controller';
-export { GestureController } from './providers/gesture-controller';
 
 // ROUTER STRATEGY
 export { IonicRouteStrategy } from './util/ionic-router-reuse-strategy';

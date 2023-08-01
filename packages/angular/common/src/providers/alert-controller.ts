@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { AlertOptions, alertController } from '@ionic/core';
+import type { AlertOptions } from '@ionic/core/components';
+import { alertController } from '@ionic/core/components';
 
-import { OverlayBaseController } from '../util/overlay';
+import { OverlayBaseController } from '../utils/overlay';
 
 @Injectable({
   providedIn: 'root',

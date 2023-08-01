@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { LoadingOptions, loadingController } from '@ionic/core';
+import type { LoadingOptions } from '@ionic/core/components';
+import { loadingController } from '@ionic/core/components';
 
-import { OverlayBaseController } from '../util/overlay';
+import { OverlayBaseController } from '../utils/overlay';
 
 @Injectable({
   providedIn: 'root',

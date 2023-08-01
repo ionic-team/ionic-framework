@@ -1,7 +1,8 @@
 import { Injector, Injectable, EnvironmentInjector, inject } from '@angular/core';
-import { ModalOptions, modalController } from '@ionic/core';
+import type { ModalOptions } from '@ionic/core/components';
+import { modalController } from '@ionic/core/components';
 
-import { OverlayBaseController } from '../util/overlay';
+import { OverlayBaseController } from '../utils/overlay';
 
 import { AngularDelegate } from './angular-delegate';
 
