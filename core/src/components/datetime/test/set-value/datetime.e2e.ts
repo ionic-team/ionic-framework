@@ -27,7 +27,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       const activeDate = page.locator('ion-datetime .time-body');
       await expect(activeDate).toHaveText('12:40 PM');
     });
-    test.only('should update active item when value is not initially set', async ({ page }) => {
+    test('should update active item when value is not initially set', async ({ page }) => {
       await page.setContent(
         `
         <ion-datetime presentation="date" locale="en-US"></ion-datetime>
