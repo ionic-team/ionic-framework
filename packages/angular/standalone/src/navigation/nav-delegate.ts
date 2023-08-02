@@ -1,6 +1,5 @@
-import { NavDelegate as NavDelegateBase, NAV_DELEGATE_INPUTS, NAV_DELEGATE_METHODS, ProxyCmp } from '@ionic/angular/common';
+import { NavDelegate as NavDelegateBase, NAV_DELEGATE_INPUTS, NAV_DELEGATE_METHODS, ProxyCmp, CommonModule } from '@ionic/angular/common';
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 @ProxyCmp({
   inputs: NAV_DELEGATE_INPUTS,
