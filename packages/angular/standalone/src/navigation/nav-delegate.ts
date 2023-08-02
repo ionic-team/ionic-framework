@@ -1,9 +1,10 @@
-import { NavDelegate as NavDelegateBase, NAV_DELEGATE_INPUTS, NAV_DELEGATE_METHODS, ProxyCmp, CommonModule } from '@ionic/angular/common';
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { NavDelegate as NavDelegateBase, ProxyCmp } from '@ionic/angular/common';
+import { defineCustomElement } from '@ionic/core/components/ion-nav.js';
 
 @ProxyCmp({
-  inputs: NAV_DELEGATE_INPUTS,
-  methods: NAV_DELEGATE_METHODS,
+  defineCustomElementFn: defineCustomElement,
 })
 @Component({
   selector: 'ion-nav',

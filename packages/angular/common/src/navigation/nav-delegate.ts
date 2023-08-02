@@ -1,7 +1,7 @@
 import { ElementRef, Injector, EnvironmentInjector, Directive } from '@angular/core';
 
 import { AngularDelegate } from '../../../src/providers/angular-delegate';
-import { ProxyCmp, proxyOutputs } from '../utils';
+import { ProxyCmp, proxyOutputs } from '../utils/proxy';
 
 export const NAV_DELEGATE_INPUTS = [
   'animated',
@@ -31,7 +31,14 @@ export const NAV_DELEGATE_METHODS = [
   inputs: NAV_DELEGATE_INPUTS,
   methods: NAV_DELEGATE_METHODS,
 })
+/**
+ * @Component extends from @Directive
+ * so by defining the inputs here we
+ * do not need to re-define them for the
+ * lazy loaded popover.
+ */
 @Directive({
+  selector: 'ion-nav',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: NAV_DELEGATE_INPUTS
 })
