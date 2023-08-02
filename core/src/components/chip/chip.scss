@@ -86,7 +86,7 @@
 // ---------------------------------------------
 
 ::slotted(ion-icon) {
-  font-size: 1.25em;
+  font-size: calc(20 / 14 * 1em);
 }
 
 :host(:not(.ion-color)) ::slotted(ion-icon) {
@@ -107,8 +107,8 @@
 ::slotted(ion-avatar) {
   flex-shrink: 0;
 
-  width: 1.5em;
-  height: 1.5em;
+  width: calc(24 / 14 * 1em);
+  height: calc(24 / 14 * 1em);
 }
 
 ::slotted(ion-avatar:first-child) {
