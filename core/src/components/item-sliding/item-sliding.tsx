@@ -244,7 +244,6 @@ export class ItemSliding implements ComponentInterface {
   }
 
   private async updateOptions() {
-    console.log('update');
     const options = this.el.querySelectorAll('ion-item-options');
 
     let sides = 0;
