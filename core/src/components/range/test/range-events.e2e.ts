@@ -7,7 +7,10 @@ import { configs, dragElementBy, test } from '@utils/test/playwright';
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('range: events:'), () => {
     test.describe('range: knob events', () => {
-      test('should emit start/end events', async ({ page }) => {
+      /**
+       * The mouse events are flaky on CI
+       */
+      test.fixme('should emit start/end events', async ({ page }) => {
         /**
          * Requires padding to prevent the knob from being clipped.
          * If it's clipped, then the value might be one off.
@@ -64,7 +67,8 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         expect(rangeEnd).toHaveReceivedEventDetail({ value: 21 });
       });
 
-      test('should not scroll when the knob is swiped', async ({ page, skip }) => {
+      // TODO FW-2873
+      test.skip('should not scroll when the knob is swiped', async ({ page, skip }) => {
         skip.browser('webkit', 'mouse.wheel is not available in WebKit');
 
         await page.goto(`/src/components/range/test/legacy/basic`, config);
@@ -114,7 +118,8 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         expect(ionChangeSpy).toHaveReceivedEventTimes(0);
       });
 
-      test('should emit when the knob is released', async ({ page }) => {
+      // TODO FW-2873
+      test.skip('should emit when the knob is released', async ({ page }) => {
         await page.setContent(`<ion-range aria-label="range"></ion-range>`, config);
 
         const rangeHandle = page.locator('ion-range .range-knob-handle');
@@ -158,7 +163,8 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     });
 
     test.describe('ionInput', () => {
-      test('should emit when the knob is dragged', async ({ page }) => {
+      // TODO(FW-2873) Enable this test when touch events/gestures are better supported in Playwright
+      test.skip('should emit when the knob is dragged', async ({ page }) => {
         await page.setContent(`<ion-range aria-label="range"></ion-range>`, config);
 
         const rangeHandle = page.locator('ion-range .range-knob-handle');

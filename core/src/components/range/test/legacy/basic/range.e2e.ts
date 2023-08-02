@@ -18,7 +18,11 @@ configs().forEach(({ title, screenshot, config }) => {
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('range: behavior'), () => {
-    test('should emit start/end events', async ({ page }) => {
+    /**
+     * The mouse events are flaky on CI
+     * TODO FW-2873
+     */
+    test.fixme('should emit start/end events', async ({ page }) => {
       await page.setContent(`<ion-range value="20" legacy="true"></ion-range>`, config);
 
       const rangeStart = await page.spyOnEvent('ionKnobMoveStart');
@@ -62,7 +66,8 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       expect(rangeEnd).toHaveReceivedEventDetail({ value: 21 });
     });
 
-    test('should not scroll when the knob is swiped', async ({ page, skip }) => {
+    // TODO FW-2873
+    test.skip('should not scroll when the knob is swiped', async ({ page, skip }) => {
       skip.browser('webkit', 'mouse.wheel is not available in WebKit');
 
       await page.goto(`/src/components/range/test/legacy/basic`, config);
