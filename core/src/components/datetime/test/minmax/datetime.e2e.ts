@@ -301,21 +301,20 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, config }) => 
           <ion-datetime
             min="2022-01-15"
             value="2022-02-01"
-            presentation="date"
+            presentation="month-year"
           ></ion-datetime>
         `,
           config
         );
 
         const datetime = page.locator('ion-datetime');
-        const monthYearToggle = page.locator('ion-datetime .calendar-month-year');
         const monthColumnItems = page.locator('ion-datetime .month-column .picker-item:not(.picker-item-empty)');
+        const ionChange = await page.spyOnEvent('ionChange');
 
-        await monthYearToggle.click();
-        await page.waitForChanges();
+        await page.waitForSelector('.datetime-ready');
 
         await monthColumnItems.nth(0).click(); // switch to January
-        await page.waitForChanges();
+        await ionChange.next();
 
         await expect(datetime).toHaveJSProperty('value', '2022-01-15T00:00:00');
       });
