@@ -1,6 +1,7 @@
 import { ElementRef, Injector, EnvironmentInjector, Directive } from '@angular/core';
 
-import { AngularDelegate } from '../../../src/providers/angular-delegate';
+import { AngularDelegate } from '@ionic/angular/common';
+
 import { ProxyCmp, proxyOutputs } from '../utils/proxy';
 
 export const NAV_DELEGATE_INPUTS = [
