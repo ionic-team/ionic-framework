@@ -8,7 +8,13 @@ import { IonRouterOutlet } from './ion-router-outlet';
 })
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class IonBackButtonDelegateDirective extends IonBackButtonDelegateBase {
-  constructor(@Optional() routerOutlet: IonRouterOutlet, navCtrl: NavController, config: Config, r: ElementRef, z: NgZone) {
+  constructor(
+    @Optional() routerOutlet: IonRouterOutlet,
+    navCtrl: NavController,
+    config: Config,
+    r: ElementRef,
+    z: NgZone
+  ) {
     super(routerOutlet, navCtrl, config, r, z);
   }
 }

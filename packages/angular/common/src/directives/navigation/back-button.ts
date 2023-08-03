@@ -1,16 +1,10 @@
-import {
-  Directive,
-  HostListener,
-  Input,
-  Optional,
-  ElementRef,
-  NgZone
-} from '@angular/core';
+import { Directive, HostListener, Input, Optional, ElementRef, NgZone } from '@angular/core';
 import type { AnimationBuilder } from '@ionic/core/components';
 
 import { Config } from '../../providers/config';
 import { NavController } from '../../providers/nav-controller';
 import { ProxyCmp } from '../../utils/proxy';
+
 import { IonRouterOutlet } from './router-outlet';
 
 const BACK_BUTTON_INPUTS = ['color', 'defaultHref', 'disabled', 'icon', 'mode', 'routerAnimation', 'text', 'type'];
@@ -20,6 +14,7 @@ const BACK_BUTTON_INPUTS = ['color', 'defaultHref', 'disabled', 'icon', 'mode', 
 })
 @Directive({
   selector: 'ion-back-button',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: BACK_BUTTON_INPUTS,
 })
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
