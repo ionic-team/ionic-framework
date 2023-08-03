@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonNavDelegate as IonNavDelegateBase } from '@ionic/angular/common';
+import { NavDelegate as NavDelegateBase, NAV_DELEGATE_SELECTOR, NAV_DELEGATE_TEMPLATE } from '@ionic/angular/common';
 
 @Component({
-  selector: 'ion-nav',
+  selector: NAV_DELEGATE_SELECTOR,
+  template: NAV_DELEGATE_TEMPLATE,
 })
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
-export class NavDelegate extends IonNavDelegateBase {}
+export class NavDelegate extends NavDelegateBase {}

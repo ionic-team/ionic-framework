@@ -1,11 +1,14 @@
 import { ElementRef, Injector, EnvironmentInjector, Directive } from '@angular/core';
-import { AngularDelegate } from '@ionic/angular/common';
 
+import { AngularDelegate } from '../providers/angular-delegate';
 import { ProxyCmp, proxyOutputs } from '../utils/proxy';
 
-export const NAV_DELEGATE_INPUTS = ['animated', 'animation', 'root', 'rootParams', 'swipeGesture'];
+export const NAV_DELEGATE_SELECTOR = 'ion-nav';
+export const NAV_DELEGATE_TEMPLATE = '<ng-content></ng-content>';
 
-export const NAV_DELEGATE_METHODS = [
+const NAV_DELEGATE_INPUTS = ['animated', 'animation', 'root', 'rootParams', 'swipeGesture'];
+
+const NAV_DELEGATE_METHODS = [
   'push',
   'insert',
   'insertPages',
@@ -32,10 +35,11 @@ export const NAV_DELEGATE_METHODS = [
  * lazy loaded popover.
  */
 @Directive({
-  selector: 'ion-nav',
+  selector: NAV_DELEGATE_SELECTOR,
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: NAV_DELEGATE_INPUTS,
 })
+
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class NavDelegate {
   protected el: HTMLElement;
