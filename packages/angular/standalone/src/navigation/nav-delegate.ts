@@ -1,6 +1,6 @@
 import { Component, ElementRef, Injector, EnvironmentInjector } from '@angular/core';
 import {
-  IonNavDelegate as IonNavDelegateBase,
+  NavDelegate as NavDelegateBase,
   ProxyCmp,
   NAV_DELEGATE_SELECTOR,
   NAV_DELEGATE_TEMPLATE,
@@ -16,7 +16,7 @@ import { defineCustomElement } from '@ionic/core/components/ion-nav.js';
   template: NAV_DELEGATE_TEMPLATE,
   standalone: true,
 })
-export class IonNav extends IonNavDelegateBase {
+export class IonNav extends NavDelegateBase {
   constructor(
     ref: ElementRef,
     environmentInjector: EnvironmentInjector,

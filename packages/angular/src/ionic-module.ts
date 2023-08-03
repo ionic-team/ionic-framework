@@ -22,7 +22,7 @@ import {
 import { IonBackButtonDelegateDirective } from './directives/navigation/ion-back-button';
 import { IonRouterOutlet } from './directives/navigation/ion-router-outlet';
 import { IonTabs } from './directives/navigation/ion-tabs';
-import { IonNavDelegate } from './directives/navigation/nav-delegate';
+import { NavDelegate } from './directives/navigation/nav-delegate';
 import {
   RouterLinkDelegateDirective,
   RouterLinkWithHrefDelegateDirective,
@@ -50,7 +50,7 @@ const DECLARATIONS = [
   IonTabs,
   IonRouterOutlet,
   IonBackButtonDelegateDirective,
-  IonNavDelegate,
+  NavDelegate,
   RouterLinkDelegateDirective,
   RouterLinkWithHrefDelegateDirective,
 ];

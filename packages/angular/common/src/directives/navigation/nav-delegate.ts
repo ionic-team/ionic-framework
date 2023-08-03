@@ -34,7 +34,7 @@ const NAV_DELEGATE_METHODS = [
   inputs: NAV_DELEGATE_INPUTS,
 })
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
-export class IonNavDelegate {
+export class NavDelegate {
   protected el: HTMLElement;
   constructor(
     ref: ElementRef,
