@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Injector, EnvironmentInjector } from '@angular/core';
+import { Directive, ElementRef, Injector, EnvironmentInjector, NgZone } from '@angular/core';
 import { NavDelegate as NavDelegateBase, NAV_DELEGATE_SELECTOR, AngularDelegate } from '@ionic/angular/common';
 
 @Directive({
@@ -10,8 +10,10 @@ export class NavDelegate extends NavDelegateBase {
     ref: ElementRef,
     environmentInjector: EnvironmentInjector,
     injector: Injector,
-    angularDelegate: AngularDelegate
+    // TODO FW-4766: Remove AngularDelegate
+    angularDelegate: AngularDelegate,
+    z: NgZone
   ) {
-    super(ref, environmentInjector, injector, angularDelegate);
+    super(ref, environmentInjector, injector, angularDelegate, z);
   }
 }

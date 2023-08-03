@@ -1,4 +1,4 @@
-import { ElementRef, Injector, Directive, EnvironmentInjector } from '@angular/core';
+import { ElementRef, Injector, Directive, EnvironmentInjector, NgZone } from '@angular/core';
 
 import { AngularDelegate } from '../../providers/angular-delegate';
 import { ProxyCmp, proxyOutputs } from '../../utils/proxy';
@@ -40,7 +40,9 @@ export class NavDelegate {
     ref: ElementRef,
     environmentInjector: EnvironmentInjector,
     injector: Injector,
-    angularDelegate: AngularDelegate
+    // TODO FW-4766: Remove AngularDelegate
+    angularDelegate: AngularDelegate,
+    protected z: NgZone
   ) {
     this.el = ref.nativeElement;
     ref.nativeElement.delegate = angularDelegate.create(environmentInjector, injector);

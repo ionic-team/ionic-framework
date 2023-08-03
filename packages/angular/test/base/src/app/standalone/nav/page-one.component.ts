@@ -1,23 +1,21 @@
-import { Component } from '@angular/core';
+/**
+ * TODO: Update the template to use `ion-nav-link` once it's implemented
+ * as a standalone component.
+ * 
+ * It is recommended to also wait for the following components to be implemented
+ * as standalone components:
+ * `ion-header`, `ion-toolbar`, `ion-title`, `ion-content`,
+ * `ion-button`, `ion-buttons`, `ion-back-button`
+ */
 
-import { PageTwoComponent } from './page-two.component';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-page-one',
   template: `
-    <<ion-header>
-      <ion-toolbar>
-        <ion-title>Page One</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content class="ion-padding">
-      <h1>Page One</h1>
-      <ion-nav-link router-direction="forward" [component]="component">
-        <ion-button>Go to Page Two</ion-button>
-      </ion-nav-link>
-    </ion-content>>
+    <div>
+      <p>Page One</p>
+    </div>
   `,
 })
-export class PageOneComponent {
-  component = PageTwoComponent;
-}
+export class PageOneComponent {}
