@@ -368,7 +368,7 @@ export class Datetime implements ComponentInterface {
     const { value } = this;
 
     if (this.hasValue()) {
-      await this.processValue(value, true);
+      await this.processValue(value);
     }
 
     this.emitStyle();
@@ -511,7 +511,7 @@ export class Datetime implements ComponentInterface {
    */
   @Method()
   async reset(startDate?: string) {
-    await this.processValue(startDate, true);
+    await this.processValue(startDate);
   }
 
   /**
@@ -1196,7 +1196,7 @@ export class Datetime implements ComponentInterface {
     });
   }
 
-  private processValue = async (value?: string | string[] | null, animate = false) => {
+  private processValue = async (value?: string | string[] | null) => {
     const hasValue = value !== null && value !== undefined && (!Array.isArray(value) || value.length > 0);
     const valueToProcess = hasValue ? parseDate(value) : this.defaultParts;
 
@@ -1267,13 +1267,13 @@ export class Datetime implements ComponentInterface {
      * Only animate if:
      * 1. We're using grid style (wheel style pickers should just jump to new value)
      * 2. The month and/or year actually changed (otherwise there's nothing to animate to)
-     * 3. The datetime is visible (prevents animation when in collapsed datetime-button, for example)
+     * 3. The calendar body is visible (prevents animation when in collapsed datetime-button, for example)
      * 4. The month/year picker is not open (since you wouldn't see the animation anyway)
      */
     const didChangeMonth = month !== workingParts.month || year !== workingParts.year;
-    const elIsVisible = el.offsetParent !== null;
+    const bodyIsVisible = el.classList.contains('datetime-ready');
     const { isGridStyle, showMonthAndYear } = this;
-    if (animate && isGridStyle && didChangeMonth && elIsVisible && !showMonthAndYear) {
+    if (isGridStyle && didChangeMonth && bodyIsVisible && !showMonthAndYear) {
       /**
        * Tell other render functions that we need to force the
        * target month to appear in place of the actual next/prev month.
