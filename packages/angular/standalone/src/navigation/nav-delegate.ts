@@ -1,10 +1,10 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ElementRef, Injector, EnvironmentInjector } from '@angular/core';
 import {
-  NavDelegate as NavDelegateBase,
+  IonNavDelegate as IonNavDelegateBase,
   ProxyCmp,
   NAV_DELEGATE_SELECTOR,
   NAV_DELEGATE_TEMPLATE,
+  AngularDelegate,
 } from '@ionic/angular/common';
 import { defineCustomElement } from '@ionic/core/components/ion-nav.js';
 
@@ -15,6 +15,14 @@ import { defineCustomElement } from '@ionic/core/components/ion-nav.js';
   selector: NAV_DELEGATE_SELECTOR,
   template: NAV_DELEGATE_TEMPLATE,
   standalone: true,
-  imports: [CommonModule],
 })
-export class NavDelegate extends NavDelegateBase {}
+export class IonNav extends IonNavDelegateBase {
+  constructor(
+    ref: ElementRef,
+    environmentInjector: EnvironmentInjector,
+    injector: Injector,
+    angularDelegate: AngularDelegate
+  ) {
+    super(ref, environmentInjector, injector, angularDelegate);
+  }
+}

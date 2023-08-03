@@ -1,9 +1,17 @@
-import { Component } from '@angular/core';
-import { NavDelegate as NavDelegateBase, NAV_DELEGATE_SELECTOR, NAV_DELEGATE_TEMPLATE } from '@ionic/angular/common';
+import { Directive, ElementRef, Injector, EnvironmentInjector } from '@angular/core';
+import { IonNavDelegate as IonNavDelegateBase, NAV_DELEGATE_SELECTOR, AngularDelegate } from '@ionic/angular/common';
 
-@Component({
+@Directive({
   selector: NAV_DELEGATE_SELECTOR,
-  template: NAV_DELEGATE_TEMPLATE,
 })
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
-export class NavDelegate extends NavDelegateBase {}
+export class IonNavDelegate extends IonNavDelegateBase {
+  constructor(
+    ref: ElementRef,
+    environmentInjector: EnvironmentInjector,
+    injector: Injector,
+    angularDelegate: AngularDelegate
+  ) {
+    super(ref, environmentInjector, injector, angularDelegate);
+  }
+}

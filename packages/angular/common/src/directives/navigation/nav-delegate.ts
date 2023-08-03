@@ -3,29 +3,38 @@ import { ElementRef, Injector, Directive, EnvironmentInjector } from '@angular/c
 import { AngularDelegate } from '../../providers/angular-delegate';
 import { ProxyCmp, proxyOutputs } from '../../utils/proxy';
 
+export const NAV_DELEGATE_SELECTOR = 'ion-nav';
+export const NAV_DELEGATE_TEMPLATE = '<ng-content></ng-content>';
+
+const NAV_DELEGATE_INPUTS = ['animated', 'animation', 'root', 'rootParams', 'swipeGesture'];
+
+const NAV_DELEGATE_METHODS = [
+  'push',
+  'insert',
+  'insertPages',
+  'pop',
+  'popTo',
+  'popToRoot',
+  'removeIndex',
+  'setRoot',
+  'setPages',
+  'getActive',
+  'getByIndex',
+  'canGoBack',
+  'getPrevious',
+];
+
 @ProxyCmp({
-  inputs: ['animated', 'animation', 'root', 'rootParams', 'swipeGesture'],
-  methods: [
-    'push',
-    'insert',
-    'insertPages',
-    'pop',
-    'popTo',
-    'popToRoot',
-    'removeIndex',
-    'setRoot',
-    'setPages',
-    'getActive',
-    'getByIndex',
-    'canGoBack',
-    'getPrevious',
-  ],
+  inputs: NAV_DELEGATE_INPUTS,
+  methods: NAV_DELEGATE_METHODS,
 })
 @Directive({
-  selector: 'ion-nav',
+  selector: NAV_DELEGATE_SELECTOR,
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: NAV_DELEGATE_INPUTS,
 })
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
-export class NavDelegate {
+export class IonNavDelegate {
   protected el: HTMLElement;
   constructor(
     ref: ElementRef,

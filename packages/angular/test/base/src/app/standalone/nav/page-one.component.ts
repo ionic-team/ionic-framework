@@ -5,7 +5,7 @@ import { PageTwoComponent } from './page-two.component';
 @Component({
   selector: 'app-page-one',
   template: `
-    <ion-header>
+    <<ion-header>
       <ion-toolbar>
         <ion-title>Page One</ion-title>
       </ion-toolbar>
@@ -15,7 +15,7 @@ import { PageTwoComponent } from './page-two.component';
       <ion-nav-link router-direction="forward" [component]="component">
         <ion-button>Go to Page Two</ion-button>
       </ion-nav-link>
-    </ion-content>
+    </ion-content>>
   `,
 })
 export class PageOneComponent {
