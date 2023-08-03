@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.2.3-nightly.20230803](https://github.com/ionic-team/ionic-framework/compare/v7.2.2...v7.2.3-nightly.20230803) (2023-08-03)
+
+
+### Bug Fixes
+
+* **item-sliding:** account for options added before watcher ([#27915](https://github.com/ionic-team/ionic-framework/issues/27915)) ([a0b3ef0](https://github.com/ionic-team/ionic-framework/commit/a0b3ef02af718e232246515bb873ad8c090fa55d)), closes [#27910](https://github.com/ionic-team/ionic-framework/issues/27910)
+* **nav:** improve reliability of swipe back gesture when quickly swiping back ([#27904](https://github.com/ionic-team/ionic-framework/issues/27904)) ([9500769](https://github.com/ionic-team/ionic-framework/commit/9500769f114d180613f0340b1a328b5e631b7188)), closes [#27893](https://github.com/ionic-team/ionic-framework/issues/27893)
+
+
+
+
+
 ## [7.2.2](https://github.com/ionic-team/ionic-framework/compare/v7.2.1...v7.2.2) (2023-08-02)
 
 
