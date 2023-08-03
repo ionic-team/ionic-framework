@@ -32,7 +32,7 @@ export {
   RouterLinkDelegateDirective,
   RouterLinkWithHrefDelegateDirective,
 } from './directives/navigation/router-link-delegate';
-export { NavDelegate, NAV_DELEGATE_INPUTS, NAV_DELEGATE_METHODS } from './directives/navigation/nav-delegate';
+export { NavDelegate, NAV_DELEGATE_SELECTOR, NAV_DELEGATE_TEMPLATE } from './directives/navigation/nav-delegate';
 export { IonTabs } from './directives/navigation/tabs';
 
 export { ProxyCmp } from './utils/proxy';
