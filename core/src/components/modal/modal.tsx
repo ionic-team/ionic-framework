@@ -761,7 +761,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       return;
     }
 
-    const { currentBreakpoint, moveSheetToBreakpoint, canDismiss, breakpoints } = this;
+    const { currentBreakpoint, moveSheetToBreakpoint, canDismiss, breakpoints, animated } = this;
 
     if (currentBreakpoint === breakpoint) {
       return;
@@ -772,6 +772,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
         breakpoint,
         breakpointOffset: 1 - currentBreakpoint!,
         canDismiss: canDismiss !== undefined && canDismiss !== true && breakpoints![0] === 0,
+        animated,
       });
       await this.sheetTransition;
       this.sheetTransition = undefined;

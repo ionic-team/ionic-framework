@@ -839,39 +839,18 @@ export class Datetime implements ComponentInterface {
 
       const getChangedMonth = (parts: DatetimeParts): DatetimeParts | undefined => {
         const box = calendarBodyRef.getBoundingClientRect();
-        const root = this.el!.shadowRoot!;
 
         /**
-         * Get the elements that are in the center of the calendar body.
-         * The topmost of these will be elements inside of the active month.
+         * If the current scroll position is all the way to the left
+         * then we have scrolled to the previous month.
+         * Otherwise, assume that we have scrolled to the next
+         * month. We have a tolerance of 2px to account for
+         * sub pixel rendering.
          *
-         * We filter out popovers to exclude the time picker, if present,
-         * since it sits on top of the entire screen. This handles the
-         * time picker being open when the datetime's value is changed
-         * programmatically, for example.
+         * Check below the next line ensures that we did not
+         * swipe and abort (i.e. we swiped but we are still on the current month).
          */
-        const elementsAtCenter = root
-          .elementsFromPoint(box.x + box.width / 2, box.y + box.height / 2)
-          .filter((el) => el.tagName !== 'ION-POPOVER');
-
-        /**
-         * If there are no elements, then the component may be
-         * re-rendering on a slow device.
-         */
-        if (elementsAtCenter.length === 0) {
-          return;
-        }
-
-        /**
-         * elementsFromPoint always orders the returned elements starting
-         * from the topmost box, so it's safe to just grab the first one.
-         * This ensures we always pick an element inside the active month,
-         * rather than, say, the body element.
-         */
-        const topmostCenterEl = elementsAtCenter[0];
-
-        const month = topmostCenterEl.closest('.calendar-month');
-        if (!month) return;
+        const month = calendarBodyRef.scrollLeft <= 2 ? startMonth : endMonth;
 
         /**
          * The edge of the month must be lined up with
