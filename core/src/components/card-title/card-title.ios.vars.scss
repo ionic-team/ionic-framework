@@ -4,7 +4,7 @@
 // --------------------------------------------------
 
 /// @prop - Font size of the card title
-$card-ios-title-font-size:             1.75rem !default;
+$card-ios-title-font-size:             dynamic-font(28px) !default;
 
 /// @prop - Font weight of the card title
 $card-ios-title-font-weight:           700 !default;

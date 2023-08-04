@@ -16,4 +16,4 @@ $card-ios-padding-bottom:              $card-ios-padding-top !default;
 $card-ios-padding-start:               $card-ios-padding-top !default;
 
 /// @prop - Font size of the card
-$card-ios-font-size:                   1rem !default;
+$card-ios-font-size:                   dynamic-font(16px) !default;
