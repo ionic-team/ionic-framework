@@ -34,7 +34,7 @@ $button-md-min-height:                                  36px !default;
 $button-md-border-radius:                               4px !default;
 
 /// @prop - Font size of the button text
-$button-md-font-size:                                   14px !default;
+$button-md-font-size:                                   0.875rem !default;
 
 /// @prop - Font weight of the button text
 $button-md-font-weight:                                 500 !default;
@@ -78,7 +78,7 @@ $button-md-large-padding-start:                         $button-md-large-padding
 $button-md-large-min-height:                            2.8em !default;
 
 /// @prop - Font size of the large button
-$button-md-large-font-size:                             20px !default;
+$button-md-large-font-size:                             1.25rem !default;
 
 
 // Material Design Small Button
@@ -100,7 +100,7 @@ $button-md-small-padding-start:                         $button-md-small-padding
 $button-md-small-min-height:                            2.1em !default;
 
 /// @prop - Font size of the small button
-$button-md-small-font-size:                             13px !default;
+$button-md-small-font-size:                             0.8125rem !default;
 
 
 // Material Design Outline Button
