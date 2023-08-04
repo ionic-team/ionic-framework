@@ -88,7 +88,10 @@
   @include margin(0);
   @include margin-horizontal(null, .3em);
 
-  font-size: 24px;
+  // This value is calculated by dividing the font size the
+  // icon should be in px (24px) by the font size of its
+  // parent button (17px). e.g. 24 / 17 = 1.4117
+  font-size: 1.41em;
 
   line-height: .67;
 }
@@ -97,7 +100,10 @@
   @include margin(0);
   @include margin-horizontal(.4em, null);
 
-  font-size: 24px;
+  // This value is calculated by dividing the font size the
+  // icon should be in px (24px) by the font size of its
+  // parent button (17px). e.g. 24 / 17 = 1.4117
+  font-size: 1.41em;
 
   line-height: .67;
 }
@@ -106,7 +112,10 @@
   @include padding(0);
   @include margin(0);
 
-  font-size: 28px;
+  // This value is calculated by dividing the font size the
+  // icon should be in px (28px) by the font size of its
+  // parent button (17px). e.g. 28 / 17 = 1.647
+  font-size: 1.65em;
 
   line-height: .67;
 }
