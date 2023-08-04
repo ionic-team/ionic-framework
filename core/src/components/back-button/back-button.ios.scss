@@ -29,8 +29,10 @@
    * button which is why a maximum font size is applied.
    * Also, we want the text to remain readable
    * so a minimum font size is applied.
+   * Using 1.294 instead of 1.3 aligns the text
+   * with the icon a bit nicer in Firefox.
    */
-  font-size: dynamic-font-clamp(1, 17px, 1.3);
+  font-size: dynamic-font-clamp(1, 17px, 1.294);
 }
 
 .button-native {
