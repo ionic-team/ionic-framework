@@ -139,9 +139,10 @@ export class Datetime implements ComponentInterface {
 
   /**
    * When non-null, will force the datetime to render the month
-   * containing the specified date. This enables animating the
-   * transition to a new value, and should be reset to null once
-   * the transition is finished and the forced month is now in view.
+   * containing the specified date. Currently, this should only
+   * be used to enable immediately auto-scrolling to the new month,
+   * and should then be reset to undefined once the transition is
+   * finished and the forced month is now in view.
    *
    * Applies to grid-style datetimes only.
    */
@@ -886,25 +887,16 @@ export class Datetime implements ComponentInterface {
         if (Math.abs(monthBox.x - box.x) > 2) return;
 
         /**
-         * If we're force-rendering a month, and we've scrolled to
-         * that month, return that.
-         *
-         * Checking that we've actually scrolled to the forced month
-         * is mostly for safety; in theory, if there's a forced month,
-         * that means a new value was manually set, so we should have
-         * automatically animated directly to it.
+         * If we're force-rendering a month, assume we've
+         * scrolled to that and return it.
+         * 
+         * If forceRenderDate is ever used in a context where the
+         * forced month is not immediately auto-scrolled to, this
+         * should be updated to also check whether `month` has the
+         * same month and year as the forced date.
          */
         const { forceRenderDate } = this;
-        const firstDayEl = month.querySelector('.calendar-day');
-        const dataMonth = firstDayEl?.getAttribute('data-month');
-        const dataYear = firstDayEl?.getAttribute('data-year');
-        if (
-          forceRenderDate !== undefined &&
-          dataMonth &&
-          dataYear &&
-          parseInt(dataMonth) === forceRenderDate.month &&
-          parseInt(dataYear) === forceRenderDate.year
-        ) {
+        if (forceRenderDate !== undefined) {
           return { month: forceRenderDate.month, year: forceRenderDate.year, day: forceRenderDate.day };
         }
 
