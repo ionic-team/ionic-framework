@@ -29,7 +29,7 @@ export declare interface IonPopover extends Components.IonPopover {
    */
   ionPopoverDidDismiss: EventEmitter<CustomEvent>;
   /**
-   * Emitted after the popover has presented. Shorthand for ionPopoverWillDismiss.
+   * Emitted after the popover has presented. Shorthand for ionPopoverDidPresent.
    */
   didPresent: EventEmitter<CustomEvent>;
   /**
