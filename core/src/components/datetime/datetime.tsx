@@ -369,7 +369,7 @@ export class Datetime implements ComponentInterface {
     const { value } = this;
 
     if (this.hasValue()) {
-      await this.processValue(value);
+      this.processValue(value);
     }
 
     this.emitStyle();
@@ -512,7 +512,7 @@ export class Datetime implements ComponentInterface {
    */
   @Method()
   async reset(startDate?: string) {
-    await this.processValue(startDate);
+    this.processValue(startDate);
   }
 
   /**
@@ -1188,7 +1188,7 @@ export class Datetime implements ComponentInterface {
     });
   }
 
-  private processValue = async (value?: string | string[] | null) => {
+  private processValue = (value?: string | string[] | null) => {
     const hasValue = value !== null && value !== undefined && (!Array.isArray(value) || value.length > 0);
     const valueToProcess = hasValue ? parseDate(value) : this.defaultParts;
 
@@ -1266,38 +1266,11 @@ export class Datetime implements ComponentInterface {
     const bodyIsVisible = el.classList.contains('datetime-ready');
     const { isGridStyle, showMonthAndYear } = this;
     if (isGridStyle && didChangeMonth && bodyIsVisible && !showMonthAndYear) {
-      /**
-       * Tell other render functions that we need to force the
-       * target month to appear in place of the actual next/prev month.
-       * Because this is a State variable, a rerender will be triggered
-       * automatically, updating the rendered months.
-       */
-      this.forceRenderDate = targetValue;
-
-      /**
-       * Flag that we've started scrolling to the forced date.
-       * The resolve function will be called by the datetime's
-       * scroll listener when it's done updating everything.
-       * This is a replacement for making prev/nextMonth async,
-       * since the logic we're waiting on is in a listener.
-       */
-      const forceDateScrollingPromise = new Promise<void>((resolve) => {
-        this.resolveForceDateScrolling = resolve;
-      });
-
-      /**
-       * Animate smoothly to the forced month. This will also update
-       * workingParts and correct the surrounding months for us.
-       */
-      const targetMonthIsBefore = isBefore(targetValue, workingParts);
-      targetMonthIsBefore ? this.prevMonth() : this.nextMonth();
-      await forceDateScrollingPromise;
-      this.resolveForceDateScrolling = undefined;
-      this.forceRenderDate = undefined;
+      this.animateToDate(targetValue);
     } else {
       /**
        * We only need to do this if we didn't just animate to a new month,
-       * since prevMonth/nextMonth call setWorkingParts for us.
+       * since that calls prevMonth/nextMonth which calls setWorkingParts for us.
        */
       this.setWorkingParts({
         month,
@@ -1310,7 +1283,40 @@ export class Datetime implements ComponentInterface {
     }
   };
 
-  async componentWillLoad() {
+  private animateToDate = async (targetValue: DatetimeParts) => {
+    const { workingParts } = this;
+
+    /**
+     * Tell other render functions that we need to force the
+     * target month to appear in place of the actual next/prev month.
+     * Because this is a State variable, a rerender will be triggered
+     * automatically, updating the rendered months.
+     */
+    this.forceRenderDate = targetValue;
+
+    /**
+     * Flag that we've started scrolling to the forced date.
+     * The resolve function will be called by the datetime's
+     * scroll listener when it's done updating everything.
+     * This is a replacement for making prev/nextMonth async,
+     * since the logic we're waiting on is in a listener.
+     */
+    const forceDateScrollingPromise = new Promise<void>((resolve) => {
+      this.resolveForceDateScrolling = resolve;
+    });
+
+    /**
+     * Animate smoothly to the forced month. This will also update
+     * workingParts and correct the surrounding months for us.
+     */
+    const targetMonthIsBefore = isBefore(targetValue, workingParts);
+    targetMonthIsBefore ? this.prevMonth() : this.nextMonth();
+    await forceDateScrollingPromise;
+    this.resolveForceDateScrolling = undefined;
+    this.forceRenderDate = undefined;
+  };
+
+  componentWillLoad() {
     const { el, highlightedDates, multiple, presentation, preferWheel } = this;
 
     if (multiple) {
@@ -1348,7 +1354,7 @@ export class Datetime implements ComponentInterface {
     this.processMinParts();
     this.processMaxParts();
 
-    await this.processValue(this.value);
+    this.processValue(this.value);
 
     this.emitStyle();
   }
