@@ -26,6 +26,7 @@ $baselineUnit: 1rem !default;
 @function dynamic-font-max($size, $maxScale, $unit: $baselineUnit) {
   $baseScale: font-scale($size, $unit);
   $maxScale: $size * $maxScale;
+
   @return min($baseScale, $maxScale);
 }
 
@@ -40,6 +41,7 @@ $baselineUnit: 1rem !default;
 @function dynamic-font-min($minScale, $size, $unit: $baselineUnit) {
   $baseScale: font-scale($size, $unit);
   $minScale: $size * $minScale;
+
   @return min($minScale, $baseScale);
 }
 
@@ -56,5 +58,6 @@ $baselineUnit: 1rem !default;
   $baseScale: font-scale($baseSize, $unit);
   $maxScale: $baseSize * $maxScale;
   $minScale: $baseSize * $minScale;
+
   @return clamp($minScale, $baseScale, $maxScale);
 }
