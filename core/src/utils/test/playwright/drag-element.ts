@@ -30,7 +30,7 @@ export const dragElementBy = async (
   const startX = startXCoord === undefined ? boundingBox.x + boundingBox.width / 2 : startXCoord;
   const startY = startYCoord === undefined ? boundingBox.y + boundingBox.height / 2 : startYCoord;
 
-  // Navigate the start position.
+  // Navigate to the start position.
   await page.mouse.move(startX, startY);
 
   await page.mouse.down();
