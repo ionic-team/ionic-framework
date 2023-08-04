@@ -4,7 +4,7 @@
 // --------------------------------------------------
 
 /// @prop - Font size of the reorder icon
-$reorder-ios-icon-font-size:      2.125rem !default;
+$reorder-ios-icon-font-size:      dynamic-font(34px) !default;
 
 /// @prop - Opacity of the reorder icon
 $reorder-ios-icon-opacity:        .4 !default;
