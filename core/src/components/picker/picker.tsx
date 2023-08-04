@@ -1,5 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import { raf } from '@utils/helpers';
 import {
   createDelegateController,
   createTriggerController,
@@ -197,6 +198,16 @@ export class Picker implements ComponentInterface, OverlayInterface {
 
   componentWillLoad() {
     setOverlayId(this.el);
+  }
+
+  componentDidLoad() {
+    /**
+     * If picker was rendered with isOpen="true"
+     * then we should open picker immediately.
+     */
+    if (this.isOpen === true) {
+      raf(() => this.present());
+    }
   }
 
   /**
