@@ -1,4 +1,5 @@
 @import "../../themes/ionic.globals";
+@import "./chip.vars";
 
 :host {
   /**
@@ -86,7 +87,7 @@
 // ---------------------------------------------
 
 ::slotted(ion-icon) {
-  font-size: calc(20em / 14);
+  font-size: $chip-icon-size;
 }
 
 :host(:not(.ion-color)) ::slotted(ion-icon) {
@@ -107,8 +108,8 @@
 ::slotted(ion-avatar) {
   flex-shrink: 0;
 
-  width: calc(24em / 14);
-  height: calc(24em / 14);
+  width: $chip-avatar-size;
+  height: $chip-avatar-size;
 }
 
 ::slotted(ion-avatar:first-child) {

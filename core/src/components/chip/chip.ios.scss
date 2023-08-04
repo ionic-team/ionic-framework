@@ -1,4 +1,5 @@
 @import "./chip";
+@import "./chip.vars";
 
 :host {
   /**
@@ -6,5 +7,5 @@
    * so we set max font size for chips.
    * We add a min font size to keep the text legible.
    */
-  font-size: clamp(13px, 0.875rem, 22px);
+  font-size: clamp(13px, $chip-base-font-size-rem, 22px);
 }
