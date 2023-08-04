@@ -138,7 +138,7 @@ export class Datetime implements ComponentInterface {
   @State() isTimePopoverOpen = false;
 
   /**
-   * When non-null, will force the datetime to render the month
+   * When defined, will force the datetime to render the month
    * containing the specified date. Currently, this should only
    * be used to enable immediately auto-scrolling to the new month,
    * and should then be reset to undefined once the transition is
