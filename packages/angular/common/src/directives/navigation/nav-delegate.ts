@@ -3,9 +3,6 @@ import { ElementRef, Injector, Directive, EnvironmentInjector, NgZone } from '@a
 import { AngularDelegate } from '../../providers/angular-delegate';
 import { ProxyCmp, proxyOutputs } from '../../utils/proxy';
 
-export const NAV_DELEGATE_SELECTOR = 'ion-nav';
-export const NAV_DELEGATE_TEMPLATE = '<ng-content></ng-content>';
-
 const NAV_DELEGATE_INPUTS = ['animated', 'animation', 'root', 'rootParams', 'swipeGesture'];
 
 const NAV_DELEGATE_METHODS = [
@@ -29,7 +26,7 @@ const NAV_DELEGATE_METHODS = [
   methods: NAV_DELEGATE_METHODS,
 })
 @Directive({
-  selector: NAV_DELEGATE_SELECTOR,
+  selector: 'ion-nav',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: NAV_DELEGATE_INPUTS,
 })
