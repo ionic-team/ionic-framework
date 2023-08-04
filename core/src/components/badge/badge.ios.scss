@@ -14,5 +14,5 @@
    * with other components and in case "-apple-system-body" does
    * go smaller than 14px in the future.
    */
-  font-size: max(13px, $badge-font-size);
+  font-size: dynamic-font-min(1, $badge-baseline-font-size);
 }
