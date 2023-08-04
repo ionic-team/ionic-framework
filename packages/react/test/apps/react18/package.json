@@ -3,59 +3,44 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "@ionic/react": "^6.6.1",
-    "@ionic/react-router": "^6.6.1",
-    "@types/react": "^18.0.28",
-    "@types/react-dom": "^18.0.11",
-    "@types/react-router": "^5.1.20",
-    "@types/react-router-dom": "^5.3.3",
-    "ionicons": "^6.0.4",
+    "@ionic/react": "^7.0.0",
+    "@ionic/react-router": "^7.0.0",
+    "ionicons": "^7.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router": "^5.3.4",
-    "react-router-dom": "^5.3.4",
-    "react-scripts": "^5.0.0",
-    "typescript": "^4.1.3"
+    "react-router-dom": "^5.3.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom --transformIgnorePatterns 'node_modules/(?!(@ionic/react|@ionic/react-router|@ionic/core|@stencil/core|ionicons)/)'",
-    "eject": "react-scripts eject",
+    "dev": "vite",
+    "start": "vite",
+    "build": "tsc && vite build",
+    "test": "vitest",
     "sync": "sh ./scripts/sync.sh",
     "cypress": "cypress run --headless --browser chrome",
     "cypress.open": "cypress open",
     "e2e": "concurrently \"serve -s build -l 3000\" \"wait-on http-get://localhost:3000 && npm run cypress\" --kill-others --success first"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
-    "@types/jest": "^27.4.1",
-    "@types/node": "^17.0.21",
+    "@types/react": "^18.0.27",
+    "@types/react-dom": "^18.0.10",
+    "@types/react-router": "^5.1.20",
+    "@types/react-router-dom": "^5.3.3",
+    "@vitejs/plugin-legacy": "^4.0.2",
+    "@vitejs/plugin-react": "^4.0.1",
     "concurrently": "^6.3.0",
-    "cypress": "^10.9.0",
+    "cypress": "^12.7.0",
     "serve": "^14.0.1",
     "wait-on": "^6.0.0",
-    "webpack-cli": "^4.9.1"
+    "eslint": "^8.35.0",
+    "eslint-plugin-react": "^7.32.2",
+    "jsdom": "^22.1.0",
+    "typescript": "^5.1.6",
+    "vite": "^4.3.9",
+    "vitest": "^0.32.2"
   },
   "description": "An Ionic project",
   "engines": {
