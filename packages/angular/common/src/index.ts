@@ -21,6 +21,7 @@ export type { IonicWindow } from './types/interfaces';
 
 export { NavParams } from './directives/navigation/nav-params';
 
+export { IonPopover } from './overlays/popover';
 export { IonModal } from './overlays/modal';
 
 export { IonRouterOutlet, INPUT_BINDER, RoutedComponentInputBinder } from './directives/navigation/router-outlet';
