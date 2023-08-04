@@ -19,7 +19,7 @@
     "sync": "sh ./scripts/sync.sh",
     "cypress": "cypress run --headless --browser chrome",
     "cypress.open": "cypress open",
-    "e2e": "concurrently \"serve -s build -l 3000\" \"wait-on http-get://localhost:3000 && npm run cypress\" --kill-others --success first"
+    "e2e": "concurrently \"serve -s dist -l 3000\" \"wait-on http-get://localhost:3000 && npm run cypress\" --kill-others --success first"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
