@@ -889,7 +889,7 @@ export class Datetime implements ComponentInterface {
         /**
          * If we're force-rendering a month, assume we've
          * scrolled to that and return it.
-         * 
+         *
          * If forceRenderDate is ever used in a context where the
          * forced month is not immediately auto-scrolled to, this
          * should be updated to also check whether `month` has the
