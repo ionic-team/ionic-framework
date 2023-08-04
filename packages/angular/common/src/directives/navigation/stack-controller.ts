@@ -1,9 +1,9 @@
 import { Location } from '@angular/common';
 import { ComponentRef, NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { bindLifecycleEvents } from '@ionic/angular/common';
-import { AnimationBuilder, RouterDirection } from '@ionic/core';
+import type { AnimationBuilder, RouterDirection } from '@ionic/core/components';
 
+import { bindLifecycleEvents } from '../../providers/angular-delegate';
 import { NavController } from '../../providers/nav-controller';
 
 import {

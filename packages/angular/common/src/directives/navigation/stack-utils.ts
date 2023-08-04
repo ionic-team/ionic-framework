@@ -1,6 +1,6 @@
 import { ComponentRef } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
-import { AnimationBuilder, NavDirection, RouterDirection } from '@ionic/core';
+import type { AnimationBuilder, NavDirection, RouterDirection } from '@ionic/core/components';
 
 export const insertView = (views: RouteView[], view: RouteView, direction: RouterDirection): RouteView[] => {
   if (direction === 'root') {
