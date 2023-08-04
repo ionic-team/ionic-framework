@@ -23,7 +23,7 @@ export { NavParams } from './directives/navigation/nav-params';
 export { IonRouterOutlet, INPUT_BINDER, RoutedComponentInputBinder } from './directives/navigation/router-outlet';
 export type { StackEvent } from './directives/navigation/stack-utils';
 
-export { IonBackButton } from './directives/navigation/back-button';
+export { IonBackButtonDelegate } from './directives/navigation/back-button';
 export {
   RouterLinkDelegateDirective,
   RouterLinkWithHrefDelegateDirective,
