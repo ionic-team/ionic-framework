@@ -1,10 +1,7 @@
-import { LocationStrategy } from '@angular/common';
-import { Component, ElementRef } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Component } from '@angular/core';
 import {
   RouterLinkDelegateDirective as RouterLinkDelegateBase,
   RouterLinkWithHrefDelegateDirective as RouterLinkHrefDelegateBase,
-  NavController,
 } from '@ionic/angular/common';
 
 @Component({
@@ -13,17 +10,7 @@ import {
   template: '<ng-content></ng-content>',
   standalone: true,
 })
-export class IonRouterLink extends RouterLinkDelegateBase {
-  constructor(
-    locationStrategy: LocationStrategy,
-    navCtrl: NavController,
-    elementRef: ElementRef,
-    router: Router,
-    routerLink?: RouterLink
-  ) {
-    super(locationStrategy, navCtrl, elementRef, router, routerLink);
-  }
-}
+export class IonRouterLink extends RouterLinkDelegateBase {}
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
@@ -31,14 +18,4 @@ export class IonRouterLink extends RouterLinkDelegateBase {
   template: '<ng-content></ng-content>',
   standalone: true,
 })
-export class IonRouterLinkWithHref extends RouterLinkHrefDelegateBase {
-  constructor(
-    locationStrategy: LocationStrategy,
-    navCtrl: NavController,
-    elementRef: ElementRef,
-    router: Router,
-    routerLink?: RouterLink
-  ) {
-    super(locationStrategy, navCtrl, elementRef, router, routerLink);
-  }
-}
+export class IonRouterLinkWithHref extends RouterLinkHrefDelegateBase {}
