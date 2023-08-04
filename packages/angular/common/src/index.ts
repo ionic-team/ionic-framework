@@ -30,3 +30,5 @@ export {
 } from './directives/navigation/router-link-delegate';
 export { NavDelegate } from './directives/navigation/nav-delegate';
 export { IonTabs } from './directives/navigation/tabs';
+
+export { ProxyCmp } from './utils/proxy';
