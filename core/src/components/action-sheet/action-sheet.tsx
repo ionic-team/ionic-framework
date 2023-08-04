@@ -2,6 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Watch, Component, Element, Event, Host, Method, Prop, h, readTask } from '@stencil/core';
 import type { Gesture } from '@utils/gesture';
 import { createButtonActiveGesture } from '@utils/gesture/button-active';
+import { raf } from '@utils/helpers';
 import {
   BACKDROP,
   createDelegateController,
@@ -318,25 +319,32 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
 
   componentDidLoad() {
     /**
-     * Do not create gesture if:
-     * 1. A gesture already exists
-     * 2. App is running in MD mode
-     * 3. A wrapper ref does not exist
+     * Only create gesture if:
+     * 1. A gesture does not already exist
+     * 2. App is running in iOS mode
+     * 3. A wrapper ref exists
+     * 4. A group ref exists
      */
     const { groupEl, wrapperEl } = this;
-    if (this.gesture || getIonMode(this) === 'md' || !wrapperEl || !groupEl) {
-      return;
+    if (!this.gesture && getIonMode(this) === 'ios' && wrapperEl && groupEl) {
+      readTask(() => {
+        const isScrollable = groupEl.scrollHeight > groupEl.clientHeight;
+        if (!isScrollable) {
+          this.gesture = createButtonActiveGesture(wrapperEl, (refEl: HTMLElement) =>
+            refEl.classList.contains('action-sheet-button')
+          );
+          this.gesture.enable(true);
+        }
+      });
     }
 
-    readTask(() => {
-      const isScrollable = groupEl.scrollHeight > groupEl.clientHeight;
-      if (!isScrollable) {
-        this.gesture = createButtonActiveGesture(wrapperEl, (refEl: HTMLElement) =>
-          refEl.classList.contains('action-sheet-button')
-        );
-        this.gesture.enable(true);
-      }
-    });
+    /**
+     * If action sheet was rendered with isOpen="true"
+     * then we should open action sheet immediately.
+     */
+    if (this.isOpen === true) {
+      raf(() => this.present());
+    }
   }
 
   render() {
