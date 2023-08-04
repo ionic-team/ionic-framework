@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.2.2](https://github.com/ionic-team/ionic-framework/compare/v7.2.1...v7.2.2) (2023-08-02)
+
+
+### Bug Fixes
+
+* **react, vue:** custom animations are used when going back ([#27895](https://github.com/ionic-team/ionic-framework/issues/27895)) ([824033f](https://github.com/ionic-team/ionic-framework/commit/824033f1d4b4a3e5d4c6a978a39e5bb1f33b5bb4)), closes [#27873](https://github.com/ionic-team/ionic-framework/issues/27873)
+
+
+
+
+
+## [7.2.1](https://github.com/ionic-team/ionic-framework/compare/v7.2.0...v7.2.1) (2023-07-26)
+
+**Note:** Version bump only for package @ionic/vue-router
+
+
+
+
+
 # [7.2.0](https://github.com/ionic-team/ionic-framework/compare/v7.1.4...v7.2.0) (2023-07-19)
 
 **Note:** Version bump only for package @ionic/vue-router

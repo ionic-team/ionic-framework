@@ -581,6 +581,13 @@
   @include transform-origin(start, top);
 
   max-width: 100%;
+
+  /**
+   * The 2 ensures the label
+   * remains on top of any browser
+   * autofill background too.
+   */
+  z-index: 2;
 }
 
 /**

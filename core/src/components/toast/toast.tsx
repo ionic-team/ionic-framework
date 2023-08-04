@@ -1,6 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { State, Watch, Component, Element, Event, h, Host, Method, Prop } from '@stencil/core';
 import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
+import { raf } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 import {
   createDelegateController,
@@ -251,6 +252,16 @@ export class Toast implements ComponentInterface, OverlayInterface {
 
   componentWillLoad() {
     setOverlayId(this.el);
+  }
+
+  componentDidLoad() {
+    /**
+     * If toast was rendered with isOpen="true"
+     * then we should open toast immediately.
+     */
+    if (this.isOpen === true) {
+      raf(() => this.present());
+    }
   }
 
   /**
