@@ -347,7 +347,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
   componentDidLoad() {
     /**
-     * Only  create gesture if:
+     * Only create gesture if:
      * 1. A gesture does not already exist
      * 2. App is running in iOS mode
      * 3. A wrapper ref exists
@@ -360,8 +360,8 @@ export class Alert implements ComponentInterface, OverlayInterface {
     }
 
     /**
-     * If toast was rendered with isOpen="true"
-     * then we should open toast immediately.
+     * If alert was rendered with isOpen="true"
+     * then we should open alert immediately.
      */
     if (this.isOpen === true) {
       raf(() => this.present());
