@@ -36,7 +36,7 @@ $button-ios-border-radius:                            14px !default;
 /// @prop - Font size of the button text
 /// The maximum font size is calculated by taking the default font size
 /// and multiplying it by 3, since 310% of the default is the maximum
-$button-ios-font-size:                                min(1rem, 48px) !default;
+$button-ios-font-size:                                dynamic-font-max(16px, 3) !default;
 
 /// @prop - Font weight of the button text
 $button-ios-font-weight:                              500 !default;
@@ -87,7 +87,7 @@ $button-ios-large-border-radius:                      16px !default;
 /// @prop - Font size of the large button
 /// The maximum font size is calculated by taking the default font size
 /// and multiplying it by 3, since 310% of the default is the maximum
-$button-ios-large-font-size:                          min(1.25rem, 60px) !default;
+$button-ios-large-font-size:                          dynamic-font-max(20px, 3) !default;
 
 
 // iOS Small Button
@@ -114,7 +114,7 @@ $button-ios-small-border-radius:                      6px !default;
 /// @prop - Font size of the small button
 /// The maximum font size is calculated by taking the default font size
 /// and multiplying it by 3, since 310% of the default is the maximum
-$button-ios-small-font-size:                          min(0.8125rem, 39px) !default;
+$button-ios-small-font-size:                          dynamic-font-max(13px, 3) !default;
 
 
 // iOS Outline Button
@@ -159,7 +159,7 @@ $button-ios-outline-background-color-focused:         ion-color(primary, base, $
 /// @prop - Font size of the clear button
 /// The maximum font size is calculated by taking the default font size
 /// and multiplying it by 3, since 310% of the default is the maximum
-$button-ios-clear-font-size:                          min(1.0625rem, 51px) !default;
+$button-ios-clear-font-size:                          dynamic-font-max(17px, 3) !default;
 
 /// @prop - Font weight of the clear button
 $button-ios-clear-font-weight:                        normal !default;
