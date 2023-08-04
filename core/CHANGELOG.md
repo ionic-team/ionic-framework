@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.2.2](https://github.com/ionic-team/ionic-framework/compare/v7.2.1...v7.2.2) (2023-08-02)
+
+
+### Bug Fixes
+
+* **datetime-button:** render correct text when passing partial date values ([#27816](https://github.com/ionic-team/ionic-framework/issues/27816)) ([bd1910b](https://github.com/ionic-team/ionic-framework/commit/bd1910ba69348877ad5f99d9db2b59d06693b91e)), closes [#27797](https://github.com/ionic-team/ionic-framework/issues/27797)
+* **input, textarea:** input does not block floating label ([#27870](https://github.com/ionic-team/ionic-framework/issues/27870)) ([f14c440](https://github.com/ionic-team/ionic-framework/commit/f14c440d6321ef9f168b272338e5cd21cab384ef)), closes [#27812](https://github.com/ionic-team/ionic-framework/issues/27812)
+* **item-options:** use correct safe area padding ([#27853](https://github.com/ionic-team/ionic-framework/issues/27853)) ([0b8f1bc](https://github.com/ionic-team/ionic-framework/commit/0b8f1bc7dd4170a2a8c9ed3aede173dd489b25ea))
+* **radio:** radios can be focused and are announced with group ([#27817](https://github.com/ionic-team/ionic-framework/issues/27817)) ([ba2f49b](https://github.com/ionic-team/ionic-framework/commit/ba2f49b8a460520d20ac198db800ea2d9e5b015f)), closes [#27438](https://github.com/ionic-team/ionic-framework/issues/27438)
+* **select:** popover uses modern form syntax ([#27818](https://github.com/ionic-team/ionic-framework/issues/27818)) ([0c117cf](https://github.com/ionic-team/ionic-framework/commit/0c117cfe7f383b7c7837d27de5a6eee12ddd6c2f)), closes [#27071](https://github.com/ionic-team/ionic-framework/issues/27071) [#27786](https://github.com/ionic-team/ionic-framework/issues/27786)
+
+
+
+
+
+## [7.2.1](https://github.com/ionic-team/ionic-framework/compare/v7.2.0...v7.2.1) (2023-07-26)
+
+
+### Bug Fixes
+
+* **item-sliding:** buttons are not interactive on close ([#27829](https://github.com/ionic-team/ionic-framework/issues/27829)) ([6e4919c](https://github.com/ionic-team/ionic-framework/commit/6e4919caff90fc60988e5cc85ad7161844eb5b51)), closes [#22722](https://github.com/ionic-team/ionic-framework/issues/22722)
+* **modal:** body background is reset with inline card modals ([#27835](https://github.com/ionic-team/ionic-framework/issues/27835)) ([38626d9](https://github.com/ionic-team/ionic-framework/commit/38626d96809d1c6be523ea62a4fac1dec73ee891)), closes [#27830](https://github.com/ionic-team/ionic-framework/issues/27830)
+
+
+
+
+
 # [7.2.0](https://github.com/ionic-team/ionic-framework/compare/v7.1.4...v7.2.0) (2023-07-19)
 
 

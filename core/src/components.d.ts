@@ -2176,7 +2176,7 @@ export namespace Components {
          */
         "side": PositionSide;
         /**
-          * Describes how to calculate the popover width. If `"cover"`, the popover width will match the width of the trigger. If `"auto"`, the popover width will be determined by the content in the popover.
+          * Describes how to calculate the popover width. If `"cover"`, the popover width will match the width of the trigger. If `"auto"`, the popover width will be set to a static default value.
          */
         "size": PopoverSize;
         /**
@@ -6189,7 +6189,7 @@ declare namespace LocalJSX {
          */
         "side"?: PositionSide;
         /**
-          * Describes how to calculate the popover width. If `"cover"`, the popover width will match the width of the trigger. If `"auto"`, the popover width will be determined by the content in the popover.
+          * Describes how to calculate the popover width. If `"cover"`, the popover width will match the width of the trigger. If `"auto"`, the popover width will be set to a static default value.
          */
         "size"?: PopoverSize;
         /**
