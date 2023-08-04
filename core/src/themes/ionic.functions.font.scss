@@ -42,7 +42,7 @@ $baselineUnit: 1rem !default;
   $baseScale: dynamic-font($size, $unit);
   $minScale: $size * $minScale;
 
-  @return min($minScale, $baseScale);
+  @return max($minScale, $baseScale);
 }
 
 /**
