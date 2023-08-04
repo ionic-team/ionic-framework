@@ -1,7 +1,14 @@
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { ModuleWithProviders, APP_INITIALIZER, NgModule, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
-import { ModalController, PopoverController, ConfigToken, AngularDelegate } from '@ionic/angular/common';
+import {
+  ModalController,
+  PopoverController,
+  ConfigToken,
+  AngularDelegate,
+  INPUT_BINDER,
+  RoutedComponentInputBinder,
+} from '@ionic/angular/common';
 import { IonicConfig } from '@ionic/core';
 
 import { appInitialize } from './app-initialize';
@@ -13,7 +20,7 @@ import {
   TextValueAccessorDirective,
 } from './directives/control-value-accessors';
 import { IonBackButtonDelegateDirective } from './directives/navigation/ion-back-button';
-import { INPUT_BINDER, IonRouterOutlet, RoutedComponentInputBinder } from './directives/navigation/ion-router-outlet';
+import { IonRouterOutlet } from './directives/navigation/ion-router-outlet';
 import { IonTabs } from './directives/navigation/ion-tabs';
 import { NavDelegate } from './directives/navigation/nav-delegate';
 import {
