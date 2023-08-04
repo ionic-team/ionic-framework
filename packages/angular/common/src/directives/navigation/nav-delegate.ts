@@ -3,9 +3,9 @@ import { ElementRef, Injector, Directive, EnvironmentInjector, NgZone } from '@a
 import { AngularDelegate } from '../../providers/angular-delegate';
 import { ProxyCmp, proxyOutputs } from '../../utils/proxy';
 
-const NAV_DELEGATE_INPUTS = ['animated', 'animation', 'root', 'rootParams', 'swipeGesture'];
+const NAV_INPUTS = ['animated', 'animation', 'root', 'rootParams', 'swipeGesture'];
 
-const NAV_DELEGATE_METHODS = [
+const NAV_METHODS = [
   'push',
   'insert',
   'insertPages',
@@ -22,13 +22,13 @@ const NAV_DELEGATE_METHODS = [
 ];
 
 @ProxyCmp({
-  inputs: NAV_DELEGATE_INPUTS,
-  methods: NAV_DELEGATE_METHODS,
+  inputs: NAV_INPUTS,
+  methods: NAV_METHODS,
 })
 @Directive({
   selector: 'ion-nav',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: NAV_DELEGATE_INPUTS,
+  inputs: NAV_INPUTS,
 })
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class NavDelegate {
