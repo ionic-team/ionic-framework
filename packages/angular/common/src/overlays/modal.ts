@@ -33,7 +33,7 @@ export declare interface IonModal extends Components.IonModal {
    */
   ionBreakpointDidChange: EventEmitter<CustomEvent<ModalBreakpointChangeEventDetail>>;
   /**
-   * Emitted after the modal has presented. Shorthand for ionModalWillDismiss.
+   * Emitted after the modal has presented. Shorthand for ionModalDidPresent.
    */
   didPresent: EventEmitter<CustomEvent>;
   /**
