@@ -26,7 +26,7 @@ export { IonModal } from './overlays/modal';
 export { IonRouterOutlet, INPUT_BINDER, RoutedComponentInputBinder } from './directives/navigation/router-outlet';
 export type { StackEvent } from './directives/navigation/stack-utils';
 
-export { IonBackButton } from './directives/navigation/back-button';
+export { IonBackButtonDelegate } from './directives/navigation/back-button';
 export {
   RouterLinkDelegateDirective,
   RouterLinkWithHrefDelegateDirective,
