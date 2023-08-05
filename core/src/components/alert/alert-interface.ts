@@ -45,7 +45,7 @@ type AlertButtonOverlayHandler = boolean | void | { [key: string]: any };
 
 export interface AlertButton {
   text: string;
-  role?: 'cancel' | 'destructive' | string;
+  role?: 'cancel' | 'destructive' | Omit<string, 'cancel' | 'destructive'>;
   cssClass?: string | string[];
   id?: string;
   // TODO(FW-2832): type
