@@ -12,7 +12,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
           }
         </style>
 
-        <ion-note>Default</ion-note>
+        <ion-note>Note</ion-note>
       `,
         config
       );
@@ -31,7 +31,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         </style>
 
         <ion-item>
-          <ion-note slot="end">Default</ion-note>
+          <ion-note slot="end">Note</ion-note>
         </ion-item>
       `,
         config
@@ -51,7 +51,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         </style>
 
         <ion-item-divider>
-          <ion-note slot="end">Default</ion-note>
+          <ion-note slot="end">Note</ion-note>
         </ion-item-divider>
       `,
         config
