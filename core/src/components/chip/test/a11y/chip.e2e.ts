@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-configs({ directions: ['ltr'], modes: ['ios', 'md'] }).forEach(({ title, screenshot, config }) => {
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   /**
    * Font scaling does not vary across directions.
    */
