@@ -1241,11 +1241,11 @@ export class Datetime implements ComponentInterface {
      * 3. The calendar body is visible (prevents animation when in collapsed datetime-button, for example)
      * 4. The month/year picker is not open (since you wouldn't see the animation anyway)
      */
-    const didChangeMonth = month !== workingParts.month || year !== workingParts.year;
-    const monthYearDefined = month !== undefined && year !== undefined;
+    const didChangeMonth =
+      (month !== undefined && month !== workingParts.month) || (year !== undefined && year !== workingParts.year);
     const bodyIsVisible = el.classList.contains('datetime-ready');
     const { isGridStyle, showMonthAndYear } = this;
-    if (isGridStyle && didChangeMonth && monthYearDefined && bodyIsVisible && !showMonthAndYear) {
+    if (isGridStyle && didChangeMonth && bodyIsVisible && !showMonthAndYear) {
       this.animateToDate(targetValue);
     } else {
       /**
