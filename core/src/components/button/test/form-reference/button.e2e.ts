@@ -131,7 +131,11 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, config }) => 
       expect(submitEvent).not.toHaveReceivedEvent();
     });
 
-    test('should submit the form by id when form is set async', async ({ page }) => {
+    test('should submit the form by id when form is set async', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/27952',
+      });
       await page.setContent(
         `
         <form id="myForm"></form>
