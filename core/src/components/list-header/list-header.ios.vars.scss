@@ -8,7 +8,7 @@
 $list-header-ios-padding-start:       $item-ios-padding-start !default;
 
 /// @prop - Font size of the list header
-$list-header-ios-font-size:           22px !default;
+$list-header-ios-font-size:           min(1.375rem, 56px) !default;
 
 /// @prop - Font weight of the list header
 $list-header-ios-font-weight:         700 !default;
