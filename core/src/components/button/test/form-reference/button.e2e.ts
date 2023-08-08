@@ -130,6 +130,25 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, config }) => 
 
       expect(submitEvent).not.toHaveReceivedEvent();
     });
+
+    test('should submit the form by id when form is set async', async ({ page }) => {
+      await page.setContent(
+        `
+        <form id="myForm"></form>
+        <ion-button type="submit">Submit</ion-button>
+      `,
+        config
+      );
+
+      const submitEvent = await page.spyOnEvent('submit');
+      const button = page.locator('ion-button');
+
+      await button.evaluate((el: HTMLIonButtonElement) => (el.form = 'myForm'));
+
+      await page.click('ion-button');
+
+      expect(submitEvent).toHaveReceivedEvent();
+    });
   });
 
   test.describe(title('should throw a warning if the form cannot be found'), () => {
