@@ -28,7 +28,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       const content = page.locator('.page-two-content');
 
-      await dragElementBy(content, page, 1000, 0, 10);
+      await dragElementBy(content, page, 370, 0, 10);
 
       await ionNavDidChange.next();
     });
@@ -42,7 +42,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       await ionNavDidChange.next();
 
-      await cardModalPage.swipeToCloseModal('ion-modal ion-content.page-two-content');
+      await cardModalPage.swipeToCloseModal('ion-modal ion-content.page-two-content', true, 270);
     });
   });
 });

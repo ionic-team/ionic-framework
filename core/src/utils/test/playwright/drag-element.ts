@@ -77,38 +77,42 @@ export const dragElementByYAxis = async (
   await page.mouse.up();
 };
 
-const calculateEndX = (startX: number, dragByX: number, viewportWidth: number) => {
-  let endX = startX + dragByX;
+const validateDragByX = (startX: number, dragByX: number, viewportWidth: number) => {
+  const endX = startX + dragByX;
   // The element is being dragged past the right of the viewport.
   if (endX > viewportWidth) {
-    // The x coordinate is set to 5 pixels to the left of the right of the viewport to avoid the mouseup event not firing.
-    endX = viewportWidth - 5;
+    const recommendedDragByX = viewportWidth - startX - 5;
+    throw new Error(
+      `The element is being dragged past the right of the viewport. Update the dragByX value to prevent going out of bounds. A recommended value is ${recommendedDragByX}.`
+    );
   }
 
   // The element is being dragged past the left of the viewport.
   if (endX < 0) {
-    // The x coordinate is set to 5 pixels to the right of the left of the viewport to avoid the mouseup event not firing.
-    endX = 5;
+    const recommendedDragByX = startX - 5;
+    throw new Error(
+      `The element is being dragged past the left of the viewport. Update the dragByX value to prevent going out of bounds. A recommended value is ${recommendedDragByX}.`
+    );
   }
-
-  return endX;
 };
 
-const calculateEndY = (startY: number, dragByY: number, viewportHeight: number) => {
-  let endY = startY + dragByY;
+const validateDragByY = (startY: number, dragByY: number, viewportHeight: number) => {
+  const endY = startY + dragByY;
   // The element is being dragged past the bottom of the viewport.
   if (endY > viewportHeight) {
-    // The y coordinate is set to 5 pixels above the bottom of the viewport to avoid the mouseup event not firing.
-    endY = viewportHeight - 5;
+    const recommendedDragByY = viewportHeight - startY - 5;
+    throw new Error(
+      `The element is being dragged past the bottom of the viewport. Update the dragByY value to prevent going out of bounds. A recommended value is ${recommendedDragByY}.`
+    );
   }
 
   // The element is being dragged past the top of the viewport.
   if (endY < 0) {
-    // The y coordinate is set to 5 pixels below the top of the viewport to avoid the mouseup event not firing.
-    endY = 5;
+    const recommendedDragByY = startY - 5;
+    throw new Error(
+      `The element is being dragged past the top of the viewport. Update the dragByY value to prevent going out of bounds. A recommended value is ${recommendedDragByY}.`
+    );
   }
-
-  return endY;
 };
 
 const moveElement = async (page: E2EPage, startX: number, startY: number, dragByX = 0, dragByY = 0) => {
@@ -122,8 +126,11 @@ const moveElement = async (page: E2EPage, startX: number, startY: number, dragBy
     );
   }
 
-  const endX = calculateEndX(startX, dragByX, viewport.width);
-  const endY = calculateEndY(startY, dragByY, viewport.height);
+  validateDragByX(startX, dragByX, viewport.width);
+  validateDragByY(startY, dragByY, viewport.height);
+
+  const endX = startX + dragByX;
+  const endY = startY + dragByY;
 
   // Drag the element.
   for (let i = 1; i <= steps; i++) {
