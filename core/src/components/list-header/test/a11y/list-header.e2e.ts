@@ -13,7 +13,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         </style>
 
         <ion-list-header>
-          <ion-label>Default</ion-label>
+          <ion-label>List Header</ion-label>
         </ion-list-header>
       `,
         config
