@@ -17,7 +17,7 @@
    * Breadcrumbs can be placed in the content too, so
    * we add a min font size to keep the text legible.
    */
-  font-size: clamp(16px, #{$breadcrumb-font-size}, 22px);
+  font-size: dynamic-font-clamp(1, $breadcrumb-baseline-font-size, 1.375);
 }
 
 :host(.breadcrumb-active) {
@@ -66,7 +66,7 @@
 ::slotted(ion-icon) {
   color: $breadcrumb-ios-icon-color;
 
-  font-size: min(1.125rem, 22px);
+  font-size: dynamic-font-max(18px, 1.2);
 }
 
 ::slotted(ion-icon[slot="start"]) {
@@ -102,5 +102,5 @@
 }
 
 .breadcrumbs-collapsed-indicator ion-icon {
-  font-size: min(1.375rem, 22px);
+  font-size: dynamic-font-max(22px, 1);
 }

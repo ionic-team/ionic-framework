@@ -4,7 +4,7 @@
 // --------------------------------------------------
 
 /// @prop - Font size of the card subtitle
-$card-ios-subtitle-font-size:            0.75rem !default;
+$card-ios-subtitle-font-size:            dynamic-font(12px) !default;
 
 /// @prop - Font weight of the card subtitle
 $card-ios-subtitle-font-weight:          700 !default;

@@ -24,5 +24,5 @@
  * icons resize with Dynamic Type.
  */
 ::slotted(ion-icon) {
-  font-size: 1rem;
+  font-size: dynamic-font(16px);
 }

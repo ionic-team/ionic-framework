@@ -14,14 +14,14 @@
   h1 {
     @include margin(0, 0, 2px);
 
-    font-size: 1.5rem;
+    font-size: dynamic-font(24px);
     font-weight: normal;
   }
 
   h2 {
     @include margin(2px, 0);
 
-    font-size: 1rem;
+    font-size: dynamic-font(16px);
     font-weight: normal;
   }
 
@@ -31,14 +31,14 @@
   h6 {
     @include margin(2px, 0);
 
-    font-size: 0.875rem;
+    font-size: dynamic-font(14px);
     font-weight: normal;
   }
 
   p {
     @include margin(0, 0, 2px);
 
-    font-size: 0.875rem;
+    font-size: dynamic-font(14px);
     font-weight: normal;
 
     line-height: 1.5;

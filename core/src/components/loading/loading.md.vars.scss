@@ -4,7 +4,7 @@
 // --------------------------------------------------
 
 /// @prop - Font size of the loading wrapper
-$loading-md-font-size:                 0.875rem !default;
+$loading-md-font-size:                 dynamic-font(14px) !default;
 
 /// @prop - Padding top of the loading wrapper
 $loading-md-padding-top:               24px !default;
