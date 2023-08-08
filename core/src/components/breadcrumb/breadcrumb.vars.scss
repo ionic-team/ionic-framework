@@ -6,8 +6,10 @@
 /// @prop - Font weight of the breadcrumb
 $breadcrumb-font-weight:         400 !default;
 
+$breadcrumb-baseline-font-size: 16px !default;
+
 /// @prop - Font size of the breadcrumb
-$breadcrumb-font-size:           1rem !default;
+$breadcrumb-font-size:           dynamic-font($breadcrumb-baseline-font-size) !default;
 
 /// @prop - Color of the breadcrumb separator
 $breadcrumb-separator-color:     var(--ion-color-step-550, #73849a) !default;

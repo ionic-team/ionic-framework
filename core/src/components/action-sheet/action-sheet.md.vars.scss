@@ -26,7 +26,7 @@ $action-sheet-md-title-height:                          60px !default;
 $action-sheet-md-title-color:                           rgba($text-color-rgb, 0.54) !default;
 
 /// @prop - Font size of the action sheet title
-$action-sheet-md-title-font-size:                       1rem !default;
+$action-sheet-md-title-font-size:                       dynamic-font(16px) !default;
 
 /// @prop - Padding top of the action sheet title
 $action-sheet-md-title-padding-top:                     20px !default;
@@ -45,7 +45,7 @@ $action-sheet-md-title-padding-start:                   $action-sheet-md-title-p
 // --------------------------------------------------
 
 /// @prop - Font size of the action sheet sub title
-$action-sheet-md-sub-title-font-size:                   0.875rem !default;
+$action-sheet-md-sub-title-font-size:                   dynamic-font(14px) !default;
 
 /// @prop - Padding top of the action sheet sub title
 $action-sheet-md-sub-title-padding-top:                 16px !default;
@@ -70,7 +70,7 @@ $action-sheet-md-button-height:                         52px !default;
 $action-sheet-md-button-text-color:                     $text-color-step-150 !default;
 
 /// @prop - Font size of the action sheet button
-$action-sheet-md-button-font-size:                      1rem !default;
+$action-sheet-md-button-font-size:                      dynamic-font(16px) !default;
 
 /// @prop - Padding top of the action sheet button
 $action-sheet-md-button-padding-top:                    12px !default;
@@ -91,7 +91,7 @@ $action-sheet-md-button-background:                     transparent !default;
 // --------------------------------------------------
 
 /// @prop - Font size of the icon in the action sheet button
-$action-sheet-md-icon-font-size:                        1.5rem !default;
+$action-sheet-md-icon-font-size:                        dynamic-font(24px) !default;
 
 /// @prop - Margin top of the icon in the action sheet button
 $action-sheet-md-icon-margin-top:                       0 !default;
