@@ -1237,14 +1237,15 @@ export class Datetime implements ComponentInterface {
     /**
      * Only animate if:
      * 1. We're using grid style (wheel style pickers should just jump to new value)
-     * 2. The month and/or year actually changed (otherwise there's nothing to animate to)
+     * 2. The month and/or year actually changed, and both are defined (otherwise there's nothing to animate to)
      * 3. The calendar body is visible (prevents animation when in collapsed datetime-button, for example)
      * 4. The month/year picker is not open (since you wouldn't see the animation anyway)
      */
     const didChangeMonth = month !== workingParts.month || year !== workingParts.year;
+    const monthYearDefined = month !== undefined && year !== undefined;
     const bodyIsVisible = el.classList.contains('datetime-ready');
     const { isGridStyle, showMonthAndYear } = this;
-    if (isGridStyle && didChangeMonth && bodyIsVisible && !showMonthAndYear) {
+    if (isGridStyle && didChangeMonth && monthYearDefined && bodyIsVisible && !showMonthAndYear) {
       this.animateToDate(targetValue);
     } else {
       /**
