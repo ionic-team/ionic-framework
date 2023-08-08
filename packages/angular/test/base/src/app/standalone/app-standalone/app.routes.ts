@@ -10,8 +10,8 @@ export const routes: Routes = [
       { path: 'modal', loadComponent: () => import('../modal/modal.component').then(m => m.ModalComponent) },
       { path: 'router-outlet', loadComponent: () => import('../router-outlet/router-outlet.component').then(m => m.RouterOutletComponent) },
       { path: 'back-button', loadComponent: () => import('../back-button/back-button.component').then(m => m.BackButtonComponent) },
+      { path: 'router-link', loadComponent: () => import('../router-link/router-link.component').then(m => m.RouterLinkComponent) },
       { path: 'nav', loadComponent: () => import('../nav/nav.component').then(m => m.NavComponent) },
     ]
   },
 ];
-
