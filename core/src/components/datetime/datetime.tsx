@@ -138,7 +138,6 @@ export class Datetime implements ComponentInterface {
 
   @Element() el!: HTMLIonDatetimeElement;
 
-  @State() isPresented = false;
   @State() isTimePopoverOpen = false;
 
   /**
@@ -2367,7 +2366,6 @@ export class Datetime implements ComponentInterface {
       disabled,
       el,
       color,
-      isPresented,
       readonly,
       showMonthAndYear,
       preferWheel,
@@ -2393,7 +2391,6 @@ export class Datetime implements ComponentInterface {
         class={{
           ...createColorClasses(color, {
             [mode]: true,
-            ['datetime-presented']: isPresented,
             ['datetime-readonly']: readonly,
             ['datetime-disabled']: disabled,
             'show-month-and-year': shouldShowMonthAndYear,
