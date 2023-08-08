@@ -13,7 +13,7 @@ describe('Button: Hidden Form Button', () => {
 
     const getButtons = () => {
       return page.body.querySelectorAll('form button');
-    }
+    };
 
     const form = page.body.querySelectorAll('form');
     const button = page.body.querySelector('ion-button');
@@ -23,7 +23,7 @@ describe('Button: Hidden Form Button', () => {
     expect(getButtons().length).toEqual(1);
 
     // Re-render the component
-    button.color = "danger";
+    button.color = 'danger';
     await page.waitForChanges();
 
     expect(getButtons().length).toEqual(1);
