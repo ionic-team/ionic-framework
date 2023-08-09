@@ -2176,7 +2176,7 @@ export namespace Components {
          */
         "side": PositionSide;
         /**
-          * Describes how to calculate the popover width. If `"cover"`, the popover width will match the width of the trigger. If `"auto"`, the popover width will be determined by the content in the popover.
+          * Describes how to calculate the popover width. If `"cover"`, the popover width will match the width of the trigger. If `"auto"`, the popover width will be set to a static default value.
          */
         "size": PopoverSize;
         /**
@@ -2578,6 +2578,10 @@ export namespace Components {
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
+        /**
+          * If used in a form, set the name of the control, which is submitted with the form data.
+         */
+        "name": string;
         /**
           * Set the input's placeholder. `placeholder` can accept either plaintext or HTML as a string. To display characters normally reserved for HTML, they must be escaped. For example `<Ionic>` would become `&lt;Ionic&gt;`  For more information: [Security Documentation](https://ionicframework.com/docs/faq/security)
          */
@@ -6185,7 +6189,7 @@ declare namespace LocalJSX {
          */
         "side"?: PositionSide;
         /**
-          * Describes how to calculate the popover width. If `"cover"`, the popover width will match the width of the trigger. If `"auto"`, the popover width will be determined by the content in the popover.
+          * Describes how to calculate the popover width. If `"cover"`, the popover width will match the width of the trigger. If `"auto"`, the popover width will be set to a static default value.
          */
         "size"?: PopoverSize;
         /**
@@ -6625,6 +6629,10 @@ declare namespace LocalJSX {
           * The mode determines which platform styles to use.
          */
         "mode"?: "ios" | "md";
+        /**
+          * If used in a form, set the name of the control, which is submitted with the form data.
+         */
+        "name"?: string;
         /**
           * Emitted when the input loses focus.
          */

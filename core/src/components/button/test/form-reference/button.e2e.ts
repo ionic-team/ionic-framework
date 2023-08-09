@@ -44,7 +44,7 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, config }) => 
       await page.setContent(
         `
         <form>
-           <ion-button type="submit">Submit</ion-button>
+          <ion-button type="submit">Submit</ion-button>
         </form>
       `,
         config
@@ -56,19 +56,116 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, config }) => 
 
       expect(submitEvent).toHaveReceivedEvent();
     });
+
+    test('should submit the closest form by pressing the `enter` button on a form element', async ({
+      page,
+    }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/19368',
+      });
+
+      await page.setContent(
+        `
+        <form>
+          <input type="text" />
+          <ion-button type="submit">Submit</ion-button>
+        </form>
+      `,
+        config
+      );
+
+      const submitEvent = await page.spyOnEvent('submit');
+
+      await page.press('input', 'Enter');
+
+      expect(submitEvent).toHaveReceivedEvent();
+    });
+
+    test('should submit the closest form with multiple elements by pressing the `enter` button', async ({
+      page,
+    }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/19368',
+      });
+
+      await page.setContent(
+        `
+        <form>
+          <input type="text" />
+          <textarea></textarea>
+          <ion-button type="submit">Submit</ion-button>
+        </form>
+      `,
+        config
+      );
+
+      const submitEvent = await page.spyOnEvent('submit');
+
+      await page.press('input', 'Enter');
+
+      expect(submitEvent).toHaveReceivedEvent();
+    });
+
+    test('should not submit the closest form when button is disabled', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/19368',
+      });
+
+      await page.setContent(
+        `
+        <form>
+          <input type="text" />
+          <ion-button type="submit" disabled>Submit</ion-button>
+        </form>
+      `,
+        config
+      );
+
+      const submitEvent = await page.spyOnEvent('submit');
+
+      await page.press('input', 'Enter');
+
+      expect(submitEvent).not.toHaveReceivedEvent();
+    });
+
+    test('should submit the form by id when form is set async', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/27952',
+      });
+      await page.setContent(
+        `
+        <form id="myForm"></form>
+        <ion-button type="submit">Submit</ion-button>
+      `,
+        config
+      );
+
+      const submitEvent = await page.spyOnEvent('submit');
+      const button = page.locator('ion-button');
+
+      await button.evaluate((el: HTMLIonButtonElement) => (el.form = 'myForm'));
+
+      await page.click('ion-button');
+
+      expect(submitEvent).toHaveReceivedEvent();
+    });
   });
 
   test.describe(title('should throw a warning if the form cannot be found'), () => {
     test('form is a string selector', async ({ page }) => {
-      await page.setContent(`<ion-button type="submit" form="missingForm">Submit</ion-button>`, config);
-
       const logs: string[] = [];
 
       page.on('console', (msg) => {
-        logs.push(msg.text());
+        if (msg.type() === 'warning') {
+          logs.push(msg.text());
+        }
       });
 
-      await page.click('ion-button');
+      await page.setContent(`<ion-button type="submit" form="missingForm">Submit</ion-button>`, config);
 
       expect(logs.length).toBe(1);
       expect(logs[0]).toContain(
@@ -77,6 +174,14 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, config }) => 
     });
 
     test('form is an element reference', async ({ page }) => {
+      const logs: string[] = [];
+
+      page.on('console', (msg) => {
+        if (msg.type() === 'warning') {
+          logs.push(msg.text());
+        }
+      });
+
       await page.setContent(
         `
         <ion-button type="submit">Submit</ion-button>
@@ -89,14 +194,6 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, config }) => 
       `,
         config
       );
-
-      const logs: string[] = [];
-
-      page.on('console', (msg) => {
-        logs.push(msg.text());
-      });
-
-      await page.click('ion-button');
 
       expect(logs.length).toBe(1);
       expect(logs[0]).toContain(

@@ -186,9 +186,6 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-label-slot-truncate`));
     });
   });
-});
-
-configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('input: async label'), () => {
     test('input should re-render when label slot is added async', async ({ page }) => {
       await page.setContent(
@@ -211,6 +208,29 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       await page.waitForChanges();
 
       expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-async-label`));
+    });
+  });
+  test.describe(title('input: floating/stacked label layering'), () => {
+    test('label should not be covered by text field', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/27812',
+      });
+      await page.setContent(
+        `
+        <style>
+          .custom-input .native-wrapper {
+            background: pink;
+          }
+        </style>
+        <ion-input class="custom-input" label="My Label" label-placement="stacked"></ion-input>
+      `,
+        config
+      );
+
+      const input = page.locator('ion-input');
+
+      expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-label-layering`));
     });
   });
 });

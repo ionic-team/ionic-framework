@@ -323,6 +323,15 @@
   min-height: inherit;
   max-height: inherit;
 
+  /**
+   * This avoids a WebKit bug where
+   * the height of the inner textarea
+   * is incorrect and flows outside the
+   * parent container: https://bugs.webkit.org/show_bug.cgi?id=256781
+   * TODO FW-4734
+   */
+  grid-auto-rows: 100%;
+
   &::after {
     // This technique is used for an auto-resizing textarea.
     // The text contents are reflected as a pseudo-element that is visually hidden.
@@ -620,6 +629,13 @@
   @include padding(0px);
 
   max-width: 100%;
+
+  /**
+   * The 2 ensures the label
+   * remains on top of any browser
+   * autofill background too.
+   */
+  z-index: 2;
 }
 
 /**

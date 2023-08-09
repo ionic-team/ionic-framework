@@ -8,7 +8,7 @@ import {
   printIonContentErrorMsg,
 } from '@utils/content';
 import { clamp, componentOnReady, getElementRoot, raf, transitionEndAsync } from '@utils/helpers';
-import { hapticImpact } from '@utils/native/haptic';
+import { ImpactStyle, hapticImpact } from '@utils/native/haptic';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Animation, Gesture, GestureDetail } from '../../interface';
@@ -246,7 +246,7 @@ export class Refresher implements ComponentInterface {
           if (!this.didRefresh) {
             this.beginRefresh();
             this.didRefresh = true;
-            hapticImpact({ style: 'light' });
+            hapticImpact({ style: ImpactStyle.Light });
 
             /**
              * Translate the content element otherwise when pointer is removed
