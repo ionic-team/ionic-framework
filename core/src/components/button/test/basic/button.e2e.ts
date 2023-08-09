@@ -4,7 +4,7 @@ import { configs, test } from '@utils/test/playwright';
 configs().forEach(({ config, screenshot, title }) => {
   test.describe(title('button: basic'), () => {
 
-    test('example flaky test', async ({ page }) => {
+    test('example flaky test', async () => {
       if (Math.random() > 0.7) {
         expect(false).toBe(true);
       } else {
