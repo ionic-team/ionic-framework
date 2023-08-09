@@ -1471,7 +1471,7 @@ ion-toast,css-prop,--start
 ion-toast,css-prop,--white-space
 ion-toast,css-prop,--width
 ion-toast,part,button
-ion-toast,part,button-cancel
+ion-toast,part,button cancel
 ion-toast,part,container
 ion-toast,part,header
 ion-toast,part,icon

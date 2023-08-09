@@ -35,7 +35,7 @@ import type { ToastButton, ToastPosition, ToastLayout } from './toast-interface'
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @part button - Any button element that is displayed inside of the toast.
- * @part button-cancel - Any button element with role "cancel" that is displayed inside of the toast.
+ * @part button cancel - Any button element with role "cancel" that is displayed inside of the toast.
  * @part container - The element that wraps all child elements.
  * @part header - The header text of the toast.
  * @part message - The body text of the toast.
@@ -587,7 +587,7 @@ const buttonClass = (button: ToastButton): CssClassMap => {
 };
 
 const buttonPart = (button: ToastButton): string => {
-  return isCancel(button.role) ? 'button-cancel' : 'button';
+  return isCancel(button.role) ? 'button cancel' : 'button';
 };
 
 type ToastPresentOptions = ToastPosition;
