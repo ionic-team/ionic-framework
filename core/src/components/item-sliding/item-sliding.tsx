@@ -76,11 +76,18 @@ export class ItemSliding implements ComponentInterface {
     this.item = el.querySelector('ion-item');
     this.contentEl = findClosestIonContent(el);
 
-    await this.updateOptions();
-
+    /**
+     * The MutationObserver needs to be added before we
+     * call updateOptions below otherwise we may miss
+     * ion-item-option elements that are added to the DOM
+     * while updateOptions is running and before the MutationObserver
+     * has been initialized.
+     */
     this.mutationObserver = watchForOptions<HTMLIonItemOptionElement>(el, 'ion-item-option', async () => {
       await this.updateOptions();
     });
+
+    await this.updateOptions();
 
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el,
@@ -407,6 +414,9 @@ export class ItemSliding implements ComponentInterface {
     if (!this.item) {
       return;
     }
+
+    const { el } = this;
+
     const style = this.item.style;
     this.openAmount = openAmount;
 
@@ -426,6 +436,12 @@ export class ItemSliding implements ComponentInterface {
           : SlidingState.Start;
     } else {
       /**
+       * The sliding options should not be
+       * clickable while the item is closing.
+       */
+      el.classList.add('item-sliding-closing');
+
+      /**
        * Item sliding cannot be interrupted
        * while closing the item. If it did,
        * it would allow the item to get into an
@@ -441,6 +457,7 @@ export class ItemSliding implements ComponentInterface {
         if (this.gesture) {
           this.gesture.enable(!this.disabled);
         }
+        el.classList.remove('item-sliding-closing');
       }, 600);
 
       openSlidingItem = undefined;
