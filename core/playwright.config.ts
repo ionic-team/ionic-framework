@@ -65,6 +65,7 @@ const config: PlaywrightTestConfig = {
   /* Fail fast on CI */
   maxFailures: process.env.CI ? 1 : 0,
   retries: 2,
+  reportSlowTests: null,
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
