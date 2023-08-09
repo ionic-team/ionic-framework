@@ -4,10 +4,6 @@
 // Label
 // --------------------------------------------------
 
-:host {
-  font-size: 1rem;
-}
-
 :host-context(.item) {
   /**
    * @prop --color: Color of the label. This property is only available when using `ion-label` inside of an `ion-item`.
