@@ -3,8 +3,8 @@ import { configs, test } from '@utils/test/playwright';
 
 configs().forEach(({ config, screenshot, title }) => {
   test.describe(title('button: basic'), () => {
-    test('example flaky test', async () => {
-      if (Math.random() > 0.3) {
+    test('example flaky test', async ({}, testInfo) => {
+      if (testInfo.retry === 0) {
         expect(false).toBe(true);
       } else {
         expect(true).toBe(true);
