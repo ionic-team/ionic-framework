@@ -17,7 +17,7 @@
 :host(.label-stacked) {
   @include margin(null, null, 4px, null);
 
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 
 :host(.label-floating) {
@@ -49,14 +49,14 @@
 ::slotted(*) h1 {
   @include margin(3px, 0, 2px);
 
-  font-size: 22px;
+  font-size: 1.375rem;
   font-weight: normal;
 }
 
 ::slotted(*) h2 {
   @include margin(0, 0, 2px);
 
-  font-size: 17px;
+  font-size: 1.0625rem;
   font-weight: normal;
 }
 
@@ -66,7 +66,7 @@
 ::slotted(*) h6 {
   @include margin(0, 0, 3px);
 
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: normal;
 
   line-height: normal;
