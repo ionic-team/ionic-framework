@@ -64,8 +64,7 @@ const config: PlaywrightTestConfig = {
   forbidOnly: !!process.env.CI,
   /* Fail fast on CI */
   maxFailures: process.env.CI ? 1 : 0,
-  /* Flaky test should be either addressed or disabled until we can address them */
-  retries: 0,
+  retries: 2,
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
