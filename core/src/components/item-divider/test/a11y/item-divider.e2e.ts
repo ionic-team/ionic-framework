@@ -23,7 +23,9 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       await expect(itemDivider).toHaveScreenshot(screenshot(`item-divider-scale`));
     });
-    test('should scale text on larger font sizes when item divider contains headings and paragraphs', async ({ page }) => {
+    test('should scale text on larger font sizes when item divider contains headings and paragraphs', async ({
+      page,
+    }) => {
       await page.setContent(
         `
         <style>
