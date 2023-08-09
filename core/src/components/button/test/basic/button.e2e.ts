@@ -3,6 +3,14 @@ import { configs, test } from '@utils/test/playwright';
 
 configs().forEach(({ config, screenshot, title }) => {
   test.describe(title('button: basic'), () => {
+
+    test('example flaky test', async ({ page }) => {
+      if (Math.random() > 0.5) {
+        expect(false).toBe(true);
+      } else {
+        expect(true).toBe(true);
+      }
+    })
     test('should not have visual regressions', async ({ page }) => {
       await page.goto(`/src/components/button/test/basic`, config);
 
