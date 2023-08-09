@@ -127,25 +127,14 @@
 
 ::slotted(h1) {
   @include margin(0, 0, 2px);
-
-  font-size: 24px;
-  font-weight: normal;
 }
 
 ::slotted(h2) {
   @include margin(2px, 0);
-
-  font-size: 16px;
-  font-weight: normal;
 }
 
 ::slotted(h3, h4, h5, h6) {
   @include margin(2px, 0);
-
-  font-size: 14px;
-  font-weight: normal;
-
-  line-height: normal;
 }
 
 ::slotted(p) {
@@ -153,7 +142,7 @@
 
   color: $item-md-paragraph-text-color;
 
-  font-size: 14px;
+  font-size: 0.875rem;
 
   line-height: normal;
 
