@@ -30,6 +30,10 @@ export interface ToastButton {
   icon?: string;
   side?: 'start' | 'end';
   role?: 'cancel' | string;
+
+  /**
+   * @deprecated Use the toast button's CSS Shadow Parts instead.
+   */
   cssClass?: string | string[];
   htmlAttributes?: { [key: string]: any };
   handler?: () => boolean | void | Promise<boolean | void>;
