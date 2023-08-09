@@ -25,6 +25,8 @@ export interface ToastOptions {
 
 export type ToastLayout = 'baseline' | 'stacked';
 
+// TODO FW-4923 remove cssClass property
+
 export interface ToastButton {
   text?: string;
   icon?: string;
