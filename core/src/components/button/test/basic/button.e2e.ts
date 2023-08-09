@@ -5,7 +5,7 @@ configs().forEach(({ config, screenshot, title }) => {
   test.describe(title('button: basic'), () => {
 
     test('example flaky test', async ({ page }) => {
-      if (Math.random() > 0.5) {
+      if (Math.random() > 0.7) {
         expect(false).toBe(true);
       } else {
         expect(true).toBe(true);
