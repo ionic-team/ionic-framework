@@ -54,16 +54,17 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       const datetime = page.locator('ion-datetime');
 
-      const day = datetime.locator('.calendar-day[data-month="6"][data-day="1"][data-year="2023"]');
-      await day.click();
+      const dayOne = datetime.locator('.calendar-day[data-month="6"][data-day="1"][data-year="2023"]');
+      const daySix = datetime.locator('.calendar-day[data-month="6"][data-day="6"][data-year="2023"]');
+      await dayOne.click();
       await page.waitForChanges();
 
-      await expect(day).toHaveClass(/calendar-day-active/);
+      await expect(dayOne).toHaveClass(/calendar-day-active/);
 
       await datetime.evaluate((el: HTMLIonDatetimeElement) => el.cancel());
       await page.waitForChanges();
 
-      await expect(day).not.toHaveClass(/calendar-day-active/);
+      await expect(daySix).toHaveClass(/calendar-day-active/);
     });
   });
 });
