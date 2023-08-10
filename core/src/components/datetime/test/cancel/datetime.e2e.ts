@@ -44,7 +44,12 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await ionModalDidDismiss.next();
     });
 
-    test('should reset the internal state of datetime', async ({ page }) => {
+    test('should reset the internal state of datetime', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/27975',
+      });
+
       await page.setContent(
         `
         <ion-datetime value="2023-06-06T16:30" show-default-buttons="true"></ion-datetime>
