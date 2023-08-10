@@ -115,7 +115,7 @@ const validateDragByY = (startY: number, dragByY: number, viewportHeight: number
   }
 };
 
-const moveElement = async (page: E2EPage, startX: number, startY: number, dragByX = 0, dragByY = 0) => {
+export const moveElement = async (page: E2EPage, startX: number, startY: number, dragByX = 0, dragByY = 0) => {
   const steps = 10;
   const browser = page.context().browser()!.browserType().name();
 

@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import { configs, dragElementBy, test } from '@utils/test/playwright';
+import { configs, dragElementBy, moveElement, test } from '@utils/test/playwright';
 
 /**
  * This behavior does not vary across modes/directions.
@@ -7,10 +7,7 @@ import { configs, dragElementBy, test } from '@utils/test/playwright';
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('range: events:'), () => {
     test.describe('range: knob events', () => {
-      /**
-       * The mouse events are flaky on CI
-       */
-      test('should emit start/end events', async ({ page }) => {
+      test.only('should emit start/end events', async ({ page }) => {
         /**
          * Requires padding to prevent the knob from being clipped.
          * If it's clipped, then the value might be one off.
@@ -26,73 +23,51 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
           config
         );
 
-        // add a script to have ripple on mouse down
-        await page.addScriptTag({
-          content: `
-            document.addEventListener('mousedown', (ev) => {
-              const ripple = document.createElement('div');
-              ripple.style.position = 'absolute';
-              ripple.style.width = '100px';
-              ripple.style.height = '100px';
-              ripple.style.borderRadius = '50%';
-              ripple.style.background = 'rgba(0, 0, 0, 0.1)';
-              ripple.style.transform = 'translate(-50%, -50%)';
-              ripple.style.left = ev.clientX + 'px';
-              ripple.style.top = ev.clientY + 'px';
-              document.body.appendChild(ripple);
-              setTimeout(() => {
-                ripple.remove();
-              }, 1000);
-            });
-          `,
-        });
-
-        // add a script to have ripple on mouse move
-        await page.addScriptTag({
-          content: `
-            document.addEventListener('mousemove', (ev) => {
-              const ripple = document.createElement('div');
-              ripple.style.position = 'absolute';
-              ripple.style.width = '100px';
-              ripple.style.height = '100px';
-              ripple.style.borderRadius = '50%';
-              ripple.style.background = 'rgba(255, 255, 0, 0.1)';
-              ripple.style.transform = 'translate(-50%, -50%)';
-              ripple.style.left = ev.clientX + 'px';
-              ripple.style.top = ev.clientY + 'px';
-              document.body.appendChild(ripple);
-              setTimeout(() => {
-                ripple.remove();
-              }, 1000);
-            });
-          `,
-        });
-
         const rangeStart = await page.spyOnEvent('ionKnobMoveStart');
         const rangeEnd = await page.spyOnEvent('ionKnobMoveEnd');
 
         const rangeEl = page.locator('ion-range');
+        const boundingBox = await rangeEl.boundingBox();
 
-        await dragElementBy(rangeEl, page, 185, 0);
-        await page.waitForChanges();
+        if (!boundingBox) {
+          throw new Error(
+            'Cannot get a bounding box for an element that is not visible. See https://playwright.dev/docs/api/class-locator#locator-bounding-box for more information'
+          );
+        }
+
+        const startX = boundingBox.x + boundingBox.width / 2;
+        const startY = boundingBox.y + boundingBox.height / 2;
+
+        // Navigate to the center of the element.
+        await page.mouse.move(startX, startY);
+        await page.mouse.down();
 
         await rangeStart.next();
-        await rangeEnd.next();
-
         /**
-         * dragElementBy defaults to starting the drag from the middle of the el,
-         * so the start value should jump to 50 despite the range defaulting to 20.
+         * Since the mouse moved to the center of the element, the start value will be 50.
          */
         expect(rangeStart).toHaveReceivedEventDetail({ value: 50 });
+
+        // Drag the element.
+        await moveElement(page, startX, startY, 185, 0);
+
+        await page.mouse.up();
+
+        await rangeEnd.next();
         expect(rangeEnd).toHaveReceivedEventDetail({ value: 100 });
 
         /**
          * Verify both events fire if range is clicked without dragging.
          */
-        await dragElementBy(rangeEl, page, 0, 0);
-        await page.waitForChanges();
+        await page.mouse.move(startX, startY);
+        await page.mouse.down();
 
+        await rangeStart.next();
         expect(rangeStart).toHaveReceivedEventDetail({ value: 50 });
+
+        await page.mouse.up();
+
+        await rangeEnd.next();
         expect(rangeEnd).toHaveReceivedEventDetail({ value: 50 });
       });
 
