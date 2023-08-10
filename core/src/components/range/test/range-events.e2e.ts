@@ -7,7 +7,7 @@ import { configs, dragElementBy, moveElement, test } from '@utils/test/playwrigh
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('range: events:'), () => {
     test.describe('range: knob events', () => {
-      test.only('should emit start/end events', async ({ page }) => {
+      test('should emit start/end events', async ({ page }) => {
         /**
          * Requires padding to prevent the knob from being clipped.
          * If it's clipped, then the value might be one off.
