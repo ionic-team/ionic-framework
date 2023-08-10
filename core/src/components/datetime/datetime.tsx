@@ -540,7 +540,7 @@ export class Datetime implements ComponentInterface {
   }
 
   /**
-   * Resets the internal state of the datetime but does not update the value.
+   * Resets the internal state of the datetime but does not update the value property.
    * Passing a valid ISO-8601 string will reset the state of the component to the provided date.
    * If no date string was passed but the value property is set, then the internal state of
    * datetime will be reset to that value. Otherwise, the internal state will be reset to the
