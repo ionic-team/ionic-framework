@@ -44,7 +44,7 @@ jobs:
           shard: ${{ matrix.shard }}
           totalShards: ${{ matrix.totalShards }}
           update: true
-          component: ${{ inputs.component}}
+          component: ${{ inputs.component }}
           component-folder: ${{ inputs.component-folder}}
 
   update-reference-screenshots:
