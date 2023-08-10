@@ -18,11 +18,7 @@ configs().forEach(({ title, screenshot, config }) => {
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('range: behavior'), () => {
-    /**
-     * The mouse events are flaky on CI
-     * TODO FW-2873
-     */
-    test.fixme('should emit start/end events', async ({ page }) => {
+    test.only('should emit start/end events', async ({ page }) => {
       await page.setContent(`<ion-range value="20" legacy="true"></ion-range>`, config);
 
       const rangeStart = await page.spyOnEvent('ionKnobMoveStart');
@@ -30,7 +26,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       const rangeEl = page.locator('ion-range');
 
-      await dragElementBy(rangeEl, page, 300, 0);
+      await dragElementBy(rangeEl, page, 185, 0);
       await page.waitForChanges();
 
       /**

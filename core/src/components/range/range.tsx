@@ -411,6 +411,7 @@ export class Range implements ComponentInterface {
   }
 
   private onStart(detail: GestureDetail) {
+    console.log('onStart')
     const { contentEl } = this;
     if (contentEl) {
       this.initialContentScrollY = disableContentScrollY(contentEl);
@@ -432,7 +433,9 @@ export class Range implements ComponentInterface {
     // update the active knob's position
     this.update(currentX);
 
+    console.log('move before ionKnobMoveStart emit')
     this.ionKnobMoveStart.emit({ value: this.ensureValueInBounds(this.value) });
+    console.log('move after ionKnobMoveStart emit')
   }
 
   private onMove(detail: GestureDetail) {
