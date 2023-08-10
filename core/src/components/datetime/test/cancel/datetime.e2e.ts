@@ -1,5 +1,5 @@
-import { configs, test } from '@utils/test/playwright';
 import { expect } from '@playwright/test';
+import { configs, test } from '@utils/test/playwright';
 
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe.only(title('datetime: cancel method'), () => {
