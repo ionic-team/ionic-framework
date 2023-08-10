@@ -55,6 +55,7 @@ export const createGesture = (config: GestureConfig): Gesture => {
   });
 
   const pointerDown = (ev: UIEvent): boolean => {
+    console.log('pointerDown');
     const timeStamp = now(ev);
     if (hasStartedPan || !hasFiredStart) {
       return false;
@@ -69,6 +70,7 @@ export const createGesture = (config: GestureConfig): Gesture => {
 
     // Check if gesture can start
     if (canStart && canStart(detail) === false) {
+      console.log('canStart is false');
       return false;
     }
     // Release fallback

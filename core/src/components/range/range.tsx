@@ -302,6 +302,7 @@ export class Range implements ComponentInterface {
         onEnd: (ev) => this.onEnd(ev),
       });
       this.gesture.enable(!this.disabled);
+      console.log('setupGesture gesture enabled', this.gesture);
     }
   };
 

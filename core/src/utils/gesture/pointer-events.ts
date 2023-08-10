@@ -107,6 +107,7 @@ export const createPointerEvents = (
 
   const enable = (isEnabled = true) => {
     if (!isEnabled) {
+      console.log('enable false');
       if (rmTouchStart) {
         rmTouchStart();
       }
@@ -116,6 +117,7 @@ export const createPointerEvents = (
       rmTouchStart = rmMouseStart = undefined;
       stop();
     } else {
+      console.log('enable true');
       if (!rmTouchStart) {
         rmTouchStart = addEventListener(el, 'touchstart', handleTouchStart, options);
       }
