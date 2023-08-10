@@ -546,7 +546,7 @@ export class Datetime implements ComponentInterface {
    */
   @Method()
   async reset(startDate?: string) {
-    this.processValue(startDate);
+    this.processValue(startDate ?? this.value);
   }
 
   /**
