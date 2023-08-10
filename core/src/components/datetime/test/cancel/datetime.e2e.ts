@@ -2,7 +2,7 @@ import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
-  test.describe.only(title('datetime: cancel method'), () => {
+  test.describe(title('datetime: cancel method'), () => {
     test('should emit ionCancel', async ({ page }) => {
       await page.setContent(
         `
