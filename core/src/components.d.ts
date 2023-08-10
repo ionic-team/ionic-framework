@@ -915,7 +915,7 @@ export namespace Components {
          */
         "readonly": boolean;
         /**
-          * Resets the internal state of the datetime but does not update the value. Passing a valid ISO-8601 string will reset the state of the component to the provided date. If no date string was passed but the value property is set, then the internal state of datetime will be reset to that value. Otherwise, the internal state will be reset to the clamped value of the min, max and today.
+          * Resets the internal state of the datetime but does not update the value property. Passing a valid ISO-8601 string will reset the state of the component to the provided date. If no date string was passed but the value property is set, then the internal state of datetime will be reset to that value. Otherwise, the internal state will be reset to the clamped value of the min, max and today.
          */
         "reset": (startDate?: string) => Promise<void>;
         /**
