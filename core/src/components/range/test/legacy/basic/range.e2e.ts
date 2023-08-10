@@ -18,7 +18,7 @@ configs().forEach(({ title, screenshot, config }) => {
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('range: behavior'), () => {
-    test.only('should emit start/end events', async ({ page }) => {
+    test('should emit start/end events', async ({ page }) => {
       await page.setContent(`<ion-range value="20" legacy="true"></ion-range>`, config);
 
       const rangeStart = await page.spyOnEvent('ionKnobMoveStart');
