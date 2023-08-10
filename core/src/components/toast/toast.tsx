@@ -418,6 +418,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
       <div class={buttonGroupsClasses}>
         {buttons.map((b) => (
           <button
+            {...b.htmlAttributes}
             type="button"
             class={buttonClass(b)}
             tabIndex={0}
