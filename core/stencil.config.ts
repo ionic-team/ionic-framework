@@ -7,6 +7,43 @@ import { vueOutputTarget } from '@stencil/vue-output-target';
 // @ts-ignore
 import { apiSpecGenerator } from './scripts/api-spec-generator';
 
+const getAngularOutputTargets = () => {
+  const componentCorePackage = '@ionic/core';
+  const excludeComponents = [
+    // overlays that accept user components
+    'ion-modal',
+    'ion-popover',
+
+    // navigation
+    'ion-router',
+    'ion-route',
+    'ion-route-redirect',
+    'ion-router-link',
+    'ion-router-outlet',
+
+    // tabs
+    'ion-tabs',
+    'ion-tab',
+
+    // auxiliar
+    'ion-picker-column',
+  ]
+  return [
+    angularOutputTarget({
+      componentCorePackage,
+      directivesProxyFile: '../packages/angular/src/directives/proxies.ts',
+      directivesArrayFile: '../packages/angular/src/directives/proxies-list.ts',
+      excludeComponents,
+    }),
+    angularOutputTarget({
+      componentCorePackage,
+      directivesProxyFile: '../packages/angular/standalone/src/directives/proxies.ts',
+      excludeComponents,
+      outputType: 'standalone',
+    })
+  ];
+}
+
 export const config: Config = {
   autoprefixCss: true,
   sourceMap: false,
@@ -182,30 +219,7 @@ export const config: Config = {
     //   type: 'stats',
     //   file: 'stats.json'
     // },
-    angularOutputTarget({
-      componentCorePackage: '@ionic/core',
-      directivesProxyFile: '../packages/angular/src/directives/proxies.ts',
-      directivesArrayFile: '../packages/angular/src/directives/proxies-list.ts',
-      excludeComponents: [
-        // overlays that accept user components
-        'ion-modal',
-        'ion-popover',
-
-        // navigation
-        'ion-router',
-        'ion-route',
-        'ion-route-redirect',
-        'ion-router-link',
-        'ion-router-outlet',
-
-        // tabs
-        'ion-tabs',
-        'ion-tab',
-
-        // auxiliar
-        'ion-picker-column',
-      ],
-    }),
+    ...getAngularOutputTargets(),
   ],
   buildEs5: 'prod',
   testing: {

@@ -23,3 +23,4 @@ export {
   NavParams,
   IonicRouteStrategy,
 } from '@ionic/angular/common';
+export * from './directives/proxies';
