@@ -41,6 +41,7 @@
 
 :host(.title-large) {
   @include padding(0, 16px);
+  @include margin(null, null, 6px, null);
   @include transform-origin(left, center);
 
   bottom: 0;
@@ -48,8 +49,6 @@
   align-items: flex-end;
 
   min-width: 100%;
-
-  padding-bottom: 6px;
 
   font-size: 34px;
   font-weight: 700;
