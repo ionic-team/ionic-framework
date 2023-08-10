@@ -36,7 +36,6 @@ import { defineCustomElement as defineIonFabList } from '@ionic/core/components/
 import { defineCustomElement as defineIonFooter } from '@ionic/core/components/ion-footer.js';
 import { defineCustomElement as defineIonGrid } from '@ionic/core/components/ion-grid.js';
 import { defineCustomElement as defineIonHeader } from '@ionic/core/components/ion-header.js';
-import { defineCustomElement as defineIonIcon } from '@ionic/core/components/ion-icon.js';
 import { defineCustomElement as defineIonImg } from '@ionic/core/components/ion-img.js';
 import { defineCustomElement as defineIonInfiniteScroll } from '@ionic/core/components/ion-infinite-scroll.js';
 import { defineCustomElement as defineIonInfiniteScrollContent } from '@ionic/core/components/ion-infinite-scroll-content.js';
@@ -1000,30 +999,6 @@ export class IonHeader {
 
 
 export declare interface IonHeader extends Components.IonHeader {}
-
-
-@ProxyCmp({
-  defineCustomElementFn: defineIonIcon,
-  inputs: ['color', 'flipRtl', 'icon', 'ios', 'lazy', 'md', 'mode', 'name', 'sanitize', 'size', 'src']
-})
-@Component({
-  selector: 'ion-icon',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'flipRtl', 'icon', 'ios', 'lazy', 'md', 'mode', 'name', 'sanitize', 'size', 'src'],
-  standalone: true
-})
-export class IonIcon {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-  }
-}
-
-
-export declare interface IonIcon extends Components.IonIcon {}
 
 
 @ProxyCmp({

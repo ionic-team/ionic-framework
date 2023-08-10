@@ -23,4 +23,5 @@ export {
   NavParams,
   IonicRouteStrategy,
 } from '@ionic/angular/common';
+export { IonIcon } from './directives/icon';
 export * from './directives/proxies';

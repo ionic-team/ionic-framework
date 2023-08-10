@@ -38,7 +38,16 @@ const getAngularOutputTargets = () => {
     angularOutputTarget({
       componentCorePackage,
       directivesProxyFile: '../packages/angular/standalone/src/directives/proxies.ts',
-      excludeComponents,
+      excludeComponents: [
+        ...excludeComponents,
+        /**
+         * IonIcon is a special case because it does not come
+         * from the `@ionic/core` package, so generating proxies that
+         * are reliant on the CE build will reference the wrong
+         * import location.
+         */
+        'ion-icon'
+      ],
       outputType: 'standalone',
     })
   ];
