@@ -18,7 +18,11 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
     test('should not cut off characters', async ({ page }) => {
       await page.setContent(
         `
-        <ion-title size="large">ÔÔÔ</ion-title>
+        <ion-header>
+          <ion-toolbar>
+            <ion-title size="large">ÔÔÔ</ion-title>
+          </ion-toolbar>
+        </ion-header>
       `,
         config
       );
