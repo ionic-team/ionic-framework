@@ -316,6 +316,7 @@ export class Range implements ComponentInterface {
   }
 
   componentDidLoad() {
+    console.log('did load');
     this.originalIonInput = this.ionInput;
     this.setupGesture();
     this.didLoad = true;

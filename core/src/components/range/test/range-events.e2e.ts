@@ -10,7 +10,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       /**
        * The mouse events are flaky on CI
        */
-      test.fixme('should emit start/end events', async ({ page }) => {
+      test('should emit start/end events', async ({ page }) => {
         /**
          * Requires padding to prevent the knob from being clipped.
          * If it's clipped, then the value might be one off.
@@ -31,7 +31,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
         const rangeEl = page.locator('ion-range');
 
-        await dragElementBy(rangeEl, page, 300, 0);
+        await dragElementBy(rangeEl, page, 185, 0);
         await page.waitForChanges();
 
         /**
