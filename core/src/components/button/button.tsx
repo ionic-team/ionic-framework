@@ -153,19 +153,27 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
    */
   @Event() ionBlur!: EventEmitter<void>;
 
-  connectedCallback(): void {
-    // Allow form to be submitted through `ion-button`
-    if (this.type !== 'button' && hasShadowDom(this.el)) {
-      this.formEl = this.findForm();
-      if (this.formEl) {
-        // Create a hidden native button inside of the form
-        this.formButtonEl = document.createElement('button');
-        this.formButtonEl.type = this.type;
-        this.formButtonEl.style.display = 'none';
-        // Only submit if the button is not disabled.
-        this.formButtonEl.disabled = this.disabled;
-        this.formEl.appendChild(this.formButtonEl);
+  private renderHiddenButton() {
+    const formEl = (this.formEl = this.findForm());
+    if (formEl) {
+      const { formButtonEl } = this;
+
+      /**
+       * If the form already has a rendered form button
+       * then do not append a new one again.
+       */
+      if (formButtonEl !== null && formEl.contains(formButtonEl)) {
+        return;
       }
+
+      // Create a hidden native button inside of the form
+      const newFormButtonEl = (this.formButtonEl = document.createElement('button'));
+      newFormButtonEl.type = this.type;
+      newFormButtonEl.style.display = 'none';
+      // Only submit if the button is not disabled.
+      newFormButtonEl.disabled = this.disabled;
+
+      formEl.appendChild(newFormButtonEl);
     }
   }
 
@@ -314,6 +322,11 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     if (fill == null) {
       fill = this.inToolbar || this.inListHeader ? 'clear' : 'solid';
     }
+
+    {
+      type !== 'button' && this.renderHiddenButton();
+    }
+
     return (
       <Host
         onClick={this.handleClick}
