@@ -1,12 +1,11 @@
-
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, NgZone } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, NgZone } from '@angular/core';
 import { defineCustomElement as defineIonIcon } from 'ionicons/components/ion-icon.js';
 
-import { ProxyCmp } from "./angular-component-lib/utils";
+import { ProxyCmp } from './angular-component-lib/utils';
 
 @ProxyCmp({
   defineCustomElementFn: defineIonIcon,
-  inputs: ['color', 'flipRtl', 'icon', 'ios', 'lazy', 'md', 'mode', 'name', 'sanitize', 'size', 'src']
+  inputs: ['color', 'flipRtl', 'icon', 'ios', 'lazy', 'md', 'mode', 'name', 'sanitize', 'size', 'src'],
 })
 @Component({
   selector: 'ion-icon',
@@ -14,7 +13,7 @@ import { ProxyCmp } from "./angular-component-lib/utils";
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['color', 'flipRtl', 'icon', 'ios', 'lazy', 'md', 'mode', 'name', 'sanitize', 'size', 'src'],
-  standalone: true
+  standalone: true,
 })
 export class IonIcon {
   protected el: HTMLElement;
