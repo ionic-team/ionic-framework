@@ -550,14 +550,16 @@ export class Datetime implements ComponentInterface {
   }
 
   /**
-   * Emits the ionCancel event and
-   * optionally closes the popover
-   * or modal that the datetime was
-   * presented in.
+   * The cancel method performs the following actions:
+   * 1. Emits the ionCancel event
+   * 2. Resets the internal state of the datetime
+   * 3. Closes the parent popover or modal if "closeOverlay" is true.
    */
   @Method()
   async cancel(closeOverlay = false) {
     this.ionCancel.emit();
+
+    this.reset();
 
     if (closeOverlay) {
       this.closeParentOverlay();
