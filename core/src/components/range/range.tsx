@@ -289,7 +289,9 @@ export class Range implements ComponentInterface {
 
   private setupGesture = async () => {
     const rangeSlider = this.rangeSlider;
+    console.log('setupGesture', rangeSlider?.classList);
     if (rangeSlider) {
+      console.log('setupGesture rangeSlider exists');
       this.gesture = (await import('../../utils/gesture')).createGesture({
         el: rangeSlider,
         gestureName: 'range',
