@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.2.4-nightly.20230811](https://github.com/ionic-team/ionic-framework/compare/v7.2.3...v7.2.4-nightly.20230811) (2023-08-11)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
 ## [7.2.3](https://github.com/ionic-team/ionic-framework/compare/v7.2.2...v7.2.3) (2023-08-09)
 
 **Note:** Version bump only for package @ionic/vue
