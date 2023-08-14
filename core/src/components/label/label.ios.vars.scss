@@ -23,7 +23,7 @@ $label-ios-margin-bottom:              $item-ios-padding-bottom !default;
 $label-ios-margin-start:               0 !default;
 
 /// @prop - Font size of the label when the text wraps
-$label-ios-text-wrap-font-size:        0.875rem !default;
+$label-ios-text-wrap-font-size:        dynamic-font(14px) !default;
 
 /// @prop - Line height of the label when the text wraps
 $label-ios-text-wrap-line-height:      1.5 !default;
