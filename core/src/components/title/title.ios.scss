@@ -14,7 +14,7 @@
 
   transform: translateZ(0);
 
-  font-size: 17px;
+  font-size: dynamic-font-min(1, 17px);
   font-weight: 600;
 
   text-align: center;
@@ -31,7 +31,7 @@
 
   position: relative;
 
-  font-size: 13px;
+  font-size: dynamic-font-min(1, 13px);
   font-weight: normal;
 }
 
@@ -51,7 +51,7 @@
 
   padding-bottom: 6px;
 
-  font-size: 34px;
+  font-size: dynamic-font(34px);
   font-weight: 700;
 
   text-align: start;
