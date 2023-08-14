@@ -44,7 +44,10 @@
 ::slotted(ion-icon) {
   color: $item-md-icon-slot-color;
 
-  font-size: $item-md-icon-slot-font-size;
+  // The font size should be 24px which is
+  // calculated in relation to the host's font
+  // size of 14px. e.g. 24 / 14 = 1.714
+  font-size: 1.71em;
 }
 
 :host(.ion-color) ::slotted(ion-icon) {
