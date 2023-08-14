@@ -51,13 +51,13 @@
       <ion-item>
         <ion-label>Min</ion-label>
         <ion-input formControlName="inputMin" type="number"></ion-input>
-        <pre>errors: {{ profileForm.controls.inputMin.errors | json }}</pre>
+        <pre>errors: {{ profileForm.controls['inputMin'].errors | json }}</pre>
       </ion-item>
 
       <ion-item>
         <ion-label>Max</ion-label>
         <ion-input formControlName="inputMax" type="number"></ion-input>
-        <pre>errors: {{ profileForm.controls.inputMax.errors | json }}</pre>
+        <pre>errors: {{ profileForm.controls['inputMax'].errors | json }}</pre>
       </ion-item>
     </ion-list>
     <p>
