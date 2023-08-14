@@ -10,7 +10,7 @@ $item-md-min-height:                        48px !default;
 $item-md-paragraph-text-color:              $text-color-step-400 !default;
 
 /// @prop - Font size of the item
-$item-md-font-size:                         1rem !default;
+$item-md-font-size:                         dynamic-font(16px) !default;
 
 /// @prop - Width of the avatar in the item
 $item-md-avatar-width:                      40px !default;
