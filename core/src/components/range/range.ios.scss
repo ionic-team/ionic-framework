@@ -35,7 +35,7 @@
 }
 
 :host(.range-has-pin) {
-  @include padding($range-ios-padding-vertical + $range-ios-pin-font-size, null, null, null);
+  @include padding(calc($range-ios-pin-font-size + $range-ios-padding-vertical), null, null, null);
 }
 
 .range-bar-active {
@@ -70,12 +70,8 @@
 }
 
 .range-pin {
-  @include transform(translate3d(0, 28px, 0), scale(.01));
+  @include transform(translate3d(0, 0, 0), scale(.01));
   @include padding($range-ios-pin-padding-top, $range-ios-pin-padding-end, $range-ios-pin-padding-bottom, $range-ios-pin-padding-start);
-
-  display: inline-block;
-  position: relative;
-  top: -20px;
 
   min-width: 28px;
 
@@ -89,9 +85,18 @@
   text-align: center;
 }
 
+/**
+ * The -100% ensures the pin sits on top
+ * of the range-knob-handle container.
+ * We apply 11px so that the pin
+ * text is closer to the knob inside of the container.
+ * We also apply the 11px here instead of using "top"
+ * otherwise the pin text will translate below the knob
+ * when the text is scaled.
+ */
 .range-knob-pressed .range-pin,
 .range-knob-handle.ion-focused .range-pin {
-  @include transform(translate3d(0, 0, 0), scale(1));
+  transform: translate3d(0, calc(-100% + 11px), 0) scale(1);
 }
 
 // iOS Range: Disabled
