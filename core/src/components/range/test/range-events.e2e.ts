@@ -23,50 +23,6 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
           config
         );
 
-        // add a script to have ripple on mouse down
-        await page.addScriptTag({
-          content: `
-            document.addEventListener('mousedown', (ev) => {
-              // console log the element that was clicked on
-              console.log('element clicked: ', ev.target);
-              const ripple = document.createElement('div');
-              ripple.style.position = 'absolute';
-              ripple.style.width = '100px';
-              ripple.style.height = '100px';
-              ripple.style.borderRadius = '50%';
-              ripple.style.background = 'rgba(0, 0, 0, 0.1)';
-              ripple.style.transform = 'translate(-50%, -50%)';
-              ripple.style.left = ev.clientX + 'px';
-              ripple.style.top = ev.clientY + 'px';
-              document.body.appendChild(ripple);
-              setTimeout(() => {
-                ripple.remove();
-              }, 1000);
-            });
-          `,
-        });
-
-        // add a script to have ripple on mouse move
-        await page.addScriptTag({
-          content: `
-            document.addEventListener('mousemove', (ev) => {
-              const ripple = document.createElement('div');
-              ripple.style.position = 'absolute';
-              ripple.style.width = '100px';
-              ripple.style.height = '100px';
-              ripple.style.borderRadius = '50%';
-              ripple.style.background = 'rgba(255, 255, 0, 0.1)';
-              ripple.style.transform = 'translate(-50%, -50%)';
-              ripple.style.left = ev.clientX + 'px';
-              ripple.style.top = ev.clientY + 'px';
-              document.body.appendChild(ripple);
-              setTimeout(() => {
-                ripple.remove();
-              }, 1000);
-            });
-          `,
-        });
-
         const rangeStart = await page.spyOnEvent('ionKnobMoveStart');
         const rangeEnd = await page.spyOnEvent('ionKnobMoveEnd');
 
@@ -87,6 +43,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         await page.mouse.down();
 
         await rangeStart.next();
+
         /**
          * Since the mouse moved to the center of the element, the start value will be 50.
          */
