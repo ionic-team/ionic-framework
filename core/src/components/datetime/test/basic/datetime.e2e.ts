@@ -384,40 +384,6 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
  * This behavior does not differ across
  * modes/directions.
  */
-configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
-  test.describe(title('datetime: clear button'), () => {
-    test('should clear the active calendar day', async ({ page }, testInfo) => {
-      testInfo.annotations.push({
-        type: 'issue',
-        description: 'https://github.com/ionic-team/ionic-framework/issues/26258',
-      });
-
-      await page.setContent(
-        `
-        <ion-datetime value="2022-11-10" show-clear-button="true"></ion-datetime>
-      `,
-        config
-      );
-
-      await page.waitForSelector('.datetime-ready');
-
-      const selectedDay = page.locator('ion-datetime .calendar-day-active');
-
-      await expect(selectedDay).toHaveText('10');
-
-      await page.click('ion-datetime #clear-button');
-
-      await page.waitForChanges();
-
-      await expect(selectedDay).toHaveCount(0);
-    });
-  });
-});
-
-/**
- * This behavior does not differ across
- * modes/directions.
- */
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('datetime: ionChange'), () => {
     test('should fire ionChange when confirming a value from the calendar grid', async ({ page }) => {

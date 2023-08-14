@@ -424,6 +424,9 @@ export class Datetime implements ComponentInterface {
    * if they want to customize these buttons. If custom
    * buttons are set in the `button` slot then the
    * default buttons will not be rendered.
+   *
+   * Pressing the "Cancel" button will call the "cancel" method.
+   * Pressing the "OK" button will the "confirm" method.
    */
   @Prop() showDefaultButtons = false;
 
@@ -434,6 +437,8 @@ export class Datetime implements ComponentInterface {
    * if they want to customize these buttons. If custom
    * buttons are set in the `button` slot then the
    * default buttons will not be rendered.
+   *
+   * Pressing the "Clear" button will call the "reset" method.
    */
   @Prop() showClearButton = false;
 
@@ -1380,11 +1385,6 @@ export class Datetime implements ComponentInterface {
       return;
     }
 
-    const clearButtonClick = () => {
-      this.reset();
-      this.setValue(undefined);
-    };
-
     /**
      * By default we render two buttons:
      * Cancel - Dismisses the datetime and
@@ -1410,7 +1410,7 @@ export class Datetime implements ComponentInterface {
                 )}
                 <div>
                   {showClearButton && (
-                    <ion-button id="clear-button" color={this.color} onClick={() => clearButtonClick()}>
+                    <ion-button id="clear-button" color={this.color} onClick={() => this.reset()}>
                       {this.clearText}
                     </ion-button>
                   )}
