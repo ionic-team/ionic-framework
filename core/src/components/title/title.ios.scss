@@ -40,10 +40,10 @@
 // --------------------------------------------------
 
 :host(.title-large) {
-  @include padding(0, 16px);
+  @include padding(0, 12px);
   @include transform-origin(left, center);
 
-  bottom: 0;
+  position: static;
 
   align-items: flex-end;
 

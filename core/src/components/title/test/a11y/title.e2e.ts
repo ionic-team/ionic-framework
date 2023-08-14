@@ -2,7 +2,7 @@ import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
 configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
-  test.describe.only(title('title: font scaling'), () => {
+  test.describe(title('title: font scaling'), () => {
     test('should scale default title text on larger font sizes', async ({ page }) => {
       await page.setContent(
         `
@@ -50,7 +50,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 });
 
 configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, screenshot, config }) => {
-  test.describe.only(title('title: font scaling for large attribute'), () => {
+  test.describe(title('title: font scaling for large attribute'), () => {
     test('should scale text on larger font sizes', async ({ page }) => {
       await page.setContent(
         `
