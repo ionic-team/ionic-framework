@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.2.4-nightly.20230814](https://github.com/ionic-team/ionic-framework/compare/v7.2.3...v7.2.4-nightly.20230814) (2023-08-14)
+
+
+### Bug Fixes
+
+* **tap-click:** do not error in document-less environment ([#27972](https://github.com/ionic-team/ionic-framework/issues/27972)) ([28bd4ba](https://github.com/ionic-team/ionic-framework/commit/28bd4ba720bb77d5f5c48cd7a45e0015daddc9dd))
+
+
+
+
+
 ## [7.2.3](https://github.com/ionic-team/ionic-framework/compare/v7.2.2...v7.2.3) (2023-08-09)
 
 
