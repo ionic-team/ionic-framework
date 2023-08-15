@@ -13,6 +13,7 @@ export const routes: Routes = [
       { path: 'router-link', loadComponent: () => import('../router-link/router-link.component').then(m => m.RouterLinkComponent) },
       { path: 'nav', loadComponent: () => import('../nav/nav.component').then(m => m.NavComponent) },
       { path: 'providers', loadComponent: () => import('../providers/providers.component').then(m => m.ProvidersComponent) },
+      { path: 'overlay-controllers', loadComponent: () => import('../overlay-controllers/overlay-controllers.component').then(m => m.OverlayControllersComponent) },
     ]
   },
 ];
