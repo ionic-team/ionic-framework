@@ -268,9 +268,7 @@ export class Input implements ComponentInterface {
    */
   @Prop() step?: string;
 
-  /**
-   * The initial size of the control. This value is in pixels unless the value of the type attribute is `"text"` or `"password"`, in which case it is an integer number of characters. This attribute applies only when the `type` attribute is set to `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, or `"password"`, otherwise it is ignored.
-   */
+  // FW-4914 Remove this property in Ionic 8
   @Prop() size?: number;
 
   /**

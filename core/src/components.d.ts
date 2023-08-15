@@ -1277,9 +1277,6 @@ export namespace Components {
           * The shape of the input. If "round" it will have an increased border radius.
          */
         "shape"?: 'round';
-        /**
-          * The initial size of the control. This value is in pixels unless the value of the type attribute is `"text"` or `"password"`, in which case it is an integer number of characters. This attribute applies only when the `type` attribute is set to `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, or `"password"`, otherwise it is ignored.
-         */
         "size"?: number;
         /**
           * If `true`, the element will have its spelling and grammar checked.
@@ -5339,9 +5336,6 @@ declare namespace LocalJSX {
           * The shape of the input. If "round" it will have an increased border radius.
          */
         "shape"?: 'round';
-        /**
-          * The initial size of the control. This value is in pixels unless the value of the type attribute is `"text"` or `"password"`, in which case it is an integer number of characters. This attribute applies only when the `type` attribute is set to `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, or `"password"`, otherwise it is ignored.
-         */
         "size"?: number;
         /**
           * If `true`, the element will have its spelling and grammar checked.

@@ -73,7 +73,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         await ionModalDidPresent.next();
 
         const modalHeader = page.locator('#modal-header');
-        await dragElementBy(modalHeader, page, 0, -500);
+        await dragElementBy(modalHeader, page, 0, 30);
 
         const modal = page.locator('ion-modal');
         expect(modal).not.toBe(null);

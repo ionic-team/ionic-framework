@@ -16,7 +16,7 @@ export class CardModalPage {
     this.ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
   }
   async openModalByTrigger(selector: string) {
-    await this.page.click(selector);
+    await this.page.locator(selector).click();
     await this.ionModalDidPresent.next();
 
     return this.page.locator('ion-modal');
