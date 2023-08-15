@@ -7,7 +7,7 @@ import {
   NgZone,
   TemplateRef,
 } from '@angular/core';
-import { Components } from '@ionic/core';
+import type { Components } from '@ionic/core/components';
 
 import { ProxyCmp, proxyOutputs } from '../utils/proxy';
 
