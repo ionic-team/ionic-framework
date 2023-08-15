@@ -9,7 +9,6 @@ import { defineCustomElement } from '@ionic/core/components/ion-nav.js';
   selector: 'ion-nav',
   template: '<ng-content></ng-content>',
   standalone: true,
-  imports: [AngularDelegate]
 })
 export class IonNav extends NavDelegateBase {
   constructor(

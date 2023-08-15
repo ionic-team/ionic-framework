@@ -8,9 +8,7 @@ import { PageOneComponent } from './page-one.component';
   selector: 'app-nav',
   templateUrl: './nav.component.html',
   standalone: true,
-  imports: [IonNav],
-  // TODO FW-4766: Remove AngularDelegate from providers
-  providers: [AngularDelegate]
+  imports: [IonNav]
 })
 export class NavComponent {
   component = PageOneComponent;
