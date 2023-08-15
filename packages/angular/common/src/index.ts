@@ -36,3 +36,5 @@ export { NavDelegate } from './directives/navigation/nav-delegate';
 export { IonTabs } from './directives/navigation/tabs';
 
 export { ProxyCmp } from './utils/proxy';
+
+export { IonicRouteStrategy } from './utils/routing';

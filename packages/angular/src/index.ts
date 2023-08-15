@@ -35,10 +35,8 @@ export {
   Platform,
   AngularDelegate,
   NavParams,
+  IonicRouteStrategy,
 } from '@ionic/angular/common';
-
-// ROUTER STRATEGY
-export { IonicRouteStrategy } from './util/ionic-router-reuse-strategy';
 
 // TYPES
 export * from './types/ionic-lifecycle-hooks';
