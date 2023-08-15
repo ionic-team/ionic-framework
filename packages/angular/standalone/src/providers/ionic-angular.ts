@@ -1,0 +1,58 @@
+import { DOCUMENT } from '@angular/common';
+import { APP_INITIALIZER } from '@angular/core';
+import type { Provider } from '@angular/core';
+import { Router } from '@angular/router';
+import { ConfigToken, INPUT_BINDER, RoutedComponentInputBinder } from '@ionic/angular/common';
+import { initialize } from '@ionic/core/components';
+import type { IonicConfig } from '@ionic/core/components';
+
+export const provideIonicAngular = (config?: IonicConfig): Provider[] => {
+  /**
+   * TODO FW-XXXX
+   * Use makeEnvironmentProviders once Angular 14 support is dropped.
+   * This prevents provideIonicAngular from being accidentally referenced in an @Component.
+   */
+  return [
+    {
+      provide: ConfigToken,
+      useValue: config,
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeIonicAngular,
+      multi: true,
+      deps: [ConfigToken, DOCUMENT],
+    },
+    {
+      provide: INPUT_BINDER,
+      useFactory: componentInputBindingFactory,
+      deps: [Router],
+    },
+  ];
+};
+
+const initializeIonicAngular = (config: IonicConfig, doc: Document) => {
+  return () => {
+    /**
+     * By default Ionic Framework hides elements that
+     * are not hydrated, but in the CE build there is no
+     * hydration.
+     * TODO FW-2797: Remove when all integrations have been
+     * migrated to CE build.
+     */
+    doc.documentElement.classList.add('ion-ce');
+
+    initialize(config);
+  };
+};
+
+const componentInputBindingFactory = (router?: Router) => {
+  /**
+   * We cast the router to any here, since the componentInputBindingEnabled
+   * property is not available until Angular v16.
+   */
+  if ((router as any)?.componentInputBindingEnabled) {
+    return new RoutedComponentInputBinder();
+  }
+  return null;
+};

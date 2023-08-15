@@ -4,7 +4,7 @@ export { IonPopover } from './overlays/popover';
 export { IonRouterOutlet } from './navigation/router-outlet';
 export { IonRouterLink, IonRouterLinkWithHref } from './navigation/router-link-delegate';
 export { IonNav } from './navigation/nav-delegate';
-
+export { provideIonicAngular } from './providers/ionic-angular';
 export {
   ActionSheetController,
   AlertController,
