@@ -20,6 +20,7 @@ import {
   Injectable,
   reflectComponentType,
 } from '@angular/core';
+import type { Provider } from '@angular/core';
 import { OutletContext, Router, ActivatedRoute, ChildrenOutletContexts, PRIMARY_OUTLET, Data } from '@angular/router';
 import { componentOnReady } from '@ionic/core/components';
 import type { AnimationBuilder } from '@ionic/core/components';
@@ -508,13 +509,13 @@ class RoutedComponentInputBinder {
   }
 }
 
-export const provideComponentInputBinding = () => {
+export const provideComponentInputBinding = (): Provider => {
   return {
     provide: INPUT_BINDER,
     useFactory: componentInputBindingFactory,
     deps: [Router],
-  }
-}
+  };
+};
 
 function componentInputBindingFactory(router?: Router) {
   /**
