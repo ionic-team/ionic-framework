@@ -12,6 +12,8 @@ export const routes: Routes = [
       { path: 'back-button', loadComponent: () => import('../back-button/back-button.component').then(m => m.BackButtonComponent) },
       { path: 'router-link', loadComponent: () => import('../router-link/router-link.component').then(m => m.RouterLinkComponent) },
       { path: 'nav', loadComponent: () => import('../nav/nav.component').then(m => m.NavComponent) },
+      { path: 'providers', loadComponent: () => import('../providers/providers.component').then(m => m.ProvidersComponent) },
+      { path: 'overlay-controllers', loadComponent: () => import('../overlay-controllers/overlay-controllers.component').then(m => m.OverlayControllersComponent) },
     ]
   },
 ];
