@@ -37,13 +37,16 @@ $range-md-pin-background-color:              $range-md-bar-active-background-col
 $range-md-pin-color:                         ion-color(primary, contrast) !default;
 
 /// @prop - Font size of the range pin
-$range-md-pin-font-size:                     12px !default;
+$range-md-pin-font-size:                     dynamic-font(12px) !default;
 
 /// @prop - Padding top/bottom of the range pin
 $range-md-pin-padding-vertical:              8px !default;
 
 /// @prop - Padding start/end of the range pin
-$range-md-pin-padding-horizontal:            0 !default;
+$range-md-pin-padding-horizontal:            0px !default;
+
+/// @prop - Width and height of the range pin
+$range-md-pin-dimension: dynamic-font(28px) !default;
 
 /// @prop - Background of the range pin when the value is the minimum
 $range-md-pin-min-background-color:          $range-md-bar-background-color !default;
