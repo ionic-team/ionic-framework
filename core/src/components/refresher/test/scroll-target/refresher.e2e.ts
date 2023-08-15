@@ -3,12 +3,11 @@ import { configs, test } from '@utils/test/playwright';
 
 import { pullToRefresh } from '../test.utils';
 
-// TODO FW-2795: Enable this test when touch events/gestures are better supported in Playwright
 /**
  * This behavior does not vary across directions.
  */
 configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
-  test.describe.skip(title('refresher: custom scroll target'), () => {
+  test.describe(title('refresher: custom scroll target'), () => {
     test.beforeEach(async ({ page }) => {
       await page.goto('/src/components/refresher/test/scroll-target', config);
     });
@@ -19,7 +18,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
 
         expect(await items.count()).toBe(30);
 
-        await pullToRefresh(page, '#inner-scroll');
+        await pullToRefresh(page);
 
         expect(await items.count()).toBe(60);
       });
@@ -39,7 +38,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
 
         expect(await items.count()).toBe(30);
 
-        await pullToRefresh(page, '#inner-scroll');
+        await pullToRefresh(page);
 
         expect(await items.count()).toBe(60);
       });
