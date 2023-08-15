@@ -7,7 +7,7 @@ import {
   NgZone,
   TemplateRef,
 } from '@angular/core';
-import { Components, ModalBreakpointChangeEventDetail } from '@ionic/core';
+import type { Components, ModalBreakpointChangeEventDetail } from '@ionic/core/components';
 
 import { ProxyCmp, proxyOutputs } from '../utils/proxy';
 
