@@ -20,7 +20,6 @@ export {
   NavController,
   Config,
   Platform,
-  AngularDelegate,
   NavParams,
   IonicRouteStrategy,
 } from '@ionic/angular/common';
