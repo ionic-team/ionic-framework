@@ -1,16 +1,8 @@
 import { enableProdMode } from '@angular/core';
-import { RouteReuseStrategy, provideRouter } from '@angular/router';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { bootstrapApplication } from '@angular/platform-browser';
-
-import { provideIonicAngular, IonicRouteStrategy } from '@ionic/angular/standalone';
 
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
-
-import { AppComponentStandalone } from './app/app-standalone.component';
-
-import { routes } from './app/app.routes';
 
 if (environment.production) {
   enableProdMode();
@@ -25,11 +17,11 @@ if (isLazy) {
     .catch(err => console.error(err));
   });
 } else {
-  bootstrapApplication(AppComponentStandalone, {
-    providers: [
-      { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-      provideRouter(routes),
-      provideIonicAngular({ keyboardHeight: 12345 })
-    ],
-  });
+  /**
+   * Importing standalone and lazy modules in the same
+   * file creates side effects where manually generated components
+   * such as ion-modal do not get bootstrapped correctly. Using
+   * a dynamic import avoids this.
+   */
+  import('./main-standalone').then((module) => { module.bootstrapStandalone() });
 }
