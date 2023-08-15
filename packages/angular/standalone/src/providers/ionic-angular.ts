@@ -1,8 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { APP_INITIALIZER } from '@angular/core';
 import type { Provider } from '@angular/core';
-import { Router } from '@angular/router';
-import { ConfigToken, INPUT_BINDER, RoutedComponentInputBinder } from '@ionic/angular/common';
+import { ConfigToken, provideComponentInputBinding } from '@ionic/angular/common';
 import { initialize } from '@ionic/core/components';
 import type { IonicConfig } from '@ionic/core/components';
 
@@ -23,11 +22,7 @@ export const provideIonicAngular = (config?: IonicConfig): Provider[] => {
       multi: true,
       deps: [ConfigToken, DOCUMENT],
     },
-    {
-      provide: INPUT_BINDER,
-      useFactory: componentInputBindingFactory,
-      deps: [Router],
-    },
+    provideComponentInputBinding(),
   ];
 };
 
@@ -44,15 +39,4 @@ const initializeIonicAngular = (config: IonicConfig, doc: Document) => {
 
     initialize(config);
   };
-};
-
-const componentInputBindingFactory = (router?: Router) => {
-  /**
-   * We cast the router to any here, since the componentInputBindingEnabled
-   * property is not available until Angular v16.
-   */
-  if ((router as any)?.componentInputBindingEnabled) {
-    return new RoutedComponentInputBinder();
-  }
-  return null;
 };
