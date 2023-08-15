@@ -433,7 +433,7 @@ class OutletInjector implements Injector {
 }
 
 // TODO: FW-4785 - Remove this once Angular 15 support is dropped
-export const INPUT_BINDER = new InjectionToken<RoutedComponentInputBinder>('');
+const INPUT_BINDER = new InjectionToken<RoutedComponentInputBinder>('');
 
 /**
  * Injectable used as a tree-shakable provider for opting in to binding router data to component
@@ -450,7 +450,7 @@ export const INPUT_BINDER = new InjectionToken<RoutedComponentInputBinder>('');
  * the subscriptions are cleaned up.
  */
 @Injectable()
-export class RoutedComponentInputBinder {
+class RoutedComponentInputBinder {
   private outletDataSubscriptions = new Map<IonRouterOutlet, Subscription>();
 
   bindActivatedRouteToOutletComponent(outlet: IonRouterOutlet): void {
@@ -506,4 +506,23 @@ export class RoutedComponentInputBinder {
 
     this.outletDataSubscriptions.set(outlet, dataSubscription);
   }
+}
+
+export const provideComponentInputBinding = () => {
+  return {
+    provide: INPUT_BINDER,
+    useFactory: componentInputBindingFactory,
+    deps: [Router],
+  }
+}
+
+function componentInputBindingFactory(router?: Router) {
+  /**
+   * We cast the router to any here, since the componentInputBindingEnabled
+   * property is not available until Angular v16.
+   */
+  if ((router as any)?.componentInputBindingEnabled) {
+    return new RoutedComponentInputBinder();
+  }
+  return null;
 }
