@@ -10,7 +10,6 @@ export class NavDelegate extends NavDelegateBase {
     ref: ElementRef,
     environmentInjector: EnvironmentInjector,
     injector: Injector,
-    // TODO FW-4766: Remove AngularDelegate
     angularDelegate: AngularDelegate,
     z: NgZone
   ) {
