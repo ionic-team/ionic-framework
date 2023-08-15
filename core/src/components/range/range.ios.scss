@@ -70,7 +70,7 @@
 }
 
 .range-pin {
-  @include transform(translate3d(0, 0, 0), scale(.01));
+  @include transform(translate3d(0, 100%, 0), scale(.01));
   @include padding($range-ios-pin-padding-top, $range-ios-pin-padding-end, $range-ios-pin-padding-bottom, $range-ios-pin-padding-start);
 
   min-width: 28px;
