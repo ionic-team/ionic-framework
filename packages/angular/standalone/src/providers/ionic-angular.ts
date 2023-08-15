@@ -7,7 +7,7 @@ import type { IonicConfig } from '@ionic/core/components';
 
 export const provideIonicAngular = (config?: IonicConfig): Provider[] => {
   /**
-   * TODO FW-XXXX
+   * TODO FW-4967
    * Use makeEnvironmentProviders once Angular 14 support is dropped.
    * This prevents provideIonicAngular from being accidentally referenced in an @Component.
    */
