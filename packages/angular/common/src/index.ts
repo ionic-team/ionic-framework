@@ -24,7 +24,7 @@ export { NavParams } from './directives/navigation/nav-params';
 export { IonPopover } from './overlays/popover';
 export { IonModal } from './overlays/modal';
 
-export { IonRouterOutlet, INPUT_BINDER, RoutedComponentInputBinder } from './directives/navigation/router-outlet';
+export { IonRouterOutlet, provideComponentInputBinding } from './directives/navigation/router-outlet';
 export type { StackEvent } from './directives/navigation/stack-utils';
 
 export { IonBackButtonDelegate } from './directives/navigation/back-button';
@@ -36,3 +36,5 @@ export { NavDelegate } from './directives/navigation/nav-delegate';
 export { IonTabs } from './directives/navigation/tabs';
 
 export { ProxyCmp } from './utils/proxy';
+
+export { IonicRouteStrategy } from './utils/routing';

@@ -1,13 +1,11 @@
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { ModuleWithProviders, APP_INITIALIZER, NgModule, NgZone } from '@angular/core';
-import { Router } from '@angular/router';
 import {
   ModalController,
   PopoverController,
   ConfigToken,
   AngularDelegate,
-  INPUT_BINDER,
-  RoutedComponentInputBinder,
+  provideComponentInputBinding,
 } from '@ionic/angular/common';
 import { IonicConfig } from '@ionic/core';
 
@@ -76,23 +74,8 @@ export class IonicModule {
           multi: true,
           deps: [ConfigToken, DOCUMENT, NgZone],
         },
-        {
-          provide: INPUT_BINDER,
-          useFactory: componentInputBindingFactory,
-          deps: [Router],
-        },
+        provideComponentInputBinding(),
       ],
     };
   }
-}
-
-function componentInputBindingFactory(router?: Router) {
-  /**
-   * We cast the router to any here, since the componentInputBindingEnabled
-   * property is not available until Angular v16.
-   */
-  if ((router as any)?.componentInputBindingEnabled) {
-    return new RoutedComponentInputBinder();
-  }
-  return null;
 }
