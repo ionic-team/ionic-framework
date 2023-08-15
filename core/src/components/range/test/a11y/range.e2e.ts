@@ -70,4 +70,33 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       await expect(range).toHaveScreenshot(screenshot(`range-focus-with-pin`));
     });
   });
+
+  test.describe(title('range: font scaling'), () => {
+    test('should scale text on larger font sizes', async ({ page }) => {
+      // Capture both icons and text in the start/end slots
+      await page.setContent(
+        `
+        <style>
+          html {
+            font-size: 310%;
+          }
+        </style>
+        <ion-range value="50" label="Range Label" pin="true">
+          <ion-icon name="snow" slot="start" aria-hidden="true"></ion-icon>
+          <div name="snow" slot="end" aria-hidden="true">Warmer</div>
+        </ion-range>
+      `,
+        config
+      );
+
+      const range = page.locator('ion-range');
+      const rangeHandle = range.locator('.range-knob-handle');
+
+      // Capture the range pin in screenshots
+      await rangeHandle.evaluate((el) => el.classList.add('ion-focused'));
+      await page.waitForChanges();
+
+      await expect(range).toHaveScreenshot(screenshot(`range-scale`));
+    });
+  });
 });
