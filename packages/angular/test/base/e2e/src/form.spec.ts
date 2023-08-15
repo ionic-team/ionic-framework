@@ -130,8 +130,9 @@ describe('Form', () => {
     it('ion-input should error with min set', () => {
       const control = cy.get('form ion-input[formControlName="inputMin"]');
 
-      control.type('0');
-      control.get('input').blur();
+      control.type('{backspace}0');
+
+      control.within(() => cy.get('input').blur());
 
       control.should('have.class', 'ng-invalid');
     });
@@ -140,7 +141,7 @@ describe('Form', () => {
       const control = cy.get('form ion-input[formControlName="inputMax"]');
 
       control.type('2');
-      control.get('input').blur();
+      control.within(() => cy.get('input').blur());
 
       control.should('have.class', 'ng-invalid');
     });
