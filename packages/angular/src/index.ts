@@ -35,7 +35,11 @@ export {
   Platform,
   AngularDelegate,
   NavParams,
+<<<<<<< HEAD
   IonicRouteStrategy,
+=======
+  IonicRouteStrategy
+>>>>>>> 4abb779483 (feat(angular): standalone has route strategy)
 } from '@ionic/angular/common';
 
 // TYPES
