@@ -5,4 +5,22 @@ export { IonRouterOutlet } from './navigation/router-outlet';
 export { IonRouterLink, IonRouterLinkWithHref } from './navigation/router-link-delegate';
 export { IonNav } from './navigation/nav-delegate';
 
-export { IonicRouteStrategy } from '@ionic/angular/common';
+export {
+  ActionSheetController,
+  AlertController,
+  LoadingController,
+  MenuController,
+  ModalController,
+  PickerController,
+  PopoverController,
+  ToastController,
+  AnimationController,
+  GestureController,
+  DomController,
+  NavController,
+  Config,
+  Platform,
+  AngularDelegate,
+  NavParams,
+  IonicRouteStrategy,
+} from '@ionic/angular/common';
