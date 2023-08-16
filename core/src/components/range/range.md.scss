@@ -142,6 +142,10 @@
   color: var(--pin-color);
 
   &::before {
+    /**
+     * The -1px here moves the ::before
+     * psuedo-element down to create a uniform pin shape.
+     */
     @include position(null, null, -1px, 50%);
     @include margin-horizontal(-13px, null);
 
@@ -171,6 +175,11 @@
   }
 }
 
+/**
+ * Move the pin up by its full height
+ * plus a few pixels so the tip is above
+ * (but not touching) the knob.
+ */
 .range-knob-pressed .range-pin,
 .range-knob-handle.ion-focused .range-pin {
   transform: translate3d(0, calc(-100% + 4px), 0) scale(1);
