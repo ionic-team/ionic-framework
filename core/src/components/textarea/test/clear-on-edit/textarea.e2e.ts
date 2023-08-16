@@ -4,7 +4,10 @@ import { test, configs } from '@utils/test/playwright';
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('textarea: clearOnEdit'), () => {
     test('should clear when typed into', async ({ page }) => {
-      await page.setContent(`<ion-textarea value="abc" clear-on-edit="true" aria-label="textarea"></ion-textarea>`, config);
+      await page.setContent(
+        `<ion-textarea value="abc" clear-on-edit="true" aria-label="textarea"></ion-textarea>`,
+        config
+      );
 
       const ionInput = await page.spyOnEvent('ionInput');
 
@@ -17,7 +20,10 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     });
 
     test('should not clear when tab is pressed', async ({ page }) => {
-      await page.setContent(`<ion-textarea value="abc" clear-on-edit="true" aria-label="textarea"></ion-textarea>`, config);
+      await page.setContent(
+        `<ion-textarea value="abc" clear-on-edit="true" aria-label="textarea"></ion-textarea>`,
+        config
+      );
 
       const textarea = page.locator('ion-textarea');
       await textarea.locator('textarea').focus();
