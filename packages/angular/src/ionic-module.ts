@@ -17,10 +17,10 @@ import {
   SelectValueAccessorDirective,
   TextValueAccessorDirective,
 } from './directives/control-value-accessors';
-import { IonBackButtonDelegateDirective } from './directives/navigation/ion-back-button';
+import { IonBackButton } from './directives/navigation/ion-back-button';
+import { IonNav } from './directives/navigation/ion-nav';
 import { IonRouterOutlet } from './directives/navigation/ion-router-outlet';
 import { IonTabs } from './directives/navigation/ion-tabs';
-import { NavDelegate } from './directives/navigation/nav-delegate';
 import {
   RouterLinkDelegateDirective,
   RouterLinkWithHrefDelegateDirective,
@@ -47,8 +47,8 @@ const DECLARATIONS = [
   // navigation
   IonTabs,
   IonRouterOutlet,
-  IonBackButtonDelegateDirective,
-  NavDelegate,
+  IonBackButton,
+  IonNav,
   RouterLinkDelegateDirective,
   RouterLinkWithHrefDelegateDirective,
 ];

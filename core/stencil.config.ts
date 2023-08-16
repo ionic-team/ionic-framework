@@ -7,8 +7,9 @@ import { vueOutputTarget } from '@stencil/vue-output-target';
 // @ts-ignore
 import { apiSpecGenerator } from './scripts/api-spec-generator';
 
+const componentCorePackage = '@ionic/core';
+
 const getAngularOutputTargets = () => {
-  const componentCorePackage = '@ionic/core';
   const excludeComponents = [
     // overlays that accept user components
     'ion-modal',
@@ -20,6 +21,8 @@ const getAngularOutputTargets = () => {
     'ion-route-redirect',
     'ion-router-link',
     'ion-router-outlet',
+    'ion-nav',
+    'ion-back-button',
 
     // tabs
     'ion-tabs',
@@ -34,6 +37,7 @@ const getAngularOutputTargets = () => {
       directivesProxyFile: '../packages/angular/src/directives/proxies.ts',
       directivesArrayFile: '../packages/angular/src/directives/proxies-list.ts',
       excludeComponents,
+      outputType: 'component',
     }),
     angularOutputTarget({
       componentCorePackage,
@@ -107,7 +111,7 @@ export const config: Config = {
   ],
   outputTargets: [
     reactOutputTarget({
-      componentCorePackage: '@ionic/core',
+      componentCorePackage,
       includeImportCustomElements: true,
       includePolyfills: false,
       includeDefineCustomElements: false,
@@ -144,7 +148,7 @@ export const config: Config = {
       ]
     }),
     vueOutputTarget({
-      componentCorePackage: '@ionic/core',
+      componentCorePackage,
       includeImportCustomElements: true,
       includePolyfills: false,
       includeDefineCustomElements: false,

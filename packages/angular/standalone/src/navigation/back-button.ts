@@ -1,10 +1,5 @@
-import { Component, Optional, ChangeDetectionStrategy, ElementRef, NgZone } from '@angular/core';
-import {
-  IonBackButtonDelegate as IonBackButtonDelegateBase,
-  NavController,
-  Config,
-  ProxyCmp,
-} from '@ionic/angular/common';
+import { Component, Optional, ChangeDetectionStrategy, ElementRef, NgZone, ChangeDetectorRef } from '@angular/core';
+import { IonBackButton as IonBackButtonBase, NavController, Config, ProxyCmp } from '@ionic/angular/common';
 import { defineCustomElement } from '@ionic/core/components/ion-back-button.js';
 
 import { IonRouterOutlet } from './router-outlet';
@@ -19,14 +14,15 @@ import { IonRouterOutlet } from './router-outlet';
   standalone: true,
 })
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
-export class IonBackButton extends IonBackButtonDelegateBase {
+export class IonBackButton extends IonBackButtonBase {
   constructor(
     @Optional() routerOutlet: IonRouterOutlet,
     navCtrl: NavController,
     config: Config,
     r: ElementRef,
-    z: NgZone
+    z: NgZone,
+    c: ChangeDetectorRef
   ) {
-    super(routerOutlet, navCtrl, config, r, z);
+    super(routerOutlet, navCtrl, config, r, z, c);
   }
 }

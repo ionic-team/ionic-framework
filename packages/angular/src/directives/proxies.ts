@@ -231,28 +231,6 @@ export declare interface IonAvatar extends Components.IonAvatar {}
 
 
 @ProxyCmp({
-  inputs: ['color', 'defaultHref', 'disabled', 'icon', 'mode', 'routerAnimation', 'text', 'type']
-})
-@Component({
-  selector: 'ion-back-button',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'defaultHref', 'disabled', 'icon', 'mode', 'routerAnimation', 'text', 'type'],
-})
-export class IonBackButton {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-  }
-}
-
-
-export declare interface IonBackButton extends Components.IonBackButton {}
-
-
-@ProxyCmp({
   inputs: ['stopPropagation', 'tappable', 'visible']
 })
 @Component({
@@ -1393,39 +1371,6 @@ export class IonMenuToggle {
 
 
 export declare interface IonMenuToggle extends Components.IonMenuToggle {}
-
-
-@ProxyCmp({
-  inputs: ['animated', 'animation', 'root', 'rootParams', 'swipeGesture'],
-  methods: ['push', 'insert', 'insertPages', 'pop', 'popTo', 'popToRoot', 'removeIndex', 'setRoot', 'setPages', 'getActive', 'getByIndex', 'canGoBack', 'getPrevious']
-})
-@Component({
-  selector: 'ion-nav',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['animated', 'animation', 'root', 'rootParams', 'swipeGesture'],
-})
-export class IonNav {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionNavWillChange', 'ionNavDidChange']);
-  }
-}
-
-
-export declare interface IonNav extends Components.IonNav {
-  /**
-   * Event fired when the nav will change components
-   */
-  ionNavWillChange: EventEmitter<CustomEvent<void>>;
-  /**
-   * Event fired when the nav has changed components
-   */
-  ionNavDidChange: EventEmitter<CustomEvent<void>>;
-}
 
 
 @ProxyCmp({

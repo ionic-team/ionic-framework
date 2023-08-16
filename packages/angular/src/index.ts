@@ -5,8 +5,8 @@ export { RadioValueAccessorDirective as RadioValueAccessor } from './directives/
 export { SelectValueAccessorDirective as SelectValueAccessor } from './directives/control-value-accessors/select-value-accessor';
 export { TextValueAccessorDirective as TextValueAccessor } from './directives/control-value-accessors/text-value-accessor';
 export { IonTabs } from './directives/navigation/ion-tabs';
-export { IonBackButtonDelegateDirective as IonBackButtonDelegate } from './directives/navigation/ion-back-button';
-export { NavDelegate } from './directives/navigation/nav-delegate';
+export { IonBackButton } from './directives/navigation/ion-back-button';
+export { IonNav } from './directives/navigation/ion-nav';
 export { IonRouterOutlet } from './directives/navigation/ion-router-outlet';
 export {
   RouterLinkDelegateDirective as RouterLinkDelegate,
