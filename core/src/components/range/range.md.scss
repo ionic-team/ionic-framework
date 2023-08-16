@@ -123,6 +123,11 @@
   @include border-radius(50%);
   @include transform(translate3d(0, 0, 0), scale(.01));
 
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
   /**
    * The dimensions of the range need
    * to scale with the size of the text
@@ -135,10 +140,6 @@
 
   background: var(--pin-background);
   color: var(--pin-color);
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
 
   &::before {
     @include position(null, null, -1px, 50%);
