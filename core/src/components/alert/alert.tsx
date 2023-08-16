@@ -673,6 +673,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
       <div class={alertButtonGroupClass}>
         {buttons.map((button) => (
           <button
+            {...button.htmlAttributes}
             type="button"
             id={button.id}
             class={buttonClass(button)}
