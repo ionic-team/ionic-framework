@@ -141,12 +141,6 @@
   color: current-color(contrast);
 }
 
-.calendar-day.calendar-day-today.calendar-day-active .calendar-day-highlight {
-  background: current-color(base);
-
-  opacity: 1;
-}
-
 // Time / Header
 // -----------------------------------
 :host .datetime-time {
