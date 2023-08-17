@@ -181,6 +181,17 @@ input {
   justify-content: end;
 }
 
+// Align Items
+// ---------------------------------------------
+
+:host(.checkbox-align-start) .checkbox-wrapper {
+  align-items: start;
+}
+
+:host(.checkbox-align-center) .checkbox-wrapper {
+  align-items: center;
+}
+
 
 // Label Placement - Start
 // ----------------------------------------------------------------
@@ -246,6 +257,25 @@ input {
   width: 100px;
   min-width: 100px;
   max-width: 200px;
+}
+
+// Label Placement - Stacked
+// ----------------------------------------------------------------
+
+/**
+ * Label is on top of the checkbox.
+ */
+:host(.checkbox-label-placement-stacked) .checkbox-wrapper {
+  flex-direction: column;
+}
+
+:host(.checkbox-label-placement-stacked) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the checkbox should be on the bottom
+    * when the label sits at the top.
+    */
+  @include margin(null, 0, $form-control-label-margin, 0);
 }
 
 
