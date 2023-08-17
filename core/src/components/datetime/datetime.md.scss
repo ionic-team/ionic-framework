@@ -69,12 +69,15 @@
 
 // Individual day button in month
 :host .calendar-day {
-  @include padding(13px, 0, 13px, 0px);
+  width: 42px;
+  min-width: 42px;
+
+  height: 42px;
 
   font-size: $datetime-md-calendar-item-font-size;
 }
 
-.calendar-day:focus .calendar-day-highlight {
+.calendar-day:focus {
   background: current-color(base, 0.2);
 
   box-shadow: 0px 0px 0px 4px current-color(base, 0.2);
@@ -85,11 +88,9 @@
  * should have ion-color for text color.
  */
 :host .calendar-day.calendar-day-today {
-  color: current-color(base);
-}
-
-.calendar-day.calendar-day-today .calendar-day-highlight {
   border: 1px solid current-color(base);
+
+  color: current-color(base);
 }
 
 /**
@@ -101,7 +102,7 @@
   color: current-color(contrast);
 }
 
-.calendar-day.calendar-day-active .calendar-day-highlight {
+.calendar-day.calendar-day-active {
   border: 1px solid current-color(base);
 
   background: current-color(base);
