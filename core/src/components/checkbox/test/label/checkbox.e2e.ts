@@ -139,7 +139,7 @@ configs().forEach(({ title, screenshot, config }) => {
       });
     });
 
-    test.describe.only('checkbox: stacked placement', () => {
+    test.describe('checkbox: stacked placement', () => {
       test('should render a start alignment with label in the stacked position', async ({ page }) => {
         await page.setContent(
           `
