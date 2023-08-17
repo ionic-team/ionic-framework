@@ -805,7 +805,7 @@ export class Datetime implements ComponentInterface {
     /**
      * Get the number of padding days so
      * we know how much to offset our next selector by
-     * to grab the correct calenday-day element.
+     * to grab the correct calendar-day element.
      */
     const padding = currentMonth.querySelectorAll('.calendar-day-padding');
     const { day } = this.workingParts;
@@ -819,7 +819,7 @@ export class Datetime implements ComponentInterface {
      * and focus it.
      */
     const dayEl = currentMonth.querySelector(
-      `.calendar-day:nth-of-type(${padding.length + day})`
+      `.calendar-day-wrapper:nth-of-type(${padding.length + day}) .calendar-day`
     ) as HTMLElement | null;
     if (dayEl) {
       dayEl.focus();
