@@ -156,7 +156,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   /**
    * This is responsible for rendering a hidden native
    * button element inside the associated form. This allows
-   * the users to submit a form by pressing enter when a text
+   * users to submit a form by pressing "Enter" when a text
    * field inside of the form is focused. The native button
    * rendered inside of `ion-button` is in the Shadow DOM
    * and therefore does not participate in form submission
