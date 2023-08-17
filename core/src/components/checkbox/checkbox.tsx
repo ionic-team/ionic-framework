@@ -231,6 +231,7 @@ export class Checkbox implements ComponentInterface {
       labelPlacement,
       name,
       value,
+      align,
     } = this;
     const mode = getIonMode(this);
     const path = getSVGPath(mode, indeterminate);
@@ -247,7 +248,7 @@ export class Checkbox implements ComponentInterface {
           'checkbox-indeterminate': indeterminate,
           interactive: true,
           [`checkbox-justify-${justify}`]: true,
-          [`checkbox-align-${this.align}`]: true,
+          [`checkbox-align-${align}`]: true,
           [`checkbox-label-placement-${labelPlacement}`]: true,
         })}
       >
