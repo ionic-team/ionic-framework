@@ -82,10 +82,10 @@ export class Checkbox implements ComponentInterface {
    * `"end"`: The label will appear to the right of the checkbox in LTR and to the left in RTL.
    * `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
    */
-  @Prop() labelPlacement: 'start' | 'end' | 'fixed' = 'start';
+  @Prop() labelPlacement: 'start' | 'end' | 'fixed' | 'stacked' = 'start';
 
   /**
-   * How to pack the label and checkbox within a line.
+   * How to pack the label and checkbox within a line when using `labelPlacement="start | end | fixed"`.
    * `"start"`: The label and checkbox will appear on the left in LTR and
    * on the right in RTL.
    * `"end"`: The label and checkbox will appear on the right in LTR and
@@ -94,6 +94,13 @@ export class Checkbox implements ComponentInterface {
    * ends of the line with space between the two elements.
    */
   @Prop() justify: 'start' | 'end' | 'space-between' = 'space-between';
+
+  /**
+   * How to pack the label and control along the cross axis when using `labelPlacement="stacked"`.
+   * `"start"`: The label and control will appear at the top of the container.
+   * `"center"`: The label and control will appear at the center of the container.
+   */
+  @Prop() align: 'start' | 'center' = 'start';
 
   // TODO(FW-3100): remove this
   /**
@@ -240,6 +247,7 @@ export class Checkbox implements ComponentInterface {
           'checkbox-indeterminate': indeterminate,
           interactive: true,
           [`checkbox-justify-${justify}`]: true,
+          [`checkbox-align-${this.align}`]: true,
           [`checkbox-label-placement-${labelPlacement}`]: true,
         })}
       >
