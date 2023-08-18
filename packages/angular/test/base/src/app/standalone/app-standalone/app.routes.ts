@@ -6,14 +6,15 @@ export const routes: Routes = [
     path: '',
     component: AppComponent,
     children: [
-      { path: 'popover', loadComponent: () => import('../popover/popover.component').then(m => m.PopoverComponent) },
-      { path: 'modal', loadComponent: () => import('../modal/modal.component').then(m => m.ModalComponent) },
-      { path: 'router-outlet', loadComponent: () => import('../router-outlet/router-outlet.component').then(m => m.RouterOutletComponent) },
-      { path: 'back-button', loadComponent: () => import('../back-button/back-button.component').then(m => m.BackButtonComponent) },
-      { path: 'router-link', loadComponent: () => import('../router-link/router-link.component').then(m => m.RouterLinkComponent) },
-      { path: 'nav', loadComponent: () => import('../nav/nav.component').then(m => m.NavComponent) },
-      { path: 'providers', loadComponent: () => import('../providers/providers.component').then(m => m.ProvidersComponent) },
-      { path: 'overlay-controllers', loadComponent: () => import('../overlay-controllers/overlay-controllers.component').then(m => m.OverlayControllersComponent) },
+      { path: 'popover', loadComponent: () => import('../popover/popover.component').then(c => c.PopoverComponent) },
+      { path: 'modal', loadComponent: () => import('../modal/modal.component').then(c => c.ModalComponent) },
+      { path: 'router-outlet', loadComponent: () => import('../router-outlet/router-outlet.component').then(c => c.RouterOutletComponent) },
+      { path: 'back-button', loadComponent: () => import('../back-button/back-button.component').then(c => c.BackButtonComponent) },
+      { path: 'router-link', loadComponent: () => import('../router-link/router-link.component').then(c => c.RouterLinkComponent) },
+      { path: 'nav', loadComponent: () => import('../nav/nav.component').then(c => c.NavComponent) },
+      { path: 'providers', loadComponent: () => import('../providers/providers.component').then(c => c.ProvidersComponent) },
+      { path: 'overlay-controllers', loadComponent: () => import('../overlay-controllers/overlay-controllers.component').then(c => c.OverlayControllersComponent) },
+      { path: 'button', loadComponent: () => import('../button/button.component').then(c => c.ButtonComponent) }
     ]
   },
 ];

@@ -7,6 +7,56 @@ import { vueOutputTarget } from '@stencil/vue-output-target';
 // @ts-ignore
 import { apiSpecGenerator } from './scripts/api-spec-generator';
 
+const componentCorePackage = '@ionic/core';
+
+const getAngularOutputTargets = () => {
+  const excludeComponents = [
+    // overlays that accept user components
+    'ion-modal',
+    'ion-popover',
+
+    // navigation
+    'ion-router',
+    'ion-route',
+    'ion-route-redirect',
+    'ion-router-link',
+    'ion-router-outlet',
+    'ion-nav',
+    'ion-back-button',
+
+    // tabs
+    'ion-tabs',
+    'ion-tab',
+
+    // auxiliar
+    'ion-picker-column',
+  ]
+  return [
+    angularOutputTarget({
+      componentCorePackage,
+      directivesProxyFile: '../packages/angular/src/directives/proxies.ts',
+      directivesArrayFile: '../packages/angular/src/directives/proxies-list.ts',
+      excludeComponents,
+      outputType: 'component',
+    }),
+    angularOutputTarget({
+      componentCorePackage,
+      directivesProxyFile: '../packages/angular/standalone/src/directives/proxies.ts',
+      excludeComponents: [
+        ...excludeComponents,
+        /**
+         * IonIcon is a special case because it does not come
+         * from the `@ionic/core` package, so generating proxies that
+         * are reliant on the CE build will reference the wrong
+         * import location.
+         */
+        'ion-icon'
+      ],
+      outputType: 'standalone',
+    })
+  ];
+}
+
 export const config: Config = {
   autoprefixCss: true,
   sourceMap: false,
@@ -61,7 +111,7 @@ export const config: Config = {
   ],
   outputTargets: [
     reactOutputTarget({
-      componentCorePackage: '@ionic/core',
+      componentCorePackage,
       includeImportCustomElements: true,
       includePolyfills: false,
       includeDefineCustomElements: false,
@@ -98,7 +148,7 @@ export const config: Config = {
       ]
     }),
     vueOutputTarget({
-      componentCorePackage: '@ionic/core',
+      componentCorePackage,
       includeImportCustomElements: true,
       includePolyfills: false,
       includeDefineCustomElements: false,
@@ -182,30 +232,7 @@ export const config: Config = {
     //   type: 'stats',
     //   file: 'stats.json'
     // },
-    angularOutputTarget({
-      componentCorePackage: '@ionic/core',
-      directivesProxyFile: '../packages/angular/src/directives/proxies.ts',
-      directivesArrayFile: '../packages/angular/src/directives/proxies-list.ts',
-      excludeComponents: [
-        // overlays that accept user components
-        'ion-modal',
-        'ion-popover',
-
-        // navigation
-        'ion-router',
-        'ion-route',
-        'ion-route-redirect',
-        'ion-router-link',
-        'ion-router-outlet',
-
-        // tabs
-        'ion-tabs',
-        'ion-tab',
-
-        // auxiliar
-        'ion-picker-column',
-      ],
-    }),
+    ...getAngularOutputTargets(),
   ],
   buildEs5: 'prod',
   testing: {

@@ -1,4 +1,5 @@
-import { Directive, HostListener, Input, Optional, ElementRef, NgZone } from '@angular/core';
+import { HostListener, Input, Optional, ElementRef, NgZone, ChangeDetectorRef, Directive } from '@angular/core';
+import type { Components } from '@ionic/core';
 import type { AnimationBuilder } from '@ionic/core/components';
 
 import { Config } from '../../providers/config';
@@ -9,21 +10,23 @@ import { IonRouterOutlet } from './router-outlet';
 
 const BACK_BUTTON_INPUTS = ['color', 'defaultHref', 'disabled', 'icon', 'mode', 'routerAnimation', 'text', 'type'];
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export declare interface IonBackButton extends Components.IonBackButton {}
+
 @ProxyCmp({
   inputs: BACK_BUTTON_INPUTS,
 })
 @Directive({
-  selector: 'ion-back-button',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: BACK_BUTTON_INPUTS,
 })
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
-export class IonBackButtonDelegate {
+export class IonBackButton {
   @Input()
-  defaultHref: string | undefined | null;
+  defaultHref: string | undefined;
 
   @Input()
-  routerAnimation?: AnimationBuilder;
+  routerAnimation: AnimationBuilder | undefined;
 
   protected el: HTMLElement;
 
@@ -32,8 +35,10 @@ export class IonBackButtonDelegate {
     private navCtrl: NavController,
     private config: Config,
     private r: ElementRef,
-    protected z: NgZone
+    protected z: NgZone,
+    c: ChangeDetectorRef
   ) {
+    c.detach();
     this.el = this.r.nativeElement;
   }
 
