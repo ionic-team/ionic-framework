@@ -156,7 +156,7 @@
 
 .toast-icon,
 .toast-button-icon {
-  font-size: 1.4em;
+  font-size: dynamic-font(22px, 1em);
 }
 
 .toast-button-inner {
@@ -164,7 +164,6 @@
 
   align-items: center;
 }
-
 
 // Toast Button: Hover
 // --------------------------------------------------

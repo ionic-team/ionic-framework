@@ -10,7 +10,7 @@ $toast-md-background:                              $text-color-step-200 !default
 $toast-md-box-shadow:                              0 3px 5px -1px rgba(0, 0, 0, .2), 0 6px 10px 0 rgba(0, 0, 0, .14), 0 1px 18px 0 rgba(0, 0, 0, .12) !default;
 
 /// @prop - Font size of the toast
-$toast-md-font-size:                               14px !default;
+$toast-md-font-size:                               dynamic-font(14px) !default;
 
 /// @prop - Color of the toast
 $toast-md-color:                                   $background-color-step-50 !default;

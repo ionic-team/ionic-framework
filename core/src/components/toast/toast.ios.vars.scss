@@ -25,7 +25,7 @@ $toast-ios-header-font-weight:                    500 !default;
 $toast-ios-header-margin-bottom:                  2px !default;
 
 /// @prop - Font size of the toast title
-$toast-ios-content-font-size:                     14px !default;
+$toast-ios-content-font-size:                     dynamic-font(14px) !default;
 
 /// @prop - Padding top of the toast content
 $toast-ios-content-padding-top:                   15px !default;

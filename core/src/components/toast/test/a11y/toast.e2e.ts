@@ -5,7 +5,7 @@ import { configs, test } from '@utils/test/playwright';
 /**
  * This test does not check LTR vs RTL layouts
  */
-configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('toast: a11y'), () => {
     test.beforeEach(async ({ page }) => {
       await page.goto(`/src/components/toast/test/a11y`, config);
@@ -51,6 +51,28 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
 
       await expect(toastButton).toHaveAttribute('aria-labelledby', 'close-label');
       await expect(toastButton).toHaveAttribute('aria-label', 'close button');
+    });
+  });
+
+  test.describe(title('toast: font scaling'), () => {
+    test.only('should scale text on larger font sizes', async ({ page }) => {
+      await page.setContent(`
+        <style>
+          html {
+            font-size: 310%;
+          }
+        </style>
+
+        <ion-toast is-open="true">
+          Hello world
+        </ion-toast>
+      `, config);
+
+      const toast = page.locator('ion-toast');
+
+      await expect(toast).toBeVisible();
+
+      await expect(toast).toHaveScreenshot(screenshot('toast-scale'));
     });
   });
 });
