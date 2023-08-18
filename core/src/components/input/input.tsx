@@ -1,21 +1,25 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
+import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
+import type { LegacyFormController, NotchController } from '@utils/forms';
+import { createLegacyFormController, createNotchController } from '@utils/forms';
+import type { Attributes } from '@utils/helpers';
+import { inheritAriaAttributes, debounceEvent, findItemLabel, inheritAttributes } from '@utils/helpers';
+import { printIonWarning } from '@utils/logging';
+import { createSlotMutationController } from '@utils/slot-mutation-controller';
+import type { SlotMutationController } from '@utils/slot-mutation-controller';
+import { createColorClasses, hostContext } from '@utils/theme';
 import { closeCircle, closeSharp } from 'ionicons/icons';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { AutocompleteTypes, Color, StyleEventDetail, TextFieldTypes } from '../../interface';
-import type { LegacyFormController } from '../../utils/forms';
-import { createLegacyFormController } from '../../utils/forms';
-import type { Attributes } from '../../utils/helpers';
-import { inheritAriaAttributes, debounceEvent, findItemLabel, inheritAttributes } from '../../utils/helpers';
-import { printIonWarning } from '../../utils/logging';
-import { createColorClasses, hostContext } from '../../utils/theme';
 
 import type { InputChangeEventDetail, InputInputEventDetail } from './input-interface';
 import { getCounterText } from './input.utils';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
+ * @slot label - The label text to associate with the input. Use the `labelPlacement` property to control where the label is placed relative to the input. Use this if you need to render a label with custom HTML. (EXPERIMENTAL)
  */
 @Component({
   tag: 'ion-input',
@@ -31,6 +35,9 @@ export class Input implements ComponentInterface {
   private inheritedAttributes: Attributes = {};
   private isComposing = false;
   private legacyFormController!: LegacyFormController;
+  private slotMutationController?: SlotMutationController;
+  private notchController?: NotchController;
+  private notchSpacerEl: HTMLElement | undefined;
 
   // This flag ensures we log the deprecation warning at most once.
   private hasLoggedDeprecationWarning = false;
@@ -165,6 +172,10 @@ export class Input implements ComponentInterface {
 
   /**
    * The visible label associated with the input.
+   *
+   * Use this if you need to render a plaintext label.
+   *
+   * The `label` property will take priority over the `label` slot if both are used.
    */
   @Prop() label?: string;
 
@@ -257,9 +268,7 @@ export class Input implements ComponentInterface {
    */
   @Prop() step?: string;
 
-  /**
-   * The initial size of the control. This value is in pixels unless the value of the type attribute is `"text"` or `"password"`, in which case it is an integer number of characters. This attribute applies only when the `type` attribute is set to `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, or `"password"`, otherwise it is ignored.
-   */
+  // FW-4914 Remove this property in Ionic 8
   @Prop() size?: number;
 
   /**
@@ -273,8 +282,9 @@ export class Input implements ComponentInterface {
   @Prop({ mutable: true }) value?: string | number | null = '';
 
   /**
-   * The `ionInput` event fires when the `value` of an `<ion-input>` element
-   * has been changed.
+   * The `ionInput` event is fired each time the user modifies the input's value.
+   * Unlike the `ionChange` event, the `ionInput` event is fired for each alteration
+   * to the input's value. This typically happens for each keystroke as the user types.
    *
    * For elements that accept text input (`type=text`, `type=tel`, etc.), the interface
    * is [`InputEvent`](https://developer.mozilla.org/en-US/docs/Web/API/InputEvent); for others,
@@ -284,9 +294,9 @@ export class Input implements ComponentInterface {
   @Event() ionInput!: EventEmitter<InputInputEventDetail>;
 
   /**
-   * The `ionChange` event is fired for `<ion-input>` elements when the user
-   * modifies the element's value. Unlike the `ionInput` event, the `ionChange`
-   * event is not necessarily fired for each alteration to an element's value.
+   * The `ionChange` event is fired when the user modifies the input's value.
+   * Unlike the `ionInput` event, the `ionChange` event is only fired when changes
+   * are committed, not as the user types.
    *
    * Depending on the way the users interacts with the element, the `ionChange`
    * event fires at a different moment:
@@ -353,6 +363,12 @@ export class Input implements ComponentInterface {
     const { el } = this;
 
     this.legacyFormController = createLegacyFormController(el);
+    this.slotMutationController = createSlotMutationController(el, 'label', () => forceUpdate(this));
+    this.notchController = createNotchController(
+      el,
+      () => this.notchSpacerEl,
+      () => this.labelSlot
+    );
 
     this.emitStyle();
     this.debounceChanged();
@@ -369,6 +385,10 @@ export class Input implements ComponentInterface {
     this.originalIonInput = this.ionInput;
   }
 
+  componentDidRender() {
+    this.notchController?.calculateNotchWidth();
+  }
+
   disconnectedCallback() {
     if (Build.isBrowser) {
       document.dispatchEvent(
@@ -376,6 +396,16 @@ export class Input implements ComponentInterface {
           detail: this.el,
         })
       );
+    }
+
+    if (this.slotMutationController) {
+      this.slotMutationController.destroy();
+      this.slotMutationController = undefined;
+    }
+
+    if (this.notchController) {
+      this.notchController.destroy();
+      this.notchController = undefined;
     }
   }
 
@@ -502,7 +532,7 @@ export class Input implements ComponentInterface {
      * Clear the input if the control has not been previously cleared during focus.
      * Do not clear if the user hitting enter to submit a form.
      */
-    if (!this.didInputClearOnEdit && this.hasValue() && ev.key !== 'Enter') {
+    if (!this.didInputClearOnEdit && this.hasValue() && ev.key !== 'Enter' && ev.key !== 'Tab') {
       this.value = '';
       this.emitInputChange(ev);
     }
@@ -578,15 +608,35 @@ export class Input implements ComponentInterface {
 
   private renderLabel() {
     const { label } = this;
-    if (label === undefined) {
-      return;
-    }
 
     return (
-      <div class="label-text-wrapper">
-        <div class="label-text">{this.label}</div>
+      <div
+        class={{
+          'label-text-wrapper': true,
+          'label-text-wrapper-hidden': !this.hasLabel,
+        }}
+      >
+        {label === undefined ? <slot name="label"></slot> : <div class="label-text">{label}</div>}
       </div>
     );
+  }
+
+  /**
+   * Gets any content passed into the `label` slot,
+   * not the <slot> definition.
+   */
+  private get labelSlot() {
+    return this.el.querySelector('[slot="label"]');
+  }
+
+  /**
+   * Returns `true` if label content is provided
+   * either by a prop or a content. If you want
+   * to get the plaintext value of the label use
+   * the `labelText` getter instead.
+   */
+  private get hasLabel() {
+    return this.label !== undefined || this.labelSlot !== null;
   }
 
   /**
@@ -608,8 +658,13 @@ export class Input implements ComponentInterface {
       return [
         <div class="input-outline-container">
           <div class="input-outline-start"></div>
-          <div class="input-outline-notch">
-            <div class="notch-spacer" aria-hidden="true">
+          <div
+            class={{
+              'input-outline-notch': true,
+              'input-outline-notch-hidden': !this.hasLabel,
+            }}
+          >
+            <div class="notch-spacer" aria-hidden="true" ref={(el) => (this.notchSpacerEl = el)}>
               {this.label}
             </div>
           </div>

@@ -1,20 +1,37 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, h, writeTask } from '@stencil/core';
+import {
+  Build,
+  Component,
+  Element,
+  Event,
+  Host,
+  Method,
+  Prop,
+  State,
+  Watch,
+  forceUpdate,
+  h,
+  writeTask,
+} from '@stencil/core';
+import type { LegacyFormController, NotchController } from '@utils/forms';
+import { createLegacyFormController, createNotchController } from '@utils/forms';
+import type { Attributes } from '@utils/helpers';
+import { inheritAriaAttributes, debounceEvent, findItemLabel, inheritAttributes } from '@utils/helpers';
+import { printIonWarning } from '@utils/logging';
+import { createSlotMutationController } from '@utils/slot-mutation-controller';
+import type { SlotMutationController } from '@utils/slot-mutation-controller';
+import { createColorClasses, hostContext } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Color, StyleEventDetail } from '../../interface';
-import type { LegacyFormController } from '../../utils/forms';
-import { createLegacyFormController } from '../../utils/forms';
-import type { Attributes } from '../../utils/helpers';
-import { inheritAriaAttributes, debounceEvent, findItemLabel, inheritAttributes } from '../../utils/helpers';
-import { printIonWarning } from '../../utils/logging';
-import { createColorClasses, hostContext } from '../../utils/theme';
 import { getCounterText } from '../input/input.utils';
 
 import type { TextareaChangeEventDetail, TextareaInputEventDetail } from './textarea-interface';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ *
+ * @slot label - The label text to associate with the textarea. Use the `labelPlacement` property to control where the label is placed relative to the textarea. Use this if you need to render a label with custom HTML. (EXPERIMENTAL)
  */
 @Component({
   tag: 'ion-textarea',
@@ -38,6 +55,11 @@ export class Textarea implements ComponentInterface {
   private inheritedAttributes: Attributes = {};
   private originalIonInput?: EventEmitter<TextareaInputEventDetail>;
   private legacyFormController!: LegacyFormController;
+  private notchSpacerEl: HTMLElement | undefined;
+
+  private slotMutationController?: SlotMutationController;
+
+  private notchController?: NotchController;
 
   // This flag ensures we log the deprecation warning at most once.
   private hasLoggedDeprecationWarning = false;
@@ -205,6 +227,10 @@ export class Textarea implements ComponentInterface {
 
   /**
    * The visible label associated with the textarea.
+   *
+   * Use this if you need to render a plaintext label.
+   *
+   * The `label` property will take priority over the `label` slot if both are used.
    */
   @Prop() label?: string;
 
@@ -249,18 +275,16 @@ export class Textarea implements ComponentInterface {
   }
 
   /**
-   * The `ionChange` event is fired for `<ion-textarea>` elements when the user
-   * modifies the element's value. Unlike the `ionInput` event, the `ionChange`
-   * event is not necessarily fired for each alteration to an element's value.
-   *
-   * The `ionChange` event is fired when the element loses focus after its value
-   * has been modified.
+   * The `ionChange` event is fired when the user modifies the textarea's value.
+   * Unlike the `ionInput` event, the `ionChange` event is fired when
+   * the element loses focus after its value has been modified.
    */
   @Event() ionChange!: EventEmitter<TextareaChangeEventDetail>;
 
   /**
-   * The `ionInput` event fires when the `value` of an `<ion-textarea>` element
-   * has been changed.
+   * The `ionInput` event is fired each time the user modifies the textarea's value.
+   * Unlike the `ionChange` event, the `ionInput` event is fired for each alteration
+   * to the textarea's value. This typically happens for each keystroke as the user types.
    *
    * When `clearOnEdit` is enabled, the `ionInput` event will be fired when
    * the user clears the textarea by performing a keydown event.
@@ -286,6 +310,12 @@ export class Textarea implements ComponentInterface {
   connectedCallback() {
     const { el } = this;
     this.legacyFormController = createLegacyFormController(el);
+    this.slotMutationController = createSlotMutationController(el, 'label', () => forceUpdate(this));
+    this.notchController = createNotchController(
+      el,
+      () => this.notchSpacerEl,
+      () => this.labelSlot
+    );
     this.emitStyle();
     this.debounceChanged();
     if (Build.isBrowser) {
@@ -305,6 +335,16 @@ export class Textarea implements ComponentInterface {
         })
       );
     }
+
+    if (this.slotMutationController) {
+      this.slotMutationController.destroy();
+      this.slotMutationController = undefined;
+    }
+
+    if (this.notchController) {
+      this.notchController.destroy();
+      this.notchController = undefined;
+    }
   }
 
   componentWillLoad() {
@@ -317,6 +357,10 @@ export class Textarea implements ComponentInterface {
   componentDidLoad() {
     this.originalIonInput = this.ionInput;
     this.runAutoGrow();
+  }
+
+  componentDidRender() {
+    this.notchController?.calculateNotchWidth();
   }
 
   /**
@@ -390,7 +434,7 @@ export class Textarea implements ComponentInterface {
   /**
    * Check if we need to clear the text input if clearOnEdit is enabled
    */
-  private checkClearOnEdit(ev: Event) {
+  private checkClearOnEdit(ev: KeyboardEvent) {
     if (!this.clearOnEdit) {
       return;
     }
@@ -398,7 +442,7 @@ export class Textarea implements ComponentInterface {
      * Clear the textarea if the control has not been previously cleared
      * during focus.
      */
-    if (!this.didTextareaClearOnEdit && this.hasValue()) {
+    if (!this.didTextareaClearOnEdit && this.hasValue() && ev.key !== 'Tab') {
       this.value = '';
       this.emitInputChange(ev);
     }
@@ -457,7 +501,7 @@ export class Textarea implements ComponentInterface {
     this.ionBlur.emit(ev);
   };
 
-  private onKeyDown = (ev: Event) => {
+  private onKeyDown = (ev: KeyboardEvent) => {
     this.checkClearOnEdit(ev);
   };
 
@@ -530,15 +574,35 @@ Developers can use the "legacy" property to continue using the legacy form marku
 
   private renderLabel() {
     const { label } = this;
-    if (label === undefined) {
-      return;
-    }
 
     return (
-      <div class="label-text-wrapper">
-        <div class="label-text">{this.label}</div>
+      <div
+        class={{
+          'label-text-wrapper': true,
+          'label-text-wrapper-hidden': !this.hasLabel,
+        }}
+      >
+        {label === undefined ? <slot name="label"></slot> : <div class="label-text">{label}</div>}
       </div>
     );
+  }
+
+  /**
+   * Gets any content passed into the `label` slot,
+   * not the <slot> definition.
+   */
+  private get labelSlot() {
+    return this.el.querySelector('[slot="label"]');
+  }
+
+  /**
+   * Returns `true` if label content is provided
+   * either by a prop or a content. If you want
+   * to get the plaintext value of the label use
+   * the `labelText` getter instead.
+   */
+  private get hasLabel() {
+    return this.label !== undefined || this.labelSlot !== null;
   }
 
   /**
@@ -559,8 +623,13 @@ Developers can use the "legacy" property to continue using the legacy form marku
       return [
         <div class="textarea-outline-container">
           <div class="textarea-outline-start"></div>
-          <div class="textarea-outline-notch">
-            <div class="notch-spacer" aria-hidden="true">
+          <div
+            class={{
+              'textarea-outline-notch': true,
+              'textarea-outline-notch-hidden': !this.hasLabel,
+            }}
+          >
+            <div class="notch-spacer" aria-hidden="true" ref={(el) => (this.notchSpacerEl = el)}>
               {this.label}
             </div>
           </div>

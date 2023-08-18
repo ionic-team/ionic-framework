@@ -1,7 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Listen, Method, Host, h } from '@stencil/core';
-
-import { getElementRoot } from '../../utils/helpers';
+import { getElementRoot } from '@utils/helpers';
 
 import type { PickerInternalChangeEventDetail } from './picker-internal-interfaces';
 

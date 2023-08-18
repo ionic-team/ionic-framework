@@ -1,8 +1,8 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Listen, Prop, Watch, h } from '@stencil/core';
+import { renderHiddenInput } from '@utils/helpers';
 
 import { getIonMode } from '../../global/ionic-global';
-import { renderHiddenInput } from '../../utils/helpers';
 
 import type { RadioGroupChangeEventDetail } from './radio-group-interface';
 

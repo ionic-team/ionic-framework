@@ -16,7 +16,7 @@
 
   @include margin($button-ios-margin-top, $button-ios-margin-end, $button-ios-margin-bottom, $button-ios-margin-start);
 
-  height: #{$button-ios-height};
+  min-height: #{$button-ios-min-height};
 
   font-size: #{$button-ios-font-size};
   font-weight: #{$button-ios-font-weight};
@@ -97,7 +97,7 @@
   --padding-end: #{$button-ios-large-padding-end};
   --padding-bottom: #{$button-ios-large-padding-bottom};
 
-  height: #{$button-ios-large-height};
+  min-height: #{$button-ios-large-min-height};
 
   font-size: #{$button-ios-large-font-size};
 }
@@ -109,9 +109,14 @@
   --padding-end: #{$button-ios-small-padding-end};
   --padding-bottom: #{$button-ios-small-padding-bottom};
 
-  height: #{$button-ios-small-height};
+  min-height: #{$button-ios-small-min-height};
 
   font-size: #{$button-ios-small-font-size};
+}
+
+:host(.button-has-icon-only) {
+  --padding-top: 0;
+  --padding-bottom: 0;
 }
 
 

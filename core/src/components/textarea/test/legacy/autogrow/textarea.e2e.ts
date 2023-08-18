@@ -14,8 +14,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       expect(await page.screenshot()).toMatchSnapshot(screenshot(`textarea-autogrow-diff`));
     });
 
-    // TODO(FW-3920): Autogrow test is flaky
-    test.skip('should grow when typing', async ({ page }) => {
+    test('should grow when typing', async ({ page }) => {
       await page.setContent(
         `
         <ion-app>
@@ -66,8 +65,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
             <ion-textarea
               legacy="true"
               auto-grow="true"
-              value="abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz">
-            </ion-textarea>
+              value="abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"></ion-textarea>
           </ion-content>
         </ion-app>`,
         config

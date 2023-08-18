@@ -24,5 +24,10 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await ionToastDidDismiss.next();
       await expect(toast).toBeHidden();
     });
+
+    test('should open if isOpen is true on load', async ({ page }) => {
+      await page.setContent('<ion-toast is-open="true"></ion-toast>', config);
+      await expect(page.locator('ion-toast')).toBeVisible();
+    });
   });
 });

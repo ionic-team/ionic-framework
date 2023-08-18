@@ -1,4 +1,5 @@
 @import "../../themes/ionic.globals";
+@import "./toggle.vars.scss";
 
 // Toggle
 // --------------------------------------------------
@@ -120,6 +121,10 @@ input {
   overflow: hidden;
 }
 
+:host(.in-item:not(.legacy-toggle)) .label-text-wrapper {
+  @include margin($toggle-item-label-margin-top, null, $toggle-item-label-margin-bottom, null);
+}
+
 /**
  * If no label text is placed into the slot
  * then the element should be hidden otherwise
@@ -170,7 +175,7 @@ input {
    * the input should be on the end
    * when the label sits at the start.
    */
-  @include margin(0, $form-control-label-margin, 0, 0);
+  @include margin(null, $form-control-label-margin, null, 0);
 }
 
 // Toggle Label Placement - End
@@ -190,7 +195,7 @@ input {
  * when the label sits at the end.
  */
 :host(.toggle-label-placement-end) .label-text-wrapper {
-  @include margin(0, 0, 0, $form-control-label-margin);
+  @include margin(null, 0, null, $form-control-label-margin);
 }
 
 // Input Label Placement - Fixed
@@ -202,7 +207,7 @@ input {
    * the input should be on the end
    * when the label sits at the start.
    */
-  @include margin(0, $form-control-label-margin, 0, 0);
+  @include margin(null, $form-control-label-margin, null, 0);
 }
 
 /**

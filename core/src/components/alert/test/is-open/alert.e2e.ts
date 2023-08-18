@@ -29,5 +29,10 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ config, title }) => 
       await ionAlertDidDismiss.next();
       await expect(alert).toBeHidden();
     });
+
+    test('should open if isOpen is true on load', async ({ page }) => {
+      await page.setContent('<ion-alert is-open="true"></ion-alert>', config);
+      await expect(page.locator('ion-alert')).toBeVisible();
+    });
   });
 });

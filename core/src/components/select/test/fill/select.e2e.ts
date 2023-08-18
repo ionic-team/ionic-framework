@@ -120,6 +120,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         const select = page.locator('ion-select');
         expect(await select.screenshot()).toMatchSnapshot(screenshot(`select-fill-outline-label-floating`));
       });
+
       test('should not have visual regressions with shaped outline', async ({ page }) => {
         await page.setContent(
           `
@@ -164,6 +165,76 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         const select = page.locator('ion-select');
         expect(await select.screenshot()).toMatchSnapshot(screenshot(`select-fill-shaped-outline-custom`));
       });
+    });
+  });
+});
+
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('select: label slot'), () => {
+    test('should render the notch correctly with a slotted label', async ({ page }) => {
+      await page.setContent(
+        `
+        <style>
+          .custom-label {
+            font-size: 30px;
+          }
+        </style>
+        <ion-select
+          fill="outline"
+          label-placement="stacked"
+          value="apple"
+        >
+          <div slot="label" class="custom-label">My Label Content</div>
+          <ion-select-option value="apple">Apple</ion-select-option>
+        </ion-select>
+      `,
+        config
+      );
+
+      const select = page.locator('ion-select');
+      expect(await select.screenshot()).toMatchSnapshot(screenshot(`select-fill-outline-slotted-label`));
+    });
+    test('should render the notch correctly with a slotted label after the select was originally hidden', async ({
+      page,
+    }) => {
+      await page.setContent(
+        `
+        <style>
+          .custom-label {
+            font-size: 30px;
+          }
+        </style>
+        <ion-select
+          fill="outline"
+          label-placement="stacked"
+          value="apple"
+          style="display: none"
+        >
+          <div slot="label" class="custom-label">My Label Content</div>
+          <ion-select-option value="apple">Apple</ion-select-option>
+        </ion-select>
+      `,
+        config
+      );
+
+      const select = page.locator('ion-select');
+
+      await select.evaluate((el: HTMLIonSelectElement) => el.style.removeProperty('display'));
+
+      expect(await select.screenshot()).toMatchSnapshot(screenshot(`select-fill-outline-hidden-slotted-label`));
+    });
+  });
+  test.describe(title('select: notch cutout'), () => {
+    test('notch cutout should be hidden when no label is passed', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-select fill="outline" label-placement="stacked" aria-label="my select"></ion-select>
+      `,
+        config
+      );
+
+      const notchCutout = page.locator('ion-select .select-outline-notch');
+      await expect(notchCutout).toBeHidden();
     });
   });
 });

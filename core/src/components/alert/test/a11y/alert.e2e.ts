@@ -60,5 +60,21 @@ configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
     test('should allow for manually specifying aria attributes', async ({ page }) => {
       await testAria(page, 'customAria', 'Custom title', 'Custom description');
     });
+
+    test('should have aria-labelledby and aria-label added to the button when htmlAttributes is set', async ({
+      page,
+    }) => {
+      const didPresent = await page.spyOnEvent('ionAlertDidPresent');
+
+      const button = page.locator('#ariaLabelButton');
+      await button.click();
+
+      await didPresent.next();
+
+      const alertButton = page.locator('ion-alert .alert-button');
+
+      await expect(alertButton).toHaveAttribute('aria-labelledby', 'close-label');
+      await expect(alertButton).toHaveAttribute('aria-label', 'close button');
+    });
   });
 });

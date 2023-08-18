@@ -6,30 +6,23 @@ import { testSlidingItem } from '../test.utils';
 /**
  * item-sliding doesn't have mode-specific styling
  */
+configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('item-sliding: basic'), () => {
+    test.fixme('should not have visual regressions', async ({ page }) => {
+      await page.goto(`/src/components/item-sliding/test/basic`, config);
+
+      await testSlidingItem(page, 'item2', 'start', screenshot, true);
+      await testSlidingItem(page, 'item2', 'end', screenshot);
+    });
+  });
+});
+
+/**
+ * This behavior does not vary across modes/directions
+ */
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('item-sliding: basic'), () => {
-    // TODO FW-3006
-    test.skip('should not have visual regressions', async ({ page, browserName }, testInfo) => {
-      // TODO(FW-2608)
-      test.fixme(
-        testInfo.project.metadata.rtl === true && (browserName === 'firefox' || browserName === 'webkit'),
-        'https://github.com/ionic-team/ionic-framework/issues/26103'
-      );
-
-      await page.goto(`/src/components/item-sliding/test/basic`, config);
-      const item = page.locator('#item2');
-
-      await testSlidingItem(page, item, 'start', true);
-      await testSlidingItem(page, item, 'end');
-    });
-
-    // mouse gesture is flaky on CI, skip for now
-    test.fixme('should open when swiped', async ({ page, skip }) => {
-      skip.browser(
-        (browserName: string) => browserName !== 'chromium',
-        'dragElementBy is flaky outside of Chrome browsers.'
-      );
-
+    test('should open when swiped', async ({ page }) => {
       await page.goto(`/src/components/item-sliding/test/basic`, config);
       const item = page.locator('#item2');
 
@@ -40,8 +33,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       await expect(item).toHaveScreenshot(screenshot(`item-sliding-gesture`));
     });
 
-    // TODO FW-3006
-    test.skip('should not scroll when the item-sliding is swiped', async ({ page, skip }) => {
+    test('should not scroll when the item-sliding is swiped', async ({ page, skip }) => {
       skip.browser('webkit', 'mouse.wheel is not available in WebKit');
 
       await page.goto(`/src/components/item-sliding/test/basic`, config);

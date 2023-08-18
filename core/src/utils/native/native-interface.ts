@@ -1,13 +1,17 @@
-/**
- * Used to represent a generic error from a native plugin call.
- */
-export interface NativePluginError {
+export enum ExceptionCode {
   /**
-   * The error code.
+   * API is not implemented.
+   *
+   * This usually means the API can't be used because it is not implemented for
+   * the current platform.
    */
-  code?: string;
+  Unimplemented = 'UNIMPLEMENTED',
   /**
-   * The error message.
+   * API is not available.
+   *
+   * This means the API can't be used right now because:
+   *   - it is currently missing a prerequisite, such as network connectivity
+   *   - it requires a particular platform or browser version
    */
-  message?: string;
+  Unavailable = 'UNAVAILABLE',
 }
