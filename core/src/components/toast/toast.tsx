@@ -35,6 +35,7 @@ import type { ToastButton, ToastPosition, ToastLayout } from './toast-interface'
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @part button - Any button element that is displayed inside of the toast.
+ * @part button cancel - Any button element with role "cancel" that is displayed inside of the toast.
  * @part container - The element that wraps all child elements.
  * @part header - The header text of the toast.
  * @part message - The body text of the toast.
@@ -422,7 +423,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
             class={buttonClass(b)}
             tabIndex={0}
             onClick={() => this.buttonClick(b)}
-            part="button"
+            part={buttonPart(b)}
           >
             <div class="toast-button-inner">
               {b.icon && (
@@ -584,6 +585,10 @@ const buttonClass = (button: ToastButton): CssClassMap => {
     'ion-activatable': true,
     ...getClassMap(button.cssClass),
   };
+};
+
+const buttonPart = (button: ToastButton): string => {
+  return isCancel(button.role) ? 'button cancel' : 'button';
 };
 
 type ToastPresentOptions = ToastPosition;

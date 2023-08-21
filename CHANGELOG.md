@@ -3,6 +3,54 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.3.0](https://github.com/ionic-team/ionic-framework/compare/v7.2.4...v7.3.0) (2023-08-16)
+
+
+### Bug Fixes
+
+* **alert:** radio and checkbox labels wrap to next line ([#27898](https://github.com/ionic-team/ionic-framework/issues/27898)) ([0d3127a](https://github.com/ionic-team/ionic-framework/commit/0d3127ad09df3c914a8c254f14931de5ca3beb31)), closes [#17269](https://github.com/ionic-team/ionic-framework/issues/17269)
+
+
+### Features
+
+* **action-sheet:** add htmlAttributes property for passing attributes to buttons ([#27863](https://github.com/ionic-team/ionic-framework/issues/27863)) ([5ce4ec0](https://github.com/ionic-team/ionic-framework/commit/5ce4ec0439e4f31aba31062fd8af4a2ad792a54f))
+* **alert:** add htmlAttributes property for passing attributes to buttons ([#27862](https://github.com/ionic-team/ionic-framework/issues/27862)) ([06be0e5](https://github.com/ionic-team/ionic-framework/commit/06be0e511164ebdaa6af9a3747d0585260c030a9))
+* **toast:** add htmlAttributes property for passing attributes to buttons   ([#27855](https://github.com/ionic-team/ionic-framework/issues/27855)) ([9a68588](https://github.com/ionic-team/ionic-framework/commit/9a685882b7085d911ff09eedacc367629e32348a))
+* **toast:** add shadow part for cancel button ([#27921](https://github.com/ionic-team/ionic-framework/issues/27921)) ([e9faf54](https://github.com/ionic-team/ionic-framework/commit/e9faf54d0a7409521706ce9c8b0d26f3fbe9ba41)), closes [#27920](https://github.com/ionic-team/ionic-framework/issues/27920)
+
+
+
+
+
+## [7.2.4](https://github.com/ionic-team/ionic-framework/compare/v7.2.3...v7.2.4) (2023-08-16)
+
+
+### Bug Fixes
+
+* **tap-click:** do not error in document-less environment ([#27972](https://github.com/ionic-team/ionic-framework/issues/27972)) ([28bd4ba](https://github.com/ionic-team/ionic-framework/commit/28bd4ba720bb77d5f5c48cd7a45e0015daddc9dd))
+* **title:** large title aligns with ios spec ([#27969](https://github.com/ionic-team/ionic-framework/issues/27969)) ([8fa12fc](https://github.com/ionic-team/ionic-framework/commit/8fa12fc88857df27a1ca11249f0085e100fe1474)), closes [#27966](https://github.com/ionic-team/ionic-framework/issues/27966)
+
+
+
+
+
+## [7.2.3](https://github.com/ionic-team/ionic-framework/compare/v7.2.2...v7.2.3) (2023-08-09)
+
+
+### Bug Fixes
+
+* **button:** hidden button is added when form is set async ([#27955](https://github.com/ionic-team/ionic-framework/issues/27955)) ([e9fa300](https://github.com/ionic-team/ionic-framework/commit/e9fa30002bd5dec4f2f56a15c84eec1b3e794942)), closes [#27952](https://github.com/ionic-team/ionic-framework/issues/27952)
+* **datetime:** changing months work if partially visible ([#27917](https://github.com/ionic-team/ionic-framework/issues/27917)) ([eb19c28](https://github.com/ionic-team/ionic-framework/commit/eb19c289d6581639f6df7aff002bebdf2b27d31c)), closes [#27913](https://github.com/ionic-team/ionic-framework/issues/27913)
+* **item-sliding:** account for options added before watcher ([#27915](https://github.com/ionic-team/ionic-framework/issues/27915)) ([a0b3ef0](https://github.com/ionic-team/ionic-framework/commit/a0b3ef02af718e232246515bb873ad8c090fa55d)), closes [#27910](https://github.com/ionic-team/ionic-framework/issues/27910)
+* **many:** overlays present if isOpen is true on load ([#27933](https://github.com/ionic-team/ionic-framework/issues/27933)) ([a0e6ac6](https://github.com/ionic-team/ionic-framework/commit/a0e6ac6013552c5e3acdde33575d4aaf4d4c0bda)), closes [#27928](https://github.com/ionic-team/ionic-framework/issues/27928)
+* **modal:** setCurrentBreakpoint respects animated prop ([#27924](https://github.com/ionic-team/ionic-framework/issues/27924)) ([da55ab9](https://github.com/ionic-team/ionic-framework/commit/da55ab949ef1894738da5a6241176089b7a2b6e3)), closes [#27923](https://github.com/ionic-team/ionic-framework/issues/27923)
+* **nav:** improve reliability of swipe back gesture when quickly swiping back ([#27904](https://github.com/ionic-team/ionic-framework/issues/27904)) ([9500769](https://github.com/ionic-team/ionic-framework/commit/9500769f114d180613f0340b1a328b5e631b7188)), closes [#27893](https://github.com/ionic-team/ionic-framework/issues/27893)
+* **tab-button:** update event type interface on React ([#27950](https://github.com/ionic-team/ionic-framework/issues/27950)) ([1cf1eca](https://github.com/ionic-team/ionic-framework/commit/1cf1eca00239f3e98854466116e42f9a2e7b4590)), closes [#27949](https://github.com/ionic-team/ionic-framework/issues/27949)
+
+
+
+
+
 ## [7.2.2](https://github.com/ionic-team/ionic-framework/compare/v7.2.1...v7.2.2) (2023-08-02)
 
 
