@@ -1,4 +1,4 @@
-import type { AnimationBuilder, Mode, TextFieldTypes } from '../../interface';
+import type { AnimationBuilder, LiteralUnion, Mode, TextFieldTypes } from '../../interface';
 import type { IonicSafeString } from '../../utils/sanitization';
 
 export interface AlertOptions {
@@ -45,7 +45,7 @@ type AlertButtonOverlayHandler = boolean | void | { [key: string]: any };
 
 export interface AlertButton {
   text: string;
-  role?: 'cancel' | 'destructive' | Omit<string, 'cancel' | 'destructive'>;
+  role?: LiteralUnion<'cancel' | 'destructive', string>;
   cssClass?: string | string[];
   id?: string;
   htmlAttributes?: { [key: string]: any };
