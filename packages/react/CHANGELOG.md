@@ -3,6 +3,100 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.3.0](https://github.com/ionic-team/ionic-framework/compare/v7.2.4...v7.3.0) (2023-08-16)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.2.4](https://github.com/ionic-team/ionic-framework/compare/v7.2.3...v7.2.4) (2023-08-16)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.2.3](https://github.com/ionic-team/ionic-framework/compare/v7.2.2...v7.2.3) (2023-08-09)
+
+
+### Bug Fixes
+
+* **tab-button:** update event type interface on React ([#27950](https://github.com/ionic-team/ionic-framework/issues/27950)) ([1cf1eca](https://github.com/ionic-team/ionic-framework/commit/1cf1eca00239f3e98854466116e42f9a2e7b4590)), closes [#27949](https://github.com/ionic-team/ionic-framework/issues/27949)
+
+
+
+
+
+## [7.2.2](https://github.com/ionic-team/ionic-framework/compare/v7.2.1...v7.2.2) (2023-08-02)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.2.1](https://github.com/ionic-team/ionic-framework/compare/v7.2.0...v7.2.1) (2023-07-26)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+# [7.2.0](https://github.com/ionic-team/ionic-framework/compare/v7.1.4...v7.2.0) (2023-07-19)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.1.4](https://github.com/ionic-team/ionic-framework/compare/v7.1.3...v7.1.4) (2023-07-19)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.1.3](https://github.com/ionic-team/ionic-framework/compare/v7.1.2...v7.1.3) (2023-07-12)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.1.2](https://github.com/ionic-team/ionic-framework/compare/v7.1.1...v7.1.2) (2023-07-06)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.1.1](https://github.com/ionic-team/ionic-framework/compare/v7.1.0...v7.1.1) (2023-06-26)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+# [7.1.0](https://github.com/ionic-team/ionic-framework/compare/v7.0.14...v7.1.0) (2023-06-21)
+
+
+### Features
+
+* **segment, segment-button:** update segment value property to accept numbers ([#27222](https://github.com/ionic-team/ionic-framework/issues/27222)) ([ec95ae5](https://github.com/ionic-team/ionic-framework/commit/ec95ae5cd38e3d2b9ec9fdbc9e237fa1241f7a4e)), closes [#27221](https://github.com/ionic-team/ionic-framework/issues/27221)
+
+
+
+
+
 ## [7.0.14](https://github.com/ionic-team/ionic-framework/compare/v7.0.13...v7.0.14) (2023-06-15)
 
 **Note:** Version bump only for package @ionic/react

@@ -3,6 +3,102 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.3.0](https://github.com/ionic-team/ionic-framework/compare/v7.2.4...v7.3.0) (2023-08-16)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [7.2.4](https://github.com/ionic-team/ionic-framework/compare/v7.2.3...v7.2.4) (2023-08-16)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [7.2.3](https://github.com/ionic-team/ionic-framework/compare/v7.2.2...v7.2.3) (2023-08-09)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [7.2.2](https://github.com/ionic-team/ionic-framework/compare/v7.2.1...v7.2.2) (2023-08-02)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [7.2.1](https://github.com/ionic-team/ionic-framework/compare/v7.2.0...v7.2.1) (2023-07-26)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+# [7.2.0](https://github.com/ionic-team/ionic-framework/compare/v7.1.4...v7.2.0) (2023-07-19)
+
+
+### Features
+
+* **searchbar:** add name property ([#27737](https://github.com/ionic-team/ionic-framework/issues/27737)) ([7131037](https://github.com/ionic-team/ionic-framework/commit/71310372c94862342d607007ece127340df92a8c)), closes [#27675](https://github.com/ionic-team/ionic-framework/issues/27675)
+
+
+
+
+
+## [7.1.4](https://github.com/ionic-team/ionic-framework/compare/v7.1.3...v7.1.4) (2023-07-19)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [7.1.3](https://github.com/ionic-team/ionic-framework/compare/v7.1.2...v7.1.3) (2023-07-12)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [7.1.2](https://github.com/ionic-team/ionic-framework/compare/v7.1.1...v7.1.2) (2023-07-06)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+## [7.1.1](https://github.com/ionic-team/ionic-framework/compare/v7.1.0...v7.1.1) (2023-06-26)
+
+**Note:** Version bump only for package @ionic/vue
+
+
+
+
+
+# [7.1.0](https://github.com/ionic-team/ionic-framework/compare/v7.0.14...v7.1.0) (2023-06-21)
+
+
+### Features
+
+* **range:** add label prop ([#27408](https://github.com/ionic-team/ionic-framework/issues/27408)) ([368add2](https://github.com/ionic-team/ionic-framework/commit/368add2a5ca3820a1f9623c96d29bcccfa693fdc))
+* **segment, segment-button:** update segment value property to accept numbers ([#27222](https://github.com/ionic-team/ionic-framework/issues/27222)) ([ec95ae5](https://github.com/ionic-team/ionic-framework/commit/ec95ae5cd38e3d2b9ec9fdbc9e237fa1241f7a4e)), closes [#27221](https://github.com/ionic-team/ionic-framework/issues/27221)
+* **select:** add props to customize toggle icons ([#27648](https://github.com/ionic-team/ionic-framework/issues/27648)) ([95e28b6](https://github.com/ionic-team/ionic-framework/commit/95e28b6629843af7dce62f20bc8e31adfb391990)), closes [#17248](https://github.com/ionic-team/ionic-framework/issues/17248)
+
+
+
+
+
 ## [7.0.14](https://github.com/ionic-team/ionic-framework/compare/v7.0.13...v7.0.14) (2023-06-15)
 
 **Note:** Version bump only for package @ionic/vue

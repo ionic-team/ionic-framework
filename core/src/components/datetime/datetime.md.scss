@@ -36,7 +36,7 @@
 
 :host .calendar-action-buttons ion-item,
 :host .calendar-action-buttons ion-button {
-  color: #{$text-color-step-350};
+  --color: #{$text-color-step-350};
 }
 
 // Calendar / Header / Days of Week

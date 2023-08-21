@@ -11,8 +11,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       await expect(page).toHaveScreenshot(screenshot(`textarea-autogrow-diff`));
     });
 
-    // TODO(FW-3920): Autogrow test is flaky
-    test.skip('should grow when typing', async ({ page }) => {
+    test('should grow when typing', async ({ page }) => {
       await page.setContent(
         `
         <ion-textarea aria-label="Textarea" auto-grow="true"></ion-textarea>
@@ -25,6 +24,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       await nativeTextarea.type('Now, this is a story all about how');
 
+      await page.waitForChanges();
       await expect(ionTextarea).toHaveScreenshot(screenshot(`textarea-autogrow-initial`));
 
       await nativeTextarea.type(
@@ -52,8 +52,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
             <ion-textarea
               aria-label="Textarea"
               auto-grow="true"
-              value="abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz">
-            </ion-textarea>
+              value="abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"></ion-textarea>
           </ion-content>
         </ion-app>`,
         config

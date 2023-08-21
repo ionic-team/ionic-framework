@@ -94,7 +94,7 @@
  * when the select is activated.
  * This should only happen on MD.
  */
-:host(.select-expanded:not(.legacy-select)) .select-icon {
+:host(.select-expanded:not(.legacy-select):not(.has-expanded-icon)) .select-icon {
   @include transform(rotate(180deg));
 }
 
@@ -123,7 +123,7 @@
   @include transform(translate3d(0, -9px, 0));
 }
 
-:host-context(.item-has-focus) .select-icon {
+:host-context(.item-has-focus):host(:not(.has-expanded-icon)) .select-icon {
   @include transform(rotate(180deg));
 }
 
@@ -131,8 +131,8 @@
  * Ensure that the translation we did
  * above is preserved when we rotate the select icon.
  */
-:host-context(.item-has-focus.item-label-stacked) .select-icon,
-:host-context(.item-has-focus.item-label-floating:not(.item-fill-outline)) .select-icon {
+:host-context(.item-has-focus.item-label-stacked):host(:not(.has-expanded-icon)) .select-icon,
+:host-context(.item-has-focus.item-label-floating:not(.item-fill-outline)):host(:not(.has-expanded-icon)) .select-icon {
   @include transform(rotate(180deg), translate3d(0, -9px, 0));
 }
 

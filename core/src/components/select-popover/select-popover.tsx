@@ -1,9 +1,9 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Element, Component, Host, Prop, h } from '@stencil/core';
+import { Element, Component, Host, Prop, h, forceUpdate } from '@stencil/core';
+import { safeCall } from '@utils/overlays';
+import { getClassMap } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
-import { safeCall } from '../../utils/overlays';
-import { getClassMap } from '../../utils/theme';
 import type { CheckboxCustomEvent } from '../checkbox/checkbox-interface';
 import type { RadioGroupCustomEvent } from '../radio-group/radio-group-interface';
 
@@ -116,19 +116,28 @@ export class SelectPopover implements ComponentInterface {
 
   renderCheckboxOptions(options: SelectPopoverOption[]) {
     return options.map((option) => (
-      <ion-item class={getClassMap(option.cssClass)}>
+      <ion-item
+        class={{
+          // TODO FW-4784
+          'item-checkbox-checked': option.checked,
+          ...getClassMap(option.cssClass),
+        }}
+      >
         <ion-checkbox
-          slot="start"
           value={option.value}
           disabled={option.disabled}
           checked={option.checked}
-          legacy={true}
+          justify="start"
+          labelPlacement="end"
           onIonChange={(ev) => {
             this.setChecked(ev);
             this.callOptionHandler(ev);
+            // TODO FW-4784
+            forceUpdate(this);
           }}
-        ></ion-checkbox>
-        <ion-label>{option.text}</ion-label>
+        >
+          {option.text}
+        </ion-checkbox>
       </ion-item>
     ));
   }
@@ -139,12 +148,16 @@ export class SelectPopover implements ComponentInterface {
     return (
       <ion-radio-group value={checked} onIonChange={(ev) => this.callOptionHandler(ev)}>
         {options.map((option) => (
-          <ion-item class={getClassMap(option.cssClass)}>
-            <ion-label>{option.text}</ion-label>
+          <ion-item
+            class={{
+              // TODO FW-4784
+              'item-radio-checked': option.value === checked,
+              ...getClassMap(option.cssClass),
+            }}
+          >
             <ion-radio
               value={option.value}
               disabled={option.disabled}
-              legacy={true}
               onClick={() => this.dismissParentPopover()}
               onKeyUp={(ev) => {
                 if (ev.key === ' ') {
@@ -156,7 +169,9 @@ export class SelectPopover implements ComponentInterface {
                   this.dismissParentPopover();
                 }
               }}
-            ></ion-radio>
+            >
+              {option.text}
+            </ion-radio>
           </ion-item>
         ))}
       </ion-radio-group>

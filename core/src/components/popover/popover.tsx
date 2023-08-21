@@ -1,11 +1,8 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
-
-import { getIonMode } from '../../global/ionic-global';
-import type { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate } from '../../interface';
-import { CoreDelegate, attachComponent, detachComponent } from '../../utils/framework-delegate';
-import { addEventListener, raf, hasLazyBuild } from '../../utils/helpers';
-import { printIonWarning } from '../../utils/logging';
+import { CoreDelegate, attachComponent, detachComponent } from '@utils/framework-delegate';
+import { addEventListener, raf, hasLazyBuild } from '@utils/helpers';
+import { printIonWarning } from '@utils/logging';
 import {
   BACKDROP,
   dismiss,
@@ -14,11 +11,14 @@ import {
   prepareOverlay,
   present,
   setOverlayId,
-} from '../../utils/overlays';
+} from '@utils/overlays';
+import { isPlatform } from '@utils/platform';
+import { getClassMap } from '@utils/theme';
+import { deepReady, waitForMount } from '@utils/transition';
+
+import { getIonMode } from '../../global/ionic-global';
+import type { AnimationBuilder, ComponentProps, ComponentRef, FrameworkDelegate } from '../../interface';
 import type { OverlayEventDetail } from '../../utils/overlays-interface';
-import { isPlatform } from '../../utils/platform';
-import { getClassMap } from '../../utils/theme';
-import { deepReady, waitForMount } from '../../utils/transition';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
@@ -180,8 +180,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
   /**
    * Describes how to calculate the popover width.
    * If `"cover"`, the popover width will match the width of the trigger.
-   * If `"auto"`, the popover width will be determined by the content in
-   * the popover.
+   * If `"auto"`, the popover width will be set to a static default value.
    */
   @Prop() size: PopoverSize = 'auto';
 

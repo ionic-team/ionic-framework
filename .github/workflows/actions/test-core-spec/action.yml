@@ -1,5 +1,8 @@
 name: 'Test Core Spec'
 description: 'Test Core Spec'
+inputs:
+  stencil-version:
+    description: 'The NPM tag of @stencil/core to install.'
 runs:
   using: 'composite'
   steps:
@@ -7,9 +10,14 @@ runs:
       with:
         node-version: 16.x
     - name: Install Dependencies
-      run: npm install
+      run: npm ci
       working-directory: ./core
       shell: bash
+    - name: Install Stencil ${{ inputs.stencil-version }}
+      run: npm install @stencil/core@${{ inputs.stencil-version }}
+      shell: bash
+      working-directory: ./core
+      if: ${{ inputs.stencil-version != '' }}
     - uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-core

@@ -1,11 +1,8 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Watch, Component, Element, Event, h, Host, Method, Prop, State } from '@stencil/core';
-
-import { config } from '../../global/config';
-import { getIonMode } from '../../global/ionic-global';
-import type { AnimationBuilder, Color, CssClassMap, OverlayInterface, FrameworkDelegate } from '../../interface';
-import { ENABLE_HTML_CONTENT_DEFAULT } from '../../utils/config';
-import { printIonWarning } from '../../utils/logging';
+import { State, Watch, Component, Element, Event, h, Host, Method, Prop } from '@stencil/core';
+import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
+import { raf } from '@utils/helpers';
+import { printIonWarning } from '@utils/logging';
 import {
   createDelegateController,
   createTriggerController,
@@ -16,11 +13,15 @@ import {
   present,
   safeCall,
   setOverlayId,
-} from '../../utils/overlays';
+} from '@utils/overlays';
+import { sanitizeDOMString } from '@utils/sanitization';
+import { createColorClasses, getClassMap } from '@utils/theme';
+
+import { config } from '../../global/config';
+import { getIonMode } from '../../global/ionic-global';
+import type { AnimationBuilder, Color, CssClassMap, OverlayInterface, FrameworkDelegate } from '../../interface';
 import type { OverlayEventDetail } from '../../utils/overlays-interface';
 import type { IonicSafeString } from '../../utils/sanitization';
-import { sanitizeDOMString } from '../../utils/sanitization';
-import { createColorClasses, getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
@@ -34,6 +35,7 @@ import type { ToastButton, ToastPosition, ToastLayout } from './toast-interface'
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @part button - Any button element that is displayed inside of the toast.
+ * @part button cancel - Any button element with role "cancel" that is displayed inside of the toast.
  * @part container - The element that wraps all child elements.
  * @part header - The header text of the toast.
  * @part message - The body text of the toast.
@@ -253,6 +255,16 @@ export class Toast implements ComponentInterface, OverlayInterface {
     setOverlayId(this.el);
   }
 
+  componentDidLoad() {
+    /**
+     * If toast was rendered with isOpen="true"
+     * then we should open toast immediately.
+     */
+    if (this.isOpen === true) {
+      raf(() => this.present());
+    }
+  }
+
   /**
    * Present the toast overlay after it has been created.
    */
@@ -405,7 +417,14 @@ export class Toast implements ComponentInterface, OverlayInterface {
     return (
       <div class={buttonGroupsClasses}>
         {buttons.map((b) => (
-          <button type="button" class={buttonClass(b)} tabIndex={0} onClick={() => this.buttonClick(b)} part="button">
+          <button
+            {...b.htmlAttributes}
+            type="button"
+            class={buttonClass(b)}
+            tabIndex={0}
+            onClick={() => this.buttonClick(b)}
+            part={buttonPart(b)}
+          >
             <div class="toast-button-inner">
               {b.icon && (
                 <ion-icon
@@ -566,6 +585,10 @@ const buttonClass = (button: ToastButton): CssClassMap => {
     'ion-activatable': true,
     ...getClassMap(button.cssClass),
   };
+};
+
+const buttonPart = (button: ToastButton): string => {
+  return isCancel(button.role) ? 'button cancel' : 'button';
 };
 
 type ToastPresentOptions = ToastPosition;

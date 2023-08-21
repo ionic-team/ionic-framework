@@ -71,8 +71,8 @@ core/playwright-report/
 core/**/*-snapshots
 
 # angular
-angular/css/
-angular/test/build/
+packages/angular/css/
+packages/angular/test/build/
 .angular/
 
 # vue

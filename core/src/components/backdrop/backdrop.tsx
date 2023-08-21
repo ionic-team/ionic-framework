@@ -1,8 +1,8 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Event, Host, Listen, Prop, h } from '@stencil/core';
+import { GESTURE_CONTROLLER } from '@utils/gesture';
 
 import { getIonMode } from '../../global/ionic-global';
-import { GESTURE_CONTROLLER } from '../../utils/gesture';
 
 @Component({
   tag: 'ion-backdrop',

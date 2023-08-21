@@ -1,6 +1,5 @@
 import { readTask, writeTask } from '@stencil/core';
-
-import { clamp } from '../../utils/helpers';
+import { clamp } from '@utils/helpers';
 
 const TRANSITION = 'all 0.2s ease-in-out';
 
