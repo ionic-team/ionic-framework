@@ -10,15 +10,28 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       /**
        * The mouse events are flaky on CI
        */
-      test.fixme('should emit start/end events', async ({ page }, testInfo) => {
-        await page.setContent(`<ion-range value="20"></ion-range>`, config);
+      test.fixme('should emit start/end events', async ({ page }) => {
+        /**
+         * Requires padding to prevent the knob from being clipped.
+         * If it's clipped, then the value might be one off.
+         * For example, if the knob is clipped on the right, then the value
+         * will be 99 instead of 100.
+         */
+        await page.setContent(
+          `
+          <div style="padding: 0 20px">
+            <ion-range value="20"></ion-range>
+          </div>
+        `,
+          config
+        );
 
         const rangeStart = await page.spyOnEvent('ionKnobMoveStart');
         const rangeEnd = await page.spyOnEvent('ionKnobMoveEnd');
 
         const rangeEl = page.locator('ion-range');
 
-        await dragElementBy(rangeEl, page, testInfo.project.metadata.rtl ? -300 : 300, 0);
+        await dragElementBy(rangeEl, page, 300, 0);
         await page.waitForChanges();
 
         /**
@@ -65,13 +78,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
         expect(await scrollEl.evaluate((el: HTMLElement) => el.scrollTop)).toEqual(0);
 
-        const box = (await knobEl.boundingBox())!;
-        const centerX = box.x + box.width / 2;
-        const centerY = box.y + box.height / 2;
-
-        await page.mouse.move(centerX, centerY);
-        await page.mouse.down();
-        await page.mouse.move(centerX + 30, centerY);
+        await dragElementBy(knobEl, page, 30, 0, undefined, undefined, false);
 
         /**
          * Do not use scrollToBottom() or other scrolling methods
@@ -118,13 +125,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         const rangeHandle = page.locator('ion-range .range-knob-handle');
         const ionChangeSpy = await page.spyOnEvent('ionChange');
 
-        const boundingBox = await rangeHandle.boundingBox();
-
-        await rangeHandle.hover();
-        await page.mouse.down();
-        await page.mouse.move(boundingBox!.x + 100, boundingBox!.y);
-
-        await page.mouse.up();
+        await dragElementBy(rangeHandle, page, 100, 0);
 
         await ionChangeSpy.next();
 
@@ -169,11 +170,9 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         const rangeHandle = page.locator('ion-range .range-knob-handle');
         const ionInputSpy = await page.spyOnEvent('ionInput');
 
-        const boundingBox = await rangeHandle.boundingBox();
-
         await rangeHandle.hover();
-        await page.mouse.down();
-        await page.mouse.move(boundingBox!.x + 100, boundingBox!.y);
+
+        await dragElementBy(rangeHandle, page, 100, 0, undefined, undefined, false);
 
         await ionInputSpy.next();
 

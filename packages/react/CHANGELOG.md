@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.3.0](https://github.com/ionic-team/ionic-framework/compare/v7.2.4...v7.3.0) (2023-08-16)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.2.4](https://github.com/ionic-team/ionic-framework/compare/v7.2.3...v7.2.4) (2023-08-16)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.2.3](https://github.com/ionic-team/ionic-framework/compare/v7.2.2...v7.2.3) (2023-08-09)
+
+
+### Bug Fixes
+
+* **tab-button:** update event type interface on React ([#27950](https://github.com/ionic-team/ionic-framework/issues/27950)) ([1cf1eca](https://github.com/ionic-team/ionic-framework/commit/1cf1eca00239f3e98854466116e42f9a2e7b4590)), closes [#27949](https://github.com/ionic-team/ionic-framework/issues/27949)
+
+
+
+
+
 ## [7.2.2](https://github.com/ionic-team/ionic-framework/compare/v7.2.1...v7.2.2) (2023-08-02)
 
 **Note:** Version bump only for package @ionic/react
