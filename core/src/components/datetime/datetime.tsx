@@ -2410,6 +2410,7 @@ export class Datetime implements ComponentInterface {
       preferWheel,
       presentation,
       size,
+      isGridStyle
     } = this;
     const mode = getIonMode(this);
     const isMonthAndYearPresentation =
@@ -2437,7 +2438,7 @@ export class Datetime implements ComponentInterface {
             [`datetime-presentation-${presentation}`]: true,
             [`datetime-size-${size}`]: true,
             [`datetime-prefer-wheel`]: hasWheelVariant,
-            [`datetime-grid`]: this.isGridStyle,
+            [`datetime-grid`]: isGridStyle,
           }),
         }}
       >
