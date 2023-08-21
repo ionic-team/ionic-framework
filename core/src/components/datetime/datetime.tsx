@@ -2397,7 +2397,19 @@ export class Datetime implements ComponentInterface {
   }
 
   render() {
-    const { name, value, disabled, el, color, readonly, showMonthAndYear, preferWheel, presentation, size, isGridStyle } = this;
+    const {
+      name,
+      value,
+      disabled,
+      el,
+      color,
+      readonly,
+      showMonthAndYear,
+      preferWheel,
+      presentation,
+      size,
+      isGridStyle,
+    } = this;
     const mode = getIonMode(this);
     const isMonthAndYearPresentation =
       presentation === 'year' || presentation === 'month' || presentation === 'month-year';
