@@ -15,9 +15,9 @@ runs:
     - name: Check Diff
       run: |
         git diff --exit-code || {
-          echo "There is a diff between the build output from main and your branch."
-          echo "Confirm that you have run "npm run build" locally and pushed all expected changes to your branch."
-          git diff
+          echo -e "\033[1;31mWarning: There is a diff between the build output from main and your branch.\033[0m"
+          echo -e "\033[1;31mConfirm that you have run npm run build locally and pushed all expected changes to your branch.\033[0m"
+          echo -e "\033[1;31mGit Diff Output:\033[0m"
           exit 1
         }
       shell: bash
