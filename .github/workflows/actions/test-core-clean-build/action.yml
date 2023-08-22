@@ -13,6 +13,12 @@ runs:
         path: ./core
         filename: CoreBuild.zip
     - name: Check Diff
-      run: git diff --exit-code
+      run: |
+        git diff --exit-code || {
+          echo "There is a diff between the build output from main and your branch."
+          echo "Confirm that you have run "npm run build" locally and pushed all expected changes to your branch."
+          git diff
+          exit 1
+        }
       shell: bash
       working-directory: ./core
