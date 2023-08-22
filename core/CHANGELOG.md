@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.2.4](https://github.com/ionic-team/ionic-framework/compare/v7.2.3...v7.2.4) (2023-08-16)
+
+
+### Bug Fixes
+
+* **tap-click:** do not error in document-less environment ([#27972](https://github.com/ionic-team/ionic-framework/issues/27972)) ([28bd4ba](https://github.com/ionic-team/ionic-framework/commit/28bd4ba720bb77d5f5c48cd7a45e0015daddc9dd))
+* **title:** large title aligns with ios spec ([#27969](https://github.com/ionic-team/ionic-framework/issues/27969)) ([8fa12fc](https://github.com/ionic-team/ionic-framework/commit/8fa12fc88857df27a1ca11249f0085e100fe1474)), closes [#27966](https://github.com/ionic-team/ionic-framework/issues/27966)
+
+
+
+
+
+## [7.2.3](https://github.com/ionic-team/ionic-framework/compare/v7.2.2...v7.2.3) (2023-08-09)
+
+
+### Bug Fixes
+
+* **button:** hidden button is added when form is set async ([#27955](https://github.com/ionic-team/ionic-framework/issues/27955)) ([e9fa300](https://github.com/ionic-team/ionic-framework/commit/e9fa30002bd5dec4f2f56a15c84eec1b3e794942)), closes [#27952](https://github.com/ionic-team/ionic-framework/issues/27952)
+* **datetime:** changing months work if partially visible ([#27917](https://github.com/ionic-team/ionic-framework/issues/27917)) ([eb19c28](https://github.com/ionic-team/ionic-framework/commit/eb19c289d6581639f6df7aff002bebdf2b27d31c)), closes [#27913](https://github.com/ionic-team/ionic-framework/issues/27913)
+* **item-sliding:** account for options added before watcher ([#27915](https://github.com/ionic-team/ionic-framework/issues/27915)) ([a0b3ef0](https://github.com/ionic-team/ionic-framework/commit/a0b3ef02af718e232246515bb873ad8c090fa55d)), closes [#27910](https://github.com/ionic-team/ionic-framework/issues/27910)
+* **many:** overlays present if isOpen is true on load ([#27933](https://github.com/ionic-team/ionic-framework/issues/27933)) ([a0e6ac6](https://github.com/ionic-team/ionic-framework/commit/a0e6ac6013552c5e3acdde33575d4aaf4d4c0bda)), closes [#27928](https://github.com/ionic-team/ionic-framework/issues/27928)
+* **modal:** setCurrentBreakpoint respects animated prop ([#27924](https://github.com/ionic-team/ionic-framework/issues/27924)) ([da55ab9](https://github.com/ionic-team/ionic-framework/commit/da55ab949ef1894738da5a6241176089b7a2b6e3)), closes [#27923](https://github.com/ionic-team/ionic-framework/issues/27923)
+* **nav:** improve reliability of swipe back gesture when quickly swiping back ([#27904](https://github.com/ionic-team/ionic-framework/issues/27904)) ([9500769](https://github.com/ionic-team/ionic-framework/commit/9500769f114d180613f0340b1a328b5e631b7188)), closes [#27893](https://github.com/ionic-team/ionic-framework/issues/27893)
+
+
+
+
+
 ## [7.2.2](https://github.com/ionic-team/ionic-framework/compare/v7.2.1...v7.2.2) (2023-08-02)
 
 

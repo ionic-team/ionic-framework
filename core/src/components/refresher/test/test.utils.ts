@@ -18,7 +18,7 @@ const pullToRefresh = async (page: E2EPage, selector = 'body') => {
 
   const ev = await page.spyOnEvent('ionRefreshComplete');
 
-  await dragElementByYAxis(target, page, 400);
+  await dragElementByYAxis(target, page, 320);
   await ev.next();
 };
 
