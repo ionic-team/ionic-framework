@@ -64,11 +64,13 @@
   vertical-align: -webkit-baseline-middle; // the best for those that support it
 
   font-kerning: none;
+
+  transform: scale(2);
 }
 
 :host(.button-disabled) {
   cursor: default;
-  opacity: .5;
+  opacity: 0.5;
   pointer-events: none;
 }
 
@@ -81,7 +83,6 @@
   --color: #{ion-color(primary, contrast)};
 }
 
-
 // Outline Button
 // --------------------------------------------------
 
@@ -92,7 +93,6 @@
   --color: #{ion-color(primary, base)};
 }
 
-
 // Clear Button
 // --------------------------------------------------
 
@@ -102,7 +102,6 @@
   --background: transparent;
   --color: #{ion-color(primary, base)};
 }
-
 
 // Block Button
 // --------------------------------------------------
@@ -124,7 +123,6 @@
 :host(.button-block) .button-native::after {
   clear: both;
 }
-
 
 // Full Button
 // --------------------------------------------------
@@ -210,15 +208,13 @@
   z-index: 1;
 }
 
-
 // Button Slots
 // --------------------------------------------------
 
-::slotted([slot=start]),
-::slotted([slot=end]) {
+::slotted([slot="start"]),
+::slotted([slot="end"]) {
   flex-shrink: 0;
 }
-
 
 // Button Icons
 // --------------------------------------------------
@@ -229,17 +225,16 @@
 }
 
 ::slotted(ion-icon[slot="start"]) {
-  @include margin(0, .3em, 0, -.3em);
+  @include margin(0, 0.3em, 0, -0.3em);
 }
 
 ::slotted(ion-icon[slot="end"]) {
-  @include margin(0, -.2em, 0, .3em);
+  @include margin(0, -0.2em, 0, 0.3em);
 }
 
 ::slotted(ion-icon[slot="icon-only"]) {
   font-size: 1.8em;
 }
-
 
 // Button Ripple effect
 // --------------------------------------------------
@@ -247,7 +242,6 @@
 ion-ripple-effect {
   color: var(--ripple-color);
 }
-
 
 // Button: States
 // --------------------------------------------------
@@ -291,7 +285,6 @@ ion-ripple-effect {
   opacity: var(--background-activated-opacity);
 }
 
-
 // Button Colors
 // --------------------------------------------------
 
@@ -314,7 +307,6 @@ ion-ripple-effect {
   background: transparent;
   color: current-color(base);
 }
-
 
 // Button in Toolbar
 // --------------------------------------------------

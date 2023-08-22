@@ -36,6 +36,8 @@
 
   user-select: none;
   z-index: $z-index-item-input;
+
+  transform: scale(2);
 }
 
 :host(.in-item) {
@@ -165,7 +167,6 @@ input {
   opacity: 0;
 }
 
-
 // Justify Content
 // ---------------------------------------------
 
@@ -180,7 +181,6 @@ input {
 :host(.checkbox-justify-end) .checkbox-wrapper {
   justify-content: end;
 }
-
 
 // Label Placement - Start
 // ----------------------------------------------------------------
@@ -202,7 +202,6 @@ input {
   @include margin(null, $form-control-label-margin, null, 0);
 }
 
-
 // Label Placement - End
 // ----------------------------------------------------------------
 
@@ -222,7 +221,6 @@ input {
 :host(.checkbox-label-placement-end) .label-text-wrapper {
   @include margin(null, 0, null, $form-control-label-margin);
 }
-
 
 // Label Placement - Fixed
 // ----------------------------------------------------------------
@@ -248,7 +246,6 @@ input {
   max-width: 200px;
 }
 
-
 // Checked / Indeterminate Checkbox
 // ---------------------------------------------
 
@@ -263,7 +260,6 @@ input {
 :host(.checkbox-indeterminate) .checkbox-icon path {
   opacity: 1;
 }
-
 
 // Disabled Checkbox
 // ---------------------------------------------
