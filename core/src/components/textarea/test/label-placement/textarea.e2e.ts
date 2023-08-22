@@ -25,18 +25,6 @@ configs().forEach(({ title, screenshot, config }) => {
       const textarea = page.locator('ion-textarea');
       expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-placement-start-multi-line-value`));
     });
-
-    test('label should be truncated', async ({ page }) => {
-      await page.setContent(
-        `
-      <ion-textarea label="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur." label-placement="start"></ion-textarea>
-    `,
-        config
-      );
-
-      const textarea = page.locator('ion-textarea');
-      expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-placement-start-label-truncated`));
-    });
   });
   test.describe(title('textarea: label placement end'), () => {
     test('label should appear on the ending side of the textarea', async ({ page }) => {
@@ -60,17 +48,6 @@ configs().forEach(({ title, screenshot, config }) => {
 
       const textarea = page.locator('ion-textarea');
       expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-placement-end-multi-line-value`));
-    });
-    test('label should be truncated', async ({ page }) => {
-      await page.setContent(
-        `
-      <ion-textarea label="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur." label-placement="end"></ion-textarea>
-    `,
-        config
-      );
-
-      const textarea = page.locator('ion-textarea');
-      expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-placement-end-label-truncated`));
     });
   });
   test.describe(title('textarea: label placement fixed'), () => {
@@ -231,6 +208,121 @@ configs().forEach(({ title, screenshot, config }) => {
 
       const textarea = page.locator('ion-textarea');
       expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-placement-floating-label-truncated`));
+    });
+  });
+});
+
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('textarea: label overflow'), () => {
+    test('label property should be truncated with an ellipsis', async ({ page }) => {
+      await page.setContent(
+        `
+            <ion-textarea label="Label Label Label Label Label" placeholder="Text Input"></ion-textarea>
+          `,
+        config
+      );
+
+      const textarea = page.locator('ion-textarea');
+      expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-label-truncate`));
+    });
+    test('label slot should be truncated with an ellipsis', async ({ page }) => {
+      await page.setContent(
+        `
+            <ion-textarea placeholder="Text Input">
+              <div slot="label">Label Label Label Label Label</div>
+            </ion-textarea>
+          `,
+        config
+      );
+
+      const textarea = page.locator('ion-textarea');
+      expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-label-slot-truncate`));
+    });
+  });
+});
+
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('textarea: async label'), () => {
+    test('textarea should re-render when label slot is added async', async ({ page }) => {
+      await page.setContent(
+        `
+            <ion-textarea fill="solid" label-placement="stacked" placeholder="Text Input"></ion-textarea>
+          `,
+        config
+      );
+
+      const textarea = page.locator('ion-textarea');
+
+      await textarea.evaluate((el: HTMLIonInputElement) => {
+        const labelEl = document.createElement('div');
+        labelEl.slot = 'label';
+        labelEl.innerHTML = 'Comments <span class="required" style="color: red">*</span';
+
+        el.appendChild(labelEl);
+      });
+
+      await page.waitForChanges();
+
+      expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-async-label`));
+    });
+  });
+  test.describe(title('textarea: flex in grid rendering'), () => {
+    test('should correctly render new lines in stacked textarea', async ({ page }) => {
+      /**
+       * While this bug only impacts Safari, we run this
+       * text on all browsers to make sure the Safari fix
+       * does not negatively impact other browsers.
+       */
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/27345',
+      });
+
+      /**
+       * Add padding to make it easier to see
+       * if the text is incorrectly flowing outside
+       * the container on Safari.
+       */
+      await page.setContent(
+        `
+        <div style="padding: 20px;" class="container">
+          <ion-textarea fill="solid" label="Comments" label-placement="stacked"></ion-textarea>
+        </div>
+      `,
+        config
+      );
+
+      const nativeTextarea = page.locator('ion-textarea textarea');
+
+      await nativeTextarea.type(`Comment
+        With
+        Multiple
+        Lines`);
+
+      await expect(page.locator('.container')).toHaveScreenshot(screenshot(`textarea-multi-line-sizing`));
+    });
+  });
+  test.describe(title('textarea: floating/stacked label layering'), () => {
+    test('label should not be covered by text field', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/27812',
+      });
+      await page.setContent(
+        `
+        <style>
+          .custom-textarea .native-wrapper {
+            background: pink;
+          }
+        </style>
+        <ion-textarea class="custom-textarea" label="My Label" label-placement="stacked"></ion-textarea>
+      `,
+        config
+      );
+
+      const textarea = page.locator('ion-textarea');
+
+      expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-label-layering`));
     });
   });
 });

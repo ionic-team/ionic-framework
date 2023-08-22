@@ -1,13 +1,13 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Prop, h } from '@stencil/core';
+import { Component, Element, Event, Host, Prop, Watch, h } from '@stencil/core';
+import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
+import type { Attributes } from '@utils/helpers';
+import { inheritAriaAttributes, hasShadowDom } from '@utils/helpers';
+import { printIonWarning } from '@utils/logging';
+import { createColorClasses, hostContext, openURL } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { AnimationBuilder, Color } from '../../interface';
-import type { AnchorInterface, ButtonInterface } from '../../utils/element-interface';
-import type { Attributes } from '../../utils/helpers';
-import { inheritAriaAttributes, hasShadowDom } from '../../utils/helpers';
-import { printIonWarning } from '../../utils/logging';
-import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 import type { RouterDirection } from '../router/utils/interface';
 
 /**
@@ -32,6 +32,8 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
   private inItem = false;
   private inListHeader = false;
   private inToolbar = false;
+  private formButtonEl: HTMLButtonElement | null = null;
+  private formEl: HTMLFormElement | null = null;
   private inheritedAttributes: Attributes = {};
 
   @Element() el!: HTMLElement;
@@ -52,6 +54,13 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
    * If `true`, the user cannot interact with the button.
    */
   @Prop({ reflect: true }) disabled = false;
+  @Watch('disabled')
+  disabledChanged() {
+    const { disabled } = this;
+    if (this.formButtonEl) {
+      this.formButtonEl.disabled = disabled;
+    }
+  }
 
   /**
    * Set to `"block"` for a full-width button or to `"full"` for a full-width button
@@ -144,6 +153,39 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
    */
   @Event() ionBlur!: EventEmitter<void>;
 
+  /**
+   * This is responsible for rendering a hidden native
+   * button element inside the associated form. This allows
+   * users to submit a form by pressing "Enter" when a text
+   * field inside of the form is focused. The native button
+   * rendered inside of `ion-button` is in the Shadow DOM
+   * and therefore does not participate in form submission
+   * which is why the following code is necessary.
+   */
+  private renderHiddenButton() {
+    const formEl = (this.formEl = this.findForm());
+    if (formEl) {
+      const { formButtonEl } = this;
+
+      /**
+       * If the form already has a rendered form button
+       * then do not append a new one again.
+       */
+      if (formButtonEl !== null && formEl.contains(formButtonEl)) {
+        return;
+      }
+
+      // Create a hidden native button inside of the form
+      const newFormButtonEl = (this.formButtonEl = document.createElement('button'));
+      newFormButtonEl.type = this.type;
+      newFormButtonEl.style.display = 'none';
+      // Only submit if the button is not disabled.
+      newFormButtonEl.disabled = this.disabled;
+
+      formEl.appendChild(newFormButtonEl);
+    }
+  }
+
   componentWillLoad() {
     this.inToolbar = !!this.el.closest('ion-buttons');
     this.inListHeader = !!this.el.closest('ion-list-header');
@@ -177,12 +219,63 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
       return form;
     }
     if (typeof form === 'string') {
-      const el = document.getElementById(form);
-      if (el instanceof HTMLFormElement) {
-        return el;
+      // Check if the string provided is a form id.
+      const el: HTMLElement | null = document.getElementById(form);
+      if (el) {
+        if (el instanceof HTMLFormElement) {
+          return el;
+        } else {
+          /**
+           * The developer specified a string for the form attribute, but the
+           * element with that id is not a form element.
+           */
+          printIonWarning(
+            `Form with selector: "#${form}" could not be found. Verify that the id is attached to a <form> element.`,
+            this.el
+          );
+          return null;
+        }
+      } else {
+        /**
+         * The developer specified a string for the form attribute, but the
+         * element with that id could not be found in the DOM.
+         */
+        printIonWarning(
+          `Form with selector: "#${form}" could not be found. Verify that the id is correct and the form is rendered in the DOM.`,
+          this.el
+        );
+        return null;
       }
     }
-    return null;
+    if (form !== undefined) {
+      /**
+       * The developer specified a HTMLElement for the form attribute,
+       * but the element is not a HTMLFormElement.
+       * This will also catch if the developer tries to pass in null
+       * as the form attribute.
+       */
+      printIonWarning(
+        `The provided "form" element is invalid. Verify that the form is a HTMLFormElement and rendered in the DOM.`,
+        this.el
+      );
+      return null;
+    }
+    /**
+     * If the form element is not set, the button may be inside
+     * of a form element. Query the closest form element to the button.
+     */
+    return this.el.closest('form');
+  }
+
+  private submitForm(ev: Event) {
+    // this button wants to specifically submit a form
+    // climb up the dom to see if we're in a <form>
+    // and if so, then use JS to submit it
+    if (this.formEl && this.formButtonEl) {
+      ev.preventDefault();
+
+      this.formButtonEl.click();
+    }
   }
 
   private handleClick = (ev: Event) => {
@@ -190,49 +283,7 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     if (this.type === 'button') {
       openURL(this.href, ev, this.routerDirection, this.routerAnimation);
     } else if (hasShadowDom(el)) {
-      // this button wants to specifically submit a form
-      // climb up the dom to see if we're in a <form>
-      // and if so, then use JS to submit it
-      let formEl = this.findForm();
-      const { form } = this;
-
-      if (!formEl && form !== undefined) {
-        /**
-         * The developer specified a form selector for
-         * the button to submit, but it was not found.
-         */
-        if (typeof form === 'string') {
-          printIonWarning(
-            `Form with selector: "#${form}" could not be found. Verify that the id is correct and the form is rendered in the DOM.`,
-            el
-          );
-        } else {
-          printIonWarning(
-            `The provided "form" element is invalid. Verify that the form is a HTMLFormElement and rendered in the DOM.`,
-            el
-          );
-        }
-        return;
-      }
-
-      if (!formEl) {
-        /**
-         * If the form element is not set, the button may be inside
-         * of a form element. Query the closest form element to the button.
-         */
-        formEl = el.closest('form');
-      }
-
-      if (formEl) {
-        ev.preventDefault();
-
-        const fakeButton = document.createElement('button');
-        fakeButton.type = this.type;
-        fakeButton.style.display = 'none';
-        formEl.appendChild(fakeButton);
-        fakeButton.click();
-        fakeButton.remove();
-      }
+      this.submitForm(ev);
     }
   };
 
@@ -280,6 +331,18 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     if (fill == null) {
       fill = this.inToolbar || this.inListHeader ? 'clear' : 'solid';
     }
+
+    /**
+     * We call renderHiddenButton in the render function to account
+     * for any properties being set async. For example, changing the
+     * "type" prop from "button" to "submit" after the component has
+     * loaded would warrant the hidden button being added to the
+     * associated form.
+     */
+    {
+      type !== 'button' && this.renderHiddenButton();
+    }
+
     return (
       <Host
         onClick={this.handleClick}

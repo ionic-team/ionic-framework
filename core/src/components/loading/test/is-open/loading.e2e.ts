@@ -23,5 +23,10 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await ionLoadingDidDismiss.next();
       await expect(loading).toBeHidden();
     });
+
+    test('should open if isOpen is true on load', async ({ page }) => {
+      await page.setContent('<ion-loading is-open="true"></ion-loading>', config);
+      await expect(page.locator('ion-loading')).toBeVisible();
+    });
   });
 });

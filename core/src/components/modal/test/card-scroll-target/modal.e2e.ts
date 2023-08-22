@@ -30,7 +30,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
         await content.evaluate((el: HTMLElement) => (el.scrollTop = 500));
 
-        await dragElementBy(content, page, 0, 500);
+        await dragElementBy(content, page, 0, 300);
 
         await content.waitForElementState('stable');
 

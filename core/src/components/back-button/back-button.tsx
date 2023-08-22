@@ -1,14 +1,14 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, h } from '@stencil/core';
+import type { ButtonInterface } from '@utils/element-interface';
+import type { Attributes } from '@utils/helpers';
+import { inheritAriaAttributes } from '@utils/helpers';
+import { createColorClasses, hostContext, openURL } from '@utils/theme';
 import { arrowBackSharp, chevronBack } from 'ionicons/icons';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import type { AnimationBuilder, Color } from '../../interface';
-import type { ButtonInterface } from '../../utils/element-interface';
-import type { Attributes } from '../../utils/helpers';
-import { inheritAriaAttributes } from '../../utils/helpers';
-import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.

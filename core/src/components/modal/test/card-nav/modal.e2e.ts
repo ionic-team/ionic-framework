@@ -9,12 +9,7 @@ import { CardModalPage } from '../fixtures';
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('card modal - nav'), () => {
     let cardModalPage: CardModalPage;
-    test.beforeEach(async ({ page, skip }) => {
-      skip.browser(
-        (browserName: string) => browserName !== 'chromium',
-        'dragElementBy is flaky outside of Chrome browsers.'
-      );
-
+    test.beforeEach(async ({ page }) => {
       cardModalPage = new CardModalPage(page);
       await cardModalPage.navigate('/src/components/modal/test/card-nav?ionic:_testing=false', config);
     });
@@ -33,7 +28,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       const content = page.locator('.page-two-content');
 
-      await dragElementBy(content, page, 1000, 0, 10);
+      await dragElementBy(content, page, 370, 0, 10);
 
       await ionNavDidChange.next();
     });
@@ -47,7 +42,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       await ionNavDidChange.next();
 
-      await cardModalPage.swipeToCloseModal('ion-modal ion-content.page-two-content');
+      await cardModalPage.swipeToCloseModal('ion-modal ion-content.page-two-content', true, 270);
     });
   });
 });

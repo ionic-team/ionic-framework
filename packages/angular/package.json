@@ -1,0 +1,94 @@
+{
+  "name": "@ionic/angular",
+  "version": "7.3.0",
+  "description": "Angular specific wrappers for @ionic/core",
+  "keywords": [
+    "ionic",
+    "framework",
+    "angular",
+    "mobile",
+    "app",
+    "webapp",
+    "capacitor",
+    "cordova",
+    "progressive web app",
+    "pwa"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ionic-team/ionic-framework.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ionic-team/ionic/issues"
+  },
+  "homepage": "https://ionicframework.com/",
+  "scripts": {
+    "build": "npm run clean && npm run build.ng && npm run build.core && npm run clean-generated",
+    "build.core": "node scripts/build-core.js",
+    "build.link": "npm run build && node scripts/link-copy.js",
+    "build.ng": "ng-packagr -p ng-package.json -c tsconfig.json",
+    "clean": "node scripts/clean.js",
+    "clean-generated": "node ./scripts/clean-generated.js",
+    "lint": "npm run eslint && npm run prettier -- --write --cache",
+    "lint.fix": "npm run eslint -- --fix",
+    "fmt": "npm run eslint -- --fix && npm run prettier -- --write --cache",
+    "prettier": "prettier \"**/*.ts\"",
+    "eslint": "eslint . --ext .ts",
+    "prerelease": "npm run validate && np prerelease --yolo --any-branch --tag next",
+    "sync": "./scripts/sync.sh",
+    "test": "echo 'angular no tests yet'",
+    "tsc": "tsc -p .",
+    "validate": "npm i && npm run lint && npm run test && npm run build"
+  },
+  "exports": {
+    "./css/*": {
+      "style": "./css/*"
+    }
+  },
+  "dependencies": {
+    "@ionic/core": "^7.3.0",
+    "ionicons": "^7.0.0",
+    "jsonc-parser": "^3.0.0",
+    "tslib": "^2.3.0"
+  },
+  "peerDependencies": {
+    "@angular/core": ">=14.0.0",
+    "@angular/forms": ">=14.0.0",
+    "@angular/router": ">=14.0.0",
+    "rxjs": ">=7.5.0",
+    "zone.js": ">=0.11.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/core": "^14.0.0",
+    "@angular-devkit/schematics": "^14.0.0",
+    "@angular-eslint/eslint-plugin": "^14.0.0",
+    "@angular-eslint/eslint-plugin-template": "^14.0.0",
+    "@angular-eslint/template-parser": "^14.0.0",
+    "@angular/common": "^14.0.0",
+    "@angular/compiler": "^14.0.0",
+    "@angular/compiler-cli": "^14.0.0",
+    "@angular/core": "^14.0.0",
+    "@angular/forms": "^14.0.0",
+    "@angular/platform-browser": "^14.0.0",
+    "@angular/platform-browser-dynamic": "^14.0.0",
+    "@angular/router": "^14.0.0",
+    "@ionic/eslint-config": "^0.3.0",
+    "@ionic/prettier-config": "^2.0.0",
+    "@schematics/angular": "^14.0.0",
+    "@types/node": "12.12.5",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "eslint": "^8.0.0",
+    "eslint-plugin-import": "^2.25.2",
+    "fs-extra": "^7.0.0",
+    "ng-packagr": "^14.0.0",
+    "prettier": "^2.4.1",
+    "rxjs": "~7.5.0",
+    "typescript": "~4.7.2",
+    "typescript-eslint-language-service": "^5.0.0",
+    "zone.js": "~0.11.4"
+  },
+  "prettier": "@ionic/prettier-config",
+  "schematics": "./schematics/collection.json"
+}

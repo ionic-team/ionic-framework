@@ -1,10 +1,8 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Watch, Component, Element, Event, Host, Method, Prop, h, readTask } from '@stencil/core';
-
-import { getIonMode } from '../../global/ionic-global';
-import type { AnimationBuilder, CssClassMap, FrameworkDelegate, OverlayInterface } from '../../interface';
-import type { Gesture } from '../../utils/gesture';
-import { createButtonActiveGesture } from '../../utils/gesture/button-active';
+import type { Gesture } from '@utils/gesture';
+import { createButtonActiveGesture } from '@utils/gesture/button-active';
+import { raf } from '@utils/helpers';
 import {
   BACKDROP,
   createDelegateController,
@@ -16,9 +14,12 @@ import {
   present,
   safeCall,
   setOverlayId,
-} from '../../utils/overlays';
+} from '@utils/overlays';
+import { getClassMap } from '@utils/theme';
+
+import { getIonMode } from '../../global/ionic-global';
+import type { AnimationBuilder, CssClassMap, FrameworkDelegate, OverlayInterface } from '../../interface';
 import type { OverlayEventDetail } from '../../utils/overlays-interface';
-import { getClassMap } from '../../utils/theme';
 
 import type { ActionSheetButton } from './action-sheet-interface';
 import { iosEnterAnimation } from './animations/ios.enter';
@@ -318,25 +319,32 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
 
   componentDidLoad() {
     /**
-     * Do not create gesture if:
-     * 1. A gesture already exists
-     * 2. App is running in MD mode
-     * 3. A wrapper ref does not exist
+     * Only create gesture if:
+     * 1. A gesture does not already exist
+     * 2. App is running in iOS mode
+     * 3. A wrapper ref exists
+     * 4. A group ref exists
      */
     const { groupEl, wrapperEl } = this;
-    if (this.gesture || getIonMode(this) === 'md' || !wrapperEl || !groupEl) {
-      return;
+    if (!this.gesture && getIonMode(this) === 'ios' && wrapperEl && groupEl) {
+      readTask(() => {
+        const isScrollable = groupEl.scrollHeight > groupEl.clientHeight;
+        if (!isScrollable) {
+          this.gesture = createButtonActiveGesture(wrapperEl, (refEl: HTMLElement) =>
+            refEl.classList.contains('action-sheet-button')
+          );
+          this.gesture.enable(true);
+        }
+      });
     }
 
-    readTask(() => {
-      const isScrollable = groupEl.scrollHeight > groupEl.clientHeight;
-      if (!isScrollable) {
-        this.gesture = createButtonActiveGesture(wrapperEl, (refEl: HTMLElement) =>
-          refEl.classList.contains('action-sheet-button')
-        );
-        this.gesture.enable(true);
-      }
-    });
+    /**
+     * If action sheet was rendered with isOpen="true"
+     * then we should open action sheet immediately.
+     */
+    if (this.isOpen === true) {
+      raf(() => this.present());
+    }
   }
 
   render() {
@@ -386,7 +394,13 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
                 </div>
               )}
               {buttons.map((b) => (
-                <button type="button" id={b.id} class={buttonClass(b)} onClick={() => this.buttonClick(b)}>
+                <button
+                  {...b.htmlAttributes}
+                  type="button"
+                  id={b.id}
+                  class={buttonClass(b)}
+                  onClick={() => this.buttonClick(b)}
+                >
                   <span class="action-sheet-button-inner">
                     {b.icon && <ion-icon icon={b.icon} aria-hidden="true" lazy={false} class="action-sheet-icon" />}
                     {b.text}
@@ -398,7 +412,12 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
 
             {cancelButton && (
               <div class="action-sheet-group action-sheet-group-cancel">
-                <button type="button" class={buttonClass(cancelButton)} onClick={() => this.buttonClick(cancelButton)}>
+                <button
+                  {...cancelButton.htmlAttributes}
+                  type="button"
+                  class={buttonClass(cancelButton)}
+                  onClick={() => this.buttonClick(cancelButton)}
+                >
                   <span class="action-sheet-button-inner">
                     {cancelButton.icon && (
                       <ion-icon icon={cancelButton.icon} aria-hidden="true" lazy={false} class="action-sheet-icon" />

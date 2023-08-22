@@ -1,6 +1,7 @@
+import { createAnimation } from '@utils/animation/animation';
+import { getElementRoot } from '@utils/helpers';
+
 import type { Animation } from '../../../interface';
-import { createAnimation } from '../../../utils/animation/animation';
-import { getElementRoot } from '../../../utils/helpers';
 import { calculateWindowAdjustment, getPopoverDimensions, getPopoverPosition } from '../utils';
 
 const POPOVER_MD_BODY_PADDING = 12;

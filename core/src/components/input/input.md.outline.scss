@@ -82,8 +82,6 @@
 :host(.input-fill-outline) .label-text-wrapper,
 :host(.input-fill-outline) .label-text-wrapper {
   position: relative;
-
-  z-index: 1;
 }
 
 /**
@@ -172,6 +170,16 @@
 
   opacity: 0;
   pointer-events: none;
+
+  /**
+   * The spacer currently inherits
+   * border-box sizing from the Ionic reset styles.
+   * However, we do not want to include padding in
+   * the calculation of the element dimensions.
+   * This code can be removed if input is updated
+   * to use the Shadow DOM.
+   */
+  box-sizing: content-box;
 }
 
 :host(.input-fill-outline) .input-outline-start {

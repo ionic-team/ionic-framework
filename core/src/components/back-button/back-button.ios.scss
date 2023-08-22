@@ -54,11 +54,3 @@
     opacity: .6;
   }
 }
-
-
-// Back Button Color: Focused
-// --------------------------------------------------
-
-:host(.ion-color.ion-focused) .button-native::after {
-  background: #{current-color(base)};
-}

@@ -1,6 +1,7 @@
+import type { KeyboardResizeOptions } from '@capacitor/keyboard';
+
 import { getScrollElement, scrollByPoint } from '../../content';
 import { raf } from '../../helpers';
-import type { KeyboardResizeOptions } from '../../native/keyboard';
 import { KeyboardResize } from '../../native/keyboard';
 
 import { relocateInput, SCROLL_AMOUNT_PADDING } from './common';

@@ -106,9 +106,8 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     });
   });
 
-  // TODO FW-3536
-  test.describe.skip(title('overlays: focus'), () => {
-    test('should not select a hidden focusable element', async ({ page, browserName }) => {
+  test.describe(title('overlays: focus'), () => {
+    test('should not select a hidden focusable element', async ({ page, pageUtils }) => {
       await page.setContent(
         `
         <style>
@@ -131,19 +130,18 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
       const presentButton = page.locator('ion-button#open-modal');
       const visibleButton = page.locator('ion-button#visible');
-      const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
 
       await presentButton.click();
       await ionModalDidPresent.next();
 
-      await page.keyboard.press(tabKey);
+      await pageUtils.pressKeys('Tab');
       await expect(visibleButton).toBeFocused();
 
-      await page.keyboard.press(tabKey);
+      await pageUtils.pressKeys('Tab');
       await expect(visibleButton).toBeFocused();
     });
 
-    test('should not select a disabled focusable element', async ({ page, browserName }) => {
+    test('should not select a disabled focusable element', async ({ page, pageUtils }) => {
       await page.setContent(
         `
         <ion-button id="open-modal">Show Modal</ion-button>
@@ -160,19 +158,18 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       const ionModalDidPresent = await page.spyOnEvent('ionModalDidPresent');
       const presentButton = page.locator('ion-button#open-modal');
       const activeButton = page.locator('ion-button#active');
-      const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
 
       await presentButton.click();
       await ionModalDidPresent.next();
 
-      await page.keyboard.press(tabKey);
+      await pageUtils.pressKeys('Tab');
       await expect(activeButton).toBeFocused();
 
-      await page.keyboard.press(tabKey);
+      await pageUtils.pressKeys('Tab');
       await expect(activeButton).toBeFocused();
     });
 
-    test('should select a focusable element with disabled="false"', async ({ page, browserName }) => {
+    test('should select a focusable element with disabled="false"', async ({ page, pageUtils }) => {
       await page.setContent(
         `
         <ion-button id="open-modal">Show Modal</ion-button>
@@ -190,19 +187,18 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       const presentButton = page.locator('ion-button#open-modal');
       const disabledFalseButton = page.locator('ion-button#disabled-false');
       const activeButton = page.locator('ion-button#active');
-      const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
 
       await presentButton.click();
       await ionModalDidPresent.next();
 
-      await page.keyboard.press(tabKey);
+      await pageUtils.pressKeys('Tab');
       await expect(disabledFalseButton).toBeFocused();
 
-      await page.keyboard.press(tabKey);
+      await pageUtils.pressKeys('Tab');
       await expect(activeButton).toBeFocused();
 
       // Loop back to beginning of overlay
-      await page.keyboard.press(tabKey);
+      await pageUtils.pressKeys('Tab');
       await expect(disabledFalseButton).toBeFocused();
     });
 
