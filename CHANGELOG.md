@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.3.0](https://github.com/ionic-team/ionic-framework/compare/v7.2.4...v7.3.0) (2023-08-16)
+
+
+### Bug Fixes
+
+* **alert:** radio and checkbox labels wrap to next line ([#27898](https://github.com/ionic-team/ionic-framework/issues/27898)) ([0d3127a](https://github.com/ionic-team/ionic-framework/commit/0d3127ad09df3c914a8c254f14931de5ca3beb31)), closes [#17269](https://github.com/ionic-team/ionic-framework/issues/17269)
+
+
+### Features
+
+* **action-sheet:** add htmlAttributes property for passing attributes to buttons ([#27863](https://github.com/ionic-team/ionic-framework/issues/27863)) ([5ce4ec0](https://github.com/ionic-team/ionic-framework/commit/5ce4ec0439e4f31aba31062fd8af4a2ad792a54f))
+* **alert:** add htmlAttributes property for passing attributes to buttons ([#27862](https://github.com/ionic-team/ionic-framework/issues/27862)) ([06be0e5](https://github.com/ionic-team/ionic-framework/commit/06be0e511164ebdaa6af9a3747d0585260c030a9))
+* **toast:** add htmlAttributes property for passing attributes to buttons   ([#27855](https://github.com/ionic-team/ionic-framework/issues/27855)) ([9a68588](https://github.com/ionic-team/ionic-framework/commit/9a685882b7085d911ff09eedacc367629e32348a))
+* **toast:** add shadow part for cancel button ([#27921](https://github.com/ionic-team/ionic-framework/issues/27921)) ([e9faf54](https://github.com/ionic-team/ionic-framework/commit/e9faf54d0a7409521706ce9c8b0d26f3fbe9ba41)), closes [#27920](https://github.com/ionic-team/ionic-framework/issues/27920)
+
+
+
+
+
 ## [7.2.4](https://github.com/ionic-team/ionic-framework/compare/v7.2.3...v7.2.4) (2023-08-16)
 
 
