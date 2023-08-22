@@ -63,7 +63,14 @@ export const createInlineOverlayComponent = <PropType, ElementType>(
 
     componentDidUpdate(prevProps: IonicReactInternalProps<PropType>) {
       const node = this.ref.current! as HTMLElement;
-      attachProps(node, this.props, prevProps);
+      /**
+       * onDidDismiss and onWillPresent have manual implementations that
+       * will invoke the original handler. We need to filter those out
+       * so they don't get attached twice and called twice.
+       */
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { onDidDismiss, onWillPresent, ...cProps } = this.props;
+      attachProps(node, cProps, prevProps);
     }
 
     componentWillUnmount() {
