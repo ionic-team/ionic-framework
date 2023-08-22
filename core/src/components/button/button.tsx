@@ -143,8 +143,6 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
    */
   @Prop() form?: string | HTMLFormElement;
 
-  @Prop() invalid = false; // testing prop for build output diff
-
   /**
    * Emitted when the button has focus.
    */
