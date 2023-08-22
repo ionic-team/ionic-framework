@@ -1,6 +1,5 @@
 import { readTask, writeTask } from '@stencil/core';
-
-import { clamp } from '../../utils/helpers';
+import { clamp } from '@utils/helpers';
 
 export const handleFooterFade = (scrollEl: HTMLElement, baseEl: HTMLElement) => {
   readTask(() => {

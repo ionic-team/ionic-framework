@@ -1,15 +1,16 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Listen, Method, Prop, State, Watch, h } from '@stencil/core';
+import { getTimeGivenProgression } from '@utils/animation/cubic-bezier';
+import { doc } from '@utils/browser';
+import { GESTURE_CONTROLLER } from '@utils/gesture';
+import type { Attributes } from '@utils/helpers';
+import { inheritAriaAttributes, assert, clamp, isEndSide as isEnd } from '@utils/helpers';
+import { menuController } from '@utils/menu-controller';
+import { getOverlay } from '@utils/overlays';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import type { Animation, Gesture, GestureDetail } from '../../interface';
-import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
-import { GESTURE_CONTROLLER } from '../../utils/gesture';
-import type { Attributes } from '../../utils/helpers';
-import { inheritAriaAttributes, assert, clamp, isEndSide as isEnd } from '../../utils/helpers';
-import { menuController } from '../../utils/menu-controller';
-import { getOverlay } from '../../utils/overlays';
 
 import type { MenuChangeEventDetail, MenuI, Side } from './menu-interface';
 
@@ -189,7 +190,6 @@ export class Menu implements ComponentInterface, MenuI {
     }
 
     if (!Build.isBrowser) {
-      this.disabled = true;
       return;
     }
 
@@ -705,9 +705,18 @@ export class Menu implements ComponentInterface, MenuI {
       this.forceClosing();
     }
 
-    if (!this.disabled) {
-      menuController._setActiveMenu(this);
+    if (doc?.contains(this.el)) {
+      /**
+       * Only set the active menu if the menu element is
+       * present in the DOM. Otherwise if it was destructively
+       * re-hydrated (through Angular Universal), then ignore
+       * setting the removed node as the active menu.
+       */
+      if (!this.disabled) {
+        menuController._setActiveMenu(this);
+      }
     }
+
     assert(!this.isAnimating, 'can not be animating');
   }
 

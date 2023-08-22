@@ -11,7 +11,9 @@
 
   @include font-smoothing();
 
-  display: flex;
+  display: grid;
+
+  grid-auto-columns: 1fr;
 
   position: relative;
 
@@ -41,6 +43,8 @@
   width: auto;
 
   overflow-x: auto;
+
+  grid-auto-columns: minmax(min-content, 1fr);
 }
 
 :host(.segment-scrollable::-webkit-scrollbar) {

@@ -1,13 +1,15 @@
 import { expect } from '@playwright/test';
-import type { Locator } from '@playwright/test';
-import type { E2EPage } from '@utils/test/playwright';
+import type { E2EPage, ScreenshotFn } from '@utils/test/playwright';
 
 export const testSlidingItem = async (
   page: E2EPage,
-  item: Locator,
+  itemID: string,
   screenshotNameSuffix: string,
+  screenshot: ScreenshotFn,
   openStart = false
 ) => {
+  const item = page.locator(`#${itemID}`);
+
   // passing a param into the eval callback is tricky due to execution context
   // so just do the check outside the callback instead to make things easy
   if (openStart) {
@@ -23,7 +25,7 @@ export const testSlidingItem = async (
   // opening animation takes longer than waitForChanges accounts for
   await page.waitForTimeout(500);
 
-  await expect(item).toHaveScreenshot(`item-sliding-${screenshotNameSuffix}-${page.getSnapshotSettings()}.png`);
+  await expect(item).toHaveScreenshot(screenshot(`item-sliding-${screenshotNameSuffix}`));
 
   await item.evaluate(async (el: HTMLIonItemSlidingElement) => {
     await el.close();

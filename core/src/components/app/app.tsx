@@ -1,9 +1,9 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Build, Component, Element, Host, Method, h } from '@stencil/core';
+import { isPlatform } from '@utils/platform';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { isPlatform } from '../../utils/platform';
 
 @Component({
   tag: 'ion-app',

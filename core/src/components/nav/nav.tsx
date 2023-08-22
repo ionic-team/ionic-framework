@@ -1,13 +1,14 @@
 import type { EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Method, Prop, Watch, h } from '@stencil/core';
+import { getTimeGivenProgression } from '@utils/animation/cubic-bezier';
+import { assert } from '@utils/helpers';
+import { printIonWarning } from '@utils/logging';
+import type { TransitionOptions } from '@utils/transition';
+import { lifecycle, setPageHidden, transition } from '@utils/transition';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
 import type { Animation, AnimationBuilder, ComponentProps, FrameworkDelegate, Gesture } from '../../interface';
-import { getTimeGivenProgression } from '../../utils/animation/cubic-bezier';
-import { assert } from '../../utils/helpers';
-import type { TransitionOptions } from '../../utils/transition';
-import { lifecycle, setPageHidden, transition } from '../../utils/transition';
 import type { NavOutlet, RouteID, RouteWrite, RouterDirection } from '../router/utils/interface';
 
 import { LIFECYCLE_DID_LEAVE, LIFECYCLE_WILL_LEAVE, LIFECYCLE_WILL_UNLOAD } from './constants';
@@ -30,12 +31,13 @@ import { VIEW_STATE_ATTACHED, VIEW_STATE_DESTROYED, VIEW_STATE_NEW, convertToVie
 export class Nav implements NavOutlet {
   private transInstr: TransitionInstruction[] = [];
   private sbAni?: Animation;
-  private animationEnabled = true;
+  private gestureOrAnimationInProgress = false;
   private useRouter = false;
   private isTransitioning = false;
   private destroyed = false;
   private views: ViewController[] = [];
   private gesture?: Gesture;
+  private didLoad = false;
 
   @Element() el!: HTMLElement;
 
@@ -77,12 +79,25 @@ export class Nav implements NavOutlet {
   @Watch('root')
   rootChanged() {
     const isDev = Build.isDev;
-    if (this.root !== undefined) {
-      if (!this.useRouter) {
+
+    if (this.root === undefined) {
+      return;
+    }
+
+    if (this.didLoad === false) {
+      /**
+       * If the component has not loaded yet, we can skip setting up the root component.
+       * It will be called when `componentDidLoad` fires.
+       */
+      return;
+    }
+
+    if (!this.useRouter) {
+      if (this.root !== undefined) {
         this.setRoot(this.root, this.rootParams);
-      } else if (isDev) {
-        console.warn('<ion-nav> does not support a root attribute when using ion-router.');
       }
+    } else if (isDev) {
+      printIonWarning('<ion-nav> does not support a root attribute when using ion-router.', this.el);
     }
   }
 
@@ -112,6 +127,9 @@ export class Nav implements NavOutlet {
   }
 
   async componentDidLoad() {
+    // We want to set this flag before any watch callbacks are manually called
+    this.didLoad = true;
+
     this.rootChanged();
 
     this.gesture = (await import('../../utils/gesture/swipe-back')).createSwipeBackGesture(
@@ -851,7 +869,36 @@ export class Nav implements NavOutlet {
     // or if it is a portal (modal, actionsheet, etc.)
     const opts = ti.opts!;
 
-    const progressCallback = opts.progressAnimation ? (ani: Animation | undefined) => (this.sbAni = ani) : undefined;
+    const progressCallback = opts.progressAnimation
+      ? (ani: Animation | undefined) => {
+          /**
+           * Because this progress callback is called asynchronously
+           * it is possible for the gesture to start and end before
+           * the animation is ever set. In that scenario, we should
+           * immediately call progressEnd so that the transition promise
+           * resolves and the gesture does not get locked up.
+           */
+          if (ani !== undefined && !this.gestureOrAnimationInProgress) {
+            this.gestureOrAnimationInProgress = true;
+            ani.onFinish(
+              () => {
+                this.gestureOrAnimationInProgress = false;
+              },
+              { oneTimeCallback: true }
+            );
+
+            /**
+             * Playing animation to beginning
+             * with a duration of 0 prevents
+             * any flickering when the animation
+             * is later cleaned up.
+             */
+            ani.progressEnd(0, 0, 0);
+          } else {
+            this.sbAni = ani;
+          }
+        }
+      : undefined;
     const mode = getIonMode(this);
     const enteringEl = enteringView.element!;
     const leavingEl = leavingView && leavingView.element!;
@@ -990,15 +1037,16 @@ export class Nav implements NavOutlet {
 
   private canStart(): boolean {
     return (
+      !this.gestureOrAnimationInProgress &&
       !!this.swipeGesture &&
       !this.isTransitioning &&
       this.transInstr.length === 0 &&
-      this.animationEnabled &&
       this.canGoBackSync()
     );
   }
 
   private onStart() {
+    this.gestureOrAnimationInProgress = true;
     this.pop({ direction: 'back', progressAnimation: true });
   }
 
@@ -1010,10 +1058,9 @@ export class Nav implements NavOutlet {
 
   private onEnd(shouldComplete: boolean, stepValue: number, dur: number) {
     if (this.sbAni) {
-      this.animationEnabled = false;
       this.sbAni.onFinish(
         () => {
-          this.animationEnabled = true;
+          this.gestureOrAnimationInProgress = false;
         },
         { oneTimeCallback: true }
       );
@@ -1037,6 +1084,8 @@ export class Nav implements NavOutlet {
       }
 
       this.sbAni.progressEnd(shouldComplete ? 1 : 0, newStepValue, dur);
+    } else {
+      this.gestureOrAnimationInProgress = false;
     }
   }
 

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Select - toggleIcon</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Select - toggleIcon</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="test-content">
+        <ion-list>
+          <ion-item>
+            <ion-select label="toggleIcon" toggle-icon="arrow-down" placeholder="Select one" interface="popover">
+              <ion-select-option value="apples">Apples</ion-select-option>
+              <ion-select-option value="oranges">Oranges</ion-select-option>
+              <ion-select-option value="pears">Pears</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-select label="expandedIcon" expanded-icon="arrow-up" placeholder="Select one" interface="popover">
+              <ion-select-option value="apples">Apples</ion-select-option>
+              <ion-select-option value="oranges">Oranges</ion-select-option>
+              <ion-select-option value="pears">Pears</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-select
+              label="Both"
+              toggle-icon="arrow-down"
+              expanded-icon="pizza"
+              placeholder="Select one"
+              interface="popover"
+            >
+              <ion-select-option value="apples">Apples</ion-select-option>
+              <ion-select-option value="oranges">Oranges</ion-select-option>
+              <ion-select-option value="pears">Pears</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ion-app>
+  </body>
+</html>

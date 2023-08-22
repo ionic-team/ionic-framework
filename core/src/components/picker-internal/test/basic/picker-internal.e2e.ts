@@ -1,25 +1,18 @@
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
-// TODO: FW-3020
-configs().forEach(({ title, screenshot, config }) => {
-  test.describe(title('picker-internal: rendering'), () => {
-    test.skip('inline pickers should not have visual regression', async ({ page }) => {
-      await page.goto(`/src/components/picker-internal/test/basic`, config);
-
-      await page.setIonViewport();
-
-      await expect(page).toHaveScreenshot(screenshot(`picker-internal-inline-diff`), {
-        fullPage: true,
-      });
-    });
-  });
-});
-
 /**
- * This behavior does not vary across modes.
+ * This behavior does not vary across directions.
  */
 configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('picker-internal: rendering'), () => {
+    test('inline pickers should not have visual regression', async ({ page }) => {
+      await page.goto(`/src/components/picker-internal/test/basic`, config);
+
+      await expect(page.locator('#inline')).toHaveScreenshot(screenshot(`picker-internal-inline-diff`));
+    });
+  });
+
   test.describe(title('picker-internal: overlay rendering'), () => {
     test('popover: should not have visual regression', async ({ page }) => {
       await page.goto(`/src/components/picker-internal/test/basic`, config);

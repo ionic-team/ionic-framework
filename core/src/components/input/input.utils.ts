@@ -1,4 +1,4 @@
-import { printIonError } from '../../utils/logging';
+import { printIonError } from '@utils/logging';
 
 export const getCounterText = (
   value: string | number | null | undefined,

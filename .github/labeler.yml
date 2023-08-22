@@ -9,7 +9,7 @@
   - core/**/*
 
 'package: angular':
-  - angular/**/*
+  - packages/angular/**/*
   - packages/angular-*/**/*
 
 'package: react':

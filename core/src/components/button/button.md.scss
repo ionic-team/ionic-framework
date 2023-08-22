@@ -16,7 +16,7 @@
 
   @include margin($button-md-margin-top, $button-md-margin-end, $button-md-margin-bottom, $button-md-margin-start);
 
-  height: #{$button-md-height};
+  min-height: #{$button-md-min-height};
 
   font-size: #{$button-md-font-size};
   font-weight: #{$button-md-font-weight};
@@ -97,7 +97,7 @@
   --padding-end: #{$button-md-large-padding-end};
   --padding-bottom: #{$button-md-large-padding-bottom};
 
-  height: #{$button-md-large-height};
+  min-height: #{$button-md-large-min-height};
 
   font-size: #{$button-md-large-font-size};
 }
@@ -108,9 +108,14 @@
   --padding-end: #{$button-md-small-padding-end};
   --padding-bottom: #{$button-md-small-padding-bottom};
 
-  height: #{$button-md-small-height};
+  min-height: #{$button-md-small-min-height};
 
   font-size: #{$button-md-small-font-size};
+}
+
+:host(.button-has-icon-only) {
+  --padding-top: 0;
+  --padding-bottom: 0;
 }
 
 

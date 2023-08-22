@@ -1,10 +1,10 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, State, h } from '@stencil/core';
+import { findIonContent, getScrollElement, printIonContentErrorMsg } from '@utils/content';
+import type { KeyboardController } from '@utils/keyboard/keyboard-controller';
+import { createKeyboardController } from '@utils/keyboard/keyboard-controller';
 
 import { getIonMode } from '../../global/ionic-global';
-import { findIonContent, getScrollElement, printIonContentErrorMsg } from '../../utils/content';
-import type { KeyboardController } from '../../utils/keyboard/keyboard-controller';
-import { createKeyboardController } from '../../utils/keyboard/keyboard-controller';
 
 import { handleFooterFade } from './footer.utils';
 
