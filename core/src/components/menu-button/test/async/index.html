@@ -20,30 +20,19 @@
 
   <body>
     <ion-app>
-      <ion-menu content-id="main">
-        <ion-header>
-          <ion-toolbar color="tertiary">
-            <ion-title>Custom Menu</ion-title>
-          </ion-toolbar>
-        </ion-header>
-        <ion-content>
-          <ion-list>
-            <ion-item>Menu Item</ion-item>
-            <ion-item>Menu Item</ion-item>
-            <ion-item>Menu Item</ion-item>
-            <ion-item>Menu Item</ion-item>
-            <ion-item>Menu Item</ion-item>
-          </ion-list>
-        </ion-content>
-      </ion-menu>
+      <div id="menu-container">
+        <ion-menu content-id="main">
+          <ion-content class="ion-padding">
+            Menu Content
+          </ion-content>
+        </ion-menu>
+      </div>
 
       <div class="ion-page" id="main">
         <ion-header>
           <ion-toolbar>
             <ion-title>Menu - Basic</ion-title>
-            <ion-buttons slot="start">
-              <ion-menu-button></ion-menu-button>
-            </ion-buttons>
+            <ion-buttons slot="start" id="buttons-container"></ion-buttons>
           </ion-toolbar>
         </ion-header>
         <ion-content class="ion-padding">
@@ -55,15 +44,23 @@
     </ion-app>
 
     <script>
+      const buttons = document.querySelector('ion-buttons');
+      const menuButton = document.createElement('ion-menu-button');
       const menu = document.querySelector('ion-menu');
-      const app = document.querySelector('ion-app');
+      const menuContainer = document.querySelector('#menu-container');
+
+      let firstLoad = true;
 
       // When the menu loads, immediately remove it from the DOM
-      window.addEventListener('ionMenuChange', () => {
-        menu.remove();
+      document.body.addEventListener('ionMenuChange', () => {
+        if (firstLoad) {
+          menuContainer.removeChild(menu);
+          buttons.appendChild(menuButton);
+          firstLoad = false;
+        }
       });
       const trigger = () => {
-        app.appendChild(menu)
+        menuContainer.append(menu)
       }
     </script>
   </body>

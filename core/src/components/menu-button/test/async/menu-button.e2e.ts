@@ -13,6 +13,9 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       const menuButton = page.locator('ion-menu-button');
       const triggerButton = page.locator('#trigger');
 
+      await expect(menu).not.toBeAttached();
+      await expect(menuButton).toBeHidden();
+
       await triggerButton.click();
 
       await expect(menu).toBeAttached();
