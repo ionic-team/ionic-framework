@@ -4,7 +4,7 @@
 // --------------------------------------------------
 
 /// @prop - Font size of the item option button
-$item-option-button-ios-font-size:          16px !default;
+$item-option-button-ios-font-size:          dynamic-font-clamp(1, 16px, 1.6) !default;
 
 /// @prop - Background color of the item option button
 $item-option-button-ios-background-color:   ion-color(primary, base) !default;
