@@ -55,24 +55,131 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   });
 
   test.describe(title('toast: font scaling'), () => {
-    test.only('should scale text on larger font sizes', async ({ page }) => {
-      await page.setContent(`
+    test('should scale header text on larger font sizes', async ({ page }) => {
+      await page.setContent(
+        `
         <style>
           html {
             font-size: 310%;
           }
         </style>
 
-        <ion-toast is-open="true">
-          Hello world
-        </ion-toast>
-      `, config);
+        <ion-toast is-open="true" header="Testing" message="Hello world"></ion-toast>
+      `,
+        config
+      );
 
       const toast = page.locator('ion-toast');
 
       await expect(toast).toBeVisible();
 
-      await expect(toast).toHaveScreenshot(screenshot('toast-scale'));
+      const toastWrapper = toast.locator('.toast-wrapper');
+      await expect(toastWrapper).toHaveScreenshot(screenshot('toast-header-scale'));
+    });
+
+    test('should scale message text on larger font sizes', async ({ page }) => {
+      await page.setContent(
+        `
+        <style>
+          html {
+            font-size: 310%;
+          }
+        </style>
+
+        <ion-toast is-open="true" message="Hello world"></ion-toast>
+      `,
+        config
+      );
+
+      const toast = page.locator('ion-toast');
+
+      await expect(toast).toBeVisible();
+
+      const toastWrapper = toast.locator('.toast-wrapper');
+      await expect(toastWrapper).toHaveScreenshot(screenshot('toast-message-scale'));
+    });
+
+    test('should scale content icon on larger font sizes', async ({ page }) => {
+      await page.setContent(
+        `
+        <style>
+          html {
+            font-size: 310%;
+          }
+        </style>
+
+        <ion-toast is-open="true" message="Hello world" icon="alert"></ion-toast>
+      `,
+        config
+      );
+
+      const toast = page.locator('ion-toast');
+
+      await expect(toast).toBeVisible();
+
+      const toastWrapper = toast.locator('.toast-wrapper');
+      await expect(toastWrapper).toHaveScreenshot(screenshot('toast-icon-scale'));
+    });
+
+    test('should scale button text on larger font sizes', async ({ page }) => {
+      await page.setContent(
+        `
+        <style>
+          html {
+            font-size: 310%;
+          }
+        </style>
+
+        <ion-toast is-open="true" message="Hello world"></ion-toast>
+      `,
+        config
+      );
+
+      const toast = page.locator('ion-toast');
+
+      toast.evaluate((el: HTMLIonToastElement) => {
+        el.buttons = [
+          {
+            text: 'Cancel',
+          },
+        ];
+      });
+
+      await expect(toast).toBeVisible();
+
+      const toastWrapper = toast.locator('.toast-wrapper');
+      await expect(toastWrapper).toHaveScreenshot(screenshot('toast-buttons-scale'));
+    });
+
+    test('should scale buttons and icons on larger font sizes', async ({ page }) => {
+      await page.setContent(
+        `
+        <style>
+          html {
+            font-size: 310%;
+          }
+        </style>
+
+        <ion-toast is-open="true" message="Hello world"></ion-toast>
+      `,
+        config
+      );
+
+      const toast = page.locator('ion-toast');
+
+      toast.evaluate((el: HTMLIonToastElement) => {
+        el.buttons = [
+          {
+            text: 'Cancel',
+            icon: 'close',
+          },
+        ];
+      });
+
+      await expect(toast).toBeVisible();
+
+      const toastWrapper = toast.locator('.toast-wrapper');
+      await expect(toastWrapper).toHaveScreenshot(screenshot('toast-buttons-icon-scale'));
     });
   });
 });

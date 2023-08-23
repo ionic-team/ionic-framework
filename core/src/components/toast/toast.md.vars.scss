@@ -19,7 +19,7 @@ $toast-md-color:                                   $background-color-step-50 !de
 $toast-md-border-radius:                           4px !default;
 
 /// @prop - Font size of the toast message
-$toast-md-header-line-height:                      20px !default;
+$toast-md-header-line-height:                      dynamic-type(20px) !default;
 
 /// @prop - Font size of the toast message
 $toast-md-header-font-weight:                      500 !default;
@@ -28,7 +28,7 @@ $toast-md-header-font-weight:                      500 !default;
 $toast-md-header-margin-bottom:                    2px !default;
 
 /// @prop - Font size of the toast message
-$toast-md-message-line-height:                     20px !default;
+$toast-md-message-line-height:                     dynamic-type(20px) !default;
 
 /// @prop - Padding top of the toast message
 $toast-md-content-padding-top:                     14px !default;
@@ -55,7 +55,7 @@ $toast-md-button-padding-bottom:                   $toast-md-button-padding-top 
 $toast-md-button-padding-start:                    15px !default;
 
 /// @prop - Font size of the toast button
-$toast-md-button-font-size:                        14px !default;
+$toast-md-button-font-size:                        dynamic-font(14px) !default;
 
 /// @prop - Font weight of the toast button
 $toast-md-button-font-weight:                      500 !default;

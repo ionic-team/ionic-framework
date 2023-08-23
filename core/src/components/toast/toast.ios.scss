@@ -68,7 +68,7 @@
 .toast-button {
   @include padding($toast-ios-button-padding-top, $toast-ios-button-padding-end, $toast-ios-button-padding-bottom, $toast-ios-button-padding-start);
 
-  height: $toast-ios-button-min-height;
+  min-height: $toast-ios-button-min-height;
 
   transition: background-color, opacity 100ms linear;
 
