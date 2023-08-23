@@ -2221,6 +2221,10 @@ export namespace Components {
     }
     interface IonRadio {
         /**
+          * How to pack the label and control along the cross axis when using `labelPlacement="stacked"`. `"start"`: The label and control will appear at the top of the container. `"center"`: The label and control will appear at the center of the container.
+         */
+        "align": 'start' | 'center';
+        /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
         "color"?: Color;
@@ -2229,13 +2233,13 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * How to pack the label and radio within a line. `"start"`: The label and radio will appear on the left in LTR and on the right in RTL. `"end"`: The label and radio will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and radio will appear on opposite ends of the line with space between the two elements.
+          * How to pack the label and radio within a line when using `labelPlacement="start | end | fixed"`. `"start"`: The label and radio will appear on the left in LTR and on the right in RTL. `"end"`: The label and radio will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and radio will appear on opposite ends of the line with space between the two elements.
          */
         "justify": 'start' | 'end' | 'space-between';
         /**
           * Where to place the label relative to the radio. `"start"`: The label will appear to the left of the radio in LTR and to the right in RTL. `"end"`: The label will appear to the right of the radio in LTR and to the left in RTL. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
          */
-        "labelPlacement": 'start' | 'end' | 'fixed';
+        "labelPlacement": 'start' | 'end' | 'fixed' | 'stacked';
         /**
           * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the default slot that contains the label text. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
          */
@@ -6235,6 +6239,10 @@ declare namespace LocalJSX {
     }
     interface IonRadio {
         /**
+          * How to pack the label and control along the cross axis when using `labelPlacement="stacked"`. `"start"`: The label and control will appear at the top of the container. `"center"`: The label and control will appear at the center of the container.
+         */
+        "align"?: 'start' | 'center';
+        /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
         "color"?: Color;
@@ -6243,13 +6251,13 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
-          * How to pack the label and radio within a line. `"start"`: The label and radio will appear on the left in LTR and on the right in RTL. `"end"`: The label and radio will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and radio will appear on opposite ends of the line with space between the two elements.
+          * How to pack the label and radio within a line when using `labelPlacement="start | end | fixed"`. `"start"`: The label and radio will appear on the left in LTR and on the right in RTL. `"end"`: The label and radio will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and radio will appear on opposite ends of the line with space between the two elements.
          */
         "justify"?: 'start' | 'end' | 'space-between';
         /**
           * Where to place the label relative to the radio. `"start"`: The label will appear to the left of the radio in LTR and to the right in RTL. `"end"`: The label will appear to the right of the radio in LTR and to the left in RTL. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
          */
-        "labelPlacement"?: 'start' | 'end' | 'fixed';
+        "labelPlacement"?: 'start' | 'end' | 'fixed' | 'stacked';
         /**
           * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt components in to the modern form markup when they are using either the `aria-label` attribute or the default slot that contains the label text. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior. Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
          */

@@ -137,5 +137,35 @@ configs().forEach(({ title, screenshot, config }) => {
         expect(await radio.screenshot()).toMatchSnapshot(screenshot(`radio-label-fixed-justify-space-between`));
       });
     });
+
+    test.describe('radio: stacked placement', () => {
+      test('should render a start alignment with label in the stacked position', async ({ page }) => {
+        await page.setContent(
+          `
+            <ion-radio-group value="1">
+              <ion-radio label-placement="stacked" align="start" style="width: 200px" value="1">This is a long label</ion-radio>
+            </ion-radio-group>
+          `,
+          config
+        );
+
+        const radio = page.locator('ion-radio');
+        expect(await radio.screenshot()).toMatchSnapshot(screenshot(`radio-label-stacked-align-start`));
+      });
+
+      test('should render a center alignment with label in the stacked position', async ({ page }) => {
+        await page.setContent(
+          `
+            <ion-radio-group value="1">
+              <ion-radio label-placement="stacked" align="center" style="width: 200px" value="1">This is a long label</ion-radio>
+            </ion-radio-group>
+          `,
+          config
+        );
+
+        const radio = page.locator('ion-radio');
+        expect(await radio.screenshot()).toMatchSnapshot(screenshot(`radio-label-stacked-align-center`));
+      });
+    });
   });
 });
