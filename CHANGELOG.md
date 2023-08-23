@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.3.1](https://github.com/ionic-team/ionic-framework/compare/v7.3.0...v7.3.1) (2023-08-23)
+
+
+### Bug Fixes
+
+* **angular:** ionTabsWillChange is fired before tab activation ([#27991](https://github.com/ionic-team/ionic-framework/issues/27991)) ([bbfb8f8](https://github.com/ionic-team/ionic-framework/commit/bbfb8f81a61475d7e73b63743db5d6a0cd979d21)), closes [#27212](https://github.com/ionic-team/ionic-framework/issues/27212)
+* **input, textarea:** clearOnEdit does not clear when pressing Tab ([#28005](https://github.com/ionic-team/ionic-framework/issues/28005)) ([444acc1](https://github.com/ionic-team/ionic-framework/commit/444acc1f1bca348b62dfb398067cc087529f67f1)), closes [#27746](https://github.com/ionic-team/ionic-framework/issues/27746)
+* **react:** avoid multiple invocations of onDidDismiss and onWillPresent ([#28020](https://github.com/ionic-team/ionic-framework/issues/28020)) ([0ac3df3](https://github.com/ionic-team/ionic-framework/commit/0ac3df3f378bdefc3a927adc798ebd9ec7a54fee)), closes [#28010](https://github.com/ionic-team/ionic-framework/issues/28010)
+
+
+
+
+
 # [7.3.0](https://github.com/ionic-team/ionic-framework/compare/v7.2.4...v7.3.0) (2023-08-16)
 
 
