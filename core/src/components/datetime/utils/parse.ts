@@ -1,3 +1,5 @@
+import { printIonWarning } from '@utils/logging';
+
 import type { DatetimeParts } from '../datetime-interface';
 
 import { isAfter, isBefore } from './comparison';
@@ -56,14 +58,32 @@ export const getPartsFromCalendarDay = (el: HTMLElement): DatetimeParts => {
  * We do not use the JS Date object here because
  * it adjusts the date for the current timezone.
  */
-export function parseDate(val: string): DatetimeParts;
-export function parseDate(val: string[]): DatetimeParts[];
+export function parseDate(val: string): DatetimeParts | undefined;
+export function parseDate(val: string[]): DatetimeParts[] | undefined;
 export function parseDate(val: undefined | null): undefined;
-export function parseDate(val: string | string[]): DatetimeParts | DatetimeParts[];
+export function parseDate(val: string | string[]): DatetimeParts | DatetimeParts[] | undefined;
 export function parseDate(val: string | string[] | undefined | null): DatetimeParts | DatetimeParts[] | undefined;
 export function parseDate(val: string | string[] | undefined | null): DatetimeParts | DatetimeParts[] | undefined {
   if (Array.isArray(val)) {
-    return val.map((valStr) => parseDate(valStr));
+    const parsedArray: DatetimeParts[] = [];
+    for (const valStr of val) {
+      const parsedVal = parseDate(valStr);
+
+      /**
+       * If any of the values weren't parsed correctly, consider
+       * the entire batch incorrect. This simplifies the type
+       * signatures by having "undefined" be a general error case
+       * instead of returning (Datetime | undefined)[], which is
+       * harder for TS to perform type narrowing on.
+       */
+      if (!parsedVal) {
+        return undefined;
+      }
+
+      parsedArray.push(parsedVal);
+    }
+
+    return parsedArray;
   }
 
   // manually parse IS0 cuz Date.parse cannot be trusted
@@ -85,6 +105,7 @@ export function parseDate(val: string | string[] | undefined | null): DatetimePa
 
   if (parse === null) {
     // wasn't able to parse the ISO datetime
+    printIonWarning(`Unable to parse date string: ${val}. Please provide a valid ISO 8601 datetime string.`);
     return undefined;
   }
 
@@ -132,8 +153,10 @@ export const parseAmPm = (hour: number) => {
  * For example, max="2012" would fill in the missing
  * month, day, hour, and minute information.
  */
-export const parseMaxParts = (max: string, todayParts: DatetimeParts): DatetimeParts => {
-  const { month, day, year, hour, minute } = parseDate(max);
+export const parseMaxParts = (max: string, todayParts: DatetimeParts): DatetimeParts | undefined => {
+  const parsedMax = parseDate(max);
+  if (!parsedMax) return;
+  const { month, day, year, hour, minute } = parsedMax;
 
   /**
    * When passing in `max` or `min`, developers
@@ -168,8 +191,10 @@ export const parseMaxParts = (max: string, todayParts: DatetimeParts): DatetimeP
  * For example, min="2012" would fill in the missing
  * month, day, hour, and minute information.
  */
-export const parseMinParts = (min: string, todayParts: DatetimeParts): DatetimeParts => {
-  const { month, day, year, hour, minute } = parseDate(min);
+export const parseMinParts = (min: string, todayParts: DatetimeParts): DatetimeParts | undefined => {
+  const parsedMin = parseDate(min);
+  if (!parsedMin) return;
+  const { month, day, year, hour, minute } = parsedMin;
 
   /**
    * When passing in `max` or `min`, developers
