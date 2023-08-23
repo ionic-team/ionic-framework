@@ -847,6 +847,7 @@ export const IonToggle = /*@__PURE__*/ defineContainer<JSX.IonToggle, JSX.IonTog
   'labelPlacement',
   'legacy',
   'justify',
+  'align',
   'ionChange',
   'ionFocus',
   'ionBlur',
