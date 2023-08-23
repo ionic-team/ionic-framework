@@ -58,6 +58,20 @@ configs().forEach(({ title, screenshot, config }) => {
 
         expect(await range.screenshot()).toMatchSnapshot(screenshot(`range-no-items-fixed`));
       });
+      test('should render label in the stacked placement', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-range label-placement="stacked">
+            <span slot="label">Volume</span>
+          </ion-range>
+        `,
+          config
+        );
+
+        const range = page.locator('ion-range');
+
+        expect(await range.screenshot()).toMatchSnapshot(screenshot(`range-no-items-stacked`));
+      });
     });
 
     test.describe('range: start and end items', () => {
@@ -124,6 +138,22 @@ configs().forEach(({ title, screenshot, config }) => {
 
         expect(await range.screenshot()).toMatchSnapshot(screenshot(`range-items-fixed`));
       });
+      test('should render label in the stacked placement', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-range label-placement="stacked">
+            <ion-icon name="volume-off" slot="start"></ion-icon>
+            <ion-icon name="volume-high" slot="end"></ion-icon>
+            <span slot="label">Volume</span>
+          </ion-range>
+        `,
+          config
+        );
+
+        const range = page.locator('ion-range');
+
+        expect(await range.screenshot()).toMatchSnapshot(screenshot(`range-items-stacked`));
+      });
     });
 
     test.describe('range: label prop', () => {
@@ -149,6 +179,14 @@ configs().forEach(({ title, screenshot, config }) => {
         const range = page.locator('ion-range');
 
         expect(await range.screenshot()).toMatchSnapshot(screenshot(`range-label-prop-fixed`));
+      });
+
+      test('should render label in the stacked placement', async ({ page }) => {
+        await page.setContent(`<ion-range label-placement="stacked" label="Volume"></ion-range>`, config);
+
+        const range = page.locator('ion-range');
+
+        expect(await range.screenshot()).toMatchSnapshot(screenshot(`range-label-prop-stacked`));
       });
     });
   });
