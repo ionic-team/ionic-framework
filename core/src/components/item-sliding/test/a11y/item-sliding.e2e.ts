@@ -5,7 +5,7 @@ import { testSlidingItem } from '../test.utils';
 /**
  * This behavior does not vary across directions
  */
-configs({ directions: ['ltr']} ).forEach(({ title, screenshot, config }) => {
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('item-sliding: font scaling'), () => {
     test('should scale text on larger font sizes', async ({ page }) => {
       await page.setContent(
