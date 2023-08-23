@@ -3,12 +3,6 @@ import { Inject, Injectable, NgZone } from '@angular/core';
 import { BackButtonEventDetail, KeyboardEventDetail, Platforms, getPlatforms, isPlatform } from '@ionic/core';
 import { Subject, Subscription } from 'rxjs';
 
-declare global {
-  interface Window {
-    cordova?: unknown
-  }
-}
-
 export interface BackButtonEmitter extends Subject<BackButtonEventDetail> {
   subscribeWithPriority(
     priority: number,
@@ -21,7 +15,7 @@ export interface BackButtonEmitter extends Subject<BackButtonEventDetail> {
 })
 export class Platform {
   private _readyPromise: Promise<string>;
-  private win: Window;
+  private win: any;
 
   /**
    * @hidden
@@ -62,10 +56,9 @@ export class Platform {
    */
   resize = new Subject<void>();
 
-  constructor(@Inject(DOCUMENT) private doc: Document, zone: NgZone) {
+  constructor(@Inject(DOCUMENT) private doc: any, zone: NgZone) {
     zone.run(() => {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      this.win = doc.defaultView!;
+      this.win = doc.defaultView;
       this.backButton.subscribeWithPriority = function (priority, callback) {
         return this.subscribe((ev) => {
           return ev.register(priority, (processNextHandler) => zone.run(() => callback(processNextHandler)));
@@ -83,7 +76,7 @@ export class Platform {
       this._readyPromise = new Promise((res) => {
         readyResolve = res;
       });
-      if (this.win?.cordova) {
+      if (this.win?.['cordova']) {
         doc.addEventListener(
           'deviceready',
           () => {
