@@ -158,6 +158,18 @@ input {
   justify-content: end;
 }
 
+// Toggle Align
+// --------------------------------------------------
+
+
+:host(.toggle-align-start) .toggle-wrapper {
+  align-items: start;
+}
+
+:host(.toggle-align-center) .toggle-wrapper {
+  align-items: center;
+}
+
 // Toggle Label Placement - Start
 // ----------------------------------------------------------------
 
@@ -220,6 +232,25 @@ input {
   width: 100px;
   min-width: 100px;
   max-width: 200px;
+}
+
+// Toggle Label Placement - Stacked
+// ----------------------------------------------------------------
+
+/**
+ * Label is on top of the radio.
+ */
+:host(.toggle-label-placement-stacked) .toggle-wrapper {
+  flex-direction: column;
+}
+
+:host(.toggle-label-placement-stacked) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the input should be on the bottom
+   * when the label sits on top.
+   */
+  @include margin(null, 0, $form-control-label-margin, 0);
 }
 
 // Toggle Background Track: Unchecked

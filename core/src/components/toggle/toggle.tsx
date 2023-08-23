@@ -90,8 +90,9 @@ export class Toggle implements ComponentInterface {
    * `"start"`: The label will appear to the left of the toggle in LTR and to the right in RTL.
    * `"end"`: The label will appear to the right of the toggle in LTR and to the left in RTL.
    * `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+   * `"stacked"`: The label will appear above the toggle in all directions.
    */
-  @Prop() labelPlacement: 'start' | 'end' | 'fixed' = 'start';
+  @Prop() labelPlacement: 'start' | 'end' | 'fixed' | 'stacked' = 'start';
 
   /**
    * Set the `legacy` property to `true` to forcibly use the legacy form control markup.
@@ -114,6 +115,13 @@ export class Toggle implements ComponentInterface {
    * ends of the line with space between the two elements.
    */
   @Prop() justify: 'start' | 'end' | 'space-between' = 'space-between';
+
+  /**
+   * How to pack the label and control along the cross axis when using `labelPlacement="stacked"`.
+   * `"start"`: The label and control will appear at the top of the container.
+   * `"center"`: The label and control will appear at the center of the container.
+   */
+  @Prop() align: 'start' | 'center' = 'start';
 
   /**
    * Emitted when the user switches the toggle on or off. Does not emit
@@ -319,7 +327,7 @@ export class Toggle implements ComponentInterface {
   }
 
   private renderToggle() {
-    const { activated, color, checked, disabled, el, justify, labelPlacement, inputId, name } = this;
+    const { activated, color, checked, disabled, el, justify, labelPlacement, inputId, name, align } = this;
 
     const mode = getIonMode(this);
     const value = this.getValue();
@@ -335,7 +343,8 @@ export class Toggle implements ComponentInterface {
           'toggle-activated': activated,
           'toggle-checked': checked,
           'toggle-disabled': disabled,
-          [`toggle-justify-${justify}`]: true,
+          [`toggle-justify-${justify}`]: labelPlacement !== 'stacked',
+          [`toggle-align-${align}`]: labelPlacement === 'stacked',
           [`toggle-label-placement-${labelPlacement}`]: true,
           [`toggle-${rtl}`]: true,
         })}

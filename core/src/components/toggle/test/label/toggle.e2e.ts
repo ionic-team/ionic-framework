@@ -126,4 +126,30 @@ configs().forEach(({ title, screenshot, config }) => {
       expect(await toggle.screenshot()).toMatchSnapshot(screenshot(`toggle-label-fixed-justify-space-between`));
     });
   });
+
+  test.describe(title('toggle: stacked placement'), () => {
+    test('should render a start alignment with label in the stacked position', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-toggle label-placement="stacked" align="start" style="width: 200px">This is a long label</ion-toggle>
+        `,
+        config
+      );
+
+      const toggle = page.locator('ion-toggle');
+      expect(await toggle.screenshot()).toMatchSnapshot(screenshot(`toggle-label-stacked-align-start`));
+    });
+
+    test('should render a center alignment with label in the stacked position', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-toggle label-placement="stacked" align="center" style="width: 200px">This is a long label</ion-toggle>
+        `,
+        config
+      );
+
+      const toggle = page.locator('ion-toggle');
+      expect(await toggle.screenshot()).toMatchSnapshot(screenshot(`toggle-label-stacked-align-center`));
+    });
+  });
 });
