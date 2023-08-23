@@ -3,6 +3,7 @@ import { Component, Element, Event, Host, Listen, Method, Prop, Watch, forceUpda
 import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
 import type { Gesture } from '@utils/gesture';
 import { createButtonActiveGesture } from '@utils/gesture/button-active';
+import { raf } from '@utils/helpers';
 import {
   createDelegateController,
   createTriggerController,
@@ -346,19 +347,25 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
   componentDidLoad() {
     /**
-     * Do not create gesture if:
-     * 1. A gesture already exists
-     * 2. App is running in MD mode
-     * 3. A wrapper ref does not exist
+     * Only create gesture if:
+     * 1. A gesture does not already exist
+     * 2. App is running in iOS mode
+     * 3. A wrapper ref exists
      */
-    if (this.gesture || getIonMode(this) === 'md' || !this.wrapperEl) {
-      return;
+    if (!this.gesture && getIonMode(this) === 'ios' && this.wrapperEl) {
+      this.gesture = createButtonActiveGesture(this.wrapperEl, (refEl: HTMLElement) =>
+        refEl.classList.contains('alert-button')
+      );
+      this.gesture.enable(true);
     }
 
-    this.gesture = createButtonActiveGesture(this.wrapperEl, (refEl: HTMLElement) =>
-      refEl.classList.contains('alert-button')
-    );
-    this.gesture.enable(true);
+    /**
+     * If alert was rendered with isOpen="true"
+     * then we should open alert immediately.
+     */
+    if (this.isOpen === true) {
+      raf(() => this.present());
+    }
   }
 
   /**
@@ -666,6 +673,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
       <div class={alertButtonGroupClass}>
         {buttons.map((button) => (
           <button
+            {...button.htmlAttributes}
             type="button"
             id={button.id}
             class={buttonClass(button)}

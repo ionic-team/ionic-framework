@@ -34,13 +34,14 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       `,
         config
       );
+
       await page.waitForSelector('.datetime-ready');
 
       const datetime = page.locator('ion-datetime');
       const activeDayButton = page.locator('.calendar-day-active');
       const monthYearButton = page.locator('.calendar-month-year');
       const monthColumn = page.locator('.month-column');
-      const yearColumn = page.locator('.year-column');
+      const ionChange = await page.spyOnEvent('ionChange');
 
       await datetime.evaluate((el: HTMLIonDatetimeElement) => (el.value = '2021-10-05'));
 
@@ -49,11 +50,9 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await page.waitForChanges();
 
       // Select October 2021
+      // The year will automatically switch to 2021 when selecting 10
       await monthColumn.locator('.picker-item[data-value="10"]').click();
-      await page.waitForChanges();
-
-      await yearColumn.locator('.picker-item[data-value="2021"]').click();
-      await page.waitForChanges();
+      await ionChange.next();
 
       // Close month/year picker
       await monthYearButton.click();

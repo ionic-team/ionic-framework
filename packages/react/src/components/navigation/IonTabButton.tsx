@@ -9,7 +9,7 @@ type Props = LocalJSX.IonTabButton &
   IonicReactProps & {
     routerOptions?: RouterOptions;
     ref?: React.Ref<HTMLIonTabButtonElement>;
-    onClick?: (e: Event) => void;
+    onClick?: (e: CustomEvent) => void;
   };
 
 export const IonTabButton = /*@__PURE__*/ (() =>
