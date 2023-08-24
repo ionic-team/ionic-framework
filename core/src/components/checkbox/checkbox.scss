@@ -82,8 +82,6 @@
 
   flex-grow: 1;
 
-  align-items: center;
-
   height: inherit;
 
   cursor: inherit;
@@ -184,14 +182,13 @@ input {
 // Align Items
 // ---------------------------------------------
 
-:host(.checkbox-label-placement-stacked.checkbox-align-start) .checkbox-wrapper {
+:host(.checkbox-align-start) .checkbox-wrapper {
   align-items: start;
 }
 
-:host(.checkbox-label-placement-stacked.checkbox-align-center) .checkbox-wrapper {
+:host(.checkbox-align-center) .checkbox-wrapper {
   align-items: center;
 }
-
 
 // Label Placement - Start
 // ----------------------------------------------------------------

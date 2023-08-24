@@ -212,6 +212,7 @@ export const IonCheckbox = /*@__PURE__*/ defineContainer<JSX.IonCheckbox, JSX.Io
   'value',
   'labelPlacement',
   'justify',
+  'align',
   'legacy',
   'ionChange',
   'ionFocus',
@@ -585,6 +586,7 @@ export const IonRadio = /*@__PURE__*/ defineContainer<JSX.IonRadio, JSX.IonRadio
   'labelPlacement',
   'legacy',
   'justify',
+  'align',
   'ionStyle',
   'ionFocus',
   'ionBlur'
@@ -845,6 +847,7 @@ export const IonToggle = /*@__PURE__*/ defineContainer<JSX.IonToggle, JSX.IonTog
   'labelPlacement',
   'legacy',
   'justify',
+  'align',
   'ionChange',
   'ionFocus',
   'ionBlur',

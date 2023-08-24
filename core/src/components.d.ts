@@ -603,7 +603,7 @@ export namespace Components {
     }
     interface IonCheckbox {
         /**
-          * How to pack the label and control along the cross axis when using `labelPlacement="stacked"`. `"start"`: The label and control will appear at the top of the container. `"center"`: The label and control will appear at the center of the container.
+          * How to pack the label and control along the cross axis. `"start"`: The label and control will appear at the top of the container. `"center"`: The label and control will appear at the center of the container.
          */
         "align": 'start' | 'center';
         /**
@@ -623,7 +623,7 @@ export namespace Components {
          */
         "indeterminate": boolean;
         /**
-          * How to pack the label and checkbox within a line when using `labelPlacement="start | end | fixed"`. `"start"`: The label and checkbox will appear on the left in LTR and on the right in RTL. `"end"`: The label and checkbox will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and checkbox will appear on opposite ends of the line with space between the two elements.
+          * How to pack the label and checkbox within a line. `"start"`: The label and checkbox will appear on the left in LTR and on the right in RTL. `"end"`: The label and checkbox will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and checkbox will appear on opposite ends of the line with space between the two elements.
          */
         "justify": 'start' | 'end' | 'space-between';
         /**
@@ -2221,7 +2221,7 @@ export namespace Components {
     }
     interface IonRadio {
         /**
-          * How to pack the label and control along the cross axis when using `labelPlacement="stacked"`. `"start"`: The label and control will appear at the top of the container. `"center"`: The label and control will appear at the center of the container.
+          * How to pack the label and control along the cross axis. `"start"`: The label and control will appear at the top of the container. `"center"`: The label and control will appear at the center of the container.
          */
         "align": 'start' | 'center';
         /**
@@ -2233,7 +2233,7 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
-          * How to pack the label and radio within a line when using `labelPlacement="start | end | fixed"`. `"start"`: The label and radio will appear on the left in LTR and on the right in RTL. `"end"`: The label and radio will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and radio will appear on opposite ends of the line with space between the two elements.
+          * How to pack the label and radio within a line. `"start"`: The label and radio will appear on the left in LTR and on the right in RTL. `"end"`: The label and radio will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and radio will appear on opposite ends of the line with space between the two elements.
          */
         "justify": 'start' | 'end' | 'space-between';
         /**
@@ -3174,7 +3174,7 @@ export namespace Components {
     }
     interface IonToggle {
         /**
-          * How to pack the label and control along the cross axis when using `labelPlacement="stacked"`. `"start"`: The label and control will appear at the top of the container. `"center"`: The label and control will appear at the center of the container.
+          * How to pack the label and control along the cross axis. `"start"`: The label and control will appear at the top of the container. `"center"`: The label and control will appear at the center of the container.
          */
         "align": 'start' | 'center';
         /**
@@ -3194,7 +3194,7 @@ export namespace Components {
          */
         "enableOnOffLabels": boolean | undefined;
         /**
-          * How to pack the label and toggle within a line when using `labelPlacement="start | end | fixed"`. `"start"`: The label and toggle will appear on the left in LTR and on the right in RTL. `"end"`: The label and toggle will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and toggle will appear on opposite ends of the line with space between the two elements.
+          * How to pack the label and toggle within a line`. `"start"`: The label and toggle will appear on the left in LTR and on the right in RTL. `"end"`: The label and toggle will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and toggle will appear on opposite ends of the line with space between the two elements.
          */
         "justify": 'start' | 'end' | 'space-between';
         /**
@@ -4638,7 +4638,7 @@ declare namespace LocalJSX {
     }
     interface IonCheckbox {
         /**
-          * How to pack the label and control along the cross axis when using `labelPlacement="stacked"`. `"start"`: The label and control will appear at the top of the container. `"center"`: The label and control will appear at the center of the container.
+          * How to pack the label and control along the cross axis. `"start"`: The label and control will appear at the top of the container. `"center"`: The label and control will appear at the center of the container.
          */
         "align"?: 'start' | 'center';
         /**
@@ -4658,7 +4658,7 @@ declare namespace LocalJSX {
          */
         "indeterminate"?: boolean;
         /**
-          * How to pack the label and checkbox within a line when using `labelPlacement="start | end | fixed"`. `"start"`: The label and checkbox will appear on the left in LTR and on the right in RTL. `"end"`: The label and checkbox will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and checkbox will appear on opposite ends of the line with space between the two elements.
+          * How to pack the label and checkbox within a line. `"start"`: The label and checkbox will appear on the left in LTR and on the right in RTL. `"end"`: The label and checkbox will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and checkbox will appear on opposite ends of the line with space between the two elements.
          */
         "justify"?: 'start' | 'end' | 'space-between';
         /**
@@ -6243,7 +6243,7 @@ declare namespace LocalJSX {
     }
     interface IonRadio {
         /**
-          * How to pack the label and control along the cross axis when using `labelPlacement="stacked"`. `"start"`: The label and control will appear at the top of the container. `"center"`: The label and control will appear at the center of the container.
+          * How to pack the label and control along the cross axis. `"start"`: The label and control will appear at the top of the container. `"center"`: The label and control will appear at the center of the container.
          */
         "align"?: 'start' | 'center';
         /**
@@ -6255,7 +6255,7 @@ declare namespace LocalJSX {
          */
         "disabled"?: boolean;
         /**
-          * How to pack the label and radio within a line when using `labelPlacement="start | end | fixed"`. `"start"`: The label and radio will appear on the left in LTR and on the right in RTL. `"end"`: The label and radio will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and radio will appear on opposite ends of the line with space between the two elements.
+          * How to pack the label and radio within a line. `"start"`: The label and radio will appear on the left in LTR and on the right in RTL. `"end"`: The label and radio will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and radio will appear on opposite ends of the line with space between the two elements.
          */
         "justify"?: 'start' | 'end' | 'space-between';
         /**
@@ -7319,7 +7319,7 @@ declare namespace LocalJSX {
     }
     interface IonToggle {
         /**
-          * How to pack the label and control along the cross axis when using `labelPlacement="stacked"`. `"start"`: The label and control will appear at the top of the container. `"center"`: The label and control will appear at the center of the container.
+          * How to pack the label and control along the cross axis. `"start"`: The label and control will appear at the top of the container. `"center"`: The label and control will appear at the center of the container.
          */
         "align"?: 'start' | 'center';
         /**
@@ -7339,7 +7339,7 @@ declare namespace LocalJSX {
          */
         "enableOnOffLabels"?: boolean | undefined;
         /**
-          * How to pack the label and toggle within a line when using `labelPlacement="start | end | fixed"`. `"start"`: The label and toggle will appear on the left in LTR and on the right in RTL. `"end"`: The label and toggle will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and toggle will appear on opposite ends of the line with space between the two elements.
+          * How to pack the label and toggle within a line`. `"start"`: The label and toggle will appear on the left in LTR and on the right in RTL. `"end"`: The label and toggle will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and toggle will appear on opposite ends of the line with space between the two elements.
          */
         "justify"?: 'start' | 'end' | 'space-between';
         /**

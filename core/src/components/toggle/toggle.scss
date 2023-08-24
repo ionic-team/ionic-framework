@@ -94,8 +94,6 @@ input {
 
   flex-grow: 1;
 
-  align-items: center;
-
   height: inherit;
 
   transition: background-color 15ms linear;
@@ -162,11 +160,11 @@ input {
 // --------------------------------------------------
 
 
-:host(.toggle-label-placement-stacked.toggle-align-start) .toggle-wrapper {
+:host(.toggle-align-start) .toggle-wrapper {
   align-items: start;
 }
 
-:host(.toggle-label-placement-stacked.toggle-align-center) .toggle-wrapper {
+:host(.toggle-align-center) .toggle-wrapper {
   align-items: center;
 }
 

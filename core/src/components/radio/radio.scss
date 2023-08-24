@@ -96,8 +96,6 @@ input {
 
   flex-grow: 1;
 
-  align-items: center;
-
   height: inherit;
 
   min-height: inherit;
@@ -163,11 +161,11 @@ input {
 // Radio Align
 // --------------------------------------------------
 
-:host(.radio-label-placement-stacked.radio-align-start) .radio-wrapper {
+:host(.radio-align-start) .radio-wrapper {
   align-items: start;
 }
 
-:host(.radio-label-placement-stacked.radio-align-center) .radio-wrapper {
+:host(.radio-align-center) .radio-wrapper {
   align-items: center;
 }
 

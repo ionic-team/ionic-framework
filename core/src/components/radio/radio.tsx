@@ -101,7 +101,7 @@ export class Radio implements ComponentInterface {
   @Prop() legacy?: boolean;
 
   /**
-   * How to pack the label and radio within a line when using `labelPlacement="start | end | fixed"`.
+   * How to pack the label and radio within a line.
    * `"start"`: The label and radio will appear on the left in LTR and
    * on the right in RTL.
    * `"end"`: The label and radio will appear on the right in LTR and
@@ -112,7 +112,7 @@ export class Radio implements ComponentInterface {
   @Prop() justify: 'start' | 'end' | 'space-between' = 'space-between';
 
   /**
-   * How to pack the label and control along the cross axis when using `labelPlacement="stacked"`.
+   * How to pack the label and control along the cross axis.
    * `"start"`: The label and control will appear at the top of the container.
    * `"center"`: The label and control will appear at the center of the container.
    */
