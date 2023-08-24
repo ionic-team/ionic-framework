@@ -14,7 +14,7 @@
     <style>
       .grid {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         grid-row-gap: 20px;
         grid-column-gap: 20px;
 
@@ -51,6 +51,10 @@
           <div class="grid-item">
             <h2>Open, then close after 500ms</h2>
             <ion-button id="timeout" onclick="openPopover(event, 500)">Open Popover</ion-button>
+          </div>
+          <div class="grid-item">
+            <h2>Open, then close after 50ms</h2>
+            <ion-button id="immediate" onclick="openPopover(event, 50)">Open Popover</ion-button>
           </div>
         </div>
 
