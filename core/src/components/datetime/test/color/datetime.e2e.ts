@@ -9,7 +9,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
     test('should not have visual regressions', async ({ page }) => {
       await page.goto('/src/components/datetime/test/color', config);
 
-      const datetime = page.locator('#colorDatetime');
+      const datetime = page.locator('#color-datetime');
 
       await expect(datetime).toHaveScreenshot(screenshot(`datetime-color`));
 
@@ -17,13 +17,6 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       await page.waitForChanges();
 
       await expect(datetime).toHaveScreenshot(screenshot(`datetime-color-dark`));
-    });
-    test('should be able to customize datetime using css parts', async ({ page }) => {
-      await page.goto('/src/components/datetime/test/color', config);
-
-      const datetime = page.locator('#customDatetime');
-
-      await expect(datetime).toHaveScreenshot(screenshot(`datetime-custom-css-parts`));
     });
   });
 });

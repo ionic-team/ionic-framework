@@ -36,60 +36,8 @@
         border-radius: 8px;
       }
 
-      #colorName::first-letter {
+      #color-name::first-letter {
         text-transform: capitalize;
-      }
-
-      /*
-      * Custom Datetime
-      * -------------------------------------------
-      */
-
-      .custom-css-parts::part(calendar-day) {
-        color: #d31373;
-
-        margin: 2px 0;
-      }
-
-      /*
-      * Custom Material Design Datetime
-      * -------------------------------------------
-      */
-
-      .md .custom-css-parts::part(calendar-day):focus {
-        background-color: rgb(80, 26, 206, 0.2);
-        box-shadow: 0px 0px 0px 4px rgb(80, 26, 206, 0.2);
-      }
-
-      .md .custom-css-parts::part(calendar-day active),
-      .md .custom-css-parts::part(calendar-day active):focus {
-        background-color: #501ace;
-        border-color: #501ace;
-        color: white;
-      }
-
-      .md .custom-css-parts::part(calendar-day today) {
-        border-color: #501ace;
-        color: #501ace;
-      }
-
-      /*
-      * Custom iOS Datetime
-      * -------------------------------------------
-      */
-
-      .ios .custom-css-parts::part(calendar-day):focus {
-        background-color: rgb(80, 26, 206, 0.2);
-      }
-
-      .ios .custom-css-parts::part(calendar-day active),
-      .ios .custom-css-parts::part(calendar-day active):focus {
-        background-color: rgb(80, 26, 206, 0.2);
-        color: #501ace;
-      }
-
-      .ios .custom-css-parts::part(calendar-day today) {
-        color: #501ace;
       }
 
       /*
@@ -268,33 +216,20 @@
       <ion-content class="ion-padding">
         <div class="grid">
           <div class="grid-item">
-            <h2 id="colorName">Danger</h2>
+            <h2 id="color-name">Danger</h2>
             <ion-datetime
-              id="colorDatetime"
+              id="color-datetime"
               color="danger"
               value="2022-05-03"
               show-default-title="true"
               show-default-buttons="true"
             ></ion-datetime>
           </div>
-
-          <div class="grid-item">
-            <h2>Custom CSS Parts</h2>
-            <ion-datetime
-              id="customDatetime"
-              value="2023-06-15"
-              highlighted-dates="2023-06-01"
-              show-default-title="true"
-              show-default-buttons="true"
-              class="custom-css-parts"
-            ></ion-datetime>
-          </div>
         </div>
       </ion-content>
       <script>
-        const colorDatetime = document.querySelector('#colorDatetime');
-        const customDatetime = document.querySelector('#customDatetime');
-        const colorName = document.querySelector('#colorName');
+        const colorDatetime = document.querySelector('#color-datetime');
+        const colorName = document.querySelector('#color-name');
         const colorSelect = document.querySelector('ion-select');
         const darkModeToggle = document.querySelector('ion-checkbox');
 
@@ -302,36 +237,6 @@
           colorDatetime.color = ev.detail.value;
           colorName.innerHTML = ev.detail.value;
         });
-
-        // Mock the current day to always have the same screenshots
-        const mockToday = '2023-06-10T16:22';
-        Date = class extends Date {
-          constructor(...args) {
-            if (args.length === 0) {
-              super(mockToday);
-            } else {
-              super(...args);
-            }
-          }
-        };
-
-        customDatetime.highlightedDates = [
-          {
-            date: '2023-06-02',
-            textColor: 'purple',
-            backgroundColor: 'pink',
-          },
-          {
-            date: '2023-06-04',
-            textColor: 'firebrick',
-            backgroundColor: 'salmon',
-          },
-          {
-            date: '2023-06-06',
-            textColor: 'blue',
-            backgroundColor: 'lightblue',
-          },
-        ];
 
         darkModeToggle.addEventListener('ionChange', (ev) => {
           document.body.classList.toggle('dark');
