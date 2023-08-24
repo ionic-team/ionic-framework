@@ -3,6 +3,11 @@
 // iOS Toast
 // --------------------------------------------------
 
+/// @prop - The maximum height of the toast
+/// The maximum height of an iOS notification
+/// scaled to 310% is 478px.
+$toast-ios-max-height: 478px;
+
 /// @prop - Background Color of the toast wrapper
 $toast-ios-background-color: $background-color-step-50 !default;
 
@@ -28,7 +33,7 @@ $toast-ios-header-font-weight: 500 !default;
 $toast-ios-header-margin-bottom: 2px !default;
 
 /// @prop - Font size of the toast title
-$toast-ios-content-font-size: dynamic-font(14px) !default;
+$toast-ios-content-font-size: dynamic-font-clamp(1, 14px, 3.1) !default;
 
 /// @prop - Padding top of the toast content
 $toast-ios-content-padding-top: 15px !default;
@@ -64,11 +69,9 @@ $toast-ios-button-padding-bottom: $toast-ios-button-padding-top !default;
 $toast-ios-button-padding-start: 15px !default;
 
 /// @prop - Font size of the toast button
-/// Uses the same base font size as an iOS button.
-/// 2.75 = 44px / 16px
-/// Allows for the button to scale with the text size
-/// without increasing the height of the toast container.
-$toast-ios-button-font-size: dynamic-font-clamp(1, 16px, 2.75) !default;
+/// Uses the same font size scaling rules as back button.
+/// Prioritizing the toast header and message over the button.
+$toast-ios-button-font-size: dynamic-font-clamp(1, 17px, 1.294) !default;
 
 /// @prop - Font size of the toast button
 $toast-ios-button-font-weight: 500 !default;
