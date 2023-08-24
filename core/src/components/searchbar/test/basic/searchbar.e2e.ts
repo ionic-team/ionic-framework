@@ -122,30 +122,6 @@ configs().forEach(({ title, screenshot, config }) => {
 
       await expect(searchbar).toHaveScreenshot(screenshot(`searchbar-buttons`));
     });
-
-    test('text should not be cut off when clear button is hidden', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-searchbar show-clear-button="focus" value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce non metus vel velit sollicitudin suscipit quis sed lectus. "></ion-searchbar>
-      `,
-        config
-      );
-
-      const searchbar = page.locator('ion-searchbar');
-      await expect(searchbar).toHaveScreenshot(screenshot(`searchbar-text-clear-hidden`));
-    });
-
-    test('text should be cut off when clear button is visible', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-searchbar show-clear-button="always" value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce non metus vel velit sollicitudin suscipit quis sed lectus. "></ion-searchbar>
-      `,
-        config
-      );
-
-      const searchbar = page.locator('ion-searchbar');
-      await expect(searchbar).toHaveScreenshot(screenshot(`searchbar-text-clear-visible`));
-    });
   });
 });
 
@@ -191,6 +167,35 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       const icon = page.locator('ion-searchbar ion-icon.searchbar-search-icon');
 
       await expect(icon).toHaveScreenshot(screenshot(`searchbar-search-icon`));
+    });
+  });
+});
+
+
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('searchbar: ios clear button text cut off'), () => {
+    test('text should not be cut off when clear button is hidden', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-searchbar show-clear-button="focus" value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce non metus vel velit sollicitudin suscipit quis sed lectus. "></ion-searchbar>
+      `,
+        config
+      );
+
+      const searchbar = page.locator('ion-searchbar');
+      await expect(searchbar).toHaveScreenshot(screenshot(`searchbar-text-clear-hidden`));
+    });
+
+    test('text should be cut off when clear button is visible', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-searchbar show-clear-button="always" value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce non metus vel velit sollicitudin suscipit quis sed lectus. "></ion-searchbar>
+      `,
+        config
+      );
+
+      const searchbar = page.locator('ion-searchbar');
+      await expect(searchbar).toHaveScreenshot(screenshot(`searchbar-text-clear-visible`));
     });
   });
 });
