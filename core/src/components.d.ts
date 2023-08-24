@@ -3194,7 +3194,7 @@ export namespace Components {
          */
         "enableOnOffLabels": boolean | undefined;
         /**
-          * How to pack the label and toggle within a line. `"start"`: The label and toggle will appear on the left in LTR and on the right in RTL. `"end"`: The label and toggle will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and toggle will appear on opposite ends of the line with space between the two elements.
+          * How to pack the label and toggle within a line when using `labelPlacement="start | end | fixed"`. `"start"`: The label and toggle will appear on the left in LTR and on the right in RTL. `"end"`: The label and toggle will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and toggle will appear on opposite ends of the line with space between the two elements.
          */
         "justify": 'start' | 'end' | 'space-between';
         /**
@@ -7339,7 +7339,7 @@ declare namespace LocalJSX {
          */
         "enableOnOffLabels"?: boolean | undefined;
         /**
-          * How to pack the label and toggle within a line. `"start"`: The label and toggle will appear on the left in LTR and on the right in RTL. `"end"`: The label and toggle will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and toggle will appear on opposite ends of the line with space between the two elements.
+          * How to pack the label and toggle within a line when using `labelPlacement="start | end | fixed"`. `"start"`: The label and toggle will appear on the left in LTR and on the right in RTL. `"end"`: The label and toggle will appear on the right in LTR and on the left in RTL. `"space-between"`: The label and toggle will appear on opposite ends of the line with space between the two elements.
          */
         "justify"?: 'start' | 'end' | 'space-between';
         /**

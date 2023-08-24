@@ -248,8 +248,8 @@ export class Checkbox implements ComponentInterface {
           'checkbox-disabled': disabled,
           'checkbox-indeterminate': indeterminate,
           interactive: true,
-          [`checkbox-justify-${justify}`]: labelPlacement !== 'stacked',
-          [`checkbox-align-${align}`]: labelPlacement === 'stacked',
+          [`checkbox-justify-${justify}`]: true,
+          [`checkbox-align-${align}`]: true,
           [`checkbox-label-placement-${labelPlacement}`]: true,
         })}
       >
