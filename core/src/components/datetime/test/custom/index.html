@@ -33,29 +33,23 @@
         }
       }
 
-      #custom-grid,
-      #custom-wheel {
+      /*
+      * Custom Datetime Time / Wheel Parts
+      * -------------------------------------------
+      */
+
+      .custom-time-wheel {
         --background: rgb(245, 235, 247);
         --background-rgb: 245, 235, 247;
       }
 
-      /*
-      * Custom Datetime Time Parts
-      * -------------------------------------------
-      */
-
-      #custom-grid::part(time-button) {
+      .custom-time-wheel::part(time-button) {
         color: rgb(128, 30, 171);
       }
 
-      #custom-grid::part(time-button active) {
+      .custom-time-wheel::part(time-button active) {
         background-color: rgb(248, 215, 255);
       }
-
-      /*
-      * Custom Datetime Wheel Parts
-      * -------------------------------------------
-      */
 
       /*
         The second selectors that target ion-picker(-column)-internal
@@ -63,23 +57,23 @@
         undocumented usage.
       */
 
-      #custom-wheel,
-      #custom-wheel ion-picker-internal {
+      .custom-time-wheel,
+      ion-picker-internal {
         --wheel-highlight-background: rgb(218, 216, 255);
         --wheel-fade-background-rgb: 245, 235, 247;
       }
 
-      #custom-wheel ion-picker-internal {
+      ion-picker-internal {
         background-color: rgb(245, 235, 247);
       }
 
-      #custom-wheel::part(wheel-item),
-      #custom-wheel ion-picker-column-internal::part(wheel-item) {
+      .custom-time-wheel::part(wheel-item),
+      ion-picker-column-internal::part(wheel-item) {
         color: rgb(255, 134, 154);
       }
 
-      #custom-wheel::part(wheel-item active),
-      #custom-wheel ion-picker-column-internal::part(wheel-item active) {
+      .custom-grid.wheel::part(wheel-item active),
+      ion-picker-column-internal::part(wheel-item active) {
         color: rgb(128, 30, 171);
       }
 
@@ -148,11 +142,11 @@
         <div class="grid">
           <div class="grid-item">
             <h2>Grid Style</h2>
-            <ion-datetime id="custom-grid" value="2020-03-14T14:23:00.000Z"></ion-datetime>
+            <ion-datetime id="custom-grid" value="2020-03-14T14:23:00.000Z" class="custom-time-wheel"></ion-datetime>
           </div>
           <div class="grid-item">
             <h2>Wheel Style</h2>
-            <ion-datetime id="custom-wheel" prefer-wheel="true" value="2020-03-14T14:23:00.000Z"></ion-datetime>
+            <ion-datetime id="custom-wheel" prefer-wheel="true" value="2020-03-14T14:23:00.000Z" class="custom-time-wheel"></ion-datetime>
           </div>
           <div class="grid-item">
             <h2>Grid Style</h2>
