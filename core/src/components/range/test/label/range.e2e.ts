@@ -61,14 +61,16 @@ configs().forEach(({ title, screenshot, config }) => {
       test('should render label in the stacked placement', async ({ page }) => {
         await page.setContent(
           `
-          <ion-range label-placement="stacked">
-            <span slot="label">Volume</span>
-          </ion-range>
+          <div id="container" style="padding-inline-start: 20px;">
+            <ion-range label-placement="stacked">
+              <span slot="label">Volume</span>
+            </ion-range>
+          </div>
         `,
           config
         );
 
-        const range = page.locator('ion-range');
+        const range = page.locator('#container');
 
         expect(await range.screenshot()).toMatchSnapshot(screenshot(`range-no-items-stacked`));
       });
@@ -182,9 +184,16 @@ configs().forEach(({ title, screenshot, config }) => {
       });
 
       test('should render label in the stacked placement', async ({ page }) => {
-        await page.setContent(`<ion-range label-placement="stacked" label="Volume"></ion-range>`, config);
+        await page.setContent(
+          `
+          <div id="container" style="padding-inline-start: 20px;">
+            <ion-range label-placement="stacked" label="Volume"></ion-range>
+          </div>
+          `,
+          config
+        );
 
-        const range = page.locator('ion-range');
+        const range = page.locator('#container');
 
         expect(await range.screenshot()).toMatchSnapshot(screenshot(`range-label-prop-stacked`));
       });
