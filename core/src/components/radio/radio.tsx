@@ -272,8 +272,8 @@ export class Radio implements ComponentInterface {
           'in-item': inItem,
           'radio-checked': checked,
           'radio-disabled': disabled,
-          [`radio-justify-${justify}`]: labelPlacement !== 'stacked',
-          [`radio-align-${align}`]: labelPlacement === 'stacked',
+          [`radio-justify-${justify}`]: true,
+          [`radio-align-${align}`]: true,
           [`radio-label-placement-${labelPlacement}`]: true,
           // Focus and active styling should not apply when the radio is in an item
           'ion-activatable': !inItem,

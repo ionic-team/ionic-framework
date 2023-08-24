@@ -106,7 +106,7 @@ export class Toggle implements ComponentInterface {
   @Prop() legacy?: boolean;
 
   /**
-   * How to pack the label and toggle within a line.
+   * How to pack the label and toggle within a line when using `labelPlacement="start | end | fixed"`.
    * `"start"`: The label and toggle will appear on the left in LTR and
    * on the right in RTL.
    * `"end"`: The label and toggle will appear on the right in LTR and
@@ -343,8 +343,8 @@ export class Toggle implements ComponentInterface {
           'toggle-activated': activated,
           'toggle-checked': checked,
           'toggle-disabled': disabled,
-          [`toggle-justify-${justify}`]: labelPlacement !== 'stacked',
-          [`toggle-align-${align}`]: labelPlacement === 'stacked',
+          [`toggle-justify-${justify}`]: true,
+          [`toggle-align-${align}`]: true,
           [`toggle-label-placement-${labelPlacement}`]: true,
           [`toggle-${rtl}`]: true,
         })}

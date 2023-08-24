@@ -163,11 +163,11 @@ input {
 // Radio Align
 // --------------------------------------------------
 
-:host(.radio-align-start) .radio-wrapper {
+:host(.radio-label-placement-stacked.radio-align-start) .radio-wrapper {
   align-items: start;
 }
 
-:host(.radio-align-center) .radio-wrapper {
+:host(.radio-label-placement-stacked.radio-align-center) .radio-wrapper {
   align-items: center;
 }
 
