@@ -171,7 +171,6 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   });
 });
 
-
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('searchbar: ios clear button text cut off'), () => {
     test('text should not be cut off when clear button is hidden', async ({ page }) => {
