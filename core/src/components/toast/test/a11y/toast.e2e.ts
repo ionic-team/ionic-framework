@@ -178,8 +178,13 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       await expect(toast).toBeVisible();
 
-      const toastWrapper = toast.locator('.toast-wrapper');
-      await expect(toastWrapper).toHaveScreenshot(screenshot('toast-buttons-icon-scale'));
+      /**
+       * Linux incorrectly clips the screenshot when capturing the toast container
+       * with the inset styling.
+       *
+       * We capture the entire toast container (entire page) to avoid this issue.
+       */
+      await expect(toast).toHaveScreenshot(screenshot('toast-buttons-icon-scale'));
     });
   });
 });

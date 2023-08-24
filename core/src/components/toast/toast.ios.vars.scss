@@ -64,8 +64,11 @@ $toast-ios-button-padding-bottom: $toast-ios-button-padding-top !default;
 $toast-ios-button-padding-start: 15px !default;
 
 /// @prop - Font size of the toast button
-/// Follows the same rules as the button font size
-$toast-ios-button-font-size: dynamic-font-max(16px, 3) !default;
+/// Uses the same base font size as an iOS button.
+/// 2.75 = 44px / 16px
+/// Allows for the button to scale with the text size
+/// without increasing the height of the toast container.
+$toast-ios-button-font-size: dynamic-font-clamp(1, 16px, 2.75) !default;
 
 /// @prop - Font size of the toast button
 $toast-ios-button-font-weight: 500 !default;
