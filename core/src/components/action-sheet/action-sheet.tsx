@@ -230,6 +230,18 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async dismiss(data?: any, role?: string): Promise<boolean> {
+    /**
+     * When using an inline action sheet
+     * and presenting an action sheet it is possible to
+     * quickly dismiss the action sheet while it is
+     * presenting. We need to await any current
+     * transition to allow the present to finish
+     * before dismissing again.
+     */
+    if (this.currentTransition !== undefined) {
+      await this.currentTransition;
+    }
+
     this.currentTransition = dismiss(this, data, role, 'actionSheetLeave', iosLeaveAnimation, mdLeaveAnimation);
     const dismissed = await this.currentTransition;
 

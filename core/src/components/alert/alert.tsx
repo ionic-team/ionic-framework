@@ -403,6 +403,18 @@ export class Alert implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async dismiss(data?: any, role?: string): Promise<boolean> {
+    /**
+     * When using an inline alert
+     * and presenting an alert it is possible to
+     * quickly dismiss the alert while it is
+     * presenting. We need to await any current
+     * transition to allow the present to finish
+     * before dismissing again.
+     */
+    if (this.currentTransition !== undefined) {
+      await this.currentTransition;
+    }
+
     this.currentTransition = dismiss(this, data, role, 'alertLeave', iosLeaveAnimation, mdLeaveAnimation);
     const dismissed = await this.currentTransition;
 

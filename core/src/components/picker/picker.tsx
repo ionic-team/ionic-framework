@@ -251,6 +251,18 @@ export class Picker implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async dismiss(data?: any, role?: string): Promise<boolean> {
+    /**
+     * When using an inline picker
+     * and presenting a picker it is possible to
+     * quickly dismiss the picker while it is
+     * presenting. We need to await any current
+     * transition to allow the present to finish
+     * before dismissing again.
+     */
+    if (this.currentTransition !== undefined) {
+      await this.currentTransition;
+    }
+
     if (this.durationTimeout) {
       clearTimeout(this.durationTimeout);
     }
