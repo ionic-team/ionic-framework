@@ -434,7 +434,7 @@ export class Textarea implements ComponentInterface {
   /**
    * Check if we need to clear the text input if clearOnEdit is enabled
    */
-  private checkClearOnEdit(ev: Event) {
+  private checkClearOnEdit(ev: KeyboardEvent) {
     if (!this.clearOnEdit) {
       return;
     }
@@ -442,7 +442,7 @@ export class Textarea implements ComponentInterface {
      * Clear the textarea if the control has not been previously cleared
      * during focus.
      */
-    if (!this.didTextareaClearOnEdit && this.hasValue()) {
+    if (!this.didTextareaClearOnEdit && this.hasValue() && ev.key !== 'Tab') {
       this.value = '';
       this.emitInputChange(ev);
     }
@@ -501,7 +501,7 @@ export class Textarea implements ComponentInterface {
     this.ionBlur.emit(ev);
   };
 
-  private onKeyDown = (ev: Event) => {
+  private onKeyDown = (ev: KeyboardEvent) => {
     this.checkClearOnEdit(ev);
   };
 
