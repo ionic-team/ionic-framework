@@ -1009,7 +1009,7 @@ ion-progress-bar,part,stream
 ion-progress-bar,part,track
 
 ion-radio,shadow
-ion-radio,prop,align,"center" | "start",'start',false,false
+ion-radio,prop,align,"center" | "start",'center',false,false
 ion-radio,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-radio,prop,disabled,boolean,false,false,false
 ion-radio,prop,justify,"end" | "space-between" | "start",'space-between',false,false

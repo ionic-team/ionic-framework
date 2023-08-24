@@ -116,7 +116,7 @@ export class Radio implements ComponentInterface {
    * `"start"`: The label and control will appear at the top of the container.
    * `"center"`: The label and control will appear at the center of the container.
    */
-  @Prop() align: 'start' | 'center' = 'start';
+  @Prop() align: 'start' | 'center' = 'center';
 
   /**
    * Emitted when the styles change.
