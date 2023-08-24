@@ -3,17 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [7.3.1](https://github.com/ionic-team/ionic-framework/compare/v7.3.0...v7.3.1) (2023-08-23)
-
-
-### Bug Fixes
-
-* **react:** avoid multiple invocations of onDidDismiss and onWillPresent ([#28020](https://github.com/ionic-team/ionic-framework/issues/28020)) ([0ac3df3](https://github.com/ionic-team/ionic-framework/commit/0ac3df3f378bdefc3a927adc798ebd9ec7a54fee)), closes [#28010](https://github.com/ionic-team/ionic-framework/issues/28010)
-
-
-
-
-
 # [7.3.0](https://github.com/ionic-team/ionic-framework/compare/v7.2.4...v7.3.0) (2023-08-16)
 
 **Note:** Version bump only for package @ionic/react

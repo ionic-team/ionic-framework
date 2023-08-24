@@ -17,7 +17,6 @@ export { NavParams } from './directives/navigation/nav-params';
 export { IonModal } from './directives/overlays/modal';
 export { IonPopover } from './directives/overlays/popover';
 export * from './directives/proxies';
-export * from './directives/validators';
 
 // PROVIDERS
 export { AngularDelegate } from './providers/angular-delegate';

@@ -18,8 +18,6 @@ export class FormComponent {
       toggle: [false],
       input: ['', Validators.required],
       input2: ['Default Value'],
-      inputMin: [1, Validators.min(1)],
-      inputMax: [1, Validators.max(1)],
       checkbox: [false]
     }, {
       updateOn: typeof (window as any) !== 'undefined' && window.location.hash === '#blur' ? 'blur' : 'change'

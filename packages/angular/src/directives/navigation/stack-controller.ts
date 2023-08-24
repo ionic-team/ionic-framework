@@ -8,7 +8,7 @@ import { NavController } from '../../providers/nav-controller';
 
 import {
   RouteView,
-  StackDidChangeEvent,
+  StackEvent,
   computeStackId,
   destroyView,
   getUrl,
@@ -61,7 +61,7 @@ export class StackController {
     return view;
   }
 
-  setActive(enteringView: RouteView): Promise<StackDidChangeEvent> {
+  setActive(enteringView: RouteView): Promise<StackEvent> {
     const consumeResult = this.navCtrl.consumeTransition();
     let { direction, animation, animationBuilder } = consumeResult;
     const leavingView = this.activeView;
@@ -222,13 +222,6 @@ export class StackController {
 
   getActiveStackId(): string | undefined {
     return this.activeView ? this.activeView.stackId : undefined;
-  }
-
-  /**
-   * @internal
-   */
-  getActiveView(): RouteView | undefined {
-    return this.activeView;
   }
 
   hasRunningTask(): boolean {

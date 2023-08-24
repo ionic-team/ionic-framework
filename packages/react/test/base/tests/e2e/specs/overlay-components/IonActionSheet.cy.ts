@@ -17,19 +17,11 @@ describe('IonActionSheet', () => {
   });
 
   it('display action and call dismiss to close it', () => {
-    cy.get('ion-content').contains('onWillPresent count: 0');
-    cy.get('ion-content').contains('onDidDismiss count: 0');
-
-    // show action sheet
+    //show action sheet
     cy.get('ion-button').contains('Show ActionSheet, hide after 250 ms').click();
     cy.get('ion-action-sheet').contains('Action Sheet');
 
-    // verify action sheet is hidden
+    //verify action sheet is hidden
     cy.get('ion-action-sheet').should('not.be.visible');
-
-    // verify lifecycle events are called once
-    cy.get('ion-content').contains('onWillPresent count: 1');
-    cy.get('ion-content').contains('onDidDismiss count: 0');
   });
-
 });

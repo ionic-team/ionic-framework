@@ -79,23 +79,10 @@ export const destroyView = (view: RouteView | undefined): void => {
   }
 };
 
-export interface StackWillChangeEvent {
-  enteringView: RouteView;
-  /**
-   * `true` if the event is trigged as a result of a switch
-   * between tab navigation stacks.
-   */
-  tabSwitch: boolean;
-}
-
-export interface StackDidChangeEvent {
+export interface StackEvent {
   enteringView: RouteView;
   direction: RouterDirection;
   animation: NavDirection | undefined;
-  /**
-   * `true` if the event is trigged as a result of a switch
-   * between tab navigation stacks.
-   */
   tabSwitch: boolean;
 }
 
