@@ -33,43 +33,106 @@
         }
       }
 
+      #custom-grid,
+      #custom-wheel {
+        --background: rgb(245, 235, 247);
+        --background-rgb: 245, 235, 247;
+      }
+
+      /*
+      * Custom Datetime Time Parts
+      * -------------------------------------------
+      */
+
+      #custom-grid::part(time-button) {
+        color: rgb(128, 30, 171);
+      }
+
+      #custom-grid::part(time-button active) {
+        background-color: rgb(248, 215, 255);
+      }
+
+      /*
+      * Custom Datetime Wheel Parts
+      * -------------------------------------------
+      */
+
       /*
         The second selectors that target ion-picker(-column)-internal
         directly are for styling the time picker. This is currently
         undocumented usage.
       */
 
-      ion-datetime,
-      ion-picker-internal {
+      #custom-wheel,
+      #custom-wheel ion-picker-internal {
         --wheel-highlight-background: rgb(218, 216, 255);
         --wheel-fade-background-rgb: 245, 235, 247;
       }
 
-      ion-datetime {
-        --background: rgb(245, 235, 247);
-        --background-rgb: 245, 235, 247;
-      }
-
-      ion-picker-internal {
+      #custom-wheel ion-picker-internal {
         background-color: rgb(245, 235, 247);
       }
 
-      ion-datetime::part(wheel-item),
-      ion-picker-column-internal::part(wheel-item) {
+      #custom-wheel::part(wheel-item),
+      #custom-wheel ion-picker-column-internal::part(wheel-item) {
         color: rgb(255, 134, 154);
       }
 
-      ion-datetime::part(wheel-item active),
-      ion-picker-column-internal::part(wheel-item active) {
+      #custom-wheel::part(wheel-item active),
+      #custom-wheel ion-picker-column-internal::part(wheel-item active) {
         color: rgb(128, 30, 171);
       }
 
-      ion-datetime::part(time-button) {
-        color: rgb(128, 30, 171);
+      /*
+      * Custom Datetime Day Parts
+      * -------------------------------------------
+      */
+
+      #custom-calendar-days::part(calendar-day) {
+        color: #d31373;
+
+        margin: 2px 0;
       }
 
-      ion-datetime::part(time-button active) {
-        background-color: rgb(248, 215, 255);
+      /*
+      * Custom Material Design Datetime Day Parts
+      * -------------------------------------------
+      */
+
+      .md #custom-calendar-days::part(calendar-day):focus {
+        background-color: rgb(80, 26, 206, 0.2);
+        box-shadow: 0px 0px 0px 4px rgb(80, 26, 206, 0.2);
+      }
+
+      .md #custom-calendar-days::part(calendar-day active),
+      .md #custom-calendar-days::part(calendar-day active):focus {
+        background-color: #501ace;
+        border-color: #501ace;
+        color: white;
+      }
+
+      .md #custom-calendar-days::part(calendar-day today) {
+        border-color: #501ace;
+        color: #501ace;
+      }
+
+      /*
+      * Custom iOS Datetime Day Parts
+      * -------------------------------------------
+      */
+
+      .ios #custom-calendar-days::part(calendar-day):focus {
+        background-color: rgb(80, 26, 206, 0.2);
+      }
+
+      .ios #custom-calendar-days::part(calendar-day active),
+      .ios #custom-calendar-days::part(calendar-day active):focus {
+        background-color: rgb(80, 26, 206, 0.2);
+        color: #501ace;
+      }
+
+      .ios #custom-calendar-days::part(calendar-day today) {
+        color: #501ace;
       }
     </style>
   </head>
@@ -91,8 +154,52 @@
             <h2>Wheel Style</h2>
             <ion-datetime id="custom-wheel" prefer-wheel="true" value="2020-03-14T14:23:00.000Z"></ion-datetime>
           </div>
+          <div class="grid-item">
+            <h2>Grid Style</h2>
+            <ion-datetime
+              id="custom-calendar-days"
+              value="2023-06-15"
+              highlighted-dates="2023-06-01"
+              show-default-title="true"
+              show-default-buttons="true"
+            ></ion-datetime>
+          </div>
         </div>
       </ion-content>
     </ion-app>
+
+    <script>
+      const customDatetime = document.querySelector('#custom-calendar-days');
+
+      // Mock the current day to always have the same screenshots
+      const mockToday = '2023-06-10T16:22';
+      Date = class extends Date {
+        constructor(...args) {
+          if (args.length === 0) {
+            super(mockToday);
+          } else {
+            super(...args);
+          }
+        }
+      };
+
+      customDatetime.highlightedDates = [
+        {
+          date: '2023-06-02',
+          textColor: 'purple',
+          backgroundColor: 'pink',
+        },
+        {
+          date: '2023-06-04',
+          textColor: 'firebrick',
+          backgroundColor: 'salmon',
+        },
+        {
+          date: '2023-06-06',
+          textColor: 'blue',
+          backgroundColor: 'lightblue',
+        },
+      ];
+    </script>
   </body>
 </html>
