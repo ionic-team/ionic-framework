@@ -24,7 +24,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
     });
 
     test('should allow styling time picker in grid style datetimes', async ({ page }) => {
-      const timeButton = page.locator('ion-datetime .time-body');
+      const timeButton = page.locator('#custom-grid .time-body');
       const popover = page.locator('.popover-viewport');
       const ionPopoverDidPresent = await page.spyOnEvent('ionPopoverDidPresent');
 
