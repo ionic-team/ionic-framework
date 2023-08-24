@@ -33,7 +33,7 @@ ion-item-options {
 
   height: 100%;
 
-  font-size: 14px;
+  font-size: dynamic-font(14px);
 
   user-select: none;
   z-index: $z-index-item-options;
