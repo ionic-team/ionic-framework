@@ -80,7 +80,11 @@
     left: unset;
   }
 
+  display: flex;
+
   position: absolute;
+
+  justify-content: center;
 
   width: var(--knob-handle-size);
   height: var(--knob-handle-size);
