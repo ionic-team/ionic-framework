@@ -81,9 +81,9 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
             font-size: 310%;
           }
         </style>
-        <ion-range value="50" label="Range Label" pin="true">
+        <ion-range value="50" label="Label" pin="true">
           <ion-icon name="snow" slot="start" aria-hidden="true"></ion-icon>
-          <div name="snow" slot="end" aria-hidden="true">Warmer</div>
+          <div name="snow" slot="end" aria-hidden="true">Warm</div>
         </ion-range>
       `,
         config
