@@ -40,7 +40,7 @@
 // --------------------------------------------------
 
 :host(.title-large) {
-  @include padding(0, 12px);
+  @include padding(2px, 12px, 4px, 12px);
   @include transform-origin(left, center);
 
   position: static;
@@ -48,8 +48,6 @@
   align-items: flex-end;
 
   min-width: 100%;
-
-  padding-bottom: 0;
 
   font-size: dynamic-font(34px);
 
