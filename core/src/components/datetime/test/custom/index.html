@@ -83,9 +83,13 @@
       */
 
       #custom-calendar-days::part(calendar-day) {
-        color: #d31373;
+        color: #da5296;
 
         margin: 2px 0;
+      }
+
+      #custom-calendar-days::part(calendar-day today) {
+        color: #8462d1;
       }
 
       /*
@@ -93,21 +97,20 @@
       * -------------------------------------------
       */
 
-      .md #custom-calendar-days::part(calendar-day):focus {
-        background-color: rgb(80, 26, 206, 0.2);
-        box-shadow: 0px 0px 0px 4px rgb(80, 26, 206, 0.2);
+      #custom-calendar-days.md::part(calendar-day):focus {
+        background-color: rgb(154 209 98 / 0.2);
+        box-shadow: 0px 0px 0px 4px rgb(154 209 98 / 0.2);
       }
 
-      .md #custom-calendar-days::part(calendar-day active),
-      .md #custom-calendar-days::part(calendar-day active):focus {
-        background-color: #501ace;
-        border-color: #501ace;
-        color: white;
+      #custom-calendar-days.md::part(calendar-day active),
+      #custom-calendar-days.md::part(calendar-day active):focus {
+        background-color: #9ad162;
+        border-color: #9ad162;
+        color: #fff;
       }
 
-      .md #custom-calendar-days::part(calendar-day today) {
-        border-color: #501ace;
-        color: #501ace;
+      #custom-calendar-days.md::part(calendar-day today) {
+        border-color: #8462d1;
       }
 
       /*
@@ -115,18 +118,14 @@
       * -------------------------------------------
       */
 
-      .ios #custom-calendar-days::part(calendar-day):focus {
-        background-color: rgb(80, 26, 206, 0.2);
+      #custom-calendar-days.ios::part(calendar-day):focus {
+        background-color: rgb(154 209 98 / 0.2);
       }
 
-      .ios #custom-calendar-days::part(calendar-day active),
-      .ios #custom-calendar-days::part(calendar-day active):focus {
-        background-color: rgb(80, 26, 206, 0.2);
-        color: #501ace;
-      }
-
-      .ios #custom-calendar-days::part(calendar-day today) {
-        color: #501ace;
+      #custom-calendar-days.ios::part(calendar-day active),
+      #custom-calendar-days.ios::part(calendar-day active):focus {
+        background-color: rgb(154 209 98 / 0.2);
+        color: #9ad162;
       }
     </style>
   </head>
