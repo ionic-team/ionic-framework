@@ -81,3 +81,10 @@
 
 /core/src/css/ @brandyscarney
 /core/src/themes/ @brandyscarney
+
+# Tests
+
+**/datetime.e2e.ts @mapsandapps
+**/datetime-button.e2e.ts @mapsandapps
+**/icon.e2e.ts @mapsandapps
+**/loading.e2e.ts @mapsandapps
