@@ -64,3 +64,10 @@
 /core/src/utils/sanitization/ @liamdebeasi
 /core/src/utils/tap-click/ @liamdebeasi
 /core/src/utils/transition/ @liamdebeasi
+
+# Tests
+
+**/datetime.e2e.ts @mapsandapps
+**/datetime-button.e2e.ts @mapsandapps
+**/icon.e2e.ts @mapsandapps
+**/loading.e2e.ts @mapsandapps
