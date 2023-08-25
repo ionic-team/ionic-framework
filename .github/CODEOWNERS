@@ -43,6 +43,8 @@
 /core/src/components/datetime/ @liamdebeasi @amandaejohnston @sean-perkins
 /core/src/components/datetime-button/ @liamdebeasi
 
+/core/src/components/item/ @brandyscarney
+
 /core/src/components/menu/ @amandaejohnston
 /core/src/components/menu-toggle/ @amandaejohnston
 
@@ -58,6 +60,13 @@
 /core/src/components/refresher/ @liamdebeasi
 /core/src/components/refresher-content/ @liamdebeasi
 
+/core/src/components/searchbar/ @brandyscarney
+
+/core/src/components/segment/ @brandyscarney
+/core/src/components/segment-button/ @brandyscarney
+
+/core/src/components/skeleton-text/ @brandyscarney
+
 # Utilities
 
 /core/src/utils/animation/ @liamdebeasi
@@ -69,3 +78,6 @@
 /core/src/utils/sanitization/ @liamdebeasi
 /core/src/utils/tap-click/ @liamdebeasi
 /core/src/utils/transition/ @liamdebeasi
+
+/core/src/css/ @brandyscarney
+/core/src/themes/ @brandyscarney
