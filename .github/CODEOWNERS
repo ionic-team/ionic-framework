@@ -15,9 +15,9 @@
 
 ## Angular
 
-/packages/angular/ @sean-perkins
-/packages/angular-server @sean-perkins
-/packages/angular/test
+/packages/angular/ @sean-perkins @thetaPC
+/packages/angular-server @sean-perkins @thetaPC
+/packages/angular/test @thetaPC
 
 ## React
 
@@ -28,10 +28,10 @@
 
 ## Vue
 
-/packages/vue/ @liamdebeasi
-/packages/vue-router/ @liamdebeasi
-/packages/vue/test/
-/packages/vue-router/__tests__
+/packages/vue/ @liamdebeasi @thetaPC
+/packages/vue-router/ @liamdebeasi @thetaPC
+/packages/vue/test/ @thetaPC
+/packages/vue-router/__tests__ @thetaPC
 
 # Components
 
