@@ -139,7 +139,7 @@ configs().forEach(({ title, screenshot, config }) => {
     });
 
     test.describe('radio: stacked placement', () => {
-      test('should render a start alignment with label in the stacked position', async ({ page }) => {
+      test('should align the label to the start of the container in the stacked position', async ({ page }) => {
         await page.setContent(
           `
             <ion-radio-group value="1">
@@ -153,7 +153,7 @@ configs().forEach(({ title, screenshot, config }) => {
         expect(await radio.screenshot()).toMatchSnapshot(screenshot(`radio-label-stacked-align-start`));
       });
 
-      test('should render a center alignment with label in the stacked position', async ({ page }) => {
+      test('should align the label to the center of the container in the stacked position', async ({ page }) => {
         await page.setContent(
           `
             <ion-radio-group value="1">

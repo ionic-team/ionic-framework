@@ -58,7 +58,7 @@ configs().forEach(({ title, screenshot, config }) => {
 
         expect(await range.screenshot()).toMatchSnapshot(screenshot(`range-no-items-fixed`));
       });
-      test('should render label in the stacked placement', async ({ page }) => {
+      test('should render label above the range slider', async ({ page }) => {
         await page.setContent(
           `
           <div id="container" style="padding-inline-start: 20px;">
@@ -140,7 +140,7 @@ configs().forEach(({ title, screenshot, config }) => {
 
         expect(await range.screenshot()).toMatchSnapshot(screenshot(`range-items-fixed`));
       });
-      test('should render label in the stacked placement', async ({ page }) => {
+      test('should render label above the range slider', async ({ page }) => {
         await page.setContent(
           `
           <ion-range label-placement="stacked">
@@ -183,7 +183,7 @@ configs().forEach(({ title, screenshot, config }) => {
         expect(await range.screenshot()).toMatchSnapshot(screenshot(`range-label-prop-fixed`));
       });
 
-      test('should render label in the stacked placement', async ({ page }) => {
+      test('should render label above the range slider', async ({ page }) => {
         await page.setContent(
           `
           <div id="container" style="padding-inline-start: 20px;">
