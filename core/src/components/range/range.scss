@@ -324,7 +324,7 @@
 :host(.range-label-placement-stacked) .label-text-wrapper {
   /**
   * The margin between the label and
-  * the radio should be on the bottom
+  * the range should be on the bottom
   * when the label sits on top.
   */
   @include margin(null, 0, $form-control-label-margin, 0);
