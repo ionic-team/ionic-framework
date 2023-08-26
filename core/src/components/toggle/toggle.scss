@@ -245,7 +245,7 @@ input {
 :host(.toggle-label-placement-stacked) .label-text-wrapper {
   /**
    * The margin between the label and
-   * the input should be on the bottom
+   * the toggle should be on the bottom
    * when the label sits on top.
    */
   @include margin(null, 0, $form-control-label-margin, 0);
