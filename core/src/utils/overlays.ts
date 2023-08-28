@@ -762,31 +762,8 @@ export const createLockController = () => {
     return resolve;
   };
 
-  /**
-   * Call commit() to claim a lock.
-   * commit() locks other transitions from starting.
-   * Once the transition has completed, this promise resolves.
-   * @param transition animation
-   */
-  const commit = async (transition?: Promise<any>): Promise<boolean> => {
-    if (!transition) {
-      console.warn('no transition');
-    }
-    const unlock = await lock();
-
-    let changed = false;
-    try {
-      changed = await transition;
-    } catch (e) {
-      console.error(e);
-    }
-    unlock();
-
-    return changed;
-  };
-
   return {
-    commit,
+    lock,
   };
 };
 

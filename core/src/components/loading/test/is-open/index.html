@@ -80,11 +80,11 @@
         }
       };
 
-      loading.addEventListener('ionLoadingDidDismiss', () => {
-        loading.isOpen = false;
-      });
+      // loading.addEventListener('ionLoadingDidDismiss', () => {
+      //   loading.isOpen = false;
+      // });
 
-      const openLoadingWithFastTimeout = (timeout) => {
+      const openLoadingWithFastTimeout = () => {
         loading.isOpen = true;
 
         setTimeout(() => {
@@ -92,7 +92,7 @@
         }, 50);
       };
 
-      const openCloseOpen = (timeout) => {
+      const openCloseOpen = () => {
         setTimeout(() => {
           loading.isOpen = true;
           setTimeout(() => {

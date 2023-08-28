@@ -8,6 +8,7 @@ import {
   eventMethod,
   prepareOverlay,
   present,
+  createLockController,
   createDelegateController,
   createTriggerController,
   setOverlayId,
@@ -42,10 +43,10 @@ import { mdLeaveAnimation } from './animations/md.leave';
 })
 export class Loading implements ComponentInterface, OverlayInterface {
   private readonly delegateController = createDelegateController(this);
+  private readonly lockController = createLockController();
   private readonly triggerController = createTriggerController();
   private customHTMLEnabled = config.get('innerHTMLTemplatesEnabled', ENABLE_HTML_CONTENT_DEFAULT);
   private durationTimeout?: ReturnType<typeof setTimeout>;
-  private waitPromise?: Promise<void>;
 
   presented = false;
   lastFocus?: HTMLElement;
@@ -230,23 +231,12 @@ export class Loading implements ComponentInterface, OverlayInterface {
     this.triggerController.removeClickListener();
   }
 
-  private async lock() {
-    const p = this.waitPromise;
-    let resolve!: () => void;
-    this.waitPromise = new Promise((r) => (resolve = r));
-
-    if (p !== undefined) {
-      await p;
-    }
-    return resolve;
-  }
-
   /**
    * Present the loading overlay after it has been created.
    */
   @Method()
   async present(): Promise<void> {
-    const unlock = await this.lock();
+    const unlock = await this.lockController.lock();
 
     await this.delegateController.attachViewToDom();
 
@@ -270,7 +260,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async dismiss(data?: any, role?: string): Promise<boolean> {
-    const unlock = await this.lock();
+    const unlock = await this.lockController.lock();
 
     if (this.durationTimeout) {
       clearTimeout(this.durationTimeout);
