@@ -74,28 +74,6 @@ configs().forEach(({ title, screenshot, config }) => {
 
         expect(await range.screenshot()).toMatchSnapshot(screenshot(`range-no-items-stacked`));
       });
-
-      test('should render pin below a stacked label', async ({ page }) => {
-        await page.setContent(
-          `
-          <div id="container" style="padding-inline-start: 20px;">
-            <ion-range label-placement="stacked" pin="true">
-              <span slot="label">Volume</span>
-            </ion-range>
-          </div>
-        `,
-          config
-        );
-
-        const container = page.locator('#container');
-        const range = page.locator('ion-range');
-        const knob = range.locator('.range-knob-handle');
-
-        // Force the pin to show
-        await knob.evaluate((el: HTMLElement) => el.classList.add('ion-focused'));
-
-        expect(await container.screenshot()).toMatchSnapshot(screenshot(`range-no-items-stacked-pin`));
-      });
     });
 
     test.describe('range: start and end items', () => {
@@ -238,6 +216,33 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       const range = page.locator('ion-range');
 
       expect(await range.screenshot()).toMatchSnapshot(screenshot(`range-label-truncate`));
+    });
+  });
+
+  test.describe(title('range: with pin'), () => {
+    test('should render pin below a stacked label', async ({ page }) => {
+      await page.setContent(
+        `
+        <div id="container" style="padding-inline-start: 20px;">
+          <ion-range label-placement="stacked" pin="true">
+            <span slot="label">Volume</span>
+          </ion-range>
+        </div>
+      `,
+        config
+      );
+
+      const container = page.locator('#container');
+      const range = page.locator('ion-range');
+      const knob = range.locator('.range-knob-handle');
+
+      // Force the pin to show
+      await knob.evaluate((el: HTMLElement) => el.classList.add('ion-focused'));
+
+      // wait for the pin to have height
+      await knob.waitFor();
+
+      expect(await container.screenshot()).toMatchSnapshot(screenshot(`range-stacked-pin`));
     });
   });
 });
