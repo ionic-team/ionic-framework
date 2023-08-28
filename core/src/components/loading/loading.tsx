@@ -9,6 +9,7 @@ import {
   prepareOverlay,
   present,
   createDelegateController,
+  createLockController,
   createTriggerController,
   setOverlayId,
 } from '@utils/overlays';
@@ -41,6 +42,7 @@ import { mdLeaveAnimation } from './animations/md.leave';
   scoped: true,
 })
 export class Loading implements ComponentInterface, OverlayInterface {
+  private readonly lockController = createLockController();
   private readonly delegateController = createDelegateController(this);
   private readonly triggerController = createTriggerController();
   private customHTMLEnabled = config.get('innerHTMLTemplatesEnabled', ENABLE_HTML_CONTENT_DEFAULT);
@@ -251,7 +253,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
 
     this.currentTransition = present(this, 'loadingEnter', iosEnterAnimation, mdEnterAnimation);
 
-    await this.currentTransition;
+    await this.lockController.commit(this.currentTransition);
 
     if (this.duration > 0) {
       this.durationTimeout = setTimeout(() => this.dismiss(), this.duration + 10);
@@ -271,12 +273,24 @@ export class Loading implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async dismiss(data?: any, role?: string): Promise<boolean> {
+    /**
+     * When using an inline loading indicator
+     * and dismissing a loading indicator it is possible to
+     * quickly dismiss the loading indicator while it is
+     * presenting. We need to await any current
+     * transition to allow the present to finish
+     * before dismissing again.
+     */
+    if (this.currentTransition !== undefined) {
+      await this.currentTransition;
+    }
+
     if (this.durationTimeout) {
       clearTimeout(this.durationTimeout);
     }
     this.currentTransition = dismiss(this, data, role, 'loadingLeave', iosLeaveAnimation, mdLeaveAnimation);
 
-    const dismissed = await this.currentTransition;
+    const dismissed = await this.lockController.commit(this.currentTransition);
 
     if (dismissed) {
       this.delegateController.removeViewFromDom();

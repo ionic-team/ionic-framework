@@ -14,7 +14,7 @@
     <style>
       .grid {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(4, 1fr);
         grid-row-gap: 20px;
         grid-column-gap: 20px;
       }
@@ -53,6 +53,14 @@
             <h2>Open, then close after 500ms</h2>
             <ion-button id="timeout" onclick="openLoading(500)">Open Loading</ion-button>
           </div>
+          <div class="grid-item">
+            <h2>Open, then close immediately</h2>
+            <ion-button id="immediate" onclick="openLoadingWithFastTimeout()">Open Loading</ion-button>
+          </div>
+          <div class="grid-item">
+            <h2>Wait-open-close-open</h2>
+            <ion-button id="immediate" onclick="openCloseOpen()">Open Loading</ion-button>
+          </div>
         </div>
 
         <ion-loading message="Hello world"></ion-loading>
@@ -75,6 +83,26 @@
       loading.addEventListener('ionLoadingDidDismiss', () => {
         loading.isOpen = false;
       });
+
+      const openLoadingWithFastTimeout = (timeout) => {
+        loading.isOpen = true;
+
+        setTimeout(() => {
+          loading.isOpen = false;
+        }, 50);
+      };
+
+      const openCloseOpen = (timeout) => {
+        setTimeout(() => {
+          loading.isOpen = true;
+          setTimeout(() => {
+            loading.isOpen = false;
+            setTimeout(() => {
+              loading.isOpen = true;
+            }, 50);
+          }, 50);
+        }, 2000);
+      };
     </script>
   </body>
 </html>
