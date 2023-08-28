@@ -128,7 +128,7 @@ export const setIonicClasses = (element: ElementRef): void => {
 };
 
 const getClasses = (element: HTMLElement) => {
-  return element.classList.filter(c => c && c.startsWith('ng-')).map(c => `ion-${c.substring(3)}`);;
+  return element.classList.filter(c => c && c.startsWith('ng-')).map(c => `ion-${c.substring(3)}`);
 };
 
 const setClasses = (element: HTMLElement, classes: string[]) => {
