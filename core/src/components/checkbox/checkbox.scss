@@ -106,6 +106,14 @@
   @include margin($checkbox-item-label-margin-top, null, $checkbox-item-label-margin-bottom, null);
 }
 
+:host(.in-item.checkbox-label-placement-stacked) .label-text-wrapper {
+  @include margin($checkbox-item-label-margin-top, null, $form-control-label-margin, null);
+}
+
+:host(.in-item.checkbox-label-placement-stacked) .native-wrapper {
+  @include margin(null, null, $checkbox-item-label-margin-bottom, null);
+}
+
 /**
  * If no label text is placed into the slot
  * then the element should be hidden otherwise
