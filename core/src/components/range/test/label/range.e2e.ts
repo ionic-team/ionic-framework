@@ -74,6 +74,28 @@ configs().forEach(({ title, screenshot, config }) => {
 
         expect(await range.screenshot()).toMatchSnapshot(screenshot(`range-no-items-stacked`));
       });
+
+      test('should render pin below a stacked label', async ({ page }) => {
+        await page.setContent(
+          `
+          <div id="container" style="padding-inline-start: 20px;">
+            <ion-range label-placement="stacked" pin="true">
+              <span slot="label">Volume</span>
+            </ion-range>
+          </div>
+        `,
+          config
+        );
+
+        const container = page.locator('#container');
+        const range = page.locator('ion-range');
+        const knob = range.locator('.range-knob-handle');
+
+        // Force the pin to show
+        await knob.evaluate((el: HTMLElement) => el.classList.add('ion-focused'));
+
+        expect(await container.screenshot()).toMatchSnapshot(screenshot(`range-no-items-stacked-pin`));
+      });
     });
 
     test.describe('range: start and end items', () => {
