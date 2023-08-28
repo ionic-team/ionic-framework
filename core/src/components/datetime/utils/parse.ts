@@ -132,8 +132,17 @@ export const parseAmPm = (hour: number) => {
  * For example, max="2012" would fill in the missing
  * month, day, hour, and minute information.
  */
-export const parseMaxParts = (max: string, todayParts: DatetimeParts): DatetimeParts => {
-  const { month, day, year, hour, minute } = parseDate(max);
+export const parseMaxParts = (max: string, todayParts: DatetimeParts): DatetimeParts | undefined => {
+  const result = parseDate(max);
+
+  /**
+   * If min was not a valid date then return undefined.
+   */
+  if (result === undefined) {
+    return;
+  }
+
+  const { month, day, year, hour, minute } = result;
 
   /**
    * When passing in `max` or `min`, developers
@@ -168,8 +177,17 @@ export const parseMaxParts = (max: string, todayParts: DatetimeParts): DatetimeP
  * For example, min="2012" would fill in the missing
  * month, day, hour, and minute information.
  */
-export const parseMinParts = (min: string, todayParts: DatetimeParts): DatetimeParts => {
-  const { month, day, year, hour, minute } = parseDate(min);
+export const parseMinParts = (min: string, todayParts: DatetimeParts): DatetimeParts | undefined => {
+  const result = parseDate(min);
+
+  /**
+   * If min was not a valid date then return undefined.
+   */
+  if (result === undefined) {
+    return;
+  }
+
+  const { month, day, year, hour, minute } = result;
 
   /**
    * When passing in `max` or `min`, developers
