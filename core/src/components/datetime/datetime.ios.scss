@@ -101,10 +101,10 @@
 }
 
 :host .calendar-day {
-  width: 40px;
-  min-width: 40px;
+  width: $datetime-ios-day-width;
+  min-width: $datetime-ios-day-width;
 
-  height: 40px;
+  height: $datetime-ios-day-height;
 
   font-size: 20px;
 }

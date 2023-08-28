@@ -69,10 +69,10 @@
 
 // Individual day button in month
 :host .calendar-day {
-  width: 42px;
-  min-width: 42px;
+  width: $datetime-md-day-width;
+  min-width: $datetime-md-day-width;
 
-  height: 42px;
+  height: $datetime-md-day-height;
 
   font-size: $datetime-md-calendar-item-font-size;
 }
