@@ -14,6 +14,7 @@ import {
   eventMethod,
   prepareOverlay,
   present,
+  createLockController,
   createTriggerController,
   setOverlayId,
 } from '@utils/overlays';
@@ -64,10 +65,10 @@ import { setCardStatusBarDark, setCardStatusBarDefault } from './utils';
   shadow: true,
 })
 export class Modal implements ComponentInterface, OverlayInterface {
+  private readonly lockController = createLockController();
   private readonly triggerController = createTriggerController();
   private gesture?: Gesture;
   private coreDelegate: FrameworkDelegate = CoreDelegate();
-  private currentTransition?: Promise<any>;
   private sheetTransition?: Promise<any>;
   private isSheetModal = false;
   private currentBreakpoint?: number;
@@ -426,19 +427,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
       return;
     }
 
-    const { presentingElement, el } = this;
+    const unlock = await this.lockController.lock();
 
-    /**
-     * When using an inline modal
-     * and dismissing a modal it is possible to
-     * quickly present the modal while it is
-     * dismissing. We need to await any current
-     * transition to allow the dismiss to finish
-     * before presenting again.
-     */
-    if (this.currentTransition !== undefined) {
-      await this.currentTransition;
-    }
+    const { presentingElement, el } = this;
 
     /**
      * If the modal is presented multiple times (inline modals), we
@@ -474,12 +465,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
 
     writeTask(() => this.el.classList.add('show-modal'));
-
-    this.currentTransition = present<ModalPresentOptions>(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, {
-      presentingEl: presentingElement,
-      currentBreakpoint: this.initialBreakpoint,
-      backdropBreakpoint: this.backdropBreakpoint,
-    });
 
     /* tslint:disable-next-line */
     if (typeof window !== 'undefined') {
@@ -526,7 +511,11 @@ export class Modal implements ComponentInterface, OverlayInterface {
       setCardStatusBarDark();
     }
 
-    await this.currentTransition;
+    await present<ModalPresentOptions>(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, {
+      presentingEl: presentingElement,
+      currentBreakpoint: this.initialBreakpoint,
+      backdropBreakpoint: this.backdropBreakpoint,
+    });
 
     if (this.isSheetModal) {
       this.initSheetGesture();
@@ -534,7 +523,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       this.initSwipeToClose();
     }
 
-    this.currentTransition = undefined;
+    unlock();
   }
 
   private initSwipeToClose() {
@@ -650,6 +639,8 @@ export class Modal implements ComponentInterface, OverlayInterface {
       return false;
     }
 
+    const unlock = await this.lockController.lock();
+
     /**
      * If a canDismiss handler is responsible
      * for calling the dismiss method, we should
@@ -677,21 +668,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
       this.keyboardOpenCallback = undefined;
     }
 
-    /**
-     * When using an inline modal
-     * and presenting a modal it is possible to
-     * quickly dismiss the modal while it is
-     * presenting. We need to await any current
-     * transition to allow the present to finish
-     * before dismissing again.
-     */
-    if (this.currentTransition !== undefined) {
-      await this.currentTransition;
-    }
-
     const enteringAnimation = activeAnimations.get(this) || [];
 
-    this.currentTransition = dismiss<ModalDismissOptions>(
+    const dismissed = await dismiss<ModalDismissOptions>(
       this,
       data,
       role,
@@ -704,8 +683,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
         backdropBreakpoint: this.backdropBreakpoint,
       }
     );
-
-    const dismissed = await this.currentTransition;
 
     if (dismissed) {
       const { delegate } = this.getDelegate();
@@ -723,8 +700,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
       enteringAnimation.forEach((ani) => ani.destroy());
     }
     this.currentBreakpoint = undefined;
-    this.currentTransition = undefined;
     this.animation = undefined;
+
+    unlock();
+
     return dismissed;
   }
 

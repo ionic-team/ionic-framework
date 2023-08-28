@@ -6,6 +6,7 @@ import { createButtonActiveGesture } from '@utils/gesture/button-active';
 import { raf } from '@utils/helpers';
 import {
   createDelegateController,
+  createLockController,
   createTriggerController,
   BACKDROP,
   dismiss,
@@ -46,6 +47,7 @@ import { mdLeaveAnimation } from './animations/md.leave';
 })
 export class Alert implements ComponentInterface, OverlayInterface {
   private readonly delegateController = createDelegateController(this);
+  private readonly lockController = createLockController();
   private readonly triggerController = createTriggerController();
   private customHTMLEnabled = config.get('innerHTMLTemplatesEnabled', ENABLE_HTML_CONTENT_DEFAULT);
   private activeId?: string;
@@ -54,7 +56,6 @@ export class Alert implements ComponentInterface, OverlayInterface {
   private processedButtons: AlertButton[] = [];
   private wrapperEl?: HTMLElement;
   private gesture?: Gesture;
-  private currentTransition?: Promise<any>;
 
   presented = false;
   lastFocus?: HTMLElement;
@@ -373,23 +374,13 @@ export class Alert implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async present(): Promise<void> {
-    /**
-     * When using an inline alert
-     * and dismissing an alert it is possible to
-     * quickly present the alert while it is
-     * dismissing. We need to await any current
-     * transition to allow the dismiss to finish
-     * before presenting again.
-     */
-    if (this.currentTransition !== undefined) {
-      await this.currentTransition;
-    }
+    const unlock = await this.lockController.lock();
 
     await this.delegateController.attachViewToDom();
 
-    this.currentTransition = present(this, 'alertEnter', iosEnterAnimation, mdEnterAnimation);
-    await this.currentTransition;
-    this.currentTransition = undefined;
+    await present(this, 'alertEnter', iosEnterAnimation, mdEnterAnimation);
+
+    unlock();
   }
 
   /**
@@ -403,12 +394,15 @@ export class Alert implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async dismiss(data?: any, role?: string): Promise<boolean> {
-    this.currentTransition = dismiss(this, data, role, 'alertLeave', iosLeaveAnimation, mdLeaveAnimation);
-    const dismissed = await this.currentTransition;
+    const unlock = await this.lockController.lock();
+
+    const dismissed = await dismiss(this, data, role, 'alertLeave', iosLeaveAnimation, mdLeaveAnimation);
 
     if (dismissed) {
       this.delegateController.removeViewFromDom();
     }
+
+    unlock();
 
     return dismissed;
   }

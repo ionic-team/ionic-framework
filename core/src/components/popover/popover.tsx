@@ -5,6 +5,7 @@ import { addEventListener, raf, hasLazyBuild } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 import {
   BACKDROP,
+  createLockController,
   dismiss,
   eventMethod,
   focusFirstDescendant,
@@ -58,7 +59,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
   private triggerEl?: HTMLElement | null;
   private parentPopover: HTMLIonPopoverElement | null = null;
   private coreDelegate: FrameworkDelegate = CoreDelegate();
-  private currentTransition?: Promise<any>;
+  private readonly lockController = createLockController();
   private destroyTriggerInteraction?: () => void;
   private destroyKeyboardInteraction?: () => void;
   private destroyDismissInteraction?: () => void;
@@ -434,17 +435,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
       return;
     }
 
-    /**
-     * When using an inline popover
-     * and dismissing a popover it is possible to
-     * quickly present the popover while it is
-     * dismissing. We need to await any current
-     * transition to allow the dismiss to finish
-     * before presenting again.
-     */
-    if (this.currentTransition !== undefined) {
-      await this.currentTransition;
-    }
+    const unlock = await this.lockController.lock();
 
     const { el } = this;
 
@@ -487,7 +478,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
       await waitForMount();
     }
 
-    this.currentTransition = present<PopoverPresentOptions>(this, 'popoverEnter', iosEnterAnimation, mdEnterAnimation, {
+    await present<PopoverPresentOptions>(this, 'popoverEnter', iosEnterAnimation, mdEnterAnimation, {
       event: event || this.event,
       size: this.size,
       trigger: this.triggerEl,
@@ -495,10 +486,6 @@ export class Popover implements ComponentInterface, PopoverInterface {
       side: this.side,
       align: this.alignment,
     });
-
-    await this.currentTransition;
-
-    this.currentTransition = undefined;
 
     /**
      * If popover is nested and was
@@ -509,6 +496,8 @@ export class Popover implements ComponentInterface, PopoverInterface {
     if (this.focusDescendantOnPresent) {
       focusFirstDescendant(this.el, this.el);
     }
+
+    unlock();
   }
 
   /**
@@ -521,24 +510,14 @@ export class Popover implements ComponentInterface, PopoverInterface {
    */
   @Method()
   async dismiss(data?: any, role?: string, dismissParentPopover = true): Promise<boolean> {
-    /**
-     * When using an inline popover
-     * and presenting a popover it is possible to
-     * quickly dismiss the popover while it is
-     * presenting. We need to await any current
-     * transition to allow the present to finish
-     * before dismissing again.
-     */
-    if (this.currentTransition !== undefined) {
-      await this.currentTransition;
-    }
+    const unlock = await this.lockController.lock();
 
     const { destroyKeyboardInteraction, destroyDismissInteraction } = this;
     if (dismissParentPopover && this.parentPopover) {
       this.parentPopover.dismiss(data, role, dismissParentPopover);
     }
 
-    this.currentTransition = dismiss<PopoverDismissOptions>(
+    const shouldDismiss = await dismiss<PopoverDismissOptions>(
       this,
       data,
       role,
@@ -547,7 +526,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
       mdLeaveAnimation,
       this.event
     );
-    const shouldDismiss = await this.currentTransition;
+
     if (shouldDismiss) {
       if (destroyKeyboardInteraction) {
         destroyKeyboardInteraction();
@@ -567,7 +546,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
       await detachComponent(delegate, this.usersElement);
     }
 
-    this.currentTransition = undefined;
+    unlock();
 
     return shouldDismiss;
   }

@@ -8,8 +8,8 @@ import {
   eventMethod,
   prepareOverlay,
   present,
-  createLockController,
   createDelegateController,
+  createLockController,
   createTriggerController,
   setOverlayId,
 } from '@utils/overlays';

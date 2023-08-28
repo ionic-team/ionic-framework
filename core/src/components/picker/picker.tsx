@@ -3,6 +3,7 @@ import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '
 import { raf } from '@utils/helpers';
 import {
   createDelegateController,
+  createLockController,
   createTriggerController,
   BACKDROP,
   dismiss,
@@ -38,10 +39,10 @@ import type { PickerButton, PickerColumn } from './picker-interface';
 })
 export class Picker implements ComponentInterface, OverlayInterface {
   private readonly delegateController = createDelegateController(this);
+  private readonly lockController = createLockController();
   private readonly triggerController = createTriggerController();
 
   private durationTimeout?: ReturnType<typeof setTimeout>;
-  private currentTransition?: Promise<any>;
   lastFocus?: HTMLElement;
 
   @Element() el!: HTMLIonPickerElement;
@@ -215,29 +216,17 @@ export class Picker implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async present(): Promise<void> {
-    /**
-     * When using an inline picker
-     * and dismissing an picker it is possible to
-     * quickly present the picker while it is
-     * dismissing. We need to await any current
-     * transition to allow the dismiss to finish
-     * before presenting again.
-     */
-    if (this.currentTransition !== undefined) {
-      await this.currentTransition;
-    }
+    const unlock = await this.lockController.lock();
 
     await this.delegateController.attachViewToDom();
 
-    this.currentTransition = present(this, 'pickerEnter', iosEnterAnimation, iosEnterAnimation, undefined);
-
-    await this.currentTransition;
-
-    this.currentTransition = undefined;
+    await present(this, 'pickerEnter', iosEnterAnimation, iosEnterAnimation, undefined);
 
     if (this.duration > 0) {
       this.durationTimeout = setTimeout(() => this.dismiss(), this.duration);
     }
+
+    unlock();
   }
 
   /**
@@ -251,15 +240,18 @@ export class Picker implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async dismiss(data?: any, role?: string): Promise<boolean> {
+    const unlock = await this.lockController.lock();
+
     if (this.durationTimeout) {
       clearTimeout(this.durationTimeout);
     }
-    this.currentTransition = dismiss(this, data, role, 'pickerLeave', iosLeaveAnimation, iosLeaveAnimation);
-    const dismissed = await this.currentTransition;
+    const dismissed = await dismiss(this, data, role, 'pickerLeave', iosLeaveAnimation, iosLeaveAnimation);
 
     if (dismissed) {
       this.delegateController.removeViewFromDom();
     }
+
+    unlock();
 
     return dismissed;
   }
