@@ -99,7 +99,7 @@ export const CoreDelegate = () => {
        * The delegate host wrapper el is only needed for modals and popovers
        * because they allow the dev to provide custom content to the overlay.
        */
-      const root = ChildComponent = BaseComponent.children[0] as HTMLElement;
+      const root = (ChildComponent = BaseComponent.children[0] as HTMLElement);
       if (!root.classList.contains('ion-delegate-host')) {
         /**
          * If the root element is not a delegate host, it means
