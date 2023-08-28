@@ -335,6 +335,10 @@ ion-picker-column-internal {
   align-items: center;
   justify-content: center;
 
+  // Adding a min width and min height allows
+  // it to shrink smaller than its content
+  // which keeps the calendar day highlight
+  // larger while letting the grid items shrink
   min-width: 0;
 
   min-height: 0;
