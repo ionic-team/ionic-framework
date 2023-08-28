@@ -449,6 +449,9 @@ export class Popover implements ComponentInterface, PopoverInterface {
     const { el } = this;
 
     const { inline, delegate } = this.getDelegate(true);
+
+    this.ionMount.emit();
+
     this.usersElement = await attachComponent(
       delegate,
       el,
@@ -462,8 +465,6 @@ export class Popover implements ComponentInterface, PopoverInterface {
       this.configureKeyboardInteraction();
     }
     this.configureDismissInteraction();
-
-    this.ionMount.emit();
 
     /**
      * When using the lazy loaded build of Stencil, we need to wait

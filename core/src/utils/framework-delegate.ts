@@ -56,6 +56,7 @@ export const CoreDelegate = () => {
     cssClasses: string[] = []
   ) => {
     BaseComponent = parentElement;
+    let ChildComponent;
     /**
      * If passing in a component via the `component` props
      * we need to append it inside of our overlay component.
@@ -87,6 +88,8 @@ export const CoreDelegate = () => {
        */
       BaseComponent.appendChild(el);
 
+      ChildComponent = el;
+
       await new Promise((resolve) => componentOnReady(el, resolve));
     } else if (
       BaseComponent.children.length > 0 &&
@@ -96,7 +99,7 @@ export const CoreDelegate = () => {
        * The delegate host wrapper el is only needed for modals and popovers
        * because they allow the dev to provide custom content to the overlay.
        */
-      const root = BaseComponent.children[0] as HTMLElement;
+      const root = ChildComponent = BaseComponent.children[0] as HTMLElement;
       if (!root.classList.contains('ion-delegate-host')) {
         /**
          * If the root element is not a delegate host, it means
@@ -111,6 +114,7 @@ export const CoreDelegate = () => {
         el.append(...BaseComponent.children);
         // Append the new parent element to the original parent element.
         BaseComponent.appendChild(el);
+        ChildComponent = el;
       }
     }
 
@@ -130,7 +134,7 @@ export const CoreDelegate = () => {
 
     app.appendChild(BaseComponent);
 
-    return BaseComponent;
+    return ChildComponent;
   };
 
   const removeViewFromDom = () => {
