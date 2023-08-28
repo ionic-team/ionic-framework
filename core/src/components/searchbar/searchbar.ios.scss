@@ -15,13 +15,13 @@
 
   @include padding($searchbar-ios-padding-top, $searchbar-ios-padding-end, $searchbar-ios-padding-bottom, $searchbar-ios-padding-start);
 
-  height: $searchbar-ios-input-height + $searchbar-ios-padding-top + $searchbar-ios-padding-bottom;
+  min-height: $searchbar-ios-input-min-height + $searchbar-ios-padding-top + $searchbar-ios-padding-bottom;
 
-  contain: strict;
+  contain: content;
 }
 
 .searchbar-input-container {
-  height: $searchbar-ios-input-height;
+  min-height: $searchbar-ios-input-min-height;
 }
 
 
@@ -45,16 +45,24 @@
 // -----------------------------------------
 
 .searchbar-input {
-  @include padding(0, 28px);
+  @include padding(6px, 0px);
 
   height: 100%;
 
-  font-size: 17px;
+  font-size: dynamic-font(17px);
   font-weight: 400;
 
   contain: strict;
 }
 
+/**
+ * We should only account for the clear button
+ * if the clear button is actually visible. Otherwise
+ * long text in an input can get cut off when it does not need to.
+ */
+:host(.searchbar-has-value.searchbar-should-show-clear) .searchbar-input {
+  @include padding(null, dynamic-font(28px));
+}
 
 // Searchbar Clear Input Icon
 // -----------------------------------------
@@ -65,7 +73,7 @@
 
   position: absolute;
 
-  width: 30px;
+  width: dynamic-font(30px);
   height: 100%;
 
   border: 0;
@@ -101,7 +109,7 @@
 }
 
 :host(.searchbar-left-aligned) .searchbar-input {
-  @include padding-horizontal(30px, null);
+  @include padding-horizontal(dynamic-font(30px), null);
 }
 
 
