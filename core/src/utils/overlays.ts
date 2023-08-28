@@ -745,13 +745,20 @@ export const createDelegateController = (ref: {
 
 /**
  * Creates a lock controller.
- *
- * This function locks transitions.
- * The unlock() function within it calls resolve on this function, unlocking the transitions.
  */
 export const createLockController = () => {
   let waitPromise: Promise<void>;
 
+  /**
+   * This function can be used to lock transitions.
+   * When this function gets resolved, the lock is released.
+   *
+   * @example ```tsx
+   * const unlock = await this.lockController.lock();
+   * // do other stuff
+   * unlock();
+   * ```
+   */
   const lock = async () => {
     const p = waitPromise;
     let resolve!: () => void;
