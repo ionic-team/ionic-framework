@@ -1,7 +1,9 @@
 import type { RouteInfo, ViewItem } from '@ionic/react';
 import { IonRoute, ViewLifeCycleManager, ViewStacks, generateId } from '@ionic/react';
 import React from 'react';
-import { matchPath } from 'react-router';
+// import { matchPath } from 'react-router';
+
+import { matchPath } from './utils/matchPath';
 
 export class ReactRouterViewStack extends ViewStacks {
   constructor() {
@@ -23,13 +25,18 @@ export class ReactRouterViewStack extends ViewStacks {
       ionRoute: false,
     };
 
-    const matchProps = {
-      exact: reactElement.props.exact,
-      path: reactElement.props.path || reactElement.props.from,
-      component: reactElement.props.component,
-    };
+    // const matchProps = {
+    //   exact: reactElement.props.exact,
+    //   path: reactElement.props.path || reactElement.props.from,
+    //   component: reactElement.props.component,
+    // };
 
-    const match = matchPath(routeInfo.pathname, matchProps);
+    // const match = matchPath({
+    //   pathname: routeInfo.pathname,
+    //   componentProps: reactElement.props,
+    // });
+
+    // const match = matchPath(routeInfo.pathname, matchProps);
 
     if (reactElement.type === IonRoute) {
       viewItem.ionRoute = true;
@@ -37,7 +44,10 @@ export class ReactRouterViewStack extends ViewStacks {
     }
 
     viewItem.routeData = {
-      match,
+      match: matchPath({
+        pathname: routeInfo.pathname,
+        componentProps: reactElement.props,
+      }),
       childProps: reactElement.props,
     };
 
@@ -96,8 +106,19 @@ export class ReactRouterViewStack extends ViewStacks {
     return children;
   }
 
+  registerIonPage(routeInfo: RouteInfo, ionPage: HTMLElement) {
+    const viewItem = this.findViewItemByRouteInfo(routeInfo);
+
+    if (viewItem) {
+      viewItem.ionPageElement = ionPage;
+      viewItem.ionRoute = true;
+    }
+
+    // TODO Vue has additional vue specific logic for viewItem.matchedRoute
+  }
+
   findViewItemByRouteInfo(routeInfo: RouteInfo, outletId?: string, updateMatch?: boolean) {
-    const { viewItem, match } = this.findViewItemByPath(routeInfo.pathname, outletId);
+    const { viewItem, match } = this.findViewItemByPath(routeInfo.pathname, outletId, false);
     const shouldUpdateMatch = updateMatch === undefined || updateMatch === true;
     if (shouldUpdateMatch && viewItem && match) {
       viewItem.routeData.match = match;
@@ -106,16 +127,16 @@ export class ReactRouterViewStack extends ViewStacks {
   }
 
   findLeavingViewItemByRouteInfo(routeInfo: RouteInfo, outletId?: string, mustBeIonRoute = true) {
-    const { viewItem } = this.findViewItemByPath(routeInfo.lastPathname!, outletId, false, mustBeIonRoute);
+    const { viewItem } = this.findViewItemByPath(routeInfo.lastPathname!, outletId, mustBeIonRoute);
     return viewItem;
   }
 
   findViewItemByPathname(pathname: string, outletId?: string) {
-    const { viewItem } = this.findViewItemByPath(pathname, outletId);
+    const { viewItem } = this.findViewItemByPath(pathname, outletId, false);
     return viewItem;
   }
 
-  private findViewItemByPath(pathname: string, outletId?: string, forceExact?: boolean, mustBeIonRoute?: boolean) {
+  private findViewItemByPath(pathname: string, outletId?: string, mustBeIonRoute = false) {
     let viewItem: ViewItem | undefined;
     let match: ReturnType<typeof matchPath> | undefined;
     let viewStack: ViewItem[];
@@ -140,15 +161,14 @@ export class ReactRouterViewStack extends ViewStacks {
       if (mustBeIonRoute && !v.ionRoute) {
         return false;
       }
-      const matchProps = {
-        exact: forceExact ? true : v.routeData.childProps.exact,
-        path: v.routeData.childProps.path || v.routeData.childProps.from,
-        component: v.routeData.childProps.component,
-      };
-      const myMatch = matchPath(pathname, matchProps);
-      if (myMatch) {
+
+      match = matchPath({
+        pathname,
+        componentProps: v.routeData.childProps,
+      });
+
+      if (match) {
         viewItem = v;
-        match = myMatch;
         return true;
       }
       return false;
@@ -171,13 +191,16 @@ export class ReactRouterViewStack extends ViewStacks {
   }
 }
 
-function matchComponent(node: React.ReactElement, pathname: string, forceExact?: boolean) {
-  const matchProps = {
-    exact: forceExact ? true : node.props.exact,
-    path: node.props.path || node.props.from,
-    component: node.props.component,
-  };
-  const match = matchPath(pathname, matchProps);
+function matchComponent(node: React.ReactElement, pathname: string) {
+  // const matchProps = {
+  //   exact: forceExact ? true : node.props.exact,
+  //   path: node.props.path || node.props.from,
+  //   component: node.props.component,
+  // };
+  // const match = matchPath(pathname, matchProps);
 
-  return match;
+  return matchPath({
+    pathname,
+    componentProps: node.props,
+  });
 }

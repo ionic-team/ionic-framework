@@ -10,4 +10,8 @@ export interface ViewItem<T = any> {
   transitionHtml?: string;
   outletId: string;
   disableIonPageManagement?: boolean;
+  /**
+   * Callback function when the view item is registered.
+   */
+  registerCallback?: () => void;
 }

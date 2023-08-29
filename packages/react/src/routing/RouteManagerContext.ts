@@ -14,7 +14,7 @@ export interface RouteManagerContextState {
     routeInfo: RouteInfo,
     page?: HTMLElement
   ) => ViewItem;
-  findViewItemByPathname(pathname: string, outletId?: string): ViewItem | undefined;
+  findViewItemByPathname(pathname: string, outletId?: string, forceExact?: boolean): ViewItem | undefined;
   findLeavingViewItemByRouteInfo: (routeInfo: RouteInfo, outletId?: string) => ViewItem | undefined;
   findViewItemByRouteInfo: (routeInfo: RouteInfo, outletId?: string, updateMatch?: boolean) => ViewItem | undefined;
   getChildrenToRender: (
@@ -25,6 +25,7 @@ export interface RouteManagerContextState {
   ) => React.ReactNode[];
   goBack: () => void;
   unMountViewItem: (viewItem: ViewItem) => void;
+  registerIonPage: (routeInfo: RouteInfo, ionPage: HTMLElement) => void;
 }
 
 // TODO(FW-2959): types
@@ -39,4 +40,5 @@ export const RouteManagerContext = /*@__PURE__*/ React.createContext<RouteManage
   getChildrenToRender: () => undefined as any,
   goBack: () => undefined,
   unMountViewItem: () => undefined,
+  registerIonPage: () => undefined
 });

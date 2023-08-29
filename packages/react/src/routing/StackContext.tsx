@@ -3,7 +3,7 @@ import React from 'react';
 import type { RouteInfo } from '../models/RouteInfo';
 
 export interface StackContextState {
-  registerIonPage: (page: HTMLElement, routeInfo: RouteInfo) => void;
+  registerIonPage: (routeInfo: RouteInfo, page: HTMLElement) => void;
   isInOutlet: () => boolean;
 }
 

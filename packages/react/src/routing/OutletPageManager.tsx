@@ -35,7 +35,9 @@ export class OutletPageManager extends React.Component<OutletPageManagerProps> {
       if (!this.outletIsReady) {
         componentOnReady(this.ionRouterOutlet, () => {
           this.outletIsReady = true;
-          this.context.registerIonPage(this.ionRouterOutlet!, this.props.routeInfo!);
+          console.log('registerIonPage from OutletPageManager');
+          this.context.registerIonPage(this.props.routeInfo!, this.ionRouterOutlet!);
+          // this.context.registerIonPage(this.ionRouterOutlet!, this.props.routeInfo!);
         });
       }
 
