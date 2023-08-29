@@ -1040,7 +1040,7 @@ ion-range,prop,debounce,number | undefined,undefined,false,false
 ion-range,prop,disabled,boolean,false,false,false
 ion-range,prop,dualKnobs,boolean,false,false,false
 ion-range,prop,label,string | undefined,undefined,false,false
-ion-range,prop,labelPlacement,"end" | "fixed" | "start",'start',false,false
+ion-range,prop,labelPlacement,"end" | "fixed" | "stacked" | "start",'start',false,false
 ion-range,prop,legacy,boolean | undefined,undefined,false,false
 ion-range,prop,max,number,100,false,false
 ion-range,prop,min,number,0,false,false
