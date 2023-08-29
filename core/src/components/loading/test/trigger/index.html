@@ -66,21 +66,6 @@
           loadingTimeout.dismiss();
         }, 500);
       });
-
-      const loading = document.getElementById('default-loading');
-
-      setTimeout(() => {
-        loading.isOpen = true;
-        setTimeout(() => {
-          loading.isOpen = false;
-          setTimeout(() => {
-            loading.isOpen = true;
-            setTimeout(() => {
-              loading.isOpen = false;
-            }, 50);
-          }, 50);
-        }, 50);
-      }, 2000);
     </script>
   </body>
 </html>
