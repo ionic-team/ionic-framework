@@ -447,9 +447,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
     this.currentBreakpoint = this.initialBreakpoint;
 
     const { inline, delegate } = this.getDelegate(true);
-    this.usersElement = await attachComponent(delegate, el, this.component, ['ion-page'], this.componentProps, inline);
 
     this.ionMount.emit();
+
+    this.usersElement = await attachComponent(delegate, el, this.component, ['ion-page'], this.componentProps, inline);
 
     /**
      * When using the lazy loaded build of Stencil, we need to wait
