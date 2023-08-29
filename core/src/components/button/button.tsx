@@ -153,6 +153,15 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
    */
   @Event() ionBlur!: EventEmitter<void>;
 
+  /**
+   * This is responsible for rendering a hidden native
+   * button element inside the associated form. This allows
+   * users to submit a form by pressing "Enter" when a text
+   * field inside of the form is focused. The native button
+   * rendered inside of `ion-button` is in the Shadow DOM
+   * and therefore does not participate in form submission
+   * which is why the following code is necessary.
+   */
   private renderHiddenButton() {
     const formEl = (this.formEl = this.findForm());
     if (formEl) {
@@ -323,6 +332,13 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
       fill = this.inToolbar || this.inListHeader ? 'clear' : 'solid';
     }
 
+    /**
+     * We call renderHiddenButton in the render function to account
+     * for any properties being set async. For example, changing the
+     * "type" prop from "button" to "submit" after the component has
+     * loaded would warrant the hidden button being added to the
+     * associated form.
+     */
     {
       type !== 'button' && this.renderHiddenButton();
     }
