@@ -2,9 +2,9 @@ import { Component, ContentChild, ContentChildren, ViewChild, QueryList } from '
 import { IonTabs as IonTabsBase, ProxyCmp } from '@ionic/angular/common';
 import { defineCustomElement } from '@ionic/core/components/ion-tabs.js';
 
-import { IonTabBar } from '../proxies';
+import { IonTabBar } from '../directives/proxies';
 
-import { IonRouterOutlet } from './ion-router-outlet';
+import { IonRouterOutlet } from './router-outlet';
 
 @ProxyCmp({
   defineCustomElementFn: defineCustomElement
