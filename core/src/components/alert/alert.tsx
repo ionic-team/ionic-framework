@@ -4,9 +4,9 @@ import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
 import type { Gesture } from '@utils/gesture';
 import { createButtonActiveGesture } from '@utils/gesture/button-active';
 import { raf } from '@utils/helpers';
+import { createLockController } from '@utils/lock-controller';
 import {
   createDelegateController,
-  createLockController,
   createTriggerController,
   BACKDROP,
   dismiss,

@@ -4,6 +4,7 @@ import { findIonContent, printIonContentErrorMsg } from '@utils/content';
 import { CoreDelegate, attachComponent, detachComponent } from '@utils/framework-delegate';
 import { raf, inheritAttributes, hasLazyBuild } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
+import { createLockController } from '@utils/lock-controller';
 import { printIonWarning } from '@utils/logging';
 import { Style as StatusBarStyle, StatusBar } from '@utils/native/status-bar';
 import {
@@ -14,7 +15,6 @@ import {
   eventMethod,
   prepareOverlay,
   present,
-  createLockController,
   createTriggerController,
   setOverlayId,
 } from '@utils/overlays';
@@ -423,11 +423,11 @@ export class Modal implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async present(): Promise<void> {
+    const unlock = await this.lockController.lock();
+
     if (this.presented) {
       return;
     }
-
-    const unlock = await this.lockController.lock();
 
     const { presentingElement, el } = this;
 
@@ -465,6 +465,12 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
 
     writeTask(() => this.el.classList.add('show-modal'));
+
+    await present<ModalPresentOptions>(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, {
+      presentingEl: presentingElement,
+      currentBreakpoint: this.initialBreakpoint,
+      backdropBreakpoint: this.backdropBreakpoint,
+    });
 
     /* tslint:disable-next-line */
     if (typeof window !== 'undefined') {
@@ -510,12 +516,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
       this.statusBarStyle = await StatusBar.getStyle();
       setCardStatusBarDark();
     }
-
-    await present<ModalPresentOptions>(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, {
-      presentingEl: presentingElement,
-      currentBreakpoint: this.initialBreakpoint,
-      backdropBreakpoint: this.backdropBreakpoint,
-    });
 
     if (this.isSheetModal) {
       this.initSheetGesture();

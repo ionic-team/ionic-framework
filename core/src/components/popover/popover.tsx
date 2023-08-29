@@ -2,10 +2,10 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 import { CoreDelegate, attachComponent, detachComponent } from '@utils/framework-delegate';
 import { addEventListener, raf, hasLazyBuild } from '@utils/helpers';
+import { createLockController } from '@utils/lock-controller';
 import { printIonWarning } from '@utils/logging';
 import {
   BACKDROP,
-  createLockController,
   dismiss,
   eventMethod,
   focusFirstDescendant,
@@ -431,11 +431,11 @@ export class Popover implements ComponentInterface, PopoverInterface {
    */
   @Method()
   async present(event?: MouseEvent | TouchEvent | PointerEvent | CustomEvent): Promise<void> {
+    const unlock = await this.lockController.lock();
+
     if (this.presented) {
       return;
     }
-
-    const unlock = await this.lockController.lock();
 
     const { el } = this;
 

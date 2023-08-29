@@ -744,37 +744,6 @@ export const createDelegateController = (ref: {
 };
 
 /**
- * Creates a lock controller.
- */
-export const createLockController = () => {
-  let waitPromise: Promise<void>;
-
-  /**
-   * This function can be used to lock transitions.
-   * When this function gets resolved, the lock is released.
-   *
-   * @example ```tsx
-   * const unlock = await this.lockController.lock();
-   * // do other stuff
-   * unlock();
-   * ```
-   */
-  const lock = async () => {
-    const p = waitPromise;
-    let resolve!: () => void;
-    waitPromise = new Promise((r) => (resolve = r));
-    if (p !== undefined) {
-      await p;
-    }
-    return resolve;
-  };
-
-  return {
-    lock,
-  };
-};
-
-/**
  * Constructs a trigger interaction for an overlay.
  * Presents an overlay when the trigger is clicked.
  *

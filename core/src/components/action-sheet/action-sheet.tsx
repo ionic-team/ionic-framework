@@ -3,10 +3,10 @@ import { Watch, Component, Element, Event, Host, Method, Prop, h, readTask } fro
 import type { Gesture } from '@utils/gesture';
 import { createButtonActiveGesture } from '@utils/gesture/button-active';
 import { raf } from '@utils/helpers';
+import { createLockController } from '@utils/lock-controller';
 import {
   BACKDROP,
   createDelegateController,
-  createLockController,
   createTriggerController,
   dismiss,
   eventMethod,

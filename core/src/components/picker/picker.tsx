@@ -1,9 +1,9 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 import { raf } from '@utils/helpers';
+import { createLockController } from '@utils/lock-controller';
 import {
   createDelegateController,
-  createLockController,
   createTriggerController,
   BACKDROP,
   dismiss,

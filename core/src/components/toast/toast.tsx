@@ -2,10 +2,10 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { State, Watch, Component, Element, Event, h, Host, Method, Prop } from '@stencil/core';
 import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
 import { raf } from '@utils/helpers';
+import { createLockController } from '@utils/lock-controller';
 import { printIonWarning } from '@utils/logging';
 import {
   createDelegateController,
-  createLockController,
   createTriggerController,
   dismiss,
   eventMethod,
