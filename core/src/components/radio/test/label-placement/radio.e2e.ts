@@ -137,7 +137,7 @@ configs().forEach(({ title, screenshot, config }) => {
         expect(await radio.screenshot()).toMatchSnapshot(screenshot(`radio-label-fixed-justify-space-between`));
       });
     });
-    test.describe.only('radio: stacked placement', () => {
+    test.describe('radio: stacked placement', () => {
       test('should align the label to the start of the container in the stacked position', async ({ page }) => {
         await page.setContent(
           `
