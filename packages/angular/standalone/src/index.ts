@@ -3,6 +3,7 @@ export { IonModal } from './overlays/modal';
 export { IonPopover } from './overlays/popover';
 export { IonRouterOutlet } from './navigation/router-outlet';
 export { IonRouterLink, IonRouterLinkWithHref } from './navigation/router-link-delegate';
+export { IonTabs } from './navigation/tabs';
 export { provideIonicAngular } from './providers/ionic-angular';
 export {
   ActionSheetController,
