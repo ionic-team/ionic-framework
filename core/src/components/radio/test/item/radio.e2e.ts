@@ -61,7 +61,7 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, screenshot, co
   });
 
   test.describe(title('radio: stacked label in item'), () => {
-    test.only('should render margins correctly when using stacked label in item', async ({ page }) => {
+    test('should render margins correctly when using stacked label in item', async ({ page }) => {
       await page.setContent(
         `
           <ion-list>
