@@ -114,6 +114,12 @@ export const CoreDelegate = () => {
         el.append(...BaseComponent.children);
         // Append the new parent element to the original parent element.
         BaseComponent.appendChild(el);
+
+        /**
+         * Update the ChildComponent to be the
+         * newly created div in the event that one
+         * does not already exist.
+         */
         ChildComponent = el;
       }
     }
@@ -134,7 +140,18 @@ export const CoreDelegate = () => {
 
     app.appendChild(BaseComponent);
 
-    return ChildComponent;
+    /**
+     * We return the child component rather than the overlay
+     * reference itself since modal and popover will
+     * use this to wait for any Ionic components in the child view
+     * to be ready (i.e. componentOnReady) when using the
+     * lazy loaded component bundle.
+     *
+     * However, we fall back to returning BaseComponent
+     * in the event that a modal or popover is presented
+     * with no child content.
+     */
+    return ChildComponent ?? BaseComponent;
   };
 
   const removeViewFromDom = () => {
