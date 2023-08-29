@@ -20,7 +20,7 @@ import type { RouteID, RouterDirection, RouteWrite, NavOutlet } from '../router/
 
 @Component({
   tag: 'ion-router-outlet',
-  styleUrl: 'route-outlet.scss',
+  styleUrl: 'router-outlet.scss',
   shadow: true,
 })
 export class RouterOutlet implements ComponentInterface, NavOutlet {
