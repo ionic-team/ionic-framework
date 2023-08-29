@@ -149,7 +149,7 @@ configs().forEach(({ title, screenshot, config }) => {
         );
 
         const radio = page.locator('ion-radio');
-        expect(await radio.screenshot()).toMatchSnapshot(screenshot(`radio-label-stacked-align-start`));
+        await expect(radio).toHaveScreenshot(screenshot(`radio-label-stacked-align-start`));
       });
 
       test('should align the label to the center of the container in the stacked position', async ({ page }) => {
@@ -163,7 +163,7 @@ configs().forEach(({ title, screenshot, config }) => {
         );
 
         const radio = page.locator('ion-radio');
-        expect(await radio.screenshot()).toMatchSnapshot(screenshot(`radio-label-stacked-align-center`));
+        await expect(radio).toHaveScreenshot(screenshot(`radio-label-stacked-align-center`));
       });
     });
   });

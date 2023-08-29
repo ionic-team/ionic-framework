@@ -149,7 +149,7 @@ configs().forEach(({ title, screenshot, config }) => {
         );
 
         const checkbox = page.locator('ion-checkbox');
-        expect(await checkbox.screenshot()).toMatchSnapshot(screenshot(`checkbox-label-stacked-align-start`));
+        await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-label-stacked-align-start`));
       });
 
       test('should align the label to the center of the container in the stacked position', async ({ page }) => {
@@ -161,7 +161,7 @@ configs().forEach(({ title, screenshot, config }) => {
         );
 
         const checkbox = page.locator('ion-checkbox');
-        expect(await checkbox.screenshot()).toMatchSnapshot(screenshot(`checkbox-label-stacked-align-center`));
+        await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-label-stacked-align-center`));
       });
     });
   });

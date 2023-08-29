@@ -137,7 +137,7 @@ configs().forEach(({ title, screenshot, config }) => {
       );
 
       const toggle = page.locator('ion-toggle');
-      expect(await toggle.screenshot()).toMatchSnapshot(screenshot(`toggle-label-stacked-align-start`));
+      await expect(toggle).toHaveScreenshot(screenshot(`toggle-label-stacked-align-start`));
     });
 
     test('should align the label to the center of the container in the stacked position', async ({ page }) => {
@@ -149,7 +149,7 @@ configs().forEach(({ title, screenshot, config }) => {
       );
 
       const toggle = page.locator('ion-toggle');
-      expect(await toggle.screenshot()).toMatchSnapshot(screenshot(`toggle-label-stacked-align-center`));
+      await expect(toggle).toHaveScreenshot(screenshot(`toggle-label-stacked-align-center`));
     });
   });
 });

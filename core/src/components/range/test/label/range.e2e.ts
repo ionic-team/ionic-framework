@@ -72,7 +72,7 @@ configs().forEach(({ title, screenshot, config }) => {
 
         const range = page.locator('#container');
 
-        expect(await range.screenshot()).toMatchSnapshot(screenshot(`range-no-items-stacked`));
+        await expect(range).toHaveScreenshot(screenshot(`range-no-items-stacked`));
       });
     });
 
@@ -154,7 +154,7 @@ configs().forEach(({ title, screenshot, config }) => {
 
         const range = page.locator('ion-range');
 
-        expect(await range.screenshot()).toMatchSnapshot(screenshot(`range-items-stacked`));
+        await expect(range).toHaveScreenshot(screenshot(`range-items-stacked`));
       });
     });
 
@@ -194,7 +194,7 @@ configs().forEach(({ title, screenshot, config }) => {
 
         const range = page.locator('#container');
 
-        expect(await range.screenshot()).toMatchSnapshot(screenshot(`range-label-prop-stacked`));
+        await expect(range).toHaveScreenshot(screenshot(`range-label-prop-stacked`));
       });
     });
   });
@@ -238,7 +238,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       // Force the pin to show
       await knob.evaluate((el: HTMLElement) => el.classList.add('ion-focused'));
 
-      expect(await container.screenshot()).toMatchSnapshot(screenshot(`range-stacked-pin`));
+      await expect(container).toHaveScreenshot(screenshot(`range-stacked-pin`));
     });
   });
 });

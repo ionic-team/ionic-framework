@@ -75,7 +75,7 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, screenshot, co
         config
       );
       const list = page.locator('ion-list');
-      expect(await list.screenshot()).toMatchSnapshot(screenshot(`radio-stacked-label-in-item`));
+      await expect(list).toHaveScreenshot(screenshot(`radio-stacked-label-in-item`));
     });
   });
 });
