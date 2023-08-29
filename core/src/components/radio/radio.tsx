@@ -85,7 +85,7 @@ export class Radio implements ComponentInterface {
    * `"end"`: The label will appear to the right of the radio in LTR and to the left in RTL.
    * `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
    */
-  @Prop() labelPlacement: 'start' | 'end' | 'fixed' = 'start';
+  @Prop() labelPlacement: 'start' | 'end' | 'fixed' | 'stacked' = 'start';
 
   // TODO FW-3125: Remove the legacy property and implementation
   /**
@@ -109,6 +109,13 @@ export class Radio implements ComponentInterface {
    * ends of the line with space between the two elements.
    */
   @Prop() justify: 'start' | 'end' | 'space-between' = 'space-between';
+
+  /**
+   * How to pack the label and control along the cross axis.
+   * `"start"`: The label and control will appear at the top of the container.
+   * `"center"`: The label and control will appear at the center of the container.
+   */
+  @Prop() align: 'start' | 'center' = 'center';
 
   /**
    * Emitted when the styles change.
@@ -250,7 +257,7 @@ export class Radio implements ComponentInterface {
   }
 
   private renderRadio() {
-    const { checked, disabled, color, el, justify, labelPlacement, hasLabel, buttonTabindex } = this;
+    const { checked, disabled, color, el, justify, labelPlacement, hasLabel, buttonTabindex, align } = this;
     const mode = getIonMode(this);
     const inItem = hostContext('ion-item', el);
 
@@ -265,6 +272,7 @@ export class Radio implements ComponentInterface {
           'radio-checked': checked,
           'radio-disabled': disabled,
           [`radio-justify-${justify}`]: true,
+          [`radio-align-${align}`]: true,
           [`radio-label-placement-${labelPlacement}`]: true,
           // Focus and active styling should not apply when the radio is in an item
           'ion-activatable': !inItem,

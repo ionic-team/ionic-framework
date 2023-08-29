@@ -59,4 +59,23 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, screenshot, co
       expect(await list.screenshot()).toMatchSnapshot(screenshot(`radio-long-label-in-item`));
     });
   });
+
+  test.describe(title('radio: stacked label in item'), () => {
+    test('should render margins correctly when using stacked label in item', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-list>
+            <ion-radio-group>
+              <ion-item>
+                <ion-radio label-placement="stacked">Enable Notifications</ion-radio>
+              </ion-item>
+            </ion-radio-group>
+          </ion-list>
+        `,
+        config
+      );
+      const list = page.locator('ion-list');
+      expect(await list.screenshot()).toMatchSnapshot(screenshot(`radio-stacked-label-in-item`));
+    });
+  });
 });
