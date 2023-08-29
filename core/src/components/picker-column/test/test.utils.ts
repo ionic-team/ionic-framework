@@ -40,12 +40,12 @@ export async function testPickerColumn(
 
     screenshots.push({
       name: `picker-${description}-column-diff-${i}-${page.getSnapshotSettings()}.png`,
-      screenshot: await page.screenshot(),
+      screenshot: page,
     });
   }
 
   for (const screenshot of screenshots) {
-    expect(screenshot.screenshot).toMatchSnapshot(screenshot.name);
+    expect(screenshot.screenshot).toHaveScreenshot(screenshot.name);
   }
   */
 }

@@ -139,7 +139,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
         );
 
         const select = page.locator('ion-select');
-        expect(await select.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+        await expect(select).toHaveScreenshot(
           screenshot(`select-no-fill-highlight`)
         );
       });
@@ -154,7 +154,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
         );
 
         const select = page.locator('ion-select');
-        expect(await select.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+        await expect(select).toHaveScreenshot(
           screenshot(`select-solid-highlight`)
         );
       });
@@ -169,7 +169,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
         );
 
         const select = page.locator('ion-select');
-        expect(await select.screenshot({ animations: 'disabled' })).toMatchSnapshot(
+        await expect(select).toHaveScreenshot(
           screenshot(`select-outline-highlight`)
         );
       });

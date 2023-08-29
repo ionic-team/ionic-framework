@@ -53,7 +53,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
         );
 
         const errorText = page.locator('ion-textarea .error-text');
-        expect(await errorText.screenshot()).toMatchSnapshot(screenshot(`textarea-error-custom-color`));
+        await expect(errorText).toHaveScreenshot(screenshot(`textarea-error-custom-color`));
       });
     });
     test.describe('textarea: hint text rendering', () => {
@@ -62,7 +62,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
           await page.setContent(`<ion-textarea helper-text="my helper" label="my textarea"></ion-textarea>`, config);
 
           const bottomEl = page.locator('ion-textarea .textarea-bottom');
-          expect(await bottomEl.screenshot()).toMatchSnapshot(screenshot(`textarea-bottom-content-helper`));
+          await expect(bottomEl).toHaveScreenshot(screenshot(`textarea-bottom-content-helper`));
         });
         test('should not have visual regressions when rendering error text', async ({ page }) => {
           await page.setContent(
@@ -71,7 +71,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
           );
 
           const bottomEl = page.locator('ion-textarea .textarea-bottom');
-          expect(await bottomEl.screenshot()).toMatchSnapshot(screenshot(`textarea-bottom-content-error`));
+          await expect(bottomEl).toHaveScreenshot(screenshot(`textarea-bottom-content-error`));
         });
       });
     });
@@ -137,7 +137,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
           );
 
           const bottomEl = page.locator('ion-textarea .textarea-bottom');
-          expect(await bottomEl.screenshot()).toMatchSnapshot(screenshot(`textarea-bottom-content-counter`));
+          await expect(bottomEl).toHaveScreenshot(screenshot(`textarea-bottom-content-counter`));
         });
 
         test('should not have visual regressions when rendering counter with helper text', async ({ page }) => {
@@ -147,7 +147,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
           );
 
           const bottomEl = page.locator('ion-textarea .textarea-bottom');
-          expect(await bottomEl.screenshot()).toMatchSnapshot(
+          await expect(bottomEl).toHaveScreenshot(
             screenshot(`textarea-bottom-content-counter-helper-text`)
           );
         });
@@ -159,7 +159,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
           );
 
           const bottomEl = page.locator('ion-textarea .textarea-bottom');
-          expect(await bottomEl.screenshot()).toMatchSnapshot(screenshot(`textarea-bottom-content-counter-error-text`));
+          await expect(bottomEl).toHaveScreenshot(screenshot(`textarea-bottom-content-counter-error-text`));
         });
       });
     });
