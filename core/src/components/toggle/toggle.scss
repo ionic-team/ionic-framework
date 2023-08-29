@@ -123,6 +123,14 @@ input {
   @include margin($toggle-item-label-margin-top, null, $toggle-item-label-margin-bottom, null);
 }
 
+:host(.in-item.toggle-label-placement-stacked) .label-text-wrapper {
+  @include margin($toggle-item-label-margin-top, null, $form-control-label-margin, null);
+}
+
+:host(.in-item.toggle-label-placement-stacked) .native-wrapper {
+  @include margin(null, null, $toggle-item-label-margin-bottom, null);
+}
+
 /**
  * If no label text is placed into the slot
  * then the element should be hidden otherwise
@@ -173,7 +181,7 @@ input {
 
 /**
  * Label is on the left of the input in LTR and
- * on the right in RTL.
+ * on the right in RTL.c
  */
 :host(.toggle-label-placement-start) .toggle-wrapper {
   flex-direction: row;

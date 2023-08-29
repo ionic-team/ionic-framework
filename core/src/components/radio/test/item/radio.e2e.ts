@@ -65,12 +65,12 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, screenshot, co
       await page.setContent(
         `
           <ion-list>
-          <ion-radio-group>
-            <ion-item>
-              <ion-radio label-placement="stacked">Enable Notifications</ion-radio>
-            </ion-item>
-          </ion-radio-group>
-        </ion-list>
+            <ion-radio-group>
+              <ion-item>
+                <ion-radio label-placement="stacked">Enable Notifications</ion-radio>
+              </ion-item>
+            </ion-radio-group>
+          </ion-list>
         `,
         config
       );
