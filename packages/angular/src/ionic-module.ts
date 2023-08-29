@@ -22,6 +22,7 @@ import {
 import { IonModal } from './directives/overlays/modal';
 import { IonPopover } from './directives/overlays/popover';
 import { DIRECTIVES } from './directives/proxies-list';
+import { IonMaxValidator, IonMinValidator } from './directives/validators';
 import { AngularDelegate } from './providers/angular-delegate';
 import { ConfigToken } from './providers/config';
 import { ModalController } from './providers/modal-controller';
@@ -49,6 +50,10 @@ const DECLARATIONS = [
   NavDelegate,
   RouterLinkDelegateDirective,
   RouterLinkWithHrefDelegateDirective,
+
+  // validators
+  IonMinValidator,
+  IonMaxValidator,
 ];
 
 @NgModule({
