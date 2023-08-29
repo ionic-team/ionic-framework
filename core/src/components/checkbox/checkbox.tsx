@@ -81,6 +81,7 @@ export class Checkbox implements ComponentInterface {
    * `"start"`: The label will appear to the left of the checkbox in LTR and to the right in RTL.
    * `"end"`: The label will appear to the right of the checkbox in LTR and to the left in RTL.
    * `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+   * `"stacked"`: The label will appear above the checkbox regardless of the direction. The alignment of the label can be controlled with the `align` property.
    */
   @Prop() labelPlacement: 'start' | 'end' | 'fixed' | 'stacked' = 'start';
 
