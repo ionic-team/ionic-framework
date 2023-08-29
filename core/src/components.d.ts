@@ -603,6 +603,10 @@ export namespace Components {
     }
     interface IonCheckbox {
         /**
+          * How to pack the label and control along the cross axis. `"start"`: The label and control will appear at the top of the container. `"center"`: The label and control will appear at the center of the container.
+         */
+        "align": 'start' | 'center';
+        /**
           * If `true`, the checkbox is selected.
          */
         "checked": boolean;
@@ -625,7 +629,7 @@ export namespace Components {
         /**
           * Where to place the label relative to the checkbox. `"start"`: The label will appear to the left of the checkbox in LTR and to the right in RTL. `"end"`: The label will appear to the right of the checkbox in LTR and to the left in RTL. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
          */
-        "labelPlacement": 'start' | 'end' | 'fixed';
+        "labelPlacement": 'start' | 'end' | 'fixed' | 'stacked';
         /**
           * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt checkboxes in to the modern form markup when they are using either the `aria-label` attribute or have text in the default slot. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior.  Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
          */
@@ -4626,6 +4630,10 @@ declare namespace LocalJSX {
     }
     interface IonCheckbox {
         /**
+          * How to pack the label and control along the cross axis. `"start"`: The label and control will appear at the top of the container. `"center"`: The label and control will appear at the center of the container.
+         */
+        "align"?: 'start' | 'center';
+        /**
           * If `true`, the checkbox is selected.
          */
         "checked"?: boolean;
@@ -4648,7 +4656,7 @@ declare namespace LocalJSX {
         /**
           * Where to place the label relative to the checkbox. `"start"`: The label will appear to the left of the checkbox in LTR and to the right in RTL. `"end"`: The label will appear to the right of the checkbox in LTR and to the left in RTL. `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
          */
-        "labelPlacement"?: 'start' | 'end' | 'fixed';
+        "labelPlacement"?: 'start' | 'end' | 'fixed' | 'stacked';
         /**
           * Set the `legacy` property to `true` to forcibly use the legacy form control markup. Ionic will only opt checkboxes in to the modern form markup when they are using either the `aria-label` attribute or have text in the default slot. As a result, the `legacy` property should only be used as an escape hatch when you want to avoid this automatic opt-in behavior.  Note that this property will be removed in an upcoming major release of Ionic, and all form components will be opted-in to using the modern form markup.
          */

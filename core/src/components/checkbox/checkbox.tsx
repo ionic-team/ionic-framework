@@ -82,7 +82,7 @@ export class Checkbox implements ComponentInterface {
    * `"end"`: The label will appear to the right of the checkbox in LTR and to the left in RTL.
    * `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
    */
-  @Prop() labelPlacement: 'start' | 'end' | 'fixed' = 'start';
+  @Prop() labelPlacement: 'start' | 'end' | 'fixed' | 'stacked' = 'start';
 
   /**
    * How to pack the label and checkbox within a line.
@@ -94,6 +94,13 @@ export class Checkbox implements ComponentInterface {
    * ends of the line with space between the two elements.
    */
   @Prop() justify: 'start' | 'end' | 'space-between' = 'space-between';
+
+  /**
+   * How to pack the label and control along the cross axis.
+   * `"start"`: The label and control will appear at the top of the container.
+   * `"center"`: The label and control will appear at the center of the container.
+   */
+  @Prop() align: 'start' | 'center' = 'center';
 
   // TODO(FW-3100): remove this
   /**
@@ -224,6 +231,7 @@ export class Checkbox implements ComponentInterface {
       labelPlacement,
       name,
       value,
+      align,
     } = this;
     const mode = getIonMode(this);
     const path = getSVGPath(mode, indeterminate);
@@ -240,6 +248,7 @@ export class Checkbox implements ComponentInterface {
           'checkbox-indeterminate': indeterminate,
           interactive: true,
           [`checkbox-justify-${justify}`]: true,
+          [`checkbox-align-${align}`]: true,
           [`checkbox-label-placement-${labelPlacement}`]: true,
         })}
       >
