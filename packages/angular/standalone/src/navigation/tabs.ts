@@ -45,6 +45,7 @@ import { IonRouterOutlet } from './router-outlet';
       }
     `,
   ],
+  imports: [IonRouterOutlet]
 })
 // eslint-disable-next-line @angular-eslint/component-class-suffix
 export class IonTabs extends IonTabsBase {
