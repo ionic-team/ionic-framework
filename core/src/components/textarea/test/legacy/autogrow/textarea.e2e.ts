@@ -29,8 +29,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         config
       );
 
-      const textarea = await page.waitForSelector('ion-textarea');
-
+      const textarea = page.locator('ion-textarea');
       await textarea.click();
 
       await page.waitForChanges();
