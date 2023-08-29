@@ -165,9 +165,7 @@ configs().forEach(({ title, screenshot, config }) => {
       );
 
       const textarea = page.locator('ion-textarea');
-      await expect(textarea).toHaveScreenshot(
-        screenshot(`textarea-placement-floating-no-value-placeholder`)
-      );
+      await expect(textarea).toHaveScreenshot(screenshot(`textarea-placement-floating-no-value-placeholder`));
     });
     test('label should appear on top of the textarea when the textarea is focused', async ({ page }) => {
       await page.setContent(
@@ -183,9 +181,7 @@ configs().forEach(({ title, screenshot, config }) => {
       await nativeTextarea.click();
       await page.waitForChanges();
 
-      await expect(textarea).toHaveScreenshot(
-        screenshot(`textarea-focused-placement-floating-no-value`)
-      );
+      await expect(textarea).toHaveScreenshot(screenshot(`textarea-focused-placement-floating-no-value`));
     });
     test('textarea should render multiple lines of text', async ({ page }) => {
       await page.setContent(

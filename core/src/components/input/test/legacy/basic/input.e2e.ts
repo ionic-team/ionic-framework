@@ -87,9 +87,7 @@ configs().forEach(({ title, screenshot, config }) => {
         // Verifies that the parent item receives .item-has-focus when the input is focused.
         await expect(item).toHaveClass(/item-has-focus/);
         // Validates the display of an input with an ion-item using lines="full" when focused.
-        await expect(item).toHaveScreenshot(
-          screenshot(`input-with-lines-full-focused`)
-        );
+        await expect(item).toHaveScreenshot(screenshot(`input-with-lines-full-focused`));
       });
     });
 
@@ -118,9 +116,7 @@ configs().forEach(({ title, screenshot, config }) => {
         await expect(item).toHaveClass(/item-has-focus/);
 
         // Validates the display of an input with an ion-item using lines="inset" when focused.
-        await expect(item).toHaveScreenshot(
-          screenshot(`input-with-lines-inset-focused`)
-        );
+        await expect(item).toHaveScreenshot(screenshot(`input-with-lines-inset-focused`));
       });
     });
 
@@ -149,9 +145,7 @@ configs().forEach(({ title, screenshot, config }) => {
         await expect(item).toHaveClass(/item-has-focus/);
 
         // Validates the display of an input with an ion-item using lines="none" when focused.
-        await expect(item).toHaveScreenshot(
-          screenshot(`input-with-lines-none-focused`)
-        );
+        await expect(item).toHaveScreenshot(screenshot(`input-with-lines-none-focused`));
       });
     });
 

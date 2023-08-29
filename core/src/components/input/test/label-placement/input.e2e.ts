@@ -114,9 +114,7 @@ configs().forEach(({ title, screenshot, config }) => {
       await nativeInput.click();
       await page.waitForChanges();
 
-      await expect(input).toHaveScreenshot(
-        screenshot(`input-focused-placement-floating-no-value`)
-      );
+      await expect(input).toHaveScreenshot(screenshot(`input-focused-placement-floating-no-value`));
     });
     test('long label should truncate', async ({ page }) => {
       await page.setContent(

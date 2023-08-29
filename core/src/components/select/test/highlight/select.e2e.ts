@@ -139,9 +139,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
         );
 
         const select = page.locator('ion-select');
-        await expect(select).toHaveScreenshot(
-          screenshot(`select-no-fill-highlight`)
-        );
+        await expect(select).toHaveScreenshot(screenshot(`select-no-fill-highlight`));
       });
     });
     test.describe('select: solid', () => {
@@ -154,9 +152,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
         );
 
         const select = page.locator('ion-select');
-        await expect(select).toHaveScreenshot(
-          screenshot(`select-solid-highlight`)
-        );
+        await expect(select).toHaveScreenshot(screenshot(`select-solid-highlight`));
       });
     });
     test.describe('select: outline', () => {
@@ -169,9 +165,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
         );
 
         const select = page.locator('ion-select');
-        await expect(select).toHaveScreenshot(
-          screenshot(`select-outline-highlight`)
-        );
+        await expect(select).toHaveScreenshot(screenshot(`select-outline-highlight`));
       });
     });
   });

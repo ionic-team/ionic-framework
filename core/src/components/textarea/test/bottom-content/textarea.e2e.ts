@@ -147,9 +147,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
           );
 
           const bottomEl = page.locator('ion-textarea .textarea-bottom');
-          await expect(bottomEl).toHaveScreenshot(
-            screenshot(`textarea-bottom-content-counter-helper-text`)
-          );
+          await expect(bottomEl).toHaveScreenshot(screenshot(`textarea-bottom-content-counter-helper-text`));
         });
 
         test('should not have visual regressions when rendering counter with error text', async ({ page }) => {
