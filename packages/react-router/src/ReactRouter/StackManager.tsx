@@ -1,24 +1,23 @@
-import type { RouteInfo, StackContextState, ViewItem } from '@ionic/react';
+import type { AnimationBuilder, RouteInfo, RouterDirection, StackContextState } from '@ionic/react';
 import { RouteManagerContext, StackContext, generateId, getConfig } from '@ionic/react';
+import type { ReactNode } from 'react';
 import React from 'react';
 import { matchPath } from 'react-router-dom';
-
-import { clonePageElement } from './clonePageElement';
-
-// TODO(FW-2959): types
 
 interface StackManagerProps {
   routeInfo: RouteInfo;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface StackManagerState {}
+interface StackManagerState {
+  components: ReactNode[];
+}
 
-const isViewVisible = (el: HTMLElement) =>
-  !el.classList.contains('ion-page-invisible') && !el.classList.contains('ion-page-hidden');
+const isViewVisible = (enteringEl: HTMLElement) => {
+  return !enteringEl.classList.contains('ion-page-invisible') && !enteringEl.classList.contains('ion-page-hidden');
+};
 
 export class StackManager extends React.PureComponent<StackManagerProps, StackManagerState> {
-  id: string; // TODO pretty sure this should be a number
+  id: string;
   context!: React.ContextType<typeof RouteManagerContext>;
   ionRouterOutlet?: React.ReactElement;
   routerOutletElement: HTMLIonRouterOutletElement | undefined;
@@ -31,16 +30,18 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
   };
 
   private clearOutletTimeout: any;
-  // private pendingPageTransition = false;
 
   constructor(props: StackManagerProps) {
     super(props);
     this.registerIonPage = this.registerIonPage.bind(this);
-    this.transitionPage = this.transitionPage.bind(this);
+    this.transition = this.transition.bind(this);
     this.handlePageTransition = this.handlePageTransition.bind(this);
-    this.id = generateId('routerOutlet');
+    this.id = generateId('ion-router-outlet');
     this.prevProps = undefined;
     this.skipTransition = false;
+    this.state = {
+      components: [],
+    };
   }
 
   componentDidMount() {
@@ -57,10 +58,8 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
       clearTimeout(this.clearOutletTimeout);
     }
     if (this.routerOutletElement) {
-      console.log('calling page transition because of mount');
       this.setupRouterOutlet(this.routerOutletElement);
       this.setupViewItem();
-      // this.handlePageTransition(this.props.routeInfo);
     }
   }
 
@@ -70,6 +69,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
 
     if (pathname !== prevPathname) {
       this.prevProps = prevProps;
+      console.log('pathname changed... setup view item?!');
       this.setupViewItem();
     }
 
@@ -88,6 +88,11 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
   }
 
   componentWillUnmount() {
+    /**
+     * Remove stack data for this outlet
+     * when outlet is destroyed otherwise
+     * we will see cached view data.
+     */
     this.clearOutletTimeout = this.context.clearOutlet(this.id);
   }
 
@@ -96,6 +101,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
 
     const { id, props } = this;
     const { routeInfo } = props;
+
     /**
      * This function is responsible for creating the entering view item
      * and adding it to the view stack.
@@ -105,11 +111,25 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
     let enteringViewItem = this.context.findViewItemByRouteInfo(routeInfo, id);
 
     if (!enteringViewItem) {
+      /**
+       * If the entering view item does not exist, this is
+       * the first time we are rendering this route.
+       *
+       * We need to create a view item instance and add it to the view stack.
+       * Later, we will mount the view item and transition the page.
+       */
       enteringViewItem = this.context.createViewItem(id, currentRoute, routeInfo);
+
       this.context.addViewItem(enteringViewItem);
     }
 
     if (!enteringViewItem.mount) {
+      /**
+       * If the entering view item is not mounted,
+       * that means it has not been rendered yet.
+       * We need to mount it and then finish the transition
+       * after the React component has mounted.
+       */
       enteringViewItem.mount = true;
       enteringViewItem.registerCallback = () => {
         this.handlePageTransition();
@@ -118,17 +138,25 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
         }
       };
     } else {
+      /**
+       * If the entering view item has already mounted,
+       * that means the page reference should already
+       * exist and we can transition immediately.
+       */
       this.handlePageTransition();
     }
+
+    this.setState({
+      components: this.context.getChildrenToRender(id, this.ionRouterOutlet!, routeInfo),
+    });
   }
 
   async handlePageTransition() {
     const { id, props } = this;
     const { routeInfo } = props;
-    const { prevRouteLastPathname } = routeInfo;
+    const { prevRouteLastPathname, routeDirection, pushedByRoute, routeAnimation } = routeInfo;
 
     const enteringViewItem = this.context.findViewItemByRouteInfo(routeInfo, id)!;
-    console.log('find view item by route info', routeInfo, enteringViewItem);
     let leavingViewItem = this.context.findLeavingViewItemByRouteInfo(routeInfo, id);
     const enteringEl = enteringViewItem?.ionPageElement;
 
@@ -138,7 +166,6 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
      * methods to work properly.
      */
     if (enteringEl === undefined) {
-      console.log('** THIS ISNT SUPPOSED TO HAPPEN....', enteringViewItem);
       console.warn(`[@ionic/react Warning]: The view you are trying to render for path ${routeInfo.pathname} does not have the required <IonPage> component. Transitions and lifecycle methods may not work as expected.
 
 See https://ionicframework.com/docs/react/navigation#ionpage for more information.`);
@@ -194,18 +221,25 @@ See https://ionicframework.com/docs/react/navigation#ionpage for more informatio
        * route or on an initial page load (i.e. refreshing). In cases when loading
        * /tabs/tab-1, we need to transition the /tabs page element into the view.
        */
-      this.transitionPage(routeInfo, enteringViewItem, leavingViewItem);
+      this.transition(
+        enteringViewItem.ionPageElement!,
+        leavingViewItem.ionPageElement!,
+        routeDirection!,
+        !!pushedByRoute,
+        false,
+        routeAnimation
+      );
     } else {
       /**
        * If there is no leaving element, just show
        * the entering element. Wrap it in an raf
-       * in case ion-content's fullscreen callback
+       * in case IonContent's fullscreen callback
        * is running. Otherwise we'd have a flicker.
        */
       requestAnimationFrame(() => enteringEl?.classList.remove('ion-page-invisible'));
     }
 
-    this.forceUpdate();
+    // this.forceUpdate();
   }
 
   // async handlePageTransition(routeInfo: RouteInfo) {
@@ -324,17 +358,9 @@ See https://ionicframework.com/docs/react/navigation#ionpage for more informatio
   registerIonPage(routeInfo: RouteInfo, ionPageEl: HTMLElement) {
     const { id } = this;
     const viewItem = this.context.findViewItemByRouteInfo(routeInfo, id)!;
-
-    if (!viewItem) {
-      console.log('could not find view item for route info', routeInfo, id);
-    }
-
     const oldIonPageEl = viewItem.ionPageElement;
 
-    // this.context.registerIonPage(viewItem, ionPageEl);
-
-    // this.context.registerIonPage(viewItem, ionPageEl);
-    //  viewStacks.registerIonPage(viewItem, ionpageEl);
+    this.context.registerIonPage(viewItem, ionPageEl);
 
     /**
      * If there is a registerCallback,
@@ -361,33 +387,6 @@ See https://ionicframework.com/docs/react/navigation#ionpage for more informatio
       ionPageEl.classList.remove('ion-page-invisible');
     }
   }
-
-  // registerIonPage(page: HTMLElement, routeInfo: RouteInfo) {
-  //   // was findViewItemByRouteInfo
-  //   const foundView = this.context.findViewItemByPathname(routeInfo.pathname, this.id, false);
-  //   // const foundView = this.context.findViewItemByRouteInfo(routeInfo, this.id, true);
-  //   console.log('calling page transition from registering ion page...', {
-  //     routeInfo,
-  //     page,
-  //     foundView,
-  //   });
-  //   // const foundView = this.context.findViewItemByRouteInfo(routeInfo, this.id);
-  //   if (foundView) {
-  //     const oldPageElement = foundView.ionPageElement;
-  //     foundView.ionPageElement = page;
-  //     foundView.ionRoute = true;
-
-  //     /**
-  //      * React 18 will unmount and remount IonPage
-  //      * elements in development mode when using createRoot.
-  //      * This can cause duplicate page transitions to occur.
-  //      */
-  //     if (oldPageElement === page) {
-  //       return;
-  //     }
-  //   }
-  //   this.handlePageTransition(routeInfo);
-  // }
 
   async setupRouterOutlet(routerOutlet: HTMLIonRouterOutletElement) {
     const canStart = () => {
@@ -427,23 +426,51 @@ See https://ionicframework.com/docs/react/navigation#ionpage for more informatio
     };
 
     const onStart = async () => {
+      const { id } = this;
       const { routeInfo } = this.props;
+      let { routeAnimation: animationBuilder } = routeInfo;
 
-      const propsToUse =
-        this.prevProps && this.prevProps.routeInfo.pathname === routeInfo.pushedByRoute
-          ? this.prevProps.routeInfo
-          : ({ pathname: routeInfo.pushedByRoute || '' } as any);
-      const enteringViewItem = this.context.findViewItemByRouteInfo(propsToUse, this.id, false);
-      const leavingViewItem = this.context.findViewItemByRouteInfo(routeInfo, this.id, false);
+      // const propsToUse =
+      //   this.prevProps && this.prevProps.routeInfo.pathname === routeInfo.pushedByRoute
+      //     ? this.prevProps.routeInfo
+      //     : ({ pathname: routeInfo.pushedByRoute || '' } as any);
 
-      /**
-       * When the gesture starts, kick off
-       * a transition that is controlled
-       * via a swipe gesture.
-       */
-      if (enteringViewItem && leavingViewItem) {
-        await this.transitionPage(routeInfo, enteringViewItem, leavingViewItem, 'back', true);
+      const enteringViewItem = this.context.findViewItemByRouteInfo(
+        { pathname: routeInfo.pushedByRoute || '' } as RouteInfo,
+        id,
+        false
+      );
+      const leavingViewItem = this.context.findViewItemByRouteInfo(routeInfo, id, false);
+
+      if (leavingViewItem) {
+        const enteringEl = enteringViewItem?.ionPageElement;
+        const leavingEl = leavingViewItem?.ionPageElement;
+
+        /**
+         * If we are going back from a page that
+         * was presented using a custom animation
+         * we should default to using that
+         * unless the developer explicitly
+         * provided another animation.
+         */
+        const customAnimation = enteringViewItem!.routerAnimation;
+        if (animationBuilder === undefined && customAnimation !== undefined) {
+          animationBuilder = customAnimation;
+        }
+
+        leavingViewItem.routerAnimation = animationBuilder;
+
+        await this.transition(enteringEl!, leavingEl!, 'back', this.context.canGoBack(), true, animationBuilder);
       }
+
+      // /**
+      //  * When the gesture starts, kick off
+      //  * a transition that is controlled
+      //  * via a swipe gesture.
+      //  */
+      // if (enteringViewItem && leavingViewItem) {
+      //   await this.transition(enteringViewItem.ionPageElement!, leavingViewItem.ionPageElement!, 'back', true, true);
+      // }
 
       return Promise.resolve();
     };
@@ -491,98 +518,109 @@ See https://ionicframework.com/docs/react/navigation#ionpage for more informatio
     };
   }
 
-  async transitionPage(
-    routeInfo: RouteInfo,
-    enteringViewItem: ViewItem,
-    leavingViewItem?: ViewItem,
-    direction?: 'forward' | 'back',
-    progressAnimation = false
+  async transition(
+    enteringEl: HTMLElement,
+    leavingEl: HTMLElement,
+    direction: RouterDirection,
+    showGoBack: boolean,
+    progressAnimation: boolean,
+    animationBuilder?: AnimationBuilder
   ) {
-    console.log('transitionPage', {
-      enteringViewItem,
-      leavingViewItem,
+    console.log('transition', {
+      enteringEl,
+      leavingEl,
       direction,
-      routeInfo,
     });
-    const runCommit = async (enteringEl: HTMLElement, leavingEl?: HTMLElement) => {
-      const skipTransition = this.skipTransition;
+    const { skipTransition, routerOutletElement } = this;
 
+    /**
+     * If the transition was handled
+     * via the swipe to go back gesture,
+     * then we do not want to perform
+     * another transition.
+     *
+     * We skip adding ion-page or ion-page-invisible
+     * because the entering view already exists in the DOM.
+     * If we added the classes, there would be a flicker where
+     * the view would be briefly hidden.
+     */
+    if (skipTransition) {
       /**
-       * If the transition was handled
-       * via the swipe to go back gesture,
-       * then we do not want to perform
-       * another transition.
-       *
-       * We skip adding ion-page or ion-page-invisible
-       * because the entering view already exists in the DOM.
-       * If we added the classes, there would be a flicker where
-       * the view would be briefly hidden.
+       * We need to reset skipTransition before
+       * we call routerOutlet.commit otherwise
+       * the transition triggered by the swipe
+       * to go back gesture would reset it. In
+       * that case you would see a duplicate
+       * transition triggered by handlePageTransition
+       * in componentDidUpdate.
        */
-      if (skipTransition) {
-        /**
-         * We need to reset skipTransition before
-         * we call routerOutlet.commit otherwise
-         * the transition triggered by the swipe
-         * to go back gesture would reset it. In
-         * that case you would see a duplicate
-         * transition triggered by handlePageTransition
-         * in componentDidUpdate.
-         */
-        this.skipTransition = false;
-      } else {
-        enteringEl.classList.add('ion-page');
-        enteringEl.classList.add('ion-page-invisible');
-      }
+      this.skipTransition = false;
 
-      await routerOutlet.commit(enteringEl, leavingEl, {
-        duration: skipTransition || directionToUse === undefined ? 0 : undefined,
-        direction: directionToUse,
-        showGoBack: !!routeInfo.pushedByRoute,
-        progressAnimation,
-        animationBuilder: routeInfo.routeAnimation,
-      });
-    };
-
-    const routerOutlet = this.routerOutletElement!;
-
-    const routeInfoFallbackDirection =
-      routeInfo.routeDirection === 'none' || routeInfo.routeDirection === 'root' ? undefined : routeInfo.routeDirection;
-    const directionToUse = direction ?? routeInfoFallbackDirection;
-
-    if (enteringViewItem && enteringViewItem.ionPageElement && this.routerOutletElement) {
-      if (leavingViewItem && leavingViewItem.ionPageElement && enteringViewItem === leavingViewItem) {
-        // If a page is transitioning to another version of itself
-        // we clone it so we can have an animation to show
-
-        const match = matchComponent(leavingViewItem.reactElement, routeInfo.pathname, true);
-        if (match) {
-          const newLeavingElement = clonePageElement(leavingViewItem.ionPageElement.outerHTML);
-          if (newLeavingElement) {
-            this.routerOutletElement.appendChild(newLeavingElement);
-            await runCommit(enteringViewItem.ionPageElement, newLeavingElement);
-            this.routerOutletElement.removeChild(newLeavingElement);
-          }
-        } else {
-          await runCommit(enteringViewItem.ionPageElement, undefined);
-        }
-      } else {
-        await runCommit(enteringViewItem.ionPageElement, leavingViewItem?.ionPageElement);
-        if (leavingViewItem && leavingViewItem.ionPageElement && !progressAnimation) {
-          leavingViewItem.ionPageElement.classList.add('ion-page-hidden');
-          leavingViewItem.ionPageElement.setAttribute('aria-hidden', 'true');
-        }
-      }
+      return Promise.resolve(false);
     }
+
+    if (enteringEl === leavingEl) {
+      return Promise.resolve(false);
+    }
+
+    enteringEl.classList.add('ion-page-invisible');
+
+    const hasRootDirection = direction === undefined || direction === 'root' || direction === 'none';
+    const result = await routerOutletElement!.commit(enteringEl, leavingEl, {
+      /**
+       * replace operations result in a direction of none.
+       * These typically do not have need animations, so we set
+       * the duration to 0. However, if a developer explicitly
+       * passes an animationBuilder, we should assume that
+       * they want an animation to be played even
+       * though it is a replace operation.
+       */
+      duration: hasRootDirection && animationBuilder === undefined ? 0 : undefined,
+      direction: direction as any, // TODO none isn't a valid direction, investigate
+      showGoBack,
+      progressAnimation,
+      animationBuilder,
+    });
+
+    return result;
+    // };
+
+    // const routerOutlet = this.routerOutletElement!;
+
+    // const routeInfoFallbackDirection =
+    //   routeInfo.routeDirection === 'none' || routeInfo.routeDirection === 'root' ? undefined : routeInfo.routeDirection;
+    // const directionToUse = direction ?? routeInfoFallbackDirection;
+
+    // if (enteringViewItem && enteringViewItem.ionPageElement && this.routerOutletElement) {
+    //   if (leavingViewItem && leavingViewItem.ionPageElement && enteringViewItem === leavingViewItem) {
+    //     // If a page is transitioning to another version of itself
+    //     // we clone it so we can have an animation to show
+
+    //     const match = matchComponent(leavingViewItem.reactElement, routeInfo.pathname, true);
+    //     if (match) {
+    //       const newLeavingElement = clonePageElement(leavingViewItem.ionPageElement.outerHTML);
+    //       if (newLeavingElement) {
+    //         this.routerOutletElement.appendChild(newLeavingElement);
+    //         await runCommit(enteringViewItem.ionPageElement, newLeavingElement);
+    //         this.routerOutletElement.removeChild(newLeavingElement);
+    //       }
+    //     } else {
+    //       await runCommit(enteringViewItem.ionPageElement, undefined);
+    //     }
+    //   } else {
+    //     await runCommit(enteringViewItem.ionPageElement, leavingViewItem?.ionPageElement);
+    //     if (leavingViewItem && leavingViewItem.ionPageElement && !progressAnimation) {
+    //       leavingViewItem.ionPageElement.classList.add('ion-page-hidden');
+    //       leavingViewItem.ionPageElement.setAttribute('aria-hidden', 'true');
+    //     }
+    //   }
+    // }
   }
 
   render() {
     const { children } = this.props;
     const ionRouterOutlet = React.Children.only(children) as React.ReactElement;
     this.ionRouterOutlet = ionRouterOutlet;
-
-    const components = this.context.getChildrenToRender(this.id, this.ionRouterOutlet, this.props.routeInfo, () => {
-      this.forceUpdate();
-    });
 
     return (
       <StackContext.Provider value={this.stackContextValue}>
@@ -596,14 +634,17 @@ See https://ionicframework.com/docs/react/navigation#ionpage for more informatio
               if (ionRouterOutlet.props.forwardedRef) {
                 ionRouterOutlet.props.forwardedRef.current = node;
               }
-              this.routerOutletElement = node;
+              if (node) {
+                this.routerOutletElement = node;
+                console.log('assigned router outlet element node...', node);
+              }
               const { ref } = ionRouterOutlet as any;
               if (typeof ref === 'function') {
                 ref(node);
               }
             },
           },
-          components
+          this.state.components
         )}
       </StackContext.Provider>
     );
@@ -644,13 +685,13 @@ function matchRoute(node: React.ReactNode, routeInfo: RouteInfo) {
   return matchedNode;
 }
 
-function matchComponent(node: React.ReactElement, pathname: string, forceExact?: boolean) {
-  const matchProps = {
-    exact: forceExact ? true : node.props.exact,
-    path: node.props.path || node.props.from,
-    component: node.props.component,
-  };
-  const match = matchPath(pathname, matchProps);
+// function matchComponent(node: React.ReactElement, pathname: string, forceExact?: boolean) {
+//   const matchProps = {
+//     exact: forceExact ? true : node.props.exact,
+//     path: node.props.path || node.props.from,
+//     component: node.props.component,
+//   };
+//   const match = matchPath(pathname, matchProps);
 
-  return match;
-}
+//   return match;
+// }

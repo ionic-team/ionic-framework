@@ -74,7 +74,5 @@ export abstract class ViewStacks {
     outletId: string,
     ionRouterOutlet: React.ReactElement,
     routeInfo: RouteInfo,
-    reRender: () => void,
-    setInTransition: () => void
   ): React.ReactNode[];
 }

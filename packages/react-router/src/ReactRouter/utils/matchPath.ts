@@ -41,6 +41,17 @@ export const matchPath = ({ pathname, componentProps }: MatchPathOptions): false
   }
 
   const hasParameter = match.path.includes(':');
+  if (hasParameter) {
+    console.log('the match path has a parameter!!', {
+      pathname,
+      url: match.url,
+      match
+    })
+  }
+  if (hasParameter && match.url.includes(':')) {
+    return false;
+  }
+
   if (hasParameter && pathname !== match.url) {
     console.log('discarding the match because it has a path parameter', {
       pathname,

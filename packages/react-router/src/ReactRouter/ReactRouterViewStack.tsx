@@ -15,43 +15,30 @@ export class ReactRouterViewStack extends ViewStacks {
     this.findViewItemByPathname = this.findViewItemByPathname.bind(this);
   }
 
-  createViewItem(outletId: string, reactElement: React.ReactElement, routeInfo: RouteInfo, page?: HTMLElement) {
-    const viewItem: ViewItem = {
+  createViewItem(
+    outletId: string,
+    reactElement: React.ReactElement,
+    routeInfo: RouteInfo,
+    ionPage?: HTMLElement
+  ): ViewItem {
+    const ionRoute = reactElement.type === IonRoute;
+
+    return {
       id: generateId('viewItem'),
       outletId,
-      ionPageElement: page,
+      ionPageElement: ionPage,
       reactElement,
-      mount: true,
-      ionRoute: false,
+      ionRoute,
+      disableIonPageManagement: ionRoute && reactElement.props.disableIonPageManagement,
+      mount: false,
+      routeData: {
+        match: matchPath({
+          pathname: routeInfo.pathname,
+          componentProps: reactElement.props,
+        }),
+        childProps: reactElement.props,
+      },
     };
-
-    // const matchProps = {
-    //   exact: reactElement.props.exact,
-    //   path: reactElement.props.path || reactElement.props.from,
-    //   component: reactElement.props.component,
-    // };
-
-    // const match = matchPath({
-    //   pathname: routeInfo.pathname,
-    //   componentProps: reactElement.props,
-    // });
-
-    // const match = matchPath(routeInfo.pathname, matchProps);
-
-    if (reactElement.type === IonRoute) {
-      viewItem.ionRoute = true;
-      viewItem.disableIonPageManagement = reactElement.props.disableIonPageManagement;
-    }
-
-    viewItem.routeData = {
-      match: matchPath({
-        pathname: routeInfo.pathname,
-        componentProps: reactElement.props,
-      }),
-      childProps: reactElement.props,
-    };
-
-    return viewItem;
   }
 
   getChildrenToRender(outletId: string, ionRouterOutlet: React.ReactElement, routeInfo: RouteInfo) {
@@ -68,7 +55,7 @@ export class ReactRouterViewStack extends ViewStacks {
     });
 
     const children = viewItems.map((viewItem) => {
-      let clonedChild;
+      let clonedChild: React.ReactNode;
       if (viewItem.ionRoute && !viewItem.disableIonPageManagement) {
         clonedChild = (
           <ViewLifeCycleManager
@@ -106,15 +93,16 @@ export class ReactRouterViewStack extends ViewStacks {
     return children;
   }
 
-  registerIonPage(routeInfo: RouteInfo, ionPage: HTMLElement) {
-    const viewItem = this.findViewItemByRouteInfo(routeInfo);
-
+  /**
+   * Registers the `<IonPage>` element reference to
+   * the view item with the matching route info.
+   */
+  registerIonPage(viewItem: ViewItem, ionPage: HTMLElement) {
     if (viewItem) {
+      // TODO view doesn't check if it exists
       viewItem.ionPageElement = ionPage;
       viewItem.ionRoute = true;
     }
-
-    // TODO Vue has additional vue specific logic for viewItem.matchedRoute
   }
 
   findViewItemByRouteInfo(routeInfo: RouteInfo, outletId?: string, updateMatch?: boolean) {
@@ -139,19 +127,18 @@ export class ReactRouterViewStack extends ViewStacks {
   private findViewItemByPath(pathname: string, outletId?: string, mustBeIonRoute = false) {
     let viewItem: ViewItem | undefined;
     let match: ReturnType<typeof matchPath> | undefined;
-    let viewStack: ViewItem[];
 
     if (outletId) {
-      viewStack = this.getViewItemsForOutlet(outletId);
+      const viewStack = this.getViewItemsForOutlet(outletId);
       viewStack.some(matchView);
       if (!viewItem) {
         viewStack.some(matchDefaultRoute);
       }
     } else {
-      const viewItems = this.getAllViewItems();
-      viewItems.some(matchView);
+      const viewStack = this.getAllViewItems();
+      viewStack.some(matchView);
       if (!viewItem) {
-        viewItems.some(matchDefaultRoute);
+        viewStack.some(matchDefaultRoute);
       }
     }
 
