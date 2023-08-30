@@ -79,16 +79,6 @@
 // Toolbar: Large Title
 // --------------------------------------------------
 
-/**
- * Ensure there is enough spacing between the large
- * title and any potential content in subsequent
- * toolbars. We do not add padding to the title
- * itself because it is absolutely positioned.
- */
-:host(.toolbar-title-large) {
-  padding-bottom: 7px;
-}
-
 :host(.toolbar-title-large) .toolbar-container {
   flex-wrap: wrap;
   align-items: flex-start;
