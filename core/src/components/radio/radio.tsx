@@ -84,7 +84,7 @@ export class Radio implements ComponentInterface {
    * `"start"`: The label will appear to the left of the radio in LTR and to the right in RTL.
    * `"end"`: The label will appear to the right of the radio in LTR and to the left in RTL.
    * `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
-   * `"stacked"`: The label will appear above the radio regardless of the direction. The alignment of the label can be controlled with the `align` property.
+   * `"stacked"`: The label will appear above the radio regardless of the direction. The alignment of the label can be controlled with the `alignment` property.
    */
   @Prop() labelPlacement: 'start' | 'end' | 'fixed' | 'stacked' = 'start';
 
@@ -112,11 +112,11 @@ export class Radio implements ComponentInterface {
   @Prop() justify: 'start' | 'end' | 'space-between' = 'space-between';
 
   /**
-   * How to pack the label and control along the cross axis.
+   * How to control the alignment of the radio and label on the cross axis.
    * `"start"`: The label and control will appear at the top of the container.
    * `"center"`: The label and control will appear at the center of the container.
    */
-  @Prop() align: 'start' | 'center' = 'center';
+  @Prop() alignment: 'start' | 'center' = 'center';
 
   /**
    * Emitted when the styles change.
@@ -258,7 +258,7 @@ export class Radio implements ComponentInterface {
   }
 
   private renderRadio() {
-    const { checked, disabled, color, el, justify, labelPlacement, hasLabel, buttonTabindex, align } = this;
+    const { checked, disabled, color, el, justify, labelPlacement, hasLabel, buttonTabindex, alignment } = this;
     const mode = getIonMode(this);
     const inItem = hostContext('ion-item', el);
 
@@ -273,7 +273,7 @@ export class Radio implements ComponentInterface {
           'radio-checked': checked,
           'radio-disabled': disabled,
           [`radio-justify-${justify}`]: true,
-          [`radio-align-${align}`]: true,
+          [`radio-alignment-${alignment}`]: true,
           [`radio-label-placement-${labelPlacement}`]: true,
           // Focus and active styling should not apply when the radio is in an item
           'ion-activatable': !inItem,

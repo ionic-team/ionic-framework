@@ -131,7 +131,7 @@ configs().forEach(({ title, screenshot, config }) => {
     test('should align the label to the start of the container in the stacked position', async ({ page }) => {
       await page.setContent(
         `
-          <ion-toggle label-placement="stacked" align="start" style="width: 200px">This is a long label</ion-toggle>
+          <ion-toggle label-placement="stacked" alignment="start" style="width: 200px">This is a long label</ion-toggle>
         `,
         config
       );
@@ -143,7 +143,7 @@ configs().forEach(({ title, screenshot, config }) => {
     test('should align the label to the center of the container in the stacked position', async ({ page }) => {
       await page.setContent(
         `
-          <ion-toggle label-placement="stacked" align="center" style="width: 200px">This is a long label</ion-toggle>
+          <ion-toggle label-placement="stacked" alignment="center" style="width: 200px">This is a long label</ion-toggle>
         `,
         config
       );

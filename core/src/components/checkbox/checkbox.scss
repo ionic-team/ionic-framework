@@ -192,11 +192,11 @@ input {
 // Align Items
 // ---------------------------------------------
 
-:host(.checkbox-align-start) .checkbox-wrapper {
+:host(.checkbox-alignment-start) .checkbox-wrapper {
   align-items: start;
 }
 
-:host(.checkbox-align-center) .checkbox-wrapper {
+:host(.checkbox-alignment-center) .checkbox-wrapper {
   align-items: center;
 }
 

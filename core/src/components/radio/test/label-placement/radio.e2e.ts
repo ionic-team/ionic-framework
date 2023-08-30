@@ -142,7 +142,7 @@ configs().forEach(({ title, screenshot, config }) => {
         await page.setContent(
           `
             <ion-radio-group value="1">
-              <ion-radio label-placement="stacked" align="start" style="width: 200px" value="1">This is a long label</ion-radio>
+              <ion-radio label-placement="stacked" alignment="start" style="width: 200px" value="1">This is a long label</ion-radio>
             </ion-radio-group>
           `,
           config
@@ -156,7 +156,7 @@ configs().forEach(({ title, screenshot, config }) => {
         await page.setContent(
           `
             <ion-radio-group value="1">
-              <ion-radio label-placement="stacked" align="center" style="width: 200px" value="1">This is a long label</ion-radio>
+              <ion-radio label-placement="stacked" alignment="center" style="width: 200px" value="1">This is a long label</ion-radio>
             </ion-radio-group>
           `,
           config
