@@ -185,7 +185,7 @@ class DatetimePresentationFixture {
   async goto(presentation: string, config: E2EPageOptions) {
     await this.page.setContent(
       `
-      <ion-datetime presentation="${presentation}" value="2022-03-10T13:00:00"></ion-datetime>
+      <ion-datetime presentation="${presentation}" value="2010-03-10T13:00:00"></ion-datetime>
     `,
       config
     );
