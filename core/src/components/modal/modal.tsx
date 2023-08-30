@@ -426,6 +426,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
     const unlock = await this.lockController.lock();
 
     if (this.presented) {
+      unlock();
       return;
     }
 

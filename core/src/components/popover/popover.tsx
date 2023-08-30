@@ -434,6 +434,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
     const unlock = await this.lockController.lock();
 
     if (this.presented) {
+      unlock();
       return;
     }
 
