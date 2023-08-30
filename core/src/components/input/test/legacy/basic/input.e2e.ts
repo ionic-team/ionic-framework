@@ -19,7 +19,7 @@ configs().forEach(({ title, screenshot, config }) => {
         );
         const item = page.locator('ion-item');
         // Validates the display of an input where text extends off the edge of the component.
-        expect(await item.screenshot()).toMatchSnapshot(screenshot(`input-with-text-overflow`));
+        await expect(item).toHaveScreenshot(screenshot(`input-with-text-overflow`));
       });
     });
 
@@ -39,7 +39,7 @@ configs().forEach(({ title, screenshot, config }) => {
         );
         const item = page.locator('ion-item');
         // Validates the display of an input with a placeholder.
-        expect(await item.screenshot()).toMatchSnapshot(screenshot(`input-with-placeholder`));
+        await expect(item).toHaveScreenshot(screenshot(`input-with-placeholder`));
       });
     });
 
@@ -59,7 +59,7 @@ configs().forEach(({ title, screenshot, config }) => {
         );
         const item = page.locator('ion-item');
         // Validates the display of an input in a disabled state.
-        expect(await item.screenshot()).toMatchSnapshot(screenshot(`input-disabled`));
+        await expect(item).toHaveScreenshot(screenshot(`input-disabled`));
       });
     });
 
@@ -80,16 +80,14 @@ configs().forEach(({ title, screenshot, config }) => {
         const item = page.locator('ion-item');
         const input = page.locator('ion-input');
         // Validates the display of an input with an ion-item using lines="full".
-        expect(await item.screenshot({ animations: 'disabled' })).toMatchSnapshot(screenshot(`input-with-lines-full`));
+        await expect(item).toHaveScreenshot(screenshot(`input-with-lines-full`));
 
         await input.click();
 
         // Verifies that the parent item receives .item-has-focus when the input is focused.
         await expect(item).toHaveClass(/item-has-focus/);
         // Validates the display of an input with an ion-item using lines="full" when focused.
-        expect(await item.screenshot({ animations: 'disabled' })).toMatchSnapshot(
-          screenshot(`input-with-lines-full-focused`)
-        );
+        await expect(item).toHaveScreenshot(screenshot(`input-with-lines-full-focused`));
       });
     });
 
@@ -110,7 +108,7 @@ configs().forEach(({ title, screenshot, config }) => {
         const item = page.locator('ion-item');
         const input = page.locator('ion-input');
         // Validates the display of an input with an ion-item using lines="inset".
-        expect(await item.screenshot({ animations: 'disabled' })).toMatchSnapshot(screenshot(`input-with-lines-inset`));
+        await expect(item).toHaveScreenshot(screenshot(`input-with-lines-inset`));
 
         await input.click();
 
@@ -118,9 +116,7 @@ configs().forEach(({ title, screenshot, config }) => {
         await expect(item).toHaveClass(/item-has-focus/);
 
         // Validates the display of an input with an ion-item using lines="inset" when focused.
-        expect(await item.screenshot({ animations: 'disabled' })).toMatchSnapshot(
-          screenshot(`input-with-lines-inset-focused`)
-        );
+        await expect(item).toHaveScreenshot(screenshot(`input-with-lines-inset-focused`));
       });
     });
 
@@ -141,7 +137,7 @@ configs().forEach(({ title, screenshot, config }) => {
         const item = page.locator('ion-item');
         const input = page.locator('ion-input');
         // Validates the display of an input with an ion-item using lines="none".
-        expect(await item.screenshot({ animations: 'disabled' })).toMatchSnapshot(screenshot(`input-with-lines-none`));
+        await expect(item).toHaveScreenshot(screenshot(`input-with-lines-none`));
 
         await input.click();
 
@@ -149,9 +145,7 @@ configs().forEach(({ title, screenshot, config }) => {
         await expect(item).toHaveClass(/item-has-focus/);
 
         // Validates the display of an input with an ion-item using lines="none" when focused.
-        expect(await item.screenshot({ animations: 'disabled' })).toMatchSnapshot(
-          screenshot(`input-with-lines-none-focused`)
-        );
+        await expect(item).toHaveScreenshot(screenshot(`input-with-lines-none-focused`));
       });
     });
 
@@ -176,7 +170,7 @@ configs().forEach(({ title, screenshot, config }) => {
         );
         const item = page.locator('ion-item');
         // Validates the display of an input with a clear button.
-        expect(await item.screenshot()).toMatchSnapshot(screenshot(`input-with-clear-button`));
+        await expect(item).toHaveScreenshot(screenshot(`input-with-clear-button`));
       });
     });
   });
