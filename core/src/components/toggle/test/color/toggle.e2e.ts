@@ -12,7 +12,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       );
 
       const toggle = page.locator('ion-toggle');
-      expect(await toggle.screenshot()).toMatchSnapshot(screenshot(`toggle-color-checked`));
+      await expect(toggle).toHaveScreenshot(screenshot(`toggle-color-checked`));
     });
 
     test('should not apply color when unchecked', async ({ page }) => {
@@ -24,7 +24,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       );
 
       const toggle = page.locator('ion-toggle');
-      expect(await toggle.screenshot()).toMatchSnapshot(screenshot(`toggle-color-unchecked`));
+      await expect(toggle).toHaveScreenshot(screenshot(`toggle-color-unchecked`));
     });
   });
 });
