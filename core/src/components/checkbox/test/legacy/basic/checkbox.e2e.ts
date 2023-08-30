@@ -8,7 +8,7 @@ configs().forEach(({ title, screenshot, config }) => {
 
       await page.setIonViewport();
 
-      expect(await page.screenshot()).toMatchSnapshot(screenshot(`checkbox-legacy-basic`));
+      await expect(page).toHaveScreenshot(screenshot(`checkbox-legacy-basic`));
     });
   });
 });

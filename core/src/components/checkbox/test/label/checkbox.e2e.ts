@@ -21,7 +21,7 @@ configs().forEach(({ title, screenshot, config }) => {
         );
 
         const checkbox = page.locator('ion-checkbox');
-        expect(await checkbox.screenshot()).toMatchSnapshot(screenshot(`checkbox-label-start-justify-start`));
+        await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-label-start-justify-start`));
       });
 
       test('should render an end justification with label in the start position', async ({ page }) => {
@@ -33,7 +33,7 @@ configs().forEach(({ title, screenshot, config }) => {
         );
 
         const checkbox = page.locator('ion-checkbox');
-        expect(await checkbox.screenshot()).toMatchSnapshot(screenshot(`checkbox-label-start-justify-end`));
+        await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-label-start-justify-end`));
       });
 
       test('should render a space between justification with label in the start position', async ({ page }) => {
@@ -45,7 +45,7 @@ configs().forEach(({ title, screenshot, config }) => {
         );
 
         const checkbox = page.locator('ion-checkbox');
-        expect(await checkbox.screenshot()).toMatchSnapshot(screenshot(`checkbox-label-start-justify-space-between`));
+        await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-label-start-justify-space-between`));
       });
 
       test('should truncate long labels with ellipses', async ({ page }) => {
@@ -59,7 +59,7 @@ configs().forEach(({ title, screenshot, config }) => {
         );
 
         const checkbox = page.locator('ion-checkbox');
-        expect(await checkbox.screenshot()).toMatchSnapshot(screenshot(`checkbox-long-label`));
+        await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-long-label`));
       });
     });
 
@@ -73,7 +73,7 @@ configs().forEach(({ title, screenshot, config }) => {
         );
 
         const checkbox = page.locator('ion-checkbox');
-        expect(await checkbox.screenshot()).toMatchSnapshot(screenshot(`checkbox-label-end-justify-start`));
+        await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-label-end-justify-start`));
       });
 
       test('should render an end justification with label in the end position', async ({ page }) => {
@@ -85,7 +85,7 @@ configs().forEach(({ title, screenshot, config }) => {
         );
 
         const checkbox = page.locator('ion-checkbox');
-        expect(await checkbox.screenshot()).toMatchSnapshot(screenshot(`checkbox-label-end-justify-end`));
+        await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-label-end-justify-end`));
       });
 
       test('should render a space between justification with label in the end position', async ({ page }) => {
@@ -97,7 +97,7 @@ configs().forEach(({ title, screenshot, config }) => {
         );
 
         const checkbox = page.locator('ion-checkbox');
-        expect(await checkbox.screenshot()).toMatchSnapshot(screenshot(`checkbox-label-end-justify-space-between`));
+        await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-label-end-justify-space-between`));
       });
     });
 
@@ -111,7 +111,7 @@ configs().forEach(({ title, screenshot, config }) => {
         );
 
         const checkbox = page.locator('ion-checkbox');
-        expect(await checkbox.screenshot()).toMatchSnapshot(screenshot(`checkbox-label-fixed-justify-start`));
+        await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-label-fixed-justify-start`));
       });
 
       test('should render an end justification with label in the fixed position', async ({ page }) => {
@@ -123,7 +123,7 @@ configs().forEach(({ title, screenshot, config }) => {
         );
 
         const checkbox = page.locator('ion-checkbox');
-        expect(await checkbox.screenshot()).toMatchSnapshot(screenshot(`checkbox-label-fixed-justify-end`));
+        await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-label-fixed-justify-end`));
       });
 
       test('should render a space between justification with label in the fixed position', async ({ page }) => {
@@ -135,7 +135,7 @@ configs().forEach(({ title, screenshot, config }) => {
         );
 
         const checkbox = page.locator('ion-checkbox');
-        expect(await checkbox.screenshot()).toMatchSnapshot(screenshot(`checkbox-label-fixed-justify-space-between`));
+        await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-label-fixed-justify-space-between`));
       });
     });
   });
