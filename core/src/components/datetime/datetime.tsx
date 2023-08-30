@@ -2084,6 +2084,13 @@ export class Datetime implements ComponentInterface {
               dateStyle = getHighlightStyles(highlightedDates, dateIsoString, el);
             }
 
+            let dateParts = undefined;
+
+            // Spacer elements should not get the CSS parts added for calendar days
+            if (day !== null) {
+              dateParts = `calendar-day${isActive ? ' active' : ''}${isToday ? ' today' : ''}`;
+            }
+
             return (
               <div class="calendar-day-wrapper">
                 <button
@@ -2100,7 +2107,7 @@ export class Datetime implements ComponentInterface {
                     'calendar-day-active': isActive,
                     'calendar-day-today': isToday,
                   }}
-                  part={`calendar-day${isActive ? ' active' : ''}${isToday ? ' today' : ''}`}
+                  part={dateParts}
                   style={
                     dateStyle && {
                       color: dateStyle.textColor,
