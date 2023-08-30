@@ -19,7 +19,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const select = page.locator('ion-select');
-        expect(await select.screenshot()).toMatchSnapshot(screenshot(`select-fill-solid`));
+        await expect(select).toHaveScreenshot(screenshot(`select-fill-solid`));
       });
       test('should render correctly with floating label', async ({ page }) => {
         await page.setContent(
@@ -37,7 +37,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const select = page.locator('ion-select');
-        expect(await select.screenshot()).toMatchSnapshot(screenshot(`select-fill-solid-label-floating`));
+        await expect(select).toHaveScreenshot(screenshot(`select-fill-solid-label-floating`));
       });
       test('should not have visual regressions with shaped solid', async ({ page }) => {
         await page.setContent(
@@ -55,7 +55,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const select = page.locator('ion-select');
-        expect(await select.screenshot()).toMatchSnapshot(screenshot(`select-fill-shaped-solid`));
+        await expect(select).toHaveScreenshot(screenshot(`select-fill-shaped-solid`));
       });
       test('padding and border radius should be customizable', async ({ page }) => {
         await page.setContent(
@@ -81,7 +81,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const select = page.locator('ion-select');
-        expect(await select.screenshot()).toMatchSnapshot(screenshot(`select-fill-shaped-solid-custom`));
+        await expect(select).toHaveScreenshot(screenshot(`select-fill-shaped-solid-custom`));
       });
     });
     test.describe('select: fill outline', () => {
@@ -100,7 +100,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const select = page.locator('ion-select');
-        expect(await select.screenshot()).toMatchSnapshot(screenshot(`select-fill-outline`));
+        await expect(select).toHaveScreenshot(screenshot(`select-fill-outline`));
       });
       test('should render correctly with floating label', async ({ page }) => {
         await page.setContent(
@@ -118,7 +118,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const select = page.locator('ion-select');
-        expect(await select.screenshot()).toMatchSnapshot(screenshot(`select-fill-outline-label-floating`));
+        await expect(select).toHaveScreenshot(screenshot(`select-fill-outline-label-floating`));
       });
 
       test('should not have visual regressions with shaped outline', async ({ page }) => {
@@ -137,7 +137,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const select = page.locator('ion-select');
-        expect(await select.screenshot()).toMatchSnapshot(screenshot(`select-fill-shaped-outline`));
+        await expect(select).toHaveScreenshot(screenshot(`select-fill-shaped-outline`));
       });
       test('padding and border radius should be customizable', async ({ page }) => {
         await page.setContent(
@@ -163,7 +163,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const select = page.locator('ion-select');
-        expect(await select.screenshot()).toMatchSnapshot(screenshot(`select-fill-shaped-outline-custom`));
+        await expect(select).toHaveScreenshot(screenshot(`select-fill-shaped-outline-custom`));
       });
     });
   });
@@ -192,7 +192,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       );
 
       const select = page.locator('ion-select');
-      expect(await select.screenshot()).toMatchSnapshot(screenshot(`select-fill-outline-slotted-label`));
+      await expect(select).toHaveScreenshot(screenshot(`select-fill-outline-slotted-label`));
     });
     test('should render the notch correctly with a slotted label after the select was originally hidden', async ({
       page,
@@ -221,7 +221,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
 
       await select.evaluate((el: HTMLIonSelectElement) => el.style.removeProperty('display'));
 
-      expect(await select.screenshot()).toMatchSnapshot(screenshot(`select-fill-outline-hidden-slotted-label`));
+      await expect(select).toHaveScreenshot(screenshot(`select-fill-outline-hidden-slotted-label`));
     });
   });
   test.describe(title('select: notch cutout'), () => {
