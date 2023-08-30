@@ -11,7 +11,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         config
       );
       const input = page.locator('ion-input');
-      expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-full-bottom-no-fill`));
+      await expect(input).toHaveScreenshot(screenshot(`input-full-bottom-no-fill`));
     });
     test('entire input component should render correctly with solid fill', async ({ page }) => {
       await page.setContent(
@@ -21,7 +21,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         config
       );
       const input = page.locator('ion-input');
-      expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-full-bottom-solid`));
+      await expect(input).toHaveScreenshot(screenshot(`input-full-bottom-solid`));
     });
     test('entire input component should render correctly with outline fill', async ({ page }) => {
       await page.setContent(
@@ -31,7 +31,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         config
       );
       const input = page.locator('ion-input');
-      expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-full-bottom-outline`));
+      await expect(input).toHaveScreenshot(screenshot(`input-full-bottom-outline`));
     });
   });
 });
@@ -94,7 +94,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
         );
 
         const errorText = page.locator('ion-input .error-text');
-        expect(await errorText.screenshot()).toMatchSnapshot(screenshot(`input-error-custom-color`));
+        await expect(errorText).toHaveScreenshot(screenshot(`input-error-custom-color`));
       });
     });
     test.describe('input: hint text rendering', () => {
@@ -103,7 +103,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
           await page.setContent(`<ion-input helper-text="my helper" label="my input"></ion-input>`, config);
 
           const bottomEl = page.locator('ion-input .input-bottom');
-          expect(await bottomEl.screenshot()).toMatchSnapshot(screenshot(`input-bottom-content-helper`));
+          await expect(bottomEl).toHaveScreenshot(screenshot(`input-bottom-content-helper`));
         });
         test('should not have visual regressions when rendering error text', async ({ page }) => {
           await page.setContent(
@@ -112,7 +112,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
           );
 
           const bottomEl = page.locator('ion-input .input-bottom');
-          expect(await bottomEl.screenshot()).toMatchSnapshot(screenshot(`input-bottom-content-error`));
+          await expect(bottomEl).toHaveScreenshot(screenshot(`input-bottom-content-error`));
         });
       });
     });
@@ -179,7 +179,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
           await page.setContent(`<ion-input counter="true" maxlength="20" label="my input"></ion-input>`, config);
 
           const bottomEl = page.locator('ion-input .input-bottom');
-          expect(await bottomEl.screenshot()).toMatchSnapshot(screenshot(`input-bottom-content-counter`));
+          await expect(bottomEl).toHaveScreenshot(screenshot(`input-bottom-content-counter`));
         });
       });
     });
