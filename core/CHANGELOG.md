@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.3.2-nightly.20230830](https://github.com/ionic-team/ionic-framework/compare/v7.3.1...v7.3.2-nightly.20230830) (2023-08-30)
+
+
+### Bug Fixes
+
+* **datetime:** gracefully handle invalid min/max ([#28054](https://github.com/ionic-team/ionic-framework/issues/28054)) ([01fc9b4](https://github.com/ionic-team/ionic-framework/commit/01fc9b45116f7ad6ddc56c7fb1535dec798c2b3a)), closes [#28041](https://github.com/ionic-team/ionic-framework/issues/28041)
+
+
+
+
+
 ## [7.3.1](https://github.com/ionic-team/ionic-framework/compare/v7.3.0...v7.3.1) (2023-08-23)
 
 
