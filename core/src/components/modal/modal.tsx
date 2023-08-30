@@ -640,6 +640,11 @@ export class Modal implements ComponentInterface, OverlayInterface {
       return false;
     }
 
+    /**
+     * Because the canDismiss check below is async,
+     * we need to claim a lock before the check happens,
+     * in case the dismiss transition does run.
+     */
     const unlock = await this.lockController.lock();
 
     /**
@@ -648,6 +653,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
      * not run the canDismiss check again.
      */
     if (role !== 'handler' && !(await this.checkCanDismiss(data, role))) {
+      unlock();
       return false;
     }
 
