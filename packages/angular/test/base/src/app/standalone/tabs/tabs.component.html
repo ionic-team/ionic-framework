@@ -1,4 +1,4 @@
-<ion-tabs>
+<ion-tabs (ionTabsDidChange)="tabChanged($event)" (ionTabsWillChange)="tabsWillChange($event)">
   <ion-tab-bar>
     <ion-tab-button tab="tab-one">
       <ion-label>Tab One</ion-label>
@@ -16,3 +16,27 @@
     </ion-tab-button>
   </ion-tab-bar>
 </ion-tabs>
+<div id="test">
+  <ul>
+    <li>
+      ionTabsWillChange counter: <span id="ionTabsWillChangeCounter">{{ tabsWillChangeCounter }}</span>
+    </li>
+    <li>
+      ionTabsWillChange event: <span id="ionTabsWillChangeEvent">{{ tabsWillChangeEvent }}</span>
+    </li>
+    <li>
+      ionTabsWillChange selectedTab: <span id="ionTabsWillChangeSelectedTab">{{ tabsWillChangeSelectedTab }}</span>
+    </li>
+  </ul>
+  <ul>
+    <li>
+      ionTabsDidChange counter: <span id="ionTabsDidChangeCounter">{{ tabsDidChangeCounter }}</span>
+    </li>
+    <li>
+      ionTabsDidChange event: <span id="ionTabsDidChangeEvent">{{ tabsDidChangeEvent }}</span>
+    </li>
+    <li>
+      ionTabsDidChange selectedTab: <span id="ionTabsDidChangeSelectedTab">{{ tabsDidChangeSelectedTab }}</span>
+    </li>
+  </ul>
+</div>
