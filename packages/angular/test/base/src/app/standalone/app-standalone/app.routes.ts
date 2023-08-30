@@ -16,7 +16,6 @@ export const routes: Routes = [
       { path: 'overlay-controllers', loadComponent: () => import('../overlay-controllers/overlay-controllers.component').then(c => c.OverlayControllersComponent) },
       { path: 'button', loadComponent: () => import('../button/button.component').then(c => c.ButtonComponent) },
       { path: 'icon', loadComponent: () => import('../icon/icon.component').then(c => c.IconComponent) },
-      { path: 'tabs', loadComponent: () => import('../tabs/tabs.component').then(c => c.TabsComponent) },
       {
         path: 'tabs',
         loadComponent: () => import('../tabs/tabs.component').then(c => c.TabsComponent),
