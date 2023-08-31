@@ -129,3 +129,18 @@ describe('toast: htmlAttributes', () => {
     await expect(toast.getAttribute('data-testid')).toBe('basic-toast');
   });
 });
+
+describe('toast: button cancel', () => {
+  it('should render the cancel button with part button-cancel', async () => {
+    const page = await newSpecPage({
+      components: [Toast],
+      template: () => <ion-toast buttons={[{ text: 'Cancel', role: 'cancel' }]}></ion-toast>,
+    });
+
+    const toast = page.body.querySelector('ion-toast');
+
+    const buttonCancel = toast?.shadowRoot?.querySelector('.toast-button-cancel');
+
+    expect(buttonCancel.getAttribute('part')).toBe('button cancel');
+  });
+});

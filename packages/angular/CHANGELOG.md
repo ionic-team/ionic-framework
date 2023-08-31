@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.3.2](https://github.com/ionic-team/ionic-framework/compare/v7.3.1...v7.3.2) (2023-08-30)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [7.3.1](https://github.com/ionic-team/ionic-framework/compare/v7.3.0...v7.3.1) (2023-08-23)
+
+
+### Bug Fixes
+
+* **angular:** ionTabsWillChange is fired before tab activation ([#27991](https://github.com/ionic-team/ionic-framework/issues/27991)) ([bbfb8f8](https://github.com/ionic-team/ionic-framework/commit/bbfb8f81a61475d7e73b63743db5d6a0cd979d21)), closes [#27212](https://github.com/ionic-team/ionic-framework/issues/27212)
+
+
+
+
+
+# [7.3.0](https://github.com/ionic-team/ionic-framework/compare/v7.2.4...v7.3.0) (2023-08-16)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
+## [7.2.4](https://github.com/ionic-team/ionic-framework/compare/v7.2.3...v7.2.4) (2023-08-16)
+
+**Note:** Version bump only for package @ionic/angular
+
+
+
+
+
 ## [7.2.3](https://github.com/ionic-team/ionic-framework/compare/v7.2.2...v7.2.3) (2023-08-09)
 
 **Note:** Version bump only for package @ionic/angular

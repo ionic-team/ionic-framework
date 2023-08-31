@@ -3,6 +3,59 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.3.2](https://github.com/ionic-team/ionic-framework/compare/v7.3.1...v7.3.2) (2023-08-30)
+
+
+### Bug Fixes
+
+* **datetime:** gracefully handle invalid min/max ([#28054](https://github.com/ionic-team/ionic-framework/issues/28054)) ([01fc9b4](https://github.com/ionic-team/ionic-framework/commit/01fc9b45116f7ad6ddc56c7fb1535dec798c2b3a)), closes [#28041](https://github.com/ionic-team/ionic-framework/issues/28041)
+
+
+
+
+
+## [7.3.1](https://github.com/ionic-team/ionic-framework/compare/v7.3.0...v7.3.1) (2023-08-23)
+
+
+### Bug Fixes
+
+* **input, textarea:** clearOnEdit does not clear when pressing Tab ([#28005](https://github.com/ionic-team/ionic-framework/issues/28005)) ([444acc1](https://github.com/ionic-team/ionic-framework/commit/444acc1f1bca348b62dfb398067cc087529f67f1)), closes [#27746](https://github.com/ionic-team/ionic-framework/issues/27746)
+
+
+
+
+
+# [7.3.0](https://github.com/ionic-team/ionic-framework/compare/v7.2.4...v7.3.0) (2023-08-16)
+
+
+### Bug Fixes
+
+* **alert:** radio and checkbox labels wrap to next line ([#27898](https://github.com/ionic-team/ionic-framework/issues/27898)) ([0d3127a](https://github.com/ionic-team/ionic-framework/commit/0d3127ad09df3c914a8c254f14931de5ca3beb31)), closes [#17269](https://github.com/ionic-team/ionic-framework/issues/17269)
+
+
+### Features
+
+* **action-sheet:** add htmlAttributes property for passing attributes to buttons ([#27863](https://github.com/ionic-team/ionic-framework/issues/27863)) ([5ce4ec0](https://github.com/ionic-team/ionic-framework/commit/5ce4ec0439e4f31aba31062fd8af4a2ad792a54f))
+* **alert:** add htmlAttributes property for passing attributes to buttons ([#27862](https://github.com/ionic-team/ionic-framework/issues/27862)) ([06be0e5](https://github.com/ionic-team/ionic-framework/commit/06be0e511164ebdaa6af9a3747d0585260c030a9))
+* **toast:** add htmlAttributes property for passing attributes to buttons   ([#27855](https://github.com/ionic-team/ionic-framework/issues/27855)) ([9a68588](https://github.com/ionic-team/ionic-framework/commit/9a685882b7085d911ff09eedacc367629e32348a))
+* **toast:** add shadow part for cancel button ([#27921](https://github.com/ionic-team/ionic-framework/issues/27921)) ([e9faf54](https://github.com/ionic-team/ionic-framework/commit/e9faf54d0a7409521706ce9c8b0d26f3fbe9ba41)), closes [#27920](https://github.com/ionic-team/ionic-framework/issues/27920)
+
+
+
+
+
+## [7.2.4](https://github.com/ionic-team/ionic-framework/compare/v7.2.3...v7.2.4) (2023-08-16)
+
+
+### Bug Fixes
+
+* **tap-click:** do not error in document-less environment ([#27972](https://github.com/ionic-team/ionic-framework/issues/27972)) ([28bd4ba](https://github.com/ionic-team/ionic-framework/commit/28bd4ba720bb77d5f5c48cd7a45e0015daddc9dd))
+* **title:** large title aligns with ios spec ([#27969](https://github.com/ionic-team/ionic-framework/issues/27969)) ([8fa12fc](https://github.com/ionic-team/ionic-framework/commit/8fa12fc88857df27a1ca11249f0085e100fe1474)), closes [#27966](https://github.com/ionic-team/ionic-framework/issues/27966)
+
+
+
+
+
 ## [7.2.3](https://github.com/ionic-team/ionic-framework/compare/v7.2.2...v7.2.3) (2023-08-09)
 
 
