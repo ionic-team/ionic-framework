@@ -56,7 +56,7 @@ $toast-md-button-padding-bottom: $toast-md-button-padding-top !default;
 $toast-md-button-padding-start: 15px !default;
 
 /// @prop - Font size of the toast button
-$toast-md-button-font-size: dynamic-font-clamp(1, 14px, 1.294) !default;
+$toast-md-button-font-size: dynamic-font(14px) !default;
 
 /// @prop - Font weight of the toast button
 $toast-md-button-font-weight: 500 !default;
