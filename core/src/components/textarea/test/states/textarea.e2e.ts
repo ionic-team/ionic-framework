@@ -12,7 +12,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       );
 
       const textarea = page.locator('ion-textarea');
-      expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-readonly`));
+      await expect(textarea).toHaveScreenshot(screenshot(`textarea-readonly`));
     });
 
     test('should render disabled textarea correctly', async ({ page }) => {
@@ -24,7 +24,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       );
 
       const textarea = page.locator('ion-textarea');
-      expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-disabled`));
+      await expect(textarea).toHaveScreenshot(screenshot(`textarea-disabled`));
     });
   });
 });
