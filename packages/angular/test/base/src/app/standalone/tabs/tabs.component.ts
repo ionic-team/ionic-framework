@@ -8,7 +8,6 @@ addIcons({ add, logoIonic, save });
 @Component({
   selector: 'app-tabs',
   templateUrl: './tabs.component.html',
-  styleUrls: ['./tabs.component.css'],
   standalone: true,
   imports: [IonTabBar, IonTabButton, IonIcon, IonLabel, IonTabs]
 })
