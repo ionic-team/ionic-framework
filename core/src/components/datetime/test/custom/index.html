@@ -38,16 +38,16 @@
       * -------------------------------------------
       */
 
-      .custom-time-wheel {
+      .custom-grid-wheel {
         --background: rgb(245, 235, 247);
         --background-rgb: 245, 235, 247;
       }
 
-      .custom-time-wheel::part(time-button) {
+      .custom-grid-wheel::part(time-button) {
         color: rgb(128, 30, 171);
       }
 
-      .custom-time-wheel::part(time-button active) {
+      .custom-grid-wheel::part(time-button active) {
         background-color: rgb(248, 215, 255);
       }
 
@@ -57,7 +57,7 @@
         undocumented usage.
       */
 
-      .custom-time-wheel,
+      .custom-grid-wheel,
       ion-picker-internal {
         --wheel-highlight-background: rgb(218, 216, 255);
         --wheel-fade-background-rgb: 245, 235, 247;
@@ -67,12 +67,12 @@
         background-color: rgb(245, 235, 247);
       }
 
-      .custom-time-wheel::part(wheel-item),
+      .custom-grid-wheel::part(wheel-item),
       ion-picker-column-internal::part(wheel-item) {
         color: rgb(255, 134, 154);
       }
 
-      .custom-grid.wheel::part(wheel-item active),
+      .custom-grid-wheel::part(wheel-item active),
       ion-picker-column-internal::part(wheel-item active) {
         color: rgb(128, 30, 171);
       }
@@ -139,16 +139,11 @@
         <div class="grid">
           <div class="grid-item">
             <h2>Grid Style</h2>
-            <ion-datetime id="custom-grid" value="2020-03-14T14:23:00.000Z" class="custom-time-wheel"></ion-datetime>
+            <ion-datetime value="2020-03-14T14:23:00.000Z" class="custom-grid-wheel"></ion-datetime>
           </div>
           <div class="grid-item">
             <h2>Wheel Style</h2>
-            <ion-datetime
-              id="custom-wheel"
-              prefer-wheel="true"
-              value="2020-03-14T14:23:00.000Z"
-              class="custom-time-wheel"
-            ></ion-datetime>
+            <ion-datetime prefer-wheel="true" value="2020-03-14T14:23:00.000Z" class="custom-grid-wheel"></ion-datetime>
           </div>
           <div class="grid-item">
             <h2>Grid Style</h2>
