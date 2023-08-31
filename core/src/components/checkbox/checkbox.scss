@@ -270,10 +270,10 @@ input {
 // Label Placement - Stacked
 // ----------------------------------------------------------------
 
-  /**
-  * Label is on top of the checkbox.
-  */
-  :host(.checkbox-label-placement-stacked) .checkbox-wrapper {
+/**
+ * Label is on top of the checkbox.
+ */
+:host(.checkbox-label-placement-stacked) .checkbox-wrapper {
   flex-direction: column;
 }
 
