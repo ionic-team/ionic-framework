@@ -118,8 +118,8 @@ export class Toggle implements ComponentInterface {
 
   /**
    * How to control the alignment of the toggle and label on the cross axis.
-   * `"start"`: The label and control will appear at the top of the container.
-   * `"center"`: The label and control will appear at the center of the container.
+   * ``"start"`: The label and control will appear on the left of the cross axis in LTR, and on the right side in RTL.
+   * `"center"`: The label and control will appear at the center of the cross axis in both LTR and RTL.
    */
   @Prop() alignment: 'start' | 'center' = 'center';
 

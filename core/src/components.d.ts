@@ -603,7 +603,7 @@ export namespace Components {
     }
     interface IonCheckbox {
         /**
-          * How to control the alignment of the checkbox and label on the cross axis. `"start"`: The label and control will appear at the top of the container. `"center"`: The label and control will appear at the center of the container.
+          * How to control the alignment of the checkbox and label on the cross axis. `"start"`: The label and control will appear on the left of the cross axis in LTR, and on the right side in RTL. `"center"`: The label and control will appear at the center of the cross axis in both LTR and RTL.
          */
         "alignment": 'start' | 'center';
         /**
@@ -2221,7 +2221,7 @@ export namespace Components {
     }
     interface IonRadio {
         /**
-          * How to control the alignment of the radio and label on the cross axis. `"start"`: The label and control will appear at the top of the container. `"center"`: The label and control will appear at the center of the container.
+          * How to control the alignment of the radio and label on the cross axis. `"start"`: The label and control will appear on the left of the cross axis in LTR, and on the right side in RTL. `"center"`: The label and control will appear at the center of the cross axis in both LTR and RTL.
          */
         "alignment": 'start' | 'center';
         /**
@@ -3174,7 +3174,7 @@ export namespace Components {
     }
     interface IonToggle {
         /**
-          * How to control the alignment of the toggle and label on the cross axis. `"start"`: The label and control will appear at the top of the container. `"center"`: The label and control will appear at the center of the container.
+          * How to control the alignment of the toggle and label on the cross axis. ``"start"`: The label and control will appear on the left of the cross axis in LTR, and on the right side in RTL. `"center"`: The label and control will appear at the center of the cross axis in both LTR and RTL.
          */
         "alignment": 'start' | 'center';
         /**
@@ -4638,7 +4638,7 @@ declare namespace LocalJSX {
     }
     interface IonCheckbox {
         /**
-          * How to control the alignment of the checkbox and label on the cross axis. `"start"`: The label and control will appear at the top of the container. `"center"`: The label and control will appear at the center of the container.
+          * How to control the alignment of the checkbox and label on the cross axis. `"start"`: The label and control will appear on the left of the cross axis in LTR, and on the right side in RTL. `"center"`: The label and control will appear at the center of the cross axis in both LTR and RTL.
          */
         "alignment"?: 'start' | 'center';
         /**
@@ -6243,7 +6243,7 @@ declare namespace LocalJSX {
     }
     interface IonRadio {
         /**
-          * How to control the alignment of the radio and label on the cross axis. `"start"`: The label and control will appear at the top of the container. `"center"`: The label and control will appear at the center of the container.
+          * How to control the alignment of the radio and label on the cross axis. `"start"`: The label and control will appear on the left of the cross axis in LTR, and on the right side in RTL. `"center"`: The label and control will appear at the center of the cross axis in both LTR and RTL.
          */
         "alignment"?: 'start' | 'center';
         /**
@@ -7319,7 +7319,7 @@ declare namespace LocalJSX {
     }
     interface IonToggle {
         /**
-          * How to control the alignment of the toggle and label on the cross axis. `"start"`: The label and control will appear at the top of the container. `"center"`: The label and control will appear at the center of the container.
+          * How to control the alignment of the toggle and label on the cross axis. ``"start"`: The label and control will appear on the left of the cross axis in LTR, and on the right side in RTL. `"center"`: The label and control will appear at the center of the cross axis in both LTR and RTL.
          */
         "alignment"?: 'start' | 'center';
         /**
