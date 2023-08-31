@@ -1,7 +1,7 @@
 module.exports = {
   meta: {
     messages: {
-      noPlaywrightToMatchSnapshotAssertion: '"toHaveSnapshot" assertions should be used in favor of "toMatchSnapshot". "toHaveSnapshot" brings file size reductions and anti-flake behaviors such as disabling animations by default.',
+      noPlaywrightToMatchSnapshotAssertion: '"toHaveScreenshot" assertions should be used in favor of "toMatchSnapshot". "toHaveScreenshot" brings file size reductions and anti-flake behaviors such as disabling animations by default.',
     },
   },
   create(context) {
