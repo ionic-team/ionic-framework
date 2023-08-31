@@ -532,7 +532,7 @@ export class Input implements ComponentInterface {
      * Clear the input if the control has not been previously cleared during focus.
      * Do not clear if the user hitting enter to submit a form.
      */
-    if (!this.didInputClearOnEdit && this.hasValue() && ev.key !== 'Enter') {
+    if (!this.didInputClearOnEdit && this.hasValue() && ev.key !== 'Enter' && ev.key !== 'Tab') {
       this.value = '';
       this.emitInputChange(ev);
     }

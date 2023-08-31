@@ -122,11 +122,7 @@ export class Datetime implements ComponentInterface {
 
   private prevPresentation: string | null = null;
 
-  /**
-   * Duplicate reference to `activeParts` that does not trigger a re-render of the component.
-   * Allows caching an instance of the `activeParts` in between render cycles.
-   */
-  private activePartsClone: DatetimeParts | DatetimeParts[] = [];
+  private resolveForceDateScrolling?: () => void;
 
   @State() showMonthAndYear = false;
 
@@ -144,6 +140,17 @@ export class Datetime implements ComponentInterface {
   @Element() el!: HTMLIonDatetimeElement;
 
   @State() isTimePopoverOpen = false;
+
+  /**
+   * When defined, will force the datetime to render the month
+   * containing the specified date. Currently, this should only
+   * be used to enable immediately auto-scrolling to the new month,
+   * and should then be reset to undefined once the transition is
+   * finished and the forced month is now in view.
+   *
+   * Applies to grid-style datetimes only.
+   */
+  @State() forceRenderDate?: DatetimeParts;
 
   /**
    * The color to use from your application's color palette.
@@ -226,6 +233,12 @@ export class Datetime implements ComponentInterface {
    */
   @Prop() presentation: DatetimePresentation = 'date-time';
 
+  private get isGridStyle() {
+    const { presentation, preferWheel } = this;
+    const hasDatePresentation = presentation === 'date' || presentation === 'date-time' || presentation === 'time-date';
+    return hasDatePresentation && !preferWheel;
+  }
+
   /**
    * The text to display on the picker's cancel button.
    */
@@ -307,11 +320,6 @@ export class Datetime implements ComponentInterface {
     this.parsedMinuteValues = convertToArrayOfNumbers(this.minuteValues);
   }
 
-  @Watch('activeParts')
-  protected activePartsChanged() {
-    this.activePartsClone = this.activeParts;
-  }
-
   /**
    * The locale to use for `ion-datetime`. This
    * impacts month and day name formatting.
@@ -361,54 +369,11 @@ export class Datetime implements ComponentInterface {
    * Update the datetime value when the value changes
    */
   @Watch('value')
-  protected valueChanged() {
-    const { value, minParts, maxParts, workingParts } = this;
+  protected async valueChanged() {
+    const { value } = this;
 
     if (this.hasValue()) {
-      this.warnIfIncorrectValueUsage();
-
-      /**
-       * Clones the value of the `activeParts` to the private clone, to update
-       * the date display on the current render cycle without causing another render.
-       *
-       * This allows us to update the current value's date/time display without
-       * refocusing or shifting the user's display (leaves the user in place).
-       */
-      const valueDateParts = parseDate(value);
-      if (valueDateParts) {
-        warnIfValueOutOfBounds(valueDateParts, minParts, maxParts);
-
-        if (Array.isArray(valueDateParts)) {
-          this.activePartsClone = [...valueDateParts];
-        } else {
-          const { month, day, year, hour, minute } = valueDateParts;
-          const ampm = hour != null ? (hour >= 12 ? 'pm' : 'am') : undefined;
-
-          this.activePartsClone = {
-            ...this.activeParts,
-            month,
-            day,
-            year,
-            hour,
-            minute,
-            ampm,
-          };
-
-          /**
-           * The working parts am/pm value must be updated when the value changes, to
-           * ensure the time picker hour column values are generated correctly.
-           *
-           * Note that we don't need to do this if valueDateParts is an array, since
-           * multiple="true" does not apply to time pickers.
-           */
-          this.setWorkingParts({
-            ...workingParts,
-            ampm,
-          });
-        }
-      } else {
-        printIonWarning(`Unable to parse date string: ${value}. Please provide a valid ISO 8601 datetime string.`);
-      }
+      this.processValue(value);
     }
 
     this.emitStyle();
@@ -601,9 +566,9 @@ export class Datetime implements ComponentInterface {
    * data. This should be used when rendering an
    * interface in an environment where the `value`
    * may not be set. This function works
-   * by returning the first selected date in
-   * "activePartsClone" and then falling back to
-   * defaultParts if no active date is selected.
+   * by returning the first selected date and then
+   * falling back to defaultParts if no active date
+   * is selected.
    */
   private getActivePartsWithFallback = () => {
     const { defaultParts } = this;
@@ -611,8 +576,8 @@ export class Datetime implements ComponentInterface {
   };
 
   private getActivePart = () => {
-    const { activePartsClone } = this;
-    return Array.isArray(activePartsClone) ? activePartsClone[0] : activePartsClone;
+    const { activeParts } = this;
+    return Array.isArray(activeParts) ? activeParts[0] : activeParts;
   };
 
   private closeParentOverlay = () => {
@@ -632,7 +597,7 @@ export class Datetime implements ComponentInterface {
   };
 
   private setActiveParts = (parts: DatetimeParts, removeDate = false) => {
-    const { multiple, minParts, maxParts, activePartsClone } = this;
+    const { multiple, minParts, maxParts, activeParts } = this;
 
     /**
      * When setting the active parts, it is possible
@@ -648,16 +613,7 @@ export class Datetime implements ComponentInterface {
     this.setWorkingParts(validatedParts);
 
     if (multiple) {
-      /**
-       * We read from activePartsClone here because valueChanged() only updates that,
-       * so it's the more reliable source of truth. If we read from activeParts, then
-       * if you click July 1, manually set the value to July 2, and then click July 3,
-       * the new value would be [July 1, July 3], ignoring the value set.
-       *
-       * We can then pass the new value to activeParts (rather than activePartsClone)
-       * since the clone will be updated automatically by activePartsChanged().
-       */
-      const activePartsArray = Array.isArray(activePartsClone) ? activePartsClone : [activePartsClone];
+      const activePartsArray = Array.isArray(activeParts) ? activeParts : [activeParts];
       if (removeDate) {
         this.activeParts = activePartsArray.filter((p) => !isSameDay(p, validatedParts));
       } else {
@@ -914,6 +870,20 @@ export class Datetime implements ComponentInterface {
         if (Math.abs(monthBox.x - box.x) > 2) return;
 
         /**
+         * If we're force-rendering a month, assume we've
+         * scrolled to that and return it.
+         *
+         * If forceRenderDate is ever used in a context where the
+         * forced month is not immediately auto-scrolled to, this
+         * should be updated to also check whether `month` has the
+         * same month and year as the forced date.
+         */
+        const { forceRenderDate } = this;
+        if (forceRenderDate !== undefined) {
+          return { month: forceRenderDate.month, year: forceRenderDate.year, day: forceRenderDate.day };
+        }
+
+        /**
          * From here, we can determine if the start
          * month or the end month was scrolled into view.
          * If no month was changed, then we can return from
@@ -981,6 +951,10 @@ export class Datetime implements ComponentInterface {
 
           calendarBodyRef.scrollLeft = workingMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
           calendarBodyRef.style.removeProperty('overflow');
+
+          if (this.resolveForceDateScrolling) {
+            this.resolveForceDateScrolling();
+          }
         });
       };
 
@@ -1198,12 +1172,20 @@ export class Datetime implements ComponentInterface {
   }
 
   private processValue = (value?: string | string[] | null) => {
-    const hasValue = value !== null && value !== undefined;
+    const hasValue = value !== null && value !== undefined && (!Array.isArray(value) || value.length > 0);
     const valueToProcess = hasValue ? parseDate(value) : this.defaultParts;
 
-    const { minParts, maxParts } = this;
+    const { minParts, maxParts, workingParts, el } = this;
 
     this.warnIfIncorrectValueUsage();
+
+    /**
+     * Return early if the value wasn't parsed correctly, such as
+     * if an improperly formatted date string was provided.
+     */
+    if (!valueToProcess) {
+      return;
+    }
 
     /**
      * Datetime should only warn of out of bounds values
@@ -1223,18 +1205,10 @@ export class Datetime implements ComponentInterface {
      * that the values don't necessarily have to be in order.
      */
     const singleValue = Array.isArray(valueToProcess) ? valueToProcess[0] : valueToProcess;
+    const targetValue = clampDate(singleValue, minParts, maxParts);
 
-    const { month, day, year, hour, minute } = clampDate(singleValue, minParts, maxParts);
+    const { month, day, year, hour, minute } = targetValue;
     const ampm = parseAmPm(hour!);
-
-    this.setWorkingParts({
-      month,
-      day,
-      year,
-      hour,
-      minute,
-      ampm,
-    });
 
     /**
      * Since `activeParts` indicates a value that
@@ -1263,6 +1237,67 @@ export class Datetime implements ComponentInterface {
        */
       this.activeParts = [];
     }
+
+    /**
+     * Only animate if:
+     * 1. We're using grid style (wheel style pickers should just jump to new value)
+     * 2. The month and/or year actually changed, and both are defined (otherwise there's nothing to animate to)
+     * 3. The calendar body is visible (prevents animation when in collapsed datetime-button, for example)
+     * 4. The month/year picker is not open (since you wouldn't see the animation anyway)
+     */
+    const didChangeMonth =
+      (month !== undefined && month !== workingParts.month) || (year !== undefined && year !== workingParts.year);
+    const bodyIsVisible = el.classList.contains('datetime-ready');
+    const { isGridStyle, showMonthAndYear } = this;
+    if (isGridStyle && didChangeMonth && bodyIsVisible && !showMonthAndYear) {
+      this.animateToDate(targetValue);
+    } else {
+      /**
+       * We only need to do this if we didn't just animate to a new month,
+       * since that calls prevMonth/nextMonth which calls setWorkingParts for us.
+       */
+      this.setWorkingParts({
+        month,
+        day,
+        year,
+        hour,
+        minute,
+        ampm,
+      });
+    }
+  };
+
+  private animateToDate = async (targetValue: DatetimeParts) => {
+    const { workingParts } = this;
+
+    /**
+     * Tell other render functions that we need to force the
+     * target month to appear in place of the actual next/prev month.
+     * Because this is a State variable, a rerender will be triggered
+     * automatically, updating the rendered months.
+     */
+    this.forceRenderDate = targetValue;
+
+    /**
+     * Flag that we've started scrolling to the forced date.
+     * The resolve function will be called by the datetime's
+     * scroll listener when it's done updating everything.
+     * This is a replacement for making prev/nextMonth async,
+     * since the logic we're waiting on is in a listener.
+     */
+    const forceDateScrollingPromise = new Promise<void>((resolve) => {
+      this.resolveForceDateScrolling = resolve;
+    });
+
+    /**
+     * Animate smoothly to the forced month. This will also update
+     * workingParts and correct the surrounding months for us.
+     */
+    const targetMonthIsBefore = isBefore(targetValue, workingParts);
+    targetMonthIsBefore ? this.prevMonth() : this.nextMonth();
+    await forceDateScrollingPromise;
+    this.resolveForceDateScrolling = undefined;
+    this.forceRenderDate = undefined;
   };
 
   componentWillLoad() {
@@ -1291,16 +1326,18 @@ export class Datetime implements ComponentInterface {
       }
     }
 
-    this.processMinParts();
-    this.processMaxParts();
     const hourValues = (this.parsedHourValues = convertToArrayOfNumbers(this.hourValues));
     const minuteValues = (this.parsedMinuteValues = convertToArrayOfNumbers(this.minuteValues));
     const monthValues = (this.parsedMonthValues = convertToArrayOfNumbers(this.monthValues));
     const yearValues = (this.parsedYearValues = convertToArrayOfNumbers(this.yearValues));
     const dayValues = (this.parsedDayValues = convertToArrayOfNumbers(this.dayValues));
 
-    const todayParts = (this.todayParts = parseDate(getToday()));
+    const todayParts = (this.todayParts = parseDate(getToday())!);
     this.defaultParts = getClosestValidDate(todayParts, monthValues, dayValues, yearValues, hourValues, minuteValues);
+
+    this.processMinParts();
+    this.processMaxParts();
+
     this.processValue(this.value);
 
     this.emitStyle();
@@ -2047,7 +2084,7 @@ export class Datetime implements ComponentInterface {
             const { isActive, isToday, ariaLabel, ariaSelected, disabled, text } = getCalendarDayState(
               this.locale,
               referenceParts,
-              this.activePartsClone,
+              this.activeParts,
               this.todayParts,
               this.minParts,
               this.maxParts,
@@ -2167,7 +2204,7 @@ export class Datetime implements ComponentInterface {
   private renderCalendarBody() {
     return (
       <div class="calendar-body ion-focusable" ref={(el) => (this.calendarBodyRef = el)} tabindex="0">
-        {generateMonths(this.workingParts).map(({ month, year }) => {
+        {generateMonths(this.workingParts, this.forceRenderDate).map(({ month, year }) => {
           return this.renderMonth(month, year);
         })}
       </div>
@@ -2376,7 +2413,19 @@ export class Datetime implements ComponentInterface {
   }
 
   render() {
-    const { name, value, disabled, el, color, readonly, showMonthAndYear, preferWheel, presentation, size } = this;
+    const {
+      name,
+      value,
+      disabled,
+      el,
+      color,
+      readonly,
+      showMonthAndYear,
+      preferWheel,
+      presentation,
+      size,
+      isGridStyle,
+    } = this;
     const mode = getIonMode(this);
     const isMonthAndYearPresentation =
       presentation === 'year' || presentation === 'month' || presentation === 'month-year';
@@ -2384,7 +2433,6 @@ export class Datetime implements ComponentInterface {
     const monthYearPickerOpen = showMonthAndYear && !isMonthAndYearPresentation;
     const hasDatePresentation = presentation === 'date' || presentation === 'date-time' || presentation === 'time-date';
     const hasWheelVariant = hasDatePresentation && preferWheel;
-    const hasGrid = hasDatePresentation && !preferWheel;
 
     renderHiddenInput(true, el, name, formatValue(value), disabled);
 
@@ -2403,7 +2451,7 @@ export class Datetime implements ComponentInterface {
             [`datetime-presentation-${presentation}`]: true,
             [`datetime-size-${size}`]: true,
             [`datetime-prefer-wheel`]: hasWheelVariant,
-            [`datetime-grid`]: hasGrid,
+            [`datetime-grid`]: isGridStyle,
           }),
         }}
       >
