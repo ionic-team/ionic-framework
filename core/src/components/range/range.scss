@@ -318,7 +318,7 @@
 :host(.range-label-placement-stacked) .range-wrapper {
   flex-direction: column;
 
-  align-items: normal;
+  align-items: stretch;
 }
 
 :host(.range-label-placement-stacked) .label-text-wrapper {
