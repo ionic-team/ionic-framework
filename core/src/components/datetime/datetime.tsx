@@ -2094,6 +2094,18 @@ export class Datetime implements ComponentInterface {
             return (
               <div class="calendar-day-wrapper">
                 <button
+                  // We need to use !important for the inline styles here because
+                  // otherwise the CSS shadow parts will override these styles.
+                  // See https://github.com/WICG/webcomponents/issues/847
+                  // Both the CSS shadow parts and highlightedDate styles are
+                  // provided by the developer, but highlightedDate styles should
+                  // always take priority.
+                  ref={(el) => {
+                    if (el && dateStyle) {
+                      el.style.setProperty('color', `${dateStyle.textColor}`, 'important');
+                      el.style.setProperty('background-color', `${dateStyle.backgroundColor}`, 'important');
+                    }
+                  }}
                   tabindex="-1"
                   data-day={day}
                   data-month={month}
@@ -2108,12 +2120,6 @@ export class Datetime implements ComponentInterface {
                     'calendar-day-today': isToday,
                   }}
                   part={dateParts}
-                  style={
-                    dateStyle && {
-                      color: dateStyle.textColor,
-                      backgroundColor: dateStyle.backgroundColor,
-                    }
-                  }
                   aria-hidden={isCalendarPadding ? 'true' : null}
                   aria-selected={ariaSelected}
                   aria-label={ariaLabel}

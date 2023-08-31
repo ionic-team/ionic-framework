@@ -83,7 +83,7 @@
       */
 
       #custom-calendar-days::part(calendar-day) {
-        background: #ffe2e6;
+        background-color: #ffe2e6;
 
         color: #da5296;
 
@@ -94,15 +94,15 @@
         color: #8462d1;
       }
 
+      #custom-calendar-days::part(calendar-day):focus {
+        background-color: rgb(154 209 98 / 0.2);
+        box-shadow: 0px 0px 0px 4px rgb(154 209 98 / 0.2);
+      }
+
       /*
       * Custom Material Design Datetime Day Parts
       * -------------------------------------------
       */
-
-      #custom-calendar-days.md::part(calendar-day):focus {
-        background-color: rgb(154 209 98 / 0.2);
-        box-shadow: 0px 0px 0px 4px rgb(154 209 98 / 0.2);
-      }
 
       #custom-calendar-days.md::part(calendar-day active),
       #custom-calendar-days.md::part(calendar-day active):focus {
@@ -119,10 +119,6 @@
       * Custom iOS Datetime Day Parts
       * -------------------------------------------
       */
-
-      #custom-calendar-days.ios::part(calendar-day):focus {
-        background-color: rgb(154 209 98 / 0.2);
-      }
 
       #custom-calendar-days.ios::part(calendar-day active),
       #custom-calendar-days.ios::part(calendar-day active):focus {
