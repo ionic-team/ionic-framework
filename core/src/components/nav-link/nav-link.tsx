@@ -35,8 +35,8 @@ export class NavLink implements ComponentInterface {
 
   private onClick = () => {
     const { el } = this;
-    const button = el.querySelector('button,ion-button,a');
-    if (button?.hasAttribute('disabled')) {
+    const button = el.querySelector<HTMLIonButtonElement>('ion-button');
+    if (button?.disabled) {
       // Do not navigate if the button is disabled
       return;
     }
