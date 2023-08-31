@@ -14,7 +14,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       );
 
       const radio = page.locator('ion-radio');
-      expect(await radio.screenshot()).toMatchSnapshot(screenshot(`radio-color-checked`));
+      await expect(radio).toHaveScreenshot(screenshot(`radio-color-checked`));
     });
 
     test('should not apply color when unchecked', async ({ page }) => {
@@ -28,7 +28,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       );
 
       const radio = page.locator('ion-radio');
-      expect(await radio.screenshot()).toMatchSnapshot(screenshot(`radio-color-unchecked`));
+      await expect(radio).toHaveScreenshot(screenshot(`radio-color-unchecked`));
     });
   });
 });

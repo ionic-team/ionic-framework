@@ -23,7 +23,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       await rangeHandle.evaluate((el) => el.classList.add('ion-focused'));
       await page.waitForChanges();
 
-      expect(await range.screenshot()).toMatchSnapshot(screenshot(`range-focus`));
+      await expect(range).toHaveScreenshot(screenshot(`range-focus`));
 
       const box = (await rangeHandle.boundingBox())!;
       const centerX = box.x + box.width / 2;
@@ -33,7 +33,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       await page.mouse.down();
       await page.waitForChanges();
 
-      expect(await range.screenshot()).toMatchSnapshot(screenshot(`range-active`));
+      await expect(range).toHaveScreenshot(screenshot(`range-active`));
     });
   });
 });
@@ -57,7 +57,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       await rangeHandle.evaluate((el) => el.classList.add('ion-focused'));
       await page.waitForChanges();
 
-      expect(await range.screenshot()).toMatchSnapshot(screenshot(`range-focus-with-pin`));
+      await expect(range).toHaveScreenshot(screenshot(`range-focus-with-pin`));
     });
   });
 });

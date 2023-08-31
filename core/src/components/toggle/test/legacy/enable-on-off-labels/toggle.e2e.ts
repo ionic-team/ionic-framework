@@ -7,7 +7,7 @@ configs().forEach(({ title, screenshot, config }) => {
       await page.goto(`/src/components/toggle/test/legacy/enable-on-off-labels`, config);
       await page.setIonViewport();
 
-      expect(await page.screenshot()).toMatchSnapshot(screenshot(`toggle-on-off-labels-diff`));
+      await expect(page).toHaveScreenshot(screenshot(`toggle-on-off-labels-diff`));
     });
   });
 });
@@ -37,7 +37,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       await page.setIonViewport();
 
-      expect(await page.screenshot()).toMatchSnapshot(screenshot(`toggle-on-off-labels-dark-mode-diff`));
+      await expect(page).toHaveScreenshot(screenshot(`toggle-on-off-labels-dark-mode-diff`));
     });
   });
 });
