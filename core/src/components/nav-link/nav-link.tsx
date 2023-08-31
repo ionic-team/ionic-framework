@@ -34,7 +34,14 @@ export class NavLink implements ComponentInterface {
   @Prop() routerAnimation?: AnimationBuilder;
 
   private onClick = () => {
-    return navLink(this.el, this.routerDirection, this.component, this.componentProps, this.routerAnimation);
+    const { el } = this;
+    const button = el.querySelector('button,ion-button,a');
+    if (button?.hasAttribute('disabled')) {
+      // Do not navigate if the button is disabled
+      return;
+    }
+
+    return navLink(el, this.routerDirection, this.component, this.componentProps, this.routerAnimation);
   };
 
   render() {
