@@ -2097,8 +2097,8 @@ export class Datetime implements ComponentInterface {
                   // We need to use !important for the inline styles here because
                   // otherwise the CSS shadow parts will override these styles.
                   // See https://github.com/WICG/webcomponents/issues/847
-                  // Both the CSS shadow parts and highlightedDate styles are
-                  // provided by the developer, but highlightedDate styles should
+                  // Both the CSS shadow parts and highlightedDates styles are
+                  // provided by the developer, but highlightedDates styles should
                   // always take priority.
                   ref={(el) => {
                     if (el && dateStyle) {
