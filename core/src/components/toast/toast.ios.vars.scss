@@ -3,71 +3,81 @@
 // iOS Toast
 // --------------------------------------------------
 
+/// @prop - The maximum height of the toast
+/// The maximum height of an iOS notification
+/// scaled to 310% is 478px.
+$toast-ios-max-height: 478px;
+
 /// @prop - Background Color of the toast wrapper
-$toast-ios-background-color:                      $background-color-step-50 !default;
+$toast-ios-background-color: $background-color-step-50 !default;
 
 /// @prop - Background Color alpha of the toast wrapper when translucent
-$toast-ios-translucent-background-color-alpha:    .8 !default;
+$toast-ios-translucent-background-color-alpha: 0.8 !default;
 
 /// @prop - Background Color of the toast wrapper when translucent
-$toast-ios-translucent-background-color:          rgba($background-color-rgb, $toast-ios-translucent-background-color-alpha) !default;
+$toast-ios-translucent-background-color: rgba(
+  $background-color-rgb,
+  $toast-ios-translucent-background-color-alpha
+) !default;
 
 /// @prop - Border radius of the toast wrapper
-$toast-ios-border-radius:                         14px !default;
+$toast-ios-border-radius: 14px !default;
 
 /// @prop - Color of the toast title
-$toast-ios-title-color:                           $text-color-step-150 !default;
+$toast-ios-title-color: $text-color-step-150 !default;
 
 /// @prop - Font size of the toast title
-$toast-ios-header-font-weight:                    500 !default;
+$toast-ios-header-font-weight: 500 !default;
 
 /// @prop - Spacing between the header and the message
-$toast-ios-header-margin-bottom:                  2px !default;
+$toast-ios-header-margin-bottom: 2px !default;
 
 /// @prop - Font size of the toast title
-$toast-ios-content-font-size:                     14px !default;
+$toast-ios-content-font-size: dynamic-font-clamp(1, 14px, 3.1) !default;
 
 /// @prop - Padding top of the toast content
-$toast-ios-content-padding-top:                   15px !default;
+$toast-ios-content-padding-top: 15px !default;
 
 /// @prop - Padding end of the toast content
-$toast-ios-content-padding-end:                   $toast-ios-content-padding-top !default;
+$toast-ios-content-padding-end: $toast-ios-content-padding-top !default;
 
 /// @prop - Padding bottom of the toast content
-$toast-ios-content-padding-bottom:                $toast-ios-content-padding-top !default;
+$toast-ios-content-padding-bottom: $toast-ios-content-padding-top !default;
 
 /// @prop - Padding start of the toast content
-$toast-ios-content-padding-start:                 $toast-ios-content-padding-end !default;
+$toast-ios-content-padding-start: $toast-ios-content-padding-end !default;
 
-/// @prop - Color of the toast button	
-$toast-ios-button-color:                          #{ion-color(primary, base)} !default;
+/// @prop - Color of the toast button
+$toast-ios-button-color: #{ion-color(primary, base)} !default;
 
 /// @prop - Filter of the translucent toast
-$toast-ios-translucent-filter:                    saturate(180%) blur(20px) !default;
+$toast-ios-translucent-filter: saturate(180%) blur(20px) !default;
 
 /// @prop - Minimum height of the toast button
-$toast-ios-button-min-height:                     44px !default;
+$toast-ios-button-min-height: 44px !default;
 
 /// @prop - Padding top of the toast button
-$toast-ios-button-padding-top:                    10px !default;
+$toast-ios-button-padding-top: 10px !default;
 
 /// @prop - Padding end of the toast button
-$toast-ios-button-padding-end:                    15px !default;
+$toast-ios-button-padding-end: 15px !default;
 
 /// @prop - Padding bottom of the toast button
-$toast-ios-button-padding-bottom:                 $toast-ios-button-padding-top !default;
+$toast-ios-button-padding-bottom: $toast-ios-button-padding-top !default;
 
 /// @prop - Padding start of the toast button
-$toast-ios-button-padding-start:                  15px !default;
+$toast-ios-button-padding-start: 15px !default;
 
 /// @prop - Font size of the toast button
-$toast-ios-button-font-size:                      17px !default;
+/// Uses the same font size scaling rules as back button.
+/// Prioritizing the toast header and message over the button.
+$toast-ios-button-font-size: dynamic-font-clamp(1, 17px, 1.294) !default;
 
 /// @prop - Font size of the toast button
-$toast-ios-button-font-weight:                    500 !default;
+$toast-ios-button-font-weight: 500 !default;
 
 /// @prop - Background color alpha of the toast activated button
-$toast-ios-button-opacity-activated:              .4 !default;
+$toast-ios-button-opacity-activated: 0.4 !default;
 
 /// @prop - Background color of the toast button
-$toast-ios-button-background-color:               transparent !default;
+$toast-ios-button-background-color: transparent !default;
