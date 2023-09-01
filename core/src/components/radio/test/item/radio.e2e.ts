@@ -17,7 +17,7 @@ configs().forEach(({ title, screenshot, config }) => {
         config
       );
       const list = page.locator('ion-list');
-      expect(await list.screenshot()).toMatchSnapshot(screenshot(`toggle-list`));
+      await expect(list).toHaveScreenshot(screenshot(`radio-list`));
     });
     test('should render correctly in inset list', async ({ page }) => {
       await page.setContent(
@@ -33,7 +33,7 @@ configs().forEach(({ title, screenshot, config }) => {
         config
       );
       const list = page.locator('ion-list');
-      expect(await list.screenshot()).toMatchSnapshot(screenshot(`radio-inset-list`));
+      await expect(list).toHaveScreenshot(screenshot(`radio-inset-list`));
     });
   });
 });
@@ -56,7 +56,7 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, screenshot, co
         config
       );
       const list = page.locator('ion-list');
-      expect(await list.screenshot()).toMatchSnapshot(screenshot(`radio-long-label-in-item`));
+      await expect(list).toHaveScreenshot(screenshot(`radio-long-label-in-item`));
     });
   });
 });

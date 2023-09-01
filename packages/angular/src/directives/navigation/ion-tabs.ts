@@ -16,14 +16,19 @@ import { NavController } from '../../providers/nav-controller';
 import { IonTabBar } from '../proxies';
 
 import { IonRouterOutlet } from './ion-router-outlet';
-import { StackEvent } from './stack-utils';
+import { StackDidChangeEvent, StackWillChangeEvent } from './stack-utils';
 
 @Component({
   selector: 'ion-tabs',
   template: `
     <ng-content select="[slot=top]"></ng-content>
     <div class="tabs-inner" #tabsInner>
-      <ion-router-outlet #outlet tabs="true" (stackEvents)="onPageSelected($event)"></ion-router-outlet>
+      <ion-router-outlet
+        #outlet
+        tabs="true"
+        (stackWillChange)="onStackWillChange($event)"
+        (stackDidChange)="onStackDidChange($event)"
+      ></ion-router-outlet>
     </div>
     <ng-content></ng-content>
   `,
@@ -62,7 +67,13 @@ export class IonTabs implements AfterContentInit, AfterContentChecked {
   @ContentChild(IonTabBar, { static: false }) tabBar: IonTabBar | undefined;
   @ContentChildren(IonTabBar) tabBars: QueryList<IonTabBar>;
 
+  /**
+   * Emitted before the tab view is changed.
+   */
   @Output() ionTabsWillChange = new EventEmitter<{ tab: string }>();
+  /**
+   * Emitted after the tab view is changed.
+   */
   @Output() ionTabsDidChange = new EventEmitter<{ tab: string }>();
 
   private tabBarSlot = 'bottom';
@@ -80,10 +91,19 @@ export class IonTabs implements AfterContentInit, AfterContentChecked {
   /**
    * @internal
    */
-  onPageSelected(detail: StackEvent): void {
-    const stackId = detail.enteringView.stackId;
-    if (detail.tabSwitch && stackId !== undefined) {
+  onStackWillChange({ enteringView, tabSwitch }: StackWillChangeEvent): void {
+    const stackId = enteringView.stackId;
+    if (tabSwitch && stackId !== undefined) {
       this.ionTabsWillChange.emit({ tab: stackId });
+    }
+  }
+
+  /**
+   * @internal
+   */
+  onStackDidChange({ enteringView, tabSwitch }: StackDidChangeEvent): void {
+    const stackId = enteringView.stackId;
+    if (tabSwitch && stackId !== undefined) {
       if (this.tabBar) {
         this.tabBar.selectedTab = stackId;
       }

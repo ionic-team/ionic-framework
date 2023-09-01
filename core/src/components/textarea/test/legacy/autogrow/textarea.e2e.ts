@@ -11,7 +11,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       await page.setIonViewport();
 
-      expect(await page.screenshot()).toMatchSnapshot(screenshot(`textarea-autogrow-diff`));
+      await expect(page).toHaveScreenshot(screenshot(`textarea-autogrow-diff`));
     });
 
     test('should grow when typing', async ({ page }) => {
@@ -29,7 +29,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         config
       );
 
-      const textarea = await page.waitForSelector('ion-textarea');
+      const textarea = page.locator('ion-textarea');
 
       await textarea.click();
 
@@ -39,7 +39,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       await page.setIonViewport();
 
-      expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-autogrow-initial`));
+      await expect(textarea).toHaveScreenshot(screenshot(`textarea-autogrow-initial`));
 
       await textarea.type(
         [
@@ -50,7 +50,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         ].join('\n')
       );
 
-      expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-autogrow-after`));
+      await expect(textarea).toHaveScreenshot(screenshot(`textarea-autogrow-after`));
     });
 
     test('should break long lines without white space', async ({ page }) => {
@@ -73,7 +73,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       const textarea = page.locator('ion-textarea');
 
-      expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-autogrow-word-break`));
+      await expect(textarea).toHaveScreenshot(screenshot(`textarea-autogrow-word-break`));
     });
   });
 });

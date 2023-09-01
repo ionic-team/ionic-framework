@@ -14,7 +14,7 @@ configs().forEach(({ title, screenshot, config }) => {
 
         const range = page.locator('ion-range');
 
-        expect(await range.screenshot()).toMatchSnapshot(screenshot(`range-no-items-no-label`));
+        await expect(range).toHaveScreenshot(screenshot(`range-no-items-no-label`));
       });
       test('should render label in the start placement', async ({ page }) => {
         await page.setContent(
@@ -28,7 +28,7 @@ configs().forEach(({ title, screenshot, config }) => {
 
         const range = page.locator('ion-range');
 
-        expect(await range.screenshot()).toMatchSnapshot(screenshot(`range-no-items-start`));
+        await expect(range).toHaveScreenshot(screenshot(`range-no-items-start`));
       });
       test('should render label in the end placement', async ({ page }) => {
         await page.setContent(
@@ -42,7 +42,7 @@ configs().forEach(({ title, screenshot, config }) => {
 
         const range = page.locator('ion-range');
 
-        expect(await range.screenshot()).toMatchSnapshot(screenshot(`range-no-items-end`));
+        await expect(range).toHaveScreenshot(screenshot(`range-no-items-end`));
       });
       test('should render label in the fixed placement', async ({ page }) => {
         await page.setContent(
@@ -56,7 +56,7 @@ configs().forEach(({ title, screenshot, config }) => {
 
         const range = page.locator('ion-range');
 
-        expect(await range.screenshot()).toMatchSnapshot(screenshot(`range-no-items-fixed`));
+        await expect(range).toHaveScreenshot(screenshot(`range-no-items-fixed`));
       });
     });
 
@@ -74,7 +74,7 @@ configs().forEach(({ title, screenshot, config }) => {
 
         const range = page.locator('ion-range');
 
-        expect(await range.screenshot()).toMatchSnapshot(screenshot(`range-items-no-label`));
+        await expect(range).toHaveScreenshot(screenshot(`range-items-no-label`));
       });
       test('should render label in the start placement', async ({ page }) => {
         await page.setContent(
@@ -90,7 +90,7 @@ configs().forEach(({ title, screenshot, config }) => {
 
         const range = page.locator('ion-range');
 
-        expect(await range.screenshot()).toMatchSnapshot(screenshot(`range-items-start`));
+        await expect(range).toHaveScreenshot(screenshot(`range-items-start`));
       });
       test('should render label in the end placement', async ({ page }) => {
         await page.setContent(
@@ -106,7 +106,7 @@ configs().forEach(({ title, screenshot, config }) => {
 
         const range = page.locator('ion-range');
 
-        expect(await range.screenshot()).toMatchSnapshot(screenshot(`range-items-end`));
+        await expect(range).toHaveScreenshot(screenshot(`range-items-end`));
       });
       test('should render label in the fixed placement', async ({ page }) => {
         await page.setContent(
@@ -122,7 +122,7 @@ configs().forEach(({ title, screenshot, config }) => {
 
         const range = page.locator('ion-range');
 
-        expect(await range.screenshot()).toMatchSnapshot(screenshot(`range-items-fixed`));
+        await expect(range).toHaveScreenshot(screenshot(`range-items-fixed`));
       });
     });
 
@@ -132,7 +132,7 @@ configs().forEach(({ title, screenshot, config }) => {
 
         const range = page.locator('ion-range');
 
-        expect(await range.screenshot()).toMatchSnapshot(screenshot(`range-label-prop-start`));
+        await expect(range).toHaveScreenshot(screenshot(`range-label-prop-start`));
       });
 
       test('should render label in the end placement', async ({ page }) => {
@@ -140,7 +140,7 @@ configs().forEach(({ title, screenshot, config }) => {
 
         const range = page.locator('ion-range');
 
-        expect(await range.screenshot()).toMatchSnapshot(screenshot(`range-label-prop-end`));
+        await expect(range).toHaveScreenshot(screenshot(`range-label-prop-end`));
       });
 
       test('should render label in the fixed placement', async ({ page }) => {
@@ -148,7 +148,7 @@ configs().forEach(({ title, screenshot, config }) => {
 
         const range = page.locator('ion-range');
 
-        expect(await range.screenshot()).toMatchSnapshot(screenshot(`range-label-prop-fixed`));
+        await expect(range).toHaveScreenshot(screenshot(`range-label-prop-fixed`));
       });
     });
   });
@@ -168,7 +168,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
 
       const range = page.locator('ion-range');
 
-      expect(await range.screenshot()).toMatchSnapshot(screenshot(`range-label-truncate`));
+      await expect(range).toHaveScreenshot(screenshot(`range-label-truncate`));
     });
   });
 });

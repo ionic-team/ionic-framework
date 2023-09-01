@@ -31,6 +31,12 @@ export interface MoveSheetToBreakpointOptions {
    * `true` if the sheet can be transitioned and dismissed off the view.
    */
   canDismiss?: boolean;
+
+  /**
+   * If `true`, the sheet will animate to the breakpoint.
+   * If `false`, the sheet will jump directly to the breakpoint.
+   */
+  animated: boolean;
 }
 
 export const createSheetGesture = (
@@ -246,11 +252,17 @@ export const createSheetGesture = (
       breakpoint: closest,
       breakpointOffset: offset,
       canDismiss: canDismissBlocksGesture,
+
+      /**
+       * The swipe is user-driven, so we should
+       * always animate when the gesture ends.
+       */
+      animated: true,
     });
   };
 
   const moveSheetToBreakpoint = (options: MoveSheetToBreakpointOptions) => {
-    const { breakpoint, canDismiss, breakpointOffset } = options;
+    const { breakpoint, canDismiss, breakpointOffset, animated } = options;
     /**
      * canDismiss should only prevent snapping
      * when users are trying to dismiss. If canDismiss
@@ -360,7 +372,7 @@ export const createSheetGesture = (
           },
           { oneTimeCallback: true }
         )
-        .progressEnd(1, 0, 500);
+        .progressEnd(1, 0, animated ? 500 : 0);
     });
   };
 

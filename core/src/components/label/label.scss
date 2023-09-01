@@ -29,8 +29,7 @@
   color: current-color(base);
 }
 
-:host(.ion-text-wrap),
-:host([text-wrap]) {
+:host(.ion-text-wrap) {
   white-space: normal;
 }
 

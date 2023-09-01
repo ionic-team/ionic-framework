@@ -1,30 +1,43 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { ActivatedRouteSnapshot, DetachedRouteHandle, RouteReuseStrategy } from '@angular/router';
 
+/**
+ * Provides a way to customize when activated routes get reused.
+ */
 export class IonicRouteStrategy implements RouteReuseStrategy {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  /**
+   * Whether the given route should detach for later reuse.
+   */
   shouldDetach(_route: ActivatedRouteSnapshot): boolean {
     return false;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  /**
+   * Returns `false`, meaning the route (and its subtree) is never reattached
+   */
   shouldAttach(_route: ActivatedRouteSnapshot): boolean {
     return false;
   }
 
-  store(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    _route: ActivatedRouteSnapshot,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    _detachedTree: DetachedRouteHandle
-  ): void {
+  /**
+   * A no-op; the route is never stored since this strategy never detaches routes for later re-use.
+   */
+  store(_route: ActivatedRouteSnapshot, _detachedTree: DetachedRouteHandle): void {
     return;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  /**
+   * Returns `null` because this strategy does not store routes for later re-use.
+   */
   retrieve(_route: ActivatedRouteSnapshot): DetachedRouteHandle | null {
     return null;
   }
 
+  /**
+   * Determines if a route should be reused.
+   * This strategy returns `true` when the future route config and
+   * current route config are identical and all route parameters are identical.
+   */
   shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
     if (future.routeConfig !== curr.routeConfig) {
       return false;

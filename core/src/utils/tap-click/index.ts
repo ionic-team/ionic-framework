@@ -1,7 +1,13 @@
+import { doc } from '@utils/browser';
+
 import type { Config } from '../../interface';
 import { now, pointerCoord } from '../helpers';
 
 export const startTapClick = (config: Config) => {
+  if (doc === undefined) {
+    return;
+  }
+
   let lastTouch = -MOUSE_WAIT * 10;
   let lastActivated = 0;
 
@@ -143,7 +149,6 @@ export const startTapClick = (config: Config) => {
     }
   };
 
-  const doc = document;
   doc.addEventListener('ionGestureCaptured', cancelActive);
 
   doc.addEventListener('touchstart', onTouchStart, true);

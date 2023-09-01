@@ -12,7 +12,7 @@ configs().forEach(({ title, screenshot, config }) => {
       );
 
       const input = page.locator('ion-input');
-      expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-placement-start`));
+      await expect(input).toHaveScreenshot(screenshot(`input-placement-start`));
     });
   });
   test.describe(title('input: label placement end'), () => {
@@ -25,7 +25,7 @@ configs().forEach(({ title, screenshot, config }) => {
       );
 
       const input = page.locator('ion-input');
-      expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-placement-end`));
+      await expect(input).toHaveScreenshot(screenshot(`input-placement-end`));
     });
   });
   test.describe(title('input: label placement fixed'), () => {
@@ -40,7 +40,7 @@ configs().forEach(({ title, screenshot, config }) => {
       );
 
       const input = page.locator('ion-input');
-      expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-placement-fixed`));
+      await expect(input).toHaveScreenshot(screenshot(`input-placement-fixed`));
     });
   });
   test.describe(title('input: label placement stacked'), () => {
@@ -53,7 +53,7 @@ configs().forEach(({ title, screenshot, config }) => {
       );
 
       const input = page.locator('ion-input');
-      expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-placement-stacked-value`));
+      await expect(input).toHaveScreenshot(screenshot(`input-placement-stacked-value`));
     });
     test('label should appear above the input when there is a no value', async ({ page }) => {
       await page.setContent(
@@ -64,7 +64,7 @@ configs().forEach(({ title, screenshot, config }) => {
       );
 
       const input = page.locator('ion-input');
-      expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-placement-stacked-no-value`));
+      await expect(input).toHaveScreenshot(screenshot(`input-placement-stacked-no-value`));
     });
     test('long label should truncate', async ({ page }) => {
       await page.setContent(
@@ -74,7 +74,7 @@ configs().forEach(({ title, screenshot, config }) => {
         config
       );
       const input = page.locator('ion-input');
-      expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-placement-stacked-long-label`));
+      await expect(input).toHaveScreenshot(screenshot(`input-placement-stacked-long-label`));
     });
   });
   test.describe(title('input: label placement floating'), () => {
@@ -87,7 +87,7 @@ configs().forEach(({ title, screenshot, config }) => {
       );
 
       const input = page.locator('ion-input');
-      expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-placement-floating-value`));
+      await expect(input).toHaveScreenshot(screenshot(`input-placement-floating-value`));
     });
     test('label should appear on top of the input and hide the input when there is a no value', async ({ page }) => {
       await page.setContent(
@@ -98,7 +98,7 @@ configs().forEach(({ title, screenshot, config }) => {
       );
 
       const input = page.locator('ion-input');
-      expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-placement-floating-no-value`));
+      await expect(input).toHaveScreenshot(screenshot(`input-placement-floating-no-value`));
     });
     test('label should appear on top of the input when the input is focused', async ({ page }) => {
       await page.setContent(
@@ -114,9 +114,7 @@ configs().forEach(({ title, screenshot, config }) => {
       await nativeInput.click();
       await page.waitForChanges();
 
-      expect(await input.screenshot({ animations: 'disabled' })).toMatchSnapshot(
-        screenshot(`input-focused-placement-floating-no-value`)
-      );
+      await expect(input).toHaveScreenshot(screenshot(`input-focused-placement-floating-no-value`));
     });
     test('long label should truncate', async ({ page }) => {
       await page.setContent(
@@ -126,7 +124,7 @@ configs().forEach(({ title, screenshot, config }) => {
         config
       );
       const input = page.locator('ion-input');
-      expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-placement-floating-long-label`));
+      await expect(input).toHaveScreenshot(screenshot(`input-placement-floating-long-label`));
     });
   });
 });
@@ -144,7 +142,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         config
       );
       const input = page.locator('ion-input');
-      expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-placement-floating-long-label-outline`));
+      await expect(input).toHaveScreenshot(screenshot(`input-placement-floating-long-label-outline`));
     });
     test('long label should truncate with solid', async ({ page }) => {
       await page.setContent(
@@ -154,7 +152,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         config
       );
       const input = page.locator('ion-input');
-      expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-placement-floating-long-label-solid`));
+      await expect(input).toHaveScreenshot(screenshot(`input-placement-floating-long-label-solid`));
     });
   });
 });
@@ -170,7 +168,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       );
 
       const input = page.locator('ion-input');
-      expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-label-truncate`));
+      await expect(input).toHaveScreenshot(screenshot(`input-label-truncate`));
     });
     test('label slot should be truncated with an ellipsis', async ({ page }) => {
       await page.setContent(
@@ -183,12 +181,9 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       );
 
       const input = page.locator('ion-input');
-      expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-label-slot-truncate`));
+      await expect(input).toHaveScreenshot(screenshot(`input-label-slot-truncate`));
     });
   });
-});
-
-configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('input: async label'), () => {
     test('input should re-render when label slot is added async', async ({ page }) => {
       await page.setContent(
@@ -210,7 +205,30 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
 
       await page.waitForChanges();
 
-      expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-async-label`));
+      await expect(input).toHaveScreenshot(screenshot(`input-async-label`));
+    });
+  });
+  test.describe(title('input: floating/stacked label layering'), () => {
+    test('label should not be covered by text field', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/27812',
+      });
+      await page.setContent(
+        `
+        <style>
+          .custom-input .native-wrapper {
+            background: pink;
+          }
+        </style>
+        <ion-input class="custom-input" label="My Label" label-placement="stacked"></ion-input>
+      `,
+        config
+      );
+
+      const input = page.locator('ion-input');
+
+      await expect(input).toHaveScreenshot(screenshot(`input-label-layering`));
     });
   });
 });

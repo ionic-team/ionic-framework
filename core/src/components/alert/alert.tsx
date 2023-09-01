@@ -3,6 +3,8 @@ import { Component, Element, Event, Host, Listen, Method, Prop, Watch, forceUpda
 import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
 import type { Gesture } from '@utils/gesture';
 import { createButtonActiveGesture } from '@utils/gesture/button-active';
+import { raf } from '@utils/helpers';
+import { createLockController } from '@utils/lock-controller';
 import {
   createDelegateController,
   createTriggerController,
@@ -45,6 +47,7 @@ import { mdLeaveAnimation } from './animations/md.leave';
 })
 export class Alert implements ComponentInterface, OverlayInterface {
   private readonly delegateController = createDelegateController(this);
+  private readonly lockController = createLockController();
   private readonly triggerController = createTriggerController();
   private customHTMLEnabled = config.get('innerHTMLTemplatesEnabled', ENABLE_HTML_CONTENT_DEFAULT);
   private activeId?: string;
@@ -53,7 +56,6 @@ export class Alert implements ComponentInterface, OverlayInterface {
   private processedButtons: AlertButton[] = [];
   private wrapperEl?: HTMLElement;
   private gesture?: Gesture;
-  private currentTransition?: Promise<any>;
 
   presented = false;
   lastFocus?: HTMLElement;
@@ -346,19 +348,25 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
   componentDidLoad() {
     /**
-     * Do not create gesture if:
-     * 1. A gesture already exists
-     * 2. App is running in MD mode
-     * 3. A wrapper ref does not exist
+     * Only create gesture if:
+     * 1. A gesture does not already exist
+     * 2. App is running in iOS mode
+     * 3. A wrapper ref exists
      */
-    if (this.gesture || getIonMode(this) === 'md' || !this.wrapperEl) {
-      return;
+    if (!this.gesture && getIonMode(this) === 'ios' && this.wrapperEl) {
+      this.gesture = createButtonActiveGesture(this.wrapperEl, (refEl: HTMLElement) =>
+        refEl.classList.contains('alert-button')
+      );
+      this.gesture.enable(true);
     }
 
-    this.gesture = createButtonActiveGesture(this.wrapperEl, (refEl: HTMLElement) =>
-      refEl.classList.contains('alert-button')
-    );
-    this.gesture.enable(true);
+    /**
+     * If alert was rendered with isOpen="true"
+     * then we should open alert immediately.
+     */
+    if (this.isOpen === true) {
+      raf(() => this.present());
+    }
   }
 
   /**
@@ -366,23 +374,13 @@ export class Alert implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async present(): Promise<void> {
-    /**
-     * When using an inline alert
-     * and dismissing an alert it is possible to
-     * quickly present the alert while it is
-     * dismissing. We need to await any current
-     * transition to allow the dismiss to finish
-     * before presenting again.
-     */
-    if (this.currentTransition !== undefined) {
-      await this.currentTransition;
-    }
+    const unlock = await this.lockController.lock();
 
     await this.delegateController.attachViewToDom();
 
-    this.currentTransition = present(this, 'alertEnter', iosEnterAnimation, mdEnterAnimation);
-    await this.currentTransition;
-    this.currentTransition = undefined;
+    await present(this, 'alertEnter', iosEnterAnimation, mdEnterAnimation);
+
+    unlock();
   }
 
   /**
@@ -396,12 +394,15 @@ export class Alert implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async dismiss(data?: any, role?: string): Promise<boolean> {
-    this.currentTransition = dismiss(this, data, role, 'alertLeave', iosLeaveAnimation, mdLeaveAnimation);
-    const dismissed = await this.currentTransition;
+    const unlock = await this.lockController.lock();
+
+    const dismissed = await dismiss(this, data, role, 'alertLeave', iosLeaveAnimation, mdLeaveAnimation);
 
     if (dismissed) {
       this.delegateController.removeViewFromDom();
     }
+
+    unlock();
 
     return dismissed;
   }
@@ -666,6 +667,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
       <div class={alertButtonGroupClass}>
         {buttons.map((button) => (
           <button
+            {...button.htmlAttributes}
             type="button"
             id={button.id}
             class={buttonClass(button)}

@@ -8,7 +8,7 @@ configs().forEach(({ title, screenshot, config }) => {
 
       await page.setIonViewport();
 
-      expect(await page.screenshot()).toMatchSnapshot(screenshot(`range-diff`));
+      await expect(page).toHaveScreenshot(screenshot(`range-diff`));
     });
   });
 });
@@ -77,13 +77,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       expect(await scrollEl.evaluate((el: HTMLElement) => el.scrollTop)).toEqual(0);
 
-      const box = (await knobEl.boundingBox())!;
-      const centerX = box.x + box.width / 2;
-      const centerY = box.y + box.height / 2;
-
-      await page.mouse.move(centerX, centerY);
-      await page.mouse.down();
-      await page.mouse.move(centerX + 30, centerY);
+      await dragElementBy(knobEl, page, 30, 0, undefined, undefined, false);
 
       /**
        * Do not use scrollToBottom() or other scrolling methods

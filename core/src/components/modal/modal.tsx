@@ -4,6 +4,7 @@ import { findIonContent, printIonContentErrorMsg } from '@utils/content';
 import { CoreDelegate, attachComponent, detachComponent } from '@utils/framework-delegate';
 import { raf, inheritAttributes, hasLazyBuild } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
+import { createLockController } from '@utils/lock-controller';
 import { printIonWarning } from '@utils/logging';
 import { Style as StatusBarStyle, StatusBar } from '@utils/native/status-bar';
 import {
@@ -64,10 +65,10 @@ import { setCardStatusBarDark, setCardStatusBarDefault } from './utils';
   shadow: true,
 })
 export class Modal implements ComponentInterface, OverlayInterface {
+  private readonly lockController = createLockController();
   private readonly triggerController = createTriggerController();
   private gesture?: Gesture;
   private coreDelegate: FrameworkDelegate = CoreDelegate();
-  private currentTransition?: Promise<any>;
   private sheetTransition?: Promise<any>;
   private isSheetModal = false;
   private currentBreakpoint?: number;
@@ -422,23 +423,14 @@ export class Modal implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async present(): Promise<void> {
+    const unlock = await this.lockController.lock();
+
     if (this.presented) {
+      unlock();
       return;
     }
 
     const { presentingElement, el } = this;
-
-    /**
-     * When using an inline modal
-     * and dismissing a modal it is possible to
-     * quickly present the modal while it is
-     * dismissing. We need to await any current
-     * transition to allow the dismiss to finish
-     * before presenting again.
-     */
-    if (this.currentTransition !== undefined) {
-      await this.currentTransition;
-    }
 
     /**
      * If the modal is presented multiple times (inline modals), we
@@ -447,9 +439,15 @@ export class Modal implements ComponentInterface, OverlayInterface {
     this.currentBreakpoint = this.initialBreakpoint;
 
     const { inline, delegate } = this.getDelegate(true);
-    this.usersElement = await attachComponent(delegate, el, this.component, ['ion-page'], this.componentProps, inline);
 
+    /**
+     * Emit ionMount so JS Frameworks have an opportunity
+     * to add the child component to the DOM. The child
+     * component will be assigned to this.usersElement below.
+     */
     this.ionMount.emit();
+
+    this.usersElement = await attachComponent(delegate, el, this.component, ['ion-page'], this.componentProps, inline);
 
     /**
      * When using the lazy loaded build of Stencil, we need to wait
@@ -475,7 +473,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     writeTask(() => this.el.classList.add('show-modal'));
 
-    this.currentTransition = present<ModalPresentOptions>(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, {
+    await present<ModalPresentOptions>(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, {
       presentingEl: presentingElement,
       currentBreakpoint: this.initialBreakpoint,
       backdropBreakpoint: this.backdropBreakpoint,
@@ -526,15 +524,13 @@ export class Modal implements ComponentInterface, OverlayInterface {
       setCardStatusBarDark();
     }
 
-    await this.currentTransition;
-
     if (this.isSheetModal) {
       this.initSheetGesture();
     } else if (hasCardModal) {
       this.initSwipeToClose();
     }
 
-    this.currentTransition = undefined;
+    unlock();
   }
 
   private initSwipeToClose() {
@@ -651,11 +647,19 @@ export class Modal implements ComponentInterface, OverlayInterface {
     }
 
     /**
+     * Because the canDismiss check below is async,
+     * we need to claim a lock before the check happens,
+     * in case the dismiss transition does run.
+     */
+    const unlock = await this.lockController.lock();
+
+    /**
      * If a canDismiss handler is responsible
      * for calling the dismiss method, we should
      * not run the canDismiss check again.
      */
     if (role !== 'handler' && !(await this.checkCanDismiss(data, role))) {
+      unlock();
       return false;
     }
 
@@ -677,21 +681,9 @@ export class Modal implements ComponentInterface, OverlayInterface {
       this.keyboardOpenCallback = undefined;
     }
 
-    /**
-     * When using an inline modal
-     * and presenting a modal it is possible to
-     * quickly dismiss the modal while it is
-     * presenting. We need to await any current
-     * transition to allow the present to finish
-     * before dismissing again.
-     */
-    if (this.currentTransition !== undefined) {
-      await this.currentTransition;
-    }
-
     const enteringAnimation = activeAnimations.get(this) || [];
 
-    this.currentTransition = dismiss<ModalDismissOptions>(
+    const dismissed = await dismiss<ModalDismissOptions>(
       this,
       data,
       role,
@@ -704,8 +696,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
         backdropBreakpoint: this.backdropBreakpoint,
       }
     );
-
-    const dismissed = await this.currentTransition;
 
     if (dismissed) {
       const { delegate } = this.getDelegate();
@@ -723,8 +713,10 @@ export class Modal implements ComponentInterface, OverlayInterface {
       enteringAnimation.forEach((ani) => ani.destroy());
     }
     this.currentBreakpoint = undefined;
-    this.currentTransition = undefined;
     this.animation = undefined;
+
+    unlock();
+
     return dismissed;
   }
 
@@ -761,7 +753,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
       return;
     }
 
-    const { currentBreakpoint, moveSheetToBreakpoint, canDismiss, breakpoints } = this;
+    const { currentBreakpoint, moveSheetToBreakpoint, canDismiss, breakpoints, animated } = this;
 
     if (currentBreakpoint === breakpoint) {
       return;
@@ -772,6 +764,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
         breakpoint,
         breakpointOffset: 1 - currentBreakpoint!,
         canDismiss: canDismiss !== undefined && canDismiss !== true && breakpoints![0] === 0,
+        animated,
       });
       await this.sheetTransition;
       this.sheetTransition = undefined;
