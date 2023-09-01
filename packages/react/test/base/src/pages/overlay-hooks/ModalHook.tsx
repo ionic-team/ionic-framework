@@ -146,7 +146,9 @@ const ModalHook: React.FC = () => {
 
           <IonButton
             expand="block"
-            onClick={presentRootModal}
+            onClick={() => {
+              presentRootModal()
+            }}
             id="show-root-modal"
           >
             Show Root Modal
