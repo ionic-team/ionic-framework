@@ -3,9 +3,14 @@ describe('Tabs', () => {
     cy.visit('/standalone/tabs');
   });
 
-  it('should render the active tab', () => {
-    cy.get('#tab-button-tab-one').click();
+  it('should redirect to the default tab', () => {
     cy.get('app-tab-one').should('be.visible');
     cy.contains('Tab 1');
+  });
+
+  it('should render new content when switching tabs', () => {
+    cy.get('#tab-button-tab-two').click();
+    cy.get('app-tab-two').should('be.visible');
+    cy.contains('Tab 2');
   });
 });
