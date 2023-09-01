@@ -566,6 +566,16 @@ export class Modal implements ComponentInterface, OverlayInterface {
        * removed from the DOM.
        */
       this.gestureAnimationDismissing = true;
+
+      /**
+       * Reset the status bar style as the dismiss animation
+       * starts otherwise the status bar will be the wrong
+       * color for the duration of the dismiss animation.
+       * The dismiss method does this as well, but
+       * in this case it's only called once the animation
+       * has finished.
+       */
+      setCardStatusBarDefault(this.statusBarStyle);
       this.animation!.onFinish(async () => {
         await this.dismiss(undefined, GESTURE);
         this.gestureAnimationDismissing = false;
