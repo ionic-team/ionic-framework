@@ -1364,7 +1364,7 @@ ion-textarea,prop,autocapitalize,string,'none',false,false
 ion-textarea,prop,autofocus,boolean,false,false,false
 ion-textarea,prop,clearOnEdit,boolean,false,false,false
 ion-textarea,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
-ion-textarea,prop,cols,number | undefined,undefined,false,false
+ion-textarea,prop,cols,number | undefined,undefined,false,true
 ion-textarea,prop,counter,boolean,false,false,false
 ion-textarea,prop,counterFormatter,((inputLength: number, maxLength: number) => string) | undefined,undefined,false,false
 ion-textarea,prop,debounce,number | undefined,undefined,false,false
