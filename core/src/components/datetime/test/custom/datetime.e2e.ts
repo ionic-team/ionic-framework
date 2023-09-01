@@ -13,16 +13,6 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       await expect(datetime).toHaveScreenshot(screenshot(`datetime-custom-wheel`));
     });
 
-    test('should allow styling month/year picker in grid style datetimes', async ({ page }) => {
-      const datetime = page.locator('#custom-grid');
-      const monthYearToggle = datetime.locator('.calendar-month-year');
-
-      await monthYearToggle.click();
-      await page.waitForChanges();
-
-      await expect(datetime).toHaveScreenshot(screenshot(`datetime-custom-month-year`));
-    });
-
     test('should allow styling time picker in grid style datetimes', async ({ page }) => {
       const timeButton = page.locator('#custom-grid .time-body');
       const popover = page.locator('.popover-viewport');

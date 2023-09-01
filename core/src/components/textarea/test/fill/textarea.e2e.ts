@@ -23,7 +23,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const textarea = page.locator('ion-textarea');
-        expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-fill-solid`));
+        await expect(textarea).toHaveScreenshot(screenshot(`textarea-fill-solid`));
       });
       test('should render correctly with floating label', async ({ page }) => {
         await page.setContent(
@@ -42,7 +42,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const textarea = page.locator('ion-textarea');
-        expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-fill-solid-label-floating`));
+        await expect(textarea).toHaveScreenshot(screenshot(`textarea-fill-solid-label-floating`));
       });
       test('should not have visual regressions with shaped solid', async ({ page }) => {
         await page.setContent(
@@ -61,7 +61,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const textarea = page.locator('ion-textarea');
-        expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-fill-shaped-solid`));
+        await expect(textarea).toHaveScreenshot(screenshot(`textarea-fill-shaped-solid`));
       });
       test('padding and border radius should be customizable', async ({ page }) => {
         await page.setContent(
@@ -89,7 +89,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const textarea = page.locator('ion-textarea');
-        expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-fill-shaped-solid-custom`));
+        await expect(textarea).toHaveScreenshot(screenshot(`textarea-fill-shaped-solid-custom`));
       });
     });
     test.describe('textarea: fill outline', () => {
@@ -109,7 +109,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const textarea = page.locator('ion-textarea');
-        expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-fill-outline`));
+        await expect(textarea).toHaveScreenshot(screenshot(`textarea-fill-outline`));
       });
       test('should render correctly with floating label', async ({ page }) => {
         await page.setContent(
@@ -128,7 +128,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const textarea = page.locator('ion-textarea');
-        expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-fill-outline-label-floating`));
+        await expect(textarea).toHaveScreenshot(screenshot(`textarea-fill-outline-label-floating`));
       });
       test('should not have visual regressions with shaped outline', async ({ page }) => {
         await page.setContent(
@@ -147,7 +147,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const textarea = page.locator('ion-textarea');
-        expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-fill-shaped-outline`));
+        await expect(textarea).toHaveScreenshot(screenshot(`textarea-fill-shaped-outline`));
       });
       test('padding and border radius should be customizable', async ({ page }) => {
         await page.setContent(
@@ -175,7 +175,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const textarea = page.locator('ion-textarea');
-        expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-fill-shaped-outline-custom`));
+        await expect(textarea).toHaveScreenshot(screenshot(`textarea-fill-shaped-outline-custom`));
       });
     });
   });
@@ -219,7 +219,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       );
 
       const textarea = page.locator('ion-textarea');
-      expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-fill-outline-slotted-label`));
+      await expect(textarea).toHaveScreenshot(screenshot(`textarea-fill-outline-slotted-label`));
     });
     test('should render the notch correctly with a slotted label after the textarea was originally hidden', async ({
       page,
@@ -247,7 +247,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
 
       await textarea.evaluate((el: HTMLIonSelectElement) => el.style.removeProperty('display'));
 
-      expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-fill-outline-hidden-slotted-label`));
+      await expect(textarea).toHaveScreenshot(screenshot(`textarea-fill-outline-hidden-slotted-label`));
     });
   });
 });

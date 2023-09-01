@@ -20,7 +20,7 @@ import type { RouteID, RouterDirection, RouteWrite, NavOutlet } from '../router/
 
 @Component({
   tag: 'ion-router-outlet',
-  styleUrl: 'route-outlet.scss',
+  styleUrl: 'router-outlet.scss',
   shadow: true,
 })
 export class RouterOutlet implements ComponentInterface, NavOutlet {
@@ -285,6 +285,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
     return true;
   }
 
+  // TODO: FW-5048 - Remove this code in favor of using lock controller from utils
   private async lock() {
     const p = this.waitPromise;
     let resolve!: () => void;
