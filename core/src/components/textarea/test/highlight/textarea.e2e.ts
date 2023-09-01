@@ -24,7 +24,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const textarea = page.locator('ion-textarea');
-        expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-no-fill-valid`));
+        await expect(textarea).toHaveScreenshot(screenshot(`textarea-no-fill-valid`));
       });
       test('should render invalid state correctly', async ({ page }) => {
         await page.setContent(
@@ -43,7 +43,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const textarea = page.locator('ion-textarea');
-        expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-no-fill-invalid`));
+        await expect(textarea).toHaveScreenshot(screenshot(`textarea-no-fill-invalid`));
       });
       test('should render focused state correctly', async ({ page }) => {
         await page.setContent(
@@ -62,7 +62,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const textarea = page.locator('ion-textarea');
-        expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-no-fill-focus`));
+        await expect(textarea).toHaveScreenshot(screenshot(`textarea-no-fill-focus`));
       });
     });
     test.describe('textarea: solid', () => {
@@ -84,7 +84,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const textarea = page.locator('ion-textarea');
-        expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-solid-valid`));
+        await expect(textarea).toHaveScreenshot(screenshot(`textarea-solid-valid`));
       });
       test('should render invalid state correctly', async ({ page }) => {
         await page.setContent(
@@ -104,7 +104,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const textarea = page.locator('ion-textarea');
-        expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-solid-invalid`));
+        await expect(textarea).toHaveScreenshot(screenshot(`textarea-solid-invalid`));
       });
       test('should render focused state correctly', async ({ page }) => {
         await page.setContent(
@@ -124,7 +124,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const textarea = page.locator('ion-textarea');
-        expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-solid-focus`));
+        await expect(textarea).toHaveScreenshot(screenshot(`textarea-solid-focus`));
       });
     });
     test.describe('textarea: outline', () => {
@@ -146,7 +146,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const textarea = page.locator('ion-textarea');
-        expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-outline-valid`));
+        await expect(textarea).toHaveScreenshot(screenshot(`textarea-outline-valid`));
       });
       test('should render invalid state correctly', async ({ page }) => {
         await page.setContent(
@@ -166,7 +166,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const textarea = page.locator('ion-textarea');
-        expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-outline-invalid`));
+        await expect(textarea).toHaveScreenshot(screenshot(`textarea-outline-invalid`));
       });
       test('should render focused state correctly', async ({ page }) => {
         await page.setContent(
@@ -186,7 +186,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const textarea = page.locator('ion-textarea');
-        expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-outline-focus`));
+        await expect(textarea).toHaveScreenshot(screenshot(`textarea-outline-focus`));
       });
     });
   });

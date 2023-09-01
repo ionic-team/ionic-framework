@@ -2,6 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { State, Watch, Component, Element, Event, h, Host, Method, Prop } from '@stencil/core';
 import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
 import { raf } from '@utils/helpers';
+import { createLockController } from '@utils/lock-controller';
 import { printIonWarning } from '@utils/logging';
 import {
   createDelegateController,
@@ -51,8 +52,8 @@ import type { ToastButton, ToastPosition, ToastLayout } from './toast-interface'
 })
 export class Toast implements ComponentInterface, OverlayInterface {
   private readonly delegateController = createDelegateController(this);
+  private readonly lockController = createLockController();
   private readonly triggerController = createTriggerController();
-  private currentTransition?: Promise<any>;
   private customHTMLEnabled = config.get('innerHTMLTemplatesEnabled', ENABLE_HTML_CONTENT_DEFAULT);
   private durationTimeout?: ReturnType<typeof setTimeout>;
 
@@ -270,28 +271,11 @@ export class Toast implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async present(): Promise<void> {
-    /**
-     * When using an inline toast
-     * and dismissing a toast it is possible to
-     * quickly present the toast while it is
-     * dismissing. We need to await any current
-     * transition to allow the dismiss to finish
-     * before presenting again.
-     */
-    if (this.currentTransition !== undefined) {
-      await this.currentTransition;
-    }
+    const unlock = await this.lockController.lock();
 
     await this.delegateController.attachViewToDom();
 
-    this.currentTransition = present<ToastPresentOptions>(
-      this,
-      'toastEnter',
-      iosEnterAnimation,
-      mdEnterAnimation,
-      this.position
-    );
-    await this.currentTransition;
+    await present<ToastPresentOptions>(this, 'toastEnter', iosEnterAnimation, mdEnterAnimation, this.position);
 
     /**
      * Content is revealed to screen readers after
@@ -300,11 +284,11 @@ export class Toast implements ComponentInterface, OverlayInterface {
      */
     this.revealContentToScreenReader = true;
 
-    this.currentTransition = undefined;
-
     if (this.duration > 0) {
       this.durationTimeout = setTimeout(() => this.dismiss(undefined, 'timeout'), this.duration);
     }
+
+    unlock();
   }
 
   /**
@@ -318,11 +302,13 @@ export class Toast implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async dismiss(data?: any, role?: string): Promise<boolean> {
+    const unlock = await this.lockController.lock();
+
     if (this.durationTimeout) {
       clearTimeout(this.durationTimeout);
     }
 
-    this.currentTransition = dismiss<ToastDismissOptions>(
+    const dismissed = await dismiss<ToastDismissOptions>(
       this,
       data,
       role,
@@ -331,12 +317,13 @@ export class Toast implements ComponentInterface, OverlayInterface {
       mdLeaveAnimation,
       this.position
     );
-    const dismissed = await this.currentTransition;
 
     if (dismissed) {
       this.delegateController.removeViewFromDom();
       this.revealContentToScreenReader = false;
     }
+
+    unlock();
 
     return dismissed;
   }

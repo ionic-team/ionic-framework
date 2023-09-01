@@ -21,7 +21,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const input = page.locator('ion-input');
-        expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-no-fill-valid`));
+        await expect(input).toHaveScreenshot(screenshot(`input-no-fill-valid`));
       });
       test('should render invalid state correctly', async ({ page }) => {
         await page.setContent(
@@ -40,7 +40,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const input = page.locator('ion-input');
-        expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-no-fill-invalid`));
+        await expect(input).toHaveScreenshot(screenshot(`input-no-fill-invalid`));
       });
       test('should render focused state correctly', async ({ page }) => {
         await page.setContent(
@@ -59,7 +59,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const input = page.locator('ion-input');
-        expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-no-fill-focus`));
+        await expect(input).toHaveScreenshot(screenshot(`input-no-fill-focus`));
       });
     });
     test.describe('input: solid', () => {
@@ -81,7 +81,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const input = page.locator('ion-input');
-        expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-solid-valid`));
+        await expect(input).toHaveScreenshot(screenshot(`input-solid-valid`));
       });
       test('should render invalid state correctly', async ({ page }) => {
         await page.setContent(
@@ -101,7 +101,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const input = page.locator('ion-input');
-        expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-solid-invalid`));
+        await expect(input).toHaveScreenshot(screenshot(`input-solid-invalid`));
       });
       test('should render focused state correctly', async ({ page }) => {
         await page.setContent(
@@ -121,7 +121,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const input = page.locator('ion-input');
-        expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-solid-focus`));
+        await expect(input).toHaveScreenshot(screenshot(`input-solid-focus`));
       });
     });
     test.describe('input: outline', () => {
@@ -143,7 +143,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const input = page.locator('ion-input');
-        expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-outline-valid`));
+        await expect(input).toHaveScreenshot(screenshot(`input-outline-valid`));
       });
       test('should render invalid state correctly', async ({ page }) => {
         await page.setContent(
@@ -163,7 +163,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const input = page.locator('ion-input');
-        expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-outline-invalid`));
+        await expect(input).toHaveScreenshot(screenshot(`input-outline-invalid`));
       });
       test('should render focused state correctly', async ({ page }) => {
         await page.setContent(
@@ -183,7 +183,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const input = page.locator('ion-input');
-        expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-outline-focus`));
+        await expect(input).toHaveScreenshot(screenshot(`input-outline-focus`));
       });
     });
   });
