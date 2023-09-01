@@ -2123,8 +2123,9 @@ export class Datetime implements ComponentInterface {
 
             let dateParts = undefined;
 
-            // Spacer elements should not get the CSS parts added for calendar days
-            if (day !== null) {
+            // "Filler days" at the beginning of the grid should not get the calendar day
+            // CSS parts added to them
+            if (!isCalendarPadding) {
               dateParts = `calendar-day${isActive ? ' active' : ''}${isToday ? ' today' : ''}`;
             }
 
