@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "7.0.14",
+  "version": "7.3.0",
   "description": "Base components for Ionic",
   "keywords": [
     "ionic",
@@ -31,21 +31,25 @@
     "loader/"
   ],
   "dependencies": {
-    "@stencil/core": "^3.4.0",
-    "ionicons": "^7.1.0",
+    "@stencil/core": "^4.0.3",
+    "ionicons": "7.1.0",
     "tslib": "^2.1.0"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.7.3",
+    "@capacitor/core": "^5.2.3",
+    "@capacitor/haptics": "^5.0.6",
+    "@capacitor/keyboard": "^5.0.6",
+    "@capacitor/status-bar": "^5.0.6",
     "@ionic/eslint-config": "^0.3.0",
     "@ionic/prettier-config": "^2.0.0",
     "@jest/core": "^27.5.1",
-    "@playwright/test": "^1.35.1",
+    "@playwright/test": "^1.37.0",
     "@rollup/plugin-node-resolve": "^8.4.0",
     "@rollup/plugin-virtual": "^2.0.3",
     "@stencil/angular-output-target": "^0.7.1",
     "@stencil/react-output-target": "^0.5.3",
-    "@stencil/sass": "^3.0.4",
+    "@stencil/sass": "^3.0.5",
     "@stencil/vue-output-target": "^0.8.6",
     "@types/jest": "^27.5.2",
     "@types/node": "^14.6.0",
@@ -62,7 +66,7 @@
     "jest-cli": "^27.5.1",
     "prettier": "^2.6.1",
     "rollup": "^2.26.4",
-    "sass": "^1.26.10",
+    "sass": "^1.33.0",
     "serve": "^14.0.1",
     "stylelint": "^13.13.1",
     "stylelint-order": "^4.1.0",

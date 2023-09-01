@@ -7,15 +7,33 @@ configs().forEach(({ title, screenshot, config }) => {
       await page.setContent(
         `
         <ion-segment scrollable="true" value="2">
-          <ion-segment-button value="1">First</ion-segment-button>
-          <ion-segment-button value="2">Second</ion-segment-button>
-          <ion-segment-button value="3">Third</ion-segment-button>
-          <ion-segment-button value="4">Fourth</ion-segment-button>
-          <ion-segment-button value="5">Fifth</ion-segment-button>
-          <ion-segment-button value="6">Sixth</ion-segment-button>
-          <ion-segment-button value="7">Seventh</ion-segment-button>
-          <ion-segment-button value="8">Eigth</ion-segment-button>
-          <ion-segment-button value="9">Nineth</ion-segment-button>
+          <ion-segment-button value="1">
+            <ion-label>First</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="2">
+            <ion-label>Second</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="3">
+            <ion-label>Third</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="4">
+            <ion-label>Fourth</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="5">
+            <ion-label>Fifth</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="6">
+            <ion-label>Sixth</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="7">
+            <ion-label>Seventh</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="8">
+            <ion-label>Eighth</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="9">
+            <ion-label>Ninth</ion-label>
+          </ion-segment-button>
         </ion-segment>
       `,
         config

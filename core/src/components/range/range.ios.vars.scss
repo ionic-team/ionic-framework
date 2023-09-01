@@ -67,7 +67,7 @@ $range-ios-pin-background-color: transparent !default;
 $range-ios-pin-color: $text-color !default;
 
 /// @prop - Font size of the range pin
-$range-ios-pin-font-size: 12px !default;
+$range-ios-pin-font-size: dynamic-font(12px) !default;
 
 /// @prop - Padding top of the range pin
 $range-ios-pin-padding-top: 8px !default;

@@ -1,0 +1,84 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title> Forms test </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+    <ion-list>
+      <ion-item>
+        <ion-label>DateTime</ion-label>
+        <ion-datetime formControlName="datetime" min="1994-03-14" max="2017-12-09" display-format="MM/DD/YYYY">
+        </ion-datetime>
+      </ion-item>
+
+      <ion-item>
+        <ion-select label="Select" formControlName="select">
+          <ion-select-option value="">No Game Console</ion-select-option>
+          <ion-select-option value="nes">NES</ion-select-option>
+          <ion-select-option value="n64" selected>Nintendo64</ion-select-option>
+          <ion-select-option value="ps">PlayStation</ion-select-option>
+          <ion-select-option value="genesis">Sega Genesis</ion-select-option>
+          <ion-select-option value="saturn">Sega Saturn</ion-select-option>
+          <ion-select-option value="snes">SNES</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-toggle formControlName="toggle"> Toggle </ion-toggle>
+      </ion-item>
+
+      <ion-item>
+        <ion-input
+          label="Input (required)"
+          formControlName="input"
+          class="required"
+          id="touched-input-test"
+        ></ion-input>
+      </ion-item>
+
+      <ion-button id="input-touched" (click)="setTouched()">Set Input Touched</ion-button>
+
+      <ion-item>
+        <ion-input label="Input" formControlName="input2"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-checkbox formControlName="checkbox"> Checkbox </ion-checkbox>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Min</ion-label>
+        <ion-input formControlName="inputMin" type="number"></ion-input>
+        <pre>errors: {{ profileForm.controls['inputMin'].errors | json }}</pre>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Max</ion-label>
+        <ion-input formControlName="inputMax" type="number"></ion-input>
+        <pre>errors: {{ profileForm.controls['inputMax'].errors | json }}</pre>
+      </ion-item>
+    </ion-list>
+    <p>
+      Form Status: <span id="status">{{ profileForm.status }}</span>
+    </p>
+    <p>
+      Form value: <span id="data">{{ profileForm.value | json }}</span>
+    </p>
+    <p>
+      Form Submit: <span id="submit">{{ submitted }}</span>
+    </p>
+    <ion-button id="mark-all-touched-button" (click)="markAllAsTouched()">Mark all as touched</ion-button>
+    <ion-button id="submit-button" type="submit" [disabled]="!profileForm.valid">Submit</ion-button>
+  </form>
+  <ion-list>
+    <ion-item>
+      <ion-toggle [formControl]="outsideToggle"> Outside form </ion-toggle>
+      <ion-note slot="end">{{ outsideToggle.value }}</ion-note>
+    </ion-item>
+  </ion-list>
+  <p>
+    <ion-button (click)="setValues()" id="set-values">Set values</ion-button>
+  </p>
+</ion-content>

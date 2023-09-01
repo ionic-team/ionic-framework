@@ -331,12 +331,12 @@
 // --------------------------------------------------
 
 ::slotted(.button-small) {
-  --padding-top: 0;
-  --padding-bottom: 0;
+  --padding-top: 2px;
+  --padding-bottom: 2px;
   --padding-start: .6em;
   --padding-end: .6em;
 
-  height: 25px;
+  min-height: 25px;
 
   font-size: dynamic-font(12px);
 }

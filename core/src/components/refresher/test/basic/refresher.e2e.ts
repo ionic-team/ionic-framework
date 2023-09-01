@@ -3,13 +3,11 @@ import { configs, test } from '@utils/test/playwright';
 
 import { pullToRefresh } from '../test.utils';
 
-// TODO FW-2795: Enable this test when touch events/gestures are better supported in Playwright
-
 /**
  * This behavior does not vary across directions.
  */
 configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
-  test.describe.skip(title('refresher: basic'), () => {
+  test.describe(title('refresher: basic'), () => {
     test.beforeEach(async ({ page }) => {
       await page.goto('/src/components/refresher/test/basic', config);
     });

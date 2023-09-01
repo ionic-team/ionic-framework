@@ -31,7 +31,7 @@ $searchbar-md-cancel-button-font-size:           1.6em !default;
 $searchbar-md-input-search-icon-color:           $text-color-step-400 !default;
 
 /// @prop - Size of the searchbar input search icon
-$searchbar-md-input-search-icon-size:            20px !default;
+$searchbar-md-input-search-icon-size:            dynamic-font(21px) !default;
 
 /// @prop - Height of the searchbar input
 $searchbar-md-input-height:                      auto !default;
@@ -58,4 +58,4 @@ $searchbar-md-input-border-radius:               2px !default;
 $searchbar-md-input-clear-icon-color:            $text-color-step-400 !default;
 
 /// @prop - Size of the searchbar input clear icon
-$searchbar-md-input-clear-icon-size:             22px !default;
+$searchbar-md-input-clear-icon-size:             dynamic-font(22px) !default;

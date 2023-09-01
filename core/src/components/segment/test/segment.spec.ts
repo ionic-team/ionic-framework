@@ -10,7 +10,10 @@ it('should disable segment buttons added to disabled segment async', async () =>
   });
 
   const segment = page.body.querySelector('ion-segment');
-  segment.innerHTML = `<ion-segment-button>Segment Button</ion-segment-button>`;
+  segment.innerHTML = `
+    <ion-segment-button>
+      <ion-label>Segment Button</ion-label>
+    </ion-segment-button>`;
   await page.waitForChanges();
 
   const segmentButton = page.body.querySelector('ion-segment-button');
@@ -22,7 +25,9 @@ it('should set checked state when value is set asynchronously', async () => {
     components: [Segment, SegmentButton],
     html: `
       <ion-segment value="first">
-        <ion-segment-button>First</ion-segment-button>
+        <ion-segment-button>
+          <ion-label>First</ion-label>
+        </ion-segment-button>
       </ion-segment>
     `,
   });

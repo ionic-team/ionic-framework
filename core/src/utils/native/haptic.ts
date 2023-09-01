@@ -1,23 +1,90 @@
-// Main types for this API
+import type {
+  HapticsPlugin,
+  NotificationType as CapacitorNotificationType,
+  ImpactStyle as CapacitorImpactStyle,
+} from '@capacitor/haptics';
+
+import { getCapacitor } from './capacitor';
+
+export enum ImpactStyle {
+  /**
+   * A collision between large, heavy user interface elements
+   *
+   * @since 1.0.0
+   */
+  Heavy = 'HEAVY',
+  /**
+   * A collision between moderately sized user interface elements
+   *
+   * @since 1.0.0
+   */
+  Medium = 'MEDIUM',
+  /**
+   * A collision between small, light user interface elements
+   *
+   * @since 1.0.0
+   */
+  Light = 'LIGHT',
+}
+
 interface HapticImpactOptions {
-  style: 'light' | 'medium' | 'heavy';
+  style: CapacitorImpactStyle;
+}
+
+export enum NotificationType {
+  /**
+   * A notification feedback type indicating that a task has completed successfully
+   *
+   * @since 1.0.0
+   */
+  Success = 'SUCCESS',
+  /**
+   * A notification feedback type indicating that a task has produced a warning
+   *
+   * @since 1.0.0
+   */
+  Warning = 'WARNING',
+  /**
+   * A notification feedback type indicating that a task has failed
+   *
+   * @since 1.0.0
+   */
+  Error = 'ERROR',
 }
 
 interface HapticNotificationOptions {
-  style: 'success' | 'warning' | 'error';
+  type: CapacitorNotificationType;
+}
+
+interface TapticEngine {
+  gestureSelectionStart: () => void;
+  gestureSelectionChanged: () => void;
+  gestureSelectionEnd: () => void;
 }
 
 const HapticEngine = {
-  getEngine() {
-    const win = window as any;
-    return win.TapticEngine || (win.Capacitor?.isPluginAvailable('Haptics') && win.Capacitor.Plugins.Haptics);
+  getEngine(): HapticsPlugin | undefined {
+    const tapticEngine = (window as any).TapticEngine;
+    if (tapticEngine) {
+      // Cordova
+      // TODO FW-4707 - Remove this in Ionic 8
+      return tapticEngine;
+    }
+    const capacitor = getCapacitor();
+
+    if (capacitor?.isPluginAvailable('Haptics')) {
+      // Capacitor
+      return capacitor.Plugins.Haptics as HapticsPlugin;
+    }
+    return undefined;
   },
   available() {
-    const win = window as any;
     const engine = this.getEngine();
     if (!engine) {
       return false;
     }
+
+    const capacitor = getCapacitor();
 
     /**
      * Developers can manually import the
@@ -28,25 +95,30 @@ const HapticEngine = {
      * the Vibrate API. This check avoids that error
      * if the browser does not support the Vibrate API.
      */
-    if (win.Capacitor?.getPlatform() === 'web') {
+    if (capacitor?.getPlatform() === 'web') {
       return typeof navigator !== 'undefined' && navigator.vibrate !== undefined;
     }
 
     return true;
   },
   isCordova() {
-    return !!(window as any).TapticEngine;
+    return (window as any).TapticEngine !== undefined;
   },
   isCapacitor() {
-    const win = window as any;
-    return !!win.Capacitor;
+    return getCapacitor() !== undefined;
   },
   impact(options: HapticImpactOptions) {
     const engine = this.getEngine();
     if (!engine) {
       return;
     }
-    const style = this.isCapacitor() ? options.style.toUpperCase() : options.style;
+    /**
+     * To provide backwards compatibility with Cordova apps,
+     * we convert the style to lowercase.
+     *
+     * TODO: FW-4707 - Remove this in Ionic 8
+     */
+    const style = this.isCapacitor() ? options.style : (options.style.toLowerCase() as ImpactStyle);
     engine.impact({ style });
   },
   notification(options: HapticNotificationOptions) {
@@ -54,11 +126,24 @@ const HapticEngine = {
     if (!engine) {
       return;
     }
-    const style = this.isCapacitor() ? options.style.toUpperCase() : options.style;
-    engine.notification({ style });
+    /**
+     * To provide backwards compatibility with Cordova apps,
+     * we convert the style to lowercase.
+     *
+     * TODO: FW-4707 - Remove this in Ionic 8
+     */
+    const type = this.isCapacitor() ? options.type : (options.type.toLowerCase() as NotificationType);
+    engine.notification({ type });
   },
   selection() {
-    this.impact({ style: 'light' });
+    /**
+     * To provide backwards compatibility with Cordova apps,
+     * we convert the style to lowercase.
+     *
+     * TODO: FW-4707 - Remove this in Ionic 8
+     */
+    const style = this.isCapacitor() ? ImpactStyle.Light : ('light' as ImpactStyle);
+    this.impact({ style });
   },
   selectionStart() {
     const engine = this.getEngine();
@@ -68,7 +153,7 @@ const HapticEngine = {
     if (this.isCapacitor()) {
       engine.selectionStart();
     } else {
-      engine.gestureSelectionStart();
+      (engine as unknown as TapticEngine).gestureSelectionStart();
     }
   },
   selectionChanged() {
@@ -79,7 +164,7 @@ const HapticEngine = {
     if (this.isCapacitor()) {
       engine.selectionChanged();
     } else {
-      engine.gestureSelectionChanged();
+      (engine as unknown as TapticEngine).gestureSelectionChanged();
     }
   },
   selectionEnd() {
@@ -90,7 +175,7 @@ const HapticEngine = {
     if (this.isCapacitor()) {
       engine.selectionEnd();
     } else {
-      engine.gestureSelectionEnd();
+      (engine as unknown as TapticEngine).gestureSelectionEnd();
     }
   },
 };
@@ -135,7 +220,7 @@ export const hapticSelectionEnd = () => {
 
 /**
  * Use this to indicate success/failure/warning to the user.
- * options should be of the type `{ type: 'success' }` (or `warning`/`error`)
+ * options should be of the type `{ type: NotificationType.SUCCESS }` (or `WARNING`/`ERROR`)
  */
 export const hapticNotification = (options: HapticNotificationOptions) => {
   hapticAvailable() && HapticEngine.notification(options);
@@ -143,7 +228,7 @@ export const hapticNotification = (options: HapticNotificationOptions) => {
 
 /**
  * Use this to indicate success/failure/warning to the user.
- * options should be of the type `{ style: 'light' }` (or `medium`/`heavy`)
+ * options should be of the type `{ style: ImpactStyle.LIGHT }` (or `MEDIUM`/`HEAVY`)
  */
 export const hapticImpact = (options: HapticImpactOptions) => {
   hapticAvailable() && HapticEngine.impact(options);

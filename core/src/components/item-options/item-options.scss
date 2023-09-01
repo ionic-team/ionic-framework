@@ -33,7 +33,7 @@ ion-item-options {
 
   height: 100%;
 
-  font-size: 14px;
+  font-size: dynamic-font(14px);
 
   user-select: none;
   z-index: $z-index-item-options;
@@ -56,15 +56,17 @@ ion-item-options {
   }
 }
 
-.item-options-start ion-item-option:first-child {
-  @include padding-horizontal(null, var(--ion-safe-area-left));
-
+/* stylelint-disable property-disallowed-list */
+[dir="ltr"] .item-options-start ion-item-option:first-child,
+[dir="rtl"] .item-options-start ion-item-option:last-child {
+  padding-left: var(--ion-safe-area-left);
 }
 
-.item-options-end ion-item-option:last-child {
-  @include padding-horizontal(null, var(--ion-safe-area-right));
-
+[dir="ltr"] .item-options-end ion-item-option:last-child,
+[dir="rtl"] .item-options-end ion-item-option:first-child {
+  padding-right: var(--ion-safe-area-right);
 }
+/* stylelint-enable property-disallowed-list */
 
 .item-sliding-active-slide {
   @include rtl() {

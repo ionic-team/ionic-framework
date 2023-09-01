@@ -95,7 +95,7 @@ configs().forEach(({ title, screenshot, config }) => {
     test('should apply color correctly', async ({ page }) => {
       await page.setContent(
         `
-        <ion-radio slot="start" value="pepperoni" color="success"></ion-radio>
+        <ion-radio legacy="true" value="pepperoni" color="success"></ion-radio>
       `,
         config
       );
@@ -138,7 +138,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
     test('radio should be checked when activated even without a radio group', async ({ page }) => {
       await page.setContent(
         `
-        <ion-radio slot="start" value="pepperoni"></ion-radio>
+        <ion-radio legacy="true" value="pepperoni"></ion-radio>
       `,
         config
       );

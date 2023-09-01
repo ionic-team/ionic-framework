@@ -62,8 +62,6 @@
 
   font-family: $font-family-base;
 
-  white-space: pre-wrap;
-
   z-index: $z-index-item-input;
 
   box-sizing: border-box;
@@ -74,6 +72,8 @@
   flex: 1;
 
   background: var(--background);
+
+  white-space: pre-wrap;
 }
 
 // TODO: FW-2876 - Remove this selector
@@ -131,9 +131,8 @@
   outline: none;
 
   background: transparent;
-  box-sizing: border-box;
-  resize: none;
-  appearance: none;
+
+  white-space: pre-wrap;
 
   /**
    * This ensures the textarea
@@ -145,6 +144,9 @@
    * contrast of the textarea.
    */
   z-index: 1;
+  box-sizing: border-box;
+  resize: none;
+  appearance: none;
 
   &::placeholder {
     @include padding(0);
@@ -160,14 +162,39 @@
 }
 
 // TODO: FW-2876 - Remove this selector
+:host(.legacy-textarea) .native-textarea {
+  white-space: inherit;
+}
+
+// TODO: FW-2876 - Remove this selector
 :host(.legacy-textarea) .native-textarea,
 :host(.legacy-textarea) .textarea-legacy-wrapper::after {
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
   @include border-radius(var(--border-radius));
 }
 
-.native-textarea,
-// TODO: FW-2876 - Remove this selector, keep .native-textarea
+.native-textarea {
+  color: inherit;
+
+  font-family: inherit;
+  font-size: inherit;
+  font-style: inherit;
+  font-weight: inherit;
+
+  letter-spacing: inherit;
+
+  text-align: inherit;
+  text-decoration: inherit;
+  text-indent: inherit;
+  text-overflow: inherit;
+  text-transform: inherit;
+
+  grid-area: 1 / 1 / 2 / 2;
+
+  word-break: break-word;
+}
+
+// TODO: FW-2876 - Remove this selector
 :host(.legacy-textarea) .textarea-legacy-wrapper::after {
   @include text-inherit();
 
@@ -296,6 +323,15 @@
   min-height: inherit;
   max-height: inherit;
 
+  /**
+   * This avoids a WebKit bug where
+   * the height of the inner textarea
+   * is incorrect and flows outside the
+   * parent container: https://bugs.webkit.org/show_bug.cgi?id=256781
+   * TODO FW-4734
+   */
+  grid-auto-rows: 100%;
+
   &::after {
     // This technique is used for an auto-resizing textarea.
     // The text contents are reflected as a pseudo-element that is visually hidden.
@@ -312,8 +348,27 @@
 .native-wrapper::after {
   @include padding(var(--padding-top), 0, var(--padding-bottom), 0);
   @include margin(0, 0, 0, 0);
-  @include text-inherit();
   @include border-radius(var(--border-radius));
+
+  /**
+   * Note: Do not use @include text-inherit()
+   * as that sets white-space: inherit
+   * Instead, we use white-space: pre-wrap above.
+   */
+  color: inherit;
+
+  font-family: inherit;
+  font-size: inherit;
+  font-style: inherit;
+  font-weight: inherit;
+
+  letter-spacing: inherit;
+
+  text-align: inherit;
+  text-decoration: inherit;
+  text-indent: inherit;
+  text-overflow: inherit;
+  text-transform: inherit;
 
   grid-area: 1 / 1 / 2 / 2;
 
@@ -358,7 +413,7 @@
 
   border-top: var(--border-width) var(--border-style) var(--border-color);
 
-  font-size: 12px;
+  font-size: dynamic-font(12px);
 }
 
 /**
@@ -455,12 +510,23 @@
  * works on block-level elements. A flex item is
  * considered blockified (https://www.w3.org/TR/css-display-3/#blockify).
  */
-.label-text {
+.label-text,
+::slotted([slot="label"]) {
   text-overflow: ellipsis;
 
   white-space: nowrap;
 
   overflow: hidden;
+}
+
+/**
+ * If no label text is placed into the slot
+ * then the element should be hidden otherwise
+ * there will be additional margins added.
+ */
+.label-text-wrapper-hidden,
+.textarea-outline-notch-hidden {
+  display: none;
 }
 
 .textarea-wrapper textarea {
@@ -563,6 +629,13 @@
   @include padding(0px);
 
   max-width: 100%;
+
+  /**
+   * The 2 ensures the label
+   * remains on top of any browser
+   * autofill background too.
+   */
+  z-index: 2;
 }
 
 /**

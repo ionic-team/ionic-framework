@@ -1,11 +1,11 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Component, Host, Prop, h } from '@stencil/core';
+import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
+import { sanitizeDOMString } from '@utils/sanitization';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
-import { ENABLE_HTML_CONTENT_DEFAULT } from '../../utils/config';
 import type { IonicSafeString } from '../../utils/sanitization';
-import { sanitizeDOMString } from '../../utils/sanitization';
 import type { SpinnerTypes } from '../spinner/spinner-configs';
 
 @Component({

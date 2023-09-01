@@ -14,7 +14,7 @@
 
   transform: translateZ(0);
 
-  font-size: 17px;
+  font-size: dynamic-font-max(17px, 1.2);
   font-weight: 600;
 
   text-align: center;
@@ -31,7 +31,7 @@
 
   position: relative;
 
-  font-size: 13px;
+  font-size: dynamic-font-max(13px, 1.8);
   font-weight: normal;
 }
 
@@ -40,18 +40,17 @@
 // --------------------------------------------------
 
 :host(.title-large) {
-  @include padding(0, 16px);
+  @include padding(2px, 12px, 4px, 12px);
   @include transform-origin(left, center);
 
-  bottom: 0;
+  position: static;
 
   align-items: flex-end;
 
   min-width: 100%;
 
-  padding-bottom: 6px;
+  font-size: dynamic-font-max(34px, 1.8);
 
-  font-size: 34px;
   font-weight: 700;
 
   text-align: start;
