@@ -16,6 +16,16 @@ export const routes: Routes = [
       { path: 'overlay-controllers', loadComponent: () => import('../overlay-controllers/overlay-controllers.component').then(c => c.OverlayControllersComponent) },
       { path: 'button', loadComponent: () => import('../button/button.component').then(c => c.ButtonComponent) },
       { path: 'icon', loadComponent: () => import('../icon/icon.component').then(c => c.IconComponent) },
+      { path: 'tabs', redirectTo: '/standalone/tabs/tab-one', pathMatch: 'full' },
+      {
+        path: 'tabs',
+        loadComponent: () => import('../tabs/tabs.component').then(c => c.TabsComponent),
+        children: [
+          { path: 'tab-one', loadComponent: () => import('../tabs/tab1.component').then(c => c.TabOneComponent) },
+          { path: 'tab-two', loadComponent: () => import('../tabs/tab2.component').then(c => c.TabTwoComponent) },
+          { path: 'tab-three', loadComponent: () => import('../tabs/tab3.component').then(c => c.TabThreeComponent) }
+        ]
+      },
     ]
   },
 ];
