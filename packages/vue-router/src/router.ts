@@ -400,6 +400,8 @@ export const createIonRouter = (
             currentHistoryPosition
           );
 
+          const routerAnimation = incomingRouteParams.routerAnimation || currentRouteInfo?.routerAnimation || routeInfo.routerAnimation;
+
           /**
            * If going from /home to /child, then replacing from
            * /child to /home, we don't want the route info to
@@ -417,8 +419,7 @@ export const createIonRouter = (
           routeInfo.pushedByRoute = pushedByRoute;
           routeInfo.routerDirection =
             currentRouteInfo?.routerDirection || routeInfo.routerDirection;
-          routeInfo.routerAnimation =
-            currentRouteInfo?.routerAnimation || routeInfo.routerAnimation;
+          routeInfo.routerAnimation = routerAnimation;
           routeInfo.prevRouteLastPathname = currentRouteInfo?.lastPathname;
         }
       }
