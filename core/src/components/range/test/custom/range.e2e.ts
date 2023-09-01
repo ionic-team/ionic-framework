@@ -7,7 +7,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       await page.goto(`/src/components/range/test/custom`, config);
 
       const range = page.locator('ion-range');
-      expect(await range.screenshot()).toMatchSnapshot(screenshot(`range-custom`));
+      await expect(range).toHaveScreenshot(screenshot(`range-custom`));
     });
   });
 });

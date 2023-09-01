@@ -73,6 +73,7 @@ export interface ViewItem {
   vueComponentRef: Ref;
   params?: { [k: string]: any };
   vueComponentData: VueComponentData;
+  routerAnimation?: AnimationBuilder;
 }
 
 export interface ViewStacks {
