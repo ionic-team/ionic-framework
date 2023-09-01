@@ -60,11 +60,13 @@ export const IonOverlayManager: React.FC<IonOverlayManagerProps> = ({ onAddOverl
      * Note that updating the ref in the body
      * of IonOverlayManager is not sufficient
      * because that relies on overlaysRef being
-     * updated as part of React's render loop
-     * which is async. If two modals are added
-     * one after the other, the first modal will
-     * not have been added to overlaysRef since
-     * React has not re-rendered yet.
+     * updated as part of React's render loop. states updates
+     * are batched, so updating the state twice in quick succession does
+     * not necessarily result in 2 separate render calls.
+     * This means if two modals are added one after the other, 
+     * the first modal will not have been added to
+     * overlaysRef since React has not re-rendered yet.
+     * More info: https://react.dev/reference/react/useState#setstate-caveats
      */
     overlaysRef.current = newOverlays;
     setOverlays(newOverlays);
@@ -83,11 +85,13 @@ export const IonOverlayManager: React.FC<IonOverlayManagerProps> = ({ onAddOverl
      * Note that updating the ref in the body
      * of IonOverlayManager is not sufficient
      * because that relies on overlaysRef being
-     * updated as part of React's render loop
-     * which is async. If two modals are added
-     * one after the other, the first modal will
-     * not have been added to overlaysRef since
-     * React has not re-rendered yet.
+     * updated as part of React's render loop. states updates
+     * are batched, so updating the state twice in quick succession does
+     * not necessarily result in 2 separate render calls.
+     * This means if two modals are added one after the other, 
+     * the first modal will not have been added to
+     * overlaysRef since React has not re-rendered yet.
+     * More info: https://react.dev/reference/react/useState#setstate-caveats
      */
     overlaysRef.current = newOverlays;
     setOverlays(newOverlays);
