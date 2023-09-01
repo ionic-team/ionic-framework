@@ -473,6 +473,19 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     writeTask(() => this.el.classList.add('show-modal'));
 
+    const hasCardModal = presentingElement !== undefined;
+
+    /**
+     * We need to change the status bar at the
+     * start of the animation so that it completes
+     * by the time the card animation is done.
+     */
+    if (hasCardModal && getIonMode(this) === 'ios') {
+      // Cache the original status bar color before the modal is presented
+      this.statusBarStyle = await StatusBar.getStyle();
+      setCardStatusBarDark();
+    }
+
     await present<ModalPresentOptions>(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, {
       presentingEl: presentingElement,
       currentBreakpoint: this.initialBreakpoint,
@@ -509,19 +522,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
         }
       };
       window.addEventListener(KEYBOARD_DID_OPEN, this.keyboardOpenCallback);
-    }
-
-    const hasCardModal = presentingElement !== undefined;
-
-    /**
-     * We need to change the status bar at the
-     * start of the animation so that it completes
-     * by the time the card animation is done.
-     */
-    if (hasCardModal && getIonMode(this) === 'ios') {
-      // Cache the original status bar color before the modal is presented
-      this.statusBarStyle = await StatusBar.getStyle();
-      setCardStatusBarDark();
     }
 
     if (this.isSheetModal) {
