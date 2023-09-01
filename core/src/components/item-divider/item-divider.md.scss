@@ -1,3 +1,4 @@
+@use "sass:math";
 @import "./item-divider";
 @import "./item-divider.md.vars";
 
@@ -14,7 +15,7 @@
 
   border-bottom: $item-divider-md-border-bottom;
 
-  font-size: $item-divider-md-font-size;
+  font-size: dynamic-font($item-divider-md-font-size);
 }
 
 
@@ -44,10 +45,13 @@
 ::slotted(ion-icon) {
   color: $item-md-icon-slot-color;
 
-  // The font size should be 24px which is
-  // calculated in relation to the host's font
-  // size of 14px. e.g. 24 / 14 = 1.714
-  font-size: 1.71em;
+  // The icon's font size should use em units to support
+  // font scaling but evaluate to 24px at 100% font size.
+  // The value in em units is calculated by dividing
+  // the icon's font size in pixels by the item divider's
+  // font size in pixels.
+  // e.g. 24px / 14px = 1.7142857143em
+  font-size: math.div($item-md-icon-slot-font-size, $item-divider-md-font-size) * 1em;
 }
 
 :host(.ion-color) ::slotted(ion-icon) {
