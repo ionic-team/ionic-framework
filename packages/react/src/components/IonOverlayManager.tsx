@@ -40,7 +40,6 @@ export const IonOverlayManager: React.FC<IonOverlayManagerProps> = ({ onAddOverl
    */
   const [overlays, setOverlays] = useState<OverlaysList>({});
   const overlaysRef = useRef<OverlaysList>({});
-  overlaysRef.current = overlays;
 
   useEffect(() => {
     /* Setup the callbacks that get called from <IonApp /> */
@@ -51,12 +50,46 @@ export const IonOverlayManager: React.FC<IonOverlayManagerProps> = ({ onAddOverl
   const addOverlay = (id: string, component: ReactComponentOrElement, containerElement: HTMLDivElement) => {
     const newOverlays = { ...overlaysRef.current };
     newOverlays[id] = { component, containerElement };
+
+    /**
+     * In order for this function to use the latest data
+     * we need to update the ref synchronously.
+     * However, updating a ref does not cause a re-render
+     * which is why we still update the state.
+     *
+     * Note that updating the ref in the body
+     * of IonOverlayManager is not sufficient
+     * because that relies on overlaysRef being
+     * updated as part of React's render loop
+     * which is async. If two modals are added
+     * one after the other, the first modal will
+     * not have been added to overlaysRef since
+     * React has not re-rendered yet.
+     */
+    overlaysRef.current = newOverlays;
     setOverlays(newOverlays);
   };
 
   const removeOverlay = (id: string) => {
     const newOverlays = { ...overlaysRef.current };
     delete newOverlays[id];
+
+    /**
+     * In order for this function to use the latest data
+     * we need to update the ref synchronously.
+     * However, updating a ref does not cause a re-render
+     * which is why we still update the state.
+     *
+     * Note that updating the ref in the body
+     * of IonOverlayManager is not sufficient
+     * because that relies on overlaysRef being
+     * updated as part of React's render loop
+     * which is async. If two modals are added
+     * one after the other, the first modal will
+     * not have been added to overlaysRef since
+     * React has not re-rendered yet.
+     */
+    overlaysRef.current = newOverlays;
     setOverlays(newOverlays);
   };
 
