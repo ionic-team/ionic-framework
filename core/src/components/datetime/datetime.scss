@@ -384,6 +384,11 @@ ion-picker-column-internal {
   opacity: 0.4;
 }
 
+.calendar-day:focus {
+  background: current-color(base, 0.2);
+
+  box-shadow: 0px 0px 0px 4px current-color(base, 0.2);
+}
 
 // Time / Header
 // -----------------------------------

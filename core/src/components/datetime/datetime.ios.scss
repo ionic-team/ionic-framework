@@ -109,13 +109,8 @@
   font-size: 20px;
 }
 
-.calendar-day:focus,
 .calendar-day.calendar-day-active {
   background: current-color(base, 0.2);
-}
-
-.calendar-day:focus {
-  box-shadow: 0px 0px 0px 4px current-color(base, 0.2);
 }
 
 /**
