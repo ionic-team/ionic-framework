@@ -72,6 +72,52 @@
   text-transform: uppercase;
 }
 
+@supports (border-radius: mod(1px, 1px)) {
+  .calendar-days-of-week .day-of-week {
+    /**
+     * When the computed font size is 24px
+     * we want the days of the week to only
+     * show the first letter of each day.
+     *
+     * We use the modulus operator to ensure
+     * that any font size less than 24px is
+     * unchanged (i.e. 16 % 24 = 16). If the
+     * font size is 24px then the remainder
+     * will be 0.
+     */
+    $max-font-size: min(1rem, $datetime-dynamic-font-breakpoint);
+    $remainder: mod($max-font-size, $datetime-dynamic-font-breakpoint);
+
+    /**
+     * From here, we scale the remainder to get
+     * a width value larger than 20px. Note that the
+     * exact value does not matter, as long as it is
+     * large enough. We then clamp the width
+     * to have a max width of 100% so that each
+     * element does not appear too wide if $width
+     * is a very large number.
+     *
+     * Note that when the font size is 24px
+     * then the remainder will be 0, so $width
+     * will still be zero and the min value
+     * will apply, setting the width of each
+     * element to 20px.
+     */
+    $width: calc($remainder * 10);
+    width: clamp(20px, #{$width}, 100%);
+
+    /**
+     * The above width will cause
+     * all the other letters to overflow
+     * to other lines. The below code hides
+     * those additional letters so only
+     * the first letter is shown.
+     */
+    overflow: hidden;
+    height: $datetime-dynamic-font-breakpoint;
+  }
+}
+
 // Calendar / Body
 // -----------------------------------
 :host .calendar-body .calendar-month .calendar-month-grid {

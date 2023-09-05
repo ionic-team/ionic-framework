@@ -8,3 +8,6 @@ $datetime-min-width:             16px !default;
 
 /// @prop - Minimum height of the datetime
 $datetime-min-height:            1.2em !default;
+
+/// @prop - The font size at which layouts may change to accommodate Dynamic Type
+$datetime-dynamic-font-breakpoint: 24px !default;
