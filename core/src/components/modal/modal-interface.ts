@@ -30,6 +30,7 @@ export interface ModalAnimationOptions {
   presentingEl?: HTMLElement;
   currentBreakpoint?: number;
   backdropBreakpoint?: number;
+  easing?: string;
 }
 
 export interface ModalBreakpointChangeEventDetail {

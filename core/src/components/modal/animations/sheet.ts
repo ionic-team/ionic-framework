@@ -3,8 +3,13 @@ import { createAnimation } from '@utils/animation/animation';
 import type { ModalAnimationOptions } from '../modal-interface';
 import { getBackdropValueForSheet } from '../utils';
 
+/**
+ * We apply the easing curve to the 0th keyframe
+ * instead of on the effect as a whole to avoid https://bugs.webkit.org/show_bug.cgi?id=241020
+ * This bug is most noticeable on animations that slide off the screen.
+ */
 export const createSheetEnterAnimation = (opts: ModalAnimationOptions) => {
-  const { currentBreakpoint, backdropBreakpoint } = opts;
+  const { currentBreakpoint, backdropBreakpoint, easing } = opts;
 
   /**
    * If the backdropBreakpoint is undefined, then the backdrop
@@ -14,7 +19,10 @@ export const createSheetEnterAnimation = (opts: ModalAnimationOptions) => {
   const shouldShowBackdrop = backdropBreakpoint === undefined || backdropBreakpoint < currentBreakpoint!;
   const initialBackdrop = shouldShowBackdrop ? `calc(var(--backdrop-opacity) * ${currentBreakpoint!})` : '0';
 
-  const backdropAnimation = createAnimation('backdropAnimation').fromTo('opacity', 0, initialBackdrop);
+  const backdropAnimation = createAnimation('backdropAnimation').keyframes([
+    { offset: 0, opacity: 0, easing },
+    { offset: 1, opacity: initialBackdrop },
+  ]);
 
   if (shouldShowBackdrop) {
     backdropAnimation
@@ -25,7 +33,7 @@ export const createSheetEnterAnimation = (opts: ModalAnimationOptions) => {
   }
 
   const wrapperAnimation = createAnimation('wrapperAnimation').keyframes([
-    { offset: 0, opacity: 1, transform: 'translateY(100%)' },
+    { offset: 0, opacity: 1, transform: 'translateY(100%)', easing },
     { offset: 1, opacity: 1, transform: `translateY(${100 - currentBreakpoint! * 100}%)` },
   ]);
 
@@ -33,7 +41,7 @@ export const createSheetEnterAnimation = (opts: ModalAnimationOptions) => {
 };
 
 export const createSheetLeaveAnimation = (opts: ModalAnimationOptions) => {
-  const { currentBreakpoint, backdropBreakpoint } = opts;
+  const { currentBreakpoint, backdropBreakpoint, easing } = opts;
 
   /**
    * Backdrop does not always fade in from 0 to 1 if backdropBreakpoint
@@ -45,22 +53,39 @@ export const createSheetLeaveAnimation = (opts: ModalAnimationOptions) => {
     backdropBreakpoint!
   )})`;
   const defaultBackdrop = [
-    { offset: 0, opacity: backdropValue },
+    { offset: 0, opacity: backdropValue, easing },
     { offset: 1, opacity: 0 },
   ];
 
+  /**
+   * The above WebKit bug only applies when
+   * an animation has 2 keyframes, so when using
+   * the below keyframes we can continue to apply
+   * the easing curve to the entire effect.
+   * Note that since there are more than 2 keyframes
+   * here applying the easing curve to the 0th keyframe
+   * would product a different result than applying
+   * the easing curve to the entire effect as the
+   * easing for keyframes 1 to 2 would be linear.
+   */
   const customBackdrop = [
     { offset: 0, opacity: backdropValue },
     { offset: backdropBreakpoint!, opacity: 0 },
     { offset: 1, opacity: 0 },
   ];
 
+  const useCustomBackdrop = backdropBreakpoint !== 0;
+
   const backdropAnimation = createAnimation('backdropAnimation').keyframes(
-    backdropBreakpoint !== 0 ? customBackdrop : defaultBackdrop
+    useCustomBackdrop ? customBackdrop : defaultBackdrop
   );
 
+  if (useCustomBackdrop) {
+    backdropAnimation.easing(easing);
+  }
+
   const wrapperAnimation = createAnimation('wrapperAnimation').keyframes([
-    { offset: 0, opacity: 1, transform: `translateY(${100 - currentBreakpoint! * 100}%)` },
+    { offset: 0, opacity: 1, transform: `translateY(${100 - currentBreakpoint! * 100}%)`, easing },
     { offset: 1, opacity: 1, transform: `translateY(100%)` },
   ]);
 

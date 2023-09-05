@@ -7,27 +7,39 @@ import type { ModalAnimationOptions } from '../modal-interface';
 
 import { createSheetEnterAnimation } from './sheet';
 
-const createEnterAnimation = () => {
+const createEnterAnimation = ({ easing }: ModalAnimationOptions) => {
   const backdropAnimation = createAnimation()
-    .fromTo('opacity', 0.01, 'var(--backdrop-opacity)')
+    .keyframes([
+      { offset: 0, opacity: 0.01, easing },
+      { offset: 1, opacity: 'var(--backdrop-opacity)' },
+    ])
     .beforeStyles({
       'pointer-events': 'none',
     })
     .afterClearStyles(['pointer-events']);
 
-  const wrapperAnimation = createAnimation().fromTo('transform', 'translateY(100vh)', 'translateY(0vh)');
+  const wrapperAnimation = createAnimation().keyframes([
+    { offset: 0, transform: 'translateY(100vh)', easing },
+    { offset: 1, transform: 'translateY(0vh)' },
+  ]);
 
   return { backdropAnimation, wrapperAnimation };
 };
 
 /**
  * iOS Modal Enter Animation for the Card presentation style
+ *
+ * We apply the easing curve to the 0th keyframe
+ * instead of on the effect as a whole to avoid https://bugs.webkit.org/show_bug.cgi?id=241020
+ * This bug is most noticeable on animations that slide off the screen.
  */
 export const iosEnterAnimation = (baseEl: HTMLElement, opts: ModalAnimationOptions): Animation => {
+  const EASING = 'cubic-bezier(0.32,0.72,0,1)';
   const { presentingEl, currentBreakpoint } = opts;
+  const optsWithEasing = { ...opts, easing: EASING };
   const root = getElementRoot(baseEl);
   const { wrapperAnimation, backdropAnimation } =
-    currentBreakpoint !== undefined ? createSheetEnterAnimation(opts) : createEnterAnimation();
+    currentBreakpoint !== undefined ? createSheetEnterAnimation(optsWithEasing) : createEnterAnimation(optsWithEasing);
 
   backdropAnimation.addElement(root.querySelector('ion-backdrop')!);
 
@@ -35,7 +47,6 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts: ModalAnimationOptio
 
   const baseAnimation = createAnimation('entering-base')
     .addElement(baseEl)
-    .easing('cubic-bezier(0.32,0.72,0,1)')
     .duration(500)
     .addAnimation(wrapperAnimation);
 
@@ -71,7 +82,13 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts: ModalAnimationOptio
         .beforeAddWrite(() => bodyEl.style.setProperty('background-color', 'black'))
         .addElement(presentingEl)
         .keyframes([
-          { offset: 0, filter: 'contrast(1)', transform: 'translateY(0px) scale(1)', borderRadius: '0px' },
+          {
+            offset: 0,
+            filter: 'contrast(1)',
+            transform: 'translateY(0px) scale(1)',
+            borderRadius: '0px',
+            easing: EASING,
+          },
           { offset: 1, filter: 'contrast(0.85)', transform: finalTransform, borderRadius: '10px 10px 0 0' },
         ]);
 
@@ -80,7 +97,10 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts: ModalAnimationOptio
       baseAnimation.addAnimation(backdropAnimation);
 
       if (!hasCardModal) {
-        wrapperAnimation.fromTo('opacity', '0', '1');
+        wrapperAnimation.keyframes([
+          { offset: 0, opacity: 0, easing: EASING },
+          { offset: 1, opacity: 1 },
+        ]);
       } else {
         const toPresentingScale = hasCardModal ? SwipeToCloseDefaults.MIN_PRESENTING_SCALE : 1;
         const finalTransform = `translateY(-10px) scale(${toPresentingScale})`;
@@ -91,7 +111,7 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts: ModalAnimationOptio
           })
           .addElement(presentingElRoot.querySelector('.modal-wrapper')!)
           .keyframes([
-            { offset: 0, filter: 'contrast(1)', transform: 'translateY(0) scale(1)' },
+            { offset: 0, filter: 'contrast(1)', transform: 'translateY(0) scale(1)', easing: EASING },
             { offset: 1, filter: 'contrast(0.85)', transform: finalTransform },
           ]);
 
@@ -101,7 +121,7 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts: ModalAnimationOptio
           })
           .addElement(presentingElRoot.querySelector('.modal-shadow')!)
           .keyframes([
-            { offset: 0, opacity: '1', transform: 'translateY(0) scale(1)' },
+            { offset: 0, opacity: '1', transform: 'translateY(0) scale(1)', easing: EASING },
             { offset: 1, opacity: '0', transform: finalTransform },
           ]);
 
