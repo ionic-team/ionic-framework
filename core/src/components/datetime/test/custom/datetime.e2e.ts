@@ -35,7 +35,11 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   });
 });
 
-configs().forEach(({ title, screenshot, config }) => {
+/**
+ * This behavior does not differ across
+ * directions.
+ */
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('datetime: custom focus'), () => {
     test('should focus the selected day and then the day after', async ({ page }) => {
       await page.goto(`/src/components/datetime/test/custom`, config);

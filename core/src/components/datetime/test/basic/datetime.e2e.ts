@@ -491,7 +491,11 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
   });
 });
 
-configs().forEach(({ title, screenshot, config }) => {
+/**
+ * This behavior does not differ across
+ * directions.
+ */
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('datetime: focus'), () => {
     test('should focus the selected day and then the day after', async ({ page }) => {
       await page.setContent(
