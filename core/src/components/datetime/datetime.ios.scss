@@ -20,8 +20,8 @@
   @include padding($datetime-ios-padding, $datetime-ios-padding, $datetime-ios-padding, $datetime-ios-padding);
 
   border-bottom: $datetime-ios-border-color;
-  
-  font-size: 14px;
+
+  font-size: dynamic-font-max(14px, 1.6);
 }
 
 :host .datetime-header .datetime-title {
@@ -39,7 +39,7 @@
   --background-hover: transparent;
   --background-activated: transparent;
 
-  font-size: 16px;
+  font-size: dynamic-font-max(16px, 1.6);
   font-weight: 600;
 }
 
@@ -63,7 +63,7 @@
 
   color: $text-color-step-700;
 
-  font-size: 12px;
+  font-size: dynamic-font-max(12px, 1.6);
 
   font-weight: 600;
 
@@ -89,7 +89,7 @@
 }
 
 :host .calendar-day {
-  font-size: 20px;
+  font-size: dynamic-font-max(20px, 1.6);
 }
 
 .calendar-day:focus .calendar-day-highlight,
@@ -146,7 +146,7 @@
 :host .datetime-time {
   @include padding($datetime-ios-padding * 0.5, $datetime-ios-padding, $datetime-ios-padding, $datetime-ios-padding);
 
-  font-size: 16px;
+  font-size: dynamic-font-max(16px, 1.6);
 }
 
 :host .datetime-time .time-header {
