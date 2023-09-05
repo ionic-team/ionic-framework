@@ -6,7 +6,7 @@ import type { IonicReactProps } from './IonicReactProps';
 import { IonIconInner } from './inner-proxies';
 import { createForwardRef, getConfig } from './utils';
 
-interface IonIconProps {
+export interface IonIconProps {
   color?: string;
   flipRtl?: boolean;
   icon?: string;
