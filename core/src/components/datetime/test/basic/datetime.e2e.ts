@@ -490,3 +490,36 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
     });
   });
 });
+
+configs().forEach(({ title, screenshot, config }) => {
+  test.describe(title('datetime: focus'), () => {
+    test('should focus the selected day and then the day after', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime value="2023-08-01"></ion-datetime>
+      `,
+        config
+      );
+
+      await page.waitForSelector('.datetime-ready');
+
+      const datetime = page.locator('ion-datetime');
+
+      const day = datetime.locator(`.calendar-day[data-day='1'][data-month='8']`);
+
+      await day.focus();
+      await page.waitForChanges();
+
+      await expect(day).toBeFocused();
+      await expect(datetime).toHaveScreenshot(screenshot(`datetime-focus-selected-calendar-day`));
+
+      await page.keyboard.press('ArrowRight');
+      await page.waitForChanges();
+
+      const nextDay = datetime.locator(`.calendar-day[data-day='2'][data-month='8']`);
+
+      await expect(nextDay).toBeFocused();
+      await expect(datetime).toHaveScreenshot(screenshot(`datetime-focus-calendar-day`));
+    });
+  });
+});

@@ -34,3 +34,29 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
     });
   });
 });
+
+configs().forEach(({ title, screenshot, config }) => {
+  test.describe(title('datetime: custom focus'), () => {
+    test('should focus the selected day and then the day after', async ({ page }) => {
+      await page.goto(`/src/components/datetime/test/custom`, config);
+
+      const datetime = page.locator('#custom-calendar-days');
+
+      const day = datetime.locator(`.calendar-day[data-day='15'][data-month='6']`);
+
+      await day.focus();
+      await page.waitForChanges();
+
+      await expect(day).toBeFocused();
+      await expect(datetime).toHaveScreenshot(screenshot(`datetime-custom-focus-selected-calendar-day`));
+
+      await page.keyboard.press('ArrowRight');
+      await page.waitForChanges();
+
+      const nextDay = datetime.locator(`.calendar-day[data-day='16'][data-month='6']`);
+
+      await expect(nextDay).toBeFocused();
+      await expect(datetime).toHaveScreenshot(screenshot(`datetime-custom-focus-calendar-day`));
+    });
+  });
+});
