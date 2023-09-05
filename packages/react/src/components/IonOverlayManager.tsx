@@ -60,7 +60,7 @@ export const IonOverlayManager: React.FC<IonOverlayManagerProps> = ({ onAddOverl
      * Note that updating the ref in the body
      * of IonOverlayManager is not sufficient
      * because that relies on overlaysRef being
-     * updated as part of React's render loop. states updates
+     * updated as part of React's render loop. State updates
      * are batched, so updating the state twice in quick succession does
      * not necessarily result in 2 separate render calls.
      * This means if two modals are added one after the other,
