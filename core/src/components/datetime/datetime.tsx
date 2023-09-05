@@ -2141,7 +2141,11 @@ export class Datetime implements ComponentInterface {
                   ref={(el) => {
                     if (el) {
                       el.style.setProperty('color', `${dateStyle ? dateStyle.textColor : ''}`, 'important');
-                      el.style.setProperty('background-color', `${dateStyle ? dateStyle.backgroundColor : ''}`, 'important');
+                      el.style.setProperty(
+                        'background-color',
+                        `${dateStyle ? dateStyle.backgroundColor : ''}`,
+                        'important'
+                      );
                     }
                   }}
                   tabindex="-1"
