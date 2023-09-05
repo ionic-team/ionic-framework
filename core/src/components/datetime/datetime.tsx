@@ -2139,9 +2139,9 @@ export class Datetime implements ComponentInterface {
                   // provided by the developer, but highlightedDates styles should
                   // always take priority.
                   ref={(el) => {
-                    if (el && dateStyle) {
-                      el.style.setProperty('color', `${dateStyle.textColor}`, 'important');
-                      el.style.setProperty('background-color', `${dateStyle.backgroundColor}`, 'important');
+                    if (el) {
+                      el.style.setProperty('color', `${dateStyle ? dateStyle.textColor : ''}`, 'important');
+                      el.style.setProperty('background-color', `${dateStyle ? dateStyle.backgroundColor : ''}`, 'important');
                     }
                   }}
                   tabindex="-1"
