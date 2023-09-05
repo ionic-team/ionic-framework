@@ -105,6 +105,7 @@
      */
     $width: calc($remainder * 10);
     width: clamp(20px, #{$width}, 100%);
+    height: $datetime-dynamic-font-breakpoint;
 
     /**
      * The above width will cause
@@ -114,7 +115,6 @@
      * the first letter is shown.
      */
     overflow: hidden;
-    height: $datetime-dynamic-font-breakpoint;
   }
 }
 
@@ -128,9 +128,10 @@
  */
 @supports ((border-radius: mod(1px, 1px)) and (background: -webkit-named-image(apple-pay-logo-black)) and (not (contain-intrinsic-size: none))) or (not (border-radius: mod(1px, 1px))) {
   .calendar-days-of-week .day-of-week {
-    overflow: initial;
     width: auto;
     height: auto;
+
+    overflow: initial;
   }
 }
 

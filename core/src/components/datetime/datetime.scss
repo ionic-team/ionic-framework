@@ -256,7 +256,7 @@ ion-picker-column-internal {
 }
 
 .calendar-days-of-week .day-of-week {
-  margin: 0 auto;
+  @include margin(0, auto);
 }
 
 // Calendar / Body
