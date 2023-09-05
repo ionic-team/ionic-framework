@@ -19,9 +19,12 @@ export class RadioValueAccessorDirective extends ValueAccessor {
     super(injector, el);
   }
 
-  // TODO(FW-2827): type (HTMLIonRadioElement and HTMLElement are both missing `checked`)
   @HostListener('ionSelect', ['$event.target'])
   _handleIonSelect(el: any): void {
+    /**
+    * The `el` type is any to access the `checked` state property
+    * that is not exposed on the type interface.
+    */
     this.handleValueChange(el, el.checked);
   }
 }

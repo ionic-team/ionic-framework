@@ -24,6 +24,18 @@ export {
   IonicRouteStrategy,
 } from '@ionic/angular/common';
 export { IonNav } from './navigation/nav';
-export { IonIcon } from './directives/icon';
-export { IonInput } from './directives/input';
+export {
+  IonCheckbox,
+  IonDatetime,
+  IonInput,
+  IonIcon,
+  IonRadioGroup,
+  IonRadio,
+  IonRange,
+  IonSearchbar,
+  IonSegment,
+  IonSelect,
+  IonTextarea,
+  IonToggle
+} from './directives';
 export * from './directives/proxies';

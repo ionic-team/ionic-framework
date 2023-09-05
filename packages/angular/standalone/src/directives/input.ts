@@ -76,7 +76,7 @@ export class IonInput extends ValueAccessor {
   }
 
   @HostListener('ionInput', ['$event.target'])
-  handleInputEvent(el: HTMLIonInputElement): void {
+  handleIonInput(el: HTMLIonInputElement): void {
     this.handleValueChange(el, el.value);
   }
 

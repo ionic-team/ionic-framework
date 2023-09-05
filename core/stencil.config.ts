@@ -51,7 +51,21 @@ const getAngularOutputTargets = () => {
          * import location.
          */
         'ion-icon',
-        'ion-input'
+        /**
+         * Value Accessors are manually implemented in the `@ionic/angular/standalone` package.
+         */
+        'ion-input',
+        'ion-textarea',
+        'ion-searchbar',
+        'ion-datetime',
+        'ion-radio',
+        'ion-segment',
+        'ion-checkbox',
+        'ion-toggle',
+        'ion-range',
+        'ion-radio-group',
+        'ion-select'
+
       ],
       outputType: 'standalone',
     })

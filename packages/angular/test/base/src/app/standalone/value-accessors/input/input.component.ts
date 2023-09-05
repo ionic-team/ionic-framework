@@ -1,7 +1,7 @@
-import { JsonPipe } from "@angular/common";
 import { Component } from "@angular/core";
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { IonInput } from "@ionic/angular/standalone";
+import { ValueAccessorTestComponent } from "../value-accessor-test/value-accessor-test.component";
 
 @Component({
   selector: 'app-input',
@@ -11,7 +11,7 @@ import { IonInput } from "@ionic/angular/standalone";
     IonInput,
     ReactiveFormsModule,
     FormsModule,
-    JsonPipe
+    ValueAccessorTestComponent,
   ]
 })
 export class InputComponent {
@@ -22,9 +22,5 @@ export class InputComponent {
   });
 
   constructor(private fb: FormBuilder) { }
-
-  onSubmit() {
-    console.log(this.form.value);
-  }
 
 }
