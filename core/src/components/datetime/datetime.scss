@@ -409,7 +409,15 @@ ion-picker-column-internal {
   }
 }
 
-@supports not (border-radius: mod(1px, 1px)) {
+/**
+ * iOS <17 has a bug where the result of mod() is
+ * used incorrectly if used inside of another CSS function such
+ * as calc(). The first set of @support checks accounts for iOS <17.
+ * We check -webkit-named-image to ensure that non-WebKit browsers are ignored.
+ * The second set of @support checks account for all other browsers that
+ * do not support mod() yet.
+ */
+@supports ((border-radius: mod(1px, 1px)) and (background: -webkit-named-image(apple-pay-logo-black)) and (not (contain-intrinsic-size: none))) or (not (border-radius: mod(1px, 1px))) {
   .calendar-day-highlight {
     @include border-radius(32px);
   }
