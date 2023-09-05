@@ -16,6 +16,7 @@ export const routes: Routes = [
       { path: 'overlay-controllers', loadComponent: () => import('../overlay-controllers/overlay-controllers.component').then(c => c.OverlayControllersComponent) },
       { path: 'button', loadComponent: () => import('../button/button.component').then(c => c.ButtonComponent) },
       { path: 'icon', loadComponent: () => import('../icon/icon.component').then(c => c.IconComponent) },
+      { path: 'input', loadComponent: () => import('../input/input.component').then(c => c.InputComponent)},
       { path: 'tabs', redirectTo: '/standalone/tabs/tab-one', pathMatch: 'full' },
       {
         path: 'tabs',

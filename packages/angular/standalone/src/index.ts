@@ -25,4 +25,5 @@ export {
 } from '@ionic/angular/common';
 export { IonNav } from './navigation/nav';
 export { IonIcon } from './directives/icon';
+export { IonInput } from './directives/input';
 export * from './directives/proxies';

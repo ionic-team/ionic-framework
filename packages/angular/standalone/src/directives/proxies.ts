@@ -38,7 +38,6 @@ import { defineCustomElement as defineIonHeader } from '@ionic/core/components/i
 import { defineCustomElement as defineIonImg } from '@ionic/core/components/ion-img.js';
 import { defineCustomElement as defineIonInfiniteScroll } from '@ionic/core/components/ion-infinite-scroll.js';
 import { defineCustomElement as defineIonInfiniteScrollContent } from '@ionic/core/components/ion-infinite-scroll-content.js';
-import { defineCustomElement as defineIonInput } from '@ionic/core/components/ion-input.js';
 import { defineCustomElement as defineIonItem } from '@ionic/core/components/ion-item.js';
 import { defineCustomElement as defineIonItemDivider } from '@ionic/core/components/ion-item-divider.js';
 import { defineCustomElement as defineIonItemGroup } from '@ionic/core/components/ion-item-group.js';
@@ -84,7 +83,7 @@ import { defineCustomElement as defineIonToggle } from '@ionic/core/components/i
 import { defineCustomElement as defineIonToolbar } from '@ionic/core/components/ion-toolbar.js';
 @ProxyCmp({
   defineCustomElementFn: defineIonAccordion,
-  inputs: ['disabled', 'mode', 'readonly', 'toggleIcon', 'toggleIconSlot', 'value'],
+  inputs: ['disabled', 'mode', 'readonly', 'toggleIcon', 'toggleIconSlot', 'value']
 })
 @Component({
   selector: 'ion-accordion',
@@ -92,7 +91,7 @@ import { defineCustomElement as defineIonToolbar } from '@ionic/core/components/
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['disabled', 'mode', 'readonly', 'toggleIcon', 'toggleIconSlot', 'value'],
-  standalone: true,
+  standalone: true
 })
 export class IonAccordion {
   protected el: HTMLElement;
@@ -102,11 +101,13 @@ export class IonAccordion {
   }
 }
 
+
 export declare interface IonAccordion extends Components.IonAccordion {}
+
 
 @ProxyCmp({
   defineCustomElementFn: defineIonAccordionGroup,
-  inputs: ['animated', 'disabled', 'expand', 'mode', 'multiple', 'readonly', 'value'],
+  inputs: ['animated', 'disabled', 'expand', 'mode', 'multiple', 'readonly', 'value']
 })
 @Component({
   selector: 'ion-accordion-group',
@@ -114,7 +115,7 @@ export declare interface IonAccordion extends Components.IonAccordion {}
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['animated', 'disabled', 'expand', 'mode', 'multiple', 'readonly', 'value'],
-  standalone: true,
+  standalone: true
 })
 export class IonAccordionGroup {
   protected el: HTMLElement;
@@ -124,6 +125,7 @@ export class IonAccordionGroup {
     proxyOutputs(this, this.el, ['ionChange']);
   }
 }
+
 
 import type { AccordionGroupChangeEventDetail as IIonAccordionGroupAccordionGroupChangeEventDetail } from '@ionic/core/components';
 
@@ -137,66 +139,29 @@ the value property.
   ionChange: EventEmitter<CustomEvent<IIonAccordionGroupAccordionGroupChangeEventDetail>>;
 }
 
+
 @ProxyCmp({
   defineCustomElementFn: defineIonActionSheet,
-  inputs: [
-    'animated',
-    'backdropDismiss',
-    'buttons',
-    'cssClass',
-    'enterAnimation',
-    'header',
-    'htmlAttributes',
-    'isOpen',
-    'keyboardClose',
-    'leaveAnimation',
-    'mode',
-    'subHeader',
-    'translucent',
-    'trigger',
-  ],
-  methods: ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss'],
+  inputs: ['animated', 'backdropDismiss', 'buttons', 'cssClass', 'enterAnimation', 'header', 'htmlAttributes', 'isOpen', 'keyboardClose', 'leaveAnimation', 'mode', 'subHeader', 'translucent', 'trigger'],
+  methods: ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss']
 })
 @Component({
   selector: 'ion-action-sheet',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [
-    'animated',
-    'backdropDismiss',
-    'buttons',
-    'cssClass',
-    'enterAnimation',
-    'header',
-    'htmlAttributes',
-    'isOpen',
-    'keyboardClose',
-    'leaveAnimation',
-    'mode',
-    'subHeader',
-    'translucent',
-    'trigger',
-  ],
-  standalone: true,
+  inputs: ['animated', 'backdropDismiss', 'buttons', 'cssClass', 'enterAnimation', 'header', 'htmlAttributes', 'isOpen', 'keyboardClose', 'leaveAnimation', 'mode', 'subHeader', 'translucent', 'trigger'],
+  standalone: true
 })
 export class IonActionSheet {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, [
-      'ionActionSheetDidPresent',
-      'ionActionSheetWillPresent',
-      'ionActionSheetWillDismiss',
-      'ionActionSheetDidDismiss',
-      'didPresent',
-      'willPresent',
-      'willDismiss',
-      'didDismiss',
-    ]);
+    proxyOutputs(this, this.el, ['ionActionSheetDidPresent', 'ionActionSheetWillPresent', 'ionActionSheetWillDismiss', 'ionActionSheetDidDismiss', 'didPresent', 'willPresent', 'willDismiss', 'didDismiss']);
   }
 }
+
 
 import type { OverlayEventDetail as IIonActionSheetOverlayEventDetail } from '@ionic/core/components';
 
@@ -239,70 +204,29 @@ Shorthand for ionActionSheetDidDismiss.
   didDismiss: EventEmitter<CustomEvent<IIonActionSheetOverlayEventDetail>>;
 }
 
+
 @ProxyCmp({
   defineCustomElementFn: defineIonAlert,
-  inputs: [
-    'animated',
-    'backdropDismiss',
-    'buttons',
-    'cssClass',
-    'enterAnimation',
-    'header',
-    'htmlAttributes',
-    'inputs',
-    'isOpen',
-    'keyboardClose',
-    'leaveAnimation',
-    'message',
-    'mode',
-    'subHeader',
-    'translucent',
-    'trigger',
-  ],
-  methods: ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss'],
+  inputs: ['animated', 'backdropDismiss', 'buttons', 'cssClass', 'enterAnimation', 'header', 'htmlAttributes', 'inputs', 'isOpen', 'keyboardClose', 'leaveAnimation', 'message', 'mode', 'subHeader', 'translucent', 'trigger'],
+  methods: ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss']
 })
 @Component({
   selector: 'ion-alert',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [
-    'animated',
-    'backdropDismiss',
-    'buttons',
-    'cssClass',
-    'enterAnimation',
-    'header',
-    'htmlAttributes',
-    'inputs',
-    'isOpen',
-    'keyboardClose',
-    'leaveAnimation',
-    'message',
-    'mode',
-    'subHeader',
-    'translucent',
-    'trigger',
-  ],
-  standalone: true,
+  inputs: ['animated', 'backdropDismiss', 'buttons', 'cssClass', 'enterAnimation', 'header', 'htmlAttributes', 'inputs', 'isOpen', 'keyboardClose', 'leaveAnimation', 'message', 'mode', 'subHeader', 'translucent', 'trigger'],
+  standalone: true
 })
 export class IonAlert {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, [
-      'ionAlertDidPresent',
-      'ionAlertWillPresent',
-      'ionAlertWillDismiss',
-      'ionAlertDidDismiss',
-      'didPresent',
-      'willPresent',
-      'willDismiss',
-      'didDismiss',
-    ]);
+    proxyOutputs(this, this.el, ['ionAlertDidPresent', 'ionAlertWillPresent', 'ionAlertWillDismiss', 'ionAlertDidDismiss', 'didPresent', 'willPresent', 'willDismiss', 'didDismiss']);
   }
 }
+
 
 import type { OverlayEventDetail as IIonAlertOverlayEventDetail } from '@ionic/core/components';
 
@@ -345,8 +269,9 @@ Shorthand for ionAlertDidDismiss.
   didDismiss: EventEmitter<CustomEvent<IIonAlertOverlayEventDetail>>;
 }
 
+
 @ProxyCmp({
-  defineCustomElementFn: defineIonApp,
+  defineCustomElementFn: defineIonApp
 })
 @Component({
   selector: 'ion-app',
@@ -354,7 +279,7 @@ Shorthand for ionAlertDidDismiss.
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: [],
-  standalone: true,
+  standalone: true
 })
 export class IonApp {
   protected el: HTMLElement;
@@ -364,10 +289,12 @@ export class IonApp {
   }
 }
 
+
 export declare interface IonApp extends Components.IonApp {}
 
+
 @ProxyCmp({
-  defineCustomElementFn: defineIonAvatar,
+  defineCustomElementFn: defineIonAvatar
 })
 @Component({
   selector: 'ion-avatar',
@@ -375,7 +302,7 @@ export declare interface IonApp extends Components.IonApp {}
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: [],
-  standalone: true,
+  standalone: true
 })
 export class IonAvatar {
   protected el: HTMLElement;
@@ -385,11 +312,13 @@ export class IonAvatar {
   }
 }
 
+
 export declare interface IonAvatar extends Components.IonAvatar {}
+
 
 @ProxyCmp({
   defineCustomElementFn: defineIonBackdrop,
-  inputs: ['stopPropagation', 'tappable', 'visible'],
+  inputs: ['stopPropagation', 'tappable', 'visible']
 })
 @Component({
   selector: 'ion-backdrop',
@@ -397,7 +326,7 @@ export declare interface IonAvatar extends Components.IonAvatar {}
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['stopPropagation', 'tappable', 'visible'],
-  standalone: true,
+  standalone: true
 })
 export class IonBackdrop {
   protected el: HTMLElement;
@@ -408,6 +337,7 @@ export class IonBackdrop {
   }
 }
 
+
 export declare interface IonBackdrop extends Components.IonBackdrop {
   /**
    * Emitted when the backdrop is tapped.
@@ -415,9 +345,10 @@ export declare interface IonBackdrop extends Components.IonBackdrop {
   ionBackdropTap: EventEmitter<CustomEvent<void>>;
 }
 
+
 @ProxyCmp({
   defineCustomElementFn: defineIonBadge,
-  inputs: ['color', 'mode'],
+  inputs: ['color', 'mode']
 })
 @Component({
   selector: 'ion-badge',
@@ -425,7 +356,7 @@ export declare interface IonBackdrop extends Components.IonBackdrop {
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['color', 'mode'],
-  standalone: true,
+  standalone: true
 })
 export class IonBadge {
   protected el: HTMLElement;
@@ -435,43 +366,21 @@ export class IonBadge {
   }
 }
 
+
 export declare interface IonBadge extends Components.IonBadge {}
+
 
 @ProxyCmp({
   defineCustomElementFn: defineIonBreadcrumb,
-  inputs: [
-    'active',
-    'color',
-    'disabled',
-    'download',
-    'href',
-    'mode',
-    'rel',
-    'routerAnimation',
-    'routerDirection',
-    'separator',
-    'target',
-  ],
+  inputs: ['active', 'color', 'disabled', 'download', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'separator', 'target']
 })
 @Component({
   selector: 'ion-breadcrumb',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [
-    'active',
-    'color',
-    'disabled',
-    'download',
-    'href',
-    'mode',
-    'rel',
-    'routerAnimation',
-    'routerDirection',
-    'separator',
-    'target',
-  ],
-  standalone: true,
+  inputs: ['active', 'color', 'disabled', 'download', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'separator', 'target'],
+  standalone: true
 })
 export class IonBreadcrumb {
   protected el: HTMLElement;
@@ -481,6 +390,7 @@ export class IonBreadcrumb {
     proxyOutputs(this, this.el, ['ionFocus', 'ionBlur']);
   }
 }
+
 
 export declare interface IonBreadcrumb extends Components.IonBreadcrumb {
   /**
@@ -493,9 +403,10 @@ export declare interface IonBreadcrumb extends Components.IonBreadcrumb {
   ionBlur: EventEmitter<CustomEvent<void>>;
 }
 
+
 @ProxyCmp({
   defineCustomElementFn: defineIonBreadcrumbs,
-  inputs: ['color', 'itemsAfterCollapse', 'itemsBeforeCollapse', 'maxItems', 'mode'],
+  inputs: ['color', 'itemsAfterCollapse', 'itemsBeforeCollapse', 'maxItems', 'mode']
 })
 @Component({
   selector: 'ion-breadcrumbs',
@@ -503,7 +414,7 @@ export declare interface IonBreadcrumb extends Components.IonBreadcrumb {
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['color', 'itemsAfterCollapse', 'itemsBeforeCollapse', 'maxItems', 'mode'],
-  standalone: true,
+  standalone: true
 })
 export class IonBreadcrumbs {
   protected el: HTMLElement;
@@ -514,6 +425,7 @@ export class IonBreadcrumbs {
   }
 }
 
+
 import type { BreadcrumbCollapsedClickEventDetail as IIonBreadcrumbsBreadcrumbCollapsedClickEventDetail } from '@ionic/core/components';
 
 export declare interface IonBreadcrumbs extends Components.IonBreadcrumbs {
@@ -523,53 +435,18 @@ export declare interface IonBreadcrumbs extends Components.IonBreadcrumbs {
   ionCollapsedClick: EventEmitter<CustomEvent<IIonBreadcrumbsBreadcrumbCollapsedClickEventDetail>>;
 }
 
+
 @ProxyCmp({
   defineCustomElementFn: defineIonButton,
-  inputs: [
-    'buttonType',
-    'color',
-    'disabled',
-    'download',
-    'expand',
-    'fill',
-    'form',
-    'href',
-    'mode',
-    'rel',
-    'routerAnimation',
-    'routerDirection',
-    'shape',
-    'size',
-    'strong',
-    'target',
-    'type',
-  ],
+  inputs: ['buttonType', 'color', 'disabled', 'download', 'expand', 'fill', 'form', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'shape', 'size', 'strong', 'target', 'type']
 })
 @Component({
   selector: 'ion-button',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [
-    'buttonType',
-    'color',
-    'disabled',
-    'download',
-    'expand',
-    'fill',
-    'form',
-    'href',
-    'mode',
-    'rel',
-    'routerAnimation',
-    'routerDirection',
-    'shape',
-    'size',
-    'strong',
-    'target',
-    'type',
-  ],
-  standalone: true,
+  inputs: ['buttonType', 'color', 'disabled', 'download', 'expand', 'fill', 'form', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'shape', 'size', 'strong', 'target', 'type'],
+  standalone: true
 })
 export class IonButton {
   protected el: HTMLElement;
@@ -579,6 +456,7 @@ export class IonButton {
     proxyOutputs(this, this.el, ['ionFocus', 'ionBlur']);
   }
 }
+
 
 export declare interface IonButton extends Components.IonButton {
   /**
@@ -591,9 +469,10 @@ export declare interface IonButton extends Components.IonButton {
   ionBlur: EventEmitter<CustomEvent<void>>;
 }
 
+
 @ProxyCmp({
   defineCustomElementFn: defineIonButtons,
-  inputs: ['collapse'],
+  inputs: ['collapse']
 })
 @Component({
   selector: 'ion-buttons',
@@ -601,7 +480,7 @@ export declare interface IonButton extends Components.IonButton {
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['collapse'],
-  standalone: true,
+  standalone: true
 })
 export class IonButtons {
   protected el: HTMLElement;
@@ -611,43 +490,21 @@ export class IonButtons {
   }
 }
 
+
 export declare interface IonButtons extends Components.IonButtons {}
+
 
 @ProxyCmp({
   defineCustomElementFn: defineIonCard,
-  inputs: [
-    'button',
-    'color',
-    'disabled',
-    'download',
-    'href',
-    'mode',
-    'rel',
-    'routerAnimation',
-    'routerDirection',
-    'target',
-    'type',
-  ],
+  inputs: ['button', 'color', 'disabled', 'download', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'target', 'type']
 })
 @Component({
   selector: 'ion-card',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [
-    'button',
-    'color',
-    'disabled',
-    'download',
-    'href',
-    'mode',
-    'rel',
-    'routerAnimation',
-    'routerDirection',
-    'target',
-    'type',
-  ],
-  standalone: true,
+  inputs: ['button', 'color', 'disabled', 'download', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'target', 'type'],
+  standalone: true
 })
 export class IonCard {
   protected el: HTMLElement;
@@ -657,11 +514,13 @@ export class IonCard {
   }
 }
 
+
 export declare interface IonCard extends Components.IonCard {}
+
 
 @ProxyCmp({
   defineCustomElementFn: defineIonCardContent,
-  inputs: ['mode'],
+  inputs: ['mode']
 })
 @Component({
   selector: 'ion-card-content',
@@ -669,7 +528,7 @@ export declare interface IonCard extends Components.IonCard {}
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['mode'],
-  standalone: true,
+  standalone: true
 })
 export class IonCardContent {
   protected el: HTMLElement;
@@ -679,11 +538,13 @@ export class IonCardContent {
   }
 }
 
+
 export declare interface IonCardContent extends Components.IonCardContent {}
+
 
 @ProxyCmp({
   defineCustomElementFn: defineIonCardHeader,
-  inputs: ['color', 'mode', 'translucent'],
+  inputs: ['color', 'mode', 'translucent']
 })
 @Component({
   selector: 'ion-card-header',
@@ -691,7 +552,7 @@ export declare interface IonCardContent extends Components.IonCardContent {}
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['color', 'mode', 'translucent'],
-  standalone: true,
+  standalone: true
 })
 export class IonCardHeader {
   protected el: HTMLElement;
@@ -701,11 +562,13 @@ export class IonCardHeader {
   }
 }
 
+
 export declare interface IonCardHeader extends Components.IonCardHeader {}
+
 
 @ProxyCmp({
   defineCustomElementFn: defineIonCardSubtitle,
-  inputs: ['color', 'mode'],
+  inputs: ['color', 'mode']
 })
 @Component({
   selector: 'ion-card-subtitle',
@@ -713,7 +576,7 @@ export declare interface IonCardHeader extends Components.IonCardHeader {}
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['color', 'mode'],
-  standalone: true,
+  standalone: true
 })
 export class IonCardSubtitle {
   protected el: HTMLElement;
@@ -723,11 +586,13 @@ export class IonCardSubtitle {
   }
 }
 
+
 export declare interface IonCardSubtitle extends Components.IonCardSubtitle {}
+
 
 @ProxyCmp({
   defineCustomElementFn: defineIonCardTitle,
-  inputs: ['color', 'mode'],
+  inputs: ['color', 'mode']
 })
 @Component({
   selector: 'ion-card-title',
@@ -735,7 +600,7 @@ export declare interface IonCardSubtitle extends Components.IonCardSubtitle {}
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['color', 'mode'],
-  standalone: true,
+  standalone: true
 })
 export class IonCardTitle {
   protected el: HTMLElement;
@@ -745,41 +610,21 @@ export class IonCardTitle {
   }
 }
 
+
 export declare interface IonCardTitle extends Components.IonCardTitle {}
+
 
 @ProxyCmp({
   defineCustomElementFn: defineIonCheckbox,
-  inputs: [
-    'checked',
-    'color',
-    'disabled',
-    'indeterminate',
-    'justify',
-    'labelPlacement',
-    'legacy',
-    'mode',
-    'name',
-    'value',
-  ],
+  inputs: ['checked', 'color', 'disabled', 'indeterminate', 'justify', 'labelPlacement', 'legacy', 'mode', 'name', 'value']
 })
 @Component({
   selector: 'ion-checkbox',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [
-    'checked',
-    'color',
-    'disabled',
-    'indeterminate',
-    'justify',
-    'labelPlacement',
-    'legacy',
-    'mode',
-    'name',
-    'value',
-  ],
-  standalone: true,
+  inputs: ['checked', 'color', 'disabled', 'indeterminate', 'justify', 'labelPlacement', 'legacy', 'mode', 'name', 'value'],
+  standalone: true
 })
 export class IonCheckbox {
   protected el: HTMLElement;
@@ -789,6 +634,7 @@ export class IonCheckbox {
     proxyOutputs(this, this.el, ['ionChange', 'ionFocus', 'ionBlur']);
   }
 }
+
 
 import type { CheckboxChangeEventDetail as IIonCheckboxCheckboxChangeEventDetail } from '@ionic/core/components';
 
@@ -810,9 +656,10 @@ setting the checked property.
   ionBlur: EventEmitter<CustomEvent<void>>;
 }
 
+
 @ProxyCmp({
   defineCustomElementFn: defineIonChip,
-  inputs: ['color', 'disabled', 'mode', 'outline'],
+  inputs: ['color', 'disabled', 'mode', 'outline']
 })
 @Component({
   selector: 'ion-chip',
@@ -820,7 +667,7 @@ setting the checked property.
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['color', 'disabled', 'mode', 'outline'],
-  standalone: true,
+  standalone: true
 })
 export class IonChip {
   protected el: HTMLElement;
@@ -830,69 +677,21 @@ export class IonChip {
   }
 }
 
+
 export declare interface IonChip extends Components.IonChip {}
+
 
 @ProxyCmp({
   defineCustomElementFn: defineIonCol,
-  inputs: [
-    'offset',
-    'offsetLg',
-    'offsetMd',
-    'offsetSm',
-    'offsetXl',
-    'offsetXs',
-    'pull',
-    'pullLg',
-    'pullMd',
-    'pullSm',
-    'pullXl',
-    'pullXs',
-    'push',
-    'pushLg',
-    'pushMd',
-    'pushSm',
-    'pushXl',
-    'pushXs',
-    'size',
-    'sizeLg',
-    'sizeMd',
-    'sizeSm',
-    'sizeXl',
-    'sizeXs',
-  ],
+  inputs: ['offset', 'offsetLg', 'offsetMd', 'offsetSm', 'offsetXl', 'offsetXs', 'pull', 'pullLg', 'pullMd', 'pullSm', 'pullXl', 'pullXs', 'push', 'pushLg', 'pushMd', 'pushSm', 'pushXl', 'pushXs', 'size', 'sizeLg', 'sizeMd', 'sizeSm', 'sizeXl', 'sizeXs']
 })
 @Component({
   selector: 'ion-col',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [
-    'offset',
-    'offsetLg',
-    'offsetMd',
-    'offsetSm',
-    'offsetXl',
-    'offsetXs',
-    'pull',
-    'pullLg',
-    'pullMd',
-    'pullSm',
-    'pullXl',
-    'pullXs',
-    'push',
-    'pushLg',
-    'pushMd',
-    'pushSm',
-    'pushXl',
-    'pushXs',
-    'size',
-    'sizeLg',
-    'sizeMd',
-    'sizeSm',
-    'sizeXl',
-    'sizeXs',
-  ],
-  standalone: true,
+  inputs: ['offset', 'offsetLg', 'offsetMd', 'offsetSm', 'offsetXl', 'offsetXs', 'pull', 'pullLg', 'pullMd', 'pullSm', 'pullXl', 'pullXs', 'push', 'pushLg', 'pushMd', 'pushSm', 'pushXl', 'pushXs', 'size', 'sizeLg', 'sizeMd', 'sizeSm', 'sizeXl', 'sizeXs'],
+  standalone: true
 })
 export class IonCol {
   protected el: HTMLElement;
@@ -902,12 +701,14 @@ export class IonCol {
   }
 }
 
+
 export declare interface IonCol extends Components.IonCol {}
+
 
 @ProxyCmp({
   defineCustomElementFn: defineIonContent,
   inputs: ['color', 'forceOverscroll', 'fullscreen', 'scrollEvents', 'scrollX', 'scrollY'],
-  methods: ['getScrollElement', 'scrollToTop', 'scrollToBottom', 'scrollByPoint', 'scrollToPoint'],
+  methods: ['getScrollElement', 'scrollToTop', 'scrollToBottom', 'scrollByPoint', 'scrollToPoint']
 })
 @Component({
   selector: 'ion-content',
@@ -915,7 +716,7 @@ export declare interface IonCol extends Components.IonCol {}
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['color', 'forceOverscroll', 'fullscreen', 'scrollEvents', 'scrollX', 'scrollY'],
-  standalone: true,
+  standalone: true
 })
 export class IonContent {
   protected el: HTMLElement;
@@ -925,6 +726,7 @@ export class IonContent {
     proxyOutputs(this, this.el, ['ionScrollStart', 'ionScroll', 'ionScrollEnd']);
   }
 }
+
 
 import type { ScrollBaseDetail as IIonContentScrollBaseDetail } from '@ionic/core/components';
 import type { ScrollDetail as IIonContentScrollDetail } from '@ionic/core/components';
@@ -947,80 +749,19 @@ Set `scrollEvents` to `true` to enable.
   ionScrollEnd: EventEmitter<CustomEvent<IIonContentScrollBaseDetail>>;
 }
 
+
 @ProxyCmp({
   defineCustomElementFn: defineIonDatetime,
-  inputs: [
-    'cancelText',
-    'clearText',
-    'color',
-    'dayValues',
-    'disabled',
-    'doneText',
-    'firstDayOfWeek',
-    'highlightedDates',
-    'hourCycle',
-    'hourValues',
-    'isDateEnabled',
-    'locale',
-    'max',
-    'min',
-    'minuteValues',
-    'mode',
-    'monthValues',
-    'multiple',
-    'name',
-    'preferWheel',
-    'presentation',
-    'readonly',
-    'showClearButton',
-    'showDefaultButtons',
-    'showDefaultTimeLabel',
-    'showDefaultTitle',
-    'size',
-    'titleSelectedDatesFormatter',
-    'value',
-    'yearValues',
-  ],
-  methods: ['confirm', 'reset', 'cancel'],
+  inputs: ['cancelText', 'clearText', 'color', 'dayValues', 'disabled', 'doneText', 'firstDayOfWeek', 'highlightedDates', 'hourCycle', 'hourValues', 'isDateEnabled', 'locale', 'max', 'min', 'minuteValues', 'mode', 'monthValues', 'multiple', 'name', 'preferWheel', 'presentation', 'readonly', 'showClearButton', 'showDefaultButtons', 'showDefaultTimeLabel', 'showDefaultTitle', 'size', 'titleSelectedDatesFormatter', 'value', 'yearValues'],
+  methods: ['confirm', 'reset', 'cancel']
 })
 @Component({
   selector: 'ion-datetime',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [
-    'cancelText',
-    'clearText',
-    'color',
-    'dayValues',
-    'disabled',
-    'doneText',
-    'firstDayOfWeek',
-    'highlightedDates',
-    'hourCycle',
-    'hourValues',
-    'isDateEnabled',
-    'locale',
-    'max',
-    'min',
-    'minuteValues',
-    'mode',
-    'monthValues',
-    'multiple',
-    'name',
-    'preferWheel',
-    'presentation',
-    'readonly',
-    'showClearButton',
-    'showDefaultButtons',
-    'showDefaultTimeLabel',
-    'showDefaultTitle',
-    'size',
-    'titleSelectedDatesFormatter',
-    'value',
-    'yearValues',
-  ],
-  standalone: true,
+  inputs: ['cancelText', 'clearText', 'color', 'dayValues', 'disabled', 'doneText', 'firstDayOfWeek', 'highlightedDates', 'hourCycle', 'hourValues', 'isDateEnabled', 'locale', 'max', 'min', 'minuteValues', 'mode', 'monthValues', 'multiple', 'name', 'preferWheel', 'presentation', 'readonly', 'showClearButton', 'showDefaultButtons', 'showDefaultTimeLabel', 'showDefaultTitle', 'size', 'titleSelectedDatesFormatter', 'value', 'yearValues'],
+  standalone: true
 })
 export class IonDatetime {
   protected el: HTMLElement;
@@ -1030,6 +771,7 @@ export class IonDatetime {
     proxyOutputs(this, this.el, ['ionCancel', 'ionChange', 'ionFocus', 'ionBlur']);
   }
 }
+
 
 import type { DatetimeChangeEventDetail as IIonDatetimeDatetimeChangeEventDetail } from '@ionic/core/components';
 
@@ -1052,9 +794,10 @@ export declare interface IonDatetime extends Components.IonDatetime {
   ionBlur: EventEmitter<CustomEvent<void>>;
 }
 
+
 @ProxyCmp({
   defineCustomElementFn: defineIonDatetimeButton,
-  inputs: ['color', 'datetime', 'disabled', 'mode'],
+  inputs: ['color', 'datetime', 'disabled', 'mode']
 })
 @Component({
   selector: 'ion-datetime-button',
@@ -1062,7 +805,7 @@ export declare interface IonDatetime extends Components.IonDatetime {
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['color', 'datetime', 'disabled', 'mode'],
-  standalone: true,
+  standalone: true
 })
 export class IonDatetimeButton {
   protected el: HTMLElement;
@@ -1072,12 +815,14 @@ export class IonDatetimeButton {
   }
 }
 
+
 export declare interface IonDatetimeButton extends Components.IonDatetimeButton {}
+
 
 @ProxyCmp({
   defineCustomElementFn: defineIonFab,
   inputs: ['activated', 'edge', 'horizontal', 'vertical'],
-  methods: ['close'],
+  methods: ['close']
 })
 @Component({
   selector: 'ion-fab',
@@ -1085,7 +830,7 @@ export declare interface IonDatetimeButton extends Components.IonDatetimeButton 
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['activated', 'edge', 'horizontal', 'vertical'],
-  standalone: true,
+  standalone: true
 })
 export class IonFab {
   protected el: HTMLElement;
@@ -1095,51 +840,21 @@ export class IonFab {
   }
 }
 
+
 export declare interface IonFab extends Components.IonFab {}
+
 
 @ProxyCmp({
   defineCustomElementFn: defineIonFabButton,
-  inputs: [
-    'activated',
-    'closeIcon',
-    'color',
-    'disabled',
-    'download',
-    'href',
-    'mode',
-    'rel',
-    'routerAnimation',
-    'routerDirection',
-    'show',
-    'size',
-    'target',
-    'translucent',
-    'type',
-  ],
+  inputs: ['activated', 'closeIcon', 'color', 'disabled', 'download', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'show', 'size', 'target', 'translucent', 'type']
 })
 @Component({
   selector: 'ion-fab-button',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [
-    'activated',
-    'closeIcon',
-    'color',
-    'disabled',
-    'download',
-    'href',
-    'mode',
-    'rel',
-    'routerAnimation',
-    'routerDirection',
-    'show',
-    'size',
-    'target',
-    'translucent',
-    'type',
-  ],
-  standalone: true,
+  inputs: ['activated', 'closeIcon', 'color', 'disabled', 'download', 'href', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'show', 'size', 'target', 'translucent', 'type'],
+  standalone: true
 })
 export class IonFabButton {
   protected el: HTMLElement;
@@ -1149,6 +864,7 @@ export class IonFabButton {
     proxyOutputs(this, this.el, ['ionFocus', 'ionBlur']);
   }
 }
+
 
 export declare interface IonFabButton extends Components.IonFabButton {
   /**
@@ -1161,9 +877,10 @@ export declare interface IonFabButton extends Components.IonFabButton {
   ionBlur: EventEmitter<CustomEvent<void>>;
 }
 
+
 @ProxyCmp({
   defineCustomElementFn: defineIonFabList,
-  inputs: ['activated', 'side'],
+  inputs: ['activated', 'side']
 })
 @Component({
   selector: 'ion-fab-list',
@@ -1171,7 +888,7 @@ export declare interface IonFabButton extends Components.IonFabButton {
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['activated', 'side'],
-  standalone: true,
+  standalone: true
 })
 export class IonFabList {
   protected el: HTMLElement;
@@ -1181,11 +898,13 @@ export class IonFabList {
   }
 }
 
+
 export declare interface IonFabList extends Components.IonFabList {}
+
 
 @ProxyCmp({
   defineCustomElementFn: defineIonFooter,
-  inputs: ['collapse', 'mode', 'translucent'],
+  inputs: ['collapse', 'mode', 'translucent']
 })
 @Component({
   selector: 'ion-footer',
@@ -1193,7 +912,7 @@ export declare interface IonFabList extends Components.IonFabList {}
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['collapse', 'mode', 'translucent'],
-  standalone: true,
+  standalone: true
 })
 export class IonFooter {
   protected el: HTMLElement;
@@ -1203,11 +922,13 @@ export class IonFooter {
   }
 }
 
+
 export declare interface IonFooter extends Components.IonFooter {}
+
 
 @ProxyCmp({
   defineCustomElementFn: defineIonGrid,
-  inputs: ['fixed'],
+  inputs: ['fixed']
 })
 @Component({
   selector: 'ion-grid',
@@ -1215,7 +936,7 @@ export declare interface IonFooter extends Components.IonFooter {}
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['fixed'],
-  standalone: true,
+  standalone: true
 })
 export class IonGrid {
   protected el: HTMLElement;
@@ -1225,11 +946,13 @@ export class IonGrid {
   }
 }
 
+
 export declare interface IonGrid extends Components.IonGrid {}
+
 
 @ProxyCmp({
   defineCustomElementFn: defineIonHeader,
-  inputs: ['collapse', 'mode', 'translucent'],
+  inputs: ['collapse', 'mode', 'translucent']
 })
 @Component({
   selector: 'ion-header',
@@ -1237,7 +960,7 @@ export declare interface IonGrid extends Components.IonGrid {}
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['collapse', 'mode', 'translucent'],
-  standalone: true,
+  standalone: true
 })
 export class IonHeader {
   protected el: HTMLElement;
@@ -1247,11 +970,13 @@ export class IonHeader {
   }
 }
 
+
 export declare interface IonHeader extends Components.IonHeader {}
+
 
 @ProxyCmp({
   defineCustomElementFn: defineIonImg,
-  inputs: ['alt', 'src'],
+  inputs: ['alt', 'src']
 })
 @Component({
   selector: 'ion-img',
@@ -1259,7 +984,7 @@ export declare interface IonHeader extends Components.IonHeader {}
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['alt', 'src'],
-  standalone: true,
+  standalone: true
 })
 export class IonImg {
   protected el: HTMLElement;
@@ -1269,6 +994,7 @@ export class IonImg {
     proxyOutputs(this, this.el, ['ionImgWillLoad', 'ionImgDidLoad', 'ionError']);
   }
 }
+
 
 export declare interface IonImg extends Components.IonImg {
   /**
@@ -1285,10 +1011,11 @@ export declare interface IonImg extends Components.IonImg {
   ionError: EventEmitter<CustomEvent<void>>;
 }
 
+
 @ProxyCmp({
   defineCustomElementFn: defineIonInfiniteScroll,
   inputs: ['disabled', 'position', 'threshold'],
-  methods: ['complete'],
+  methods: ['complete']
 })
 @Component({
   selector: 'ion-infinite-scroll',
@@ -1296,7 +1023,7 @@ export declare interface IonImg extends Components.IonImg {
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['disabled', 'position', 'threshold'],
-  standalone: true,
+  standalone: true
 })
 export class IonInfiniteScroll {
   protected el: HTMLElement;
@@ -1306,6 +1033,7 @@ export class IonInfiniteScroll {
     proxyOutputs(this, this.el, ['ionInfinite']);
   }
 }
+
 
 export declare interface IonInfiniteScroll extends Components.IonInfiniteScroll {
   /**
@@ -1317,9 +1045,10 @@ your async operation has completed.
   ionInfinite: EventEmitter<CustomEvent<void>>;
 }
 
+
 @ProxyCmp({
   defineCustomElementFn: defineIonInfiniteScrollContent,
-  inputs: ['loadingSpinner', 'loadingText'],
+  inputs: ['loadingSpinner', 'loadingText']
 })
 @Component({
   selector: 'ion-infinite-scroll-content',
@@ -1327,7 +1056,7 @@ your async operation has completed.
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['loadingSpinner', 'loadingText'],
-  standalone: true,
+  standalone: true
 })
 export class IonInfiniteScrollContent {
   protected el: HTMLElement;
@@ -1337,193 +1066,21 @@ export class IonInfiniteScrollContent {
   }
 }
 
+
 export declare interface IonInfiniteScrollContent extends Components.IonInfiniteScrollContent {}
 
-@ProxyCmp({
-  defineCustomElementFn: defineIonInput,
-  inputs: [
-    'accept',
-    'autocapitalize',
-    'autocomplete',
-    'autocorrect',
-    'autofocus',
-    'clearInput',
-    'clearOnEdit',
-    'color',
-    'counter',
-    'counterFormatter',
-    'debounce',
-    'disabled',
-    'enterkeyhint',
-    'errorText',
-    'fill',
-    'helperText',
-    'inputmode',
-    'label',
-    'labelPlacement',
-    'legacy',
-    'max',
-    'maxlength',
-    'min',
-    'minlength',
-    'mode',
-    'multiple',
-    'name',
-    'pattern',
-    'placeholder',
-    'readonly',
-    'required',
-    'shape',
-    'size',
-    'spellcheck',
-    'step',
-    'type',
-    'value',
-  ],
-  methods: ['setFocus', 'getInputElement'],
-})
-@Component({
-  selector: 'ion-input',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [
-    'accept',
-    'autocapitalize',
-    'autocomplete',
-    'autocorrect',
-    'autofocus',
-    'clearInput',
-    'clearOnEdit',
-    'color',
-    'counter',
-    'counterFormatter',
-    'debounce',
-    'disabled',
-    'enterkeyhint',
-    'errorText',
-    'fill',
-    'helperText',
-    'inputmode',
-    'label',
-    'labelPlacement',
-    'legacy',
-    'max',
-    'maxlength',
-    'min',
-    'minlength',
-    'mode',
-    'multiple',
-    'name',
-    'pattern',
-    'placeholder',
-    'readonly',
-    'required',
-    'shape',
-    'size',
-    'spellcheck',
-    'step',
-    'type',
-    'value',
-  ],
-  standalone: true,
-})
-export class IonInput {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionInput', 'ionChange', 'ionBlur', 'ionFocus']);
-  }
-}
-
-import type { InputInputEventDetail as IIonInputInputInputEventDetail } from '@ionic/core/components';
-import type { InputChangeEventDetail as IIonInputInputChangeEventDetail } from '@ionic/core/components';
-
-export declare interface IonInput extends Components.IonInput {
-  /**
-   * The `ionInput` event is fired each time the user modifies the input's value.
-Unlike the `ionChange` event, the `ionInput` event is fired for each alteration
-to the input's value. This typically happens for each keystroke as the user types.
-
-For elements that accept text input (`type=text`, `type=tel`, etc.), the interface
-is [`InputEvent`](https://developer.mozilla.org/en-US/docs/Web/API/InputEvent); for others,
-the interface is [`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event). If
-the input is cleared on edit, the type is `null`.
-   */
-  ionInput: EventEmitter<CustomEvent<IIonInputInputInputEventDetail>>;
-  /**
-   * The `ionChange` event is fired when the user modifies the input's value.
-Unlike the `ionInput` event, the `ionChange` event is only fired when changes
-are committed, not as the user types.
-
-Depending on the way the users interacts with the element, the `ionChange`
-event fires at a different moment:
-- When the user commits the change explicitly (e.g. by selecting a date
-from a date picker for `<ion-input type="date">`, pressing the "Enter" key, etc.).
-- When the element loses focus after its value has changed: for elements
-where the user's interaction is typing.
-   */
-  ionChange: EventEmitter<CustomEvent<IIonInputInputChangeEventDetail>>;
-  /**
-   * Emitted when the input loses focus.
-   */
-  ionBlur: EventEmitter<CustomEvent<FocusEvent>>;
-  /**
-   * Emitted when the input has focus.
-   */
-  ionFocus: EventEmitter<CustomEvent<FocusEvent>>;
-}
 
 @ProxyCmp({
   defineCustomElementFn: defineIonItem,
-  inputs: [
-    'button',
-    'color',
-    'counter',
-    'counterFormatter',
-    'detail',
-    'detailIcon',
-    'disabled',
-    'download',
-    'fill',
-    'href',
-    'lines',
-    'mode',
-    'rel',
-    'routerAnimation',
-    'routerDirection',
-    'shape',
-    'target',
-    'type',
-  ],
+  inputs: ['button', 'color', 'counter', 'counterFormatter', 'detail', 'detailIcon', 'disabled', 'download', 'fill', 'href', 'lines', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'shape', 'target', 'type']
 })
 @Component({
   selector: 'ion-item',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [
-    'button',
-    'color',
-    'counter',
-    'counterFormatter',
-    'detail',
-    'detailIcon',
-    'disabled',
-    'download',
-    'fill',
-    'href',
-    'lines',
-    'mode',
-    'rel',
-    'routerAnimation',
-    'routerDirection',
-    'shape',
-    'target',
-    'type',
-  ],
-  standalone: true,
+  inputs: ['button', 'color', 'counter', 'counterFormatter', 'detail', 'detailIcon', 'disabled', 'download', 'fill', 'href', 'lines', 'mode', 'rel', 'routerAnimation', 'routerDirection', 'shape', 'target', 'type'],
+  standalone: true
 })
 export class IonItem {
   protected el: HTMLElement;
@@ -1533,11 +1090,13 @@ export class IonItem {
   }
 }
 
+
 export declare interface IonItem extends Components.IonItem {}
+
 
 @ProxyCmp({
   defineCustomElementFn: defineIonItemDivider,
-  inputs: ['color', 'mode', 'sticky'],
+  inputs: ['color', 'mode', 'sticky']
 })
 @Component({
   selector: 'ion-item-divider',
@@ -1545,7 +1104,7 @@ export declare interface IonItem extends Components.IonItem {}
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['color', 'mode', 'sticky'],
-  standalone: true,
+  standalone: true
 })
 export class IonItemDivider {
   protected el: HTMLElement;
@@ -1555,10 +1114,12 @@ export class IonItemDivider {
   }
 }
 
+
 export declare interface IonItemDivider extends Components.IonItemDivider {}
 
+
 @ProxyCmp({
-  defineCustomElementFn: defineIonItemGroup,
+  defineCustomElementFn: defineIonItemGroup
 })
 @Component({
   selector: 'ion-item-group',
@@ -1566,7 +1127,7 @@ export declare interface IonItemDivider extends Components.IonItemDivider {}
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: [],
-  standalone: true,
+  standalone: true
 })
 export class IonItemGroup {
   protected el: HTMLElement;
@@ -1576,11 +1137,13 @@ export class IonItemGroup {
   }
 }
 
+
 export declare interface IonItemGroup extends Components.IonItemGroup {}
+
 
 @ProxyCmp({
   defineCustomElementFn: defineIonItemOption,
-  inputs: ['color', 'disabled', 'download', 'expandable', 'href', 'mode', 'rel', 'target', 'type'],
+  inputs: ['color', 'disabled', 'download', 'expandable', 'href', 'mode', 'rel', 'target', 'type']
 })
 @Component({
   selector: 'ion-item-option',
@@ -1588,7 +1151,7 @@ export declare interface IonItemGroup extends Components.IonItemGroup {}
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['color', 'disabled', 'download', 'expandable', 'href', 'mode', 'rel', 'target', 'type'],
-  standalone: true,
+  standalone: true
 })
 export class IonItemOption {
   protected el: HTMLElement;
@@ -1598,11 +1161,13 @@ export class IonItemOption {
   }
 }
 
+
 export declare interface IonItemOption extends Components.IonItemOption {}
+
 
 @ProxyCmp({
   defineCustomElementFn: defineIonItemOptions,
-  inputs: ['side'],
+  inputs: ['side']
 })
 @Component({
   selector: 'ion-item-options',
@@ -1610,7 +1175,7 @@ export declare interface IonItemOption extends Components.IonItemOption {}
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['side'],
-  standalone: true,
+  standalone: true
 })
 export class IonItemOptions {
   protected el: HTMLElement;
@@ -1621,6 +1186,7 @@ export class IonItemOptions {
   }
 }
 
+
 export declare interface IonItemOptions extends Components.IonItemOptions {
   /**
    * Emitted when the item has been fully swiped.
@@ -1628,10 +1194,11 @@ export declare interface IonItemOptions extends Components.IonItemOptions {
   ionSwipe: EventEmitter<CustomEvent<any>>;
 }
 
+
 @ProxyCmp({
   defineCustomElementFn: defineIonItemSliding,
   inputs: ['disabled'],
-  methods: ['getOpenAmount', 'getSlidingRatio', 'open', 'close', 'closeOpened'],
+  methods: ['getOpenAmount', 'getSlidingRatio', 'open', 'close', 'closeOpened']
 })
 @Component({
   selector: 'ion-item-sliding',
@@ -1639,7 +1206,7 @@ export declare interface IonItemOptions extends Components.IonItemOptions {
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['disabled'],
-  standalone: true,
+  standalone: true
 })
 export class IonItemSliding {
   protected el: HTMLElement;
@@ -1650,6 +1217,7 @@ export class IonItemSliding {
   }
 }
 
+
 export declare interface IonItemSliding extends Components.IonItemSliding {
   /**
    * Emitted when the sliding position changes.
@@ -1657,9 +1225,10 @@ export declare interface IonItemSliding extends Components.IonItemSliding {
   ionDrag: EventEmitter<CustomEvent<any>>;
 }
 
+
 @ProxyCmp({
   defineCustomElementFn: defineIonLabel,
-  inputs: ['color', 'mode', 'position'],
+  inputs: ['color', 'mode', 'position']
 })
 @Component({
   selector: 'ion-label',
@@ -1667,7 +1236,7 @@ export declare interface IonItemSliding extends Components.IonItemSliding {
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['color', 'mode', 'position'],
-  standalone: true,
+  standalone: true
 })
 export class IonLabel {
   protected el: HTMLElement;
@@ -1677,12 +1246,14 @@ export class IonLabel {
   }
 }
 
+
 export declare interface IonLabel extends Components.IonLabel {}
+
 
 @ProxyCmp({
   defineCustomElementFn: defineIonList,
   inputs: ['inset', 'lines', 'mode'],
-  methods: ['closeSlidingItems'],
+  methods: ['closeSlidingItems']
 })
 @Component({
   selector: 'ion-list',
@@ -1690,7 +1261,7 @@ export declare interface IonLabel extends Components.IonLabel {}
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['inset', 'lines', 'mode'],
-  standalone: true,
+  standalone: true
 })
 export class IonList {
   protected el: HTMLElement;
@@ -1700,11 +1271,13 @@ export class IonList {
   }
 }
 
+
 export declare interface IonList extends Components.IonList {}
+
 
 @ProxyCmp({
   defineCustomElementFn: defineIonListHeader,
-  inputs: ['color', 'lines', 'mode'],
+  inputs: ['color', 'lines', 'mode']
 })
 @Component({
   selector: 'ion-list-header',
@@ -1712,7 +1285,7 @@ export declare interface IonList extends Components.IonList {}
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['color', 'lines', 'mode'],
-  standalone: true,
+  standalone: true
 })
 export class IonListHeader {
   protected el: HTMLElement;
@@ -1722,70 +1295,32 @@ export class IonListHeader {
   }
 }
 
+
 export declare interface IonListHeader extends Components.IonListHeader {}
+
 
 @ProxyCmp({
   defineCustomElementFn: defineIonLoading,
-  inputs: [
-    'animated',
-    'backdropDismiss',
-    'cssClass',
-    'duration',
-    'enterAnimation',
-    'htmlAttributes',
-    'isOpen',
-    'keyboardClose',
-    'leaveAnimation',
-    'message',
-    'mode',
-    'showBackdrop',
-    'spinner',
-    'translucent',
-    'trigger',
-  ],
-  methods: ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss'],
+  inputs: ['animated', 'backdropDismiss', 'cssClass', 'duration', 'enterAnimation', 'htmlAttributes', 'isOpen', 'keyboardClose', 'leaveAnimation', 'message', 'mode', 'showBackdrop', 'spinner', 'translucent', 'trigger'],
+  methods: ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss']
 })
 @Component({
   selector: 'ion-loading',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [
-    'animated',
-    'backdropDismiss',
-    'cssClass',
-    'duration',
-    'enterAnimation',
-    'htmlAttributes',
-    'isOpen',
-    'keyboardClose',
-    'leaveAnimation',
-    'message',
-    'mode',
-    'showBackdrop',
-    'spinner',
-    'translucent',
-    'trigger',
-  ],
-  standalone: true,
+  inputs: ['animated', 'backdropDismiss', 'cssClass', 'duration', 'enterAnimation', 'htmlAttributes', 'isOpen', 'keyboardClose', 'leaveAnimation', 'message', 'mode', 'showBackdrop', 'spinner', 'translucent', 'trigger'],
+  standalone: true
 })
 export class IonLoading {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, [
-      'ionLoadingDidPresent',
-      'ionLoadingWillPresent',
-      'ionLoadingWillDismiss',
-      'ionLoadingDidDismiss',
-      'didPresent',
-      'willPresent',
-      'willDismiss',
-      'didDismiss',
-    ]);
+    proxyOutputs(this, this.el, ['ionLoadingDidPresent', 'ionLoadingWillPresent', 'ionLoadingWillDismiss', 'ionLoadingDidDismiss', 'didPresent', 'willPresent', 'willDismiss', 'didDismiss']);
   }
 }
+
 
 import type { OverlayEventDetail as IIonLoadingOverlayEventDetail } from '@ionic/core/components';
 
@@ -1828,10 +1363,11 @@ Shorthand for ionLoadingDidDismiss.
   didDismiss: EventEmitter<CustomEvent<IIonLoadingOverlayEventDetail>>;
 }
 
+
 @ProxyCmp({
   defineCustomElementFn: defineIonMenu,
   inputs: ['contentId', 'disabled', 'maxEdgeStart', 'menuId', 'side', 'swipeGesture', 'type'],
-  methods: ['isOpen', 'isActive', 'open', 'close', 'toggle', 'setOpen'],
+  methods: ['isOpen', 'isActive', 'open', 'close', 'toggle', 'setOpen']
 })
 @Component({
   selector: 'ion-menu',
@@ -1839,7 +1375,7 @@ Shorthand for ionLoadingDidDismiss.
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['contentId', 'disabled', 'maxEdgeStart', 'menuId', 'side', 'swipeGesture', 'type'],
-  standalone: true,
+  standalone: true
 })
 export class IonMenu {
   protected el: HTMLElement;
@@ -1849,6 +1385,7 @@ export class IonMenu {
     proxyOutputs(this, this.el, ['ionWillOpen', 'ionWillClose', 'ionDidOpen', 'ionDidClose']);
   }
 }
+
 
 export declare interface IonMenu extends Components.IonMenu {
   /**
@@ -1869,9 +1406,10 @@ export declare interface IonMenu extends Components.IonMenu {
   ionDidClose: EventEmitter<CustomEvent<void>>;
 }
 
+
 @ProxyCmp({
   defineCustomElementFn: defineIonMenuButton,
-  inputs: ['autoHide', 'color', 'disabled', 'menu', 'mode', 'type'],
+  inputs: ['autoHide', 'color', 'disabled', 'menu', 'mode', 'type']
 })
 @Component({
   selector: 'ion-menu-button',
@@ -1879,7 +1417,7 @@ export declare interface IonMenu extends Components.IonMenu {
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['autoHide', 'color', 'disabled', 'menu', 'mode', 'type'],
-  standalone: true,
+  standalone: true
 })
 export class IonMenuButton {
   protected el: HTMLElement;
@@ -1889,11 +1427,13 @@ export class IonMenuButton {
   }
 }
 
+
 export declare interface IonMenuButton extends Components.IonMenuButton {}
+
 
 @ProxyCmp({
   defineCustomElementFn: defineIonMenuToggle,
-  inputs: ['autoHide', 'menu'],
+  inputs: ['autoHide', 'menu']
 })
 @Component({
   selector: 'ion-menu-toggle',
@@ -1901,7 +1441,7 @@ export declare interface IonMenuButton extends Components.IonMenuButton {}
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['autoHide', 'menu'],
-  standalone: true,
+  standalone: true
 })
 export class IonMenuToggle {
   protected el: HTMLElement;
@@ -1911,11 +1451,13 @@ export class IonMenuToggle {
   }
 }
 
+
 export declare interface IonMenuToggle extends Components.IonMenuToggle {}
+
 
 @ProxyCmp({
   defineCustomElementFn: defineIonNavLink,
-  inputs: ['component', 'componentProps', 'routerAnimation', 'routerDirection'],
+  inputs: ['component', 'componentProps', 'routerAnimation', 'routerDirection']
 })
 @Component({
   selector: 'ion-nav-link',
@@ -1923,7 +1465,7 @@ export declare interface IonMenuToggle extends Components.IonMenuToggle {}
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['component', 'componentProps', 'routerAnimation', 'routerDirection'],
-  standalone: true,
+  standalone: true
 })
 export class IonNavLink {
   protected el: HTMLElement;
@@ -1933,11 +1475,13 @@ export class IonNavLink {
   }
 }
 
+
 export declare interface IonNavLink extends Components.IonNavLink {}
+
 
 @ProxyCmp({
   defineCustomElementFn: defineIonNote,
-  inputs: ['color', 'mode'],
+  inputs: ['color', 'mode']
 })
 @Component({
   selector: 'ion-note',
@@ -1945,7 +1489,7 @@ export declare interface IonNavLink extends Components.IonNavLink {}
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['color', 'mode'],
-  standalone: true,
+  standalone: true
 })
 export class IonNote {
   protected el: HTMLElement;
@@ -1955,68 +1499,32 @@ export class IonNote {
   }
 }
 
+
 export declare interface IonNote extends Components.IonNote {}
+
 
 @ProxyCmp({
   defineCustomElementFn: defineIonPicker,
-  inputs: [
-    'animated',
-    'backdropDismiss',
-    'buttons',
-    'columns',
-    'cssClass',
-    'duration',
-    'enterAnimation',
-    'htmlAttributes',
-    'isOpen',
-    'keyboardClose',
-    'leaveAnimation',
-    'mode',
-    'showBackdrop',
-    'trigger',
-  ],
-  methods: ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss', 'getColumn'],
+  inputs: ['animated', 'backdropDismiss', 'buttons', 'columns', 'cssClass', 'duration', 'enterAnimation', 'htmlAttributes', 'isOpen', 'keyboardClose', 'leaveAnimation', 'mode', 'showBackdrop', 'trigger'],
+  methods: ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss', 'getColumn']
 })
 @Component({
   selector: 'ion-picker',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [
-    'animated',
-    'backdropDismiss',
-    'buttons',
-    'columns',
-    'cssClass',
-    'duration',
-    'enterAnimation',
-    'htmlAttributes',
-    'isOpen',
-    'keyboardClose',
-    'leaveAnimation',
-    'mode',
-    'showBackdrop',
-    'trigger',
-  ],
-  standalone: true,
+  inputs: ['animated', 'backdropDismiss', 'buttons', 'columns', 'cssClass', 'duration', 'enterAnimation', 'htmlAttributes', 'isOpen', 'keyboardClose', 'leaveAnimation', 'mode', 'showBackdrop', 'trigger'],
+  standalone: true
 })
 export class IonPicker {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, [
-      'ionPickerDidPresent',
-      'ionPickerWillPresent',
-      'ionPickerWillDismiss',
-      'ionPickerDidDismiss',
-      'didPresent',
-      'willPresent',
-      'willDismiss',
-      'didDismiss',
-    ]);
+    proxyOutputs(this, this.el, ['ionPickerDidPresent', 'ionPickerWillPresent', 'ionPickerWillDismiss', 'ionPickerDidDismiss', 'didPresent', 'willPresent', 'willDismiss', 'didDismiss']);
   }
 }
+
 
 import type { OverlayEventDetail as IIonPickerOverlayEventDetail } from '@ionic/core/components';
 
@@ -2059,9 +1567,10 @@ Shorthand for ionPickerDidDismiss.
   didDismiss: EventEmitter<CustomEvent<IIonPickerOverlayEventDetail>>;
 }
 
+
 @ProxyCmp({
   defineCustomElementFn: defineIonProgressBar,
-  inputs: ['buffer', 'color', 'mode', 'reversed', 'type', 'value'],
+  inputs: ['buffer', 'color', 'mode', 'reversed', 'type', 'value']
 })
 @Component({
   selector: 'ion-progress-bar',
@@ -2069,7 +1578,7 @@ Shorthand for ionPickerDidDismiss.
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['buffer', 'color', 'mode', 'reversed', 'type', 'value'],
-  standalone: true,
+  standalone: true
 })
 export class IonProgressBar {
   protected el: HTMLElement;
@@ -2079,11 +1588,13 @@ export class IonProgressBar {
   }
 }
 
+
 export declare interface IonProgressBar extends Components.IonProgressBar {}
+
 
 @ProxyCmp({
   defineCustomElementFn: defineIonRadio,
-  inputs: ['color', 'disabled', 'justify', 'labelPlacement', 'legacy', 'mode', 'name', 'value'],
+  inputs: ['color', 'disabled', 'justify', 'labelPlacement', 'legacy', 'mode', 'name', 'value']
 })
 @Component({
   selector: 'ion-radio',
@@ -2091,7 +1602,7 @@ export declare interface IonProgressBar extends Components.IonProgressBar {}
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['color', 'disabled', 'justify', 'labelPlacement', 'legacy', 'mode', 'name', 'value'],
-  standalone: true,
+  standalone: true
 })
 export class IonRadio {
   protected el: HTMLElement;
@@ -2101,6 +1612,7 @@ export class IonRadio {
     proxyOutputs(this, this.el, ['ionFocus', 'ionBlur']);
   }
 }
+
 
 export declare interface IonRadio extends Components.IonRadio {
   /**
@@ -2113,9 +1625,10 @@ export declare interface IonRadio extends Components.IonRadio {
   ionBlur: EventEmitter<CustomEvent<void>>;
 }
 
+
 @ProxyCmp({
   defineCustomElementFn: defineIonRadioGroup,
-  inputs: ['allowEmptySelection', 'name', 'value'],
+  inputs: ['allowEmptySelection', 'name', 'value']
 })
 @Component({
   selector: 'ion-radio-group',
@@ -2123,7 +1636,7 @@ export declare interface IonRadio extends Components.IonRadio {
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['allowEmptySelection', 'name', 'value'],
-  standalone: true,
+  standalone: true
 })
 export class IonRadioGroup {
   protected el: HTMLElement;
@@ -2134,6 +1647,7 @@ export class IonRadioGroup {
   }
 }
 
+
 import type { RadioGroupChangeEventDetail as IIonRadioGroupRadioGroupChangeEventDetail } from '@ionic/core/components';
 
 export declare interface IonRadioGroup extends Components.IonRadioGroup {
@@ -2143,55 +1657,18 @@ export declare interface IonRadioGroup extends Components.IonRadioGroup {
   ionChange: EventEmitter<CustomEvent<IIonRadioGroupRadioGroupChangeEventDetail>>;
 }
 
+
 @ProxyCmp({
   defineCustomElementFn: defineIonRange,
-  inputs: [
-    'activeBarStart',
-    'color',
-    'debounce',
-    'disabled',
-    'dualKnobs',
-    'label',
-    'labelPlacement',
-    'legacy',
-    'max',
-    'min',
-    'mode',
-    'name',
-    'pin',
-    'pinFormatter',
-    'snaps',
-    'step',
-    'ticks',
-    'value',
-  ],
+  inputs: ['activeBarStart', 'color', 'debounce', 'disabled', 'dualKnobs', 'label', 'labelPlacement', 'legacy', 'max', 'min', 'mode', 'name', 'pin', 'pinFormatter', 'snaps', 'step', 'ticks', 'value']
 })
 @Component({
   selector: 'ion-range',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [
-    'activeBarStart',
-    'color',
-    'debounce',
-    'disabled',
-    'dualKnobs',
-    'label',
-    'labelPlacement',
-    'legacy',
-    'max',
-    'min',
-    'mode',
-    'name',
-    'pin',
-    'pinFormatter',
-    'snaps',
-    'step',
-    'ticks',
-    'value',
-  ],
-  standalone: true,
+  inputs: ['activeBarStart', 'color', 'debounce', 'disabled', 'dualKnobs', 'label', 'labelPlacement', 'legacy', 'max', 'min', 'mode', 'name', 'pin', 'pinFormatter', 'snaps', 'step', 'ticks', 'value'],
+  standalone: true
 })
 export class IonRange {
   protected el: HTMLElement;
@@ -2201,6 +1678,7 @@ export class IonRange {
     proxyOutputs(this, this.el, ['ionChange', 'ionInput', 'ionFocus', 'ionBlur', 'ionKnobMoveStart', 'ionKnobMoveEnd']);
   }
 }
+
 
 import type { RangeChangeEventDetail as IIonRangeRangeChangeEventDetail } from '@ionic/core/components';
 import type { RangeKnobMoveStartEventDetail as IIonRangeRangeKnobMoveStartEventDetail } from '@ionic/core/components';
@@ -2242,10 +1720,11 @@ mouse drag, touch gesture, or keyboard interaction.
   ionKnobMoveEnd: EventEmitter<CustomEvent<IIonRangeRangeKnobMoveEndEventDetail>>;
 }
 
+
 @ProxyCmp({
   defineCustomElementFn: defineIonRefresher,
   inputs: ['closeDuration', 'disabled', 'pullFactor', 'pullMax', 'pullMin', 'snapbackDuration'],
-  methods: ['complete', 'cancel', 'getProgress'],
+  methods: ['complete', 'cancel', 'getProgress']
 })
 @Component({
   selector: 'ion-refresher',
@@ -2253,7 +1732,7 @@ mouse drag, touch gesture, or keyboard interaction.
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['closeDuration', 'disabled', 'pullFactor', 'pullMax', 'pullMin', 'snapbackDuration'],
-  standalone: true,
+  standalone: true
 })
 export class IonRefresher {
   protected el: HTMLElement;
@@ -2263,6 +1742,7 @@ export class IonRefresher {
     proxyOutputs(this, this.el, ['ionRefresh', 'ionPull', 'ionStart']);
   }
 }
+
 
 import type { RefresherEventDetail as IIonRefresherRefresherEventDetail } from '@ionic/core/components';
 
@@ -2284,9 +1764,10 @@ called when the async operation has completed.
   ionStart: EventEmitter<CustomEvent<void>>;
 }
 
+
 @ProxyCmp({
   defineCustomElementFn: defineIonRefresherContent,
-  inputs: ['pullingIcon', 'pullingText', 'refreshingSpinner', 'refreshingText'],
+  inputs: ['pullingIcon', 'pullingText', 'refreshingSpinner', 'refreshingText']
 })
 @Component({
   selector: 'ion-refresher-content',
@@ -2294,7 +1775,7 @@ called when the async operation has completed.
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['pullingIcon', 'pullingText', 'refreshingSpinner', 'refreshingText'],
-  standalone: true,
+  standalone: true
 })
 export class IonRefresherContent {
   protected el: HTMLElement;
@@ -2304,10 +1785,12 @@ export class IonRefresherContent {
   }
 }
 
+
 export declare interface IonRefresherContent extends Components.IonRefresherContent {}
 
+
 @ProxyCmp({
-  defineCustomElementFn: defineIonReorder,
+  defineCustomElementFn: defineIonReorder
 })
 @Component({
   selector: 'ion-reorder',
@@ -2315,7 +1798,7 @@ export declare interface IonRefresherContent extends Components.IonRefresherCont
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: [],
-  standalone: true,
+  standalone: true
 })
 export class IonReorder {
   protected el: HTMLElement;
@@ -2325,12 +1808,14 @@ export class IonReorder {
   }
 }
 
+
 export declare interface IonReorder extends Components.IonReorder {}
+
 
 @ProxyCmp({
   defineCustomElementFn: defineIonReorderGroup,
   inputs: ['disabled'],
-  methods: ['complete'],
+  methods: ['complete']
 })
 @Component({
   selector: 'ion-reorder-group',
@@ -2338,7 +1823,7 @@ export declare interface IonReorder extends Components.IonReorder {}
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['disabled'],
-  standalone: true,
+  standalone: true
 })
 export class IonReorderGroup {
   protected el: HTMLElement;
@@ -2348,6 +1833,7 @@ export class IonReorderGroup {
     proxyOutputs(this, this.el, ['ionItemReorder']);
   }
 }
+
 
 import type { ItemReorderEventDetail as IIonReorderGroupItemReorderEventDetail } from '@ionic/core/components';
 
@@ -2360,10 +1846,11 @@ to be called in order to finalize the reorder action.
   ionItemReorder: EventEmitter<CustomEvent<IIonReorderGroupItemReorderEventDetail>>;
 }
 
+
 @ProxyCmp({
   defineCustomElementFn: defineIonRippleEffect,
   inputs: ['type'],
-  methods: ['addRipple'],
+  methods: ['addRipple']
 })
 @Component({
   selector: 'ion-ripple-effect',
@@ -2371,7 +1858,7 @@ to be called in order to finalize the reorder action.
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['type'],
-  standalone: true,
+  standalone: true
 })
 export class IonRippleEffect {
   protected el: HTMLElement;
@@ -2381,10 +1868,12 @@ export class IonRippleEffect {
   }
 }
 
+
 export declare interface IonRippleEffect extends Components.IonRippleEffect {}
 
+
 @ProxyCmp({
-  defineCustomElementFn: defineIonRow,
+  defineCustomElementFn: defineIonRow
 })
 @Component({
   selector: 'ion-row',
@@ -2392,7 +1881,7 @@ export declare interface IonRippleEffect extends Components.IonRippleEffect {}
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: [],
-  standalone: true,
+  standalone: true
 })
 export class IonRow {
   protected el: HTMLElement;
@@ -2402,62 +1891,22 @@ export class IonRow {
   }
 }
 
+
 export declare interface IonRow extends Components.IonRow {}
+
 
 @ProxyCmp({
   defineCustomElementFn: defineIonSearchbar,
-  inputs: [
-    'animated',
-    'autocomplete',
-    'autocorrect',
-    'cancelButtonIcon',
-    'cancelButtonText',
-    'clearIcon',
-    'color',
-    'debounce',
-    'disabled',
-    'enterkeyhint',
-    'inputmode',
-    'mode',
-    'name',
-    'placeholder',
-    'searchIcon',
-    'showCancelButton',
-    'showClearButton',
-    'spellcheck',
-    'type',
-    'value',
-  ],
-  methods: ['setFocus', 'getInputElement'],
+  inputs: ['animated', 'autocomplete', 'autocorrect', 'cancelButtonIcon', 'cancelButtonText', 'clearIcon', 'color', 'debounce', 'disabled', 'enterkeyhint', 'inputmode', 'mode', 'name', 'placeholder', 'searchIcon', 'showCancelButton', 'showClearButton', 'spellcheck', 'type', 'value'],
+  methods: ['setFocus', 'getInputElement']
 })
 @Component({
   selector: 'ion-searchbar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [
-    'animated',
-    'autocomplete',
-    'autocorrect',
-    'cancelButtonIcon',
-    'cancelButtonText',
-    'clearIcon',
-    'color',
-    'debounce',
-    'disabled',
-    'enterkeyhint',
-    'inputmode',
-    'mode',
-    'name',
-    'placeholder',
-    'searchIcon',
-    'showCancelButton',
-    'showClearButton',
-    'spellcheck',
-    'type',
-    'value',
-  ],
-  standalone: true,
+  inputs: ['animated', 'autocomplete', 'autocorrect', 'cancelButtonIcon', 'cancelButtonText', 'clearIcon', 'color', 'debounce', 'disabled', 'enterkeyhint', 'inputmode', 'mode', 'name', 'placeholder', 'searchIcon', 'showCancelButton', 'showClearButton', 'spellcheck', 'type', 'value'],
+  standalone: true
 })
 export class IonSearchbar {
   protected el: HTMLElement;
@@ -2467,6 +1916,7 @@ export class IonSearchbar {
     proxyOutputs(this, this.el, ['ionInput', 'ionChange', 'ionCancel', 'ionClear', 'ionBlur', 'ionFocus']);
   }
 }
+
 
 import type { SearchbarInputEventDetail as IIonSearchbarSearchbarInputEventDetail } from '@ionic/core/components';
 import type { SearchbarChangeEventDetail as IIonSearchbarSearchbarChangeEventDetail } from '@ionic/core/components';
@@ -2505,9 +1955,10 @@ when clicking the clear or cancel buttons.
   ionFocus: EventEmitter<CustomEvent<void>>;
 }
 
+
 @ProxyCmp({
   defineCustomElementFn: defineIonSegment,
-  inputs: ['color', 'disabled', 'mode', 'scrollable', 'selectOnFocus', 'swipeGesture', 'value'],
+  inputs: ['color', 'disabled', 'mode', 'scrollable', 'selectOnFocus', 'swipeGesture', 'value']
 })
 @Component({
   selector: 'ion-segment',
@@ -2515,7 +1966,7 @@ when clicking the clear or cancel buttons.
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['color', 'disabled', 'mode', 'scrollable', 'selectOnFocus', 'swipeGesture', 'value'],
-  standalone: true,
+  standalone: true
 })
 export class IonSegment {
   protected el: HTMLElement;
@@ -2525,6 +1976,7 @@ export class IonSegment {
     proxyOutputs(this, this.el, ['ionChange']);
   }
 }
+
 
 import type { SegmentChangeEventDetail as IIonSegmentSegmentChangeEventDetail } from '@ionic/core/components';
 
@@ -2536,9 +1988,10 @@ dragging pointer has been released from `ion-segment`.
   ionChange: EventEmitter<CustomEvent<IIonSegmentSegmentChangeEventDetail>>;
 }
 
+
 @ProxyCmp({
   defineCustomElementFn: defineIonSegmentButton,
-  inputs: ['disabled', 'layout', 'mode', 'type', 'value'],
+  inputs: ['disabled', 'layout', 'mode', 'type', 'value']
 })
 @Component({
   selector: 'ion-segment-button',
@@ -2546,7 +1999,7 @@ dragging pointer has been released from `ion-segment`.
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['disabled', 'layout', 'mode', 'type', 'value'],
-  standalone: true,
+  standalone: true
 })
 export class IonSegmentButton {
   protected el: HTMLElement;
@@ -2556,64 +2009,22 @@ export class IonSegmentButton {
   }
 }
 
+
 export declare interface IonSegmentButton extends Components.IonSegmentButton {}
+
 
 @ProxyCmp({
   defineCustomElementFn: defineIonSelect,
-  inputs: [
-    'cancelText',
-    'color',
-    'compareWith',
-    'disabled',
-    'expandedIcon',
-    'fill',
-    'interface',
-    'interfaceOptions',
-    'justify',
-    'label',
-    'labelPlacement',
-    'legacy',
-    'mode',
-    'multiple',
-    'name',
-    'okText',
-    'placeholder',
-    'selectedText',
-    'shape',
-    'toggleIcon',
-    'value',
-  ],
-  methods: ['open'],
+  inputs: ['cancelText', 'color', 'compareWith', 'disabled', 'expandedIcon', 'fill', 'interface', 'interfaceOptions', 'justify', 'label', 'labelPlacement', 'legacy', 'mode', 'multiple', 'name', 'okText', 'placeholder', 'selectedText', 'shape', 'toggleIcon', 'value'],
+  methods: ['open']
 })
 @Component({
   selector: 'ion-select',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [
-    'cancelText',
-    'color',
-    'compareWith',
-    'disabled',
-    'expandedIcon',
-    'fill',
-    'interface',
-    'interfaceOptions',
-    'justify',
-    'label',
-    'labelPlacement',
-    'legacy',
-    'mode',
-    'multiple',
-    'name',
-    'okText',
-    'placeholder',
-    'selectedText',
-    'shape',
-    'toggleIcon',
-    'value',
-  ],
-  standalone: true,
+  inputs: ['cancelText', 'color', 'compareWith', 'disabled', 'expandedIcon', 'fill', 'interface', 'interfaceOptions', 'justify', 'label', 'labelPlacement', 'legacy', 'mode', 'multiple', 'name', 'okText', 'placeholder', 'selectedText', 'shape', 'toggleIcon', 'value'],
+  standalone: true
 })
 export class IonSelect {
   protected el: HTMLElement;
@@ -2623,6 +2034,7 @@ export class IonSelect {
     proxyOutputs(this, this.el, ['ionChange', 'ionCancel', 'ionDismiss', 'ionFocus', 'ionBlur']);
   }
 }
+
 
 import type { SelectChangeEventDetail as IIonSelectSelectChangeEventDetail } from '@ionic/core/components';
 
@@ -2649,9 +2061,10 @@ export declare interface IonSelect extends Components.IonSelect {
   ionBlur: EventEmitter<CustomEvent<void>>;
 }
 
+
 @ProxyCmp({
   defineCustomElementFn: defineIonSelectOption,
-  inputs: ['disabled', 'value'],
+  inputs: ['disabled', 'value']
 })
 @Component({
   selector: 'ion-select-option',
@@ -2659,7 +2072,7 @@ export declare interface IonSelect extends Components.IonSelect {
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['disabled', 'value'],
-  standalone: true,
+  standalone: true
 })
 export class IonSelectOption {
   protected el: HTMLElement;
@@ -2669,11 +2082,13 @@ export class IonSelectOption {
   }
 }
 
+
 export declare interface IonSelectOption extends Components.IonSelectOption {}
+
 
 @ProxyCmp({
   defineCustomElementFn: defineIonSkeletonText,
-  inputs: ['animated'],
+  inputs: ['animated']
 })
 @Component({
   selector: 'ion-skeleton-text',
@@ -2681,7 +2096,7 @@ export declare interface IonSelectOption extends Components.IonSelectOption {}
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['animated'],
-  standalone: true,
+  standalone: true
 })
 export class IonSkeletonText {
   protected el: HTMLElement;
@@ -2691,11 +2106,13 @@ export class IonSkeletonText {
   }
 }
 
+
 export declare interface IonSkeletonText extends Components.IonSkeletonText {}
+
 
 @ProxyCmp({
   defineCustomElementFn: defineIonSpinner,
-  inputs: ['color', 'duration', 'name', 'paused'],
+  inputs: ['color', 'duration', 'name', 'paused']
 })
 @Component({
   selector: 'ion-spinner',
@@ -2703,7 +2120,7 @@ export declare interface IonSkeletonText extends Components.IonSkeletonText {}
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['color', 'duration', 'name', 'paused'],
-  standalone: true,
+  standalone: true
 })
 export class IonSpinner {
   protected el: HTMLElement;
@@ -2713,11 +2130,13 @@ export class IonSpinner {
   }
 }
 
+
 export declare interface IonSpinner extends Components.IonSpinner {}
+
 
 @ProxyCmp({
   defineCustomElementFn: defineIonSplitPane,
-  inputs: ['contentId', 'disabled', 'when'],
+  inputs: ['contentId', 'disabled', 'when']
 })
 @Component({
   selector: 'ion-split-pane',
@@ -2725,7 +2144,7 @@ export declare interface IonSpinner extends Components.IonSpinner {}
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['contentId', 'disabled', 'when'],
-  standalone: true,
+  standalone: true
 })
 export class IonSplitPane {
   protected el: HTMLElement;
@@ -2736,6 +2155,7 @@ export class IonSplitPane {
   }
 }
 
+
 export declare interface IonSplitPane extends Components.IonSplitPane {
   /**
    * Expression to be called when the split-pane visibility has changed
@@ -2743,9 +2163,10 @@ export declare interface IonSplitPane extends Components.IonSplitPane {
   ionSplitPaneVisible: EventEmitter<CustomEvent<{ visible: boolean }>>;
 }
 
+
 @ProxyCmp({
   defineCustomElementFn: defineIonTabBar,
-  inputs: ['color', 'mode', 'selectedTab', 'translucent'],
+  inputs: ['color', 'mode', 'selectedTab', 'translucent']
 })
 @Component({
   selector: 'ion-tab-bar',
@@ -2753,7 +2174,7 @@ export declare interface IonSplitPane extends Components.IonSplitPane {
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['color', 'mode', 'selectedTab', 'translucent'],
-  standalone: true,
+  standalone: true
 })
 export class IonTabBar {
   protected el: HTMLElement;
@@ -2763,11 +2184,13 @@ export class IonTabBar {
   }
 }
 
+
 export declare interface IonTabBar extends Components.IonTabBar {}
+
 
 @ProxyCmp({
   defineCustomElementFn: defineIonTabButton,
-  inputs: ['disabled', 'download', 'href', 'layout', 'mode', 'rel', 'selected', 'tab', 'target'],
+  inputs: ['disabled', 'download', 'href', 'layout', 'mode', 'rel', 'selected', 'tab', 'target']
 })
 @Component({
   selector: 'ion-tab-button',
@@ -2775,7 +2198,7 @@ export declare interface IonTabBar extends Components.IonTabBar {}
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['disabled', 'download', 'href', 'layout', 'mode', 'rel', 'selected', 'tab', 'target'],
-  standalone: true,
+  standalone: true
 })
 export class IonTabButton {
   protected el: HTMLElement;
@@ -2785,11 +2208,13 @@ export class IonTabButton {
   }
 }
 
+
 export declare interface IonTabButton extends Components.IonTabButton {}
+
 
 @ProxyCmp({
   defineCustomElementFn: defineIonText,
-  inputs: ['color', 'mode'],
+  inputs: ['color', 'mode']
 })
 @Component({
   selector: 'ion-text',
@@ -2797,7 +2222,7 @@ export declare interface IonTabButton extends Components.IonTabButton {}
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['color', 'mode'],
-  standalone: true,
+  standalone: true
 })
 export class IonText {
   protected el: HTMLElement;
@@ -2807,82 +2232,22 @@ export class IonText {
   }
 }
 
+
 export declare interface IonText extends Components.IonText {}
+
 
 @ProxyCmp({
   defineCustomElementFn: defineIonTextarea,
-  inputs: [
-    'autoGrow',
-    'autocapitalize',
-    'autofocus',
-    'clearOnEdit',
-    'color',
-    'cols',
-    'counter',
-    'counterFormatter',
-    'debounce',
-    'disabled',
-    'enterkeyhint',
-    'errorText',
-    'fill',
-    'helperText',
-    'inputmode',
-    'label',
-    'labelPlacement',
-    'legacy',
-    'maxlength',
-    'minlength',
-    'mode',
-    'name',
-    'placeholder',
-    'readonly',
-    'required',
-    'rows',
-    'shape',
-    'spellcheck',
-    'value',
-    'wrap',
-  ],
-  methods: ['setFocus', 'getInputElement'],
+  inputs: ['autoGrow', 'autocapitalize', 'autofocus', 'clearOnEdit', 'color', 'cols', 'counter', 'counterFormatter', 'debounce', 'disabled', 'enterkeyhint', 'errorText', 'fill', 'helperText', 'inputmode', 'label', 'labelPlacement', 'legacy', 'maxlength', 'minlength', 'mode', 'name', 'placeholder', 'readonly', 'required', 'rows', 'shape', 'spellcheck', 'value', 'wrap'],
+  methods: ['setFocus', 'getInputElement']
 })
 @Component({
   selector: 'ion-textarea',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [
-    'autoGrow',
-    'autocapitalize',
-    'autofocus',
-    'clearOnEdit',
-    'color',
-    'cols',
-    'counter',
-    'counterFormatter',
-    'debounce',
-    'disabled',
-    'enterkeyhint',
-    'errorText',
-    'fill',
-    'helperText',
-    'inputmode',
-    'label',
-    'labelPlacement',
-    'legacy',
-    'maxlength',
-    'minlength',
-    'mode',
-    'name',
-    'placeholder',
-    'readonly',
-    'required',
-    'rows',
-    'shape',
-    'spellcheck',
-    'value',
-    'wrap',
-  ],
-  standalone: true,
+  inputs: ['autoGrow', 'autocapitalize', 'autofocus', 'clearOnEdit', 'color', 'cols', 'counter', 'counterFormatter', 'debounce', 'disabled', 'enterkeyhint', 'errorText', 'fill', 'helperText', 'inputmode', 'label', 'labelPlacement', 'legacy', 'maxlength', 'minlength', 'mode', 'name', 'placeholder', 'readonly', 'required', 'rows', 'shape', 'spellcheck', 'value', 'wrap'],
+  standalone: true
 })
 export class IonTextarea {
   protected el: HTMLElement;
@@ -2892,6 +2257,7 @@ export class IonTextarea {
     proxyOutputs(this, this.el, ['ionChange', 'ionInput', 'ionBlur', 'ionFocus']);
   }
 }
+
 
 import type { TextareaChangeEventDetail as IIonTextareaTextareaChangeEventDetail } from '@ionic/core/components';
 import type { TextareaInputEventDetail as IIonTextareaTextareaInputEventDetail } from '@ionic/core/components';
@@ -2922,8 +2288,9 @@ the user clears the textarea by performing a keydown event.
   ionFocus: EventEmitter<CustomEvent<FocusEvent>>;
 }
 
+
 @ProxyCmp({
-  defineCustomElementFn: defineIonThumbnail,
+  defineCustomElementFn: defineIonThumbnail
 })
 @Component({
   selector: 'ion-thumbnail',
@@ -2931,7 +2298,7 @@ the user clears the textarea by performing a keydown event.
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: [],
-  standalone: true,
+  standalone: true
 })
 export class IonThumbnail {
   protected el: HTMLElement;
@@ -2941,11 +2308,13 @@ export class IonThumbnail {
   }
 }
 
+
 export declare interface IonThumbnail extends Components.IonThumbnail {}
+
 
 @ProxyCmp({
   defineCustomElementFn: defineIonTitle,
-  inputs: ['color', 'size'],
+  inputs: ['color', 'size']
 })
 @Component({
   selector: 'ion-title',
@@ -2953,7 +2322,7 @@ export declare interface IonThumbnail extends Components.IonThumbnail {}
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['color', 'size'],
-  standalone: true,
+  standalone: true
 })
 export class IonTitle {
   protected el: HTMLElement;
@@ -2963,76 +2332,32 @@ export class IonTitle {
   }
 }
 
+
 export declare interface IonTitle extends Components.IonTitle {}
+
 
 @ProxyCmp({
   defineCustomElementFn: defineIonToast,
-  inputs: [
-    'animated',
-    'buttons',
-    'color',
-    'cssClass',
-    'duration',
-    'enterAnimation',
-    'header',
-    'htmlAttributes',
-    'icon',
-    'isOpen',
-    'keyboardClose',
-    'layout',
-    'leaveAnimation',
-    'message',
-    'mode',
-    'position',
-    'translucent',
-    'trigger',
-  ],
-  methods: ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss'],
+  inputs: ['animated', 'buttons', 'color', 'cssClass', 'duration', 'enterAnimation', 'header', 'htmlAttributes', 'icon', 'isOpen', 'keyboardClose', 'layout', 'leaveAnimation', 'message', 'mode', 'position', 'translucent', 'trigger'],
+  methods: ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss']
 })
 @Component({
   selector: 'ion-toast',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [
-    'animated',
-    'buttons',
-    'color',
-    'cssClass',
-    'duration',
-    'enterAnimation',
-    'header',
-    'htmlAttributes',
-    'icon',
-    'isOpen',
-    'keyboardClose',
-    'layout',
-    'leaveAnimation',
-    'message',
-    'mode',
-    'position',
-    'translucent',
-    'trigger',
-  ],
-  standalone: true,
+  inputs: ['animated', 'buttons', 'color', 'cssClass', 'duration', 'enterAnimation', 'header', 'htmlAttributes', 'icon', 'isOpen', 'keyboardClose', 'layout', 'leaveAnimation', 'message', 'mode', 'position', 'translucent', 'trigger'],
+  standalone: true
 })
 export class IonToast {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, [
-      'ionToastDidPresent',
-      'ionToastWillPresent',
-      'ionToastWillDismiss',
-      'ionToastDidDismiss',
-      'didPresent',
-      'willPresent',
-      'willDismiss',
-      'didDismiss',
-    ]);
+    proxyOutputs(this, this.el, ['ionToastDidPresent', 'ionToastWillPresent', 'ionToastWillDismiss', 'ionToastDidDismiss', 'didPresent', 'willPresent', 'willDismiss', 'didDismiss']);
   }
 }
+
 
 import type { OverlayEventDetail as IIonToastOverlayEventDetail } from '@ionic/core/components';
 
@@ -3075,39 +2400,18 @@ Shorthand for ionToastDidDismiss.
   didDismiss: EventEmitter<CustomEvent<IIonToastOverlayEventDetail>>;
 }
 
+
 @ProxyCmp({
   defineCustomElementFn: defineIonToggle,
-  inputs: [
-    'checked',
-    'color',
-    'disabled',
-    'enableOnOffLabels',
-    'justify',
-    'labelPlacement',
-    'legacy',
-    'mode',
-    'name',
-    'value',
-  ],
+  inputs: ['checked', 'color', 'disabled', 'enableOnOffLabels', 'justify', 'labelPlacement', 'legacy', 'mode', 'name', 'value']
 })
 @Component({
   selector: 'ion-toggle',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [
-    'checked',
-    'color',
-    'disabled',
-    'enableOnOffLabels',
-    'justify',
-    'labelPlacement',
-    'legacy',
-    'mode',
-    'name',
-    'value',
-  ],
-  standalone: true,
+  inputs: ['checked', 'color', 'disabled', 'enableOnOffLabels', 'justify', 'labelPlacement', 'legacy', 'mode', 'name', 'value'],
+  standalone: true
 })
 export class IonToggle {
   protected el: HTMLElement;
@@ -3117,6 +2421,7 @@ export class IonToggle {
     proxyOutputs(this, this.el, ['ionChange', 'ionFocus', 'ionBlur']);
   }
 }
+
 
 import type { ToggleChangeEventDetail as IIonToggleToggleChangeEventDetail } from '@ionic/core/components';
 
@@ -3136,9 +2441,10 @@ when programmatically changing the value of the `checked` property.
   ionBlur: EventEmitter<CustomEvent<void>>;
 }
 
+
 @ProxyCmp({
   defineCustomElementFn: defineIonToolbar,
-  inputs: ['color', 'mode'],
+  inputs: ['color', 'mode']
 })
 @Component({
   selector: 'ion-toolbar',
@@ -3146,7 +2452,7 @@ when programmatically changing the value of the `checked` property.
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['color', 'mode'],
-  standalone: true,
+  standalone: true
 })
 export class IonToolbar {
   protected el: HTMLElement;
@@ -3156,4 +2462,7 @@ export class IonToolbar {
   }
 }
 
+
 export declare interface IonToolbar extends Components.IonToolbar {}
+
+

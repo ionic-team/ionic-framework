@@ -50,7 +50,8 @@ const getAngularOutputTargets = () => {
          * are reliant on the CE build will reference the wrong
          * import location.
          */
-        'ion-icon'
+        'ion-icon',
+        'ion-input'
       ],
       outputType: 'standalone',
     })
