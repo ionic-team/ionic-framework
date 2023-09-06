@@ -70,4 +70,21 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, screenshot, co
       await expect(list).toHaveScreenshot(screenshot(`checkbox-long-label-in-item`));
     });
   });
+
+  test.describe(title('checkbox: stacked label in item'), () => {
+    test('should render margins correctly when using stacked label in item', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-list>
+            <ion-item>
+              <ion-checkbox label-placement="stacked">Enable Notifications</ion-checkbox>
+            </ion-item>
+          </ion-list>
+        `,
+        config
+      );
+      const list = page.locator('ion-list');
+      await expect(list).toHaveScreenshot(screenshot(`checkbox-stacked-label-in-item`));
+    });
+  });
 });
