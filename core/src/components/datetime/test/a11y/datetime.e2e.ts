@@ -15,16 +15,18 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
           }
         </style>
 
-        <ion-datetime show-default-title="true" show-default-buttons="true" presentation="date-time" value="2022-06-06T16:30"></ion-datetime>
+        <div id="container" style="width: 450px;">
+          <ion-datetime size="cover" show-default-title="true" show-default-buttons="true" presentation="date-time" value="2022-06-06T16:30"></ion-datetime>
+        </div>
       `,
         config
       );
 
-      const datetime = page.locator('ion-datetime');
+      const container = page.locator('#container');
 
       await page.waitForSelector('.datetime-ready');
 
-      await expect(datetime).toHaveScreenshot(screenshot(`datetime-scale`));
+      await expect(container).toHaveScreenshot(screenshot(`datetime-scale`));
     });
   });
 });
