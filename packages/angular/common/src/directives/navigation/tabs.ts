@@ -11,7 +11,7 @@ import {
 
 import { NavController } from '../../providers/nav-controller';
 
-import type { StackEvent } from './stack-utils';
+import { StackDidChangeEvent, StackWillChangeEvent } from './stack-utils';
 
 @Directive({
   selector: 'ion-tabs',
@@ -28,7 +28,13 @@ export class IonTabs implements AfterContentInit, AfterContentChecked {
 
   @ViewChild('tabsInner', { read: ElementRef, static: true }) tabsInner: ElementRef<HTMLDivElement>;
 
+  /**
+   * Emitted before the tab view is changed.
+   */
   @Output() ionTabsWillChange = new EventEmitter<{ tab: string }>();
+  /**
+   * Emitted after the tab view is changed.
+   */
   @Output() ionTabsDidChange = new EventEmitter<{ tab: string }>();
 
   private tabBarSlot = 'bottom';
@@ -46,10 +52,19 @@ export class IonTabs implements AfterContentInit, AfterContentChecked {
   /**
    * @internal
    */
-  onPageSelected(detail: StackEvent): void {
-    const stackId = detail.enteringView.stackId;
-    if (detail.tabSwitch && stackId !== undefined) {
+  onStackWillChange({ enteringView, tabSwitch }: StackWillChangeEvent): void {
+    const stackId = enteringView.stackId;
+    if (tabSwitch && stackId !== undefined) {
       this.ionTabsWillChange.emit({ tab: stackId });
+    }
+  }
+
+  /**
+   * @internal
+   */
+  onStackDidChange({ enteringView, tabSwitch }: StackDidChangeEvent): void {
+    const stackId = enteringView.stackId;
+    if (tabSwitch && stackId !== undefined) {
       if (this.tabBar) {
         this.tabBar.selectedTab = stackId;
       }
