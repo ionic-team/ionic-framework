@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, HostListener, Injector, NgZone } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Injector,
+  NgZone,
+} from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValueAccessor } from '@ionic/angular/common';
 import type { SelectChangeEventDetail, Components } from '@ionic/core/components';
@@ -6,12 +15,34 @@ import { defineCustomElement } from '@ionic/core/components/ion-select.js';
 
 import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 
-const SELECT_INPUTS = ['cancelText', 'color', 'compareWith', 'disabled', 'expandedIcon', 'fill', 'interface', 'interfaceOptions', 'justify', 'label', 'labelPlacement', 'legacy', 'mode', 'multiple', 'name', 'okText', 'placeholder', 'selectedText', 'shape', 'toggleIcon', 'value'];
+const SELECT_INPUTS = [
+  'cancelText',
+  'color',
+  'compareWith',
+  'disabled',
+  'expandedIcon',
+  'fill',
+  'interface',
+  'interfaceOptions',
+  'justify',
+  'label',
+  'labelPlacement',
+  'legacy',
+  'mode',
+  'multiple',
+  'name',
+  'okText',
+  'placeholder',
+  'selectedText',
+  'shape',
+  'toggleIcon',
+  'value',
+];
 
 @ProxyCmp({
   defineCustomElementFn: defineCustomElement,
   inputs: SELECT_INPUTS,
-  methods: ['open']
+  methods: ['open'],
 })
 @Component({
   selector: 'ion-select',
@@ -24,9 +55,9 @@ const SELECT_INPUTS = ['cancelText', 'color', 'compareWith', 'disabled', 'expand
       provide: NG_VALUE_ACCESSOR,
       useExisting: IonSelect,
       multi: true,
-    }
+    },
   ],
-  standalone: true
+  standalone: true,
 })
 export class IonSelect extends ValueAccessor {
   protected el: HTMLElement;

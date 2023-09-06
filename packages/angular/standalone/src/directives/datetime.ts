@@ -1,5 +1,13 @@
-
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, HostListener, Injector, NgZone } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Injector,
+  NgZone,
+} from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValueAccessor } from '@ionic/angular/common';
 import type { DatetimeChangeEventDetail, Components } from '@ionic/core/components';
@@ -7,8 +15,38 @@ import { defineCustomElement } from '@ionic/core/components/ion-datetime.js';
 
 import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 
-
-const DATETIME_INPUTS = ['cancelText', 'clearText', 'color', 'dayValues', 'disabled', 'doneText', 'firstDayOfWeek', 'highlightedDates', 'hourCycle', 'hourValues', 'isDateEnabled', 'locale', 'max', 'min', 'minuteValues', 'mode', 'monthValues', 'multiple', 'name', 'preferWheel', 'presentation', 'readonly', 'showClearButton', 'showDefaultButtons', 'showDefaultTimeLabel', 'showDefaultTitle', 'size', 'titleSelectedDatesFormatter', 'value', 'yearValues'];
+const DATETIME_INPUTS = [
+  'cancelText',
+  'clearText',
+  'color',
+  'dayValues',
+  'disabled',
+  'doneText',
+  'firstDayOfWeek',
+  'highlightedDates',
+  'hourCycle',
+  'hourValues',
+  'isDateEnabled',
+  'locale',
+  'max',
+  'min',
+  'minuteValues',
+  'mode',
+  'monthValues',
+  'multiple',
+  'name',
+  'preferWheel',
+  'presentation',
+  'readonly',
+  'showClearButton',
+  'showDefaultButtons',
+  'showDefaultTimeLabel',
+  'showDefaultTitle',
+  'size',
+  'titleSelectedDatesFormatter',
+  'value',
+  'yearValues',
+];
 
 @ProxyCmp({
   defineCustomElementFn: defineCustomElement,
@@ -26,7 +64,7 @@ const DATETIME_INPUTS = ['cancelText', 'clearText', 'color', 'dayValues', 'disab
       provide: NG_VALUE_ACCESSOR,
       useExisting: IonDatetime,
       multi: true,
-    }
+    },
   ],
   standalone: true,
 })
@@ -40,9 +78,7 @@ export class IonDatetime extends ValueAccessor {
   }
 
   @HostListener('ionChange', ['$event.target'])
-  handleIonChange(
-    el: HTMLIonDatetimeElement
-  ): void {
+  handleIonChange(el: HTMLIonDatetimeElement): void {
     this.handleValueChange(el, el.value);
   }
 }

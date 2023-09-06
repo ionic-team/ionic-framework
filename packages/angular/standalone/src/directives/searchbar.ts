@@ -1,19 +1,47 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, HostListener, Injector, NgZone } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Injector,
+  NgZone,
+} from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValueAccessor } from '@ionic/angular/common';
 import type { SearchbarInputEventDetail, SearchbarChangeEventDetail, Components } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-searchbar.js';
 
-
 import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 
-
-const SEARCHBAR_INPUTS = ['animated', 'autocomplete', 'autocorrect', 'cancelButtonIcon', 'cancelButtonText', 'clearIcon', 'color', 'debounce', 'disabled', 'enterkeyhint', 'inputmode', 'mode', 'name', 'placeholder', 'searchIcon', 'showCancelButton', 'showClearButton', 'spellcheck', 'type', 'value'];
+const SEARCHBAR_INPUTS = [
+  'animated',
+  'autocomplete',
+  'autocorrect',
+  'cancelButtonIcon',
+  'cancelButtonText',
+  'clearIcon',
+  'color',
+  'debounce',
+  'disabled',
+  'enterkeyhint',
+  'inputmode',
+  'mode',
+  'name',
+  'placeholder',
+  'searchIcon',
+  'showCancelButton',
+  'showClearButton',
+  'spellcheck',
+  'type',
+  'value',
+];
 
 @ProxyCmp({
   defineCustomElementFn: defineCustomElement,
   inputs: SEARCHBAR_INPUTS,
-  methods: ['setFocus', 'getInputElement']
+  methods: ['setFocus', 'getInputElement'],
 })
 @Component({
   selector: 'ion-searchbar',
@@ -26,9 +54,9 @@ const SEARCHBAR_INPUTS = ['animated', 'autocomplete', 'autocorrect', 'cancelButt
       provide: NG_VALUE_ACCESSOR,
       useExisting: IonSearchbar,
       multi: true,
-    }
+    },
   ],
-  standalone: true
+  standalone: true,
 })
 export class IonSearchbar extends ValueAccessor {
   protected el: HTMLElement;

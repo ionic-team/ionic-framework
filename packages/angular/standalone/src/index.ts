@@ -36,6 +36,6 @@ export {
   IonSegment,
   IonSelect,
   IonTextarea,
-  IonToggle
+  IonToggle,
 } from './directives';
 export * from './directives/proxies';

@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, HostListener, Injector, NgZone } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Injector,
+  NgZone,
+} from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValueAccessor, setIonicClasses } from '@ionic/angular/common';
 import type { CheckboxChangeEventDetail, Components } from '@ionic/core/components';
@@ -6,13 +15,22 @@ import { defineCustomElement } from '@ionic/core/components/ion-checkbox.js';
 
 import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 
-
-const CHECKBOX_INPUTS = ['checked', 'color', 'disabled', 'indeterminate', 'justify', 'labelPlacement', 'legacy', 'mode', 'name', 'value'];
-
+const CHECKBOX_INPUTS = [
+  'checked',
+  'color',
+  'disabled',
+  'indeterminate',
+  'justify',
+  'labelPlacement',
+  'legacy',
+  'mode',
+  'name',
+  'value',
+];
 
 @ProxyCmp({
   defineCustomElementFn: defineCustomElement,
-  inputs: CHECKBOX_INPUTS
+  inputs: CHECKBOX_INPUTS,
 })
 @Component({
   selector: 'ion-checkbox',
@@ -27,7 +45,7 @@ const CHECKBOX_INPUTS = ['checked', 'color', 'disabled', 'indeterminate', 'justi
       multi: true,
     },
   ],
-  standalone: true
+  standalone: true,
 })
 export class IonCheckbox extends ValueAccessor {
   protected el: HTMLElement;

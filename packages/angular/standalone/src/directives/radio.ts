@@ -1,5 +1,13 @@
-
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, HostListener, Injector, NgZone } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Injector,
+  NgZone,
+} from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValueAccessor } from '@ionic/angular/common';
 import type { Components } from '@ionic/core/components';
@@ -11,7 +19,7 @@ const RADIO_INPUTS = ['color', 'disabled', 'justify', 'labelPlacement', 'legacy'
 
 @ProxyCmp({
   defineCustomElementFn: defineCustomElement,
-  inputs: RADIO_INPUTS
+  inputs: RADIO_INPUTS,
 })
 @Component({
   selector: 'ion-radio',
@@ -24,9 +32,9 @@ const RADIO_INPUTS = ['color', 'disabled', 'justify', 'labelPlacement', 'legacy'
       provide: NG_VALUE_ACCESSOR,
       useExisting: IonRadio,
       multi: true,
-    }
+    },
   ],
-  standalone: true
+  standalone: true,
 })
 export class IonRadio extends ValueAccessor {
   protected el: HTMLElement;
@@ -46,7 +54,6 @@ export class IonRadio extends ValueAccessor {
     this.handleValueChange(el, el.checked);
   }
 }
-
 
 export declare interface IonRadio extends Components.IonRadio {
   /**

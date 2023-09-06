@@ -1,18 +1,49 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, HostListener, Injector, NgZone } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Injector,
+  NgZone,
+} from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValueAccessor } from '@ionic/angular/common';
-import type { RangeChangeEventDetail, RangeKnobMoveStartEventDetail, RangeKnobMoveEndEventDetail, Components } from '@ionic/core/components';
+import type {
+  RangeChangeEventDetail,
+  RangeKnobMoveStartEventDetail,
+  RangeKnobMoveEndEventDetail,
+  Components,
+} from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-range.js';
-
 
 import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 
-
-const RANGE_INPUTS = ['activeBarStart', 'color', 'debounce', 'disabled', 'dualKnobs', 'label', 'labelPlacement', 'legacy', 'max', 'min', 'mode', 'name', 'pin', 'pinFormatter', 'snaps', 'step', 'ticks', 'value'];
+const RANGE_INPUTS = [
+  'activeBarStart',
+  'color',
+  'debounce',
+  'disabled',
+  'dualKnobs',
+  'label',
+  'labelPlacement',
+  'legacy',
+  'max',
+  'min',
+  'mode',
+  'name',
+  'pin',
+  'pinFormatter',
+  'snaps',
+  'step',
+  'ticks',
+  'value',
+];
 
 @ProxyCmp({
   defineCustomElementFn: defineCustomElement,
-  inputs: RANGE_INPUTS
+  inputs: RANGE_INPUTS,
 })
 @Component({
   selector: 'ion-range',
@@ -25,9 +56,9 @@ const RANGE_INPUTS = ['activeBarStart', 'color', 'debounce', 'disabled', 'dualKn
       provide: NG_VALUE_ACCESSOR,
       useExisting: IonRange,
       multi: true,
-    }
+    },
   ],
-  standalone: true
+  standalone: true,
 })
 export class IonRange extends ValueAccessor {
   protected el: HTMLElement;
@@ -39,9 +70,7 @@ export class IonRange extends ValueAccessor {
   }
 
   @HostListener('ionChange', ['$event.target'])
-  handleIonChange(
-    el: HTMLIonRangeElement
-  ): void {
+  handleIonChange(el: HTMLIonRangeElement): void {
     this.handleValueChange(el, el.value);
   }
 }

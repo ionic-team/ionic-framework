@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, HostListener, Injector, NgZone } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Injector,
+  NgZone,
+} from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValueAccessor, setIonicClasses } from '@ionic/angular/common';
 import type { ToggleChangeEventDetail, Components } from '@ionic/core/components';
@@ -6,11 +15,22 @@ import { defineCustomElement } from '@ionic/core/components/ion-toggle.js';
 
 import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 
-const TOGGLE_INPUTS = ['checked', 'color', 'disabled', 'enableOnOffLabels', 'justify', 'labelPlacement', 'legacy', 'mode', 'name', 'value'];
+const TOGGLE_INPUTS = [
+  'checked',
+  'color',
+  'disabled',
+  'enableOnOffLabels',
+  'justify',
+  'labelPlacement',
+  'legacy',
+  'mode',
+  'name',
+  'value',
+];
 
 @ProxyCmp({
   defineCustomElementFn: defineCustomElement,
-  inputs: TOGGLE_INPUTS
+  inputs: TOGGLE_INPUTS,
 })
 @Component({
   selector: 'ion-toggle',
@@ -23,9 +43,9 @@ const TOGGLE_INPUTS = ['checked', 'color', 'disabled', 'enableOnOffLabels', 'jus
       provide: NG_VALUE_ACCESSOR,
       useExisting: IonToggle,
       multi: true,
-    }
+    },
   ],
-  standalone: true
+  standalone: true,
 })
 export class IonToggle extends ValueAccessor {
   protected el: HTMLElement;

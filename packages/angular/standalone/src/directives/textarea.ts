@@ -1,19 +1,57 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, HostListener, Injector, NgZone } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Injector,
+  NgZone,
+} from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValueAccessor } from '@ionic/angular/common';
 import type { TextareaChangeEventDetail, TextareaInputEventDetail, Components } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-textarea.js';
 
-
 import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 
-
-const TEXTAREA_INPUTS = ['autoGrow', 'autocapitalize', 'autofocus', 'clearOnEdit', 'color', 'cols', 'counter', 'counterFormatter', 'debounce', 'disabled', 'enterkeyhint', 'errorText', 'fill', 'helperText', 'inputmode', 'label', 'labelPlacement', 'legacy', 'maxlength', 'minlength', 'mode', 'name', 'placeholder', 'readonly', 'required', 'rows', 'shape', 'spellcheck', 'value', 'wrap'];
+const TEXTAREA_INPUTS = [
+  'autoGrow',
+  'autocapitalize',
+  'autofocus',
+  'clearOnEdit',
+  'color',
+  'cols',
+  'counter',
+  'counterFormatter',
+  'debounce',
+  'disabled',
+  'enterkeyhint',
+  'errorText',
+  'fill',
+  'helperText',
+  'inputmode',
+  'label',
+  'labelPlacement',
+  'legacy',
+  'maxlength',
+  'minlength',
+  'mode',
+  'name',
+  'placeholder',
+  'readonly',
+  'required',
+  'rows',
+  'shape',
+  'spellcheck',
+  'value',
+  'wrap',
+];
 
 @ProxyCmp({
   defineCustomElementFn: defineCustomElement,
   inputs: TEXTAREA_INPUTS,
-  methods: ['setFocus', 'getInputElement']
+  methods: ['setFocus', 'getInputElement'],
 })
 @Component({
   selector: 'ion-textarea',
@@ -26,9 +64,9 @@ const TEXTAREA_INPUTS = ['autoGrow', 'autocapitalize', 'autofocus', 'clearOnEdit
       provide: NG_VALUE_ACCESSOR,
       useExisting: IonTextarea,
       multi: true,
-    }
+    },
   ],
-  standalone: true
+  standalone: true,
 })
 export class IonTextarea extends ValueAccessor {
   protected el: HTMLElement;

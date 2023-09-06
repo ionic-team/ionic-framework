@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, HostListener, Injector, NgZone } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Injector,
+  NgZone,
+} from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValueAccessor } from '@ionic/angular/common';
 import type { SegmentChangeEventDetail, Components } from '@ionic/core/components';
@@ -6,12 +15,11 @@ import { defineCustomElement } from '@ionic/core/components/ion-segment.js';
 
 import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 
-
 const SEGMENT_INPUTS = ['color', 'disabled', 'mode', 'scrollable', 'selectOnFocus', 'swipeGesture', 'value'];
 
 @ProxyCmp({
   defineCustomElementFn: defineCustomElement,
-  inputs: SEGMENT_INPUTS
+  inputs: SEGMENT_INPUTS,
 })
 @Component({
   selector: 'ion-segment',
@@ -24,9 +32,9 @@ const SEGMENT_INPUTS = ['color', 'disabled', 'mode', 'scrollable', 'selectOnFocu
       provide: NG_VALUE_ACCESSOR,
       useExisting: IonSegment,
       multi: true,
-    }
+    },
   ],
-  standalone: true
+  standalone: true,
 })
 export class IonSegment extends ValueAccessor {
   protected el: HTMLElement;

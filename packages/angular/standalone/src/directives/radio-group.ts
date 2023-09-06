@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, HostListener, Injector, NgZone } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Injector,
+  NgZone,
+} from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValueAccessor } from '@ionic/angular/common';
 import type { RadioGroupChangeEventDetail, Components } from '@ionic/core/components';
@@ -10,7 +19,7 @@ const RADIO_GROUP_INPUTS = ['allowEmptySelection', 'name', 'value'];
 
 @ProxyCmp({
   defineCustomElementFn: defineCustomElement,
-  inputs: RADIO_GROUP_INPUTS
+  inputs: RADIO_GROUP_INPUTS,
 })
 @Component({
   selector: 'ion-radio-group',
@@ -23,9 +32,9 @@ const RADIO_GROUP_INPUTS = ['allowEmptySelection', 'name', 'value'];
       provide: NG_VALUE_ACCESSOR,
       useExisting: IonRadioGroup,
       multi: true,
-    }
+    },
   ],
-  standalone: true
+  standalone: true,
 })
 export class IonRadioGroup extends ValueAccessor {
   protected el: HTMLElement;
@@ -37,9 +46,7 @@ export class IonRadioGroup extends ValueAccessor {
   }
 
   @HostListener('ionChange', ['$event.target'])
-  handleIonChange(
-    el: HTMLIonRadioGroupElement
-  ): void {
+  handleIonChange(el: HTMLIonRadioGroupElement): void {
     this.handleValueChange(el, el.value);
   }
 }

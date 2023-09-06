@@ -1,7 +1,20 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, HostListener, Injector, NgZone } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Injector,
+  NgZone,
+} from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValueAccessor } from '@ionic/angular/common';
-import type { InputInputEventDetail as IIonInputInputInputEventDetail, InputChangeEventDetail as IIonInputInputChangeEventDetail, Components } from '@ionic/core/components';
+import type {
+  InputInputEventDetail as IIonInputInputInputEventDetail,
+  InputChangeEventDetail as IIonInputInputChangeEventDetail,
+  Components,
+} from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-input.js';
 
 import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
@@ -62,7 +75,7 @@ const INPUT_INPUTS = [
       provide: NG_VALUE_ACCESSOR,
       useExisting: IonInput,
       multi: true,
-    }
+    },
   ],
   standalone: true,
 })
@@ -92,7 +105,7 @@ export class IonInput extends ValueAccessor {
       } else {
         fn(value);
       }
-    })
+    });
   }
 }
 
