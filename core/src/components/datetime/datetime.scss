@@ -221,6 +221,18 @@ ion-picker-column-internal {
 }
 
 /**
+ * The confirm and clear buttons are grouped in a
+ * container so that they appear on the end opposite
+ * of the cancel button.
+ * We use display: flex so that the
+ * wrapper only takes up as much
+ * height as it needs.
+ */
+.datetime-action-buttons .datetime-action-buttons-container {
+  display: flex;
+}
+
+/**
  * Date/Year button should be on
  * the opposite side of the component
  * as the Next/Prev buttons
