@@ -17,7 +17,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       const range = page.locator('ion-range');
 
-      expect(await range.screenshot()).toMatchSnapshot(screenshot(`range-enabled`));
+      await expect(range).toHaveScreenshot(screenshot(`range-enabled`));
     });
 
     test('should render disabled state', async ({ page }) => {
@@ -34,7 +34,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       const range = page.locator('ion-range');
 
-      expect(await range.screenshot()).toMatchSnapshot(screenshot(`range-disabled`));
+      await expect(range).toHaveScreenshot(screenshot(`range-disabled`));
     });
 
     test('should render disabled state with a value', async ({ page }) => {
@@ -51,7 +51,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       const range = page.locator('ion-range');
 
-      expect(await range.screenshot()).toMatchSnapshot(screenshot(`range-disabled-value`));
+      await expect(range).toHaveScreenshot(screenshot(`range-disabled-value`));
     });
 
     test('should render disabled state with ticks', async ({ page }) => {
@@ -68,7 +68,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       const range = page.locator('ion-range');
 
-      expect(await range.screenshot()).toMatchSnapshot(screenshot(`range-disabled-ticks`));
+      await expect(range).toHaveScreenshot(screenshot(`range-disabled-ticks`));
     });
   });
 });

@@ -1,10 +1,11 @@
-import React from 'react';
 import { IonButton, IonContent, IonPage, IonActionSheet } from '@ionic/react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 const ActionSheetComponent: React.FC = () => {
   const [message, setMessage] = useState('');
   const [show, setShow] = useState(false);
+  const [willPresentCount, setWillPresentCount] = useState(0);
+  const [didDismissCount, setDidDismissCount] = useState(0);
 
   return (
     <IonPage>
@@ -26,7 +27,13 @@ const ActionSheetComponent: React.FC = () => {
             },
           ]}
           header="Action Sheet"
-          onDidDismiss={() => setShow(false)}
+          onWillPresent={() => {
+            setWillPresentCount(willPresentCount + 1);
+          }}
+          onDidDismiss={() => {
+            setDidDismissCount(didDismissCount + 1);
+            setShow(false);
+          }}
         />
         <IonButton expand="block" onClick={() => setShow(true)}>
           Show ActionSheet
@@ -41,6 +48,8 @@ const ActionSheetComponent: React.FC = () => {
           Show ActionSheet, hide after 250 mss
         </IonButton>
         <div>{message}</div>
+        <div>onWillPresent count: {willPresentCount}</div>
+        <div>onDidDismiss count: {didDismissCount}</div>
       </IonContent>
     </IonPage>
   );

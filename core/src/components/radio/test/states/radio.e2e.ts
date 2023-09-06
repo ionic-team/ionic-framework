@@ -14,7 +14,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       );
 
       const radio = page.locator('ion-radio');
-      expect(await radio.screenshot()).toMatchSnapshot(screenshot(`radio-disabled`));
+      await expect(radio).toHaveScreenshot(screenshot(`radio-disabled`));
     });
 
     test('should render disabled checked radio correctly', async ({ page }) => {
@@ -28,7 +28,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       );
 
       const radio = page.locator('ion-radio');
-      expect(await radio.screenshot()).toMatchSnapshot(screenshot(`radio-checked-disabled`));
+      await expect(radio).toHaveScreenshot(screenshot(`radio-checked-disabled`));
     });
 
     test('should render checked radio correctly', async ({ page }) => {
@@ -42,7 +42,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       );
 
       const radio = page.locator('ion-radio');
-      expect(await radio.screenshot()).toMatchSnapshot(screenshot(`radio-checked`));
+      await expect(radio).toHaveScreenshot(screenshot(`radio-checked`));
     });
 
     test('should render unchecked radio correctly', async ({ page }) => {
@@ -56,7 +56,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       );
 
       const radio = page.locator('ion-radio');
-      expect(await radio.screenshot()).toMatchSnapshot(screenshot(`radio-unchecked`));
+      await expect(radio).toHaveScreenshot(screenshot(`radio-unchecked`));
     });
   });
 });
