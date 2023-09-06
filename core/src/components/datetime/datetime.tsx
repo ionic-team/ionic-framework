@@ -90,6 +90,7 @@ import {
  * calendar.
  * @part calendar-day active - The currently selected calendar day.
  * @part calendar-day today - The calendar day that contains the current day.
+ * @part calendar-day disabled - The calendar day that is disabled.
  */
 @Component({
   tag: 'ion-datetime',
@@ -2126,7 +2127,9 @@ export class Datetime implements ComponentInterface {
             // "Filler days" at the beginning of the grid should not get the calendar day
             // CSS parts added to them
             if (!isCalendarPadding) {
-              dateParts = `calendar-day${isActive ? ' active' : ''}${isToday ? ' today' : ''}`;
+              dateParts = `calendar-day${isActive ? ' active' : ''}${isToday ? ' today' : ''}${
+                isCalDayDisabled ? ' disabled' : ''
+              }`;
             }
 
             return (

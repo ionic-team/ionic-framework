@@ -99,6 +99,11 @@
         box-shadow: 0px 0px 0px 4px rgb(154 209 98 / 0.2);
       }
 
+      #custom-calendar-days::part(calendar-day disabled) {
+        background: rgba(0 0 0 / 0.2);
+        color: black;
+      }
+
       /*
       * Custom Material Design Datetime Day Parts
       * -------------------------------------------
@@ -190,6 +195,14 @@
           backgroundColor: 'lightblue',
         },
       ];
+
+      customDatetime.isDateEnabled = (date) => {
+        if (date === '2023-06-22') {
+          return false;
+        }
+
+        return true;
+      };
     </script>
   </body>
 </html>
