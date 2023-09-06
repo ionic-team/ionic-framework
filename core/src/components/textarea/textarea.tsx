@@ -180,7 +180,7 @@ export class Textarea implements ComponentInterface {
   /**
    * The visible width of the text control, in average character widths. If it is specified, it must be a positive integer.
    */
-  @Prop() cols?: number;
+  @Prop({ reflect: true }) cols?: number;
 
   /**
    * The number of visible text lines for the control.

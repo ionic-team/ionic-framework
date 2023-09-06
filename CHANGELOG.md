@@ -3,6 +3,45 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.3.3](https://github.com/ionic-team/ionic-framework/compare/v7.3.2...v7.3.3) (2023-09-06)
+
+
+### Bug Fixes
+
+* **modal:** swipe to dismiss resets status bar style ([#28110](https://github.com/ionic-team/ionic-framework/issues/28110)) ([176585f](https://github.com/ionic-team/ionic-framework/commit/176585f446b04a6a0cedab2e09417637dbfc78ee)), closes [#28105](https://github.com/ionic-team/ionic-framework/issues/28105)
+* **overlays:** prevent overlays from getting stuck open ([#28069](https://github.com/ionic-team/ionic-framework/issues/28069)) ([584e9d3](https://github.com/ionic-team/ionic-framework/commit/584e9d3be220343451c2d4b9bf90658ecd530de1)), closes [#27200](https://github.com/ionic-team/ionic-framework/issues/27200)
+* **popover:** dynamic width popover is positioned correctly ([#28072](https://github.com/ionic-team/ionic-framework/issues/28072)) ([2a80eb6](https://github.com/ionic-team/ionic-framework/commit/2a80eb6bd0b16a9dab9bea600bb7f935d25c0e1b)), closes [#27190](https://github.com/ionic-team/ionic-framework/issues/27190) [#24780](https://github.com/ionic-team/ionic-framework/issues/24780)
+* **react:** overlay content is shown with hook  ([#28109](https://github.com/ionic-team/ionic-framework/issues/28109)) ([7b551fd](https://github.com/ionic-team/ionic-framework/commit/7b551fd54b9e16a2538e5b82a13d72b3007fa045)), closes [#28102](https://github.com/ionic-team/ionic-framework/issues/28102)
+* **textarea:** cols property is respected ([#28081](https://github.com/ionic-team/ionic-framework/issues/28081)) ([6d4eabc](https://github.com/ionic-team/ionic-framework/commit/6d4eabcc1046c28c1abf69a8bda3e06f80cf3f8f)), closes [#22142](https://github.com/ionic-team/ionic-framework/issues/22142)
+
+
+
+
+
+## [7.3.2](https://github.com/ionic-team/ionic-framework/compare/v7.3.1...v7.3.2) (2023-08-30)
+
+
+### Bug Fixes
+
+* **datetime:** gracefully handle invalid min/max ([#28054](https://github.com/ionic-team/ionic-framework/issues/28054)) ([01fc9b4](https://github.com/ionic-team/ionic-framework/commit/01fc9b45116f7ad6ddc56c7fb1535dec798c2b3a)), closes [#28041](https://github.com/ionic-team/ionic-framework/issues/28041)
+
+
+
+
+
+## [7.3.1](https://github.com/ionic-team/ionic-framework/compare/v7.3.0...v7.3.1) (2023-08-23)
+
+
+### Bug Fixes
+
+* **angular:** ionTabsWillChange is fired before tab activation ([#27991](https://github.com/ionic-team/ionic-framework/issues/27991)) ([bbfb8f8](https://github.com/ionic-team/ionic-framework/commit/bbfb8f81a61475d7e73b63743db5d6a0cd979d21)), closes [#27212](https://github.com/ionic-team/ionic-framework/issues/27212)
+* **input, textarea:** clearOnEdit does not clear when pressing Tab ([#28005](https://github.com/ionic-team/ionic-framework/issues/28005)) ([444acc1](https://github.com/ionic-team/ionic-framework/commit/444acc1f1bca348b62dfb398067cc087529f67f1)), closes [#27746](https://github.com/ionic-team/ionic-framework/issues/27746)
+* **react:** avoid multiple invocations of onDidDismiss and onWillPresent ([#28020](https://github.com/ionic-team/ionic-framework/issues/28020)) ([0ac3df3](https://github.com/ionic-team/ionic-framework/commit/0ac3df3f378bdefc3a927adc798ebd9ec7a54fee)), closes [#28010](https://github.com/ionic-team/ionic-framework/issues/28010)
+
+
+
+
+
 # [7.3.0](https://github.com/ionic-team/ionic-framework/compare/v7.2.4...v7.3.0) (2023-08-16)
 
 
