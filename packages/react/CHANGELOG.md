@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.3.3](https://github.com/ionic-team/ionic-framework/compare/v7.3.2...v7.3.3) (2023-09-06)
+
+
+### Bug Fixes
+
+* **react:** overlay content is shown with hook  ([#28109](https://github.com/ionic-team/ionic-framework/issues/28109)) ([7b551fd](https://github.com/ionic-team/ionic-framework/commit/7b551fd54b9e16a2538e5b82a13d72b3007fa045)), closes [#28102](https://github.com/ionic-team/ionic-framework/issues/28102)
+
+
+
+
+
 ## [7.3.2](https://github.com/ionic-team/ionic-framework/compare/v7.3.1...v7.3.2) (2023-08-30)
 
 **Note:** Version bump only for package @ionic/react
