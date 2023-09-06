@@ -350,6 +350,11 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     }
   }
 
+  private getFirstInteractive() {
+    const controls = this.el.querySelectorAll<HTMLElement>('ion-toggle, ion-checkbox, ion-radio');
+    return controls[0];
+  }
+
   render() {
     const {
       counterString,
@@ -367,6 +372,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
       routerAnimation,
       routerDirection,
       inheritedAriaAttributes,
+      multipleInputs,
     } = this;
     const childStyles = {} as StyleEventDetail;
     const mode = getIonMode(this);
@@ -383,15 +389,26 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
             rel,
             target,
           };
+
+    let clickFn = {};
+
+    const firstInteractive = this.getFirstInteractive();
+
     // Only set onClick if the item is clickable to prevent screen
     // readers from reading all items as clickable
-    const clickFn = clickable
-      ? {
-          onClick: (ev: Event) => {
+    if (clickable || (firstInteractive !== undefined && !multipleInputs)) {
+      clickFn = {
+        onClick: (ev: Event) => {
+          if (clickable) {
             openURL(href, ev, routerDirection, routerAnimation);
-          },
-        }
-      : {};
+          }
+          if (firstInteractive !== undefined && !multipleInputs) {
+            firstInteractive.click();
+          }
+        },
+      };
+    }
+
     const showDetail = detail !== undefined ? detail : mode === 'ios' && clickable;
     this.itemStyles.forEach((value) => {
       Object.assign(childStyles, value);
