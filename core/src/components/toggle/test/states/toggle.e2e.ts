@@ -12,7 +12,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       );
 
       const toggle = page.locator('ion-toggle');
-      expect(await toggle.screenshot()).toMatchSnapshot(screenshot(`toggle-disabled`));
+      await expect(toggle).toHaveScreenshot(screenshot(`toggle-disabled`));
     });
 
     test('should render checked toggle correctly', async ({ page }) => {
@@ -24,7 +24,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       );
 
       const toggle = page.locator('ion-toggle');
-      expect(await toggle.screenshot()).toMatchSnapshot(screenshot(`toggle-checked`));
+      await expect(toggle).toHaveScreenshot(screenshot(`toggle-checked`));
     });
 
     test('should render unchecked toggle correctly', async ({ page }) => {
@@ -36,7 +36,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       );
 
       const toggle = page.locator('ion-toggle');
-      expect(await toggle.screenshot()).toMatchSnapshot(screenshot(`toggle-unchecked`));
+      await expect(toggle).toHaveScreenshot(screenshot(`toggle-unchecked`));
     });
   });
 });

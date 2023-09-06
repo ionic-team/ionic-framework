@@ -46,7 +46,8 @@ module.exports = {
     {
       "files": ["*.e2e.ts"],
       "rules": {
-        "custom-rules/await-playwright-promise-assertion": "error"
+        "custom-rules/await-playwright-promise-assertion": "error",
+        "custom-rules/no-playwright-to-match-snapshot-assertion": "error"
       }
     }
   ]

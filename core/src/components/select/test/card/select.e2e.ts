@@ -18,7 +18,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       );
 
       const card = page.locator('ion-card');
-      expect(await card.screenshot()).toMatchSnapshot(screenshot(`select-card`));
+      await expect(card).toHaveScreenshot(screenshot(`select-card`));
     });
   });
 });
