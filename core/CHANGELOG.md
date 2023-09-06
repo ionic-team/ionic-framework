@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.3.3-nightly.20230906](https://github.com/ionic-team/ionic-framework/compare/v7.3.2...v7.3.3-nightly.20230906) (2023-09-06)
+
+
+### Bug Fixes
+
+* **modal:** swipe to dismiss resets status bar style ([#28110](https://github.com/ionic-team/ionic-framework/issues/28110)) ([176585f](https://github.com/ionic-team/ionic-framework/commit/176585f446b04a6a0cedab2e09417637dbfc78ee)), closes [#28105](https://github.com/ionic-team/ionic-framework/issues/28105)
+* **overlays:** prevent overlays from getting stuck open ([#28069](https://github.com/ionic-team/ionic-framework/issues/28069)) ([584e9d3](https://github.com/ionic-team/ionic-framework/commit/584e9d3be220343451c2d4b9bf90658ecd530de1)), closes [#27200](https://github.com/ionic-team/ionic-framework/issues/27200)
+* **popover:** dynamic width popover is positioned correctly ([#28072](https://github.com/ionic-team/ionic-framework/issues/28072)) ([2a80eb6](https://github.com/ionic-team/ionic-framework/commit/2a80eb6bd0b16a9dab9bea600bb7f935d25c0e1b)), closes [#27190](https://github.com/ionic-team/ionic-framework/issues/27190) [#24780](https://github.com/ionic-team/ionic-framework/issues/24780)
+* **textarea:** cols property is respected ([#28081](https://github.com/ionic-team/ionic-framework/issues/28081)) ([6d4eabc](https://github.com/ionic-team/ionic-framework/commit/6d4eabcc1046c28c1abf69a8bda3e06f80cf3f8f)), closes [#22142](https://github.com/ionic-team/ionic-framework/issues/22142)
+
+
+
+
+
 ## [7.3.2](https://github.com/ionic-team/ionic-framework/compare/v7.3.1...v7.3.2) (2023-08-30)
 
 
