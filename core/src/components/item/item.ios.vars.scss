@@ -7,7 +7,7 @@
 $item-ios-min-height:                        44px !default;
 
 /// @prop - Font size of the item
-$item-ios-font-size:                         16px !default;
+$item-ios-font-size:                         dynamic-font(16px) !default;
 
 /// @prop - Margin top of the item paragraph
 $item-ios-paragraph-margin-top:              0 !default;
