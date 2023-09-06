@@ -39,3 +39,5 @@ export * from './directives/control-value-accessors';
 export { ProxyCmp } from './utils/proxy';
 
 export { IonicRouteStrategy } from './utils/routing';
+
+export { raf } from './utils/util';
