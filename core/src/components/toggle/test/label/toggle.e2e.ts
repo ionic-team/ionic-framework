@@ -21,7 +21,7 @@ configs().forEach(({ title, screenshot, config }) => {
       );
 
       const toggle = page.locator('ion-toggle');
-      expect(await toggle.screenshot()).toMatchSnapshot(screenshot(`toggle-label-start-justify-start`));
+      await expect(toggle).toHaveScreenshot(screenshot(`toggle-label-start-justify-start`));
     });
     test('should render an end justification with label in the start position', async ({ page }) => {
       await page.setContent(
@@ -33,7 +33,7 @@ configs().forEach(({ title, screenshot, config }) => {
       );
 
       const toggle = page.locator('ion-toggle');
-      expect(await toggle.screenshot()).toMatchSnapshot(screenshot(`toggle-label-start-justify-end`));
+      await expect(toggle).toHaveScreenshot(screenshot(`toggle-label-start-justify-end`));
     });
     test('should render a space between justification with label in the start position', async ({ page }) => {
       await page.setContent(
@@ -45,7 +45,7 @@ configs().forEach(({ title, screenshot, config }) => {
       );
 
       const toggle = page.locator('ion-toggle');
-      expect(await toggle.screenshot()).toMatchSnapshot(screenshot(`toggle-label-start-justify-space-between`));
+      await expect(toggle).toHaveScreenshot(screenshot(`toggle-label-start-justify-space-between`));
     });
   });
 
@@ -60,7 +60,7 @@ configs().forEach(({ title, screenshot, config }) => {
       );
 
       const toggle = page.locator('ion-toggle');
-      expect(await toggle.screenshot()).toMatchSnapshot(screenshot(`toggle-label-end-justify-start`));
+      await expect(toggle).toHaveScreenshot(screenshot(`toggle-label-end-justify-start`));
     });
     test('should render an end justification with label in the end position', async ({ page }) => {
       await page.setContent(
@@ -72,7 +72,7 @@ configs().forEach(({ title, screenshot, config }) => {
       );
 
       const toggle = page.locator('ion-toggle');
-      expect(await toggle.screenshot()).toMatchSnapshot(screenshot(`toggle-label-end-justify-end`));
+      await expect(toggle).toHaveScreenshot(screenshot(`toggle-label-end-justify-end`));
     });
     test('should render a space between justification with label in the end position', async ({ page }) => {
       await page.setContent(
@@ -84,7 +84,7 @@ configs().forEach(({ title, screenshot, config }) => {
       );
 
       const toggle = page.locator('ion-toggle');
-      expect(await toggle.screenshot()).toMatchSnapshot(screenshot(`toggle-label-end-justify-space-between`));
+      await expect(toggle).toHaveScreenshot(screenshot(`toggle-label-end-justify-space-between`));
     });
   });
 
@@ -99,7 +99,7 @@ configs().forEach(({ title, screenshot, config }) => {
       );
 
       const toggle = page.locator('ion-toggle');
-      expect(await toggle.screenshot()).toMatchSnapshot(screenshot(`toggle-label-fixed-justify-start`));
+      await expect(toggle).toHaveScreenshot(screenshot(`toggle-label-fixed-justify-start`));
     });
     test('should render an end justification with label in the fixed position', async ({ page }) => {
       await page.setContent(
@@ -111,7 +111,7 @@ configs().forEach(({ title, screenshot, config }) => {
       );
 
       const toggle = page.locator('ion-toggle');
-      expect(await toggle.screenshot()).toMatchSnapshot(screenshot(`toggle-label-fixed-justify-end`));
+      await expect(toggle).toHaveScreenshot(screenshot(`toggle-label-fixed-justify-end`));
     });
     test('should render a space between justification with label in the fixed position', async ({ page }) => {
       await page.setContent(
@@ -123,7 +123,7 @@ configs().forEach(({ title, screenshot, config }) => {
       );
 
       const toggle = page.locator('ion-toggle');
-      expect(await toggle.screenshot()).toMatchSnapshot(screenshot(`toggle-label-fixed-justify-space-between`));
+      await expect(toggle).toHaveScreenshot(screenshot(`toggle-label-fixed-justify-space-between`));
     });
   });
 });

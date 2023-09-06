@@ -138,7 +138,6 @@ export class Datetime implements ComponentInterface {
 
   @Element() el!: HTMLIonDatetimeElement;
 
-  @State() isPresented = false;
   @State() isTimePopoverOpen = false;
 
   /**
@@ -883,21 +882,18 @@ export class Datetime implements ComponentInterface {
 
       const getChangedMonth = (parts: DatetimeParts): DatetimeParts | undefined => {
         const box = calendarBodyRef.getBoundingClientRect();
-        const root = this.el!.shadowRoot!;
 
         /**
-         * Get the element that is in the center of the calendar body.
-         * This will be an element inside of the active month.
+         * If the current scroll position is all the way to the left
+         * then we have scrolled to the previous month.
+         * Otherwise, assume that we have scrolled to the next
+         * month. We have a tolerance of 2px to account for
+         * sub pixel rendering.
+         *
+         * Check below the next line ensures that we did not
+         * swipe and abort (i.e. we swiped but we are still on the current month).
          */
-        const elementAtCenter = root.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2);
-        /**
-         * If there is no element then the
-         * component may be re-rendering on a slow device.
-         */
-        if (!elementAtCenter) return;
-
-        const month = elementAtCenter.closest('.calendar-month');
-        if (!month) return;
+        const month = calendarBodyRef.scrollLeft <= 2 ? startMonth : endMonth;
 
         /**
          * The edge of the month must be lined up with
@@ -2364,19 +2360,7 @@ export class Datetime implements ComponentInterface {
   }
 
   render() {
-    const {
-      name,
-      value,
-      disabled,
-      el,
-      color,
-      isPresented,
-      readonly,
-      showMonthAndYear,
-      preferWheel,
-      presentation,
-      size,
-    } = this;
+    const { name, value, disabled, el, color, readonly, showMonthAndYear, preferWheel, presentation, size } = this;
     const mode = getIonMode(this);
     const isMonthAndYearPresentation =
       presentation === 'year' || presentation === 'month' || presentation === 'month-year';
@@ -2396,7 +2380,6 @@ export class Datetime implements ComponentInterface {
         class={{
           ...createColorClasses(color, {
             [mode]: true,
-            ['datetime-presented']: isPresented,
             ['datetime-readonly']: readonly,
             ['datetime-disabled']: disabled,
             'show-month-and-year': shouldShowMonthAndYear,

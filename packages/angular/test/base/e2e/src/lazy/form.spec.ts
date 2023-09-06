@@ -30,6 +30,8 @@ describe('Form', () => {
         toggle: false,
         input: '',
         input2: 'Default Value',
+        inputMin: 1,
+        inputMax: 1,
         checkbox: false
       });
     });
@@ -55,6 +57,8 @@ describe('Form', () => {
         toggle: false,
         input: 'Some value',
         input2: 'Default Value',
+        inputMin: 1,
+        inputMax: 1,
         checkbox: false
       });
     });
@@ -67,6 +71,8 @@ describe('Form', () => {
         toggle: true,
         input: '',
         input2: 'Default Value',
+        inputMin: 1,
+        inputMax: 1,
         checkbox: false
       });
     });
@@ -79,6 +85,8 @@ describe('Form', () => {
         toggle: false,
         input: '',
         input2: 'Default Value',
+        inputMin: 1,
+        inputMax: 1,
         checkbox: true
       });
     });
@@ -99,6 +107,8 @@ describe('Form', () => {
         toggle: true,
         input: '',
         input2: 'Default Value',
+        inputMin: 1,
+        inputMax: 1,
         checkbox: false
       });
       cy.get('ion-checkbox').click();
@@ -108,9 +118,38 @@ describe('Form', () => {
         toggle: true,
         input: '',
         input2: 'Default Value',
+        inputMin: 1,
+        inputMax: 1,
         checkbox: true
       });
     });
+  });
+
+  describe('validators', () => {
+
+    it('ion-input should error with min set', () => {
+      const control = cy.get('form ion-input[formControlName="inputMin"]');
+
+      control.should('have.class', 'ng-valid');
+
+      control.type('{backspace}0');
+
+      control.within(() => cy.get('input').blur());
+
+      control.should('have.class', 'ng-invalid');
+    });
+
+    it('ion-input should error with max set', () => {
+      const control = cy.get('form ion-input[formControlName="inputMax"]');
+
+      control.should('have.class', 'ng-valid');
+
+      control.type('2');
+      control.within(() => cy.get('input').blur());
+
+      control.should('have.class', 'ng-invalid');
+    });
+
   });
 });
 

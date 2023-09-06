@@ -30,5 +30,10 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ config, title }) => 
 
       await expect(actionSheet).toBeHidden();
     });
+
+    test('should open if isOpen is true on load', async ({ page }) => {
+      await page.setContent('<ion-action-sheet is-open="true"></ion-action-sheet>', config);
+      await expect(page.locator('ion-action-sheet')).toBeVisible();
+    });
   });
 });

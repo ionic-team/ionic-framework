@@ -21,7 +21,7 @@ configs().forEach(({ title, screenshot, config }) => {
         config
       );
       const list = page.locator('ion-list');
-      expect(await list.screenshot()).toMatchSnapshot(screenshot(`textarea-list-no-fill`));
+      await expect(list).toHaveScreenshot(screenshot(`textarea-list-no-fill`));
     });
     test('should render correctly in inset list with no fill', async ({ page }) => {
       await page.setContent(
@@ -41,7 +41,7 @@ configs().forEach(({ title, screenshot, config }) => {
         config
       );
       const list = page.locator('ion-list');
-      expect(await list.screenshot()).toMatchSnapshot(screenshot(`textarea-inset-list-no-fill`));
+      await expect(list).toHaveScreenshot(screenshot(`textarea-inset-list-no-fill`));
     });
   });
 });

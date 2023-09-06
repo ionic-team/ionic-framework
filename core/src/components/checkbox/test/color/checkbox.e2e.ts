@@ -12,7 +12,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       );
 
       const checkbox = page.locator('ion-checkbox');
-      expect(await checkbox.screenshot()).toMatchSnapshot(screenshot(`checkbox-color-checked`));
+      await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-color-checked`));
     });
 
     test('should not apply color when unchecked', async ({ page }) => {
@@ -24,7 +24,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       );
 
       const checkbox = page.locator('ion-checkbox');
-      expect(await checkbox.screenshot()).toMatchSnapshot(screenshot(`checkbox-color-unchecked`));
+      await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-color-unchecked`));
     });
   });
 });

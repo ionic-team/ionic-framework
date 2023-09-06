@@ -113,7 +113,7 @@ export const generateDayAriaLabel = (locale: string, today: boolean, refParts: D
   /**
    * MM/DD/YYYY will return midnight in the user's timezone.
    */
-  const date = new Date(`${refParts.month}/${refParts.day}/${refParts.year} GMT+0000`);
+  const date = getNormalizedDate(refParts);
 
   const labelString = new Intl.DateTimeFormat(locale, {
     weekday: 'long',
@@ -134,7 +134,7 @@ export const generateDayAriaLabel = (locale: string, today: boolean, refParts: D
  * Used for the header in MD mode.
  */
 export const getMonthAndDay = (locale: string, refParts: DatetimeParts) => {
-  const date = new Date(`${refParts.month}/${refParts.day}/${refParts.year} GMT+0000`);
+  const date = getNormalizedDate(refParts);
   return new Intl.DateTimeFormat(locale, { weekday: 'short', month: 'short', day: 'numeric', timeZone: 'UTC' }).format(
     date
   );
@@ -147,7 +147,7 @@ export const getMonthAndDay = (locale: string, refParts: DatetimeParts) => {
  * Example: May 2021
  */
 export const getMonthAndYear = (locale: string, refParts: DatetimeParts) => {
-  const date = new Date(`${refParts.month}/${refParts.day}/${refParts.year} GMT+0000`);
+  const date = getNormalizedDate(refParts);
   return new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(date);
 };
 
@@ -183,11 +183,25 @@ export const getYear = (locale: string, refParts: DatetimeParts) => {
   return getLocalizedDateTime(locale, refParts, { year: 'numeric' });
 };
 
-const getNormalizedDate = (refParts: DatetimeParts) => {
+/**
+ * Given reference parts, return a JS Date object
+ * with a normalized time.
+ */
+export const getNormalizedDate = (refParts: DatetimeParts) => {
   const timeString =
     refParts.hour !== undefined && refParts.minute !== undefined ? ` ${refParts.hour}:${refParts.minute}` : '';
 
-  return new Date(`${refParts.month}/${refParts.day}/${refParts.year}${timeString} GMT+0000`);
+  /**
+   * We use / notation here for the date
+   * so we do not need to do extra work and pad values with zeroes.
+   * Values such as YYYY-MM are still valid, so
+   * we add fallback values so we still get
+   * a valid date otherwise we will pass in a string
+   * like "//2023". Some browsers, such as Chrome, will
+   * account for this and still return a valid date. However,
+   * this is not a consistent behavior across all browsers.
+   */
+  return new Date(`${refParts.month ?? 1}/${refParts.day ?? 1}/${refParts.year ?? 2023}${timeString} GMT+0000`);
 };
 
 /**

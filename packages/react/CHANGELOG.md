@@ -3,6 +3,79 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.3.3](https://github.com/ionic-team/ionic-framework/compare/v7.3.2...v7.3.3) (2023-09-06)
+
+
+### Bug Fixes
+
+* **react:** overlay content is shown with hook  ([#28109](https://github.com/ionic-team/ionic-framework/issues/28109)) ([7b551fd](https://github.com/ionic-team/ionic-framework/commit/7b551fd54b9e16a2538e5b82a13d72b3007fa045)), closes [#28102](https://github.com/ionic-team/ionic-framework/issues/28102)
+
+
+
+
+
+## [7.3.2](https://github.com/ionic-team/ionic-framework/compare/v7.3.1...v7.3.2) (2023-08-30)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.3.1](https://github.com/ionic-team/ionic-framework/compare/v7.3.0...v7.3.1) (2023-08-23)
+
+
+### Bug Fixes
+
+* **react:** avoid multiple invocations of onDidDismiss and onWillPresent ([#28020](https://github.com/ionic-team/ionic-framework/issues/28020)) ([0ac3df3](https://github.com/ionic-team/ionic-framework/commit/0ac3df3f378bdefc3a927adc798ebd9ec7a54fee)), closes [#28010](https://github.com/ionic-team/ionic-framework/issues/28010)
+
+
+
+
+
+# [7.3.0](https://github.com/ionic-team/ionic-framework/compare/v7.2.4...v7.3.0) (2023-08-16)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.2.4](https://github.com/ionic-team/ionic-framework/compare/v7.2.3...v7.2.4) (2023-08-16)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.2.3](https://github.com/ionic-team/ionic-framework/compare/v7.2.2...v7.2.3) (2023-08-09)
+
+
+### Bug Fixes
+
+* **tab-button:** update event type interface on React ([#27950](https://github.com/ionic-team/ionic-framework/issues/27950)) ([1cf1eca](https://github.com/ionic-team/ionic-framework/commit/1cf1eca00239f3e98854466116e42f9a2e7b4590)), closes [#27949](https://github.com/ionic-team/ionic-framework/issues/27949)
+
+
+
+
+
+## [7.2.2](https://github.com/ionic-team/ionic-framework/compare/v7.2.1...v7.2.2) (2023-08-02)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
+## [7.2.1](https://github.com/ionic-team/ionic-framework/compare/v7.2.0...v7.2.1) (2023-07-26)
+
+**Note:** Version bump only for package @ionic/react
+
+
+
+
+
 # [7.2.0](https://github.com/ionic-team/ionic-framework/compare/v7.1.4...v7.2.0) (2023-07-19)
 
 **Note:** Version bump only for package @ionic/react

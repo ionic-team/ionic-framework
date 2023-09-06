@@ -12,3 +12,23 @@ configs().forEach(({ title, screenshot, config }) => {
     });
   });
 });
+
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('title: special characters'), () => {
+    test('should not cut off characters', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-header>
+          <ion-toolbar>
+            <ion-title size="large">ÔÔÔ</ion-title>
+          </ion-toolbar>
+        </ion-header>
+      `,
+        config
+      );
+
+      const title = page.locator('ion-title');
+      await expect(title).toHaveScreenshot(screenshot('title-characters'));
+    });
+  });
+});
