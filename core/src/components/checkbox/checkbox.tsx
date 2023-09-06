@@ -31,6 +31,7 @@ import type { CheckboxChangeEventDetail } from './checkbox-interface';
 export class Checkbox implements ComponentInterface {
   private inputId = `ion-cb-${checkboxIds++}`;
   private focusEl?: HTMLElement;
+  private labelEl?: HTMLLabelElement;
   private legacyFormController!: LegacyFormController; // TODO(FW-3100): remove this
   private inheritedAttributes: Attributes = {};
 
@@ -203,6 +204,20 @@ export class Checkbox implements ComponentInterface {
     this.ionBlur.emit();
   };
 
+  private onClick = (ev: MouseEvent) => {
+    const path = ev.composedPath();
+    const { labelEl } = this;
+
+    if (labelEl) {
+      // Prevents the parent ion-item click listener from firing twice.
+      ev.stopPropagation();
+      if (path.includes(labelEl)) {
+        return;
+      }
+      this.toggleChecked(ev);
+    }
+  };
+
   // TODO(FW-3100): run contents of renderCheckbox directly instead
   render() {
     const { legacyFormController } = this;
@@ -242,8 +257,9 @@ export class Checkbox implements ComponentInterface {
           [`checkbox-justify-${justify}`]: true,
           [`checkbox-label-placement-${labelPlacement}`]: true,
         })}
+        onClick={this.onClick}
       >
-        <label class="checkbox-wrapper">
+        <label class="checkbox-wrapper" ref={(labelEl) => (this.labelEl = labelEl)}>
           {/*
             The native control must be rendered
             before the visible label text due to https://bugs.webkit.org/show_bug.cgi?id=251951
@@ -323,11 +339,14 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
           'legacy-checkbox': true,
           interactive: true,
         })}
+        onClick={this.onClick}
       >
         <svg class="checkbox-icon" viewBox="0 0 24 24" part="container">
           {path}
         </svg>
-        <label htmlFor={inputId}>{labelText}</label>
+        <label htmlFor={inputId} ref={(labelEl) => (this.labelEl = labelEl)}>
+          {labelText}
+        </label>
         <input
           type="checkbox"
           aria-checked={`${checked}`}

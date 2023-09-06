@@ -84,4 +84,26 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       expect(ionChange).not.toHaveReceivedEvent();
     });
   });
+
+  test(title('clicking padded space within item should click the checkbox'), async ({ page }) => {
+    await page.setContent(
+      `
+      <ion-item>
+        <ion-checkbox>Size</ion-checkbox>
+      </ion-item>
+    `,
+      config
+    );
+    const itemNative = page.locator('.item-native');
+    const ionChange = await page.spyOnEvent('ionChange');
+
+    /**
+     * .click() is intended to be used on interactive elements,
+     * but we want to test clicking the padded space of the
+     * item that is not the checkbox itself.
+     */
+    await itemNative.click({ force: true });
+
+    expect(ionChange).toHaveReceivedEvent();
+  });
 });
