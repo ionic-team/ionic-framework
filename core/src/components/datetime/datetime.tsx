@@ -85,6 +85,11 @@ import {
  *
  * @part month-year-button - The button that opens the month/year picker when
  * using a grid style layout.
+ *
+ * @part calendar-day - The individual buttons that display a day inside of the datetime
+ * calendar.
+ * @part calendar-day active - The currently selected calendar day.
+ * @part calendar-day today - The calendar day that contains the current day.
  */
 @Component({
   tag: 'ion-datetime',
@@ -756,7 +761,7 @@ export class Datetime implements ComponentInterface {
     /**
      * Get the number of padding days so
      * we know how much to offset our next selector by
-     * to grab the correct calenday-day element.
+     * to grab the correct calendar-day element.
      */
     const padding = currentMonth.querySelectorAll('.calendar-day-padding');
     const { day } = this.workingParts;
@@ -770,7 +775,7 @@ export class Datetime implements ComponentInterface {
      * and focus it.
      */
     const dayEl = currentMonth.querySelector(
-      `.calendar-day:nth-of-type(${padding.length + day})`
+      `.calendar-day-wrapper:nth-of-type(${padding.length + day}) .calendar-day`
     ) as HTMLElement | null;
     if (dayEl) {
       dayEl.focus();
@@ -2116,69 +2121,85 @@ export class Datetime implements ComponentInterface {
               dateStyle = getHighlightStyles(highlightedDates, dateIsoString, el);
             }
 
+            let dateParts = undefined;
+
+            // "Filler days" at the beginning of the grid should not get the calendar day
+            // CSS parts added to them
+            if (!isCalendarPadding) {
+              dateParts = `calendar-day${isActive ? ' active' : ''}${isToday ? ' today' : ''}`;
+            }
+
             return (
-              <button
-                tabindex="-1"
-                data-day={day}
-                data-month={month}
-                data-year={year}
-                data-index={index}
-                data-day-of-week={dayOfWeek}
-                disabled={isCalDayDisabled}
-                class={{
-                  'calendar-day-padding': isCalendarPadding,
-                  'calendar-day': true,
-                  'calendar-day-active': isActive,
-                  'calendar-day-today': isToday,
-                }}
-                style={
-                  dateStyle && {
-                    color: dateStyle.textColor,
-                  }
-                }
-                aria-hidden={isCalendarPadding ? 'true' : null}
-                aria-selected={ariaSelected}
-                aria-label={ariaLabel}
-                onClick={() => {
-                  if (isCalendarPadding) {
-                    return;
-                  }
+              <div class="calendar-day-wrapper">
+                <button
+                  // We need to use !important for the inline styles here because
+                  // otherwise the CSS shadow parts will override these styles.
+                  // See https://github.com/WICG/webcomponents/issues/847
+                  // Both the CSS shadow parts and highlightedDates styles are
+                  // provided by the developer, but highlightedDates styles should
+                  // always take priority.
+                  ref={(el) => {
+                    if (el) {
+                      el.style.setProperty('color', `${dateStyle ? dateStyle.textColor : ''}`, 'important');
+                      el.style.setProperty(
+                        'background-color',
+                        `${dateStyle ? dateStyle.backgroundColor : ''}`,
+                        'important'
+                      );
+                    }
+                  }}
+                  tabindex="-1"
+                  data-day={day}
+                  data-month={month}
+                  data-year={year}
+                  data-index={index}
+                  data-day-of-week={dayOfWeek}
+                  disabled={isCalDayDisabled}
+                  class={{
+                    'calendar-day-padding': isCalendarPadding,
+                    'calendar-day': true,
+                    'calendar-day-active': isActive,
+                    'calendar-day-today': isToday,
+                  }}
+                  part={dateParts}
+                  aria-hidden={isCalendarPadding ? 'true' : null}
+                  aria-selected={ariaSelected}
+                  aria-label={ariaLabel}
+                  onClick={() => {
+                    if (isCalendarPadding) {
+                      return;
+                    }
 
-                  this.setWorkingParts({
-                    ...this.workingParts,
-                    month,
-                    day,
-                    year,
-                  });
-
-                  // multiple only needs date info, so we can wipe out other fields like time
-                  if (multiple) {
-                    this.setActiveParts(
-                      {
-                        month,
-                        day,
-                        year,
-                      },
-                      isActive
-                    );
-                  } else {
-                    this.setActiveParts({
-                      ...activePart,
+                    this.setWorkingParts({
+                      ...this.workingParts,
                       month,
                       day,
                       year,
                     });
-                  }
-                }}
-              >
-                <div
-                  class="calendar-day-highlight"
-                  style={{
-                    backgroundColor: dateStyle?.backgroundColor,
+
+                    // multiple only needs date info, so we can wipe out other fields like time
+                    if (multiple) {
+                      this.setActiveParts(
+                        {
+                          month,
+                          day,
+                          year,
+                        },
+                        isActive
+                      );
+                    } else {
+                      this.setActiveParts({
+                        ...activePart,
+                        month,
+                        day,
+                        year,
+                      });
+                    }
                   }}
-                ></div>
-                {text}
-              </button>
+                >
+                  {text}
+                </button>
+              </div>
             );
           })}
         </div>
