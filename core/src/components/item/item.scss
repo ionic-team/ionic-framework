@@ -67,7 +67,7 @@
   --show-full-highlight: 0;
   --show-inset-highlight: 0;
   --detail-icon-color: initial;
-  --detail-icon-font-size: 20px;
+  --detail-icon-font-size: 1.25em;
   --detail-icon-opacity: 0.25;
   --color-activated: var(--color);
   --color-focused: var(--color);
@@ -573,7 +573,7 @@ ion-ripple-effect {
 .item-counter {
   padding-top: 5px;
 
-  font-size: 12px;
+  font-size: dynamic-font(12px);
 
   z-index: 1;
 }
