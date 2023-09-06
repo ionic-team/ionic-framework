@@ -366,68 +366,8 @@ ion-picker-column-internal {
   opacity: 0.4;
 }
 
-@supports (border-radius: mod(1px, 1px)) {
-  .calendar-day-highlight {
-    /**
-     * When the computed font size is 24px
-     * we want the calendar day circles to appear
-     * as rounded rectangle so the text does not
-     * spill outside of the circle (the circle
-     * itself does not change size).
-     */
-    $fontSizeBreakpoint: 24px;
-
-    /**
-     * We use the modulus operator to ensure
-     * that any font size less than 24px is
-     * unchanged (i.e. 16 % 24 = 16). If the
-     * font size is 24px then the remainder
-     * will be 0.
-     */
-    $maxFontSize: min(1rem, $fontSizeBreakpoint);
-    $remainder: mod($maxFontSize, $fontSizeBreakpoint);
-
-    /**
-     * From here, we scale the remainder to get
-     * a border radius value large enough to make
-     * the day button look like a circle. Note that the
-     * exact value does not matter, as long as it is
-     * large enough.
-     *
-     * Note that when the font size is 24px
-     * then the remainder will be 0, so $radius
-     * will still be zero.
-     */
-    $radius: calc($remainder * 10);
-
-    /**
-     * In the event that $radius is 0
-     * we use max() to ensure a minimum
-     * border radius of 8px which will
-     * give the day button the rounded
-     * rectangle appearance.
-     * For font sizes smaller than 24px
-     * the border radius will give a circle appearance.
-     */
-    @include border-radius(max(8px, $radius));
-  }
-}
-
-/**
- * iOS <17 has a bug where the result of mod() is
- * used incorrectly if used inside of another CSS function such
- * as calc(). The first set of @support checks accounts for iOS <17.
- * We check -webkit-named-image to ensure that non-WebKit browsers are ignored.
- * The second set of @support checks account for all other browsers that
- * do not support mod() yet.
- */
-@supports ((border-radius: mod(1px, 1px)) and (background: -webkit-named-image(apple-pay-logo-black)) and (not (contain-intrinsic-size: none))) or (not (border-radius: mod(1px, 1px))) {
-  .calendar-day-highlight {
-    @include border-radius(32px);
-  }
-}
-
 .calendar-day-highlight {
+  @include border-radius(32px, 32px, 32px, 32px);
   @include padding(4px, 4px, 4px, 4px);
 
   position: absolute;

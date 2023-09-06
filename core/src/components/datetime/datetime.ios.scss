@@ -116,6 +116,51 @@
      */
     overflow: hidden;
   }
+
+  .calendar-day-highlight {
+    /**
+     * When the computed font size is 24px
+     * we want the calendar day circles to appear
+     * as rounded rectangle so the text does not
+     * spill outside of the circle (the circle
+     * itself does not change size).
+     */
+    $fontSizeBreakpoint: 24px;
+
+    /**
+     * We use the modulus operator to ensure
+     * that any font size less than 24px is
+     * unchanged (i.e. 16 % 24 = 16). If the
+     * font size is 24px then the remainder
+     * will be 0.
+     */
+    $maxFontSize: min(1rem, $fontSizeBreakpoint);
+    $remainder: mod($maxFontSize, $fontSizeBreakpoint);
+
+    /**
+     * From here, we scale the remainder to get
+     * a border radius value large enough to make
+     * the day button look like a circle. Note that the
+     * exact value does not matter, as long as it is
+     * large enough.
+     *
+     * Note that when the font size is 24px
+     * then the remainder will be 0, so $radius
+     * will still be zero.
+     */
+    $radius: calc($remainder * 10);
+
+    /**
+     * In the event that $radius is 0
+     * we use max() to ensure a minimum
+     * border radius of 8px which will
+     * give the day button the rounded
+     * rectangle appearance.
+     * For font sizes smaller than 24px
+     * the border radius will give a circle appearance.
+     */
+    @include border-radius(max(8px, $radius));
+  }
 }
 
 /**
@@ -132,6 +177,10 @@
     height: auto;
 
     overflow: initial;
+  }
+
+  .calendar-day-highlight {
+    @include border-radius(32px);
   }
 }
 
