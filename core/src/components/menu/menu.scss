@@ -67,9 +67,9 @@
     *
     * LTR:
     * The left side of the menu touches the screen edge. Padding is applied to the
-    * left side of the menu.
+    * left side of the menu. No changes are needed since the value has been set.
     * The right side of the menu is not touching the screen edge. Padding is not
-    * applied to the right side of the menu.
+    * applied to the right side of the menu. A value of 0 is set.
     */
   --ion-safe-area-right: 0px;
 
@@ -83,10 +83,9 @@
       * Otherwise, the content will have less space on both sides.
       *
       * RTL:
-      * The right side of the menu touches the screen edge. Padding is applied to the
-      * right side of the menu.
+      * The right side of the menu touches the screen edge. Padding is applied to the right side of the menu. The original value is set.
       * The left side of the menu is not touching the screen edge. Padding is not
-      * applied to the left side of the menu.
+      * applied to the left side of the menu. A value of 0 is set.
       */
     --ion-safe-area-right: env(safe-area-inset-right);
     --ion-safe-area-left: 0px;
@@ -94,11 +93,35 @@
 }
 
 :host(.menu-side-end) .menu-inner {
+  /**
+    * Menu does not cover the whole screen so we need to set the safe area for the
+    * side that touches the screen edge only. Since safe area is not logical, it
+    * needs to be applied to the correct side depending on the language direction.
+    * Otherwise, the content will have less space on both sides.
+    *
+    * LTR:
+    * The right side of the menu touches the screen edge. Padding is applied to the
+    * right side of the menu. No changes are needed since the value has been set.
+    * The left side of the menu is not touching the screen edge. Padding is not
+    * applied to the left side of the menu. A value of 0 is set.
+    */
   --ion-safe-area-left: 0px;
 
   @include position(0, 0, 0, auto);
 
   @include rtl() {
+    /**
+      * Menu does not cover the whole screen so we need to set the safe area for the
+      * side that touches the screen edge only. Since safe area is not logical, it
+      * needs to be applied to the correct side depending on the language direction.
+      * Otherwise, the content will have less space on both sides.
+      *
+      * RTL:
+      * The left side of the menu touches the screen edge. Padding is applied to the
+      * left side of the menu. The original value is set.
+      * The right side of the menu is not touching the screen edge. Padding is not
+      * applied to the right side of the menu. A value of 0 is set.
+      */
     --ion-safe-area-left: env(safe-area-inset-left);
     --ion-safe-area-right: 0px;
   }
