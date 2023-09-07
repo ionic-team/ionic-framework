@@ -127,6 +127,14 @@ input {
   @include margin($radio-item-label-margin-top, null, $radio-item-label-margin-bottom, null);
 }
 
+:host(.in-item.radio-label-placement-stacked) .label-text-wrapper {
+  @include margin($radio-item-label-margin-top, null, $form-control-label-margin, null);
+}
+
+:host(.in-item.radio-label-placement-stacked) .native-wrapper {
+  @include margin(null, null, $radio-item-label-margin-bottom, null);
+}
+
 /**
  * If no label text is placed into the slot
  * then the element should be hidden otherwise
@@ -158,6 +166,17 @@ input {
 
 :host(.radio-justify-end) .radio-wrapper {
   justify-content: end;
+}
+
+// Radio Align
+// --------------------------------------------------
+
+:host(.radio-alignment-start) .radio-wrapper {
+  align-items: start;
+}
+
+:host(.radio-alignment-center) .radio-wrapper {
+  align-items: center;
 }
 
 // Radio Label Placement - Start
@@ -221,4 +240,23 @@ input {
 
   width: 100px;
   min-width: 100px;
+}
+
+// Radio Label Placement - Stacked
+// ----------------------------------------------------------------
+
+/**
+ * Label is on top of the radio.
+ */
+:host(.radio-label-placement-stacked) .radio-wrapper {
+  flex-direction: column;
+}
+
+:host(.radio-label-placement-stacked) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the radio should be on the bottom
+   * when the label sits on top.
+   */
+  @include margin(null, 0, $form-control-label-margin, 0);
 }

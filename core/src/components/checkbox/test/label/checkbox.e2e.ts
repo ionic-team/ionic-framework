@@ -138,5 +138,31 @@ configs().forEach(({ title, screenshot, config }) => {
         await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-label-fixed-justify-space-between`));
       });
     });
+
+    test.describe('checkbox: stacked placement', () => {
+      test('should align the label to the start of the container in the stacked position', async ({ page }) => {
+        await page.setContent(
+          `
+            <ion-checkbox label-placement="stacked" alignment="start" style="width: 200px">This is a long label</ion-checkbox>
+          `,
+          config
+        );
+
+        const checkbox = page.locator('ion-checkbox');
+        await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-label-stacked-align-start`));
+      });
+
+      test('should align the label to the center of the container in the stacked position', async ({ page }) => {
+        await page.setContent(
+          `
+            <ion-checkbox label-placement="stacked" alignment="center" style="width: 200px">This is a long label</ion-checkbox>
+          `,
+          config
+        );
+
+        const checkbox = page.locator('ion-checkbox');
+        await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-label-stacked-align-center`));
+      });
+    });
   });
 });

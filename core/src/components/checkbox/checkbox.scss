@@ -108,6 +108,14 @@
   @include margin($checkbox-item-label-margin-top, null, $checkbox-item-label-margin-bottom, null);
 }
 
+:host(.in-item.checkbox-label-placement-stacked) .label-text-wrapper {
+  @include margin($checkbox-item-label-margin-top, null, $form-control-label-margin, null);
+}
+
+:host(.in-item.checkbox-label-placement-stacked) .native-wrapper {
+  @include margin(null, null, $checkbox-item-label-margin-bottom, null);
+}
+
 /**
  * If no label text is placed into the slot
  * then the element should be hidden otherwise
@@ -181,6 +189,17 @@ input {
   justify-content: end;
 }
 
+// Align Items
+// ---------------------------------------------
+
+:host(.checkbox-alignment-start) .checkbox-wrapper {
+  align-items: start;
+}
+
+:host(.checkbox-alignment-center) .checkbox-wrapper {
+  align-items: center;
+}
+
 
 // Label Placement - Start
 // ----------------------------------------------------------------
@@ -248,6 +267,24 @@ input {
   max-width: 200px;
 }
 
+// Label Placement - Stacked
+// ----------------------------------------------------------------
+
+/**
+ * Label is on top of the checkbox.
+ */
+:host(.checkbox-label-placement-stacked) .checkbox-wrapper {
+  flex-direction: column;
+}
+
+:host(.checkbox-label-placement-stacked) .label-text-wrapper {
+  /**
+   * The margin between the label and
+   * the checkbox should be on the bottom
+   * when the label sits at the top.
+   */
+  @include margin(null, 0, $form-control-label-margin, 0);
+}
 
 // Checked / Indeterminate Checkbox
 // ---------------------------------------------
