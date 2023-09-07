@@ -205,9 +205,12 @@ export class Checkbox implements ComponentInterface {
   };
 
   private onClick = (ev: MouseEvent) => {
-    if (this.itemController.controlClickHandler(ev)) {
-      this.toggleChecked(ev);
+    if (!this.itemController.controlClickHandler(ev)) {
+      ev.stopPropagation();
+      return;
     }
+
+    this.toggleChecked(ev);
   };
 
   // TODO(FW-3100): run contents of renderCheckbox directly instead
