@@ -39,10 +39,9 @@ html {
 @supports (-webkit-touch-callout: none) {
   html {
     /**
-     * Fallback if Dynamic Type is not enabled.
+     * Includes fallback if Dynamic Type is not enabled.
      */
-    font: 16px var(--ion-font-family);
-    font: var(--ion-dynamic-type);
+    font: var(--ion-dynamic-type, 16px var(--ion-font-family));
   }
 }
 
