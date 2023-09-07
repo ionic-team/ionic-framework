@@ -90,21 +90,32 @@
 
     /**
      * From here, we scale the remainder to get
-     * a width value larger than 20px. Note that the
-     * exact value does not matter, as long as it is
-     * large enough. We then clamp the width
+     * a width value larger than 20px. The purpose of
+     * scaling the remainder is to get a border radius
+     * large enough such that the element resembles a circle.
+     * We then clamp the width
      * to have a max width of 100% so that each
      * element does not appear too wide if $width
      * is a very large number.
      *
-     * Note that when the font size is 24px
-     * then the remainder will be 0, so $width
-     * will still be zero and the min value
-     * will apply, setting the width of each
-     * element to 20px.
+     * When the font size is >=24px then $remainder
+     * will be 0px. This results in $width being 0px
+     * since 0px * 10 is still 0px. We set a minimum
+     * width of 20px below so that the days of the
+     * week still show when the font size is >=24px
+     * and have a fixed width of 20px.
      */
     $width: calc($remainder * 10);
     width: clamp(20px, #{$width}, 100%);
+
+    /**
+     * We show the first letter of the week
+     * by setting the width small such that all other
+     * letters wrap to the next line. While we do have
+     * overflow: hidden to visually hide the overflowing
+     * text, we need to explicitly set the height of the
+     * container too otherwise it will increase as the text wraps.
+     */
     height: $datetime-dynamic-font-breakpoint;
 
     /**
