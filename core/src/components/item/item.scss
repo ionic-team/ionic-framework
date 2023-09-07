@@ -206,6 +206,8 @@
   display: flex;
   position: relative;
 
+  flex-wrap: wrap;
+
   align-items: inherit;
   justify-content: inherit;
 
@@ -223,9 +225,10 @@
   background: var(--background);
 
   overflow: inherit;
-  box-sizing: border-box;
 
   z-index: 1;
+
+  box-sizing: border-box;
 }
 
 .item-native::-moz-focus-inner {
@@ -265,11 +268,21 @@ button, a {
   // This is required to work with an inset highlight
   position: relative;
 
-  flex: 1;
+  // This flex property is required in order to make
+  // the elements wrap when there is a slotted start
+  // element and a label
+  flex: 1 0 auto;
+
   flex-direction: inherit;
+  flex-wrap: wrap;
+
   align-items: inherit;
   align-self: stretch;
 
+  // Max width must be set to 100%, otherwise the
+  // elements will overflow this container instead
+  // of wrapping
+  max-width: 100%;
   min-height: inherit;
 
   border-width: var(--inner-border-width);
@@ -353,11 +366,19 @@ button, a {
 .input-wrapper {
   display: flex;
 
-  flex: 1;
+  // This flex property is required in order to keep
+  // the label from shrinking when there are wide
+  // elements next to it that
+  flex: 1 0 auto;
   flex-direction: inherit;
 
   align-items: inherit;
   align-self: stretch;
+
+  // Max width must be set to 100%, otherwise the
+  // elements will overflow this container instead
+  // of wrapping
+  max-width: 100%;
 
   text-overflow: ellipsis;
 
