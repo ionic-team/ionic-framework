@@ -66,8 +66,8 @@
     * Otherwise, the content will have less space on both sides.
     *
     * LTR:
-    * The left side of the menu touches the screen edge. Padding is applied to the
-    * left side of the menu. No changes are needed since the value has been set.
+    * The left side of the menu touches the screen edge. The safe area padding has
+    * already been set in the core styles, so there's no need to set it again.
     * The right side of the menu is not touching the screen edge. Padding is not
     * applied to the right side of the menu. A value of 0 is set.
     */
@@ -83,7 +83,8 @@
       * Otherwise, the content will have less space on both sides.
       *
       * RTL:
-      * The right side of the menu touches the screen edge. Padding is applied to the right side of the menu. The original value is set.
+      * The right side of the menu touches the screen edge. The safe area padding has
+      * already been set in the core styles, so there's no need to set it again.
       * The left side of the menu is not touching the screen edge. Padding is not
       * applied to the left side of the menu. A value of 0 is set.
       */
@@ -100,8 +101,8 @@
     * Otherwise, the content will have less space on both sides.
     *
     * LTR:
-    * The right side of the menu touches the screen edge. Padding is applied to the
-    * right side of the menu. No changes are needed since the value has been set.
+    * The right side of the menu touches the screen edge. The safe area padding has
+    * already been set in the core styles, so there's no need to set it again.
     * The left side of the menu is not touching the screen edge. Padding is not
     * applied to the left side of the menu. A value of 0 is set.
     */
@@ -117,8 +118,8 @@
       * Otherwise, the content will have less space on both sides.
       *
       * RTL:
-      * The left side of the menu touches the screen edge. Padding is applied to the
-      * left side of the menu. The original value is set.
+      * The left side of the menu touches the screen edge. The safe area padding has
+      * already been set in the core styles, so there's no need to set it again.
       * The right side of the menu is not touching the screen edge. Padding is not
       * applied to the right side of the menu. A value of 0 is set.
       */
