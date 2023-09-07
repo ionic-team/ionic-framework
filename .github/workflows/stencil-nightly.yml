@@ -46,6 +46,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/workflows/actions/test-core-spec
+        with:
+          stencil-version: nightly
 
   test-core-screenshot:
     strategy:

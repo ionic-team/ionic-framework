@@ -153,19 +153,36 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
    */
   @Event() ionBlur!: EventEmitter<void>;
 
-  connectedCallback(): void {
-    // Allow form to be submitted through `ion-button`
-    if (this.type !== 'button' && hasShadowDom(this.el)) {
-      this.formEl = this.findForm();
-      if (this.formEl) {
-        // Create a hidden native button inside of the form
-        this.formButtonEl = document.createElement('button');
-        this.formButtonEl.type = this.type;
-        this.formButtonEl.style.display = 'none';
-        // Only submit if the button is not disabled.
-        this.formButtonEl.disabled = this.disabled;
-        this.formEl.appendChild(this.formButtonEl);
+  /**
+   * This is responsible for rendering a hidden native
+   * button element inside the associated form. This allows
+   * users to submit a form by pressing "Enter" when a text
+   * field inside of the form is focused. The native button
+   * rendered inside of `ion-button` is in the Shadow DOM
+   * and therefore does not participate in form submission
+   * which is why the following code is necessary.
+   */
+  private renderHiddenButton() {
+    const formEl = (this.formEl = this.findForm());
+    if (formEl) {
+      const { formButtonEl } = this;
+
+      /**
+       * If the form already has a rendered form button
+       * then do not append a new one again.
+       */
+      if (formButtonEl !== null && formEl.contains(formButtonEl)) {
+        return;
       }
+
+      // Create a hidden native button inside of the form
+      const newFormButtonEl = (this.formButtonEl = document.createElement('button'));
+      newFormButtonEl.type = this.type;
+      newFormButtonEl.style.display = 'none';
+      // Only submit if the button is not disabled.
+      newFormButtonEl.disabled = this.disabled;
+
+      formEl.appendChild(newFormButtonEl);
     }
   }
 
@@ -314,6 +331,18 @@ export class Button implements ComponentInterface, AnchorInterface, ButtonInterf
     if (fill == null) {
       fill = this.inToolbar || this.inListHeader ? 'clear' : 'solid';
     }
+
+    /**
+     * We call renderHiddenButton in the render function to account
+     * for any properties being set async. For example, changing the
+     * "type" prop from "button" to "submit" after the component has
+     * loaded would warrant the hidden button being added to the
+     * associated form.
+     */
+    {
+      type !== 'button' && this.renderHiddenButton();
+    }
+
     return (
       <Host
         onClick={this.handleClick}

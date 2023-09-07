@@ -2,6 +2,8 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Watch, Component, Element, Event, Host, Method, Prop, h, readTask } from '@stencil/core';
 import type { Gesture } from '@utils/gesture';
 import { createButtonActiveGesture } from '@utils/gesture/button-active';
+import { raf } from '@utils/helpers';
+import { createLockController } from '@utils/lock-controller';
 import {
   BACKDROP,
   createDelegateController,
@@ -39,8 +41,8 @@ import { mdLeaveAnimation } from './animations/md.leave';
 })
 export class ActionSheet implements ComponentInterface, OverlayInterface {
   private readonly delegateController = createDelegateController(this);
+  private readonly lockController = createLockController();
   private readonly triggerController = createTriggerController();
-  private currentTransition?: Promise<any>;
   private wrapperEl?: HTMLElement;
   private groupEl?: HTMLElement;
   private gesture?: Gesture;
@@ -197,25 +199,13 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async present(): Promise<void> {
-    /**
-     * When using an inline action sheet
-     * and dismissing a action sheet it is possible to
-     * quickly present the action sheet while it is
-     * dismissing. We need to await any current
-     * transition to allow the dismiss to finish
-     * before presenting again.
-     */
-    if (this.currentTransition !== undefined) {
-      await this.currentTransition;
-    }
+    const unlock = await this.lockController.lock();
 
     await this.delegateController.attachViewToDom();
 
-    this.currentTransition = present(this, 'actionSheetEnter', iosEnterAnimation, mdEnterAnimation);
+    await present(this, 'actionSheetEnter', iosEnterAnimation, mdEnterAnimation);
 
-    await this.currentTransition;
-
-    this.currentTransition = undefined;
+    unlock();
   }
 
   /**
@@ -229,12 +219,15 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async dismiss(data?: any, role?: string): Promise<boolean> {
-    this.currentTransition = dismiss(this, data, role, 'actionSheetLeave', iosLeaveAnimation, mdLeaveAnimation);
-    const dismissed = await this.currentTransition;
+    const unlock = await this.lockController.lock();
+
+    const dismissed = await dismiss(this, data, role, 'actionSheetLeave', iosLeaveAnimation, mdLeaveAnimation);
 
     if (dismissed) {
       this.delegateController.removeViewFromDom();
     }
+
+    unlock();
 
     return dismissed;
   }
@@ -318,25 +311,32 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
 
   componentDidLoad() {
     /**
-     * Do not create gesture if:
-     * 1. A gesture already exists
-     * 2. App is running in MD mode
-     * 3. A wrapper ref does not exist
+     * Only create gesture if:
+     * 1. A gesture does not already exist
+     * 2. App is running in iOS mode
+     * 3. A wrapper ref exists
+     * 4. A group ref exists
      */
     const { groupEl, wrapperEl } = this;
-    if (this.gesture || getIonMode(this) === 'md' || !wrapperEl || !groupEl) {
-      return;
+    if (!this.gesture && getIonMode(this) === 'ios' && wrapperEl && groupEl) {
+      readTask(() => {
+        const isScrollable = groupEl.scrollHeight > groupEl.clientHeight;
+        if (!isScrollable) {
+          this.gesture = createButtonActiveGesture(wrapperEl, (refEl: HTMLElement) =>
+            refEl.classList.contains('action-sheet-button')
+          );
+          this.gesture.enable(true);
+        }
+      });
     }
 
-    readTask(() => {
-      const isScrollable = groupEl.scrollHeight > groupEl.clientHeight;
-      if (!isScrollable) {
-        this.gesture = createButtonActiveGesture(wrapperEl, (refEl: HTMLElement) =>
-          refEl.classList.contains('action-sheet-button')
-        );
-        this.gesture.enable(true);
-      }
-    });
+    /**
+     * If action sheet was rendered with isOpen="true"
+     * then we should open action sheet immediately.
+     */
+    if (this.isOpen === true) {
+      raf(() => this.present());
+    }
   }
 
   render() {
@@ -386,7 +386,13 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
                 </div>
               )}
               {buttons.map((b) => (
-                <button type="button" id={b.id} class={buttonClass(b)} onClick={() => this.buttonClick(b)}>
+                <button
+                  {...b.htmlAttributes}
+                  type="button"
+                  id={b.id}
+                  class={buttonClass(b)}
+                  onClick={() => this.buttonClick(b)}
+                >
                   <span class="action-sheet-button-inner">
                     {b.icon && <ion-icon icon={b.icon} aria-hidden="true" lazy={false} class="action-sheet-icon" />}
                     {b.text}
@@ -398,7 +404,12 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
 
             {cancelButton && (
               <div class="action-sheet-group action-sheet-group-cancel">
-                <button type="button" class={buttonClass(cancelButton)} onClick={() => this.buttonClick(cancelButton)}>
+                <button
+                  {...cancelButton.htmlAttributes}
+                  type="button"
+                  class={buttonClass(cancelButton)}
+                  onClick={() => this.buttonClick(cancelButton)}
+                >
                   <span class="action-sheet-button-inner">
                     {cancelButton.icon && (
                       <ion-icon icon={cancelButton.icon} aria-hidden="true" lazy={false} class="action-sheet-icon" />

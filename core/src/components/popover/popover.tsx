@@ -2,6 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 import { CoreDelegate, attachComponent, detachComponent } from '@utils/framework-delegate';
 import { addEventListener, raf, hasLazyBuild } from '@utils/helpers';
+import { createLockController } from '@utils/lock-controller';
 import { printIonWarning } from '@utils/logging';
 import {
   BACKDROP,
@@ -58,7 +59,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
   private triggerEl?: HTMLElement | null;
   private parentPopover: HTMLIonPopoverElement | null = null;
   private coreDelegate: FrameworkDelegate = CoreDelegate();
-  private currentTransition?: Promise<any>;
+  private readonly lockController = createLockController();
   private destroyTriggerInteraction?: () => void;
   private destroyKeyboardInteraction?: () => void;
   private destroyDismissInteraction?: () => void;
@@ -180,8 +181,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
   /**
    * Describes how to calculate the popover width.
    * If `"cover"`, the popover width will match the width of the trigger.
-   * If `"auto"`, the popover width will be determined by the content in
-   * the popover.
+   * If `"auto"`, the popover width will be set to a static default value.
    */
   @Prop() size: PopoverSize = 'auto';
 
@@ -431,25 +431,24 @@ export class Popover implements ComponentInterface, PopoverInterface {
    */
   @Method()
   async present(event?: MouseEvent | TouchEvent | PointerEvent | CustomEvent): Promise<void> {
-    if (this.presented) {
-      return;
-    }
+    const unlock = await this.lockController.lock();
 
-    /**
-     * When using an inline popover
-     * and dismissing a popover it is possible to
-     * quickly present the popover while it is
-     * dismissing. We need to await any current
-     * transition to allow the dismiss to finish
-     * before presenting again.
-     */
-    if (this.currentTransition !== undefined) {
-      await this.currentTransition;
+    if (this.presented) {
+      unlock();
+      return;
     }
 
     const { el } = this;
 
     const { inline, delegate } = this.getDelegate(true);
+
+    /**
+     * Emit ionMount so JS Frameworks have an opportunity
+     * to add the child component to the DOM. The child
+     * component will be assigned to this.usersElement below.
+     */
+    this.ionMount.emit();
+
     this.usersElement = await attachComponent(
       delegate,
       el,
@@ -463,8 +462,6 @@ export class Popover implements ComponentInterface, PopoverInterface {
       this.configureKeyboardInteraction();
     }
     this.configureDismissInteraction();
-
-    this.ionMount.emit();
 
     /**
      * When using the lazy loaded build of Stencil, we need to wait
@@ -488,7 +485,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
       await waitForMount();
     }
 
-    this.currentTransition = present<PopoverPresentOptions>(this, 'popoverEnter', iosEnterAnimation, mdEnterAnimation, {
+    await present<PopoverPresentOptions>(this, 'popoverEnter', iosEnterAnimation, mdEnterAnimation, {
       event: event || this.event,
       size: this.size,
       trigger: this.triggerEl,
@@ -496,10 +493,6 @@ export class Popover implements ComponentInterface, PopoverInterface {
       side: this.side,
       align: this.alignment,
     });
-
-    await this.currentTransition;
-
-    this.currentTransition = undefined;
 
     /**
      * If popover is nested and was
@@ -510,6 +503,8 @@ export class Popover implements ComponentInterface, PopoverInterface {
     if (this.focusDescendantOnPresent) {
       focusFirstDescendant(this.el, this.el);
     }
+
+    unlock();
   }
 
   /**
@@ -522,24 +517,14 @@ export class Popover implements ComponentInterface, PopoverInterface {
    */
   @Method()
   async dismiss(data?: any, role?: string, dismissParentPopover = true): Promise<boolean> {
-    /**
-     * When using an inline popover
-     * and presenting a popover it is possible to
-     * quickly dismiss the popover while it is
-     * presenting. We need to await any current
-     * transition to allow the present to finish
-     * before dismissing again.
-     */
-    if (this.currentTransition !== undefined) {
-      await this.currentTransition;
-    }
+    const unlock = await this.lockController.lock();
 
     const { destroyKeyboardInteraction, destroyDismissInteraction } = this;
     if (dismissParentPopover && this.parentPopover) {
       this.parentPopover.dismiss(data, role, dismissParentPopover);
     }
 
-    this.currentTransition = dismiss<PopoverDismissOptions>(
+    const shouldDismiss = await dismiss<PopoverDismissOptions>(
       this,
       data,
       role,
@@ -548,7 +533,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
       mdLeaveAnimation,
       this.event
     );
-    const shouldDismiss = await this.currentTransition;
+
     if (shouldDismiss) {
       if (destroyKeyboardInteraction) {
         destroyKeyboardInteraction();
@@ -568,7 +553,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
       await detachComponent(delegate, this.usersElement);
     }
 
-    this.currentTransition = undefined;
+    unlock();
 
     return shouldDismiss;
   }

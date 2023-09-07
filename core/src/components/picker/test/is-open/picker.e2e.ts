@@ -23,5 +23,10 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await ionPickerDidDismiss.next();
       await expect(picker).toBeHidden();
     });
+
+    test('should open if isOpen is true on load', async ({ page }) => {
+      await page.setContent('<ion-picker is-open="true"></ion-picker>', config);
+      await expect(page.locator('ion-picker')).toBeVisible();
+    });
   });
 });

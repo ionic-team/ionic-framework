@@ -25,7 +25,6 @@ export { IonPopover } from './overlays/popover';
 export { IonModal } from './overlays/modal';
 
 export { IonRouterOutlet, provideComponentInputBinding } from './directives/navigation/router-outlet';
-export type { StackEvent } from './directives/navigation/stack-utils';
 
 export { IonBackButton } from './directives/navigation/back-button';
 export {

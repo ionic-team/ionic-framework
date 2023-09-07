@@ -16,6 +16,7 @@ export {
 export { IonModal } from './directives/overlays/modal';
 export { IonPopover } from './directives/overlays/popover';
 export * from './directives/proxies';
+export * from './directives/validators';
 
 // PROVIDERS
 export {

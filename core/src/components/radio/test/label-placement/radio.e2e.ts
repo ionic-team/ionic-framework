@@ -24,7 +24,7 @@ configs().forEach(({ title, screenshot, config }) => {
         );
 
         const radio = page.locator('ion-radio');
-        expect(await radio.screenshot()).toMatchSnapshot(screenshot(`radio-label-start-justify-start`));
+        await expect(radio).toHaveScreenshot(screenshot(`radio-label-start-justify-start`));
       });
       test('should render an end justification with label in the start position', async ({ page }) => {
         await page.setContent(
@@ -37,7 +37,7 @@ configs().forEach(({ title, screenshot, config }) => {
         );
 
         const radio = page.locator('ion-radio');
-        expect(await radio.screenshot()).toMatchSnapshot(screenshot(`radio-label-start-justify-end`));
+        await expect(radio).toHaveScreenshot(screenshot(`radio-label-start-justify-end`));
       });
       test('should render a space between justification with label in the start position', async ({ page }) => {
         await page.setContent(
@@ -50,7 +50,7 @@ configs().forEach(({ title, screenshot, config }) => {
         );
 
         const radio = page.locator('ion-radio');
-        expect(await radio.screenshot()).toMatchSnapshot(screenshot(`radio-label-start-justify-space-between`));
+        await expect(radio).toHaveScreenshot(screenshot(`radio-label-start-justify-space-between`));
       });
     });
 
@@ -66,7 +66,7 @@ configs().forEach(({ title, screenshot, config }) => {
         );
 
         const radio = page.locator('ion-radio');
-        expect(await radio.screenshot()).toMatchSnapshot(screenshot(`radio-label-end-justify-start`));
+        await expect(radio).toHaveScreenshot(screenshot(`radio-label-end-justify-start`));
       });
       test('should render an end justification with label in the end position', async ({ page }) => {
         await page.setContent(
@@ -79,7 +79,7 @@ configs().forEach(({ title, screenshot, config }) => {
         );
 
         const radio = page.locator('ion-radio');
-        expect(await radio.screenshot()).toMatchSnapshot(screenshot(`radio-label-end-justify-end`));
+        await expect(radio).toHaveScreenshot(screenshot(`radio-label-end-justify-end`));
       });
       test('should render a space between justification with label in the end position', async ({ page }) => {
         await page.setContent(
@@ -92,7 +92,7 @@ configs().forEach(({ title, screenshot, config }) => {
         );
 
         const radio = page.locator('ion-radio');
-        expect(await radio.screenshot()).toMatchSnapshot(screenshot(`radio-label-end-justify-space-between`));
+        await expect(radio).toHaveScreenshot(screenshot(`radio-label-end-justify-space-between`));
       });
     });
 
@@ -108,7 +108,7 @@ configs().forEach(({ title, screenshot, config }) => {
         );
 
         const radio = page.locator('ion-radio');
-        expect(await radio.screenshot()).toMatchSnapshot(screenshot(`radio-label-fixed-justify-start`));
+        await expect(radio).toHaveScreenshot(screenshot(`radio-label-fixed-justify-start`));
       });
       test('should render an end justification with label in the fixed position', async ({ page }) => {
         await page.setContent(
@@ -121,7 +121,7 @@ configs().forEach(({ title, screenshot, config }) => {
         );
 
         const radio = page.locator('ion-radio');
-        expect(await radio.screenshot()).toMatchSnapshot(screenshot(`radio-label-fixed-justify-end`));
+        await expect(radio).toHaveScreenshot(screenshot(`radio-label-fixed-justify-end`));
       });
       test('should render a space between justification with label in the fixed position', async ({ page }) => {
         await page.setContent(
@@ -134,7 +134,7 @@ configs().forEach(({ title, screenshot, config }) => {
         );
 
         const radio = page.locator('ion-radio');
-        expect(await radio.screenshot()).toMatchSnapshot(screenshot(`radio-label-fixed-justify-space-between`));
+        await expect(radio).toHaveScreenshot(screenshot(`radio-label-fixed-justify-space-between`));
       });
     });
   });

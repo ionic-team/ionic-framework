@@ -28,6 +28,7 @@ import {
 import { IonModal } from './directives/overlays/modal';
 import { IonPopover } from './directives/overlays/popover';
 import { DIRECTIVES } from './directives/proxies-list';
+import { IonMaxValidator, IonMinValidator } from './directives/validators';
 
 const DECLARATIONS = [
   // generated proxies
@@ -51,6 +52,10 @@ const DECLARATIONS = [
   IonNav,
   RouterLinkDelegateDirective,
   RouterLinkWithHrefDelegateDirective,
+
+  // validators
+  IonMinValidator,
+  IonMaxValidator,
 ];
 
 @NgModule({

@@ -61,12 +61,12 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       test('it should not swipe to close when swiped on the content but the content is scrolled', async ({ page }) => {
         const modal = await cardModalPage.openModalByTrigger('#card');
 
-        const content = (await page.$('ion-modal ion-content'))!;
+        const content = page.locator('ion-modal ion-content');
         await content.evaluate((el: HTMLIonContentElement) => el.scrollToBottom(0));
 
         await cardModalPage.swipeToCloseModal('ion-modal ion-content', false);
 
-        await content.waitForElementState('stable');
+        await content.waitFor();
         await expect(modal).toBeVisible();
       });
       test('it should not swipe to close when swiped on the content but the content is scrolled even when content is replaced', async ({
@@ -76,12 +76,12 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
         await page.click('ion-button.replace');
 
-        const content = (await page.$('ion-modal ion-content'))!;
+        const content = page.locator('ion-modal ion-content');
         await content.evaluate((el: HTMLIonContentElement) => el.scrollToBottom(0));
 
         await cardModalPage.swipeToCloseModal('ion-modal ion-content', false);
 
-        await content.waitForElementState('stable');
+        await content.waitFor();
         await expect(modal).toBeVisible();
       });
       test('content should be scrollable after gesture ends', async ({ page }) => {

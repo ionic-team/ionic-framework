@@ -67,6 +67,22 @@
   box-sizing: border-box;
 }
 
+/**
+ * When the cols property is set we should
+ * respect that width instead of defaulting
+ * to taking up the entire line.
+ * Requires both the cols and autoGrow
+ * properties to be reflected as attributes
+ * on the host.
+ *
+ * cols does not work with autoGrow because
+ * autoGrow would prevent line breaks from naturally
+ * occurring until the textarea takes up the entire line width.
+ */
+:host([cols]:not([auto-grow])) {
+  width: fit-content;
+}
+
 // TODO: FW-2876 - Remove this selector
 :host(.legacy-textarea) {
   flex: 1;
@@ -629,6 +645,13 @@
   @include padding(0px);
 
   max-width: 100%;
+
+  /**
+   * The 2 ensures the label
+   * remains on top of any browser
+   * autofill background too.
+   */
+  z-index: 2;
 }
 
 /**

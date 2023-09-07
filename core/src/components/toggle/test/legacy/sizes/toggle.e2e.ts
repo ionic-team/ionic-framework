@@ -8,7 +8,7 @@ configs().forEach(({ title, screenshot, config }) => {
 
       await page.setIonViewport();
 
-      expect(await page.screenshot()).toMatchSnapshot(screenshot(`toggle-sizes-diff`));
+      await expect(page).toHaveScreenshot(screenshot(`toggle-sizes-diff`));
     });
   });
 });

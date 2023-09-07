@@ -4,8 +4,7 @@
 // iOS Label
 // --------------------------------------------------
 
-:host(.ion-text-wrap),
-:host([text-wrap]) {
+:host(.ion-text-wrap) {
   font-size: $label-ios-text-wrap-font-size;
 
   line-height: $label-ios-text-wrap-line-height;
