@@ -1,6 +1,7 @@
 import 'ionicons';
 
 export { createAnimation } from './utils/animation/animation';
+export { getIonPageElement } from './utils/transition';
 export { iosTransitionAnimation } from './utils/transition/ios.transition';
 export { mdTransitionAnimation } from './utils/transition/md.transition';
 export { getTimeGivenProgression } from './utils/animation/cubic-bezier';
