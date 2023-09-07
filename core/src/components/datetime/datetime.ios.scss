@@ -119,23 +119,14 @@
 
   .calendar-day-highlight {
     /**
-     * When the computed font size is 24px
-     * we want the calendar day circles to appear
-     * as rounded rectangle so the text does not
-     * spill outside of the circle (the circle
-     * itself does not change size).
-     */
-    $fontSizeBreakpoint: 24px;
-
-    /**
      * We use the modulus operator to ensure
      * that any font size less than 24px is
      * unchanged (i.e. 16 % 24 = 16). If the
      * font size is 24px then the remainder
      * will be 0.
      */
-    $maxFontSize: min(1rem, $fontSizeBreakpoint);
-    $remainder: mod($maxFontSize, $fontSizeBreakpoint);
+    $maxFontSize: min(1rem, $datetime-dynamic-font-breakpoint);
+    $remainder: mod($maxFontSize, $datetime-dynamic-font-breakpoint);
 
     /**
      * From here, we scale the remainder to get
