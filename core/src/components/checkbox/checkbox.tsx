@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, Watch, h } from '@stencil/core';
-import type { LegacyFormController } from '@utils/forms';
-import { createLegacyFormController } from '@utils/forms';
+import type { ItemController, LegacyFormController } from '@utils/forms';
+import { createItemController, createLegacyFormController } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
 import { getAriaLabel, inheritAriaAttributes, renderHiddenInput } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
@@ -31,8 +31,8 @@ import type { CheckboxChangeEventDetail } from './checkbox-interface';
 export class Checkbox implements ComponentInterface {
   private inputId = `ion-cb-${checkboxIds++}`;
   private focusEl?: HTMLElement;
-  private labelEl?: HTMLLabelElement;
   private legacyFormController!: LegacyFormController; // TODO(FW-3100): remove this
+  private itemController!: ItemController;
   private inheritedAttributes: Attributes = {};
 
   // TODO(FW-3100): remove this
@@ -133,9 +133,9 @@ export class Checkbox implements ComponentInterface {
    */
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
-  // TODO(FW-3100): remove this
   connectedCallback() {
-    this.legacyFormController = createLegacyFormController(this.el);
+    this.legacyFormController = createLegacyFormController(this.el); // TODO(FW-3100): remove this
+    this.itemController = createItemController(this.el);
   }
 
   componentWillLoad() {
@@ -205,15 +205,7 @@ export class Checkbox implements ComponentInterface {
   };
 
   private onClick = (ev: MouseEvent) => {
-    const path = ev.composedPath();
-    const { labelEl } = this;
-
-    if (labelEl) {
-      // Prevents the parent ion-item click listener from firing twice.
-      ev.stopPropagation();
-      if (path.includes(labelEl)) {
-        return;
-      }
+    if (this.itemController.controlClickHandler(ev)) {
       this.toggleChecked(ev);
     }
   };
@@ -259,7 +251,7 @@ export class Checkbox implements ComponentInterface {
         })}
         onClick={this.onClick}
       >
-        <label class="checkbox-wrapper" ref={(labelEl) => (this.labelEl = labelEl)}>
+        <label class="checkbox-wrapper" ref={this.itemController.setLabelRef}>
           {/*
             The native control must be rendered
             before the visible label text due to https://bugs.webkit.org/show_bug.cgi?id=251951
@@ -344,7 +336,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
         <svg class="checkbox-icon" viewBox="0 0 24 24" part="container">
           {path}
         </svg>
-        <label htmlFor={inputId} ref={(labelEl) => (this.labelEl = labelEl)}>
+        <label htmlFor={inputId} ref={this.itemController.setLabelRef}>
           {labelText}
         </label>
         <input

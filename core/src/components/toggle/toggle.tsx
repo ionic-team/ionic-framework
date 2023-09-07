@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, State, Watch, h } from '@stencil/core';
-import type { LegacyFormController } from '@utils/forms';
-import { createLegacyFormController } from '@utils/forms';
+import type { ItemController, LegacyFormController } from '@utils/forms';
+import { createItemController, createLegacyFormController } from '@utils/forms';
 import { getAriaLabel, renderHiddenInput, inheritAriaAttributes } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
@@ -38,6 +38,7 @@ export class Toggle implements ComponentInterface {
   private focusEl?: HTMLElement;
   private lastDrag = 0;
   private legacyFormController!: LegacyFormController;
+  private itemController!: ItemController;
   private inheritedAttributes: Attributes = {};
   private toggleTrack?: HTMLElement;
   private didLoad = false;
@@ -159,6 +160,7 @@ export class Toggle implements ComponentInterface {
 
   async connectedCallback() {
     this.legacyFormController = createLegacyFormController(this.el);
+    this.itemController = createItemController(this.el);
 
     /**
      * If we have not yet rendered
@@ -250,11 +252,13 @@ export class Toggle implements ComponentInterface {
     }
   }
 
-  private onClick = (ev: Event) => {
+  private onClick = (ev: MouseEvent) => {
     ev.preventDefault();
 
-    if (this.lastDrag + 300 < Date.now()) {
-      this.toggleChecked();
+    if (this.itemController.controlClickHandler(ev)) {
+      if (this.lastDrag + 300 < Date.now()) {
+        this.toggleChecked();
+      }
     }
   };
 
@@ -340,7 +344,7 @@ export class Toggle implements ComponentInterface {
           [`toggle-${rtl}`]: true,
         })}
       >
-        <label class="toggle-wrapper">
+        <label ref={this.itemController.setLabelRef} class="toggle-wrapper">
           {/*
             The native control must be rendered
             before the visible label text due to https://bugs.webkit.org/show_bug.cgi?id=251951
@@ -422,7 +426,9 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
         })}
       >
         {this.renderToggleControl()}
-        <label htmlFor={inputId}>{labelText}</label>
+        <label ref={this.itemController.setLabelRef} htmlFor={inputId}>
+          {labelText}
+        </label>
         <input
           type="checkbox"
           role="switch"
