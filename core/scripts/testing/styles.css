@@ -33,7 +33,7 @@
 }
 
 :root, html {
-  --ion-dynamic-type: var(--ion-default-dynamic-font);
+  --ion-dynamic-font: var(--ion-default-dynamic-font);
 }
 
 :root,
