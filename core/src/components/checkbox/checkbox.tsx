@@ -186,7 +186,7 @@ export class Checkbox implements ComponentInterface {
     });
   };
 
-  private toggleChecked = (ev: any) => {
+  private toggleChecked = (ev: Event) => {
     ev.preventDefault();
 
     this.setFocus();
