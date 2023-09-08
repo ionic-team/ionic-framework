@@ -41,7 +41,7 @@ html {
     /**
      * Includes fallback if Dynamic Type is not enabled.
      */
-    font: var(--ion-dynamic-type, 16px var(--ion-font-family));
+    font: var(--ion-dynamic-font, 16px var(--ion-font-family));
   }
 }
 
