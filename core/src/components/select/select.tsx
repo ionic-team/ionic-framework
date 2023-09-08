@@ -734,6 +734,8 @@ export class Select implements ComponentInterface {
       style['has-placeholder'] = this.placeholder !== undefined;
       style['has-value'] = this.hasValue();
       style['has-focus'] = this.isExpanded;
+      // TODO(FW-3194): remove this
+      style['legacy'] = !!this.legacy;
     }
 
     this.ionStyle.emit(style);

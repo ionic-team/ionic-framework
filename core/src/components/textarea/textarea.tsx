@@ -392,6 +392,8 @@ export class Textarea implements ComponentInterface {
         'has-placeholder': this.placeholder !== undefined,
         'has-value': this.hasValue(),
         'has-focus': this.hasFocus,
+        // TODO(FW-2876): remove this
+        'legacy': !!this.legacy,
       });
     }
   }

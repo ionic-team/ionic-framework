@@ -215,6 +215,8 @@ export class Toggle implements ComponentInterface {
     if (this.legacyFormController.hasLegacyControl()) {
       this.ionStyle.emit({
         'interactive-disabled': this.disabled,
+        // TODO(FW-2990): remove this
+        'legacy': !!this.legacy
       });
     }
   }

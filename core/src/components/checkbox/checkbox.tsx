@@ -157,6 +157,8 @@ export class Checkbox implements ComponentInterface {
   private emitStyle() {
     const style: StyleEventDetail = {
       'interactive-disabled': this.disabled,
+      // TODO(FW-3100): remove this
+      'legacy': !!this.legacy
     };
 
     // TODO(FW-3100): remove this

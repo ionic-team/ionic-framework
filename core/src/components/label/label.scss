@@ -20,6 +20,15 @@
   box-sizing: border-box;
 }
 
+// TODO(): remove
+:host-context(.item-legacy) {
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+}
+
 :host(.ion-color) {
   color: current-color(base);
 }

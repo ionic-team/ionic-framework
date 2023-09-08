@@ -479,6 +479,8 @@ export class Input implements ComponentInterface {
         'has-value': this.hasValue(),
         'has-focus': this.hasFocus,
         'interactive-disabled': this.disabled,
+        // TODO(FW-2764): remove this
+        'legacy': !!this.legacy,
       });
     }
   }
