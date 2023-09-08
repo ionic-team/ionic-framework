@@ -90,13 +90,10 @@
 
     /**
      * From here, we scale the remainder to get
-     * a width value larger than 20px. The purpose of
-     * scaling the remainder is to get a border radius
-     * large enough such that the element resembles a circle.
-     * We then clamp the width
-     * to have a max width of 100% so that each
-     * element does not appear too wide if $width
-     * is a very large number.
+     * a width value larger than 20px.
+     * We then clamp the width to have a max width
+     * of 100% so that each element does not appear
+     * too wide if $width is a very large number.
      *
      * When the font size is >=24px then $remainder
      * will be 0px. This results in $width being 0px
@@ -140,11 +137,10 @@
     $remainder: mod($maxFontSize, $datetime-dynamic-font-breakpoint);
 
     /**
-     * From here, we scale the remainder to get
-     * a border radius value large enough to make
-     * the day button look like a circle. Note that the
-     * exact value does not matter, as long as it is
-     * large enough.
+     * From here, we scale the remainder. The purpose of
+     * scaling the remainder is to get a border radius
+     * large enough such that the element's
+     * shape is a circle.
      *
      * Note that when the font size is 24px
      * then the remainder will be 0, so $radius
