@@ -1,5 +1,5 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Element, Host, Listen, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
+import { Build, Component, Element, Host, Listen, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
 import type { AnchorInterface, ButtonInterface } from '@utils/element-interface';
 import type { Attributes } from '@utils/helpers';
 import { inheritAttributes, raf } from '@utils/helpers';
@@ -351,6 +351,15 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   }
 
   private getFirstInteractive() {
+    if (Build.isTesting) {
+      /**
+       * Pseudo selectors can't be tested in unit tests.
+       * It will cause an error when running the tests.
+       *
+       * We can remove this once https://github.com/ionic-team/stencil/issues/3588 is fixed.
+       */
+      return undefined;
+    }
     const controls = this.el.querySelectorAll<HTMLElement>(
       'ion-toggle:not([disabled]), ion-checkbox:not([disabled]), ion-radio:not([disabled])'
     );
@@ -407,7 +416,6 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
           if (firstInteractive !== undefined && !multipleInputs) {
             const path = ev.composedPath();
             const target = path[0] as HTMLElement;
-
             if (ev.isTrusted) {
               /**
                * Dispatches a click event to the first interactive element,
@@ -417,9 +425,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
                * which means the user clicked on the .item-native or
                * .item-inner padding.
                */
-
               const clickedWithinShadowRoot = this.el.shadowRoot!.contains(target);
-
               if (clickedWithinShadowRoot) {
                 firstInteractive.click();
               }
