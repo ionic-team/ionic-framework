@@ -351,7 +351,9 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   }
 
   private getFirstInteractive() {
-    const controls = this.el.querySelectorAll<HTMLElement>('ion-toggle, ion-checkbox, ion-radio');
+    const controls = this.el.querySelectorAll<HTMLElement>(
+      'ion-toggle:not([disabled]), ion-checkbox:not([disabled]), ion-radio:not([disabled])'
+    );
     return controls[0];
   }
 
@@ -398,12 +400,30 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
     // readers from reading all items as clickable
     if (clickable || (firstInteractive !== undefined && !multipleInputs)) {
       clickFn = {
-        onClick: (ev: Event) => {
+        onClick: (ev: MouseEvent) => {
           if (clickable) {
             openURL(href, ev, routerDirection, routerAnimation);
           }
           if (firstInteractive !== undefined && !multipleInputs) {
-            firstInteractive.click();
+            const path = ev.composedPath();
+            const target = path[0] as HTMLElement;
+
+            if (ev.isTrusted) {
+              /**
+               * Dispatches a click event to the first interactive element,
+               * when it is the result of a user clicking on the item.
+               *
+               * We check if the click target is in the shadow root,
+               * which means the user clicked on the .item-native or
+               * .item-inner padding.
+               */
+
+              const clickedWithinShadowRoot = this.el.shadowRoot!.contains(target);
+
+              if (clickedWithinShadowRoot) {
+                firstInteractive.click();
+              }
+            }
           }
         },
       };
@@ -430,6 +450,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
             [`item-lines-${lines}`]: lines !== undefined,
             [`item-fill-${fillValue}`]: true,
             [`item-shape-${shape}`]: shape !== undefined,
+            'item-interactive': firstInteractive !== undefined,
             'item-disabled': disabled,
             'in-list': inList,
             'item-multiple-inputs': this.multipleInputs,

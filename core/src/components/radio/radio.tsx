@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
-import type { ItemController, LegacyFormController } from '@utils/forms';
-import { createItemController, createLegacyFormController } from '@utils/forms';
+import type { LegacyFormController } from '@utils/forms';
+import { createLegacyFormController } from '@utils/forms';
 import { addEventListener, getAriaLabel, removeEventListener } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 import { createColorClasses, hostContext } from '@utils/theme';
@@ -30,7 +30,6 @@ export class Radio implements ComponentInterface {
   private radioGroup: HTMLIonRadioGroupElement | null = null;
   private nativeInput!: HTMLInputElement;
   private legacyFormController!: LegacyFormController;
-  private itemController!: ItemController;
 
   // This flag ensures we log the deprecation warning at most once.
   private hasLoggedDeprecationWarning = false;
@@ -145,7 +144,6 @@ export class Radio implements ComponentInterface {
 
   connectedCallback() {
     this.legacyFormController = createLegacyFormController(this.el);
-    this.itemController = createItemController(this.el);
     if (this.value === undefined) {
       this.value = this.inputId;
     }
@@ -193,12 +191,8 @@ export class Radio implements ComponentInterface {
     }
   };
 
-  private onClick = (ev: MouseEvent) => {
+  private onClick = () => {
     const { radioGroup, checked } = this;
-
-    if (!this.itemController.controlClickHandler(ev)) {
-      return;
-    }
 
     /**
      * The legacy control uses a native input inside
@@ -281,7 +275,7 @@ export class Radio implements ComponentInterface {
         aria-disabled={disabled ? 'true' : null}
         tabindex={buttonTabindex}
       >
-        <label class="radio-wrapper" ref={this.itemController.setLabelRef}>
+        <label class="radio-wrapper">
           <div
             class={{
               'label-text-wrapper': true,
@@ -344,9 +338,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
         })}
       >
         {this.renderRadioControl()}
-        <label ref={this.itemController.setLabelRef} htmlFor={inputId}>
-          {labelText}
-        </label>
+        <label htmlFor={inputId}>{labelText}</label>
         <input
           type="radio"
           checked={checked}

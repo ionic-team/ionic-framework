@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Prop, Watch, h } from '@stencil/core';
-import type { ItemController, LegacyFormController } from '@utils/forms';
-import { createItemController, createLegacyFormController } from '@utils/forms';
+import type { LegacyFormController } from '@utils/forms';
+import { createLegacyFormController } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
 import { getAriaLabel, inheritAriaAttributes, renderHiddenInput } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
@@ -32,7 +32,6 @@ export class Checkbox implements ComponentInterface {
   private inputId = `ion-cb-${checkboxIds++}`;
   private focusEl?: HTMLElement;
   private legacyFormController!: LegacyFormController; // TODO(FW-3100): remove this
-  private itemController!: ItemController;
   private inheritedAttributes: Attributes = {};
 
   // TODO(FW-3100): remove this
@@ -135,7 +134,6 @@ export class Checkbox implements ComponentInterface {
 
   connectedCallback() {
     this.legacyFormController = createLegacyFormController(this.el); // TODO(FW-3100): remove this
-    this.itemController = createItemController(this.el);
   }
 
   componentWillLoad() {
@@ -205,11 +203,6 @@ export class Checkbox implements ComponentInterface {
   };
 
   private onClick = (ev: MouseEvent) => {
-    if (!this.itemController.controlClickHandler(ev)) {
-      ev.stopPropagation();
-      return;
-    }
-
     this.toggleChecked(ev);
   };
 
@@ -254,7 +247,7 @@ export class Checkbox implements ComponentInterface {
         })}
         onClick={this.onClick}
       >
-        <label class="checkbox-wrapper" ref={this.itemController.setLabelRef}>
+        <label class="checkbox-wrapper">
           {/*
             The native control must be rendered
             before the visible label text due to https://bugs.webkit.org/show_bug.cgi?id=251951
@@ -339,9 +332,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
         <svg class="checkbox-icon" viewBox="0 0 24 24" part="container">
           {path}
         </svg>
-        <label htmlFor={inputId} ref={this.itemController.setLabelRef}>
-          {labelText}
-        </label>
+        <label htmlFor={inputId}>{labelText}</label>
         <input
           type="checkbox"
           aria-checked={`${checked}`}
