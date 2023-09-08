@@ -456,7 +456,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
             [`item-lines-${lines}`]: lines !== undefined,
             [`item-fill-${fillValue}`]: true,
             [`item-shape-${shape}`]: shape !== undefined,
-            'item-interactive': firstInteractive !== undefined,
+            'item-has-interactive-control': firstInteractive !== undefined,
             'item-disabled': disabled,
             'in-list': inList,
             'item-multiple-inputs': this.multipleInputs,
