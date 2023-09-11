@@ -9,7 +9,7 @@ runs:
   steps:
     - uses: actions/setup-node@v3
       with:
-        node-version: 16.x
+        node-version: 18.x
     - uses: actions/download-artifact@v3
       with:
         path: ./artifacts
@@ -35,7 +35,16 @@ runs:
         git config user.name ionitron
         git config user.email hi@ionicframework.com
         git add src/\*.png --force
-        git commit -m "chore(): add updated snapshots"
-        git push
+
+        if git diff --exit-code; then
+          echo -e "\033[1;31m⚠️ Error: No new screenshots generated ⚠️\033[0m"
+          echo -e "\033[1;31mThis means that there were zero visual diffs when running screenshot tests.\033[0m"
+          echo -e "\033[1;31mMake sure you have pushed any code changes that would result in visual diffs.\033[0m"
+          exit 1
+        else
+          git commit -m "chore(): add updated snapshots"
+          git push
+        fi
+
       shell: bash
       working-directory: ./core
