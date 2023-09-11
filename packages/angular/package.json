@@ -48,7 +48,7 @@
   },
   "dependencies": {
     "@ionic/core": "^7.3.3",
-    "ionicons": "^7.0.0",
+    "ionicons": "7.1.3-dev.11694468279.1c23df00",
     "jsonc-parser": "^3.0.0",
     "tslib": "^2.3.0"
   },
