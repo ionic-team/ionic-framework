@@ -17,7 +17,7 @@ configs().forEach(({ title, screenshot, config }) => {
         config
       );
       const list = page.locator('ion-list');
-      await expect(list).toHaveScreenshot(screenshot(`toggle-list`));
+      await expect(list).toHaveScreenshot(screenshot(`radio-list`));
     });
     test('should render correctly in inset list', async ({ page }) => {
       await page.setContent(

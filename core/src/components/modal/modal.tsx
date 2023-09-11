@@ -473,6 +473,19 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
     writeTask(() => this.el.classList.add('show-modal'));
 
+    const hasCardModal = presentingElement !== undefined;
+
+    /**
+     * We need to change the status bar at the
+     * start of the animation so that it completes
+     * by the time the card animation is done.
+     */
+    if (hasCardModal && getIonMode(this) === 'ios') {
+      // Cache the original status bar color before the modal is presented
+      this.statusBarStyle = await StatusBar.getStyle();
+      setCardStatusBarDark();
+    }
+
     await present<ModalPresentOptions>(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, {
       presentingEl: presentingElement,
       currentBreakpoint: this.initialBreakpoint,
@@ -509,19 +522,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
         }
       };
       window.addEventListener(KEYBOARD_DID_OPEN, this.keyboardOpenCallback);
-    }
-
-    const hasCardModal = presentingElement !== undefined;
-
-    /**
-     * We need to change the status bar at the
-     * start of the animation so that it completes
-     * by the time the card animation is done.
-     */
-    if (hasCardModal && getIonMode(this) === 'ios') {
-      // Cache the original status bar color before the modal is presented
-      this.statusBarStyle = await StatusBar.getStyle();
-      setCardStatusBarDark();
     }
 
     if (this.isSheetModal) {
@@ -566,6 +566,16 @@ export class Modal implements ComponentInterface, OverlayInterface {
        * removed from the DOM.
        */
       this.gestureAnimationDismissing = true;
+
+      /**
+       * Reset the status bar style as the dismiss animation
+       * starts otherwise the status bar will be the wrong
+       * color for the duration of the dismiss animation.
+       * The dismiss method does this as well, but
+       * in this case it's only called once the animation
+       * has finished.
+       */
+      setCardStatusBarDefault(this.statusBarStyle);
       this.animation!.onFinish(async () => {
         await this.dismiss(undefined, GESTURE);
         this.gestureAnimationDismissing = false;

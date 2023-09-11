@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Progress Bar - Buffer</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+    <style>
+      .custom-bar-background {
+        --buffer-background: red;
+      }
+
+      .no-bar-background {
+        --buffer-background: none;
+      }
+
+      ion-content ion-progress-bar {
+        margin: 10px 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Progress Bar - Buffer</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="outer-content">
+        <ion-list>
+          <ion-list-header>
+            <ion-label> Buffer </ion-label>
+          </ion-list-header>
+          <ion-progress-bar value="0.20" buffer="0.4"></ion-progress-bar>
+
+          <ion-list-header>
+            <ion-label> Buffer (reversed) </ion-label>
+          </ion-list-header>
+          <ion-progress-bar color="secondary" reversed="true" value="0.20" buffer="0.4"></ion-progress-bar>
+
+          <ion-list-header>
+            <ion-label> Buffer (without value) </ion-label>
+          </ion-list-header>
+          <ion-progress-bar color="tertiary" buffer="0"></ion-progress-bar>
+
+          <ion-list-header>
+            <ion-label> Buffer (change buffer with slider) </ion-label>
+          </ion-list-header>
+          <ion-progress-bar class="progressBarBuffer" value="0.20" buffer="0.4"></ion-progress-bar>
+          <ion-progress-bar class="progressBarBuffer" value="0.20" buffer="0.4" reversed="true"></ion-progress-bar>
+
+          <ion-item>
+            <ion-range legacy="true" pin="true" value="0" id="progressValueBuffer">
+              <ion-label slot="start">0</ion-label>
+              <ion-label slot="end">100</ion-label>
+            </ion-range>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      // Progress Bar Buffer
+      const progressValueBuffer = document.getElementById('progressValueBuffer');
+      const progressBarBuffer = document.querySelectorAll('.progressBarBuffer');
+
+      progressValueBuffer.addEventListener('ionChange', function (ev) {
+        progressBarBuffer.forEach((ele) => (ele.buffer = ev.detail.value / 100));
+      });
+    </script>
+  </body>
+</html>
