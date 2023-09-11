@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.3.4-nightly.20230911](https://github.com/ionic-team/ionic-framework/compare/v7.3.3...v7.3.4-nightly.20230911) (2023-09-11)
+
+
+### Bug Fixes
+
+* **menu:** remove app dir from safe area padding ([#28123](https://github.com/ionic-team/ionic-framework/issues/28123)) ([e0542a7](https://github.com/ionic-team/ionic-framework/commit/e0542a7867871fa45a7fe6a4986e7de633063b4b))
+
+
+
+
+
 ## [7.3.3](https://github.com/ionic-team/ionic-framework/compare/v7.3.2...v7.3.3) (2023-09-06)
 
 
