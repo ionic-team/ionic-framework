@@ -393,7 +393,7 @@ export class Textarea implements ComponentInterface {
         'has-value': this.hasValue(),
         'has-focus': this.hasFocus,
         // TODO(FW-2876): remove this
-        'legacy': !!this.legacy,
+        legacy: !!this.legacy,
       });
     }
   }

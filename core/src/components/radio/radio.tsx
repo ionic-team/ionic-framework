@@ -177,7 +177,7 @@ export class Radio implements ComponentInterface {
     const style: StyleEventDetail = {
       'interactive-disabled': this.disabled,
       // TODO(FW-3125): remove this
-      'legacy': !!this.legacy,
+      legacy: !!this.legacy,
     };
 
     if (this.legacyFormController.hasLegacyControl()) {

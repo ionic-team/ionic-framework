@@ -480,7 +480,7 @@ export class Input implements ComponentInterface {
         'has-focus': this.hasFocus,
         'interactive-disabled': this.disabled,
         // TODO(FW-2764): remove this
-        'legacy': !!this.legacy,
+        legacy: !!this.legacy,
       });
     }
   }

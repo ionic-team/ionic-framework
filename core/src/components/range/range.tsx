@@ -396,7 +396,7 @@ export class Range implements ComponentInterface {
         interactive: true,
         'interactive-disabled': this.disabled,
         // TODO(FW-2997): remove this
-        'legacy': !!this.legacy,
+        legacy: !!this.legacy,
       });
     }
   }
