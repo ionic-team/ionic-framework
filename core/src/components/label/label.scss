@@ -18,15 +18,15 @@
   font-size: inherit;
 
   box-sizing: border-box;
+
+  text-overflow: ellipsis;
+
+  overflow: hidden;
 }
 
 // TODO(): remove
 :host-context(.item-legacy) {
-  text-overflow: ellipsis;
-
   white-space: nowrap;
-
-  overflow: hidden;
 }
 
 :host(.ion-color) {
