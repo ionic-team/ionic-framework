@@ -10,7 +10,12 @@ import { IonRouterOutlet } from './router-outlet';
   template: `
     <ng-content select="[slot=top]"></ng-content>
     <div class="tabs-inner" #tabsInner>
-      <ion-router-outlet #outlet tabs="true" (stackEvents)="onPageSelected($event)"></ion-router-outlet>
+      <ion-router-outlet
+        #outlet
+        tabs="true"
+        (stackWillChange)="onStackWillChange($event)"
+        (stackDidChange)="onStackDidChange($event)"
+      ></ion-router-outlet>
     </div>
     <ng-content></ng-content>
   `,

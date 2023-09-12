@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Popover - Async</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      ion-popover {
+        --width: fit-content;
+      }
+
+      .wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: end;
+
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <ion-content class="ion-padding">
+      <div class="wrapper">
+        <button id="button">Open Popover</button>
+      </div>
+
+      <ion-popover trigger="button"></ion-popover>
+    </ion-content>
+
+    <script>
+      const popover = document.querySelector('ion-popover');
+
+      popover.addEventListener('ionMount', () => {
+        popover.innerHTML = `
+          <div style="padding: 10px;">
+            <ion-list>
+              <ion-item>Item 1</ion-item>
+            </ion-list>
+          </div>
+        `;
+      });
+    </script>
+  </body>
+</html>

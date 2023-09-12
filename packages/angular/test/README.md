@@ -8,7 +8,7 @@ The Angular test app supports syncing your locally built changes for validation.
 
 1. Build the `core` and `packages/angular` directories using `npm run build`.
 2. [Build the Angular test app](#test-app-build-structure).
-3. Navigate to the built test app.
+3. Navigate to the built test app directory (e.g. `packages/angular/test/build/ng14`).
 4. Install dependencies using `npm install`.
 5. Sync your local changes using `npm run sync`.
 
@@ -22,21 +22,26 @@ See https://angular.io/cli/cache for more information.
 
 ### Disable Cache
 
-```
+```shell
 ng cache disable
 ```
 
-> Note: You may need to manually remove the `.angular` directory once after running this command.
+> [!NOTE]
+> You may need to manually remove the `.angular` directory once after running this command.
 
 ### Enable Cache
 
-```
+```shell
 ng cache enable
 ```
 
-> Note: You will need to delete the `.angular` cache and restart the dev server every time you want to sync local changes of Ionic.
+> [!NOTE]
+> You will need to delete the `.angular` cache and restart the dev server every time you want to sync local changes of Ionic.
 
 ## Test App Build Structure
+
+> [!NOTE]
+> Please confirm your current directory as `packages/angular/test` before proceeding with any of the following commands.
 
 Unlike other test applications, these test apps are broken up into multiple directories. These directories are then combined to create a single application. This allows us to share common application code, tests, etc so that each app is being tested the same way. Below details the different pieces that help create a single test application.
 

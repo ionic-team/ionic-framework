@@ -30,6 +30,8 @@ const Body: React.FC<{
       <IonButton expand="block" onClick={() => onDismiss({ test: true }, 'close')}>
         Close
       </IonButton>
+
+      <button onClick={onDismiss} id="show-secondary-modal">Show Secondary Modal</button>
     </IonContent>
   </IonPage>
 );
@@ -83,6 +85,14 @@ const ModalHook: React.FC = () => {
 
   const [presentModalWithContext] = useIonModal(ModalWithContext);
 
+  const [presentSecondaryModal] = useIonModal(ModalSecondary);
+  const [presentRootModal, dismissRootModal] = useIonModal(Body, {
+    onDismiss: () => {
+      dismissRootModal();
+      presentSecondaryModal();
+    }
+  });
+
   return (
     <MyContext.Provider value={{ value: 'overriden value' }}>
       <IonPage>
@@ -134,6 +144,16 @@ const ModalHook: React.FC = () => {
             Show Modal with Context
           </IonButton>
 
+          <IonButton
+            expand="block"
+            onClick={() => {
+              presentRootModal()
+            }}
+            id="show-root-modal"
+          >
+            Show Root Modal
+          </IonButton>
+
           <div>Count: {count}</div>
           <div>Dismissed with role: {dismissedRole}</div>
           <div>Data: {dismissedData && JSON.stringify(dismissedData)}</div>
@@ -142,6 +162,15 @@ const ModalHook: React.FC = () => {
     </MyContext.Provider>
   );
 };
+
+const ModalSecondary: React.FC = () => {
+  return (
+    <div className="ion-padding">
+      <h1>Secondary Modal</h1>
+      <p>This text should be visible</p>
+    </div>
+  )
+}
 
 const MyContext = React.createContext({
   value: 'default value',

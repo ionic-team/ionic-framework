@@ -123,7 +123,7 @@
 }
 
 .alert-tappable {
-  height: $alert-ios-tappable-height;
+  min-height: $alert-ios-tappable-height;
 }
 
 
@@ -137,12 +137,6 @@
   order: 0;
 
   color: $alert-ios-radio-label-text-color;
-
-  text-overflow: ellipsis;
-
-  white-space: nowrap;
-
-  overflow: hidden;
 }
 
 
@@ -196,12 +190,6 @@
   flex: 1;
 
   color: $alert-ios-checkbox-label-text-color;
-
-  text-overflow: ellipsis;
-
-  white-space: nowrap;
-
-  overflow: hidden;
 }
 
 // iOS Alert Checkbox Outer Circle: Unchecked

@@ -31,7 +31,7 @@ import { Config } from '../../providers/config';
 import { NavController } from '../../providers/nav-controller';
 
 import { StackController } from './stack-controller';
-import { RouteView, getUrl } from './stack-utils';
+import { RouteView, StackDidChangeEvent, StackWillChangeEvent, getUrl, isTabSwitch } from './stack-utils';
 
 // TODO(FW-2827): types
 
@@ -67,7 +67,11 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
    */
   @Input() name = PRIMARY_OUTLET;
 
-  @Output() stackEvents = new EventEmitter<any>();
+  /** @internal */
+  @Output() stackWillChange = new EventEmitter<StackWillChangeEvent>();
+  /** @internal */
+  @Output() stackDidChange = new EventEmitter<StackDidChangeEvent>();
+
   // eslint-disable-next-line @angular-eslint/no-output-rename
   @Output('activate') activateEvents = new EventEmitter<any>();
   // eslint-disable-next-line @angular-eslint/no-output-rename
@@ -305,9 +309,16 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
      */
     this.navCtrl.setTopOutlet(this);
 
+    const leavingView = this.stackCtrl.getActiveView();
+
+    this.stackWillChange.emit({
+      enteringView,
+      tabSwitch: isTabSwitch(enteringView, leavingView),
+    });
+
     this.stackCtrl.setActive(enteringView).then((data) => {
       this.activateEvents.emit(cmpRef.instance);
-      this.stackEvents.emit(data);
+      this.stackDidChange.emit(data);
     });
   }
 

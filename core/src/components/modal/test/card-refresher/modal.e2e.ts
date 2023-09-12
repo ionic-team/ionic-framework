@@ -15,7 +15,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       const modal = page.locator('ion-modal');
       const content = (await page.$('ion-modal ion-content'))!;
 
-      await dragElementBy(content, page, 0, 500);
+      await dragElementBy(content, page, 0, 300);
 
       await content.waitForElementState('stable');
 

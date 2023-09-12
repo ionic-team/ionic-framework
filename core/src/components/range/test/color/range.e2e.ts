@@ -16,7 +16,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       );
 
       const range = page.locator('ion-range');
-      expect(await range.screenshot()).toMatchSnapshot(screenshot(`range-color`));
+      await expect(range).toHaveScreenshot(screenshot(`range-color`));
     });
   });
 });
