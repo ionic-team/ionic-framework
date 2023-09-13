@@ -322,6 +322,9 @@
 }
 
 :host(.range-label-placement-stacked) .label-text-wrapper {
+  @include transform-origin(start, top);
+  @include transform(scale(#{$form-control-label-stacked-scale}));
+
   /**
   * The margin between the label and
   * the range should be on the bottom

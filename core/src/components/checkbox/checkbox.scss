@@ -278,12 +278,22 @@ input {
 }
 
 :host(.checkbox-label-placement-stacked) .label-text-wrapper {
+  @include transform(scale(#{$form-control-label-stacked-scale}));
+
   /**
    * The margin between the label and
    * the checkbox should be on the bottom
    * when the label sits at the top.
    */
   @include margin(null, 0, $form-control-label-margin, 0);
+}
+
+:host(.checkbox-label-placement-stacked.checkbox-alignment-start) .label-text-wrapper {
+  @include transform-origin(start, top);
+}
+
+:host(.checkbox-label-placement-stacked.checkbox-alignment-center) .label-text-wrapper {
+  @include transform-origin(center, top);
 }
 
 // Checked / Indeterminate Checkbox
