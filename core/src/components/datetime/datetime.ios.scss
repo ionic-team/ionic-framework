@@ -101,6 +101,11 @@
      * width of 20px below so that the days of the
      * week still show when the font size is >=24px
      * and have a fixed width of 20px.
+     *
+     * The days of the week text on iOS have a maximum font size
+     * that is no larger than 20px, so setting a minimum width
+     * of 20px ensures that the text will always fit. (See font-size
+     * declaration in the .calendar-days-of-week block).
      */
     $width: calc($remainder * 10);
     width: clamp(20px, #{$width}, 100%);
