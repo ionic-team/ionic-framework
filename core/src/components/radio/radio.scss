@@ -261,6 +261,12 @@ input {
    * when the label sits on top.
    */
   @include margin(null, 0, $form-control-label-margin, 0);
+
+  /**
+   * Label text should not extend
+   * beyond the bounds of the radio.
+   */
+  max-width: calc(100% / #{$form-control-label-stacked-scale});
 }
 
 :host(.radio-label-placement-stacked.radio-alignment-start) .label-text-wrapper {

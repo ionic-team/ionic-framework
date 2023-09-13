@@ -331,4 +331,10 @@
   * when the label sits on top.
   */
   @include margin(null, 0, $form-control-label-margin, 0);
+
+  /**
+   * Label text should not extend
+   * beyond the bounds of the range.
+   */
+  max-width: calc(100% / #{$form-control-label-stacked-scale});
 }

@@ -286,6 +286,12 @@ input {
    * when the label sits at the top.
    */
   @include margin(null, 0, $form-control-label-margin, 0);
+
+  /**
+   * Label text should not extend
+   * beyond the bounds of the checkbox.
+   */
+  max-width: calc(100% / #{$form-control-label-stacked-scale});
 }
 
 :host(.checkbox-label-placement-stacked.checkbox-alignment-start) .label-text-wrapper {

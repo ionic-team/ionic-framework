@@ -153,3 +153,19 @@ configs().forEach(({ title, screenshot, config }) => {
     });
   });
 });
+
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
+  test.describe(title('toggle: stacked long label'), () => {
+    test('long label should truncate', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-toggle label-placement="stacked" alignment="start" style="width: 200px">Enable Notifications Enable Notifications Enable Notifications Enable Notifications Enable Notifications Enable Notifications Enable Notifications</ion-toggle>
+        `,
+        config
+      );
+
+      const toggle = page.locator('ion-toggle');
+      await expect(toggle).toHaveScreenshot(screenshot(`toggle-label-stacked-long-label`));
+    });
+  });
+});

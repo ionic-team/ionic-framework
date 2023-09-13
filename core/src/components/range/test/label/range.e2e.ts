@@ -241,4 +241,20 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       await expect(container).toHaveScreenshot(screenshot(`range-stacked-pin`));
     });
   });
+
+  test.describe(title('range: stacked long label'), () => {
+    test('long label should truncate', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-range label-placement="stacked" style="width: 200px">
+            <div slot="label">Temperature Temperature Temperature Temperature Temperature Temperature Temperature Temperature Temperature </div>
+          </ion-radio>
+        `,
+        config
+      );
+
+      const range = page.locator('ion-range');
+      await expect(range).toHaveScreenshot(screenshot(`range-label-stacked-long-label`));
+    });
+  });
 });
