@@ -34,7 +34,7 @@ runs:
       run: |
         git config user.name ionitron
         git config user.email hi@ionicframework.com
-        git add src/\*.png --force -N
+        git add src/\*.png --force
 
         if git diff --exit-code; then
           echo -e "\033[1;31m⚠️ Error: No new screenshots generated ⚠️\033[0m"
