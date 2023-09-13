@@ -166,3 +166,19 @@ configs().forEach(({ title, screenshot, config }) => {
     });
   });
 });
+
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
+  test.describe(title('checkbox: stacked long label'), () => {
+    test('long label should truncate', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-checkbox label-placement="stacked" alignment="start" style="width: 200px">Enable Notifications Enable Notifications Enable Notifications Enable Notifications Enable Notifications Enable Notifications Enable Notifications</ion-checkbox>
+        `,
+        config
+      );
+
+      const checkbox = page.locator('ion-checkbox');
+      await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-label-stacked-long-label`));
+    });
+  });
+});
