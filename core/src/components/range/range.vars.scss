@@ -2,4 +2,7 @@
 $range-item-label-margin-top: 10px !default;
 
 /// @prop - Bottom margin of range's label when in an item
-$range-item-label-margin-bottom: 10px !default;
+// We don't add additional margin because the native container
+// has additional white space. Otherwise there would be too
+// much white space at the bottom of the item.
+$range-item-label-margin-bottom: 0px !default;
