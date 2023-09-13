@@ -34,10 +34,6 @@ runs:
       run: |
         git config user.name ionitron
         git config user.email hi@ionicframework.com
-
-        # This adds an empty entry for new
-        # screenshot files so we can track them with
-        # git diff
         git add src/\*.png --force -N
 
         if git diff --exit-code; then
@@ -46,9 +42,6 @@ runs:
           echo -e "\033[1;31mMake sure you have pushed any code changes that would result in visual diffs.\033[0m"
           exit 1
         else
-          # This actually adds the contents
-          # of the screenshots (including new ones)
-          git add src/\*.png --force
           git commit -m "chore(): add updated snapshots"
           git push
         fi
