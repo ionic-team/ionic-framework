@@ -58,7 +58,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config, screen
         `
           <ion-list>
             <ion-item>
-              <ion-range label="Temperature" elabel-placement="stacked"></ion-range>
+              <ion-range label="Temperature" label-placement="stacked"></ion-range>
             </ion-item>
           </ion-list>
         `,
