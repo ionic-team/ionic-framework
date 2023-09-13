@@ -51,7 +51,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   });
 });
 
-configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
   test.describe(title('range: stacked label in item'), () => {
     test('should render margins correctly when using stacked label in item', async ({ page }) => {
       await page.setContent(
