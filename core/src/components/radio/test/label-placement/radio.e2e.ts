@@ -168,3 +168,19 @@ configs().forEach(({ title, screenshot, config }) => {
     });
   });
 });
+
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
+  test.describe(title('radio: stacked long label'), () => {
+    test('long label should truncate', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-radio label-placement="stacked" alignment="start" style="width: 200px">Enable Notifications Enable Notifications Enable Notifications Enable Notifications Enable Notifications Enable Notifications Enable Notifications</ion-radio>
+        `,
+        config
+      );
+
+      const radio = page.locator('ion-radio');
+      await expect(radio).toHaveScreenshot(screenshot(`radio-label-stacked-long-label`));
+    });
+  });
+});

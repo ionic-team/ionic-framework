@@ -251,12 +251,28 @@ input {
 }
 
 :host(.toggle-label-placement-stacked) .label-text-wrapper {
+  @include transform(scale(#{$form-control-label-stacked-scale}));
+
   /**
    * The margin between the label and
    * the toggle should be on the bottom
    * when the label sits on top.
    */
   @include margin(null, 0, $form-control-label-margin, 0);
+
+  /**
+   * Label text should not extend
+   * beyond the bounds of the toggle.
+   */
+  max-width: calc(100% / #{$form-control-label-stacked-scale});
+}
+
+:host(.toggle-label-placement-stacked.toggle-alignment-start) .label-text-wrapper {
+  @include transform-origin(start, top);
+}
+
+:host(.toggle-label-placement-stacked.toggle-alignment-center) .label-text-wrapper {
+  @include transform-origin(center, top);
 }
 
 // Toggle Background Track: Unchecked

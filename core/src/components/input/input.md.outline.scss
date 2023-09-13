@@ -90,14 +90,14 @@
 :host(.has-focus.input-fill-outline.input-label-placement-floating) .label-text-wrapper,
 :host(.has-value.input-fill-outline.input-label-placement-floating) .label-text-wrapper,
 :host(.input-fill-outline.input-label-placement-stacked) .label-text-wrapper {
-  @include transform(translateY(-32%), scale(#{$input-floating-label-scale}));
+  @include transform(translateY(-32%), scale(#{$form-control-label-stacked-scale}));
   @include margin(0);
 
   /**
    * Label text should not extend
    * beyond the bounds of the input.
    */
-  max-width: calc((100% - var(--padding-start) - var(--padding-end) - #{$input-md-floating-label-padding * 2}) / #{$input-floating-label-scale});
+  max-width: calc((100% - var(--padding-start) - var(--padding-end) - #{$input-md-floating-label-padding * 2}) / #{$form-control-label-stacked-scale});
 }
 
 /**
@@ -166,7 +166,7 @@
    */
   @include padding(null, #{$input-md-floating-label-padding * 2}, null, null);
 
-  font-size: calc(1em * #{$input-floating-label-scale});
+  font-size: calc(1em * #{$form-control-label-stacked-scale});
 
   opacity: 0;
   pointer-events: none;
