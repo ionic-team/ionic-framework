@@ -13,6 +13,18 @@ let currentPadding = 0;
 
 const SKIP_SCROLL_ASSIST = 'data-ionic-skip-scroll-assist';
 
+/**
+ * addEventListener typically expects an Event
+ * type in the event listener callbacks. In this case
+ * we have a CustomEvent, so we update the window event map
+ * to register our specific event as well as the type of that event.
+ */
+declare global {
+  interface WindowEventMap {
+    ionKeyboardDidShow: CustomEvent<{ keyboardHeight: number }>;
+  }
+}
+
 export const enableScrollAssist = (
   componentEl: HTMLElement,
   inputEl: HTMLInputElement | HTMLTextAreaElement,
@@ -78,7 +90,7 @@ export const enableScrollAssist = (
    * because `ionKeyboardDidShow` uses the native events
    * which fire every time the keyboard changes.
    */
-  const keyboardShow = (ev: any) => {
+  const keyboardShow = (ev: CustomEvent<{ keyboardHeight: number }>) => {
     /**
      * If the keyboard has not yet been presented
      * for this text field then the text field has just
