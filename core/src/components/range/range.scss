@@ -1,4 +1,5 @@
 @import "../../themes/ionic.globals";
+@import "./range.vars.scss";
 
 // Range
 // --------------------------------------------------
@@ -328,4 +329,16 @@
   * when the label sits on top.
   */
   @include margin(null, 0, $form-control-label-margin, 0);
+}
+
+:host(.in-item:not(.legacy-range)) .label-text-wrapper {
+  @include margin($range-item-label-margin-top, null, $range-item-label-margin-bottom, null);
+}
+
+:host(.in-item.range-label-placement-stacked) .label-text-wrapper {
+  @include margin($range-item-label-margin-top, null, $form-control-label-margin, null);
+}
+
+:host(.in-item.range-label-placement-stacked) .native-wrapper {
+  @include margin(null, null, $range-item-label-margin-bottom, null);
 }
