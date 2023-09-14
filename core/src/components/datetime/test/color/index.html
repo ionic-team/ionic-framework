@@ -9,11 +9,18 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
     <style>
+      ion-checkbox,
+      ion-select {
+        margin-inline-start: 10px;
+        margin-inline-end: 10px;
+      }
+
       .grid {
         display: grid;
-        grid-template-columns: repeat(2, minmax(250px, 1fr));
+        grid-template-columns: repeat(auto-fill, 250px);
         grid-gap: 20px;
       }
+
       h2 {
         font-size: 12px;
         font-weight: normal;
@@ -29,10 +36,14 @@
         border-radius: 8px;
       }
 
+      #color-name::first-letter {
+        text-transform: capitalize;
+      }
+
       /*
-       * Dark Colors
-       * -------------------------------------------
-       */
+      * Dark Theme
+      * -------------------------------------------
+      */
 
       body.dark {
         --ion-color-primary: #428cff;
@@ -100,9 +111,9 @@
       }
 
       /*
-       * iOS Dark Theme
-       * -------------------------------------------
-       */
+      * iOS Dark Theme
+      * -------------------------------------------
+      */
 
       .ios body.dark {
         --ion-background-color: #000000;
@@ -144,9 +155,9 @@
       }
 
       /*
-       * Material Design Dark Theme
-       * -------------------------------------------
-       */
+      * Material Design Dark Theme
+      * -------------------------------------------
+      */
 
       .md body.dark {
         --ion-background-color: #121212;
@@ -191,30 +202,23 @@
     <ion-app>
       <ion-header translucent="true">
         <ion-toolbar>
-          <ion-title>Datetime - Color</ion-title>
-          <ion-item lines="none" slot="end">
-            <ion-label>Dark Mode</ion-label>
-            <ion-checkbox slot="end"></ion-checkbox>
-          </ion-item>
-
-          <ion-item lines="none" slot="end">
-            <ion-label>Color</ion-label>
-            <ion-select value="danger">
-              <ion-select-option value="primary">Primary</ion-select-option>
-              <ion-select-option value="secondary">Secondary</ion-select-option>
-              <ion-select-option value="tertiary">Tertiary</ion-select-option>
-              <ion-select-option value="success">Success</ion-select-option>
-              <ion-select-option value="warning">Warning</ion-select-option>
-              <ion-select-option value="danger">Danger</ion-select-option>
-            </ion-select>
-          </ion-item>
+          <ion-checkbox>Dark Mode</ion-checkbox>
+          <ion-select label="Color" justify="end" slot="end" value="danger">
+            <ion-select-option value="primary">Primary</ion-select-option>
+            <ion-select-option value="secondary">Secondary</ion-select-option>
+            <ion-select-option value="tertiary">Tertiary</ion-select-option>
+            <ion-select-option value="success">Success</ion-select-option>
+            <ion-select-option value="warning">Warning</ion-select-option>
+            <ion-select-option value="danger">Danger</ion-select-option>
+          </ion-select>
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
         <div class="grid">
           <div class="grid-item">
-            <h2>Default</h2>
+            <h2 id="color-name">Danger</h2>
             <ion-datetime
+              id="color-datetime"
               color="danger"
               value="2022-05-03"
               show-default-title="true"
@@ -224,14 +228,14 @@
         </div>
       </ion-content>
       <script>
+        const colorDatetime = document.querySelector('#color-datetime');
+        const colorName = document.querySelector('#color-name');
         const colorSelect = document.querySelector('ion-select');
         const darkModeToggle = document.querySelector('ion-checkbox');
-        const datetimes = document.querySelectorAll('ion-datetime');
 
         colorSelect.addEventListener('ionChange', (ev) => {
-          datetimes.forEach((datetime) => {
-            datetime.color = ev.detail.value;
-          });
+          colorDatetime.color = ev.detail.value;
+          colorName.innerHTML = ev.detail.value;
         });
 
         darkModeToggle.addEventListener('ionChange', (ev) => {
