@@ -13,18 +13,6 @@ let currentPadding = 0;
 
 const SKIP_SCROLL_ASSIST = 'data-ionic-skip-scroll-assist';
 
-/**
- * addEventListener typically expects an Event
- * type in the event listener callbacks. In this case
- * we have a CustomEvent, so we update the window event map
- * to register our specific event as well as the type of that event.
- */
-declare global {
-  interface WindowEventMap {
-    ionKeyboardDidShow: CustomEvent<{ keyboardHeight: number }>;
-  }
-}
-
 export const enableScrollAssist = (
   componentEl: HTMLElement,
   inputEl: HTMLInputElement | HTMLTextAreaElement,
@@ -135,7 +123,7 @@ export const enableScrollAssist = (
    */
   const focusOut = () => {
     hasKeyboardBeenPresentedForTextField = false;
-    window.removeEventListener('ionKeyboardDidShow', keyboardShow);
+    win?.removeEventListener('ionKeyboardDidShow', keyboardShow);
     componentEl.removeEventListener('focusout', focusOut, true);
   };
 
@@ -166,7 +154,7 @@ export const enableScrollAssist = (
       platformHeight
     );
 
-    window.addEventListener('ionKeyboardDidShow', keyboardShow);
+    win?.addEventListener('ionKeyboardDidShow', keyboardShow);
     componentEl.addEventListener('focusout', focusOut, true);
   };
 
@@ -174,7 +162,7 @@ export const enableScrollAssist = (
 
   return () => {
     componentEl.removeEventListener('focusin', focusIn, true);
-    window.removeEventListener('ionKeyboardDidShow', keyboardShow);
+    win?.removeEventListener('ionKeyboardDidShow', keyboardShow);
     componentEl.removeEventListener('focusout', focusOut, true);
   };
 };
