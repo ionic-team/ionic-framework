@@ -5,7 +5,7 @@ import { configs, test } from '@utils/test/playwright';
  * This behavior does not vary across modes.
  */
 configs({ modes: ['md'] }).forEach(({ title, config, screenshot }) => {
-  test.describe.only(title('menu: safe area'), () => {
+  test.describe(title('menu: safe area'), () => {
     test.beforeEach(async ({ page }) => {
       await page.goto(`/src/components/menu/test/safe-area`, config);
     });
