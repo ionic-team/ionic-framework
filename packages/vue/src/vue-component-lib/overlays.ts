@@ -177,7 +177,14 @@ export const defineOverlayContainer = <Props extends object>(name: string, defin
         return h(
           name,
           { ...restOfProps, ref: elementRef },
-          (isOpen.value || restOfProps.keepContentsMounted) ? renderChildren() : undefined
+
+          /**
+           * When binding keepContentsMounted as an attribute
+           * i.e. <ion-modal keep-contents-mounted></ion-modal>
+           * the value of the prop will be the empty string which is
+           * why we still call renderChildren() in that case.
+           */
+          (isOpen.value || restOfProps.keepContentsMounted || restOfProps.keepContentsMounted === '') ? renderChildren() : undefined
         )
       }
     });
