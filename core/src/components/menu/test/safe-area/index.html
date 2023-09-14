@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Menu - Safe Area Padding</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <script type="module">
+      import { menuController } from '../../../../dist/ionic/index.esm.js';
+      window.menuController = menuController;
+    </script>
+    <style>
+      :root {
+        --ion-safe-area-left: 60px;
+        --ion-safe-area-right: 20px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-menu side="start" menu-id="start-menu" content-id="main">
+        <ion-header>
+          <ion-toolbar color="primary">
+            <ion-title>Start Menu</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+          <ion-list>
+            <ion-item>Menu Item</ion-item>
+          </ion-list>
+        </ion-content>
+      </ion-menu>
+
+      <ion-menu side="end" menu-id="end-menu" content-id="main">
+        <ion-header>
+          <ion-toolbar color="danger">
+            <ion-title>End Menu</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+          <ion-list>
+            <ion-item>Menu Item</ion-item>
+          </ion-list>
+        </ion-content>
+      </ion-menu>
+
+      <div class="ion-page" id="main">
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Menu - Safe Area Padding</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding">
+          <ion-button expand="block" id="open-start" onclick="openStart()">Open Start Menu</ion-button>
+          <ion-button expand="block" id="open-end" onclick="openEnd()">Open End Menu</ion-button>
+        </ion-content>
+      </div>
+    </ion-app>
+
+    <script>
+      async function openStart() {
+        // Open the menu by menu-id
+        await menuController.enable(true, 'start-menu');
+        await menuController.open('start-menu');
+      }
+
+      async function openEnd() {
+        // Open the menu by side
+        await menuController.open('end');
+      }
+    </script>
+  </body>
+</html>

@@ -83,12 +83,12 @@
       * Otherwise, the content will have less space on both sides.
       *
       * RTL:
-      * The right side of the menu touches the screen edge. The safe area padding has
-      * already been set in the core styles, so there's no need to set it again.
+      * The right side of the menu touches the screen edge.
+      * The right side needs to revert back to the default value that was set in the core styles, so we unset it here.
       * The left side of the menu is not touching the screen edge. Padding is not
       * applied to the left side of the menu. A value of 0 is set.
       */
-    --ion-safe-area-right: env(safe-area-inset-right);
+    --ion-safe-area-right: unset;
     --ion-safe-area-left: 0px;
   }
 }
@@ -118,12 +118,12 @@
       * Otherwise, the content will have less space on both sides.
       *
       * RTL:
-      * The left side of the menu touches the screen edge. The safe area padding has
-      * already been set in the core styles, so there's no need to set it again.
+      * The left side of the menu touches the screen edge.
+      * The left side needs to revert back to the default value that was set in the core styles, so we unset it here.
       * The right side of the menu is not touching the screen edge. Padding is not
       * applied to the right side of the menu. A value of 0 is set.
       */
-    --ion-safe-area-left: env(safe-area-inset-left);
+    --ion-safe-area-left: unset;
     --ion-safe-area-right: 0px;
   }
 }
