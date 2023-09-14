@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.7.3",
-    "@capacitor/core": "^5.3.0",
+    "@capacitor/core": "^5.4.0",
     "@capacitor/haptics": "^5.0.6",
     "@capacitor/keyboard": "^5.0.6",
     "@capacitor/status-bar": "^5.0.6",
