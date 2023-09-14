@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.4.0](https://github.com/ionic-team/ionic-framework/compare/v7.3.4...v7.4.0) (2023-09-14)
+
+
+### Bug Fixes
+
+* **datetime:** scroll to newly selected date when value changes ([#27806](https://github.com/ionic-team/ionic-framework/issues/27806)) ([32244fb](https://github.com/ionic-team/ionic-framework/commit/32244fbdd1931e59a9e3cedd2b143c8ee7d01459)), closes [#26391](https://github.com/ionic-team/ionic-framework/issues/26391)
+* **many:** add correct scale to stacked labels ([#28163](https://github.com/ionic-team/ionic-framework/issues/28163)) ([8cb8786](https://github.com/ionic-team/ionic-framework/commit/8cb878669e53bad25bbe2787826b6d02d292848a))
+* **range:** add correct margin in item ([#28161](https://github.com/ionic-team/ionic-framework/issues/28161)) ([1d2b867](https://github.com/ionic-team/ionic-framework/commit/1d2b867f2207d366e355265b081bc9aabe31ce7e))
+
+
+### Features
+
+* **checkbox, radio, toggle, range:** stacked labels for form controls ([#28075](https://github.com/ionic-team/ionic-framework/issues/28075)) ([e6c7bb6](https://github.com/ionic-team/ionic-framework/commit/e6c7bb60e7e61c965f45e2bf3e3bd16f5125ad56))
+* **datetime:** add disabled part ([#28134](https://github.com/ionic-team/ionic-framework/issues/28134)) ([cd8d509](https://github.com/ionic-team/ionic-framework/commit/cd8d5091a133804ac97d0394354dcf7cd73d9355))
+* **datetime:** add parts for calendar day, active, and today ([#27641](https://github.com/ionic-team/ionic-framework/issues/27641)) ([79b005d](https://github.com/ionic-team/ionic-framework/commit/79b005da704c2ce481e1e3bc4d24cdba06a36d04)), closes [#25340](https://github.com/ionic-team/ionic-framework/issues/25340)
+* export TransitionOptions interface and getIonPageElement ([#28140](https://github.com/ionic-team/ionic-framework/issues/28140)) ([19f3bb2](https://github.com/ionic-team/ionic-framework/commit/19f3bb23fd5587848fc41a744ca46ef5985c04d2)), closes [#28137](https://github.com/ionic-team/ionic-framework/issues/28137)
+
+
+
+
+
 ## [7.3.4](https://github.com/ionic-team/ionic-framework/compare/v7.3.3...v7.3.4) (2023-09-13)
 
 
