@@ -74,7 +74,7 @@ export const enableScrollAssist = (
    * This means that if the keyboard changes but does not change
    * geometry, then scroll assist will not re-run even if
    * the user has scrolled the text field under the keyboard.
-   * This should not be a problem when running in Cordova/Capacitor
+   * This is not a problem when running in Cordova/Capacitor
    * because `ionKeyboardDidShow` uses the native events
    * which fire every time the keyboard changes.
    */
