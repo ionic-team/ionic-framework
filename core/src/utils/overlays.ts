@@ -1,3 +1,5 @@
+import { doc } from '@utils/browser';
+
 import { config } from '../global/config';
 import { getIonMode } from '../global/ionic-global';
 import type {
@@ -386,6 +388,17 @@ export const getOverlays = (doc: Document, selector?: string): HTMLIonOverlayEle
 };
 
 /**
+ * Returns a list of all presented overlays.
+ * Inline overlays can exist in the DOM but not be presented,
+ * so there are times when we want to exclude those.
+ * @param doc The document to find the element within.
+ * @param overlayTag The selector for the overlay, defaults to Ionic overlay components.
+ */
+const getPresentedOverlays = (doc: Document, overlayTag?: string): HTMLIonOverlayElement[] => {
+  return getOverlays(doc, overlayTag).filter((o) => !isOverlayHidden(o));
+};
+
+/**
  * Returns an overlay element
  * @param doc The document to find the element within.
  * @param overlayTag The selector for the overlay, defaults to Ionic overlay components.
@@ -393,7 +406,7 @@ export const getOverlays = (doc: Document, selector?: string): HTMLIonOverlayEle
  * @returns The overlay element or `undefined` if no overlay element is found.
  */
 export const getOverlay = (doc: Document, overlayTag?: string, id?: string): HTMLIonOverlayElement | undefined => {
-  const overlays = getOverlays(doc, overlayTag).filter((o) => !isOverlayHidden(o));
+  const overlays = getPresentedOverlays(doc, overlayTag);
   return id === undefined ? overlays[overlays.length - 1] : overlays.find((o) => o.id === id);
 };
 
@@ -525,7 +538,13 @@ export const dismiss = async <OverlayDismissOptions>(
     return false;
   }
 
-  setRootAriaHidden(false);
+  /**
+   * If this is the last visible overlay then
+   * we want to re-add the root to the accessibility tree.
+   */
+  if (doc !== undefined && getPresentedOverlays(doc).length === 1) {
+    setRootAriaHidden(false);
+  }
 
   overlay.presented = false;
 
