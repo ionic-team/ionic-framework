@@ -85,6 +85,8 @@
       * RTL:
       * The right side of the menu touches the screen edge.
       * The right side needs to revert back to the default value that was set in the core styles, so we unset it here.
+      * This would keep the variable consistent with the core styles.
+      * Additionally, it would continue to allow users to override the variable if they choose to.
       * The left side of the menu is not touching the screen edge. Padding is not
       * applied to the left side of the menu. A value of 0 is set.
       */
@@ -120,6 +122,8 @@
       * RTL:
       * The left side of the menu touches the screen edge.
       * The left side needs to revert back to the default value that was set in the core styles, so we unset it here.
+      * This would keep the variable consistent with the core styles.
+      * Additionally, it would continue to allow users to override the variable if they choose to.
       * The right side of the menu is not touching the screen edge. Padding is not
       * applied to the right side of the menu. A value of 0 is set.
       */
