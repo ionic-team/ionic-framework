@@ -80,7 +80,7 @@ describe('setRootAriaHidden()', () => {
     setRootAriaHidden(true);
   });
 
-  it.only('should remove router-outlet from accessibility tree when overlay is presented', async () => {
+  it('should remove router-outlet from accessibility tree when overlay is presented', async () => {
     const page = await newSpecPage({
       components: [RouterOutlet, Modal],
       html: `
@@ -98,7 +98,7 @@ describe('setRootAriaHidden()', () => {
     expect(routerOutlet.hasAttribute('aria-hidden')).toEqual(true);
   });
 
-  it.only('should add router-outlet from accessibility tree when then final overlay is dismissed', async () => {
+  it('should add router-outlet from accessibility tree when then final overlay is dismissed', async () => {
     const page = await newSpecPage({
       components: [RouterOutlet, Modal],
       html: `
