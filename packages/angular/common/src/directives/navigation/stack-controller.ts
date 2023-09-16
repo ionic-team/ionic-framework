@@ -67,18 +67,7 @@ export class StackController {
 
     const viewsSnapshot = this.views.slice();
 
-    let currentNavigation;
-
-    const router = this.router as any;
-
-    // Angular >= 7.2.0
-    if (router.getCurrentNavigation) {
-      currentNavigation = router.getCurrentNavigation();
-
-      // Angular < 7.2.0
-    } else if (router.navigations?.value) {
-      currentNavigation = router.navigations.value;
-    }
+    const currentNavigation = this.router.getCurrentNavigation();
 
     /**
      * If the navigation action sets `replaceUrl: true` then we need to make sure
