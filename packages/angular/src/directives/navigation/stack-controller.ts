@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { ComponentRef, NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AnimationBuilder, RouterDirection } from '@ionic/core';
+import { AnimationBuilder, NavDirection, RouterDirection } from '@ionic/core';
 
 import { bindLifecycleEvents } from '../../providers/angular-delegate';
 import { NavController } from '../../providers/nav-controller';
@@ -62,14 +62,8 @@ export class StackController {
   }
 
   setActive(enteringView: RouteView): Promise<StackDidChangeEvent> {
-    const consumeResult = this.navCtrl.consumeTransition();
+    const { isDirectionBasedOnNavigationIds, ...consumeResult } = this.navCtrl.consumeTransition();
     let { direction, animation, animationBuilder } = consumeResult;
-    const leavingView = this.activeView;
-    const tabSwitch = isTabSwitch(enteringView, leavingView);
-    if (tabSwitch) {
-      direction = 'back';
-      animation = undefined;
-    }
 
     const viewsSnapshot = this.views.slice();
 
@@ -87,25 +81,65 @@ export class StackController {
     }
 
     /**
-     * If the navigation action
-     * sets `replaceUrl: true`
-     * then we need to make sure
-     * we remove the last item
-     * from our views stack
+     * If the navigation action sets `replaceUrl: true` then we need to make sure
+     * we remove the last item from our views stack
      */
-    if (currentNavigation?.extras?.replaceUrl) {
+    if (currentNavigation?.extras?.replaceUrl && currentNavigation?.trigger !== 'popstate') {
       if (this.views.length > 0) {
         this.views.splice(-1, 1);
       }
     }
 
-    const reused = this.views.includes(enteringView);
+    // determine direction based on the order of the views in the stack
+    const leavingView = this.activeView;
+    const isEnteringViewReused = this.views.includes(enteringView);
+    const leavingViewIndex = leavingView ? this.views.indexOf(leavingView) : -1;
+    const enteringViewIndex = isEnteringViewReused ? this.views.indexOf(enteringView) : this.views.length;
+    const suggestedDirectionBasedOnStackOrder: NavDirection | undefined =
+      leavingViewIndex === -1 ? undefined : enteringViewIndex < leavingViewIndex ? 'back' : 'forward';
+
+    /**
+     * The user triggered a back navigation on a page that was navigated to with root. In this case, the new page
+     * becomes the root and the leavingView is removed.
+     *
+     * This can happen when e.g.:
+     * - using the NavController's navigateBack on a root page
+     * - navigating to a page with navigateRoot and then using the browser back button
+     */
+    if (
+      direction === 'back' &&
+      isDirectionBasedOnNavigationIds &&
+      leavingView?.root &&
+      currentNavigation?.trigger === 'popstate'
+    ) {
+      if (leavingViewIndex >= 0) {
+        this.views.splice(leavingViewIndex, 1);
+      }
+    }
+
+    /**
+     * direction based on stack order takes precedence over direction based on navigation ids
+     *
+     * only applied if the user did not explicitly set the direction
+     * (e.g. via the NavController, routerLink directive etc.)
+     */
+    if (isDirectionBasedOnNavigationIds && suggestedDirectionBasedOnStackOrder) {
+      direction = suggestedDirectionBasedOnStackOrder;
+      animation = suggestedDirectionBasedOnStackOrder;
+    }
+
+    const tabSwitch = isTabSwitch(enteringView, leavingView);
+    if (tabSwitch) {
+      direction = 'back';
+      animation = undefined;
+    }
+
     const views = this.insertView(enteringView, direction);
 
     // Trigger change detection before transition starts
     // This will call ngOnInit() the first time too, just after the view
     // was attached to the dom, but BEFORE the transition starts
-    if (!reused) {
+    if (!isEnteringViewReused) {
       enteringView.ref.changeDetectorRef.detectChanges();
     }
 

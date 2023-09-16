@@ -113,6 +113,7 @@ describe('Router Link', () => {
   describe('back', () => {
     it('should go back with ion-button[routerLink][routerDirection=back]', () => {
       cy.get('#routerLink-back').click();
+      testBack();
     });
 
     it('should go back with a[routerLink][routerDirection=back]', () => {
@@ -138,6 +139,7 @@ function testForward() {
   cy.get('app-router-link-page #canGoBack').should('have.text', 'true');
 
   cy.go('back');
+  cy.wait(500);
   cy.testStack('ion-router-outlet', ['app-router-link']);
   cy.testLifeCycle('app-router-link', {
     ionViewWillEnter: 2,
@@ -159,7 +161,7 @@ function testRoot() {
   cy.get('app-router-link-page #canGoBack').should('have.text', 'false');
 
   cy.go('back');
-  cy.wait(100);
+  cy.wait(500);
   cy.testStack('ion-router-outlet', ['app-router-link']);
   cy.testLifeCycle('app-router-link', {
     ionViewWillEnter: 1,
@@ -181,7 +183,7 @@ function testBack() {
   cy.get('app-router-link-page #canGoBack').should('have.text', 'false');
 
   cy.go('back');
-  cy.wait(100);
+  cy.wait(500);
   cy.testStack('ion-router-outlet', ['app-router-link']);
   cy.testLifeCycle('app-router-link', {
     ionViewWillEnter: 1,
