@@ -91,9 +91,7 @@ export class StackController {
      * The user triggered a back navigation on a page that was navigated to with root. In this case, the new page
      * becomes the root and the leavingView is removed.
      *
-     * This can happen when e.g.:
-     * - using the NavController's navigateBack on a root page
-     * - navigating to a page with navigateRoot and then using the browser back button
+     * This can happen e.g. when navigating to a page with navigateRoot and then using the browser back button
      */
     if (
       direction === 'back' &&
