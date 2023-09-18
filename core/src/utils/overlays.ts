@@ -383,6 +383,9 @@ export const dismissOverlay = (
   return overlay.dismiss(data, role);
 };
 
+/**
+ * Returns a list of all overlays in the DOM even if they are not presented.
+ */
 export const getOverlays = (doc: Document, selector?: string): HTMLIonOverlayElement[] => {
   if (selector === undefined) {
     selector = 'ion-alert,ion-action-sheet,ion-loading,ion-modal,ion-picker,ion-popover,ion-toast';
