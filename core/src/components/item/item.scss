@@ -206,6 +206,9 @@
   display: flex;
   position: relative;
 
+  // Flex wrap is required here in order to wrap
+  // the start slot + .item-inner content that
+  // doesn't fit on the same line
   flex-wrap: wrap;
 
   align-items: inherit;
@@ -274,6 +277,10 @@ button, a {
   flex: 1 0 auto;
 
   flex-direction: inherit;
+
+  // Flex wrap is required here in order to wrap
+  // .input-wrapper content + the end slot that
+  // doesn't fit on the same line
   flex-wrap: wrap;
 
   align-items: inherit;
@@ -370,7 +377,13 @@ button, a {
   // the label from shrinking when there are wide
   // elements next to it
   flex: 1 0 auto;
+
   flex-direction: inherit;
+
+  // Flex wrap is required here in order to wrap
+  // content in the default slot (such as a label
+  // and a button) that doesn't fit on the same line
+  flex-wrap: wrap;
 
   align-items: inherit;
   align-self: stretch;
