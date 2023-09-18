@@ -20,8 +20,6 @@
   box-sizing: border-box;
 
   text-overflow: ellipsis;
-
-  overflow: hidden;
 }
 
 // TODO(): remove
@@ -33,8 +31,8 @@
   color: current-color(base);
 }
 
-:host(.ion-text-wrap) {
-  white-space: normal;
+:host(.ion-text-nowrap) {
+  overflow: hidden;
 }
 
 :host-context(.item-interactive-disabled:not(.item-multiple-inputs)) {
