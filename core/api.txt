@@ -289,12 +289,13 @@ ion-card-title,prop,mode,"ios" | "md",undefined,false,false
 ion-card-title,css-prop,--color
 
 ion-checkbox,shadow
+ion-checkbox,prop,alignment,"center" | "start",'center',false,false
 ion-checkbox,prop,checked,boolean,false,false,false
 ion-checkbox,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-checkbox,prop,disabled,boolean,false,false,false
 ion-checkbox,prop,indeterminate,boolean,false,false,false
 ion-checkbox,prop,justify,"end" | "space-between" | "start",'space-between',false,false
-ion-checkbox,prop,labelPlacement,"end" | "fixed" | "start",'start',false,false
+ion-checkbox,prop,labelPlacement,"end" | "fixed" | "stacked" | "start",'start',false,false
 ion-checkbox,prop,legacy,boolean | undefined,undefined,false,false
 ion-checkbox,prop,mode,"ios" | "md",undefined,false,false
 ion-checkbox,prop,name,string,this.inputId,false,false
@@ -427,6 +428,10 @@ ion-datetime,css-prop,--background-rgb
 ion-datetime,css-prop,--title-color
 ion-datetime,css-prop,--wheel-fade-background-rgb
 ion-datetime,css-prop,--wheel-highlight-background
+ion-datetime,part,calendar-day
+ion-datetime,part,calendar-day active
+ion-datetime,part,calendar-day disabled
+ion-datetime,part,calendar-day today
 ion-datetime,part,month-year-button
 ion-datetime,part,time-button
 ion-datetime,part,time-button active
@@ -1008,10 +1013,11 @@ ion-progress-bar,part,stream
 ion-progress-bar,part,track
 
 ion-radio,shadow
+ion-radio,prop,alignment,"center" | "start",'center',false,false
 ion-radio,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-radio,prop,disabled,boolean,false,false,false
 ion-radio,prop,justify,"end" | "space-between" | "start",'space-between',false,false
-ion-radio,prop,labelPlacement,"end" | "fixed" | "start",'start',false,false
+ion-radio,prop,labelPlacement,"end" | "fixed" | "stacked" | "start",'start',false,false
 ion-radio,prop,legacy,boolean | undefined,undefined,false,false
 ion-radio,prop,mode,"ios" | "md",undefined,false,false
 ion-radio,prop,name,string,this.inputId,false,false
@@ -1038,7 +1044,7 @@ ion-range,prop,debounce,number | undefined,undefined,false,false
 ion-range,prop,disabled,boolean,false,false,false
 ion-range,prop,dualKnobs,boolean,false,false,false
 ion-range,prop,label,string | undefined,undefined,false,false
-ion-range,prop,labelPlacement,"end" | "fixed" | "start",'start',false,false
+ion-range,prop,labelPlacement,"end" | "fixed" | "stacked" | "start",'start',false,false
 ion-range,prop,legacy,boolean | undefined,undefined,false,false
 ion-range,prop,max,number,100,false,false
 ion-range,prop,min,number,0,false,false
@@ -1478,12 +1484,13 @@ ion-toast,part,icon
 ion-toast,part,message
 
 ion-toggle,shadow
+ion-toggle,prop,alignment,"center" | "start",'center',false,false
 ion-toggle,prop,checked,boolean,false,false,false
 ion-toggle,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,undefined,false,true
 ion-toggle,prop,disabled,boolean,false,false,false
 ion-toggle,prop,enableOnOffLabels,boolean | undefined,config.get('toggleOnOffLabels'),false,false
 ion-toggle,prop,justify,"end" | "space-between" | "start",'space-between',false,false
-ion-toggle,prop,labelPlacement,"end" | "fixed" | "start",'start',false,false
+ion-toggle,prop,labelPlacement,"end" | "fixed" | "stacked" | "start",'start',false,false
 ion-toggle,prop,legacy,boolean | undefined,undefined,false,false
 ion-toggle,prop,mode,"ios" | "md",undefined,false,false
 ion-toggle,prop,name,string,this.inputId,false,false

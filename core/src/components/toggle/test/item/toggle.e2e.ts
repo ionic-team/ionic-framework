@@ -71,6 +71,25 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, screenshot, co
     });
   });
 
+  test.describe(title('toggle: stacked label in item'), () => {
+    test('should render margins correctly when using stacked label in item', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-list>
+            <ion-radio-group>
+              <ion-item>
+                <ion-toggle label-placement="stacked">Enable Notifications</ion-toggle>
+              </ion-item>
+            </ion-radio-group>
+          </ion-list>
+        `,
+        config
+      );
+      const list = page.locator('ion-list');
+      await expect(list).toHaveScreenshot(screenshot(`toggle-stacked-label-in-item`));
+    });
+  });
+
   test.describe(title('toggle: ionChange'), () => {
     test('clicking padded space within item should click the toggle', async ({ page }) => {
       await page.setContent(

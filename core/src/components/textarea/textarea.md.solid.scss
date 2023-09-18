@@ -72,5 +72,5 @@
    * Label text should not extend
    * beyond the bounds of the textarea.
    */
-  max-width: calc(100% / #{$textarea-floating-label-scale});
+  max-width: calc(100% / #{$form-control-label-stacked-scale});
 }
