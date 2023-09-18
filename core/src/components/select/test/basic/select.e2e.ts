@@ -234,5 +234,33 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       await select.evaluate((el: HTMLIonSelectElement) => (el.value = 'banana'));
       await expect(ionChange).not.toHaveReceivedEvent();
     });
+
+    test('clicking padded space within item should click the select', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-item>
+          <ion-select label="Fruit" interface="action-sheet">
+            <ion-select-option value="apple">Apple</ion-select-option>
+            <ion-select-option value="banana">Banana</ion-select-option>
+          </ion-select>
+        </ion-item>
+      `,
+        config
+      );
+      const itemNative = page.locator('.item-native');
+      const ionActionSheetDidPresent = await page.spyOnEvent('ionActionSheetDidPresent');
+
+      // Clicks the padded space within the item
+      await itemNative.click({
+        position: {
+          x: 5,
+          y: 5,
+        },
+      });
+
+      await ionActionSheetDidPresent.next();
+
+      expect(ionActionSheetDidPresent).toHaveReceivedEvent();
+    });
   });
 });

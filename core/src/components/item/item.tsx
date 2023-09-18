@@ -361,7 +361,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
       return undefined;
     }
     const controls = this.el.querySelectorAll<HTMLElement>(
-      'ion-toggle:not([disabled]), ion-checkbox:not([disabled]), ion-radio:not([disabled])'
+      'ion-toggle:not([disabled]), ion-checkbox:not([disabled]), ion-radio:not([disabled]), ion-select:not([disabled])'
     );
     return controls[0];
   }
