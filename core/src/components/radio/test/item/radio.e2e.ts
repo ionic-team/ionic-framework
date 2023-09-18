@@ -58,8 +58,10 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, screenshot, co
       const list = page.locator('ion-list');
       await expect(list).toHaveScreenshot(screenshot(`radio-long-label-in-item`));
     });
+  });
 
-    test(title('clicking padded space within item should click the radio'), async ({ page }) => {
+  test.describe(title('radio: ionChange'), () => {
+    test('clicking padded space within item should click the radio', async ({ page }) => {
       await page.setContent(
         `
         <ion-radio-group>
