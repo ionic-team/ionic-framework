@@ -4,7 +4,7 @@
 // --------------------------------------------------
 
 :host {
-  @include margin($fab-size + $fab-list-margin, 0);
+  @include margin(calc(100% + #{$fab-list-margin}), 0);
 
   display: none;
   position: absolute;
@@ -13,8 +13,8 @@
   flex-direction: column;
   align-items: center;
 
-  min-width: $fab-size;
-  min-height: $fab-size;
+  min-width: $fab-small-size;
+  min-height: $fab-small-size;
 }
 
 :host(.fab-list-active) {
@@ -59,14 +59,14 @@
 }
 
 :host(.fab-list-side-start) {
-  @include margin(0, $fab-size + $fab-list-margin);
+  @include margin(0, calc(100% + #{$fab-list-margin}));
   @include position-horizontal(null, 0);
 
   flex-direction: row-reverse;
 }
 
 :host(.fab-list-side-end) {
-  @include margin(0, $fab-size + $fab-list-margin);
+  @include margin(0, calc(100% + #{$fab-list-margin}));
   @include position(null, null, null, 0);
 
   flex-direction: row;

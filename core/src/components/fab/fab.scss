@@ -1,10 +1,14 @@
 @import "./fab.vars";
+@import "../fab-list/fab-list.vars";
 
 // Floating Action Button Container
 // --------------------------------------------------
 
 :host {
   position: absolute;
+
+  width: fit-content;
+  height: fit-content;
 
   z-index: $z-index-fixed-content;
 }
@@ -14,8 +18,8 @@
 // --------------------------------------------------
 
 :host(.fab-horizontal-center) {
-  @include position(null, null, null, 50%);
-  @include margin-horizontal(-$fab-size * 0.5, null);
+  @include position(null, 0px, null, 0px);
+  @include margin(null, auto);
 }
 
 :host(.fab-horizontal-start) {
@@ -39,21 +43,46 @@
 }
 
 :host(.fab-vertical-top.fab-edge) {
-  top: -$fab-size * 0.5;
+  top: 0;
 }
 
+:host(.fab-vertical-top.fab-edge) ::slotted(ion-fab-button) {
+  margin-top: -50%;
+}
+
+:host(.fab-vertical-top.fab-edge) ::slotted(ion-fab-list.fab-list-side-start),
+:host(.fab-vertical-top.fab-edge) ::slotted(ion-fab-list.fab-list-side-end) {
+  @include margin(-50%, null, null, null);
+}
+
+:host(.fab-vertical-top.fab-edge) ::slotted(ion-fab-list.fab-list-side-top),
+:host(.fab-vertical-top.fab-edge) ::slotted(ion-fab-list.fab-list-side-bottom) {
+  @include margin(calc(50% + #{$fab-list-margin}) null, null, null);
+}
 
 :host(.fab-vertical-bottom) {
   bottom: $fab-content-margin;
 }
 
 :host(.fab-vertical-bottom.fab-edge) {
-  bottom: -$fab-size * 0.5;
+  bottom: 0;
 }
 
+:host(.fab-vertical-bottom.fab-edge) ::slotted(ion-fab-button) {
+  margin-bottom: -50%;
+}
+
+:host(.fab-vertical-bottom.fab-edge) ::slotted(ion-fab-list.fab-list-side-start),
+:host(.fab-vertical-bottom.fab-edge) ::slotted(ion-fab-list.fab-list-side-end) {
+  @include margin(null, null, -50%, null);
+}
+
+:host(.fab-vertical-bottom.fab-edge) ::slotted(ion-fab-list.fab-list-side-top),
+:host(.fab-vertical-bottom.fab-edge) ::slotted(ion-fab-list.fab-list-side-bottom) {
+  @include margin(null, null, calc(50% + #{$fab-list-margin}) null);
+}
 
 :host(.fab-vertical-center) {
-  @include margin(-$fab-size * 0.5, null, null, null);
-
-  top: 50%;
+  @include position(0px, null, 0px, null);
+  @include margin(auto, null);
 }
