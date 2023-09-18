@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react",
-  "version": "7.4.0",
+  "version": "7.4.1-nightly.20230918",
   "description": "React specific wrapper for @ionic/core",
   "keywords": [
     "ionic",
@@ -41,7 +41,7 @@
     "css/"
   ],
   "dependencies": {
-    "@ionic/core": "^7.4.0",
+    "@ionic/core": "^7.4.1-nightly.20230918",
     "ionicons": "^7.0.0",
     "tslib": "*"
   },
