@@ -18,14 +18,16 @@
   font-size: inherit;
 
   box-sizing: border-box;
+
+  text-overflow: ellipsis;
 }
 
 :host(.ion-color) {
   color: current-color(base);
 }
 
-:host(.ion-text-wrap) {
-  white-space: normal;
+:host(.ion-text-nowrap) {
+  overflow: hidden;
 }
 
 :host-context(.item-interactive-disabled:not(.item-multiple-inputs)) {
