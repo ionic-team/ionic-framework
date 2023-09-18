@@ -12,7 +12,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       );
 
       const checkbox = page.locator('ion-checkbox');
-      expect(await checkbox.screenshot()).toMatchSnapshot(screenshot(`checkbox-disabled`));
+      await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-disabled`));
     });
 
     test('should render disabled checked checkbox correctly', async ({ page }) => {
@@ -24,7 +24,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       );
 
       const checkbox = page.locator('ion-checkbox');
-      expect(await checkbox.screenshot()).toMatchSnapshot(screenshot(`checkbox-checked-disabled`));
+      await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-checked-disabled`));
     });
 
     test('should render checked checkbox correctly', async ({ page }) => {
@@ -36,7 +36,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       );
 
       const checkbox = page.locator('ion-checkbox');
-      expect(await checkbox.screenshot()).toMatchSnapshot(screenshot(`checkbox-checked`));
+      await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-checked`));
     });
 
     test('should render unchecked checkbox correctly', async ({ page }) => {
@@ -48,7 +48,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       );
 
       const checkbox = page.locator('ion-checkbox');
-      expect(await checkbox.screenshot()).toMatchSnapshot(screenshot(`checkbox-unchecked`));
+      await expect(checkbox).toHaveScreenshot(screenshot(`checkbox-unchecked`));
     });
   });
 });

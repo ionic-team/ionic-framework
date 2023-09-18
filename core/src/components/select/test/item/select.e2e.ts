@@ -20,7 +20,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         config
       );
       const list = page.locator('ion-list');
-      expect(await list.screenshot()).toMatchSnapshot(screenshot(`select-list-no-fill`));
+      await expect(list).toHaveScreenshot(screenshot(`select-list-no-fill`));
     });
     test('should render correctly in inset list with no fill', async ({ page }) => {
       await page.setContent(
@@ -39,7 +39,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         config
       );
       const list = page.locator('ion-list');
-      expect(await list.screenshot()).toMatchSnapshot(screenshot(`select-inset-list-no-fill`));
+      await expect(list).toHaveScreenshot(screenshot(`select-inset-list-no-fill`));
     });
   });
 });

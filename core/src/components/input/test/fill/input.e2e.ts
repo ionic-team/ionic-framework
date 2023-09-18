@@ -23,7 +23,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const input = page.locator('ion-input');
-        expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-fill-solid`));
+        await expect(input).toHaveScreenshot(screenshot(`input-fill-solid`));
       });
       test('should render correctly with floating label', async ({ page }) => {
         await page.setContent(
@@ -42,7 +42,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const input = page.locator('ion-input');
-        expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-fill-solid-label-floating`));
+        await expect(input).toHaveScreenshot(screenshot(`input-fill-solid-label-floating`));
       });
       test('should not have visual regressions with shaped solid', async ({ page }) => {
         await page.setContent(
@@ -61,7 +61,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const input = page.locator('ion-input');
-        expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-fill-shaped-solid`));
+        await expect(input).toHaveScreenshot(screenshot(`input-fill-shaped-solid`));
       });
       test('padding and border radius should be customizable', async ({ page }) => {
         await page.setContent(
@@ -89,7 +89,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const input = page.locator('ion-input');
-        expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-fill-shaped-solid-custom`));
+        await expect(input).toHaveScreenshot(screenshot(`input-fill-shaped-solid-custom`));
       });
     });
     test.describe('input: fill outline', () => {
@@ -109,7 +109,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const input = page.locator('ion-input');
-        expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-fill-outline`));
+        await expect(input).toHaveScreenshot(screenshot(`input-fill-outline`));
       });
       test('should render correctly with floating label', async ({ page }) => {
         await page.setContent(
@@ -128,7 +128,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const input = page.locator('ion-input');
-        expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-fill-outline-label-floating`));
+        await expect(input).toHaveScreenshot(screenshot(`input-fill-outline-label-floating`));
       });
       test('should not have visual regressions with shaped outline', async ({ page }) => {
         await page.setContent(
@@ -147,7 +147,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const input = page.locator('ion-input');
-        expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-fill-shaped-outline`));
+        await expect(input).toHaveScreenshot(screenshot(`input-fill-shaped-outline`));
       });
       test('padding and border radius should be customizable', async ({ page }) => {
         await page.setContent(
@@ -175,7 +175,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
         );
 
         const input = page.locator('ion-input');
-        expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-fill-shaped-outline-custom`));
+        await expect(input).toHaveScreenshot(screenshot(`input-fill-shaped-outline-custom`));
       });
     });
   });
@@ -203,7 +203,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       );
 
       const input = page.locator('ion-input');
-      expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-fill-outline-slotted-label`));
+      await expect(input).toHaveScreenshot(screenshot(`input-fill-outline-slotted-label`));
     });
     test('should render the notch correctly with a slotted label after the input was originally hidden', async ({
       page,
@@ -231,7 +231,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
 
       await input.evaluate((el: HTMLIonSelectElement) => el.style.removeProperty('display'));
 
-      expect(await input.screenshot()).toMatchSnapshot(screenshot(`input-fill-outline-hidden-slotted-label`));
+      await expect(input).toHaveScreenshot(screenshot(`input-fill-outline-hidden-slotted-label`));
     });
   });
   test.describe(title('input: notch cutout'), () => {

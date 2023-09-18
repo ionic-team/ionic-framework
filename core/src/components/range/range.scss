@@ -1,4 +1,5 @@
 @import "../../themes/ionic.globals";
+@import "./range.vars.scss";
 
 // Range
 // --------------------------------------------------
@@ -307,4 +308,42 @@
   width: 100px;
   min-width: 100px;
   max-width: 200px;
+}
+
+// Range Label Placement - Stacked
+// ----------------------------------------------------------------
+
+/**
+ * Label is on top of the range.
+ */
+:host(.range-label-placement-stacked) .range-wrapper {
+  flex-direction: column;
+
+  align-items: stretch;
+}
+
+:host(.range-label-placement-stacked) .label-text-wrapper {
+  @include transform-origin(start, top);
+  @include transform(scale(#{$form-control-label-stacked-scale}));
+
+  /**
+  * The margin between the label and
+  * the range should be on the bottom
+  * when the label sits on top.
+  */
+  @include margin(null, 0, $form-control-label-margin, 0);
+
+  /**
+   * Label text should not extend
+   * beyond the bounds of the range.
+   */
+  max-width: calc(100% / #{$form-control-label-stacked-scale});
+}
+
+:host(.in-item.range-label-placement-stacked) .label-text-wrapper {
+  @include margin($range-item-label-margin-top, null, $form-control-label-margin, null);
+}
+
+:host(.in-item.range-label-placement-stacked) .native-wrapper {
+  @include margin(null, null, $range-item-label-margin-bottom, null);
 }

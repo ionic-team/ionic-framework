@@ -244,6 +244,30 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
         await ionChange.next();
       });
+
+      test('should jump to selected date when programmatically updating value', async ({ page }) => {
+        await page.setContent(
+          `
+            <ion-datetime presentation="date" prefer-wheel="true" min="2019-05-05" max="2023-10-01" value="2019-05-30"></ion-datetime>
+          `,
+          config
+        );
+
+        await page.waitForSelector('.datetime-ready');
+        const datetime = page.locator('ion-datetime');
+
+        await datetime.evaluate((el: HTMLIonDatetimeElement) => (el.value = '2021-05-25T12:40:00.000Z'));
+        await page.waitForChanges();
+
+        const selectedMonth = datetime.locator('.month-column .picker-item-active');
+        const selectedDay = datetime.locator('.day-column .picker-item-active');
+        const selectedYear = datetime.locator('.year-column .picker-item-active');
+
+        await expect(selectedMonth).toHaveText(/May/);
+        await expect(selectedDay).toHaveText(/25/);
+        await expect(selectedYear).toHaveText(/2021/);
+      });
+
       test.describe('datetime: date wheel localization', () => {
         test('should correctly localize the date data', async ({ page }) => {
           await page.setContent(

@@ -15,7 +15,7 @@ configs().forEach(({ title, screenshot, config }) => {
         config
       );
       const list = page.locator('ion-list');
-      expect(await list.screenshot()).toMatchSnapshot(screenshot(`toggle-list`));
+      await expect(list).toHaveScreenshot(screenshot(`toggle-list`));
     });
     test('should render correctly in inset list', async ({ page }) => {
       await page.setContent(
@@ -29,7 +29,7 @@ configs().forEach(({ title, screenshot, config }) => {
         config
       );
       const list = page.locator('ion-list');
-      expect(await list.screenshot()).toMatchSnapshot(screenshot(`toggle-inset-list`));
+      await expect(list).toHaveScreenshot(screenshot(`toggle-inset-list`));
     });
   });
 });
@@ -46,7 +46,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         config
       );
       const item = page.locator('ion-item');
-      expect(await item.screenshot()).toMatchSnapshot(screenshot(`toggle-item-color`));
+      await expect(item).toHaveScreenshot(screenshot(`toggle-item-color`));
     });
   });
 });
@@ -67,7 +67,26 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, screenshot, co
         config
       );
       const list = page.locator('ion-list');
-      expect(await list.screenshot()).toMatchSnapshot(screenshot(`toggle-long-label-in-item`));
+      await expect(list).toHaveScreenshot(screenshot(`toggle-long-label-in-item`));
+    });
+  });
+
+  test.describe(title('toggle: stacked label in item'), () => {
+    test('should render margins correctly when using stacked label in item', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-list>
+            <ion-radio-group>
+              <ion-item>
+                <ion-toggle label-placement="stacked">Enable Notifications</ion-toggle>
+              </ion-item>
+            </ion-radio-group>
+          </ion-list>
+        `,
+        config
+      );
+      const list = page.locator('ion-list');
+      await expect(list).toHaveScreenshot(screenshot(`toggle-stacked-label-in-item`));
     });
   });
 });
