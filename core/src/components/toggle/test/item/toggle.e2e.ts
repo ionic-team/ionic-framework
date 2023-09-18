@@ -83,7 +83,16 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, screenshot, co
     const itemNative = page.locator('.item-native');
     const ionChange = await page.spyOnEvent('ionChange');
 
-    // Clicks the padded space within the item
+    /**
+     * Clicks the padded space within the item.
+     *
+     * We intentionally activate the toggle control when clicking either
+     * the label or padded space. This is different than native iOS,
+     * but we do it for three reasons:
+     * 1. Clicking a label connected to a control is standard behavior for web controls.
+     * 2. iOS is inconsistent in their implementation and other controls can be activated by clicking the label.
+     * 3. MD is consistent in their implementation and activates controls by clicking the label.
+     */
     await itemNative.click({
       position: {
         x: 5,
