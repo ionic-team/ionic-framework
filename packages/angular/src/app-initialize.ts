@@ -1,9 +1,8 @@
 import { NgZone } from '@angular/core';
 import type { Config, IonicWindow } from '@ionic/angular/common';
+import { raf } from '@ionic/angular/common';
 import { setupConfig } from '@ionic/core';
 import { applyPolyfills, defineCustomElements } from '@ionic/core/loader';
-
-import { raf } from './util/util';
 
 // TODO(FW-2827): types
 

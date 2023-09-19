@@ -33,7 +33,10 @@ export {
 } from './directives/navigation/router-link-delegate';
 export { IonNav } from './directives/navigation/nav';
 export { IonTabs } from './directives/navigation/tabs';
+export * from './directives/control-value-accessors';
 
 export { ProxyCmp } from './utils/proxy';
 
 export { IonicRouteStrategy } from './utils/routing';
+
+export { raf } from './utils/util';

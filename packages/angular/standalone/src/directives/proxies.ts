@@ -23,11 +23,9 @@ import { defineCustomElement as defineIonCardContent } from '@ionic/core/compone
 import { defineCustomElement as defineIonCardHeader } from '@ionic/core/components/ion-card-header.js';
 import { defineCustomElement as defineIonCardSubtitle } from '@ionic/core/components/ion-card-subtitle.js';
 import { defineCustomElement as defineIonCardTitle } from '@ionic/core/components/ion-card-title.js';
-import { defineCustomElement as defineIonCheckbox } from '@ionic/core/components/ion-checkbox.js';
 import { defineCustomElement as defineIonChip } from '@ionic/core/components/ion-chip.js';
 import { defineCustomElement as defineIonCol } from '@ionic/core/components/ion-col.js';
 import { defineCustomElement as defineIonContent } from '@ionic/core/components/ion-content.js';
-import { defineCustomElement as defineIonDatetime } from '@ionic/core/components/ion-datetime.js';
 import { defineCustomElement as defineIonDatetimeButton } from '@ionic/core/components/ion-datetime-button.js';
 import { defineCustomElement as defineIonFab } from '@ionic/core/components/ion-fab.js';
 import { defineCustomElement as defineIonFabButton } from '@ionic/core/components/ion-fab-button.js';
@@ -38,7 +36,6 @@ import { defineCustomElement as defineIonHeader } from '@ionic/core/components/i
 import { defineCustomElement as defineIonImg } from '@ionic/core/components/ion-img.js';
 import { defineCustomElement as defineIonInfiniteScroll } from '@ionic/core/components/ion-infinite-scroll.js';
 import { defineCustomElement as defineIonInfiniteScrollContent } from '@ionic/core/components/ion-infinite-scroll-content.js';
-import { defineCustomElement as defineIonInput } from '@ionic/core/components/ion-input.js';
 import { defineCustomElement as defineIonItem } from '@ionic/core/components/ion-item.js';
 import { defineCustomElement as defineIonItemDivider } from '@ionic/core/components/ion-item-divider.js';
 import { defineCustomElement as defineIonItemGroup } from '@ionic/core/components/ion-item-group.js';
@@ -56,19 +53,13 @@ import { defineCustomElement as defineIonNavLink } from '@ionic/core/components/
 import { defineCustomElement as defineIonNote } from '@ionic/core/components/ion-note.js';
 import { defineCustomElement as defineIonPicker } from '@ionic/core/components/ion-picker.js';
 import { defineCustomElement as defineIonProgressBar } from '@ionic/core/components/ion-progress-bar.js';
-import { defineCustomElement as defineIonRadio } from '@ionic/core/components/ion-radio.js';
-import { defineCustomElement as defineIonRadioGroup } from '@ionic/core/components/ion-radio-group.js';
-import { defineCustomElement as defineIonRange } from '@ionic/core/components/ion-range.js';
 import { defineCustomElement as defineIonRefresher } from '@ionic/core/components/ion-refresher.js';
 import { defineCustomElement as defineIonRefresherContent } from '@ionic/core/components/ion-refresher-content.js';
 import { defineCustomElement as defineIonReorder } from '@ionic/core/components/ion-reorder.js';
 import { defineCustomElement as defineIonReorderGroup } from '@ionic/core/components/ion-reorder-group.js';
 import { defineCustomElement as defineIonRippleEffect } from '@ionic/core/components/ion-ripple-effect.js';
 import { defineCustomElement as defineIonRow } from '@ionic/core/components/ion-row.js';
-import { defineCustomElement as defineIonSearchbar } from '@ionic/core/components/ion-searchbar.js';
-import { defineCustomElement as defineIonSegment } from '@ionic/core/components/ion-segment.js';
 import { defineCustomElement as defineIonSegmentButton } from '@ionic/core/components/ion-segment-button.js';
-import { defineCustomElement as defineIonSelect } from '@ionic/core/components/ion-select.js';
 import { defineCustomElement as defineIonSelectOption } from '@ionic/core/components/ion-select-option.js';
 import { defineCustomElement as defineIonSkeletonText } from '@ionic/core/components/ion-skeleton-text.js';
 import { defineCustomElement as defineIonSpinner } from '@ionic/core/components/ion-spinner.js';
@@ -76,11 +67,9 @@ import { defineCustomElement as defineIonSplitPane } from '@ionic/core/component
 import { defineCustomElement as defineIonTabBar } from '@ionic/core/components/ion-tab-bar.js';
 import { defineCustomElement as defineIonTabButton } from '@ionic/core/components/ion-tab-button.js';
 import { defineCustomElement as defineIonText } from '@ionic/core/components/ion-text.js';
-import { defineCustomElement as defineIonTextarea } from '@ionic/core/components/ion-textarea.js';
 import { defineCustomElement as defineIonThumbnail } from '@ionic/core/components/ion-thumbnail.js';
 import { defineCustomElement as defineIonTitle } from '@ionic/core/components/ion-title.js';
 import { defineCustomElement as defineIonToast } from '@ionic/core/components/ion-toast.js';
-import { defineCustomElement as defineIonToggle } from '@ionic/core/components/ion-toggle.js';
 import { defineCustomElement as defineIonToolbar } from '@ionic/core/components/ion-toolbar.js';
 @ProxyCmp({
   defineCustomElementFn: defineIonAccordion,
@@ -748,69 +737,6 @@ export class IonCardTitle {
 export declare interface IonCardTitle extends Components.IonCardTitle {}
 
 @ProxyCmp({
-  defineCustomElementFn: defineIonCheckbox,
-  inputs: [
-    'checked',
-    'color',
-    'disabled',
-    'indeterminate',
-    'justify',
-    'labelPlacement',
-    'legacy',
-    'mode',
-    'name',
-    'value',
-  ],
-})
-@Component({
-  selector: 'ion-checkbox',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [
-    'checked',
-    'color',
-    'disabled',
-    'indeterminate',
-    'justify',
-    'labelPlacement',
-    'legacy',
-    'mode',
-    'name',
-    'value',
-  ],
-  standalone: true,
-})
-export class IonCheckbox {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionChange', 'ionFocus', 'ionBlur']);
-  }
-}
-
-import type { CheckboxChangeEventDetail as IIonCheckboxCheckboxChangeEventDetail } from '@ionic/core/components';
-
-export declare interface IonCheckbox extends Components.IonCheckbox {
-  /**
-   * Emitted when the checked property has changed
-as a result of a user action such as a click.
-This event will not emit when programmatically
-setting the checked property.
-   */
-  ionChange: EventEmitter<CustomEvent<IIonCheckboxCheckboxChangeEventDetail>>;
-  /**
-   * Emitted when the checkbox has focus.
-   */
-  ionFocus: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the checkbox loses focus.
-   */
-  ionBlur: EventEmitter<CustomEvent<void>>;
-}
-
-@ProxyCmp({
   defineCustomElementFn: defineIonChip,
   inputs: ['color', 'disabled', 'mode', 'outline'],
 })
@@ -945,111 +871,6 @@ Set `scrollEvents` to `true` to enable.
 Set `scrollEvents` to `true` to enable.
    */
   ionScrollEnd: EventEmitter<CustomEvent<IIonContentScrollBaseDetail>>;
-}
-
-@ProxyCmp({
-  defineCustomElementFn: defineIonDatetime,
-  inputs: [
-    'cancelText',
-    'clearText',
-    'color',
-    'dayValues',
-    'disabled',
-    'doneText',
-    'firstDayOfWeek',
-    'highlightedDates',
-    'hourCycle',
-    'hourValues',
-    'isDateEnabled',
-    'locale',
-    'max',
-    'min',
-    'minuteValues',
-    'mode',
-    'monthValues',
-    'multiple',
-    'name',
-    'preferWheel',
-    'presentation',
-    'readonly',
-    'showClearButton',
-    'showDefaultButtons',
-    'showDefaultTimeLabel',
-    'showDefaultTitle',
-    'size',
-    'titleSelectedDatesFormatter',
-    'value',
-    'yearValues',
-  ],
-  methods: ['confirm', 'reset', 'cancel'],
-})
-@Component({
-  selector: 'ion-datetime',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [
-    'cancelText',
-    'clearText',
-    'color',
-    'dayValues',
-    'disabled',
-    'doneText',
-    'firstDayOfWeek',
-    'highlightedDates',
-    'hourCycle',
-    'hourValues',
-    'isDateEnabled',
-    'locale',
-    'max',
-    'min',
-    'minuteValues',
-    'mode',
-    'monthValues',
-    'multiple',
-    'name',
-    'preferWheel',
-    'presentation',
-    'readonly',
-    'showClearButton',
-    'showDefaultButtons',
-    'showDefaultTimeLabel',
-    'showDefaultTitle',
-    'size',
-    'titleSelectedDatesFormatter',
-    'value',
-    'yearValues',
-  ],
-  standalone: true,
-})
-export class IonDatetime {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionCancel', 'ionChange', 'ionFocus', 'ionBlur']);
-  }
-}
-
-import type { DatetimeChangeEventDetail as IIonDatetimeDatetimeChangeEventDetail } from '@ionic/core/components';
-
-export declare interface IonDatetime extends Components.IonDatetime {
-  /**
-   * Emitted when the datetime selection was cancelled.
-   */
-  ionCancel: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the value (selected date) has changed.
-   */
-  ionChange: EventEmitter<CustomEvent<IIonDatetimeDatetimeChangeEventDetail>>;
-  /**
-   * Emitted when the datetime has focus.
-   */
-  ionFocus: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the datetime loses focus.
-   */
-  ionBlur: EventEmitter<CustomEvent<void>>;
 }
 
 @ProxyCmp({
@@ -1338,142 +1159,6 @@ export class IonInfiniteScrollContent {
 }
 
 export declare interface IonInfiniteScrollContent extends Components.IonInfiniteScrollContent {}
-
-@ProxyCmp({
-  defineCustomElementFn: defineIonInput,
-  inputs: [
-    'accept',
-    'autocapitalize',
-    'autocomplete',
-    'autocorrect',
-    'autofocus',
-    'clearInput',
-    'clearOnEdit',
-    'color',
-    'counter',
-    'counterFormatter',
-    'debounce',
-    'disabled',
-    'enterkeyhint',
-    'errorText',
-    'fill',
-    'helperText',
-    'inputmode',
-    'label',
-    'labelPlacement',
-    'legacy',
-    'max',
-    'maxlength',
-    'min',
-    'minlength',
-    'mode',
-    'multiple',
-    'name',
-    'pattern',
-    'placeholder',
-    'readonly',
-    'required',
-    'shape',
-    'size',
-    'spellcheck',
-    'step',
-    'type',
-    'value',
-  ],
-  methods: ['setFocus', 'getInputElement'],
-})
-@Component({
-  selector: 'ion-input',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [
-    'accept',
-    'autocapitalize',
-    'autocomplete',
-    'autocorrect',
-    'autofocus',
-    'clearInput',
-    'clearOnEdit',
-    'color',
-    'counter',
-    'counterFormatter',
-    'debounce',
-    'disabled',
-    'enterkeyhint',
-    'errorText',
-    'fill',
-    'helperText',
-    'inputmode',
-    'label',
-    'labelPlacement',
-    'legacy',
-    'max',
-    'maxlength',
-    'min',
-    'minlength',
-    'mode',
-    'multiple',
-    'name',
-    'pattern',
-    'placeholder',
-    'readonly',
-    'required',
-    'shape',
-    'size',
-    'spellcheck',
-    'step',
-    'type',
-    'value',
-  ],
-  standalone: true,
-})
-export class IonInput {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionInput', 'ionChange', 'ionBlur', 'ionFocus']);
-  }
-}
-
-import type { InputInputEventDetail as IIonInputInputInputEventDetail } from '@ionic/core/components';
-import type { InputChangeEventDetail as IIonInputInputChangeEventDetail } from '@ionic/core/components';
-
-export declare interface IonInput extends Components.IonInput {
-  /**
-   * The `ionInput` event is fired each time the user modifies the input's value.
-Unlike the `ionChange` event, the `ionInput` event is fired for each alteration
-to the input's value. This typically happens for each keystroke as the user types.
-
-For elements that accept text input (`type=text`, `type=tel`, etc.), the interface
-is [`InputEvent`](https://developer.mozilla.org/en-US/docs/Web/API/InputEvent); for others,
-the interface is [`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event). If
-the input is cleared on edit, the type is `null`.
-   */
-  ionInput: EventEmitter<CustomEvent<IIonInputInputInputEventDetail>>;
-  /**
-   * The `ionChange` event is fired when the user modifies the input's value.
-Unlike the `ionInput` event, the `ionChange` event is only fired when changes
-are committed, not as the user types.
-
-Depending on the way the users interacts with the element, the `ionChange`
-event fires at a different moment:
-- When the user commits the change explicitly (e.g. by selecting a date
-from a date picker for `<ion-input type="date">`, pressing the "Enter" key, etc.).
-- When the element loses focus after its value has changed: for elements
-where the user's interaction is typing.
-   */
-  ionChange: EventEmitter<CustomEvent<IIonInputInputChangeEventDetail>>;
-  /**
-   * Emitted when the input loses focus.
-   */
-  ionBlur: EventEmitter<CustomEvent<FocusEvent>>;
-  /**
-   * Emitted when the input has focus.
-   */
-  ionFocus: EventEmitter<CustomEvent<FocusEvent>>;
-}
 
 @ProxyCmp({
   defineCustomElementFn: defineIonItem,
@@ -2082,167 +1767,6 @@ export class IonProgressBar {
 export declare interface IonProgressBar extends Components.IonProgressBar {}
 
 @ProxyCmp({
-  defineCustomElementFn: defineIonRadio,
-  inputs: ['color', 'disabled', 'justify', 'labelPlacement', 'legacy', 'mode', 'name', 'value'],
-})
-@Component({
-  selector: 'ion-radio',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'disabled', 'justify', 'labelPlacement', 'legacy', 'mode', 'name', 'value'],
-  standalone: true,
-})
-export class IonRadio {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionFocus', 'ionBlur']);
-  }
-}
-
-export declare interface IonRadio extends Components.IonRadio {
-  /**
-   * Emitted when the radio button has focus.
-   */
-  ionFocus: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the radio button loses focus.
-   */
-  ionBlur: EventEmitter<CustomEvent<void>>;
-}
-
-@ProxyCmp({
-  defineCustomElementFn: defineIonRadioGroup,
-  inputs: ['allowEmptySelection', 'name', 'value'],
-})
-@Component({
-  selector: 'ion-radio-group',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['allowEmptySelection', 'name', 'value'],
-  standalone: true,
-})
-export class IonRadioGroup {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionChange']);
-  }
-}
-
-import type { RadioGroupChangeEventDetail as IIonRadioGroupRadioGroupChangeEventDetail } from '@ionic/core/components';
-
-export declare interface IonRadioGroup extends Components.IonRadioGroup {
-  /**
-   * Emitted when the value has changed.
-   */
-  ionChange: EventEmitter<CustomEvent<IIonRadioGroupRadioGroupChangeEventDetail>>;
-}
-
-@ProxyCmp({
-  defineCustomElementFn: defineIonRange,
-  inputs: [
-    'activeBarStart',
-    'color',
-    'debounce',
-    'disabled',
-    'dualKnobs',
-    'label',
-    'labelPlacement',
-    'legacy',
-    'max',
-    'min',
-    'mode',
-    'name',
-    'pin',
-    'pinFormatter',
-    'snaps',
-    'step',
-    'ticks',
-    'value',
-  ],
-})
-@Component({
-  selector: 'ion-range',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [
-    'activeBarStart',
-    'color',
-    'debounce',
-    'disabled',
-    'dualKnobs',
-    'label',
-    'labelPlacement',
-    'legacy',
-    'max',
-    'min',
-    'mode',
-    'name',
-    'pin',
-    'pinFormatter',
-    'snaps',
-    'step',
-    'ticks',
-    'value',
-  ],
-  standalone: true,
-})
-export class IonRange {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionChange', 'ionInput', 'ionFocus', 'ionBlur', 'ionKnobMoveStart', 'ionKnobMoveEnd']);
-  }
-}
-
-import type { RangeChangeEventDetail as IIonRangeRangeChangeEventDetail } from '@ionic/core/components';
-import type { RangeKnobMoveStartEventDetail as IIonRangeRangeKnobMoveStartEventDetail } from '@ionic/core/components';
-import type { RangeKnobMoveEndEventDetail as IIonRangeRangeKnobMoveEndEventDetail } from '@ionic/core/components';
-
-export declare interface IonRange extends Components.IonRange {
-  /**
-   * The `ionChange` event is fired for `<ion-range>` elements when the user
-modifies the element's value:
-- When the user releases the knob after dragging;
-- When the user moves the knob with keyboard arrows
-
-`ionChange` is not fired when the value is changed programmatically.
-   */
-  ionChange: EventEmitter<CustomEvent<IIonRangeRangeChangeEventDetail>>;
-  /**
-   * The `ionInput` event is fired for `<ion-range>` elements when the value
-is modified. Unlike `ionChange`, `ionInput` is fired continuously
-while the user is dragging the knob.
-   */
-  ionInput: EventEmitter<CustomEvent<IIonRangeRangeChangeEventDetail>>;
-  /**
-   * Emitted when the range has focus.
-   */
-  ionFocus: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the range loses focus.
-   */
-  ionBlur: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the user starts moving the range knob, whether through
-mouse drag, touch gesture, or keyboard interaction.
-   */
-  ionKnobMoveStart: EventEmitter<CustomEvent<IIonRangeRangeKnobMoveStartEventDetail>>;
-  /**
-   * Emitted when the user finishes moving the range knob, whether through
-mouse drag, touch gesture, or keyboard interaction.
-   */
-  ionKnobMoveEnd: EventEmitter<CustomEvent<IIonRangeRangeKnobMoveEndEventDetail>>;
-}
-
-@ProxyCmp({
   defineCustomElementFn: defineIonRefresher,
   inputs: ['closeDuration', 'disabled', 'pullFactor', 'pullMax', 'pullMin', 'snapbackDuration'],
   methods: ['complete', 'cancel', 'getProgress'],
@@ -2405,138 +1929,6 @@ export class IonRow {
 export declare interface IonRow extends Components.IonRow {}
 
 @ProxyCmp({
-  defineCustomElementFn: defineIonSearchbar,
-  inputs: [
-    'animated',
-    'autocomplete',
-    'autocorrect',
-    'cancelButtonIcon',
-    'cancelButtonText',
-    'clearIcon',
-    'color',
-    'debounce',
-    'disabled',
-    'enterkeyhint',
-    'inputmode',
-    'mode',
-    'name',
-    'placeholder',
-    'searchIcon',
-    'showCancelButton',
-    'showClearButton',
-    'spellcheck',
-    'type',
-    'value',
-  ],
-  methods: ['setFocus', 'getInputElement'],
-})
-@Component({
-  selector: 'ion-searchbar',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [
-    'animated',
-    'autocomplete',
-    'autocorrect',
-    'cancelButtonIcon',
-    'cancelButtonText',
-    'clearIcon',
-    'color',
-    'debounce',
-    'disabled',
-    'enterkeyhint',
-    'inputmode',
-    'mode',
-    'name',
-    'placeholder',
-    'searchIcon',
-    'showCancelButton',
-    'showClearButton',
-    'spellcheck',
-    'type',
-    'value',
-  ],
-  standalone: true,
-})
-export class IonSearchbar {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionInput', 'ionChange', 'ionCancel', 'ionClear', 'ionBlur', 'ionFocus']);
-  }
-}
-
-import type { SearchbarInputEventDetail as IIonSearchbarSearchbarInputEventDetail } from '@ionic/core/components';
-import type { SearchbarChangeEventDetail as IIonSearchbarSearchbarChangeEventDetail } from '@ionic/core/components';
-
-export declare interface IonSearchbar extends Components.IonSearchbar {
-  /**
-   * Emitted when the `value` of the `ion-searchbar` element has changed.
-   */
-  ionInput: EventEmitter<CustomEvent<IIonSearchbarSearchbarInputEventDetail>>;
-  /**
-   * The `ionChange` event is fired for `<ion-searchbar>` elements when the user
-modifies the element's value. Unlike the `ionInput` event, the `ionChange`
-event is not necessarily fired for each alteration to an element's value.
-
-The `ionChange` event is fired when the value has been committed
-by the user. This can happen when the element loses focus or
-when the "Enter" key is pressed. `ionChange` can also fire
-when clicking the clear or cancel buttons.
-   */
-  ionChange: EventEmitter<CustomEvent<IIonSearchbarSearchbarChangeEventDetail>>;
-  /**
-   * Emitted when the cancel button is clicked.
-   */
-  ionCancel: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the clear input button is clicked.
-   */
-  ionClear: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the input loses focus.
-   */
-  ionBlur: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the input has focus.
-   */
-  ionFocus: EventEmitter<CustomEvent<void>>;
-}
-
-@ProxyCmp({
-  defineCustomElementFn: defineIonSegment,
-  inputs: ['color', 'disabled', 'mode', 'scrollable', 'selectOnFocus', 'swipeGesture', 'value'],
-})
-@Component({
-  selector: 'ion-segment',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['color', 'disabled', 'mode', 'scrollable', 'selectOnFocus', 'swipeGesture', 'value'],
-  standalone: true,
-})
-export class IonSegment {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionChange']);
-  }
-}
-
-import type { SegmentChangeEventDetail as IIonSegmentSegmentChangeEventDetail } from '@ionic/core/components';
-
-export declare interface IonSegment extends Components.IonSegment {
-  /**
-   * Emitted when the value property has changed and any
-dragging pointer has been released from `ion-segment`.
-   */
-  ionChange: EventEmitter<CustomEvent<IIonSegmentSegmentChangeEventDetail>>;
-}
-
-@ProxyCmp({
   defineCustomElementFn: defineIonSegmentButton,
   inputs: ['disabled', 'layout', 'mode', 'type', 'value'],
 })
@@ -2557,97 +1949,6 @@ export class IonSegmentButton {
 }
 
 export declare interface IonSegmentButton extends Components.IonSegmentButton {}
-
-@ProxyCmp({
-  defineCustomElementFn: defineIonSelect,
-  inputs: [
-    'cancelText',
-    'color',
-    'compareWith',
-    'disabled',
-    'expandedIcon',
-    'fill',
-    'interface',
-    'interfaceOptions',
-    'justify',
-    'label',
-    'labelPlacement',
-    'legacy',
-    'mode',
-    'multiple',
-    'name',
-    'okText',
-    'placeholder',
-    'selectedText',
-    'shape',
-    'toggleIcon',
-    'value',
-  ],
-  methods: ['open'],
-})
-@Component({
-  selector: 'ion-select',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [
-    'cancelText',
-    'color',
-    'compareWith',
-    'disabled',
-    'expandedIcon',
-    'fill',
-    'interface',
-    'interfaceOptions',
-    'justify',
-    'label',
-    'labelPlacement',
-    'legacy',
-    'mode',
-    'multiple',
-    'name',
-    'okText',
-    'placeholder',
-    'selectedText',
-    'shape',
-    'toggleIcon',
-    'value',
-  ],
-  standalone: true,
-})
-export class IonSelect {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionChange', 'ionCancel', 'ionDismiss', 'ionFocus', 'ionBlur']);
-  }
-}
-
-import type { SelectChangeEventDetail as IIonSelectSelectChangeEventDetail } from '@ionic/core/components';
-
-export declare interface IonSelect extends Components.IonSelect {
-  /**
-   * Emitted when the value has changed.
-   */
-  ionChange: EventEmitter<CustomEvent<IIonSelectSelectChangeEventDetail>>;
-  /**
-   * Emitted when the selection is cancelled.
-   */
-  ionCancel: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the overlay is dismissed.
-   */
-  ionDismiss: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the select has focus.
-   */
-  ionFocus: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the select loses focus.
-   */
-  ionBlur: EventEmitter<CustomEvent<void>>;
-}
 
 @ProxyCmp({
   defineCustomElementFn: defineIonSelectOption,
@@ -2810,119 +2111,6 @@ export class IonText {
 export declare interface IonText extends Components.IonText {}
 
 @ProxyCmp({
-  defineCustomElementFn: defineIonTextarea,
-  inputs: [
-    'autoGrow',
-    'autocapitalize',
-    'autofocus',
-    'clearOnEdit',
-    'color',
-    'cols',
-    'counter',
-    'counterFormatter',
-    'debounce',
-    'disabled',
-    'enterkeyhint',
-    'errorText',
-    'fill',
-    'helperText',
-    'inputmode',
-    'label',
-    'labelPlacement',
-    'legacy',
-    'maxlength',
-    'minlength',
-    'mode',
-    'name',
-    'placeholder',
-    'readonly',
-    'required',
-    'rows',
-    'shape',
-    'spellcheck',
-    'value',
-    'wrap',
-  ],
-  methods: ['setFocus', 'getInputElement'],
-})
-@Component({
-  selector: 'ion-textarea',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [
-    'autoGrow',
-    'autocapitalize',
-    'autofocus',
-    'clearOnEdit',
-    'color',
-    'cols',
-    'counter',
-    'counterFormatter',
-    'debounce',
-    'disabled',
-    'enterkeyhint',
-    'errorText',
-    'fill',
-    'helperText',
-    'inputmode',
-    'label',
-    'labelPlacement',
-    'legacy',
-    'maxlength',
-    'minlength',
-    'mode',
-    'name',
-    'placeholder',
-    'readonly',
-    'required',
-    'rows',
-    'shape',
-    'spellcheck',
-    'value',
-    'wrap',
-  ],
-  standalone: true,
-})
-export class IonTextarea {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionChange', 'ionInput', 'ionBlur', 'ionFocus']);
-  }
-}
-
-import type { TextareaChangeEventDetail as IIonTextareaTextareaChangeEventDetail } from '@ionic/core/components';
-import type { TextareaInputEventDetail as IIonTextareaTextareaInputEventDetail } from '@ionic/core/components';
-
-export declare interface IonTextarea extends Components.IonTextarea {
-  /**
-   * The `ionChange` event is fired when the user modifies the textarea's value.
-Unlike the `ionInput` event, the `ionChange` event is fired when
-the element loses focus after its value has been modified.
-   */
-  ionChange: EventEmitter<CustomEvent<IIonTextareaTextareaChangeEventDetail>>;
-  /**
-   * The `ionInput` event is fired each time the user modifies the textarea's value.
-Unlike the `ionChange` event, the `ionInput` event is fired for each alteration
-to the textarea's value. This typically happens for each keystroke as the user types.
-
-When `clearOnEdit` is enabled, the `ionInput` event will be fired when
-the user clears the textarea by performing a keydown event.
-   */
-  ionInput: EventEmitter<CustomEvent<IIonTextareaTextareaInputEventDetail>>;
-  /**
-   * Emitted when the input loses focus.
-   */
-  ionBlur: EventEmitter<CustomEvent<FocusEvent>>;
-  /**
-   * Emitted when the input has focus.
-   */
-  ionFocus: EventEmitter<CustomEvent<FocusEvent>>;
-}
-
-@ProxyCmp({
   defineCustomElementFn: defineIonThumbnail,
 })
 @Component({
@@ -3073,67 +2261,6 @@ Shorthand for ionToastWillDismiss.
 Shorthand for ionToastDidDismiss.
    */
   didDismiss: EventEmitter<CustomEvent<IIonToastOverlayEventDetail>>;
-}
-
-@ProxyCmp({
-  defineCustomElementFn: defineIonToggle,
-  inputs: [
-    'checked',
-    'color',
-    'disabled',
-    'enableOnOffLabels',
-    'justify',
-    'labelPlacement',
-    'legacy',
-    'mode',
-    'name',
-    'value',
-  ],
-})
-@Component({
-  selector: 'ion-toggle',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>',
-  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: [
-    'checked',
-    'color',
-    'disabled',
-    'enableOnOffLabels',
-    'justify',
-    'labelPlacement',
-    'legacy',
-    'mode',
-    'name',
-    'value',
-  ],
-  standalone: true,
-})
-export class IonToggle {
-  protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
-    c.detach();
-    this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionChange', 'ionFocus', 'ionBlur']);
-  }
-}
-
-import type { ToggleChangeEventDetail as IIonToggleToggleChangeEventDetail } from '@ionic/core/components';
-
-export declare interface IonToggle extends Components.IonToggle {
-  /**
-   * Emitted when the user switches the toggle on or off. Does not emit
-when programmatically changing the value of the `checked` property.
-   */
-  ionChange: EventEmitter<CustomEvent<IIonToggleToggleChangeEventDetail>>;
-  /**
-   * Emitted when the toggle has focus.
-   */
-  ionFocus: EventEmitter<CustomEvent<void>>;
-  /**
-   * Emitted when the toggle loses focus.
-   */
-  ionBlur: EventEmitter<CustomEvent<void>>;
 }
 
 @ProxyCmp({

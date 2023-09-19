@@ -26,6 +26,21 @@ export const routes: Routes = [
           { path: 'tab-three', loadComponent: () => import('../tabs/tab3.component').then(c => c.TabThreeComponent) }
         ]
       },
+      {
+        path: 'value-accessors',
+        children: [
+          { path: 'checkbox', loadComponent: () => import('../value-accessors/checkbox/checkbox.component').then(c => c.CheckboxComponent) },
+          { path: 'datetime', loadComponent: () => import('../value-accessors/datetime/datetime.component').then(c => c.DatetimeComponent) },
+          { path: 'input', loadComponent: () => import('../value-accessors/input/input.component').then(c => c.InputComponent) },
+          { path: 'radio-group', loadComponent: () => import('../value-accessors/radio-group/radio-group.component').then(c => c.RadioGroupComponent) },
+          { path: 'range', loadComponent: () => import('../value-accessors/range/range.component').then(c => c.RangeComponent) },
+          { path: 'searchbar', loadComponent: () => import('../value-accessors/searchbar/searchbar.component').then(c => c.SearchbarComponent) },
+          { path: 'segment', loadComponent: () => import('../value-accessors/segment/segment.component').then(c => c.SegmentComponent) },
+          { path: 'textarea', loadComponent: () => import('../value-accessors/textarea/textarea.component').then(c => c.TextareaComponent) },
+          { path: 'toggle', loadComponent: () => import('../value-accessors/toggle/toggle.component').then(c => c.ToggleComponent) },
+          { path: '**', redirectTo: 'checkbox' }
+        ]
+      }
     ]
   },
 ];

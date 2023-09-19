@@ -2,7 +2,7 @@ import { AfterViewInit, ElementRef, Injector, OnDestroy, Directive, HostListener
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
-import { raf } from '../../util/util';
+import { raf } from '../../utils/util';
 
 // TODO(FW-2827): types
 
@@ -17,11 +17,11 @@ export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDes
   protected lastValue: any;
   private statusChanges?: Subscription;
 
-  constructor(protected injector: Injector, protected el: ElementRef) {}
+  constructor(protected injector: Injector, protected elementRef: ElementRef) {}
 
   writeValue(value: any): void {
-    this.el.nativeElement.value = this.lastValue = value;
-    setIonicClasses(this.el);
+    this.elementRef.nativeElement.value = this.lastValue = value;
+    setIonicClasses(this.elementRef);
   }
 
   /**
@@ -38,20 +38,20 @@ export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDes
    * @param value The new value of the control.
    */
   handleValueChange(el: HTMLElement, value: any): void {
-    if (el === this.el.nativeElement) {
+    if (el === this.elementRef.nativeElement) {
       if (value !== this.lastValue) {
         this.lastValue = value;
         this.onChange(value);
       }
-      setIonicClasses(this.el);
+      setIonicClasses(this.elementRef);
     }
   }
 
   @HostListener('ionBlur', ['$event.target'])
   _handleBlurEvent(el: any): void {
-    if (el === this.el.nativeElement) {
+    if (el === this.elementRef.nativeElement) {
       this.onTouched();
-      setIonicClasses(this.el);
+      setIonicClasses(this.elementRef);
     }
   }
 
@@ -64,7 +64,7 @@ export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDes
   }
 
   setDisabledState(isDisabled: boolean): void {
-    this.el.nativeElement.disabled = isDisabled;
+    this.elementRef.nativeElement.disabled = isDisabled;
   }
 
   ngOnDestroy(): void {
@@ -87,7 +87,7 @@ export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDes
 
     // Listen for changes in validity, disabled, or pending states
     if (ngControl.statusChanges) {
-      this.statusChanges = ngControl.statusChanges.subscribe(() => setIonicClasses(this.el));
+      this.statusChanges = ngControl.statusChanges.subscribe(() => setIonicClasses(this.elementRef));
     }
 
     /**
@@ -102,7 +102,7 @@ export class ValueAccessor implements ControlValueAccessor, AfterViewInit, OnDes
           const oldFn = formControl[method].bind(formControl);
           formControl[method] = (...params: any[]) => {
             oldFn(...params);
-            setIonicClasses(this.el);
+            setIonicClasses(this.elementRef);
           };
         }
       });
@@ -129,7 +129,7 @@ export const setIonicClasses = (element: ElementRef): void => {
 
 const getClasses = (element: HTMLElement) => {
   const classList = element.classList;
-  const classes = [];
+  const classes: string[] = [];
   for (let i = 0; i < classList.length; i++) {
     const item = classList.item(i);
     if (item !== null && startsWith(item, 'ng-')) {
