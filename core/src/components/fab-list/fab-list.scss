@@ -13,6 +13,13 @@
   flex-direction: column;
   align-items: center;
 
+  /**
+   * The list should be centered relative to the parent
+   * FAB button. We set minimum dimensions so the
+   * FAB list can be centered relative to the small FAB button.
+   * However, the small FAB button adds start/end margin, so we need
+   * to account for that in the FAB list dimensions.
+   */
   min-width: $fab-small-size + ($fab-button-small-margin * 2);
   min-height: $fab-small-size + ($fab-button-small-margin * 2);
 }
