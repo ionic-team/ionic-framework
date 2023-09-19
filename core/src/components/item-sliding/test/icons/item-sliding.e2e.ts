@@ -10,11 +10,12 @@ import { configs, test, dragElementBy } from '@utils/test/playwright';
  */
 configs().forEach(({ title, screenshot, config }) => {
   test.describe(title('item-sliding: icons'), () => {
-    test('should not have visual regressions', async ({ page }) => {
+    test.only('should not have visual regressions', async ({ page }) => {
       await page.goto(`/src/components/item-sliding/test/icons`, config);
 
       const itemIDs = ['iconsOnly', 'iconsStart', 'iconsEnd', 'iconsTop', 'iconsBottom'];
       for (const itemID of itemIDs) {
+        const itemIDKebab = itemID.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
         const item = page.locator(`#${itemID}`);
 
         /**
@@ -28,7 +29,7 @@ configs().forEach(({ title, screenshot, config }) => {
         await dragElementBy(item, page, dragByX);
         await page.waitForChanges();
 
-        await expect(item).toHaveScreenshot(screenshot(`item-sliding-${itemID}`));
+        await expect(item).toHaveScreenshot(screenshot(`item-sliding-${itemIDKebab}`));
       }
     });
   });
