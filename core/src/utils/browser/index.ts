@@ -22,7 +22,7 @@
  */
 
 /**
- * Even listeners on the window typically expect
+ * Event listeners on the window typically expect
  * Event types for the listener parameter. If you want to listen
  * on the window for certain CustomEvent types you can add that definition
  * here as long as you are using the "win" utility below.
