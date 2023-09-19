@@ -10,7 +10,7 @@ import { configs, test, dragElementBy } from '@utils/test/playwright';
  */
 configs().forEach(({ title, screenshot, config }) => {
   test.describe(title('item-sliding: icons'), () => {
-    test.only('should not have visual regressions', async ({ page }) => {
+    test('should not have visual regressions', async ({ page }) => {
       await page.goto(`/src/components/item-sliding/test/icons`, config);
 
       const itemIDs = ['iconsOnly', 'iconsStart', 'iconsEnd', 'iconsTop', 'iconsBottom'];
