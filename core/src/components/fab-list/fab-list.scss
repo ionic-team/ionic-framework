@@ -13,8 +13,8 @@
   flex-direction: column;
   align-items: center;
 
-  min-width: $fab-small-size;
-  min-height: $fab-small-size;
+  min-width: $fab-small-size + ($fab-button-small-margin * 2);
+  min-height: $fab-small-size + ($fab-button-small-margin * 2);
 }
 
 :host(.fab-list-active) {
