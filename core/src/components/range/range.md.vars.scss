@@ -7,7 +7,12 @@
 $range-md-padding-vertical:                  8px !default;
 
 /// @prop - Padding start/end of the range
+// TODO FW-2997 Update to 18px for modern syntax
 $range-md-padding-horizontal:                14px !default;
+
+/// @prop - Padding start/end of the range - modern range
+// TODO FW-2997 remove this
+$range-md-padding-horizontal-modern: 18px !default;
 
 /// @prop - Height of the range slider
 $range-md-slider-height:                     42px !default;
