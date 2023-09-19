@@ -2,6 +2,8 @@ import { newSpecPage } from '@stencil/core/testing';
 
 import { Nav } from '../../../components/nav/nav';
 import { RouterOutlet } from '../../../components/router-outlet/router-outlet';
+import { Modal } from '../../../components/modal/modal';
+
 import { setRootAriaHidden } from '../../overlays';
 
 describe('setRootAriaHidden()', () => {
@@ -76,5 +78,55 @@ describe('setRootAriaHidden()', () => {
     });
 
     setRootAriaHidden(true);
+  });
+
+  it('should remove router-outlet from accessibility tree when overlay is presented', async () => {
+    const page = await newSpecPage({
+      components: [RouterOutlet, Modal],
+      html: `
+        <ion-router-outlet>
+          <ion-modal></ion-modal>
+        </ion-router-outlet>
+      `,
+    });
+
+    const routerOutlet = page.body.querySelector('ion-router-outlet');
+    const modal = page.body.querySelector('ion-modal');
+
+    await modal.present();
+
+    expect(routerOutlet.hasAttribute('aria-hidden')).toEqual(true);
+  });
+
+  it('should add router-outlet from accessibility tree when then final overlay is dismissed', async () => {
+    const page = await newSpecPage({
+      components: [RouterOutlet, Modal],
+      html: `
+        <ion-router-outlet>
+          <ion-modal id="one"></ion-modal>
+          <ion-modal id="two"></ion-modal>
+        </ion-router-outlet>
+      `,
+    });
+
+    const routerOutlet = page.body.querySelector('ion-router-outlet');
+    const modalOne = page.body.querySelector('ion-modal#one');
+    const modalTwo = page.body.querySelector('ion-modal#two');
+
+    await modalOne.present();
+
+    expect(routerOutlet.hasAttribute('aria-hidden')).toEqual(true);
+
+    await modalTwo.present();
+
+    expect(routerOutlet.hasAttribute('aria-hidden')).toEqual(true);
+
+    await modalOne.dismiss();
+
+    expect(routerOutlet.hasAttribute('aria-hidden')).toEqual(true);
+
+    await modalTwo.dismiss();
+
+    expect(routerOutlet.hasAttribute('aria-hidden')).toEqual(false);
   });
 });
