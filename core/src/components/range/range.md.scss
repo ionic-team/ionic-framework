@@ -30,14 +30,12 @@
   @include padding($range-md-padding-vertical, $range-md-padding-horizontal);
 }
 
-// TODO FW-2997 update this to $range-md-padding-horizontal
 :host(.range-item-start-adjustment) {
-  @include padding(null, null, null, $range-md-padding-horizontal-modern);
+  @include padding(null, null, null, $range-md-item-padding-horizontal);
 }
 
-// TODO FW-2997 update this to $range-md-padding-horizontal
 :host(.range-item-end-adjustment) {
-  @include padding(null, $range-md-padding-horizontal-modern, null, null);
+  @include padding(null, $range-md-item-padding-horizontal, null, null);
 }
 
 :host(.ion-color) .range-bar {
