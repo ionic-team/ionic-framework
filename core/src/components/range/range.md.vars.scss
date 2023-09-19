@@ -7,11 +7,15 @@
 $range-md-padding-vertical:                  8px !default;
 
 /// @prop - Padding start/end of the range
-// TODO FW-2997 Update to 18px for modern syntax
+// TODO FW-2997 Update to 18px for modern syntax. Preserve the 24px comment below too.
 $range-md-padding-horizontal:                14px !default;
 
 /// @prop - Padding start/end of the range - modern range
 // TODO FW-2997 remove this
+/**
+ * 18px was chosen so the knob and its focus/active
+ * effects do not get cut off by the item.
+ */
 $range-md-padding-horizontal-modern: 18px !default;
 
 /// @prop - Height of the range slider
