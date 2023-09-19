@@ -1,6 +1,6 @@
 import type { FrameworkDelegate, JSX } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-nav.js';
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
 import { ReactDelegate } from '../../framework-delegate';
 import { createReactComponent } from '../react-component-lib';
@@ -19,7 +19,6 @@ type IonNavProps = JSX.IonNav & {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const IonNavInternal: React.FC<IonNavProps> = ({ children, forwardedRef, ...restOfProps }) => {
-  const idRef = useRef(0);
   const [views, setViews] = useState<React.ReactElement[]>([]);
 
   /**
@@ -29,7 +28,7 @@ const IonNavInternal: React.FC<IonNavProps> = ({ children, forwardedRef, ...rest
   const addView = (view: React.ReactElement) => setViews((existingViews) => [...existingViews, view]);
   const removeView = (view: React.ReactElement) => setViews((existingViews) => existingViews.filter((v) => v !== view));
 
-  const delegate = useMemo(() => ReactDelegate(addView, removeView, () => idRef.current++), []);
+  const delegate = useMemo(() => ReactDelegate(addView, removeView), []);
 
   return (
     <IonNavInner delegate={delegate} ref={forwardedRef} {...restOfProps}>
