@@ -199,6 +199,8 @@
 // --------------------------------------------------
 
 :host(.fab-button-small) {
+  @include margin($fab-button-small-margin);
+
   width: #{$fab-small-size};
   height: #{$fab-small-size};
 }
