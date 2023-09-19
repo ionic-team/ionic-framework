@@ -15,7 +15,6 @@ configs().forEach(({ title, screenshot, config }) => {
 
       const itemIDs = ['iconsOnly', 'iconsStart', 'iconsEnd', 'iconsTop', 'iconsBottom'];
       for (const itemID of itemIDs) {
-        const itemIDKebab = itemID.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
         const item = page.locator(`#${itemID}`);
 
         /**
@@ -29,6 +28,8 @@ configs().forEach(({ title, screenshot, config }) => {
         await dragElementBy(item, page, dragByX);
         await page.waitForChanges();
 
+        // Convert camelCase to kebab-case
+        const itemIDKebab = itemID.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
         await expect(item).toHaveScreenshot(screenshot(`item-sliding-${itemIDKebab}`));
       }
     });
