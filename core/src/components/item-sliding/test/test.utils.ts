@@ -3,8 +3,8 @@ import type { E2EPage, ScreenshotFn } from '@utils/test/playwright';
 
 /**
  * Warning: This function will fail when in RTL mode.
- * TODO FW-3711: There's an issue that prevents tests in RTL mode to pass.
- * Once the issue is resolved, we can remove the `directions` config.
+ * TODO(FW-3711): Remove the `directions` config when this issue preventing 
+ * tests from passing in RTL mode is resolved.
  */
 export const testSlidingItem = async (
   page: E2EPage,
