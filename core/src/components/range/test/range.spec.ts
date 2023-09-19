@@ -78,7 +78,7 @@ describe('range id', () => {
   });
 });
 
-describe.only('range: item adjustments', () => {
+describe('range: item adjustments', () => {
   it('should add start and end adjustment with no content', async () => {
     const page = await newSpecPage({
       components: [Item, Range],
