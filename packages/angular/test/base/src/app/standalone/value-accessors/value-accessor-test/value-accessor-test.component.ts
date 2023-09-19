@@ -14,6 +14,8 @@ import { FormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
     /**
      * NgFor directive is not available until Angular 15.
      * We import the CommonModule for now.
+     *
+     * TODO: FW-5197 Replace with NgFor when dropping Angular 14 support.
      */
     CommonModule
   ]
