@@ -3,9 +3,8 @@ import type { E2EPage, ScreenshotFn } from '@utils/test/playwright';
 
 /**
  * Warning: This function will fail when in RTL mode.
- * TODO: There's an issue that prevents tests in RTL mode to pass.
+ * TODO FW-3711: There's an issue that prevents tests in RTL mode to pass.
  * Once the issue is resolved, we can remove the `directions` config.
- * https://github.com/ionic-team/ionic-framework/issues/26950
  */
 export const testSlidingItem = async (
   page: E2EPage,
