@@ -9,7 +9,7 @@ export const useIonViewWillEnter = (callback: LifeCycleCallback, deps: any[] = [
   id.current = id.current || Math.floor(Math.random() * 1000000);
   useEffect(() => {
     callback.id = id.current!;
-    context.onIonViewWillEnter(callback);
+    return context.onIonViewWillEnter(callback);
   }, deps);
 };
 
@@ -19,7 +19,7 @@ export const useIonViewDidEnter = (callback: LifeCycleCallback, deps: any[] = []
   id.current = id.current || Math.floor(Math.random() * 1000000);
   useEffect(() => {
     callback.id = id.current!;
-    context.onIonViewDidEnter(callback);
+    return context.onIonViewDidEnter(callback);
   }, deps);
 };
 
@@ -29,7 +29,7 @@ export const useIonViewWillLeave = (callback: LifeCycleCallback, deps: any[] = [
   id.current = id.current || Math.floor(Math.random() * 1000000);
   useEffect(() => {
     callback.id = id.current!;
-    context.onIonViewWillLeave(callback);
+    return context.onIonViewWillLeave(callback);
   }, deps);
 };
 
@@ -39,6 +39,6 @@ export const useIonViewDidLeave = (callback: LifeCycleCallback, deps: any[] = []
   id.current = id.current || Math.floor(Math.random() * 1000000);
   useEffect(() => {
     callback.id = id.current!;
-    context.onIonViewDidLeave(callback);
+    return context.onIonViewDidLeave(callback);
   }, deps);
 };
