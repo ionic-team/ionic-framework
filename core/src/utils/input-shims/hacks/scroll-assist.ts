@@ -1,4 +1,5 @@
 import type { KeyboardResizeOptions } from '@capacitor/keyboard';
+import { win } from '@utils/browser';
 
 import { getScrollElement, scrollByPoint } from '../../content';
 import { raf } from '../../helpers';
@@ -35,6 +36,21 @@ export const enableScrollAssist = (
     enableScrollPadding && (keyboardResize === undefined || keyboardResize.mode === KeyboardResize.None);
 
   /**
+   * When adding scroll padding we need to know
+   * how much of the viewport the keyboard obscures.
+   * We do this by subtracting the keyboard height
+   * from the platform height.
+   *
+   * If we compute this value when switching between
+   * inputs then the webview may already be resized.
+   * At this point, `win.innerHeight` has already accounted
+   * for the keyboard meaning we would then subtract
+   * the keyboard height again. This will result in the input
+   * being scrolled more than it needs to.
+   */
+  const platformHeight = win !== undefined ? win.innerHeight : 0;
+
+  /**
    * When the input is about to receive
    * focus, we need to move it to prevent
    * mobile Safari from adjusting the viewport.
@@ -50,7 +66,16 @@ export const enableScrollAssist = (
       inputEl.removeAttribute(SKIP_SCROLL_ASSIST);
       return;
     }
-    jsSetFocus(componentEl, inputEl, contentEl, footerEl, keyboardHeight, addScrollPadding, disableClonedInput);
+    jsSetFocus(
+      componentEl,
+      inputEl,
+      contentEl,
+      footerEl,
+      keyboardHeight,
+      addScrollPadding,
+      disableClonedInput,
+      platformHeight
+    );
   };
   componentEl.addEventListener('focusin', focusIn, true);
 
@@ -84,12 +109,13 @@ const jsSetFocus = async (
   footerEl: HTMLIonFooterElement | null,
   keyboardHeight: number,
   enableScrollPadding: boolean,
-  disableClonedInput = false
+  disableClonedInput = false,
+  platformHeight = 0
 ) => {
   if (!contentEl && !footerEl) {
     return;
   }
-  const scrollData = getScrollData(componentEl, (contentEl || footerEl)!, keyboardHeight);
+  const scrollData = getScrollData(componentEl, (contentEl || footerEl)!, keyboardHeight, platformHeight);
 
   if (contentEl && Math.abs(scrollData.scrollAmount) < 4) {
     // the text input is in a safe position that doesn't
