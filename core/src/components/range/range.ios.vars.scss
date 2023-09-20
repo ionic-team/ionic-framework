@@ -7,7 +7,15 @@
 $range-ios-padding-vertical: 8px !default;
 
 /// @prop - Padding start/end of the range
+// TODO FW-2997 Remove this
 $range-ios-padding-horizontal: 16px !default;
+
+/// @prop - Padding start/end of the range - modern syntax
+/**
+ * 24px was chosen so the knob and its
+ * shadow do not get cut off by the item.
+ */
+$range-ios-item-padding-horizontal: 24px !default;
 
 /// @prop - Height of the range slider
 $range-ios-slider-height: 42px !default;

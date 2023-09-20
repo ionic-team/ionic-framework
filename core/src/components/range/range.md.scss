@@ -30,6 +30,14 @@
   @include padding($range-md-padding-vertical, $range-md-padding-horizontal);
 }
 
+:host(.range-item-start-adjustment) {
+  @include padding(null, null, null, $range-md-item-padding-horizontal);
+}
+
+:host(.range-item-end-adjustment) {
+  @include padding(null, $range-md-item-padding-horizontal, null, null);
+}
+
 :host(.ion-color) .range-bar {
   background: current-color(base, 0.26);
 }
