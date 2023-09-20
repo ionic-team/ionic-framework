@@ -1,6 +1,8 @@
 import type { FrameworkDelegate } from '@ionic/core/components';
 import { createPortal } from 'react-dom';
 
+import { generateId } from './utils/generateId';
+
 // TODO(FW-2959): types
 
 type ReactComponent = (props?: any) => JSX.Element;
@@ -10,6 +12,9 @@ export const ReactDelegate = (
   removeView: (view: React.ReactElement) => void
 ): FrameworkDelegate => {
   const refMap = new WeakMap<HTMLElement, React.ReactElement>();
+  const reactDelegateId = `react-delegate-${generateId()}`;
+  // Incrementing counter to generate unique keys for each view
+  let id = 0;
 
   const attachViewToDom = async (
     parentElement: HTMLElement,
@@ -22,7 +27,8 @@ export const ReactDelegate = (
     parentElement.appendChild(div);
 
     const componentWithProps = component(propsOrDataObj);
-    const hostComponent = createPortal(componentWithProps, div);
+    const key = `${reactDelegateId}-${id++}`;
+    const hostComponent = createPortal(componentWithProps, div, key);
 
     refMap.set(div, hostComponent);
 
