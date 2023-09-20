@@ -356,7 +356,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
        * Pseudo selectors can't be tested in unit tests.
        * It will cause an error when running the tests.
        *
-       * We can remove this once https://github.com/ionic-team/stencil/issues/3588 is fixed.
+       * TODO: FW-5205 - Remove the build conditional when this is fixed in Stencil
        */
       return undefined;
     }
