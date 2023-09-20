@@ -28,7 +28,7 @@ configs().forEach(({ title, screenshot, config }) => {
         await dragElementBy(item, page, dragByX);
         await page.waitForChanges();
 
-        // Convert camelCase to kebab-case
+        // Convert camelCase ids to kebab-case for screenshot file names
         const itemIDKebab = itemID.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
         await expect(item).toHaveScreenshot(screenshot(`item-sliding-${itemIDKebab}`));
       }
