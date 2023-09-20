@@ -1,4 +1,5 @@
 import type { KeyboardResizeOptions } from '@capacitor/keyboard';
+import { win } from '@utils/browser';
 
 import { getScrollElement, scrollByPoint } from '../../content';
 import { raf } from '../../helpers';
@@ -35,6 +36,98 @@ export const enableScrollAssist = (
     enableScrollPadding && (keyboardResize === undefined || keyboardResize.mode === KeyboardResize.None);
 
   /**
+   * This tracks whether or not the keyboard has been
+   * presented for a single focused text field. Note
+   * that it does not track if the keyboard is open
+   * in general such as if the keyboard is open for
+   * a different focused text field.
+   */
+  let hasKeyboardBeenPresentedForTextField = false;
+
+  /**
+   * When adding scroll padding we need to know
+   * how much of the viewport the keyboard obscures.
+   * We do this by subtracting the keyboard height
+   * from the platform height.
+   *
+   * If we compute this value when switching between
+   * inputs then the webview may already be resized.
+   * At this point, `win.innerHeight` has already accounted
+   * for the keyboard meaning we would then subtract
+   * the keyboard height again. This will result in the input
+   * being scrolled more than it needs to.
+   */
+  const platformHeight = win !== undefined ? win.innerHeight : 0;
+
+  /**
+   * Scroll assist is run when a text field
+   * is focused. However, it may need to
+   * re-run when the keyboard size changes
+   * such that the text field is now hidden
+   * underneath the keyboard.
+   * This function re-runs scroll assist
+   * when that happens.
+   *
+   * One limitation of this is on a web browser
+   * where native keyboard APIs do not have cross-browser
+   * support. `ionKeyboardDidShow` relies on the Visual Viewport API.
+   * This means that if the keyboard changes but does not change
+   * geometry, then scroll assist will not re-run even if
+   * the user has scrolled the text field under the keyboard.
+   * This is not a problem when running in Cordova/Capacitor
+   * because `ionKeyboardDidShow` uses the native events
+   * which fire every time the keyboard changes.
+   */
+  const keyboardShow = (ev: CustomEvent<{ keyboardHeight: number }>) => {
+    /**
+     * If the keyboard has not yet been presented
+     * for this text field then the text field has just
+     * received focus. In that case, the focusin listener
+     * will run scroll assist.
+     */
+    if (hasKeyboardBeenPresentedForTextField === false) {
+      hasKeyboardBeenPresentedForTextField = true;
+      return;
+    }
+
+    /**
+     * Otherwise, the keyboard has already been presented
+     * for the focused text field.
+     * This means that the keyboard likely changed
+     * geometry, and we need to re-run scroll assist.
+     * This can happen when the user rotates their device
+     * or when they switch keyboards.
+     *
+     * Make sure we pass in the computed keyboard height
+     * rather than the estimated keyboard height.
+     *
+     * Since the keyboard is already open then we do not
+     * need to wait for the webview to resize, so we pass
+     * "waitForResize: false".
+     */
+    jsSetFocus(
+      componentEl,
+      inputEl,
+      contentEl,
+      footerEl,
+      ev.detail.keyboardHeight,
+      addScrollPadding,
+      disableClonedInput,
+      platformHeight,
+      false
+    );
+  };
+
+  /**
+   * Reset the internal state when the text field loses focus.
+   */
+  const focusOut = () => {
+    hasKeyboardBeenPresentedForTextField = false;
+    win?.removeEventListener('ionKeyboardDidShow', keyboardShow);
+    componentEl.removeEventListener('focusout', focusOut, true);
+  };
+
+  /**
    * When the input is about to receive
    * focus, we need to move it to prevent
    * mobile Safari from adjusting the viewport.
@@ -50,12 +143,27 @@ export const enableScrollAssist = (
       inputEl.removeAttribute(SKIP_SCROLL_ASSIST);
       return;
     }
-    jsSetFocus(componentEl, inputEl, contentEl, footerEl, keyboardHeight, addScrollPadding, disableClonedInput);
+    jsSetFocus(
+      componentEl,
+      inputEl,
+      contentEl,
+      footerEl,
+      keyboardHeight,
+      addScrollPadding,
+      disableClonedInput,
+      platformHeight
+    );
+
+    win?.addEventListener('ionKeyboardDidShow', keyboardShow);
+    componentEl.addEventListener('focusout', focusOut, true);
   };
+
   componentEl.addEventListener('focusin', focusIn, true);
 
   return () => {
     componentEl.removeEventListener('focusin', focusIn, true);
+    win?.removeEventListener('ionKeyboardDidShow', keyboardShow);
+    componentEl.removeEventListener('focusout', focusOut, true);
   };
 };
 
@@ -84,12 +192,14 @@ const jsSetFocus = async (
   footerEl: HTMLIonFooterElement | null,
   keyboardHeight: number,
   enableScrollPadding: boolean,
-  disableClonedInput = false
+  disableClonedInput = false,
+  platformHeight = 0,
+  waitForResize = true
 ) => {
   if (!contentEl && !footerEl) {
     return;
   }
-  const scrollData = getScrollData(componentEl, (contentEl || footerEl)!, keyboardHeight);
+  const scrollData = getScrollData(componentEl, (contentEl || footerEl)!, keyboardHeight, platformHeight);
 
   if (contentEl && Math.abs(scrollData.scrollAmount) < 4) {
     // the text input is in a safe position that doesn't
@@ -191,7 +301,7 @@ const jsSetFocus = async (
        * bandwidth to become available.
        */
       const totalScrollAmount = scrollEl.scrollHeight - scrollEl.clientHeight;
-      if (scrollData.scrollAmount > totalScrollAmount - scrollEl.scrollTop) {
+      if (waitForResize && scrollData.scrollAmount > totalScrollAmount - scrollEl.scrollTop) {
         /**
          * On iOS devices, the system will show a "Passwords" bar above the keyboard
          * after the initial keyboard is shown. This prevents the webview from resizing

@@ -21,6 +21,14 @@
   @include padding($range-ios-padding-vertical, $range-ios-padding-horizontal);
 }
 
+:host(.range-item-start-adjustment) {
+  @include padding(null, null, null, $range-ios-item-padding-horizontal);
+}
+
+:host(.range-item-end-adjustment) {
+  @include padding(null, $range-ios-item-padding-horizontal, null, null);
+}
+
 :host(.ion-color) .range-bar-active,
 :host(.ion-color) .range-tick-active {
   background: current-color(base);
