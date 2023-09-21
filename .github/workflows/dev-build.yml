@@ -36,6 +36,12 @@ jobs:
   leave-comment:
     runs-on: ubuntu-latest
     needs: [create-dev-hash, release-ionic]
+    steps:
+      - name: Comment on PR
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: |
+            To test the dev build, update your Ionic packages to version ${{ needs.create-dev-hash.outputs.dev-hash }}
 
   get-build:
     name: Get your dev build!
