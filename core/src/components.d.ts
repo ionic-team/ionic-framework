@@ -1336,6 +1336,7 @@ export namespace Components {
         "download": string | undefined;
         /**
           * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available in `md` mode.
+          * @deprecated Use the `fill` property on `ion-input` or `ion-textarea` instead.
          */
         "fill"?: 'outline' | 'solid';
         /**
@@ -5407,6 +5408,7 @@ declare namespace LocalJSX {
         "download"?: string | undefined;
         /**
           * The fill for the item. If `"solid"` the item will have a background. If `"outline"` the item will be transparent with a border. Only available in `md` mode.
+          * @deprecated Use the `fill` property on `ion-input` or `ion-textarea` instead.
          */
         "fill"?: 'outline' | 'solid';
         /**
