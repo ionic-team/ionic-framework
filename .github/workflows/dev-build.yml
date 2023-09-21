@@ -1,4 +1,4 @@
-name: 'Ionic Dev Build'
+name: "Ionic Dev Build"
 
 on:
   workflow_dispatch:
@@ -33,10 +33,13 @@ jobs:
     secrets:
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+  leave-comment:
+    runs-on: ubuntu-latest
+    needs: [create-dev-hash, release-ionic]
+
   get-build:
     name: Get your dev build!
     runs-on: ubuntu-latest
     needs: [create-dev-hash, release-ionic]
     steps:
       - run: echo ${{ needs.create-dev-hash.outputs.dev-hash }}
-
