@@ -60,4 +60,4 @@ jobs:
         with:
           message: |
             To test the dev build, update your Ionic packages to version ${{ needs.create-dev-hash.outputs.dev-hash }}
-          pr_number: steps.get-pr.outputs.number
+          pr_number: needs.get-pr.outputs.number
