@@ -6,7 +6,7 @@ import { GESTURE_CONTROLLER } from '@utils/gesture';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, assert, clamp, isEndSide as isEnd } from '@utils/helpers';
 import { menuController } from '@utils/menu-controller';
-import { getOverlay } from '@utils/overlays';
+import { getPresentedOverlay } from '@utils/overlays';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
@@ -38,6 +38,7 @@ export class Menu implements ComponentInterface, MenuI {
   private lastOnEnd = 0;
   private gesture?: Gesture;
   private blocker = GESTURE_CONTROLLER.createBlocker({ disableScroll: true });
+  private didLoad = false;
 
   isAnimating = false;
   width!: number;
@@ -58,7 +59,7 @@ export class Menu implements ComponentInterface, MenuI {
      * open does not contain this ion-menu, then ion-menu's
      * focus trapping should not run.
      */
-    const lastOverlay = getOverlay(document);
+    const lastOverlay = getPresentedOverlay(document);
     if (lastOverlay && !lastOverlay.contains(this.el)) {
       return;
     }
@@ -216,6 +217,7 @@ export class Menu implements ComponentInterface, MenuI {
 
     // register this menu with the app's menu controller
     menuController._register(this);
+    this.menuChanged();
 
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: document,
@@ -237,8 +239,20 @@ export class Menu implements ComponentInterface, MenuI {
   }
 
   async componentDidLoad() {
-    this.ionMenuChange.emit({ disabled: this.disabled, open: this._isOpen });
+    this.didLoad = true;
+    this.menuChanged();
     this.updateState();
+  }
+
+  private menuChanged() {
+    /**
+     * Inform dependent components such as ion-menu-button
+     * that the menu is ready. Note that we only want to do this
+     * once the menu has been rendered which is why we check for didLoad.
+     */
+    if (this.didLoad) {
+      this.ionMenuChange.emit({ disabled: this.disabled, open: this._isOpen });
+    }
   }
 
   async disconnectedCallback() {

@@ -80,18 +80,6 @@
           <ion-progress-bar class="custom-bar-background" value="0.75"></ion-progress-bar>
 
           <ion-list-header>
-            <ion-label> Determinate (change progress with slider) </ion-label>
-          </ion-list-header>
-          <ion-progress-bar id="progressBar"></ion-progress-bar>
-
-          <ion-item>
-            <ion-range legacy="true" pin="true" value="0" id="progressValue">
-              <ion-label slot="start">0</ion-label>
-              <ion-label slot="end">100</ion-label>
-            </ion-range>
-          </ion-item>
-
-          <ion-list-header>
             <ion-label> Buffer </ion-label>
           </ion-list-header>
           <ion-progress-bar value="0.20" buffer="0.4"></ion-progress-bar>
@@ -105,39 +93,8 @@
             <ion-label> Buffer (without value) </ion-label>
           </ion-list-header>
           <ion-progress-bar color="tertiary" buffer="0"></ion-progress-bar>
-
-          <ion-list-header>
-            <ion-label> Buffer (change buffer with slider) </ion-label>
-          </ion-list-header>
-          <ion-progress-bar class="progressBarBuffer" value="0.20" buffer="0.4"></ion-progress-bar>
-          <ion-progress-bar class="progressBarBuffer" value="0.20" buffer="0.4" reversed="true"></ion-progress-bar>
-
-          <ion-item>
-            <ion-range legacy="true" pin="true" value="0" id="progressValueBuffer">
-              <ion-label slot="start">0</ion-label>
-              <ion-label slot="end">100</ion-label>
-            </ion-range>
-          </ion-item>
         </ion-list>
       </ion-content>
     </ion-app>
-
-    <script>
-      // Progress Bar Value
-      const progressValue = document.getElementById('progressValue');
-      const progressBar = document.getElementById('progressBar');
-
-      progressValue.addEventListener('ionChange', function (ev) {
-        progressBar.value = ev.detail.value / 100;
-      });
-
-      // Progress Bar Buffer
-      const progressValueBuffer = document.getElementById('progressValueBuffer');
-      const progressBarBuffer = document.querySelectorAll('.progressBarBuffer');
-
-      progressValueBuffer.addEventListener('ionChange', function (ev) {
-        progressBarBuffer.forEach((ele) => (ele.buffer = ev.detail.value / 100));
-      });
-    </script>
   </body>
 </html>

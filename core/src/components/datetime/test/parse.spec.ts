@@ -154,6 +154,18 @@ describe('parseMinParts()', () => {
       minute: 30,
     });
   });
+  it('should return undefined when given invalid info', () => {
+    const today = {
+      day: 14,
+      month: 3,
+      year: 2022,
+      minute: 4,
+      hour: 2,
+    };
+    expect(parseMinParts(undefined, today)).toEqual(undefined);
+    expect(parseMinParts(null, today)).toEqual(undefined);
+    expect(parseMinParts('foo', today)).toEqual(undefined);
+  });
 });
 
 describe('parseMaxParts()', () => {
@@ -204,5 +216,17 @@ describe('parseMaxParts()', () => {
       hour: 23,
       minute: 59,
     });
+  });
+  it('should return undefined when given invalid info', () => {
+    const today = {
+      day: 14,
+      month: 3,
+      year: 2022,
+      minute: 4,
+      hour: 2,
+    };
+    expect(parseMaxParts(undefined, today)).toEqual(undefined);
+    expect(parseMaxParts(null, today)).toEqual(undefined);
+    expect(parseMaxParts('foo', today)).toEqual(undefined);
   });
 });

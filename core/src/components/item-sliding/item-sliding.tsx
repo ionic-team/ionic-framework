@@ -76,11 +76,18 @@ export class ItemSliding implements ComponentInterface {
     this.item = el.querySelector('ion-item');
     this.contentEl = findClosestIonContent(el);
 
-    await this.updateOptions();
-
+    /**
+     * The MutationObserver needs to be added before we
+     * call updateOptions below otherwise we may miss
+     * ion-item-option elements that are added to the DOM
+     * while updateOptions is running and before the MutationObserver
+     * has been initialized.
+     */
     this.mutationObserver = watchForOptions<HTMLIonItemOptionElement>(el, 'ion-item-option', async () => {
       await this.updateOptions();
     });
+
+    await this.updateOptions();
 
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el,

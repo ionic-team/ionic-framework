@@ -2,8 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 import type { LegacyFormController } from '@utils/forms';
 import { createLegacyFormController } from '@utils/forms';
-import type { Attributes } from '@utils/helpers';
-import { addEventListener, getAriaLabel, inheritAriaAttributes, removeEventListener } from '@utils/helpers';
+import { addEventListener, getAriaLabel, removeEventListener } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 import { createColorClasses, hostContext } from '@utils/theme';
 
@@ -31,7 +30,6 @@ export class Radio implements ComponentInterface {
   private radioGroup: HTMLIonRadioGroupElement | null = null;
   private nativeInput!: HTMLInputElement;
   private legacyFormController!: LegacyFormController;
-  private inheritedAttributes: Attributes = {};
 
   // This flag ensures we log the deprecation warning at most once.
   private hasLoggedDeprecationWarning = false;
@@ -86,8 +84,9 @@ export class Radio implements ComponentInterface {
    * `"start"`: The label will appear to the left of the radio in LTR and to the right in RTL.
    * `"end"`: The label will appear to the right of the radio in LTR and to the left in RTL.
    * `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+   * `"stacked"`: The label will appear above the radio regardless of the direction. The alignment of the label can be controlled with the `alignment` property.
    */
-  @Prop() labelPlacement: 'start' | 'end' | 'fixed' = 'start';
+  @Prop() labelPlacement: 'start' | 'end' | 'fixed' | 'stacked' = 'start';
 
   // TODO FW-3125: Remove the legacy property and implementation
   /**
@@ -113,6 +112,13 @@ export class Radio implements ComponentInterface {
   @Prop() justify: 'start' | 'end' | 'space-between' = 'space-between';
 
   /**
+   * How to control the alignment of the radio and label on the cross axis.
+   * `"start"`: The label and control will appear on the left of the cross axis in LTR, and on the right side in RTL.
+   * `"center"`: The label and control will appear at the center of the cross axis in both LTR and RTL.
+   */
+  @Prop() alignment: 'start' | 'center' = 'center';
+
+  /**
    * Emitted when the styles change.
    * @internal
    */
@@ -135,8 +141,7 @@ export class Radio implements ComponentInterface {
     ev.stopPropagation();
     ev.preventDefault();
 
-    const element = this.legacyFormController.hasLegacyControl() ? this.el : this.nativeInput;
-    element.focus();
+    this.el.focus();
   }
 
   /** @internal */
@@ -167,12 +172,6 @@ export class Radio implements ComponentInterface {
 
   componentWillLoad() {
     this.emitStyle();
-
-    if (!this.legacyFormController.hasLegacyControl()) {
-      this.inheritedAttributes = {
-        ...inheritAriaAttributes(this.el),
-      };
-    }
   }
 
   @Watch('checked')
@@ -201,7 +200,34 @@ export class Radio implements ComponentInterface {
   };
 
   private onClick = () => {
-    this.checked = this.nativeInput.checked;
+    const { radioGroup, checked } = this;
+
+    /**
+     * The legacy control uses a native input inside
+     * of the radio host, so we can set this.checked
+     * to the state of the nativeInput. RadioGroup
+     * will prevent the native input from checking if
+     * allowEmptySelection="false" by calling ev.preventDefault().
+     */
+    if (this.legacyFormController.hasLegacyControl()) {
+      this.checked = this.nativeInput.checked;
+      return;
+    }
+
+    /**
+     * The modern control does not use a native input
+     * inside of the radio host, so we cannot rely on the
+     * ev.preventDefault() behavior above. If the radio
+     * is checked and the parent radio group allows for empty
+     * selection, then we can set the checked state to false.
+     * Otherwise, the checked state should always be set
+     * to true because the checked state cannot be toggled.
+     */
+    if (checked && radioGroup?.allowEmptySelection) {
+      this.checked = false;
+    } else {
+      this.checked = true;
+    }
   };
 
   private onFocus = () => {
@@ -232,23 +258,14 @@ export class Radio implements ComponentInterface {
   }
 
   private renderRadio() {
-    const {
-      checked,
-      disabled,
-      inputId,
-      color,
-      el,
-      justify,
-      labelPlacement,
-      inheritedAttributes,
-      hasLabel,
-      buttonTabindex,
-    } = this;
+    const { checked, disabled, color, el, justify, labelPlacement, hasLabel, buttonTabindex, alignment } = this;
     const mode = getIonMode(this);
     const inItem = hostContext('ion-item', el);
 
     return (
       <Host
+        onFocus={this.onFocus}
+        onBlur={this.onBlur}
         onClick={this.onClick}
         class={createColorClasses(color, {
           [mode]: true,
@@ -256,26 +273,18 @@ export class Radio implements ComponentInterface {
           'radio-checked': checked,
           'radio-disabled': disabled,
           [`radio-justify-${justify}`]: true,
+          [`radio-alignment-${alignment}`]: true,
           [`radio-label-placement-${labelPlacement}`]: true,
           // Focus and active styling should not apply when the radio is in an item
           'ion-activatable': !inItem,
           'ion-focusable': !inItem,
         })}
+        role="radio"
+        aria-checked={checked ? 'true' : 'false'}
+        aria-disabled={disabled ? 'true' : null}
+        tabindex={buttonTabindex}
       >
         <label class="radio-wrapper">
-          {/*
-            The native control must be rendered
-            before the visible label text due to https://bugs.webkit.org/show_bug.cgi?id=251951
-          */}
-          <input
-            type="radio"
-            checked={checked}
-            disabled={disabled}
-            id={inputId}
-            tabindex={buttonTabindex}
-            ref={(nativeEl) => (this.nativeInput = nativeEl as HTMLInputElement)}
-            {...inheritedAttributes}
-          />
           <div
             class={{
               'label-text-wrapper': true,

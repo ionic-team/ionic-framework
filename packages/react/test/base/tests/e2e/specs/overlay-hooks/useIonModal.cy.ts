@@ -70,4 +70,16 @@ describe('useIonModal', () => {
     //verify context value is overriden value
     cy.get('div').contains('overriden value')
   });
+
+  it('should render nested modal when modals are added and removed at the same time', () => {
+    cy.get('#show-root-modal').click();
+
+    cy.get('ion-modal').should('have.length', 1);
+
+    cy.get('ion-modal #show-secondary-modal').click();
+
+    cy.get('ion-modal').should('have.length', 1);
+
+    cy.get('ion-modal').contains('This text should be visible');
+  });
 });

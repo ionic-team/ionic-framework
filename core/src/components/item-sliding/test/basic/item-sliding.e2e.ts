@@ -1,36 +1,63 @@
 import { expect } from '@playwright/test';
 import { configs, dragElementBy, test } from '@utils/test/playwright';
 
-import { testSlidingItem } from '../test.utils';
-
-// TODO FW-3006
 /**
- * item-sliding doesn't have mode-specific styling
+ * item-sliding doesn't have mode-specific styling,
+ * but the child components, item-options and item-option, do.
+ *
+ * It is important to test all modes to ensure that the
+ * child components are being rendered correctly.
  */
-configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
+configs().forEach(({ title, screenshot, config }) => {
   test.describe(title('item-sliding: basic'), () => {
-    test.fixme('should not have visual regressions', async ({ page }) => {
+    test.beforeEach(async ({ page }) => {
       await page.goto(`/src/components/item-sliding/test/basic`, config);
+    });
+    test.describe('start options', () => {
+      test('should not have visual regressions', async ({ page }) => {
+        const item = page.locator('#item2');
 
-      await testSlidingItem(page, 'item2', 'start', screenshot, true);
-      await testSlidingItem(page, 'item2', 'end', screenshot);
+        /**
+         * Negative dragByX value to drag element from the right to the left
+         * to reveal the options on the right side.
+         * Positive dragByX value to drag element from the left to the right
+         * to reveal the options on the left side.
+         */
+        const dragByX = config.direction === 'rtl' ? -150 : 150;
+
+        await dragElementBy(item, page, dragByX);
+        await page.waitForChanges();
+
+        await expect(item).toHaveScreenshot(screenshot('item-sliding-start'));
+      });
+    });
+
+    test.describe('end options', () => {
+      test('should not have visual regressions', async ({ page }) => {
+        const item = page.locator('#item2');
+
+        /**
+         * Negative dragByX value to drag element from the right to the left
+         * to reveal the options on the right side.
+         * Positive dragByX value to drag element from the left to the right
+         * to reveal the options on the left side.
+         */
+        const dragByX = config.direction === 'rtl' ? 150 : -150;
+
+        await dragElementBy(item, page, dragByX);
+
+        await expect(item).toHaveScreenshot(screenshot('item-sliding-end'));
+      });
     });
   });
 });
 
-// TODO FW-3006
 /**
  * This behavior does not vary across modes/directions
  */
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('item-sliding: basic'), () => {
-    // mouse gesture is flaky on CI, skip for now
-    test.fixme('should open when swiped', async ({ page, skip }) => {
-      skip.browser(
-        (browserName: string) => browserName !== 'chromium',
-        'dragElementBy is flaky outside of Chrome browsers.'
-      );
-
+    test('should open when swiped', async ({ page }) => {
       await page.goto(`/src/components/item-sliding/test/basic`, config);
       const item = page.locator('#item2');
 
@@ -41,7 +68,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       await expect(item).toHaveScreenshot(screenshot(`item-sliding-gesture`));
     });
 
-    test.skip('should not scroll when the item-sliding is swiped', async ({ page, skip }) => {
+    test('should not scroll when the item-sliding is swiped', async ({ page, skip }) => {
       skip.browser('webkit', 'mouse.wheel is not available in WebKit');
 
       await page.goto(`/src/components/item-sliding/test/basic`, config);

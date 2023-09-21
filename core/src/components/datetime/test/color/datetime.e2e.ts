@@ -9,7 +9,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
     test('should not have visual regressions', async ({ page }) => {
       await page.goto('/src/components/datetime/test/color', config);
 
-      const datetime = page.locator('ion-datetime');
+      const datetime = page.locator('#color-datetime');
 
       await expect(datetime).toHaveScreenshot(screenshot(`datetime-color`));
 

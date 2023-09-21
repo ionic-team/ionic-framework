@@ -18,7 +18,7 @@ runs:
   steps:
     - uses: actions/setup-node@v3
       with:
-        node-version: 16.x
+        node-version: 18.x
     - uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-core
