@@ -1,10 +1,5 @@
 @import "../../themes/ionic.globals";
 
-/// @prop - How much to scale the floating label by.
-/// The value 0.75 is used to match the MD spec.
-/// iOS does not have a floating label design spec, so we standardize on 0.75.
-$textarea-floating-label-scale: 0.75 !default;
-
 /// @prop - The bottom padding of the textarea element.
 /// The value 8px is to add additional spacing for auto grow and scrollable textareas.
 $textarea-padding-bottom: 8px !default;
