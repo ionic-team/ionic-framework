@@ -19,3 +19,5 @@ export interface InputCustomEvent<T = InputChangeEventDetail> extends CustomEven
   detail: T;
   target: HTMLIonInputElement;
 }
+
+export type InputValue = string | number | null | undefined;

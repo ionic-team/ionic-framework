@@ -17,7 +17,7 @@ import { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interf
 import { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
 import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimePresentation, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 import { SpinnerTypes } from "./components/spinner/spinner-configs";
-import { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
+import { InputChangeEventDetail, InputInputEventDetail, InputValue } from "./components/input/input-interface";
 import { CounterFormatter } from "./components/item/item-interface";
 import { MenuChangeEventDetail, Side } from "./components/menu/menu-interface";
 import { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
@@ -53,7 +53,7 @@ export { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interf
 export { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
 export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimePresentation, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 export { SpinnerTypes } from "./components/spinner/spinner-configs";
-export { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
+export { InputChangeEventDetail, InputInputEventDetail, InputValue } from "./components/input/input-interface";
 export { CounterFormatter } from "./components/item/item-interface";
 export { MenuChangeEventDetail, Side } from "./components/menu/menu-interface";
 export { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
@@ -1189,6 +1189,7 @@ export namespace Components {
           * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
          */
         "debounce"?: number;
+        "defaultValue"?: InputValue;
         /**
           * If `true`, the user cannot interact with the input.
          */
@@ -1297,7 +1298,7 @@ export namespace Components {
         /**
           * The value of the input.
          */
-        "value"?: string | number | null;
+        "value"?: InputValue;
     }
     interface IonItem {
         /**
@@ -5248,6 +5249,7 @@ declare namespace LocalJSX {
           * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke.
          */
         "debounce"?: number;
+        "defaultValue"?: InputValue;
         /**
           * If `true`, the user cannot interact with the input.
          */
@@ -5368,7 +5370,7 @@ declare namespace LocalJSX {
         /**
           * The value of the input.
          */
-        "value"?: string | number | null;
+        "value"?: InputValue;
     }
     interface IonItem {
         /**

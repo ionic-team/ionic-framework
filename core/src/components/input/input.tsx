@@ -13,7 +13,7 @@ import { closeCircle, closeSharp } from 'ionicons/icons';
 import { getIonMode } from '../../global/ionic-global';
 import type { AutocompleteTypes, Color, StyleEventDetail, TextFieldTypes } from '../../interface';
 
-import type { InputChangeEventDetail, InputInputEventDetail } from './input-interface';
+import type { InputChangeEventDetail, InputInputEventDetail, InputValue } from './input-interface';
 import { getCounterText } from './input.utils';
 
 /**
@@ -53,7 +53,7 @@ export class Input implements ComponentInterface {
   /**
    * The value of the input when the input is focused.
    */
-  private focusedValue?: string | number | null;
+  private focusedValue?: InputValue;
 
   @State() hasFocus = false;
 
@@ -279,7 +279,9 @@ export class Input implements ComponentInterface {
   /**
    * The value of the input.
    */
-  @Prop({ mutable: true }) value?: string | number | null = '';
+  @Prop({ mutable: true }) value?: InputValue = '';
+
+  @Prop({ mutable: true }) defaultValue?: InputValue = this.getValue();
 
   /**
    * The `ionInput` event is fired each time the user modifies the input's value.
@@ -352,6 +354,11 @@ export class Input implements ComponentInterface {
     this.emitStyle();
   }
 
+  @Watch('defaultValue')
+  protected defaultValueChanged(newValue: InputValue) {
+    this.value = this.defaultValue = this.getValue(newValue);
+  }
+
   componentWillLoad() {
     this.inheritedAttributes = {
       ...inheritAriaAttributes(this.el),
@@ -383,6 +390,12 @@ export class Input implements ComponentInterface {
 
   componentDidLoad() {
     this.originalIonInput = this.ionInput;
+
+    if (this.value === '' || this.value == null) {
+      if (this.defaultValue !== '') {
+        this.value = this.getValue(this.defaultValue);
+      }
+    }
   }
 
   componentDidRender() {
@@ -466,8 +479,8 @@ export class Input implements ComponentInterface {
     return clearOnEdit === undefined ? type === 'password' : clearOnEdit;
   }
 
-  private getValue(): string {
-    return typeof this.value === 'number' ? this.value.toString() : (this.value || '').toString();
+  private getValue(value = this.value): string {
+    return typeof value === 'number' ? value.toString() : (value || '').toString();
   }
 
   private emitStyle() {
@@ -685,6 +698,7 @@ export class Input implements ComponentInterface {
     const { disabled, fill, readonly, shape, inputId, labelPlacement } = this;
     const mode = getIonMode(this);
     const value = this.getValue();
+    const defaultValue = this.getValue(this.defaultValue);
     const inItem = hostContext('ion-item', this.el);
     const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;
 
@@ -732,6 +746,7 @@ export class Input implements ComponentInterface {
               size={this.size}
               type={this.type}
               value={value}
+              defaultValue={defaultValue}
               onInput={this.onInput}
               onChange={this.onChange}
               onBlur={this.onBlur}
@@ -796,6 +811,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
 
     const mode = getIonMode(this);
     const value = this.getValue();
+    const defaultValue = this.getValue(this.defaultValue);
     const labelId = this.inputId + '-lbl';
     const label = findItemLabel(this.el);
     if (label) {
@@ -840,6 +856,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
           size={this.size}
           type={this.type}
           value={value}
+          defaultValue={defaultValue}
           onInput={this.onInput}
           onChange={this.onChange}
           onBlur={this.onBlur}

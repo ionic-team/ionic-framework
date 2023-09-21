@@ -556,6 +556,7 @@ ion-input,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secon
 ion-input,prop,counter,boolean,false,false,false
 ion-input,prop,counterFormatter,((inputLength: number, maxLength: number) => string) | undefined,undefined,false,false
 ion-input,prop,debounce,number | undefined,undefined,false,false
+ion-input,prop,defaultValue,null | number | string | undefined,this.getValue(),false,false
 ion-input,prop,disabled,boolean,false,false,false
 ion-input,prop,enterkeyhint,"done" | "enter" | "go" | "next" | "previous" | "search" | "send" | undefined,undefined,false,false
 ion-input,prop,errorText,string | undefined,undefined,false,false
