@@ -42,6 +42,8 @@ jobs:
 
   get-pr:
     runs-on: ubuntu-latest
+    outputs:
+      pr-number: ${{ steps.PR.outputs.number }}
     steps:
       - uses: 8BitJonny/gh-get-current-pr@2.2.0
         id: PR
@@ -60,4 +62,4 @@ jobs:
         with:
           message: |
             To test the dev build, update your Ionic packages to version ${{ needs.create-dev-hash.outputs.dev-hash }}
-          pr_number: needs.get-pr.outputs.number
+          pr_number: ${{ needs.get-pr.outputs.pr-number }}
