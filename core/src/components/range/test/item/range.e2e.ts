@@ -31,6 +31,20 @@ configs().forEach(({ title, screenshot, config }) => {
       const list = page.locator('ion-list');
       await expect(list).toHaveScreenshot(screenshot(`range-inset-list`));
     });
+    test('should render adjustments in item', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-list inset="true">
+          <ion-item>
+            <ion-range value="0" aria-label="true"></ion-range>
+          </ion-item>
+        </ion-list>
+      `,
+        config
+      );
+      const list = page.locator('ion-list');
+      await expect(list).toHaveScreenshot(screenshot(`range-adjustments`));
+    });
   });
 });
 
