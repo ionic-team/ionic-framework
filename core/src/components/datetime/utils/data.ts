@@ -574,7 +574,6 @@ export const getTimeColumnsData = (
   allowedMinuteValues?: number[]
 ): { [key: string]: PickerColumnItem[] } => {
   const computedHourCycle = getHourCycle(locale, hourCycle);
-  console.log('computed', computedHourCycle);
   const use24Hour = is24Hour(computedHourCycle);
   const { hours, minutes, am, pm } = generateTime(
     locale,
