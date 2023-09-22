@@ -1,5 +1,6 @@
 import type { DatetimeParts, DatetimeHourCycle } from '../datetime-interface';
 
+import { H11_HOUR_CYCLE, H12_HOUR_CYCLE, H23_HOUR_CYCLE, H24_HOUR_CYCLE } from './data';
 import { is24Hour } from './helpers';
 import { convertDataToISO } from './manipulation';
 
@@ -93,13 +94,13 @@ export const getFormattedHour = (hour: number, hourCycle: DatetimeHourCycle): st
    */
   if (hour === 0) {
     switch (hourCycle) {
-      case 'h11':
+      case H11_HOUR_CYCLE:
         return '0';
-      case 'h12':
+      case H12_HOUR_CYCLE:
         return '12';
-      case 'h23':
+      case H23_HOUR_CYCLE:
         return '00';
-      case 'h24':
+      case H24_HOUR_CYCLE:
         return '24';
       default:
         throw new Error(`Invalid hour cycle "${hourCycle}"`);

@@ -14,6 +14,11 @@ import {
 import { getNumDaysInMonth, is24Hour, getHourCycle } from './helpers';
 import { getNextMonth, getPreviousMonth, getInternalHourValue } from './manipulation';
 
+export const H11_HOUR_CYCLE = 'h11';
+export const H12_HOUR_CYCLE = 'h12';
+export const H23_HOUR_CYCLE = 'h23';
+export const H24_HOUR_CYCLE = 'h24';
+
 /**
  * Returns the current date as
  * an ISO string in the user's
@@ -137,13 +142,13 @@ export const getDaysOfMonth = (month: number, year: number, firstDayOfWeek: numb
 
 const getHourData = (hourCycle: DatetimeHourCycle) => {
   switch (hourCycle) {
-    case 'h11':
+    case H11_HOUR_CYCLE:
       return hour11;
-    case 'h12':
+    case H12_HOUR_CYCLE:
       return hour12;
-    case 'h23':
+    case H23_HOUR_CYCLE:
       return hour23;
-    case 'h24':
+    case H24_HOUR_CYCLE:
       return hour24;
     default:
       throw new Error(`Invalid hour cycle "${hourCycle}"`);

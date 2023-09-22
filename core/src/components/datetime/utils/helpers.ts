@@ -1,5 +1,7 @@
 import type { DatetimeHourCycle } from '../datetime-interface';
 
+import { H11_HOUR_CYCLE, H12_HOUR_CYCLE, H23_HOUR_CYCLE, H24_HOUR_CYCLE } from './data';
+
 /**
  * Determines if given year is a
  * leap year. Returns `true` if year
@@ -52,13 +54,13 @@ export const getHourCycle = (locale: string, hourCycle?: DatetimeHourCycle) => {
 
   switch (hour.value) {
     case '00':
-      return 'h23';
+      return H23_HOUR_CYCLE;
     case '24':
-      return 'h24';
+      return H24_HOUR_CYCLE;
     case '0':
-      return 'h11';
+      return H11_HOUR_CYCLE;
     case '12':
-      return 'h12';
+      return H12_HOUR_CYCLE;
     default:
       throw new Error(`Invalid hour cycle "${hourCycle}"`);
   }
