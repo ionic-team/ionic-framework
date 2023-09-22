@@ -8,7 +8,7 @@ on:
         required: false
         default: ''
       component-folder:
-        description: 'If a component is selected, should it only update its respective folder? (leave blank to update all)'
+        description: 'If a component is provided, should it only update its respective folder? (leave blank to update all)'
         required: false
         default: true
         type: boolean
