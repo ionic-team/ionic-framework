@@ -62,5 +62,4 @@ jobs:
             ${{ needs.create-dev-hash.outputs.dev-hash }}
             ```
           pr_number: ${{ steps.PR.outputs.number }}
-          comment_tag: execution
-          mode: recreate
+          comment_tag: dev-build
