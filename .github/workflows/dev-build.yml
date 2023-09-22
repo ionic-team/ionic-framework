@@ -61,5 +61,11 @@ jobs:
         uses: thollander/actions-comment-pull-request@v2
         with:
           message: |
-            To test the dev build, update your Ionic packages to version ${{ needs.create-dev-hash.outputs.dev-hash }}
+            _(execution A dev build has been generated for this PR. To use the dev build, update your Ionic packages to the following version:
+            ```
+            ${{ needs.create-dev-hash.outputs.dev-hash }}
+            ```
+            )_
           pr_number: ${{ needs.get-pr.outputs.pr-number }}
+          comment_tag: execution
+          mode: recreate
