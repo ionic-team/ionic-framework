@@ -78,4 +78,33 @@ configs({ directions: ['ltr'], modes: ['md'] }).forEach(({ title, screenshot, co
       await expect(list).toHaveScreenshot(screenshot(`radio-stacked-label-in-item`));
     });
   });
+
+  test.describe(title('radio: ionChange'), () => {
+    test('clicking padded space within item should click the radio', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-radio-group>
+          <ion-item>
+            <ion-radio>
+              <ion-label>Enable Notifications</ion-label>
+            </ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      `,
+        config
+      );
+      const itemNative = page.locator('.item-native');
+      const ionChange = await page.spyOnEvent('ionChange');
+
+      // Clicks the padded space within the item
+      await itemNative.click({
+        position: {
+          x: 5,
+          y: 5,
+        },
+      });
+
+      expect(ionChange).toHaveReceivedEvent();
+    });
+  });
 });

@@ -173,6 +173,13 @@
   }
 }
 
+// Item: Interactive
+// --------------------------------------------------
+
+:host(.item-has-interactive-control) {
+  cursor: pointer;
+}
+
 
 // Item: Disabled
 // --------------------------------------------------
@@ -187,6 +194,7 @@
   opacity: .3;
   pointer-events: none;
 }
+
 
 
 // Native Item

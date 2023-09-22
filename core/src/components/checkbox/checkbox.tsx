@@ -140,9 +140,8 @@ export class Checkbox implements ComponentInterface {
    */
   @Event() ionStyle!: EventEmitter<StyleEventDetail>;
 
-  // TODO(FW-3100): remove this
   connectedCallback() {
-    this.legacyFormController = createLegacyFormController(this.el);
+    this.legacyFormController = createLegacyFormController(this.el); // TODO(FW-3100): remove this
   }
 
   componentWillLoad() {
@@ -195,7 +194,7 @@ export class Checkbox implements ComponentInterface {
     });
   };
 
-  private toggleChecked = (ev: any) => {
+  private toggleChecked = (ev: Event) => {
     ev.preventDefault();
 
     this.setFocus();
@@ -209,6 +208,10 @@ export class Checkbox implements ComponentInterface {
 
   private onBlur = () => {
     this.ionBlur.emit();
+  };
+
+  private onClick = (ev: MouseEvent) => {
+    this.toggleChecked(ev);
   };
 
   // TODO(FW-3100): run contents of renderCheckbox directly instead
@@ -252,6 +255,7 @@ export class Checkbox implements ComponentInterface {
           [`checkbox-alignment-${alignment}`]: true,
           [`checkbox-label-placement-${labelPlacement}`]: true,
         })}
+        onClick={this.onClick}
       >
         <label class="checkbox-wrapper">
           {/*
@@ -333,6 +337,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
           'legacy-checkbox': true,
           interactive: true,
         })}
+        onClick={this.onClick}
       >
         <svg class="checkbox-icon" viewBox="0 0 24 24" part="container">
           {path}
