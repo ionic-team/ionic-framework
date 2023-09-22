@@ -1,12 +1,4 @@
 /**
- * Typescript 4.x does not recognize hourCycle as a valid option.
- * See https://github.com/microsoft/TypeScript/issues/34399.
- */
-interface DatetimeFormatOptions extends Intl.ResolvedDateTimeFormatOptions {
-  hourCycle?: 'h11' | 'h12' | 'h23' | 'h24';
-}
-
-/**
  * Determines if given year is a
  * leap year. Returns `true` if year
  * is a leap year. Returns `false`
@@ -32,7 +24,7 @@ export const is24Hour = (locale: string, hourCycle?: 'h23' | 'h12') => {
    * option into the locale string. Example: `en-US-u-hc-h23`
    */
   const formatted = new Intl.DateTimeFormat(locale, { hour: 'numeric' });
-  const options = formatted.resolvedOptions() as DatetimeFormatOptions;
+  const options = formatted.resolvedOptions();
   if (options.hourCycle !== undefined) {
     return options.hourCycle === 'h23';
   }
