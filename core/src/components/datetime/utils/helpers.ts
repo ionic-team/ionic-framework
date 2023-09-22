@@ -59,14 +59,14 @@ export const getHourCycle = (locale: string, hourCycle?: DatetimeHourCycle) => {
    * Midnight for h24 starts at 24:00
    */
   switch (hour.value) {
-    case '00':
-      return H23_HOUR_CYCLE;
-    case '24':
-      return H24_HOUR_CYCLE;
     case '0':
       return H11_HOUR_CYCLE;
     case '12':
       return H12_HOUR_CYCLE;
+    case '00':
+      return H23_HOUR_CYCLE;
+    case '24':
+      return H24_HOUR_CYCLE;
     default:
       throw new Error(`Invalid hour cycle "${hourCycle}"`);
   }
