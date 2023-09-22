@@ -34,7 +34,7 @@ import {
   getCombinedDateColumnData,
 } from './utils/data';
 import { formatValue, getLocalizedTime, getMonthAndDay, getMonthAndYear } from './utils/format';
-import { is24Hour, isLocaleDayPeriodRTL, isMonthFirstLocale, getNumDaysInMonth } from './utils/helpers';
+import { isLocaleDayPeriodRTL, isMonthFirstLocale, getNumDaysInMonth, getHourCycle } from './utils/helpers';
 import {
   calculateHourFromAMPM,
   convertDataToISO,
@@ -2238,7 +2238,7 @@ export class Datetime implements ComponentInterface {
 
   private renderTimeOverlay() {
     const { hourCycle, isTimePopoverOpen, locale } = this;
-    const use24Hour = is24Hour(locale, hourCycle);
+    const computedHourCycle = getHourCycle(locale, hourCycle);
     const activePart = this.getActivePartsWithFallback();
 
     return [
@@ -2271,7 +2271,7 @@ export class Datetime implements ComponentInterface {
           }
         }}
       >
-        {getLocalizedTime(locale, activePart, use24Hour)}
+        {getLocalizedTime(locale, activePart, computedHourCycle)}
       </button>,
       <ion-popover
         alignment="center"

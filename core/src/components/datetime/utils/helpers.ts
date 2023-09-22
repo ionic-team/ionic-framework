@@ -1,4 +1,4 @@
-import { DatetimeHourCycle } from '../datetime-interface';
+import type { DatetimeHourCycle } from '../datetime-interface';
 
 /**
  * Determines if given year is a
@@ -10,13 +10,13 @@ export const isLeapYear = (year: number) => {
   return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
 };
 
-export const is24Hour = (locale: string, hourCycle?: DatetimeHourCycle) => {
+export const getHourCycle = (locale: string, hourCycle?: DatetimeHourCycle) => {
   /**
-   * If developer has explicitly enabled h23 time
+   * If developer has explicitly enabled 24-hour time
    * then return early and do not look at the system default.
    */
   if (hourCycle !== undefined) {
-    return hourCycle === 'h23';
+    return hourCycle;
   }
 
   /**
@@ -28,7 +28,7 @@ export const is24Hour = (locale: string, hourCycle?: DatetimeHourCycle) => {
   const formatted = new Intl.DateTimeFormat(locale, { hour: 'numeric' });
   const options = formatted.resolvedOptions();
   if (options.hourCycle !== undefined) {
-    return options.hourCycle === 'h23';
+    return options.hourCycle;
   }
 
   /**
@@ -44,7 +44,22 @@ export const is24Hour = (locale: string, hourCycle?: DatetimeHourCycle) => {
     throw new Error('Hour value not found from DateTimeFormat');
   }
 
-  return hour.value === '00';
+  switch (hour.value) {
+    case '00':
+      return 'h23';
+    case '24':
+      return 'h24';
+    case '0':
+      return 'h11';
+    case '12':
+      return 'h12';
+    default:
+      throw new Error(`Invalid hour cycle "${hourCycle}"`);
+  }
+};
+
+export const is24Hour = (hourCycle: DatetimeHourCycle) => {
+  return hourCycle === 'h23' || hourCycle === 'h24';
 };
 
 /**
