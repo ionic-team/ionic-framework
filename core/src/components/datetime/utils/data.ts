@@ -140,6 +140,10 @@ export const getDaysOfMonth = (month: number, year: number, firstDayOfWeek: numb
   return days;
 };
 
+/**
+ * Returns an array of pre-defined hour
+ * values based on the provided hourCycle.
+ */
 const getHourData = (hourCycle: DatetimeHourCycle) => {
   switch (hourCycle) {
     case H11_HOUR_CYCLE:
