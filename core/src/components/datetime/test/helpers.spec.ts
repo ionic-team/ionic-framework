@@ -1,4 +1,4 @@
-import { isLeapYear, getNumDaysInMonth, is24Hour, isMonthFirstLocale } from '../utils/helpers';
+import { isLeapYear, getNumDaysInMonth, is24Hour, isMonthFirstLocale, getHourCycle } from '../utils/helpers';
 
 describe('daysInMonth()', () => {
   it('should return correct days in month for month and year', () => {
@@ -37,14 +37,23 @@ describe('isLeapYear()', () => {
 
 describe('is24Hour()', () => {
   it('should return true if the locale uses 24 hour time', () => {
-    expect(is24Hour('en-US')).toBe(false);
-    expect(is24Hour('en-US', 'h23')).toBe(true);
-    expect(is24Hour('en-US', 'h12')).toBe(false);
-    expect(is24Hour('en-US-u-hc-h23')).toBe(true);
-    expect(is24Hour('en-GB')).toBe(true);
-    expect(is24Hour('en-GB', 'h23')).toBe(true);
-    expect(is24Hour('en-GB', 'h12')).toBe(false);
-    expect(is24Hour('en-GB-u-hc-h12')).toBe(false);
+    expect(is24Hour('h11')).toBe(false);
+    expect(is24Hour('h12')).toBe(false);
+    expect(is24Hour('h23')).toBe(true);
+    expect(is24Hour('h24')).toBe(true);
+  });
+});
+
+describe('getHourCycle()', () => {
+  it('should return the correct hour cycle', () => {
+    expect(getHourCycle('en-US')).toBe('h12');
+    expect(getHourCycle('en-US', 'h23')).toBe('h23');
+    expect(getHourCycle('en-US', 'h12')).toBe('h12');
+    expect(getHourCycle('en-US-u-hc-h23')).toBe('h23');
+    expect(getHourCycle('en-GB')).toBe('h23');
+    expect(getHourCycle('en-GB', 'h23')).toBe('h23');
+    expect(getHourCycle('en-GB', 'h12')).toBe('h12');
+    expect(getHourCycle('en-GB-u-hc-h12')).toBe('h12');
   });
 });
 
