@@ -52,6 +52,12 @@ export const getHourCycle = (locale: string, hourCycle?: DatetimeHourCycle) => {
     throw new Error('Hour value not found from DateTimeFormat');
   }
 
+  /**
+   * Midnight for h11 starts at 0:00am
+   * Midnight for h12 starts at 12:00am
+   * Midnight for h23 starts at 00:00
+   * Midnight for h24 starts at 24:00
+   */
   switch (hour.value) {
     case '00':
       return H23_HOUR_CYCLE;
