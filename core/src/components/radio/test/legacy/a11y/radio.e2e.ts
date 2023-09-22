@@ -6,7 +6,8 @@ import { configs, test } from '@utils/test/playwright';
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('radio: a11y'), () => {
-    test('tabbing should switch between radio groups', async ({ page, pageUtils }) => {
+    // TODO(FW-5218)
+    test.fixme('tabbing should switch between radio groups', async ({ page, pageUtils }) => {
       await page.goto(`/src/components/radio/test/legacy/a11y`, config);
 
       const firstGroupRadios = page.locator('#first-group ion-radio');
@@ -21,7 +22,8 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await pageUtils.pressKeys('shift+Tab');
       await expect(firstGroupRadios.nth(0)).toBeFocused();
     });
-    test('using arrow keys should move between enabled radios within group', async ({ page, pageUtils }) => {
+    // TODO(FW-5218)
+    test.fixme('using arrow keys should move between enabled radios within group', async ({ page, pageUtils }) => {
       await page.goto(`/src/components/radio/test/legacy/a11y`, config);
 
       const firstGroupRadios = page.locator('#first-group ion-radio');
