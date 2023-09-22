@@ -85,6 +85,7 @@ export class Item implements ComponentInterface, AnchorInterface, ButtonInterfac
   /**
    * The fill for the item. If `"solid"` the item will have a background. If
    * `"outline"` the item will be transparent with a border. Only available in `md` mode.
+   * @deprecated Use the `fill` property on `ion-input` or `ion-textarea` instead.
    */
   @Prop() fill?: 'outline' | 'solid';
 
