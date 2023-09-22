@@ -1,6 +1,6 @@
 import type { Mode } from '../../../interface';
 import type { PickerColumnItem } from '../../picker-column-internal/picker-column-internal-interfaces';
-import type { DatetimeParts } from '../datetime-interface';
+import type { DatetimeParts, DatetimeHourCycle } from '../datetime-interface';
 
 import { isAfter, isBefore, isSameDay } from './comparison';
 import {
@@ -132,7 +132,7 @@ export const getDaysOfMonth = (month: number, year: number, firstDayOfWeek: numb
  */
 export const generateTime = (
   refParts: DatetimeParts,
-  hourCycle: 'h12' | 'h23' = 'h12',
+  hourCycle: DatetimeHourCycle = 'h12',
   minParts?: DatetimeParts,
   maxParts?: DatetimeParts,
   hourValues?: number[],
@@ -540,7 +540,7 @@ export const getCombinedDateColumnData = (
 export const getTimeColumnsData = (
   locale: string,
   refParts: DatetimeParts,
-  hourCycle?: 'h23' | 'h12',
+  hourCycle?: DatetimeHourCycle,
   minParts?: DatetimeParts,
   maxParts?: DatetimeParts,
   allowedHourValues?: number[],

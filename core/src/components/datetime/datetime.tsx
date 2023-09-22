@@ -19,6 +19,7 @@ import type {
   DatetimeHighlight,
   DatetimeHighlightStyle,
   DatetimeHighlightCallback,
+  DatetimeHourCycle,
 } from './datetime-interface';
 import { isSameDay, warnIfValueOutOfBounds, isBefore, isAfter } from './utils/comparison';
 import {
@@ -422,7 +423,7 @@ export class Datetime implements ComponentInterface {
    * The hour cycle of the `ion-datetime`. If no value is set, this is
    * specified by the current locale.
    */
-  @Prop() hourCycle?: 'h23' | 'h12';
+  @Prop() hourCycle?: DatetimeHourCycle;
 
   /**
    * If `cover`, the `ion-datetime` will expand to cover the full width of its container.

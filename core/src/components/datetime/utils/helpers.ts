@@ -1,3 +1,5 @@
+import { DatetimeHourCycle } from '../datetime-interface';
+
 /**
  * Determines if given year is a
  * leap year. Returns `true` if year
@@ -8,7 +10,7 @@ export const isLeapYear = (year: number) => {
   return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
 };
 
-export const is24Hour = (locale: string, hourCycle?: 'h23' | 'h12') => {
+export const is24Hour = (locale: string, hourCycle?: DatetimeHourCycle) => {
   /**
    * If developer has explicitly enabled h23 time
    * then return early and do not look at the system default.
