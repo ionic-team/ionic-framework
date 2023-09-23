@@ -69,10 +69,11 @@
   @include margin(0);
   @include padding(
     var(--inner-padding-top),
-    calc(var(--ion-safe-area-right, 0px) + var(--inner-padding-end)),
+    null,
     var(--inner-padding-bottom),
     var(--inner-padding-start)
   );
+  @include safe-area-horizontal("padding", null, var(--inner-padding-end));
 
   display: flex;
 

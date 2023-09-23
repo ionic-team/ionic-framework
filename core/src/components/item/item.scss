@@ -207,8 +207,9 @@
     var(--padding-top),
     var(--padding-end),
     var(--padding-bottom),
-    calc(var(--padding-start) + var(--ion-safe-area-left, 0px))
+    null
   );
+  @include safe-area-horizontal("padding", var(--padding-start));
   @include text-inherit();
 
   display: flex;
@@ -263,10 +264,11 @@ button, a {
   @include margin(0);
   @include padding(
     var(--inner-padding-top),
-    calc(var(--ion-safe-area-right, 0px) + var(--inner-padding-end)),
+    null,
     var(--inner-padding-bottom),
-    var(--inner-padding-start)
+    null
   );
+  @include safe-area-horizontal("padding", null, var(--inner-padding-end));
 
   display: flex;
 
@@ -299,8 +301,9 @@ button, a {
     0,
     var(--inner-padding-end),
     0,
-    calc(var(--padding-start) + var(--ion-safe-area-left, 0px))
+    null
   );
+  @include safe-area-horizontal("padding", var(--padding-start));
 
   display: flex;
 

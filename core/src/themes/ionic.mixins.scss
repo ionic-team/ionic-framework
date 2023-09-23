@@ -261,6 +261,32 @@
   @content;
 }
 
+@mixin safe-area-horizontal($prop: 'padding', $start: 0px, $end: null) {
+  @include ltr() {
+    @if $start != null {
+      #{$prop}-left: calc(var(--ion-safe-area-left, 0) + #{$start});
+    }
+    @if $end != null {
+      #{$prop}-right: calc(var(--ion-safe-area-right, 0) + #{$end});
+    }
+  }
+
+  @include rtl() {
+    @if $start != null && $end != null {
+      #{$prop}-left: calc(var(--ion-safe-area-left, 0) + #{$end});
+      #{$prop}-right: calc(var(--ion-safe-area-right, 0) + #{$start});
+    } @else if $start != null {
+      #{$prop}-right: calc(var(--ion-safe-area-right, 0) + #{$start});
+      // Unset left since it was set by ltr().
+      #{$prop}-left: unset;
+    } @else if $end != null {
+      #{$prop}-left: calc(var(--ion-safe-area-left, 0) + #{$end});
+      // Unset right since it was set by ltr().
+      #{$prop}-right: unset;
+    }
+  }
+}
+
 
 // SVG Background Image Mixin
 // @param {string} $svg

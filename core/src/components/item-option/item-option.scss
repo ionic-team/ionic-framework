@@ -18,15 +18,11 @@
 }
 
 :host(.in-list.item-options-end:last-child) {
-  @include padding-horizontal(
-    null, calc(.7em + var(--ion-safe-area-right))
-  );
+  @include safe-area-horizontal("padding", null, 0.7em);
 }
 
 :host(.in-list.item-options-start:first-child) {
-  @include padding-horizontal(
-    calc(.7em + var(--ion-safe-area-left)), null
-  );
+  @include safe-area-horizontal("padding", 0.7em);
 }
 
 :host(.ion-color) {
