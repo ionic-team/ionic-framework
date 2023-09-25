@@ -1,0 +1,13 @@
+@use "sass:math";
+
+/// @prop - Unitless font size of the chip before scaling
+$chip-base-font-size: 14;
+
+/// @prop - Font size of the chip in rem before scaling
+$chip-base-font-size-rem: #{math.div($chip-base-font-size, 16)}rem;
+
+/// @prop - Size of an icon within a chip (in em to scale as the font size of the chip scales)
+$chip-icon-size: math.div(20em, $chip-base-font-size);
+
+/// @prop - Size of an avatar within a chip (in em to scale as the font size of the chip scales)
+$chip-avatar-size: math.div(24em, $chip-base-font-size);

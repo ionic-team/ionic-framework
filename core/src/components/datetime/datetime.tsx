@@ -1447,7 +1447,7 @@ export class Datetime implements ComponentInterface {
                     {this.cancelText}
                   </ion-button>
                 )}
-                <div>
+                <div class="datetime-action-buttons-container">
                   {showClearButton && (
                     <ion-button id="clear-button" color={this.color} onClick={() => clearButtonClick()}>
                       {this.clearText}

@@ -225,10 +225,10 @@ const animateLargeTitle = (
   const BACKWARDS_KEYFRAMES = [
     { offset: 0, opacity: 0, transform: `translate3d(${START_TRANSLATE}, ${backButtonBox.top - 4}px, 0) scale(0.49)` },
     { offset: 0.1, opacity: 0 },
-    { offset: 1, opacity: 1, transform: `translate3d(0, ${largeTitleBox.top - 2}px, 0) scale(1)` },
+    { offset: 1, opacity: 1, transform: `translate3d(0, ${largeTitleBox.top + 2}px, 0) scale(1)` },
   ];
   const FORWARDS_KEYFRAMES = [
-    { offset: 0, opacity: 0.99, transform: `translate3d(0, ${largeTitleBox.top - 2}px, 0) scale(1)` },
+    { offset: 0, opacity: 0.99, transform: `translate3d(0, ${largeTitleBox.top + 2}px, 0) scale(1)` },
     { offset: 0.6, opacity: 0 },
     { offset: 1, opacity: 0, transform: `translate3d(${START_TRANSLATE}, ${backButtonBox.top - 4}px, 0) scale(0.5)` },
   ];
@@ -253,10 +253,10 @@ const animateLargeTitle = (
       [ORIGIN_X]: TITLE_START_OFFSET,
     })
     .beforeAddWrite(() => {
-      largeTitleEl.style.setProperty('display', 'none');
+      largeTitleEl.style.setProperty('opacity', '0');
     })
     .afterAddWrite(() => {
-      largeTitleEl.style.setProperty('display', '');
+      largeTitleEl.style.setProperty('opacity', '');
       clonedTitleEl.style.setProperty('display', 'none');
     })
     .keyframes(KEYFRAMES);

@@ -429,7 +429,7 @@
 
   border-top: var(--border-width) var(--border-style) var(--border-color);
 
-  font-size: 12px;
+  font-size: dynamic-font(12px);
 }
 
 /**

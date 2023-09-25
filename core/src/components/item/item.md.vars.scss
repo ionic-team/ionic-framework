@@ -165,7 +165,7 @@ $item-md-icon-end-slot-margin-end:          null !default;
 $item-md-icon-slot-color:                   rgba($text-color-rgb, 0.54) !default;
 
 /// @prop - Font size of an icon in the start/end slot
-$item-md-icon-slot-font-size:                  24px !default;
+$item-md-icon-slot-font-size:               24px !default;
 
 
 // Label Slots
@@ -188,7 +188,7 @@ $item-md-label-slot-end-margin-start:       $item-md-label-slot-end-margin-end !
 // --------------------------------------------------
 
 /// @prop - Font size of a note in the start/end slot
-$item-md-note-slot-font-size:               11px !default;
+$item-md-note-slot-font-size:               0.6875rem !default;
 
 /// @prop - Padding top for a note in the start/end slot
 $item-md-note-slot-padding-top:             18px !default;

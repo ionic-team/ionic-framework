@@ -32,7 +32,9 @@ $toolbar-ios-padding-bottom:                        $toolbar-ios-padding-top !de
 $toolbar-ios-padding-start:                         $toolbar-ios-padding-end !default;
 
 /// @prop - Font size of the toolbar button
-$toolbar-ios-button-font-size:                      17px !default;
+/// The minimum and maximum font sizes for a toolbar button are
+/// 100% and 135%, respectively, of their default font size
+$toolbar-ios-button-font-size:                      clamp(17px, 1.0625rem, 21px) !default;
 
 /// @prop - Border radius of the toolbar button
 $toolbar-ios-button-border-radius:                  4px !default;

@@ -6,4 +6,6 @@
 
 :host {
   --color: #{$note-ios-color};
+
+  font-size: $note-ios-font-size;
 }
