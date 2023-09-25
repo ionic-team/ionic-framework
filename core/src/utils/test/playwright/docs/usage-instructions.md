@@ -4,19 +4,30 @@ E2E tests verify Ionic components in a real browser. This is useful for testing 
 
 ## Table of Contents
 
+- [Installing Dependencies](#installing-dependencies)
 - [Running Tests](#running-tests)
 - [Managing Screenshots](#managing-screenshots)
 - [Further Reading](#further-reading)
+
+## Installing Dependencies
+
+Follow these steps to install Playwright dependencies. These steps must also be run whenever the installed version of Playwright changes so you test with the correct browser binaries.
+
+1. Install the Playwright dependency in the `core` directory: `npm ci` 
+2. Download the correct browsers: `npx playwright install`
 
 ## Running Tests
 
 ### Running All Test Files
 
-All E2E can be run using the following command:
+All E2E tests can be run using the following command:
 
 ```shell
 npm run test.e2e
 ```
+
+> [!NOTE]
+> This command a wrapper for `npx playwright test`. All flags passed to `npm run test.e2e` can also be passed to `npx playwright test`.
 
 ### Running Specific Test Files
 
