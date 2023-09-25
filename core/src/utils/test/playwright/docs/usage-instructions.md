@@ -51,15 +51,13 @@ npm run test.e2e -- --update-snapshots
 
 From here, you can switch back to your branch and run the tests.
 
-:::note
-Locally generated ground truths should not be committed to the repo. The `.gitignore` file prevents this from accidentally happening.
-:::
+> [!NOTE]
+> Locally generated ground truths should not be committed to the repo. The `.gitignore` file prevents this from accidentally happening.
 
 ### Updating Ground Truths (CI)
 
-:::caution
-Only Ionic Team members can update ground truths on the main repo. Ground truths cannot be updated on forked versions of the repo.
-:::
+> [!IMPORTANT]
+> Only Ionic Team members can update ground truths on the main repo. Ground truths cannot be updated on forked versions of the repo.
 
 When making an intentional visual change, you will need to update the ground truth screenshots or add new ones. It is important that the ground truth and comparison screenshots are taken in the same environment, so do not update the ground truth screenshots locally and commit them to the repo.
 
@@ -89,9 +87,8 @@ Download the appropriate artifact and unzip the file.
 
 In the newly created directory, open the `playwright-report/index.html` in your browser. From here, you will be able to see the tests that failed as well as the expected screenshot, the actual screenshot, and the pixel differences.
 
-:::caution
-It is recommended to verify the screenshot difference within the Playwright test report first. If you choose to try and reproduce the difference in a browser manually, make sure you are using the **exact** same browser version that Playwright is using.
-:::
+> [!WARNING]
+>It is recommended to verify the screenshot difference within the Playwright test report first. If you choose to try and reproduce the difference in a browser manually, make sure you are using the **exact** same browser version that Playwright is using.
 
 ## Further Reading
 
