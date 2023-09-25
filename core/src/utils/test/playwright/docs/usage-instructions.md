@@ -27,7 +27,7 @@ npm run test.e2e
 ```
 
 > [!NOTE]
-> This command a wrapper for `npx playwright test`. All flags passed to `npm run test.e2e` can also be passed to `npx playwright test`.
+> This command is a wrapper for `npx playwright test`. All data passed to `npm run test.e2e` can also be passed to `npx playwright test`.
 
 ### Running Specific Test Files
 
@@ -54,7 +54,7 @@ If you are running a test that takes a screenshot, you must first generate the s
 
 The examples for [Running Tests](#running-tests) also apply here, so you can update screenshots for a specific test file instead.
 
-Note that since you are generating the `main` ground truth screenshots, you must have the `main` branch checked out locally. Don't forget to re-build using `npm run build` first!
+Note that since you are generating the `main` ground truth screenshots, you must be on the `main` branch locally. Don't forget to pull the latest `main` changes and then re-build using `npm run build`.
 
 ```shell
 npm run test.e2e -- --update-snapshots
@@ -84,7 +84,7 @@ This workflow will re-run the screenshot tests. Instead of failing any tests wit
 
 When any of the screenshot tests fail, it means a potential regression was caught. Developers must manually verify the difference in the Playwright test report.
 
-If the screenshots fail on CI then developers must download the build artifact. On the **Summary** page for a particular workflow, find the **Artifacts** section. Screenshot tests are currently parallelized across `n` test runners, and the results from each of those runners is included in an artifact with the following naming scheme:
+If the screenshots fail on CI then developers must download the build artifact. On the **Summary** page for a particular workflow, find the **Artifacts** section. Screenshot tests are currently parallelized across several test runners, and the results from each of those runners is included in an artifact with the following naming scheme:
 
 ```
 test-results-[current shard]-[total shards]
@@ -99,7 +99,7 @@ Download the appropriate artifact and unzip the file.
 In the newly created directory, open the `playwright-report/index.html` in your browser. From here, you will be able to see the tests that failed as well as the expected screenshot, the actual screenshot, and the pixel differences.
 
 > [!WARNING]
->It is recommended to verify the screenshot difference within the Playwright test report first. If you choose to try and reproduce the difference in a browser manually, make sure you are using the **exact** same browser version that Playwright is using.
+> It is recommended to verify the screenshot difference within the Playwright test report first. If you choose to try and reproduce the difference in a browser manually, make sure you are using the **exact** same browser version that Playwright is using.
 
 ## Further Reading
 
