@@ -88,7 +88,7 @@
   * margin to the bottom of the label, it provides a buffer
   * for the pin to move into when it is pressed.
   */
-  @include margin(null, null, $range-md-padding-vertical + $range-md-pin-font-size + $range-md-pin-padding-vertical, null);
+  @include margin(null, null, $range-md-pin-dimension, null);
 }
 
 .range-bar-active {

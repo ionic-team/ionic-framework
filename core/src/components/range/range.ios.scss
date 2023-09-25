@@ -55,7 +55,7 @@
   * overlapping the range. The buffer is added to the
   * bottom of the range label instead of the host.
   */
-  @include padding($range-ios-padding-vertical + $range-ios-pin-font-size, null, null, null);
+  @include padding(calc($range-ios-pin-font-size + $range-ios-padding-vertical), null, null, null);
 }
 
 :host(.range-has-pin.range-label-placement-stacked) .label-text-wrapper {
@@ -64,7 +64,7 @@
   * margin to the bottom of the label, it provides a buffer
   * for the pin to move into when it is pressed.
   */
-  @include margin(null, null, $range-ios-padding-vertical + $range-ios-pin-font-size, null);
+  @include margin(null, null, calc($range-ios-pin-font-size + $range-ios-padding-vertical), null);
 }
 
 .range-bar-active {
