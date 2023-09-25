@@ -1,7 +1,6 @@
 import { Directive, HostListener, ElementRef, Injector } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-
-import { ValueAccessor } from './value-accessor';
+import { ValueAccessor } from '@ionic/angular/common';
 
 @Directive({
   selector: 'ion-input[type=number]',
