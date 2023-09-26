@@ -47,4 +47,23 @@ describe('IonNav', () => {
     cy.get('#pageTwoProps').should('have.text', '{"someValue":"Hello"}');
   });
 
+  it('should unmount pages when popping to root', () => {
+    // Issue: https://github.com/ionic-team/ionic-framework/issues/27798
+
+    cy.contains('Go to Page Two').click();
+    cy.get('#pageTwoContent').should('be.visible');
+
+    cy.contains('Go to Page Three').click();
+    cy.get('#pageThreeContent').should('be.visible');
+
+    cy.window().then((window) => {
+      window.addEventListener('pageThreeUnmounted', cy.stub().as('pageThreeUnmounted'));
+    });
+
+    cy.get('ion-button').contains('popToRoot').click();
+    cy.get('#pageThreeContent').should('not.exist');
+
+    cy.get('@pageThreeUnmounted').should('have.been.calledOnce');
+  });
+
 });

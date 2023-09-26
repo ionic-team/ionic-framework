@@ -58,6 +58,22 @@ configs().forEach(({ title, screenshot, config }) => {
 
         await expect(range).toHaveScreenshot(screenshot(`range-no-items-fixed`));
       });
+      test('should render label above the range slider', async ({ page }) => {
+        await page.setContent(
+          `
+          <div id="container" style="padding-inline-start: 20px;">
+            <ion-range label-placement="stacked">
+              <span slot="label">Volume</span>
+            </ion-range>
+          </div>
+        `,
+          config
+        );
+
+        const range = page.locator('#container');
+
+        await expect(range).toHaveScreenshot(screenshot(`range-no-items-stacked`));
+      });
     });
 
     test.describe('range: start and end items', () => {
@@ -124,6 +140,22 @@ configs().forEach(({ title, screenshot, config }) => {
 
         await expect(range).toHaveScreenshot(screenshot(`range-items-fixed`));
       });
+      test('should render label above the range slider', async ({ page }) => {
+        await page.setContent(
+          `
+          <ion-range label-placement="stacked">
+            <ion-icon name="volume-off" slot="start"></ion-icon>
+            <ion-icon name="volume-high" slot="end"></ion-icon>
+            <span slot="label">Volume</span>
+          </ion-range>
+        `,
+          config
+        );
+
+        const range = page.locator('ion-range');
+
+        await expect(range).toHaveScreenshot(screenshot(`range-items-stacked`));
+      });
     });
 
     test.describe('range: label prop', () => {
@@ -150,6 +182,20 @@ configs().forEach(({ title, screenshot, config }) => {
 
         await expect(range).toHaveScreenshot(screenshot(`range-label-prop-fixed`));
       });
+      test('should render label above the range slider', async ({ page }) => {
+        await page.setContent(
+          `
+          <div id="container" style="padding-inline-start: 20px;">
+            <ion-range label-placement="stacked" label="Volume"></ion-range>
+          </div>
+          `,
+          config
+        );
+
+        const range = page.locator('#container');
+
+        await expect(range).toHaveScreenshot(screenshot(`range-label-prop-stacked`));
+      });
     });
   });
 });
@@ -169,6 +215,46 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       const range = page.locator('ion-range');
 
       await expect(range).toHaveScreenshot(screenshot(`range-label-truncate`));
+    });
+  });
+
+  test.describe(title('range: with pin'), () => {
+    test('should render pin below a stacked label', async ({ page }) => {
+      await page.setContent(
+        `
+        <div id="container" style="padding-inline-start: 20px;">
+          <ion-range label-placement="stacked" pin="true">
+            <span slot="label">Volume</span>
+          </ion-range>
+        </div>
+      `,
+        config
+      );
+
+      const container = page.locator('#container');
+      const range = page.locator('ion-range');
+      const knob = range.locator('.range-knob-handle');
+
+      // Force the pin to show
+      await knob.evaluate((el: HTMLElement) => el.classList.add('ion-focused'));
+
+      await expect(container).toHaveScreenshot(screenshot(`range-stacked-pin`));
+    });
+  });
+
+  test.describe(title('range: stacked long label'), () => {
+    test('long label should truncate', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-range label-placement="stacked" style="width: 200px">
+            <div slot="label">Temperature Temperature Temperature Temperature Temperature Temperature Temperature Temperature Temperature </div>
+          </ion-radio>
+        `,
+        config
+      );
+
+      const range = page.locator('ion-range');
+      await expect(range).toHaveScreenshot(screenshot(`range-label-stacked-long-label`));
     });
   });
 });
