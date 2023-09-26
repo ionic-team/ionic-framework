@@ -1,6 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Listen, Method, Prop, forceUpdate, h, readTask } from '@stencil/core';
-import { componentOnReady } from '@utils/helpers';
+import { componentOnReady, hasLazyBuild } from '@utils/helpers';
 import { isPlatform } from '@utils/platform';
 import { isRTL } from '@utils/rtl';
 import { createColorClasses, hostContext } from '@utils/theme';
@@ -115,10 +115,24 @@ export class Content implements ComponentInterface {
 
   connectedCallback() {
     this.isMainContent = this.el.closest('ion-menu, ion-popover, ion-modal') === null;
+
+    if (hasLazyBuild(this.el)) {
+      const closestTabs = this.el.closest('ion-tabs');
+      if (closestTabs !== null) {
+        closestTabs.addEventListener('ionTabBarLoaded', this.resize);
+      }
+    }
   }
 
   disconnectedCallback() {
     this.onScrollEnd();
+
+    if (hasLazyBuild(this.el)) {
+      const closestTabs = this.el.closest('ion-tabs');
+      if (closestTabs !== null) {
+        closestTabs.removeEventListener('ionTabBarLoaded', this.resize);
+      }
+    }
   }
 
   /**

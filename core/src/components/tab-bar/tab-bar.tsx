@@ -57,6 +57,9 @@ export class TabBar implements ComponentInterface {
   /** @internal */
   @Event() ionTabBarChanged!: EventEmitter<TabBarChangedEventDetail>;
 
+  /** @internal */
+  @Event() ionTabBarLoaded!: EventEmitter<void>;
+
   componentWillLoad() {
     this.selectedTabChanged();
   }
@@ -80,6 +83,10 @@ export class TabBar implements ComponentInterface {
     if (this.keyboardCtrl) {
       this.keyboardCtrl.destroy();
     }
+  }
+
+  componentDidLoad() {
+    this.ionTabBarLoaded.emit();
   }
 
   render() {
