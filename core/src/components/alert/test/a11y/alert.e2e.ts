@@ -180,5 +180,37 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       await expect(page).toHaveScreenshot(screenshot(`alert-radio-scale`));
     });
+    test('should scale text on larger font sizes with text fields', async ({ page }) => {
+      await page.setContent(
+        `
+        <style>
+          html {
+            font-size: 36px;
+          }
+        </style>
+
+
+        <ion-alert header="Header" sub-header="Sub Header" message="Message"></ion-alert>
+
+        <script>
+          const alert = document.querySelector('ion-alert');
+          alert.inputs = [
+            { type: 'text', value: 'My Input', label: 'Input' },
+            { type: 'textarea', value: 'My Textarea', label: 'Textarea' },
+          ];
+          alert.buttons = ['Ok', 'Cancel'];
+        </script>
+      `,
+        config
+      );
+
+      const alert = page.locator('ion-alert');
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+
+      await alert.evaluate((el: HTMLIonAlertElement) => el.present());
+      await ionAlertDidPresent.next();
+
+      await expect(page).toHaveScreenshot(screenshot(`alert-text-fields-scale`));
+    });
   });
 });
