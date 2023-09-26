@@ -286,14 +286,18 @@ export class Toast implements ComponentInterface, OverlayInterface {
 
     const { position, positionAnchor } = this;
 
-    /**
-     * If the anchor is defined as an ID, find the element.
-     * We do this on every present so the toast doesn't need
-     * to account for the surrounding DOM changing since the
-     * last time it was presented.
-     */
     let anchor: HTMLElement | undefined;
-    if (typeof positionAnchor === 'string') {
+    if (position === 'middle' && positionAnchor !== undefined) {
+      // TODO: add a test to make sure the toast really is still presented at the middle in this case
+      printIonWarning('The positionAnchor property is ignored when using position="middle".', this.el);
+    } else if (typeof positionAnchor === 'string') {
+      /**
+       * If the anchor is defined as an ID, find the element.
+       * We do this on every present so the toast doesn't need
+       * to account for the surrounding DOM changing since the
+       * last time it was presented.
+       */
+
       const foundEl = document.getElementById(positionAnchor);
       if (foundEl === null) {
         printIonWarning(`An anchor element with an ID of ${positionAnchor} was not found in the DOM.`, this.el);
