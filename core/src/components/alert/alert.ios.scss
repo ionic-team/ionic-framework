@@ -261,7 +261,7 @@
   flex: $alert-ios-button-flex;
 
   min-width: $alert-ios-button-min-width;
-  height: $alert-ios-button-min-height;
+  min-height: $alert-ios-button-min-height;
 
   border-top: $alert-ios-button-border-width $alert-ios-button-border-style $alert-ios-button-border-color;
   border-right: $alert-ios-button-border-width $alert-ios-button-border-style $alert-ios-button-border-color;
