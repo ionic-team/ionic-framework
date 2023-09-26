@@ -5,7 +5,7 @@
 // --------------------------------------------------
 
 /// @prop - Font size of the alert
-$alert-md-font-size:                          14px !default;
+$alert-md-font-size:                          dynamic-font(14px) !default;
 
 /// @prop - Max width of the alert
 $alert-md-max-width:                          280px !default;
@@ -38,13 +38,13 @@ $alert-md-head-text-align:                    start !default;
 $alert-md-title-color:                        $text-color !default;
 
 /// @prop - Font size of the alert title
-$alert-md-title-font-size:                    20px !default;
+$alert-md-title-font-size:                    dynamic-font(20px) !default;
 
 /// @prop - Font weight of the alert title
 $alert-md-title-font-weight:                  500 !default;
 
 /// @prop - Font size of the alert sub title
-$alert-md-sub-title-font-size:                16px !default;
+$alert-md-sub-title-font-size:                dynamic-font(16px) !default;
 
 /// @prop - Text color of the alert sub title
 $alert-md-sub-title-text-color:               $text-color !default;
@@ -62,7 +62,7 @@ $alert-md-message-padding-bottom:             $alert-md-message-padding-top !def
 $alert-md-message-padding-start:              $alert-md-message-padding-end !default;
 
 /// @prop - Font size of the alert message
-$alert-md-message-font-size:                  16px !default;
+$alert-md-message-font-size:                  dynamic-font(16px) !default;
 
 /// @prop - Text color of the alert message
 $alert-md-message-text-color:                 $text-color-step-450 !default;
@@ -239,7 +239,7 @@ $alert-md-radio-label-padding-bottom:         $alert-md-radio-label-padding-top 
 $alert-md-radio-label-padding-start:          $alert-md-radio-label-padding-end + 26px !default;
 
 /// @prop - Font size of the label for the radio alert
-$alert-md-radio-label-font-size:              16px !default;
+$alert-md-radio-label-font-size:              dynamic-font(16px) !default;
 
 /// @prop - Text color of the label for the radio alert
 $alert-md-radio-label-text-color:             $text-color-step-150 !default;
@@ -314,7 +314,7 @@ $alert-md-checkbox-label-padding-start:       $alert-md-checkbox-label-padding-e
 $alert-md-checkbox-label-text-color:          $text-color-step-150 !default;
 
 /// @prop - Font size of the label for the checkbox in the alert
-$alert-md-checkbox-label-font-size:           16px !default;
+$alert-md-checkbox-label-font-size:           dynamic-font(16px) !default;
 
 /// @prop - Height of the tappable inputs in the checkbox alert
 $alert-md-tappable-height:                    $item-md-min-height !default;
