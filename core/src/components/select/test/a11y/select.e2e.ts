@@ -10,7 +10,11 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config, scree
       const results = await new AxeBuilder({ page }).analyze();
       expect(results.violations).toEqual([]);
     });
+  });
+});
 
+configs({ directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
+  test.describe(title('select: a11y'), () => {
     test.describe(title('select: font scaling'), () => {
       test('should scale text on larger font sizes', async ({ page }) => {
         await page.setContent(
