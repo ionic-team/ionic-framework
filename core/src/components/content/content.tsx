@@ -121,11 +121,6 @@ export class Content implements ComponentInterface {
     this.onScrollEnd();
   }
 
-  @Listen('appload', { target: 'window' })
-  onAppLoad() {
-    this.resize();
-  }
-
   /**
    * Rotating certain devices can update
    * the safe area insets. As a result,
