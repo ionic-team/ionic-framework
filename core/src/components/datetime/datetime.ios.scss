@@ -212,7 +212,7 @@
   // will collapse instead of expanding to fill the button
   height: 0;
 
-  min-height: 16px;
+  min-height: dynamic-font(16px);
 }
 
 :host .calendar-day {
