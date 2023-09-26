@@ -2,11 +2,12 @@ import { createAnimation } from '@utils/animation/animation';
 import { getElementRoot } from '@utils/helpers';
 
 import type { Animation } from '../../../interface';
+import type { ToastPresentOptions } from '../toast-interface';
 
 /**
  * MD Toast Enter Animation
  */
-export const mdEnterAnimation = (baseEl: HTMLElement, position: string): Animation => {
+export const mdEnterAnimation = (baseEl: HTMLElement, opts: ToastPresentOptions): Animation => {
   const baseAnimation = createAnimation();
   const wrapperAnimation = createAnimation();
 
@@ -18,7 +19,7 @@ export const mdEnterAnimation = (baseEl: HTMLElement, position: string): Animati
 
   wrapperAnimation.addElement(wrapperEl);
 
-  switch (position) {
+  switch (opts.position) {
     case 'top':
       wrapperEl.style.top = top;
       wrapperAnimation.fromTo('opacity', 0.01, 1);

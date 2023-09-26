@@ -28,7 +28,7 @@ import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
-import type { ToastButton, ToastPosition, ToastLayout } from './toast-interface';
+import type { ToastButton, ToastPosition, ToastLayout, ToastPresentOptions, ToastDismissOptions } from './toast-interface';
 
 // TODO(FW-2832): types
 
@@ -137,9 +137,18 @@ export class Toast implements ComponentInterface, OverlayInterface {
   @Prop() keyboardClose = false;
 
   /**
-   * The position of the toast on the screen.
+   * The starting position of the toast on the screen. Can be tweaked further
+   * using the `positionAnchor` property.
    */
   @Prop() position: ToastPosition = 'bottom';
+
+  /**
+   * The element to anchor the toast's position to. Can be set as a direct reference
+   * or the ID of the element. With `position="bottom"`, the toast will sit above the
+   * chosen element. With `position="top"`, the toast will sit below the chosen element.
+   * With `position="middle"`, the value of `positionAnchor` is ignored.
+   */
+  @Prop() positionAnchor?: HTMLElement | string;
 
   /**
    * An array of buttons for the toast.
@@ -275,7 +284,30 @@ export class Toast implements ComponentInterface, OverlayInterface {
 
     await this.delegateController.attachViewToDom();
 
-    await present<ToastPresentOptions>(this, 'toastEnter', iosEnterAnimation, mdEnterAnimation, this.position);
+    const { position, positionAnchor } = this;
+
+    /**
+     * If the anchor is defined as an ID, find the element.
+     * We do this on every present so the toast doesn't need
+     * to account for the surrounding DOM changing since the
+     * last time it was presented.
+     */
+    let anchor: HTMLElement | undefined;
+    if (typeof positionAnchor === 'string') {
+      const foundEl = document.getElementById(positionAnchor);
+      if (foundEl === null) {
+        printIonWarning(`An anchor element with an ID of ${positionAnchor} was not found in the DOM.`, this.el);
+      } else {
+        anchor = foundEl;
+      }
+    } else {
+      anchor = positionAnchor;
+    }
+
+    await present<ToastPresentOptions>(this, 'toastEnter', iosEnterAnimation, mdEnterAnimation, {
+      position,
+      positionAnchor: anchor
+    });
 
     /**
      * Content is revealed to screen readers after
@@ -315,7 +347,9 @@ export class Toast implements ComponentInterface, OverlayInterface {
       'toastLeave',
       iosLeaveAnimation,
       mdLeaveAnimation,
-      this.position
+      this.position // TODO: do we need the anchor for this too? or can we just calculate based on the position of the toast itself?
+      // if we can use the toast's position, would save needing to grab the element again on dismiss
+      // would also handle the animation being wonky if the anchor has moved since the toast was presented
     );
 
     if (dismissed) {
@@ -577,6 +611,3 @@ const buttonClass = (button: ToastButton): CssClassMap => {
 const buttonPart = (button: ToastButton): string => {
   return isCancel(button.role) ? 'button cancel' : 'button';
 };
-
-type ToastPresentOptions = ToastPosition;
-type ToastDismissOptions = ToastPosition;

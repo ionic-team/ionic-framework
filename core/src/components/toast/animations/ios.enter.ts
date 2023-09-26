@@ -2,11 +2,12 @@ import { createAnimation } from '@utils/animation/animation';
 import { getElementRoot } from '@utils/helpers';
 
 import type { Animation } from '../../../interface';
+import type { ToastPresentOptions } from '../toast-interface';
 
 /**
  * iOS Toast Enter Animation
  */
-export const iosEnterAnimation = (baseEl: HTMLElement, position: string): Animation => {
+export const iosEnterAnimation = (baseEl: HTMLElement, opts: ToastPresentOptions): Animation => {
   const baseAnimation = createAnimation();
   const wrapperAnimation = createAnimation();
 
@@ -18,7 +19,7 @@ export const iosEnterAnimation = (baseEl: HTMLElement, position: string): Animat
 
   wrapperAnimation.addElement(wrapperEl);
 
-  switch (position) {
+  switch (opts.position) {
     case 'top':
       wrapperAnimation.fromTo('transform', 'translateY(-100%)', `translateY(${top})`);
       break;
