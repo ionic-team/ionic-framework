@@ -53,7 +53,7 @@ const minutes = [
 // h11 hour system uses 0-11. Midnight starts at 0:00am.
 const hour11 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
-// h12 hour system uses 0-12. Midnight starts at 10:00am.
+// h12 hour system uses 0-12. Midnight starts at 12:00am.
 const hour12 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
 // h23 hour system uses 0-23. Midnight starts at 0:00.
