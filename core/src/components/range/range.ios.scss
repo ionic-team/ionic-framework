@@ -109,7 +109,7 @@
   background: $range-ios-pin-background-color;
   color: $range-ios-pin-color;
 
-  font-size: $range-ios-pin-font-size;
+  font-size: dynamic-font($range-ios-pin-font-size);
 
   text-align: center;
 }

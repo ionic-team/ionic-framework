@@ -26,14 +26,14 @@
 :host(:not(.legacy-range)) ::slotted(:not(ion-icon)[slot="start"]),
 :host(:not(.legacy-range)) ::slotted(:not(ion-icon)[slot="end"]),
 :host(:not(.legacy-range)) .native-wrapper {
-  font-size: $range-md-pin-font-size;
+  font-size: dynamic-font($range-md-pin-font-size);
 }
 
 // TODO FW-2997 remove this
 :host(.legacy-range) {
   @include padding($range-md-padding-vertical, $range-md-padding-horizontal);
 
-  font-size: $range-md-pin-font-size;
+  font-size: dynamic-font($range-md-pin-font-size);
 }
 
 :host(.range-item-start-adjustment) {
