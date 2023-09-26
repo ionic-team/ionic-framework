@@ -62,6 +62,7 @@
 
 :host(.title-large.ion-cloned-element) {
   --color: #{$text-color};
+  font-family: var(--ion-font-family);
 }
 
 :host(.title-large) .toolbar-title {
