@@ -78,3 +78,107 @@ configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
     });
   });
 });
+
+/**
+ * This behavior does not vary across directions
+ */
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('alert: font scaling'), () => {
+    test('should scale text on larger font sizes', async ({ page }) => {
+      await page.setContent(
+        `
+        <style>
+          html {
+            font-size: 36px;
+          }
+        </style>
+
+
+        <ion-alert header="Header" sub-header="Sub Header" message="Message"></ion-alert>
+
+        <script>
+          const alert = document.querySelector('ion-alert');
+          alert.buttons = ['Ok', 'Cancel'];
+        </script>
+      `,
+        config
+      );
+
+      const alert = page.locator('ion-alert');
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+
+      await alert.evaluate((el: HTMLIonAlertElement) => el.present());
+      await ionAlertDidPresent.next();
+
+      await expect(page).toHaveScreenshot(screenshot(`alert-scale`));
+    });
+    test('should scale text on larger font sizes with checkboxes', async ({ page }) => {
+      await page.setContent(
+        `
+        <style>
+          html {
+            font-size: 36px;
+          }
+        </style>
+
+
+        <ion-alert header="Header" sub-header="Sub Header" message="Message"></ion-alert>
+
+        <script>
+          const alert = document.querySelector('ion-alert');
+          alert.inputs = [
+            { type: 'checkbox', value: 'a', label: 'Checkbox A', checked: true },
+            { type: 'checkbox', value: 'b', label: 'Checkbox B' },
+            { type: 'checkbox', value: 'c', label: 'Checkbox C' },
+            { type: 'checkbox', value: 'd', label: 'Checkbox D' },
+          ];
+          alert.buttons = ['Ok', 'Cancel'];
+        </script>
+      `,
+        config
+      );
+
+      const alert = page.locator('ion-alert');
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+
+      await alert.evaluate((el: HTMLIonAlertElement) => el.present());
+      await ionAlertDidPresent.next();
+
+      await expect(page).toHaveScreenshot(screenshot(`alert-checkbox-scale`));
+    });
+    test('should scale text on larger font sizes with radios', async ({ page }) => {
+      await page.setContent(
+        `
+        <style>
+          html {
+            font-size: 36px;
+          }
+        </style>
+
+
+        <ion-alert header="Header" sub-header="Sub Header" message="Message"></ion-alert>
+
+        <script>
+          const alert = document.querySelector('ion-alert');
+          alert.inputs = [
+            { type: 'radio', value: 'a', label: 'Radio A', checked: true },
+            { type: 'radio', value: 'b', label: 'Radio B' },
+            { type: 'radio', value: 'c', label: 'Radio C' },
+            { type: 'radio', value: 'd', label: 'Radio D' },
+          ];
+          alert.buttons = ['Ok', 'Cancel'];
+        </script>
+      `,
+        config
+      );
+
+      const alert = page.locator('ion-alert');
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+
+      await alert.evaluate((el: HTMLIonAlertElement) => el.present());
+      await ionAlertDidPresent.next();
+
+      await expect(page).toHaveScreenshot(screenshot(`alert-radio-scale`));
+    });
+  });
+});
