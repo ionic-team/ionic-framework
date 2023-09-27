@@ -96,7 +96,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 });
 
 configs({ directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
-  test.describe.only(title('radio: a11y'), () => {
+  test.describe(title('radio: a11y'), () => {
     test.describe(title('radio: font scaling'), () => {
       test('should scale text on larger font sizes', async ({ page }) => {
         await page.setContent(
