@@ -43,5 +43,14 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       await expect(page).toHaveScreenshot(screenshot(`toast-middle-anchor`));
     });
+
+    test('should correctly anchor toast when using an element reference', async ({ page }) => {
+      const ionToastDidPresent = await page.spyOnEvent('ionToastDidPresent');
+
+      await page.click('#headerElAnchor');
+      await ionToastDidPresent.next();
+
+      await expect(page).toHaveScreenshot(screenshot(`toast-header-el-anchor`));
+    });
   });
 });

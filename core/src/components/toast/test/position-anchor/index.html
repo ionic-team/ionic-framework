@@ -31,10 +31,12 @@
       <ion-button id="headerAnchor">Anchor to Header</ion-button>
       <ion-button id="footerAnchor">Anchor to Footer</ion-button>
       <ion-button id="middleAnchor">Anchor to Header (Middle Position)</ion-button>
+      <ion-button id="headerElAnchor">Anchor to Header (Element Ref)</ion-button>
 
       <ion-toast id="headerToast" trigger="headerAnchor" position="top" position-anchor="header" message="Hello World" duration="2000"></ion-toast>
       <ion-toast id="footerToast" trigger="footerAnchor" position="bottom" position-anchor="footer" message="Hello World" duration="2000"></ion-toast>
       <ion-toast id="middleToast" trigger="middleAnchor" position="middle" position-anchor="header" message="Hello World" duration="2000"></ion-toast>
+      <ion-toast id="headerElToast" trigger="headerElAnchor" position="top" message="Hello World" duration="2000"></ion-toast>
     </ion-content>
 
     <ion-footer id="footer">
@@ -43,6 +45,12 @@
       </ion-toolbar>
     </ion-footer>
   </ion-app>
+
+  <script>
+    const headerElToast = document.querySelector('#headerElToast');
+    const header = document.querySelector('ion-header');
+    headerElToast.positionAnchor = header;
+  </script>
 </body>
 
 </html>
