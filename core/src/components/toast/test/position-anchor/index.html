@@ -1,56 +1,83 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Toast - positionAnchor</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
 
-<head>
-  <meta charset="UTF-8" />
-  <title>Toast - positionAnchor</title>
-  <meta name="viewport"
-    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
-  <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
-  <script src="../../../../../scripts/testing/scripts.js"></script>
-  <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      html {
+        --ion-safe-area-top: 30px;
+        --ion-safe-area-bottom: 30px;
+      }
+    </style>
+  </head>
 
-  <style>
-    html {
-      --ion-safe-area-top: 30px;
-      --ion-safe-area-bottom: 30px;
-    }
-  </style>
-</head>
+  <body>
+    <ion-app>
+      <ion-header id="header">
+        <ion-toolbar>
+          <ion-title>Toast - positionAnchor</ion-title>
+        </ion-toolbar>
+      </ion-header>
 
-<body>
-  <ion-app>
-    <ion-header id="header">
-      <ion-toolbar>
-        <ion-title>Toast - positionAnchor</ion-title>
-      </ion-toolbar>
-    </ion-header>
+      <ion-content class="ion-padding">
+        <ion-button id="headerAnchor">Anchor to Header</ion-button>
+        <ion-button id="footerAnchor">Anchor to Footer</ion-button>
+        <ion-button id="middleAnchor">Anchor to Header (Middle Position)</ion-button>
+        <ion-button id="headerElAnchor">Anchor to Header (Element Ref)</ion-button>
 
-    <ion-content class="ion-padding">
-      <ion-button id="headerAnchor">Anchor to Header</ion-button>
-      <ion-button id="footerAnchor">Anchor to Footer</ion-button>
-      <ion-button id="middleAnchor">Anchor to Header (Middle Position)</ion-button>
-      <ion-button id="headerElAnchor">Anchor to Header (Element Ref)</ion-button>
+        <ion-toast
+          id="headerToast"
+          trigger="headerAnchor"
+          position="top"
+          position-anchor="header"
+          message="Hello World"
+          duration="2000"
+        ></ion-toast>
+        <ion-toast
+          id="footerToast"
+          trigger="footerAnchor"
+          position="bottom"
+          position-anchor="footer"
+          message="Hello World"
+          duration="2000"
+        ></ion-toast>
+        <ion-toast
+          id="middleToast"
+          trigger="middleAnchor"
+          position="middle"
+          position-anchor="header"
+          message="Hello World"
+          duration="2000"
+        ></ion-toast>
+        <ion-toast
+          id="headerElToast"
+          trigger="headerElAnchor"
+          position="top"
+          message="Hello World"
+          duration="2000"
+        ></ion-toast>
+      </ion-content>
 
-      <ion-toast id="headerToast" trigger="headerAnchor" position="top" position-anchor="header" message="Hello World" duration="2000"></ion-toast>
-      <ion-toast id="footerToast" trigger="footerAnchor" position="bottom" position-anchor="footer" message="Hello World" duration="2000"></ion-toast>
-      <ion-toast id="middleToast" trigger="middleAnchor" position="middle" position-anchor="header" message="Hello World" duration="2000"></ion-toast>
-      <ion-toast id="headerElToast" trigger="headerElAnchor" position="top" message="Hello World" duration="2000"></ion-toast>
-    </ion-content>
+      <ion-footer id="footer">
+        <ion-toolbar>
+          <ion-title>Footer</ion-title>
+        </ion-toolbar>
+      </ion-footer>
+    </ion-app>
 
-    <ion-footer id="footer">
-      <ion-toolbar>
-        <ion-title>Footer</ion-title>
-      </ion-toolbar>
-    </ion-footer>
-  </ion-app>
-
-  <script>
-    const headerElToast = document.querySelector('#headerElToast');
-    const header = document.querySelector('ion-header');
-    headerElToast.positionAnchor = header;
-  </script>
-</body>
-
+    <script>
+      const headerElToast = document.querySelector('#headerElToast');
+      const header = document.querySelector('ion-header');
+      headerElToast.positionAnchor = header;
+    </script>
+  </body>
 </html>

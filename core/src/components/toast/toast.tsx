@@ -28,7 +28,13 @@ import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
-import type { ToastButton, ToastPosition, ToastLayout, ToastPresentOptions, ToastDismissOptions } from './toast-interface';
+import type {
+  ToastButton,
+  ToastPosition,
+  ToastLayout,
+  ToastPresentOptions,
+  ToastDismissOptions,
+} from './toast-interface';
 
 // TODO(FW-2832): types
 
@@ -309,7 +315,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
 
     await present<ToastPresentOptions>(this, 'toastEnter', iosEnterAnimation, mdEnterAnimation, {
       position,
-      positionAnchor: anchor
+      positionAnchor: anchor,
     });
 
     /**

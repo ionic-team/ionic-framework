@@ -40,7 +40,7 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts: ToastPresentOptions
        * to the top edge of the anchor. We want to calculate from the
        * bottom edge of the screen instead.
        */
-      offset -= (win.innerHeight - box.top);
+      offset -= win.innerHeight - box.top;
     }
 
     /**

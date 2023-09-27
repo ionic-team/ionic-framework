@@ -41,7 +41,7 @@ export const mdEnterAnimation = (baseEl: HTMLElement, opts: ToastPresentOptions)
        * to the top edge of the anchor. We want to calculate from the
        * bottom edge of the screen instead.
        */
-      offset += (win.innerHeight - box.top);
+      offset += win.innerHeight - box.top;
     }
 
     /**
@@ -49,7 +49,7 @@ export const mdEnterAnimation = (baseEl: HTMLElement, opts: ToastPresentOptions)
      * accounted for when checking the position of the anchor.
      */
     top = `${offset}px`;
-    bottom =  `${offset}px`;
+    bottom = `${offset}px`;
   } else {
     top = `calc(${offset}px + var(--ion-safe-area-top, 0px))`;
     bottom = `calc(${offset}px + var(--ion-safe-area-bottom, 0px))`;
