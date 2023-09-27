@@ -6976,6 +6976,7 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         "onIonTabBarChanged"?: (event: IonTabBarCustomEvent<TabBarChangedEventDetail>) => void;
+        "onIonTabBarLoaded"?: (event: IonTabBarCustomEvent<void>) => void;
         /**
           * The selected tab component
          */
