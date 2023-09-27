@@ -137,8 +137,17 @@ $alert-ios-button-margin:                               0 !default;
 /// @prop - Min width of the alert button
 $alert-ios-button-min-width:                            50% !default;
 
-/// @prop - Minimum height of the alert button
-$alert-ios-button-min-height:                           28px !default;
+/// @prop - Height of the alert button
+/**
+ * We want the height of the button to
+ * scale with the text so the next never runs
+ * into the edge of the button. We change the height
+ * instead of adding padding because we would need to offset
+ * the height the padding and the border. Since the border uses
+ * a hairline (<1px) width, this will cause subpixel rendering
+ * differences across browsers.
+ */
+$alert-ios-button-height:                           dynamic-font(44px) !default;
 
 /// @prop - Padding of the alert button
 $alert-ios-button-padding: 8px !default;

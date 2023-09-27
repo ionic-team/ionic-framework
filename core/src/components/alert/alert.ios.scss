@@ -255,19 +255,13 @@
 }
 
 .alert-button {
-  /**
-   * Adding padding ensures there is enough
-   * whitespace in the button when scaled up
-   * to large font sizes.
-   */
-  @include padding($alert-ios-button-padding);
   @include margin($alert-ios-button-margin);
   @include border-radius($alert-ios-button-border-radius);
 
   flex: $alert-ios-button-flex;
 
   min-width: $alert-ios-button-min-width;
-  min-height: $alert-ios-button-min-height;
+  height: $alert-ios-button-height;
 
   border-top: $alert-ios-button-border-width $alert-ios-button-border-style $alert-ios-button-border-color;
   border-right: $alert-ios-button-border-width $alert-ios-button-border-style $alert-ios-button-border-color;
