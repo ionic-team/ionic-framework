@@ -57,7 +57,12 @@ export class TabBar implements ComponentInterface {
   /** @internal */
   @Event() ionTabBarChanged!: EventEmitter<TabBarChangedEventDetail>;
 
-  /** @internal */
+  /**
+   * @internal
+   * This event is used in IonContent to correctly
+   * calculate the fullscreen content offsets
+   * when IonTabBar is used.
+   */
   @Event() ionTabBarLoaded!: EventEmitter<void>;
 
   componentWillLoad() {
