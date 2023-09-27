@@ -288,7 +288,6 @@ export class Toast implements ComponentInterface, OverlayInterface {
 
     let anchor: HTMLElement | undefined;
     if (position === 'middle' && positionAnchor !== undefined) {
-      // TODO: add a test to make sure the toast really is still presented at the middle in this case
       printIonWarning('The positionAnchor property is ignored when using position="middle".', this.el);
     } else if (typeof positionAnchor === 'string') {
       /**
@@ -351,9 +350,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
       'toastLeave',
       iosLeaveAnimation,
       mdLeaveAnimation,
-      this.position // TODO: do we need the anchor for this too? or can we just calculate based on the position of the toast itself?
-      // if we can use the toast's position, would save needing to grab the element again on dismiss
-      // would also handle the animation being wonky if the anchor has moved since the toast was presented
+      this.position
     );
 
     if (dismissed) {
