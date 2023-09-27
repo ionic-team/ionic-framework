@@ -14,13 +14,13 @@ $radio-md-background-color-focused:  ion-color(primary, tint) !default;
 $radio-md-color-off:                 rgb($text-color-rgb, 0.60) !default;
 
 /// @prop - Width of the radio icon
-$radio-md-icon-width:                20px !default;
+$radio-md-icon-width:                dynamic-font(20px) !default;
 
 /// @prop - Height of the radio icon
-$radio-md-icon-height:               20px !default;
+$radio-md-icon-height:               dynamic-font(20px) !default;
 
 /// @prop - Border width of the radio icon
-$radio-md-icon-border-width:         2px !default;
+$radio-md-icon-border-width:         dynamic-font(2px) !default;
 
 /// @prop - Border style of the radio icon
 $radio-md-icon-border-style:         solid !default;
