@@ -94,8 +94,6 @@ input {
 
   flex-grow: 1;
 
-  align-items: center;
-
   height: inherit;
 
   transition: background-color 15ms linear;
@@ -123,6 +121,14 @@ input {
 
 :host(.in-item:not(.legacy-toggle)) .label-text-wrapper {
   @include margin($toggle-item-label-margin-top, null, $toggle-item-label-margin-bottom, null);
+}
+
+:host(.in-item.toggle-label-placement-stacked) .label-text-wrapper {
+  @include margin($toggle-item-label-margin-top, null, $form-control-label-margin, null);
+}
+
+:host(.in-item.toggle-label-placement-stacked) .native-wrapper {
+  @include margin(null, null, $toggle-item-label-margin-bottom, null);
 }
 
 /**
@@ -156,6 +162,18 @@ input {
 
 :host(.toggle-justify-end) .toggle-wrapper {
   justify-content: end;
+}
+
+// Toggle Align
+// --------------------------------------------------
+
+
+:host(.toggle-alignment-start) .toggle-wrapper {
+  align-items: start;
+}
+
+:host(.toggle-alignment-center) .toggle-wrapper {
+  align-items: center;
 }
 
 // Toggle Label Placement - Start
@@ -220,6 +238,41 @@ input {
   width: 100px;
   min-width: 100px;
   max-width: 200px;
+}
+
+// Toggle Label Placement - Stacked
+// ----------------------------------------------------------------
+
+/**
+ * Label is on top of the toggle.
+ */
+:host(.toggle-label-placement-stacked) .toggle-wrapper {
+  flex-direction: column;
+}
+
+:host(.toggle-label-placement-stacked) .label-text-wrapper {
+  @include transform(scale(#{$form-control-label-stacked-scale}));
+
+  /**
+   * The margin between the label and
+   * the toggle should be on the bottom
+   * when the label sits on top.
+   */
+  @include margin(null, 0, $form-control-label-margin, 0);
+
+  /**
+   * Label text should not extend
+   * beyond the bounds of the toggle.
+   */
+  max-width: calc(100% / #{$form-control-label-stacked-scale});
+}
+
+:host(.toggle-label-placement-stacked.toggle-alignment-start) .label-text-wrapper {
+  @include transform-origin(start, top);
+}
+
+:host(.toggle-label-placement-stacked.toggle-alignment-center) .label-text-wrapper {
+  @include transform-origin(center, top);
 }
 
 // Toggle Background Track: Unchecked

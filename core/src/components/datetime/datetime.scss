@@ -311,6 +311,10 @@ ion-picker-column-internal {
 }
 
 :host .calendar-body .calendar-month {
+  display: flex;
+
+  flex-flow: column;
+
   /**
    * Swiping should snap to at
    * most one month at a time.
@@ -346,13 +350,31 @@ ion-picker-column-internal {
   grid-template-columns: repeat(7, 1fr);
 }
 
+:host .calendar-day-wrapper {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  // Adding a min width and min height allows
+  // it to shrink smaller than its content
+  // which keeps the calendar day highlight
+  // larger while letting the grid items shrink
+  min-width: 0;
+
+  min-height: 0;
+
+  overflow: visible;
+}
+
 /**
  * Center the day text vertically
  * and horizontally within its grid cell.
  */
-:host .calendar-day {
-  @include padding(0px, 0px, 0px, 0px);
-  @include margin(0px, 0px, 0px, 0px);
+.calendar-day {
+  @include border-radius(50%);
+  @include padding(0px);
+  @include margin(0px);
 
   display: flex;
 
@@ -383,16 +405,10 @@ ion-picker-column-internal {
   opacity: 0.4;
 }
 
-.calendar-day-highlight {
-  @include border-radius(32px, 32px, 32px, 32px);
-  @include padding(4px, 4px, 4px, 4px);
+.calendar-day:focus {
+  background: current-color(base, 0.2);
 
-  position: absolute;
-
-  width: 32px;
-  height: 32px;
-
-  z-index: -1;
+  box-shadow: 0px 0px 0px 4px current-color(base, 0.2);
 }
 
 // Time / Header

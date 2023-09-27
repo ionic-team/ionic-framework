@@ -72,5 +72,5 @@
    * Label text should not extend
    * beyond the bounds of the input.
    */
-  max-width: calc(100% / #{$input-floating-label-scale});
+  max-width: calc(100% / #{$form-control-label-stacked-scale});
 }
