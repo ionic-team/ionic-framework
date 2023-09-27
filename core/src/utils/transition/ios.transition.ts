@@ -228,9 +228,9 @@ const animateLargeTitle = (
     { offset: 1, opacity: 1, transform: `translate3d(0, ${largeTitleBox.top + 2}px, 0) scale(1)` },
   ];
   const FORWARDS_KEYFRAMES = [
-    { offset: 0, opacity: 0.99, transform: `translate3d(0, ${largeTitleBox.top + 2}px, 0) scale(1)` },
+    { offset: 0, opacity: 0.99, transform: `translate3d(0, ${largeTitleBox.top}px, 0) scale(1)` },
     { offset: 0.6, opacity: 0 },
-    { offset: 1, opacity: 0, transform: `translate3d(${START_TRANSLATE}, ${backButtonBox.top - 4}px, 0) scale(0.5)` },
+    { offset: 1, opacity: 0, transform: `translate3d(${START_TRANSLATE}, ${backButtonBox.top - 4}px, 0) scale(0.44)` },
   ];
 
   const KEYFRAMES = backDirection ? BACKWARDS_KEYFRAMES : FORWARDS_KEYFRAMES;
@@ -247,7 +247,7 @@ const animateLargeTitle = (
   clonedLargeTitleAnimation
     .beforeStyles({
       'transform-origin': `${ORIGIN_X} center`,
-      height: '46px',
+      height: `${largeTitleBox.height}px`,
       display: '',
       position: 'relative',
       [ORIGIN_X]: TITLE_START_OFFSET,
