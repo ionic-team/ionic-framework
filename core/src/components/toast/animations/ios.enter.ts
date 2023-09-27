@@ -1,4 +1,5 @@
 import { createAnimation } from '@utils/animation/animation';
+import { win } from '@utils/browser';
 import { getElementRoot } from '@utils/helpers';
 
 import type { Animation } from '../../../interface';
@@ -10,16 +11,52 @@ import type { ToastPresentOptions } from '../toast-interface';
 export const iosEnterAnimation = (baseEl: HTMLElement, opts: ToastPresentOptions): Animation => {
   const baseAnimation = createAnimation();
   const wrapperAnimation = createAnimation();
+  const { position, positionAnchor } = opts;
 
   const root = getElementRoot(baseEl);
   const wrapperEl = root.querySelector('.toast-wrapper') as HTMLElement;
 
-  const bottom = `calc(-10px - var(--ion-safe-area-bottom, 0px))`;
-  const top = `calc(10px + var(--ion-safe-area-top, 0px))`;
+  /**
+   * Start with a predefined offset from the edge the toast will be
+   * positioned relative to. By default, this will be the top edge
+   * of the screen.
+   */
+  let offset = position === 'top' ? 10 : -10;
+  let top, bottom;
+
+  /**
+   * If positionAnchor is defined, add in the distance from the top
+   * of the screen to the target anchor edge. For position="top", the
+   * bottom anchor edge is targeted. For position="bottom", the top
+   * anchor edge is targeted.
+   */
+  if (positionAnchor && win) {
+    const box = positionAnchor.getBoundingClientRect();
+    if (position === 'top') {
+      offset += box.bottom;
+    } else if (position === 'bottom') {
+      /**
+       * Just box.top is the distance from the top edge of the screen
+       * to the top edge of the anchor. We want to calculate from the
+       * bottom edge of the screen instead.
+       */
+      offset -= (win.innerHeight - box.top);
+    }
+
+    /**
+     * We don't include safe area here because that should already be
+     * accounted for when checking the position of the anchor.
+     */
+    top = `${offset}px`;
+    bottom = `${offset}px`;
+  } else {
+    top = `calc(${offset}px + var(--ion-safe-area-top, 0px))`;
+    bottom = `calc(${offset}px - var(--ion-safe-area-bottom, 0px))`;
+  }
 
   wrapperAnimation.addElement(wrapperEl);
 
-  switch (opts.position) {
+  switch (position) {
     case 'top':
       wrapperAnimation.fromTo('transform', 'translateY(-100%)', `translateY(${top})`);
       break;

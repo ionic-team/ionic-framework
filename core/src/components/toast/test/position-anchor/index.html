@@ -10,6 +10,13 @@
   <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
   <script src="../../../../../scripts/testing/scripts.js"></script>
   <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+
+  <style>
+    html {
+      --ion-safe-area-top: 50px;
+      --ion-safe-area-bottom: 50px;
+    }
+  </style>
 </head>
 
 <body>
@@ -23,9 +30,11 @@
     <ion-content class="ion-padding">
       <ion-button id="headerAnchor">Anchor to Header</ion-button>
       <ion-button id="footerAnchor">Anchor to Footer</ion-button>
+      <ion-button id="middleAnchor">Anchor to Header (Middle Position)</ion-button>
 
       <ion-toast id="headerToast" trigger="headerAnchor" position="top" position-anchor="header" message="Hello World" duration="2000"></ion-toast>
       <ion-toast id="footerToast" trigger="footerAnchor" position="bottom" position-anchor="footer" message="Hello World" duration="2000"></ion-toast>
+      <ion-toast id="middleToast" trigger="middleAnchor" position="middle" position-anchor="header" message="Hello World" duration="2000"></ion-toast>
     </ion-content>
 
     <ion-footer id="footer">

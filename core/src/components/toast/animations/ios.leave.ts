@@ -13,20 +13,23 @@ export const iosLeaveAnimation = (baseEl: HTMLElement, position: string): Animat
   const root = getElementRoot(baseEl);
   const wrapperEl = root.querySelector('.toast-wrapper') as HTMLElement;
 
-  const bottom = `calc(-10px - var(--ion-safe-area-bottom, 0px))`;
-  const top = `calc(10px + var(--ion-safe-area-top, 0px))`;
-
   wrapperAnimation.addElement(wrapperEl);
 
+  /**
+   * For top/bottom positions, we use to() instead of fromTo() so that if
+   * the positionAnchor prop was used, we don't need to recalculate the
+   * toast and/or anchor's position and duplicate work from the enter
+   * animation.
+   */
   switch (position) {
     case 'top':
-      wrapperAnimation.fromTo('transform', `translateY(${top})`, 'translateY(-100%)');
+      wrapperAnimation.to('transform', 'translateY(-100%)');
       break;
     case 'middle':
       wrapperAnimation.fromTo('opacity', 0.99, 0);
       break;
     default:
-      wrapperAnimation.fromTo('transform', `translateY(${bottom})`, 'translateY(100%)');
+      wrapperAnimation.to('transform', 'translateY(100%)');
       break;
   }
   return baseAnimation.easing('cubic-bezier(.36,.66,.04,1)').duration(300).addAnimation(wrapperAnimation);
