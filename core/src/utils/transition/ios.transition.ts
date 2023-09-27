@@ -128,46 +128,91 @@ const animateBackButton = (
   backButtonBox: DOMRect
 ) => {
   const BACK_BUTTON_START_OFFSET = rtl ? `calc(100% - ${backButtonBox.right + 4}px)` : `${backButtonBox.left - 4}px`;
-  const START_TEXT_TRANSLATE = rtl ? '7px' : '-7px';
-  const END_TEXT_TRANSLATE = rtl ? '-4px' : '4px';
-
-  const ICON_TRANSLATE = rtl ? '-4px' : '4px';
 
   const TEXT_ORIGIN_X = rtl ? 'right' : 'left';
   const ICON_ORIGIN_X = rtl ? 'left' : 'right';
+
+  const CONTAINER_ORIGIN_X = rtl ? 'right' : 'left';
+  const CONTAINER_END_TRANSLATE = rtl ? `-${window.innerWidth - backButtonBox.right}px` : `${backButtonBox.left}px`;
+
+  const FORWARD_CONTAINER_KEYFRAMES = [
+    // TODO
+    { offset: 0, transform: 'translate3d(0, 0, 0)' },
+    { offset: 1, transform: `translate3d(${CONTAINER_END_TRANSLATE}, ${backButtonBox.top}px, 0)` }
+  ];
+
+  const BACKWARD_CONTAINER_KEYFRAMES = [
+    { offset: 0, transform: `translate3d(${CONTAINER_END_TRANSLATE}, ${backButtonBox.top}px, 0)` },
+    // TODO
+    { offset: 1, transform: 'translate3d(0, 0, 0)' },
+  ];
+
+  const CONTAINER_KEYFRAMES = backDirection ? BACKWARD_CONTAINER_KEYFRAMES : FORWARD_CONTAINER_KEYFRAMES;
 
   const FORWARD_TEXT_KEYFRAMES = [
     {
       offset: 0,
       opacity: 0,
-      transform: `translate3d(${START_TEXT_TRANSLATE}, ${largeTitleBox.top - 40}px, 0) scale(2.1)`,
+      // TODO
+      transform: 'scale(1)',
     },
-    { offset: 1, opacity: 1, transform: `translate3d(${END_TEXT_TRANSLATE}, ${backButtonBox.top - 46}px, 0) scale(1)` },
+    {
+      offset: 1,
+      opacity: 1,
+      transform: 'scale(1)'
+    },
   ];
+
   const BACKWARD_TEXT_KEYFRAMES = [
-    { offset: 0, opacity: 1, transform: `translate3d(${END_TEXT_TRANSLATE}, ${backButtonBox.top - 46}px, 0) scale(1)` },
-    { offset: 0.6, opacity: 0 },
+    { offset: 0, opacity: 1, transform: 'scale(1)', },
     {
       offset: 1,
       opacity: 0,
-      transform: `translate3d(${START_TEXT_TRANSLATE}, ${largeTitleBox.top - 40}px, 0) scale(2.1)`,
+      // TODO
+      transform: 'scale(1)',
     },
   ];
   const TEXT_KEYFRAMES = backDirection ? BACKWARD_TEXT_KEYFRAMES : FORWARD_TEXT_KEYFRAMES;
 
   const FORWARD_ICON_KEYFRAMES = [
-    { offset: 0, opacity: 0, transform: `translate3d(${ICON_TRANSLATE}, ${backButtonBox.top - 41}px, 0) scale(0.6)` },
-    { offset: 1, opacity: 1, transform: `translate3d(${ICON_TRANSLATE}, ${backButtonBox.top - 46}px, 0) scale(1)` },
+    {
+      offset: 0,
+      opacity: 0,
+      transform: 'scale(0.6)'
+    },
+    {
+      offset: 0.6,
+      opacity: 0,
+      transform: 'scale(0.6)'
+    },
+    {
+      offset: 1,
+      opacity: 1,
+      transform: 'scale(1)'
+    },
   ];
   const BACKWARD_ICON_KEYFRAMES = [
-    { offset: 0, opacity: 1, transform: `translate3d(${ICON_TRANSLATE}, ${backButtonBox.top - 46}px, 0) scale(1)` },
-    { offset: 0.2, opacity: 0, transform: `translate3d(${ICON_TRANSLATE}, ${backButtonBox.top - 41}px, 0) scale(0.6)` },
-    { offset: 1, opacity: 0, transform: `translate3d(${ICON_TRANSLATE}, ${backButtonBox.top - 41}px, 0) scale(0.6)` },
+    {
+      offset: 0,
+      opacity: 1,
+      transform: 'scale(1)'
+    },
+    {
+      offset: 0.2,
+      opacity: 0,
+      transform: 'scale(0.6)'
+    },
+    {
+      offset: 1,
+      opacity: 0,
+      transform: 'scale(0.6)'
+    },
   ];
   const ICON_KEYFRAMES = backDirection ? BACKWARD_ICON_KEYFRAMES : FORWARD_ICON_KEYFRAMES;
 
   const enteringBackButtonTextAnimation = createAnimation();
   const enteringBackButtonIconAnimation = createAnimation();
+  const enteringBackButtonAnimation = createAnimation();
 
   const clonedBackButtonEl = getClonedElement('ion-back-button');
 
@@ -185,6 +230,14 @@ const animateBackButton = (
 
   enteringBackButtonIconAnimation.addElement(backButtonIconEl);
   enteringBackButtonTextAnimation.addElement(backButtonTextEl);
+  enteringBackButtonAnimation.addElement(clonedBackButtonEl)
+
+  enteringBackButtonAnimation.beforeStyles({
+    position: 'absolute',
+    top: '0px',
+    [CONTAINER_ORIGIN_X]: '0px',
+  })
+  .keyframes(CONTAINER_KEYFRAMES);
 
   enteringBackButtonTextAnimation
     .beforeStyles({
@@ -207,7 +260,7 @@ const animateBackButton = (
     })
     .keyframes(ICON_KEYFRAMES);
 
-  rootAnimation.addAnimation([enteringBackButtonTextAnimation, enteringBackButtonIconAnimation]);
+  rootAnimation.addAnimation([enteringBackButtonTextAnimation, enteringBackButtonIconAnimation, enteringBackButtonAnimation]);
 };
 
 const animateLargeTitle = (
