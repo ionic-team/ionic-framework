@@ -14,7 +14,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 });
 
 configs({ directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
-  test.describe(title('select: a11y'), () => {
+  test.describe.only(title('select: a11y'), () => {
     test.describe(title('select: font scaling'), () => {
       test('should scale text on larger font sizes', async ({ page }) => {
         await page.setContent(
@@ -24,10 +24,10 @@ configs({ directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
                 font-size: 310%;
               }
             </style>
-            <ion-select label="My Label" value="oranges" placeholder="Placeholder">
-              <ion-select-option value="apples">Apples</ion-select-option>
-              <ion-select-option value="bananas">Bananas</ion-select-option>
-              <ion-select-option value="oranges">Oranges</ion-select-option>
+            <ion-select label="Fruit" value="apple" placeholder="Placeholder">
+              <ion-select-option value="apple">Apple</ion-select-option>
+              <ion-select-option value="banana">Banana</ion-select-option>
+              <ion-select-option value="orange">Orange</ion-select-option>
             </ion-select>
           `,
           config
