@@ -52,7 +52,7 @@ npm run test.e2e src/components/button/test
 
 If you are running a test that takes a screenshot, you must first generate the reference screenshot from `main`. This is known as generating a "ground truth screenshot". All other screenshots will be compared to this ground truth. Alternatively, if `main` has changed since the last time you generated ground truths you may need to update your local ground truths.
 
-The examples for [Running Tests](#running-tests) also apply here, so you can update screenshots for a specific test file instead.
+The examples provided in the [Running Tests](#running-tests) section also apply here, allowing you to update screenshots for a specific test file.
 
 Note that since you are generating the `main` ground truth screenshots, you must be on the `main` branch locally. Don't forget to pull the latest `main` changes and then re-build using `npm run build`.
 
