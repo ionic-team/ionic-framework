@@ -54,6 +54,12 @@ describe('getHourCycle()', () => {
     expect(getHourCycle('en-GB', 'h23')).toBe('h23');
     expect(getHourCycle('en-GB', 'h12')).toBe('h12');
     expect(getHourCycle('en-GB-u-hc-h12')).toBe('h12');
+
+    expect(getHourCycle('en-GB', 'h11')).toBe('h11');
+    expect(getHourCycle('en-GB-u-hc-h11')).toBe('h11');
+
+    expect(getHourCycle('en-GB', 'h24')).toBe('h24');
+    expect(getHourCycle('en-GB-u-hc-h24')).toBe('h24');
   });
 });
 
