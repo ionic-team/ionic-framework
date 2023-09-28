@@ -59,7 +59,13 @@ The examples provided in the [Running Tests](#running-tests) section also apply 
 Note that since you are generating the reference branch ground truth screenshots, you must be on the reference branch locally. Don't forget to pull the latest reference branch changes and then re-build using `npm run build`.
 
 ```shell
-npm run test.e2e -- --update-snapshots
+npm run test.e2e.update-snapshots
+```
+
+Optionally, you can pass a directory to only update the ground truths for that directory & subdirectories. This is useful when working on a specific component.
+
+```shell
+npm run test.e2e.update-snapshots src/components/alert/
 ```
 
 From here, you can switch back to your branch and run the tests.
