@@ -81,6 +81,7 @@ const createLargeTitleTransition = (
       backDirection,
       leavingLargeTitle,
       leavingLargeTitleBox,
+      enteringBackButton,
       enteringBackButtonBox
     );
     animateBackButton(
@@ -102,6 +103,7 @@ const createLargeTitleTransition = (
       backDirection,
       enteringLargeTitle,
       enteringLargeTitleBox,
+      leavingBackButtonBox,
       leavingBackButtonBox
     );
     animateBackButton(
@@ -137,7 +139,6 @@ const animateBackButton = (
 
   const CONTAINER_ORIGIN_X = rtl ? 'right' : 'left';
 
-
   const buttonText = shadow(backButtonEl).querySelector('.button-text');
   const buttonTextBox = buttonText.getBoundingClientRect();
 
@@ -149,22 +150,23 @@ const animateBackButton = (
   const icon = shadow(backButtonEl).querySelector('ion-icon');
   const bbox = icon.getBoundingClientRect();
 
-  const CONTAINER_START_TRANSLATE = rtl ? `${(bbox.width / 2) - (bbox.right - backButtonBox.right)}px` : `${backButtonBox.left - (bbox.width / 2)}px`;
-  const CONTAINER_END_TRANSLATE = rtl ? `-${window.innerWidth - backButtonBox.right}px` : `${backButtonBox.left}px`;
+  const CONTAINER_START_TRANSLATE_X = rtl ? `${(bbox.width / 2) - (bbox.right - backButtonBox.right)}px` : `${backButtonBox.left - (bbox.width / 2)}px`;
+  const CONTAINER_END_TRANSLATE_X = rtl ? `-${window.innerWidth - backButtonBox.right}px` : `${backButtonBox.left}px`;
 
-  console.log(buttonTextBox, titleTextBox)
+  // TODO: figure out how to get start translate y programmatically
+  // 67px for scaled text, 55px for default text
+  const CONTAINER_START_TRANSLATE_Y = '67px';
 
-  console.log(Math.abs(buttonTextBox.top + titleTextBox.top + 5))
+  const CONTAINER_END_TRANSLATE_Y = `${backButtonBox.top}px`;
 
-  // TODO figure out top value
   const FORWARD_CONTAINER_KEYFRAMES = [
-    { offset: 0, transform: `translate3d(${CONTAINER_START_TRANSLATE}, 0px, 0)` },
-    { offset: 1, transform: `translate3d(${CONTAINER_END_TRANSLATE}, ${backButtonBox.top}px, 0)` }
+    { offset: 0, transform: `translate3d(${CONTAINER_START_TRANSLATE_X}, ${CONTAINER_START_TRANSLATE_Y}, 0)` },
+    { offset: 1, transform: `translate3d(${CONTAINER_END_TRANSLATE_X}, ${CONTAINER_END_TRANSLATE_Y}, 0)` }
   ];
 
   const BACKWARD_CONTAINER_KEYFRAMES = [
-    { offset: 0, transform: `translate3d(${CONTAINER_END_TRANSLATE}, ${backButtonBox.top}px, 0)` },
-    { offset: 1, transform: `translate3d(${CONTAINER_START_TRANSLATE}, ${largeTitleBox.top  + 22}px, 0)` },
+    { offset: 0, transform: `translate3d(${CONTAINER_END_TRANSLATE_X}, ${CONTAINER_END_TRANSLATE_Y}, 0)` },
+    { offset: 1, transform: `translate3d(${CONTAINER_START_TRANSLATE_X}, ${CONTAINER_START_TRANSLATE_Y}, 0)` },
   ];
 
   const CONTAINER_KEYFRAMES = backDirection ? BACKWARD_CONTAINER_KEYFRAMES : FORWARD_CONTAINER_KEYFRAMES;
@@ -172,7 +174,7 @@ const animateBackButton = (
   const FORWARD_TEXT_KEYFRAMES = [
     {
       offset: 0,
-      opacity: 1,
+      opacity: 0,
       transform: TEXT_START_SCALE,
     },
     {
@@ -186,7 +188,7 @@ const animateBackButton = (
     { offset: 0, opacity: 1, transform: TEXT_END_SCALE, },
     {
       offset: 1,
-      opacity: 1,
+      opacity: 0,
       transform: TEXT_START_SCALE,
     },
   ];
@@ -287,21 +289,39 @@ const animateLargeTitle = (
   backDirection: boolean,
   largeTitleEl: any,
   largeTitleBox: DOMRect,
+  backButtonEl: any,
   backButtonBox: DOMRect
 ) => {
   const TITLE_START_OFFSET = rtl ? `calc(100% - ${largeTitleBox.right}px)` : `${largeTitleBox.left}px`;
-  const START_TRANSLATE = rtl ? '-26px' : '26px';
+
+  const START_TRANSLATE_X = '0px';
+
+  // TOOD figure out correct value here
+  // 26/-26 for scaled text, 16/-16 for default text
+  const END_TRANSLATE_X = rtl ? '-26px' : '26px';
+
+  const START_TRANSLATE_Y = `${largeTitleBox.top}px`;
+
+  // TODO figure out correct value here
+  // -18px for scaled text, -2px for default text
+  const END_TRANSLATE_Y = `-18px`;
+
   const ORIGIN_X = rtl ? 'right' : 'left';
 
+  // TODO figure out end scale
+  // 0.35 for scaled text, 0.5 for default text
+  const END_SCALE = `scale(0.35)`;
+  const START_SCALE = 'scale(1)';
+
   const BACKWARDS_KEYFRAMES = [
-    { offset: 0, opacity: 1, transform: `translate3d(${START_TRANSLATE}, ${backButtonBox.top - 22}px, 0) scale(0.35)` },
-    { offset: 0.1, opacity: 1 },
-    { offset: 1, opacity: 1, transform: `translate3d(0, ${largeTitleBox.top}px, 0) scale(1)` },
+    { offset: 0, opacity: 0, transform: `translate3d(${END_TRANSLATE_X}, ${END_TRANSLATE_Y}, 0) ${END_SCALE}` },
+    { offset: 0.1, opacity: 0 },
+    { offset: 1, opacity: 1, transform: `translate3d(${START_TRANSLATE_X}, ${START_TRANSLATE_Y}, 0) ${START_SCALE}` },
   ];
   const FORWARDS_KEYFRAMES = [
-    { offset: 0, opacity: 0.99, transform: `translate3d(0, ${largeTitleBox.top}px, 0) scale(1)` },
-    { offset: 0.6, opacity: 1 },
-    { offset: 1, opacity: 1, transform: `translate3d(${START_TRANSLATE}, ${backButtonBox.top - 22}px, 0) scale(0.35)` },
+    { offset: 0, opacity: 0.99, transform: `translate3d(${START_TRANSLATE_X}, ${START_TRANSLATE_Y}, 0) ${START_SCALE}` },
+    { offset: 0.6, opacity: 0 },
+    { offset: 1, opacity: 0, transform: `translate3d(${END_TRANSLATE_X}, ${END_TRANSLATE_Y}, 0) ${END_SCALE}` },
   ];
 
   const KEYFRAMES = backDirection ? BACKWARDS_KEYFRAMES : FORWARDS_KEYFRAMES;
