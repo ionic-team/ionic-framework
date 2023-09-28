@@ -11,7 +11,7 @@ E2E tests verify Ionic components in a real browser. This is useful for testing 
 
 ## Installing Dependencies
 
-Follow these steps to install Playwright dependencies. These steps must also be run whenever the installed version of Playwright changes so you test with the correct browser binaries.
+Follow these steps to install Playwright dependencies. These steps must also be run whenever the installed version of Playwright changes to ensure that you are testing with the correct browser binaries.
 
 1. Install the Playwright dependency in the `core` directory: `npm ci` 
 2. Download the correct browsers: `npx playwright install`
