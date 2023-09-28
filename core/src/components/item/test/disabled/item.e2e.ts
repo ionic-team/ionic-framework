@@ -11,7 +11,6 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       await page.setIonViewport();
 
-      // TODO: FW-4037 - Fix label color inconsistency between disabled controls
       await expect(page).toHaveScreenshot(screenshot(`item-disabled-diff`));
     });
   });
