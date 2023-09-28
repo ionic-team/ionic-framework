@@ -20,6 +20,8 @@
   box-sizing: border-box;
 
   text-overflow: ellipsis;
+
+  inline-size: min-content;
 }
 
 // TODO(): remove
