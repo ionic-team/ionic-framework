@@ -15,7 +15,7 @@ import { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./compo
 import { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
 import { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
 import { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
-import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimePresentation, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
+import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 import { SpinnerTypes } from "./components/spinner/spinner-configs";
 import { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
 import { CounterFormatter } from "./components/item/item-interface";
@@ -51,7 +51,7 @@ export { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./compo
 export { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
 export { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
 export { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
-export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimePresentation, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
+export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 export { SpinnerTypes } from "./components/spinner/spinner-configs";
 export { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
 export { CounterFormatter } from "./components/item/item-interface";
@@ -865,7 +865,7 @@ export namespace Components {
         /**
           * The hour cycle of the `ion-datetime`. If no value is set, this is specified by the current locale.
          */
-        "hourCycle"?: 'h23' | 'h12';
+        "hourCycle"?: DatetimeHourCycle;
         /**
           * Values used to create the list of selectable hours. By default the hour values range from `0` to `23` for 24-hour, or `1` to `12` for 12-hour. However, to control exactly which hours to display, the `hourValues` input can take a number, an array of numbers, or a string of comma separated numbers.
          */
@@ -4889,7 +4889,7 @@ declare namespace LocalJSX {
         /**
           * The hour cycle of the `ion-datetime`. If no value is set, this is specified by the current locale.
          */
-        "hourCycle"?: 'h23' | 'h12';
+        "hourCycle"?: DatetimeHourCycle;
         /**
           * Values used to create the list of selectable hours. By default the hour values range from `0` to `23` for 24-hour, or `1` to `12` for 12-hour. However, to control exactly which hours to display, the `hourValues` input can take a number, an array of numbers, or a string of comma separated numbers.
          */
