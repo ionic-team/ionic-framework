@@ -15,3 +15,9 @@ $datetime-md-header-padding:           20px !default;
 
 /// @prop - Padding for content
 $datetime-md-padding:                  16px !default;
+
+/// @prop - Width of the calendar day
+$datetime-md-day-width: 42px !default;
+
+/// @prop - Height of the calendar day
+$datetime-md-day-height: $datetime-md-day-width !default;

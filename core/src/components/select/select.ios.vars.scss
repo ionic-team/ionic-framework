@@ -20,7 +20,7 @@ $select-ios-padding-start:          $item-ios-padding-start !default;
 $select-ios-icon-color:             $text-color-step-650 !default;
 
 /// @prop - Size of the select icon
-$select-ios-icon-size: 18px !default;
+$select-ios-icon-size:              dynamic-font(18px) !default;
 
 /// @prop - Color of the select placeholder
 $select-ios-placeholder-color:      $select-ios-icon-color !default;

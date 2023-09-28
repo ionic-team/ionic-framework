@@ -130,7 +130,7 @@
     overflow: hidden;
   }
 
-  .calendar-day-highlight {
+  .calendar-day {
     /**
      * We use the modulus operator to ensure
      * that any font size less than 24px is
@@ -182,7 +182,7 @@
     overflow: initial;
   }
 
-  .calendar-day-highlight {
+  .calendar-day {
     @include border-radius(32px);
   }
 }
@@ -200,27 +200,32 @@
    */
   @include padding($datetime-ios-padding * 0.5, $datetime-ios-padding * 0.5, $datetime-ios-padding * 0.5, $datetime-ios-padding * 0.5);
 
+  align-items: center;
+
   height: calc(100% - #{$datetime-ios-padding});
 }
 
+:host .calendar-day-wrapper {
+  @include padding(4px);
+
+  // This is required so that the calendar day wrapper
+  // will collapse instead of expanding to fill the button
+  height: 0;
+
+  min-height: dynamic-font(16px);
+}
+
 :host .calendar-day {
+  width: $datetime-ios-day-width;
+  min-width: $datetime-ios-day-width;
+
+  height: $datetime-ios-day-height;
+
   font-size: dynamic-font-max(20px, 1.6);
 }
 
-.calendar-day:focus .calendar-day-highlight,
-.calendar-day.calendar-day-active .calendar-day-highlight {
-  opacity: 0.2;
-}
-
-.calendar-day.calendar-day-active .calendar-day-highlight {
-  background: current-color(base);
-}
-
-// !important is needed here to overwrite custom highlight background, which is inline.
-// Does not apply to the active state because highlights aren't applied at all there.
-.calendar-day:focus .calendar-day-highlight {
-  /* stylelint-disable-next-line declaration-no-important */
-  background: current-color(base) !important;
+.calendar-day.calendar-day-active {
+  background: current-color(base, 0.2);
 }
 
 /**
@@ -248,12 +253,6 @@
  */
 :host .calendar-day.calendar-day-today.calendar-day-active {
   color: current-color(contrast);
-}
-
-.calendar-day.calendar-day-today.calendar-day-active .calendar-day-highlight {
-  background: current-color(base);
-
-  opacity: 1;
 }
 
 // Time / Header

@@ -55,7 +55,7 @@
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
     "concurrently": "^6.0.0",
-    "cypress": "^10.2.0",
+    "cypress": "^13.2.0",
     "eslint": "^7.26.0",
     "ts-loader": "^6.2.2",
     "ts-node": "^8.3.0",

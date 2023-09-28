@@ -7,4 +7,4 @@
 $note-ios-color:          $text-color-step-650 !default;
 
 /// @prop - Font size of the note
-$note-ios-font-size:      max(14px, 1rem) !default;
+$note-ios-font-size:      dynamic-font-min(0.875, 16px) !default;
