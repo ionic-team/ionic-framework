@@ -95,6 +95,7 @@
     "test.spec": "stencil test --spec --max-workers=2",
     "test.spec.debug": "npx --node-arg=\"--inspect-brk\" stencil test --spec",
     "test.e2e": "npx playwright test",
+    "test.e2e.update-snapshots": "npm run test.e2e -- --update-snapshots",
     "test.watch": "jest --watch --no-cache",
     "test.treeshake": "node scripts/treeshaking.js dist/index.js",
     "validate": "npm run lint && npm run test && npm run build && npm run test.treeshake"
