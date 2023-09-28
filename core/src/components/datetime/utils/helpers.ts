@@ -1,3 +1,5 @@
+import type { DatetimeHourCycle } from '../datetime-interface';
+
 /**
  * Determines if given year is a
  * leap year. Returns `true` if year
@@ -8,13 +10,19 @@ export const isLeapYear = (year: number) => {
   return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
 };
 
-export const is24Hour = (locale: string, hourCycle?: 'h23' | 'h12') => {
+/**
+ * Determines the hour cycle for a user.
+ * If the hour cycle is explicitly defined, just use that.
+ * Otherwise, we try to derive it from either the specified
+ * locale extension tags or from Intl.DateTimeFormat directly.
+ */
+export const getHourCycle = (locale: string, hourCycle?: DatetimeHourCycle) => {
   /**
-   * If developer has explicitly enabled h23 time
+   * If developer has explicitly enabled 24-hour time
    * then return early and do not look at the system default.
    */
   if (hourCycle !== undefined) {
-    return hourCycle === 'h23';
+    return hourCycle;
   }
 
   /**
@@ -26,7 +34,7 @@ export const is24Hour = (locale: string, hourCycle?: 'h23' | 'h12') => {
   const formatted = new Intl.DateTimeFormat(locale, { hour: 'numeric' });
   const options = formatted.resolvedOptions();
   if (options.hourCycle !== undefined) {
-    return options.hourCycle === 'h23';
+    return options.hourCycle;
   }
 
   /**
@@ -42,7 +50,34 @@ export const is24Hour = (locale: string, hourCycle?: 'h23' | 'h12') => {
     throw new Error('Hour value not found from DateTimeFormat');
   }
 
-  return hour.value === '00';
+  /**
+   * Midnight for h11 starts at 0:00am
+   * Midnight for h12 starts at 12:00am
+   * Midnight for h23 starts at 00:00
+   * Midnight for h24 starts at 24:00
+   */
+  switch (hour.value) {
+    case '0':
+      return 'h11';
+    case '12':
+      return 'h12';
+    case '00':
+      return 'h23';
+    case '24':
+      return 'h24';
+    default:
+      throw new Error(`Invalid hour cycle "${hourCycle}"`);
+  }
+};
+
+/**
+ * Determine if the hour cycle uses a 24-hour format.
+ * Returns true for h23 and h24. Returns false otherwise.
+ * If you don't know the hourCycle, use getHourCycle above
+ * and pass the result into this function.
+ */
+export const is24Hour = (hourCycle: DatetimeHourCycle) => {
+  return hourCycle === 'h23' || hourCycle === 'h24';
 };
 
 /**
