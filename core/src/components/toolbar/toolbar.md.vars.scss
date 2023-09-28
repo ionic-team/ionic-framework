@@ -16,7 +16,7 @@ $toolbar-order-md: (
 );
 
 /// @prop - Font size of the toolbar button
-$toolbar-md-button-font-size:                     0.875rem !default;
+$toolbar-md-button-font-size:                     dynamic-font(14px) !default;
 
 /// @prop - Text color of the toolbar button
 $toolbar-md-button-color:                         $toolbar-md-color !default;
