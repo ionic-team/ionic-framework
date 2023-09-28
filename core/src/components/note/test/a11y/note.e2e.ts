@@ -105,9 +105,9 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         config
       );
 
-        const list = page.locator('ion-list');
+      const list = page.locator('ion-list');
 
-        await expect(list).toHaveScreenshot(screenshot(`note-wrapping-label-scale`));
+      await expect(list).toHaveScreenshot(screenshot(`note-wrapping-label-scale`));
     });
   });
 });

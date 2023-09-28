@@ -12,14 +12,16 @@
 
   display: block;
 
+  flex-grow: 1;
+
   color: var(--color);
 
   font-family: $font-family-base;
   font-size: inherit;
 
-  box-sizing: border-box;
-
   text-overflow: ellipsis;
+
+  box-sizing: border-box;
 
   inline-size: min-content;
 }
