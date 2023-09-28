@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en" dir="ltr" style="font-size: 36px">
   <head>
     <meta charset="UTF-8" />
     <title>Nav - Basic</title>
@@ -16,17 +16,21 @@
       class PageOne extends HTMLElement {
         connectedCallback() {
           this.innerHTML = `
-          <ion-header>
+          <ion-header translucent="true">
             <ion-toolbar>
               <ion-buttons slot="start">
                 <ion-back-button></ion-back-button>
               </ion-buttons>
-              <ion-title>Page One</ion-title>
+              <ion-title>Settings</ion-title>
             </ion-toolbar>
           </ion-header>
-          <ion-content class="ion-padding">
-            <h1>Page One</h1>
-            <ion-nav-link router-direction="forward" component="page-two">
+          <ion-content>
+            <ion-header collapse="condense">
+              <ion-toolbar>
+                <ion-title size="large">Settings</ion-title>
+              </ion-toolbar>
+            </ion-header>
+            <ion-nav-link router-direction="forward" component="page-two" class="ion-padding">
               <ion-button class="next">Go to Page Two</ion-button>
             </ion-nav-link>
           </ion-content>
@@ -39,7 +43,7 @@
           <ion-header>
             <ion-toolbar>
               <ion-buttons slot="start">
-                <ion-back-button></ion-back-button>
+                <ion-back-button text="Settings"></ion-back-button>
               </ion-buttons>
               <ion-title>Page Two</ion-title>
             </ion-toolbar>
@@ -75,11 +79,24 @@
       customElements.define('page-one', PageOne);
       customElements.define('page-two', PageTwo);
       customElements.define('page-three', PageThree);
+
     </script>
   </head>
 
   <body>
     <ion-app>
+
+<style>
+  .liam {
+    position: absolute;
+    top: 0;
+    left:0 ;
+    height: auto;
+    z-index: 100;
+  }
+</style>
+      <!-- <ion-title size="large" class="liam">Settings</ion-title>
+      <ion-back-button default-href="/" text="Settings" class="liam"></ion-back-button> -->
       <ion-nav root="page-one"></ion-nav>
     </ion-app>
   </body>

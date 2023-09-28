@@ -155,7 +155,7 @@ const notifyViewReady = async (
   }
 };
 
-const playTransition = (trans: Animation, opts: TransitionOptions): Promise<boolean> => {
+const playTransition = async (trans: Animation, opts: TransitionOptions): Promise<boolean> => {
   const progressCallback = opts.progressCallback;
 
   const promise = new Promise<boolean>((resolve) => {
@@ -172,10 +172,25 @@ const playTransition = (trans: Animation, opts: TransitionOptions): Promise<bool
     // only the top level transition should actually start "play"
     // kick it off and let it play through
     // ******** DOM WRITE ****************
-    trans.play();
+    const t = trans.play();
+
+    setTimeout(() => {
+     // console.log(opts)
+      if (opts.direction === 'forward') {
+      trans.pause();
+      }
+    }, 0);
+
+    //await t;
   }
   // create a callback for when the animation is done
-  return promise;
+
+  if (opts.direction === 'forward') {
+    return promise;
+    //return new Promise(() => {});
+  } else {
+    return promise;
+  }
 };
 
 const fireWillEvents = (enteringEl: HTMLElement | undefined, leavingEl: HTMLElement | undefined) => {

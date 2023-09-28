@@ -67,4 +67,6 @@
 
 :host(.title-large) .toolbar-title {
   @include transform-origin(inherit);
+
+  width: auto;
 }
