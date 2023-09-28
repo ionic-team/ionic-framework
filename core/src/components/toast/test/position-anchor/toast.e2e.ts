@@ -16,7 +16,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         height: 425,
       });
     });
-    
+
     test('should place top-position toast underneath anchor', async ({ page }) => {
       const ionToastDidPresent = await page.spyOnEvent('ionToastDidPresent');
 
