@@ -50,11 +50,13 @@ npm run test.e2e src/components/button/test
 
 ### Generating or Updating Ground Truths (Local Development)
 
-If you are running a test that takes a screenshot, you must first generate the reference screenshot from `main`. This is known as generating a "ground truth screenshot". All other screenshots will be compared to this ground truth. Alternatively, if `main` has changed since the last time you generated ground truths you may need to update your local ground truths.
+If you are running a test that takes a screenshot, you must first generate the reference screenshot from your reference branch. This is known as generating a "ground truth screenshot". All other screenshots will be compared to this ground truth. Alternatively, if the reference branch has changed since the last time you generated ground truths you may need to update your local ground truths.
+
+For most types of work the reference branch is typically `main`. Features are merged into a different branch, so developers should use that as the reference branch. For example, if branch `foo` will be merged into `bar`, then the reference branch is `bar`.
 
 The examples provided in the [Running Tests](#running-tests) section also apply here, allowing you to update screenshots for a specific test file.
 
-Note that since you are generating the `main` ground truth screenshots, you must be on the `main` branch locally. Don't forget to pull the latest `main` changes and then re-build using `npm run build`.
+Note that since you are generating the reference branch ground truth screenshots, you must be on the reference branch locally. Don't forget to pull the latest reference branch changes and then re-build using `npm run build`.
 
 ```shell
 npm run test.e2e -- --update-snapshots
