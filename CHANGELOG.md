@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.4.3-nightly.20230929](https://github.com/ionic-team/ionic-framework/compare/v7.4.2...v7.4.3-nightly.20230929) (2023-09-29)
+
+
+### Bug Fixes
+
+* **fab-button:** position is correct with custom sizes ([#28195](https://github.com/ionic-team/ionic-framework/issues/28195)) ([eb41b55](https://github.com/ionic-team/ionic-framework/commit/eb41b556b57c97139b9c36dc3e3be3711d8afaca)), closes [#22564](https://github.com/ionic-team/ionic-framework/issues/22564)
+* **range:** knob positions are correct on initial render with custom elements build ([#28257](https://github.com/ionic-team/ionic-framework/issues/28257)) ([ac2c8e6](https://github.com/ionic-team/ionic-framework/commit/ac2c8e6c22da4d0d8224def24ddef56ee9d26246)), closes [#25444](https://github.com/ionic-team/ionic-framework/issues/25444)
+
+
+
+
+
 ## [7.4.2](https://github.com/ionic-team/ionic-framework/compare/v7.4.1...v7.4.2) (2023-09-27)
 
 
