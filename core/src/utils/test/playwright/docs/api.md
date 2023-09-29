@@ -108,7 +108,6 @@ The [page fixture](https://playwright.dev/docs/test-fixtures) has been extended 
 | `setIonViewport` | Resizes the browser window to fit the entire height of `ion-content` on screen. Only needed when taking fullsize screenshots with `ion-content`. |
 | `waitForChanges` | Waits for Stencil to re-render before proceeeding. This is typically only needed when you update a property on a component. |
 | `spyOnEvent` | Creates an event spy that can be used to wait for a [CustomEvent](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent) to be emitted. |
-| `getSnapshotSettings` (DEPRECATED) | Returns information about the current test (such as mode or direction) to generate a unique screenshot name. Deprecated: Use the `screenshot` function provided by the test [generator](#generators) instead. |
 
 <details>
   

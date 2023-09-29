@@ -6,7 +6,7 @@ import { GESTURE_CONTROLLER } from '@utils/gesture';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, assert, clamp, isEndSide as isEnd } from '@utils/helpers';
 import { menuController } from '@utils/menu-controller';
-import { getOverlay } from '@utils/overlays';
+import { getPresentedOverlay } from '@utils/overlays';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
@@ -59,7 +59,7 @@ export class Menu implements ComponentInterface, MenuI {
      * open does not contain this ion-menu, then ion-menu's
      * focus trapping should not run.
      */
-    const lastOverlay = getOverlay(document);
+    const lastOverlay = getPresentedOverlay(document);
     if (lastOverlay && !lastOverlay.contains(this.el)) {
       return;
     }

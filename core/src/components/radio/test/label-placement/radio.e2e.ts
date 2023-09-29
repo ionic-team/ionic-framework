@@ -137,5 +137,50 @@ configs().forEach(({ title, screenshot, config }) => {
         await expect(radio).toHaveScreenshot(screenshot(`radio-label-fixed-justify-space-between`));
       });
     });
+    test.describe('radio: stacked placement', () => {
+      test('should align the label to the start of the container in the stacked position', async ({ page }) => {
+        await page.setContent(
+          `
+            <ion-radio-group value="1">
+              <ion-radio label-placement="stacked" alignment="start" style="width: 200px" value="1">This is a long label</ion-radio>
+            </ion-radio-group>
+          `,
+          config
+        );
+
+        const radio = page.locator('ion-radio');
+        await expect(radio).toHaveScreenshot(screenshot(`radio-label-stacked-align-start`));
+      });
+
+      test('should align the label to the center of the container in the stacked position', async ({ page }) => {
+        await page.setContent(
+          `
+            <ion-radio-group value="1">
+              <ion-radio label-placement="stacked" alignment="center" style="width: 200px" value="1">This is a long label</ion-radio>
+            </ion-radio-group>
+          `,
+          config
+        );
+
+        const radio = page.locator('ion-radio');
+        await expect(radio).toHaveScreenshot(screenshot(`radio-label-stacked-align-center`));
+      });
+    });
+  });
+});
+
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
+  test.describe(title('radio: stacked long label'), () => {
+    test('long label should truncate', async ({ page }) => {
+      await page.setContent(
+        `
+          <ion-radio label-placement="stacked" alignment="start" style="width: 200px">Enable Notifications Enable Notifications Enable Notifications Enable Notifications Enable Notifications Enable Notifications Enable Notifications</ion-radio>
+        `,
+        config
+      );
+
+      const radio = page.locator('ion-radio');
+      await expect(radio).toHaveScreenshot(screenshot(`radio-label-stacked-long-label`));
+    });
   });
 });

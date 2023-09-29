@@ -39,7 +39,7 @@ export async function testPickerColumn(
     await page.waitForChanges();
 
     screenshots.push({
-      name: `picker-${description}-column-diff-${i}-${page.getSnapshotSettings()}.png`,
+      name: screenshot(`picker-${description}-column-diff-${i}`),
       screenshot: await page.screenshot(),
     });
   }

@@ -21,6 +21,14 @@
   @include padding($range-ios-padding-vertical, $range-ios-padding-horizontal);
 }
 
+:host(.range-item-start-adjustment) {
+  @include padding(null, null, null, $range-ios-item-padding-horizontal);
+}
+
+:host(.range-item-end-adjustment) {
+  @include padding(null, $range-ios-item-padding-horizontal, null, null);
+}
+
 :host(.ion-color) .range-bar-active,
 :host(.ion-color) .range-tick-active {
   background: current-color(base);
@@ -34,8 +42,29 @@
   @include margin(0, 0, 0, 16px);
 }
 
-:host(.range-has-pin) {
+:host(.range-has-pin:not(.range-label-placement-stacked)) {
+  /**
+  * The pin should not overlap any elements that are
+  * above the range. By adding padding to the top of the
+  * range, it provides a buffer for the pin to move into
+  * when it is pressed.
+  *
+  * The padding is not included when the label is stacked
+  * because the pin is below the label.
+  * It still requires a buffer to prevent the pin from
+  * overlapping the range. The buffer is added to the
+  * bottom of the range label instead of the host.
+  */
   @include padding($range-ios-padding-vertical + $range-ios-pin-font-size, null, null, null);
+}
+
+:host(.range-has-pin.range-label-placement-stacked) .label-text-wrapper {
+  /**
+  * The pin should not overlap the stacked label. By adding
+  * margin to the bottom of the label, it provides a buffer
+  * for the pin to move into when it is pressed.
+  */
+  @include margin(null, null, $range-ios-padding-vertical + $range-ios-pin-font-size, null);
 }
 
 .range-bar-active {
