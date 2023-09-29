@@ -55,6 +55,15 @@
 }
 
 
+// TODO(FW-3547): this can be removed if we
+// refactor datetime to not use an ion-item
+:host-context(.item-datetime) {
+  // Width is set to auto because it is set
+  // to min-content elsewhere and we want to
+  // prevent wrapping the label in datetime
+  width: auto;
+}
+
 // Fixed Inputs
 // --------------------------------------------------
 
