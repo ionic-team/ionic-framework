@@ -886,8 +886,6 @@ export const calculateWindowAdjustment = (
     }
   }
 
-  console.log(top, arrowTop);
-
   return {
     top,
     left,
