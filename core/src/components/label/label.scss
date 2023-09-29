@@ -27,6 +27,8 @@
 // TODO(): remove
 :host-context(.item-legacy) {
   white-space: nowrap;
+
+  overflow: hidden;
 }
 
 :host(.ion-color) {
