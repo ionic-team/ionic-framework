@@ -831,9 +831,7 @@ export const calculateWindowAdjustment = (
   let originY = contentOriginY;
   let checkSafeAreaLeft = false;
   let checkSafeAreaRight = false;
-  const triggerTop = triggerCoordinates
-    ? triggerCoordinates.top + triggerCoordinates.height
-    : bodyHeight / 2 - contentHeight / 2;
+  const triggerTop = triggerCoordinates ? triggerCoordinates.top : bodyHeight / 2 - contentHeight / 2;
   const triggerHeight = triggerCoordinates ? triggerCoordinates.height : 0;
   let addPopoverBottomClass = false;
 
@@ -874,7 +872,7 @@ export const calculateWindowAdjustment = (
        * We chose 12 here so that the popover position looks a bit nicer as
        * it is not right up against the edge of the screen.
        */
-      top = Math.max(12, triggerTop - contentHeight - triggerHeight - (arrowHeight - 1));
+      top = Math.max(12, triggerTop - contentHeight - (arrowHeight - 1));
       arrowTop = top + contentHeight;
       originY = 'bottom';
       addPopoverBottomClass = true;
@@ -887,6 +885,8 @@ export const calculateWindowAdjustment = (
       bottom = bodyPadding;
     }
   }
+
+  console.log(top, arrowTop);
 
   return {
     top,
