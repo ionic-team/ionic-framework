@@ -112,7 +112,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       await expect(page).toHaveScreenshot(screenshot(`alert-scale`));
     });
-    test.only('should scale text on larger font sizes with checkboxes', async ({ page }) => {
+    test('should scale text on larger font sizes with checkboxes', async ({ page }) => {
       await page.setContent(
         `
         <style>
