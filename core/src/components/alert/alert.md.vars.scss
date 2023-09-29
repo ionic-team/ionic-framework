@@ -8,8 +8,7 @@
 $alert-md-font-size:                          dynamic-font(14px) !default;
 
 /// @prop - Max width of the alert
-$alert-md-max-width:                          dynamic-font-max(280px, 1.3) !default;
-// $alert-md-max-width:                          dynamic-font-max(280px, 1.2) !default;
+$alert-md-max-width:                          280px !default;
 
 /// @prop - Border radius of the alert
 $alert-md-border-radius:                      4px !default;
@@ -255,19 +254,19 @@ $alert-md-checkbox-top:                       0 !default;
 $alert-md-checkbox-left:                      26px !default;
 
 /// @prop - Width of the checkbox in the alert
-$alert-md-checkbox-width:                     dynamic-font(16px) !default;
+$alert-md-checkbox-width:                     16px !default;
 
 /// @prop - Height of the checkbox in the alert
-$alert-md-checkbox-height:                    dynamic-font(16px) !default;
+$alert-md-checkbox-height:                    16px !default;
 
 /// @prop - Border width of the checkbox in the alert
-$alert-md-checkbox-border-width:              dynamic-font(2px) !default;
+$alert-md-checkbox-border-width:              2px !default;
 
 /// @prop - Border style of the checkbox in the alert
 $alert-md-checkbox-border-style:              solid !default;
 
 /// @prop - Border radius of the checkbox in the alert
-$alert-md-checkbox-border-radius:             dynamic-font(2px) !default;
+$alert-md-checkbox-border-radius:             2px !default;
 
 /// @prop - Border color of the checkbox in the alert when off
 $alert-md-checkbox-border-color-off:          $text-color-step-450 !default;
@@ -279,16 +278,16 @@ $alert-md-checkbox-border-color-on:           $alert-md-button-text-color !defau
 $alert-md-checkbox-icon-top:                  0 !default;
 
 /// @prop - Start of the icon in the checkbox alert
-$alert-md-checkbox-icon-start:                dynamic-font(3px) !default;
+$alert-md-checkbox-icon-start:                3px !default;
 
 /// @prop - Width of the icon in the checkbox alert
-$alert-md-checkbox-icon-width:                dynamic-font(6px) !default;
+$alert-md-checkbox-icon-width:                6px !default;
 
 /// @prop - Height of the icon in the checkbox alert
-$alert-md-checkbox-icon-height:               dynamic-font(10px) !default;
+$alert-md-checkbox-icon-height:               10px !default;
 
 /// @prop - Border width of the icon in the checkbox alert
-$alert-md-checkbox-icon-border-width:         dynamic-font(2px) !default;
+$alert-md-checkbox-icon-border-width:         2px !default;
 
 /// @prop - Border style of the icon in the checkbox alert
 $alert-md-checkbox-icon-border-style:         solid !default;
