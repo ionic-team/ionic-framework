@@ -290,28 +290,8 @@ export class Toast implements ComponentInterface, OverlayInterface {
 
     await this.delegateController.attachViewToDom();
 
-    const { position, positionAnchor } = this;
-
-    let anchor: HTMLElement | undefined;
-    if (position === 'middle' && positionAnchor !== undefined) {
-      printIonWarning('The positionAnchor property is ignored when using position="middle".', this.el);
-    } else if (typeof positionAnchor === 'string') {
-      /**
-       * If the anchor is defined as an ID, find the element.
-       * We do this on every present so the toast doesn't need
-       * to account for the surrounding DOM changing since the
-       * last time it was presented.
-       */
-
-      const foundEl = document.getElementById(positionAnchor);
-      if (foundEl === null) {
-        printIonWarning(`An anchor element with an ID of ${positionAnchor} was not found in the DOM.`, this.el);
-      } else {
-        anchor = foundEl;
-      }
-    } else {
-      anchor = positionAnchor;
-    }
+    const { position } = this;
+    const anchor = this.getAnchorElement();
 
     await present<ToastPresentOptions>(this, 'toastEnter', iosEnterAnimation, mdEnterAnimation, {
       position,
@@ -393,6 +373,38 @@ export class Toast implements ComponentInterface, OverlayInterface {
       : [];
 
     return buttons;
+  }
+
+  /**
+   * Returns the element specified by the positionAnchor prop,
+   * or undefined if prop's value is an ID string and the element
+   * is not found in the DOM.
+   */
+  private getAnchorElement(): HTMLElement | undefined {
+    const { position, positionAnchor } = this;
+
+    if (position === 'middle' && positionAnchor !== undefined) {
+      printIonWarning('The positionAnchor property is ignored when using position="middle".', this.el);
+      return undefined;
+    }
+
+    if (typeof positionAnchor === 'string') {
+      /**
+       * If the anchor is defined as an ID, find the element.
+       * We do this on every present so the toast doesn't need
+       * to account for the surrounding DOM changing since the
+       * last time it was presented.
+       */
+      const foundEl = document.getElementById(positionAnchor);
+      if (foundEl === null) {
+        printIonWarning(`An anchor element with an ID of "${positionAnchor}" was not found in the DOM.`, this.el);
+        return undefined;
+      }
+
+      return foundEl;
+    }
+
+    return positionAnchor;
   }
 
   private async buttonClick(button: ToastButton) {
