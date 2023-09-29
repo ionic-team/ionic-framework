@@ -472,17 +472,23 @@ export class Menu implements ComponentInterface, MenuI {
     const easingReverse = mode === 'ios' ? iosEasingReverse : mdEasingReverse;
     const ani = (this.animation as Animation)!
       .direction(isReversed ? 'reverse' : 'normal')
-      .easing(isReversed ? easingReverse : easing)
-      .onFinish(() => {
-        if (ani.getDirection() === 'reverse') {
-          ani.direction('normal');
-        }
-      });
+      .easing(isReversed ? easingReverse : easing);
 
     if (animated) {
       await ani.play();
     } else {
       ani.play({ sync: true });
+    }
+
+    /**
+     * We run this after the play invocation
+     * instead of using ani.onFinish so that
+     * multiple onFinish callbacks do not get
+     * run if an animation is played, stopped,
+     * and then played again.
+     */
+    if (ani.getDirection() === 'reverse') {
+      ani.direction('normal');
     }
   }
 
@@ -591,7 +597,9 @@ export class Menu implements ComponentInterface, MenuI {
 
     this.animation
       .easing('cubic-bezier(0.4, 0.0, 0.6, 1)')
-      .onFinish(() => this.afterAnimation(shouldOpen), { oneTimeCallback: true })
+      .onFinish(() => {
+        return this.afterAnimation(shouldOpen);
+      }, { oneTimeCallback: true })
       .progressEnd(playTo ? 1 : 0, this._isOpen ? 1 - newStepValue : newStepValue, 300);
   }
 
@@ -642,7 +650,20 @@ export class Menu implements ComponentInterface, MenuI {
     }
   }
 
+  private operationCancelled = false;
+
   private afterAnimation(isOpen: boolean) {
+    console.log('after animation', isOpen, this.isAnimating)
+    if (this.operationCancelled) {
+      console.log('cancelled')
+      this.operationCancelled = false;
+
+      this.isAnimating = false;
+      this._isOpen = false;
+
+      console.log('this.',this.disabled)
+      return;
+    }
     assert(this.isAnimating, '_before() should be called while animating');
 
     // keep opening/closing the menu disabled for a touch more yet
@@ -713,8 +734,16 @@ export class Menu implements ComponentInterface, MenuI {
       this.gesture.enable(isActive && this.swipeGesture);
     }
 
-    // Close menu immediately
-    if (!isActive && this._isOpen) {
+    /**
+     * If the menu is disabled but it is still open
+     * then we should close the menu immediately.
+     * Additionally, if the menu is in the process
+     * of animating {open, close} and the menu is disabled
+     * then it should still be closed immediately.
+     * TODO: Do we let the animation finish???
+     * what happens if we navigate away from a page?
+     */
+    if (!isActive && (this._isOpen || this.isAnimating)) {
       // close if this menu is open, and should not be enabled
       this.forceClosing();
     }
@@ -730,19 +759,16 @@ export class Menu implements ComponentInterface, MenuI {
         menuController._setActiveMenu(this);
       }
     }
-
-    assert(!this.isAnimating, 'can not be animating');
   }
 
   private forceClosing() {
-    assert(this._isOpen, 'menu cannot be closed');
-
-    this.isAnimating = true;
-
-    const ani = (this.animation as Animation)!.direction('reverse');
-    ani.play({ sync: true });
-
-    this.afterAnimation(false);
+    const { animation } = this;
+    if (animation) {
+      console.log('stopping animation');
+      // TODO - disable when menu is fully open
+      animation.stop();
+      this.operationCancelled = true;
+    }
   }
 
   render() {
