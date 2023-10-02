@@ -51,7 +51,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       // Opening and quickly disabling menu should hide it
       menu.evaluate((el: HTMLIonMenuElement) => {
         el.open();
-        setTimeout(() => el.disabled = true, 0);
+        setTimeout(() => (el.disabled = true), 0);
       });
       await expect(menu).toBeHidden();
 
