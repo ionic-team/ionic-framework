@@ -40,6 +40,15 @@ export class Menu implements ComponentInterface, MenuI {
   private blocker = GESTURE_CONTROLLER.createBlocker({ disableScroll: true });
   private didLoad = false;
 
+  /**
+   * Flag used to determine if an open/close
+   * operation was cancelled. For example, if
+   * an app calls "menu.open" then disables the menu
+   * part way through the animation, then this would
+   * be considered a cancelled operation.
+   */
+  private operationCancelled = false;
+
   isAnimating = false;
   width!: number;
   _isOpen = false;
@@ -432,6 +441,17 @@ export class Menu implements ComponentInterface, MenuI {
 
     await this.loadAnimation();
     await this.startAnimation(shouldOpen, animated);
+
+    /**
+     * If the animation was cancelled then
+     * return false because the operation
+     * did not succeed.
+     */
+    if (this.operationCancelled) {
+      this.operationCancelled = false;
+      return false;
+    }
+
     this.afterAnimation(shouldOpen);
 
     return true;
@@ -597,9 +617,7 @@ export class Menu implements ComponentInterface, MenuI {
 
     this.animation
       .easing('cubic-bezier(0.4, 0.0, 0.6, 1)')
-      .onFinish(() => {
-        return this.afterAnimation(shouldOpen);
-      }, { oneTimeCallback: true })
+      .onFinish(() => this.afterAnimation(shouldOpen), { oneTimeCallback: true })
       .progressEnd(playTo ? 1 : 0, this._isOpen ? 1 - newStepValue : newStepValue, 300);
   }
 
@@ -650,22 +668,7 @@ export class Menu implements ComponentInterface, MenuI {
     }
   }
 
-  private operationCancelled = false;
-
   private afterAnimation(isOpen: boolean) {
-    console.log('after animation', isOpen, this.isAnimating)
-    if (this.operationCancelled) {
-      console.log('cancelled')
-      this.operationCancelled = false;
-
-      this.isAnimating = false;
-      this._isOpen = false;
-
-      console.log('this.',this.disabled)
-      return;
-    }
-    assert(this.isAnimating, '_before() should be called while animating');
-
     // keep opening/closing the menu disabled for a touch more yet
     // only add listeners/css if it's enabled and isOpen
     // and only remove listeners/css if it's not open
@@ -743,9 +746,23 @@ export class Menu implements ComponentInterface, MenuI {
      * TODO: Do we let the animation finish???
      * what happens if we navigate away from a page?
      */
-    if (!isActive && (this._isOpen || this.isAnimating)) {
-      // close if this menu is open, and should not be enabled
-      this.forceClosing();
+    if (!isActive) {
+      /**
+       * It is possible to disable the menu while
+       * it is mid-animation. When this happens, we
+       * need to set the operationCancelled flag
+       * so that this._setOpen knows to return false
+       * and not run the "afterAnimation" callback.
+       */
+      if (this.isAnimating) {
+        this.operationCancelled = true;
+      }
+
+      /**
+       * If the menu is disabled then we should
+       * forcibly close the menu even if it is open.
+       */
+      this.afterAnimation(false);
     }
 
     if (doc?.contains(this.el)) {
@@ -758,16 +775,6 @@ export class Menu implements ComponentInterface, MenuI {
       if (!this.disabled) {
         menuController._setActiveMenu(this);
       }
-    }
-  }
-
-  private forceClosing() {
-    const { animation } = this;
-    if (animation) {
-      console.log('stopping animation');
-      // TODO - disable when menu is fully open
-      animation.stop();
-      this.operationCancelled = true;
     }
   }
 
