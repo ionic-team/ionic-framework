@@ -27,22 +27,16 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(secondaryMenu).toBeHidden();
     });
 
-    test('should log a warning when trying to present multiple menus on the same side', async ({ page }) => {
-      const logs: string[] = [];
-
-      page.on('console', (msg) => {
-        if (msg.type() === 'warning') {
-          logs.push(msg.text());
-        }
-      });
-
+    test('should close first menu when showing another menu on same side', async ({ page }) => {
       const primaryMenu = page.locator('ion-menu#primary-menu');
       const secondaryMenu = page.locator('ion-menu#secondary-menu');
 
       await primaryMenu.evaluate((el: HTMLIonMenuElement) => el.open());
-      await secondaryMenu.evaluate((el: HTMLIonMenuElement) => el.open());
+      await expect(primaryMenu).toBeVisible();
 
-      expect(logs.length).toBe(1);
+      await secondaryMenu.evaluate((el: HTMLIonMenuElement) => el.open());
+      await expect(primaryMenu).toBeHidden();
+      await expect(secondaryMenu).toBeVisible();
     });
   });
 });
