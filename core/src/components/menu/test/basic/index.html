@@ -62,6 +62,40 @@
         </ion-content>
       </ion-menu>
 
+      <ion-menu side="start" menu-id="custom-menu" content-id="main" class="my-custom-menu">
+        <ion-header>
+          <ion-toolbar color="tertiary">
+            <ion-title>Custom Menu</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+          <ion-list>
+            <ion-item>Menu Item</ion-item>
+            <ion-item>Menu Item</ion-item>
+            <ion-item>Menu Item</ion-item>
+            <ion-item>Menu Item</ion-item>
+            <ion-item>Menu Item</ion-item>
+          </ion-list>
+        </ion-content>
+      </ion-menu>
+
+      <ion-menu side="end" menu-id="end-menu" content-id="main" type="push">
+        <ion-header>
+          <ion-toolbar color="danger">
+            <ion-title>End Menu</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+          <ion-list>
+            <ion-item>Menu Item</ion-item>
+            <ion-item>Menu Item</ion-item>
+            <ion-item>Menu Item</ion-item>
+            <ion-item>Menu Item</ion-item>
+            <ion-item>Menu Item</ion-item>
+          </ion-list>
+        </ion-content>
+      </ion-menu>
+
       <div class="ion-page" id="main">
         <ion-header>
           <ion-toolbar>
@@ -69,24 +103,46 @@
           </ion-toolbar>
         </ion-header>
         <ion-content class="ion-padding">
-          Content
+          <ion-button expand="block" id="open-start" onclick="openStart()">Open Start Menu</ion-button>
+          <ion-button expand="block" id="open-end" onclick="openEnd()">Open End Menu</ion-button>
+          <ion-button expand="block" id="open-custom" onclick="openCustom()">Open Custom Menu</ion-button>
         </ion-content>
       </div>
     </ion-app>
 
-    <script>
-      const menu = document.querySelector('ion-menu');
+    <style>
+      .my-custom-menu {
+        --width: 500px;
+      }
 
-      setTimeout(() => {
-        menu.open();
-        setTimeout(() => {
-          menu.disabled = true;
-          setTimeout(() => {
-            menu.disabled = false;
-            menu.open();
-          }, 1000);
-        }, 200);
-      }, 500);
+      .menu-part::part(backdrop) {
+        background-color: rgba(255, 0, 255, 0.5);
+      }
+
+      .menu-part::part(container) {
+        border-radius: 0 20px 20px 0;
+
+        box-shadow: 4px 0px 16px rgba(255, 0, 255, 0.18);
+      }
+    </style>
+
+    <script>
+      async function openStart() {
+        // Open the menu by menu-id
+        await menuController.enable(true, 'start-menu');
+        await menuController.open('start-menu');
+      }
+
+      async function openEnd() {
+        // Open the menu by side
+        await menuController.open('end');
+      }
+
+      async function openCustom() {
+        // Open the menu by menu-id
+        await menuController.enable(true, 'custom-menu');
+        await menuController.open('custom-menu');
+      }
     </script>
   </body>
 </html>
