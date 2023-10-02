@@ -306,7 +306,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
     await present<ToastPresentOptions>(this, 'toastEnter', iosEnterAnimation, mdEnterAnimation, {
       position,
       top: animationPosition.top,
-      bottom: animationPosition.bottom
+      bottom: animationPosition.bottom,
     });
 
     /**
@@ -357,7 +357,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
       {
         position,
         top: lastPresentedPosition?.top ?? '',
-        bottom: lastPresentedPosition?.bottom ?? ''
+        bottom: lastPresentedPosition?.bottom ?? '',
       }
     );
 
