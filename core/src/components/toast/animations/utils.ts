@@ -2,7 +2,7 @@ import { win } from '@utils/browser';
 import { printIonWarning } from '@utils/logging';
 import type { Mode } from 'src/interface';
 
-import type { ToastPosition } from '../toast-interface';
+import type { ToastAnimationPosition, ToastPosition } from '../toast-interface';
 
 /**
  * Calculate the CSS top and bottom position of the toast, to be used
@@ -13,10 +13,7 @@ import type { ToastPosition } from '../toast-interface';
  * translateY, which calculates from the top edge of the screen. This
  * is why the bottom calculates differ slightly between modes.
  */
-export function getAnimationPosition(position: ToastPosition, positionAnchor: HTMLElement | undefined, mode: Mode, toast: HTMLElement): {
-  top: string,
-  bottom: string
-} {
+export function getAnimationPosition(position: ToastPosition, positionAnchor: HTMLElement | undefined, mode: Mode, toast: HTMLElement): ToastAnimationPosition {
   /**
    * Start with a predefined offset from the edge the toast will be
    * positioned relative to, whether on the screen or anchor element.

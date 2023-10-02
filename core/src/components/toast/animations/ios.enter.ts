@@ -4,20 +4,16 @@ import { getElementRoot } from '@utils/helpers';
 import type { Animation } from '../../../interface';
 import type { ToastPresentOptions } from '../toast-interface';
 
-import { getAnimationPosition } from './utils';
-
 /**
  * iOS Toast Enter Animation
  */
 export const iosEnterAnimation = (baseEl: HTMLElement, opts: ToastPresentOptions): Animation => {
   const baseAnimation = createAnimation();
   const wrapperAnimation = createAnimation();
-  const { position, positionAnchor } = opts;
+  const { position, top, bottom } = opts;
 
   const root = getElementRoot(baseEl);
   const wrapperEl = root.querySelector('.toast-wrapper') as HTMLElement;
-
-  const { top, bottom } = getAnimationPosition(position, positionAnchor, 'ios', baseEl);
 
   wrapperAnimation.addElement(wrapperEl);
 

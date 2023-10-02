@@ -44,9 +44,14 @@ export interface ToastButton {
 
 export type ToastPosition = 'top' | 'bottom' | 'middle';
 
-export interface ToastPresentOptions {
+interface ToastPositionAlias {
   position: ToastPosition;
-  positionAnchor?: HTMLElement;
 }
 
-export type ToastDismissOptions = ToastPosition;
+export interface ToastAnimationPosition {
+  top: string;
+  bottom: string;
+}
+
+export type ToastPresentOptions = ToastPositionAlias & ToastAnimationPosition;
+export type ToastDismissOptions = ToastPositionAlias & ToastAnimationPosition;

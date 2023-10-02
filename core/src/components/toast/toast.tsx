@@ -1,6 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { State, Watch, Component, Element, Event, h, Host, Method, Prop } from '@stencil/core';
-import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
+import { ENABLE_HTML_CONTENT_DEFAULT, getMode } from '@utils/config';
 import { raf } from '@utils/helpers';
 import { createLockController } from '@utils/lock-controller';
 import { printIonWarning } from '@utils/logging';
@@ -28,12 +28,14 @@ import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
+import { getAnimationPosition } from './animations/utils';
 import type {
   ToastButton,
   ToastPosition,
   ToastLayout,
   ToastPresentOptions,
   ToastDismissOptions,
+  ToastAnimationPosition,
 } from './toast-interface';
 
 // TODO(FW-2832): types
@@ -62,6 +64,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
   private readonly triggerController = createTriggerController();
   private customHTMLEnabled = config.get('innerHTMLTemplatesEnabled', ENABLE_HTML_CONTENT_DEFAULT);
   private durationTimeout?: ReturnType<typeof setTimeout>;
+  private lastPresentedPosition?: ToastAnimationPosition;
 
   presented = false;
 
@@ -290,12 +293,20 @@ export class Toast implements ComponentInterface, OverlayInterface {
 
     await this.delegateController.attachViewToDom();
 
-    const { position } = this;
+    const { el, position } = this;
     const anchor = this.getAnchorElement();
+    const animationPosition = getAnimationPosition(position, anchor, getMode(), el);
+
+    /**
+     * Cache the calculated position of the toast, so we can re-use it
+     * in the dismiss animation.
+     */
+    this.lastPresentedPosition = animationPosition;
 
     await present<ToastPresentOptions>(this, 'toastEnter', iosEnterAnimation, mdEnterAnimation, {
       position,
-      positionAnchor: anchor,
+      top: animationPosition.top,
+      bottom: animationPosition.bottom
     });
 
     /**
@@ -325,8 +336,10 @@ export class Toast implements ComponentInterface, OverlayInterface {
   async dismiss(data?: any, role?: string): Promise<boolean> {
     const unlock = await this.lockController.lock();
 
-    if (this.durationTimeout) {
-      clearTimeout(this.durationTimeout);
+    const { durationTimeout, position, lastPresentedPosition } = this;
+
+    if (durationTimeout) {
+      clearTimeout(durationTimeout);
     }
 
     const dismissed = await dismiss<ToastDismissOptions>(
@@ -336,7 +349,16 @@ export class Toast implements ComponentInterface, OverlayInterface {
       'toastLeave',
       iosLeaveAnimation,
       mdLeaveAnimation,
-      this.position
+      /**
+       * Fetch the cached position that was calculated back in the present
+       * animation. We always want to animate the dismiss from the same
+       * position the present stopped at, so the animation looks continuous.
+       */
+      {
+        position,
+        top: lastPresentedPosition?.top ?? '',
+        bottom: lastPresentedPosition?.bottom ?? ''
+      }
     );
 
     if (dismissed) {
