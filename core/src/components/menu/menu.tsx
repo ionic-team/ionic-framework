@@ -743,8 +743,6 @@ export class Menu implements ComponentInterface, MenuI {
      * Additionally, if the menu is in the process
      * of animating {open, close} and the menu is disabled
      * then it should still be closed immediately.
-     * TODO: Do we let the animation finish???
-     * what happens if we navigate away from a page?
      */
     if (!isActive) {
       /**
