@@ -131,9 +131,6 @@ const createMenuController = () => {
 
   const _register = (menu: MenuI) => {
     if (menus.indexOf(menu) < 0) {
-      if (!menu.disabled) {
-        _setActiveMenu(menu);
-      }
       menus.push(menu);
     }
   };
@@ -143,14 +140,6 @@ const createMenuController = () => {
     if (index > -1) {
       menus.splice(index, 1);
     }
-  };
-
-  const _setActiveMenu = (menu: MenuI) => {
-    // if this menu should be enabled
-    // then find all the other menus on this same side
-    // and automatically disable other same side menus
-    const side = menu.side;
-    menus.filter((m) => m.side === side && m !== menu).forEach((m) => (m.disabled = true));
   };
 
   const _setOpen = async (menu: MenuI, shouldOpen: boolean, animated: boolean): Promise<boolean> => {
@@ -238,7 +227,6 @@ const createMenuController = () => {
     _register,
     _unregister,
     _setOpen,
-    _setActiveMenu,
   };
 };
 
