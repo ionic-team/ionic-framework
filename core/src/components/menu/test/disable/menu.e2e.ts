@@ -7,7 +7,7 @@ import { configs, test } from '@utils/test/playwright';
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('menu: disable'), () => {
     test.beforeEach(async ({ page }) => {
-      await page.goto(`/src/components/menu/test/basic`, config);
+      await page.goto(`/src/components/menu/test/disable`, config);
     });
 
     test('should disable when menu is fully open', async ({ page }) => {
