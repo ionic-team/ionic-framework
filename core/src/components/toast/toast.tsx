@@ -381,7 +381,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
    * is not found in the DOM.
    */
   private getAnchorElement(): HTMLElement | undefined {
-    const { position, positionAnchor } = this;
+    const { position, positionAnchor, el } = this;
 
     if (position === 'middle' && positionAnchor !== undefined) {
       printIonWarning('The positionAnchor property is ignored when using position="middle".', this.el);
@@ -397,14 +397,19 @@ export class Toast implements ComponentInterface, OverlayInterface {
        */
       const foundEl = document.getElementById(positionAnchor);
       if (foundEl === null) {
-        printIonWarning(`An anchor element with an ID of "${positionAnchor}" was not found in the DOM.`, this.el);
+        printIonWarning(`An anchor element with an ID of "${positionAnchor}" was not found in the DOM.`, el);
         return undefined;
       }
 
       return foundEl;
     }
 
-    return positionAnchor;
+    if (positionAnchor instanceof HTMLElement) {
+      return positionAnchor;
+    }
+
+    printIonWarning('Invalid positionAnchor value:', positionAnchor, el);
+    return undefined;
   }
 
   private async buttonClick(button: ToastButton) {
