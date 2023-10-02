@@ -37,7 +37,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       expect(logs.length).toBe(0);
     });
 
-    test.only('should disable when menu is animating', async ({ page }) => {
+    test('should disable when menu is animating', async ({ page }) => {
       const logs: string[] = [];
 
       page.on('console', (msg) => {
@@ -51,7 +51,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       // Opening and quickly disabling menu should hide it
       menu.evaluate((el: HTMLIonMenuElement) => {
         el.open();
-        setTimeout(() => (el.disabled = true), 0);
+        setTimeout(() => el.disabled = true, 0);
       });
       await expect(menu).toBeHidden();
 
