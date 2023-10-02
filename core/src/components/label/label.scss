@@ -22,13 +22,15 @@
   text-overflow: ellipsis;
 
   box-sizing: border-box;
+
+  // Overflow hidden is required for the proper
+  // margins between skeleton text elements
+  overflow: hidden;
 }
 
 // TODO(): remove
 :host-context(.item-legacy) {
   white-space: nowrap;
-
-  overflow: hidden;
 }
 
 :host(.ion-color) {
