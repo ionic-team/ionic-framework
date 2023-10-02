@@ -33,6 +33,7 @@
         <ion-button id="footerAnchor">Anchor to Footer</ion-button>
         <ion-button id="middleAnchor">Anchor to Header (Middle Position)</ion-button>
         <ion-button id="headerElAnchor">Anchor to Header (Element Ref)</ion-button>
+        <ion-button id="hiddenElAnchor">Anchor to Hidden Element</ion-button>
 
         <ion-toast
           id="headerToast"
@@ -65,6 +66,16 @@
           message="Hello World"
           duration="2000"
         ></ion-toast>
+        <ion-toast
+          id="hiddenElToast"
+          trigger="hiddenElAnchor"
+          position="bottom"
+          position-anchor="hiddenEl"
+          message="Hello World"
+          duration="2000"
+        ></ion-toast>
+
+        <div id="hiddenEl" style="display: none">Shh I'm hiding</div>
       </ion-content>
 
       <ion-footer id="footer">

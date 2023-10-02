@@ -5,6 +5,8 @@ import { getElementRoot } from '@utils/helpers';
 import type { Animation } from '../../../interface';
 import type { ToastPresentOptions } from '../toast-interface';
 
+import { warnIfAnchorIsHidden } from './utils';
+
 /**
  * iOS Toast Enter Animation
  */
@@ -31,6 +33,8 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts: ToastPresentOptions
    * anchor edge is targeted.
    */
   if (positionAnchor && win) {
+    warnIfAnchorIsHidden(positionAnchor, baseEl);
+
     const box = positionAnchor.getBoundingClientRect();
     if (position === 'top') {
       offset += box.bottom;
