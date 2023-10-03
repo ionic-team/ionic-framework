@@ -242,7 +242,7 @@
   box-sizing: border-box;
 }
 
-// TODO(): remove
+// TODO(FW-5289): remove
 :host(.item-legacy) .item-native {
   flex-wrap: nowrap;
 }
@@ -314,7 +314,7 @@ button, a {
   box-sizing: border-box;
 }
 
-// TODO(): remove
+// TODO(FW-5289): remove
 :host(.item-legacy) .item-inner {
   flex: 1;
 
@@ -425,7 +425,7 @@ button, a {
   box-sizing: border-box;
 }
 
-// TODO(): remove
+// TODO(FW-5289): remove
 :host(.item-legacy) .input-wrapper {
   flex: 1;
 
