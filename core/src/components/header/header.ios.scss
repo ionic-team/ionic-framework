@@ -122,6 +122,11 @@
  * header will have the ".header-collapse-main" class, and
  * this selector will no longer apply.
  *
+ * The :has(...) part of the selector ensures a couple things:
+ * 1. This will only apply within a page view since the content
+ * must be a subsequent-sibling of the header (~ ion-content).
+ * 2. This will only apply when that content has a collapse header (ion-header[collapse="condense"])
+ *
  * We use opacity: 0 to avoid a layout shift.
  */
 ion-header:not(.header-collapse-main):has(~ ion-content ion-header[collapse="condense"]) {
