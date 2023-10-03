@@ -382,6 +382,11 @@ button, a {
 
 ::slotted(ion-label:not([slot="end"])) {
   flex: 1;
+
+  // Setting width to min-content allows the label to
+  // shrink and wrap its text instead of moving to its
+  // own row if there are slotted elements next to it
+  width: min-content;
 }
 
 // Item Input
