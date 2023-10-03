@@ -121,6 +121,8 @@
  * Once the collapsible large title is configured the main
  * header will have the ".header-collapse-main" class, and
  * this selector will no longer apply.
+ *
+ * We use opacity: 0 to avoid a layout shift.
  */
 ion-header:not(.header-collapse-main):has(~ ion-content ion-header[collapse="condense"]) {
   opacity: 0;
