@@ -372,6 +372,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
       this.revealContentToScreenReader = false;
     }
 
+    this.lastPresentedPosition = undefined;
     unlock();
 
     return dismissed;
