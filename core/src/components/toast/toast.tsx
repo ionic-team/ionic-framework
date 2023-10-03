@@ -64,6 +64,12 @@ export class Toast implements ComponentInterface, OverlayInterface {
   private readonly triggerController = createTriggerController();
   private customHTMLEnabled = config.get('innerHTMLTemplatesEnabled', ENABLE_HTML_CONTENT_DEFAULT);
   private durationTimeout?: ReturnType<typeof setTimeout>;
+
+  /**
+   * Holds the position of the toast calculated in the present
+   * animation, to be passed along to the dismiss animation so
+   * we don't have to calculate the position twice.
+   */
   private lastPresentedPosition?: ToastAnimationPosition;
 
   presented = false;
