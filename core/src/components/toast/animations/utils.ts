@@ -12,7 +12,7 @@ import type { ToastAnimationPosition, ToastPosition } from '../toast-interface';
  * which calculates from the bottom edge of the screen, while iOS uses
  * translateY, which calculates from the top edge of the screen. This
  * is why the bottom calculates differ slightly between modes.
- * 
+ *
  * @param position The value of the toast's position prop.
  * @param positionAnchor The element the toast should be anchored to,
  * if applicable.
