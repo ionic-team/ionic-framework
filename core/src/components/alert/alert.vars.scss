@@ -10,10 +10,10 @@ $alert-min-width:                 250px !default;
 $alert-max-height:                90% !default;
 
 /// @prop - Line height of the alert button
-$alert-button-line-height:        20px !default;
+$alert-button-line-height:        dynamic-font(20px) !default;
 
 /// @prop - Font size of the alert button
-$alert-button-font-size:          14px !default;
+$alert-button-font-size:          dynamic-font(14px) !default;
 
 /// @prop - Minimum height of a textarea in the alert
 $alert-input-min-height:          37px !default;

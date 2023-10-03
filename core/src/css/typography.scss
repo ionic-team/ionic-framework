@@ -38,7 +38,10 @@ html {
  */
 @supports (-webkit-touch-callout: none) {
   html {
-    font: var(--ion-dynamic-type);
+    /**
+     * Includes fallback if Dynamic Type is not enabled.
+     */
+    font: var(--ion-dynamic-font, 16px var(--ion-font-family));
   }
 }
 

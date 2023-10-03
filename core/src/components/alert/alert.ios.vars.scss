@@ -6,10 +6,10 @@
 // --------------------------------------------------
 
 /// @prop - Font size of the alert
-$alert-ios-font-size:                                   14px !default;
+$alert-ios-font-size:                                   dynamic-font-min(1, 14px) !default;
 
 /// @prop - Max width of the alert
-$alert-ios-max-width:                                   270px !default;
+$alert-ios-max-width:                                   dynamic-font-clamp(1, 270px, 1.2) !default;
 
 /// @prop - Border radius of the alert
 $alert-ios-border-radius:                               13px !default;
@@ -48,13 +48,13 @@ $alert-ios-title-color:                                 $text-color !default;
 $alert-ios-title-margin-top:                            8px !default;
 
 /// @prop - Font size of the alert title
-$alert-ios-title-font-size:                             17px !default;
+$alert-ios-title-font-size:                             dynamic-font-min(1, 17px) !default;
 
 /// @prop - Font weight of the alert title
 $alert-ios-title-font-weight:                           600 !default;
 
 /// @prop - Font size of the alert sub title
-$alert-ios-sub-title-font-size:                         14px !default;
+$alert-ios-sub-title-font-size:                         dynamic-font-min(1, 14px) !default;
 
 /// @prop - Text color of the alert sub title
 $alert-ios-sub-title-text-color:                        $text-color-step-400 !default;
@@ -72,7 +72,7 @@ $alert-ios-message-padding-bottom:                      21px !default;
 $alert-ios-message-padding-start:                       $alert-ios-message-padding-end !default;
 
 /// @prop - Font size of the alert message
-$alert-ios-message-font-size:                           13px !default;
+$alert-ios-message-font-size:                           dynamic-font-min(1, 13px) !default;
 
 /// @prop - Text align of the alert message
 $alert-ios-message-text-align:                          center !default;
@@ -137,11 +137,23 @@ $alert-ios-button-margin:                               0 !default;
 /// @prop - Min width of the alert button
 $alert-ios-button-min-width:                            50% !default;
 
-/// @prop - Minimum height of the alert button
-$alert-ios-button-min-height:                           44px !default;
+/// @prop - Height of the alert button
+/**
+ * We want the height of the button to
+ * scale with the text so the next never runs
+ * into the edge of the button. We change the height
+ * instead of adding padding because we would need to offset
+ * the height the padding and the border. Since the border uses
+ * a hairline (<1px) width, this will cause subpixel rendering
+ * differences across browsers.
+ */
+$alert-ios-button-height:                           dynamic-font-min(1, 44px) !default;
+
+/// @prop - Padding of the alert button
+$alert-ios-button-padding: 8px !default;
 
 /// @prop - Font size of the alert button
-$alert-ios-button-font-size:                            17px !default;
+$alert-ios-button-font-size:                            dynamic-font-min(1, 17px) !default;
 
 /// @prop - Color of the text in the alert button
 $alert-ios-button-text-color:                           ion-color(primary, base) !default;

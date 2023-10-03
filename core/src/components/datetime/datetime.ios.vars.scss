@@ -15,3 +15,12 @@ $datetime-ios-time-width:           68px !default;
 
 /// @prop - Border radius of the time picker
 $datetime-ios-time-border-radius:   8px !default;
+
+/// @prop - The font size at which layouts may change to accommodate Dynamic Type
+$datetime-dynamic-font-breakpoint: 24px !default;
+
+/// @prop - Width of the calendar day
+$datetime-ios-day-width: 40px !default;
+
+/// @prop - Height of the calendar day
+$datetime-ios-day-height: $datetime-ios-day-width !default;
