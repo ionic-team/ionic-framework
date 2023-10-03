@@ -25,6 +25,7 @@
       <ion-button id="noMessage" expand="block" onclick="presentNoMessage()">No Message</ion-button>
       <ion-button id="customAria" expand="block" onclick="presentCustomAria()">Custom Aria</ion-button>
       <ion-button id="ariaLabelButton" expand="block" onclick="presentAriaLabelButton()">Aria Label Button</ion-button>
+      <ion-button id="checkbox" expand="block" onclick="presentAlertCheckbox()">Checkbox</ion-button>
     </main>
 
     <script>
@@ -92,6 +93,21 @@
               },
             },
           ],
+        });
+      }
+
+      function presentAlertCheckbox() {
+        openAlert({
+          header: 'Checkbox',
+          inputs: [
+            {
+              type: 'checkbox',
+              label: 'Checkbox 1',
+              value: 'value1',
+              checked: true,
+            },
+          ],
+          buttons: ['OK'],
         });
       }
     </script>
