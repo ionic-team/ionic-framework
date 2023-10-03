@@ -58,7 +58,9 @@
 
 // TODO FW-3194 - Move this to host
 :host(:not(.legacy-select)) {
-  width: 100%;
+  flex: 1 1 0;
+
+  width: 0;
 }
 
 :host(.ion-color) {
