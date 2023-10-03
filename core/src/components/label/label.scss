@@ -17,9 +17,18 @@
   font-family: $font-family-base;
   font-size: inherit;
 
+  text-overflow: ellipsis;
+
   box-sizing: border-box;
 
-  text-overflow: ellipsis;
+  // Overflow hidden is required for the proper
+  // margins between skeleton text elements
+  overflow: hidden;
+}
+
+// TODO(): remove
+:host-context(.item-legacy) {
+  white-space: nowrap;
 }
 
 :host(.ion-color) {

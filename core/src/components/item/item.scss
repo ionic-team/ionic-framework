@@ -242,6 +242,11 @@
   box-sizing: border-box;
 }
 
+// TODO(): remove
+:host(.item-legacy) .item-native {
+  flex-wrap: nowrap;
+}
+
 .item-native::-moz-focus-inner {
   border: 0;
 }
@@ -309,6 +314,14 @@ button, a {
   box-sizing: border-box;
 }
 
+// TODO(): remove
+:host(.item-legacy) .item-inner {
+  flex: 1;
+
+  flex-wrap: nowrap;
+
+  max-width: none;
+}
 
 // Item Bottom
 // --------------------------------------------------
@@ -405,6 +418,15 @@ button, a {
 
   overflow: inherit;
   box-sizing: border-box;
+}
+
+// TODO(): remove
+:host(.item-legacy) .input-wrapper {
+  flex: 1;
+
+  flex-wrap: nowrap;
+
+  max-width: none;
 }
 
 :host(.item-label-stacked),
