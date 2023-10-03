@@ -74,6 +74,11 @@ export function getAnimationPosition(
   }
 }
 
+/**
+ * If the anchor element is hidden, getBoundingClientRect()
+ * will return all 0s for it, which can cause unexpected
+ * results in the position calculation when animating.
+ */
 function warnIfAnchorIsHidden(positionAnchor: HTMLElement, toast: HTMLElement) {
   if (positionAnchor.offsetParent === null) {
     printIonWarning(
