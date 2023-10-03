@@ -5,7 +5,7 @@ import { configs, test } from '@utils/test/playwright';
  * This behavior does not vary across modes/directions
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
-  test.describe(title('menu: disable'), () => {
+  test.describe(title('menu: multiple'), () => {
     test.beforeEach(async ({ page }) => {
       await page.goto(`/src/components/menu/test/multiple`, config);
     });
