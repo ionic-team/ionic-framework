@@ -30,7 +30,6 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
   // TODO(FW-2832): types
   private activeComponent: any;
   private activeParams: any;
-  private waitPromise?: Promise<void>;
   private gesture?: Gesture;
   private ani?: Animation;
   private gestureOrAnimationInProgress = false;
