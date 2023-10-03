@@ -38,5 +38,37 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(primaryMenu).toBeHidden();
       await expect(secondaryMenu).toBeVisible();
     });
+
+    test('passing side to the menuController when multiple menus have that side should result in a warning', async ({
+      page,
+    }) => {
+      const logs: string[] = [];
+
+      page.on('console', (msg) => {
+        if (msg.type() === 'warning') {
+          logs.push(msg.text());
+        }
+      });
+
+      await page.evaluate(() => (window as any).menuController.open('start'));
+
+      expect(logs.length).toBe(1);
+    });
+
+    test('passing side to the menuController when multiple disabled menus have that side should result in a warning', async ({
+      page,
+    }) => {
+      const logs: string[] = [];
+
+      page.on('console', (msg) => {
+        if (msg.type() === 'warning') {
+          logs.push(msg.text());
+        }
+      });
+
+      await page.evaluate(() => (window as any).menuController.open('end'));
+
+      expect(logs.length).toBe(1);
+    });
   });
 });

@@ -1,3 +1,5 @@
+import { printIonWarning } from '@utils/logging';
+
 import type { MenuI } from '../../components/menu/menu-interface';
 import type { AnimationBuilder, BackButtonEvent } from '../../interface';
 import { MENU_BACK_BUTTON_PRIORITY } from '../hardware-back-button';
@@ -76,14 +78,31 @@ const createMenuController = () => {
     if (menu === 'start' || menu === 'end') {
       // there could be more than one menu on the same side
       // so first try to get the enabled one
-      const menuRef = find((m) => m.side === menu && !m.disabled);
-      if (menuRef) {
-        return menuRef;
+      const menuRefs = menus.filter((m) => m.side === menu && !m.disabled);
+      if (menuRefs.length >= 1) {
+        if (menuRefs.length > 1) {
+          printIonWarning(
+            `menuController queried for a menu on the "${menu}" side, but ${menuRefs.length} menus were found. The first menu reference will be used. If this is not the behavior you want then pass the ID of the menu instead of its side.`,
+            menuRefs.map((m) => m.el)
+          );
+        }
+
+        return menuRefs[0].el;
       }
 
       // didn't find a menu side that is enabled
       // so try to get the first menu side found
-      return find((m) => m.side === menu);
+      const sideMenuRefs = menus.filter((m) => m.side === menu);
+      if (sideMenuRefs.length >= 1) {
+        if (sideMenuRefs.length > 1) {
+          printIonWarning(
+            `menuController queried for a menu on the "${menu}" side, but ${sideMenuRefs.length} menus were found. The first menu reference will be used. If this is not the behavior you want then pass the ID of the menu instead of its side.`,
+            sideMenuRefs.map((m) => m.el)
+          );
+        }
+
+        return sideMenuRefs[0].el;
+      }
     } else if (menu != null) {
       // the menuId was not left or right
       // so try to get the menu by its "id"

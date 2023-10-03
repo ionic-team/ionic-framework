@@ -12,6 +12,10 @@
     <script src="../../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <script type="module">
+      import { menuController } from '../../../../dist/ionic/index.esm.js';
+      window.menuController = menuController;
+    </script>
   </head>
 
   <body>
@@ -34,6 +38,24 @@
         <ion-content class="ion-padding"> Menu Content </ion-content>
       </ion-menu>
 
+      <ion-menu disabled="true" side="end" menu-id="success-menu" id="success-menu" content-id="main">
+        <ion-header>
+          <ion-toolbar color="success">
+            <ion-title>Success</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding"> Menu Content </ion-content>
+      </ion-menu>
+
+      <ion-menu disabled="true" side="end" menu-id="danger-menu" id="danger-menu" content-id="main">
+        <ion-header>
+          <ion-toolbar color="danger">
+            <ion-title>Danger</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding"> Menu Content </ion-content>
+      </ion-menu>
+
       <div class="ion-page" id="main">
         <ion-header>
           <ion-toolbar>
@@ -48,4 +70,5 @@
       </div>
     </ion-app>
   </body>
+  <scrip
 </html>
