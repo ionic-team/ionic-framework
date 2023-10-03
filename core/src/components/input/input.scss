@@ -346,7 +346,7 @@
 
   border-top: var(--border-width) var(--border-style) var(--border-color);
 
-  font-size: 12px;
+  font-size: dynamic-font(12px);
 }
 
 /**
@@ -627,11 +627,11 @@
 :host(.input-label-placement-stacked) .label-text-wrapper,
 :host(.has-focus.input-label-placement-floating) .label-text-wrapper,
 :host(.has-value.input-label-placement-floating) .label-text-wrapper {
-  @include transform(translateY(50%), scale(#{$input-floating-label-scale}));
+  @include transform(translateY(50%), scale(#{$form-control-label-stacked-scale}));
 
   /**
    * Label text should not extend
    * beyond the bounds of the input.
    */
-  max-width: calc(100% / #{$input-floating-label-scale});
+  max-width: calc(100% / #{$form-control-label-stacked-scale});
 }

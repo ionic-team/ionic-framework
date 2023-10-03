@@ -7,4 +7,4 @@
 $note-md-color:          $text-color-step-400 !default;
 
 /// @prop - Font size of the note
-$note-md-font-size:      0.875rem !default;
+$note-md-font-size:      dynamic-font(14px) !default;

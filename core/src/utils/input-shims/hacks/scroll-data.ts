@@ -9,13 +9,18 @@ export interface ScrollData {
   inputSafeY: number;
 }
 
-export const getScrollData = (componentEl: HTMLElement, contentEl: HTMLElement, keyboardHeight: number): ScrollData => {
+export const getScrollData = (
+  componentEl: HTMLElement,
+  contentEl: HTMLElement,
+  keyboardHeight: number,
+  platformHeight: number
+): ScrollData => {
   const itemEl = (componentEl.closest('ion-item,[ion-item]') as HTMLElement) ?? componentEl;
   return calcScrollData(
     itemEl.getBoundingClientRect(),
     contentEl.getBoundingClientRect(),
     keyboardHeight,
-    (componentEl as any).ownerDocument.defaultView.innerHeight // TODO(FW-2832): type
+    platformHeight
   );
 };
 

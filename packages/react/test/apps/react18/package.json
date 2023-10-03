@@ -32,7 +32,7 @@
     "@vitejs/plugin-legacy": "^4.0.2",
     "@vitejs/plugin-react": "^4.0.1",
     "concurrently": "^6.3.0",
-    "cypress": "^12.7.0",
+    "cypress": "^13.2.0",
     "serve": "^14.0.1",
     "wait-on": "^6.0.0",
     "eslint": "^8.35.0",

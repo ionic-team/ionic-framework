@@ -1,6 +1,11 @@
 import { expect } from '@playwright/test';
 import type { E2EPage, ScreenshotFn } from '@utils/test/playwright';
 
+/**
+ * Warning: This function will fail when in RTL mode.
+ * TODO(FW-3711): Remove the `directions` config when this issue preventing
+ * tests from passing in RTL mode is resolved.
+ */
 export const testSlidingItem = async (
   page: E2EPage,
   itemID: string,
@@ -23,6 +28,9 @@ export const testSlidingItem = async (
   }
 
   // opening animation takes longer than waitForChanges accounts for
+  // especially if another item sliding is already open,
+  // so we wait to ensure the opened item is closed before
+  // opening another
   await page.waitForTimeout(500);
 
   await expect(item).toHaveScreenshot(screenshot(`item-sliding-${screenshotNameSuffix}`));

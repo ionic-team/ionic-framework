@@ -228,8 +228,9 @@ export class Range implements ComponentInterface {
    * `"start"`: The label will appear to the left of the range in LTR and to the right in RTL.
    * `"end"`: The label will appear to the right of the range in LTR and to the left in RTL.
    * `"fixed"`: The label has the same behavior as `"start"` except it also has a fixed width. Long text will be truncated with ellipses ("...").
+   * `"stacked"`: The label will appear above the range regardless of the direction.
    */
-  @Prop() labelPlacement: 'start' | 'end' | 'fixed' = 'start';
+  @Prop() labelPlacement: 'start' | 'end' | 'fixed' | 'stacked' = 'start';
 
   /**
    * Set the `legacy` property to `true` to forcibly use the legacy form control markup.
@@ -609,8 +610,41 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
     );
   }
 
+  /**
+   * Returns true if content was passed to the "start" slot
+   */
+  private get hasStartSlotContent() {
+    return this.el.querySelector('[slot="start"]') !== null;
+  }
+
+  /**
+   * Returns true if content was passed to the "end" slot
+   */
+  private get hasEndSlotContent() {
+    return this.el.querySelector('[slot="end"]') !== null;
+  }
+
   private renderRange() {
-    const { disabled, el, rangeId, pin, pressedKnob, labelPlacement, label } = this;
+    const { disabled, el, hasLabel, rangeId, pin, pressedKnob, labelPlacement, label } = this;
+
+    const inItem = hostContext('ion-item', el);
+
+    /**
+     * If there is no start content then the knob at
+     * the min value will be cut off by the item margin.
+     */
+    const hasStartContent =
+      (hasLabel && (labelPlacement === 'start' || labelPlacement === 'fixed')) || this.hasStartSlotContent;
+
+    const needsStartAdjustment = inItem && !hasStartContent;
+
+    /**
+     * If there is no end content then the knob at
+     * the max value will be cut off by the item margin.
+     */
+    const hasEndContent = (hasLabel && labelPlacement === 'end') || this.hasEndSlotContent;
+
+    const needsEndAdjustment = inItem && !hasEndContent;
 
     const mode = getIonMode(this);
 
@@ -623,18 +657,20 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
         id={rangeId}
         class={createColorClasses(this.color, {
           [mode]: true,
-          'in-item': hostContext('ion-item', el),
+          'in-item': inItem,
           'range-disabled': disabled,
           'range-pressed': pressedKnob !== undefined,
           'range-has-pin': pin,
           [`range-label-placement-${labelPlacement}`]: true,
+          'range-item-start-adjustment': needsStartAdjustment,
+          'range-item-end-adjustment': needsEndAdjustment,
         })}
       >
         <label class="range-wrapper" id="range-label">
           <div
             class={{
               'label-text-wrapper': true,
-              'label-text-wrapper-hidden': !this.hasLabel,
+              'label-text-wrapper-hidden': !hasLabel,
             }}
           >
             {label !== undefined ? <div class="label-text">{label}</div> : <slot name="label"></slot>}

@@ -51,6 +51,12 @@
 }
 
 .header-collapse-condense ion-toolbar:first-of-type {
+  /**
+   * The toolbar that contains the collapsible
+   * large title should not have safe area padding applied.
+   */
+  padding-top: 0px;
+
   z-index: 1;
 }
 
@@ -69,8 +75,6 @@
 }
 
 .header-collapse-condense ion-toolbar ion-searchbar {
-  height: 48px;
-
   padding-top: 0px;
   padding-bottom: 13px;
 }
