@@ -3,6 +3,7 @@ import { Component, Element, Event, Method, Prop, Watch, h } from '@stencil/core
 import { getTimeGivenProgression } from '@utils/animation/cubic-bezier';
 import { attachComponent, detachComponent } from '@utils/framework-delegate';
 import { shallowEqualStringMap, hasLazyBuild } from '@utils/helpers';
+import { createLockController } from '@utils/lock-controller';
 import { transition } from '@utils/transition';
 
 import { config } from '../../global/config';
@@ -24,6 +25,7 @@ import type { RouteID, RouterDirection, RouteWrite, NavOutlet } from '../router/
   shadow: true,
 })
 export class RouterOutlet implements ComponentInterface, NavOutlet {
+  private readonly lockController = createLockController();
   private activeEl: HTMLElement | undefined;
   // TODO(FW-2832): types
   private activeComponent: any;
@@ -140,7 +142,7 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
     leavingEl: HTMLElement | undefined,
     opts?: RouterOutletOptions
   ): Promise<boolean> {
-    const unlock = await this.lock();
+    const unlock = await this.lockController.lock();
     let changed = false;
     try {
       changed = await this.transition(enteringEl, leavingEl, opts);
@@ -283,18 +285,6 @@ export class RouterOutlet implements ComponentInterface, NavOutlet {
     this.ionNavDidChange.emit();
 
     return true;
-  }
-
-  // TODO: FW-5048 - Remove this code in favor of using lock controller from utils
-  private async lock() {
-    const p = this.waitPromise;
-    let resolve!: () => void;
-    this.waitPromise = new Promise((r) => (resolve = r));
-
-    if (p !== undefined) {
-      await p;
-    }
-    return resolve;
   }
 
   render() {
