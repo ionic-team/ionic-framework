@@ -1,6 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { State, Watch, Component, Element, Event, h, Host, Method, Prop } from '@stencil/core';
-import { ENABLE_HTML_CONTENT_DEFAULT, getMode } from '@utils/config';
+import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
 import { raf } from '@utils/helpers';
 import { createLockController } from '@utils/lock-controller';
 import { printIonWarning } from '@utils/logging';
@@ -301,7 +301,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
 
     const { el, position } = this;
     const anchor = this.getAnchorElement();
-    const animationPosition = getAnimationPosition(position, anchor, getMode(), el);
+    const animationPosition = getAnimationPosition(position, anchor, getIonMode(this), el);
 
     /**
      * Cache the calculated position of the toast, so we can re-use it
