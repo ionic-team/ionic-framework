@@ -48,7 +48,7 @@ configs().forEach(({ title, screenshot, config }) => {
 
 configs({ modes: ['md'], directions: ['ltr']}).forEach(({ title, config }) => {
   test.describe(title('segment: scrollable (functionality)'), () => {
-    test.only('should scroll active button into view when value is already set', async ({ page }) => {
+    test('should scroll active button into view when value is already set', async ({ page }) => {
       await page.setContent(
         `
           <ion-segment scrollable="true" value="8">
