@@ -58,9 +58,7 @@
 
 // TODO FW-3194 - Move this to host
 :host(:not(.legacy-select)) {
-  flex: 1 1 0;
-
-  width: 0;
+  width: 100%;
 }
 
 :host(.ion-color) {
@@ -80,6 +78,19 @@
 
 // Select Used in ion-item
 // --------------------------------------------------
+
+// TODO FW-3194 - Remove the :not(.legacy-select) piece
+//
+// The flex and width properties are required here
+// in order to allow the select to shrink inside of an item
+// otherwise it always wraps to the next line even
+// when it can shrink
+:host(.in-item:not(.legacy-select)) {
+  flex: 1 1 0;
+
+  width: 0;
+}
+
 // TODO FW-3194 - Remove this
 :host(.in-item.legacy-select) {
   position: static;
