@@ -1971,6 +1971,7 @@ export class Datetime implements ComponentInterface {
           <div class="calendar-month-year">
             <ion-item
               part="month-year-button"
+              class="item-datetime"
               ref={(el) => (this.monthYearToggleItemRef = el)}
               button
               aria-label="Show year picker"
