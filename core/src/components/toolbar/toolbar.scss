@@ -28,13 +28,17 @@
   --opacity-scale: 1;
 
   @include font-smoothing();
-  @include padding-horizontal(var(--ion-safe-area-left), var(--ion-safe-area-right));
 
   display: block;
 
   position: relative;
 
   width: 100%;
+
+  // stylelint-disable-next-line property-disallowed-list
+  padding-right: var(--ion-safe-area-right);
+  // stylelint-disable-next-line property-disallowed-list
+  padding-left: var(--ion-safe-area-left);
 
   color: var(--color);
 

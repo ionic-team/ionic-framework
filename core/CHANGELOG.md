@@ -3,6 +3,64 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.4.2](https://github.com/ionic-team/ionic-framework/compare/v7.4.1...v7.4.2) (2023-09-27)
+
+
+### Bug Fixes
+
+* **title:** large title uses custom font on transition ([#28231](https://github.com/ionic-team/ionic-framework/issues/28231)) ([71a7af0](https://github.com/ionic-team/ionic-framework/commit/71a7af0f52fe62937b1dea1ca2739e78801a2a6d))
+
+
+
+
+
+## [7.4.1](https://github.com/ionic-team/ionic-framework/compare/v7.4.0...v7.4.1) (2023-09-20)
+
+
+### Bug Fixes
+
+* **overlays:** correctly re-add root to accessibility tree ([#28183](https://github.com/ionic-team/ionic-framework/issues/28183)) ([81714d4](https://github.com/ionic-team/ionic-framework/commit/81714d45bd97f0ba91729959b60a0dc1d1d06533)), closes [#28180](https://github.com/ionic-team/ionic-framework/issues/28180)
+* **radio,toggle,checkbox,select:** padded space is clickable in items ([#28136](https://github.com/ionic-team/ionic-framework/issues/28136)) ([5b7e422](https://github.com/ionic-team/ionic-framework/commit/5b7e422dc0bfd4d58fb31f62715af47e62dabb57)), closes [#27169](https://github.com/ionic-team/ionic-framework/issues/27169)
+* **range:** knob is not cut off in item with modern syntax ([#28199](https://github.com/ionic-team/ionic-framework/issues/28199)) ([0104d89](https://github.com/ionic-team/ionic-framework/commit/0104d899270d73e16f2850a5fd7d2ba25a9e7ef0)), closes [#27199](https://github.com/ionic-team/ionic-framework/issues/27199)
+* **scroll-assist:** improve input scroll accuracy with native resizing ([#28169](https://github.com/ionic-team/ionic-framework/issues/28169)) ([b5c736f](https://github.com/ionic-team/ionic-framework/commit/b5c736f5ac829efebedf3256ddf77ab3daa7a5f6)), closes [#22940](https://github.com/ionic-team/ionic-framework/issues/22940)
+* **scroll-assist:** re-run when keyboard changes ([#28174](https://github.com/ionic-team/ionic-framework/issues/28174)) ([3f06da4](https://github.com/ionic-team/ionic-framework/commit/3f06da4cfc0d59c658e17e09ccb1ea28a29339f9)), closes [#22940](https://github.com/ionic-team/ionic-framework/issues/22940)
+
+
+
+
+
+# [7.4.0](https://github.com/ionic-team/ionic-framework/compare/v7.3.4...v7.4.0) (2023-09-14)
+
+
+### Bug Fixes
+
+* **datetime:** scroll to newly selected date when value changes ([#27806](https://github.com/ionic-team/ionic-framework/issues/27806)) ([32244fb](https://github.com/ionic-team/ionic-framework/commit/32244fbdd1931e59a9e3cedd2b143c8ee7d01459)), closes [#26391](https://github.com/ionic-team/ionic-framework/issues/26391)
+* **many:** add correct scale to stacked labels ([#28163](https://github.com/ionic-team/ionic-framework/issues/28163)) ([8cb8786](https://github.com/ionic-team/ionic-framework/commit/8cb878669e53bad25bbe2787826b6d02d292848a))
+* **range:** add correct margin in item ([#28161](https://github.com/ionic-team/ionic-framework/issues/28161)) ([1d2b867](https://github.com/ionic-team/ionic-framework/commit/1d2b867f2207d366e355265b081bc9aabe31ce7e))
+
+
+### Features
+
+* **checkbox, radio, toggle, range:** stacked labels for form controls ([#28075](https://github.com/ionic-team/ionic-framework/issues/28075)) ([e6c7bb6](https://github.com/ionic-team/ionic-framework/commit/e6c7bb60e7e61c965f45e2bf3e3bd16f5125ad56))
+* **datetime:** add disabled part ([#28134](https://github.com/ionic-team/ionic-framework/issues/28134)) ([cd8d509](https://github.com/ionic-team/ionic-framework/commit/cd8d5091a133804ac97d0394354dcf7cd73d9355))
+* **datetime:** add parts for calendar day, active, and today ([#27641](https://github.com/ionic-team/ionic-framework/issues/27641)) ([79b005d](https://github.com/ionic-team/ionic-framework/commit/79b005da704c2ce481e1e3bc4d24cdba06a36d04)), closes [#25340](https://github.com/ionic-team/ionic-framework/issues/25340)
+* export TransitionOptions interface and getIonPageElement ([#28140](https://github.com/ionic-team/ionic-framework/issues/28140)) ([19f3bb2](https://github.com/ionic-team/ionic-framework/commit/19f3bb23fd5587848fc41a744ca46ef5985c04d2)), closes [#28137](https://github.com/ionic-team/ionic-framework/issues/28137)
+
+
+
+
+
+## [7.3.4](https://github.com/ionic-team/ionic-framework/compare/v7.3.3...v7.3.4) (2023-09-13)
+
+
+### Bug Fixes
+
+* **menu:** remove app dir from safe area padding ([#28123](https://github.com/ionic-team/ionic-framework/issues/28123)) ([e0542a7](https://github.com/ionic-team/ionic-framework/commit/e0542a7867871fa45a7fe6a4986e7de633063b4b))
+
+
+
+
+
 ## [7.3.3](https://github.com/ionic-team/ionic-framework/compare/v7.3.2...v7.3.3) (2023-09-06)
 
 

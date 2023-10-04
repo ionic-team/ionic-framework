@@ -513,11 +513,11 @@ button {
 :host(.select-expanded.select-label-placement-floating) .label-text-wrapper,
 :host(.ion-focused.select-label-placement-floating) .label-text-wrapper,
 :host(.has-value.select-label-placement-floating) .label-text-wrapper {
-  @include transform(translateY(50%), scale(#{$select-floating-label-scale}));
+  @include transform(translateY(50%), scale(#{$form-control-label-stacked-scale}));
 
   /**
    * Label text should not extend
    * beyond the bounds of the input.
    */
-  max-width: calc(100% / #{$select-floating-label-scale});
+  max-width: calc(100% / #{$form-control-label-stacked-scale});
 }
