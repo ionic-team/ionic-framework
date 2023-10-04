@@ -303,27 +303,40 @@ const animateLargeTitle = (
 ) => {
   const TITLE_START_OFFSET = rtl ? `calc(100% - ${largeTitleBox.right}px)` : `${largeTitleBox.left}px`;
 
-  const START_TRANSLATE_X = '0px';
-
-  // TOOD figure out correct value here
-  // 26/-26 for scaled text, 16/-16 for default text
-  const END_TRANSLATE_X = rtl ? '-26px' : '26px';
-
-  const START_TRANSLATE_Y = `${largeTitleBox.top}px`;
-
-  // TODO figure out correct value here
-  // -18px for scaled text, -2px for default text
-  const END_TRANSLATE_Y = `-18px`;
-
-  const ORIGIN_X = rtl ? 'right' : 'left';
-
   const buttonText = shadow(backButtonEl).querySelector('.button-text');
   const buttonTextBox = buttonText.getBoundingClientRect();
 
   const titleText = shadow(largeTitleEl).querySelector('.toolbar-title');
   const titleTextBox = titleText.getBoundingClientRect();
 
+ /**
+  * The cloned large should align exactly with the
+  * real large title on the leaving page otherwise there will
+  * be a layout shift.
+  */
+  const START_TRANSLATE_X = '0px';
+  const START_TRANSLATE_Y = `${largeTitleBox.top}px`;
+
+  /**
+   * The scaled title should (roughly) overlap the back button.
+   * This ensures that the back button and title overlap during
+   * the animation. Note that since both elements either fade in
+   * or fade out over the course of the animation, neither element
+   * will be fully visible on top of the other. As a result, the overlap
+   * does not need to be perfect, so approximate values are acceptable here.
+   */
+  const END_TRANSLATE_X = rtl ? `-${window.innerWidth - buttonTextBox.right - 8}px` : `${buttonTextBox.x - 8}px`;
+  // TODO figure out correct value here
+  // -18px for scaled text, -2px for default text
+  const END_TRANSLATE_Y = `-18px`;
+
+
+
+
+  const ORIGIN_X = rtl ? 'right' : 'left';
+
   const END_SCALE = `scale(${buttonTextBox.width / titleTextBox.width}, ${buttonTextBox.height / (titleTextBox.height - 10) })`;
+  console.log('end scale', END_SCALE)
   const START_SCALE = 'scale(1)';
 
   const BACKWARDS_KEYFRAMES = [
@@ -333,8 +346,8 @@ const animateLargeTitle = (
   ];
   const FORWARDS_KEYFRAMES = [
     { offset: 0, opacity: 0.99, transform: `translate3d(${START_TRANSLATE_X}, ${START_TRANSLATE_Y}, 0) ${START_SCALE}` },
-    { offset: 0.6, opacity: 0 },
-    { offset: 1, opacity: 0, transform: `translate3d(${END_TRANSLATE_X}, ${END_TRANSLATE_Y}, 0) ${END_SCALE}` },
+    { offset: 0.6, opacity: 1 },
+    { offset: 1, opacity: 1, transform: `translate3d(${END_TRANSLATE_X}, ${END_TRANSLATE_Y}, 0) ${END_SCALE}` },
   ];
 
   const KEYFRAMES = backDirection ? BACKWARDS_KEYFRAMES : FORWARDS_KEYFRAMES;
