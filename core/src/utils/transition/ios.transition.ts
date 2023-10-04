@@ -153,10 +153,19 @@ const animateBackButton = (
   const CONTAINER_START_TRANSLATE_X = rtl ? `${(bbox.width / 2) - (bbox.right - backButtonBox.right)}px` : `${backButtonBox.left - (bbox.width / 2)}px`;
   const CONTAINER_END_TRANSLATE_X = rtl ? `-${window.innerWidth - backButtonBox.right}px` : `${backButtonBox.left}px`;
 
-  // TODO: figure out how to get start translate y programmatically
-  // 67px for scaled text, 55px for default text
-  const CONTAINER_START_TRANSLATE_Y = '67px';
+  /**
+   * Back button container should be
+   * aligned to the top of the title container
+   * so the texts overlap as the back button
+   * text begins to fade in.
+   */
+  const CONTAINER_START_TRANSLATE_Y = `${titleTextBox.top}px`;
 
+  /**
+   * The cloned back button should align exactly with the
+   * real back button on the entering page otherwise there will
+   * be a layout shift.
+   */
   const CONTAINER_END_TRANSLATE_Y = `${backButtonBox.top}px`;
 
   const FORWARD_CONTAINER_KEYFRAMES = [
@@ -261,7 +270,7 @@ const animateBackButton = (
 
   enteringBackButtonTextAnimation
     .beforeStyles({
-      'transform-origin': `${TEXT_ORIGIN_X} center`,
+      'transform-origin': `${TEXT_ORIGIN_X} top`,
     })
     .beforeAddWrite(() => {
       backButtonEl.style.setProperty('display', 'none');
