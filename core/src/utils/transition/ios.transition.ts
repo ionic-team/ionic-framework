@@ -308,9 +308,13 @@ const animateLargeTitle = (
 
   const ORIGIN_X = rtl ? 'right' : 'left';
 
-  // TODO figure out end scale
-  // 0.35 for scaled text, 0.5 for default text
-  const END_SCALE = `scale(0.35)`;
+  const buttonText = shadow(backButtonEl).querySelector('.button-text');
+  const buttonTextBox = buttonText.getBoundingClientRect();
+
+  const titleText = shadow(largeTitleEl).querySelector('.toolbar-title');
+  const titleTextBox = titleText.getBoundingClientRect();
+
+  const END_SCALE = `scale(${buttonTextBox.width / titleTextBox.width}, ${buttonTextBox.height / (titleTextBox.height - 10) })`;
   const START_SCALE = 'scale(1)';
 
   const BACKWARDS_KEYFRAMES = [
@@ -320,8 +324,8 @@ const animateLargeTitle = (
   ];
   const FORWARDS_KEYFRAMES = [
     { offset: 0, opacity: 0.99, transform: `translate3d(${START_TRANSLATE_X}, ${START_TRANSLATE_Y}, 0) ${START_SCALE}` },
-    { offset: 0.6, opacity: 0 },
-    { offset: 1, opacity: 0, transform: `translate3d(${END_TRANSLATE_X}, ${END_TRANSLATE_Y}, 0) ${END_SCALE}` },
+    { offset: 0.6, opacity: 1 },
+    { offset: 1, opacity: 1, transform: `translate3d(${END_TRANSLATE_X}, ${END_TRANSLATE_Y}, 0) ${END_SCALE}` },
   ];
 
   const KEYFRAMES = backDirection ? BACKWARDS_KEYFRAMES : FORWARDS_KEYFRAMES;
