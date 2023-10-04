@@ -1,6 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Listen, Prop, State, Watch, h, writeTask } from '@stencil/core';
 import type { Gesture, GestureDetail } from '@utils/gesture';
+import { raf } from '@utils/helpers';
 import { isRTL } from '@utils/rtl';
 import { createColorClasses, hostContext } from '@utils/theme';
 
@@ -83,31 +84,7 @@ export class Segment implements ComponentInterface {
      * Used by `ion-segment-button` to determine if the button should be checked.
      */
     this.ionSelect.emit({ value });
-
-    if (this.scrollable) {
-      const buttons = this.getButtons();
-      const activeButton = buttons.find((button) => button.value === value);
-      if (activeButton !== undefined) {
-        /**
-         * Scrollable segment buttons should be
-         * centered within the view including
-         * buttons that are partially offscreen.
-         */
-        activeButton.scrollIntoView({
-          behavior: 'smooth',
-          inline: 'center',
-
-          /**
-           * Segment should scroll on the
-           * horizontal axis. `block: 'nearest'`
-           * ensures that the vertical axis
-           * does not scroll if the segment
-           * as a whole is already in view.
-           */
-          block: 'nearest',
-        });
-      }
-    }
+    this.scrollActiveButtonIntoView();
   }
 
   /**
@@ -162,6 +139,14 @@ export class Segment implements ComponentInterface {
 
   async componentDidLoad() {
     this.setCheckedClasses();
+
+    /**
+     * We need to wait for the buttons to all be rendered
+     * before we can scroll.
+     */
+    raf(() => {
+      this.scrollActiveButtonIntoView();
+    });
 
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.el,
@@ -317,6 +302,35 @@ export class Segment implements ComponentInterface {
     }
     if (next < buttons.length) {
       buttons[next].classList.add('segment-button-after-checked');
+    }
+  }
+
+  private scrollActiveButtonIntoView() {
+    const { scrollable, value } = this;
+
+    if (scrollable) {
+      const buttons = this.getButtons();
+      const activeButton = buttons.find((button) => button.value === value);
+      if (activeButton !== undefined) {
+        /**
+         * Scrollable segment buttons should be
+         * centered within the view including
+         * buttons that are partially offscreen.
+         */
+        activeButton.scrollIntoView({
+          behavior: 'smooth',
+          inline: 'center',
+
+          /**
+           * Segment should scroll on the
+           * horizontal axis. `block: 'nearest'`
+           * ensures that the vertical axis
+           * does not scroll if the segment
+           * as a whole is already in view.
+           */
+          block: 'nearest',
+        });
+      }
     }
   }
 
