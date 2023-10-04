@@ -296,6 +296,11 @@ const animateLargeTitle = (
   largeTitleBox: DOMRect,
   backButtonEl: any,
 ) => {
+  /**
+   * The horizontal transform origin for the large title
+   */
+  const ORIGIN_X = rtl ? 'right' : 'left';
+
   const TITLE_START_OFFSET = rtl ? `calc(100% - ${largeTitleBox.right}px)` : `${largeTitleBox.left}px`;
 
   const buttonText = shadow(backButtonEl).querySelector('.button-text');
@@ -331,11 +336,20 @@ const animateLargeTitle = (
    */
   const END_TRANSLATE_Y  = `${buttonTextBox.y - 2}px`
 
-  const ORIGIN_X = rtl ? 'right' : 'left';
-
-  const END_SCALE = `scale(${buttonTextBox.width / titleTextBox.width}, ${buttonTextBox.height / (titleTextBox.height - 10) })`;
-
+  /**
+   * In the forward direction, the large title should start at its
+   * normal size and then scale down to be (roughly) the size of the
+   * back button on the other view. In the backward direction, the
+   * large title should start at (roughly) the size of the back button
+   * and then scale up to its original size.
+   *
+   * Note that since both elements either fade in
+   * or fade out over the course of the animation, neither element
+   * will be fully visible on top of the other. As a result, the overlap
+   * does not need to be perfect, so approximate values are acceptable here.
+   */
   const START_SCALE = 'scale(1)';
+  const END_SCALE = `scale(${buttonTextBox.width / titleTextBox.width}, ${buttonTextBox.height / (titleTextBox.height - 10) })`;
 
   const BACKWARDS_KEYFRAMES = [
     { offset: 0, opacity: 0, transform: `translate3d(${END_TRANSLATE_X}, ${END_TRANSLATE_Y}, 0) ${END_SCALE}` },
@@ -362,6 +376,13 @@ const animateLargeTitle = (
   clonedLargeTitleAnimation
     .beforeStyles({
       'transform-origin': `${ORIGIN_X} top`,
+
+      /**
+       * Since font size changes will cause
+       * the dimension of the large title to change
+       * we need to set the cloned title height
+       * equal to that of the original large title height.
+       */
       height: `${largeTitleBox.height}px`,
       display: '',
       position: 'relative',
