@@ -15,7 +15,7 @@ $checkbox-ios-background-color-on:        ion-color(primary, base) !default;
 $checkbox-ios-background-color-focused:   ion-color(primary, tint) !default;
 
 /// @prop - Size of the checkbox icon
-$checkbox-ios-icon-size:                  dynamic-font-max(26px, 2.38) !default;
+$checkbox-ios-icon-size:                  dynamic-font-max(26px, 2.538) !default;
 
 /// @prop - Border color of the checkbox icon when off
 $checkbox-ios-icon-border-color-off:      rgba($text-color-rgb, 0.23) !default;
@@ -42,13 +42,13 @@ $checkbox-ios-checkmark-border-style:     solid !default;
 $checkbox-ios-checkmark-border-color:     ion-color(primary, contrast) !default;
 
 /// @prop - Top of the checkmark in the checkbox
-$checkbox-ios-checkmark-top:              math.div($checkbox-ios-icon-size, 6) !default;
+$checkbox-ios-checkmark-top:              calc($checkbox-ios-icon-size / 6) !default;
 
 /// @prop - Start of the checkmark in the checkbox
-$checkbox-ios-checkmark-start:            math.div($checkbox-ios-icon-size, 3) + 1px !default;
+$checkbox-ios-checkmark-start:            calc($checkbox-ios-icon-size / 3 + 1px) !default;
 
 /// @prop - Width of the checkmark in the checkbox
-$checkbox-ios-checkmark-width:            math.div($checkbox-ios-icon-size, 6) + 1px !default;
+$checkbox-ios-checkmark-width:            calc($checkbox-ios-icon-size / 6 + 1px) !default;
 
 /// @prop - Height of the checkmark in the checkbox
 $checkbox-ios-checkmark-height:           calc($checkbox-ios-icon-size * 0.5) !default;
