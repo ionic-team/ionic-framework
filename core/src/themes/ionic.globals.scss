@@ -39,6 +39,11 @@ $placeholder-opacity: 0.6 !default;
 
 $form-control-label-margin: 16px !default;
 
+// How much the stacked labels should be scaled by
+/// The value 0.75 is used to match the MD spec.
+/// iOS does not have a floating label design spec, so we standardize on 0.75.
+$form-control-label-stacked-scale: 0.75 !default;
+
 
 // Z-Index
 // --------------------------------------------------

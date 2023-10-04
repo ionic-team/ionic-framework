@@ -1,10 +1,14 @@
 @import "./fab.vars";
+@import "../fab-list/fab-list.vars";
 
 // Floating Action Button Container
 // --------------------------------------------------
 
 :host {
   position: absolute;
+
+  width: fit-content;
+  height: fit-content;
 
   z-index: $z-index-fixed-content;
 }
@@ -14,8 +18,8 @@
 // --------------------------------------------------
 
 :host(.fab-horizontal-center) {
-  @include position(null, null, null, 50%);
-  @include margin-horizontal(-$fab-size * 0.5, null);
+  @include position(null, 0px, null, 0px);
+  @include margin(null, auto);
 }
 
 :host(.fab-horizontal-start) {
@@ -38,22 +42,93 @@
   top: $fab-content-margin;
 }
 
+/**
+ * Reset the top value since edge
+ * styles use margin-top.
+ */
 :host(.fab-vertical-top.fab-edge) {
-  top: -$fab-size * 0.5;
+  top: 0;
 }
 
+/**
+ * We need to adjust the parent FAB button up by half
+ * its height so that half of it sits on the header. As a result,
+ * we target the slotted ion-fab-button instead of targeting the host.
+ */
+:host(.fab-vertical-top.fab-edge) ::slotted(ion-fab-button) {
+  margin-top: -50%;
+}
+
+/**
+ * The small FAB button adds top and bottom margin. We need to account for
+ * that margin when we adjust the FAB button for edge styles since we
+ * are overriding the margin-top value below.
+ */
+:host(.fab-vertical-top.fab-edge) ::slotted(ion-fab-button.fab-button-small) {
+  margin-top: calc((-100% + $fab-button-small-margin * 2) / 2);
+}
+
+/**
+ * Since we are adjusting the FAB button we also need
+ * to adjust the sibling ion-fab-list otherwise there will be
+ * a gap between the parent FAB button and the associated list.
+ */
+:host(.fab-vertical-top.fab-edge) ::slotted(ion-fab-list.fab-list-side-start),
+:host(.fab-vertical-top.fab-edge) ::slotted(ion-fab-list.fab-list-side-end) {
+  @include margin(-50%, null, null, null);
+}
+
+:host(.fab-vertical-top.fab-edge) ::slotted(ion-fab-list.fab-list-side-top),
+:host(.fab-vertical-top.fab-edge) ::slotted(ion-fab-list.fab-list-side-bottom) {
+  @include margin(calc(50% + #{$fab-list-margin}) null, null, null);
+}
 
 :host(.fab-vertical-bottom) {
   bottom: $fab-content-margin;
 }
 
+/**
+ * Reset the bottom value since edge
+ * styles use margin-bottom.
+ */
 :host(.fab-vertical-bottom.fab-edge) {
-  bottom: -$fab-size * 0.5;
+  bottom: 0;
 }
 
+/**
+ * We need to adjust the parent FAB button down by half
+ * its height so that half of it sits on the footer. As a result,
+ * we target the slotted ion-fab-button instead of targeting the host.
+ */
+:host(.fab-vertical-bottom.fab-edge) ::slotted(ion-fab-button) {
+  margin-bottom: -50%;
+}
+
+/**
+ * The small FAB button adds top and bottom margin. We need to account for
+ * that margin when we adjust the FAB button for edge styles since we
+ * are overriding the margin-bottom value below.
+ */
+:host(.fab-vertical-bottom.fab-edge) ::slotted(ion-fab-button.fab-button-small) {
+  margin-bottom: calc((-100% + $fab-button-small-margin * 2) / 2);
+}
+
+/**
+ * Since we are adjusting the FAB button we also need
+ * to adjust the sibling ion-fab-list otherwise there will be
+ * a gap between the parent FAB button and the associated list.
+ */
+:host(.fab-vertical-bottom.fab-edge) ::slotted(ion-fab-list.fab-list-side-start),
+:host(.fab-vertical-bottom.fab-edge) ::slotted(ion-fab-list.fab-list-side-end) {
+  @include margin(null, null, -50%, null);
+}
+
+:host(.fab-vertical-bottom.fab-edge) ::slotted(ion-fab-list.fab-list-side-top),
+:host(.fab-vertical-bottom.fab-edge) ::slotted(ion-fab-list.fab-list-side-bottom) {
+  @include margin(null, null, calc(50% + #{$fab-list-margin}) null);
+}
 
 :host(.fab-vertical-center) {
-  @include margin(-$fab-size * 0.5, null, null, null);
-
-  top: 50%;
+  @include position(0px, null, 0px, null);
+  @include margin(auto, null);
 }

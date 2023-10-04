@@ -25,6 +25,14 @@ describe('overlays - keepContentsMounted', () => {
 
       cy.get('ion-modal#auto-mount-modal ion-content').should('exist');
     });
+
+    it('should mount content if passed as attribute', () => {
+      cy.get('ion-modal#auto-mount-modal-attribute ion-content').should('exist');
+    });
+
+    it('should not mount content if passed as attribute with a value of false', () => {
+      cy.get('ion-modal#auto-mount-modal-attribute-false ion-content').should('not.exist');
+    });
   })
   describe('popover', () => {
     it('should not mount component if false', () => {
