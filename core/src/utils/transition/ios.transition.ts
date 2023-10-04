@@ -123,8 +123,8 @@ const animateBackButton = (
   rootAnimation: Animation,
   rtl: boolean,
   backDirection: boolean,
-  backButtonEl: any,
-  largeTitleEl: any,
+  backButtonEl: HTMLIonBackButtonElement,
+  largeTitleEl: HTMLIonTitleElement,
   backButtonBox: DOMRect
 ) => {
   const BACK_BUTTON_START_OFFSET = rtl ? `calc(100% - ${backButtonBox.right + 4}px)` : `${backButtonBox.left - 4}px`;
@@ -134,16 +134,16 @@ const animateBackButton = (
 
   const CONTAINER_ORIGIN_X = rtl ? 'right' : 'left';
 
-  const buttonText = shadow(backButtonEl).querySelector('.button-text');
+  const buttonText = shadow(backButtonEl).querySelector('.button-text')!;
   const buttonTextBox = buttonText.getBoundingClientRect();
 
-  const titleText = shadow(largeTitleEl).querySelector('.toolbar-title');
+  const titleText = shadow(largeTitleEl).querySelector('.toolbar-title')!;
   const titleTextBox = titleText.getBoundingClientRect();
 
   // TODO - Where does the 10 come from?
   const TEXT_START_SCALE = `scale(${titleTextBox.width / buttonTextBox.width}, ${(titleTextBox.height - 10) / buttonTextBox.height})`
   const TEXT_END_SCALE = 'scale(1)';
-  const icon = shadow(backButtonEl).querySelector('ion-icon');
+  const icon = shadow(backButtonEl).querySelector('ion-icon')!;
   const bbox = icon.getBoundingClientRect();
 
   const CONTAINER_START_TRANSLATE_X = rtl ? `${(bbox.width / 2) - (bbox.right - backButtonBox.right)}px` : `${backButtonBox.left - (bbox.width / 2)}px`;
@@ -292,9 +292,9 @@ const animateLargeTitle = (
   rootAnimation: Animation,
   rtl: boolean,
   backDirection: boolean,
-  largeTitleEl: any,
+  largeTitleEl: HTMLIonTitleElement,
   largeTitleBox: DOMRect,
-  backButtonEl: any,
+  backButtonEl: HTMLIonBackButtonElement,
 ) => {
   /**
    * The horizontal transform origin for the large title
@@ -303,10 +303,10 @@ const animateLargeTitle = (
 
   const TITLE_START_OFFSET = rtl ? `calc(100% - ${largeTitleBox.right}px)` : `${largeTitleBox.left}px`;
 
-  const buttonText = shadow(backButtonEl).querySelector('.button-text');
+  const buttonText = shadow(backButtonEl).querySelector('.button-text')!;
   const buttonTextBox = buttonText.getBoundingClientRect();
 
-  const titleText = shadow(largeTitleEl).querySelector('.toolbar-title');
+  const titleText = shadow(largeTitleEl).querySelector('.toolbar-title')!;
   const titleTextBox = titleText.getBoundingClientRect();
 
  /**
