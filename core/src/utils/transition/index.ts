@@ -177,7 +177,7 @@ const playTransition = async (trans: Animation, opts: TransitionOptions): Promis
     setTimeout(() => {
      // console.log(opts)
       if (opts.direction === 'forward') {
-      //trans.pause();
+     // trans.pause();
       }
     }, 450);
 
