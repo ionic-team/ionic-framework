@@ -82,7 +82,6 @@ const createLargeTitleTransition = (
       leavingLargeTitle,
       leavingLargeTitleBox,
       enteringBackButton,
-      enteringBackButtonBox
     );
     animateBackButton(
       rootAnimation,
@@ -90,7 +89,6 @@ const createLargeTitleTransition = (
       backDirection,
       enteringBackButton,
       leavingLargeTitle,
-      leavingLargeTitleBox,
       enteringBackButtonBox
     );
   } else if (shouldAnimationBackward) {
@@ -104,7 +102,6 @@ const createLargeTitleTransition = (
       enteringLargeTitle,
       enteringLargeTitleBox,
       leavingBackButton,
-      leavingBackButtonBox
     );
     animateBackButton(
       rootAnimation,
@@ -112,7 +109,6 @@ const createLargeTitleTransition = (
       backDirection,
       leavingBackButton,
       enteringLargeTitle,
-      enteringLargeTitleBox,
       leavingBackButtonBox
     );
   }
@@ -129,7 +125,6 @@ const animateBackButton = (
   backDirection: boolean,
   backButtonEl: any,
   largeTitleEl: any,
-  largeTitleBox: DOMRect,
   backButtonBox: DOMRect
 ) => {
   const BACK_BUTTON_START_OFFSET = rtl ? `calc(100% - ${backButtonBox.right + 4}px)` : `${backButtonBox.left - 4}px`;
@@ -145,6 +140,7 @@ const animateBackButton = (
   const titleText = shadow(largeTitleEl).querySelector('.toolbar-title');
   const titleTextBox = titleText.getBoundingClientRect();
 
+  // TODO - Where does the 10 come from?
   const TEXT_START_SCALE = `scale(${titleTextBox.width / buttonTextBox.width}, ${(titleTextBox.height - 10) / buttonTextBox.height})`
   const TEXT_END_SCALE = 'scale(1)';
   const icon = shadow(backButtonEl).querySelector('ion-icon');
@@ -299,11 +295,8 @@ const animateLargeTitle = (
   largeTitleEl: any,
   largeTitleBox: DOMRect,
   backButtonEl: any,
-  backButtonBox: DOMRect
 ) => {
   const TITLE_START_OFFSET = rtl ? `calc(100% - ${largeTitleBox.right}px)` : `${largeTitleBox.left}px`;
-
-  console.log(largeTitleEl, backButtonEl)
 
   const buttonText = shadow(backButtonEl).querySelector('.button-text');
   const buttonTextBox = buttonText.getBoundingClientRect();
