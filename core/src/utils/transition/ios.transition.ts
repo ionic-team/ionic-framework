@@ -326,17 +326,20 @@ const animateLargeTitle = (
    * does not need to be perfect, so approximate values are acceptable here.
    */
   const END_TRANSLATE_X = rtl ? `-${window.innerWidth - buttonTextBox.right - 8}px` : `${buttonTextBox.x - 8}px`;
-  // TODO figure out correct value here
-  // -18px for scaled text, -2px for default text
-  const END_TRANSLATE_Y = `-18px`;
 
-
-
+  /**
+   * The top of the scaled large title
+   * should match with the top of the
+   * back button text element.
+   * We subtract 2px to account for the top padding
+   * on the large title element.
+   */
+  const END_TRANSLATE_Y  = `${buttonTextBox.y - 2}px`
 
   const ORIGIN_X = rtl ? 'right' : 'left';
 
   const END_SCALE = `scale(${buttonTextBox.width / titleTextBox.width}, ${buttonTextBox.height / (titleTextBox.height - 10) })`;
-  console.log('end scale', END_SCALE)
+
   const START_SCALE = 'scale(1)';
 
   const BACKWARDS_KEYFRAMES = [
@@ -346,8 +349,8 @@ const animateLargeTitle = (
   ];
   const FORWARDS_KEYFRAMES = [
     { offset: 0, opacity: 0.99, transform: `translate3d(${START_TRANSLATE_X}, ${START_TRANSLATE_Y}, 0) ${START_SCALE}` },
-    { offset: 0.6, opacity: 1 },
-    { offset: 1, opacity: 1, transform: `translate3d(${END_TRANSLATE_X}, ${END_TRANSLATE_Y}, 0) ${END_SCALE}` },
+    { offset: 0.6, opacity: 0 },
+    { offset: 1, opacity: 0, transform: `translate3d(${END_TRANSLATE_X}, ${END_TRANSLATE_Y}, 0) ${END_SCALE}` },
   ];
 
   const KEYFRAMES = backDirection ? BACKWARDS_KEYFRAMES : FORWARDS_KEYFRAMES;
@@ -363,7 +366,7 @@ const animateLargeTitle = (
 
   clonedLargeTitleAnimation
     .beforeStyles({
-      'transform-origin': `${ORIGIN_X} center`,
+      'transform-origin': `${ORIGIN_X} top`,
       height: `${largeTitleBox.height}px`,
       display: '',
       position: 'relative',
