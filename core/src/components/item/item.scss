@@ -244,7 +244,7 @@
 
 // TODO(FW-5289): remove
 :host(.item-legacy) .item-native {
-  flex-wrap: nowrap;
+  flex-wrap: unset;
 }
 
 .item-native::-moz-focus-inner {
@@ -318,9 +318,9 @@ button, a {
 :host(.item-legacy) .item-inner {
   flex: 1;
 
-  flex-wrap: nowrap;
+  flex-wrap: unset;
 
-  max-width: none;
+  max-width: unset;
 }
 
 // Item Bottom
@@ -429,9 +429,9 @@ button, a {
 :host(.item-legacy) .input-wrapper {
   flex: 1;
 
-  flex-wrap: nowrap;
+  flex-wrap: unset;
 
-  max-width: none;
+  max-width: unset;
 }
 
 :host(.item-label-stacked),
