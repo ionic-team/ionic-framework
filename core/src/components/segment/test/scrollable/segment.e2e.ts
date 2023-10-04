@@ -85,23 +85,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
       );
 
       const activeButton = page.locator('#activeButton');
-
-      // wait for segment to scroll, which is done in a raf
-      await page.waitForTimeout(500);
-
-      /**
-       * We can't use toBeVisible() here because it returns true
-       * even if the element is outside the viewport.
-       */
-      const box = await activeButton.boundingBox();
-      const viewport = page.viewportSize();
-      let isInViewport = false;
-      if (box && viewport) {
-        isInViewport =
-          box.x >= 0 && box.y >= 0 && box.x + box.width <= viewport.width && box.y + box.height <= viewport.height;
-      }
-
-      expect(isInViewport).toBe(true);
+      await expect(activeButton).toBeInViewport();
     });
   });
 });
