@@ -30,6 +30,8 @@
 // TODO(FW-5289): remove
 :host-context(.item-legacy) {
   white-space: nowrap;
+
+  flex-grow: unset;
 }
 
 :host(.ion-color) {
