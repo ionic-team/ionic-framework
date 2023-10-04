@@ -75,42 +75,14 @@ const createLargeTitleTransition = (
     const leavingLargeTitleBox = leavingLargeTitle.getBoundingClientRect();
     const enteringBackButtonBox = enteringBackButton.getBoundingClientRect();
 
-    animateLargeTitle(
-      rootAnimation,
-      rtl,
-      backDirection,
-      leavingLargeTitle,
-      leavingLargeTitleBox,
-      enteringBackButton,
-    );
-    animateBackButton(
-      rootAnimation,
-      rtl,
-      backDirection,
-      enteringBackButton,
-      leavingLargeTitle,
-      enteringBackButtonBox
-    );
+    animateLargeTitle(rootAnimation, rtl, backDirection, leavingLargeTitle, leavingLargeTitleBox, enteringBackButton);
+    animateBackButton(rootAnimation, rtl, backDirection, enteringBackButton, leavingLargeTitle, enteringBackButtonBox);
   } else if (shouldAnimationBackward) {
     const enteringLargeTitleBox = enteringLargeTitle.getBoundingClientRect();
     const leavingBackButtonBox = leavingBackButton.getBoundingClientRect();
 
-    animateLargeTitle(
-      rootAnimation,
-      rtl,
-      backDirection,
-      enteringLargeTitle,
-      enteringLargeTitleBox,
-      leavingBackButton,
-    );
-    animateBackButton(
-      rootAnimation,
-      rtl,
-      backDirection,
-      leavingBackButton,
-      enteringLargeTitle,
-      leavingBackButtonBox
-    );
+    animateLargeTitle(rootAnimation, rtl, backDirection, enteringLargeTitle, enteringLargeTitleBox, leavingBackButton);
+    animateBackButton(rootAnimation, rtl, backDirection, leavingBackButton, enteringLargeTitle, leavingBackButtonBox);
   }
 
   return {
@@ -142,12 +114,16 @@ const animateBackButton = (
 
   // TODO - Where does the 10 come from?
   // TODO - Animation when button and title texts don't match
-  const TEXT_START_SCALE = `scale(${titleTextBox.width / buttonTextBox.width}, ${(titleTextBox.height - 10) / buttonTextBox.height})`
+  const TEXT_START_SCALE = `scale(${titleTextBox.width / buttonTextBox.width}, ${
+    (titleTextBox.height - 10) / buttonTextBox.height
+  })`;
   const TEXT_END_SCALE = 'scale(1)';
   const icon = shadow(backButtonEl).querySelector('ion-icon')!;
   const bbox = icon.getBoundingClientRect();
 
-  const CONTAINER_START_TRANSLATE_X = rtl ? `${(bbox.width / 2) - (bbox.right - backButtonBox.right)}px` : `${backButtonBox.left - (bbox.width / 2)}px`;
+  const CONTAINER_START_TRANSLATE_X = rtl
+    ? `${bbox.width / 2 - (bbox.right - backButtonBox.right)}px`
+    : `${backButtonBox.left - bbox.width / 2}px`;
   const CONTAINER_END_TRANSLATE_X = rtl ? `-${window.innerWidth - backButtonBox.right}px` : `${backButtonBox.left}px`;
 
   /**
@@ -174,7 +150,7 @@ const animateBackButton = (
    */
   const FORWARD_CONTAINER_KEYFRAMES = [
     { offset: 0, transform: `translate3d(${CONTAINER_START_TRANSLATE_X}, ${CONTAINER_START_TRANSLATE_Y}, 0)` },
-    { offset: 1, transform: `translate3d(${CONTAINER_END_TRANSLATE_X}, ${CONTAINER_END_TRANSLATE_Y}, 0)` }
+    { offset: 1, transform: `translate3d(${CONTAINER_END_TRANSLATE_X}, ${CONTAINER_END_TRANSLATE_Y}, 0)` },
   ];
   const BACKWARD_CONTAINER_KEYFRAMES = [
     { offset: 0, transform: `translate3d(${CONTAINER_END_TRANSLATE_X}, ${CONTAINER_END_TRANSLATE_Y}, 0)` },
@@ -190,12 +166,12 @@ const animateBackButton = (
    * by the container keyframes.
    */
   const FORWARD_TEXT_KEYFRAMES = [
-    { offset: 0, opacity: 0, transform: TEXT_START_SCALE, },
+    { offset: 0, opacity: 0, transform: TEXT_START_SCALE },
     { offset: 1, opacity: 1, transform: TEXT_END_SCALE },
   ];
   const BACKWARD_TEXT_KEYFRAMES = [
-    { offset: 0, opacity: 1, transform: TEXT_END_SCALE, },
-    { offset: 1, opacity: 0, transform: TEXT_START_SCALE, },
+    { offset: 0, opacity: 1, transform: TEXT_END_SCALE },
+    { offset: 1, opacity: 0, transform: TEXT_START_SCALE },
   ];
   const TEXT_KEYFRAMES = backDirection ? BACKWARD_TEXT_KEYFRAMES : FORWARD_TEXT_KEYFRAMES;
 
@@ -237,14 +213,15 @@ const animateBackButton = (
 
   enteringBackButtonIconAnimation.addElement(backButtonIconEl);
   enteringBackButtonTextAnimation.addElement(backButtonTextEl);
-  enteringBackButtonAnimation.addElement(clonedBackButtonEl)
+  enteringBackButtonAnimation.addElement(clonedBackButtonEl);
 
-  enteringBackButtonAnimation.beforeStyles({
-    position: 'absolute',
-    top: '0px',
-    [CONTAINER_ORIGIN_X]: '0px',
-  })
-  .keyframes(CONTAINER_KEYFRAMES);
+  enteringBackButtonAnimation
+    .beforeStyles({
+      position: 'absolute',
+      top: '0px',
+      [CONTAINER_ORIGIN_X]: '0px',
+    })
+    .keyframes(CONTAINER_KEYFRAMES);
 
   enteringBackButtonTextAnimation
     .beforeStyles({
@@ -267,7 +244,11 @@ const animateBackButton = (
     })
     .keyframes(ICON_KEYFRAMES);
 
-  rootAnimation.addAnimation([enteringBackButtonTextAnimation, enteringBackButtonIconAnimation, enteringBackButtonAnimation]);
+  rootAnimation.addAnimation([
+    enteringBackButtonTextAnimation,
+    enteringBackButtonIconAnimation,
+    enteringBackButtonAnimation,
+  ]);
 };
 
 const animateLargeTitle = (
@@ -276,7 +257,7 @@ const animateLargeTitle = (
   backDirection: boolean,
   largeTitleEl: HTMLIonTitleElement,
   largeTitleBox: DOMRect,
-  backButtonEl: HTMLIonBackButtonElement,
+  backButtonEl: HTMLIonBackButtonElement
 ) => {
   /**
    * The horizontal transform origin for the large title
@@ -291,11 +272,11 @@ const animateLargeTitle = (
   const titleText = shadow(largeTitleEl).querySelector('.toolbar-title')!;
   const titleTextBox = titleText.getBoundingClientRect();
 
- /**
-  * The cloned large should align exactly with the
-  * real large title on the leaving page otherwise there will
-  * be a layout shift.
-  */
+  /**
+   * The cloned large should align exactly with the
+   * real large title on the leaving page otherwise there will
+   * be a layout shift.
+   */
   const START_TRANSLATE_X = '0px';
   const START_TRANSLATE_Y = `${largeTitleBox.top}px`;
 
@@ -316,7 +297,7 @@ const animateLargeTitle = (
    * We subtract 2px to account for the top padding
    * on the large title element.
    */
-  const END_TRANSLATE_Y  = `${buttonTextBox.y - 2}px`
+  const END_TRANSLATE_Y = `${buttonTextBox.y - 2}px`;
 
   /**
    * In the forward direction, the large title should start at its
@@ -331,7 +312,9 @@ const animateLargeTitle = (
    * does not need to be perfect, so approximate values are acceptable here.
    */
   const START_SCALE = 'scale(1)';
-  const END_SCALE = `scale(${buttonTextBox.width / titleTextBox.width}, ${buttonTextBox.height / (titleTextBox.height - 10) })`;
+  const END_SCALE = `scale(${buttonTextBox.width / titleTextBox.width}, ${
+    buttonTextBox.height / (titleTextBox.height - 10)
+  })`;
 
   const BACKWARDS_KEYFRAMES = [
     { offset: 0, opacity: 0, transform: `translate3d(${END_TRANSLATE_X}, ${END_TRANSLATE_Y}, 0) ${END_SCALE}` },
@@ -339,7 +322,11 @@ const animateLargeTitle = (
     { offset: 1, opacity: 1, transform: `translate3d(${START_TRANSLATE_X}, ${START_TRANSLATE_Y}, 0) ${START_SCALE}` },
   ];
   const FORWARDS_KEYFRAMES = [
-    { offset: 0, opacity: 0.99, transform: `translate3d(${START_TRANSLATE_X}, ${START_TRANSLATE_Y}, 0) ${START_SCALE}` },
+    {
+      offset: 0,
+      opacity: 0.99,
+      transform: `translate3d(${START_TRANSLATE_X}, ${START_TRANSLATE_Y}, 0) ${START_SCALE}`,
+    },
     { offset: 0.6, opacity: 0 },
     { offset: 1, opacity: 0, transform: `translate3d(${END_TRANSLATE_X}, ${END_TRANSLATE_Y}, 0) ${END_SCALE}` },
   ];
