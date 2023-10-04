@@ -141,6 +141,7 @@ const animateBackButton = (
   const titleTextBox = titleText.getBoundingClientRect();
 
   // TODO - Where does the 10 come from?
+  // TODO - Animation when button and title texts don't match
   const TEXT_START_SCALE = `scale(${titleTextBox.width / buttonTextBox.width}, ${(titleTextBox.height - 10) / buttonTextBox.height})`
   const TEXT_END_SCALE = 'scale(1)';
   const icon = shadow(backButtonEl).querySelector('ion-icon')!;
@@ -164,74 +165,55 @@ const animateBackButton = (
    */
   const CONTAINER_END_TRANSLATE_Y = `${backButtonBox.top}px`;
 
+  /**
+   * In the forward direction, the cloned back button
+   * container should translate from over the large title
+   * to over the back button. In the backward direction,
+   * it should translate from over the back button to over
+   * the large title.
+   */
   const FORWARD_CONTAINER_KEYFRAMES = [
     { offset: 0, transform: `translate3d(${CONTAINER_START_TRANSLATE_X}, ${CONTAINER_START_TRANSLATE_Y}, 0)` },
     { offset: 1, transform: `translate3d(${CONTAINER_END_TRANSLATE_X}, ${CONTAINER_END_TRANSLATE_Y}, 0)` }
   ];
-
   const BACKWARD_CONTAINER_KEYFRAMES = [
     { offset: 0, transform: `translate3d(${CONTAINER_END_TRANSLATE_X}, ${CONTAINER_END_TRANSLATE_Y}, 0)` },
     { offset: 1, transform: `translate3d(${CONTAINER_START_TRANSLATE_X}, ${CONTAINER_START_TRANSLATE_Y}, 0)` },
   ];
-
   const CONTAINER_KEYFRAMES = backDirection ? BACKWARD_CONTAINER_KEYFRAMES : FORWARD_CONTAINER_KEYFRAMES;
 
+  /**
+   * In the forward direction, the text in the cloned back button
+   * should start to be (roughly) the size of the large title
+   * and then scale down to be the size of the actual back button.
+   * The text should also translate, but that translate is handled
+   * by the container keyframes.
+   */
   const FORWARD_TEXT_KEYFRAMES = [
-    {
-      offset: 0,
-      opacity: 0,
-      transform: TEXT_START_SCALE,
-    },
-    {
-      offset: 1,
-      opacity: 1,
-      transform: TEXT_END_SCALE
-    },
+    { offset: 0, opacity: 0, transform: TEXT_START_SCALE, },
+    { offset: 1, opacity: 1, transform: TEXT_END_SCALE },
   ];
-
   const BACKWARD_TEXT_KEYFRAMES = [
     { offset: 0, opacity: 1, transform: TEXT_END_SCALE, },
-    {
-      offset: 1,
-      opacity: 0,
-      transform: TEXT_START_SCALE,
-    },
+    { offset: 1, opacity: 0, transform: TEXT_START_SCALE, },
   ];
   const TEXT_KEYFRAMES = backDirection ? BACKWARD_TEXT_KEYFRAMES : FORWARD_TEXT_KEYFRAMES;
 
+  /**
+   * The icon should scale in/out in the second
+   * half of the animation. The icon should also
+   * translate, but that translate is handled by the
+   * container keyframes.
+   */
   const FORWARD_ICON_KEYFRAMES = [
-    {
-      offset: 0,
-      opacity: 0,
-      transform: 'scale(0.6)'
-    },
-    {
-      offset: 0.6,
-      opacity: 0,
-      transform: 'scale(0.6)'
-    },
-    {
-      offset: 1,
-      opacity: 1,
-      transform: 'scale(1)'
-    },
+    { offset: 0, opacity: 0, transform: 'scale(0.6)' },
+    { offset: 0.6, opacity: 0, transform: 'scale(0.6)' },
+    { offset: 1, opacity: 1, transform: 'scale(1)' },
   ];
   const BACKWARD_ICON_KEYFRAMES = [
-    {
-      offset: 0,
-      opacity: 1,
-      transform: 'scale(1)'
-    },
-    {
-      offset: 0.2,
-      opacity: 0,
-      transform: 'scale(0.6)'
-    },
-    {
-      offset: 1,
-      opacity: 0,
-      transform: 'scale(0.6)'
-    },
+    { offset: 0, opacity: 1, transform: 'scale(1)' },
+    { offset: 0.2, opacity: 0, transform: 'scale(0.6)' },
+    { offset: 1, opacity: 0, transform: 'scale(0.6)' },
   ];
   const ICON_KEYFRAMES = backDirection ? BACKWARD_ICON_KEYFRAMES : FORWARD_ICON_KEYFRAMES;
 
