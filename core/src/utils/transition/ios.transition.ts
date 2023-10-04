@@ -103,7 +103,7 @@ const createLargeTitleTransition = (
       backDirection,
       enteringLargeTitle,
       enteringLargeTitleBox,
-      leavingBackButtonBox,
+      leavingBackButton,
       leavingBackButtonBox
     );
     animateBackButton(
@@ -302,6 +302,8 @@ const animateLargeTitle = (
   backButtonBox: DOMRect
 ) => {
   const TITLE_START_OFFSET = rtl ? `calc(100% - ${largeTitleBox.right}px)` : `${largeTitleBox.left}px`;
+
+  console.log(largeTitleEl, backButtonEl)
 
   const buttonText = shadow(backButtonEl).querySelector('.button-text');
   const buttonTextBox = buttonText.getBoundingClientRect();
