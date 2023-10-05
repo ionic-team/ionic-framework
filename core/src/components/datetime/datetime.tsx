@@ -19,6 +19,7 @@ import type {
   DatetimeHighlight,
   DatetimeHighlightStyle,
   DatetimeHighlightCallback,
+  DatetimeHourCycle,
 } from './datetime-interface';
 import { isSameDay, warnIfValueOutOfBounds, isBefore, isAfter } from './utils/comparison';
 import {
@@ -33,7 +34,7 @@ import {
   getCombinedDateColumnData,
 } from './utils/data';
 import { formatValue, getLocalizedTime, getMonthAndDay, getMonthAndYear } from './utils/format';
-import { is24Hour, isLocaleDayPeriodRTL, isMonthFirstLocale, getNumDaysInMonth } from './utils/helpers';
+import { isLocaleDayPeriodRTL, isMonthFirstLocale, getNumDaysInMonth, getHourCycle } from './utils/helpers';
 import {
   calculateHourFromAMPM,
   convertDataToISO,
@@ -422,7 +423,7 @@ export class Datetime implements ComponentInterface {
    * The hour cycle of the `ion-datetime`. If no value is set, this is
    * specified by the current locale.
    */
-  @Prop() hourCycle?: 'h23' | 'h12';
+  @Prop() hourCycle?: DatetimeHourCycle;
 
   /**
    * If `cover`, the `ion-datetime` will expand to cover the full width of its container.
@@ -2237,7 +2238,7 @@ export class Datetime implements ComponentInterface {
 
   private renderTimeOverlay() {
     const { hourCycle, isTimePopoverOpen, locale } = this;
-    const use24Hour = is24Hour(locale, hourCycle);
+    const computedHourCycle = getHourCycle(locale, hourCycle);
     const activePart = this.getActivePartsWithFallback();
 
     return [
@@ -2270,7 +2271,7 @@ export class Datetime implements ComponentInterface {
           }
         }}
       >
-        {getLocalizedTime(locale, activePart, use24Hour)}
+        {getLocalizedTime(locale, activePart, computedHourCycle)}
       </button>,
       <ion-popover
         alignment="center"
