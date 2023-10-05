@@ -75,14 +75,64 @@ const createLargeTitleTransition = (
     const leavingLargeTitleBox = leavingLargeTitle.getBoundingClientRect();
     const enteringBackButtonBox = enteringBackButton.getBoundingClientRect();
 
-    animateLargeTitle(rootAnimation, rtl, backDirection, leavingLargeTitle, leavingLargeTitleBox, enteringBackButton);
-    animateBackButton(rootAnimation, rtl, backDirection, enteringBackButton, leavingLargeTitle, enteringBackButtonBox);
+    const enteringBackButtonTextEl = shadow(enteringBackButton).querySelector('.button-text')!;
+    const enteringBackButtonTextBox = enteringBackButtonTextEl.getBoundingClientRect();
+
+    const leavingLargeTitleTextEl = shadow(leavingLargeTitle).querySelector('.toolbar-title')!;
+    const leavingLargeTitleTextBox = leavingLargeTitleTextEl.getBoundingClientRect();
+
+    animateLargeTitle(
+      rootAnimation,
+      rtl,
+      backDirection,
+      leavingLargeTitle,
+      leavingLargeTitleBox,
+      leavingLargeTitleTextBox,
+      enteringBackButtonTextEl,
+      enteringBackButtonTextBox
+    );
+    animateBackButton(
+      rootAnimation,
+      rtl,
+      backDirection,
+      enteringBackButton,
+      enteringBackButtonBox,
+      enteringBackButtonTextEl,
+      enteringBackButtonTextBox,
+      leavingLargeTitle,
+      leavingLargeTitleTextBox
+    );
   } else if (shouldAnimationBackward) {
     const enteringLargeTitleBox = enteringLargeTitle.getBoundingClientRect();
     const leavingBackButtonBox = leavingBackButton.getBoundingClientRect();
 
-    animateLargeTitle(rootAnimation, rtl, backDirection, enteringLargeTitle, enteringLargeTitleBox, leavingBackButton);
-    animateBackButton(rootAnimation, rtl, backDirection, leavingBackButton, enteringLargeTitle, leavingBackButtonBox);
+    const leavingBackButtonTextEl = shadow(leavingBackButton).querySelector('.button-text')!;
+    const leavingBackButtonTextBox = leavingBackButtonTextEl.getBoundingClientRect();
+
+    const enteringLargeTitleTextEl = shadow(enteringLargeTitle).querySelector('.toolbar-title')!;
+    const enteringLargeTitleTextBox = enteringLargeTitleTextEl.getBoundingClientRect();
+
+    animateLargeTitle(
+      rootAnimation,
+      rtl,
+      backDirection,
+      enteringLargeTitle,
+      enteringLargeTitleBox,
+      enteringLargeTitleTextBox,
+      leavingBackButtonTextEl,
+      leavingBackButtonTextBox
+    );
+    animateBackButton(
+      rootAnimation,
+      rtl,
+      backDirection,
+      leavingBackButton,
+      leavingBackButtonBox,
+      leavingBackButtonTextEl,
+      leavingBackButtonTextBox,
+      enteringLargeTitle,
+      enteringLargeTitleTextBox
+    );
   }
 
   return {
@@ -96,8 +146,11 @@ const animateBackButton = (
   rtl: boolean,
   backDirection: boolean,
   backButtonEl: HTMLIonBackButtonElement,
+  backButtonBox: DOMRect,
+  backButtonTextEl: HTMLElement,
+  backButtonTextBox: DOMRect,
   largeTitleEl: HTMLIonTitleElement,
-  backButtonBox: DOMRect
+  largeTitleTextBox: DOMRect
 ) => {
   const BACK_BUTTON_START_OFFSET = rtl ? `calc(100% - ${backButtonBox.right + 4}px)` : `${backButtonBox.left - 4}px`;
 
@@ -106,12 +159,6 @@ const animateBackButton = (
 
   const CONTAINER_ORIGIN_X = rtl ? 'right' : 'left';
 
-  const buttonText = shadow(backButtonEl).querySelector('.button-text')!;
-  const buttonTextBox = buttonText.getBoundingClientRect();
-
-  const titleText = shadow(largeTitleEl).querySelector('.toolbar-title')!;
-  const titleTextBox = titleText.getBoundingClientRect();
-
   /**
    * When the title and back button texts match
    * then they should overlap during the page transition.
@@ -119,15 +166,15 @@ const animateBackButton = (
    * to not perfectly match the large title text otherwise the
    * proportions will be incorrect.
    */
-  const doTitleAndButtonTextsMatch = buttonText.textContent === largeTitleEl.textContent;
+  const doTitleAndButtonTextsMatch = backButtonTextEl.textContent === largeTitleEl.textContent;
 
-  const WIDTH_SCALE = titleTextBox.width / buttonTextBox.width;
+  const WIDTH_SCALE = largeTitleTextBox.width / backButtonTextBox.width;
 
   /**
    * We subtract 10px to account for slight sizing/padding
    * differences between the title and the back button.
    */
-  const HEIGHT_SCALE = (titleTextBox.height - 10) / buttonTextBox.height;
+  const HEIGHT_SCALE = (largeTitleTextBox.height - 10) / backButtonTextBox.height;
 
   const TEXT_START_SCALE = doTitleAndButtonTextsMatch
     ? `scale(${WIDTH_SCALE}, ${HEIGHT_SCALE})`
@@ -147,7 +194,7 @@ const animateBackButton = (
    * so the texts overlap as the back button
    * text begins to fade in.
    */
-  const CONTAINER_START_TRANSLATE_Y = `${titleTextBox.top}px`;
+  const CONTAINER_START_TRANSLATE_Y = `${largeTitleTextBox.top}px`;
 
   /**
    * The cloned back button should align exactly with the
@@ -214,8 +261,8 @@ const animateBackButton = (
 
   const clonedBackButtonEl = getClonedElement('ion-back-button');
 
-  const backButtonTextEl = shadow(clonedBackButtonEl).querySelector('.button-text');
-  const backButtonIconEl = shadow(clonedBackButtonEl).querySelector('ion-icon');
+  const clonedBackButtonTextEl = shadow(clonedBackButtonEl).querySelector('.button-text');
+  const clonedBackButtonIconEl = shadow(clonedBackButtonEl).querySelector('ion-icon');
 
   clonedBackButtonEl.text = backButtonEl.text;
   clonedBackButtonEl.mode = backButtonEl.mode;
@@ -226,8 +273,8 @@ const animateBackButton = (
   clonedBackButtonEl.style.setProperty('display', 'block');
   clonedBackButtonEl.style.setProperty('position', 'fixed');
 
-  enteringBackButtonIconAnimation.addElement(backButtonIconEl);
-  enteringBackButtonTextAnimation.addElement(backButtonTextEl);
+  enteringBackButtonIconAnimation.addElement(clonedBackButtonIconEl);
+  enteringBackButtonTextAnimation.addElement(clonedBackButtonTextEl);
   enteringBackButtonAnimation.addElement(clonedBackButtonEl);
 
   enteringBackButtonAnimation
@@ -272,7 +319,9 @@ const animateLargeTitle = (
   backDirection: boolean,
   largeTitleEl: HTMLIonTitleElement,
   largeTitleBox: DOMRect,
-  backButtonEl: HTMLIonBackButtonElement
+  largeTitleTextBox: DOMRect,
+  backButtonTextEl: HTMLElement,
+  backButtonTextBox: DOMRect
 ) => {
   /**
    * The horizontal transform origin for the large title
@@ -280,12 +329,6 @@ const animateLargeTitle = (
   const ORIGIN_X = rtl ? 'right' : 'left';
 
   const TITLE_START_OFFSET = rtl ? `calc(100% - ${largeTitleBox.right}px)` : `${largeTitleBox.left}px`;
-
-  const buttonText = shadow(backButtonEl).querySelector('.button-text')!;
-  const buttonTextBox = buttonText.getBoundingClientRect();
-
-  const titleText = shadow(largeTitleEl).querySelector('.toolbar-title')!;
-  const titleTextBox = titleText.getBoundingClientRect();
 
   /**
    * The cloned large should align exactly with the
@@ -303,7 +346,9 @@ const animateLargeTitle = (
    * will be fully visible on top of the other. As a result, the overlap
    * does not need to be perfect, so approximate values are acceptable here.
    */
-  const END_TRANSLATE_X = rtl ? `-${window.innerWidth - buttonTextBox.right - 8}px` : `${buttonTextBox.x - 8}px`;
+  const END_TRANSLATE_X = rtl
+    ? `-${window.innerWidth - backButtonTextBox.right - 8}px`
+    : `${backButtonTextBox.x - 8}px`;
 
   /**
    * The top of the scaled large title
@@ -312,7 +357,7 @@ const animateLargeTitle = (
    * We subtract 2px to account for the top padding
    * on the large title element.
    */
-  const END_TRANSLATE_Y = `${buttonTextBox.y - 2}px`;
+  const END_TRANSLATE_Y = `${backButtonTextBox.y - 2}px`;
 
   /**
    * In the forward direction, the large title should start at its
@@ -334,10 +379,10 @@ const animateLargeTitle = (
    * to not perfectly match the back button text otherwise the
    * proportions will be incorrect.
    */
-  const doTitleAndButtonTextsMatch = buttonText.textContent === largeTitleEl.textContent;
+  const doTitleAndButtonTextsMatch = backButtonTextEl.textContent === largeTitleEl.textContent;
 
-  const WIDTH_SCALE = buttonTextBox.width / titleTextBox.width;
-  const HEIGHT_SCALE = buttonTextBox.height / (titleTextBox.height - 10);
+  const WIDTH_SCALE = backButtonTextBox.width / largeTitleTextBox.width;
+  const HEIGHT_SCALE = backButtonTextBox.height / (largeTitleTextBox.height - 10);
 
   const START_SCALE = 'scale(1)';
   const END_SCALE = doTitleAndButtonTextsMatch ? `scale(${WIDTH_SCALE}, ${HEIGHT_SCALE})` : `scale(${HEIGHT_SCALE})`;
