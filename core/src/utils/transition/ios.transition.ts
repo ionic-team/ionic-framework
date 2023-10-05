@@ -112,11 +112,26 @@ const animateBackButton = (
   const titleText = shadow(largeTitleEl).querySelector('.toolbar-title')!;
   const titleTextBox = titleText.getBoundingClientRect();
 
-  // TODO - Where does the 10 come from?
-  // TODO - Animation when button and title texts don't match
-  const TEXT_START_SCALE = `scale(${titleTextBox.width / buttonTextBox.width}, ${
-    (titleTextBox.height - 10) / buttonTextBox.height
-  })`;
+  /**
+   * When the title and back button texts match
+   * then they should overlap during the page transition.
+   * If the texts do not match up then the back button text scale adjusts
+   * to not perfectly match the large title text otherwise the
+   * proportions will be incorrect.
+   */
+  const doTitleAndButtonTextsMatch = buttonText.textContent === largeTitleEl.textContent;
+
+  const WIDTH_SCALE = titleTextBox.width / buttonTextBox.width;
+
+  /**
+   * We subtract 10px to account for slight sizing/padding
+   * differences between the title and the back button.
+   */
+  const HEIGHT_SCALE = (titleTextBox.height - 10) / buttonTextBox.height;
+
+  const TEXT_START_SCALE = doTitleAndButtonTextsMatch
+    ? `scale(${WIDTH_SCALE}, ${HEIGHT_SCALE})`
+    : `scale(${HEIGHT_SCALE})`;
   const TEXT_END_SCALE = 'scale(1)';
   const icon = shadow(backButtonEl).querySelector('ion-icon')!;
   const bbox = icon.getBoundingClientRect();
@@ -311,10 +326,21 @@ const animateLargeTitle = (
    * will be fully visible on top of the other. As a result, the overlap
    * does not need to be perfect, so approximate values are acceptable here.
    */
+
+  /**
+   * When the title and back button texts match
+   * then they should overlap during the page transition.
+   * If the texts do not match up then the large title text scale adjusts
+   * to not perfectly match the back button text otherwise the
+   * proportions will be incorrect.
+   */
+  const doTitleAndButtonTextsMatch = buttonText.textContent === largeTitleEl.textContent;
+
+  const WIDTH_SCALE = buttonTextBox.width / titleTextBox.width;
+  const HEIGHT_SCALE = buttonTextBox.height / (titleTextBox.height - 10);
+
   const START_SCALE = 'scale(1)';
-  const END_SCALE = `scale(${buttonTextBox.width / titleTextBox.width}, ${
-    buttonTextBox.height / (titleTextBox.height - 10)
-  })`;
+  const END_SCALE = doTitleAndButtonTextsMatch ? `scale(${WIDTH_SCALE}, ${HEIGHT_SCALE})` : `scale(${HEIGHT_SCALE})`;
 
   const BACKWARDS_KEYFRAMES = [
     { offset: 0, opacity: 0, transform: `translate3d(${END_TRANSLATE_X}, ${END_TRANSLATE_Y}, 0) ${END_SCALE}` },
