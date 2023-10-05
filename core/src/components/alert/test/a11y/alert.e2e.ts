@@ -76,6 +76,23 @@ configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
       await expect(alertButton).toHaveAttribute('aria-labelledby', 'close-label');
       await expect(alertButton).toHaveAttribute('aria-label', 'close button');
     });
+
+    test('should not toggle the checkbox when pressing the Enter key', async ({ page }) => {
+      const didPresent = await page.spyOnEvent('ionAlertDidPresent');
+
+      const button = page.locator('#checkbox');
+      await button.click();
+
+      await didPresent.next();
+
+      const alertCheckbox = page.locator('ion-alert .alert-checkbox');
+      const ariaChecked = await alertCheckbox.getAttribute('aria-checked');
+
+      await expect(alertCheckbox).toHaveAttribute('aria-checked', ariaChecked!);
+
+      await alertCheckbox.press('Enter');
+      await expect(alertCheckbox).toHaveAttribute('aria-checked', ariaChecked!);
+    });
   });
 });
 
