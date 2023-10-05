@@ -180,12 +180,19 @@ const animateBackButton = (
     ? `scale(${WIDTH_SCALE}, ${HEIGHT_SCALE})`
     : `scale(${HEIGHT_SCALE})`;
   const TEXT_END_SCALE = 'scale(1)';
-  const icon = shadow(backButtonEl).querySelector('ion-icon')!;
-  const bbox = icon.getBoundingClientRect();
 
+  const backButtonIconEl = shadow(backButtonEl).querySelector('ion-icon')!;
+  const backButtonIconBox = backButtonIconEl.getBoundingClientRect();
+
+  /**
+   * We need to offset the container by the icon dimensions
+   * so that the back button text aligns with the large title
+   * text. Otherwise, the back button icon will align with the
+   * large title text but the back button text will not.
+   */
   const CONTAINER_START_TRANSLATE_X = rtl
-    ? `${bbox.width / 2 - (bbox.right - backButtonBox.right)}px`
-    : `${backButtonBox.left - bbox.width / 2}px`;
+    ? `${backButtonIconBox.width / 2 - (backButtonIconBox.right - backButtonBox.right)}px`
+    : `${backButtonBox.left - backButtonIconBox.width / 2}px`;
   const CONTAINER_END_TRANSLATE_X = rtl ? `-${window.innerWidth - backButtonBox.right}px` : `${backButtonBox.left}px`;
 
   /**
