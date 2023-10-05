@@ -68,5 +68,13 @@
 :host(.title-large) .toolbar-title {
   @include transform-origin(inherit);
 
+  /**
+   * During a page transition
+   * if the large title and the back button
+   * texts match up, the back button should be
+   * scaled to roughly match the dimensions of
+   * the large title text. The following line
+   * ensures that the scale values are accurate.
+   */
   width: auto;
 }
