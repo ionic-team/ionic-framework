@@ -7,6 +7,11 @@ import { configs, test } from '@utils/test/playwright';
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('menu: multiple'), () => {
     test.beforeEach(async ({ page }) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/18974',
+      });
+
       await page.goto(`/src/components/menu/test/multiple`, config);
     });
 
