@@ -353,8 +353,8 @@ const animateLargeTitle = (
       opacity: 0.99,
       transform: `translate3d(${START_TRANSLATE_X}, ${START_TRANSLATE_Y}, 0) ${START_SCALE}`,
     },
-    { offset: 0.6, opacity: 1 },
-    { offset: 1, opacity: 1, transform: `translate3d(${END_TRANSLATE_X}, ${END_TRANSLATE_Y}, 0) ${END_SCALE}` },
+    { offset: 0.6, opacity: 0 },
+    { offset: 1, opacity: 0, transform: `translate3d(${END_TRANSLATE_X}, ${END_TRANSLATE_Y}, 0) ${END_SCALE}` },
   ];
 
   const KEYFRAMES = backDirection ? BACKWARDS_KEYFRAMES : FORWARDS_KEYFRAMES;
