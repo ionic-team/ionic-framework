@@ -42,7 +42,7 @@ describe('toggle', () => {
   });
 });
 
-describe.only('ion-toggle: disabled', () => {
+describe('ion-toggle: disabled', () => {
   it('clicking disabled toggle should not toggle checked state', async () => {
     const page = await newSpecPage({
       components: [Toggle],
