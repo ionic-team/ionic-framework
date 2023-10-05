@@ -8,6 +8,7 @@ export interface ToastOptions {
   duration?: number;
   buttons?: (ToastButton | string)[];
   position?: 'top' | 'bottom' | 'middle';
+  positionAnchor?: HTMLElement | string;
   translucent?: boolean;
   animated?: boolean;
   icon?: string;
@@ -42,3 +43,15 @@ export interface ToastButton {
 }
 
 export type ToastPosition = 'top' | 'bottom' | 'middle';
+
+interface ToastPositionAlias {
+  position: ToastPosition;
+}
+
+export interface ToastAnimationPosition {
+  top: string;
+  bottom: string;
+}
+
+export type ToastPresentOptions = ToastPositionAlias & ToastAnimationPosition;
+export type ToastDismissOptions = ToastPositionAlias & ToastAnimationPosition;

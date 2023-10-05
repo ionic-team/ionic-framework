@@ -14,7 +14,8 @@
       "dom",
       "dom.iterable",
       "es2017",
-      "es2020"
+      "es2020",
+      "es2021"
     ],
     "module": "esnext",
     "moduleResolution": "node",
