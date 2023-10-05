@@ -131,4 +131,5 @@ export {
   ToggleChangeEventDetail,
   ToggleCustomEvent,
   TransitionOptions,
+  openURL,
 } from '@ionic/core';
