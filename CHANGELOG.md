@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.4.4-nightly.20231005](https://github.com/ionic-team/ionic-framework/compare/v7.4.3...v7.4.4-nightly.20231005) (2023-10-05)
+
+
+### Bug Fixes
+
+* **content:** fullscreen offset is computed correctly with tab bar ([#28245](https://github.com/ionic-team/ionic-framework/issues/28245)) ([7375dd6](https://github.com/ionic-team/ionic-framework/commit/7375dd6abafdf7457f23deb53ad5f016456a6af2)), closes [#21130](https://github.com/ionic-team/ionic-framework/issues/21130)
+* **core:** allow fullscreen scroll content to flow outside container for translucent tab bar ([#28246](https://github.com/ionic-team/ionic-framework/issues/28246)) ([b297529](https://github.com/ionic-team/ionic-framework/commit/b297529afc4b93a93f7eaecd31dd5a88a3de5f4e)), closes [#17676](https://github.com/ionic-team/ionic-framework/issues/17676)
+* **segment:** scroll to active segment-button on first load ([#28276](https://github.com/ionic-team/ionic-framework/issues/28276)) ([1167a93](https://github.com/ionic-team/ionic-framework/commit/1167a9325fb930b6c727bc26889f5488d9620062)), closes [#28096](https://github.com/ionic-team/ionic-framework/issues/28096)
+
+
+
+
+
 ## [7.4.3](https://github.com/ionic-team/ionic-framework/compare/v7.4.2...v7.4.3) (2023-10-04)
 
 
