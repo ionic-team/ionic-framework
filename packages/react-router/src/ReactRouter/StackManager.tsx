@@ -154,7 +154,7 @@ export class StackManager extends React.PureComponent<StackManagerProps, StackMa
   async handlePageTransition() {
     const { id, props } = this;
     const { routeInfo } = props;
-    const { prevRouteLastPathname, routeDirection, pushedByRoute, routeAnimation } = routeInfo;
+    const { prevRouteLastPathname, routeDirection, pushedByRoute, routeAnimation, routeAction, delta } = routeInfo;
 
     const enteringViewItem = this.context.findViewItemByRouteInfo(routeInfo, id)!;
     let leavingViewItem = this.context.findLeavingViewItemByRouteInfo(routeInfo, id);
@@ -205,7 +205,28 @@ See https://ionicframework.com/docs/react/navigation#ionpage for more informatio
       return;
     }
 
+    // Vue performs a fireLifeCycle for willEnter here on the enteringViewItem
+
     if (leavingViewItem?.ionPageElement && enteringViewItem !== leavingViewItem) {
+      const enteringEl = enteringViewItem.ionPageElement;
+      const leavingEl = leavingViewItem.ionPageElement;
+
+      let animationBuilder = routeAnimation;
+
+      /**
+       * If we are going back from a page that
+       * was presented using a custom animation
+       * we should default to using that
+       * unless the developer explicitly
+       * provided another animation.
+       */
+      const customAnimation = enteringViewItem!.routerAnimation;
+      if (animationBuilder === undefined && routeDirection === 'back' && customAnimation !== undefined) {
+        animationBuilder = customAnimation;
+      }
+
+      leavingViewItem.routerAnimation = animationBuilder;
+
       /**
        * The view should only be transitioned in the following cases:
        * 1. Performing a replace or pop action, such as a swipe to go back gesture
@@ -221,14 +242,32 @@ See https://ionicframework.com/docs/react/navigation#ionpage for more informatio
        * route or on an initial page load (i.e. refreshing). In cases when loading
        * /tabs/tab-1, we need to transition the /tabs page element into the view.
        */
-      this.transition(
-        enteringViewItem.ionPageElement!,
-        leavingViewItem.ionPageElement!,
-        routeDirection!,
-        !!pushedByRoute,
-        false,
-        routeAnimation
-      );
+      this.transition(enteringEl!, leavingEl, routeDirection!, !!pushedByRoute, false, animationBuilder);
+
+      leavingEl.classList.add('ion-page-hidden');
+      leavingEl.setAttribute('aria-hidden', 'true');
+
+      const usingLinearNavigation = this.context.size() === 1;
+
+      if (routeAction === 'replace') {
+        leavingViewItem.mount = false;
+        leavingViewItem.ionPageElement = undefined;
+        leavingViewItem.ionRoute = false;
+      } else if (!(routeAction === 'push' && routeDirection === 'forward')) {
+        const shouldLeavingViewBeRemoved =
+          routeDirection !== 'none' && leavingViewItem && enteringViewItem !== leavingViewItem;
+        if (shouldLeavingViewBeRemoved) {
+          leavingViewItem.mount = false;
+          leavingViewItem.ionPageElement = undefined;
+          leavingViewItem.ionRoute = false;
+        }
+
+        if (usingLinearNavigation) {
+          this.context.unmountLeavingViews(id, enteringViewItem, delta);
+        }
+      } else if (usingLinearNavigation) {
+        this.context.mountIntermediaryViews(id, leavingViewItem, delta);
+      }
     } else {
       /**
        * If there is no leaving element, just show

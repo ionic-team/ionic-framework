@@ -11,7 +11,7 @@ export const createViewStacks = (router: Router) => {
    * Returns the number of active stacks.
    * This is useful for determining if an app
    * is using linear navigation only or non-linear
-   * navigation. Multiple stacks indiciate an app
+   * navigation. Multiple stacks indicate an app
    * is using non-linear navigation.
    */
   const size = () => Object.keys(viewStacks).length;

@@ -8,7 +8,11 @@ export interface RouteInfo<TOptions = any> {
   lastPathname?: string;
   prevRouteLastPathname?: string;
   routeAction?: RouteAction;
+  // In Ionic Vue this is called routerDirection
+  // TODO we should align the naming
   routeDirection?: RouterDirection;
+  // In Ionic Vue this is called routerAnimation
+  // TODO we should align the naming
   routeAnimation?: AnimationBuilder;
   routeOptions?: TOptions;
   params?: { [key: string]: string | string[] };
@@ -16,4 +20,5 @@ export interface RouteInfo<TOptions = any> {
   pathname: string;
   search: string;
   tab?: string;
+  delta?: number;
 }
