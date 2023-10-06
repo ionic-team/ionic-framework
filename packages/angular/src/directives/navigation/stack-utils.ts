@@ -14,7 +14,6 @@ export const insertView = (views: RouteView[], view: RouteView, direction: Route
 
 const setRoot = (views: RouteView[], view: RouteView) => {
   views = views.filter((v) => v.stackId !== view.stackId);
-  view.root = true;
   views.push(view);
   return views;
 };
@@ -111,5 +110,4 @@ export interface RouteView {
   savedExtras?: NavigationExtras;
   unlistenEvents: () => void;
   animationBuilder?: AnimationBuilder;
-  root?: boolean;
 }

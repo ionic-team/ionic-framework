@@ -40,8 +40,8 @@ export class NavController {
           // restoredState is set if the browser back/forward button is used
           const id = ev.restoredState ? ev.restoredState.navigationId : ev.id;
           this.guessDirection = id < this.lastNavId ? 'back' : 'forward';
-          this.guessAnimation = this.guessDirection;
-          this.lastNavId = id;
+          this.guessAnimation = !ev.restoredState ? this.guessDirection : undefined;
+          this.lastNavId = this.guessDirection === 'forward' ? ev.id : id;
         }
       });
     }
@@ -181,13 +181,10 @@ export class NavController {
     direction: RouterDirection;
     animation: NavDirection | undefined;
     animationBuilder: AnimationBuilder | undefined;
-    isDirectionBasedOnNavigationIds: boolean;
   } {
     let direction: RouterDirection = 'root';
     let animation: NavDirection | undefined;
     const animationBuilder = this.animationBuilder;
-
-    const isDirectionBasedOnNavigationIds = this.direction === 'auto';
 
     if (this.direction === 'auto') {
       direction = this.guessDirection;
@@ -204,7 +201,6 @@ export class NavController {
       direction,
       animation,
       animationBuilder,
-      isDirectionBasedOnNavigationIds,
     };
   }
 
