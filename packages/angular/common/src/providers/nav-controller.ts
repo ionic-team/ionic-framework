@@ -39,9 +39,8 @@ export class NavController {
         if (ev instanceof NavigationStart) {
           // restoredState is set if the browser back/forward button is used
           const id = ev.restoredState ? ev.restoredState.navigationId : ev.id;
-          this.guessDirection = id < this.lastNavId ? 'back' : 'forward';
-          this.guessAnimation = this.guessDirection;
-          this.lastNavId = id;
+          this.guessAnimation = this.guessDirection = id < this.lastNavId ? 'back' : 'forward';
+          this.lastNavId = this.guessDirection === 'forward' ? ev.id : id;
         }
       });
     }
