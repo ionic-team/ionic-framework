@@ -19,6 +19,7 @@ export class SkeletonText implements ComponentInterface {
   @Prop() animated = false;
 
   render() {
+    const { el } = this;
     const animated = this.animated && config.getBoolean('animated', true);
     const inMedia = hostContext('ion-avatar', this.el) || hostContext('ion-thumbnail', this.el);
     const mode = getIonMode(this);
@@ -29,6 +30,7 @@ export class SkeletonText implements ComponentInterface {
           [mode]: true,
           'skeleton-text-animated': animated,
           'in-media': inMedia,
+          'in-item': hostContext('ion-item', el),
         }}
       >
         <span>&nbsp;</span>

@@ -41,6 +41,10 @@ span {
   height: 100%;
 }
 
+:host(.in-item) {
+  display: inline-block;
+}
+
 // Animated Skeleton Text
 // -----------------------------------------------------------
 
