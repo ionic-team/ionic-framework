@@ -31,6 +31,7 @@ export class SkeletonText implements ComponentInterface {
           'skeleton-text-animated': animated,
           'in-media': inMedia,
           'in-item': hostContext('ion-item', el),
+          'in-label': hostContext('ion-label', el),
         }}
       >
         <span>&nbsp;</span>
