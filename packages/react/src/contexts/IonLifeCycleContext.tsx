@@ -59,7 +59,7 @@ export interface LifeCycleCallback {
   id?: number;
 }
 
-interface LifeCycleDestructor {
+export interface LifeCycleDestructor {
   id: number;
   destructor: ReturnType<LifeCycleCallback>;
 }
