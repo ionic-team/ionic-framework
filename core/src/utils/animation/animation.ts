@@ -30,6 +30,8 @@ interface AnimationOnFinishCallback {
   o?: AnimationCallbackOptions;
 }
 
+type AnimationOnStopCallback = AnimationOnFinishCallback;
+
 export const createAnimation = (animationId?: string): Animation => {
   let _delay: number | undefined;
   let _duration: number | undefined;
@@ -63,6 +65,7 @@ export const createAnimation = (animationId?: string): Animation => {
   const id: string | undefined = animationId;
   const onFinishCallbacks: AnimationOnFinishCallback[] = [];
   const onFinishOneTimeCallbacks: AnimationOnFinishCallback[] = [];
+  const onStopOneTimeCallbacks: AnimationOnStopCallback[] = [];
   const elements: HTMLElement[] = [];
   const childAnimations: Animation[] = [];
   const stylesheets: HTMLElement[] = [];
@@ -132,6 +135,35 @@ export const createAnimation = (animationId?: string): Animation => {
 
   const isRunning = () => {
     return numAnimationsRunning !== 0 && !paused;
+  };
+
+  /**
+   * @internal
+   * Remove a callback from a chosen callback array
+   * @param callbackToRemove: A reference to the callback that should be removed
+   * @param callbackObjects: An array of callbacks that callbackToRemove should be removed from.
+   */
+  const clearCallback = (
+    callbackToRemove: AnimationLifecycle,
+    callbackObjects: AnimationOnFinishCallback[] | AnimationOnStopCallback[]
+  ) => {
+    const index = callbackObjects.findIndex((callbackObject) => callbackObject.c === callbackToRemove);
+
+    if (index > -1) {
+      callbackObjects.splice(index, 1);
+    }
+  };
+
+  /**
+   * @internal
+   * Add a callback to be fired when an animation is stopped/cancelled.
+   * @param callback: A reference to the callback that should be fired
+   * @param opts: Any options associated with this particular callback
+   */
+  const onStop = (callback: AnimationLifecycle, opts?: AnimationCallbackOptions) => {
+    onStopOneTimeCallbacks.push({ c: callback, o: opts });
+
+    return ani;
   };
 
   const onFinish = (callback: AnimationLifecycle, opts?: AnimationCallbackOptions) => {
@@ -953,7 +985,34 @@ export const createAnimation = (animationId?: string): Animation => {
         shouldCalculateNumAnimations = false;
       }
 
-      onFinish(() => resolve(), { oneTimeCallback: true });
+      /**
+       * When one of these callbacks fires we
+       * need to clear the other's callback otherwise
+       * you can potentially get these callbacks
+       * firing multiple times if the play method
+       * is subsequently called.
+       * Example:
+       * animation.play() (onStop and onFinish callbacks are registered)
+       * animation.stop() (onStop callback is fired, onFinish is not)
+       * animation.play() (onStop and onFinish callbacks are registered)
+       * Total onStop callbacks: 1
+       * Total onFinish callbacks: 2
+       */
+      const onStopCallback = () => {
+        clearCallback(onFinishCallback, onFinishOneTimeCallbacks);
+        resolve();
+      };
+      const onFinishCallback = () => {
+        clearCallback(onStopCallback, onStopOneTimeCallbacks);
+        resolve();
+      };
+
+      /**
+       * The play method resolves when an animation
+       * run either finishes or is cancelled.
+       */
+      onFinish(onFinishCallback, { oneTimeCallback: true });
+      onStop(onStopCallback, { oneTimeCallback: true });
 
       childAnimations.forEach((animation) => {
         animation.play();
@@ -969,6 +1028,14 @@ export const createAnimation = (animationId?: string): Animation => {
     });
   };
 
+  /**
+   * Stops an animation and resets it state to the
+   * beginning. This does not fire any onFinish
+   * callbacks because the animation did not finish.
+   * However, since the animation was not destroyed
+   * (i.e. the animation could run again) we do not
+   * clear the onFinish callbacks.
+   */
   const stop = () => {
     childAnimations.forEach((animation) => {
       animation.stop();
@@ -980,6 +1047,9 @@ export const createAnimation = (animationId?: string): Animation => {
     }
 
     resetFlags();
+
+    onStopOneTimeCallbacks.forEach((onStopCallback) => onStopCallback.c(0, ani));
+    onStopOneTimeCallbacks.length = 0;
   };
 
   const from = (property: string, value: any) => {
