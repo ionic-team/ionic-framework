@@ -3,6 +3,7 @@ import { Component, Element, Host, Prop, State, h } from '@stencil/core';
 import { findIonContent, getScrollElement, printIonContentErrorMsg } from '@utils/content';
 import type { KeyboardController } from '@utils/keyboard/keyboard-controller';
 import { createKeyboardController } from '@utils/keyboard/keyboard-controller';
+import { Keyboard, KeyboardResize } from '@utils/native/keyboard';
 
 import { getIonMode } from '../../global/ionic-global';
 
@@ -52,18 +53,28 @@ export class Footer implements ComponentInterface {
   }
 
   async connectedCallback() {
-    this.keyboardCtrl = await createKeyboardController(async (keyboardOpen, waitForResize) => {
-      /**
-       * If the keyboard is hiding, then we need to wait
-       * for the webview to resize. Otherwise, the footer
-       * will flicker before the webview resizes.
-       */
-      if (keyboardOpen === false && waitForResize !== undefined) {
-        await waitForResize;
-      }
+    const resizeMode = await Keyboard.getResizeMode();
 
-      this.keyboardVisible = keyboardOpen; // trigger re-render by updating state
-    });
+    /**
+     * If the resize mode is set to None then we don't want to
+     * hide the tab bar here since it will never sit on top
+     * of the keyboard. Hiding the tab bar will cause a layout shift
+     * in apps that have resize set to None.
+     */
+    if (resizeMode === undefined || resizeMode.mode !== KeyboardResize.None) {
+      this.keyboardCtrl = await createKeyboardController(async (keyboardOpen, waitForResize) => {
+        /**
+         * If the keyboard is hiding, then we need to wait
+         * for the webview to resize. Otherwise, the footer
+         * will flicker before the webview resizes.
+         */
+        if (keyboardOpen === false && waitForResize !== undefined) {
+          await waitForResize;
+        }
+
+        this.keyboardVisible = keyboardOpen; // trigger re-render by updating state
+      });
+    }
   }
 
   disconnectedCallback() {

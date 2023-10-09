@@ -1,6 +1,5 @@
 import { doc, win } from '@utils/browser';
-
-import { Keyboard, KeyboardResize } from '../native/keyboard';
+import { Keyboard, KeyboardResize } from '@utils/native/keyboard';
 
 /**
  * The element that resizes when the keyboard opens
