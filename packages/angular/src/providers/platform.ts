@@ -1,9 +1,7 @@
 import { DOCUMENT } from '@angular/common';
-import { NgZone, Inject, Injectable } from '@angular/core';
+import { Inject, Injectable, NgZone } from '@angular/core';
 import { BackButtonEventDetail, KeyboardEventDetail, Platforms, getPlatforms, isPlatform } from '@ionic/core';
-import { Subscription, Subject } from 'rxjs';
-
-// TODO(FW-2827): types
+import { Subject, Subscription } from 'rxjs';
 
 export interface BackButtonEmitter extends Subject<BackButtonEventDetail> {
   subscribeWithPriority(
@@ -22,13 +20,13 @@ export class Platform {
   /**
    * @hidden
    */
-  backButton: BackButtonEmitter = new Subject<BackButtonEventDetail>() as any;
+  backButton = new Subject<BackButtonEventDetail>() as BackButtonEmitter;
 
   /**
    * The keyboardDidShow event emits when the
    * on-screen keyboard is presented.
    */
-  keyboardDidShow = new Subject<KeyboardEventDetail>() as any;
+  keyboardDidShow = new Subject<KeyboardEventDetail>();
 
   /**
    * The keyboardDidHide event emits when the
