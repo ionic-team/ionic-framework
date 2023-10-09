@@ -412,6 +412,14 @@ export class Toast implements ComponentInterface, OverlayInterface {
   private getAnchorElement(): HTMLElement | undefined {
     const { position, positionAnchor, el } = this;
 
+    /**
+     * If positionAnchor is undefined then
+     * no anchor should be used when presenting the toast.
+     */
+    if (positionAnchor === undefined) {
+      return;
+    }
+
     if (position === 'middle' && positionAnchor !== undefined) {
       printIonWarning('The positionAnchor property is ignored when using position="middle".', this.el);
       return undefined;
