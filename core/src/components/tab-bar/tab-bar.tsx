@@ -57,6 +57,14 @@ export class TabBar implements ComponentInterface {
   /** @internal */
   @Event() ionTabBarChanged!: EventEmitter<TabBarChangedEventDetail>;
 
+  /**
+   * @internal
+   * This event is used in IonContent to correctly
+   * calculate the fullscreen content offsets
+   * when IonTabBar is used.
+   */
+  @Event() ionTabBarLoaded!: EventEmitter<void>;
+
   componentWillLoad() {
     this.selectedTabChanged();
   }
@@ -80,6 +88,10 @@ export class TabBar implements ComponentInterface {
     if (this.keyboardCtrl) {
       this.keyboardCtrl.destroy();
     }
+  }
+
+  componentDidLoad() {
+    this.ionTabBarLoaded.emit();
   }
 
   render() {
