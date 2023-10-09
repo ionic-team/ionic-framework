@@ -31,3 +31,27 @@ describe('ion-radio', () => {
     expect(radio.classList.contains('radio-checked')).toBe(true);
   });
 });
+
+describe('ion-radio: disabled', () => {
+  it('clicking disabled radio should not set checked state', async () => {
+    const page = await newSpecPage({
+      components: [Radio, RadioGroup],
+      html: `
+        <ion-radio-group>
+          <ion-radio disabled="true" value="a">Radio</ion-radio>
+        </ion-radio-group>
+      `,
+    });
+
+    const radio = page.body.querySelector('ion-radio');
+    const radioGroup = page.body.querySelector('ion-radio-group');
+
+    expect(radioGroup.value).toBe(undefined);
+
+    radio.click();
+
+    await page.waitForChanges();
+
+    expect(radioGroup.value).toBe(undefined);
+  });
+});
