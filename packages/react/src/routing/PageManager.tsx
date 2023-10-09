@@ -23,6 +23,17 @@ export class PageManager extends React.PureComponent<PageManagerProps> {
     this.ionPageElementRef = React.createRef();
     // React refs must be stable (not created inline).
     this.stableMergedRefs = mergeRefs(this.ionPageElementRef, this.props.forwardedRef);
+
+    /**
+     * This binds the scope of the following methods to the class scope.
+     * The `.bind` method returns a new function, so we need to assign it
+     * in the constructor to avoid creating a new function when removing the
+     * event listeners.
+     */
+    this.ionViewWillEnterHandler = this.ionViewWillEnterHandler.bind(this);
+    this.ionViewDidEnterHandler = this.ionViewDidEnterHandler.bind(this);
+    this.ionViewWillLeaveHandler = this.ionViewWillLeaveHandler.bind(this);
+    this.ionViewDidLeaveHandler = this.ionViewDidLeaveHandler.bind(this);
   }
 
   componentDidMount() {
@@ -31,19 +42,19 @@ export class PageManager extends React.PureComponent<PageManagerProps> {
         this.ionPageElementRef.current.classList.add('ion-page-invisible');
       }
       this.context.registerIonPage(this.ionPageElementRef.current, this.props.routeInfo!);
-      this.ionPageElementRef.current.addEventListener('ionViewWillEnter', this.ionViewWillEnterHandler.bind(this));
-      this.ionPageElementRef.current.addEventListener('ionViewDidEnter', this.ionViewDidEnterHandler.bind(this));
-      this.ionPageElementRef.current.addEventListener('ionViewWillLeave', this.ionViewWillLeaveHandler.bind(this));
-      this.ionPageElementRef.current.addEventListener('ionViewDidLeave', this.ionViewDidLeaveHandler.bind(this));
+      this.ionPageElementRef.current.addEventListener('ionViewWillEnter', this.ionViewWillEnterHandler);
+      this.ionPageElementRef.current.addEventListener('ionViewDidEnter', this.ionViewDidEnterHandler);
+      this.ionPageElementRef.current.addEventListener('ionViewWillLeave', this.ionViewWillLeaveHandler);
+      this.ionPageElementRef.current.addEventListener('ionViewDidLeave', this.ionViewDidLeaveHandler);
     }
   }
 
   componentWillUnmount() {
     if (this.ionPageElementRef.current) {
-      this.ionPageElementRef.current.removeEventListener('ionViewWillEnter', this.ionViewWillEnterHandler.bind(this));
-      this.ionPageElementRef.current.removeEventListener('ionViewDidEnter', this.ionViewDidEnterHandler.bind(this));
-      this.ionPageElementRef.current.removeEventListener('ionViewWillLeave', this.ionViewWillLeaveHandler.bind(this));
-      this.ionPageElementRef.current.removeEventListener('ionViewDidLeave', this.ionViewDidLeaveHandler.bind(this));
+      this.ionPageElementRef.current.removeEventListener('ionViewWillEnter', this.ionViewWillEnterHandler);
+      this.ionPageElementRef.current.removeEventListener('ionViewDidEnter', this.ionViewDidEnterHandler);
+      this.ionPageElementRef.current.removeEventListener('ionViewWillLeave', this.ionViewWillLeaveHandler);
+      this.ionPageElementRef.current.removeEventListener('ionViewDidLeave', this.ionViewDidLeaveHandler);
     }
   }
 
