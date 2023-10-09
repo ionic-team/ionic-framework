@@ -79,6 +79,10 @@ export const createSwipeBackGesture = (
   return createGesture({
     el,
     gestureName: 'goback-swipe',
+    /**
+     * Swipe to go back should have priority over other horizontal swipe
+     * gestures. These gestures have a priority of 100 which is why 101 was chosen here.
+     */
     gesturePriority: 101,
     threshold: 10,
     canStart,
