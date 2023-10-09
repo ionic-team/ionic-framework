@@ -10,6 +10,7 @@ export {
   IonicSlides,
   getTimeGivenProgression,
   getIonPageElement,
+  openURL,
 
   // TYPES
   Animation,
