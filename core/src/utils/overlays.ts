@@ -95,6 +95,7 @@ export const createOverlay = <T extends HTMLIonOverlayElement>(
   tagName: string,
   opts: object | undefined
 ): Promise<T> => {
+  // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
   if (typeof window !== 'undefined' && typeof window.customElements !== 'undefined') {
     return window.customElements.whenDefined(tagName).then(() => {
       const element = document.createElement(tagName) as HTMLIonOverlayElement;

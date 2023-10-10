@@ -1,5 +1,6 @@
-import type { DatetimeParts } from '../datetime-interface';
+import type { DatetimeParts, DatetimeHourCycle } from '../datetime-interface';
 
+import { is24Hour } from './helpers';
 import { convertDataToISO } from './manipulation';
 
 const getFormattedDayPeriod = (dayPeriod?: string) => {
@@ -10,7 +11,7 @@ const getFormattedDayPeriod = (dayPeriod?: string) => {
   return dayPeriod.toUpperCase();
 };
 
-export const getLocalizedTime = (locale: string, refParts: DatetimeParts, use24Hour: boolean): string => {
+export const getLocalizedTime = (locale: string, refParts: DatetimeParts, hourCycle: DatetimeHourCycle): string => {
   const timeParts: Pick<DatetimeParts, 'hour' | 'minute'> = {
     hour: refParts.hour,
     minute: refParts.minute,
@@ -34,7 +35,7 @@ export const getLocalizedTime = (locale: string, refParts: DatetimeParts, use24H
      * We use hourCycle here instead of hour12 due to:
      * https://bugs.chromium.org/p/chromium/issues/detail?id=1347316&q=hour12&can=2
      */
-    hourCycle: use24Hour ? 'h23' : 'h12',
+    hourCycle,
     /**
      * Setting Z at the end indicates that this
      * date string is in the UTC time zone. This
@@ -83,18 +84,34 @@ export const addTimePadding = (value: number): string => {
  * 12 hour times it ensures that
  * hour 0 is formatted as '12'.
  */
-export const getFormattedHour = (hour: number, use24Hour: boolean): string => {
-  if (use24Hour) {
-    return addTimePadding(hour);
-  }
-
+export const getFormattedHour = (hour: number, hourCycle: DatetimeHourCycle): string => {
   /**
-   * If using 12 hour
-   * format, make sure hour
-   * 0 is formatted as '12'.
+   * Midnight for h11 starts at 0:00am
+   * Midnight for h12 starts at 12:00am
+   * Midnight for h23 starts at 00:00
+   * Midnight for h24 starts at 24:00
    */
   if (hour === 0) {
-    return '12';
+    switch (hourCycle) {
+      case 'h11':
+        return '0';
+      case 'h12':
+        return '12';
+      case 'h23':
+        return '00';
+      case 'h24':
+        return '24';
+      default:
+        throw new Error(`Invalid hour cycle "${hourCycle}"`);
+    }
+  }
+
+  const use24Hour = is24Hour(hourCycle);
+  /**
+   * h23 and h24 use 24 hour times.
+   */
+  if (use24Hour) {
+    return addTimePadding(hour);
   }
 
   return hour.toString();

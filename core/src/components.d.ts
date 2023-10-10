@@ -15,7 +15,7 @@ import { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./compo
 import { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
 import { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
 import { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
-import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimePresentation, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
+import { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 import { SpinnerTypes } from "./components/spinner/spinner-configs";
 import { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
 import { CounterFormatter } from "./components/item/item-interface";
@@ -39,7 +39,7 @@ import { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./com
 import { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
 import { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
 import { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
-import { ToastButton, ToastLayout, ToastPosition } from "./components/toast/toast-interface";
+import { ToastButton, ToastDismissOptions, ToastLayout, ToastPosition, ToastPresentOptions } from "./components/toast/toast-interface";
 import { ToggleChangeEventDetail } from "./components/toggle/toggle-interface";
 export { AccordionGroupChangeEventDetail } from "./components/accordion-group/accordion-group-interface";
 export { AnimationBuilder, AutocompleteTypes, Color, ComponentProps, ComponentRef, FrameworkDelegate, StyleEventDetail, TextFieldTypes } from "./interface";
@@ -51,7 +51,7 @@ export { RouteID, RouterDirection, RouterEventDetail, RouteWrite } from "./compo
 export { BreadcrumbCollapsedClickEventDetail } from "./components/breadcrumb/breadcrumb-interface";
 export { CheckboxChangeEventDetail } from "./components/checkbox/checkbox-interface";
 export { ScrollBaseDetail, ScrollDetail } from "./components/content/content-interface";
-export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimePresentation, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
+export { DatetimeChangeEventDetail, DatetimeHighlight, DatetimeHighlightCallback, DatetimeHourCycle, DatetimePresentation, TitleSelectedDatesFormatter } from "./components/datetime/datetime-interface";
 export { SpinnerTypes } from "./components/spinner/spinner-configs";
 export { InputChangeEventDetail, InputInputEventDetail } from "./components/input/input-interface";
 export { CounterFormatter } from "./components/item/item-interface";
@@ -75,7 +75,7 @@ export { SelectChangeEventDetail, SelectCompareFn, SelectInterface } from "./com
 export { SelectPopoverOption } from "./components/select-popover/select-popover-interface";
 export { TabBarChangedEventDetail, TabButtonClickEventDetail, TabButtonLayout } from "./components/tab-bar/tab-bar-interface";
 export { TextareaChangeEventDetail, TextareaInputEventDetail } from "./components/textarea/textarea-interface";
-export { ToastButton, ToastLayout, ToastPosition } from "./components/toast/toast-interface";
+export { ToastButton, ToastDismissOptions, ToastLayout, ToastPosition, ToastPresentOptions } from "./components/toast/toast-interface";
 export { ToggleChangeEventDetail } from "./components/toggle/toggle-interface";
 export namespace Components {
     interface IonAccordion {
@@ -865,7 +865,7 @@ export namespace Components {
         /**
           * The hour cycle of the `ion-datetime`. If no value is set, this is specified by the current locale.
          */
-        "hourCycle"?: 'h23' | 'h12';
+        "hourCycle"?: DatetimeHourCycle;
         /**
           * Values used to create the list of selectable hours. By default the hour values range from `0` to `23` for 24-hour, or `1` to `12` for 12-hour. However, to control exactly which hours to display, the `hourValues` input can take a number, an array of numbers, or a string of comma separated numbers.
          */
@@ -3157,9 +3157,13 @@ export namespace Components {
         "onWillDismiss": <T = any>() => Promise<OverlayEventDetail<T>>;
         "overlayIndex": number;
         /**
-          * The position of the toast on the screen.
+          * The starting position of the toast on the screen. Can be tweaked further using the `positionAnchor` property.
          */
         "position": ToastPosition;
+        /**
+          * The element to anchor the toast's position to. Can be set as a direct reference or the ID of the element. With `position="bottom"`, the toast will sit above the chosen element. With `position="top"`, the toast will sit below the chosen element. With `position="middle"`, the value of `positionAnchor` is ignored.
+         */
+        "positionAnchor"?: HTMLElement | string;
         /**
           * Present the toast overlay after it has been created.
          */
@@ -4889,7 +4893,7 @@ declare namespace LocalJSX {
         /**
           * The hour cycle of the `ion-datetime`. If no value is set, this is specified by the current locale.
          */
-        "hourCycle"?: 'h23' | 'h12';
+        "hourCycle"?: DatetimeHourCycle;
         /**
           * Values used to create the list of selectable hours. By default the hour values range from `0` to `23` for 24-hour, or `1` to `12` for 12-hour. However, to control exactly which hours to display, the `hourValues` input can take a number, an array of numbers, or a string of comma separated numbers.
          */
@@ -6976,6 +6980,7 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
         "onIonTabBarChanged"?: (event: IonTabBarCustomEvent<TabBarChangedEventDetail>) => void;
+        "onIonTabBarLoaded"?: (event: IonTabBarCustomEvent<void>) => void;
         /**
           * The selected tab component
          */
@@ -7307,9 +7312,13 @@ declare namespace LocalJSX {
         "onWillPresent"?: (event: IonToastCustomEvent<void>) => void;
         "overlayIndex": number;
         /**
-          * The position of the toast on the screen.
+          * The starting position of the toast on the screen. Can be tweaked further using the `positionAnchor` property.
          */
         "position"?: ToastPosition;
+        /**
+          * The element to anchor the toast's position to. Can be set as a direct reference or the ID of the element. With `position="bottom"`, the toast will sit above the chosen element. With `position="top"`, the toast will sit below the chosen element. With `position="middle"`, the value of `positionAnchor` is ignored.
+         */
+        "positionAnchor"?: HTMLElement | string;
         /**
           * If `true`, the toast will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
          */

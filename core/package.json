@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "7.4.2",
+  "version": "7.4.3",
   "description": "Base components for Ionic",
   "keywords": [
     "ionic",
@@ -31,13 +31,13 @@
     "loader/"
   ],
   "dependencies": {
-    "@stencil/core": "^4.3.0",
-    "ionicons": "7.1.0",
+    "@stencil/core": "^4.4.0",
+    "ionicons": "^7.1.2",
     "tslib": "^2.1.0"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.7.3",
-    "@capacitor/core": "^5.4.1",
+    "@capacitor/core": "^5.4.2",
     "@capacitor/haptics": "^5.0.6",
     "@capacitor/keyboard": "^5.0.6",
     "@capacitor/status-bar": "^5.0.6",
@@ -49,12 +49,12 @@
     "@rollup/plugin-virtual": "^2.0.3",
     "@stencil/angular-output-target": "^0.8.2",
     "@stencil/react-output-target": "^0.5.3",
-    "@stencil/sass": "^3.0.5",
+    "@stencil/sass": "^3.0.6",
     "@stencil/vue-output-target": "^0.8.6",
     "@types/jest": "^27.5.2",
     "@types/node": "^14.6.0",
-    "@typescript-eslint/eslint-plugin": "^5.17.0",
-    "@typescript-eslint/parser": "^5.17.0",
+    "@typescript-eslint/eslint-plugin": "^6.7.2",
+    "@typescript-eslint/parser": "^6.7.2",
     "clean-css-cli": "^5.6.1",
     "domino": "^2.1.6",
     "eslint": "^7.32.0",
@@ -69,8 +69,7 @@
     "sass": "^1.26.10",
     "serve": "^14.0.1",
     "stylelint": "^13.13.1",
-    "stylelint-order": "^4.1.0",
-    "typescript": "^4.0.5"
+    "stylelint-order": "^4.1.0"
   },
   "scripts": {
     "build": "npm run clean && npm run build.css && stencil build --es5 --docs-json dist/docs.json",
