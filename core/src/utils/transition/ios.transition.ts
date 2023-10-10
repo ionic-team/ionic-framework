@@ -174,7 +174,7 @@ const animateBackButton = (
    * We subtract 10px to account for slight sizing/padding
    * differences between the title and the back button.
    */
-  const HEIGHT_SCALE = (largeTitleTextBox.height - 10) / backButtonTextBox.height;
+  const HEIGHT_SCALE = (largeTitleTextBox.height - LARGE_TITLE_SIZE_OFFSET) / backButtonTextBox.height;
 
   const TEXT_START_SCALE = doTitleAndButtonTextsMatch
     ? `scale(${WIDTH_SCALE}, ${HEIGHT_SCALE})`
@@ -346,6 +346,13 @@ const animateLargeTitle = (
   const START_TRANSLATE_Y = `${largeTitleBox.top}px`;
 
   /**
+   * How much to offset the large title translation by
+   * This accounts for differences in sizing between the large
+   * title and the back button due to padding and font weight.
+   */
+  const LARGE_TITLE_TRANSLATION_OFFSET = 8;
+
+  /**
    * The scaled title should (roughly) overlap the back button.
    * This ensures that the back button and title overlap during
    * the animation. Note that since both elements either fade in
@@ -354,8 +361,8 @@ const animateLargeTitle = (
    * does not need to be perfect, so approximate values are acceptable here.
    */
   const END_TRANSLATE_X = rtl
-    ? `-${window.innerWidth - backButtonTextBox.right - 8}px`
-    : `${backButtonTextBox.x - 8}px`;
+    ? `-${window.innerWidth - backButtonTextBox.right - LARGE_TITLE_TRANSLATION_OFFSET}px`
+    : `${backButtonTextBox.x - LARGE_TITLE_TRANSLATION_OFFSET}px`;
 
   /**
    * The top of the scaled large title
@@ -364,7 +371,8 @@ const animateLargeTitle = (
    * We subtract 2px to account for the top padding
    * on the large title element.
    */
-  const END_TRANSLATE_Y = `${backButtonTextBox.y - 2}px`;
+  const LARGE_TITLE_TOP_PADDING = 2;
+  const END_TRANSLATE_Y = `${backButtonTextBox.y - LARGE_TITLE_TOP_PADDING}px`;
 
   /**
    * In the forward direction, the large title should start at its
@@ -389,7 +397,7 @@ const animateLargeTitle = (
   const doTitleAndButtonTextsMatch = backButtonTextEl.textContent === largeTitleEl.textContent;
 
   const WIDTH_SCALE = backButtonTextBox.width / largeTitleTextBox.width;
-  const HEIGHT_SCALE = backButtonTextBox.height / (largeTitleTextBox.height - 10);
+  const HEIGHT_SCALE = backButtonTextBox.height / (largeTitleTextBox.height - LARGE_TITLE_SIZE_OFFSET);
 
   const START_SCALE = 'scale(1)';
   const END_SCALE = doTitleAndButtonTextsMatch ? `scale(${WIDTH_SCALE}, ${HEIGHT_SCALE})` : `scale(${HEIGHT_SCALE})`;
@@ -817,3 +825,14 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
     throw err;
   }
 };
+
+/**
+ * The scale of the back button during the animation
+ * is computed based on the scale of the large title
+ * and vice versa. However, we need to account for slight
+ * variations in the size of the large title due to
+ * padding and font weight. This value should be used to subtract
+ * a small amount from the large title height when computing scales
+ * to get more accurate scale results.
+ */
+const LARGE_TITLE_SIZE_OFFSET = 10;
