@@ -346,7 +346,7 @@ const animateLargeTitle = (
   const START_TRANSLATE_Y = `${largeTitleBox.top}px`;
 
   /**
-   * How much to offset the large title translation by
+   * How much to offset the large title translation by.
    * This accounts for differences in sizing between the large
    * title and the back button due to padding and font weight.
    */
