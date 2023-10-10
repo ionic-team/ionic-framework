@@ -100,17 +100,6 @@ export const DefaultIonLifeCycleContext = class implements IonLifeCycleContextIn
       });
       // Remove all matching items from the array
       callbacks = callbacks.filter((x) => x.id !== callback.id);
-    } else {
-      /**
-       * If the destructor isn't registered in the array, then the
-       * user-provided callback was never invoked. This is usually
-       * the result of the useEffect hook in dev mode. So we manually
-       * invoke the callback to get the destructor to tear it down.
-       */
-      const destructor = callback();
-      if (typeof destructor === 'function') {
-        destructor();
-      }
     }
   }
 
