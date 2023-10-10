@@ -3,7 +3,7 @@ import { configs, test } from '@utils/test/playwright';
 
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('select: disabled options'), () => {
-    test('should not open focus a disabled option when no value is set', async ({ page, skip }) => {
+    test('should not focus a disabled option when no value is set', async ({ page, skip }) => {
       // TODO (FW-2979)
       skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
 
