@@ -166,7 +166,7 @@ const animateBackButton = (
    * to not perfectly match the large title text otherwise the
    * proportions will be incorrect.
    */
-  const doTitleAndButtonTextsMatch = backButtonTextEl.textContent === largeTitleEl.textContent;
+  const doTitleAndButtonTextsMatch = backButtonTextEl.textContent?.trim() === largeTitleEl.textContent?.trim();
 
   const WIDTH_SCALE = largeTitleTextBox.width / backButtonTextBox.width;
 
@@ -394,7 +394,7 @@ const animateLargeTitle = (
    * to not perfectly match the back button text otherwise the
    * proportions will be incorrect.
    */
-  const doTitleAndButtonTextsMatch = backButtonTextEl.textContent === largeTitleEl.textContent;
+  const doTitleAndButtonTextsMatch = backButtonTextEl.textContent?.trim() === largeTitleEl.textContent?.trim();
 
   const WIDTH_SCALE = backButtonTextBox.width / largeTitleTextBox.width;
   const HEIGHT_SCALE = backButtonTextBox.height / (largeTitleTextBox.height - LARGE_TITLE_SIZE_OFFSET);
