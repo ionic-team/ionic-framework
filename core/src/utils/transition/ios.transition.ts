@@ -165,6 +165,8 @@ const animateBackButton = (
    * If the texts do not match up then the back button text scale adjusts
    * to not perfectly match the large title text otherwise the
    * proportions will be incorrect.
+   * When the texts match we scale both the width and height to account for
+   * font weight differences between the title and back button.
    */
   const doTitleAndButtonTextsMatch = backButtonTextEl.textContent?.trim() === largeTitleEl.textContent?.trim();
 
@@ -393,6 +395,8 @@ const animateLargeTitle = (
    * If the texts do not match up then the large title text scale adjusts
    * to not perfectly match the back button text otherwise the
    * proportions will be incorrect.
+   * When the texts match we scale both the width and height to account for
+   * font weight differences between the title and back button.
    */
   const doTitleAndButtonTextsMatch = backButtonTextEl.textContent?.trim() === largeTitleEl.textContent?.trim();
 
@@ -400,6 +404,7 @@ const animateLargeTitle = (
   const HEIGHT_SCALE = backButtonTextBox.height / (largeTitleTextBox.height - LARGE_TITLE_SIZE_OFFSET);
 
   const START_SCALE = 'scale(1)';
+
   const END_SCALE = doTitleAndButtonTextsMatch ? `scale(${WIDTH_SCALE}, ${HEIGHT_SCALE})` : `scale(${HEIGHT_SCALE})`;
 
   const BACKWARDS_KEYFRAMES = [
