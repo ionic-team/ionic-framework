@@ -14,7 +14,7 @@ const createMenuController = () => {
   const menus: MenuI[] = [];
 
   const open = async (menu?: string | null): Promise<boolean> => {
-    const menuEl = await get(menu);
+    const menuEl = await get(menu, true);
     if (menuEl) {
       return menuEl.open();
     }
@@ -72,7 +72,18 @@ const createMenuController = () => {
     return false;
   };
 
-  const get = async (menu?: string | null): Promise<HTMLIonMenuElement | undefined> => {
+  /**
+   * Finds and returns the menu specified by "menu" if registered.
+   * @param menu - The side or ID of the desired menu
+   * @param logOnMultipleSideMenus - If true, this function will log a warning
+   * if "menu" is a side but multiple menus on the same side were found. Since this function
+   * is used in multiple places, we default this log to false so that the calling
+   * functions can choose whether or not it is appropriate to log this warning.
+   */
+  const get = async (
+    menu?: string | null,
+    logOnMultipleSideMenus: boolean = false
+  ): Promise<HTMLIonMenuElement | undefined> => {
     await waitUntilReady();
 
     if (menu === 'start' || menu === 'end') {
@@ -80,7 +91,7 @@ const createMenuController = () => {
       // so first try to get the enabled one
       const menuRefs = menus.filter((m) => m.side === menu && !m.disabled);
       if (menuRefs.length >= 1) {
-        if (menuRefs.length > 1) {
+        if (menuRefs.length > 1 && logOnMultipleSideMenus) {
           printIonWarning(
             `menuController queried for a menu on the "${menu}" side, but ${menuRefs.length} menus were found. The first menu reference will be used. If this is not the behavior you want then pass the ID of the menu instead of its side.`,
             menuRefs.map((m) => m.el)
@@ -94,7 +105,7 @@ const createMenuController = () => {
       // so try to get the first menu side found
       const sideMenuRefs = menus.filter((m) => m.side === menu);
       if (sideMenuRefs.length >= 1) {
-        if (sideMenuRefs.length > 1) {
+        if (sideMenuRefs.length > 1 && logOnMultipleSideMenus) {
           printIonWarning(
             `menuController queried for a menu on the "${menu}" side, but ${sideMenuRefs.length} menus were found. The first menu reference will be used. If this is not the behavior you want then pass the ID of the menu instead of its side.`,
             sideMenuRefs.map((m) => m.el)
