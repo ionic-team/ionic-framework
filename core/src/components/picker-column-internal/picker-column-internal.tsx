@@ -414,8 +414,10 @@ export class PickerColumnInternal implements ComponentInterface {
   }
 
   render() {
-    const { items, color, isActive, numericInput } = this;
+    const { items, color, isActive, numericInput, value } = this;
     const mode = getIonMode(this);
+
+    const activeItemIndex = items.findIndex(item => item.value === value);
 
     /**
      * exportparts is needed so ion-datetime can expose the parts
@@ -425,6 +427,7 @@ export class PickerColumnInternal implements ComponentInterface {
      */
     return (
       <Host
+        role="listbox"
         exportparts={`${PICKER_ITEM_PART}, ${PICKER_ITEM_ACTIVE_PART}`}
         tabindex={0}
         class={createColorClasses(color, {
@@ -455,6 +458,9 @@ export class PickerColumnInternal implements ComponentInterface {
           }
           return (
             <button
+              role="option"
+              aria-selected={activeItemIndex === index ? 'true' : null}
+              aria-hidden={activeItemIndex === index || Math.abs(activeItemIndex - index) <= 2 ? null : 'true'}
               tabindex="-1"
               class={{
                 'picker-item': true,
