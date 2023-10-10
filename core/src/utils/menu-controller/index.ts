@@ -22,7 +22,7 @@ const createMenuController = () => {
   };
 
   const close = async (menu?: string | null): Promise<boolean> => {
-    const menuEl = await (menu !== undefined ? get(menu) : getOpen());
+    const menuEl = await (menu !== undefined ? get(menu, true) : getOpen());
     if (menuEl !== undefined) {
       return menuEl.close();
     }
@@ -30,7 +30,7 @@ const createMenuController = () => {
   };
 
   const toggle = async (menu?: string | null): Promise<boolean> => {
-    const menuEl = await get(menu);
+    const menuEl = await get(menu, true);
     if (menuEl) {
       return menuEl.toggle();
     }
