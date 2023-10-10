@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.4.4-nightly.20231010](https://github.com/ionic-team/ionic-framework/compare/v7.4.3...v7.4.4-nightly.20231010) (2023-10-10)
+
+**Note:** Version bump only for package @ionic/react-router
+
+
+
+
+
 ## [7.4.3](https://github.com/ionic-team/ionic-framework/compare/v7.4.2...v7.4.3) (2023-10-04)
 
 **Note:** Version bump only for package @ionic/react-router
