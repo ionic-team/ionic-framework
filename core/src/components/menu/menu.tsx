@@ -1,7 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Listen, Method, Prop, State, Watch, h } from '@stencil/core';
 import { getTimeGivenProgression } from '@utils/animation/cubic-bezier';
-import { doc } from '@utils/browser';
 import { GESTURE_CONTROLLER } from '@utils/gesture';
 import type { Attributes } from '@utils/helpers';
 import { inheritAriaAttributes, assert, clamp, isEndSide as isEnd } from '@utils/helpers';
@@ -761,18 +760,6 @@ export class Menu implements ComponentInterface, MenuI {
        * forcibly close the menu even if it is open.
        */
       this.afterAnimation(false);
-    }
-
-    if (doc?.contains(this.el)) {
-      /**
-       * Only set the active menu if the menu element is
-       * present in the DOM. Otherwise if it was destructively
-       * re-hydrated (through Angular Universal), then ignore
-       * setting the removed node as the active menu.
-       */
-      if (!this.disabled) {
-        menuController._setActiveMenu(this);
-      }
     }
   }
 

@@ -1,41 +1,23 @@
-import { Directive, HostListener, Input, Optional } from '@angular/core';
-import { AnimationBuilder } from '@ionic/core';
-
-import { Config } from '../../providers/config';
-import { NavController } from '../../providers/nav-controller';
+import { Optional, ElementRef, NgZone, ChangeDetectorRef, Component, ChangeDetectionStrategy } from '@angular/core';
+import { IonBackButton as IonBackButtonBase, NavController, Config } from '@ionic/angular/common';
 
 import { IonRouterOutlet } from './ion-router-outlet';
 
-@Directive({
+@Component({
   selector: 'ion-back-button',
+  template: '<ng-content></ng-content>',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class IonBackButtonDelegateDirective {
-  @Input()
-  defaultHref: string | undefined | null;
-
-  @Input()
-  routerAnimation?: AnimationBuilder;
-
+// eslint-disable-next-line @angular-eslint/directive-class-suffix
+export class IonBackButton extends IonBackButtonBase {
   constructor(
-    @Optional() private routerOutlet: IonRouterOutlet,
-    private navCtrl: NavController,
-    private config: Config
-  ) {}
-
-  /**
-   * @internal
-   */
-  @HostListener('click', ['$event'])
-  onClick(ev: Event): void {
-    const defaultHref = this.defaultHref || this.config.get('backButtonDefaultHref');
-
-    if (this.routerOutlet?.canGoBack()) {
-      this.navCtrl.setDirection('back', undefined, undefined, this.routerAnimation);
-      this.routerOutlet.pop();
-      ev.preventDefault();
-    } else if (defaultHref != null) {
-      this.navCtrl.navigateBack(defaultHref, { animation: this.routerAnimation });
-      ev.preventDefault();
-    }
+    @Optional() routerOutlet: IonRouterOutlet,
+    navCtrl: NavController,
+    config: Config,
+    r: ElementRef,
+    z: NgZone,
+    c: ChangeDetectorRef
+  ) {
+    super(routerOutlet, navCtrl, config, r, z, c);
   }
 }
