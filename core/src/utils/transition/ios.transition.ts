@@ -171,7 +171,7 @@ const animateBackButton = (
   const WIDTH_SCALE = largeTitleTextBox.width / backButtonTextBox.width;
 
   /**
-   * We subtract 10px to account for slight sizing/padding
+   * We subtract an offset to account for slight sizing/padding
    * differences between the title and the back button.
    */
   const HEIGHT_SCALE = (largeTitleTextBox.height - LARGE_TITLE_SIZE_OFFSET) / backButtonTextBox.height;
