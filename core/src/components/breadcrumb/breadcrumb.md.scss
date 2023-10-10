@@ -53,7 +53,7 @@
 ::slotted(ion-icon) {
   color: $breadcrumb-md-icon-color;
 
-  font-size: 18px;
+  font-size: dynamic-font(18px);
 }
 
 ::slotted(ion-icon[slot="start"]) {

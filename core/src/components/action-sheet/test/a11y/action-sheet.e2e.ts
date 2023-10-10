@@ -86,3 +86,37 @@ configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
     });
   });
 });
+
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('action-sheet: font scaling'), () => {
+    test('should scale text on larger font sizes', async ({ page }) => {
+      await page.setContent(
+        `
+        <style>
+          html {
+            font-size: 36px;
+          }
+        </style>
+
+        <ion-action-sheet></ion-action-sheet>
+
+        <script>
+          const actionSheet = document.querySelector('ion-action-sheet');
+          actionSheet.header = 'Header';
+          actionSheet.subHeader = 'Sub Header';
+          actionSheet.buttons = ['Ok', { role: 'cancel', text: 'Cancel' }];
+        </script>
+      `,
+        config
+      );
+
+      const ionActionSheetDidPresent = await page.spyOnEvent('ionActionSheetDidPresent');
+      const actionSheet = page.locator('ion-action-sheet');
+
+      await actionSheet.evaluate((el: HTMLIonActionSheetElement) => el.present());
+      await ionActionSheetDidPresent.next();
+
+      await expect(actionSheet).toHaveScreenshot(screenshot(`action-sheet-scale`));
+    });
+  });
+});

@@ -7,7 +7,7 @@
 $item-ios-min-height:                        44px !default;
 
 /// @prop - Font size of the item
-$item-ios-font-size:                         16px !default;
+$item-ios-font-size:                         dynamic-font(16px) !default;
 
 /// @prop - Margin top of the item paragraph
 $item-ios-paragraph-margin-top:              0 !default;
@@ -22,7 +22,7 @@ $item-ios-paragraph-margin-bottom:           2px !default;
 $item-ios-paragraph-margin-start:            $item-ios-paragraph-margin-end !default;
 
 /// @prop - Font size of the item paragraph
-$item-ios-paragraph-font-size:               14px !default;
+$item-ios-paragraph-font-size:               dynamic-font(14px) !default;
 
 /// @prop - Color of the item paragraph
 $item-ios-paragraph-text-color:              rgba($text-color-rgb, .4) !default;

@@ -17,6 +17,8 @@ $checkbox-md-background-color-focused:   ion-color(primary, tint) !default;
 $checkbox-md-icon-background-color-on:   ion-color(primary, base) !default;
 
 /// @prop - Size of the checkbox icon
+/// The icon size does not use dynamic font
+/// because it does not scale in native.
 $checkbox-md-icon-size:                  18px !default;
 
 /// @prop - Width of the checkbox icon checkmark
