@@ -27,8 +27,8 @@ export class PageManager extends React.PureComponent<PageManagerProps> {
     /**
      * This binds the scope of the following methods to the class scope.
      * The `.bind` method returns a new function, so we need to assign it
-     * in the constructor to avoid creating a new function when removing the
-     * event listeners.
+     * in the constructor rather than when adding or removing the listeners
+     * to avoid creating a new function.
      */
     this.ionViewWillEnterHandler = this.ionViewWillEnterHandler.bind(this);
     this.ionViewDidEnterHandler = this.ionViewDidEnterHandler.bind(this);
