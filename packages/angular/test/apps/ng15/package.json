@@ -34,7 +34,7 @@
     "@nguniversal/express-engine": "^15.0.0",
     "core-js": "^2.6.11",
     "express": "^4.15.2",
-    "ionicons": "^6.0.4",
+    "ionicons": "^7.2.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "typescript-eslint-language-service": "^4.1.5",

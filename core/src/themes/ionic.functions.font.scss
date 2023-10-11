@@ -1,0 +1,63 @@
+@use "sass:math";
+
+$baselineSize: 16px !default;
+$baselineUnit: 1rem !default;
+
+/**
+ * Convert a font size to a dynamic font size.
+ * Fonts that participate in Dynamic Type should use
+ * dynamic font sizes.
+ * @param size - The initial font size including the unit (i.e. px or pt)
+ * @param unit (optional) - The unit to convert to. Use this if you want to
+ * convert to a unit other than $baselineUnit.
+ */
+@function dynamic-font($size, $unit: $baselineUnit) {
+  @return (math.div($size, $baselineSize)) * $unit;
+}
+
+/**
+ * Convert a font size to a dynamic font size but impose
+ * a maximum font size.
+ * @param size - The initial font size including the unit (i.e. px or pt)
+ * @param maxScale - The maximum scale of the font (i.e. 2.5 for a maximum 250% scale).
+ * @param unit (optional) - The unit to convert the initial font size to. Use this if you want to
+ * convert to a unit other than $baselineUnit.
+ */
+@function dynamic-font-max($size, $maxScale, $unit: $baselineUnit) {
+  $baseScale: dynamic-font($size, $unit);
+  $maxScale: $size * $maxScale;
+
+  @return min($baseScale, $maxScale);
+}
+
+/**
+ * Convert a font size to a dynamic font size but impose
+ * a minimum font size.
+ * @param size - The initial font size including the unit (i.e. px or pt)
+ * @param minScale - The minimum scale of the font (i.e. 0.8 for a minimum 80% scale).
+ * @param unit (optional) - The unit to convert the initial font size to. Use this if you want to
+ * convert to a unit other than $baselineUnit.
+ */
+@function dynamic-font-min($minScale, $size, $unit: $baselineUnit) {
+  $baseScale: dynamic-font($size, $unit);
+  $minScale: $size * $minScale;
+
+  @return max($minScale, $baseScale);
+}
+
+/**
+ * Convert a font size to a dynamic font size but impose
+ * maximum and minimum font sizes.
+ * @param size - The initial font size including the unit (i.e. px or pt)
+ * @param minScale - The minimum scale of the font (i.e. 0.8 for a minimum 80% scale).
+ * @param maxScale - The maximum scale of the font (i.e. 2.5 for a maximum 250% scale).
+ * @param unit (optional) - The unit to convert the initial font size to. Use this if you want to
+ * convert to a unit other than $baselineUnit.
+ */
+@function dynamic-font-clamp($minScale, $baseSize, $maxScale, $unit: $baselineUnit) {
+  $baseScale: dynamic-font($baseSize, $unit);
+  $maxScale: $baseSize * $maxScale;
+  $minScale: $baseSize * $minScale;
+
+  @return clamp($minScale, $baseScale, $maxScale);
+}

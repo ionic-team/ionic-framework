@@ -221,6 +221,18 @@ ion-picker-column-internal {
 }
 
 /**
+ * The confirm and clear buttons are grouped in a
+ * container so that they appear on the end opposite
+ * of the cancel button.
+ * We use display: flex so that the
+ * wrapper only takes up as much
+ * height as it needs.
+ */
+.datetime-action-buttons .datetime-action-buttons-container {
+  display: flex;
+}
+
+/**
  * Date/Year button should be on
  * the opposite side of the component
  * as the Next/Prev buttons
@@ -253,6 +265,15 @@ ion-picker-column-internal {
   grid-template-columns: repeat(7, 1fr);
 
   text-align: center;
+}
+
+.calendar-days-of-week .day-of-week {
+  /**
+   * Center the days of the week within each cell
+   * if the container size is changed as a result
+   * of Dynamic Type.
+   */
+  @include margin(0, auto);
 }
 
 // Calendar / Body
@@ -350,7 +371,7 @@ ion-picker-column-internal {
  * Center the day text vertically
  * and horizontally within its grid cell.
  */
-:host .calendar-day {
+.calendar-day {
   @include border-radius(50%);
   @include padding(0px);
   @include margin(0px);

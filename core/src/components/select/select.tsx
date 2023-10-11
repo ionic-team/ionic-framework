@@ -1058,7 +1058,7 @@ Developers can use the "legacy" property to continue using the legacy form marku
         disabled={disabled}
         id={inputId}
         aria-label={this.ariaLabel}
-        aria-haspopup="listbox"
+        aria-haspopup="dialog"
         aria-expanded={`${isExpanded}`}
         onFocus={this.onFocus}
         onBlur={this.onBlur}

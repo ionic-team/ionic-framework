@@ -10,6 +10,14 @@
   --color-hover: #{$breadcrumb-ios-color-active};
   --color-focused: var(--color-active);
   --background-focused: #{$breadcrumb-ios-background-focused};
+
+  /**
+   * Main content should be prioritized
+   * on iOS, so we set max font size for breadcrumbs.
+   * Breadcrumbs can be placed in the content too, so
+   * we add a min font size to keep the text legible.
+   */
+  font-size: dynamic-font-clamp(1, $breadcrumb-baseline-font-size, 1.375);
 }
 
 :host(.breadcrumb-active) {
@@ -58,7 +66,7 @@
 ::slotted(ion-icon) {
   color: $breadcrumb-ios-icon-color;
 
-  font-size: 18px;
+  font-size: dynamic-font-max(18px, 1.2);
 }
 
 ::slotted(ion-icon[slot="start"]) {
@@ -91,4 +99,8 @@
 
 .breadcrumbs-collapsed-indicator:focus {
   background: $breadcrumb-ios-indicator-background-focused;
+}
+
+.breadcrumbs-collapsed-indicator ion-icon {
+  font-size: dynamic-font-max(22px, 1);
 }

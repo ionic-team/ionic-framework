@@ -1,0 +1,6 @@
+@import "./chip";
+@import "./chip.vars";
+
+:host {
+  font-size: $chip-base-font-size-rem;
+}
