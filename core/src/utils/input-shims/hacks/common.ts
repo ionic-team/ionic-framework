@@ -18,9 +18,17 @@ export const relocateInput = (
   }
 };
 
-// TODO(FW-2832): type
 export const isFocused = (input: HTMLInputElement | HTMLTextAreaElement): boolean => {
-  return input === (input as any).getRootNode().activeElement;
+  /**
+   * https://developer.mozilla.org/en-US/docs/Web/API/Node/getRootNode
+   * Calling getRootNode on an element in standard web page will return HTMLDocument.
+   * Calling getRootNode on an element inside of the Shadow DOM will return the associated ShadowRoot.
+   * Calling getRootNode on an element that is not attached to a document/shadow tree will return
+   * the root of the DOM tree it belongs to.
+   * isFocused is used for the hide-caret utility which only considers input/textarea elements
+   * that are present in the DOM, so we don't set types for that final case since since it does not apply.
+   */
+  return input === (input.getRootNode() as HTMLDocument | ShadowRoot).activeElement;
 };
 
 const addClone = (
