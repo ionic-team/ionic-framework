@@ -211,6 +211,10 @@ export class Checkbox implements ComponentInterface {
   };
 
   private onClick = (ev: MouseEvent) => {
+    if (this.disabled) {
+      return;
+    }
+
     this.toggleChecked(ev);
   };
 

@@ -259,6 +259,10 @@ export class Toggle implements ComponentInterface {
   }
 
   private onClick = (ev: MouseEvent) => {
+    if (this.disabled) {
+      return;
+    }
+
     ev.preventDefault();
 
     if (this.lastDrag + 300 < Date.now()) {
