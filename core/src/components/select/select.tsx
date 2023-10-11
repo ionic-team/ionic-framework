@@ -316,29 +316,46 @@ export class Select implements ComponentInterface {
 
     // focus selected option for popovers
     if (this.interface === 'popover') {
-      let indexOfSelected = this.childOpts.map((o) => o.value).indexOf(this.value);
-      indexOfSelected = indexOfSelected > -1 ? indexOfSelected : 0; // default to first option if nothing selected
-      const selectedItem = overlay.querySelector<HTMLElement>(
-        `.select-interface-option:nth-child(${indexOfSelected + 1})`
-      );
+      const indexOfSelected = this.childOpts.map((o) => o.value).indexOf(this.value);
 
-      if (selectedItem) {
-        focusElement(selectedItem);
+      if (indexOfSelected > -1) {
+        const selectedItem = overlay.querySelector<HTMLElement>(
+          `.select-interface-option:nth-child(${indexOfSelected + 1})`
+        );
 
+        if (selectedItem) {
+          focusElement(selectedItem);
+
+          /**
+           * Browsers such as Firefox do not
+           * correctly delegate focus when manually
+           * focusing an element with delegatesFocus.
+           * We work around this by manually focusing
+           * the interactive element.
+           * ion-radio and ion-checkbox are the only
+           * elements that ion-select-popover uses, so
+           * we only need to worry about those two components
+           * when focusing.
+           */
+          const interactiveEl = selectedItem.querySelector<HTMLElement>('ion-radio, ion-checkbox');
+          if (interactiveEl) {
+            interactiveEl.focus();
+          }
+        }
+      } else {
         /**
-         * Browsers such as Firefox do not
-         * correctly delegate focus when manually
-         * focusing an element with delegatesFocus.
-         * We work around this by manually focusing
-         * the interactive element.
-         * ion-radio and ion-checkbox are the only
-         * elements that ion-select-popover uses, so
-         * we only need to worry about those two components
-         * when focusing.
+         * If no value is set then focus the first enabled option.
          */
-        const interactiveEl = selectedItem.querySelector<HTMLElement>('ion-radio, ion-checkbox');
-        if (interactiveEl) {
-          interactiveEl.focus();
+        const firstEnabledOption = overlay.querySelector<HTMLElement>(
+          'ion-radio:not(.radio-disabled), ion-checkbox:not(.checkbox-disabled)'
+        );
+        if (firstEnabledOption) {
+          focusElement(firstEnabledOption.closest('ion-item')!);
+
+          /**
+           * Focus the option for the same reason as we do above.
+           */
+          firstEnabledOption.focus();
         }
       }
     }
