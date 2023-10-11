@@ -185,13 +185,28 @@ ion-picker-column-internal {
   display: none;
 }
 
-:host(.datetime-readonly),
 :host(.datetime-disabled) {
   pointer-events: none;
+
+  opacity: 0.4;
 }
 
-:host(.datetime-disabled) {
-  opacity: 0.4;
+:host(.datetime-readonly) {
+  pointer-events: none;
+
+  /**
+   * Allow user to navigate months
+   * while in readonly mode
+   */
+  .calendar-action-buttons,
+  .calendar-body,
+  .datetime-year {
+    pointer-events: initial;
+  }
+
+  .calendar-body .calendar-day {
+    pointer-events: none;
+  }
 }
 
 /**

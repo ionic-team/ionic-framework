@@ -599,6 +599,14 @@ export class Datetime implements ComponentInterface {
   };
 
   private setActiveParts = (parts: DatetimeParts, removeDate = false) => {
+    /** if the datetime component is in readonly mode,
+     * allow browsing of the calendar without changing
+     * the set value
+     */
+    if (this.readonly) {
+      return;
+    }
+
     const { multiple, minParts, maxParts, activeParts } = this;
 
     /**
