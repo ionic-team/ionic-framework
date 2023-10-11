@@ -1,9 +1,10 @@
 import { doc } from '@utils/browser';
+import type { BackButtonEvent } from '@utils/hardware-back-button';
+import { MENU_BACK_BUTTON_PRIORITY } from '@utils/hardware-back-button';
 import { printIonWarning } from '@utils/logging';
 
 import type { MenuI } from '../../components/menu/menu-interface';
-import type { AnimationBuilder, BackButtonEvent } from '../../interface';
-import { MENU_BACK_BUTTON_PRIORITY } from '../hardware-back-button';
+import type { AnimationBuilder } from '../../interface';
 import { componentOnReady } from '../helpers';
 
 import { menuOverlayAnimation } from './animations/overlay';
