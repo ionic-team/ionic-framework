@@ -35,9 +35,9 @@ export interface Animation {
   progressStep(step: number): Animation;
   progressEnd(playTo: 0 | 1 | undefined, step: number, dur?: number): Animation;
 
-  from(property: string, value: string | number): Animation;
-  to(property: string, value: string | number): Animation;
-  fromTo(property: string, fromValue: string | number, toValue: string | number): Animation;
+  from(property: string, value: any): Animation;
+  to(property: string, value: any): Animation;
+  fromTo(property: string, fromValue: any, toValue: any): Animation;
 
   /**
    * Set the keyframes for the animation.
@@ -131,7 +131,7 @@ export interface Animation {
    * browsers that do not support
    * the Web Animations API.
    */
-  getWebAnimations(): globalThis.Animation[]; // Use the Web Animation interface, not the Ionic Animations interface
+  getWebAnimations(): any[];
 
   /**
    * Add a function that performs a
