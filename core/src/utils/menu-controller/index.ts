@@ -1,3 +1,4 @@
+import { doc } from '@utils/browser';
 import { printIonWarning } from '@utils/logging';
 
 import type { MenuI } from '../../components/menu/menu-interface';
@@ -227,17 +228,14 @@ const createMenuController = () => {
   registerAnimation('push', menuPushAnimation);
   registerAnimation('overlay', menuOverlayAnimation);
 
-  if (typeof document !== 'undefined') {
-    document.addEventListener('ionBackButton', (ev: any) => {
-      // TODO(FW-2832): type
-      const openMenu = _getOpenSync();
-      if (openMenu) {
-        (ev as BackButtonEvent).detail.register(MENU_BACK_BUTTON_PRIORITY, () => {
-          return openMenu.close();
-        });
-      }
-    });
-  }
+  doc?.addEventListener('ionBackButton', (ev: BackButtonEvent) => {
+    const openMenu = _getOpenSync();
+    if (openMenu) {
+      ev.detail.register(MENU_BACK_BUTTON_PRIORITY, () => {
+        return openMenu.close();
+      });
+    }
+  });
 
   return {
     registerAnimation,

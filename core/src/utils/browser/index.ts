@@ -1,3 +1,5 @@
+import type { BackButtonEvent } from '@utils/hardware-back-button';
+
 /**
  * When accessing the document or window, it is important
  * to account for SSR applications where the
@@ -56,6 +58,16 @@ type IonicEvents = {
   removeEventListener(
     type: 'ionInputDidUnload',
     listener: (ev: CustomEvent<HTMLIonInputElement | HTMLIonTextareaElement>) => void,
+    options?: boolean | AddEventListenerOptions
+  ): void;
+  addEventListener(
+    type: 'ionBackButton',
+    listener: (ev: BackButtonEvent) => void,
+    options?: boolean | AddEventListenerOptions
+  ): void;
+  removeEventListener(
+    type: 'ionBackButton',
+    listener: (ev: BackButtonEvent) => void,
     options?: boolean | AddEventListenerOptions
   ): void;
 };
