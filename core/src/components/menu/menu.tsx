@@ -33,7 +33,7 @@ const focusableQueryString =
   shadow: true,
 })
 export class Menu implements ComponentInterface, MenuI {
-  private animation?: any; // TODO(FW-2832): type
+  private animation?: Animation;
   private lastOnEnd = 0;
   private gesture?: Gesture;
   private blocker = GESTURE_CONTROLLER.createBlocker({ disableScroll: true });
@@ -477,11 +477,11 @@ export class Menu implements ComponentInterface, MenuI {
       this.animation = undefined;
     }
     // Create new animation
-    this.animation = await menuController._createAnimation(this.type!, this);
+    const animation = (this.animation = await menuController._createAnimation(this.type!, this));
     if (!config.getBoolean('animated', true)) {
-      this.animation.duration(0);
+      animation.duration(0);
     }
-    this.animation.fill('both');
+    animation.fill('both');
   }
 
   private async startAnimation(shouldOpen: boolean, animated: boolean): Promise<void> {
