@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.5.0](https://github.com/ionic-team/ionic-framework/compare/v7.4.4...v7.5.0) (2023-10-11)
+
+
+### Bug Fixes
+
+* **alert:** stop Enter keypress for checkboxes ([#28279](https://github.com/ionic-team/ionic-framework/issues/28279)) ([72b3899](https://github.com/ionic-team/ionic-framework/commit/72b389993df4b0dc392262a106d7949e176b13af))
+* **select:** use correct aria-haspopup value ([#28265](https://github.com/ionic-team/ionic-framework/issues/28265)) ([01167fc](https://github.com/ionic-team/ionic-framework/commit/01167fc185db9bbb45b3a4086aff98008a76af2c))
+* **toast:** toast does not warn when positionAnchor is undefined ([#28312](https://github.com/ionic-team/ionic-framework/issues/28312)) ([c37b3d8](https://github.com/ionic-team/ionic-framework/commit/c37b3d8bf4b440506fdc96455a532c6316e5673d))
+
+
+### Features
+
+* **a11y:** add dynamic font scaling ([#28314](https://github.com/ionic-team/ionic-framework/issues/28314)) ([f806781](https://github.com/ionic-team/ionic-framework/commit/f8067819eeb577db163bf3e0f95fc73064d62b8a)), closes [#24638](https://github.com/ionic-team/ionic-framework/issues/24638) [#18592](https://github.com/ionic-team/ionic-framework/issues/18592)
+* **angular, react, vue, core:** export openURL utility ([#28295](https://github.com/ionic-team/ionic-framework/issues/28295)) ([6da82aa](https://github.com/ionic-team/ionic-framework/commit/6da82aab816b28bfc174f7634ded1fc1e06502ab)), closes [#27911](https://github.com/ionic-team/ionic-framework/issues/27911)
+* **angular:** ship Ionic components as Angular standalone components ([#28311](https://github.com/ionic-team/ionic-framework/issues/28311)) ([57e2476](https://github.com/ionic-team/ionic-framework/commit/57e247637005b10f0d21d5ac5f5232bcb1908301))
+* **datetime:** add support for h11 and h24 hour formats ([#28219](https://github.com/ionic-team/ionic-framework/issues/28219)) ([597bc3f](https://github.com/ionic-team/ionic-framework/commit/597bc3f085c5ff1451c73d0cf4d7d664943e712f)), closes [#23750](https://github.com/ionic-team/ionic-framework/issues/23750)
+* **toast:** allow custom positioning relative to specific element ([#28248](https://github.com/ionic-team/ionic-framework/issues/28248)) ([897ff6f](https://github.com/ionic-team/ionic-framework/commit/897ff6f7493d8d7e4ab22c6ae59de066b43ce682)), closes [#17499](https://github.com/ionic-team/ionic-framework/issues/17499)
+
+
+
+
+
 ## [7.4.4](https://github.com/ionic-team/ionic-framework/compare/v7.4.3...v7.4.4) (2023-10-11)
 
 
