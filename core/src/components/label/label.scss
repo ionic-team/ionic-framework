@@ -62,7 +62,6 @@
   align-self: baseline;
 }
 
-
 // TODO(FW-3547): this can be removed if we
 // refactor datetime to not use an ion-item
 :host-context(.item-in-datetime) {
@@ -70,6 +69,12 @@
   // to min-content elsewhere and we want to
   // prevent wrapping the label in datetime
   width: auto;
+}
+
+// Overflow hidden is required for the proper
+// margins between skeleton text elements
+:host-context(.item-skeleton-text) {
+  overflow: hidden;
 }
 
 // Fixed Inputs

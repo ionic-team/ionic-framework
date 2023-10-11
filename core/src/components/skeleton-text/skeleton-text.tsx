@@ -1,9 +1,10 @@
-import type { ComponentInterface } from '@stencil/core';
-import { Component, Element, Host, Prop, h } from '@stencil/core';
+import type { ComponentInterface, EventEmitter } from '@stencil/core';
+import { Component, Element, Event, Host, Prop, h } from '@stencil/core';
 import { hostContext } from '@utils/theme';
 
 import { config } from '../../global/config';
 import { getIonMode } from '../../global/ionic-global';
+import type { StyleEventDetail } from '../../interface';
 
 @Component({
   tag: 'ion-skeleton-text',
@@ -18,8 +19,25 @@ export class SkeletonText implements ComponentInterface {
    */
   @Prop() animated = false;
 
+  /**
+   * Emitted when the styles change.
+   * @internal
+   */
+  @Event() ionStyle!: EventEmitter<StyleEventDetail>;
+
+  componentWillLoad() {
+    this.emitStyle();
+  }
+
+  private emitStyle() {
+    const style: StyleEventDetail = {
+      'skeleton-text': true,
+    };
+
+    this.ionStyle.emit(style);
+  }
+
   render() {
-    const { el } = this;
     const animated = this.animated && config.getBoolean('animated', true);
     const inMedia = hostContext('ion-avatar', this.el) || hostContext('ion-thumbnail', this.el);
     const mode = getIonMode(this);
@@ -30,8 +48,6 @@ export class SkeletonText implements ComponentInterface {
           [mode]: true,
           'skeleton-text-animated': animated,
           'in-media': inMedia,
-          'in-item': hostContext('ion-item', el),
-          'in-label': hostContext('ion-label', el),
         }}
       >
         <span>&nbsp;</span>
