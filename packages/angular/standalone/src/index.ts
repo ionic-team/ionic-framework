@@ -5,11 +5,11 @@ export { IonRouterOutlet } from './navigation/router-outlet';
 export { IonRouterLink, IonRouterLinkWithHref } from './navigation/router-link-delegate';
 export { IonTabs } from './navigation/tabs';
 export { provideIonicAngular } from './providers/ionic-angular';
+export { MenuController } from './providers/menu-controller';
 export {
   ActionSheetController,
   AlertController,
   LoadingController,
-  MenuController,
   ModalController,
   PickerController,
   PopoverController,
