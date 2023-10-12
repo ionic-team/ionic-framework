@@ -113,7 +113,7 @@ export class RadioGroup implements ComponentInterface {
      * using the `name` attribute.
      */
     const selectedRadio = ev.target && (ev.target as HTMLElement).closest('ion-radio');
-    if (selectedRadio) {
+    if (selectedRadio && selectedRadio.disabled === false) {
       const currentValue = this.value;
       const newValue = selectedRadio.value;
       if (newValue !== currentValue) {

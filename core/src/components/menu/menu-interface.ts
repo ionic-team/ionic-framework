@@ -30,7 +30,6 @@ export interface MenuControllerI {
   _setOpen(menu: MenuI, shouldOpen: boolean, animated: boolean): Promise<boolean>;
   _register(menu: MenuI): void;
   _unregister(menu: MenuI): void;
-  _setActiveMenu(menu: MenuI): void;
 
   getMenus(): Promise<HTMLIonMenuElement[]>;
   getOpenSync(): HTMLIonMenuElement | undefined;

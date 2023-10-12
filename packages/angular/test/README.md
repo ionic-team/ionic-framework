@@ -70,6 +70,14 @@ If you want to add a version-specific change, add the change inside of the appro
 
 If you need to add E2E tests that are only run on a specific version of the JS Framework, replicate the `VersionTest` component on each partial application. This ensures that tests for framework version X do not get run for framework version Y.
 
+### Testing Lazy Loaded Ionic Components
+
+Tests for lazy loaded Ionic UI components should only be added under the `/lazy` route. This ensures the `IonicModule` is added.
+
+### Testing Standalone Ionic Components
+
+Tests for standalone Ionic UI components should only be added under the `/standalone` route. This allows for an isolated environment where the lazy loaded `IonicModule` is not initialized. The standalone components use Stencil's custom element bundle instead of the lazy loaded bundle. If `IonicModule` is initialized then the Stencil components will fall back to using the lazy loaded implementation instead of the custom elements bundle implementation.
+
 ## Adding New Test Apps
 
 As we add support for new versions of Angular, we will also need to update this directory to test against new applications. The following steps can serve as a guide for adding new apps:

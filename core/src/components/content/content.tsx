@@ -1,6 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Build, Component, Element, Event, Host, Listen, Method, Prop, forceUpdate, h, readTask } from '@stencil/core';
-import { componentOnReady } from '@utils/helpers';
+import { componentOnReady, hasLazyBuild } from '@utils/helpers';
 import { isPlatform } from '@utils/platform';
 import { isRTL } from '@utils/rtl';
 import { createColorClasses, hostContext } from '@utils/theme';
@@ -33,6 +33,9 @@ export class Content implements ComponentInterface {
   private backgroundContentEl?: HTMLElement;
   private isMainContent = true;
   private resizeTimeout: ReturnType<typeof setTimeout> | null = null;
+
+  private tabsElement: HTMLElement | null = null;
+  private tabsLoadCallback?: () => void;
 
   // Detail is used in a hot loop in the scroll event, by allocating it here
   // V8 will be able to inline any read/write to it since it's a monomorphic class.
@@ -115,15 +118,61 @@ export class Content implements ComponentInterface {
 
   connectedCallback() {
     this.isMainContent = this.el.closest('ion-menu, ion-popover, ion-modal') === null;
+
+    /**
+     * The fullscreen content offsets need to be
+     * computed after the tab bar has loaded. Since
+     * lazy evaluation means components are not hydrated
+     * at the same time, we need to wait for the ionTabBarLoaded
+     * event to fire. This does not impact dist-custom-elements
+     * because there is no hydration there.
+     */
+    if (hasLazyBuild(this.el)) {
+      /**
+       * We need to cache the reference to the tabs.
+       * If just the content is unmounted then we won't
+       * be able to query for the closest tabs on disconnectedCallback
+       * since the content has been removed from the DOM tree.
+       */
+      const closestTabs = (this.tabsElement = this.el.closest('ion-tabs'));
+      if (closestTabs !== null) {
+        /**
+         * When adding and removing the event listener
+         * we need to make sure we pass the same function reference
+         * otherwise the event listener will not be removed properly.
+         * We can't only pass `this.resize` because "this" in the function
+         * context becomes a reference to IonTabs instead of IonContent.
+         *
+         * Additionally, we listen for ionTabBarLoaded on the IonTabs
+         * instance rather than the IonTabBar instance. It's possible for
+         * a tab bar to be conditionally rendered/mounted. Since ionTabBarLoaded
+         * bubbles, we can catch any instances of child tab bars loading by listening
+         * on IonTabs.
+         */
+        this.tabsLoadCallback = () => this.resize();
+        closestTabs.addEventListener('ionTabBarLoaded', this.tabsLoadCallback);
+      }
+    }
   }
 
   disconnectedCallback() {
     this.onScrollEnd();
-  }
 
-  @Listen('appload', { target: 'window' })
-  onAppLoad() {
-    this.resize();
+    if (hasLazyBuild(this.el)) {
+      /**
+       * The event listener and tabs caches need to
+       * be cleared otherwise this will create a memory
+       * leak where the IonTabs instance can never be
+       * garbage collected.
+       */
+      const { tabsElement, tabsLoadCallback } = this;
+      if (tabsElement !== null && tabsLoadCallback !== undefined) {
+        tabsElement.removeEventListener('ionTabBarLoaded', tabsLoadCallback);
+      }
+
+      this.tabsElement = null;
+      this.tabsLoadCallback = undefined;
+    }
   }
 
   /**

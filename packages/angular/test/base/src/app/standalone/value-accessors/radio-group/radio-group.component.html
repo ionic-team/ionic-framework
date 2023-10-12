@@ -1,0 +1,14 @@
+<div>
+  <h1>IonRadioGroup Value Accessors</h1>
+  <p>
+    This test checks the form integrations with ion-radio-group to make sure values are correctly assigned to the form
+    group.
+  </p>
+
+  <app-value-accessor-test [formGroup]="form">
+    <ion-radio-group formControlName="radioGroup">
+      <ion-radio value="1">One</ion-radio>
+      <ion-radio value="2">Two</ion-radio>
+    </ion-radio-group>
+  </app-value-accessor-test>
+</div>

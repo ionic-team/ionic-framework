@@ -1,20 +1,18 @@
 import { createAnimation } from '@utils/animation/animation';
 import { getElementRoot } from '@utils/helpers';
 
-import type { Animation } from '../../../interface';
+import type { Animation, ToastDismissOptions } from '../../../interface';
 
 /**
  * iOS Toast Leave Animation
  */
-export const iosLeaveAnimation = (baseEl: HTMLElement, position: string): Animation => {
+export const iosLeaveAnimation = (baseEl: HTMLElement, opts: ToastDismissOptions): Animation => {
   const baseAnimation = createAnimation();
   const wrapperAnimation = createAnimation();
+  const { position, top, bottom } = opts;
 
   const root = getElementRoot(baseEl);
   const wrapperEl = root.querySelector('.toast-wrapper') as HTMLElement;
-
-  const bottom = `calc(-10px - var(--ion-safe-area-bottom, 0px))`;
-  const top = `calc(10px + var(--ion-safe-area-top, 0px))`;
 
   wrapperAnimation.addElement(wrapperEl);
 
