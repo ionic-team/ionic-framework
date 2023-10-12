@@ -1,17 +1,15 @@
-import { Injectable } from '@angular/core';
-import { menuController } from '@ionic/core/components';
+import type { MenuControllerI } from '@ionic/core/components';
 
-@Injectable({
-  providedIn: 'root',
-})
 export class MenuController {
+  constructor(private menuController: MenuControllerI) {}
+
   /**
    * Programmatically open the Menu.
    * @param [menuId]  Optionally get the menu by its id, or side.
    * @return returns a promise when the menu is fully opened
    */
   open(menuId?: string): Promise<boolean> {
-    return menuController.open(menuId);
+    return this.menuController.open(menuId);
   }
 
   /**
@@ -22,7 +20,7 @@ export class MenuController {
    * @return returns a promise when the menu is fully closed
    */
   close(menuId?: string): Promise<boolean> {
-    return menuController.close(menuId);
+    return this.menuController.close(menuId);
   }
 
   /**
@@ -32,7 +30,7 @@ export class MenuController {
    * @return returns a promise when the menu has been toggled
    */
   toggle(menuId?: string): Promise<boolean> {
-    return menuController.toggle(menuId);
+    return this.menuController.toggle(menuId);
   }
 
   /**
@@ -44,7 +42,7 @@ export class MenuController {
    * @return Returns the instance of the menu, which is useful for chaining.
    */
   enable(shouldEnable: boolean, menuId?: string): Promise<HTMLIonMenuElement | undefined> {
-    return menuController.enable(shouldEnable, menuId);
+    return this.menuController.enable(shouldEnable, menuId);
   }
 
   /**
@@ -54,7 +52,7 @@ export class MenuController {
    * @return Returns the instance of the menu, which is useful for chaining.
    */
   swipeGesture(shouldEnable: boolean, menuId?: string): Promise<HTMLIonMenuElement | undefined> {
-    return menuController.swipeGesture(shouldEnable, menuId);
+    return this.menuController.swipeGesture(shouldEnable, menuId);
   }
 
   /**
@@ -63,7 +61,7 @@ export class MenuController {
    * If the menuId is not specified, it returns true if ANY menu is currenly open.
    */
   isOpen(menuId?: string): Promise<boolean> {
-    return menuController.isOpen(menuId);
+    return this.menuController.isOpen(menuId);
   }
 
   /**
@@ -71,7 +69,7 @@ export class MenuController {
    * @return Returns true if the menu is currently enabled, otherwise false.
    */
   isEnabled(menuId?: string): Promise<boolean> {
-    return menuController.isEnabled(menuId);
+    return this.menuController.isEnabled(menuId);
   }
 
   /**
@@ -84,20 +82,20 @@ export class MenuController {
    * @return Returns the instance of the menu if found, otherwise `null`.
    */
   get(menuId?: string): Promise<HTMLIonMenuElement | undefined> {
-    return menuController.get(menuId);
+    return this.menuController.get(menuId);
   }
 
   /**
    * @return Returns the instance of the menu already opened, otherwise `null`.
    */
   getOpen(): Promise<HTMLIonMenuElement | undefined> {
-    return menuController.getOpen();
+    return this.menuController.getOpen();
   }
 
   /**
    * @return Returns an array of all menu instances.
    */
   getMenus(): Promise<HTMLIonMenuElement[]> {
-    return menuController.getMenus();
+    return this.menuController.getMenus();
   }
 }
