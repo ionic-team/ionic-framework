@@ -312,6 +312,7 @@ export class Router implements ComponentInterface {
     const routes = readRoutes(this.el);
 
     const fromChain = findChainForSegments(from, routes);
+    // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
     const beforeLeaveHook = fromChain && fromChain[fromChain.length - 1].beforeLeave;
 
     const canLeave = beforeLeaveHook ? await beforeLeaveHook() : true;
@@ -320,6 +321,7 @@ export class Router implements ComponentInterface {
     }
 
     const toChain = findChainForSegments(to, routes);
+    // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
     const beforeEnterHook = toChain && toChain[toChain.length - 1].beforeEnter;
 
     return beforeEnterHook ? beforeEnterHook() : true;

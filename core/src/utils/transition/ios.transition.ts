@@ -294,6 +294,7 @@ export const iosTransitionAnimation = (navEl: HTMLElement, opts: TransitionOptio
       .fill('both')
       .beforeRemoveClass('ion-page-invisible');
 
+    // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
     if (leavingEl && navEl !== null && navEl !== undefined) {
       const navDecorAnimation = createAnimation();
       navDecorAnimation.addElement(navEl);

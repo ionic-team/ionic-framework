@@ -319,6 +319,7 @@ export class Range implements ComponentInterface {
   componentDidLoad() {
     this.originalIonInput = this.ionInput;
     this.setupGesture();
+    this.updateRatio();
     this.didLoad = true;
   }
 

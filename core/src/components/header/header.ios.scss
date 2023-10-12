@@ -109,3 +109,28 @@
 .header-collapse-condense-inactive.header-collapse-condense ion-toolbar.in-toolbar ion-buttons.buttons-collapse {
   visibility: hidden;
 }
+
+/**
+ * The main header is only hidden once the collapsible large
+ * title is configured. As a result, if the main header loads
+ * before the collapsible large title is configured then the
+ * main header will be visible briefly before being hidden
+ * by the collapsible large title.
+ *
+ * The following selector ensures that any main header
+ * on a page with a collapsible large title is hidden
+ * before the collapsible large title is configured.
+ * Once the collapsible large title is configured the main
+ * header will have the ".header-collapse-main" class, and
+ * this selector will no longer apply.
+ *
+ * The :has(...) part of the selector ensures a couple things:
+ * 1. This will only apply within a page view since the content
+ * must be a subsequent-sibling of the header (~ ion-content).
+ * 2. This will only apply when that content has a collapse header (ion-header[collapse="condense"])
+ *
+ * We use opacity: 0 to avoid a layout shift.
+ */
+ion-header:not(.header-collapse-main):has(~ ion-content ion-header[collapse="condense"]) {
+  opacity: 0;
+}

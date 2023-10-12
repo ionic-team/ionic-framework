@@ -202,7 +202,11 @@ export class Radio implements ComponentInterface {
   };
 
   private onClick = () => {
-    const { radioGroup, checked } = this;
+    const { radioGroup, checked, disabled } = this;
+
+    if (disabled) {
+      return;
+    }
 
     /**
      * The legacy control uses a native input inside

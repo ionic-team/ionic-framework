@@ -48,6 +48,7 @@ export {
   menuController,
   getTimeGivenProgression,
   getIonPageElement,
+  openURL,
 
   // TYPES
   Animation,
