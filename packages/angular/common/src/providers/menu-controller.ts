@@ -1,9 +1,5 @@
-import { Injectable } from '@angular/core';
 import type { MenuControllerI } from '@ionic/core/components';
 
-@Injectable({
-  providedIn: 'root',
-})
 export class MenuController {
   constructor(private menuController: MenuControllerI) {}
 
