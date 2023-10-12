@@ -28,6 +28,7 @@ describe('Providers', () => {
     cy.get('#query-params').should('have.text', 'firstParam: abc, firstParam: true');
   })
 
+  // https://github.com/ionic-team/ionic-framework/issues/28337
   it('should register menus correctly', () => {
     cy.get('#set-menu-count').click();
     cy.get('#registered-menu-count').should('have.text', '1');
