@@ -25,12 +25,11 @@ export const createPullingAnimation = (
 };
 
 const createBaseAnimation = (pullingRefresherIcon: HTMLElement) => {
-  // TODO(FW-2832): add types/re-evaluate asserting so many things
-  const spinner = pullingRefresherIcon.querySelector('ion-spinner') as HTMLElement;
-  const circle = spinner!.shadowRoot!.querySelector('circle') as any;
-  const spinnerArrowContainer = pullingRefresherIcon.querySelector('.spinner-arrow-container') as HTMLElement;
+  const spinner = pullingRefresherIcon.querySelector('ion-spinner')!;
+  const circle = spinner!.shadowRoot!.querySelector('circle')!;
+  const spinnerArrowContainer = pullingRefresherIcon.querySelector('.spinner-arrow-container')!;
   const arrowContainer = pullingRefresherIcon!.querySelector('.arrow-container');
-  const arrow = arrowContainer ? (arrowContainer!.querySelector('ion-icon') as HTMLElement) : null;
+  const arrow = arrowContainer ? arrowContainer!.querySelector('ion-icon') : null;
 
   const baseAnimation = createAnimation().duration(1000).easing('ease-out');
 
@@ -210,6 +209,14 @@ export const shouldUseNativeRefresher = async (referenceEl: HTMLIonRefresherElem
   return (
     pullingSpinner !== null &&
     refreshingSpinner !== null &&
+    /**
+     * We use webkitOverflowScrolling for feature detection with rubber band scrolling
+     * on iOS. when doing referenceEl.style, webkitOverflowScrolling is undefined on non-iOS platforms.
+     * However, it will be the empty string on iOS.
+     * Note that we do not use getPropertyValue (and thus need to cast as any) because calling
+     * getPropertyValue('-webkit-overflow-scrolling') will return the empty string if it is not
+     * set on the element, even if the platform does not support that.
+     */
     ((mode === 'ios' && isPlatform('mobile') && (referenceEl.style as any).webkitOverflowScrolling !== undefined) ||
       mode === 'md')
   );
