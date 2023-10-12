@@ -39,7 +39,7 @@ export interface MenuControllerI {
   close: (menu?: string | null) => Promise<boolean>;
   open: (menu?: string | null) => Promise<boolean>;
   _getOpenSync: () => HTMLIonMenuElement | undefined;
-  _createAnimation: (type: string, menuCmp: MenuI) => Animation;
+  _createAnimation: (type: string, menuCmp: MenuI) => Promise<Animation>;
   _register: (menu: MenuI) => void;
   _unregister: (menu: MenuI) => void;
   _setOpen: (menu: MenuI, shouldOpen: boolean, animated: boolean) => Promise<boolean>;
