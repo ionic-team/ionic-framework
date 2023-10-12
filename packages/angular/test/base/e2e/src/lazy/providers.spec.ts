@@ -27,5 +27,10 @@ describe('Providers', () => {
 
     cy.get('#query-params').should('have.text', 'firstParam: abc, firstParam: true');
   })
+
+  it('should register menus correctly', () => {
+    cy.get('#set-menu-count').click();
+    cy.get('#registered-menu-count').should('have.text', '1');
+  });
 });
 
