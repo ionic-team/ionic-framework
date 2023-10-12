@@ -19,15 +19,14 @@
 
   text-overflow: ellipsis;
 
-  // Overflow hidden is required for the proper
-  // margins between skeleton text elements
-  overflow: hidden;
   box-sizing: border-box;
 }
 
 // TODO(FW-5289): remove
 :host-context(.item-legacy) {
   white-space: nowrap;
+
+  overflow: hidden;
 }
 
 // TODO(FW-5289): move to :host-context(.item)
@@ -63,7 +62,6 @@
   align-self: baseline;
 }
 
-
 // TODO(FW-3547): this can be removed if we
 // refactor datetime to not use an ion-item
 :host-context(.item-in-datetime) {
@@ -71,6 +69,12 @@
   // to min-content elsewhere and we want to
   // prevent wrapping the label in datetime
   width: auto;
+}
+
+// Overflow hidden is required for the proper
+// margins between skeleton text elements
+:host-context(.item-skeleton-text) {
+  overflow: hidden;
 }
 
 // Fixed Inputs
