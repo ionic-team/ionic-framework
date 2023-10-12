@@ -1,15 +1,11 @@
 import { Injectable } from '@angular/core';
+import type { MenuControllerI } from '@ionic/core/components';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MenuController {
-  private menuController;
-
-  // TODO Now - Add type
-  constructor(private menuCtrl: any) {
-    this.menuController = this.menuCtrl;
-  }
+  constructor(private menuController: MenuControllerI) {}
 
   /**
    * Programmatically open the Menu.
