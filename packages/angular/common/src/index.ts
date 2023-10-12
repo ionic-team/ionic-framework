@@ -18,6 +18,7 @@ export { Platform } from './providers/platform';
 export { bindLifecycleEvents, AngularDelegate } from './providers/angular-delegate';
 
 export type { IonicWindow } from './types/interfaces';
+export type { ViewWillEnter, ViewWillLeave, ViewDidEnter, ViewDidLeave } from './types/ionic-lifecycle-hooks';
 
 export { NavParams } from './directives/navigation/nav-params';
 

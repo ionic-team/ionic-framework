@@ -37,10 +37,11 @@ export {
   AngularDelegate,
   NavParams,
   IonicRouteStrategy,
+  ViewWillEnter,
+  ViewWillLeave,
+  ViewDidEnter,
+  ViewDidLeave,
 } from '@ionic/angular/common';
-
-// TYPES
-export * from './types/ionic-lifecycle-hooks';
 
 // PACKAGE MODULE
 export { IonicModule } from './ionic-module';

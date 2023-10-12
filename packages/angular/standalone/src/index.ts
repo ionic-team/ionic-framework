@@ -22,6 +22,10 @@ export {
   Platform,
   NavParams,
   IonicRouteStrategy,
+  ViewWillEnter,
+  ViewDidEnter,
+  ViewWillLeave,
+  ViewDidLeave,
 } from '@ionic/angular/common';
 export { IonNav } from './navigation/nav';
 export {
