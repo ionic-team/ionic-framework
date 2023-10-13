@@ -186,7 +186,7 @@ const createMenuController = (): MenuControllerI => {
   };
 
   const _createAnimation = (type: string, menuCmp: MenuI) => {
-    const animationBuilder = menuAnimations.get(type);
+    const animationBuilder = menuAnimations.get(type) as any; // TODO(FW-2832): type
     if (!animationBuilder) {
       throw new Error('animation not registered');
     }
