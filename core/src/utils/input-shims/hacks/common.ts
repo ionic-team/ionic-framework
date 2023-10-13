@@ -26,7 +26,7 @@ export const isFocused = (input: HTMLInputElement | HTMLTextAreaElement): boolea
    * Calling getRootNode on an element that is not attached to a document/shadow tree will return
    * the root of the DOM tree it belongs to.
    * isFocused is used for the hide-caret utility which only considers input/textarea elements
-   * that are present in the DOM, so we don't set types for that final case since since it does not apply.
+   * that are present in the DOM, so we don't set types for that final case since it does not apply.
    */
   return input === (input.getRootNode() as HTMLDocument | ShadowRoot).activeElement;
 };
