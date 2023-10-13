@@ -10,15 +10,7 @@ import { test as base } from '@playwright/test';
 import { PageUtils } from '../press-keys';
 
 import { initPageEvents } from './page/event-spy';
-import {
-  getSnapshotSettings,
-  goto as goToPage,
-  setContent,
-  setIonViewport,
-  spyOnEvent,
-  waitForChanges,
-  locator,
-} from './page/utils';
+import { goto as goToPage, setContent, setIonViewport, spyOnEvent, waitForChanges, locator } from './page/utils';
 import type { LocatorOptions } from './page/utils';
 import type {
   E2EPage,
@@ -57,7 +49,6 @@ export async function extendPageFixture(page: E2EPage, testInfo: TestInfo) {
   page.locator = (selector: string, options?: LocatorOptions) => locator(page, originalLocator, selector, options);
 
   // Custom Ionic methods
-  page.getSnapshotSettings = () => getSnapshotSettings(page, testInfo);
   page.setIonViewport = (options?: SetIonViewportOptions) => setIonViewport(page, options);
   page.waitForChanges = (timeoutMs?: number) => waitForChanges(page, timeoutMs);
   page.spyOnEvent = (eventName: string) => spyOnEvent(page, eventName);

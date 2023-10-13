@@ -3,6 +3,85 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [7.5.0](https://github.com/ionic-team/ionic-framework/compare/v7.4.4...v7.5.0) (2023-10-11)
+
+
+### Bug Fixes
+
+* **alert:** stop Enter keypress for checkboxes ([#28279](https://github.com/ionic-team/ionic-framework/issues/28279)) ([72b3899](https://github.com/ionic-team/ionic-framework/commit/72b389993df4b0dc392262a106d7949e176b13af))
+* **select:** use correct aria-haspopup value ([#28265](https://github.com/ionic-team/ionic-framework/issues/28265)) ([01167fc](https://github.com/ionic-team/ionic-framework/commit/01167fc185db9bbb45b3a4086aff98008a76af2c))
+* **toast:** toast does not warn when positionAnchor is undefined ([#28312](https://github.com/ionic-team/ionic-framework/issues/28312)) ([c37b3d8](https://github.com/ionic-team/ionic-framework/commit/c37b3d8bf4b440506fdc96455a532c6316e5673d))
+
+
+### Features
+
+* **a11y:** add dynamic font scaling ([#28314](https://github.com/ionic-team/ionic-framework/issues/28314)) ([f806781](https://github.com/ionic-team/ionic-framework/commit/f8067819eeb577db163bf3e0f95fc73064d62b8a)), closes [#24638](https://github.com/ionic-team/ionic-framework/issues/24638) [#18592](https://github.com/ionic-team/ionic-framework/issues/18592)
+* **angular, react, vue, core:** export openURL utility ([#28295](https://github.com/ionic-team/ionic-framework/issues/28295)) ([6da82aa](https://github.com/ionic-team/ionic-framework/commit/6da82aab816b28bfc174f7634ded1fc1e06502ab)), closes [#27911](https://github.com/ionic-team/ionic-framework/issues/27911)
+* **angular:** ship Ionic components as Angular standalone components ([#28311](https://github.com/ionic-team/ionic-framework/issues/28311)) ([57e2476](https://github.com/ionic-team/ionic-framework/commit/57e247637005b10f0d21d5ac5f5232bcb1908301))
+* **datetime:** add support for h11 and h24 hour formats ([#28219](https://github.com/ionic-team/ionic-framework/issues/28219)) ([597bc3f](https://github.com/ionic-team/ionic-framework/commit/597bc3f085c5ff1451c73d0cf4d7d664943e712f)), closes [#23750](https://github.com/ionic-team/ionic-framework/issues/23750)
+* **toast:** allow custom positioning relative to specific element ([#28248](https://github.com/ionic-team/ionic-framework/issues/28248)) ([897ff6f](https://github.com/ionic-team/ionic-framework/commit/897ff6f7493d8d7e4ab22c6ae59de066b43ce682)), closes [#17499](https://github.com/ionic-team/ionic-framework/issues/17499)
+
+
+
+
+
+## [7.4.4](https://github.com/ionic-team/ionic-framework/compare/v7.4.3...v7.4.4) (2023-10-11)
+
+
+### Bug Fixes
+
+* **animation:** play method resolves when animation is stopped ([#28264](https://github.com/ionic-team/ionic-framework/issues/28264)) ([e6031fb](https://github.com/ionic-team/ionic-framework/commit/e6031fbef0698dac0a346cd6202c47f2abf54f95))
+* **checkbox, radio, toggle:** disabled elements are not interactive ([#28294](https://github.com/ionic-team/ionic-framework/issues/28294)) ([c70432e](https://github.com/ionic-team/ionic-framework/commit/c70432e6934bcf1d570e1f7cf671c52d2bb52a8b)), closes [#28293](https://github.com/ionic-team/ionic-framework/issues/28293)
+* **content:** fullscreen offset is computed correctly with tab bar ([#28245](https://github.com/ionic-team/ionic-framework/issues/28245)) ([7375dd6](https://github.com/ionic-team/ionic-framework/commit/7375dd6abafdf7457f23deb53ad5f016456a6af2)), closes [#21130](https://github.com/ionic-team/ionic-framework/issues/21130)
+* **core:** allow fullscreen scroll content to flow outside container for translucent tab bar ([#28246](https://github.com/ionic-team/ionic-framework/issues/28246)) ([b297529](https://github.com/ionic-team/ionic-framework/commit/b297529afc4b93a93f7eaecd31dd5a88a3de5f4e)), closes [#17676](https://github.com/ionic-team/ionic-framework/issues/17676)
+* **core:** swipe to go back gesture has priority over other horizontal swipe gestures ([#28304](https://github.com/ionic-team/ionic-framework/issues/28304)) ([d5f0c77](https://github.com/ionic-team/ionic-framework/commit/d5f0c776dfb5cb40b8119c596805dad3adb621e0)), closes [#28303](https://github.com/ionic-team/ionic-framework/issues/28303)
+* **header:** collapsible large title main header does not flicker on load ([#28277](https://github.com/ionic-team/ionic-framework/issues/28277)) ([3259da0](https://github.com/ionic-team/ionic-framework/commit/3259da0de181c8f82c38d9de13733213c77d398f)), closes [#27060](https://github.com/ionic-team/ionic-framework/issues/27060)
+* **menu:** do not error if disabled or swipeGesture is changed mid-animation ([#28268](https://github.com/ionic-team/ionic-framework/issues/28268)) ([a169044](https://github.com/ionic-team/ionic-framework/commit/a1690441e5bcee8176da32700de6f9e3fde9635e)), closes [#20092](https://github.com/ionic-team/ionic-framework/issues/20092) [#19676](https://github.com/ionic-team/ionic-framework/issues/19676) [#19000](https://github.com/ionic-team/ionic-framework/issues/19000)
+* **segment:** scroll to active segment-button on first load ([#28276](https://github.com/ionic-team/ionic-framework/issues/28276)) ([1167a93](https://github.com/ionic-team/ionic-framework/commit/1167a9325fb930b6c727bc26889f5488d9620062)), closes [#28096](https://github.com/ionic-team/ionic-framework/issues/28096)
+
+
+
+
+
+## [7.4.3](https://github.com/ionic-team/ionic-framework/compare/v7.4.2...v7.4.3) (2023-10-04)
+
+
+### Bug Fixes
+
+* **fab-button:** position is correct with custom sizes ([#28195](https://github.com/ionic-team/ionic-framework/issues/28195)) ([eb41b55](https://github.com/ionic-team/ionic-framework/commit/eb41b556b57c97139b9c36dc3e3be3711d8afaca)), closes [#22564](https://github.com/ionic-team/ionic-framework/issues/22564)
+* **range:** knob positions are correct on initial render with custom elements build ([#28257](https://github.com/ionic-team/ionic-framework/issues/28257)) ([ac2c8e6](https://github.com/ionic-team/ionic-framework/commit/ac2c8e6c22da4d0d8224def24ddef56ee9d26246)), closes [#25444](https://github.com/ionic-team/ionic-framework/issues/25444)
+
+
+
+
+
+## [7.4.2](https://github.com/ionic-team/ionic-framework/compare/v7.4.1...v7.4.2) (2023-09-27)
+
+
+### Bug Fixes
+
+* **react:** Nav unmounts component while invoking popTo or popToRoot ([#27821](https://github.com/ionic-team/ionic-framework/issues/27821)) ([0edcb2c](https://github.com/ionic-team/ionic-framework/commit/0edcb2cd85133ae8c304c53c37ca829e5fbad447)), closes [#27798](https://github.com/ionic-team/ionic-framework/issues/27798)
+* **title:** large title uses custom font on transition ([#28231](https://github.com/ionic-team/ionic-framework/issues/28231)) ([71a7af0](https://github.com/ionic-team/ionic-framework/commit/71a7af0f52fe62937b1dea1ca2739e78801a2a6d))
+
+
+
+
+
+## [7.4.1](https://github.com/ionic-team/ionic-framework/compare/v7.4.0...v7.4.1) (2023-09-20)
+
+
+### Bug Fixes
+
+* **overlays:** correctly re-add root to accessibility tree ([#28183](https://github.com/ionic-team/ionic-framework/issues/28183)) ([81714d4](https://github.com/ionic-team/ionic-framework/commit/81714d45bd97f0ba91729959b60a0dc1d1d06533)), closes [#28180](https://github.com/ionic-team/ionic-framework/issues/28180)
+* **radio,toggle,checkbox,select:** padded space is clickable in items ([#28136](https://github.com/ionic-team/ionic-framework/issues/28136)) ([5b7e422](https://github.com/ionic-team/ionic-framework/commit/5b7e422dc0bfd4d58fb31f62715af47e62dabb57)), closes [#27169](https://github.com/ionic-team/ionic-framework/issues/27169)
+* **range:** knob is not cut off in item with modern syntax ([#28199](https://github.com/ionic-team/ionic-framework/issues/28199)) ([0104d89](https://github.com/ionic-team/ionic-framework/commit/0104d899270d73e16f2850a5fd7d2ba25a9e7ef0)), closes [#27199](https://github.com/ionic-team/ionic-framework/issues/27199)
+* **scroll-assist:** improve input scroll accuracy with native resizing ([#28169](https://github.com/ionic-team/ionic-framework/issues/28169)) ([b5c736f](https://github.com/ionic-team/ionic-framework/commit/b5c736f5ac829efebedf3256ddf77ab3daa7a5f6)), closes [#22940](https://github.com/ionic-team/ionic-framework/issues/22940)
+* **scroll-assist:** re-run when keyboard changes ([#28174](https://github.com/ionic-team/ionic-framework/issues/28174)) ([3f06da4](https://github.com/ionic-team/ionic-framework/commit/3f06da4cfc0d59c658e17e09ccb1ea28a29339f9)), closes [#22940](https://github.com/ionic-team/ionic-framework/issues/22940)
+
+
+
+
+
 # [7.4.0](https://github.com/ionic-team/ionic-framework/compare/v7.3.4...v7.4.0) (2023-09-14)
 
 

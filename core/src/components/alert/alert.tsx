@@ -228,6 +228,15 @@ export class Alert implements ComponentInterface, OverlayInterface {
   onKeydown(ev: any) {
     const inputTypes = new Set(this.processedInputs.map((i) => i.type));
 
+    /**
+     * Based on keyboard navigation requirements, the
+     * checkbox should not respond to the enter keydown event.
+     */
+    if (inputTypes.has('checkbox') && ev.key === 'Enter') {
+      ev.preventDefault();
+      return;
+    }
+
     // The only inputs we want to navigate between using arrow keys are the radios
     // ignore the keydown event if it is not on a radio button
     if (

@@ -96,6 +96,7 @@ const HapticEngine = {
      * if the browser does not support the Vibrate API.
      */
     if (capacitor?.getPlatform() === 'web') {
+      // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
       return typeof navigator !== 'undefined' && navigator.vibrate !== undefined;
     }
 

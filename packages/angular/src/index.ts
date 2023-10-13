@@ -5,42 +5,43 @@ export { RadioValueAccessorDirective as RadioValueAccessor } from './directives/
 export { SelectValueAccessorDirective as SelectValueAccessor } from './directives/control-value-accessors/select-value-accessor';
 export { TextValueAccessorDirective as TextValueAccessor } from './directives/control-value-accessors/text-value-accessor';
 export { IonTabs } from './directives/navigation/ion-tabs';
-export { IonBackButtonDelegateDirective as IonBackButtonDelegate } from './directives/navigation/ion-back-button';
-export { NavDelegate } from './directives/navigation/nav-delegate';
+export { IonBackButton } from './directives/navigation/ion-back-button';
+export { IonNav } from './directives/navigation/ion-nav';
 export { IonRouterOutlet } from './directives/navigation/ion-router-outlet';
 export {
   RouterLinkDelegateDirective as RouterLinkDelegate,
   RouterLinkWithHrefDelegateDirective as RouterLinkWithHrefDelegate,
 } from './directives/navigation/router-link-delegate';
 
-export { NavParams } from './directives/navigation/nav-params';
 export { IonModal } from './directives/overlays/modal';
 export { IonPopover } from './directives/overlays/popover';
 export * from './directives/proxies';
 export * from './directives/validators';
 
 // PROVIDERS
-export { AngularDelegate } from './providers/angular-delegate';
-export { ActionSheetController } from './providers/action-sheet-controller';
-export { AlertController } from './providers/alert-controller';
-export { LoadingController } from './providers/loading-controller';
+export {
+  ActionSheetController,
+  AlertController,
+  LoadingController,
+  ModalController,
+  PickerController,
+  PopoverController,
+  ToastController,
+  AnimationController,
+  GestureController,
+  DomController,
+  NavController,
+  Config,
+  Platform,
+  AngularDelegate,
+  NavParams,
+  IonicRouteStrategy,
+  ViewWillEnter,
+  ViewWillLeave,
+  ViewDidEnter,
+  ViewDidLeave,
+} from '@ionic/angular/common';
 export { MenuController } from './providers/menu-controller';
-export { PickerController } from './providers/picker-controller';
-export { ModalController } from './providers/modal-controller';
-export { Platform } from './providers/platform';
-export { PopoverController } from './providers/popover-controller';
-export { ToastController } from './providers/toast-controller';
-export { NavController } from './providers/nav-controller';
-export { DomController } from './providers/dom-controller';
-export { Config } from './providers/config';
-export { AnimationController } from './providers/animation-controller';
-export { GestureController } from './providers/gesture-controller';
-
-// ROUTER STRATEGY
-export { IonicRouteStrategy } from './util/ionic-router-reuse-strategy';
-
-// TYPES
-export * from './types/ionic-lifecycle-hooks';
 
 // PACKAGE MODULE
 export { IonicModule } from './ionic-module';
@@ -131,4 +132,5 @@ export {
   ToggleChangeEventDetail,
   ToggleCustomEvent,
   TransitionOptions,
+  openURL,
 } from '@ionic/core';

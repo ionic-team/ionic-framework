@@ -1,0 +1,48 @@
+<ion-menu menu-id="menu" content-id="content">
+  Menu Content
+</ion-menu>
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Providers Test
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding" id="content">
+  <p>
+    isLoaded: <span id="is-loaded">{{isLoaded}}</span>
+  </p>
+  <p>
+    isReady: <span id="is-ready">{{isReady}}</span>
+  </p>
+  <p>
+    isResumed: <span id="is-resumed">{{isResumed}}</span>
+  </p>
+  <p>
+    isPaused: <span id="is-paused">{{isPaused}}</span>
+  </p>
+  <p>
+    isResized: <span id="is-resized">{{isResized}}</span>
+  </p>
+  <p>
+    isTesting: <span id="is-testing">{{isTesting}}</span>
+  </p>
+  <p>
+    isDesktop: <span id="is-desktop">{{isDesktop}}</span>
+  </p>
+  <p>
+    isMobile: <span id="is-mobile">{{isMobile}}</span>
+  </p>
+  <p>
+    keyboardHeight: <span id="keyboard-height">{{keyboardHeight}}</span>
+  </p>
+  <p>
+    queryParams: <span id="query-params">{{queryParams}}</span>
+  </p>
+  <p>
+    Registered Menu Count: <span id="registered-menu-count">{{registeredMenuCount}}</span>
+  </p>
+
+  <button id="set-menu-count" (click)="setMenuCount()">Set Menu Count</button>
+</ion-content>

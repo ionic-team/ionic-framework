@@ -60,7 +60,8 @@ const config: PlaywrightTestConfig = {
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   maxFailures: 0,
-  retries: 2,
+  /* Test retries help catch flaky tests on CI */
+  retries: process.env.CI ? 2 : 0,
   reportSlowTests: null,
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,

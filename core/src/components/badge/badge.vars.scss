@@ -18,8 +18,11 @@ $badge-padding-start:             $badge-padding-end !default;
 /// @prop - Minimum width of the badge
 $badge-min-width:                 10px !default;
 
+/// @prop - Baseline font size of the badge
+$badge-baseline-font-size: 13px !default;
+
 /// @prop - Font size of the badge
-$badge-font-size:                 13px !default;
+$badge-font-size:                 dynamic-font($badge-baseline-font-size) !default;
 
 /// @prop - Font weight of the badge
 $badge-font-weight:               bold !default;

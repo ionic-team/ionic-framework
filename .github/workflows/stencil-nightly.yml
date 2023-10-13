@@ -8,7 +8,12 @@ on:
     # at 6:00 UTC (6:00 am UTC)
     - cron: '00 06 * * 1-5'
   workflow_dispatch:
-    # allows for manual invocations in the GitHub UI
+    inputs:
+      npm_release_tag:
+        required: true
+        type: string
+        description: What version should be pulled from NPM?
+        default: nightly
 
 # When pushing a new commit we should
 # cancel the previous test run to not
@@ -24,7 +29,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: ./.github/workflows/actions/build-core-stencil-prerelease
         with:
-          stencil-version: nightly
+          stencil-version: ${{ inputs.npm_release_tag || 'nightly' }}
 
   test-core-clean-build:
     needs: [build-core-with-stencil-nightly]
@@ -47,7 +52,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: ./.github/workflows/actions/test-core-spec
         with:
-          stencil-version: nightly
+          stencil-version: ${{ inputs.npm_release_tag || 'nightly' }}
 
   test-core-screenshot:
     strategy:

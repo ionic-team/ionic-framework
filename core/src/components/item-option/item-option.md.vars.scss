@@ -4,7 +4,7 @@
 // --------------------------------------------------
 
 /// @prop - Font size of the sliding option button
-$item-option-button-md-font-size:           14px !default;
+$item-option-button-md-font-size:           dynamic-font(14px) !default;
 
 /// @prop - Background color of the sliding option button
 $item-option-button-md-background-color:    ion-color(primary, base) !default;

@@ -48,6 +48,7 @@ export const chainToSegments = (chain: RouteChain): string[] | null => {
   for (const route of chain) {
     for (const segment of route.segments) {
       if (segment[0] === ':') {
+        // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
         const param = route.params && route.params[segment.slice(1)];
         if (!param) {
           return null;

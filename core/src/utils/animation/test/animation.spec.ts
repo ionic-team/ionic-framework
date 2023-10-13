@@ -4,6 +4,24 @@ import { processKeyframes } from '../animation-utils';
 import { getTimeGivenProgression } from '../cubic-bezier';
 
 describe('Animation Class', () => {
+  describe('play()', () => {
+    it('should resolve when the animation is cancelled', async () => {
+      // Tell Jest to expect 1 assertion for async code
+      expect.assertions(1);
+      const el = document.createElement('div');
+      const animation = createAnimation()
+        .addElement(el)
+        .fromTo('transform', 'translateX(0px)', 'translateX(100px)')
+        .duration(100000);
+
+      const animationPromise = animation.play();
+
+      animation.stop();
+
+      // Expect that the promise resolves and returns undefined
+      expect(animationPromise).resolves.toEqual(undefined);
+    });
+  });
   describe('isRunning()', () => {
     let animation: Animation;
     beforeEach(() => {

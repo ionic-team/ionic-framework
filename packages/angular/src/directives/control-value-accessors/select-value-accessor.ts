@@ -1,7 +1,6 @@
 import { ElementRef, Injector, Directive, HostListener } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-
-import { ValueAccessor } from './value-accessor';
+import { ValueAccessor } from '@ionic/angular/common';
 
 @Directive({
   /* tslint:disable-next-line:directive-selector */

@@ -94,3 +94,29 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     });
   });
 });
+
+/**
+ * This behavior does not vary across directions
+ */
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('radio: font scaling'), () => {
+    test('should scale text on larger font sizes', async ({ page }) => {
+      await page.setContent(
+        `
+        <style>
+          html {
+            font-size: 36px;
+          }
+        </style>
+        <ion-radio-group value="a">
+          <ion-radio value="a">Radio Label</ion-alert>
+        </ion-radio-group>
+      `,
+        config
+      );
+
+      const radioGroup = page.locator('ion-radio-group');
+      await expect(radioGroup).toHaveScreenshot(screenshot(`radio-scale`));
+    });
+  });
+});

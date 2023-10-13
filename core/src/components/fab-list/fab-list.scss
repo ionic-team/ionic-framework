@@ -4,7 +4,7 @@
 // --------------------------------------------------
 
 :host {
-  @include margin($fab-size + $fab-list-margin, 0);
+  @include margin(calc(100% + #{$fab-list-margin}), 0);
 
   display: none;
   position: absolute;
@@ -13,8 +13,15 @@
   flex-direction: column;
   align-items: center;
 
-  min-width: $fab-size;
-  min-height: $fab-size;
+  /**
+   * The list should be centered relative to the parent
+   * FAB button. We set minimum dimensions so the
+   * FAB list can be centered relative to the small FAB button.
+   * However, the small FAB button adds start/end margin, so we need
+   * to account for that in the FAB list dimensions.
+   */
+  min-width: $fab-small-size + ($fab-button-small-margin * 2);
+  min-height: $fab-small-size + ($fab-button-small-margin * 2);
 }
 
 :host(.fab-list-active) {
@@ -59,14 +66,14 @@
 }
 
 :host(.fab-list-side-start) {
-  @include margin(0, $fab-size + $fab-list-margin);
+  @include margin(0, calc(100% + #{$fab-list-margin}));
   @include position-horizontal(null, 0);
 
   flex-direction: row-reverse;
 }
 
 :host(.fab-list-side-end) {
-  @include margin(0, $fab-size + $fab-list-margin);
+  @include margin(0, calc(100% + #{$fab-list-margin}));
   @include position(null, null, null, 0);
 
   flex-direction: row;
