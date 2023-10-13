@@ -90,7 +90,6 @@
 // $useHostContext: Whether to use host-context or not. Defaults to true.
 // --------------------------------------------------------------------------------
 
-
 @function add-root-selector($root, $addHostSelector, $useHostContext: true) {
   $selectors: str-split($root, ",");
 
