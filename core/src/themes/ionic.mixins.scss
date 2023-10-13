@@ -242,17 +242,10 @@
     // - Firefox doesn't support `:host-context()`, but does support `:dir()`.
     // - Safari doesn't support `:host-context()`, but Safari 16.4+ supports `:dir()`
     // @link https://webkit.org/blog/13966/webkit-features-in-safari-16-4/
-    @each $selector in $rootSplit {
-      $dirSelector: "#{$selector}:dir(rtl)";
-      // Group the selectors back into a single selector to optimize the output.
-      $dirSelectors: append($dirSelectors, $dirSelector, comma);
-    }
 
     // Supported by Firefox.
-    @if length($dirSelectors) > 0 {
-      @at-root #{$dirSelectors} {
-        @content;
-      }
+    @at-root #{add-root-selector($root, ":dir(rtl)", false)} {
+      @content;
     }
   }
 }
