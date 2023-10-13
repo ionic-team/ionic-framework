@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.5.1-nightly.20231013](https://github.com/ionic-team/ionic-framework/compare/v7.5.0...v7.5.1-nightly.20231013) (2023-10-13)
+
+
+### Bug Fixes
+
+* **angular:** do not create duplicate menuController instances ([#28343](https://github.com/ionic-team/ionic-framework/issues/28343)) ([fa78676](https://github.com/ionic-team/ionic-framework/commit/fa78676d57eb80655ee9447ffa07dcfdae0c6b2a)), closes [#28337](https://github.com/ionic-team/ionic-framework/issues/28337)
+
+
+
+
+
 # [7.5.0](https://github.com/ionic-team/ionic-framework/compare/v7.4.4...v7.5.0) (2023-10-11)
 
 
