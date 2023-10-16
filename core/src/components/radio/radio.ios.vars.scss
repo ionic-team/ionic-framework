@@ -4,9 +4,6 @@
 // iOS Radio
 // --------------------------------------------------
 
-/// @prop - Color of the checked radio
-$radio-ios-color-on:                  current-color(base) !default;
-
 /// @prop - Background color of focus indicator for radio when focused
 $radio-ios-background-color-focused:  ion-color(primary, tint) !default;
 
