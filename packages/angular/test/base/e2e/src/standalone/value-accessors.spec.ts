@@ -107,7 +107,7 @@ describe('Value Accessors', () => {
       cy.get('ion-select').click();
       cy.get('ion-popover').should('be.visible');
 
-      cy.get('ion-popover ion-radio:first-of-type').click();
+      cy.get('ion-popover ion-radio-group ion-radio').first().click();
 
       cy.get('#formValue').should('have.text', JSON.stringify({ select: 'apples' }, null, 2));
       cy.get('ion-select').should('have.class', 'ion-dirty');
