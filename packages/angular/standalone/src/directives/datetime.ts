@@ -8,6 +8,7 @@ import {
   Injector,
   NgZone,
 } from '@angular/core';
+import type { OnInit } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValueAccessor } from '@ionic/angular/common';
 import type { DatetimeChangeEventDetail, Components } from '@ionic/core/components';
@@ -77,16 +78,24 @@ const DATETIME_METHODS = ['confirm', 'reset', 'cancel'];
   ],
   standalone: true,
 })
-export class IonDatetime extends ValueAccessor {
+export class IonDatetime extends ValueAccessor implements OnInit {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone, injector: Injector) {
     super(injector, r);
     defineCustomElement();
-    proxyInputs(IonDatetime, DATETIME_INPUTS);
-    proxyMethods(IonDatetime, DATETIME_METHODS);
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['ionCancel', 'ionChange', 'ionFocus', 'ionBlur']);
+  }
+
+  ngOnInit(): void {
+    /**
+     * Data-bound input properties are set
+     * by Angular after the constructor, so
+     * we need to run the proxy in ngOnInit.
+     */
+    proxyInputs(IonDatetime, DATETIME_INPUTS);
+    proxyMethods(IonDatetime, DATETIME_METHODS);
   }
 
   @HostListener('ionChange', ['$event.target'])

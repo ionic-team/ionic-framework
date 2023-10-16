@@ -8,6 +8,7 @@ import {
   Injector,
   NgZone,
 } from '@angular/core';
+import type { OnInit } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValueAccessor } from '@ionic/angular/common';
 import type {
@@ -88,16 +89,24 @@ const INPUT_METHODS = ['setFocus', 'getInputElement'];
   ],
   standalone: true,
 })
-export class IonInput extends ValueAccessor {
+export class IonInput extends ValueAccessor implements OnInit {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone, injector: Injector) {
     super(injector, r);
     defineCustomElement();
-    proxyInputs(IonInput, INPUT_INPUTS);
-    proxyMethods(IonInput, INPUT_METHODS);
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['ionInput', 'ionChange', 'ionBlur', 'ionFocus']);
+  }
+
+  ngOnInit(): void {
+    /**
+     * Data-bound input properties are set
+     * by Angular after the constructor, so
+     * we need to run the proxy in ngOnInit.
+     */
+    proxyInputs(IonInput, INPUT_INPUTS);
+    proxyMethods(IonInput, INPUT_METHODS);
   }
 
   @HostListener('ionInput', ['$event.target'])

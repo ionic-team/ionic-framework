@@ -8,6 +8,7 @@ import {
   Injector,
   NgZone,
 } from '@angular/core';
+import type { OnInit } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValueAccessor, setIonicClasses } from '@ionic/angular/common';
 import type { CheckboxChangeEventDetail, Components } from '@ionic/core/components';
@@ -55,15 +56,23 @@ const CHECKBOX_INPUTS = [
   ],
   standalone: true,
 })
-export class IonCheckbox extends ValueAccessor {
+export class IonCheckbox extends ValueAccessor implements OnInit {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone, injector: Injector) {
     super(injector, r);
     defineCustomElement();
-    proxyInputs(IonCheckbox, CHECKBOX_INPUTS);
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['ionChange', 'ionFocus', 'ionBlur']);
+  }
+
+  ngOnInit(): void {
+    /**
+     * Data-bound input properties are set
+     * by Angular after the constructor, so
+     * we need to run the proxy in ngOnInit.
+     */
+    proxyInputs(IonCheckbox, CHECKBOX_INPUTS);
   }
 
   writeValue(value: boolean): void {

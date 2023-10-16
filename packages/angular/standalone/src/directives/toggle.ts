@@ -8,6 +8,7 @@ import {
   Injector,
   NgZone,
 } from '@angular/core';
+import type { OnInit } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValueAccessor, setIonicClasses } from '@ionic/angular/common';
 import type { ToggleChangeEventDetail, Components } from '@ionic/core/components';
@@ -55,15 +56,23 @@ const TOGGLE_INPUTS = [
   ],
   standalone: true,
 })
-export class IonToggle extends ValueAccessor {
+export class IonToggle extends ValueAccessor implements OnInit {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone, injector: Injector) {
     super(injector, r);
     defineCustomElement();
-    proxyInputs(IonToggle, TOGGLE_INPUTS);
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['ionChange', 'ionFocus', 'ionBlur']);
+  }
+
+  ngOnInit(): void {
+    /**
+     * Data-bound input properties are set
+     * by Angular after the constructor, so
+     * we need to run the proxy in ngOnInit.
+     */
+    proxyInputs(IonToggle, TOGGLE_INPUTS);
   }
 
   writeValue(value: boolean): void {

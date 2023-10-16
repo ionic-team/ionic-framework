@@ -8,6 +8,7 @@ import {
   Injector,
   NgZone,
 } from '@angular/core';
+import type { OnInit } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValueAccessor } from '@ionic/angular/common';
 import type { SearchbarInputEventDetail, SearchbarChangeEventDetail, Components } from '@ionic/core/components';
@@ -67,16 +68,24 @@ const SEARCHBAR_METHODS = ['setFocus', 'getInputElement'];
   ],
   standalone: true,
 })
-export class IonSearchbar extends ValueAccessor {
+export class IonSearchbar extends ValueAccessor implements OnInit {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone, injector: Injector) {
     super(injector, r);
     defineCustomElement();
-    proxyInputs(IonSearchbar, SEARCHBAR_INPUTS);
-    proxyMethods(IonSearchbar, SEARCHBAR_METHODS);
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['ionInput', 'ionChange', 'ionCancel', 'ionClear', 'ionBlur', 'ionFocus']);
+  }
+
+  ngOnInit(): void {
+    /**
+     * Data-bound input properties are set
+     * by Angular after the constructor, so
+     * we need to run the proxy in ngOnInit.
+     */
+    proxyInputs(IonSearchbar, SEARCHBAR_INPUTS);
+    proxyMethods(IonSearchbar, SEARCHBAR_METHODS);
   }
 
   @HostListener('ionInput', ['$event.target'])

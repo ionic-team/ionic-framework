@@ -8,6 +8,7 @@ import {
   Injector,
   NgZone,
 } from '@angular/core';
+import type { OnInit } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValueAccessor } from '@ionic/angular/common';
 import type { Components } from '@ionic/core/components';
@@ -44,15 +45,23 @@ const RADIO_INPUTS = ['color', 'disabled', 'justify', 'labelPlacement', 'legacy'
   ],
   standalone: true,
 })
-export class IonRadio extends ValueAccessor {
+export class IonRadio extends ValueAccessor implements OnInit {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone, injector: Injector) {
     super(injector, r);
     defineCustomElement();
-    proxyInputs(IonRadio, RADIO_INPUTS);
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['ionFocus', 'ionBlur']);
+  }
+
+  ngOnInit(): void {
+    /**
+     * Data-bound input properties are set
+     * by Angular after the constructor, so
+     * we need to run the proxy in ngOnInit.
+     */
+    proxyInputs(IonRadio, RADIO_INPUTS);
   }
 
   @HostListener('ionSelect', ['$event.target'])

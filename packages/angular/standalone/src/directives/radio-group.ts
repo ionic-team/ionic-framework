@@ -8,6 +8,7 @@ import {
   Injector,
   NgZone,
 } from '@angular/core';
+import type { OnInit } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValueAccessor } from '@ionic/angular/common';
 import type { RadioGroupChangeEventDetail, Components } from '@ionic/core/components';
@@ -44,15 +45,23 @@ const RADIO_GROUP_INPUTS = ['allowEmptySelection', 'name', 'value'];
   ],
   standalone: true,
 })
-export class IonRadioGroup extends ValueAccessor {
+export class IonRadioGroup extends ValueAccessor implements OnInit {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone, injector: Injector) {
     super(injector, r);
     defineCustomElement();
-    proxyInputs(IonRadioGroup, RADIO_GROUP_INPUTS);
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['ionChange']);
+  }
+
+  ngOnInit(): void {
+    /**
+     * Data-bound input properties are set
+     * by Angular after the constructor, so
+     * we need to run the proxy in ngOnInit.
+     */
+    proxyInputs(IonRadioGroup, RADIO_GROUP_INPUTS);
   }
 
   @HostListener('ionChange', ['$event.target'])
