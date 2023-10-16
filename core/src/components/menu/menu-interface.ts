@@ -1,4 +1,4 @@
-import type { Animation } from '../../interface';
+import type { Animation, AnimationBuilder } from '@utils/animation/animation-interface';
 
 export type Side = 'start' | 'end';
 
@@ -26,13 +26,23 @@ export interface MenuI {
 }
 
 export interface MenuControllerI {
+  registerAnimation(name: string, animation: AnimationBuilder): void;
+  get(menu?: string | null, logOnMultipleSideMenus?: boolean): Promise<HTMLIonMenuElement | undefined>;
+  getMenus(): Promise<HTMLIonMenuElement[]>;
+  getOpen(): Promise<HTMLIonMenuElement | undefined>;
+  isEnabled(menu?: string | null): Promise<boolean>;
+  swipeGesture(shouldEnable: boolean, menu?: string | null): Promise<HTMLIonMenuElement | undefined>;
+  isAnimating(): Promise<boolean>;
+  isOpen(menu?: string | null): Promise<boolean>;
+  enable(shouldEnable: boolean, menu?: string | null): Promise<HTMLIonMenuElement | undefined>;
+  toggle(menu?: string | null): Promise<boolean>;
+  close(menu?: string | null): Promise<boolean>;
+  open(menu?: string | null): Promise<boolean>;
+  _getOpenSync(): HTMLIonMenuElement | undefined;
   _createAnimation(type: string, menuCmp: MenuI): Promise<Animation>;
-  _setOpen(menu: MenuI, shouldOpen: boolean, animated: boolean): Promise<boolean>;
   _register(menu: MenuI): void;
   _unregister(menu: MenuI): void;
-
-  getMenus(): Promise<HTMLIonMenuElement[]>;
-  getOpenSync(): HTMLIonMenuElement | undefined;
+  _setOpen(menu: MenuI, shouldOpen: boolean, animated: boolean): Promise<boolean>;
 }
 
 export interface MenuChangeEventDetail {
