@@ -20,6 +20,14 @@ describe('Value Accessors', () => {
     });
   });
 
+  describe('Datetime', () => {
+    beforeEach(() => cy.visit('/standalone/value-accessors/datetime'));
+
+    it('should proxy inputs on load', () => {
+      cy.get('ion-datetime').should('have.prop', 'color', 'danger');
+    });
+  });
+
   describe('Input', () => {
     beforeEach(() => cy.visit('/standalone/value-accessors/input'));
 
@@ -76,6 +84,15 @@ describe('Value Accessors', () => {
       cy.get('ion-radio').first().should('have.prop', 'color', 'danger');
     });
   });
+
+  describe('Range', () => {
+    beforeEach(() => cy.visit('/standalone/value-accessors/range'));
+
+    it('should proxy inputs on load', () => {
+      cy.get('ion-range').should('have.prop', 'color', 'danger');
+    });
+  });
+
 
   describe('Searchbar', () => {
     beforeEach(() => cy.visit('/standalone/value-accessors/searchbar'));
