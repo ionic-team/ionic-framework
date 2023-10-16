@@ -14,6 +14,10 @@ describe('Value Accessors', () => {
       cy.get('ion-checkbox').should('have.class', 'ion-dirty');
       cy.get('ion-checkbox').should('have.class', 'ion-valid');
     });
+
+    it('should proxy inputs on load', () => {
+      cy.get('ion-checkbox').should('have.prop', 'color', 'danger');
+    });
   });
 
   describe('Input', () => {
@@ -48,6 +52,10 @@ describe('Value Accessors', () => {
       cy.get('ion-input[formControlName="inputNumber"]').should('have.class', 'ion-valid');
 
     });
+
+    it('should proxy inputs on load', () => {
+      cy.get('ion-input').first().should('have.prop', 'color', 'danger');
+    });
   });
 
   describe('Radio Group', () => {
@@ -62,6 +70,10 @@ describe('Value Accessors', () => {
       cy.get('#formValue').should('have.text', JSON.stringify({ radioGroup: '2' }, null, 2));
       cy.get('ion-radio-group').should('have.class', 'ion-dirty');
       cy.get('ion-radio-group').should('have.class', 'ion-valid');
+    });
+
+    it('should proxy inputs on load', () => {
+      cy.get('ion-radio').first().should('have.prop', 'color', 'danger');
     });
   });
 
@@ -80,6 +92,10 @@ describe('Value Accessors', () => {
       cy.get('ion-searchbar').should('have.class', 'ion-dirty');
       cy.get('ion-searchbar').should('have.class', 'ion-valid');
     });
+
+    it('should proxy inputs on load', () => {
+      cy.get('ion-searchbar').should('have.prop', 'color', 'danger');
+    });
   });
 
   describe('Segment', () => {
@@ -94,6 +110,10 @@ describe('Value Accessors', () => {
       cy.get('#formValue').should('have.text', JSON.stringify({ segment: 'Free' }, null, 2));
       cy.get('ion-segment').should('have.class', 'ion-dirty');
       cy.get('ion-segment').should('have.class', 'ion-valid');
+    });
+
+    it('should proxy inputs on load', () => {
+      cy.get('ion-segment').should('have.prop', 'color', 'danger');
     });
   });
 
@@ -113,6 +133,10 @@ describe('Value Accessors', () => {
       cy.get('ion-select').should('have.class', 'ion-dirty');
       cy.get('ion-select').should('have.class', 'ion-valid');
     });
+
+    it('should proxy inputs on load', () => {
+      cy.get('ion-select').should('have.prop', 'color', 'danger');
+    });
   });
 
   describe('Textarea', () => {
@@ -130,6 +154,10 @@ describe('Value Accessors', () => {
       cy.get('ion-textarea').should('have.class', 'ion-dirty');
       cy.get('ion-textarea').should('have.class', 'ion-valid');
     });
+
+    it('should proxy inputs on load', () => {
+      cy.get('ion-textarea').should('have.prop', 'color', 'danger');
+    });
   });
 
   describe('Toggle', () => {
@@ -144,6 +172,10 @@ describe('Value Accessors', () => {
       cy.get('#formValue').should('have.text', JSON.stringify({ toggle: true }, null, 2));
       cy.get('ion-toggle').should('have.class', 'ion-dirty');
       cy.get('ion-toggle').should('have.class', 'ion-valid');
+    });
+
+    it('should proxy inputs on load', () => {
+      cy.get('ion-toggle').should('have.prop', 'color', 'danger');
     });
   });
 
