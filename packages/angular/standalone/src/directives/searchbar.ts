@@ -13,7 +13,19 @@ import { ValueAccessor } from '@ionic/angular/common';
 import type { SearchbarInputEventDetail, SearchbarChangeEventDetail, Components } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-searchbar.js';
 
-import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
+/**
+ * Value accessor components should not use ProxyCmp
+ * and should call defineCustomElement and proxyInputs
+ * manually instead. Using both the @ProxyCmp and @Component
+ * decorators and useExisting (where useExisting refers to the
+ * class) causes ng-packagr to output multiple component variables
+ * which breaks treeshaking.
+ * For example, the following would be generated:
+ * let IonSearchbar = IonSearchbar_1 = class IonSearchbar extends ValueAccessor {
+ * Instead, we want only want the class generated:
+ * class IonSearchbar extends ValueAccessor {
+ */
+import { proxyInputs, proxyMethods, proxyOutputs } from './angular-component-lib/utils';
 
 const SEARCHBAR_INPUTS = [
   'animated',
@@ -38,11 +50,8 @@ const SEARCHBAR_INPUTS = [
   'value',
 ];
 
-@ProxyCmp({
-  defineCustomElementFn: defineCustomElement,
-  inputs: SEARCHBAR_INPUTS,
-  methods: ['setFocus', 'getInputElement'],
-})
+const SEARCHBAR_METHODS = ['setFocus', 'getInputElement'];
+
 @Component({
   selector: 'ion-searchbar',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -62,6 +71,9 @@ export class IonSearchbar extends ValueAccessor {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone, injector: Injector) {
     super(injector, r);
+    defineCustomElement();
+    proxyInputs(IonSearchbar, SEARCHBAR_INPUTS);
+    proxyMethods(IonSearchbar, SEARCHBAR_METHODS);
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['ionInput', 'ionChange', 'ionCancel', 'ionClear', 'ionBlur', 'ionFocus']);

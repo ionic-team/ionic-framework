@@ -18,7 +18,19 @@ import type {
 } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-range.js';
 
-import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
+/**
+ * Value accessor components should not use ProxyCmp
+ * and should call defineCustomElement and proxyInputs
+ * manually instead. Using both the @ProxyCmp and @Component
+ * decorators and useExisting (where useExisting refers to the
+ * class) causes ng-packagr to output multiple component variables
+ * which breaks treeshaking.
+ * For example, the following would be generated:
+ * let IonRange = IonRange_1 = class IonRange extends ValueAccessor {
+ * Instead, we want only want the class generated:
+ * class IonRange extends ValueAccessor {
+ */
+import { proxyInputs, proxyOutputs } from './angular-component-lib/utils';
 
 const RANGE_INPUTS = [
   'activeBarStart',
@@ -41,10 +53,6 @@ const RANGE_INPUTS = [
   'value',
 ];
 
-@ProxyCmp({
-  defineCustomElementFn: defineCustomElement,
-  inputs: RANGE_INPUTS,
-})
 @Component({
   selector: 'ion-range',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -64,6 +72,8 @@ export class IonRange extends ValueAccessor {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone, injector: Injector) {
     super(injector, r);
+    defineCustomElement();
+    proxyInputs(IonRange, RANGE_INPUTS);
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['ionChange', 'ionInput', 'ionFocus', 'ionBlur', 'ionKnobMoveStart', 'ionKnobMoveEnd']);

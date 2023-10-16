@@ -13,7 +13,19 @@ import { ValueAccessor } from '@ionic/angular/common';
 import type { SelectChangeEventDetail, Components } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-select.js';
 
-import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
+/**
+ * Value accessor components should not use ProxyCmp
+ * and should call defineCustomElement and proxyInputs
+ * manually instead. Using both the @ProxyCmp and @Component
+ * decorators and useExisting (where useExisting refers to the
+ * class) causes ng-packagr to output multiple component variables
+ * which breaks treeshaking.
+ * For example, the following would be generated:
+ * let IonSelect = IonSelect_1 = class IonSelect extends ValueAccessor {
+ * Instead, we want only want the class generated:
+ * class IonSelect extends ValueAccessor {
+ */
+import { proxyInputs, proxyMethods, proxyOutputs } from './angular-component-lib/utils';
 
 const SELECT_INPUTS = [
   'cancelText',
@@ -39,11 +51,8 @@ const SELECT_INPUTS = [
   'value',
 ];
 
-@ProxyCmp({
-  defineCustomElementFn: defineCustomElement,
-  inputs: SELECT_INPUTS,
-  methods: ['open'],
-})
+const SELECT_METHODS = ['open'];
+
 @Component({
   selector: 'ion-select',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -63,6 +72,9 @@ export class IonSelect extends ValueAccessor {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone, injector: Injector) {
     super(injector, r);
+    defineCustomElement();
+    proxyInputs(IonSelect, SELECT_INPUTS);
+    proxyMethods(IonSelect, SELECT_METHODS);
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['ionChange', 'ionCancel', 'ionDismiss', 'ionFocus', 'ionBlur']);
