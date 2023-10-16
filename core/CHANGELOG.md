@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.5.1-nightly.20231016](https://github.com/ionic-team/ionic-framework/compare/v7.5.0...v7.5.1-nightly.20231016) (2023-10-16)
+
+
+### Bug Fixes
+
+* **angular:** do not create duplicate menuController instances ([#28343](https://github.com/ionic-team/ionic-framework/issues/28343)) ([fa78676](https://github.com/ionic-team/ionic-framework/commit/fa78676d57eb80655ee9447ffa07dcfdae0c6b2a)), closes [#28337](https://github.com/ionic-team/ionic-framework/issues/28337)
+
+
+### Features
+
+* **title:** large title transition supports dynamic font scaling ([#28290](https://github.com/ionic-team/ionic-framework/issues/28290)) ([fe47594](https://github.com/ionic-team/ionic-framework/commit/fe47594dc0bbb047f0bade144cf07b084fbeef5e)), closes [#28351](https://github.com/ionic-team/ionic-framework/issues/28351)
+
+
+
+
+
 # [7.5.0](https://github.com/ionic-team/ionic-framework/compare/v7.4.4...v7.5.0) (2023-10-11)
 
 

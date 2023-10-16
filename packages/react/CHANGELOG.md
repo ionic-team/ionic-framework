@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.5.1-nightly.20231016](https://github.com/ionic-team/ionic-framework/compare/v7.5.0...v7.5.1-nightly.20231016) (2023-10-16)
+
+
+### Bug Fixes
+
+* **react:** cleanup functions are execute for lifecycle hooks ([#28319](https://github.com/ionic-team/ionic-framework/issues/28319)) ([1ba9973](https://github.com/ionic-team/ionic-framework/commit/1ba9973857503c6e47cb225b77a5b89e0a9d2718)), closes [#28186](https://github.com/ionic-team/ionic-framework/issues/28186)
+* **react:** lifecycle events are removed on page unmount ([#28316](https://github.com/ionic-team/ionic-framework/issues/28316)) ([f14a59c](https://github.com/ionic-team/ionic-framework/commit/f14a59c5e0670ed7cc9ce1a73a087a5af13266e2))
+
+
+
+
+
 # [7.5.0](https://github.com/ionic-team/ionic-framework/compare/v7.4.4...v7.5.0) (2023-10-11)
 
 
