@@ -12,3 +12,30 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 - [Legacy](https://github.com/ionic-team/ionic-v3/blob/master/CHANGELOG.md)
 
 ## Version 8.x
+
+- [Browser and Platform Support](#version-8x-browser-platform-support)
+
+<h2 id="version-8x-browser-platform-support">Browser and Platform Support</h2>
+
+This section details the desktop browser, JavaScript framework, and mobile platform versions that are supported by Ionic 8.
+
+**Minimum Browser Versions**
+| Desktop Browser | Supported Versions |
+| --------------- | ----------------- |
+| Chrome          | 84+               |
+| Safari          | 15+               |
+| Firefox         | 75+               |
+| Edge            | 84+               |
+
+**Minimum JavaScript Framework Versions**
+| Framework | Supported Version     |
+| --------- | --------------------- |
+| Angular   | 16+                   |
+| React     | 17+                   |
+| Vue       | 3.0.6+                |
+
+**Minimum Mobile Platform Versions**
+| Platform | Supported Version      |
+| -------- | ---------------------- |
+| iOS      | 15+                    |
+| Android  | 5.1+ with Chromium 84+ |
