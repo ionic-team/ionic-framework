@@ -211,7 +211,7 @@ export const shouldUseNativeRefresher = async (referenceEl: HTMLIonRefresherElem
     refreshingSpinner !== null &&
     /**
      * We use webkitOverflowScrolling for feature detection with rubber band scrolling
-     * on iOS. when doing referenceEl.style, webkitOverflowScrolling is undefined on non-iOS platforms.
+     * on iOS. When doing referenceEl.style, webkitOverflowScrolling is undefined on non-iOS platforms.
      * However, it will be the empty string on iOS.
      * Note that we do not use getPropertyValue (and thus need to cast as any) because calling
      * getPropertyValue('-webkit-overflow-scrolling') will return the empty string if it is not
