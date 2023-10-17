@@ -9,7 +9,17 @@
   --color: #{$list-header-md-color};
   --border-color: #{$item-md-border-bottom-color};
 
-  @include padding-horizontal(calc(var(--ion-safe-area-left, 0) + #{$list-header-md-padding-start}), null);
+  /* stylelint-disable */
+  @include ltr() {
+    padding-right: var(--ion-safe-area-right);
+    padding-left: calc(var(--ion-safe-area-left, 0px) + #{$list-header-md-padding-start});
+  }
+
+  @include rtl() {
+    padding-right: calc(var(--ion-safe-area-right, 0px) + #{$list-header-md-padding-start});
+    padding-left: var(--ion-safe-area-left);
+  }
+  /* stylelint-enable */
 
   min-height: $list-header-md-min-height;
 
