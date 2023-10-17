@@ -36,7 +36,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         `
         <ion-item>
           <ion-label>Really long label should not wrap</ion-label>
-          <ion-select value="wrap" class="ion-text-wrap">
+          <ion-select value="wrap" legacy="true" class="ion-text-wrap">
             <ion-select-option value="wrap">Should wrap value only when label exists and really long text exists to make it wrap the text</ion-select-option>
           </ion-select>
         </ion-item>

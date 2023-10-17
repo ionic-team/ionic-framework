@@ -214,6 +214,11 @@
   display: flex;
   position: relative;
 
+  // Flex wrap is required here in order to wrap
+  // the start slot + .item-inner content that
+  // doesn't fit on the same line
+  flex-wrap: wrap;
+
   align-items: inherit;
   justify-content: inherit;
 
@@ -231,9 +236,15 @@
   background: var(--background);
 
   overflow: inherit;
-  box-sizing: border-box;
 
   z-index: 1;
+
+  box-sizing: border-box;
+}
+
+// TODO(FW-5289): remove
+:host(.item-legacy) .item-native {
+  flex-wrap: unset;
 }
 
 .item-native::-moz-focus-inner {
@@ -273,11 +284,25 @@ button, a {
   // This is required to work with an inset highlight
   position: relative;
 
-  flex: 1;
+  // This flex property is required in order to make
+  // the elements wrap when there is a slotted start
+  // element and a label
+  flex: 1 0 auto;
+
   flex-direction: inherit;
+
+  // Flex wrap is required here in order to wrap
+  // .input-wrapper content + the end slot that
+  // doesn't fit on the same line
+  flex-wrap: wrap;
+
   align-items: inherit;
   align-self: stretch;
 
+  // Max width must be set to 100%, otherwise the
+  // elements will overflow this container instead
+  // of wrapping
+  max-width: 100%;
   min-height: inherit;
 
   border-width: var(--inner-border-width);
@@ -289,6 +314,14 @@ button, a {
   box-sizing: border-box;
 }
 
+// TODO(FW-5289): remove
+:host(.item-legacy) .item-inner {
+  flex: 1;
+
+  flex-wrap: unset;
+
+  max-width: unset;
+}
 
 // Item Bottom
 // --------------------------------------------------
@@ -349,6 +382,11 @@ button, a {
 
 ::slotted(ion-label:not([slot="end"])) {
   flex: 1;
+
+  // Setting width to min-content allows the label to
+  // shrink and wrap its text instead of moving to its
+  // own row if there are slotted elements next to it
+  width: min-content;
 }
 
 // Item Input
@@ -361,16 +399,39 @@ button, a {
 .input-wrapper {
   display: flex;
 
-  flex: 1;
+  // This flex property is required in order to keep
+  // the label from shrinking when there are wide
+  // elements next to it
+  flex: 1 0 auto;
+
   flex-direction: inherit;
+
+  // Flex wrap is required here in order to wrap
+  // content in the default slot (such as a label
+  // and a button) that doesn't fit on the same line
+  flex-wrap: wrap;
 
   align-items: inherit;
   align-self: stretch;
+
+  // Max width must be set to 100%, otherwise the
+  // elements will overflow this container instead
+  // of wrapping
+  max-width: 100%;
 
   text-overflow: ellipsis;
 
   overflow: inherit;
   box-sizing: border-box;
+}
+
+// TODO(FW-5289): remove
+:host(.item-legacy) .input-wrapper {
+  flex: 1;
+
+  flex-wrap: unset;
+
+  max-width: unset;
 }
 
 :host(.item-label-stacked),

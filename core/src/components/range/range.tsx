@@ -397,6 +397,8 @@ export class Range implements ComponentInterface {
       this.ionStyle.emit({
         interactive: true,
         'interactive-disabled': this.disabled,
+        // TODO(FW-2997): remove this
+        legacy: !!this.legacy,
       });
     }
   }
