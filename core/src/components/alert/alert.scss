@@ -91,10 +91,21 @@
   overscroll-behavior-y: contain;
 }
 
-.alert-checkbox-group::-webkit-scrollbar,
-.alert-radio-group::-webkit-scrollbar,
-.alert-message::-webkit-scrollbar {
-  display: none;
+// Scrollbars on mobile devices will be hidden.
+// Users can still scroll the content by swiping.
+// Desktop browsers will show scrollbars. This is
+// important with a long list of options since
+// this allows users to also have the option to
+// scroll with a mouse wheel or trackpad. Otherwise,
+// the user would have to use the arrow keys to
+// scroll through the options. This may not be
+// obvious to the user.
+@media (any-pointer: none) {
+  .alert-checkbox-group::-webkit-scrollbar,
+  .alert-radio-group::-webkit-scrollbar,
+  .alert-message::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .alert-input {
