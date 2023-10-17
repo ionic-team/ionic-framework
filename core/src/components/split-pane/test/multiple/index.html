@@ -14,8 +14,8 @@
   </head>
   <body>
     <ion-split-pane id="pane-one" content-id="content-one">
-      <ion-menu id="menu-one" side="start" content-id="content-one">
-        <div class="ion-padding">Menu Content One</div>
+      <ion-menu id="pane-one-menu-one" side="start" content-id="content-one">
+        <div class="ion-padding">Split One Menu Two</div>
       </ion-menu>
 
       <div class="ion-page" id="content-one">
@@ -24,11 +24,15 @@
           <button id="show-pane-two" onclick="showSecondPane()">Show Second Pane</button>
         </ion-content>
       </div>
+
+      <ion-menu id="pane-one-menu-two" side="end" content-id="content-one">
+        <div class="ion-padding">Split One Menu Two</div>
+      </ion-menu>
     </ion-split-pane>
 
     <ion-split-pane id="pane-two" content-id="content-two" disabled="true" class="ion-page-hidden">
-      <ion-menu id="menu-two" side="start" content-id="content-two">
-        <div class="ion-padding">Menu Content Two</div>
+      <ion-menu id="pane-two-menu-one" side="start" content-id="content-two">
+        <div class="ion-padding">Split Two Menu One</div>
       </ion-menu>
 
       <div class="ion-page" id="content-two">
@@ -37,6 +41,10 @@
           <button id="show-pane-one" onclick="showFirstPane()">Show First Pane</button>
         </ion-content>
       </div>
+
+      <ion-menu id="pane-two-menu-two" side="end" content-id="content-two">
+        <div class="ion-padding">Split Two Menu Two</div>
+      </ion-menu>
     </ion-split-pane>
 
     <script>
