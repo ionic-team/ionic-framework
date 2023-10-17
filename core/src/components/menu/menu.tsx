@@ -304,7 +304,6 @@ export class Menu implements ComponentInterface, MenuI {
     }
 
     this.isPaneVisible = ev.detail.isPane(this.el);
-
     this.updateState();
   }
 
