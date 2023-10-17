@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.5.1-nightly.20231017](https://github.com/ionic-team/ionic-framework/compare/v7.5.0...v7.5.1-nightly.20231017) (2023-10-17)
+
+
+### Bug Fixes
+
+* **angular:** do not create duplicate menuController instances ([#28343](https://github.com/ionic-team/ionic-framework/issues/28343)) ([fa78676](https://github.com/ionic-team/ionic-framework/commit/fa78676d57eb80655ee9447ffa07dcfdae0c6b2a)), closes [#28337](https://github.com/ionic-team/ionic-framework/issues/28337)
+* **angular:** export missing lifecycle interfaces for standalone package ([#28346](https://github.com/ionic-team/ionic-framework/issues/28346)) ([dd93e0b](https://github.com/ionic-team/ionic-framework/commit/dd93e0b2689511f3145606f4dbb2c30dcf4c2950)), closes [/github.com/ionic-team/ionic-angular-standalone-codemods/pull/13/files/baa37ef1e3e8ba773b693db280542efba815482a#r1356414362](https://github.com//github.com/ionic-team/ionic-angular-standalone-codemods/pull/13/files/baa37ef1e3e8ba773b693db280542efba815482a/issues/r1356414362)
+* **react:** cleanup functions are execute for lifecycle hooks ([#28319](https://github.com/ionic-team/ionic-framework/issues/28319)) ([1ba9973](https://github.com/ionic-team/ionic-framework/commit/1ba9973857503c6e47cb225b77a5b89e0a9d2718)), closes [#28186](https://github.com/ionic-team/ionic-framework/issues/28186)
+* **react:** lifecycle events are removed on page unmount ([#28316](https://github.com/ionic-team/ionic-framework/issues/28316)) ([f14a59c](https://github.com/ionic-team/ionic-framework/commit/f14a59c5e0670ed7cc9ce1a73a087a5af13266e2))
+
+
+### Features
+
+* **title:** large title transition supports dynamic font scaling ([#28290](https://github.com/ionic-team/ionic-framework/issues/28290)) ([fe47594](https://github.com/ionic-team/ionic-framework/commit/fe47594dc0bbb047f0bade144cf07b084fbeef5e)), closes [#28351](https://github.com/ionic-team/ionic-framework/issues/28351)
+
+
+
+
+
 # [7.5.0](https://github.com/ionic-team/ionic-framework/compare/v7.4.4...v7.5.0) (2023-10-11)
 
 
