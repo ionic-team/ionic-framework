@@ -30,6 +30,9 @@ export class SkeletonText implements ComponentInterface {
   }
 
   private emitStyle() {
+    // The emitted property is used by item in order
+    // to add the item-skeleton-text class which applies
+    // overflow: hidden to its label
     const style: StyleEventDetail = {
       'skeleton-text': true,
     };
