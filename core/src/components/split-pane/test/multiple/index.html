@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Split Pane - Multiple</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+  <body>
+    <ion-split-pane id="pane-one" content-id="content-one">
+      <ion-menu id="menu-one" side="start" content-id="content-one">
+        <div class="ion-padding">Menu Content One</div>
+      </ion-menu>
+
+      <div class="ion-page" id="content-one">
+        <ion-content class="ion-padding">
+          Page Content One
+          <button onclick="showSecondPane()">Show Second Pane</button>
+        </ion-content>
+      </div>
+    </ion-split-pane>
+
+    <ion-split-pane id="pane-two" content-id="content-two" disabled="true" class="ion-page-hidden">
+      <ion-menu id="menu-two" side="start" content-id="content-two">
+        <div class="ion-padding">Menu Content Two</div>
+      </ion-menu>
+
+      <div class="ion-page" id="content-two">
+        <ion-content class="ion-padding">
+          Page Content Two
+          <button onclick="showFirstPane()">Show First Pane</button>
+        </ion-content>
+      </div>
+    </ion-split-pane>
+
+    <script>
+      const splitPaneOne = document.querySelector('ion-split-pane#pane-one');
+      const splitPaneTwo = document.querySelector('ion-split-pane#pane-two');
+      const showSecondPane = () => {
+        splitPaneOne.disabled = true;
+        splitPaneOne.classList.add('ion-page-hidden');
+
+        splitPaneTwo.disabled = false;
+        splitPaneTwo.classList.remove('ion-page-hidden');
+      };
+      const showFirstPane = () => {
+        splitPaneOne.disabled = false;
+        splitPaneOne.classList.remove('ion-page-hidden');
+
+        splitPaneTwo.disabled = true;
+        splitPaneTwo.classList.add('ion-page-hidden');
+      };
+    </script>
+  </body>
+</html>
