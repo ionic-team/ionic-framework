@@ -30,6 +30,7 @@
 
   @include rtl() {
     right: calc(#{$fab-content-margin} + var(--ion-safe-area-right, 0px));
+    left: auto;
   }
   /* stylelint-enable */
 }
@@ -42,6 +43,7 @@
 
   @include rtl() {
     left: calc(#{$fab-content-margin} + var(--ion-safe-area-left, 0px));
+    right: auto;
   }
   /* stylelint-enable */
 }
