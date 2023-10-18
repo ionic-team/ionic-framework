@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "7.5.0",
+  "version": "7.5.1",
   "description": "Base components for Ionic",
   "keywords": [
     "ionic",
@@ -31,12 +31,12 @@
     "loader/"
   ],
   "dependencies": {
-    "@stencil/core": "^4.4.1",
+    "@stencil/core": "^4.5.0",
     "ionicons": "^7.2.1",
     "tslib": "^2.1.0"
   },
   "devDependencies": {
-    "@axe-core/playwright": "^4.8.0",
+    "@axe-core/playwright": "^4.8.1",
     "@capacitor/core": "^5.5.0",
     "@capacitor/haptics": "^5.0.6",
     "@capacitor/keyboard": "^5.0.6",
