@@ -23,7 +23,6 @@ export {
   ActionSheetController,
   AlertController,
   LoadingController,
-  MenuController,
   ModalController,
   PickerController,
   PopoverController,
@@ -37,10 +36,12 @@ export {
   AngularDelegate,
   NavParams,
   IonicRouteStrategy,
+  ViewWillEnter,
+  ViewWillLeave,
+  ViewDidEnter,
+  ViewDidLeave,
 } from '@ionic/angular/common';
-
-// TYPES
-export * from './types/ionic-lifecycle-hooks';
+export { MenuController } from './providers/menu-controller';
 
 // PACKAGE MODULE
 export { IonicModule } from './ionic-module';
