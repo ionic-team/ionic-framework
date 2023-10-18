@@ -1452,18 +1452,33 @@ export class Datetime implements ComponentInterface {
             <slot name="buttons">
               <ion-buttons>
                 {showDefaultButtons && (
-                  <ion-button id="cancel-button" color={this.color} onClick={() => this.cancel(true)}>
+                  <ion-button
+                    id="cancel-button"
+                    color={this.color}
+                    onClick={() => this.cancel(true)}
+                    disabled={this.disabled || this.readonly}
+                  >
                     {this.cancelText}
                   </ion-button>
                 )}
                 <div class="datetime-action-buttons-container">
                   {showClearButton && (
-                    <ion-button id="clear-button" color={this.color} onClick={() => clearButtonClick()}>
+                    <ion-button
+                      id="clear-button"
+                      color={this.color}
+                      onClick={() => clearButtonClick()}
+                      disabled={this.disabled || this.readonly}
+                    >
                       {this.clearText}
                     </ion-button>
                   )}
                   {showDefaultButtons && (
-                    <ion-button id="confirm-button" color={this.color} onClick={() => this.confirm(true)}>
+                    <ion-button
+                      id="confirm-button"
+                      color={this.color}
+                      onClick={() => this.confirm(true)}
+                      disabled={this.disabled || this.readonly}
+                    >
                       {this.doneText}
                     </ion-button>
                   )}
@@ -1985,6 +2000,7 @@ export class Datetime implements ComponentInterface {
               aria-label="Show year picker"
               detail={false}
               lines="none"
+              disabled={this.disabled}
               onClick={() => {
                 this.toggleMonthAndYearView();
                 /**
@@ -2019,7 +2035,11 @@ export class Datetime implements ComponentInterface {
 
           <div class="calendar-next-prev">
             <ion-buttons>
-              <ion-button aria-label="Previous month" disabled={prevMonthDisabled} onClick={() => this.prevMonth()}>
+              <ion-button
+                aria-label="Previous month"
+                disabled={prevMonthDisabled || this.disabled}
+                onClick={() => this.prevMonth()}
+              >
                 <ion-icon
                   dir={hostDir}
                   aria-hidden="true"
@@ -2029,7 +2049,11 @@ export class Datetime implements ComponentInterface {
                   flipRtl
                 ></ion-icon>
               </ion-button>
-              <ion-button aria-label="Next month" disabled={nextMonthDisabled} onClick={() => this.nextMonth()}>
+              <ion-button
+                aria-label="Next month"
+                disabled={nextMonthDisabled || this.disabled}
+                onClick={() => this.nextMonth()}
+              >
                 <ion-icon
                   dir={hostDir}
                   aria-hidden="true"
@@ -2054,20 +2078,22 @@ export class Datetime implements ComponentInterface {
     const yearAllowed = this.parsedYearValues === undefined || this.parsedYearValues.includes(year);
     const monthAllowed = this.parsedMonthValues === undefined || this.parsedMonthValues.includes(month);
     const isCalMonthDisabled = !yearAllowed || !monthAllowed;
-    const swipeDisabled = isMonthDisabled(
-      {
-        month,
-        year,
-        day: null,
-      },
-      {
-        // The day is not used when checking if a month is disabled.
-        // Users should be able to access the min or max month, even if the
-        // min/max date is out of bounds (e.g. min is set to Feb 15, Feb should not be disabled).
-        minParts: { ...this.minParts, day: null },
-        maxParts: { ...this.maxParts, day: null },
-      }
-    );
+    const swipeDisabled =
+      this.disabled ||
+      isMonthDisabled(
+        {
+          month,
+          year,
+          day: null,
+        },
+        {
+          // The day is not used when checking if a month is disabled.
+          // Users should be able to access the min or max month, even if the
+          // min/max date is out of bounds (e.g. min is set to Feb 15, Feb should not be disabled).
+          minParts: { ...this.minParts, day: null },
+          maxParts: { ...this.maxParts, day: null },
+        }
+      );
     // The working month should never have swipe disabled.
     // Otherwise the CSS scroll snap will not work and the user
     // can free-scroll the calendar.
@@ -2166,7 +2192,7 @@ export class Datetime implements ComponentInterface {
                   data-year={year}
                   data-index={index}
                   data-day-of-week={dayOfWeek}
-                  disabled={isCalDayDisabled}
+                  disabled={isCalDayDisabled || this.disabled || this.readonly}
                   class={{
                     'calendar-day-padding': isCalendarPadding,
                     'calendar-day': true,
@@ -2259,6 +2285,7 @@ export class Datetime implements ComponentInterface {
         part={`time-button${isTimePopoverOpen ? ' active' : ''}`}
         aria-expanded="false"
         aria-haspopup="true"
+        disabled={this.disabled}
         onClick={async (ev) => {
           const { popoverRef } = this;
 
