@@ -208,15 +208,9 @@
     } @else {
       @if ($useHostContext) {
         $list: append($list, ":host-context(#{$addHostSelector}) #{$selector}", comma);
-        // Added in each case to prevent duplicate selectors
-        // in case `add-root-selector` is called multiple times
-        // for the same selector
         $list: append($list, "#{$addHostSelector} #{$selector}", comma);
       } @else {
-        // Added in each case to prevent duplicate selectors
-        // in case `add-root-selector` is called multiple times
-        // for the same selector
-        $list: append($list, "#{$addHostSelector} #{$selector}", comma);
+        $list: append($list, "#{$selector}#{$addHostSelector}", comma);
       }
     }
   }
