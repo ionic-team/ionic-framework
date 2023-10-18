@@ -203,8 +203,9 @@
     // or normal element so append both the addHostSelector and host-context
     // @include add-root-selector("ion-component", "[dir=rtl]")
     // --> :host-context([dir=rtl]) ion-component
-    // Regardless of `useHostContext` since it works for all browsers
     // --> [dir=rtl] ion-component
+    // @include add-root("ion-component", ":dir(rtl)", false)
+    // --> ion-component:dir(rtl)
     } @else {
       @if ($useHostContext) {
         $list: append($list, ":host-context(#{$addHostSelector}) #{$selector}", comma);
