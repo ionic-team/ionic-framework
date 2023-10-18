@@ -85,8 +85,10 @@
 // Add Root Selector
 // --------------------------------------------------------------------------------
 // Adds a root selector using host based on the selector passed
-// $root: The selector to add the root to
-// $addHostSelector: The selector to add to the root
+// $root: The selector that needs to be updated to include the $addHostSelector.
+// - Example: ion-button
+// $addHostSelector: The selector that is used to add the host to the $root selector.
+// - Example: [dir=rtl]
 // $useHostContext: Whether to use host-context or not. Defaults to true.
 // --------------------------------------------------------------------------------
 
