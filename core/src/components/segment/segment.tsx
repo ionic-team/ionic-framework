@@ -145,12 +145,12 @@ export class Segment implements ComponentInterface {
      * before we can scroll.
      */
     raf(() => {
-     /**
-      * When the segment loads for the first
-      * time we just want to snap the active button into
-      * place instead of scroll. Smooth scrolling should only
-      * happen when the user interacts with the segment.
-      */
+      /**
+       * When the segment loads for the first
+       * time we just want to snap the active button into
+       * place instead of scroll. Smooth scrolling should only
+       * happen when the user interacts with the segment.
+       */
       this.scrollActiveButtonIntoView(false);
     });
 
@@ -338,7 +338,7 @@ export class Segment implements ComponentInterface {
          * button such that the midpoint of the active button is at the midpoint of the
          * scroll container.
          */
-        const centeredX = activeButtonLeft - (scrollContainerBox.width / 2) + (activeButtonBox.width / 2);
+        const centeredX = activeButtonLeft - scrollContainerBox.width / 2 + activeButtonBox.width / 2;
 
         /**
          * We intentionally use scrollBy here instead of scrollIntoView
@@ -356,8 +356,8 @@ export class Segment implements ComponentInterface {
         el.scrollBy({
           top: 0,
           left: centeredX,
-          behavior: smoothScroll ? 'smooth' : 'instant'
-        })
+          behavior: smoothScroll ? 'smooth' : 'instant',
+        });
       }
     }
   }
