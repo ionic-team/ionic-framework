@@ -23,15 +23,27 @@
 }
 
 :host(.fab-horizontal-start) {
-  @include position-horizontal(
-    calc(#{$fab-content-margin} + var(--ion-safe-area-left, 0px)), null
-  );
+  /* stylelint-disable */
+  @include ltr() {
+    left: calc(#{$fab-content-margin} + var(--ion-safe-area-left, 0px));
+  }
+
+  @include rtl() {
+    right: calc(#{$fab-content-margin} + var(--ion-safe-area-right, 0px));
+  }
+  /* stylelint-enable */
 }
 
 :host(.fab-horizontal-end) {
-  @include position-horizontal(
-    null, calc(#{$fab-content-margin} + var(--ion-safe-area-right, 0px))
-  );
+  /* stylelint-disable */
+  @include ltr() {
+    right: calc(#{$fab-content-margin} + var(--ion-safe-area-right, 0px));
+  }
+
+  @include rtl() {
+    left: calc(#{$fab-content-margin} + var(--ion-safe-area-left, 0px));
+  }
+  /* stylelint-enable */
 }
 
 
