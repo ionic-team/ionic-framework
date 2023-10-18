@@ -65,6 +65,9 @@ export class Toast implements ComponentInterface, OverlayInterface {
   private customHTMLEnabled = config.get('innerHTMLTemplatesEnabled', ENABLE_HTML_CONTENT_DEFAULT);
   private durationTimeout?: ReturnType<typeof setTimeout>;
 
+  // TODO: Stubbed implementation
+  private gesture?: string;
+
   /**
    * Holds the position of the toast calculated in the present
    * animation, to be passed along to the dismiss animation so
@@ -192,6 +195,41 @@ export class Toast implements ComponentInterface, OverlayInterface {
    * Additional attributes to pass to the toast.
    */
   @Prop() htmlAttributes?: { [key: string]: any };
+
+  /**
+   * If set to 'vertical', the Toast can be dismissed with
+   * a swipe gesture. The swipe direction is determined by
+   * the value of the `position` property:
+   * `top`: The Toast can be swiped up to dismiss.
+   * `bottom`: The Toast can be swiped down to dismiss.
+   * `middle`: The Toast can be swiped up or down to dismiss.
+   */
+  @Prop() swipeGesture?: 'vertical';
+  @Watch('swipeGesture')
+  swipeGestureChanged() {
+    /**
+     * If the Toast is presented, then we need to destroy
+     * any actives gestures before a new gesture is potentially
+     * created below.
+     *
+     * If the Toast is dismissed, then no gesture should be available
+     * since the Toast is not visible. This case should never
+     * happen since the "dismiss" method handles destroying
+     * any active swipe gestures, but we keep this code
+     * around to handle the first case.
+     */
+    this.destroySwipeGesture();
+
+    /**
+     * A new swipe gesture should only be created
+     * if the Toast is presented. If the Toast is not
+     * yet presented then the "present" method will
+     * handle calling the swipe gesture setup function.
+     */
+    if (this.presented && this.prefersSwipeGesture()) {
+      this.createSwipeGesture();
+    }
+  }
 
   /**
    * If `true`, the toast will open. If `false`, the toast will close.
@@ -326,6 +364,15 @@ export class Toast implements ComponentInterface, OverlayInterface {
       this.durationTimeout = setTimeout(() => this.dismiss(undefined, 'timeout'), this.duration);
     }
 
+    /**
+     * If the Toast has a swipe gesture then we can
+     * create the gesture so users can swipe the
+     * presented Toast.
+     */
+    if (this.prefersSwipeGesture()) {
+      this.createSwipeGesture();
+    }
+
     unlock();
   }
 
@@ -373,6 +420,13 @@ export class Toast implements ComponentInterface, OverlayInterface {
     }
 
     this.lastPresentedPosition = undefined;
+
+    /**
+     * If the Toast has a swipe gesture then we can
+     * safely destroy it now that it is dismissed.
+     */
+    this.destroySwipeGesture();
+
     unlock();
 
     return dismissed;
@@ -484,6 +538,35 @@ export class Toast implements ComponentInterface, OverlayInterface {
       const cancelButton = this.getButtons().find((b) => b.role === 'cancel');
       this.callButtonHandler(cancelButton);
     }
+  };
+
+  /**
+   * Create a new swipe gesture so Toast
+   * can be swiped to dismiss.
+   */
+  private createSwipeGesture = () => {
+    this.gesture = 'stub';
+
+    this.gesture; // TODO temporary so "this.gesture" is considered read by the compiler
+  };
+
+  /**
+   * Destroy an existing swipe gesture
+   * so Toast can no longer be swiped to dismiss.
+   */
+  private destroySwipeGesture = () => {
+    this.gesture = undefined;
+  };
+
+  /**
+   * Returns `true` if swipeGesture
+   * is configured to a value that enables the swipe behavior.
+   * Returns `false` otherwise.
+   */
+  private prefersSwipeGesture = () => {
+    const { swipeGesture } = this;
+
+    return swipeGesture === 'vertical';
   };
 
   renderButtons(buttons: ToastButton[], side: 'start' | 'end') {
