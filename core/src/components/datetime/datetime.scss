@@ -188,7 +188,10 @@ ion-picker-column-internal {
 :host(.datetime-disabled) {
   pointer-events: none;
 
-  opacity: 0.4;
+  .calendar-days-of-week,
+  .datetime-time {
+    opacity: 0.4;
+  }
 }
 
 :host(.datetime-readonly) {
