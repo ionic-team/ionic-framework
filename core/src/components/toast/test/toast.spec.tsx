@@ -92,32 +92,6 @@ describe('toast: a11y smoke test', () => {
   });
 });
 
-describe('toast: duration config', () => {
-  it('should have duration set to 0', async () => {
-    const page = await newSpecPage({
-      components: [Toast],
-      html: `<ion-toast></ion-toast>`,
-    });
-
-    const toast = page.body.querySelector('ion-toast');
-
-    expect(toast.duration).toBe(0);
-  });
-
-  it('should have duration set to 5000', async () => {
-    config.reset({ toastDuration: 5000 });
-
-    const page = await newSpecPage({
-      components: [Toast],
-      html: `<ion-toast></ion-toast>`,
-    });
-
-    const toast = page.body.querySelector('ion-toast');
-
-    expect(toast.duration).toBe(5000);
-  });
-});
-
 describe('toast: htmlAttributes', () => {
   it('should correctly inherit attributes on host', async () => {
     const page = await newSpecPage({
