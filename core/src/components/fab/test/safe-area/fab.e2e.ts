@@ -30,7 +30,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
        */
       await page.setViewportSize({
         width: 200,
-        height: 200
+        height: 200,
       });
 
       await expect(page).toHaveScreenshot(screenshot('fab-safe-area-horizontal-start'));
@@ -63,7 +63,7 @@ configs({ modes: ['md'] }).forEach(({ title, screenshot, config }) => {
        */
       await page.setViewportSize({
         width: 200,
-        height: 200
+        height: 200,
       });
 
       await expect(page).toHaveScreenshot(screenshot('fab-safe-area-horizontal-end'));
