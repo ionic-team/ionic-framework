@@ -128,10 +128,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         config
       );
 
-      const datetime = page.locator('ion-datetime');
       const monthYearButton = page.locator('.calendar-month-year ion-item');
-      const prevButton = page.locator('.calendar-next-prev ion-button:nth-child(1)');
-      const nextButton = page.locator('.calendar-next-prev ion-button:nth-child(2)');
 
       await page.keyboard.press(tabKey);
       await expect(monthYearButton).not.toBeFocused();
