@@ -353,7 +353,7 @@ export class Segment implements ComponentInterface {
          * within the scroll container, the browser will attempt
          * to center by as much as it can.
          */
-        this.el.scrollBy({
+        el.scrollBy({
           top: 0,
           left: centeredX,
           behavior: smoothScroll ? 'smooth' : 'instant'
