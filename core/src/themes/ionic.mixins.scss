@@ -242,6 +242,9 @@
     // - Firefox doesn't support `:host-context()`, but does support `:dir()`.
     // - Safari doesn't support `:host-context()`, but Safari 16.4+ supports `:dir()`
     // @link https://webkit.org/blog/13966/webkit-features-in-safari-16-4/
+    // -- However, there is a Webkit bug on v16 that prevents `:dir()` from working when
+    // -- the app direction is changed dynamically. v17+ works fine.
+    // -- @link https://bugs.webkit.org/show_bug.cgi?id=257133
 
     // Supported by Firefox.
     @at-root #{add-root-selector($root, ":dir(rtl)", false)} {
