@@ -4,5 +4,5 @@
     "docs",
     "packages/*"
   ],
-  "version": "7.5.0"
+  "version": "7.5.1-nightly.20231018"
 }
