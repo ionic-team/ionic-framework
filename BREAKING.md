@@ -22,10 +22,10 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 **Minimum Browser Versions**
 | Desktop Browser | Supported Versions |
 | --------------- | ----------------- |
-| Chrome          | 84+               |
+| Chrome          | 89+               |
 | Safari          | 15+               |
 | Firefox         | 75+               |
-| Edge            | 84+               |
+| Edge            | 89+               |
 
 **Minimum JavaScript Framework Versions**
 | Framework | Supported Version     |
@@ -38,4 +38,4 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 | Platform | Supported Version      |
 | -------- | ---------------------- |
 | iOS      | 15+                    |
-| Android  | 5.1+ with Chromium 84+ |
+| Android  | 5.1+ with Chromium 89+ |
