@@ -4,9 +4,6 @@
 // Material Design Label
 // --------------------------------------------------
 
-/// @prop - Text color of the label by an input, select, or datetime
-$label-md-text-color:                    $text-color-step-600 !default;
-
 /// @prop - Text color of the stacked/floating label when it is focused
 $label-md-text-color-focused:            ion-color(primary, base) !default;
 
