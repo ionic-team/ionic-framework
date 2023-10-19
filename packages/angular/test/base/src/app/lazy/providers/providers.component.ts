@@ -21,12 +21,13 @@ export class ProvidersComponent {
   isMobile?: boolean = undefined;
   keyboardHeight = 0;
   queryParams = '';
+  registeredMenuCount = 0;
 
   constructor(
     actionSheetCtrl: ActionSheetController,
     alertCtrl: AlertController,
     loadingCtrl: LoadingController,
-    menuCtrl: MenuController,
+    private menuCtrl: MenuController,
     pickerCtrl: PickerController,
     modalCtrl: ModalController,
     platform: Platform,
@@ -81,5 +82,10 @@ export class ProvidersComponent {
       document.dispatchEvent(new CustomEvent('resume'));
       window.dispatchEvent(new CustomEvent('resize'));
     });
+  }
+
+  async setMenuCount() {
+    const menus = await this.menuCtrl.getMenus();
+    this.registeredMenuCount = menus.length;
   }
 }

@@ -763,7 +763,8 @@ export const IonSelectOption = /*@__PURE__*/ defineContainer<JSX.IonSelectOption
 
 
 export const IonSkeletonText = /*@__PURE__*/ defineContainer<JSX.IonSkeletonText>('ion-skeleton-text', defineIonSkeletonText, [
-  'animated'
+  'animated',
+  'ionStyle'
 ]);
 
 

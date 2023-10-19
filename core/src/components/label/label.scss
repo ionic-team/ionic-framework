@@ -19,18 +19,30 @@
 
   text-overflow: ellipsis;
 
+  box-sizing: border-box;
+}
+
+// TODO(FW-5289): remove
+:host-context(.item-legacy) {
   white-space: nowrap;
 
   overflow: hidden;
-  box-sizing: border-box;
+}
+
+// TODO(FW-5289): move to :host-context(.item)
+// Shouldn't need :not(.item-input) as this was
+// only needed because of the specificity with
+// :not(.item-legacy)
+:host-context(.item:not(.item-input):not(.item-legacy)) {
+  flex-grow: 1;
 }
 
 :host(.ion-color) {
   color: current-color(base);
 }
 
-:host(.ion-text-wrap) {
-  white-space: normal;
+:host(.ion-text-nowrap) {
+  overflow: hidden;
 }
 
 :host-context(.item-interactive-disabled:not(.item-multiple-inputs)) {
@@ -50,6 +62,11 @@
   align-self: baseline;
 }
 
+// Overflow hidden is required for the proper
+// margins between skeleton text elements
+:host-context(.item-skeleton-text) {
+  overflow: hidden;
+}
 
 // Fixed Inputs
 // --------------------------------------------------
