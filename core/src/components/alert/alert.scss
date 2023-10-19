@@ -101,7 +101,7 @@
 // keyboard to navigate through the options.
 // This may not be intuitive for users who
 // are not familiar with keyboard navigation.
-@media (any-pointer: none) {
+@media (any-pointer: coarse) {
   .alert-checkbox-group::-webkit-scrollbar,
   .alert-radio-group::-webkit-scrollbar,
   .alert-message::-webkit-scrollbar {
