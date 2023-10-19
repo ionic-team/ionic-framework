@@ -9,7 +9,7 @@ export class InputsComponent {
   datetime? = '1994-03-15';
   input? = 'some text';
   checkbox = true;
-  radio = 'nes';
+  radio? = 'nes';
   toggle = true;
   select? = 'nes';
   changes = 0;
