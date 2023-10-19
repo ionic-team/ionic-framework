@@ -72,7 +72,12 @@ export const createSwipeToDismissGesture = (
 
   const swipeAnimation = createAnimation('toast-swipe-to-dismiss-animation')
     .addElement(wrapperEl)
-    // TODO why 100?
+    /**
+     * The specific value here does not actually
+     * matter. We just need this to be a positive
+     * value so the animation does not jump
+     * to the end when the user beings to drag.
+     */
     .duration(100);
 
   switch (el.position) {
@@ -106,11 +111,10 @@ export const createSwipeToDismissGesture = (
 
   const onEnd = (detail: GestureDetail) => {
     const velocity = detail.velocityY;
-    const step = computeStep(detail.deltaY);
     const threshold = ((detail.deltaY + velocity * 1000) / MAX_SWIPE_DISTANCE) * INVERSION_FACTOR;
 
-    console.log(threshold);
-    const shouldComplete = threshold >= DISMISS_THRESHOLD;
+    // TODO Figure out a good duration
+    const duration = 500;
 
     /**
      * Disable the gesture for the remainder of the animation.
@@ -119,12 +123,94 @@ export const createSwipeToDismissGesture = (
      */
     gesture.enable(false);
 
+    let shouldDismiss = true;
+    let playTo: 0 | 1 = 1;
+    let step: number;
+
+    if (el.position === 'middle') {
+      shouldDismiss = true;
+      /**
+       * Since we are replacing the keyframes
+       * below the animation always starts from
+       * the beginning of the new keyframes.
+       * Similarly, we are always playing to
+       * the end of the new keyframes.
+       */
+      playTo = 1;
+      step = 0;
+
+      /**
+       * The Toast should animate from wherever its
+       * current position is to the desired end state.
+       */
+
+      /**
+       * Get the current position of the Toast for
+       * it starting state.
+       */
+      const wrapperElBox = wrapperEl.getBoundingClientRect();
+      const startPosition = `${wrapperElBox.top - topPosition}px`;
+
+      /**
+       * By default, the Toast will come
+       * back to its default state in the
+       * middle of the screen.
+       */
+      let endPosition = '0px';
+
+      /**
+       * However, if the Toast should dismiss
+       * then we need to figure out which edge of
+       * the screen it should animate towards.
+       */
+      if (shouldDismiss) {
+        const endOffset = topPosition + wrapperElHeight;
+        /**
+         * If the deltaY is negative then the user is swiping
+         * up, so the Toast should animate to the top of the screen.
+         * If the deltaY is positive then the user is swiping
+         * down, so the Toast should animate to the bottom of the screen.
+         * We also account for when the deltaY is 0, but realistically
+         * that should never happen because it means the user did not drag
+         * the toast.
+         */
+        endPosition = detail.deltaY <= 0 ? `-${endOffset}px` : `${endOffset}px`;
+      }
+
+      const KEYFRAMES = [
+        { offset: 0, transform: `translateY(${startPosition})` },
+        { offset: 1, transform: `translateY(${endPosition})` }
+      ]
+
+      swipeAnimation.keyframes(KEYFRAMES);
+    } else {
+      shouldDismiss = threshold >= DISMISS_THRESHOLD;
+      playTo = shouldDismiss ? 1 : 0;
+      step = computeStep(detail.deltaY);
+    }
+
     swipeAnimation
       .onFinish(
         () => {
-          if (shouldComplete) {
+          if (shouldDismiss) {
             onDismiss();
+            swipeAnimation.destroy();
           } else {
+            if (el.position === 'middle') {
+              /**
+               * If the toast snapped back to
+               * the middle of the screen we need
+               * to reset the keyframes
+               * so the toast can be swiped
+               * up or down again.
+               */
+              swipeAnimation
+                .keyframes(SWIPE_UP_DOWN_KEYFRAMES)
+                .progressStart(true, 0.5);
+            } else {
+              swipeAnimation.progressStart(true, 0);
+            }
+
             /**
              * If the toast did not dismiss then
              * the user should be able to swipe again.
@@ -140,15 +226,13 @@ export const createSwipeToDismissGesture = (
         },
         { oneTimeCallback: true }
       )
-
-      // TODO: Duration
-      //.progressEnd(shouldComplete ? 1 : 0, step, 500);
+    .progressEnd(playTo, step, duration);
   };
 
   const gesture = createGesture({
     el: wrapperEl,
     gestureName: 'toast-swipe-to-dismiss',
-    gesturePriority: 39, // TODO why 39?
+    gesturePriority: 39, // TODO Figure out an appropriate priority
     /**
      * Toast only supports vertical swipes.
      * This needs to be updated if we later
