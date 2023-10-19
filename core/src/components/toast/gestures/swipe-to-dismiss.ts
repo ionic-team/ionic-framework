@@ -125,7 +125,7 @@ export const createSwipeToDismissGesture = (
 
     let shouldDismiss = true;
     let playTo: 0 | 1 = 1;
-    let step: number;
+    let step: number = 0;
 
     if (el.position === 'middle') {
       shouldDismiss = true;
