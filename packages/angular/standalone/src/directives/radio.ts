@@ -4,7 +4,6 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  HostListener,
   Injector,
   NgZone,
 } from '@angular/core';
@@ -62,15 +61,6 @@ export class IonRadio extends ValueAccessor implements OnInit {
      * we need to run the proxy in ngOnInit.
      */
     proxyInputs(IonRadio, RADIO_INPUTS);
-  }
-
-  @HostListener('ionSelect', ['$event.target'])
-  handleIonSelect(el: any): void {
-    /**
-     * The `el` type is any to access the `checked` state property
-     * that is not exposed on the type interface.
-     */
-    this.handleValueChange(el, el.checked);
   }
 }
 

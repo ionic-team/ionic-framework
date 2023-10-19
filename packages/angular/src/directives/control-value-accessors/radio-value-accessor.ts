@@ -1,4 +1,4 @@
-import { ElementRef, Injector, Directive, HostListener } from '@angular/core';
+import { ElementRef, Injector, Directive } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValueAccessor } from '@ionic/angular/common';
 
@@ -16,14 +16,5 @@ import { ValueAccessor } from '@ionic/angular/common';
 export class RadioValueAccessorDirective extends ValueAccessor {
   constructor(injector: Injector, el: ElementRef) {
     super(injector, el);
-  }
-
-  @HostListener('ionSelect', ['$event.target'])
-  _handleIonSelect(el: any): void {
-    /**
-     * The `el` type is any to access the `checked` state property
-     * that is not exposed on the type interface.
-     */
-    this.handleValueChange(el, el.checked);
   }
 }
