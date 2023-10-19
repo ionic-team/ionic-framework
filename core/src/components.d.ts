@@ -3386,6 +3386,10 @@ export interface IonSelectCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIonSelectElement;
 }
+export interface IonSkeletonTextCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLIonSkeletonTextElement;
+}
 export interface IonSplitPaneCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIonSplitPaneElement;
@@ -6921,6 +6925,10 @@ declare namespace LocalJSX {
           * If `true`, the skeleton text will animate.
          */
         "animated"?: boolean;
+        /**
+          * Emitted when the styles change.
+         */
+        "onIonStyle"?: (event: IonSkeletonTextCustomEvent<StyleEventDetail>) => void;
     }
     interface IonSpinner {
         /**
