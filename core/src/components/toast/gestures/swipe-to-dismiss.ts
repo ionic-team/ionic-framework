@@ -142,11 +142,9 @@ export const createSwipeToDismissGesture = (
       /**
        * The Toast should animate from wherever its
        * current position is to the desired end state.
-       */
-
-      /**
-       * Get the current position of the Toast for
-       * it starting state.
+       *
+       * To begin, we get the current position of the
+       * Toast for its starting state.
        */
       const wrapperElBox = wrapperEl.getBoundingClientRect();
       const startPosition = `${wrapperElBox.top - topPosition}px`;
