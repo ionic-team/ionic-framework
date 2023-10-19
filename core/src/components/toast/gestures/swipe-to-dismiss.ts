@@ -1,7 +1,8 @@
-import { getElementRoot } from '@utils/helpers';
-import { createGesture } from '@utils/gesture';
 import { createAnimation } from '@utils/animation/animation';
+import { createGesture } from '@utils/gesture';
 import type { GestureDetail } from '@utils/gesture';
+import { getElementRoot } from '@utils/helpers';
+
 import type { ToastAnimationPosition } from '../toast-interface';
 
 export const createSwipeToDismissGesture = (
@@ -139,7 +140,7 @@ export const createSwipeToDismissGesture = (
        * consider when the threshold is a negative in the event the
        * user drags up (since the deltaY will also be negative).
        */
-      shouldDismiss = threshold >= (DISMISS_THRESHOLD / 2) || threshold <= (-DISMISS_THRESHOLD / 2);
+      shouldDismiss = threshold >= DISMISS_THRESHOLD / 2 || threshold <= -DISMISS_THRESHOLD / 2;
       /**
        * Since we are replacing the keyframes
        * below the animation always starts from
@@ -188,8 +189,8 @@ export const createSwipeToDismissGesture = (
 
       const KEYFRAMES = [
         { offset: 0, transform: `translateY(${startPosition})` },
-        { offset: 1, transform: `translateY(${endPosition})` }
-      ]
+        { offset: 1, transform: `translateY(${endPosition})` },
+      ];
 
       swipeAnimation.keyframes(KEYFRAMES);
     } else {
@@ -213,9 +214,7 @@ export const createSwipeToDismissGesture = (
                * so the toast can be swiped
                * up or down again.
                */
-              swipeAnimation
-                .keyframes(SWIPE_UP_DOWN_KEYFRAMES)
-                .progressStart(true, 0.5);
+              swipeAnimation.keyframes(SWIPE_UP_DOWN_KEYFRAMES).progressStart(true, 0.5);
             } else {
               swipeAnimation.progressStart(true, 0);
             }
@@ -235,7 +234,7 @@ export const createSwipeToDismissGesture = (
         },
         { oneTimeCallback: true }
       )
-    .progressEnd(playTo, step, duration);
+      .progressEnd(playTo, step, duration);
   };
 
   const gesture = createGesture({
