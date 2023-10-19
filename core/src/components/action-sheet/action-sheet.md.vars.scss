@@ -84,9 +84,6 @@ $action-sheet-md-button-padding-bottom:                 $action-sheet-md-button-
 /// @prop - Padding start of the action sheet button
 $action-sheet-md-button-padding-start:                  $action-sheet-md-button-padding-end !default;
 
-/// @prop - Background color of the action sheet button
-$action-sheet-md-button-background:                     transparent !default;
-
 // Action Sheet Icon
 // --------------------------------------------------
 
@@ -104,6 +101,3 @@ $action-sheet-md-icon-margin-bottom:                    0 !default;
 
 /// @prop - Margin start of the icon in the action sheet button
 $action-sheet-md-icon-margin-start:                     0 !default;
-
-/// @prop - Color of the icon in the action sheet button
-$action-sheet-md-icon-color:                            $action-sheet-md-title-color !default;
