@@ -1,10 +1,12 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { State, Watch, Component, Element, Event, h, Host, Method, Prop } from '@stencil/core';
 import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
+import type { Gesture } from '@utils/gesture';
 import { raf } from '@utils/helpers';
 import { createLockController } from '@utils/lock-controller';
 import { printIonWarning } from '@utils/logging';
 import {
+  GESTURE,
   createDelegateController,
   createTriggerController,
   dismiss,
@@ -29,6 +31,7 @@ import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
 import { getAnimationPosition } from './animations/utils';
+import { createSwipeToDismissGesture } from './gestures/swipe-to-dismiss';
 import type {
   ToastButton,
   ToastPosition,
@@ -66,7 +69,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
   private durationTimeout?: ReturnType<typeof setTimeout>;
 
   // TODO: Stubbed implementation
-  private gesture?: string;
+  private gesture?: Gesture;
 
   /**
    * Holds the position of the toast calculated in the present
@@ -227,7 +230,11 @@ export class Toast implements ComponentInterface, OverlayInterface {
      * handle calling the swipe gesture setup function.
      */
     if (this.presented && this.prefersSwipeGesture()) {
-      this.createSwipeGesture();
+      /**
+       * If the Toast is presented then
+       * lastPresentedPosition is defined.
+       */
+      this.createSwipeGesture(this.lastPresentedPosition!);
     }
   }
 
@@ -370,7 +377,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
      * presented Toast.
      */
     if (this.prefersSwipeGesture()) {
-      this.createSwipeGesture();
+      this.createSwipeGesture(animationPosition);
     }
 
     unlock();
@@ -544,10 +551,16 @@ export class Toast implements ComponentInterface, OverlayInterface {
    * Create a new swipe gesture so Toast
    * can be swiped to dismiss.
    */
-  private createSwipeGesture = () => {
-    this.gesture = 'stub';
+  private createSwipeGesture = (toastPosition: ToastAnimationPosition) => {
+    const gesture = (this.gesture = createSwipeToDismissGesture(this.el, toastPosition, () => {
+      /**
+       * If the gesture completed then
+       * we should dismiss the toast.
+       */
+      this.dismiss(undefined, GESTURE);
+    }));
 
-    this.gesture; // TODO temporary so "this.gesture" is considered read by the compiler
+    gesture.enable(true);
   };
 
   /**
@@ -555,6 +568,13 @@ export class Toast implements ComponentInterface, OverlayInterface {
    * so Toast can no longer be swiped to dismiss.
    */
   private destroySwipeGesture = () => {
+    const { gesture } = this;
+
+    if (gesture === undefined) {
+      return;
+    }
+
+    gesture.destroy();
     this.gesture = undefined;
   };
 
