@@ -128,7 +128,18 @@ export const createSwipeToDismissGesture = (
     let step: number = 0;
 
     if (el.position === 'middle') {
-      shouldDismiss = true;
+      /**
+       * A middle positioned Toast appears
+       * in the middle of the screen (at animation offset 0.5).
+       * As a result, the threshold will be calculated relative
+       * to this starting position. In other words at animation offset 0.5
+       * the threshold will be 0. We want the middle Toast to be eligible
+       * for dismiss when the user has swiped either half way up or down the
+       * screen. As a result, we divide DISMISS_THRESHOLD in half. We also
+       * consider when the threshold is a negative in the event the
+       * user drags up (since the deltaY will also be negative).
+       */
+      shouldDismiss = threshold >= (DISMISS_THRESHOLD / 2) || threshold <= (-DISMISS_THRESHOLD / 2);
       /**
        * Since we are replacing the keyframes
        * below the animation always starts from
