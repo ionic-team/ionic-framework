@@ -827,16 +827,22 @@ export const createAnimation = (animationId?: string): Animation => {
     }
 
     if (playTo !== undefined) {
-      onFinish(
-        () => {
+      /**
+       * This clean up callback needs to fire before
+       * any other user callbacks fire. Otherwise
+       * if someone calls progressStart(0) the animation
+       * may still be reversed.
+       */
+      onFinishOneTimeCallbacks.unshift({
+        c: () => {
           forceDurationValue = undefined;
           forceDirectionValue = undefined;
           forceDelayValue = undefined;
         },
-        {
+        o: {
           oneTimeCallback: true,
-        }
-      );
+        },
+      });
 
       if (!parentAnimation) {
         play();
