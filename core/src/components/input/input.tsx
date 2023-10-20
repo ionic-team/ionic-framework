@@ -686,18 +686,23 @@ export class Input implements ComponentInterface {
   }
 
   private renderInput() {
-    const { disabled, fill, readonly, shape, inputId, labelPlacement } = this;
+    const { disabled, fill, readonly, shape, inputId, labelPlacement, el, hasFocus } = this;
     const mode = getIonMode(this);
     const value = this.getValue();
     const inItem = hostContext('ion-item', this.el);
     const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;
 
+    const hasValue = this.hasValue();
+    const hasStartEndSlots = el.querySelector('[slot="start"], [slot="end"]') !== null;
+    const labelShouldFloat = labelPlacement === 'stacked' || (labelPlacement === 'floating' && (hasValue || hasFocus || hasStartEndSlots));
+
     return (
       <Host
         class={createColorClasses(this.color, {
           [mode]: true,
-          'has-value': this.hasValue(),
-          'has-focus': this.hasFocus,
+          'has-value': hasValue,
+          'has-focus': hasFocus,
+          'label-floating': labelShouldFloat,
           [`input-fill-${fill}`]: fill !== undefined,
           [`input-shape-${shape}`]: shape !== undefined,
           [`input-label-placement-${labelPlacement}`]: true,
