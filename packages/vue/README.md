@@ -44,6 +44,17 @@ npm run build
 
 Running `npm run bundle.watch` will cause `@ionic/vue` to be re-compiled whenever the source files change. Note that if you have not yet built the project a full build using `npm run build` must be done prior to running `npm run bundle.watch`.
 
+### Linking Local `@ionic/core` Dependency
+
+Use [npm link](https://docs.npmjs.com/cli/v6/commands/npm-link) to link the local `@ionic/core` output to your local `@ionic/vue`. This allows you to use any `@ionic/core` changes you have made when working on `@ionic/vue`.
+
+Example:
+
+```
+cd ../../core && npm link
+cd ../packages/vue && npm link @ionic/vue
+```
+
 ## Tests
 
 Instructions for testing can be found in the [test directory](test/README.md).
