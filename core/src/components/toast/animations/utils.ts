@@ -9,7 +9,7 @@ import type { ToastAnimationPosition, ToastPosition } from '../toast-interface';
  * as starting points for the animation keyframes.
  *
  * The default animations for both MD and iOS
- * use translateY, which calculates from the 
+ * use translateY, which calculates from the
  * top edge of the screen. This behavior impacts
  * how we compute the offset when a toast has
  * position='bottom' since we need to calculate from
