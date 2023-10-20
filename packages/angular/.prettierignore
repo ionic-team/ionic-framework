@@ -1,6 +1,6 @@
 dist
 scripts
 test
-src/directives/proxies.ts
+proxies.ts
 src/directives/proxies-list.ts
 src/directives/angular-component-lib/utils.ts

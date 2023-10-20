@@ -19,59 +19,5 @@ $input-ios-padding-bottom:                 $item-ios-padding-bottom !default;
 /// @prop - Margin start of the input
 $input-ios-padding-start:                  0 !default;
 
-/// @prop - Margin start of the input when it is after a label
-$input-ios-by-label-margin-start:         $item-ios-padding-start !default;
-
-/// @prop - Padding top of the inset input
-$input-ios-inset-padding-top:             ($item-ios-padding-top * 0.5) !default;
-
-/// @prop - Padding end of the inset input
-$input-ios-inset-padding-end:             ($item-ios-padding-end * 0.5) !default;
-
-/// @prop - Padding bottom of the inset input
-$input-ios-inset-padding-bottom:          ($item-ios-padding-bottom * 0.5) !default;
-
-/// @prop - Padding start of the inset input
-$input-ios-inset-padding-start:           ($item-ios-padding-start * 0.5) !default;
-
-/// @prop - Margin top of the inset input
-$input-ios-inset-margin-top:              ($item-ios-padding-top * 0.5) !default;
-
-/// @prop - Margin end of the inset input
-$input-ios-inset-margin-end:              $item-ios-padding-end !default;
-
-/// @prop - Margin bottom of the inset input
-$input-ios-inset-margin-bottom:           ($item-ios-padding-bottom * 0.5) !default;
-
-/// @prop - Margin start of the inset input
-$input-ios-inset-margin-start:            0 !default;
-
-/// @prop - Width of the icon used to clear the input
-$input-ios-input-clear-icon-width:        30px !default;
-
-/// @prop - Padding end of the input with clear input
-$input-ios-input-clear-padding-end:       ($input-ios-input-clear-icon-width + $item-ios-padding-end) !default;
-
-/// @prop - Placeholder Text color of the input
-$input-ios-placeholder-color:              $placeholder-text-color !default;
-
-/// @prop - Show the focus highlight when the input has focus
-$input-ios-show-focus-highlight:          false !default;
-
-/// @prop - Show the valid highlight when it is valid and has a value
-$input-ios-show-valid-highlight:          $input-ios-show-focus-highlight !default;
-
-/// @prop - Show the invalid highlight when it is invalid and has value
-$input-ios-show-invalid-highlight:        $input-ios-show-focus-highlight !default;
-
-/// @prop - Color of the input highlight
-$input-ios-highlight-color:               ion-color(primary, base) !default;
-
-/// @prop - Color of the input highlight when valid
-$input-ios-highlight-color-valid:         ion-color(success, base) !default;
-
-/// @prop - Color of the input highlight when invalid
-$input-ios-highlight-color-invalid:       ion-color(danger, base) !default;
-
 /// @prop - The opacity of the input text, label, helper text, char counter and placeholder of a disabled input
 $input-ios-disabled-opacity: $form-control-ios-disabled-opacity !default;
