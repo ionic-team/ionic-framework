@@ -9,10 +9,9 @@
     "lint": "npm run eslint && npm run prettier -- --write --cache",
     "lint.fix": "npm run eslint -- --fix && npm run prettier -- --write --cache",
     "bundle": "rollup --config rollup.config.js",
-    "build": "npm run clean && npm run compile && npm run bundle",
+    "bundle.watch": "npm run bundle -- --watch",
+    "build": "npm run clean && npm run bundle",
     "clean": "rimraf dist",
-    "compile": "npm run tsc",
-    "tsc": "tsc -p .",
     "sync": "sh ./scripts/sync.sh"
   },
   "main": "./dist/index.js",
@@ -45,7 +44,8 @@
   },
   "homepage": "https://github.com/ionic-team/ionic#readme",
   "dependencies": {
-    "@ionic/vue": "^7.5.1"
+    "@ionic/vue": "^7.5.1",
+    "@rollup/plugin-typescript": "^11.1.5"
   },
   "devDependencies": {
     "@ionic/eslint-config": "^0.3.0",

@@ -1,5 +1,7 @@
+import typescript from '@rollup/plugin-typescript';
+
 export default {
-  input: 'dist-transpiled/index.js',
+  input: 'src/index.ts',
   output: [
     {
       file: 'dist/index.js',
@@ -7,5 +9,6 @@ export default {
       sourcemap: true,
     }
   ],
+  plugins: [typescript()],
   external: ['vue-router', 'vue']
 };
