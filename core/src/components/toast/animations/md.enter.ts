@@ -19,7 +19,7 @@ export const mdEnterAnimation = (baseEl: HTMLElement, opts: ToastPresentOptions)
 
   switch (position) {
     case 'top':
-      wrapperEl.style.top = top;
+      wrapperEl.style.setProperty('transform', `translateY(${top})`);
       wrapperAnimation.fromTo('opacity', 0.01, 1);
       break;
     case 'middle':
@@ -28,7 +28,7 @@ export const mdEnterAnimation = (baseEl: HTMLElement, opts: ToastPresentOptions)
       wrapperAnimation.fromTo('opacity', 0.01, 1);
       break;
     default:
-      wrapperEl.style.bottom = bottom;
+      wrapperEl.style.setProperty('transform', `translateY(${bottom})`);
       wrapperAnimation.fromTo('opacity', 0.01, 1);
       break;
   }

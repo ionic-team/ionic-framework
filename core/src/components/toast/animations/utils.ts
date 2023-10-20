@@ -31,7 +31,7 @@ export function getAnimationPosition(
    */
   let offset: number;
   if (mode === 'md') {
-    offset = 8;
+    offset = position === 'top' ? 8 : -8;
   } else {
     offset = position === 'top' ? 10 : -10;
   }
@@ -54,11 +54,7 @@ export function getAnimationPosition(
        * to the top edge of the anchor. We want to calculate from the
        * bottom edge of the screen instead.
        */
-      if (mode === 'md') {
-        offset += win.innerHeight - box.top;
-      } else {
-        offset -= win.innerHeight - box.top;
-      }
+      offset -= win.innerHeight - box.top;
     }
 
     /**
@@ -72,10 +68,7 @@ export function getAnimationPosition(
   } else {
     return {
       top: `calc(${offset}px + var(--ion-safe-area-top, 0px))`,
-      bottom:
-        mode === 'md'
-          ? `calc(${offset}px + var(--ion-safe-area-bottom, 0px))`
-          : `calc(${offset}px - var(--ion-safe-area-bottom, 0px))`,
+      bottom: `calc(${offset}px - var(--ion-safe-area-bottom, 0px))`,
     };
   }
 }
