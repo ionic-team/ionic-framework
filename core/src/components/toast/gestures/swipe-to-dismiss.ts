@@ -87,12 +87,10 @@ export const createSwipeToDismissGesture = (
        * can be dragged fully offscreen.
        */
       MAX_SWIPE_DISTANCE = wrapperElBox.bottom;
-      swipeAnimation.keyframes(
-        [
-          { offset: 0, transform: `translateY(${toastPosition.top})` },
-          { offset: 1, transform: 'translateY(-100%)' },
-        ]
-      );
+      swipeAnimation.keyframes([
+        { offset: 0, transform: `translateY(${toastPosition.top})` },
+        { offset: 1, transform: 'translateY(-100%)' },
+      ]);
       swipeAnimation.progressStart(true, 0);
       break;
     case 'bottom':
@@ -104,12 +102,10 @@ export const createSwipeToDismissGesture = (
        * element so it can be dragged fully offscreen.
        */
       MAX_SWIPE_DISTANCE = hostElHeight - wrapperElBox.top;
-      swipeAnimation.keyframes(
-        [
-          { offset: 0, transform: `translateY(${toastPosition.bottom})` },
-          { offset: 1, transform: 'translateY(100%) ' },
-        ]
-      );
+      swipeAnimation.keyframes([
+        { offset: 0, transform: `translateY(${toastPosition.bottom})` },
+        { offset: 1, transform: 'translateY(100%) ' },
+      ]);
       swipeAnimation.progressStart(true, 0);
       break;
   }
