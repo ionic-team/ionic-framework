@@ -20,6 +20,8 @@ import { getCounterText } from './input.utils';
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @slot label - The label text to associate with the input. Use the `labelPlacement` property to control where the label is placed relative to the input. Use this if you need to render a label with custom HTML. (EXPERIMENTAL)
+ * @slot start - Content to display at the leading edge of the input. (EXPERIMENTAL)
+ * @slot end - Content to display at the trailing edge of the input. (EXPERIMENTAL)
  */
 @Component({
   tag: 'ion-input',
@@ -363,7 +365,7 @@ export class Input implements ComponentInterface {
     const { el } = this;
 
     this.legacyFormController = createLegacyFormController(el);
-    this.slotMutationController = createSlotMutationController(el, 'label', () => forceUpdate(this));
+    this.slotMutationController = createSlotMutationController(el, ['label', 'start', 'end'], () => forceUpdate(this));
     this.notchController = createNotchController(
       el,
       () => this.notchSpacerEl,
@@ -707,6 +709,7 @@ export class Input implements ComponentInterface {
         <label class="input-wrapper">
           {this.renderLabelContainer()}
           <div class="native-wrapper">
+            <slot name="start"></slot>
             <input
               class="native-input"
               ref={(input) => (this.nativeInput = input)}
@@ -761,6 +764,7 @@ export class Input implements ComponentInterface {
                 <ion-icon aria-hidden="true" icon={mode === 'ios' ? closeCircle : closeSharp}></ion-icon>
               </button>
             )}
+            <slot name="end"></slot>
           </div>
           {shouldRenderHighlight && <div class="input-highlight"></div>}
         </label>

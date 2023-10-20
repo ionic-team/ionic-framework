@@ -299,6 +299,7 @@
 // ----------------------------------------------------------------
 
 .native-wrapper {
+  align-items: center;
   display: flex;
 
   position: relative;
@@ -634,4 +635,15 @@
    * beyond the bounds of the input.
    */
   max-width: calc(100% / #{$form-control-label-stacked-scale});
+}
+
+// Start/End Slots
+// ----------------------------------------------------------------
+
+::slotted([slot="start"]) {
+  margin-inline-end: $form-control-label-margin;
+}
+
+::slotted([slot="end"]) {
+  margin-inline-start: $form-control-label-margin;
 }
