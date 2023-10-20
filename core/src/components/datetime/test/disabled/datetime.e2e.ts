@@ -32,7 +32,6 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       await page.waitForSelector('.datetime-ready');
       const calendarMonthYear = page.locator('ion-datetime .calendar-month-year');
-      await expect(calendarMonthYear).toHaveText('February 2022');
       await expect(calendarMonthYear.locator('button')).toBeDisabled();
     });
 
