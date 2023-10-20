@@ -15,24 +15,21 @@ export const createSwipeToDismissGesture = (
    * rather than on ion-toast which covers the entire screen.
    */
   const wrapperEl = getElementRoot(el).querySelector('.toast-wrapper')!;
+  const hostElHeight = el.clientHeight;
+  const wrapperElBox = wrapperEl.getBoundingClientRect();
 
   // TODO can this be a util function so the gesture + ios/md animations can reuse?
-  const topPosition = Math.floor(el.clientHeight / 2 - wrapperEl.clientHeight / 2);
+  const topPosition = Math.floor(hostElHeight / 2 - wrapperElBox.height / 2);
 
   /**
-   * This is the maximum amount that
-   * the toast can be swiped. For top/bottom
-   * positions this is the wrapper height since
-   * the toast appears at the top or bottom
-   * edge of the screen. For middle position this is
-   * the height of the screen plus the height
-   * of the toast since the toast can move up or down.
-   * We account for the toast height so the toast moves
-   * off screen when swiping up (otherwise it would
-   * stop at the top of the screen).
+   * The maximum amount that
+   * the toast can be swiped. This should
+   * account for the wrapper element's height
+   * too so the toast can be swiped offscreen
+   * completely.
    */
-  const wrapperElHeight = wrapperEl.clientHeight;
-  const MAX_SWIPE_DISTANCE = el.position === 'middle' ? el.clientHeight + wrapperElHeight : wrapperElHeight;
+  let MAX_SWIPE_DISTANCE = 0;
+
   /**
    * The step value at which a toast
    * is eligible for dismissing via gesture.
@@ -55,20 +52,10 @@ export const createSwipeToDismissGesture = (
    */
   const INVERSION_FACTOR = el.position === 'top' ? -1 : 1;
 
-  const SWIPE_DOWN_KEYFRAMES = [
-    { offset: 0, transform: `translateY(${toastPosition.bottom})` },
-    { offset: 1, transform: 'translateY(100%) ' },
-  ];
-
-  const SWIPE_UP_KEYFRAMES = [
-    { offset: 0, transform: `translateY(${toastPosition.top})` },
-    { offset: 1, transform: 'translateY(-100%) ' },
-  ];
-
   const SWIPE_UP_DOWN_KEYFRAMES = [
-    { offset: 0, transform: `translateY(-${topPosition + wrapperElHeight}px)` },
+    { offset: 0, transform: `translateY(-${topPosition + wrapperElBox.height}px)` },
     { offset: 0.5, transform: `translateY(0px)` },
-    { offset: 1, transform: `translateY(${topPosition + wrapperElHeight}px)` },
+    { offset: 1, transform: `translateY(${topPosition + wrapperElBox.height}px)` },
   ];
 
   const swipeAnimation = createAnimation('toast-swipe-to-dismiss-animation')
@@ -83,6 +70,7 @@ export const createSwipeToDismissGesture = (
 
   switch (el.position) {
     case 'middle':
+      MAX_SWIPE_DISTANCE = hostElHeight + wrapperElBox.height;
       swipeAnimation.keyframes(SWIPE_UP_DOWN_KEYFRAMES);
       /**
        * Toast can be swiped up or down but
@@ -91,12 +79,37 @@ export const createSwipeToDismissGesture = (
       swipeAnimation.progressStart(true, 0.5);
       break;
     case 'top':
-      swipeAnimation.keyframes(SWIPE_UP_KEYFRAMES);
+      /**
+       * The bottom edge of the wrapper
+       * includes the distance between the top
+       * of the screen and the top of the wrapper
+       * as well as the wrapper height so the wrapper
+       * can be dragged fully offscreen.
+       */
+      MAX_SWIPE_DISTANCE = wrapperElBox.bottom;
+      swipeAnimation.keyframes(
+        [
+          { offset: 0, transform: `translateY(${toastPosition.top})` },
+          { offset: 1, transform: 'translateY(-100%)' },
+        ]
+      );
       swipeAnimation.progressStart(true, 0);
       break;
     case 'bottom':
     default:
-      swipeAnimation.keyframes(SWIPE_DOWN_KEYFRAMES);
+      /**
+       * This computes the distance between the
+       * top of the wrapper and the bottom of the
+       * screen including the height of the wrapper
+       * element so it can be dragged fully offscreen.
+       */
+      MAX_SWIPE_DISTANCE = hostElHeight - wrapperElBox.top;
+      swipeAnimation.keyframes(
+        [
+          { offset: 0, transform: `translateY(${toastPosition.bottom})` },
+          { offset: 1, transform: 'translateY(100%) ' },
+        ]
+      );
       swipeAnimation.progressStart(true, 0);
       break;
   }
@@ -174,7 +187,7 @@ export const createSwipeToDismissGesture = (
        * the screen it should animate towards.
        */
       if (shouldDismiss) {
-        const endOffset = topPosition + wrapperElHeight;
+        const endOffset = topPosition + wrapperElBox.height;
         /**
          * If the deltaY is negative then the user is swiping
          * up, so the Toast should animate to the top of the screen.
