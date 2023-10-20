@@ -24,6 +24,8 @@ Running `npm run bundle.watch` will cause `@ionic/vue-router` to be re-compiled 
 
 Use [npm link](https://docs.npmjs.com/cli/v6/commands/npm-link) to link the local `@ionic/vue` output to your local `@ionic/vue-router`. This allows you to use any `@ionic/vue` changes you have made when working on `@ionic/vue-router`.
 
+**Linking dependencies only needs to be done once unless you delete or overwrite the `node_modules` directory.**
+
 Example:
 
 ```

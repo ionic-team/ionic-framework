@@ -48,6 +48,8 @@ Running `npm run bundle.watch` will cause `@ionic/vue` to be re-compiled wheneve
 
 Use [npm link](https://docs.npmjs.com/cli/v6/commands/npm-link) to link the local `@ionic/core` output to your local `@ionic/vue`. This allows you to use any `@ionic/core` changes you have made when working on `@ionic/vue`.
 
+**Linking dependencies only needs to be done once unless you delete or overwrite the `node_modules` directory.**
+
 Example:
 
 ```

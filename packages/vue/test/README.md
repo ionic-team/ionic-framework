@@ -11,8 +11,7 @@ The Vue test app supports using your local changes to make it easy to validate y
 
 Typically you will want to link at least `@ionic/core` and `@ionic/vue`. However, you may wish to also link `@ionic/vue-router` if you are making changes there. 
 
-**Linking dependencies only needs to be done once unless you delete the `node_modules` directory in the test application.**
-
+**Linking dependencies only needs to be done once unless you delete or overwrite the `node_modules` directory in the test application.**
 Example Linking Ionic Core:
 
 ```
