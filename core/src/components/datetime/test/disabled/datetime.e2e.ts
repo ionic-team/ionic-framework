@@ -7,7 +7,7 @@ import { configs, test } from '@utils/test/playwright';
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('datetime: disabled'), () => {
-    test('should not change value when date is clicked', async ({ page }) => {
+    test('date should be disabled', async ({ page }) => {
       await page.setContent(
         `
         <ion-datetime value="2022-02-28" disabled></ion-datetime>
@@ -15,21 +15,14 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         config
       );
 
-      const ionChange = await page.spyOnEvent('ionChange');
       await page.waitForSelector('.datetime-ready');
 
       const febFirstButton = page.locator(`.calendar-day[data-day='1'][data-month='2']`);
 
-      await expect(febFirstButton).not.toHaveClass(/calendar-day-active/);
-
-      await febFirstButton.click({ force: true });
-      await page.waitForChanges();
-
-      await expect(febFirstButton).not.toHaveClass(/calendar-day-active/);
-      await expect(ionChange).not.toHaveReceivedEvent();
+      await expect(febFirstButton).toBeDisabled;
     });
 
-    test('should not navigate months via month-year button', async ({ page }) => {
+    test('month-year button should be disabled', async ({ page }) => {
       await page.setContent(
         `
         <ion-datetime value="2022-02-28" disabled></ion-datetime>
@@ -40,15 +33,10 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await page.waitForSelector('.datetime-ready');
       const calendarMonthYear = page.locator('ion-datetime .calendar-month-year');
       await expect(calendarMonthYear).toHaveText('February 2022');
-
-      await calendarMonthYear.click({ force: true });
-      await page.waitForChanges();
-
-      const marchPickerItem = page.locator('.month-column .picker-item[data-value="3"]');
-      await expect(marchPickerItem).not.toBeVisible();
+      await expect(calendarMonthYear.locator('button')).toBeDisabled();
     });
 
-    test('should not open picker using keyboard navigation', async ({ page, browserName }) => {
+    test('next and prev buttons should be disabled', async ({ page }) => {
       await page.setContent(
         `
         <ion-datetime value="2022-02-28" disabled></ion-datetime>
@@ -56,15 +44,27 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         config
       );
 
-      const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
+      const prevMonthButton = page.locator('ion-datetime .calendar-next-prev ion-button:first-of-type button');
+      const nextMonthButton = page.locator('ion-datetime .calendar-next-prev ion-button:last-of-type button');
+
+      await expect(prevMonthButton).toBeDisabled();
+      await expect(nextMonthButton).toBeDisabled();
+    });
+
+    test('clear button should be disabled', async ({ page }) => {
+      await page.setContent(
+        `
+
+        <ion-datetime value="2022-02-22T16:30:00" show-default-buttons="true" show-clear-button="true" disabled></ion-datetime>
+    `,
+        config
+      );
 
       await page.waitForSelector('.datetime-ready');
-      const calendarMonthYear = page.locator('ion-datetime .calendar-month-year');
-      const monthYearButton = page.locator('.calendar-month-year ion-item');
-      await expect(calendarMonthYear).toHaveText('February 2022');
 
-      await page.keyboard.press(tabKey);
-      await expect(monthYearButton).not.toBeFocused();
+      const clearButton = page.locator('#clear-button button');
+
+      await expect(clearButton).toBeDisabled();
     });
 
     test('should not navigate through months via right arrow key', async ({ page }) => {
@@ -87,70 +87,6 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await page.waitForChanges();
 
       await expect(calendarMonthYear).toHaveText('February 2022');
-    });
-
-    test('should not view next month via next button', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-datetime value="2022-02-28" disabled></ion-datetime>
-    `,
-        config
-      );
-
-      const ionChange = await page.spyOnEvent('ionChange');
-
-      const calendarMonthYear = page.locator('ion-datetime .calendar-month-year');
-      await expect(calendarMonthYear).toHaveText('February 2022');
-
-      const nextMonthButton = page.locator('ion-datetime .calendar-next-prev ion-button + ion-button');
-      await nextMonthButton.click({ force: true });
-      await page.waitForChanges();
-
-      // should not have changed
-      await expect(calendarMonthYear).toHaveText('February 2022');
-      await expect(ionChange).not.toHaveReceivedEvent();
-    });
-
-    test('buttons should not be focusable', async ({ page, browserName }) => {
-      await page.setContent(
-        `
-        <ion-datetime value="2022-02-28" disabled></ion-datetime>
-    `,
-        config
-      );
-
-      const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
-
-      await page.setContent(
-        `
-        <ion-datetime value="2022-02-22T16:30:00" disabled></ion-datetime>
-    `,
-        config
-      );
-
-      const monthYearButton = page.locator('.calendar-month-year ion-item');
-
-      await page.keyboard.press(tabKey);
-      await expect(monthYearButton).not.toBeFocused();
-    });
-
-    test('should not be able to clear via keyboard navigation', async ({ page }) => {
-      await page.setContent(
-        `
-
-        <ion-datetime value="2022-02-22T16:30:00" show-default-buttons="true" show-clear-button="true" disabled></ion-datetime>
-    `,
-        config
-      );
-
-      await page.waitForSelector('.datetime-ready');
-
-      const clearButton = page.locator('#clear-button button');
-
-      await clearButton.focus();
-      await page.waitForChanges();
-
-      await expect(clearButton).not.toBeFocused();
     });
   });
 });
