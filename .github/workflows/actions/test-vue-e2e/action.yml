@@ -32,8 +32,28 @@ runs:
       run: npm install
       shell: bash
       working-directory: ./packages/vue/test/build/${{ inputs.app }}
-    - name: Sync
-      run: npm run sync
+    - name: Create global @ionic/core symlink
+      run: npm link
+      shell: bash
+      working-directory: ./core
+    - name: Link @ionic/core to test app
+      run: npm link @ionic/core
+      shell: bash
+      working-directory: ./packages/vue/test/build/${{ inputs.app }}
+    - name: Create global @ionic/vue symlink
+      run: npm link
+      shell: bash
+      working-directory: ./packages/vue
+    - name: Link @ionic/vue to test app
+      run: npm link @ionic/vue
+      shell: bash
+      working-directory: ./packages/vue/test/build/${{ inputs.app }}
+    - name: Create global @ionic/vue-router symlink
+      run: npm link
+      shell: bash
+      working-directory: ./packages/vue-router
+    - name: Link @ionic/vue-router to test app
+      run: npm link @ionic/vue-router
       shell: bash
       working-directory: ./packages/vue/test/build/${{ inputs.app }}
     - name: Run Spec Tests

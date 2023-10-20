@@ -20,8 +20,12 @@ runs:
       run: npm ci
       shell: bash
       working-directory: ./packages/vue-router
-    - name: Sync
-      run: npm run sync
+    - name: Create global @ionic/vue symlink
+      run: npm link
+      shell: bash
+      working-directory: ./packages/vue
+    - name: Link @ionic/vue to @ionic/vue-router
+      run: npm link @ionic/vue
       shell: bash
       working-directory: ./packages/vue-router
     - name: Lint
