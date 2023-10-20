@@ -1422,7 +1422,13 @@ export class Datetime implements ComponentInterface {
    */
 
   private renderFooter() {
-    const { showDefaultButtons, showClearButton } = this;
+    const { disabled, readonly, showDefaultButtons, showClearButton } = this;
+    /**
+     * The cancel, clear, and confirm buttons
+     * should not be interactive if the datetime
+     * is disabled or readonly.
+     */
+    const isButtonDisabled = disabled || readonly;
     const hasSlottedButtons = this.el.querySelector('[slot="buttons"]') !== null;
     if (!hasSlottedButtons && !showDefaultButtons && !showClearButton) {
       return;
@@ -1456,7 +1462,7 @@ export class Datetime implements ComponentInterface {
                     id="cancel-button"
                     color={this.color}
                     onClick={() => this.cancel(true)}
-                    disabled={this.disabled || this.readonly}
+                    disabled={isButtonDisabled}
                   >
                     {this.cancelText}
                   </ion-button>
@@ -1467,7 +1473,7 @@ export class Datetime implements ComponentInterface {
                       id="clear-button"
                       color={this.color}
                       onClick={() => clearButtonClick()}
-                      disabled={this.disabled || this.readonly}
+                      disabled={isButtonDisabled}
                     >
                       {this.clearText}
                     </ion-button>
@@ -1477,7 +1483,7 @@ export class Datetime implements ComponentInterface {
                       id="confirm-button"
                       color={this.color}
                       onClick={() => this.confirm(true)}
-                      disabled={this.disabled || this.readonly}
+                      disabled={isButtonDisabled}
                     >
                       {this.doneText}
                     </ion-button>
@@ -1980,6 +1986,7 @@ export class Datetime implements ComponentInterface {
    */
 
   private renderCalendarHeader(mode: Mode) {
+    const { disabled } = this;
     const expandedIcon = mode === 'ios' ? chevronDown : caretUpSharp;
     const collapsedIcon = mode === 'ios' ? chevronForward : caretDownSharp;
 
@@ -2000,7 +2007,7 @@ export class Datetime implements ComponentInterface {
               aria-label="Show year picker"
               detail={false}
               lines="none"
-              disabled={this.disabled}
+              disabled={disabled}
               onClick={() => {
                 this.toggleMonthAndYearView();
                 /**
@@ -2037,7 +2044,7 @@ export class Datetime implements ComponentInterface {
             <ion-buttons>
               <ion-button
                 aria-label="Previous month"
-                disabled={prevMonthDisabled || this.disabled}
+                disabled={prevMonthDisabled || disabled}
                 onClick={() => this.prevMonth()}
               >
                 <ion-icon
@@ -2051,7 +2058,7 @@ export class Datetime implements ComponentInterface {
               </ion-button>
               <ion-button
                 aria-label="Next month"
-                disabled={nextMonthDisabled || this.disabled}
+                disabled={nextMonthDisabled || disabled}
                 onClick={() => this.nextMonth()}
               >
                 <ion-icon
@@ -2075,11 +2082,13 @@ export class Datetime implements ComponentInterface {
     );
   }
   private renderMonth(month: number, year: number) {
+    const { disabled } = this;
+
     const yearAllowed = this.parsedYearValues === undefined || this.parsedYearValues.includes(year);
     const monthAllowed = this.parsedMonthValues === undefined || this.parsedMonthValues.includes(month);
     const isCalMonthDisabled = !yearAllowed || !monthAllowed;
     const swipeDisabled =
-      this.disabled ||
+      disabled ||
       isMonthDisabled(
         {
           month,
@@ -2113,11 +2122,19 @@ export class Datetime implements ComponentInterface {
       >
         <div class="calendar-month-grid">
           {getDaysOfMonth(month, year, this.firstDayOfWeek % 7).map((dateObject, index) => {
+            const { disabled, readonly } = this;
             const { day, dayOfWeek } = dateObject;
             const { el, highlightedDates, isDateEnabled, multiple } = this;
             const referenceParts = { month, day, year };
             const isCalendarPadding = day === null;
-            const { isActive, isToday, ariaLabel, ariaSelected, disabled, text } = getCalendarDayState(
+            const {
+              isActive,
+              isToday,
+              ariaLabel,
+              ariaSelected,
+              disabled: isDayDisabled,
+              text,
+            } = getCalendarDayState(
               this.locale,
               referenceParts,
               this.activeParts,
@@ -2128,7 +2145,13 @@ export class Datetime implements ComponentInterface {
             );
 
             const dateIsoString = convertDataToISO(referenceParts);
-            let isCalDayDisabled = isCalMonthDisabled || disabled;
+            /**
+             * Days are disabled if they are
+             * outside of the min/max bounds
+             * or if the component is in disabled
+             * or readonly mode.
+             */
+            let isCalDayDisabled = isCalMonthDisabled || isDayDisabled || disabled || readonly;
 
             if (!isCalDayDisabled && isDateEnabled !== undefined) {
               try {
@@ -2192,7 +2215,7 @@ export class Datetime implements ComponentInterface {
                   data-year={year}
                   data-index={index}
                   data-day-of-week={dayOfWeek}
-                  disabled={isCalDayDisabled || this.disabled || this.readonly}
+                  disabled={isCalDayDisabled}
                   class={{
                     'calendar-day-padding': isCalendarPadding,
                     'calendar-day': true,
@@ -2271,7 +2294,7 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderTimeOverlay() {
-    const { hourCycle, isTimePopoverOpen, locale } = this;
+    const { disabled, hourCycle, isTimePopoverOpen, locale } = this;
     const computedHourCycle = getHourCycle(locale, hourCycle);
     const activePart = this.getActivePartsWithFallback();
 
@@ -2285,7 +2308,7 @@ export class Datetime implements ComponentInterface {
         part={`time-button${isTimePopoverOpen ? ' active' : ''}`}
         aria-expanded="false"
         aria-haspopup="true"
-        disabled={this.disabled}
+        disabled={disabled}
         onClick={async (ev) => {
           const { popoverRef } = this;
 

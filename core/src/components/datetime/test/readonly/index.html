@@ -66,6 +66,17 @@
       <script>
         const firstDatetime = document.querySelector('#inline-datetime');
         firstDatetime.value = ['2023-08-03', '2023-08-13', '2023-08-29'];
+
+        firstDatetime.isDateEnabled = (dateString) => {
+          const date = new Date(dateString);
+          const utcDay = date.getUTCDay();
+
+          /**
+           * Date will be enabled if it is not
+           * Sunday or Saturday
+           */
+          return utcDay !== 0 && utcDay !== 6;
+        };
       </script>
     </ion-app>
   </body>
