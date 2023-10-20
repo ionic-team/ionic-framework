@@ -52,6 +52,7 @@
     "@babel/types": "^7.18.4",
     "@ionic/eslint-config": "^0.3.0",
     "@ionic/prettier-config": "^2.0.0",
+    "@rollup/plugin-typescript": "^11.1.5",
     "@typescript-eslint/eslint-plugin": "^5.48.2",
     "@typescript-eslint/parser": "^5.48.2",
     "change-case": "^4.1.1",
@@ -66,7 +67,6 @@
   },
   "dependencies": {
     "@ionic/core": "^7.5.1",
-    "@rollup/plugin-typescript": "^11.1.5",
     "ionicons": "^7.0.0"
   },
   "vetur": {
