@@ -8,11 +8,10 @@
     "lint": "npm run eslint && npm run prettier -- --write --cache",
     "lint.fix": "npm run eslint -- --fix && npm run prettier -- --write --cache",
     "test": "jest",
-    "build": "npm run clean && npm run copy && npm run copy.overlays && npm run compile && npm run bundle && npm run build.vetur && npm run build.web-types",
+    "build": "npm run clean && npm run copy && npm run copy.overlays && npm run bundle && npm run build.vetur && npm run build.web-types",
     "bundle": "rollup --config rollup.config.js",
+    "bundle.watch": "npm run bundle -- --watch",
     "clean": "rimraf dist dist-transpiled",
-    "compile": "npm run tsc",
-    "tsc": "tsc -p .",
     "build.web-types": "node ./scripts/build-web-types.js",
     "build.vetur": "node ./scripts/build-vetur.js",
     "copy": "node ./scripts/copy-css.js",
@@ -67,6 +66,7 @@
   },
   "dependencies": {
     "@ionic/core": "^7.5.1",
+    "@rollup/plugin-typescript": "^11.1.5",
     "ionicons": "^7.0.0"
   },
   "vetur": {

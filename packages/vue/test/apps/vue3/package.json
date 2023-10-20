@@ -12,8 +12,7 @@
     "lint": "eslint --ext .js,.vue,.ts --ignore-path .gitignore --fix src",
     "cypress": "node_modules/.bin/cypress run --headless --browser chrome",
     "cypress.open": "cypress open",
-    "start": "npm run dev",
-    "sync": "sh ./scripts/sync.sh"
+    "start": "npm run dev"
   },
   "dependencies": {
     "@ionic/vue": "^6.0.12",

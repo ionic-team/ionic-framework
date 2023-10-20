@@ -40,13 +40,13 @@ cd packages/vue-router && npm install
 npm run build
 ````
 
+### Re-build on changes
+
+Running `npm run bundle.watch` will cause `@ionic/vue` to be re-compiled whenever the source files change. Note that if you have not yet built the project a full build using `npm run build` must be done prior to running `npm run bundle.watch`.
+
 ## Tests
 
-* E2E Tests are found in the `packages/vue/test/base/tests` directory and use Cypress.
-* When making changes to `@ionic/vue` or `@ionic/vue-router` you can run `npm run sync` in the [test-app directory](test/README.md#syncing-local-changes) to ensure that the test application is using your built changes. Be sure to build in the `vue` and `vue-router` directories first.
-* Tests can be run in headless mode by running `npm run cypress`.
-* If you want to open the Cypress test runner, you can run `node_modules/.bin/cypress open`.
-* Bug fix and feature PRs should have new tests verifying the PR functionality.
+Instructions for testing can be found in the [test directory](test/README.md).
 
 ## Contributing
 

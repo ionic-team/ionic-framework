@@ -2,17 +2,32 @@
 
 Ionic Framework supports multiple versions of Vue. As a result, we need to verify that Ionic works correctly with each of these Vue versions.
 
-## Syncing Local Changes
+## Using Local Changes
 
-The Vue test app supports syncing your locally built changes for validation.
+The Vue test app supports using your local changes to make it easy to validate your changes in a real Vue application.
 
-1. [Build](../README.md#building) the `core`, `packages/vue`, and `packages/vue-router` projects using `npm run build`.
-2. [Build the Vue test app](#test-app-build-structure).
-3. Navigate to the built test app directory (e.g. `packages/vue/test/build/vue3`).
-4. Install dependencies using `npm install`.
-5. Sync your local changes using `npm run sync`.
+1. [Build](../README.md#building) the `core`, `packages/vue`, and `packages/vue-router` projects. You can optionally have these packages re-build whenever source files change.
+2. Link the dependencies you would like to test using [npm link](https://docs.npmjs.com/cli/v6/commands/npm-link). The Vue test app is configured to automatically rebuild when these linked dependencies change meaning you do not need to restart the server every time you make a change to a linked dependency's source.
 
-From here you can either build the application or start a local dev server. When re-syncing changes, you will need to wipe the build cache in `node_modules/.cache` and restart the dev server/re-build.
+Typically you will want to link at least `@ionic/core` and `@ionic/vue`. However, you may wish to also link `@ionic/vue-router` if you are making changes there. 
+
+**Linking dependencies only needs to be done once unless you delete the `node_modules` directory in the test application.**
+
+Example Linking Ionic Core:
+
+```
+# In the "core" directory
+npm link
+
+# Create a symbolic link to the compiled output in the "core" directory
+cd ../packages/vue/test/build/vue3 && npm link @ionic/core
+```
+
+3. [Build the Vue test app](#test-app-build-structure).
+4. Navigate to the built test app directory (e.g. `packages/vue/test/build/vue3`).
+5. Install dependencies using `npm install`.
+
+From here you can either build the application or start a local dev server.
 
 ## Test App Build Structure
 
