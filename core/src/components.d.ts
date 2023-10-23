@@ -2254,7 +2254,7 @@ export namespace Components {
          */
         "name": string;
         "setButtonTabindex": (value: number) => Promise<void>;
-        "setFocus": (ev: any) => Promise<void>;
+        "setFocus": (ev: globalThis.Event) => Promise<void>;
         /**
           * the value of the radio.
          */
