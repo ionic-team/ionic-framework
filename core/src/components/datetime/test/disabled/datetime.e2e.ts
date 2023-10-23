@@ -19,7 +19,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       const febFirstButton = page.locator(`.calendar-day[data-day='1'][data-month='2']`);
 
-      await expect(febFirstButton).toBeDisabled;
+      await expect(febFirstButton).toBeDisabled();
     });
 
     test('month-year button should be disabled', async ({ page }) => {
