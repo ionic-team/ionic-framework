@@ -172,7 +172,7 @@ export class Datetime implements ComponentInterface {
   @Prop() disabled = false;
 
   /**
-   * If `true`, the datetime appears normal but is not interactive.
+   * If `true`, the datetime appears normal but its value is not interactive.
    */
   @Prop() readonly = false;
 

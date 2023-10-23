@@ -206,6 +206,15 @@ ion-picker-column-internal {
   .datetime-year {
     pointer-events: initial;
   }
+
+  /**
+   * Disabled buttons should have full opacity
+   * in readonly mode
+   */
+  .calendar-day[disabled],
+  .datetime-action-buttons ion-button[disabled] {
+    opacity: 1;
+  }
 }
 
 /**
