@@ -3,7 +3,7 @@ import type { BackButtonEvent } from '@utils/hardware-back-button';
 import { MENU_BACK_BUTTON_PRIORITY } from '@utils/hardware-back-button';
 import { printIonWarning } from '@utils/logging';
 
-import type { MenuI } from '../../components/menu/menu-interface';
+import type { MenuI, MenuControllerI } from '../../components/menu/menu-interface';
 import type { AnimationBuilder } from '../../interface';
 import { componentOnReady } from '../helpers';
 
@@ -11,7 +11,7 @@ import { menuOverlayAnimation } from './animations/overlay';
 import { menuPushAnimation } from './animations/push';
 import { menuRevealAnimation } from './animations/reveal';
 
-const createMenuController = () => {
+const createMenuController = (): MenuControllerI => {
   const menuAnimations = new Map<string, AnimationBuilder>();
   const menus: MenuI[] = [];
 

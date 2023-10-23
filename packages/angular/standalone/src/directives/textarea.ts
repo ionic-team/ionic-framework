@@ -8,12 +8,25 @@ import {
   Injector,
   NgZone,
 } from '@angular/core';
+import type { OnInit } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValueAccessor } from '@ionic/angular/common';
 import type { TextareaChangeEventDetail, TextareaInputEventDetail, Components } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-textarea.js';
 
-import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
+/**
+ * Value accessor components should not use ProxyCmp
+ * and should call defineCustomElement and proxyInputs
+ * manually instead. Using both the @ProxyCmp and @Component
+ * decorators and useExisting (where useExisting refers to the
+ * class) causes ng-packagr to output multiple component variables
+ * which breaks treeshaking.
+ * For example, the following would be generated:
+ * let IonTextarea = IonTextarea_1 = class IonTextarea extends ValueAccessor {
+ * Instead, we want only want the class generated:
+ * class IonTextarea extends ValueAccessor {
+ */
+import { proxyInputs, proxyMethods, proxyOutputs } from './angular-component-lib/utils';
 
 const TEXTAREA_INPUTS = [
   'autoGrow',
@@ -48,11 +61,8 @@ const TEXTAREA_INPUTS = [
   'wrap',
 ];
 
-@ProxyCmp({
-  defineCustomElementFn: defineCustomElement,
-  inputs: TEXTAREA_INPUTS,
-  methods: ['setFocus', 'getInputElement'],
-})
+const TEXTAREA_METHODS = ['setFocus', 'getInputElement'];
+
 @Component({
   selector: 'ion-textarea',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -68,13 +78,24 @@ const TEXTAREA_INPUTS = [
   ],
   standalone: true,
 })
-export class IonTextarea extends ValueAccessor {
+export class IonTextarea extends ValueAccessor implements OnInit {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone, injector: Injector) {
     super(injector, r);
+    defineCustomElement();
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['ionChange', 'ionInput', 'ionBlur', 'ionFocus']);
+  }
+
+  ngOnInit(): void {
+    /**
+     * Data-bound input properties are set
+     * by Angular after the constructor, so
+     * we need to run the proxy in ngOnInit.
+     */
+    proxyInputs(IonTextarea, TEXTAREA_INPUTS);
+    proxyMethods(IonTextarea, TEXTAREA_METHODS);
   }
 
   @HostListener('ionInput', ['$event.target'])
