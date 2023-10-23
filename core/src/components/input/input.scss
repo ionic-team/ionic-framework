@@ -299,12 +299,13 @@
 // ----------------------------------------------------------------
 
 .native-wrapper {
-  align-items: center;
   display: flex;
 
   position: relative;
 
   flex-grow: 1;
+
+  align-items: center;
 
   width: 100%;
 }

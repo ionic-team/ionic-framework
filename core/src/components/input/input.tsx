@@ -700,7 +700,7 @@ export class Input implements ComponentInterface {
      * For floating labels, the label should move above the input if
      * the input has a value, is focused, or has anything in either
      * the start or end slot.
-     * 
+     *
      * If there is content in the start slot, the label would overlap
      * it if not forced to float. This is also applied to the end slot
      * because with the default or solid fills, the input is not
@@ -710,7 +710,8 @@ export class Input implements ComponentInterface {
      * apply to the outline fill, but this was not accounted for to keep
      * things consistent.
      */
-    const labelShouldFloat = labelPlacement === 'stacked' || (labelPlacement === 'floating' && (hasValue || hasFocus || hasStartEndSlots));
+    const labelShouldFloat =
+      labelPlacement === 'stacked' || (labelPlacement === 'floating' && (hasValue || hasFocus || hasStartEndSlots));
 
     return (
       <Host
