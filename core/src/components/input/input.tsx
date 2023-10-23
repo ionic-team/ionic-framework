@@ -711,7 +711,7 @@ export class Input implements ComponentInterface {
           'input-disabled': disabled,
         })}
       >
-        <label class="input-wrapper">
+        <label class="input-wrapper" htmlFor={inputId}>
           {this.renderLabelContainer()}
           <div class="native-wrapper">
             <slot name="start"></slot>
