@@ -21,7 +21,15 @@
       <ion-input label="Email" label-placement="stacked" value="hi@ionic.io"></ion-input><br />
       <ion-input label="Email" label-placement="floating"></ion-input> <br />
       <ion-input label="Email" label-placement="floating" fill="outline" value="hi@ionic.io"></ion-input> <br />
-      <ion-input label="Email" label-placement="floating" fill="solid" value="hi@ionic.io"></ion-input>
+      <ion-input label="Email" label-placement="floating" fill="solid" value="hi@ionic.io"></ion-input><br />
+      <ion-input label="Email" fill="solid" value="hi@ionic.io">
+        <ion-button slot="start" aria-label="button">
+          <ion-icon slot="icon-only" name="lock-closed" aria-hidden="true"></ion-icon>
+        </ion-button>
+        <ion-button slot="end" aria-label="button">
+          <ion-icon slot="icon-only" name="lock-closed" aria-hidden="true"></ion-icon>
+        </ion-button>
+      </ion-input>
     </main>
   </body>
 </html>
