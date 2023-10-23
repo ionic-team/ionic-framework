@@ -8,10 +8,12 @@ import type { ToastAnimationPosition, ToastPosition } from '../toast-interface';
  * Calculate the CSS top and bottom position of the toast, to be used
  * as starting points for the animation keyframes.
  *
- * Note that MD animates bottom-positioned toasts using style.bottom,
- * which calculates from the bottom edge of the screen, while iOS uses
- * translateY, which calculates from the top edge of the screen. This
- * is why the bottom calculates differ slightly between modes.
+ * The default animations for both MD and iOS
+ * use translateY, which calculates from the
+ * top edge of the screen. This behavior impacts
+ * how we compute the offset when a toast has
+ * position='bottom' since we need to calculate from
+ * the bottom edge of the screen instead.
  *
  * @param position The value of the toast's position prop.
  * @param positionAnchor The element the toast should be anchored to,
@@ -31,7 +33,7 @@ export function getAnimationPosition(
    */
   let offset: number;
   if (mode === 'md') {
-    offset = 8;
+    offset = position === 'top' ? 8 : -8;
   } else {
     offset = position === 'top' ? 10 : -10;
   }
@@ -54,11 +56,7 @@ export function getAnimationPosition(
        * to the top edge of the anchor. We want to calculate from the
        * bottom edge of the screen instead.
        */
-      if (mode === 'md') {
-        offset += win.innerHeight - box.top;
-      } else {
-        offset -= win.innerHeight - box.top;
-      }
+      offset -= win.innerHeight - box.top;
     }
 
     /**
@@ -72,10 +70,7 @@ export function getAnimationPosition(
   } else {
     return {
       top: `calc(${offset}px + var(--ion-safe-area-top, 0px))`,
-      bottom:
-        mode === 'md'
-          ? `calc(${offset}px + var(--ion-safe-area-bottom, 0px))`
-          : `calc(${offset}px - var(--ion-safe-area-bottom, 0px))`,
+      bottom: `calc(${offset}px - var(--ion-safe-area-bottom, 0px))`,
     };
   }
 }
