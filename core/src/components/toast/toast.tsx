@@ -39,6 +39,7 @@ import type {
   ToastPresentOptions,
   ToastDismissOptions,
   ToastAnimationPosition,
+  ToastSwipeGestureDirection,
 } from './toast-interface';
 
 // TODO(FW-2832): types
@@ -207,7 +208,7 @@ export class Toast implements ComponentInterface, OverlayInterface {
    * `bottom`: The Toast can be swiped down to dismiss.
    * `middle`: The Toast can be swiped up or down to dismiss.
    */
-  @Prop() swipeGesture?: 'vertical';
+  @Prop() swipeGesture?: ToastSwipeGestureDirection;
   @Watch('swipeGesture')
   swipeGestureChanged() {
     /**

@@ -37,6 +37,10 @@
   }
 }
 
+.toast-wrapper.toast-middle {
+  opacity: .01;
+}
+
 .toast-content {
   @include padding($toast-ios-content-padding-top, $toast-ios-content-padding-end, $toast-ios-content-padding-bottom, $toast-ios-content-padding-start);
 }

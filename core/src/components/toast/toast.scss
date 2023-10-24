@@ -105,10 +105,6 @@
   top: 0;
 }
 
-.toast-wrapper.toast-middle {
-  opacity: .01;
-}
-
 .toast-wrapper.toast-bottom {
   @include transform(translate3d(0, 100%, 0));
 

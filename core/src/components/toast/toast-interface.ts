@@ -55,3 +55,4 @@ export interface ToastAnimationPosition {
 
 export type ToastPresentOptions = ToastPositionAlias & ToastAnimationPosition;
 export type ToastDismissOptions = ToastPositionAlias & ToastAnimationPosition;
+export type ToastSwipeGestureDirection = 'vertical';
