@@ -43,7 +43,9 @@ export class Picker implements ComponentInterface, OverlayInterface {
   private readonly triggerController = createTriggerController();
 
   private durationTimeout?: ReturnType<typeof setTimeout>;
+
   lastFocus?: HTMLElement;
+  backdropEl?: HTMLIonBackdropElement;
 
   @Element() el!: HTMLIonPickerElement;
 
@@ -354,7 +356,11 @@ export class Picker implements ComponentInterface, OverlayInterface {
         onIonBackdropTap={this.onBackdropTap}
         onIonPickerWillDismiss={this.dispatchCancelHandler}
       >
-        <ion-backdrop visible={this.showBackdrop} tappable={this.backdropDismiss}></ion-backdrop>
+        <ion-backdrop
+          ref={(el) => (this.backdropEl = el)}
+          visible={this.showBackdrop}
+          tappable={this.backdropDismiss}
+        ></ion-backdrop>
 
         <div tabindex="0"></div>
 

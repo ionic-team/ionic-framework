@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Listen, Prop, h } from '@stencil/core';
+import { Component, Element, Event, Host, Listen, Method, Prop, h } from '@stencil/core';
 import { GESTURE_CONTROLLER } from '@utils/gesture';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -16,8 +16,6 @@ export class Backdrop implements ComponentInterface {
   private blocker = GESTURE_CONTROLLER.createBlocker({
     disableScroll: false,
   });
-
-  private io?: IntersectionObserver;
 
   /**
    * If `true`, the backdrop will be visible.
@@ -41,30 +39,19 @@ export class Backdrop implements ComponentInterface {
 
   @Element() el!: HTMLElement;
 
-  connectedCallback() {
+  /** @internal */
+  @Method()
+  async block() {
     if (this.stopPropagation) {
-      /**
-       * Creates an intersection observer that blocks all gestures
-       * when the backdrop becomes visible or enables all gestures
-       * when the backdrop is hidden.
-       */
-      this.io = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) {
-          this.blocker.block();
-        } else {
-          this.blocker.unblock();
-        }
-      });
-
-      this.io.observe(this.el);
+      this.blocker.block();
     }
   }
 
-  disconnectedCallback() {
-    this.blocker.unblock();
-    if (this.io) {
-      this.io.disconnect();
-      this.io = undefined;
+  /** @internal */
+  @Method()
+  async unblock() {
+    if (this.stopPropagation) {
+      this.blocker.unblock();
     }
   }
 

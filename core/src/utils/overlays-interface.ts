@@ -9,6 +9,7 @@ export interface OverlayEventDetail<T = any> {
 
 export interface OverlayInterface {
   el: HTMLIonOverlayElement;
+  backdropEl?: HTMLIonBackdropElement;
   animated: boolean;
   keyboardClose: boolean;
   overlayIndex: number;

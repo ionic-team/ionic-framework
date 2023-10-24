@@ -59,6 +59,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
 
   presented = false;
   lastFocus?: HTMLElement;
+  backdropEl?: HTMLIonBackdropElement;
 
   @Element() el!: HTMLIonAlertElement;
 
@@ -738,7 +739,7 @@ export class Alert implements ComponentInterface, OverlayInterface {
         onIonAlertWillDismiss={this.dispatchCancelHandler}
         onIonBackdropTap={this.onBackdropTap}
       >
-        <ion-backdrop tappable={this.backdropDismiss} />
+        <ion-backdrop ref={(el) => (this.backdropEl = el)} tappable={this.backdropDismiss} />
 
         <div tabindex="0"></div>
 

@@ -471,6 +471,10 @@ export const present = async <OverlayPresentOptions>(
 
   setRootAriaHidden(true);
 
+  if (overlay.backdropEl) {
+    overlay.backdropEl.block();
+  }
+
   overlay.presented = true;
   overlay.willPresent.emit();
   overlay.willPresentShorthand?.emit();
@@ -574,6 +578,11 @@ export const dismiss = async <OverlayDismissOptions>(
     if (role !== GESTURE) {
       await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
     }
+
+    if (overlay.backdropEl) {
+      overlay.backdropEl.unblock();
+    }
+
     overlay.didDismiss.emit({ data, role });
     overlay.didDismissShorthand?.emit({ data, role });
 
