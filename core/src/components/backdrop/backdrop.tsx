@@ -62,7 +62,10 @@ export class Backdrop implements ComponentInterface {
 
   disconnectedCallback() {
     this.blocker.unblock();
-    this.io?.disconnect();
+    if (this.io) {
+      this.io.disconnect();
+      this.io = undefined;
+    }
   }
 
   @Listen('click', { passive: false, capture: true })
