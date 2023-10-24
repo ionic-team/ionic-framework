@@ -204,6 +204,8 @@
   @include border-radius(var(--border-radius));
   @include margin(0);
   @include text-inherit();
+
+  /* stylelint-disable */
   @include ltr() {
     @include padding(
       var(--padding-top),
@@ -212,6 +214,7 @@
       calc(var(--padding-start) + var(--ion-safe-area-left, 0px))
     )
   }
+
   @include rtl() {
     @include padding(
       var(--padding-top),
@@ -220,6 +223,7 @@
       var(--padding-start)
     )
   }
+  /* stylelint-enable */
 
   display: flex;
   position: relative;
@@ -271,6 +275,8 @@ button, a {
 
 .item-inner {
   @include margin(0);
+
+  /* stylelint-disable */
   @include ltr() {
     @include padding(
       var(--inner-padding-top),
@@ -279,6 +285,7 @@ button, a {
       var(--inner-padding-start)
     )
   }
+
   @include rtl() {
     @include padding(
       var(--inner-padding-top),
@@ -287,6 +294,7 @@ button, a {
       calc(var(--ion-safe-area-right, 0px) + var(--inner-padding-start))
     )
   }
+  /* stylelint-enable */
 
   display: flex;
 
@@ -315,18 +323,22 @@ button, a {
 
 .item-bottom {
   @include margin(0);
+
+  /* stylelint-disable */
   @include ltr() {
     @include padding-horizontal(
       calc(var(--padding-start) + var(--ion-safe-area-left, 0px)),
       calc(var(--inner-padding-end) + var(--ion-safe-area-right, 0px))
     )
   }
+
   @include rtl() {
     @include padding-horizontal(
       calc(var(--padding-start) + var(--ion-safe-area-right, 0)),
       calc(var(--padding-end) + var(--ion-safe-area-left, 0px))
     )
   }
+  /* stylelint-enable */
 
   display: flex;
 
