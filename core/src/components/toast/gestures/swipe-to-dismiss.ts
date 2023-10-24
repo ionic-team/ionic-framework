@@ -2,6 +2,7 @@ import { createAnimation } from '@utils/animation/animation';
 import { createGesture } from '@utils/gesture';
 import type { GestureDetail } from '@utils/gesture';
 import { getElementRoot } from '@utils/helpers';
+import { OVERLAY_GESTURE_PRIORITY } from '@utils/overlays';
 
 import type { ToastAnimationPosition } from '../toast-interface';
 
@@ -249,7 +250,7 @@ export const createSwipeToDismissGesture = (
   const gesture = createGesture({
     el: wrapperEl,
     gestureName: 'toast-swipe-to-dismiss',
-    gesturePriority: 39, // TODO Figure out an appropriate priority
+    gesturePriority: OVERLAY_GESTURE_PRIORITY,
     /**
      * Toast only supports vertical swipes.
      * This needs to be updated if we later

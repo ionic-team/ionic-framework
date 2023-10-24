@@ -685,6 +685,7 @@ export const safeCall = (handler: any, arg?: any) => {
 
 export const BACKDROP = 'backdrop';
 export const GESTURE = 'gesture';
+export const OVERLAY_GESTURE_PRIORITY = 39;
 
 /**
  * Creates a delegate controller.
