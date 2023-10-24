@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Event, Host, Listen, Prop, h } from '@stencil/core';
+import { Component, Element, Event, Host, Listen, Prop, h } from '@stencil/core';
 import { GESTURE_CONTROLLER } from '@utils/gesture';
 
 import { getIonMode } from '../../global/ionic-global';
@@ -14,8 +14,10 @@ import { getIonMode } from '../../global/ionic-global';
 })
 export class Backdrop implements ComponentInterface {
   private blocker = GESTURE_CONTROLLER.createBlocker({
-    disableScroll: true,
+    disableScroll: false,
   });
+
+  private io?: IntersectionObserver;
 
   /**
    * If `true`, the backdrop will be visible.
@@ -37,14 +39,30 @@ export class Backdrop implements ComponentInterface {
    */
   @Event() ionBackdropTap!: EventEmitter<void>;
 
+  @Element() el!: HTMLElement;
+
   connectedCallback() {
     if (this.stopPropagation) {
-      this.blocker.block();
+      /**
+       * Creates an intersection observer that blocks all gestures
+       * when the backdrop becomes visible or enables all gestures
+       * when the backdrop is hidden.
+       */
+      this.io = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          this.blocker.block();
+        } else {
+          this.blocker.unblock();
+        }
+      });
+
+      this.io.observe(this.el);
     }
   }
 
   disconnectedCallback() {
     this.blocker.unblock();
+    this.io?.disconnect();
   }
 
   @Listen('click', { passive: false, capture: true })
