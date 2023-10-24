@@ -104,7 +104,7 @@ export const createSwipeToDismissGesture = (
       MAX_SWIPE_DISTANCE = hostElHeight - wrapperElBox.top;
       swipeAnimation.keyframes([
         { offset: 0, transform: `translateY(${toastPosition.bottom})` },
-        { offset: 1, transform: 'translateY(100%) ' },
+        { offset: 1, transform: 'translateY(100%)' },
       ]);
       swipeAnimation.progressStart(true, 0);
       break;
