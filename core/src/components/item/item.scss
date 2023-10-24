@@ -203,13 +203,23 @@
 .item-native {
   @include border-radius(var(--border-radius));
   @include margin(0);
-  @include padding(
-    var(--padding-top),
-    var(--padding-end),
-    var(--padding-bottom),
-    calc(var(--padding-start) + var(--ion-safe-area-left, 0px))
-  );
   @include text-inherit();
+  @include ltr() {
+    @include padding(
+      var(--padding-top),
+      var(--padding-end),
+      var(--padding-bottom),
+      calc(var(--padding-start) + var(--ion-safe-area-left, 0px))
+    )
+  }
+  @include rtl() {
+    @include padding(
+      var(--padding-top),
+      calc(var(--padding-end) + var(--ion-safe-area-left, 0px)),
+      var(--padding-bottom),
+      var(--padding-start)
+    )
+  }
 
   display: flex;
   position: relative;
@@ -261,12 +271,22 @@ button, a {
 
 .item-inner {
   @include margin(0);
-  @include padding(
-    var(--inner-padding-top),
-    calc(var(--ion-safe-area-right, 0px) + var(--inner-padding-end)),
-    var(--inner-padding-bottom),
-    var(--inner-padding-start)
-  );
+  @include ltr() {
+    @include padding(
+      var(--inner-padding-top),
+      calc(var(--ion-safe-area-right, 0px) + var(--inner-padding-end)),
+      var(--inner-padding-bottom),
+      var(--inner-padding-start)
+    )
+  }
+  @include rtl() {
+    @include padding(
+      var(--inner-padding-top),
+      var(--inner-padding-end),
+      var(--inner-padding-bottom),
+      calc(var(--ion-safe-area-right, 0px) + var(--inner-padding-start))
+    )
+  }
 
   display: flex;
 
@@ -295,12 +315,18 @@ button, a {
 
 .item-bottom {
   @include margin(0);
-  @include padding(
-    0,
-    var(--inner-padding-end),
-    0,
-    calc(var(--padding-start) + var(--ion-safe-area-left, 0px))
-  );
+  @include ltr() {
+    @include padding-horizontal(
+      calc(var(--padding-start) + var(--ion-safe-area-left, 0px)),
+      calc(var(--inner-padding-end) + var(--ion-safe-area-right, 0px))
+    )
+  }
+  @include rtl() {
+    @include padding-horizontal(
+      calc(var(--padding-start) + var(--ion-safe-area-right, 0)),
+      calc(var(--padding-end) + var(--ion-safe-area-left, 0px))
+    )
+  }
 
   display: flex;
 
