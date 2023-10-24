@@ -84,7 +84,7 @@ export const createSwipeToDismissGesture = (
     case 'middle':
       MAX_SWIPE_DISTANCE = hostElHeight + wrapperElBox.height;
       swipeAnimation.keyframes(SWIPE_UP_DOWN_KEYFRAMES);
-      console.log(MAX_SWIPE_DISTANCE, SWIPE_UP_DOWN_KEYFRAMES, topPosition + wrapperElBox.height)
+      console.log(MAX_SWIPE_DISTANCE, SWIPE_UP_DOWN_KEYFRAMES, topPosition + wrapperElBox.height);
       /**
        * Toast can be swiped up or down but
        * should start in the middle of the screen.
