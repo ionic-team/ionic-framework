@@ -20,13 +20,14 @@ configs().forEach(({ title, screenshot, config }) => {
  */
 configs().forEach(({ title, screenshot, config }) => {
   test.describe(title('list-header: basic'), () => {
-    test.describe('safe area left', () => {
-      test('should have padding on the left only', async ({ page }) => {
+    test.describe('safe area', () => {
+      test('should have padding added by the safe area', async ({ page }) => {
         await page.setContent(
           `
           <style>
             :root {
               --ion-safe-area-left: 40px;
+              --ion-safe-area-right: 20px;
             }
           </style>
 
@@ -40,31 +41,7 @@ configs().forEach(({ title, screenshot, config }) => {
 
         const listHeader = page.locator('ion-list-header');
 
-        await expect(listHeader).toHaveScreenshot(screenshot(`list-header-safe-area-left`));
-      });
-    });
-
-    test.describe('safe area right', () => {
-      test('should have padding on the right only', async ({ page }) => {
-        await page.setContent(
-          `
-          <style>
-            :root {
-              --ion-safe-area-right: 40px;
-            }
-          </style>
-
-          <ion-list-header>
-            <ion-label>List Header</ion-label>
-            <ion-button>Button</ion-button>
-          </ion-list-header>
-        `,
-          config
-        );
-
-        const listHeader = page.locator('ion-list-header');
-
-        await expect(listHeader).toHaveScreenshot(screenshot(`list-header-safe-area-right`));
+        await expect(listHeader).toHaveScreenshot(screenshot(`list-header-safe-area`));
       });
     });
   });
