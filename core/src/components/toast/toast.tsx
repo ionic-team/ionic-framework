@@ -68,8 +68,6 @@ export class Toast implements ComponentInterface, OverlayInterface {
   private readonly triggerController = createTriggerController();
   private customHTMLEnabled = config.get('innerHTMLTemplatesEnabled', ENABLE_HTML_CONTENT_DEFAULT);
   private durationTimeout?: ReturnType<typeof setTimeout>;
-
-  // TODO: Stubbed implementation
   private gesture?: Gesture;
 
   /**
