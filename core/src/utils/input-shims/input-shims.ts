@@ -1,3 +1,5 @@
+import { doc } from '@utils/browser';
+
 import type { Config } from '../../interface';
 import { findClosestIonContent } from '../content';
 import { componentOnReady } from '../helpers';
@@ -12,7 +14,14 @@ const SCROLL_ASSIST = true;
 const HIDE_CARET = true;
 
 export const startInputShims = async (config: Config, platform: 'ios' | 'android') => {
-  const doc = document;
+  /**
+   * If doc is undefined then we are in an SSR environment
+   * where input shims do not apply.
+   */
+  if (doc === undefined) {
+    return;
+  }
+
   const isIOS = platform === 'ios';
   const isAndroid = platform === 'android';
 
@@ -115,15 +124,13 @@ export const startInputShims = async (config: Config, platform: 'ios' | 'android
     registerInput(input);
   }
 
-  // TODO(FW-2832): types
-
-  doc.addEventListener('ionInputDidLoad', ((ev: InputEvent) => {
+  doc.addEventListener('ionInputDidLoad', (ev: InputEvent) => {
     registerInput(ev.detail);
-  }) as any);
+  });
 
-  doc.addEventListener('ionInputDidUnload', ((ev: InputEvent) => {
+  doc.addEventListener('ionInputDidUnload', (ev: InputEvent) => {
     unregisterInput(ev.detail);
-  }) as any);
+  });
 };
 
 type InputEvent = CustomEvent<HTMLElement>;
