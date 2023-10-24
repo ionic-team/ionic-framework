@@ -267,7 +267,7 @@ const proxyEvent = <T>(emitter: Subject<T>, el: EventTarget, eventName: string, 
     el.addEventListener(eventName, (ev) => {
       /**
        * `zone.run` is required to make sure that we are running inside the Angular zone
-       * at all times. This is necessary since an app that has Capacitor will 
+       * at all times. This is necessary since an app that has Capacitor will
        * override the `document.addEventListener` with its own implementation.
        * The override causes the event to no longer be in the Angular zone.
        */
