@@ -1,3 +1,4 @@
+import { Build } from '@stencil/core';
 import { createAnimation } from '@utils/animation/animation';
 import { createGesture } from '@utils/gesture';
 import type { GestureDetail } from '@utils/gesture';
@@ -22,8 +23,12 @@ export const createSwipeToDismissGesture = (
   /**
    * Users should swipe on the visible toast wrapper
    * rather than on ion-toast which covers the entire screen.
+   * When testing the class instance the inner wrapper will not
+   * be defined. As a result, we use a placeholder element in those environments.
    */
-  const wrapperEl = getElementRoot(el).querySelector('.toast-wrapper')!;
+  const wrapperEl = Build.isTesting
+    ? document.createElement('div')
+    : getElementRoot(el).querySelector('.toast-wrapper')!;
   const hostElHeight = el.clientHeight;
   const wrapperElBox = wrapperEl.getBoundingClientRect();
 
