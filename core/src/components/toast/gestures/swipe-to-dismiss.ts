@@ -4,8 +4,16 @@ import type { GestureDetail } from '@utils/gesture';
 import { getElementRoot } from '@utils/helpers';
 import { OVERLAY_GESTURE_PRIORITY } from '@utils/overlays';
 
+import { getOffsetForMiddlePosition } from '../animations/utils';
 import type { ToastAnimationPosition } from '../toast-interface';
 
+/**
+ * Create a gesture that allows the Toast
+ * to be swiped to dismiss.
+ * @param el - The Toast element
+ * @param toastPosition - The last computed position of the Toast. This is computed in the "present" method.
+ * @param onDismiss - A callback to fire when the Toast was swiped to dismiss.
+ */
 export const createSwipeToDismissGesture = (
   el: HTMLIonToastElement,
   toastPosition: ToastAnimationPosition,
@@ -19,8 +27,12 @@ export const createSwipeToDismissGesture = (
   const hostElHeight = el.clientHeight;
   const wrapperElBox = wrapperEl.getBoundingClientRect();
 
-  // TODO can this be a util function so the gesture + ios/md animations can reuse?
-  const topPosition = Math.floor(hostElHeight / 2 - wrapperElBox.height / 2);
+  /**
+   * The top offset that places the
+   * toast in the middle of the screen.
+   * Only needed when position="middle".
+   */
+  let topPosition = 0;
 
   /**
    * The maximum amount that
@@ -71,6 +83,7 @@ export const createSwipeToDismissGesture = (
 
   switch (el.position) {
     case 'middle':
+      topPosition = getOffsetForMiddlePosition(hostElHeight, wrapperElBox.height);
       MAX_SWIPE_DISTANCE = hostElHeight + wrapperElBox.height;
       swipeAnimation.keyframes(SWIPE_UP_DOWN_KEYFRAMES);
       /**

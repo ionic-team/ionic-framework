@@ -4,6 +4,8 @@ import { getElementRoot } from '@utils/helpers';
 import type { Animation } from '../../../interface';
 import type { ToastPresentOptions } from '../toast-interface';
 
+import { getOffsetForMiddlePosition } from './utils';
+
 /**
  * MD Toast Enter Animation
  */
@@ -23,7 +25,7 @@ export const mdEnterAnimation = (baseEl: HTMLElement, opts: ToastPresentOptions)
       wrapperAnimation.fromTo('opacity', 0.01, 1);
       break;
     case 'middle':
-      const topPosition = Math.floor(baseEl.clientHeight / 2 - wrapperEl.clientHeight / 2);
+      const topPosition = getOffsetForMiddlePosition(baseEl.clientHeight, wrapperEl.clientHeight);
       wrapperEl.style.top = `${topPosition}px`;
       wrapperAnimation.fromTo('opacity', 0.01, 1);
       break;
