@@ -28,13 +28,6 @@ export const createSwipeToDismissGesture = (
   const wrapperElBox = wrapperEl.getBoundingClientRect();
 
   /**
-   * The top offset that places the
-   * toast in the middle of the screen.
-   * Only needed when position="middle".
-   */
-  let topPosition = 0;
-
-  /**
    * The maximum amount that
    * the toast can be swiped. This should
    * account for the wrapper element's height
@@ -65,6 +58,12 @@ export const createSwipeToDismissGesture = (
    */
   const INVERSION_FACTOR = el.position === 'top' ? -1 : 1;
 
+  /**
+   * The top offset that places the
+   * toast in the middle of the screen.
+   * Only needed when position="middle".
+   */
+  const topPosition = getOffsetForMiddlePosition(hostElHeight, wrapperElBox.height);
   const SWIPE_UP_DOWN_KEYFRAMES = [
     { offset: 0, transform: `translateY(-${topPosition + wrapperElBox.height}px)` },
     { offset: 0.5, transform: `translateY(0px)` },
@@ -83,9 +82,9 @@ export const createSwipeToDismissGesture = (
 
   switch (el.position) {
     case 'middle':
-      topPosition = getOffsetForMiddlePosition(hostElHeight, wrapperElBox.height);
       MAX_SWIPE_DISTANCE = hostElHeight + wrapperElBox.height;
       swipeAnimation.keyframes(SWIPE_UP_DOWN_KEYFRAMES);
+      console.log(MAX_SWIPE_DISTANCE, SWIPE_UP_DOWN_KEYFRAMES, topPosition + wrapperElBox.height)
       /**
        * Toast can be swiped up or down but
        * should start in the middle of the screen.
