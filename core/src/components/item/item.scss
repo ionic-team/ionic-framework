@@ -335,8 +335,8 @@ button, a {
   @include rtl() {
     @include padding-horizontal(
       calc(var(--padding-start) + var(--ion-safe-area-right, 0)),
-      calc(var(--padding-end) + var(--ion-safe-area-left, 0px))
-    )
+      calc(var(--inner-padding-end) + var(--ion-safe-area-left, 0px))
+    );
   }
   /* stylelint-enable */
 
