@@ -1990,8 +1990,8 @@ export class Datetime implements ComponentInterface {
     const expandedIcon = mode === 'ios' ? chevronDown : caretUpSharp;
     const collapsedIcon = mode === 'ios' ? chevronForward : caretDownSharp;
 
-    const prevMonthDisabled = isPrevMonthDisabled(this.workingParts, this.minParts, this.maxParts);
-    const nextMonthDisabled = isNextMonthDisabled(this.workingParts, this.maxParts);
+    const prevMonthDisabled = isPrevMonthDisabled(this.workingParts, this.minParts, this.maxParts) || disabled;
+    const nextMonthDisabled = isNextMonthDisabled(this.workingParts, this.maxParts) || disabled;
 
     // don't use the inheritAttributes util because it removes dir from the host, and we still need that
     const hostDir = this.el.getAttribute('dir') || undefined;
@@ -2042,11 +2042,7 @@ export class Datetime implements ComponentInterface {
 
           <div class="calendar-next-prev">
             <ion-buttons>
-              <ion-button
-                aria-label="Previous month"
-                disabled={prevMonthDisabled || disabled}
-                onClick={() => this.prevMonth()}
-              >
+              <ion-button aria-label="Previous month" disabled={prevMonthDisabled} onClick={() => this.prevMonth()}>
                 <ion-icon
                   dir={hostDir}
                   aria-hidden="true"
@@ -2056,11 +2052,7 @@ export class Datetime implements ComponentInterface {
                   flipRtl
                 ></ion-icon>
               </ion-button>
-              <ion-button
-                aria-label="Next month"
-                disabled={nextMonthDisabled || disabled}
-                onClick={() => this.nextMonth()}
-              >
+              <ion-button aria-label="Next month" disabled={nextMonthDisabled} onClick={() => this.nextMonth()}>
                 <ion-icon
                   dir={hostDir}
                   aria-hidden="true"
