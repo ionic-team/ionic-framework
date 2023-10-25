@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.5.2-nightly.20231025](https://github.com/ionic-team/ionic-framework/compare/v7.5.1...v7.5.2-nightly.20231025) (2023-10-25)
+
+
+### Bug Fixes
+
+* **alert, action-sheet:** show scrollbar for long list of options ([#28369](https://github.com/ionic-team/ionic-framework/issues/28369)) ([60f3d65](https://github.com/ionic-team/ionic-framework/commit/60f3d6579498ebad75c4f5163fca3947ac2dadff)), closes [#18487](https://github.com/ionic-team/ionic-framework/issues/18487)
+* **angular:** remove form control side effects ([#28359](https://github.com/ionic-team/ionic-framework/issues/28359)) ([82d6309](https://github.com/ionic-team/ionic-framework/commit/82d6309ef1675c0a6e767e87c23f166d84579d8f)), closes [#28358](https://github.com/ionic-team/ionic-framework/issues/28358)
+* **fab:** apply safe area in positioning to proper side regardless of direction ([#28377](https://github.com/ionic-team/ionic-framework/issues/28377)) ([331c08a](https://github.com/ionic-team/ionic-framework/commit/331c08aad542de158e53ed351705d4c396bb4e90))
+* **input, searchbar, textarea:** ensure nativeInput is always available ([#28362](https://github.com/ionic-team/ionic-framework/issues/28362)) ([2b015b2](https://github.com/ionic-team/ionic-framework/commit/2b015b22144e306444f2bf30ace0b5cc7e32a710)), closes [#28283](https://github.com/ionic-team/ionic-framework/issues/28283)
+* **menu:** menu no longer disappears with multiple split panes ([#28370](https://github.com/ionic-team/ionic-framework/issues/28370)) ([5a30082](https://github.com/ionic-team/ionic-framework/commit/5a30082546cb19eb98128ca9091b35094841d4f2)), closes [#18683](https://github.com/ionic-team/ionic-framework/issues/18683) [#15538](https://github.com/ionic-team/ionic-framework/issues/15538) [#22341](https://github.com/ionic-team/ionic-framework/issues/22341)
+* **rtl:** allow :host to use rtl() ([#28353](https://github.com/ionic-team/ionic-framework/issues/28353)) ([6b7d288](https://github.com/ionic-team/ionic-framework/commit/6b7d288536307fcb49231dca66ab938b389ea85e))
+
+
+
+
+
 ## [7.5.1](https://github.com/ionic-team/ionic-framework/compare/v7.5.0...v7.5.1) (2023-10-18)
 
 
