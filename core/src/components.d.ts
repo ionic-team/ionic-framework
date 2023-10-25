@@ -915,7 +915,7 @@ export namespace Components {
          */
         "presentation": DatetimePresentation;
         /**
-          * If `true`, the datetime appears normal but its value is not interactive.
+          * If `true`, the datetime appears normal but the selected date cannot be changed.
          */
         "readonly": boolean;
         /**
@@ -4971,7 +4971,7 @@ declare namespace LocalJSX {
          */
         "presentation"?: DatetimePresentation;
         /**
-          * If `true`, the datetime appears normal but its value is not interactive.
+          * If `true`, the datetime appears normal but the selected date cannot be changed.
          */
         "readonly"?: boolean;
         /**

@@ -211,7 +211,8 @@ ion-picker-column-internal {
    * Disabled buttons should have full opacity
    * in readonly mode
    */
-  .calendar-day[disabled],
+
+  .calendar-day[disabled]:not(.calendar-day-constrained),
   .datetime-action-buttons ion-button[disabled] {
     opacity: 1;
   }

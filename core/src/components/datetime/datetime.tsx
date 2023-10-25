@@ -172,7 +172,7 @@ export class Datetime implements ComponentInterface {
   @Prop() disabled = false;
 
   /**
-   * If `true`, the datetime appears normal but its value is not interactive.
+   * If `true`, the datetime appears normal but the selected date cannot be changed.
    */
   @Prop() readonly = false;
 
@@ -2145,22 +2145,21 @@ export class Datetime implements ComponentInterface {
             );
 
             const dateIsoString = convertDataToISO(referenceParts);
-            /**
-             * Days are disabled if they are
-             * outside of the min/max bounds
-             * or if the component is in disabled
-             * or readonly mode.
-             */
-            let isCalDayDisabled = isCalMonthDisabled || isDayDisabled || disabled || readonly;
 
-            if (!isCalDayDisabled && isDateEnabled !== undefined) {
+            /**
+             * Days can be constrained by the min/max bounds or
+             * allowed dates. Constrained days may not be selected.
+             */
+            let isCalDayConstrained = isCalMonthDisabled || isDayDisabled;
+
+            if (!isCalDayConstrained && isDateEnabled !== undefined) {
               try {
                 /**
                  * The `isDateEnabled` implementation is try-catch wrapped
                  * to prevent exceptions in the user's function from
                  * interrupting the calendar rendering.
                  */
-                isCalDayDisabled = !isDateEnabled(dateIsoString);
+                isCalDayConstrained = !isDateEnabled(dateIsoString);
               } catch (e) {
                 printIonError(
                   'Exception thrown from provided `isDateEnabled` function. Please check your function and try again.',
@@ -2169,6 +2168,12 @@ export class Datetime implements ComponentInterface {
                 );
               }
             }
+
+            /**
+             * Days can be disabled through constraints or by
+             * the component being readonly or disabled.
+             */
+            const isCalDayDisabled = isCalMonthDisabled || isDayDisabled || disabled || readonly;
 
             let dateStyle: DatetimeHighlightStyle | undefined = undefined;
 
@@ -2220,6 +2225,7 @@ export class Datetime implements ComponentInterface {
                     'calendar-day-padding': isCalendarPadding,
                     'calendar-day': true,
                     'calendar-day-active': isActive,
+                    'calendar-day-constrained': isCalDayConstrained,
                     'calendar-day-today': isToday,
                   }}
                   part={dateParts}

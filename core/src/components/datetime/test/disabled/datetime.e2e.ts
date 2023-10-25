@@ -5,8 +5,20 @@ import { configs, test } from '@utils/test/playwright';
  * This behavior does not differ across
  * modes/directions.
  */
-configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
   test.describe(title('datetime: disabled'), () => {
+    test('should not have visual regressions', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime value="2022-02-05T00:00:00" min="2022-01-01T00:00:00" max="2022-02-20T23:59:59" day-values="5,6,10,11,15,16,20" show-default-buttons disabled></ion-datetime>
+    `,
+        config
+      );
+
+      const datetime = page.locator('ion-datetime');
+      await expect(datetime).toHaveScreenshot(screenshot(`datetime-disabled`));
+    });
+
     test('date should be disabled', async ({ page }) => {
       await page.setContent(
         `
