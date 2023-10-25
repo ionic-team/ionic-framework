@@ -2173,7 +2173,7 @@ export class Datetime implements ComponentInterface {
              * Days can be disabled through constraints or by
              * the component being readonly or disabled.
              */
-            const isCalDayDisabled = isCalMonthDisabled || isDayDisabled || disabled || readonly;
+            const isCalDayDisabled = isCalDayConstrained || disabled || readonly;
 
             let dateStyle: DatetimeHighlightStyle | undefined = undefined;
 
