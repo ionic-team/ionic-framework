@@ -70,6 +70,9 @@ export class Toast implements ComponentInterface, OverlayInterface {
   private durationTimeout?: ReturnType<typeof setTimeout>;
   private gesture?: Gesture;
 
+  // TODO: Stubbed implementation
+  private gesture?: string;
+
   /**
    * Holds the position of the toast calculated in the present
    * animation, to be passed along to the dismiss animation so
