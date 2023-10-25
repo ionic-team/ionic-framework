@@ -30,7 +30,7 @@ const testAria = async (
 
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('alert: text wrapping'), () => {
-    test('should break on words and white spaces', async ({ page }) => {
+    test('should break on words and white spaces for radios', async ({ page }) => {
       await page.setContent(
         `
         <ion-alert header='Text Wrapping'></ion-alert>
@@ -52,7 +52,31 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
       await alert.evaluate((el: HTMLIonAlertElement) => el.present());
       await ionAlertDidPresent.next();
 
-      await expect(page).toHaveScreenshot(screenshot(`alert-text-wrap`));
+      await expect(page).toHaveScreenshot(screenshot(`alert-radio-text-wrap`));
+    });
+    test('should break on words and white spaces for checkboxes', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-alert header='Text Wrapping'></ion-alert>
+
+        <script>
+          const alert = document.querySelector('ion-alert');
+          alert.inputs = [
+            { type: 'checkbox', value: 'a', label: 'ThisIsAllOneReallyLongWordThatShouldWrap' },
+            { type: 'checkbox', value: 'b', label: 'These are separate words that should wrap' }
+          ];
+        </script>
+      `,
+        config
+      );
+
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+      const alert = page.locator('ion-alert');
+
+      await alert.evaluate((el: HTMLIonAlertElement) => el.present());
+      await ionAlertDidPresent.next();
+
+      await expect(page).toHaveScreenshot(screenshot(`alert-checkbox-text-wrap`));
     });
   });
 });
