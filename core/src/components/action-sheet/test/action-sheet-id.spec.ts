@@ -1,10 +1,11 @@
 import { newSpecPage } from '@stencil/core/testing';
 
+import { Backdrop } from '../../backdrop/backdrop';
 import { ActionSheet } from '../action-sheet';
 
 it('action sheet should be assigned an incrementing id', async () => {
   const page = await newSpecPage({
-    components: [ActionSheet],
+    components: [ActionSheet, Backdrop],
     html: `<ion-action-sheet is-open="true"></ion-action-sheet>`,
   });
   let actionSheet: HTMLIonActionSheetElement;

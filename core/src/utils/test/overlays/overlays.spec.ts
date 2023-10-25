@@ -1,9 +1,9 @@
 import { newSpecPage } from '@stencil/core/testing';
 
+import { Backdrop } from '../../../components/backdrop/backdrop';
+import { Modal } from '../../../components/modal/modal';
 import { Nav } from '../../../components/nav/nav';
 import { RouterOutlet } from '../../../components/router-outlet/router-outlet';
-import { Modal } from '../../../components/modal/modal';
-
 import { setRootAriaHidden } from '../../overlays';
 
 describe('setRootAriaHidden()', () => {
@@ -82,7 +82,7 @@ describe('setRootAriaHidden()', () => {
 
   it('should remove router-outlet from accessibility tree when overlay is presented', async () => {
     const page = await newSpecPage({
-      components: [RouterOutlet, Modal],
+      components: [RouterOutlet, Modal, Backdrop],
       html: `
         <ion-router-outlet>
           <ion-modal></ion-modal>
@@ -100,7 +100,7 @@ describe('setRootAriaHidden()', () => {
 
   it('should add router-outlet from accessibility tree when then final overlay is dismissed', async () => {
     const page = await newSpecPage({
-      components: [RouterOutlet, Modal],
+      components: [RouterOutlet, Modal, Backdrop],
       html: `
         <ion-router-outlet>
           <ion-modal id="one"></ion-modal>

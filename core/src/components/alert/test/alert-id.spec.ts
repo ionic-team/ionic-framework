@@ -1,10 +1,11 @@
 import { newSpecPage } from '@stencil/core/testing';
 
+import { Backdrop } from '../../backdrop/backdrop';
 import { Alert } from '../alert';
 
 it('alert should be assigned an incrementing id', async () => {
   const page = await newSpecPage({
-    components: [Alert],
+    components: [Alert, Backdrop],
     html: `<ion-alert is-open="true"></ion-alert>`,
   });
   let alert: HTMLIonAlertElement;

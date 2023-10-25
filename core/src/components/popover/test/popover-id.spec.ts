@@ -1,10 +1,11 @@
 import { newSpecPage } from '@stencil/core/testing';
 
+import { Backdrop } from '../../backdrop/backdrop';
 import { Popover } from '../popover';
 
 it('popover should be assigned an incrementing id', async () => {
   const page = await newSpecPage({
-    components: [Popover],
+    components: [Popover, Backdrop],
     html: `<ion-popover is-open="true"></ion-popover>`,
   });
   let popover: HTMLIonPopoverElement;
