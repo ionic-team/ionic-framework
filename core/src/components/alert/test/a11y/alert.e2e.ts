@@ -30,7 +30,11 @@ const testAria = async (
 
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('alert: text wrapping'), () => {
-    test('should break on words and white spaces for radios', async ({ page }) => {
+    test('should break on words and white spaces for radios', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/28406',
+      });
       await page.setContent(
         `
         <ion-alert header='Text Wrapping'></ion-alert>
@@ -54,7 +58,11 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
 
       await expect(page).toHaveScreenshot(screenshot(`alert-radio-text-wrap`));
     });
-    test('should break on words and white spaces for checkboxes', async ({ page }) => {
+    test('should break on words and white spaces for checkboxes', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/28406',
+      });
       await page.setContent(
         `
         <ion-alert header='Text Wrapping'></ion-alert>
