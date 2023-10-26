@@ -207,21 +207,17 @@
 
   /* stylelint-disable */
   @include ltr() {
-    @include padding(
-      var(--padding-top),
-      var(--padding-end),
-      var(--padding-bottom),
-      calc(var(--padding-start) + var(--ion-safe-area-left, 0px))
-    )
+    padding-top: var(--padding-top);
+    padding-right: var(--padding-end);
+    padding-bottom: var(--padding-bottom);
+    padding-left: calc(var(--padding-start) + var(--ion-safe-area-left, 0px));
   }
 
   @include rtl() {
-    @include padding(
-      var(--padding-top),
-      calc(var(--padding-end) + var(--ion-safe-area-left, 0px)),
-      var(--padding-bottom),
-      var(--padding-start)
-    )
+    padding-top: var(--padding-top);
+    padding-right: var(--padding-start);
+    padding-bottom: var(--padding-bottom);
+    padding-left: calc(var(--padding-end) + var(--ion-safe-area-left, 0px));
   }
   /* stylelint-enable */
 
@@ -278,21 +274,17 @@ button, a {
 
   /* stylelint-disable */
   @include ltr() {
-    @include padding(
-      var(--inner-padding-top),
-      calc(var(--ion-safe-area-right, 0px) + var(--inner-padding-end)),
-      var(--inner-padding-bottom),
-      var(--inner-padding-start)
-    )
+    padding-top:var(--inner-padding-top);
+    padding-right:calc(var(--ion-safe-area-right, 0px) + var(--inner-padding-end));
+    padding-bottom:var(--inner-padding-bottom);
+    padding-left:var(--inner-padding-start);
   }
 
   @include rtl() {
-    @include padding(
-      var(--inner-padding-top),
-      var(--inner-padding-end),
-      var(--inner-padding-bottom),
-      calc(var(--ion-safe-area-right, 0px) + var(--inner-padding-start))
-    )
+    padding-top: var(--inner-padding-top);
+    padding-right: calc(var(--ion-safe-area-right, 0px) + var(--inner-padding-start));
+    padding-bottom: var(--inner-padding-bottom);
+    padding-left: var(--inner-padding-end);
   }
   /* stylelint-enable */
 
@@ -326,17 +318,13 @@ button, a {
 
   /* stylelint-disable */
   @include ltr() {
-    @include padding-horizontal(
-      calc(var(--padding-start) + var(--ion-safe-area-left, 0px)),
-      calc(var(--inner-padding-end) + var(--ion-safe-area-right, 0px))
-    )
+    padding-left: calc(var(--padding-start) + var(--ion-safe-area-left, 0px));
+    padding-right: calc(var(--inner-padding-end) + var(--ion-safe-area-right, 0px));
   }
 
   @include rtl() {
-    @include padding-horizontal(
-      calc(var(--padding-start) + var(--ion-safe-area-right, 0)),
-      calc(var(--inner-padding-end) + var(--ion-safe-area-left, 0px))
-    );
+    padding-left: calc(var(--inner-padding-end) + var(--ion-safe-area-left, 0px));
+    padding-right: calc(var(--padding-start) + var(--ion-safe-area-right, 0));
   }
   /* stylelint-enable */
 
