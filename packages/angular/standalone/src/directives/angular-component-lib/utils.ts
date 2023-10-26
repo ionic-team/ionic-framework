@@ -12,6 +12,14 @@ export const proxyInputs = (Cmp: any, inputs: string[]) => {
       set(val: any) {
         this.z.runOutsideAngular(() => (this.el[item] = val));
       },
+      /**
+       * In the event that proxyInputs is called
+       * multiple times re-defining these inputs
+       * will cause an error to be thrown. As a result
+       * we set configurable: true to indicate these
+       * properties can be changed.
+       */
+      configurable: true
     });
   });
 };
