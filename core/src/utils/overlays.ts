@@ -553,11 +553,14 @@ export const dismiss = async <OverlayDismissOptions>(
     return false;
   }
 
+  let isLastVisibleOverlay = false;
+
   /**
    * If this is the last visible overlay then
    * we want to re-add the root to the accessibility tree.
    */
   if (doc !== undefined && getPresentedOverlays(doc).length === 1) {
+    isLastVisibleOverlay = true;
     setRootAriaHidden(false);
   }
 
@@ -579,7 +582,8 @@ export const dismiss = async <OverlayDismissOptions>(
       await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
     }
 
-    if (overlay.backdropEl) {
+    if (overlay.backdropEl && isLastVisibleOverlay) {
+      // If the dismissed overlay is the last visible one, re-enable scrolling
       overlay.backdropEl.unblock();
     }
 
