@@ -140,6 +140,8 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       await ionModalDidDismiss.next();
 
+      await page.waitForChanges();
+
       await page.mouse.wheel(0, 100);
 
       await expect(
