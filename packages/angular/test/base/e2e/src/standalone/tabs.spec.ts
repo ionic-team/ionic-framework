@@ -13,4 +13,8 @@ describe('Tabs', () => {
     cy.get('app-tab-two').should('be.visible');
     cy.contains('Tab 2');
   });
+
+  it('parentOutlet should be defined', () => {
+    cy.get('#parent-outlet span').should('have.text', 'true');
+  });
 });

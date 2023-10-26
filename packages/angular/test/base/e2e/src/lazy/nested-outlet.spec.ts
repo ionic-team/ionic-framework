@@ -27,5 +27,8 @@ describe('Nested Outlet', () => {
     cy.get('#goto-nested-page2').click();
   });
 
+  it('parentOutlet should be defined', () => {
+    cy.get('#parent-outlet span').should('have.text', 'true');
+  });
 });
 
