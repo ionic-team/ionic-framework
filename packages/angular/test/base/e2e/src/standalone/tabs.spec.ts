@@ -14,6 +14,7 @@ describe('Tabs', () => {
     cy.contains('Tab 2');
   });
 
+  // Fixes https://github.com/ionic-team/ionic-framework/issues/28417
   it('parentOutlet should be defined', () => {
     cy.get('#parent-outlet span').should('have.text', 'true');
   });
