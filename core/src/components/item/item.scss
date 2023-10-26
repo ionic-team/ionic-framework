@@ -268,19 +268,16 @@ button, a {
 
 .item-inner {
   @include margin(0);
+  @include padding(var(--inner-padding-top), null, var(--inner-padding-bottom));
 
   /* stylelint-disable */
   @include ltr() {
-    padding-top:var(--inner-padding-top);
     padding-right:calc(var(--ion-safe-area-right, 0px) + var(--inner-padding-end));
-    padding-bottom:var(--inner-padding-bottom);
     padding-left:var(--inner-padding-start);
   }
 
   @include rtl() {
-    padding-top: var(--inner-padding-top);
     padding-right: calc(var(--ion-safe-area-right, 0px) + var(--inner-padding-start));
-    padding-bottom: var(--inner-padding-bottom);
     padding-left: var(--inner-padding-end);
   }
   /* stylelint-enable */
