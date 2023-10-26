@@ -2074,11 +2074,12 @@ export class Datetime implements ComponentInterface {
     );
   }
   private renderMonth(month: number, year: number) {
-    const { disabled } = this;
+    const { disabled, readonly } = this;
 
     const yearAllowed = this.parsedYearValues === undefined || this.parsedYearValues.includes(year);
     const monthAllowed = this.parsedMonthValues === undefined || this.parsedMonthValues.includes(month);
     const isCalMonthDisabled = !yearAllowed || !monthAllowed;
+    const isDatetimeDisabled = disabled || readonly;
     const swipeDisabled =
       disabled ||
       isMonthDisabled(
@@ -2114,7 +2115,6 @@ export class Datetime implements ComponentInterface {
       >
         <div class="calendar-month-grid">
           {getDaysOfMonth(month, year, this.firstDayOfWeek % 7).map((dateObject, index) => {
-            const { disabled, readonly } = this;
             const { day, dayOfWeek } = dateObject;
             const { el, highlightedDates, isDateEnabled, multiple } = this;
             const referenceParts = { month, day, year };
@@ -2138,20 +2138,16 @@ export class Datetime implements ComponentInterface {
 
             const dateIsoString = convertDataToISO(referenceParts);
 
-            /**
-             * Days can be constrained by the min/max bounds or
-             * allowed dates. Constrained days may not be selected.
-             */
-            let isCalDayConstrained = isCalMonthDisabled || isDayDisabled;
+            let isCalDayDisabled = isCalMonthDisabled || isDayDisabled;
 
-            if (!isCalDayConstrained && isDateEnabled !== undefined) {
+            if (!isCalDayDisabled && isDateEnabled !== undefined) {
               try {
                 /**
                  * The `isDateEnabled` implementation is try-catch wrapped
                  * to prevent exceptions in the user's function from
                  * interrupting the calendar rendering.
                  */
-                isCalDayConstrained = !isDateEnabled(dateIsoString);
+                isCalDayDisabled = !isDateEnabled(dateIsoString);
               } catch (e) {
                 printIonError(
                   'Exception thrown from provided `isDateEnabled` function. Please check your function and try again.',
@@ -2162,10 +2158,13 @@ export class Datetime implements ComponentInterface {
             }
 
             /**
-             * Days can be disabled through constraints or by
-             * the component being readonly or disabled.
+             * Some days are disabled through max & min or allowed dates
+             * and also by the component being readonly or disabled.
+             * These need to be displayed differently.
              */
-            const isCalDayDisabled = isCalDayConstrained || disabled || readonly;
+            const isCalDayDoublyDisabled = isCalDayDisabled && isDatetimeDisabled;
+
+            const isButtonDisabled = isCalDayDisabled || isDatetimeDisabled;
 
             let dateStyle: DatetimeHighlightStyle | undefined = undefined;
 
@@ -2212,12 +2211,12 @@ export class Datetime implements ComponentInterface {
                   data-year={year}
                   data-index={index}
                   data-day-of-week={dayOfWeek}
-                  disabled={isCalDayDisabled}
+                  disabled={isButtonDisabled}
                   class={{
                     'calendar-day-padding': isCalendarPadding,
                     'calendar-day': true,
                     'calendar-day-active': isActive,
-                    'calendar-day-constrained': isCalDayConstrained,
+                    'calendar-day-constrained': isCalDayDoublyDisabled,
                     'calendar-day-today': isToday,
                   }}
                   part={dateParts}
