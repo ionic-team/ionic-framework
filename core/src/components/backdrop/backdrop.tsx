@@ -14,7 +14,7 @@ import { getIonMode } from '../../global/ionic-global';
 })
 export class Backdrop implements ComponentInterface {
   private blocker = GESTURE_CONTROLLER.createBlocker({
-    disableScroll: false,
+    disableScroll: true,
   });
 
   /**
