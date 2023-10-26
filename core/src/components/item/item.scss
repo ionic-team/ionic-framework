@@ -203,20 +203,17 @@
 .item-native {
   @include border-radius(var(--border-radius));
   @include margin(0);
+  @include padding(var(--padding-top), null, var(--padding-bottom));
   @include text-inherit();
 
   /* stylelint-disable */
   @include ltr() {
-    padding-top: var(--padding-top);
     padding-right: var(--padding-end);
-    padding-bottom: var(--padding-bottom);
     padding-left: calc(var(--padding-start) + var(--ion-safe-area-left, 0px));
   }
 
   @include rtl() {
-    padding-top: var(--padding-top);
     padding-right: var(--padding-start);
-    padding-bottom: var(--padding-bottom);
     padding-left: calc(var(--padding-end) + var(--ion-safe-area-left, 0px));
   }
   /* stylelint-enable */
