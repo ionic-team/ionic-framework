@@ -3,4 +3,3 @@ export * from './numeric-value-accessor';
 export * from './radio-value-accessor';
 export * from './select-value-accessor';
 export * from './text-value-accessor';
-export * from './range-value-accessor';

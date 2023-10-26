@@ -16,7 +16,6 @@ import {
   RadioValueAccessorDirective,
   SelectValueAccessorDirective,
   TextValueAccessorDirective,
-  RangeValueAccessorDirective
 } from './directives/control-value-accessors';
 import { IonBackButton } from './directives/navigation/ion-back-button';
 import { IonNav } from './directives/navigation/ion-nav';
@@ -45,7 +44,6 @@ const DECLARATIONS = [
   RadioValueAccessorDirective,
   SelectValueAccessorDirective,
   TextValueAccessorDirective,
-  RangeValueAccessorDirective,
 
   // navigation
   IonTabs,
