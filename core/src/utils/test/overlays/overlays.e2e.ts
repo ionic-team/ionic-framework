@@ -104,53 +104,6 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       const modals = page.locator('ion-modal');
       expect(await modals.count()).toEqual(0);
     });
-
-    test('should re-enable scrolling on the page when dismissed', async ({ page, skip }) => {
-      skip.browser('webkit', 'Mouse wheel is not supported in mobile WebKit');
-      await page.goto('/src/utils/test/overlays', config);
-
-      await page.click('#create-and-present');
-
-      const modal = page.locator('ion-modal');
-      await expect(modal).toHaveCount(1);
-
-      const contentEl = page.locator('#main-content ion-content');
-
-      await expect(
-        await contentEl.evaluate(async (el: HTMLIonContentElement) => {
-          const contentScrollEl = await el.getScrollElement();
-          return contentScrollEl.scrollTop;
-        })
-      ).toBe(0);
-
-      await page.mouse.wheel(0, 100);
-
-      await expect(
-        await contentEl.evaluate(async (el: HTMLIonContentElement) => {
-          const contentScrollEl = await el.getScrollElement();
-          return contentScrollEl.scrollTop;
-        })
-      ).toBe(0);
-
-      const ionModalDidDismiss = await page.spyOnEvent('ionModalDidDismiss');
-
-      await modal.evaluate(async (el: HTMLIonModalElement) => {
-        await el.dismiss();
-      });
-
-      await ionModalDidDismiss.next();
-
-      await page.waitForChanges();
-
-      await page.mouse.wheel(0, 100);
-
-      await expect(
-        await contentEl.evaluate(async (el: HTMLIonContentElement) => {
-          const contentScrollEl = await el.getScrollElement();
-          return contentScrollEl.scrollTop;
-        })
-      ).toBeGreaterThan(0);
-    });
   });
 
   test.describe(title('overlays: focus'), () => {
@@ -300,67 +253,6 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await modalInputOne.click();
 
       await expect(modalInputOne).toBeFocused();
-    });
-  });
-
-  test.describe(title('overlays: create'), () => {
-    test('should not prevent scrolling on the page', async ({ page, skip }) => {
-      skip.browser('webkit', 'Mouse wheel is not supported in mobile WebKit');
-
-      await page.goto('/src/utils/test/overlays', config);
-
-      await page.click('#create');
-
-      const modal = page.locator('ion-modal');
-      await expect(modal).toHaveCount(1);
-
-      const contentEl = page.locator('#main-content ion-content');
-
-      await expect(
-        await contentEl.evaluate(async (el: HTMLIonContentElement) => {
-          const contentScrollEl = await el.getScrollElement();
-          return contentScrollEl.scrollTop;
-        })
-      ).toBe(0);
-
-      await page.mouse.wheel(0, 100);
-
-      await expect(
-        await contentEl.evaluate(async (el: HTMLIonContentElement) => {
-          const contentScrollEl = await el.getScrollElement();
-          return contentScrollEl.scrollTop;
-        })
-      ).toBeGreaterThan(0);
-    });
-  });
-
-  test.describe(title('overlays: present'), () => {
-    test('should prevent scrolling on the page', async ({ page, skip }) => {
-      skip.browser('webkit', 'Mouse wheel is not supported in mobile WebKit');
-      await page.goto('/src/utils/test/overlays', config);
-
-      await page.click('#create-and-present');
-
-      const modal = page.locator('ion-modal');
-      await expect(modal).toHaveCount(1);
-
-      const contentEl = page.locator('#main-content ion-content');
-
-      await expect(
-        await contentEl.evaluate(async (el: HTMLIonContentElement) => {
-          const contentScrollEl = await el.getScrollElement();
-          return contentScrollEl.scrollTop;
-        })
-      ).toBe(0);
-
-      await page.mouse.wheel(0, 100);
-
-      await expect(
-        await contentEl.evaluate(async (el: HTMLIonContentElement) => {
-          const contentScrollEl = await el.getScrollElement();
-          return contentScrollEl.scrollTop;
-        })
-      ).toBe(0);
     });
   });
 });

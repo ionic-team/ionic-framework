@@ -130,3 +130,38 @@ describe('setRootAriaHidden()', () => {
     expect(routerOutlet.hasAttribute('aria-hidden')).toEqual(false);
   });
 });
+
+describe('overlays: scroll blocking', () => {
+  it('should not block scroll when the overlay is created', async () => {
+    const page = await newSpecPage({
+      components: [Modal, Backdrop],
+      html: `
+        <ion-modal></ion-modal>
+      `,
+    });
+
+    const body = page.doc.querySelector('body')!;
+
+    expect(body.classList.contains('backdrop-no-scroll')).toEqual(false);
+  });
+
+  it('should block scroll when the overlay is presented and enable after dismiss', async () => {
+    const page = await newSpecPage({
+      components: [Modal, Backdrop],
+      html: `
+        <ion-modal></ion-modal>
+      `,
+    });
+
+    const modal = page.body.querySelector('ion-modal')!;
+    const body = page.doc.querySelector('body')!;
+
+    await modal.present();
+
+    expect(body.classList.contains('backdrop-no-scroll')).toEqual(true);
+
+    await modal.dismiss();
+
+    expect(body.classList.contains('backdrop-no-scroll')).toEqual(false);
+  });
+});
