@@ -13,6 +13,12 @@ import { defineCustomElement } from '@ionic/core/components/ion-router-outlet.js
 })
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class IonRouterOutlet extends IonRouterOutletBase {
+  /**
+   * We need to pass in the correct instance of IonRouterOutlet
+   * otherwise parentOutlet will be null in a nested outlet context.
+   * This results in APIs such as NavController.pop not working
+   * in nested outlets because the parent outlet cannot be found.
+   */
   constructor(
     @Attribute('name') name: string,
     @Optional() @Attribute('tabs') tabs: string,
