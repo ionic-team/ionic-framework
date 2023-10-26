@@ -728,6 +728,12 @@ export class Input implements ComponentInterface {
           'input-disabled': disabled,
         })}
       >
+        {/**
+         * htmlFor is needed so that clicking the label always focuses
+         * the input. Otherwise, if the start slot has something
+         * interactable, clicking the label would focus that instead
+         * since it comes before the input in the DOM.
+         */}
         <label class="input-wrapper" htmlFor={inputId}>
           {this.renderLabelContainer()}
           <div class="native-wrapper">
