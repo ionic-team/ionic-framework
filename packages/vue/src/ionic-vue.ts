@@ -5,7 +5,9 @@ import type { App, Plugin } from "vue";
 // TODO(FW-2969): types
 
 const toKebabCase = (eventName: string) => {
-  return eventName.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, "$1-$2").toLowerCase();
+  return eventName
+    .replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, "$1-$2")
+    .toLowerCase();
 };
 
 const getHelperFunctions = () => {
