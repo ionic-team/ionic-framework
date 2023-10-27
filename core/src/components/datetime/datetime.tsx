@@ -2158,11 +2158,11 @@ export class Datetime implements ComponentInterface {
             }
 
             /**
-             * Some days are disabled through max & min or allowed dates
-             * and also by the component being readonly or disabled.
+             * Some days are constrained through max & min or allowed dates
+             * and also disabled because the component is readonly or disabled.
              * These need to be displayed differently.
              */
-            const isCalDayDoublyDisabled = isCalDayDisabled && isDatetimeDisabled;
+            const isCalDayConstrained = isCalDayDisabled && isDatetimeDisabled;
 
             const isButtonDisabled = isCalDayDisabled || isDatetimeDisabled;
 
@@ -2216,7 +2216,7 @@ export class Datetime implements ComponentInterface {
                     'calendar-day-padding': isCalendarPadding,
                     'calendar-day': true,
                     'calendar-day-active': isActive,
-                    'calendar-day-constrained': isCalDayDoublyDisabled,
+                    'calendar-day-constrained': isCalDayConstrained,
                     'calendar-day-today': isToday,
                   }}
                   part={dateParts}
