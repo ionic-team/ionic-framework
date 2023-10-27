@@ -11,9 +11,7 @@ import type { App, Plugin } from "vue";
  * v-model values have been updated.
  */
 const toKebabCase = (eventName: string) => {
-  const kebabConvert = (name: string) => name.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, "$1-$2").toLowerCase();
-
-  return kebabConvert(eventName);
+  return eventName.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, "$1-$2").toLowerCase();
 };
 
 const getHelperFunctions = () => {
