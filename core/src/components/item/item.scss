@@ -272,8 +272,8 @@ button, a {
 
   /* stylelint-disable */
   @include ltr() {
-    padding-right:calc(var(--ion-safe-area-right, 0px) + var(--inner-padding-end));
-    padding-left:var(--inner-padding-start);
+    padding-right: calc(var(--ion-safe-area-right, 0px) + var(--inner-padding-end));
+    padding-left: var(--inner-padding-start);
   }
 
   @include rtl() {
