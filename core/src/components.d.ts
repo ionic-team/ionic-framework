@@ -345,7 +345,6 @@ export namespace Components {
         "type": 'submit' | 'reset' | 'button';
     }
     interface IonBackdrop {
-        "block": () => Promise<void>;
         /**
           * If `true`, the backdrop will stop propagation on tap.
          */
@@ -354,7 +353,6 @@ export namespace Components {
           * If `true`, the backdrop will can be clicked and will emit the `ionBackdropTap` event.
          */
         "tappable": boolean;
-        "unblock": () => Promise<void>;
         /**
           * If `true`, the backdrop will be visible.
          */

@@ -185,7 +185,7 @@ class GestureDelegate {
   }
 }
 
-class BlockerDelegate {
+export class BlockerDelegate {
   private ctrl?: GestureController;
 
   constructor(

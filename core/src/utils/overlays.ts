@@ -20,6 +20,7 @@ import type {
 } from '../interface';
 
 import { CoreDelegate } from './framework-delegate';
+import { GESTURE_CONTROLLER } from './gesture/gesture-controller';
 import { OVERLAY_BACK_BUTTON_PRIORITY } from './hardware-back-button';
 import { addEventListener, componentOnReady, focusElement, getElementRoot, removeEventListener } from './helpers';
 import { printIonWarning } from './logging';
@@ -472,7 +473,12 @@ export const present = async <OverlayPresentOptions>(
   setRootAriaHidden(true);
 
   if (overlay.backdropEl) {
-    overlay.backdropEl.block();
+    // Scrolling should only be disabled if the overlay has a backdrop
+    overlay.blocker = GESTURE_CONTROLLER.createBlocker({
+      disableScroll: true,
+    });
+
+    overlay.blocker.block();
   }
 
   overlay.presented = true;
@@ -553,14 +559,11 @@ export const dismiss = async <OverlayDismissOptions>(
     return false;
   }
 
-  let isLastVisibleOverlay = false;
-
   /**
    * If this is the last visible overlay then
    * we want to re-add the root to the accessibility tree.
    */
   if (doc !== undefined && getPresentedOverlays(doc).length === 1) {
-    isLastVisibleOverlay = true;
     setRootAriaHidden(false);
   }
 
@@ -582,9 +585,8 @@ export const dismiss = async <OverlayDismissOptions>(
       await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
     }
 
-    if (overlay.backdropEl && isLastVisibleOverlay) {
-      // If the dismissed overlay is the last visible one, re-enable scrolling
-      overlay.backdropEl.unblock();
+    if (overlay.blocker) {
+      overlay.blocker.destroy();
     }
 
     overlay.didDismiss.emit({ data, role });

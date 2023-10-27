@@ -184,4 +184,34 @@ describe('overlays: scroll blocking', () => {
 
     expect(body.classList.contains('backdrop-no-scroll')).toEqual(false);
   });
+
+  it('should not enable scroll until last overlay is dismissed', async () => {
+    const page = await newSpecPage({
+      components: [Modal, Backdrop],
+      html: `
+        <ion-modal id="one"></ion-modal>
+        <ion-modal id="two"></ion-modal>
+      `,
+    });
+
+    const modalOne = page.body.querySelector('#one')!;
+    const modalTwo = page.body.querySelector('#two')!;
+    const body = page.doc.querySelector('body')!;
+
+    await modalOne.present();
+
+    expect(body.classList.contains('backdrop-no-scroll')).toEqual(true);
+
+    await modalTwo.present();
+
+    expect(body.classList.contains('backdrop-no-scroll')).toEqual(true);
+
+    await modalOne.dismiss();
+
+    expect(body.classList.contains('backdrop-no-scroll')).toEqual(true);
+
+    await modalTwo.dismiss();
+
+    expect(body.classList.contains('backdrop-no-scroll')).toEqual(false);
+  });
 });
