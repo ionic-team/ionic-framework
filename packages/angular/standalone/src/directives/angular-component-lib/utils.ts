@@ -19,7 +19,7 @@ export const proxyInputs = (Cmp: any, inputs: string[]) => {
        * we set configurable: true to indicate these
        * properties can be changed.
        */
-      configurable: true
+      configurable: true,
     });
   });
 };
