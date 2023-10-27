@@ -1,6 +1,6 @@
 // @ts-nocheck
 // It's easier and safer for Volar to disable typechecking and let the return type inference do its job.
-import { VNode, defineComponent, getCurrentInstance, h, inject, ref, Ref } from 'vue';
+import { defineComponent, getCurrentInstance, h, inject, ref, Ref, withDirectives } from 'vue';
 
 export interface InputProps<T> {
   modelValue?: T;
@@ -53,8 +53,6 @@ const getElementClasses = (
  * to customElements.define. Only set if `includeImportCustomElements: true` in your config.
  * @prop modelProp - The prop that v-model binds to (i.e. value)
  * @prop modelUpdateEvent - The event that is fired from your Web Component when the value changes (i.e. ionChange)
- * @prop externalModelUpdateEvent - The external event to fire from your Vue component when modelUpdateEvent fires. This is used for ensuring that v-model references have been
- * correctly updated when a user's event callback fires.
  */
 export const defineContainer = <Props, VModelType = string | number | boolean>(
   name: string,
@@ -62,7 +60,6 @@ export const defineContainer = <Props, VModelType = string | number | boolean>(
   componentProps: string[] = [],
   modelProp?: string,
   modelUpdateEvent?: string,
-  externalModelUpdateEvent?: string
 ) => {
   /**
    * Create a Vue component wrapper around a Web Component.
@@ -78,30 +75,17 @@ export const defineContainer = <Props, VModelType = string | number | boolean>(
     let modelPropValue = props[modelProp];
     const containerRef = ref<HTMLElement>();
     const classes = new Set(getComponentClasses(attrs.class));
-    const onVnodeBeforeMount = (vnode: VNode) => {
-      // Add a listener to tell Vue to update the v-model
-      if (vnode.el) {
+    const vModelDirective = {
+      created(el: HTMLElement) {
         const eventsNames = Array.isArray(modelUpdateEvent) ? modelUpdateEvent : [modelUpdateEvent];
         eventsNames.forEach((eventName: string) => {
-          vnode.el!.addEventListener(eventName.toLowerCase(), (e: Event) => {
+          el.addEventListener(eventName.toLowerCase(), (e: Event) => {
             modelPropValue = (e?.target as any)[modelProp];
             emit(UPDATE_VALUE_EVENT, modelPropValue);
-
-            /**
-             * We need to emit the change event here
-             * rather than on the web component to ensure
-             * that any v-model bindings have been updated.
-             * Otherwise, the developer will listen on the
-             * native web component, but the v-model will
-             * not have been updated yet.
-             */
-            if (externalModelUpdateEvent) {
-              emit(externalModelUpdateEvent, e);
-            }
           });
         });
       }
-    };
+    }
 
     const currentInstance = getCurrentInstance();
     const hasRouter = currentInstance?.appContext?.provides[NAV_MANAGER];
@@ -182,7 +166,8 @@ export const defineContainer = <Props, VModelType = string | number | boolean>(
         }
       }
 
-      return h(name, propsToAdd, slots.default && slots.default());
+      const node = h(name, propsToAdd, slots.default && slots.default());
+      return modelProp === undefined ? node : withDirectives(node, [vModelDirective]);
     };
   });
 
