@@ -213,8 +213,8 @@
   }
 
   @include rtl() {
-    padding-right: var(--padding-start);
-    padding-left: calc(var(--padding-end) + var(--ion-safe-area-left, 0px));
+    padding-right: calc(var(--padding-start) + var(--ion-safe-area-right, 0px));
+    padding-left: var(--padding-end);
   }
   /* stylelint-enable */
 
@@ -277,8 +277,8 @@ button, a {
   }
 
   @include rtl() {
-    padding-right: calc(var(--ion-safe-area-right, 0px) + var(--inner-padding-start));
-    padding-left: var(--inner-padding-end);
+    padding-right: var(--inner-padding-start);
+    padding-left: calc(var(--ion-safe-area-left, 0px) + var(--inner-padding-end));
   }
   /* stylelint-enable */
 
