@@ -309,6 +309,7 @@ button, a {
 
 .item-bottom {
   @include margin(0);
+  @include padding(0, null);
 
   /* stylelint-disable */
   @include ltr() {
@@ -318,7 +319,7 @@ button, a {
 
   @include rtl() {
     padding-left: calc(var(--inner-padding-end) + var(--ion-safe-area-left, 0px));
-    padding-right: calc(var(--padding-start) + var(--ion-safe-area-right, 0));
+    padding-right: calc(var(--padding-start) + var(--ion-safe-area-right, 0px));
   }
   /* stylelint-enable */
 
