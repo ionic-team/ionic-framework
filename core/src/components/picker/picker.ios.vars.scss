@@ -24,9 +24,6 @@ $picker-ios-bottom-background-color:              rgba(var(--background-rgb, $ba
 /// @prop - Height of the picker toolbar
 $picker-ios-toolbar-height:                       44px !default;
 
-/// @prop - Background color of the picker toolbar
-$picker-ios-toolbar-background-color:             $picker-ios-top-background-color !default;
-
 /// @prop - Height of the picker button
 $picker-ios-button-height:                        $picker-ios-toolbar-height !default;
 

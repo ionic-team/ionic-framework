@@ -32,6 +32,12 @@ interface AnimationOnFinishCallback {
 
 type AnimationOnStopCallback = AnimationOnFinishCallback;
 
+/**
+ * The callback used for beforeAddRead, beforeAddWrite,
+ * afterAddRead, and afterAddWrite.
+ */
+type AnimationReadWriteCallback = () => void;
+
 export const createAnimation = (animationId?: string): Animation => {
   let _delay: number | undefined;
   let _duration: number | undefined;
@@ -51,7 +57,7 @@ export const createAnimation = (animationId?: string): Animation => {
   let numAnimationsRunning = 0;
   let shouldForceLinearEasing = false;
   let shouldForceSyncPlayback = false;
-  let cssAnimationsTimerFallback: any;
+  let cssAnimationsTimerFallback: ReturnType<typeof setTimeout> | undefined;
   let forceDirectionValue: AnimationDirection | undefined;
   let forceDurationValue: number | undefined;
   let forceDelayValue: number | undefined;
@@ -69,11 +75,11 @@ export const createAnimation = (animationId?: string): Animation => {
   const elements: HTMLElement[] = [];
   const childAnimations: Animation[] = [];
   const stylesheets: HTMLElement[] = [];
-  const _beforeAddReadFunctions: any[] = [];
-  const _beforeAddWriteFunctions: any[] = [];
-  const _afterAddReadFunctions: any[] = [];
-  const _afterAddWriteFunctions: any[] = [];
-  const webAnimations: any[] = [];
+  const _beforeAddReadFunctions: AnimationReadWriteCallback[] = [];
+  const _beforeAddWriteFunctions: AnimationReadWriteCallback[] = [];
+  const _afterAddReadFunctions: AnimationReadWriteCallback[] = [];
+  const _afterAddWriteFunctions: AnimationReadWriteCallback[] = [];
+  const webAnimations: globalThis.Animation[] = [];
   const supportsAnimationEffect =
     typeof (AnimationEffect as any) === 'function' ||
     (win !== undefined && typeof (win as any).AnimationEffect === 'function');
@@ -229,25 +235,25 @@ export const createAnimation = (animationId?: string): Animation => {
     stylesheets.length = 0;
   };
 
-  const beforeAddRead = (readFn: () => void) => {
+  const beforeAddRead = (readFn: AnimationReadWriteCallback) => {
     _beforeAddReadFunctions.push(readFn);
 
     return ani;
   };
 
-  const beforeAddWrite = (writeFn: () => void) => {
+  const beforeAddWrite = (writeFn: AnimationReadWriteCallback) => {
     _beforeAddWriteFunctions.push(writeFn);
 
     return ani;
   };
 
-  const afterAddRead = (readFn: () => void) => {
+  const afterAddRead = (readFn: AnimationReadWriteCallback) => {
     _afterAddReadFunctions.push(readFn);
 
     return ani;
   };
 
-  const afterAddWrite = (writeFn: () => void) => {
+  const afterAddWrite = (writeFn: AnimationReadWriteCallback) => {
     _afterAddWriteFunctions.push(writeFn);
 
     return ani;
@@ -505,10 +511,25 @@ export const createAnimation = (animationId?: string): Animation => {
   const updateKeyframes = (keyframeValues: AnimationKeyFrames) => {
     if (supportsWebAnimations) {
       getWebAnimations().forEach((animation) => {
-        if (animation.effect.setKeyframes) {
-          animation.effect.setKeyframes(keyframeValues);
+        /**
+         * animation.effect's type is AnimationEffect.
+         * However, in this case we have a more specific
+         * type of AnimationEffect called KeyframeEffect which
+         * inherits from AnimationEffect. As a result,
+         * we cast animation.effect to KeyframeEffect.
+         */
+        const keyframeEffect = animation.effect as KeyframeEffect;
+
+        /**
+         * setKeyframes is not supported in all browser
+         * versions that Ionic supports, so we need to
+         * check for support before using it.
+         */
+        // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+        if (keyframeEffect.setKeyframes) {
+          keyframeEffect.setKeyframes(keyframeValues);
         } else {
-          const newEffect = new KeyframeEffect(animation.effect.target, keyframeValues, animation.effect.getTiming());
+          const newEffect = new KeyframeEffect(keyframeEffect.target, keyframeValues, keyframeEffect.getTiming());
           animation.effect = newEffect;
         }
       });
@@ -686,7 +707,8 @@ export const createAnimation = (animationId?: string): Animation => {
     step = Math.min(Math.max(step, 0), 0.9999);
     if (supportsWebAnimations) {
       webAnimations.forEach((animation) => {
-        animation.currentTime = animation.effect.getComputedTiming().delay + getDuration() * step;
+        // When creating the animation the delay is guaranteed to be set to a number.
+        animation.currentTime = animation.effect!.getComputedTiming().delay! + getDuration() * step;
         animation.pause();
       });
     } else {
@@ -703,7 +725,7 @@ export const createAnimation = (animationId?: string): Animation => {
 
   const updateWebAnimation = (step?: number) => {
     webAnimations.forEach((animation) => {
-      animation.effect.updateTiming({
+      animation.effect!.updateTiming({
         delay: getDelay(),
         duration: getDuration(),
         easing: getEasing(),
@@ -1052,7 +1074,7 @@ export const createAnimation = (animationId?: string): Animation => {
     onStopOneTimeCallbacks.length = 0;
   };
 
-  const from = (property: string, value: any) => {
+  const from = (property: string, value: string | number) => {
     const firstFrame = _keyframes[0] as AnimationKeyFrameEdge | undefined;
 
     if (firstFrame !== undefined && (firstFrame.offset === undefined || firstFrame.offset === 0)) {
@@ -1064,7 +1086,7 @@ export const createAnimation = (animationId?: string): Animation => {
     return ani;
   };
 
-  const to = (property: string, value: any) => {
+  const to = (property: string, value: string | number) => {
     const lastFrame = _keyframes[_keyframes.length - 1] as AnimationKeyFrameEdge | undefined;
 
     if (lastFrame !== undefined && (lastFrame.offset === undefined || lastFrame.offset === 1)) {
@@ -1075,7 +1097,7 @@ export const createAnimation = (animationId?: string): Animation => {
     return ani;
   };
 
-  const fromTo = (property: string, fromValue: any, toValue: any) => {
+  const fromTo = (property: string, fromValue: string | number, toValue: string | number) => {
     return from(property, fromValue).to(property, toValue);
   };
 

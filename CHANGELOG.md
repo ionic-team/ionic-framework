@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.5.2](https://github.com/ionic-team/ionic-framework/compare/v7.5.1...v7.5.2) (2023-10-25)
+
+
+### Bug Fixes
+
+* **alert, action-sheet:** show scrollbar for long list of options ([#28369](https://github.com/ionic-team/ionic-framework/issues/28369)) ([60f3d65](https://github.com/ionic-team/ionic-framework/commit/60f3d6579498ebad75c4f5163fca3947ac2dadff)), closes [#18487](https://github.com/ionic-team/ionic-framework/issues/18487)
+* **angular:** remove form control side effects ([#28359](https://github.com/ionic-team/ionic-framework/issues/28359)) ([82d6309](https://github.com/ionic-team/ionic-framework/commit/82d6309ef1675c0a6e767e87c23f166d84579d8f)), closes [#28358](https://github.com/ionic-team/ionic-framework/issues/28358)
+* **fab:** apply safe area in positioning to proper side regardless of direction ([#28377](https://github.com/ionic-team/ionic-framework/issues/28377)) ([331c08a](https://github.com/ionic-team/ionic-framework/commit/331c08aad542de158e53ed351705d4c396bb4e90))
+* **input, searchbar, textarea:** ensure nativeInput is always available ([#28362](https://github.com/ionic-team/ionic-framework/issues/28362)) ([2b015b2](https://github.com/ionic-team/ionic-framework/commit/2b015b22144e306444f2bf30ace0b5cc7e32a710)), closes [#28283](https://github.com/ionic-team/ionic-framework/issues/28283)
+* **menu:** menu no longer disappears with multiple split panes ([#28370](https://github.com/ionic-team/ionic-framework/issues/28370)) ([5a30082](https://github.com/ionic-team/ionic-framework/commit/5a30082546cb19eb98128ca9091b35094841d4f2)), closes [#18683](https://github.com/ionic-team/ionic-framework/issues/18683) [#15538](https://github.com/ionic-team/ionic-framework/issues/15538) [#22341](https://github.com/ionic-team/ionic-framework/issues/22341)
+* **rtl:** allow :host to use rtl() ([#28353](https://github.com/ionic-team/ionic-framework/issues/28353)) ([6b7d288](https://github.com/ionic-team/ionic-framework/commit/6b7d288536307fcb49231dca66ab938b389ea85e))
+
+
+
+
+
+## [7.5.1](https://github.com/ionic-team/ionic-framework/compare/v7.5.0...v7.5.1) (2023-10-18)
+
+
+### Bug Fixes
+
+* **angular:** do not create duplicate menuController instances ([#28343](https://github.com/ionic-team/ionic-framework/issues/28343)) ([fa78676](https://github.com/ionic-team/ionic-framework/commit/fa78676d57eb80655ee9447ffa07dcfdae0c6b2a)), closes [#28337](https://github.com/ionic-team/ionic-framework/issues/28337)
+* **angular:** export missing lifecycle interfaces for standalone package ([#28346](https://github.com/ionic-team/ionic-framework/issues/28346)) ([dd93e0b](https://github.com/ionic-team/ionic-framework/commit/dd93e0b2689511f3145606f4dbb2c30dcf4c2950)), closes [/github.com/ionic-team/ionic-angular-standalone-codemods/pull/13/files/baa37ef1e3e8ba773b693db280542efba815482a#r1356414362](https://github.com//github.com/ionic-team/ionic-angular-standalone-codemods/pull/13/files/baa37ef1e3e8ba773b693db280542efba815482a/issues/r1356414362)
+* **react:** cleanup functions are execute for lifecycle hooks ([#28319](https://github.com/ionic-team/ionic-framework/issues/28319)) ([1ba9973](https://github.com/ionic-team/ionic-framework/commit/1ba9973857503c6e47cb225b77a5b89e0a9d2718)), closes [#28186](https://github.com/ionic-team/ionic-framework/issues/28186)
+* **react:** lifecycle events are removed on page unmount ([#28316](https://github.com/ionic-team/ionic-framework/issues/28316)) ([f14a59c](https://github.com/ionic-team/ionic-framework/commit/f14a59c5e0670ed7cc9ce1a73a087a5af13266e2))
+* **title:** large title transition supports dynamic font scaling ([#28290](https://github.com/ionic-team/ionic-framework/issues/28290)) ([fe47594](https://github.com/ionic-team/ionic-framework/commit/fe47594dc0bbb047f0bade144cf07b084fbeef5e)), closes [#28351](https://github.com/ionic-team/ionic-framework/issues/28351)
+
+
+
+
+
 # [7.5.0](https://github.com/ionic-team/ionic-framework/compare/v7.4.4...v7.5.0) (2023-10-11)
 
 

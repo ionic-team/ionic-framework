@@ -59,6 +59,17 @@
 // TODO FW-3194 - Move this to host
 :host(:not(.legacy-select)) {
   width: 100%;
+  min-height: 44px;
+}
+
+/**
+ * Since the label sits on top of the element,
+ * the component needs to be taller otherwise the
+ * label will appear too close to the select text.
+ */
+:host(.select-label-placement-floating),
+:host(.select-label-placement-stacked) {
+  min-height: 56px;
 }
 
 :host(.ion-color) {
