@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.5.3-nightly.20231027](https://github.com/ionic-team/ionic-framework/compare/v7.5.2...v7.5.3-nightly.20231027) (2023-10-27)
+
+
+### Bug Fixes
+
+* **angular:** run platform subscriptions inside zone ([#28404](https://github.com/ionic-team/ionic-framework/issues/28404)) ([a4b303e](https://github.com/ionic-team/ionic-framework/commit/a4b303e1338a35756a9cf7f67508d24d2f8537a2)), closes [#19539](https://github.com/ionic-team/ionic-framework/issues/19539)
+
+
+
+
+
 ## [7.5.2](https://github.com/ionic-team/ionic-framework/compare/v7.5.1...v7.5.2) (2023-10-25)
 
 
