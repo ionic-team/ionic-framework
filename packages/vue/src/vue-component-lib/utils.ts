@@ -59,7 +59,7 @@ export const defineContainer = <Props, VModelType = string | number | boolean>(
   defineCustomElement: any,
   componentProps: string[] = [],
   modelProp?: string,
-  modelUpdateEvent?: string,
+  modelUpdateEvent?: string
 ) => {
   /**
    * Create a Vue component wrapper around a Web Component.
@@ -84,8 +84,8 @@ export const defineContainer = <Props, VModelType = string | number | boolean>(
             emit(UPDATE_VALUE_EVENT, modelPropValue);
           });
         });
-      }
-    }
+      },
+    };
 
     const currentInstance = getCurrentInstance();
     const hasRouter = currentInstance?.appContext?.provides[NAV_MANAGER];
@@ -184,7 +184,7 @@ export const defineContainer = <Props, VModelType = string | number | boolean>(
 
     if (modelProp) {
       Container.props[MODEL_VALUE] = DEFAULT_EMPTY_PROP;
-      Container.emits = [UPDATE_VALUE_EVENT, externalModelUpdateEvent];
+      Container.emits = [UPDATE_VALUE_EVENT];
     }
   }
 
