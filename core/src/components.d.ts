@@ -3425,67 +3425,19 @@ declare global {
         prototype: HTMLIonAccordionElement;
         new (): HTMLIonAccordionElement;
     };
-    interface HTMLIonAccordionGroupElementEventMap {
-        "ionChange": AccordionGroupChangeEventDetail;
-        "ionValueChange": AccordionGroupChangeEventDetail;
-    }
     interface HTMLIonAccordionGroupElement extends Components.IonAccordionGroup, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonAccordionGroupElementEventMap>(type: K, listener: (this: HTMLIonAccordionGroupElement, ev: IonAccordionGroupCustomEvent<HTMLIonAccordionGroupElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonAccordionGroupElementEventMap>(type: K, listener: (this: HTMLIonAccordionGroupElement, ev: IonAccordionGroupCustomEvent<HTMLIonAccordionGroupElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonAccordionGroupElement: {
         prototype: HTMLIonAccordionGroupElement;
         new (): HTMLIonAccordionGroupElement;
     };
-    interface HTMLIonActionSheetElementEventMap {
-        "ionActionSheetDidPresent": void;
-        "ionActionSheetWillPresent": void;
-        "ionActionSheetWillDismiss": OverlayEventDetail;
-        "ionActionSheetDidDismiss": OverlayEventDetail;
-        "didPresent": void;
-        "willPresent": void;
-        "willDismiss": OverlayEventDetail;
-        "didDismiss": OverlayEventDetail;
-    }
     interface HTMLIonActionSheetElement extends Components.IonActionSheet, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonActionSheetElementEventMap>(type: K, listener: (this: HTMLIonActionSheetElement, ev: IonActionSheetCustomEvent<HTMLIonActionSheetElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonActionSheetElementEventMap>(type: K, listener: (this: HTMLIonActionSheetElement, ev: IonActionSheetCustomEvent<HTMLIonActionSheetElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonActionSheetElement: {
         prototype: HTMLIonActionSheetElement;
         new (): HTMLIonActionSheetElement;
     };
-    interface HTMLIonAlertElementEventMap {
-        "ionAlertDidPresent": void;
-        "ionAlertWillPresent": void;
-        "ionAlertWillDismiss": OverlayEventDetail;
-        "ionAlertDidDismiss": OverlayEventDetail;
-        "didPresent": void;
-        "willPresent": void;
-        "willDismiss": OverlayEventDetail;
-        "didDismiss": OverlayEventDetail;
-    }
     interface HTMLIonAlertElement extends Components.IonAlert, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonAlertElementEventMap>(type: K, listener: (this: HTMLIonAlertElement, ev: IonAlertCustomEvent<HTMLIonAlertElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonAlertElementEventMap>(type: K, listener: (this: HTMLIonAlertElement, ev: IonAlertCustomEvent<HTMLIonAlertElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonAlertElement: {
         prototype: HTMLIonAlertElement;
@@ -3509,18 +3461,7 @@ declare global {
         prototype: HTMLIonBackButtonElement;
         new (): HTMLIonBackButtonElement;
     };
-    interface HTMLIonBackdropElementEventMap {
-        "ionBackdropTap": void;
-    }
     interface HTMLIonBackdropElement extends Components.IonBackdrop, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonBackdropElementEventMap>(type: K, listener: (this: HTMLIonBackdropElement, ev: IonBackdropCustomEvent<HTMLIonBackdropElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonBackdropElementEventMap>(type: K, listener: (this: HTMLIonBackdropElement, ev: IonBackdropCustomEvent<HTMLIonBackdropElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonBackdropElement: {
         prototype: HTMLIonBackdropElement;
@@ -3532,55 +3473,19 @@ declare global {
         prototype: HTMLIonBadgeElement;
         new (): HTMLIonBadgeElement;
     };
-    interface HTMLIonBreadcrumbElementEventMap {
-        "ionFocus": void;
-        "ionBlur": void;
-        "collapsedClick": BreadcrumbCollapsedClickEventDetail;
-    }
     interface HTMLIonBreadcrumbElement extends Components.IonBreadcrumb, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonBreadcrumbElementEventMap>(type: K, listener: (this: HTMLIonBreadcrumbElement, ev: IonBreadcrumbCustomEvent<HTMLIonBreadcrumbElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonBreadcrumbElementEventMap>(type: K, listener: (this: HTMLIonBreadcrumbElement, ev: IonBreadcrumbCustomEvent<HTMLIonBreadcrumbElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonBreadcrumbElement: {
         prototype: HTMLIonBreadcrumbElement;
         new (): HTMLIonBreadcrumbElement;
     };
-    interface HTMLIonBreadcrumbsElementEventMap {
-        "ionCollapsedClick": BreadcrumbCollapsedClickEventDetail;
-    }
     interface HTMLIonBreadcrumbsElement extends Components.IonBreadcrumbs, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonBreadcrumbsElementEventMap>(type: K, listener: (this: HTMLIonBreadcrumbsElement, ev: IonBreadcrumbsCustomEvent<HTMLIonBreadcrumbsElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonBreadcrumbsElementEventMap>(type: K, listener: (this: HTMLIonBreadcrumbsElement, ev: IonBreadcrumbsCustomEvent<HTMLIonBreadcrumbsElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonBreadcrumbsElement: {
         prototype: HTMLIonBreadcrumbsElement;
         new (): HTMLIonBreadcrumbsElement;
     };
-    interface HTMLIonButtonElementEventMap {
-        "ionFocus": void;
-        "ionBlur": void;
-    }
     interface HTMLIonButtonElement extends Components.IonButton, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonButtonElementEventMap>(type: K, listener: (this: HTMLIonButtonElement, ev: IonButtonCustomEvent<HTMLIonButtonElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonButtonElementEventMap>(type: K, listener: (this: HTMLIonButtonElement, ev: IonButtonCustomEvent<HTMLIonButtonElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonButtonElement: {
         prototype: HTMLIonButtonElement;
@@ -3622,21 +3527,7 @@ declare global {
         prototype: HTMLIonCardTitleElement;
         new (): HTMLIonCardTitleElement;
     };
-    interface HTMLIonCheckboxElementEventMap {
-        "ionChange": CheckboxChangeEventDetail;
-        "ionFocus": void;
-        "ionBlur": void;
-        "ionStyle": StyleEventDetail;
-    }
     interface HTMLIonCheckboxElement extends Components.IonCheckbox, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonCheckboxElementEventMap>(type: K, listener: (this: HTMLIonCheckboxElement, ev: IonCheckboxCustomEvent<HTMLIonCheckboxElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonCheckboxElementEventMap>(type: K, listener: (this: HTMLIonCheckboxElement, ev: IonCheckboxCustomEvent<HTMLIonCheckboxElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonCheckboxElement: {
         prototype: HTMLIonCheckboxElement;
@@ -3654,43 +3545,13 @@ declare global {
         prototype: HTMLIonColElement;
         new (): HTMLIonColElement;
     };
-    interface HTMLIonContentElementEventMap {
-        "ionScrollStart": ScrollBaseDetail;
-        "ionScroll": ScrollDetail;
-        "ionScrollEnd": ScrollBaseDetail;
-    }
     interface HTMLIonContentElement extends Components.IonContent, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonContentElementEventMap>(type: K, listener: (this: HTMLIonContentElement, ev: IonContentCustomEvent<HTMLIonContentElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonContentElementEventMap>(type: K, listener: (this: HTMLIonContentElement, ev: IonContentCustomEvent<HTMLIonContentElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonContentElement: {
         prototype: HTMLIonContentElement;
         new (): HTMLIonContentElement;
     };
-    interface HTMLIonDatetimeElementEventMap {
-        "ionCancel": void;
-        "ionChange": DatetimeChangeEventDetail;
-        "ionValueChange": DatetimeChangeEventDetail;
-        "ionFocus": void;
-        "ionBlur": void;
-        "ionStyle": StyleEventDetail;
-        "ionRender": void;
-    }
     interface HTMLIonDatetimeElement extends Components.IonDatetime, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonDatetimeElementEventMap>(type: K, listener: (this: HTMLIonDatetimeElement, ev: IonDatetimeCustomEvent<HTMLIonDatetimeElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonDatetimeElementEventMap>(type: K, listener: (this: HTMLIonDatetimeElement, ev: IonDatetimeCustomEvent<HTMLIonDatetimeElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonDatetimeElement: {
         prototype: HTMLIonDatetimeElement;
@@ -3708,19 +3569,7 @@ declare global {
         prototype: HTMLIonFabElement;
         new (): HTMLIonFabElement;
     };
-    interface HTMLIonFabButtonElementEventMap {
-        "ionFocus": void;
-        "ionBlur": void;
-    }
     interface HTMLIonFabButtonElement extends Components.IonFabButton, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonFabButtonElementEventMap>(type: K, listener: (this: HTMLIonFabButtonElement, ev: IonFabButtonCustomEvent<HTMLIonFabButtonElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonFabButtonElementEventMap>(type: K, listener: (this: HTMLIonFabButtonElement, ev: IonFabButtonCustomEvent<HTMLIonFabButtonElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonFabButtonElement: {
         prototype: HTMLIonFabButtonElement;
@@ -3750,37 +3599,13 @@ declare global {
         prototype: HTMLIonHeaderElement;
         new (): HTMLIonHeaderElement;
     };
-    interface HTMLIonImgElementEventMap {
-        "ionImgWillLoad": void;
-        "ionImgDidLoad": void;
-        "ionError": void;
-    }
     interface HTMLIonImgElement extends Components.IonImg, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonImgElementEventMap>(type: K, listener: (this: HTMLIonImgElement, ev: IonImgCustomEvent<HTMLIonImgElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonImgElementEventMap>(type: K, listener: (this: HTMLIonImgElement, ev: IonImgCustomEvent<HTMLIonImgElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonImgElement: {
         prototype: HTMLIonImgElement;
         new (): HTMLIonImgElement;
     };
-    interface HTMLIonInfiniteScrollElementEventMap {
-        "ionInfinite": void;
-    }
     interface HTMLIonInfiniteScrollElement extends Components.IonInfiniteScroll, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonInfiniteScrollElementEventMap>(type: K, listener: (this: HTMLIonInfiniteScrollElement, ev: IonInfiniteScrollCustomEvent<HTMLIonInfiniteScrollElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonInfiniteScrollElementEventMap>(type: K, listener: (this: HTMLIonInfiniteScrollElement, ev: IonInfiniteScrollCustomEvent<HTMLIonInfiniteScrollElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonInfiniteScrollElement: {
         prototype: HTMLIonInfiniteScrollElement;
@@ -3792,22 +3617,7 @@ declare global {
         prototype: HTMLIonInfiniteScrollContentElement;
         new (): HTMLIonInfiniteScrollContentElement;
     };
-    interface HTMLIonInputElementEventMap {
-        "ionInput": InputInputEventDetail;
-        "ionChange": InputChangeEventDetail;
-        "ionBlur": FocusEvent;
-        "ionFocus": FocusEvent;
-        "ionStyle": StyleEventDetail;
-    }
     interface HTMLIonInputElement extends Components.IonInput, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonInputElementEventMap>(type: K, listener: (this: HTMLIonInputElement, ev: IonInputCustomEvent<HTMLIonInputElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonInputElementEventMap>(type: K, listener: (this: HTMLIonInputElement, ev: IonInputCustomEvent<HTMLIonInputElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonInputElement: {
         prototype: HTMLIonInputElement;
@@ -3837,53 +3647,19 @@ declare global {
         prototype: HTMLIonItemOptionElement;
         new (): HTMLIonItemOptionElement;
     };
-    interface HTMLIonItemOptionsElementEventMap {
-        "ionSwipe": any;
-    }
     interface HTMLIonItemOptionsElement extends Components.IonItemOptions, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonItemOptionsElementEventMap>(type: K, listener: (this: HTMLIonItemOptionsElement, ev: IonItemOptionsCustomEvent<HTMLIonItemOptionsElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonItemOptionsElementEventMap>(type: K, listener: (this: HTMLIonItemOptionsElement, ev: IonItemOptionsCustomEvent<HTMLIonItemOptionsElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonItemOptionsElement: {
         prototype: HTMLIonItemOptionsElement;
         new (): HTMLIonItemOptionsElement;
     };
-    interface HTMLIonItemSlidingElementEventMap {
-        "ionDrag": any;
-    }
     interface HTMLIonItemSlidingElement extends Components.IonItemSliding, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonItemSlidingElementEventMap>(type: K, listener: (this: HTMLIonItemSlidingElement, ev: IonItemSlidingCustomEvent<HTMLIonItemSlidingElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonItemSlidingElementEventMap>(type: K, listener: (this: HTMLIonItemSlidingElement, ev: IonItemSlidingCustomEvent<HTMLIonItemSlidingElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonItemSlidingElement: {
         prototype: HTMLIonItemSlidingElement;
         new (): HTMLIonItemSlidingElement;
     };
-    interface HTMLIonLabelElementEventMap {
-        "ionColor": StyleEventDetail;
-        "ionStyle": StyleEventDetail;
-    }
     interface HTMLIonLabelElement extends Components.IonLabel, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonLabelElementEventMap>(type: K, listener: (this: HTMLIonLabelElement, ev: IonLabelCustomEvent<HTMLIonLabelElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonLabelElementEventMap>(type: K, listener: (this: HTMLIonLabelElement, ev: IonLabelCustomEvent<HTMLIonLabelElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonLabelElement: {
         prototype: HTMLIonLabelElement;
@@ -3901,46 +3677,13 @@ declare global {
         prototype: HTMLIonListHeaderElement;
         new (): HTMLIonListHeaderElement;
     };
-    interface HTMLIonLoadingElementEventMap {
-        "ionLoadingDidPresent": void;
-        "ionLoadingWillPresent": void;
-        "ionLoadingWillDismiss": OverlayEventDetail;
-        "ionLoadingDidDismiss": OverlayEventDetail;
-        "didPresent": void;
-        "willPresent": void;
-        "willDismiss": OverlayEventDetail;
-        "didDismiss": OverlayEventDetail;
-    }
     interface HTMLIonLoadingElement extends Components.IonLoading, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonLoadingElementEventMap>(type: K, listener: (this: HTMLIonLoadingElement, ev: IonLoadingCustomEvent<HTMLIonLoadingElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonLoadingElementEventMap>(type: K, listener: (this: HTMLIonLoadingElement, ev: IonLoadingCustomEvent<HTMLIonLoadingElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonLoadingElement: {
         prototype: HTMLIonLoadingElement;
         new (): HTMLIonLoadingElement;
     };
-    interface HTMLIonMenuElementEventMap {
-        "ionWillOpen": void;
-        "ionWillClose": void;
-        "ionDidOpen": void;
-        "ionDidClose": void;
-        "ionMenuChange": MenuChangeEventDetail;
-    }
     interface HTMLIonMenuElement extends Components.IonMenu, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonMenuElementEventMap>(type: K, listener: (this: HTMLIonMenuElement, ev: IonMenuCustomEvent<HTMLIonMenuElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonMenuElementEventMap>(type: K, listener: (this: HTMLIonMenuElement, ev: IonMenuCustomEvent<HTMLIonMenuElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonMenuElement: {
         prototype: HTMLIonMenuElement;
@@ -3958,46 +3701,13 @@ declare global {
         prototype: HTMLIonMenuToggleElement;
         new (): HTMLIonMenuToggleElement;
     };
-    interface HTMLIonModalElementEventMap {
-        "ionModalDidPresent": void;
-        "ionModalWillPresent": void;
-        "ionModalWillDismiss": OverlayEventDetail;
-        "ionModalDidDismiss": OverlayEventDetail;
-        "ionBreakpointDidChange": ModalBreakpointChangeEventDetail;
-        "didPresent": void;
-        "willPresent": void;
-        "willDismiss": OverlayEventDetail;
-        "didDismiss": OverlayEventDetail;
-        "ionMount": void;
-    }
     interface HTMLIonModalElement extends Components.IonModal, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonModalElementEventMap>(type: K, listener: (this: HTMLIonModalElement, ev: IonModalCustomEvent<HTMLIonModalElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonModalElementEventMap>(type: K, listener: (this: HTMLIonModalElement, ev: IonModalCustomEvent<HTMLIonModalElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonModalElement: {
         prototype: HTMLIonModalElement;
         new (): HTMLIonModalElement;
     };
-    interface HTMLIonNavElementEventMap {
-        "ionNavWillLoad": void;
-        "ionNavWillChange": void;
-        "ionNavDidChange": void;
-    }
     interface HTMLIonNavElement extends Components.IonNav, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonNavElementEventMap>(type: K, listener: (this: HTMLIonNavElement, ev: IonNavCustomEvent<HTMLIonNavElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonNavElementEventMap>(type: K, listener: (this: HTMLIonNavElement, ev: IonNavCustomEvent<HTMLIonNavElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonNavElement: {
         prototype: HTMLIonNavElement;
@@ -4015,101 +3725,31 @@ declare global {
         prototype: HTMLIonNoteElement;
         new (): HTMLIonNoteElement;
     };
-    interface HTMLIonPickerElementEventMap {
-        "ionPickerDidPresent": void;
-        "ionPickerWillPresent": void;
-        "ionPickerWillDismiss": OverlayEventDetail;
-        "ionPickerDidDismiss": OverlayEventDetail;
-        "didPresent": void;
-        "willPresent": void;
-        "willDismiss": OverlayEventDetail;
-        "didDismiss": OverlayEventDetail;
-    }
     interface HTMLIonPickerElement extends Components.IonPicker, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonPickerElementEventMap>(type: K, listener: (this: HTMLIonPickerElement, ev: IonPickerCustomEvent<HTMLIonPickerElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonPickerElementEventMap>(type: K, listener: (this: HTMLIonPickerElement, ev: IonPickerCustomEvent<HTMLIonPickerElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonPickerElement: {
         prototype: HTMLIonPickerElement;
         new (): HTMLIonPickerElement;
     };
-    interface HTMLIonPickerColumnElementEventMap {
-        "ionPickerColChange": PickerColumn;
-    }
     interface HTMLIonPickerColumnElement extends Components.IonPickerColumn, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonPickerColumnElementEventMap>(type: K, listener: (this: HTMLIonPickerColumnElement, ev: IonPickerColumnCustomEvent<HTMLIonPickerColumnElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonPickerColumnElementEventMap>(type: K, listener: (this: HTMLIonPickerColumnElement, ev: IonPickerColumnCustomEvent<HTMLIonPickerColumnElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonPickerColumnElement: {
         prototype: HTMLIonPickerColumnElement;
         new (): HTMLIonPickerColumnElement;
     };
-    interface HTMLIonPickerColumnInternalElementEventMap {
-        "ionChange": PickerColumnItem;
-    }
     interface HTMLIonPickerColumnInternalElement extends Components.IonPickerColumnInternal, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonPickerColumnInternalElementEventMap>(type: K, listener: (this: HTMLIonPickerColumnInternalElement, ev: IonPickerColumnInternalCustomEvent<HTMLIonPickerColumnInternalElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonPickerColumnInternalElementEventMap>(type: K, listener: (this: HTMLIonPickerColumnInternalElement, ev: IonPickerColumnInternalCustomEvent<HTMLIonPickerColumnInternalElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonPickerColumnInternalElement: {
         prototype: HTMLIonPickerColumnInternalElement;
         new (): HTMLIonPickerColumnInternalElement;
     };
-    interface HTMLIonPickerInternalElementEventMap {
-        "ionInputModeChange": PickerInternalChangeEventDetail;
-    }
     interface HTMLIonPickerInternalElement extends Components.IonPickerInternal, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonPickerInternalElementEventMap>(type: K, listener: (this: HTMLIonPickerInternalElement, ev: IonPickerInternalCustomEvent<HTMLIonPickerInternalElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonPickerInternalElementEventMap>(type: K, listener: (this: HTMLIonPickerInternalElement, ev: IonPickerInternalCustomEvent<HTMLIonPickerInternalElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonPickerInternalElement: {
         prototype: HTMLIonPickerInternalElement;
         new (): HTMLIonPickerInternalElement;
     };
-    interface HTMLIonPopoverElementEventMap {
-        "ionPopoverDidPresent": void;
-        "ionPopoverWillPresent": void;
-        "ionPopoverWillDismiss": OverlayEventDetail;
-        "ionPopoverDidDismiss": OverlayEventDetail;
-        "didPresent": void;
-        "willPresent": void;
-        "willDismiss": OverlayEventDetail;
-        "didDismiss": OverlayEventDetail;
-        "ionMount": void;
-    }
     interface HTMLIonPopoverElement extends Components.IonPopover, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonPopoverElementEventMap>(type: K, listener: (this: HTMLIonPopoverElement, ev: IonPopoverCustomEvent<HTMLIonPopoverElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonPopoverElementEventMap>(type: K, listener: (this: HTMLIonPopoverElement, ev: IonPopoverCustomEvent<HTMLIonPopoverElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonPopoverElement: {
         prototype: HTMLIonPopoverElement;
@@ -4121,80 +3761,25 @@ declare global {
         prototype: HTMLIonProgressBarElement;
         new (): HTMLIonProgressBarElement;
     };
-    interface HTMLIonRadioElementEventMap {
-        "ionStyle": StyleEventDetail;
-        "ionFocus": void;
-        "ionBlur": void;
-    }
     interface HTMLIonRadioElement extends Components.IonRadio, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonRadioElementEventMap>(type: K, listener: (this: HTMLIonRadioElement, ev: IonRadioCustomEvent<HTMLIonRadioElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonRadioElementEventMap>(type: K, listener: (this: HTMLIonRadioElement, ev: IonRadioCustomEvent<HTMLIonRadioElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonRadioElement: {
         prototype: HTMLIonRadioElement;
         new (): HTMLIonRadioElement;
     };
-    interface HTMLIonRadioGroupElementEventMap {
-        "ionChange": RadioGroupChangeEventDetail;
-        "ionValueChange": RadioGroupChangeEventDetail;
-    }
     interface HTMLIonRadioGroupElement extends Components.IonRadioGroup, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonRadioGroupElementEventMap>(type: K, listener: (this: HTMLIonRadioGroupElement, ev: IonRadioGroupCustomEvent<HTMLIonRadioGroupElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonRadioGroupElementEventMap>(type: K, listener: (this: HTMLIonRadioGroupElement, ev: IonRadioGroupCustomEvent<HTMLIonRadioGroupElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonRadioGroupElement: {
         prototype: HTMLIonRadioGroupElement;
         new (): HTMLIonRadioGroupElement;
     };
-    interface HTMLIonRangeElementEventMap {
-        "ionChange": RangeChangeEventDetail;
-        "ionInput": RangeChangeEventDetail;
-        "ionStyle": StyleEventDetail;
-        "ionFocus": void;
-        "ionBlur": void;
-        "ionKnobMoveStart": RangeKnobMoveStartEventDetail;
-        "ionKnobMoveEnd": RangeKnobMoveEndEventDetail;
-    }
     interface HTMLIonRangeElement extends Components.IonRange, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonRangeElementEventMap>(type: K, listener: (this: HTMLIonRangeElement, ev: IonRangeCustomEvent<HTMLIonRangeElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonRangeElementEventMap>(type: K, listener: (this: HTMLIonRangeElement, ev: IonRangeCustomEvent<HTMLIonRangeElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonRangeElement: {
         prototype: HTMLIonRangeElement;
         new (): HTMLIonRangeElement;
     };
-    interface HTMLIonRefresherElementEventMap {
-        "ionRefresh": RefresherEventDetail;
-        "ionPull": void;
-        "ionStart": void;
-    }
     interface HTMLIonRefresherElement extends Components.IonRefresher, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonRefresherElementEventMap>(type: K, listener: (this: HTMLIonRefresherElement, ev: IonRefresherCustomEvent<HTMLIonRefresherElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonRefresherElementEventMap>(type: K, listener: (this: HTMLIonRefresherElement, ev: IonRefresherCustomEvent<HTMLIonRefresherElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonRefresherElement: {
         prototype: HTMLIonRefresherElement;
@@ -4212,18 +3797,7 @@ declare global {
         prototype: HTMLIonReorderElement;
         new (): HTMLIonReorderElement;
     };
-    interface HTMLIonReorderGroupElementEventMap {
-        "ionItemReorder": ItemReorderEventDetail;
-    }
     interface HTMLIonReorderGroupElement extends Components.IonReorderGroup, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonReorderGroupElementEventMap>(type: K, listener: (this: HTMLIonReorderGroupElement, ev: IonReorderGroupCustomEvent<HTMLIonReorderGroupElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonReorderGroupElementEventMap>(type: K, listener: (this: HTMLIonReorderGroupElement, ev: IonReorderGroupCustomEvent<HTMLIonReorderGroupElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonReorderGroupElement: {
         prototype: HTMLIonReorderGroupElement;
@@ -4235,53 +3809,19 @@ declare global {
         prototype: HTMLIonRippleEffectElement;
         new (): HTMLIonRippleEffectElement;
     };
-    interface HTMLIonRouteElementEventMap {
-        "ionRouteDataChanged": any;
-    }
     interface HTMLIonRouteElement extends Components.IonRoute, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonRouteElementEventMap>(type: K, listener: (this: HTMLIonRouteElement, ev: IonRouteCustomEvent<HTMLIonRouteElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonRouteElementEventMap>(type: K, listener: (this: HTMLIonRouteElement, ev: IonRouteCustomEvent<HTMLIonRouteElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonRouteElement: {
         prototype: HTMLIonRouteElement;
         new (): HTMLIonRouteElement;
     };
-    interface HTMLIonRouteRedirectElementEventMap {
-        "ionRouteRedirectChanged": any;
-    }
     interface HTMLIonRouteRedirectElement extends Components.IonRouteRedirect, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonRouteRedirectElementEventMap>(type: K, listener: (this: HTMLIonRouteRedirectElement, ev: IonRouteRedirectCustomEvent<HTMLIonRouteRedirectElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonRouteRedirectElementEventMap>(type: K, listener: (this: HTMLIonRouteRedirectElement, ev: IonRouteRedirectCustomEvent<HTMLIonRouteRedirectElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonRouteRedirectElement: {
         prototype: HTMLIonRouteRedirectElement;
         new (): HTMLIonRouteRedirectElement;
     };
-    interface HTMLIonRouterElementEventMap {
-        "ionRouteWillChange": RouterEventDetail;
-        "ionRouteDidChange": RouterEventDetail;
-    }
     interface HTMLIonRouterElement extends Components.IonRouter, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonRouterElementEventMap>(type: K, listener: (this: HTMLIonRouterElement, ev: IonRouterCustomEvent<HTMLIonRouterElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonRouterElementEventMap>(type: K, listener: (this: HTMLIonRouterElement, ev: IonRouterCustomEvent<HTMLIonRouterElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonRouterElement: {
         prototype: HTMLIonRouterElement;
@@ -4293,20 +3833,7 @@ declare global {
         prototype: HTMLIonRouterLinkElement;
         new (): HTMLIonRouterLinkElement;
     };
-    interface HTMLIonRouterOutletElementEventMap {
-        "ionNavWillLoad": void;
-        "ionNavWillChange": void;
-        "ionNavDidChange": void;
-    }
     interface HTMLIonRouterOutletElement extends Components.IonRouterOutlet, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonRouterOutletElementEventMap>(type: K, listener: (this: HTMLIonRouterOutletElement, ev: IonRouterOutletCustomEvent<HTMLIonRouterOutletElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonRouterOutletElementEventMap>(type: K, listener: (this: HTMLIonRouterOutletElement, ev: IonRouterOutletCustomEvent<HTMLIonRouterOutletElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonRouterOutletElement: {
         prototype: HTMLIonRouterOutletElement;
@@ -4318,43 +3845,13 @@ declare global {
         prototype: HTMLIonRowElement;
         new (): HTMLIonRowElement;
     };
-    interface HTMLIonSearchbarElementEventMap {
-        "ionInput": SearchbarInputEventDetail;
-        "ionChange": SearchbarChangeEventDetail;
-        "ionCancel": void;
-        "ionClear": void;
-        "ionBlur": void;
-        "ionFocus": void;
-        "ionStyle": StyleEventDetail;
-    }
     interface HTMLIonSearchbarElement extends Components.IonSearchbar, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonSearchbarElementEventMap>(type: K, listener: (this: HTMLIonSearchbarElement, ev: IonSearchbarCustomEvent<HTMLIonSearchbarElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonSearchbarElementEventMap>(type: K, listener: (this: HTMLIonSearchbarElement, ev: IonSearchbarCustomEvent<HTMLIonSearchbarElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonSearchbarElement: {
         prototype: HTMLIonSearchbarElement;
         new (): HTMLIonSearchbarElement;
     };
-    interface HTMLIonSegmentElementEventMap {
-        "ionChange": SegmentChangeEventDetail;
-        "ionSelect": SegmentChangeEventDetail;
-        "ionStyle": StyleEventDetail;
-    }
     interface HTMLIonSegmentElement extends Components.IonSegment, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonSegmentElementEventMap>(type: K, listener: (this: HTMLIonSegmentElement, ev: IonSegmentCustomEvent<HTMLIonSegmentElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonSegmentElementEventMap>(type: K, listener: (this: HTMLIonSegmentElement, ev: IonSegmentCustomEvent<HTMLIonSegmentElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonSegmentElement: {
         prototype: HTMLIonSegmentElement;
@@ -4366,23 +3863,7 @@ declare global {
         prototype: HTMLIonSegmentButtonElement;
         new (): HTMLIonSegmentButtonElement;
     };
-    interface HTMLIonSelectElementEventMap {
-        "ionChange": SelectChangeEventDetail;
-        "ionCancel": void;
-        "ionDismiss": void;
-        "ionFocus": void;
-        "ionBlur": void;
-        "ionStyle": StyleEventDetail;
-    }
     interface HTMLIonSelectElement extends Components.IonSelect, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonSelectElementEventMap>(type: K, listener: (this: HTMLIonSelectElement, ev: IonSelectCustomEvent<HTMLIonSelectElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonSelectElementEventMap>(type: K, listener: (this: HTMLIonSelectElement, ev: IonSelectCustomEvent<HTMLIonSelectElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonSelectElement: {
         prototype: HTMLIonSelectElement;
@@ -4412,18 +3893,7 @@ declare global {
         prototype: HTMLIonSpinnerElement;
         new (): HTMLIonSpinnerElement;
     };
-    interface HTMLIonSplitPaneElementEventMap {
-        "ionSplitPaneVisible": { visible: boolean };
-    }
     interface HTMLIonSplitPaneElement extends Components.IonSplitPane, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonSplitPaneElementEventMap>(type: K, listener: (this: HTMLIonSplitPaneElement, ev: IonSplitPaneCustomEvent<HTMLIonSplitPaneElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonSplitPaneElementEventMap>(type: K, listener: (this: HTMLIonSplitPaneElement, ev: IonSplitPaneCustomEvent<HTMLIonSplitPaneElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonSplitPaneElement: {
         prototype: HTMLIonSplitPaneElement;
@@ -4435,55 +3905,19 @@ declare global {
         prototype: HTMLIonTabElement;
         new (): HTMLIonTabElement;
     };
-    interface HTMLIonTabBarElementEventMap {
-        "ionTabBarChanged": TabBarChangedEventDetail;
-        "ionTabBarLoaded": void;
-    }
     interface HTMLIonTabBarElement extends Components.IonTabBar, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonTabBarElementEventMap>(type: K, listener: (this: HTMLIonTabBarElement, ev: IonTabBarCustomEvent<HTMLIonTabBarElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonTabBarElementEventMap>(type: K, listener: (this: HTMLIonTabBarElement, ev: IonTabBarCustomEvent<HTMLIonTabBarElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonTabBarElement: {
         prototype: HTMLIonTabBarElement;
         new (): HTMLIonTabBarElement;
     };
-    interface HTMLIonTabButtonElementEventMap {
-        "ionTabButtonClick": TabButtonClickEventDetail;
-    }
     interface HTMLIonTabButtonElement extends Components.IonTabButton, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonTabButtonElementEventMap>(type: K, listener: (this: HTMLIonTabButtonElement, ev: IonTabButtonCustomEvent<HTMLIonTabButtonElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonTabButtonElementEventMap>(type: K, listener: (this: HTMLIonTabButtonElement, ev: IonTabButtonCustomEvent<HTMLIonTabButtonElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonTabButtonElement: {
         prototype: HTMLIonTabButtonElement;
         new (): HTMLIonTabButtonElement;
     };
-    interface HTMLIonTabsElementEventMap {
-        "ionNavWillLoad": void;
-        "ionTabsWillChange": { tab: string };
-        "ionTabsDidChange": { tab: string };
-    }
     interface HTMLIonTabsElement extends Components.IonTabs, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonTabsElementEventMap>(type: K, listener: (this: HTMLIonTabsElement, ev: IonTabsCustomEvent<HTMLIonTabsElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonTabsElementEventMap>(type: K, listener: (this: HTMLIonTabsElement, ev: IonTabsCustomEvent<HTMLIonTabsElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonTabsElement: {
         prototype: HTMLIonTabsElement;
@@ -4495,22 +3929,7 @@ declare global {
         prototype: HTMLIonTextElement;
         new (): HTMLIonTextElement;
     };
-    interface HTMLIonTextareaElementEventMap {
-        "ionChange": TextareaChangeEventDetail;
-        "ionInput": TextareaInputEventDetail;
-        "ionStyle": StyleEventDetail;
-        "ionBlur": FocusEvent;
-        "ionFocus": FocusEvent;
-    }
     interface HTMLIonTextareaElement extends Components.IonTextarea, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonTextareaElementEventMap>(type: K, listener: (this: HTMLIonTextareaElement, ev: IonTextareaCustomEvent<HTMLIonTextareaElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonTextareaElementEventMap>(type: K, listener: (this: HTMLIonTextareaElement, ev: IonTextareaCustomEvent<HTMLIonTextareaElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonTextareaElement: {
         prototype: HTMLIonTextareaElement;
@@ -4522,62 +3941,19 @@ declare global {
         prototype: HTMLIonThumbnailElement;
         new (): HTMLIonThumbnailElement;
     };
-    interface HTMLIonTitleElementEventMap {
-        "ionStyle": StyleEventDetail;
-    }
     interface HTMLIonTitleElement extends Components.IonTitle, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonTitleElementEventMap>(type: K, listener: (this: HTMLIonTitleElement, ev: IonTitleCustomEvent<HTMLIonTitleElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonTitleElementEventMap>(type: K, listener: (this: HTMLIonTitleElement, ev: IonTitleCustomEvent<HTMLIonTitleElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonTitleElement: {
         prototype: HTMLIonTitleElement;
         new (): HTMLIonTitleElement;
     };
-    interface HTMLIonToastElementEventMap {
-        "ionToastDidPresent": void;
-        "ionToastWillPresent": void;
-        "ionToastWillDismiss": OverlayEventDetail;
-        "ionToastDidDismiss": OverlayEventDetail;
-        "didPresent": void;
-        "willPresent": void;
-        "willDismiss": OverlayEventDetail;
-        "didDismiss": OverlayEventDetail;
-    }
     interface HTMLIonToastElement extends Components.IonToast, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonToastElementEventMap>(type: K, listener: (this: HTMLIonToastElement, ev: IonToastCustomEvent<HTMLIonToastElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonToastElementEventMap>(type: K, listener: (this: HTMLIonToastElement, ev: IonToastCustomEvent<HTMLIonToastElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonToastElement: {
         prototype: HTMLIonToastElement;
         new (): HTMLIonToastElement;
     };
-    interface HTMLIonToggleElementEventMap {
-        "ionChange": ToggleChangeEventDetail;
-        "ionFocus": void;
-        "ionBlur": void;
-        "ionStyle": StyleEventDetail;
-    }
     interface HTMLIonToggleElement extends Components.IonToggle, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonToggleElementEventMap>(type: K, listener: (this: HTMLIonToggleElement, ev: IonToggleCustomEvent<HTMLIonToggleElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonToggleElementEventMap>(type: K, listener: (this: HTMLIonToggleElement, ev: IonToggleCustomEvent<HTMLIonToggleElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLIonToggleElement: {
         prototype: HTMLIonToggleElement;
