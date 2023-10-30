@@ -17,19 +17,7 @@ import type {
 } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-input.js';
 
-/**
- * Value accessor components should not use ProxyCmp
- * and should call defineCustomElement and proxyInputs
- * manually instead. Using both the @ProxyCmp and @Component
- * decorators and useExisting (where useExisting refers to the
- * class) causes ng-packagr to output multiple component variables
- * which breaks treeshaking.
- * For example, the following would be generated:
- * let IonInput = IonInput_1 = class IonInput extends ValueAccessor {
- * Instead, we want only want the class generated:
- * class IonInput extends ValueAccessor {
- */
-import { proxyInputs, proxyMethods, proxyOutputs } from './angular-component-lib/utils';
+import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 
 const INPUT_INPUTS = [
   'accept',
@@ -71,8 +59,11 @@ const INPUT_INPUTS = [
   'value',
 ];
 
-const INPUT_METHODS = ['setFocus', 'getInputElement'];
-
+@ProxyCmp({
+  defineCustomElementFn: defineCustomElement,
+  inputs: INPUT_INPUTS,
+  methods: ['setFocus', 'getInputElement'],
+})
 @Component({
   selector: 'ion-input',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -92,16 +83,8 @@ export class IonInput extends ValueAccessor {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone, injector: Injector) {
     super(injector, r);
-    defineCustomElement();
     c.detach();
     this.el = r.nativeElement;
-    /**
-     * Data-bound input properties are set
-     * by Angular after the constructor, so
-     * we need to run the proxy before ngOnInit.
-     */
-    proxyInputs(IonInput, INPUT_INPUTS);
-    proxyMethods(IonInput, INPUT_METHODS);
     proxyOutputs(this, this.el, ['ionInput', 'ionChange', 'ionBlur', 'ionFocus']);
   }
 

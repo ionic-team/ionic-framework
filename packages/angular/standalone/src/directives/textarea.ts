@@ -13,19 +13,7 @@ import { ValueAccessor } from '@ionic/angular/common';
 import type { TextareaChangeEventDetail, TextareaInputEventDetail, Components } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-textarea.js';
 
-/**
- * Value accessor components should not use ProxyCmp
- * and should call defineCustomElement and proxyInputs
- * manually instead. Using both the @ProxyCmp and @Component
- * decorators and useExisting (where useExisting refers to the
- * class) causes ng-packagr to output multiple component variables
- * which breaks treeshaking.
- * For example, the following would be generated:
- * let IonTextarea = IonTextarea_1 = class IonTextarea extends ValueAccessor {
- * Instead, we want only want the class generated:
- * class IonTextarea extends ValueAccessor {
- */
-import { proxyInputs, proxyMethods, proxyOutputs } from './angular-component-lib/utils';
+import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 
 const TEXTAREA_INPUTS = [
   'autoGrow',
@@ -60,8 +48,11 @@ const TEXTAREA_INPUTS = [
   'wrap',
 ];
 
-const TEXTAREA_METHODS = ['setFocus', 'getInputElement'];
-
+@ProxyCmp({
+  defineCustomElementFn: defineCustomElement,
+  inputs: TEXTAREA_INPUTS,
+  methods: ['setFocus', 'getInputElement'],
+})
 @Component({
   selector: 'ion-textarea',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -81,16 +72,8 @@ export class IonTextarea extends ValueAccessor {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone, injector: Injector) {
     super(injector, r);
-    defineCustomElement();
     c.detach();
     this.el = r.nativeElement;
-    /**
-     * Data-bound input properties are set
-     * by Angular after the constructor, so
-     * we need to run the proxy before ngOnInit.
-     */
-    proxyInputs(IonTextarea, TEXTAREA_INPUTS);
-    proxyMethods(IonTextarea, TEXTAREA_METHODS);
     proxyOutputs(this, this.el, ['ionChange', 'ionInput', 'ionBlur', 'ionFocus']);
   }
 
