@@ -60,6 +60,14 @@ const INPUT_INPUTS = [
   'value',
 ];
 
+/**
+ * Pulling the provider into an object works
+ * around an ng-packagr issue that causes
+ * components with multiple decorators and
+ * a provider to be re-assigned. This re-assignment
+ * is not supported by Webpack and causes treeshaking
+ * to not work on these kinds of components.
+ */
 const accessorProvider = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => IonInput),
