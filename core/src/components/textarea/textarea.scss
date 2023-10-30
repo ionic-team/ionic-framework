@@ -698,9 +698,7 @@
 /**
  * This makes the label sit above the textarea.
  */
-:host(.textarea-label-placement-stacked) .label-text-wrapper,
-:host(.has-focus.textarea-label-placement-floating) .label-text-wrapper,
-:host(.has-value.textarea-label-placement-floating) .label-text-wrapper {
+:host(.label-floating) .label-text-wrapper {
   @include transform(translateY(50%), scale(#{$form-control-label-stacked-scale}));
 
   /**

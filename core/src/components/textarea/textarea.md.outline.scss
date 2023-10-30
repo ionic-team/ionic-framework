@@ -87,9 +87,7 @@
 /**
  * This makes the label sit above the textarea.
  */
-:host(.has-focus.textarea-fill-outline.textarea-label-placement-floating) .label-text-wrapper,
-:host(.has-value.textarea-fill-outline.textarea-label-placement-floating) .label-text-wrapper,
-:host(.textarea-fill-outline.textarea-label-placement-stacked) .label-text-wrapper {
+:host(.label-floating.textarea-fill-outline) .label-text-wrapper {
   @include transform(translateY(-32%), scale(#{$form-control-label-stacked-scale}));
   @include margin(0);
 
@@ -218,8 +216,6 @@
  * the floating/stacked label. We simulate this "cut out"
  * by removing the top border from the notch fragment.
  */
-:host(.has-focus.textarea-fill-outline.textarea-label-placement-floating) .textarea-outline-notch,
-:host(.has-value.textarea-fill-outline.textarea-label-placement-floating) .textarea-outline-notch,
-:host(.textarea-fill-outline.textarea-label-placement-stacked) .textarea-outline-notch {
+:host(.label-floating.textarea-fill-outline) .textarea-outline-notch {
   border-top: none;
 }

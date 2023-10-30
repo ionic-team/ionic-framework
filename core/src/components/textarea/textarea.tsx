@@ -694,18 +694,40 @@ Developers can use the "legacy" property to continue using the legacy form marku
   }
 
   private renderTextarea() {
-    const { inputId, disabled, fill, shape, labelPlacement } = this;
+    const { inputId, disabled, fill, shape, labelPlacement, el, hasFocus } = this;
     const mode = getIonMode(this);
     const value = this.getValue();
     const inItem = hostContext('ion-item', this.el);
     const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;
 
+    const hasValue =  this.hasValue();
+    const hasStartEndSlots = el.querySelector('[slot="start"], [slot="end"]') !== null;
+
+    /**
+     * If the label is stacked, it should always sit above the textarea.
+     * For floating labels, the label should move above the textarea if
+     * the textarea has a value, is focused, or has anything in either
+     * the start or end slot.
+     *
+     * If there is content in the start slot, the label would overlap
+     * it if not forced to float. This is also applied to the end slot
+     * because with the default or solid fills, the textarea is not
+     * vertically centered in the container, but the label is. This
+     * causes the slots and label to appear vertically offset from each
+     * other when the label isn't floating above the input. This doesn't
+     * apply to the outline fill, but this was not accounted for to keep
+     * things consistent.
+     */
+    const labelShouldFloat =
+      labelPlacement === 'stacked' || (labelPlacement === 'floating' && (hasValue || hasFocus || hasStartEndSlots));
+
     return (
       <Host
         class={createColorClasses(this.color, {
           [mode]: true,
-          'has-value': this.hasValue(),
-          'has-focus': this.hasFocus,
+          'has-value': hasValue,
+          'has-focus': hasFocus,
+          'label-floating': labelShouldFloat,
           [`textarea-fill-${fill}`]: fill !== undefined,
           [`textarea-shape-${shape}`]: shape !== undefined,
           [`textarea-label-placement-${labelPlacement}`]: true,
