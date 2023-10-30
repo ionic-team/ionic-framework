@@ -97,6 +97,24 @@ describe('Value Accessors', () => {
     });
   });
 
+  describe('Select', () => {
+    beforeEach(() => cy.visit('/standalone/value-accessors/select'));
+
+    it('should update the form value', () => {
+      cy.get('#formValue').should('have.text', JSON.stringify({ select: 'bananas' }, null, 2));
+      cy.get('ion-select').should('have.class', 'ion-pristine');
+
+      cy.get('ion-select').click();
+      cy.get('ion-popover').should('be.visible');
+
+      cy.get('ion-popover ion-radio-group ion-radio').first().click();
+
+      cy.get('#formValue').should('have.text', JSON.stringify({ select: 'apples' }, null, 2));
+      cy.get('ion-select').should('have.class', 'ion-dirty');
+      cy.get('ion-select').should('have.class', 'ion-valid');
+    });
+  });
+
   describe('Textarea', () => {
     beforeEach(() => cy.visit('/standalone/value-accessors/textarea'));
 
