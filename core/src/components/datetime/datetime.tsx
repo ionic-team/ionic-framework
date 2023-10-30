@@ -104,7 +104,6 @@ import {
 export class Datetime implements ComponentInterface {
   private inputId = `ion-dt-${datetimeIds++}`;
   private calendarBodyRef?: HTMLElement;
-  private monthYearToggleItemRef?: HTMLIonItemElement;
   private popoverRef?: HTMLIonPopoverElement;
   private clearFocusVisible?: () => void;
   private parsedMinuteValues?: number[];
@@ -2000,33 +1999,15 @@ export class Datetime implements ComponentInterface {
       <div class="calendar-header">
         <div class="calendar-action-buttons">
           <div class="calendar-month-year">
-            <ion-item
-              part="month-year-button"
-              ref={(el) => (this.monthYearToggleItemRef = el)}
-              button
-              aria-label="Show year picker"
-              detail={false}
-              lines="none"
-              disabled={disabled}
-              onClick={() => {
-                this.toggleMonthAndYearView();
-                /**
-                 * TODO: FW-3547
-                 *
-                 * Currently there is not a way to set the aria-label on the inner button
-                 * on the `ion-item` and have it be reactive to changes. This is a workaround
-                 * until we either refactor `ion-item` to a button or Stencil adds a way to
-                 * have reactive props for built-in properties, such as `aria-label`.
-                 */
-                const { monthYearToggleItemRef } = this;
-                if (monthYearToggleItemRef) {
-                  const btn = monthYearToggleItemRef.shadowRoot?.querySelector('.item-native');
-                  if (btn) {
-                    const monthYearAriaLabel = this.showMonthAndYear ? 'Hide year picker' : 'Show year picker';
-                    btn.setAttribute('aria-label', monthYearAriaLabel);
-                  }
-                }
+            <button
+              class={{
+                'calendar-month-year-toggle': true,
+                'ion-activatable': true,
               }}
+              part="month-year-button"
+              disabled={disabled}
+              aria-label={this.showMonthAndYear ? 'Hide year picker' : 'Show year picker'}
+              onClick={() => this.toggleMonthAndYearView()}
             >
               <ion-label>
                 {getMonthAndYear(this.locale, this.workingParts)}
@@ -2037,7 +2018,8 @@ export class Datetime implements ComponentInterface {
                   flipRtl={true}
                 ></ion-icon>
               </ion-label>
-            </ion-item>
+              {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
+            </button>
           </div>
 
           <div class="calendar-next-prev">

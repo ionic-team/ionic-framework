@@ -34,7 +34,7 @@
 
 // Calendar / Header / Action Buttons
 // -----------------------------------
-:host .calendar-action-buttons ion-item {
+:host .calendar-action-buttons .calendar-month-year-toggle {
   --padding-start: #{$datetime-ios-padding};
   --background-hover: transparent;
   --background-activated: transparent;
@@ -43,7 +43,7 @@
   font-weight: 600;
 }
 
-:host .calendar-action-buttons ion-item ion-icon,
+:host .calendar-action-buttons .calendar-month-year-toggle ion-icon,
 :host .calendar-action-buttons ion-buttons ion-button {
   color: current-color(base);
 }

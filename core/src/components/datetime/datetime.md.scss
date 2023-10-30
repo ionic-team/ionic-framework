@@ -30,11 +30,11 @@
 
 // Calendar / Header / Action Buttons
 // -----------------------------------
-:host .datetime-calendar .calendar-action-buttons ion-item {
+:host .datetime-calendar .calendar-action-buttons .calendar-month-year-toggle {
   --padding-start: #{$datetime-md-header-padding};
 }
 
-:host .calendar-action-buttons ion-item,
+:host .calendar-action-buttons .calendar-month-year-toggle,
 :host .calendar-action-buttons ion-button {
   --color: #{$text-color-step-350};
 }
@@ -135,4 +135,22 @@
   align-items: center;
 
   justify-content: flex-end;
+}
+
+:host .datetime-view-buttons ion-button {
+  color: $text-color-step-200;
+}
+
+.calendar-month-year-toggle ion-ripple-effect {
+  color: currentColor;
+}
+
+@media (any-hover: hover) {
+  .calendar-month-year-toggle.ion-activatable:not(.ion-focused):hover {
+    &::after {
+      background: currentColor;
+
+      opacity: 0.04;
+    }
+  }
 }
