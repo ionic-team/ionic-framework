@@ -1,5 +1,5 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
-import { Component, Element, Event, Host, Listen, Prop, h } from '@stencil/core';
+import { Component, Event, Host, Listen, Prop, h } from '@stencil/core';
 
 import { getIonMode } from '../../global/ionic-global';
 
@@ -31,8 +31,6 @@ export class Backdrop implements ComponentInterface {
    * Emitted when the backdrop is tapped.
    */
   @Event() ionBackdropTap!: EventEmitter<void>;
-
-  @Element() el!: HTMLElement;
 
   @Listen('click', { passive: false, capture: true })
   protected onMouseDown(ev: TouchEvent) {
