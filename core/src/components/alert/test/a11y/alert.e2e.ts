@@ -28,6 +28,67 @@ const testAria = async (
   expect(ariaDescribedBy).toBe(expectedAriaDescribedBy);
 };
 
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('alert: text wrapping'), () => {
+    test('should break on words and white spaces for radios', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/28406',
+      });
+      await page.setContent(
+        `
+        <ion-alert header='Text Wrapping'></ion-alert>
+
+        <script>
+          const alert = document.querySelector('ion-alert');
+          alert.inputs = [
+            { type: 'radio', value: 'a', label: 'ThisIsAllOneReallyLongWordThatShouldWrap' },
+            { type: 'radio', value: 'b', label: 'These are separate words that should wrap' }
+          ];
+        </script>
+      `,
+        config
+      );
+
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+      const alert = page.locator('ion-alert');
+
+      await alert.evaluate((el: HTMLIonAlertElement) => el.present());
+      await ionAlertDidPresent.next();
+
+      await expect(page).toHaveScreenshot(screenshot(`alert-radio-text-wrap`));
+    });
+    test('should break on words and white spaces for checkboxes', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/28406',
+      });
+      await page.setContent(
+        `
+        <ion-alert header='Text Wrapping'></ion-alert>
+
+        <script>
+          const alert = document.querySelector('ion-alert');
+          alert.inputs = [
+            { type: 'checkbox', value: 'a', label: 'ThisIsAllOneReallyLongWordThatShouldWrap' },
+            { type: 'checkbox', value: 'b', label: 'These are separate words that should wrap' }
+          ];
+        </script>
+      `,
+        config
+      );
+
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+      const alert = page.locator('ion-alert');
+
+      await alert.evaluate((el: HTMLIonAlertElement) => el.present());
+      await ionAlertDidPresent.next();
+
+      await expect(page).toHaveScreenshot(screenshot(`alert-checkbox-text-wrap`));
+    });
+  });
+});
+
 configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
   test.describe(title('alert: a11y'), () => {
     test.beforeEach(async ({ page }) => {

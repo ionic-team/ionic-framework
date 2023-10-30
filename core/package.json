@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "7.5.1",
+  "version": "7.5.2",
   "description": "Base components for Ionic",
   "keywords": [
     "ionic",
@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.8.1",
-    "@capacitor/core": "^5.5.0",
+    "@capacitor/core": "^5.5.1",
     "@capacitor/haptics": "^5.0.6",
     "@capacitor/keyboard": "^5.0.6",
     "@capacitor/status-bar": "^5.0.6",
