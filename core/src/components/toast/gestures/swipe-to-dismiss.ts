@@ -141,9 +141,6 @@ export const createSwipeToDismissGesture = (
     const velocity = detail.velocityY;
     const threshold = ((detail.deltaY + velocity * 1000) / MAX_SWIPE_DISTANCE) * INVERSION_FACTOR;
 
-    // TODO Figure out a good duration
-    const duration = 500;
-
     /**
      * Disable the gesture for the remainder of the animation.
      * It will be re-enabled if the toast animates back to
@@ -154,6 +151,7 @@ export const createSwipeToDismissGesture = (
     let shouldDismiss = true;
     let playTo: 0 | 1 = 1;
     let step: number = 0;
+    let remainingDistance = 0;
 
     if (el.position === 'middle') {
       /**
@@ -186,33 +184,30 @@ export const createSwipeToDismissGesture = (
        * Toast for its starting state.
        */
       const wrapperElBox = wrapperEl.getBoundingClientRect();
-      const startPosition = `${wrapperElBox.top - topPosition}px`;
+      const startOffset = wrapperElBox.top - topPosition;
+      const startPosition = `${startOffset}px`;
 
       /**
+       * If the deltaY is negative then the user is swiping
+       * up, so the Toast should animate to the top of the screen.
+       * If the deltaY is positive then the user is swiping
+       * down, so the Toast should animate to the bottom of the screen.
+       * We also account for when the deltaY is 0, but realistically
+       * that should never happen because it means the user did not drag
+       * the toast.
+       */
+      const offsetFactor = detail.deltaY <= 0 ? -1 : 1;
+      const endOffset = (topPosition + wrapperElBox.height) * offsetFactor;
+
+      /**
+       * If the Toast should dismiss
+       * then we need to figure out which edge of
+       * the screen it should animate towards.
        * By default, the Toast will come
        * back to its default state in the
        * middle of the screen.
        */
-      let endPosition = '0px';
-
-      /**
-       * However, if the Toast should dismiss
-       * then we need to figure out which edge of
-       * the screen it should animate towards.
-       */
-      if (shouldDismiss) {
-        const endOffset = topPosition + wrapperElBox.height;
-        /**
-         * If the deltaY is negative then the user is swiping
-         * up, so the Toast should animate to the top of the screen.
-         * If the deltaY is positive then the user is swiping
-         * down, so the Toast should animate to the bottom of the screen.
-         * We also account for when the deltaY is 0, but realistically
-         * that should never happen because it means the user did not drag
-         * the toast.
-         */
-        endPosition = detail.deltaY <= 0 ? `-${endOffset}px` : `${endOffset}px`;
-      }
+      const endPosition = shouldDismiss ? `${endOffset}px` : '0px';
 
       const KEYFRAMES = [
         { offset: 0, transform: `translateY(${startPosition})` },
@@ -220,11 +215,33 @@ export const createSwipeToDismissGesture = (
       ];
 
       swipeAnimation.keyframes(KEYFRAMES);
+
+      /**
+       * Compute the remaining amount of pixels the
+       * to toast needs to move to be fully dismissed.
+       */
+      remainingDistance = endOffset - startOffset;
     } else {
       shouldDismiss = threshold >= DISMISS_THRESHOLD;
       playTo = shouldDismiss ? 1 : 0;
       step = computeStep(detail.deltaY);
+
+      /**
+       * Compute the remaining amount of pixels the
+       * to toast needs to move to be fully dismissed.
+       */
+      const remainingStepAmount = shouldDismiss ? 1 - step : step;
+      remainingDistance = remainingStepAmount * MAX_SWIPE_DISTANCE;
     }
+
+    /**
+     * The animation speed should depend on how quickly
+     * the user flicks the toast across the screen. However,
+     * it should be no slower than 300ms.
+     * We use Math.abs on the remainingDistance because that value
+     * can be negative when swiping up on a middle position toast.
+     */
+    const duration = Math.min(Math.abs(remainingDistance) / Math.abs(velocity), 200);
 
     swipeAnimation
       .onFinish(
