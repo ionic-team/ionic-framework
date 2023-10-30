@@ -8,7 +8,6 @@ import {
   Injector,
   NgZone,
 } from '@angular/core';
-import type { OnInit } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValueAccessor } from '@ionic/angular/common';
 import type {
@@ -69,23 +68,20 @@ const RANGE_INPUTS = [
   ],
   standalone: true,
 })
-export class IonRange extends ValueAccessor implements OnInit {
+export class IonRange extends ValueAccessor {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone, injector: Injector) {
     super(injector, r);
     defineCustomElement();
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionChange', 'ionInput', 'ionFocus', 'ionBlur', 'ionKnobMoveStart', 'ionKnobMoveEnd']);
-  }
-
-  ngOnInit(): void {
     /**
      * Data-bound input properties are set
      * by Angular after the constructor, so
-     * we need to run the proxy in ngOnInit.
+     * we need to run the proxy before ngOnInit.
      */
     proxyInputs(IonRange, RANGE_INPUTS);
+    proxyOutputs(this, this.el, ['ionChange', 'ionInput', 'ionFocus', 'ionBlur', 'ionKnobMoveStart', 'ionKnobMoveEnd']);
   }
 
   @HostListener('ionChange', ['$event.target'])

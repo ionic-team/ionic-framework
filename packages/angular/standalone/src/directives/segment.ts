@@ -8,7 +8,6 @@ import {
   Injector,
   NgZone,
 } from '@angular/core';
-import type { OnInit } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValueAccessor } from '@ionic/angular/common';
 import type { SegmentChangeEventDetail, Components } from '@ionic/core/components';
@@ -45,23 +44,20 @@ const SEGMENT_INPUTS = ['color', 'disabled', 'mode', 'scrollable', 'selectOnFocu
   ],
   standalone: true,
 })
-export class IonSegment extends ValueAccessor implements OnInit {
+export class IonSegment extends ValueAccessor {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone, injector: Injector) {
     super(injector, r);
     defineCustomElement();
     c.detach();
     this.el = r.nativeElement;
-    proxyOutputs(this, this.el, ['ionChange']);
-  }
-
-  ngOnInit(): void {
     /**
      * Data-bound input properties are set
      * by Angular after the constructor, so
-     * we need to run the proxy in ngOnInit.
+     * we need to run the proxy before ngOnInit.
      */
     proxyInputs(IonSegment, SEGMENT_INPUTS);
+    proxyOutputs(this, this.el, ['ionChange']);
   }
 
   @HostListener('ionChange', ['$event.target'])
