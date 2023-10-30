@@ -1,11 +1,10 @@
 import { newSpecPage } from '@stencil/core/testing';
 
-import { Backdrop } from '../../backdrop/backdrop';
 import { Modal } from '../modal';
 
 it('modal should be assigned an incrementing id', async () => {
   const page = await newSpecPage({
-    components: [Modal, Backdrop],
+    components: [Modal],
     html: `<ion-modal is-open="true"></ion-modal>`,
   });
   let modal: HTMLIonModalElement;

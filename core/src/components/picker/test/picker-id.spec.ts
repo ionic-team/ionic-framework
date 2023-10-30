@@ -1,11 +1,10 @@
 import { newSpecPage } from '@stencil/core/testing';
 
-import { Backdrop } from '../../backdrop/backdrop';
 import { Picker } from '../picker';
 
 it('picker should be assigned an incrementing id', async () => {
   const page = await newSpecPage({
-    components: [Picker, Backdrop],
+    components: [Picker],
     html: `<ion-picker is-open="true"></ion-picker>`,
   });
   let picker: HTMLIonPickerElement;

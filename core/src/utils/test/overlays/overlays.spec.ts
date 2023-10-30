@@ -82,7 +82,7 @@ describe('setRootAriaHidden()', () => {
 
   it('should remove router-outlet from accessibility tree when overlay is presented', async () => {
     const page = await newSpecPage({
-      components: [RouterOutlet, Modal, Backdrop],
+      components: [RouterOutlet, Modal],
       html: `
         <ion-router-outlet>
           <ion-modal></ion-modal>
@@ -100,7 +100,7 @@ describe('setRootAriaHidden()', () => {
 
   it('should add router-outlet from accessibility tree when then final overlay is dismissed', async () => {
     const page = await newSpecPage({
-      components: [RouterOutlet, Modal, Backdrop],
+      components: [RouterOutlet, Modal],
       html: `
         <ion-router-outlet>
           <ion-modal id="one"></ion-modal>

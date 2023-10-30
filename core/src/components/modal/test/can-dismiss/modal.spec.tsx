@@ -1,15 +1,15 @@
-import { h, setMode } from '@stencil/core';
+import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
+import { setMode } from '@stencil/core';
 
-import { Backdrop } from '../../../backdrop/backdrop';
-import { Content } from '../../../content/content';
 import { Modal } from '../../modal';
+import { Content } from '../../../content/content';
 
 describe('modal: canDismiss', () => {
   describe('modal: regular modal', () => {
     it('should dismiss when canDismiss is true', async () => {
       const page = await newSpecPage({
-        components: [Modal, Backdrop],
+        components: [Modal],
         template: () => <ion-modal animated={false} canDismiss={true}></ion-modal>,
       });
 
@@ -25,7 +25,7 @@ describe('modal: canDismiss', () => {
 
     it('should not dismiss when canDismiss is false', async () => {
       const page = await newSpecPage({
-        components: [Modal, Backdrop],
+        components: [Modal],
         template: () => <ion-modal animated={false} canDismiss={false}></ion-modal>,
       });
 
@@ -41,7 +41,7 @@ describe('modal: canDismiss', () => {
 
     it('should dismiss when canDismiss is Promise<true>', async () => {
       const page = await newSpecPage({
-        components: [Modal, Backdrop],
+        components: [Modal],
         template: () => (
           <ion-modal
             animated={false}
@@ -66,7 +66,7 @@ describe('modal: canDismiss', () => {
 
     it('should not dismiss when canDismiss is Promise<false>', async () => {
       const page = await newSpecPage({
-        components: [Modal, Backdrop],
+        components: [Modal],
         template: () => (
           <ion-modal
             animated={false}
@@ -98,7 +98,7 @@ describe('modal: canDismiss', () => {
     });
     it('should dismiss when canDismiss is true', async () => {
       const page = await newSpecPage({
-        components: [Content, Modal, Backdrop],
+        components: [Content, Modal],
         template: () => (
           <ion-modal presentingElement={document.createElement('div')} animated={false} canDismiss={true}>
             <ion-content>Test Content</ion-content>
@@ -118,7 +118,7 @@ describe('modal: canDismiss', () => {
 
     it('should not dismiss when canDismiss is false', async () => {
       const page = await newSpecPage({
-        components: [Content, Modal, Backdrop],
+        components: [Content, Modal],
         template: () => (
           <ion-modal presentingElement={document.createElement('div')} animated={false} canDismiss={false}>
             <ion-content>Test Content</ion-content>
@@ -138,7 +138,7 @@ describe('modal: canDismiss', () => {
 
     it('should dismiss when canDismiss is Promise<true>', async () => {
       const page = await newSpecPage({
-        components: [Content, Modal, Backdrop],
+        components: [Content, Modal],
         template: () => (
           <ion-modal
             presentingElement={document.createElement('div')}
@@ -166,7 +166,7 @@ describe('modal: canDismiss', () => {
 
     it('should not dismiss when canDismiss is Promise<false>', async () => {
       const page = await newSpecPage({
-        components: [Content, Modal, Backdrop],
+        components: [Content, Modal],
         template: () => (
           <ion-modal
             presentingElement={document.createElement('div')}
@@ -195,7 +195,7 @@ describe('modal: canDismiss', () => {
   describe('modal: sheet modal', () => {
     it('should dismiss when canDismiss is true', async () => {
       const page = await newSpecPage({
-        components: [Modal, Backdrop],
+        components: [Modal],
         template: () => (
           <ion-modal breakpoints={[0, 1]} initialBreakpoint={1} animated={false} canDismiss={true}></ion-modal>
         ),
@@ -213,7 +213,7 @@ describe('modal: canDismiss', () => {
 
     it('should not dismiss when canDismiss is false', async () => {
       const page = await newSpecPage({
-        components: [Modal, Backdrop],
+        components: [Modal],
         template: () => (
           <ion-modal breakpoints={[0, 1]} initialBreakpoint={1} animated={false} canDismiss={false}></ion-modal>
         ),
@@ -231,7 +231,7 @@ describe('modal: canDismiss', () => {
 
     it('should dismiss when canDismiss is Promise<true>', async () => {
       const page = await newSpecPage({
-        components: [Modal, Backdrop],
+        components: [Modal],
         template: () => (
           <ion-modal
             breakpoints={[0, 1]}
@@ -258,7 +258,7 @@ describe('modal: canDismiss', () => {
 
     it('should not dismiss when canDismiss is Promise<false>', async () => {
       const page = await newSpecPage({
-        components: [Modal, Backdrop],
+        components: [Modal],
         template: () => (
           <ion-modal
             breakpoints={[0, 1]}
@@ -287,7 +287,7 @@ describe('modal: canDismiss', () => {
     test('should pass data and role when calling dismiss', async () => {
       const canDismiss = jest.fn();
       const page = await newSpecPage({
-        components: [Modal, Backdrop],
+        components: [Modal],
         template: () => <ion-modal animated={false} canDismiss={canDismiss}></ion-modal>,
       });
 

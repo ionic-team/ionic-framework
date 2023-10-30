@@ -1,11 +1,10 @@
 import { newSpecPage } from '@stencil/core/testing';
 
-import { Backdrop } from '../../backdrop/backdrop';
 import { Loading } from '../loading';
 
 it('loading should be assigned an incrementing id', async () => {
   const page = await newSpecPage({
-    components: [Loading, Backdrop],
+    components: [Loading],
     html: `<ion-loading is-open="true"></ion-loading>`,
   });
   let loading: HTMLIonLoadingElement;
