@@ -32,6 +32,8 @@ import type { TextareaChangeEventDetail, TextareaInputEventDetail } from './text
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @slot label - The label text to associate with the textarea. Use the `labelPlacement` property to control where the label is placed relative to the textarea. Use this if you need to render a label with custom HTML. (EXPERIMENTAL)
+ * @slot start - Content to display at the leading edge of the textarea. (EXPERIMENTAL)
+ * @slot end - Content to display at the trailing edge of the textarea. (EXPERIMENTAL)
  */
 @Component({
   tag: 'ion-textarea',
@@ -310,7 +312,7 @@ export class Textarea implements ComponentInterface {
   connectedCallback() {
     const { el } = this;
     this.legacyFormController = createLegacyFormController(el);
-    this.slotMutationController = createSlotMutationController(el, 'label', () => forceUpdate(this));
+    this.slotMutationController = createSlotMutationController(el, ['label', 'start', 'end'], () => forceUpdate(this));
     this.notchController = createNotchController(
       el,
       () => this.notchSpacerEl,
@@ -713,6 +715,7 @@ Developers can use the "legacy" property to continue using the legacy form marku
         <label class="textarea-wrapper">
           {this.renderLabelContainer()}
           <div class="native-wrapper" ref={(el) => (this.textareaWrapper = el)}>
+            <slot name="start"></slot>
             <textarea
               class="native-textarea"
               ref={(el) => (this.nativeInput = el)}
@@ -741,6 +744,7 @@ Developers can use the "legacy" property to continue using the legacy form marku
             >
               {value}
             </textarea>
+            <slot name="end"></slot>
           </div>
           {shouldRenderHighlight && <div class="textarea-highlight"></div>}
         </label>

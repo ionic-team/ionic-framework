@@ -51,50 +51,175 @@
       <ion-content id="content" class="ion-padding">
         <div class="grid">
           <div class="grid-item">
-            <h2>No Fill / Start</h2>
+            <h2>No Fill / Start Label</h2>
             <ion-textarea label-placement="start" value="hi@ionic.io">
               <div slot="label">Email <span class="required">*</span></div>
             </ion-textarea>
           </div>
 
           <div class="grid-item">
-            <h2>Solid / Start</h2>
+            <h2>Solid / Start Label</h2>
             <ion-textarea label-placement="start" fill="solid" value="hi@ionic.io">
               <div slot="label">Email <span class="required">*</span></div>
             </ion-textarea>
           </div>
 
           <div class="grid-item">
-            <h2>Outline / Start</h2>
+            <h2>Outline / Start Label</h2>
             <ion-textarea label-placement="start" fill="outline" value="hi@ionic.io">
               <div slot="label">Email <span class="required">*</span></div>
             </ion-textarea>
           </div>
 
           <div class="grid-item">
-            <h2>No Fill / Floating</h2>
+            <h2>No Fill / Floating Label</h2>
             <ion-textarea label-placement="floating" value="hi@ionic.io">
               <div slot="label">Email <span class="required">*</span></div>
             </ion-textarea>
           </div>
 
           <div class="grid-item">
-            <h2>Solid / Floating</h2>
+            <h2>Solid / Floating Label</h2>
             <ion-textarea label-placement="floating" fill="solid" value="hi@ionic.io">
               <div slot="label">Email <span class="required">*</span></div>
             </ion-textarea>
           </div>
 
           <div class="grid-item">
-            <h2>Outline / Floating</h2>
+            <h2>Outline / Floating Label</h2>
             <ion-textarea label-placement="floating" fill="outline" value="hi@ionic.io">
               <div slot="label">Email <span class="required">*</span></div>
             </ion-textarea>
           </div>
 
           <div class="grid-item">
-            <h2>Outline / Floating / Async</h2>
+            <h2>No Fill / Start Label / Buttons</h2>
+            <ion-textarea label-placement="start" value="hi@ionic.io" label="Email">
+              <ion-button fill="clear" slot="start" aria-label="Lock">
+                <ion-icon slot="icon-only" name="lock-closed" aria-hidden="true"></ion-icon>
+              </ion-button>
+              <ion-button fill="clear" slot="end" aria-label="Show/hide password">
+                <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
+              </ion-button>
+            </ion-textarea>
+          </div>
+
+          <div class="grid-item">
+            <h2>Solid / Start Label / Buttons</h2>
+            <ion-textarea label-placement="start" fill="solid" value="hi@ionic.io" label="Email">
+              <ion-button fill="clear" slot="start" aria-label="Lock">
+                <ion-icon slot="icon-only" name="lock-closed" aria-hidden="true"></ion-icon>
+              </ion-button>
+              <ion-button fill="clear" slot="end" aria-label="Show/hide password">
+                <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
+              </ion-button>
+            </ion-textarea>
+          </div>
+
+          <div class="grid-item">
+            <h2>Outline / Start Label / Buttons</h2>
+            <ion-textarea label-placement="start" fill="outline" value="hi@ionic.io" label="Email">
+              <ion-button fill="clear" slot="start" aria-label="Lock">
+                <ion-icon slot="icon-only" name="lock-closed" aria-hidden="true"></ion-icon>
+              </ion-button>
+              <ion-button fill="clear" slot="end" aria-label="Show/hide password">
+                <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
+              </ion-button>
+            </ion-textarea>
+          </div>
+
+          <div class="grid-item">
+            <h2>No Fill / Floating Label / Buttons</h2>
+            <ion-textarea label-placement="floating" value="hi@ionic.io" label="Email">
+              <ion-button fill="clear" slot="start" aria-label="Lock">
+                <ion-icon slot="icon-only" name="lock-closed" aria-hidden="true"></ion-icon>
+              </ion-button>
+              <ion-button fill="clear" slot="end" aria-label="Show/hide password">
+                <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
+              </ion-button>
+            </ion-textarea>
+          </div>
+
+          <div class="grid-item">
+            <h2>Solid / Floating Label / Buttons</h2>
+            <ion-textarea label-placement="floating" fill="solid" value="hi@ionic.io" label="Email">
+              <ion-button fill="clear" slot="start" aria-label="Lock">
+                <ion-icon slot="icon-only" name="lock-closed" aria-hidden="true"></ion-icon>
+              </ion-button>
+              <ion-button fill="clear" slot="end" aria-label="Show/hide password">
+                <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
+              </ion-button>
+            </ion-textarea>
+          </div>
+          
+          <div class="grid-item">
+            <h2>Outline / Floating Label / Buttons</h2>
+            <ion-textarea label-placement="floating" fill="outline" value="hi@ionic.io" label="Email">
+              <ion-button fill="clear" slot="start" aria-label="Lock">
+                <ion-icon slot="icon-only" name="lock-closed" aria-hidden="true"></ion-icon>
+              </ion-button>
+              <ion-button fill="clear" slot="end" aria-label="Show/hide password">
+                <ion-icon slot="icon-only" name="eye" aria-hidden="true"></ion-icon>
+              </ion-button>
+            </ion-textarea>
+          </div>
+
+          <div class="grid-item">
+            <h2>No Fill / Start Label / Decorations</h2>
+            <ion-textarea label-placement="start" value="100" label="Weight">
+              <ion-icon slot="start" name="barbell" aria-hidden="true"></ion-icon>
+              <ion-label slot="end">lbs</ion-label>
+            </ion-textarea>
+          </div>
+
+          <div class="grid-item">
+            <h2>Solid / Start Label / Decorations</h2>
+            <ion-textarea label-placement="start" fill="solid" value="100" label="Weight">
+              <ion-icon slot="start" name="barbell" aria-hidden="true"></ion-icon>
+              <ion-label slot="end">lbs</ion-label>
+            </ion-textarea>
+          </div>
+
+          <div class="grid-item">
+            <h2>Outline / Start Label / Decorations</h2>
+            <ion-textarea label-placement="start" fill="outline" value="100" label="Weight">
+              <ion-icon slot="start" name="barbell" aria-hidden="true"></ion-icon>
+              <ion-label slot="end">lbs</ion-label>
+            </ion-textarea>
+          </div>
+
+          <div class="grid-item">
+            <h2>No Fill / Floating Label / Decorations</h2>
+            <ion-textarea label-placement="floating" value="100" label="Weight">
+              <ion-icon slot="start" name="barbell" aria-hidden="true"></ion-icon>
+              <ion-label slot="end">lbs</ion-label>
+            </ion-textarea>
+          </div>
+          
+          <div class="grid-item">
+            <h2>Solid / Floating Label / Decorations</h2>
+            <ion-textarea label-placement="floating" fill="solid" value="100" label="Weight">
+              <ion-icon slot="start" name="barbell" aria-hidden="true"></ion-icon>
+              <ion-label slot="end">lbs</ion-label>
+            </ion-textarea>
+          </div>
+          
+          <div class="grid-item">
+            <h2>Outline / Floating Label / Decorations</h2>
+            <ion-textarea label-placement="floating" fill="outline" value="100" label="Weight">
+              <ion-icon slot="start" name="barbell" aria-hidden="true"></ion-icon>
+              <ion-label slot="end">lbs</ion-label>
+            </ion-textarea>
+          </div>
+
+          <div class="grid-item">
+            <h2>Outline / Async Label</h2>
             <ion-textarea id="solid-async" label-placement="floating" fill="outline" value="hi@ionic.io"></ion-textarea>
+          </div>
+
+          <div class="grid-item">
+            <h2>Outline / Async Decorations</h2>
+            <ion-textarea id="async-decorations" label-placement="floating" fill="outline" label="Email"></ion-textarea>
           </div>
         </div>
 
@@ -106,29 +231,65 @@
 
     <script>
       const solidAsync = document.querySelector('#solid-async');
+      const asyncDecos = document.querySelector('#async-decorations');
 
-      const getSlottedContent = () => {
+      const getSlottedLabel = () => {
         return solidAsync.querySelector('[slot="label"]');
       };
 
+      const getSlottedStartDeco = () => {
+        return asyncDecos.querySelector('[slot="start"]');
+      };
+
+      const getSlottedEndDeco = () => {
+        return asyncDecos.querySelector('[slot="end"]');
+      };
+
       const addSlot = () => {
-        if (getSlottedContent() === null) {
+        if (getSlottedLabel() === null) {
           const labelEl = document.createElement('div');
           labelEl.slot = 'label';
           labelEl.innerHTML = 'Comments <span class="required">*</span>';
 
           solidAsync.appendChild(labelEl);
         }
+
+        if (getSlottedStartDeco() === null) {
+          const startEl = document.createElement('div');
+          startEl.slot = 'start';
+          startEl.innerHTML = 'Start';
+
+          asyncDecos.insertAdjacentElement('afterbegin', startEl);
+        }
+
+        if (getSlottedEndDeco() === null) {
+          const endEl = document.createElement('div');
+          endEl.slot = 'end';
+          endEl.innerHTML = 'End';
+
+          asyncDecos.insertAdjacentElement('beforeend', endEl);
+        }
       };
 
       const removeSlot = () => {
-        if (getSlottedContent() !== null) {
-          solidAsync.querySelector('[slot="label"]').remove();
+        const slottedLabel = getSlottedLabel();
+        if (slottedLabel !== null) {
+          slottedLabel.remove();
+        }
+
+        const slottedStartDeco = getSlottedStartDeco();
+        if (slottedStartDeco !== null) {
+          slottedStartDeco.remove();
+        }
+
+        const slottedEndDeco = getSlottedEndDeco();
+        if (slottedEndDeco !== null) {
+          slottedEndDeco.remove();
         }
       };
 
       const updateSlot = () => {
-        const slottedContent = getSlottedContent();
+        const slottedContent = getSlottedLabel();
 
         if (slottedContent !== null) {
           slottedContent.textContent = 'This is my really really really long text';
