@@ -1,6 +1,5 @@
 import { newSpecPage } from '@stencil/core/testing';
 
-import { Backdrop } from '../../../components/backdrop/backdrop';
 import { Modal } from '../../../components/modal/modal';
 import { Nav } from '../../../components/nav/nav';
 import { RouterOutlet } from '../../../components/router-outlet/router-outlet';
@@ -134,7 +133,7 @@ describe('setRootAriaHidden()', () => {
 describe('overlays: scroll blocking', () => {
   it('should not block scroll when the overlay is created', async () => {
     const page = await newSpecPage({
-      components: [Modal, Backdrop],
+      components: [Modal],
       html: `
         <ion-modal></ion-modal>
       `,
@@ -142,12 +141,12 @@ describe('overlays: scroll blocking', () => {
 
     const body = page.doc.querySelector('body')!;
 
-    expect(body.classList.contains('backdrop-no-scroll')).toEqual(false);
+    expect(body).not.toHaveClass('backdrop-no-scroll');
   });
 
   it('should block scroll when the overlay is presented', async () => {
     const page = await newSpecPage({
-      components: [Modal, Backdrop],
+      components: [Modal],
       html: `
         <ion-modal></ion-modal>
       `,
@@ -158,16 +157,16 @@ describe('overlays: scroll blocking', () => {
 
     await modal.present();
 
-    expect(body.classList.contains('backdrop-no-scroll')).toEqual(true);
+    expect(body).toHaveClass('backdrop-no-scroll');
 
     await modal.dismiss();
 
-    expect(body.classList.contains('backdrop-no-scroll')).toEqual(false);
+    expect(body).not.toHaveClass('backdrop-no-scroll');
   });
 
   it('should not block scroll when the overlay is dismissed', async () => {
     const page = await newSpecPage({
-      components: [Modal, Backdrop],
+      components: [Modal],
       html: `
         <ion-modal></ion-modal>
       `,
@@ -178,16 +177,16 @@ describe('overlays: scroll blocking', () => {
 
     await modal.present();
 
-    expect(body.classList.contains('backdrop-no-scroll')).toEqual(true);
+    expect(body).toHaveClass('backdrop-no-scroll');
 
     await modal.dismiss();
 
-    expect(body.classList.contains('backdrop-no-scroll')).toEqual(false);
+    expect(body).not.toHaveClass('backdrop-no-scroll');
   });
 
   it('should not enable scroll until last overlay is dismissed', async () => {
     const page = await newSpecPage({
-      components: [Modal, Backdrop],
+      components: [Modal],
       html: `
         <ion-modal id="one"></ion-modal>
         <ion-modal id="two"></ion-modal>
@@ -200,18 +199,18 @@ describe('overlays: scroll blocking', () => {
 
     await modalOne.present();
 
-    expect(body.classList.contains('backdrop-no-scroll')).toEqual(true);
+    expect(body).toHaveClass('backdrop-no-scroll');
 
     await modalTwo.present();
 
-    expect(body.classList.contains('backdrop-no-scroll')).toEqual(true);
+    expect(body).toHaveClass('backdrop-no-scroll');
 
     await modalOne.dismiss();
 
-    expect(body.classList.contains('backdrop-no-scroll')).toEqual(true);
+    expect(body).toHaveClass('backdrop-no-scroll');
 
     await modalTwo.dismiss();
 
-    expect(body.classList.contains('backdrop-no-scroll')).toEqual(false);
+    expect(body).not.toHaveClass('backdrop-no-scroll');
   });
 });
