@@ -630,7 +630,7 @@ export const IonRange = /*@__PURE__*/ defineContainer<JSX.IonRange, JSX.IonRange
   'ionKnobMoveStart',
   'ionKnobMoveEnd'
 ],
-'value', 'v-ion-change', 'ionChange');
+'value', 'v-ion-input', 'ionInput');
 
 
 export const IonRefresher = /*@__PURE__*/ defineContainer<JSX.IonRefresher>('ion-refresher', defineIonRefresher, [

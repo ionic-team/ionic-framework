@@ -88,8 +88,8 @@ export class IonRange extends ValueAccessor implements OnInit {
     proxyInputs(IonRange, RANGE_INPUTS);
   }
 
-  @HostListener('ionChange', ['$event.target'])
-  handleIonChange(el: HTMLIonRangeElement): void {
+  @HostListener('ionInput', ['$event.target'])
+  handleIonInput(el: HTMLIonRangeElement): void {
     this.handleValueChange(el, el.value);
   }
 }
