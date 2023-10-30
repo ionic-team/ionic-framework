@@ -313,6 +313,9 @@
 
   flex-grow: 1;
 
+  // ensure start/end slot content is vertically centered
+  align-items: center;
+
   width: 100%;
 
   height: 100%;
@@ -327,13 +330,18 @@
 
 .native-wrapper textarea {
   @include padding(var(--padding-top), 0px, var(--padding-bottom), 0px);
+
+  align-self: stretch;
+}
+
+// TODO: FW-2876 - Remove this
+.textarea-legacy-wrapper {
+  display: grid;
 }
 
 .native-wrapper,
 // TODO: FW-2876 - Remove this selector, keep .native-wrapper
 .textarea-legacy-wrapper {
-  display: grid;
-
   min-width: inherit;
   max-width: inherit;
   min-height: inherit;
@@ -700,4 +708,15 @@
    * beyond the bounds of the textarea.
    */
   max-width: calc(100% / #{$form-control-label-stacked-scale});
+}
+
+// Start/End Slots
+// ----------------------------------------------------------------
+
+::slotted([slot="start"]) {
+  margin-inline-end: $form-control-label-margin;
+}
+
+::slotted([slot="end"]) {
+  margin-inline-start: $form-control-label-margin;
 }

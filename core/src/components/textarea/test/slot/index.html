@@ -221,6 +221,14 @@
             <h2>Outline / Async Decorations</h2>
             <ion-textarea id="async-decorations" label-placement="floating" fill="outline" label="Email"></ion-textarea>
           </div>
+
+          <div class="grid-item">
+            <h2>Outline / Autogrow / Decorations</h2>
+            <ion-textarea label-placement="start" fill="outline" label="Email" auto-grow="true" value="hi@ionic.io">
+              <ion-icon slot="start" name="barbell" aria-hidden="true"></ion-icon>
+              <ion-label slot="end">lbs</ion-label>
+            </ion-textarea>
+          </div>
         </div>
 
         <ion-button onclick="addSlot()">Add Slotted Content</ion-button>
