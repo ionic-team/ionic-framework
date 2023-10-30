@@ -21,9 +21,6 @@ $item-md-avatar-height:                     $item-md-avatar-width !default;
 /// @prop - Size of the thumbnail in the item
 $item-md-thumbnail-size:                   56px !default;
 
-/// @prop - Color of the detail arrow icon
-$item-md-detail-icon-color:                 $item-md-border-color !default;
-
 /// @prop - Padding top for the item content
 $item-md-padding-top:                       10px !default;
 
@@ -44,9 +41,6 @@ $item-md-border-bottom-style:               solid !default;
 
 /// @prop - Border bottom color for the item when lines are displayed
 $item-md-border-bottom-color:               $item-md-border-color !default;
-
-/// @prop - Border bottom for the item when lines are displayed
-$item-md-border-bottom:                     $item-md-border-bottom-width $item-md-border-bottom-style $item-md-border-color !default;
 
 // Item Input
 // --------------------------------------------------
@@ -74,9 +68,6 @@ $item-md-input-fill-border-color:           $background-color-step-500 !default;
 
 /// @prop - Color of the item border when `fill` is set and hovered
 $item-md-input-fill-border-color-hover:     $background-color-step-750 !default;
-
-/// @prop - Color of the item input counter
-$item-md-input-counter-color:               rgba(0, 0, 0, .6) !default;
 
 /// @prop - Letter spacing of the item input counter
 $item-md-input-counter-letter-spacing:      .0333333333em !default;

@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.5.2](https://github.com/ionic-team/ionic-framework/compare/v7.5.1...v7.5.2) (2023-10-25)
+
+
+### Bug Fixes
+
+* **angular:** remove form control side effects ([#28359](https://github.com/ionic-team/ionic-framework/issues/28359)) ([82d6309](https://github.com/ionic-team/ionic-framework/commit/82d6309ef1675c0a6e767e87c23f166d84579d8f)), closes [#28358](https://github.com/ionic-team/ionic-framework/issues/28358)
+
+
+
+
+
+## [7.5.1](https://github.com/ionic-team/ionic-framework/compare/v7.5.0...v7.5.1) (2023-10-18)
+
+
+### Bug Fixes
+
+* **angular:** do not create duplicate menuController instances ([#28343](https://github.com/ionic-team/ionic-framework/issues/28343)) ([fa78676](https://github.com/ionic-team/ionic-framework/commit/fa78676d57eb80655ee9447ffa07dcfdae0c6b2a)), closes [#28337](https://github.com/ionic-team/ionic-framework/issues/28337)
+* **angular:** export missing lifecycle interfaces for standalone package ([#28346](https://github.com/ionic-team/ionic-framework/issues/28346)) ([dd93e0b](https://github.com/ionic-team/ionic-framework/commit/dd93e0b2689511f3145606f4dbb2c30dcf4c2950)), closes [/github.com/ionic-team/ionic-angular-standalone-codemods/pull/13/files/baa37ef1e3e8ba773b693db280542efba815482a#r1356414362](https://github.com//github.com/ionic-team/ionic-angular-standalone-codemods/pull/13/files/baa37ef1e3e8ba773b693db280542efba815482a/issues/r1356414362)
+
+
+
+
+
 # [7.5.0](https://github.com/ionic-team/ionic-framework/compare/v7.4.4...v7.5.0) (2023-10-11)
 
 
