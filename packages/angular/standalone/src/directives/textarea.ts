@@ -50,7 +50,7 @@ const TEXTAREA_INPUTS = [
 ];
 
 /**
- * Pulling the provider into an object works
+ * Pulling the provider into an object and using PURE works
  * around an ng-packagr issue that causes
  * components with multiple decorators and
  * a provider to be re-assigned. This re-assignment
@@ -59,7 +59,7 @@ const TEXTAREA_INPUTS = [
  */
 const accessorProvider = {
   provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => IonTextarea),
+  useExisting: /*@__PURE__*/ forwardRef(() => IonTextarea),
   multi: true,
 };
 

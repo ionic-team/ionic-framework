@@ -19,7 +19,7 @@ import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 const RADIO_INPUTS = ['color', 'disabled', 'justify', 'labelPlacement', 'legacy', 'mode', 'name', 'value'];
 
 /**
- * Pulling the provider into an object works
+ * Pulling the provider into an object and using PURE works
  * around an ng-packagr issue that causes
  * components with multiple decorators and
  * a provider to be re-assigned. This re-assignment
@@ -28,7 +28,7 @@ const RADIO_INPUTS = ['color', 'disabled', 'justify', 'labelPlacement', 'legacy'
  */
 const accessorProvider = {
   provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => IonRadio),
+  useExisting: /*@__PURE__*/ forwardRef(() => IonRadio),
   multi: true,
 };
 

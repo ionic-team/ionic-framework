@@ -61,7 +61,7 @@ const INPUT_INPUTS = [
 ];
 
 /**
- * Pulling the provider into an object works
+ * Pulling the provider into an object and using PURE works
  * around an ng-packagr issue that causes
  * components with multiple decorators and
  * a provider to be re-assigned. This re-assignment
@@ -70,7 +70,7 @@ const INPUT_INPUTS = [
  */
 const accessorProvider = {
   provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => IonInput),
+  useExisting: /*@__PURE__*/ forwardRef(() => IonInput),
   multi: true,
 };
 

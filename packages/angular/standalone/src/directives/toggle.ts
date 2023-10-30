@@ -30,7 +30,7 @@ const TOGGLE_INPUTS = [
 ];
 
 /**
- * Pulling the provider into an object works
+ * Pulling the provider into an object and using PURE works
  * around an ng-packagr issue that causes
  * components with multiple decorators and
  * a provider to be re-assigned. This re-assignment
@@ -39,7 +39,7 @@ const TOGGLE_INPUTS = [
  */
 const accessorProvider = {
   provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => IonToggle),
+  useExisting: /*@__PURE__*/ forwardRef(() => IonToggle),
   multi: true,
 };
 

@@ -19,7 +19,7 @@ import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 const SEGMENT_INPUTS = ['color', 'disabled', 'mode', 'scrollable', 'selectOnFocus', 'swipeGesture', 'value'];
 
 /**
- * Pulling the provider into an object works
+ * Pulling the provider into an object and using PURE works
  * around an ng-packagr issue that causes
  * components with multiple decorators and
  * a provider to be re-assigned. This re-assignment
@@ -28,7 +28,7 @@ const SEGMENT_INPUTS = ['color', 'disabled', 'mode', 'scrollable', 'selectOnFocu
  */
 const accessorProvider = {
   provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => IonSegment),
+  useExisting: /*@__PURE__*/ forwardRef(() => IonSegment),
   multi: true,
 };
 
