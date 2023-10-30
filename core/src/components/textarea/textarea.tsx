@@ -734,7 +734,13 @@ Developers can use the "legacy" property to continue using the legacy form marku
           'textarea-disabled': disabled,
         })}
       >
-        <label class="textarea-wrapper">
+        {/**
+         * htmlFor is needed so that clicking the label always focuses
+         * the textarea. Otherwise, if the start slot has something
+         * interactable, clicking the label would focus that instead
+         * since it comes before the textarea in the DOM.
+         */}
+        <label class="textarea-wrapper" htmlFor={inputId}>
           {this.renderLabelContainer()}
           <div class="native-wrapper" ref={(el) => (this.textareaWrapper = el)}>
             <slot name="start"></slot>
