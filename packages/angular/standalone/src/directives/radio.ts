@@ -7,6 +7,7 @@ import {
   HostListener,
   Injector,
   NgZone,
+  forwardRef,
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValueAccessor } from '@ionic/angular/common';
@@ -16,6 +17,12 @@ import { defineCustomElement } from '@ionic/core/components/ion-radio.js';
 import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 
 const RADIO_INPUTS = ['color', 'disabled', 'justify', 'labelPlacement', 'legacy', 'mode', 'name', 'value'];
+
+const accessorProvider = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => IonRadio),
+  multi: true,
+};
 
 @ProxyCmp({
   defineCustomElementFn: defineCustomElement,
@@ -27,13 +34,7 @@ const RADIO_INPUTS = ['color', 'disabled', 'justify', 'labelPlacement', 'legacy'
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: RADIO_INPUTS,
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: IonRadio,
-      multi: true,
-    },
-  ],
+  providers: [accessorProvider],
   standalone: true,
 })
 export class IonRadio extends ValueAccessor {

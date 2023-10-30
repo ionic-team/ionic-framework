@@ -7,6 +7,7 @@ import {
   HostListener,
   Injector,
   NgZone,
+  forwardRef,
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValueAccessor } from '@ionic/angular/common';
@@ -48,6 +49,12 @@ const DATETIME_INPUTS = [
   'yearValues',
 ];
 
+const accessorProvider = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => IonDatetime),
+  multi: true,
+};
+
 @ProxyCmp({
   defineCustomElementFn: defineCustomElement,
   inputs: DATETIME_INPUTS,
@@ -59,13 +66,7 @@ const DATETIME_INPUTS = [
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: DATETIME_INPUTS,
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: IonDatetime,
-      multi: true,
-    },
-  ],
+  providers: [accessorProvider],
   standalone: true,
 })
 export class IonDatetime extends ValueAccessor {

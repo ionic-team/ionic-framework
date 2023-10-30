@@ -7,6 +7,7 @@ import {
   HostListener,
   Injector,
   NgZone,
+  forwardRef,
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValueAccessor } from '@ionic/angular/common';
@@ -16,6 +17,12 @@ import { defineCustomElement } from '@ionic/core/components/ion-segment.js';
 import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 
 const SEGMENT_INPUTS = ['color', 'disabled', 'mode', 'scrollable', 'selectOnFocus', 'swipeGesture', 'value'];
+
+const accessorProvider = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => IonSegment),
+  multi: true,
+};
 
 @ProxyCmp({
   defineCustomElementFn: defineCustomElement,
@@ -27,13 +34,7 @@ const SEGMENT_INPUTS = ['color', 'disabled', 'mode', 'scrollable', 'selectOnFocu
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: SEGMENT_INPUTS,
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: IonSegment,
-      multi: true,
-    },
-  ],
+  providers: [accessorProvider],
   standalone: true,
 })
 export class IonSegment extends ValueAccessor {

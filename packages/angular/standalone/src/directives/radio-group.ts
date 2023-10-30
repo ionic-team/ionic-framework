@@ -7,6 +7,7 @@ import {
   HostListener,
   Injector,
   NgZone,
+  forwardRef,
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValueAccessor } from '@ionic/angular/common';
@@ -16,6 +17,12 @@ import { defineCustomElement } from '@ionic/core/components/ion-radio-group.js';
 import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 
 const RADIO_GROUP_INPUTS = ['allowEmptySelection', 'name', 'value'];
+
+const accessorProvider = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => IonRadioGroup),
+  multi: true,
+};
 
 @ProxyCmp({
   defineCustomElementFn: defineCustomElement,
@@ -27,13 +34,7 @@ const RADIO_GROUP_INPUTS = ['allowEmptySelection', 'name', 'value'];
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: RADIO_GROUP_INPUTS,
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: IonRadioGroup,
-      multi: true,
-    },
-  ],
+  providers: [accessorProvider],
   standalone: true,
 })
 export class IonRadioGroup extends ValueAccessor {

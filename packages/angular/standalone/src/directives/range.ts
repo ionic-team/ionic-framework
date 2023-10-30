@@ -7,6 +7,7 @@ import {
   HostListener,
   Injector,
   NgZone,
+  forwardRef,
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValueAccessor } from '@ionic/angular/common';
@@ -41,6 +42,12 @@ const RANGE_INPUTS = [
   'value',
 ];
 
+const accessorProvider = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => IonRange),
+  multi: true,
+};
+
 @ProxyCmp({
   defineCustomElementFn: defineCustomElement,
   inputs: RANGE_INPUTS,
@@ -51,13 +58,7 @@ const RANGE_INPUTS = [
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: RANGE_INPUTS,
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: IonRange,
-      multi: true,
-    },
-  ],
+  providers: [accessorProvider],
   standalone: true,
 })
 export class IonRange extends ValueAccessor {

@@ -7,6 +7,7 @@ import {
   HostListener,
   Injector,
   NgZone,
+  forwardRef,
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValueAccessor } from '@ionic/angular/common';
@@ -48,6 +49,12 @@ const TEXTAREA_INPUTS = [
   'wrap',
 ];
 
+const accessorProvider = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => IonTextarea),
+  multi: true,
+};
+
 @ProxyCmp({
   defineCustomElementFn: defineCustomElement,
   inputs: TEXTAREA_INPUTS,
@@ -59,13 +66,7 @@ const TEXTAREA_INPUTS = [
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: TEXTAREA_INPUTS,
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: IonTextarea,
-      multi: true,
-    },
-  ],
+  providers: [accessorProvider],
   standalone: true,
 })
 export class IonTextarea extends ValueAccessor {

@@ -7,6 +7,7 @@ import {
   HostListener,
   Injector,
   NgZone,
+  forwardRef,
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValueAccessor } from '@ionic/angular/common';
@@ -39,6 +40,12 @@ const SELECT_INPUTS = [
   'value',
 ];
 
+const accessorProvider = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => IonSelect),
+  multi: true,
+};
+
 @ProxyCmp({
   defineCustomElementFn: defineCustomElement,
   inputs: SELECT_INPUTS,
@@ -50,13 +57,7 @@ const SELECT_INPUTS = [
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: SELECT_INPUTS,
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: IonSelect,
-      multi: true,
-    },
-  ],
+  providers: [accessorProvider],
   standalone: true,
 })
 export class IonSelect extends ValueAccessor {
