@@ -37,6 +37,7 @@ export const routes: Routes = [
           { path: 'range', loadComponent: () => import('../value-accessors/range/range.component').then(c => c.RangeComponent) },
           { path: 'searchbar', loadComponent: () => import('../value-accessors/searchbar/searchbar.component').then(c => c.SearchbarComponent) },
           { path: 'segment', loadComponent: () => import('../value-accessors/segment/segment.component').then(c => c.SegmentComponent) },
+          { path: 'select', loadComponent: () => import('../value-accessors/select/select.component').then(c => c.SelectComponent) },
           { path: 'textarea', loadComponent: () => import('../value-accessors/textarea/textarea.component').then(c => c.TextareaComponent) },
           { path: 'toggle', loadComponent: () => import('../value-accessors/toggle/toggle.component').then(c => c.ToggleComponent) },
           { path: '**', redirectTo: 'checkbox' }

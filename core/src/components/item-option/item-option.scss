@@ -17,18 +17,6 @@
   font-family: $font-family-base;
 }
 
-:host(.in-list.item-options-end:last-child) {
-  @include padding-horizontal(
-    null, calc(.7em + var(--ion-safe-area-right))
-  );
-}
-
-:host(.in-list.item-options-start:first-child) {
-  @include padding-horizontal(
-    calc(.7em + var(--ion-safe-area-left)), null
-  );
-}
-
 :host(.ion-color) {
   background: current-color(base);
   color: current-color(contrast);
