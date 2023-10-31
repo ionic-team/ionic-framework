@@ -94,10 +94,7 @@ export class StackController {
      * This can happen e.g. when navigating to a page with navigateRoot and then using the browser back button
      */
     const isPopStateTransitionFromRootPage =
-      direction === 'back' &&
-      isDirectionBasedOnNavigationIds &&
-      leavingView?.root &&
-      currentNavigation?.trigger === 'popstate';
+      direction === 'back' && leavingView?.root && currentNavigation?.trigger === 'popstate';
 
     /**
      * whether direction based on stack order takes precedence over direction based on navigation ids
