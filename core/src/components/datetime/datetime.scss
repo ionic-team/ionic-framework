@@ -502,11 +502,12 @@ ion-picker-column-internal {
   @include text-inherit();
 
   position: relative;
+  
+  border: 0;
 
   background: var(--background);
   color: var(--color);
 
-  border: 0;
 }
 
 .calendar-month-year-toggle::after {
