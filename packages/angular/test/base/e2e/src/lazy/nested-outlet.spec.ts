@@ -27,5 +27,9 @@ describe('Nested Outlet', () => {
     cy.get('#goto-nested-page2').click();
   });
 
+  // Fixes https://github.com/ionic-team/ionic-framework/issues/28417
+  it('parentOutlet should be defined', () => {
+    cy.get('#parent-outlet span').should('have.text', 'true');
+  });
 });
 

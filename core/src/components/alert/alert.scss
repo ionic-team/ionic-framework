@@ -91,6 +91,26 @@
   overscroll-behavior-y: contain;
 }
 
+.alert-checkbox-label,
+.alert-radio-label {
+  /**
+   * This allows long words to wrap to the next line
+   * instead of flowing outside of the container.
+   *
+   * The "anywhere" keyword should be used instead
+   * of the "break-word" keyword since the parent
+   * container is using flexbox. Flex relies on min-content and
+   * max-content intrinsic sizes to structure the layout. Flex will
+   * wrap content only until it reaches its min-content intrinsic size
+   * which in this case is equal to the longest word in this container.
+   * "break-word" does not shrink the min-content intrinsic size
+   * of the flex item which causes the long word to still overflow.
+   * "anywhere" on the other hand does shrink the min-content
+   * intrinsic size which allows the long word to wrap to the next line.
+   */
+  overflow-wrap: anywhere;
+}
+
 /**
   * Scrollbars on mobile devices will be hidden.
   * Users can still scroll the content by swiping.

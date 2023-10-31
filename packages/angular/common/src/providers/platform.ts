@@ -68,12 +68,12 @@ export class Platform {
         });
       };
 
-      proxyEvent(this.pause, doc, 'pause');
-      proxyEvent(this.resume, doc, 'resume');
-      proxyEvent(this.backButton, doc, 'ionBackButton');
-      proxyEvent(this.resize, this.win, 'resize');
-      proxyEvent(this.keyboardDidShow, this.win, 'ionKeyboardDidShow');
-      proxyEvent(this.keyboardDidHide, this.win, 'ionKeyboardDidHide');
+      proxyEvent(this.pause, doc, 'pause', zone);
+      proxyEvent(this.resume, doc, 'resume', zone);
+      proxyEvent(this.backButton, doc, 'ionBackButton', zone);
+      proxyEvent(this.resize, this.win, 'resize', zone);
+      proxyEvent(this.keyboardDidShow, this.win, 'ionKeyboardDidShow', zone);
+      proxyEvent(this.keyboardDidHide, this.win, 'ionKeyboardDidHide', zone);
 
       let readyResolve: (value: string) => void;
       this._readyPromise = new Promise((res) => {
@@ -262,12 +262,20 @@ const readQueryParam = (url: string, key: string) => {
   return results ? decodeURIComponent(results[1].replace(/\+/g, ' ')) : null;
 };
 
-const proxyEvent = <T>(emitter: Subject<T>, el: EventTarget, eventName: string) => {
+const proxyEvent = <T>(emitter: Subject<T>, el: EventTarget, eventName: string, zone: NgZone) => {
   if (el) {
     el.addEventListener(eventName, (ev) => {
-      // ?? cordova might emit "null" events
-      const value = ev != null ? (ev as any).detail : undefined;
-      emitter.next(value);
+      /**
+       * `zone.run` is required to make sure that we are running inside the Angular zone
+       * at all times. This is necessary since an app that has Capacitor will
+       * override the `document.addEventListener` with its own implementation.
+       * The override causes the event to no longer be in the Angular zone.
+       */
+      zone.run(() => {
+        // ?? cordova might emit "null" events
+        const value = ev != null ? (ev as any).detail : undefined;
+        emitter.next(value);
+      });
     });
   }
 };
