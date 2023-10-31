@@ -32,7 +32,7 @@ configs().forEach(({ title, screenshot, config }) => {
  * The background color ensures that any border radius values can be seen.
  */
 configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
-  test.describe.only(title('list: lines with children'), () => {
+  test.describe(title('list: lines with children'), () => {
     test('last item in inset list with sliding item should not have line', async ({ page }) => {
       await page.setContent(
         `
