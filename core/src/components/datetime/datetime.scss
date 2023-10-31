@@ -495,19 +495,18 @@ ion-picker-column-internal {
 .calendar-month-year-toggle {
   @include padding(
     var(--padding-top),
-    var(--padding-end),
+    16px,
     var(--padding-bottom),
     calc(var(--padding-start) + var(--ion-safe-area-left, 0px))
   );
   @include text-inherit();
 
   position: relative;
-  
+
   border: 0;
 
   background: var(--background);
   color: var(--color);
-
 }
 
 .calendar-month-year-toggle::after {

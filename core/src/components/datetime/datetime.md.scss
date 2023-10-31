@@ -141,6 +141,10 @@
   color: $text-color-step-200;
 }
 
+.calendar-month-year-toggle {
+  min-height: 48px;
+}
+
 .calendar-month-year-toggle ion-ripple-effect {
   color: currentColor;
 }
