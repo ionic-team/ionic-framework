@@ -34,6 +34,10 @@ configs().forEach(({ title, screenshot, config }) => {
 configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('list: lines with children'), () => {
     test('only item in inset list should not have line', async ({ page }) => {
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/28435',
+      });
       await page.setContent(
         `
         <style>
@@ -62,6 +66,10 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       await expect(container).toHaveScreenshot(screenshot('inset-list-only-item-no-lines'));
     });
     test('last item in inset list with end options should not have line', async ({ page }) => {
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/28435',
+      });
       await page.setContent(
         `
         <style>
