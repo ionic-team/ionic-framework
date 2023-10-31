@@ -65,6 +65,8 @@ export class StackController {
     const consumeResult = this.navCtrl.consumeTransition();
     let { direction, animation, animationBuilder } = consumeResult;
     const leavingView = this.activeView;
+    const leavingViewIndex = leavingView ? this.views.indexOf(leavingView) : -1;
+
     const tabSwitch = isTabSwitch(enteringView, leavingView);
     if (tabSwitch) {
       direction = 'back';
@@ -73,17 +75,24 @@ export class StackController {
 
     const viewsSnapshot = this.views.slice();
 
-    let currentNavigation;
+    const currentNavigation = this.router.getCurrentNavigation();
 
-    const router = this.router as any;
+    /**
+     * The user triggered a back navigation on a page that was navigated to with root. In this case, the new page
+     * becomes the root and the leavingView is removed.
+     *
+     * This can happen e.g. when navigating to a page with navigateRoot and then using the browser back button
+     */
+    const isPopStateTransitionFromRootPage =
+      direction === 'back' && leavingView?.root && currentNavigation?.trigger === 'popstate';
 
-    // Angular >= 7.2.0
-    if (router.getCurrentNavigation) {
-      currentNavigation = router.getCurrentNavigation();
+    if (isPopStateTransitionFromRootPage) {
+      direction = 'root';
+      animation = undefined;
 
-      // Angular < 7.2.0
-    } else if (router.navigations?.value) {
-      currentNavigation = router.navigations.value;
+      if (leavingViewIndex >= 0) {
+        this.views.splice(leavingViewIndex, 1);
+      }
     }
 
     /**

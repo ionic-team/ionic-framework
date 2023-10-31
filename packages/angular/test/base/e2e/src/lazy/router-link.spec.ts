@@ -160,7 +160,7 @@ function testRoot() {
   cy.get('app-router-link-page #canGoBack').should('have.text', 'false');
 
   cy.go('back');
-  cy.wait(500);
+  cy.wait(100);
   cy.testStack('ion-router-outlet', ['app-router-link']);
   cy.testLifeCycle('app-router-link', {
     ionViewWillEnter: 1,
