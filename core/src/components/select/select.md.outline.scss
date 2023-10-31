@@ -80,6 +80,10 @@
 :host(.select-fill-outline.select-label-placement-stacked) .label-text-wrapper,
 :host(.select-fill-outline.select-label-placement-floating) .label-text-wrapper {
   position: absolute;
+  top: 50%;
+  @include transform(translateY(-50%), scale(1));
+  transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1), transform 150ms cubic-bezier(0.4, 0, 0.2, 1),
+    top 150ms cubic-bezier(0.4, 0, 0.2, 1);
 
   /**
    * Label text should not extend
@@ -106,6 +110,7 @@
 :host(.ion-focused.select-fill-outline.select-label-placement-floating) .label-text-wrapper,
 :host(.has-value.select-fill-outline.select-label-placement-floating) .label-text-wrapper,
 :host(.select-fill-outline.select-label-placement-stacked) .label-text-wrapper {
+  top: 0;
   @include transform(translateY(-32%), scale(#{$form-control-label-stacked-scale}));
   @include margin(0);
 
