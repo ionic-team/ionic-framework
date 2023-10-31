@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { ComponentRef, NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AnimationBuilder, NavDirection, RouterDirection } from '@ionic/core';
+import type { AnimationBuilder, RouterDirection } from '@ionic/core/components';
 
 import { bindLifecycleEvents } from '../../providers/angular-delegate';
 import { NavController } from '../../providers/nav-controller';
@@ -105,8 +105,7 @@ export class StackController {
      * only applied if the user did not explicitly set the direction
      * (e.g. via the NavController, routerLink directive etc.)
      */
-    const shouldSuggestedDirectionBasedOnStackOrderTakePrecedence =
-      isDirectionBasedOnNavigationIds && suggestedDirectionBasedOnStackOrder;
+    const useDirectionBasedOnStackOrder = isDirectionBasedOnNavigationIds && suggestedDirectionBasedOnStackOrder;
 
     if (isPopStateTransitionFromRootPage) {
       direction = 'root';
@@ -115,7 +114,7 @@ export class StackController {
       if (leavingViewIndex >= 0) {
         this.views.splice(leavingViewIndex, 1);
       }
-    } else if (shouldSuggestedDirectionBasedOnStackOrderTakePrecedence) {
+    } else if (useDirectionBasedOnStackOrder) {
       direction = suggestedDirectionBasedOnStackOrder;
       animation = suggestedDirectionBasedOnStackOrder;
     }
