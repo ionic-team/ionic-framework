@@ -33,7 +33,7 @@ configs().forEach(({ title, screenshot, config }) => {
  */
 configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('list: lines with children'), () => {
-    test('last item in inset list with sliding item should not have line', async ({ page }) => {
+    test('last item in inset list with end options should not have line', async ({ page }) => {
       await page.setContent(
         `
         <style>
@@ -88,7 +88,64 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       const container = page.locator('#container');
 
-      await expect(container).toHaveScreenshot(screenshot('inset-list-item-sliding-lines'));
+      await expect(container).toHaveScreenshot(screenshot('inset-list-end-options-lines'));
+    });
+    test('last item in inset list with start options should not have line', async ({ page }) => {
+      await page.setContent(
+        `
+        <style>
+          #container {
+            padding: 10px;
+            background: #0088cc;
+          }
+
+          ion-item {
+            --border-color: red;
+          }
+        </style>
+        <div id="container">
+          <ion-list inset="true">
+            <ion-item-sliding>
+              <ion-item-options slot="start">
+                <ion-item-option color="warning">
+                  <ion-icon slot="icon-only" name="pin"></ion-icon>
+                </ion-item-option>
+              </ion-item-options>
+              <ion-item>
+                <ion-label>Item 0</ion-label>
+              </ion-item>
+            </ion-item-sliding>
+
+            <ion-item-sliding>
+              <ion-item-options slot="start">
+                <ion-item-option color="warning">
+                  <ion-icon slot="icon-only" name="pin"></ion-icon>
+                </ion-item-option>
+              </ion-item-options>
+              <ion-item>
+                <ion-label>Item 1</ion-label>
+              </ion-item>
+            </ion-item-sliding>
+
+            <ion-item-sliding>
+              <ion-item-options slot="start">
+                <ion-item-option color="warning">
+                  <ion-icon slot="icon-only" name="pin"></ion-icon>
+                </ion-item-option>
+              </ion-item-options>
+              <ion-item>
+                <ion-label>Item 2</ion-label>
+              </ion-item>
+            </ion-item-sliding>
+          </ion-list>
+        </div>
+      `,
+        config
+      );
+
+      const container = page.locator('#container');
+
+      await expect(container).toHaveScreenshot(screenshot('inset-list-start-options-lines'));
     });
   });
 });
