@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.5.3-nightly.20231031](https://github.com/ionic-team/ionic-framework/compare/v7.5.2...v7.5.3-nightly.20231031) (2023-10-31)
+
+
+### Bug Fixes
+
+* **angular:** NavController works with nested outlets ([#28421](https://github.com/ionic-team/ionic-framework/issues/28421)) ([90acad1](https://github.com/ionic-team/ionic-framework/commit/90acad1837b117542830ec0083389a35c5b4ee76)), closes [#28417](https://github.com/ionic-team/ionic-framework/issues/28417)
+* **angular:** run platform subscriptions inside zone ([#28404](https://github.com/ionic-team/ionic-framework/issues/28404)) ([a4b303e](https://github.com/ionic-team/ionic-framework/commit/a4b303e1338a35756a9cf7f67508d24d2f8537a2)), closes [#19539](https://github.com/ionic-team/ionic-framework/issues/19539)
+* **angular:** standalone form components do not error when multiple are used ([#28423](https://github.com/ionic-team/ionic-framework/issues/28423)) ([89698b3](https://github.com/ionic-team/ionic-framework/commit/89698b338fb05cde427c98720c238d2365abdaa7)), closes [#28418](https://github.com/ionic-team/ionic-framework/issues/28418)
+
+
+
+
+
 ## [7.5.2](https://github.com/ionic-team/ionic-framework/compare/v7.5.1...v7.5.2) (2023-10-25)
 
 
