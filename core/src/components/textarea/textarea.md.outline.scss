@@ -112,6 +112,11 @@
   @include margin(12px, 0px, 0px, 0px);
 }
 
+:host(.textarea-fill-outline.textarea-label-placement-stacked) ::slotted([slot='start'], [slot='end']),
+:host(.textarea-fill-outline.textarea-label-placement-floating) ::slotted([slot='start'], [slot='end']) {
+  margin-top: 12px;
+}
+
 // Textarea Fill: Outline Outline Container
 // ----------------------------------------------------------------
 

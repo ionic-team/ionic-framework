@@ -313,9 +313,6 @@
 
   flex-grow: 1;
 
-  // ensure start/end slot content is vertically centered
-  align-items: center;
-
   width: 100%;
 
   height: 100%;
@@ -330,8 +327,6 @@
 
 .native-wrapper textarea {
   @include padding(var(--padding-top), 0px, var(--padding-bottom), 0px);
-
-  align-self: stretch;
 }
 
 // TODO: FW-2876 - Remove this
@@ -673,6 +668,11 @@
   @include margin(8px, 0px, 0px, 0px);
 }
 
+:host(.textarea-label-placement-stacked) ::slotted([slot='start'], [slot='end']),
+:host(.textarea-label-placement-floating) ::slotted([slot='start'], [slot='end']) {
+  margin-top: 8px;
+}
+
 /**
  * This makes the label sit over the textarea
  * when the textarea is blurred and has no value.
@@ -710,6 +710,12 @@
 
 // Start/End Slots
 // ----------------------------------------------------------------
+
+::slotted([slot="start"], [slot="end"]) {
+  @include padding(var(--padding-top), 0, var(--padding-bottom), 0);
+
+  align-self: start;
+}
 
 ::slotted([slot="start"]) {
   margin-inline-end: $form-control-label-margin;
