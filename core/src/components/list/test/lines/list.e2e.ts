@@ -33,6 +33,34 @@ configs().forEach(({ title, screenshot, config }) => {
  */
 configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('list: lines with children'), () => {
+    test('only item in inset list should not have line', async ({ page }) => {
+      await page.setContent(
+        `
+        <style>
+          #container {
+            padding: 10px;
+            background: #0088cc;
+          }
+
+          ion-item {
+            --border-color: red;
+          }
+        </style>
+        <div id="container">
+          <ion-list inset="true">
+            <ion-item>
+              <ion-label>Item 0</ion-label>
+            </ion-item>
+          </ion-list>
+        </div>
+      `,
+        config
+      );
+
+      const container = page.locator('#container');
+
+      await expect(container).toHaveScreenshot(screenshot('inset-list-only-item-no-lines'));
+    });
     test('last item in inset list with end options should not have line', async ({ page }) => {
       await page.setContent(
         `
@@ -88,7 +116,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       const container = page.locator('#container');
 
-      await expect(container).toHaveScreenshot(screenshot('inset-list-end-options-lines'));
+      await expect(container).toHaveScreenshot(screenshot('inset-list-end-options-no-lines'));
     });
     test('last item in inset list with start options should not have line', async ({ page }) => {
       await page.setContent(
@@ -145,7 +173,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       const container = page.locator('#container');
 
-      await expect(container).toHaveScreenshot(screenshot('inset-list-start-options-lines'));
+      await expect(container).toHaveScreenshot(screenshot('inset-list-start-options-no-lines'));
     });
   });
 });
