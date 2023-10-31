@@ -67,15 +67,19 @@ export class StackController {
     const leavingView = this.activeView;
     const leavingViewIndex = leavingView ? this.views.indexOf(leavingView) : -1;
 
-    const tabSwitch = isTabSwitch(enteringView, leavingView);
-    if (tabSwitch) {
-      direction = 'back';
-      animation = undefined;
-    }
-
     const viewsSnapshot = this.views.slice();
 
     const currentNavigation = this.router.getCurrentNavigation();
+
+    /**
+     * If the navigation action sets `replaceUrl: true` then we need to make sure
+     * we remove the last item from our views stack
+     */
+    if (currentNavigation?.extras?.replaceUrl && currentNavigation?.trigger !== 'popstate') {
+      if (this.views.length > 0) {
+        this.views.splice(-1, 1);
+      }
+    }
 
     /**
      * The user triggered a back navigation on a page that was navigated to with root. In this case, the new page
@@ -95,17 +99,10 @@ export class StackController {
       }
     }
 
-    /**
-     * If the navigation action
-     * sets `replaceUrl: true`
-     * then we need to make sure
-     * we remove the last item
-     * from our views stack
-     */
-    if (currentNavigation?.extras?.replaceUrl) {
-      if (this.views.length > 0) {
-        this.views.splice(-1, 1);
-      }
+    const tabSwitch = isTabSwitch(enteringView, leavingView);
+    if (tabSwitch) {
+      direction = 'back';
+      animation = undefined;
     }
 
     const reused = this.views.includes(enteringView);
