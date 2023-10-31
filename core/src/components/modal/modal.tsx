@@ -73,6 +73,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   private isSheetModal = false;
   private currentBreakpoint?: number;
   private wrapperEl?: HTMLElement;
+  private backdropEl?: HTMLIonBackdropElement;
   private sortedBreakpoints?: number[];
   private keyboardOpenCallback?: () => void;
   private moveSheetToBreakpoint?: (options: MoveSheetToBreakpointOptions) => Promise<void>;
@@ -90,7 +91,6 @@ export class Modal implements ComponentInterface, OverlayInterface {
 
   lastFocus?: HTMLElement;
   animation?: Animation;
-  backdropEl?: HTMLIonBackdropElement;
 
   @State() presented = false;
 

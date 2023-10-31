@@ -1,8 +1,9 @@
 import { newSpecPage } from '@stencil/core/testing';
 
-import { Modal } from '../../../components/modal/modal';
 import { Nav } from '../../../components/nav/nav';
 import { RouterOutlet } from '../../../components/router-outlet/router-outlet';
+import { Modal } from '../../../components/modal/modal';
+
 import { setRootAriaHidden } from '../../overlays';
 
 describe('setRootAriaHidden()', () => {

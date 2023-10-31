@@ -43,7 +43,6 @@ export class Picker implements ComponentInterface, OverlayInterface {
   private readonly triggerController = createTriggerController();
 
   private durationTimeout?: ReturnType<typeof setTimeout>;
-
   lastFocus?: HTMLElement;
 
   @Element() el!: HTMLIonPickerElement;
