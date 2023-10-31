@@ -1,11 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  EventEmitter,
-  NgZone,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, NgZone } from '@angular/core';
 import type { OnInit } from '@angular/core';
 import type { Components } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-radio.js';
