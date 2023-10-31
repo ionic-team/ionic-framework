@@ -23,12 +23,28 @@
   @include border-radius($list-inset-md-border-radius);
 }
 
-.list-md.list-inset ion-item:first-child {
+/**
+ * These selectors ensure the first item in the list
+ * has the correct radius.
+ * We need to consider the following scenarios:
+ 1. The first item in a list.
+ 2. The item in the first item-sliding in a list.
+ */
+.list-md.list-inset ion-item:first-child,
+.list-md.list-inset ion-item-sliding:first-child ion-item {
   --border-radius: #{$list-inset-md-border-radius $list-inset-md-border-radius 0 0};
 }
 
-.list-md.list-inset ion-item:last-child {
-  --border-radius: #{0 0 $list-inset-md-border-radius, $list-inset-md-border-radius};
+/**
+ * These selectors ensure the last item in the list
+ * do not have a border and has the correct radius.
+ * We need to consider the following scenarios:
+ 1. The last item in a list.
+ 2. The item in the last item-sliding in a list.
+ */
+.list-md.list-inset ion-item:last-child,
+.list-md.list-inset ion-item-sliding:last-child ion-item {
+  --border-radius: #{0 0 $list-inset-md-border-radius $list-inset-md-border-radius};
   --border-width: 0;
   --inner-border-width: 0;
 }

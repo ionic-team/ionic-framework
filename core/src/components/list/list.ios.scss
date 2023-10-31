@@ -19,7 +19,14 @@
   @include border-radius($list-inset-ios-border-radius);
 }
 
-.list-ios.list-inset ion-item:last-child {
+/**
+ * These selectors ensure the last item in the list
+ * do not have a border. We need to consider the following scenarios:
+ 1. The last item in a list.
+ 2. The item in the last item-sliding in a list.
+ */
+.list-ios.list-inset ion-item:last-child,
+.list-ios.list-inset ion-item-sliding:last-child ion-item {
   --border-width: 0;
   --inner-border-width: 0;
 }
