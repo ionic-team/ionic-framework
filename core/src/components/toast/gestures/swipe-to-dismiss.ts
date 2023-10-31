@@ -237,7 +237,7 @@ export const createSwipeToDismissGesture = (
     /**
      * The animation speed should depend on how quickly
      * the user flicks the toast across the screen. However,
-     * it should be no slower than 300ms.
+     * it should be no slower than 200ms.
      * We use Math.abs on the remainingDistance because that value
      * can be negative when swiping up on a middle position toast.
      */
