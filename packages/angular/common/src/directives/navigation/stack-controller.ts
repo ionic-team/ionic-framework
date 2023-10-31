@@ -93,24 +93,29 @@ export class StackController {
      *
      * This can happen e.g. when navigating to a page with navigateRoot and then using the browser back button
      */
-    if (
+    const isPopStateTransitionFromRootPage =
       direction === 'back' &&
       isDirectionBasedOnNavigationIds &&
       leavingView?.root &&
-      currentNavigation?.trigger === 'popstate'
-    ) {
-      if (leavingViewIndex >= 0) {
-        this.views.splice(leavingViewIndex, 1);
-      }
-    }
+      currentNavigation?.trigger === 'popstate';
 
     /**
-     * direction based on stack order takes precedence over direction based on navigation ids
+     * whether direction based on stack order takes precedence over direction based on navigation ids
      *
      * only applied if the user did not explicitly set the direction
      * (e.g. via the NavController, routerLink directive etc.)
      */
-    if (isDirectionBasedOnNavigationIds && suggestedDirectionBasedOnStackOrder) {
+    const shouldSuggestedDirectionBasedOnStackOrderTakePrecedence =
+      isDirectionBasedOnNavigationIds && suggestedDirectionBasedOnStackOrder;
+
+    if (isPopStateTransitionFromRootPage) {
+      direction = 'root';
+      animation = undefined;
+
+      if (leavingViewIndex >= 0) {
+        this.views.splice(leavingViewIndex, 1);
+      }
+    } else if (shouldSuggestedDirectionBasedOnStackOrderTakePrecedence) {
       direction = suggestedDirectionBasedOnStackOrder;
       animation = suggestedDirectionBasedOnStackOrder;
     }
