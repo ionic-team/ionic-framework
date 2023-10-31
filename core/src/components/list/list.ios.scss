@@ -27,8 +27,8 @@
  2. The last item in a list as long as it is not the only item.
  3. The item in the last item-sliding in a list.
  * Note that we do not select ion-item:last-of-type
- * because that will cause the borders to disappear for
- * when for items in item-sliding where the item is the last
+ * because that will cause the borders to disappear on
+ * items in an item-sliding when the item is the last
  * element in the item-sliding container.
  */
 .list-ios.list-inset ion-item:only-child,
