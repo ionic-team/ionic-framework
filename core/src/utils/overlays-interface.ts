@@ -2,8 +2,6 @@ import type { EventEmitter } from '@stencil/core';
 
 import type { AnimationBuilder, HTMLStencilElement } from '../interface';
 
-import type { BlockerDelegate } from './gesture/gesture-controller';
-
 export interface OverlayEventDetail<T = any> {
   data?: T;
   role?: string;
@@ -15,16 +13,6 @@ export interface OverlayInterface {
   keyboardClose: boolean;
   overlayIndex: number;
   presented: boolean;
-
-  /**
-   * Reference to the ion-backdrop element in the overlay shadow DOM.
-   */
-  backdropEl?: HTMLIonBackdropElement;
-  /**
-   * Instance of the gesture controller, used to enable and disable scrolling
-   * on the main content when the overlay is presented and dismissed.
-   */
-  blocker?: BlockerDelegate;
 
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;

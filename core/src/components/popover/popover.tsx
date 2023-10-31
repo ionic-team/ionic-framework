@@ -70,7 +70,6 @@ export class Popover implements ComponentInterface, PopoverInterface {
   private focusDescendantOnPresent = false;
 
   lastFocus?: HTMLElement;
-  backdropEl?: HTMLIonBackdropElement;
 
   @State() presented = false;
 
@@ -677,14 +676,7 @@ export class Popover implements ComponentInterface, PopoverInterface {
         onIonPopoverDidDismiss={onLifecycle}
         onIonBackdropTap={this.onBackdropTap}
       >
-        {!parentPopover && (
-          <ion-backdrop
-            ref={(el) => (this.backdropEl = el)}
-            tappable={this.backdropDismiss}
-            visible={this.showBackdrop}
-            part="backdrop"
-          />
-        )}
+        {!parentPopover && <ion-backdrop tappable={this.backdropDismiss} visible={this.showBackdrop} part="backdrop" />}
 
         <div class="popover-wrapper ion-overlay-wrapper" onClick={dismissOnSelect ? () => this.dismiss() : undefined}>
           {enableArrow && <div class="popover-arrow" part="arrow"></div>}

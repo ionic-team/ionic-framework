@@ -50,7 +50,6 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
   presented = false;
   lastFocus?: HTMLElement;
   animation?: any;
-  backdropEl?: HTMLIonBackdropElement;
 
   @Element() el!: HTMLIonActionSheetElement;
 
@@ -367,7 +366,7 @@ export class ActionSheet implements ComponentInterface, OverlayInterface {
         onIonActionSheetWillDismiss={this.dispatchCancelHandler}
         onIonBackdropTap={this.onBackdropTap}
       >
-        <ion-backdrop ref={(el) => (this.backdropEl = el)} tappable={this.backdropDismiss} />
+        <ion-backdrop tappable={this.backdropDismiss} />
 
         <div tabindex="0"></div>
 

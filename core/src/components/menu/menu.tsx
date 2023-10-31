@@ -52,10 +52,10 @@ export class Menu implements ComponentInterface, MenuI {
   width!: number;
   _isOpen = false;
 
-  backdropEl?: HTMLIonBackdropElement;
   menuInnerEl?: HTMLElement;
   contentEl?: HTMLElement;
   lastFocus?: HTMLElement;
+  backdropEl?: HTMLIonBackdropElement;
 
   private inheritedAttributes: Attributes = {};
 

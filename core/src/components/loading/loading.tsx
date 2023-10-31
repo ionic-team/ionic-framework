@@ -50,7 +50,6 @@ export class Loading implements ComponentInterface, OverlayInterface {
 
   presented = false;
   lastFocus?: HTMLElement;
-  backdropEl?: HTMLIonBackdropElement;
 
   @Element() el!: HTMLIonLoadingElement;
 
@@ -338,11 +337,7 @@ export class Loading implements ComponentInterface, OverlayInterface {
           'loading-translucent': this.translucent,
         }}
       >
-        <ion-backdrop
-          ref={(el) => (this.backdropEl = el)}
-          visible={this.showBackdrop}
-          tappable={this.backdropDismiss}
-        />
+        <ion-backdrop visible={this.showBackdrop} tappable={this.backdropDismiss} />
 
         <div tabindex="0"></div>
 

@@ -185,7 +185,7 @@ class GestureDelegate {
   }
 }
 
-export class BlockerDelegate {
+class BlockerDelegate {
   private ctrl?: GestureController;
 
   constructor(
@@ -243,5 +243,5 @@ export interface BlockerConfig {
   disableScroll?: boolean;
 }
 
-const BACKDROP_NO_SCROLL = 'backdrop-no-scroll';
+export const BACKDROP_NO_SCROLL = 'backdrop-no-scroll';
 export const GESTURE_CONTROLLER = new GestureController();
