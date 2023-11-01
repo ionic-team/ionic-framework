@@ -9,9 +9,8 @@
     "lint": "npm run eslint && npm run prettier -- --write --cache",
     "lint.fix": "npm run eslint -- --fix && npm run prettier -- --write --cache",
     "bundle": "rollup --config rollup.config.js",
-    "build": "npm run clean && npm run compile && npm run bundle",
+    "build": "npm run clean && npm run bundle",
     "clean": "rimraf dist",
-    "compile": "npm run tsc",
     "tsc": "tsc -p .",
     "sync": "sh ./scripts/sync.sh"
   },
@@ -50,6 +49,7 @@
   "devDependencies": {
     "@ionic/eslint-config": "^0.3.0",
     "@ionic/prettier-config": "^2.0.0",
+    "@rollup/plugin-typescript": "^11.1.5",
     "@types/jest": "^28.1.1",
     "@types/node": "^14.10.1",
     "@typescript-eslint/eslint-plugin": "^5.48.2",
