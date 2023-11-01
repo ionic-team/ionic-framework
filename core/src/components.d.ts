@@ -27,7 +27,7 @@ import { PickerButton, PickerColumn } from "./components/picker/picker-interface
 import { PickerColumnItem } from "./components/picker-column-internal/picker-column-internal-interfaces";
 import { PickerInternalChangeEventDetail } from "./components/picker-internal/picker-internal-interfaces";
 import { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from "./components/popover/popover-interface";
-import { RadioGroupChangeEventDetail } from "./components/radio-group/radio-group-interface";
+import { RadioGroupChangeEventDetail, RadioGroupCompareFn } from "./components/radio-group/radio-group-interface";
 import { PinFormatter, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue } from "./components/range/range-interface";
 import { RefresherEventDetail } from "./components/refresher/refresher-interface";
 import { ItemReorderEventDetail } from "./components/reorder-group/reorder-group-interface";
@@ -63,7 +63,7 @@ export { PickerButton, PickerColumn } from "./components/picker/picker-interface
 export { PickerColumnItem } from "./components/picker-column-internal/picker-column-internal-interfaces";
 export { PickerInternalChangeEventDetail } from "./components/picker-internal/picker-internal-interfaces";
 export { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from "./components/popover/popover-interface";
-export { RadioGroupChangeEventDetail } from "./components/radio-group/radio-group-interface";
+export { RadioGroupChangeEventDetail, RadioGroupCompareFn } from "./components/radio-group/radio-group-interface";
 export { PinFormatter, RangeChangeEventDetail, RangeKnobMoveEndEventDetail, RangeKnobMoveStartEventDetail, RangeValue } from "./components/range/range-interface";
 export { RefresherEventDetail } from "./components/refresher/refresher-interface";
 export { ItemReorderEventDetail } from "./components/reorder-group/reorder-group-interface";
@@ -2266,6 +2266,10 @@ export namespace Components {
          */
         "allowEmptySelection": boolean;
         /**
+          * This property allows developers to specify a custom function or property name for comparing objects when determining the selected option in the ion-radio-group. When not specified, the default behavior will use object equality (===) for comparison.
+         */
+        "compareWith"?: string | RadioGroupCompareFn | null;
+        /**
           * The name of the control, which is submitted with the form data.
          */
         "name": string;
@@ -2684,7 +2688,7 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * A property name or function used to compare object values
+          * This property allows developers to specify a custom function or property name for comparing objects when determining the selected option in the ion-select. When not specified, the default behavior will use object equality (===) for comparison.
          */
         "compareWith"?: string | SelectCompareFn | null;
         /**
@@ -6307,6 +6311,10 @@ declare namespace LocalJSX {
          */
         "allowEmptySelection"?: boolean;
         /**
+          * This property allows developers to specify a custom function or property name for comparing objects when determining the selected option in the ion-radio-group. When not specified, the default behavior will use object equality (===) for comparison.
+         */
+        "compareWith"?: string | RadioGroupCompareFn | null;
+        /**
           * The name of the control, which is submitted with the form data.
          */
         "name"?: string;
@@ -6788,7 +6796,7 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * A property name or function used to compare object values
+          * This property allows developers to specify a custom function or property name for comparing objects when determining the selected option in the ion-select. When not specified, the default behavior will use object equality (===) for comparison.
          */
         "compareWith"?: string | SelectCompareFn | null;
         /**

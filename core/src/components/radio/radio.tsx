@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 import type { LegacyFormController } from '@utils/forms';
-import { createLegacyFormController } from '@utils/forms';
+import { createLegacyFormController, isOptionSelected } from '@utils/forms';
 import { addEventListener, getAriaLabel, removeEventListener } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 import { createColorClasses, hostContext } from '@utils/theme';
@@ -197,7 +197,9 @@ export class Radio implements ComponentInterface {
 
   private updateState = () => {
     if (this.radioGroup) {
-      this.checked = this.radioGroup.value === this.value;
+      const { compareWith, value: radioGroupValue } = this.radioGroup;
+
+      this.checked = isOptionSelected(radioGroupValue, this.value, compareWith);
     }
   };
 
