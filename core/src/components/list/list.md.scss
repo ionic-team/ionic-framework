@@ -60,7 +60,7 @@
 /**
  * The only item in a list should have a border radius
  * on all corners.
- *  We target :only-child instead of :only-of-type
+ * We target :only-child instead of :only-of-type
  * otherwise borders will disappear on items inside of
  * ion-item-sliding because the item will be the only
  * one of its type inside of the ion-item-sliding group.
