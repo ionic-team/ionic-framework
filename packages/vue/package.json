@@ -9,6 +9,7 @@
     "lint.fix": "npm run eslint -- --fix && npm run prettier -- --write --cache",
     "test": "jest",
     "build": "npm run clean && npm run copy && npm run copy.overlays && npm run bundle && npm run build.vetur && npm run build.web-types",
+    "build.watch": "npm run build && npm run bundle -- --watch",
     "bundle": "rollup --config rollup.config.js",
     "clean": "rimraf dist",
     "build.web-types": "node ./scripts/build-web-types.js",

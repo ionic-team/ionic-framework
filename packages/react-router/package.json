@@ -21,6 +21,7 @@
   },
   "scripts": {
     "build": "npm run clean && npm run compile",
+    "build.watch": "npm run build && npm run compile -- --watch",
     "clean": "rimraf dist",
     "compile": "rollup -c",
     "eslint": "eslint src",
