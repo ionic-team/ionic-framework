@@ -1,6 +1,6 @@
 {
   "name": "@ionic/react-router",
-  "version": "7.5.2",
+  "version": "7.5.3",
   "description": "React Router wrapper for @ionic/react",
   "keywords": [
     "ionic",
@@ -23,7 +23,6 @@
     "build": "npm run clean && npm run compile",
     "clean": "rimraf dist",
     "compile": "rollup -c",
-    "release": "np --any-branch --no-cleanup",
     "eslint": "eslint src",
     "prettier": "prettier \"./src/**/*.{html,ts,tsx,js,jsx}\"",
     "lint": "npm run eslint && npm run prettier -- --write --cache",
@@ -36,7 +35,7 @@
     "dist/"
   ],
   "dependencies": {
-    "@ionic/react": "^7.5.2",
+    "@ionic/react": "^7.5.3",
     "tslib": "*"
   },
   "peerDependencies": {
