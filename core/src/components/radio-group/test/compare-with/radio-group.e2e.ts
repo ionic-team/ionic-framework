@@ -42,5 +42,50 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         value: 'red',
       });
     });
+
+    test('should work with different parameter types', async ({ page }) => {
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/25759',
+      });
+
+      await page.setContent(
+        `
+        <ion-radio-group value="3"></ion-radio-group>
+
+        <script>
+          const data = [
+            { id: 1, name: 'Option #1' },
+            { id: 2, name: 'Option #2' },
+            { id: 3, name: 'Option #3' },
+          ]
+          const radioGroup = document.querySelector('ion-radio-group');
+          radioGroup.compareWith = (val1, val2) => {
+            // convert val1 to a number
+            return +val1 === val2;
+          }
+
+          data.forEach((d) => {
+            const radio = document.createElement('ion-radio');
+
+            radio.value = d.id;
+            radio.textContent = d.name;
+
+            const item = document.createElement('ion-item');
+            item.appendChild(radio);
+
+            radioGroup.appendChild(item);
+          });
+        </script>
+      `,
+        config
+      );
+
+      const radios = page.locator('ion-radio');
+
+      await expect(radios.nth(0)).toHaveAttribute('aria-checked', 'false');
+      await expect(radios.nth(1)).toHaveAttribute('aria-checked', 'false');
+      await expect(radios.nth(2)).toHaveAttribute('aria-checked', 'true');
+    });
   });
 });
