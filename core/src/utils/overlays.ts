@@ -20,6 +20,7 @@ import type {
 } from '../interface';
 
 import { CoreDelegate } from './framework-delegate';
+import { BACKDROP_NO_SCROLL } from './gesture/gesture-controller';
 import { OVERLAY_BACK_BUTTON_PRIORITY } from './hardware-back-button';
 import { addEventListener, componentOnReady, focusElement, getElementRoot, removeEventListener } from './helpers';
 import { printIonWarning } from './logging';
@@ -471,6 +472,8 @@ export const present = async <OverlayPresentOptions>(
 
   setRootAriaHidden(true);
 
+  document.body.classList.add(BACKDROP_NO_SCROLL);
+
   overlay.presented = true;
   overlay.willPresent.emit();
   overlay.willPresentShorthand?.emit();
@@ -549,12 +552,15 @@ export const dismiss = async <OverlayDismissOptions>(
     return false;
   }
 
+  const lastOverlay = doc !== undefined && getPresentedOverlays(doc).length === 1;
+
   /**
    * If this is the last visible overlay then
    * we want to re-add the root to the accessibility tree.
    */
-  if (doc !== undefined && getPresentedOverlays(doc).length === 1) {
+  if (lastOverlay) {
     setRootAriaHidden(false);
+    document.body.classList.remove(BACKDROP_NO_SCROLL);
   }
 
   overlay.presented = false;
@@ -574,6 +580,7 @@ export const dismiss = async <OverlayDismissOptions>(
     if (role !== GESTURE) {
       await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
     }
+
     overlay.didDismiss.emit({ data, role });
     overlay.didDismissShorthand?.emit({ data, role });
 
