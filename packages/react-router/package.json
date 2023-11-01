@@ -23,7 +23,6 @@
     "build": "npm run clean && npm run compile",
     "clean": "rimraf dist dist-transpiled",
     "compile": "npm run tsc && rollup -c",
-    "release": "np --any-branch --no-cleanup",
     "eslint": "eslint src",
     "prettier": "prettier \"./src/**/*.{html,ts,tsx,js,jsx}\"",
     "lint": "npm run eslint && npm run prettier -- --write --cache",

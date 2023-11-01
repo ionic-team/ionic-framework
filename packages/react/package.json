@@ -25,7 +25,6 @@
     "compile": "npm run tsc && rollup -c",
     "eslint": "eslint src",
     "prettier": "prettier \"./src/**/*.{html,ts,tsx,js,jsx}\"",
-    "release": "np --any-branch --yolo --no-release-draft",
     "lint": "npm run eslint && npm run prettier -- --write --cache",
     "lint.fix": "npm run eslint -- --fix && npm run prettier -- --write --cache",
     "tsc": "tsc -p .",
