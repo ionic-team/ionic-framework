@@ -560,6 +560,7 @@ export const dismiss = async <OverlayDismissOptions>(
    */
   if (lastOverlay) {
     setRootAriaHidden(false);
+    document.body.classList.remove(BACKDROP_NO_SCROLL);
   }
 
   overlay.presented = false;
@@ -578,10 +579,6 @@ export const dismiss = async <OverlayDismissOptions>(
     // If dismissed via gesture, no need to play leaving animation again
     if (role !== GESTURE) {
       await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
-    }
-
-    if (lastOverlay) {
-      document.body.classList.remove(BACKDROP_NO_SCROLL);
     }
 
     overlay.didDismiss.emit({ data, role });
