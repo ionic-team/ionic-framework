@@ -52,11 +52,11 @@
       ];
 
       const radioGroupWithString = document.querySelector('#compareWithString');
-      radioGroupWithString.value = [options[1]];
+      radioGroupWithString.value = options[1];
 
       const radioGroupWithFn = document.querySelector('#compareWithFn');
       radioGroupWithFn.compareWith = (a, b) => a.value === b.value;
-      radioGroupWithFn.value = [options[1]];
+      radioGroupWithFn.value = options[1];
 
       document.querySelectorAll('ion-radio-group').forEach((radioGroup) => {
         options.forEach((option) => {
