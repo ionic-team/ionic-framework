@@ -10,7 +10,7 @@
     "test": "jest",
     "build": "npm run clean && npm run copy && npm run copy.overlays && npm run bundle && npm run build.vetur && npm run build.web-types",
     "bundle": "rollup --config rollup.config.js",
-    "clean": "rimraf dist dist",
+    "clean": "rimraf dist",
     "build.web-types": "node ./scripts/build-web-types.js",
     "build.vetur": "node ./scripts/build-vetur.js",
     "copy": "node ./scripts/copy-css.js",
