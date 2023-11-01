@@ -21,7 +21,7 @@ configs().forEach(({ title, screenshot, config }) => {
         <style>
           :root {
             --ion-safe-area-left: 40px;
-            --ion-safe-area-right: 10px;
+            --ion-safe-area-right: 20px;
           }
         </style>
         <ion-list>
@@ -40,7 +40,7 @@ configs().forEach(({ title, screenshot, config }) => {
 
       const list = page.locator('ion-list');
 
-      await expect(list).toHaveScreenshot(screenshot('safe-area'));
+      await expect(list).toHaveScreenshot(screenshot('item-safe-area'));
     });
   });
 });
