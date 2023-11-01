@@ -1,8 +1,9 @@
 import sourcemaps from 'rollup-plugin-sourcemaps';
 import resolve from '@rollup/plugin-node-resolve';
+import typescript from '@rollup/plugin-typescript';
 
 export default {
-  input: 'dist-transpiled/index.js',
+  input: 'src/index.ts',
   output: [
     {
       file: 'dist/index.js',
@@ -11,5 +12,9 @@ export default {
     }
   ],
   external: (id) => !/^(\.|\/)/.test(id),
-  plugins: [resolve(), sourcemaps()],
+  plugins: [
+    typescript(),
+    resolve(),
+    sourcemaps()
+  ],
 };
