@@ -31,7 +31,7 @@
     "loader/"
   ],
   "dependencies": {
-    "@stencil/core": "^4.6.0",
+    "@stencil/core": "^4.7.0",
     "ionicons": "^7.2.1",
     "tslib": "^2.1.0"
   },
