@@ -66,15 +66,20 @@
 
 :host(.input-fill-outline.input-label-placement-stacked) .label-text-wrapper,
 :host(.input-fill-outline.input-label-placement-floating) .label-text-wrapper {
+  @include transform(translateY(-50%), scale(1));
   @include transform-origin(start, top);
 
   position: absolute;
+  top: 50%;
 
   /**
    * Label text should not extend
    * beyond the bounds of the input.
    */
   max-width: calc(100% - var(--padding-start) - var(--padding-end));
+
+  transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1), transform 150ms cubic-bezier(0.4, 0, 0.2, 1),
+    top 150ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /**
@@ -94,6 +99,7 @@
 :host(.input-fill-outline.input-label-placement-stacked) .label-text-wrapper {
   @include transform(translateY(-32%), scale(#{$form-control-label-stacked-scale}));
   @include margin(0);
+  top: 0;
 
   /**
    * Label text should not extend
