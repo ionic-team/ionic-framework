@@ -30,6 +30,10 @@ configs().forEach(({ title, screenshot, config }) => {
             <div slot="helper">Helper</div>
           </ion-item>
 
+          <ion-item-divider>
+            <ion-label>Item Divider</ion-label>
+          </ion-item-divider>
+
           <ion-item>
             <ion-label> Single line text that should have ellipses when it doesn't all fit in the item</ion-label>
           </ion-item>
