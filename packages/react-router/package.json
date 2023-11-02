@@ -62,7 +62,7 @@
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1",
     "rimraf": "^3.0.2",
-    "rollup": "^3.29.4",
+    "rollup": "^4.2.0",
     "typescript": "^4.0.5"
   },
   "prettier": "@ionic/prettier-config"
