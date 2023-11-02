@@ -231,8 +231,8 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       await expect(input).toHaveScreenshot(screenshot(`input-label-layering`));
     });
   });
-  test.describe(title('input: floating/stacked label custom font size'), () => {
-    test('label should not centered when field is not focused', async ({ page }, testInfo) => {
+  test.describe(title('input: floating label custom font size'), () => {
+    test('large label should be centered when field is not focused', async ({ page }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
         description: 'https://github.com/ionic-team/ionic-framework/issues/27194',
@@ -245,20 +245,13 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
           label="Large floating label"
           label-placement="floating"
         ></ion-input>
-        <br />
-        <ion-input
-          style="font-size: 10px"
-          fill="outline"
-          label="Small floating label"
-          label-placement="floating"
-        ></ion-input>
       `,
         config
       );
 
       const input = page.locator('ion-input');
 
-      await expect(input).toHaveScreenshot(screenshot(`input-label-custom-size`));
+      await expect(input).toHaveScreenshot(screenshot('input-large-floating-label'));
     });
   });
 });
