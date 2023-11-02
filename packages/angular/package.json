@@ -28,6 +28,7 @@
     "build.core": "node scripts/build-core.js",
     "build.link": "npm run build && node scripts/link-copy.js",
     "build.ng": "ng-packagr -p ng-package.json -c tsconfig.json",
+    "build.watch": "npm run build.ng -- --watch",
     "clean": "node scripts/clean.js",
     "clean-generated": "node ./scripts/clean-generated.js",
     "lint": "npm run eslint && npm run prettier -- --write --cache",
