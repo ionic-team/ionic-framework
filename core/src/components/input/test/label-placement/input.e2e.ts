@@ -231,4 +231,34 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       await expect(input).toHaveScreenshot(screenshot(`input-label-layering`));
     });
   });
+  test.describe(title('input: floating/stacked label custom font size'), () => {
+    test('label should not centered when field is not focused', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/27194',
+      });
+      await page.setContent(
+        `
+        <ion-input
+          style="font-size: 30px"
+          fill="outline"
+          label="Large floating label"
+          label-placement="floating"
+        ></ion-input>
+        <br />
+        <ion-input
+          style="font-size: 10px"
+          fill="outline"
+          label="Small floating label"
+          label-placement="floating"
+        ></ion-input>
+      `,
+        config
+      );
+
+      const input = page.locator('ion-input');
+
+      await expect(input).toHaveScreenshot(screenshot(`input-label-custom-size`));
+    });
+  });
 });
