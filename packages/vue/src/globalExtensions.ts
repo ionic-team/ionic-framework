@@ -5,7 +5,8 @@ import type {
   LIFECYCLE_WILL_LEAVE,
 } from "@ionic/core/components";
 
-declare module "@vue/runtime-core" {
+// https://vuejs.org/guide/typescript/options-api.html#augmenting-custom-options
+declare module "vue" {
   export interface ComponentCustomOptions {
     [LIFECYCLE_DID_ENTER]?: () => void;
     [LIFECYCLE_DID_LEAVE]?: () => void;
