@@ -12,19 +12,22 @@ runs:
     - uses: actions/setup-node@v3
       with:
         node-version: 18.x
+    - uses: pnpm/action-setup@v2
+      with:
+        version: 8
     - name: Install Dependencies
-      run: npm install
+      run: pnpm install
       working-directory: ./core
       shell: bash
     # If an Ionicons version was specified install that.
     # Otherwise just use the version defined in the package.json.
     - name: Install Ionicons Version
       if: inputs.ionicons-version != ''
-      run: npm install ionicons@${{ inputs.ionicons-version }}
+      run: pnpm install ionicons@${{ inputs.ionicons-version }}
       working-directory: ./core
       shell: bash
     - name: Build Core
-      run: npm run build -- --ci
+      run: pnpm run build -- --ci
       working-directory: ./core
       shell: bash
     - uses: ./.github/workflows/actions/upload-archive
