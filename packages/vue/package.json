@@ -59,7 +59,7 @@
     "fs-extra": "^9.1.0",
     "prettier": "^2.8.3",
     "rimraf": "^3.0.2",
-    "rollup": "^3.29.4",
+    "rollup": "^4.2.0",
     "typescript": "^4.7.3",
     "vue": "^3.2.37",
     "vue-router": "^4.0.16"
