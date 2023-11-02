@@ -19,11 +19,6 @@
   --padding-start: #{$select-md-padding-start};
 }
 
-// TODO FW-3194 - Move this to host
-:host(:not(.legacy-select)) {
-  min-height: 56px;
-}
-
 .select-icon {
   width: $select-md-icon-size;
 

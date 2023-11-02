@@ -16,17 +16,8 @@ $select-ios-padding-bottom:         $item-ios-padding-bottom !default;
 /// @prop - Padding start of the select
 $select-ios-padding-start:          $item-ios-padding-start !default;
 
-/// @prop - Color of the select icon
-$select-ios-icon-color:             $text-color-step-650 !default;
-
 /// @prop - Size of the select icon
 $select-ios-icon-size:              dynamic-font(18px) !default;
-
-/// @prop - Color of the select placeholder
-$select-ios-placeholder-color:      $select-ios-icon-color !default;
-
-/// @prop - Text Color of the selected item
-$select-ios-text-color:             $text-color !default;
 
 /// @prop - Opacity of the disabled select
 $select-ios-disabled-opacity: $form-control-ios-disabled-opacity !default;

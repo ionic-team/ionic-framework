@@ -15,7 +15,12 @@ const FOCUS_KEYS = [
   'End',
 ];
 
-export const startFocusVisible = (rootEl?: HTMLElement) => {
+export interface FocusVisibleUtility {
+  destroy: () => void;
+  setFocus: (elements: Element[]) => void;
+}
+
+export const startFocusVisible = (rootEl?: HTMLElement): FocusVisibleUtility => {
   let currentFocus: Element[] = [];
   let keyboardMode = true;
 

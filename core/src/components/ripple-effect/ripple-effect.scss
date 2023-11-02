@@ -7,7 +7,6 @@
 $scale-duration: 225ms;
 $fade-in-duration: 75ms;
 $fade-out-duration: 150ms;
-$opacity-duration: $fade-in-duration + $fade-out-duration;
 
 :host {
   @include position(0, 0, 0, 0);

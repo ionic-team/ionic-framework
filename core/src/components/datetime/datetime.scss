@@ -1,4 +1,4 @@
-@import "./datetime.vars";
+@import "../../themes/ionic.globals";
 
 // Datetime
 // --------------------------------------------------
@@ -185,13 +185,37 @@ ion-picker-column-internal {
   display: none;
 }
 
-:host(.datetime-readonly),
 :host(.datetime-disabled) {
   pointer-events: none;
+
+  .calendar-days-of-week,
+  .datetime-time {
+    opacity: 0.4;
+  }
 }
 
-:host(.datetime-disabled) {
-  opacity: 0.4;
+:host(.datetime-readonly) {
+  pointer-events: none;
+
+  /**
+   * Allow user to navigate months
+   * while in readonly mode
+   */
+  .calendar-action-buttons,
+  .calendar-body,
+  .datetime-year {
+    pointer-events: initial;
+  }
+
+  /**
+   * Disabled buttons should have full opacity
+   * in readonly mode
+   */
+
+  .calendar-day[disabled]:not(.calendar-day-constrained),
+  .datetime-action-buttons ion-button[disabled] {
+    opacity: 1;
+  }
 }
 
 /**

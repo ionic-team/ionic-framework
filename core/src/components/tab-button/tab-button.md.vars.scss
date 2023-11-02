@@ -27,15 +27,6 @@ $tab-button-md-font-weight:                     normal !default;
 /// @prop - Text color of the inactive tab button
 $tab-button-md-text-color:                      $tabbar-md-color !default;
 
-/// @prop - Text color of the active tab button
-$tab-button-md-text-color-active:               $tabbar-md-color-selected !default;
-
-/// @prop - Icon color of the inactive tab button
-$tab-button-md-icon-color:                      $tabbar-md-color !default;
-
-/// @prop - Icon color of the active tab button
-$tab-button-md-icon-color-active:               $tabbar-md-color-selected !default;
-
 /// @prop - Margin top on the tab button icon
 $tab-button-md-icon-margin-top:                 16px !default;
 
@@ -47,9 +38,6 @@ $tab-button-md-icon-margin-bottom:              $tab-button-md-icon-margin-top !
 
 /// @prop - Margin start on the tab button icon
 $tab-button-md-icon-margin-start:               $tab-button-md-icon-margin-end !default;
-
-/// @prop - Font size of the active tab button text
-$tab-button-md-font-size-active:                14px !default;
 
 /// @prop - Margin top on the tab button text
 $tab-button-md-text-margin-top:                 2px !default;
@@ -68,9 +56,6 @@ $tab-button-md-text-capitalization:             none !default;
 
 /// @prop - Size of the tab button icon
 $tab-button-md-icon-size:                       22px !default;
-
-/// @prop - Opacity of the inactive tab button
-$tab-button-md-opacity:                         .7 !default;
 
 /// @prop - Border radius on the tab button badge
 $tab-button-md-badge-border-radius:             8px !default;

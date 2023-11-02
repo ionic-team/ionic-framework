@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.5.3](https://github.com/ionic-team/ionic-framework/compare/v7.5.2...v7.5.3) (2023-11-01)
+
+
+### Bug Fixes
+
+* **angular:** inputs on standalone form controls are reactive ([#28434](https://github.com/ionic-team/ionic-framework/issues/28434)) ([3b6e631](https://github.com/ionic-team/ionic-framework/commit/3b6e6318bf94125b3f8305b4d072a5945ceb3730)), closes [#28431](https://github.com/ionic-team/ionic-framework/issues/28431)
+* **angular:** NavController works with nested outlets ([#28421](https://github.com/ionic-team/ionic-framework/issues/28421)) ([90acad1](https://github.com/ionic-team/ionic-framework/commit/90acad1837b117542830ec0083389a35c5b4ee76)), closes [#28417](https://github.com/ionic-team/ionic-framework/issues/28417)
+* **angular:** run platform subscriptions inside zone ([#28404](https://github.com/ionic-team/ionic-framework/issues/28404)) ([a4b303e](https://github.com/ionic-team/ionic-framework/commit/a4b303e1338a35756a9cf7f67508d24d2f8537a2)), closes [#19539](https://github.com/ionic-team/ionic-framework/issues/19539)
+* **angular:** standalone form components do not error when multiple are used ([#28423](https://github.com/ionic-team/ionic-framework/issues/28423)) ([89698b3](https://github.com/ionic-team/ionic-framework/commit/89698b338fb05cde427c98720c238d2365abdaa7)), closes [#28418](https://github.com/ionic-team/ionic-framework/issues/28418)
+
+
+
+
+
+## [7.5.2](https://github.com/ionic-team/ionic-framework/compare/v7.5.1...v7.5.2) (2023-10-25)
+
+
+### Bug Fixes
+
+* **angular:** remove form control side effects ([#28359](https://github.com/ionic-team/ionic-framework/issues/28359)) ([82d6309](https://github.com/ionic-team/ionic-framework/commit/82d6309ef1675c0a6e767e87c23f166d84579d8f)), closes [#28358](https://github.com/ionic-team/ionic-framework/issues/28358)
+
+
+
+
+
 ## [7.5.1](https://github.com/ionic-team/ionic-framework/compare/v7.5.0...v7.5.1) (2023-10-18)
 
 
