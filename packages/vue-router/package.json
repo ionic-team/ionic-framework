@@ -8,7 +8,7 @@
     "prettier": "prettier \"./src/**/*.{html,ts,tsx,js,jsx}\"",
     "lint": "npm run eslint && npm run prettier -- --write --cache",
     "lint.fix": "npm run eslint -- --fix && npm run prettier -- --write --cache",
-    "bundle": "rollup --config rollup.config.js",
+    "bundle": "rollup --config rollup.config.mjs",
     "build": "npm run clean && npm run bundle",
     "clean": "rimraf dist",
     "sync": "sh ./scripts/sync.sh"
@@ -58,7 +58,7 @@
     "jest-environment-jsdom": "^28.1.1",
     "prettier": "^2.8.3",
     "rimraf": "^3.0.2",
-    "rollup": "^2.32.1",
+    "rollup": "^3.29.4",
     "ts-jest": "^28.0.5",
     "typescript": "^4.7.3",
     "vue": "^3.2.37",
