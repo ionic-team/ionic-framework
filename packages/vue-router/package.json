@@ -10,7 +10,7 @@
     "lint.fix": "npm run eslint -- --fix && npm run prettier -- --write --cache",
     "bundle": "rollup --config rollup.config.js",
     "build": "npm run clean && npm run bundle",
-    "build.watch": "npm run build && npm run bundle -- --watch",
+    "build.watch": "npm run bundle -- --watch",
     "clean": "rimraf dist",
     "sync": "sh ./scripts/sync.sh"
   },
