@@ -6,9 +6,6 @@
    * @prop --border: Border of the tab bar
    * @prop --color: Color of the tab bar
    */
-
-  @include padding-horizontal(var(--ion-safe-area-left), var(--ion-safe-area-right));
-
   display: flex;
 
   align-items: center;
@@ -16,7 +13,11 @@
 
   width: auto;
 
+  /* stylelint-disable */
+  padding-right: var(--ion-safe-area-right);
   padding-bottom: var(--ion-safe-area-bottom, 0);
+  padding-left: var(--ion-safe-area-left);
+  /* stylelint-enable */
 
   border-top: var(--border);
 

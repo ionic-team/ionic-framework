@@ -20,29 +20,11 @@ $range-md-item-padding-horizontal: 18px !default;
 /// @prop - Height of the range slider
 $range-md-slider-height:                     42px !default;
 
-/// @prop - Width of the area that will select the range knob
-$range-md-hit-width:                         42px !default;
-
-/// @prop - Height of the area that will select the range knob
-$range-md-hit-height:                        $range-md-slider-height !default;
-
 /// @prop - Height of the range bar
 $range-md-bar-height:                        2px !default;
 
 /// @prop - Background of the range bar
 $range-md-bar-background-color:              $background-color-step-250 !default;
-
-/// @prop - Background of the active range bar
-$range-md-bar-active-background-color:       current-color(base) !default;
-
-/// @prop - Background of the range knob
-$range-md-knob-background-color:             $range-md-bar-active-background-color !default;
-
-/// @prop - Background of the range pin
-$range-md-pin-background-color:              $range-md-bar-active-background-color !default;
-
-/// @prop - Color of the range pin
-$range-md-pin-color:                         ion-color(primary, contrast) !default;
 
 /// @prop - Font size of the range pin
 $range-md-pin-font-size:                     dynamic-font(12px) !default;
@@ -55,9 +37,6 @@ $range-md-pin-padding-horizontal:            0 !default;
 
 /// @prop - Width and height of the range pin
 $range-md-pin-dimension: dynamic-font(28px) !default;
-
-/// @prop - Background of the range pin when the value is the minimum
-$range-md-pin-min-background-color:          $range-md-bar-background-color !default;
 
 /// @prop - Opacity of the indicator shown when the range knob is hovered
 $range-md-knob-indicator-opacity-hover: 0.13 !default;
