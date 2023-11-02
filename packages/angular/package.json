@@ -82,6 +82,7 @@
     "eslint": "^8.0.0",
     "eslint-plugin-import": "^2.25.2",
     "fs-extra": "^7.0.0",
+    "glob": "^10.3.10",
     "ng-packagr": "^14.0.0",
     "prettier": "^2.4.1",
     "rxjs": "~7.5.0",
