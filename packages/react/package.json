@@ -29,7 +29,6 @@
     "lint.fix": "npm run eslint -- --fix && npm run prettier -- --write --cache",
     "copy": "node scripts/copy.js",
     "test.spec": "jest --ci",
-    "test.treeshake": "node scripts/treeshaking.js dist/index.esm.js",
     "sync": "sh ./scripts/sync.sh"
   },
   "main": "dist/index.js",
@@ -50,9 +49,7 @@
   "devDependencies": {
     "@ionic/eslint-config": "^0.3.0",
     "@ionic/prettier-config": "^2.0.0",
-    "@rollup/plugin-node-resolve": "^8.1.0",
     "@rollup/plugin-typescript": "^11.1.5",
-    "@rollup/plugin-virtual": "^2.0.3",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
     "@testing-library/react-hooks": "^7.0.1",
@@ -70,8 +67,7 @@
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "rimraf": "^3.0.2",
-    "rollup": "^2.26.4",
-    "rollup-plugin-sourcemaps": "^0.6.2",
+    "rollup": "^3.29.4",
     "ts-jest": "^26.4.4",
     "typescript": "^4.0.5"
   },

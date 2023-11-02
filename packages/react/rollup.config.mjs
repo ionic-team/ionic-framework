@@ -1,5 +1,3 @@
-import resolve from '@rollup/plugin-node-resolve';
-import sourcemaps from 'rollup-plugin-sourcemaps';
 import typescript from '@rollup/plugin-typescript';
 
 export default {
@@ -16,7 +14,5 @@ export default {
   external: (id) => !/^(\.|\/)/.test(id),
   plugins: [
     typescript(),
-    resolve(),
-    sourcemaps(),
   ],
 };
