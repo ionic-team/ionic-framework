@@ -915,7 +915,7 @@ export namespace Components {
          */
         "presentation": DatetimePresentation;
         /**
-          * If `true`, the datetime appears normal but is not interactive.
+          * If `true`, the datetime appears normal but the selected date cannot be changed.
          */
         "readonly": boolean;
         /**
@@ -2254,7 +2254,7 @@ export namespace Components {
          */
         "name": string;
         "setButtonTabindex": (value: number) => Promise<void>;
-        "setFocus": (ev: any) => Promise<void>;
+        "setFocus": (ev: globalThis.Event) => Promise<void>;
         /**
           * the value of the radio.
          */
@@ -5614,7 +5614,7 @@ declare namespace LocalJSX {
          */
         "presentation"?: DatetimePresentation;
         /**
-          * If `true`, the datetime appears normal but is not interactive.
+          * If `true`, the datetime appears normal but the selected date cannot be changed.
          */
         "readonly"?: boolean;
         /**

@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.5.3](https://github.com/ionic-team/ionic-framework/compare/v7.5.2...v7.5.3) (2023-11-01)
+
+
+### Bug Fixes
+
+* **alert:** long words wrap to next line ([#28408](https://github.com/ionic-team/ionic-framework/issues/28408)) ([34257d6](https://github.com/ionic-team/ionic-framework/commit/34257d681e9034b0a001aa45e17222f3aab5ed76)), closes [#28406](https://github.com/ionic-team/ionic-framework/issues/28406)
+* **angular:** standalone form components do not error when multiple are used ([#28423](https://github.com/ionic-team/ionic-framework/issues/28423)) ([89698b3](https://github.com/ionic-team/ionic-framework/commit/89698b338fb05cde427c98720c238d2365abdaa7)), closes [#28418](https://github.com/ionic-team/ionic-framework/issues/28418)
+* **datetime:** allow calendar navigation in readonly mode; disallow keyboard navigation when disabled ([#28336](https://github.com/ionic-team/ionic-framework/issues/28336)) ([f6a6877](https://github.com/ionic-team/ionic-framework/commit/f6a6877044a6d912a92aab00c3c78897da09415d)), closes [#28121](https://github.com/ionic-team/ionic-framework/issues/28121)
+* **input, textarea, select:** use consistent sizes ([#28390](https://github.com/ionic-team/ionic-framework/issues/28390)) ([b31ecbb](https://github.com/ionic-team/ionic-framework/commit/b31ecbbfe8deb87604686d752e92e672dd9b277a)), closes [#28388](https://github.com/ionic-team/ionic-framework/issues/28388)
+* **list-header:** apply safe area to proper side regardless of direction ([#28371](https://github.com/ionic-team/ionic-framework/issues/28371)) ([f99d530](https://github.com/ionic-team/ionic-framework/commit/f99d5305fb4b1607b42e34a0b7653d8e1b5bf23f))
+* **segment:** avoid scrolling webkit bug ([#28376](https://github.com/ionic-team/ionic-framework/issues/28376)) ([8e2f818](https://github.com/ionic-team/ionic-framework/commit/8e2f81867175e9980e6d072b0a4414baae571223)), closes [#28373](https://github.com/ionic-team/ionic-framework/issues/28373)
+* **tab-bar:** apply safe area to proper side regardless of direction ([#28372](https://github.com/ionic-team/ionic-framework/issues/28372)) ([d47b7e7](https://github.com/ionic-team/ionic-framework/commit/d47b7e750310ceb2f2c7ecfda8343923ff8d564a))
+
+
+
+
+
+## [7.5.2](https://github.com/ionic-team/ionic-framework/compare/v7.5.1...v7.5.2) (2023-10-25)
+
+
+### Bug Fixes
+
+* **alert, action-sheet:** show scrollbar for long list of options ([#28369](https://github.com/ionic-team/ionic-framework/issues/28369)) ([60f3d65](https://github.com/ionic-team/ionic-framework/commit/60f3d6579498ebad75c4f5163fca3947ac2dadff)), closes [#18487](https://github.com/ionic-team/ionic-framework/issues/18487)
+* **fab:** apply safe area in positioning to proper side regardless of direction ([#28377](https://github.com/ionic-team/ionic-framework/issues/28377)) ([331c08a](https://github.com/ionic-team/ionic-framework/commit/331c08aad542de158e53ed351705d4c396bb4e90))
+* **input, searchbar, textarea:** ensure nativeInput is always available ([#28362](https://github.com/ionic-team/ionic-framework/issues/28362)) ([2b015b2](https://github.com/ionic-team/ionic-framework/commit/2b015b22144e306444f2bf30ace0b5cc7e32a710)), closes [#28283](https://github.com/ionic-team/ionic-framework/issues/28283)
+* **menu:** menu no longer disappears with multiple split panes ([#28370](https://github.com/ionic-team/ionic-framework/issues/28370)) ([5a30082](https://github.com/ionic-team/ionic-framework/commit/5a30082546cb19eb98128ca9091b35094841d4f2)), closes [#18683](https://github.com/ionic-team/ionic-framework/issues/18683) [#15538](https://github.com/ionic-team/ionic-framework/issues/15538) [#22341](https://github.com/ionic-team/ionic-framework/issues/22341)
+* **rtl:** allow :host to use rtl() ([#28353](https://github.com/ionic-team/ionic-framework/issues/28353)) ([6b7d288](https://github.com/ionic-team/ionic-framework/commit/6b7d288536307fcb49231dca66ab938b389ea85e))
+
+
+
+
+
 ## [7.5.1](https://github.com/ionic-team/ionic-framework/compare/v7.5.0...v7.5.1) (2023-10-18)
 
 

@@ -62,8 +62,7 @@ export const findClosestIonContent = (el: Element) => {
  * Scrolls to the top of the element. If an `ion-content` is found, it will scroll
  * using the public API `scrollToTop` with a duration.
  */
-// TODO(FW-2832): type
-export const scrollToTop = (el: HTMLElement, durationMs: number): Promise<any> => {
+export const scrollToTop = (el: HTMLElement, durationMs: number): Promise<void> => {
   if (isIonContent(el)) {
     const content = el as HTMLIonContentElement;
     return content.scrollToTop(durationMs);
