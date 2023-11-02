@@ -9,7 +9,7 @@
     "lint.fix": "npm run eslint -- --fix && npm run prettier -- --write --cache",
     "test": "jest",
     "build": "npm run clean && npm run copy && npm run copy.overlays && npm run bundle && npm run build.vetur && npm run build.web-types",
-    "bundle": "rollup --config rollup.config.js",
+    "bundle": "rollup --config rollup.config.mjs",
     "clean": "rimraf dist",
     "build.web-types": "node ./scripts/build-web-types.js",
     "build.vetur": "node ./scripts/build-vetur.js",
@@ -59,7 +59,7 @@
     "fs-extra": "^9.1.0",
     "prettier": "^2.8.3",
     "rimraf": "^3.0.2",
-    "rollup": "^2.32.1",
+    "rollup": "^3.29.4",
     "typescript": "^4.7.3",
     "vue": "^3.2.37",
     "vue-router": "^4.0.16"
