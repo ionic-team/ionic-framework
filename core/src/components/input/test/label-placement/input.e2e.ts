@@ -231,6 +231,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
       await expect(input).toHaveScreenshot(screenshot(`input-label-layering`));
     });
   });
+
   test.describe(title('input: floating label custom font size'), () => {
     test('large label should be centered when field is not focused', async ({ page }, testInfo) => {
       testInfo.annotations.push({
