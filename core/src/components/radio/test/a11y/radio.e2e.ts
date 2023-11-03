@@ -16,10 +16,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
   });
 
   test.describe(title('radio: keyboard navigation'), () => {
-    test.beforeEach(async ({ page, skip }) => {
-      // TODO (FW-2979)
-      skip.browser('webkit', 'Safari 16 only allows text fields and pop-up menus to be focused.');
-
+    test.beforeEach(async ({ page }) => {
       await page.setContent(
         `
       <ion-app>
@@ -94,6 +91,32 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       await page.keyboard.press('ArrowUp');
       await expect(firstGroupRadios.nth(3)).toBeFocused();
+    });
+  });
+});
+
+/**
+ * This behavior does not vary across directions
+ */
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('radio: font scaling'), () => {
+    test('should scale text on larger font sizes', async ({ page }) => {
+      await page.setContent(
+        `
+        <style>
+          html {
+            font-size: 36px;
+          }
+        </style>
+        <ion-radio-group value="a">
+          <ion-radio value="a">Radio Label</ion-alert>
+        </ion-radio-group>
+      `,
+        config
+      );
+
+      const radioGroup = page.locator('ion-radio-group');
+      await expect(radioGroup).toHaveScreenshot(screenshot(`radio-scale`));
     });
   });
 });

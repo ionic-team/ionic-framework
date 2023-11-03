@@ -8,7 +8,7 @@ configs().forEach(({ title, screenshot, config }) => {
 
       await page.setIonViewport();
 
-      expect(await page.screenshot()).toMatchSnapshot(screenshot(`range-diff`));
+      await expect(page).toHaveScreenshot(screenshot(`range-diff`));
     });
   });
 });

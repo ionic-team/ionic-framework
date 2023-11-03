@@ -9,6 +9,8 @@
   --border-radius: 4px;
   --padding-start: 16px;
   --padding-end: 16px;
+
+  min-height: 56px;
 }
 
 /**
@@ -74,5 +76,5 @@
    * Label text should not extend
    * beyond the bounds of the select.
    */
-  max-width: calc(100% / #{$select-floating-label-scale});
+  max-width: calc(100% / #{$form-control-label-stacked-scale});
 }

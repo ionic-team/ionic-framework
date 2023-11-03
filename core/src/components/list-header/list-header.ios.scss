@@ -9,7 +9,17 @@
   --color: #{$list-header-ios-color};
   --border-color: #{$item-ios-border-bottom-color};
 
-  @include padding-horizontal(calc(var(--ion-safe-area-left, 0px) + #{$list-header-ios-padding-start}), null);
+  /* stylelint-disable */
+  @include ltr() {
+    padding-right: var(--ion-safe-area-right);
+    padding-left: calc(var(--ion-safe-area-left, 0px) + #{$list-header-ios-padding-start});
+  }
+
+  @include rtl() {
+    padding-right: calc(var(--ion-safe-area-right, 0px) + #{$list-header-ios-padding-start});
+    padding-left: var(--ion-safe-area-left);
+  }
+  /* stylelint-enable */
 
   position: relative;
 
@@ -30,9 +40,12 @@
 }
 
 ::slotted(ion-button) {
+  --padding-top: 0;
+  --padding-bottom: 0;
+
   @include margin(null, 3px);
 
-  height: 1.4em;
+  min-height: 1.4em;
 }
 
 

@@ -65,6 +65,12 @@
               <span slot="label">Temperature</span>
             </ion-range>
           </div>
+          <div class="grid-item">
+            <h2>Placement Stacked</h2>
+            <ion-range label-placement="stacked">
+              <span slot="label">Temperature</span>
+            </ion-range>
+          </div>
         </div>
 
         <h1>Label Property</h1>
@@ -80,6 +86,10 @@
           <div class="grid-item">
             <h2>Placement Fixed</h2>
             <ion-range label="Temperature" label-placement="fixed"></ion-range>
+          </div>
+          <div class="grid-item">
+            <h2>Placement Stacked</h2>
+            <ion-range label="Temperature" label-placement="stacked"></ion-range>
           </div>
         </div>
 
@@ -104,6 +114,14 @@
           <div class="grid-item">
             <h2>Placement Fixed</h2>
             <ion-range label-placement="fixed">
+              <span slot="label">Temperature</span>
+              <ion-icon name="snow" slot="start"></ion-icon>
+              <ion-icon name="flame" slot="end"></ion-icon>
+            </ion-range>
+          </div>
+          <div class="grid-item">
+            <h2>Placement Stacked</h2>
+            <ion-range label-placement="stacked">
               <span slot="label">Temperature</span>
               <ion-icon name="snow" slot="start"></ion-icon>
               <ion-icon name="flame" slot="end"></ion-icon>

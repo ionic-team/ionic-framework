@@ -12,9 +12,9 @@
   --padding-start: 5px;
   --padding-end: 5px;
 
-  height: 32px;
+  min-height: 32px;
 
-  font-size: 31px;
+  font-size: dynamic-font-clamp(1, 31px, 1.23);
 }
 
 

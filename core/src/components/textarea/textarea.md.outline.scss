@@ -8,6 +8,8 @@
   --border-radius: 4px;
   --padding-start: 16px;
   --padding-end: 16px;
+
+  min-height: 56px;
 }
 
 :host(.textarea-fill-outline.textarea-shape-round) {
@@ -82,8 +84,6 @@
 :host(.textarea-fill-outline) .label-text-wrapper,
 :host(.textarea-fill-outline) .label-text-wrapper {
   position: relative;
-
-  z-index: 1;
 }
 
 /**
@@ -92,7 +92,7 @@
 :host(.has-focus.textarea-fill-outline.textarea-label-placement-floating) .label-text-wrapper,
 :host(.has-value.textarea-fill-outline.textarea-label-placement-floating) .label-text-wrapper,
 :host(.textarea-fill-outline.textarea-label-placement-stacked) .label-text-wrapper {
-  @include transform(translateY(-32%), scale(#{$textarea-floating-label-scale}));
+  @include transform(translateY(-32%), scale(#{$form-control-label-stacked-scale}));
   @include margin(0);
 
   /**
@@ -100,7 +100,7 @@
    * beyond the bounds of the textarea.
    */
   max-width: calc(
-    (100% - var(--padding-start) - var(--padding-end) - #{$textarea-md-floating-label-padding * 2}) / #{$textarea-floating-label-scale}
+    (100% - var(--padding-start) - var(--padding-end) - #{$textarea-md-floating-label-padding * 2}) / #{$form-control-label-stacked-scale}
   );
 }
 
@@ -172,7 +172,7 @@
    */
   @include padding(null, #{$textarea-md-floating-label-padding * 2}, null, null);
 
-  font-size: calc(1em * #{$textarea-floating-label-scale});
+  font-size: calc(1em * #{$form-control-label-stacked-scale});
 
   opacity: 0;
   pointer-events: none;

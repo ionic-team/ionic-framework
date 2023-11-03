@@ -14,6 +14,10 @@
 
       <ion-button id="open-auto-mount-popover">Open Auto Mount Popover</ion-button>
 
+      <ion-button id="open-auto-mount-modal-attribute">Open Auto Mount Modal (Attribute)</ion-button>
+
+      <ion-button id="open-auto-mount-modal-attribute-false">Open Auto Mount Modal (Attribute False)</ion-button>
+
       <br /><br />
 
       <ion-modal
@@ -31,6 +35,22 @@
       >
         <PopoverContent :title="overlayProps.title"></PopoverContent>
       </ion-popover>
+
+      <ion-modal
+        id="auto-mount-modal-attribute"
+        keep-contents-mounted
+        trigger="open-auto-mount-modal-attribute"
+      >
+        <ModalContent :title="overlayProps.title"></ModalContent>
+      </ion-modal>
+
+      <ion-modal
+        id="auto-mount-modal-attribute-false"
+        keep-contents-mounted="false"
+        trigger="open-auto-mount-modal-attribute-false"
+      >
+        <ModalContent :title="overlayProps.title"></ModalContent>
+      </ion-modal>
     </ion-content>
   </ion-page>
 </template>

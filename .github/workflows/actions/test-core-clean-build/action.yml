@@ -5,7 +5,7 @@ runs:
   steps:
     - uses: actions/setup-node@v3
       with:
-        node-version: 16.x
+        node-version: 18.x
 
     - uses: ./.github/workflows/actions/download-archive
       with:
@@ -13,6 +13,15 @@ runs:
         path: ./core
         filename: CoreBuild.zip
     - name: Check Diff
-      run: git diff --exit-code
+      run: |
+        git diff --exit-code || {
+          echo -e "\033[1;31m⚠️ Error: Differences Detected ⚠️\033[0m"
+          echo -e "\033[1;31mThere are uncommitted changes between the build outputs from CI and your branch.\033[0m"
+          echo -e "\033[1;31mPlease ensure you have followed these steps:\033[0m"
+          echo -e "\033[1;31m1. Run 'npm run build' locally to generate the latest build output.\033[0m"
+          echo -e "\033[1;31m2. Commit and push all necessary changes to your branch.\033[0m"
+          echo -e "\033[1;31m3. Compare and validate the differences before proceeding.\033[0m"
+          exit 1
+        }
       shell: bash
       working-directory: ./core

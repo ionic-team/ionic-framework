@@ -1,6 +1,6 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, forceUpdate, h } from '@stencil/core';
-import { debounceEvent, raf } from '@utils/helpers';
+import { debounceEvent, raf, componentOnReady } from '@utils/helpers';
 import { isRTL } from '@utils/rtl';
 import { createColorClasses } from '@utils/theme';
 import { arrowBackSharp, closeCircle, closeSharp, searchOutline, searchSharp } from 'ionicons/icons';
@@ -27,6 +27,7 @@ export class Searchbar implements ComponentInterface {
   private isCancelVisible = false;
   private shouldAlignLeft = true;
   private originalIonInput?: EventEmitter<SearchbarInputEventDetail>;
+  private inputId = `ion-searchbar-${searchbarIds++}`;
 
   /**
    * The value of the input when the textarea is focused.
@@ -110,6 +111,11 @@ export class Searchbar implements ComponentInterface {
    * `"previous"`, `"search"`, and `"send"`.
    */
   @Prop() enterkeyhint?: 'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
+
+  /**
+   * If used in a form, set the name of the control, which is submitted with the form data.
+   */
+  @Prop() name: string = this.inputId;
 
   /**
    * Set the input's placeholder.
@@ -263,7 +269,14 @@ export class Searchbar implements ComponentInterface {
    * Returns the native `<input>` element used under the hood.
    */
   @Method()
-  getInputElement(): Promise<HTMLInputElement> {
+  async getInputElement(): Promise<HTMLInputElement> {
+    /**
+     * If this gets called in certain early lifecycle hooks (ex: Vue onMounted),
+     * nativeInput won't be defined yet with the custom elements build, so wait for it to load in.
+     */
+    if (!this.nativeInput) {
+      await new Promise((resolve) => componentOnReady(this.el, resolve));
+    }
     return Promise.resolve(this.nativeInput!);
   }
 
@@ -455,7 +468,13 @@ export class Searchbar implements ComponentInterface {
         const inputLeft = 'calc(50% - ' + textWidth / 2 + 'px)';
 
         // Calculate the icon margin
-        const iconLeft = 'calc(50% - ' + (textWidth / 2 + 30) + 'px)';
+        /**
+         * We take the icon width to account
+         * for any text scales applied to the icon
+         * such as Dynamic Type on iOS as well as 8px
+         * of padding.
+         */
+        const iconLeft = 'calc(50% - ' + (textWidth / 2 + iconEl.clientWidth + 8) + 'px)';
 
         // Set the input padding start and icon margin start
         if (rtl) {
@@ -588,6 +607,7 @@ export class Searchbar implements ComponentInterface {
             class="searchbar-input"
             inputMode={this.inputmode}
             enterKeyHint={this.enterkeyhint}
+            name={this.name}
             onInput={this.onInput}
             onChange={this.onChange}
             onBlur={this.onBlur}
@@ -639,3 +659,5 @@ export class Searchbar implements ComponentInterface {
     );
   }
 }
+
+let searchbarIds = 0;

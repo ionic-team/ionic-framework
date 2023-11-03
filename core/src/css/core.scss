@@ -13,6 +13,7 @@ html.md {
 }
 
 html {
+  --ion-default-dynamic-font: -apple-system-body;
   --ion-font-family: var(--ion-default-font);
 }
 
@@ -156,7 +157,6 @@ html.ios ion-modal.modal-card .ion-page {
   justify-content: space-between;
 
   contain: layout size style;
-  overflow: hidden;
   z-index: $z-index-page-container;
 }
 

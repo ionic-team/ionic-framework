@@ -1,5 +1,12 @@
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { ModuleWithProviders, APP_INITIALIZER, NgModule, NgZone } from '@angular/core';
+import {
+  ModalController,
+  PopoverController,
+  ConfigToken,
+  AngularDelegate,
+  provideComponentInputBinding,
+} from '@ionic/angular/common';
 import { IonicConfig } from '@ionic/core';
 
 import { appInitialize } from './app-initialize';
@@ -10,10 +17,10 @@ import {
   SelectValueAccessorDirective,
   TextValueAccessorDirective,
 } from './directives/control-value-accessors';
-import { IonBackButtonDelegateDirective } from './directives/navigation/ion-back-button';
+import { IonBackButton } from './directives/navigation/ion-back-button';
+import { IonNav } from './directives/navigation/ion-nav';
 import { IonRouterOutlet } from './directives/navigation/ion-router-outlet';
 import { IonTabs } from './directives/navigation/ion-tabs';
-import { NavDelegate } from './directives/navigation/nav-delegate';
 import {
   RouterLinkDelegateDirective,
   RouterLinkWithHrefDelegateDirective,
@@ -21,10 +28,7 @@ import {
 import { IonModal } from './directives/overlays/modal';
 import { IonPopover } from './directives/overlays/popover';
 import { DIRECTIVES } from './directives/proxies-list';
-import { AngularDelegate } from './providers/angular-delegate';
-import { ConfigToken } from './providers/config';
-import { ModalController } from './providers/modal-controller';
-import { PopoverController } from './providers/popover-controller';
+import { IonMaxValidator, IonMinValidator } from './directives/validators';
 
 const DECLARATIONS = [
   // generated proxies
@@ -44,10 +48,14 @@ const DECLARATIONS = [
   // navigation
   IonTabs,
   IonRouterOutlet,
-  IonBackButtonDelegateDirective,
-  NavDelegate,
+  IonBackButton,
+  IonNav,
   RouterLinkDelegateDirective,
   RouterLinkWithHrefDelegateDirective,
+
+  // validators
+  IonMinValidator,
+  IonMaxValidator,
 ];
 
 @NgModule({
@@ -71,6 +79,7 @@ export class IonicModule {
           multi: true,
           deps: [ConfigToken, DOCUMENT, NgZone],
         },
+        provideComponentInputBinding(),
       ],
     };
   }

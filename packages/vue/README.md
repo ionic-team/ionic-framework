@@ -22,7 +22,19 @@ npm run build
 cd packages/vue && npm install
 ```
 
-2. Build `@ionic/vue`:
+4. Build `@ionic/vue`:
+
+```shell
+npm run build
+````
+
+5. Install dependencies in `@ionic/vue-router`:
+
+```shell
+cd packages/vue-router && npm install
+```
+
+6. Build `@ionic/vue-router`:
 
 ```shell
 npm run build
@@ -30,8 +42,8 @@ npm run build
 
 ## Tests
 
-* E2E Tests are found in the `packages/vue/test-app/tests` directory and use Cypress.
-* When making changes to `@ionic/vue` or `@ionic/vue-router` you can run `npm run sync` in the `test-app` directory to ensure that the test application is using your built changes. Be sure to build in the `vue` and `vue-router` directories first.
+* E2E Tests are found in the `packages/vue/test/base/tests` directory and use Cypress.
+* When making changes to `@ionic/vue` or `@ionic/vue-router` you can run `npm run sync` in the [test-app directory](test/README.md#syncing-local-changes) to ensure that the test application is using your built changes. Be sure to build in the `vue` and `vue-router` directories first.
 * Tests can be run in headless mode by running `npm run cypress`.
 * If you want to open the Cypress test runner, you can run `node_modules/.bin/cypress open`.
 * Bug fix and feature PRs should have new tests verifying the PR functionality.

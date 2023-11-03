@@ -6,9 +6,11 @@ import { configs, test } from '@utils/test/playwright';
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('radio: a11y'), () => {
-    test('tabbing should switch between radio groups', async ({ page, pageUtils }) => {
+    test.beforeEach(async ({ page, skip }) => {
+      skip.browser('webkit', 'Tabbing is flaky in Safari');
       await page.goto(`/src/components/radio/test/legacy/a11y`, config);
-
+    });
+    test('tabbing should switch between radio groups', async ({ page, pageUtils }) => {
       const firstGroupRadios = page.locator('#first-group ion-radio');
       const secondGroupRadios = page.locator('#second-group ion-radio');
 
@@ -22,8 +24,6 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await expect(firstGroupRadios.nth(0)).toBeFocused();
     });
     test('using arrow keys should move between enabled radios within group', async ({ page, pageUtils }) => {
-      await page.goto(`/src/components/radio/test/legacy/a11y`, config);
-
       const firstGroupRadios = page.locator('#first-group ion-radio');
 
       await pageUtils.pressKeys('Tab');

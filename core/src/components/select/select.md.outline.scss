@@ -8,6 +8,8 @@
   --border-radius: 4px;
   --padding-start: 16px;
   --padding-end: 16px;
+
+  min-height: 56px;
 }
 
 :host(.select-fill-outline.select-shape-round) {
@@ -104,14 +106,14 @@
 :host(.ion-focused.select-fill-outline.select-label-placement-floating) .label-text-wrapper,
 :host(.has-value.select-fill-outline.select-label-placement-floating) .label-text-wrapper,
 :host(.select-fill-outline.select-label-placement-stacked) .label-text-wrapper {
-  @include transform(translateY(-32%), scale(#{$select-floating-label-scale}));
+  @include transform(translateY(-32%), scale(#{$form-control-label-stacked-scale}));
   @include margin(0);
 
   /**
    * Label text should not extend
    * beyond the bounds of the select.
    */
-  max-width: calc((100% - var(--padding-start) - var(--padding-end) - #{$select-md-floating-label-padding * 2}) / #{$select-floating-label-scale});
+  max-width: calc((100% - var(--padding-start) - var(--padding-end) - #{$select-md-floating-label-padding * 2}) / #{$form-control-label-stacked-scale});
 }
 
 /**
@@ -190,7 +192,7 @@
    */
   @include padding(null, #{$select-md-floating-label-padding * 2}, null, null);
 
-  font-size: calc(1em * #{$select-floating-label-scale});
+  font-size: calc(1em * #{$form-control-label-stacked-scale});
 
   opacity: 0;
   pointer-events: none;

@@ -12,7 +12,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       );
 
       const select = page.locator('ion-select');
-      expect(await select.screenshot()).toMatchSnapshot(screenshot(`select-placeholder`));
+      await expect(select).toHaveScreenshot(screenshot(`select-placeholder`));
     });
 
     test('should render enabled select with a value correctly', async ({ page }) => {
@@ -26,7 +26,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       );
 
       const select = page.locator('ion-select');
-      expect(await select.screenshot()).toMatchSnapshot(screenshot(`select-value`));
+      await expect(select).toHaveScreenshot(screenshot(`select-value`));
     });
 
     test('should render disabled select with a placeholder correctly', async ({ page }) => {
@@ -38,7 +38,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       );
 
       const select = page.locator('ion-select');
-      expect(await select.screenshot()).toMatchSnapshot(screenshot(`select-disabled-placeholder`));
+      await expect(select).toHaveScreenshot(screenshot(`select-disabled-placeholder`));
     });
 
     test('should render disabled select with a value correctly', async ({ page }) => {
@@ -52,7 +52,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       );
 
       const select = page.locator('ion-select');
-      expect(await select.screenshot()).toMatchSnapshot(screenshot(`select-disabled-value`));
+      await expect(select).toHaveScreenshot(screenshot(`select-disabled-value`));
     });
   });
 });

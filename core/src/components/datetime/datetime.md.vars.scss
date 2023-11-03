@@ -2,16 +2,22 @@
 // --------------------------------------------------
 
 /// @prop - Font size for title in header
-$datetime-md-title-font-size:          12px !default;
+$datetime-md-title-font-size:          dynamic-font(12px) !default;
 
 /// @prop - Font size for selected date in header
-$datetime-md-selected-date-font-size:  34px !default;
+$datetime-md-selected-date-font-size:  dynamic-font(34px) !default;
 
 /// @prop - Font size for calendar day button
-$datetime-md-calendar-item-font-size:  14px !default;
+$datetime-md-calendar-item-font-size:  dynamic-font(14px) !default;
 
 /// @prop - Padding for content in header
 $datetime-md-header-padding:           20px !default;
 
 /// @prop - Padding for content
 $datetime-md-padding:                  16px !default;
+
+/// @prop - Width of the calendar day
+$datetime-md-day-width: 42px !default;
+
+/// @prop - Height of the calendar day
+$datetime-md-day-height: $datetime-md-day-width !default;

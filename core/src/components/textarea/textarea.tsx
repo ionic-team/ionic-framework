@@ -16,7 +16,13 @@ import {
 import type { LegacyFormController, NotchController } from '@utils/forms';
 import { createLegacyFormController, createNotchController } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
-import { inheritAriaAttributes, debounceEvent, findItemLabel, inheritAttributes } from '@utils/helpers';
+import {
+  inheritAriaAttributes,
+  debounceEvent,
+  findItemLabel,
+  inheritAttributes,
+  componentOnReady,
+} from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 import { createSlotMutationController } from '@utils/slot-mutation-controller';
 import type { SlotMutationController } from '@utils/slot-mutation-controller';
@@ -180,7 +186,7 @@ export class Textarea implements ComponentInterface {
   /**
    * The visible width of the text control, in average character widths. If it is specified, it must be a positive integer.
    */
-  @Prop() cols?: number;
+  @Prop({ reflect: true }) cols?: number;
 
   /**
    * The number of visible text lines for the control.
@@ -378,7 +384,14 @@ export class Textarea implements ComponentInterface {
    * Returns the native `<textarea>` element used under the hood.
    */
   @Method()
-  getInputElement(): Promise<HTMLTextAreaElement> {
+  async getInputElement(): Promise<HTMLTextAreaElement> {
+    /**
+     * If this gets called in certain early lifecycle hooks (ex: Vue onMounted),
+     * nativeInput won't be defined yet with the custom elements build, so wait for it to load in.
+     */
+    if (!this.nativeInput) {
+      await new Promise((resolve) => componentOnReady(this.el, resolve));
+    }
     return Promise.resolve(this.nativeInput!);
   }
 
@@ -434,7 +447,7 @@ export class Textarea implements ComponentInterface {
   /**
    * Check if we need to clear the text input if clearOnEdit is enabled
    */
-  private checkClearOnEdit(ev: Event) {
+  private checkClearOnEdit(ev: KeyboardEvent) {
     if (!this.clearOnEdit) {
       return;
     }
@@ -442,7 +455,7 @@ export class Textarea implements ComponentInterface {
      * Clear the textarea if the control has not been previously cleared
      * during focus.
      */
-    if (!this.didTextareaClearOnEdit && this.hasValue()) {
+    if (!this.didTextareaClearOnEdit && this.hasValue() && ev.key !== 'Tab') {
       this.value = '';
       this.emitInputChange(ev);
     }
@@ -501,7 +514,7 @@ export class Textarea implements ComponentInterface {
     this.ionBlur.emit(ev);
   };
 
-  private onKeyDown = (ev: Event) => {
+  private onKeyDown = (ev: KeyboardEvent) => {
     this.checkClearOnEdit(ev);
   };
 

@@ -67,6 +67,45 @@
   box-sizing: border-box;
 }
 
+// Textarea Wrapper
+// ----------------------------------------------------------------
+
+// TODO: FW-2876 - Make this style a :host style, remove :not selector
+:host(:not(.legacy-textarea)) {
+  min-height: 44px;
+}
+
+/**
+ * Since the label sits on top of the element,
+ * the component needs to be taller otherwise the
+ * label will appear too close to the textarea text.
+ * Also, floating and stacked labels should not
+ * push the label down since it it
+ * sits on top of the textarea.
+ */
+:host(.textarea-label-placement-floating),
+:host(.textarea-label-placement-stacked) {
+  --padding-top: 0px;
+
+  min-height: 56px;
+}
+
+/**
+ * When the cols property is set we should
+ * respect that width instead of defaulting
+ * to taking up the entire line.
+ * Requires both the cols and autoGrow
+ * properties to be reflected as attributes
+ * on the host.
+ *
+ * cols does not work with autoGrow because
+ * autoGrow would prevent line breaks from naturally
+ * occurring until the textarea takes up the entire line width.
+ */
+:host([cols]:not([auto-grow])) {
+  width: fit-content;
+}
+
 // TODO: FW-2876 - Remove this selector
 :host(.legacy-textarea) {
   flex: 1;
@@ -413,7 +452,7 @@
 
   border-top: var(--border-width) var(--border-style) var(--border-color);
 
-  font-size: 12px;
+  font-size: dynamic-font(12px);
 }
 
 /**
@@ -629,6 +668,13 @@
   @include padding(0px);
 
   max-width: 100%;
+
+  /**
+   * The 2 ensures the label
+   * remains on top of any browser
+   * autofill background too.
+   */
+  z-index: 2;
 }
 
 /**
@@ -670,11 +716,11 @@
 :host(.textarea-label-placement-stacked) .label-text-wrapper,
 :host(.has-focus.textarea-label-placement-floating) .label-text-wrapper,
 :host(.has-value.textarea-label-placement-floating) .label-text-wrapper {
-  @include transform(translateY(50%), scale(#{$textarea-floating-label-scale}));
+  @include transform(translateY(50%), scale(#{$form-control-label-stacked-scale}));
 
   /**
    * Label text should not extend
    * beyond the bounds of the textarea.
    */
-  max-width: calc(100% / #{$textarea-floating-label-scale});
+  max-width: calc(100% / #{$form-control-label-stacked-scale});
 }

@@ -8,7 +8,7 @@
 $item-divider-ios-min-height:             28px !default;
 
 /// @prop - Font size of the item
-$item-divider-ios-font-size:              17px !default;
+$item-divider-ios-font-size:              dynamic-font(17px) !default;
 
 /// @prop - Font weight of the item
 $item-divider-ios-font-weight:            600 !default;

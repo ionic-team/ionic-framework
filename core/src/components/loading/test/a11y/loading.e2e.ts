@@ -30,3 +30,29 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     });
   });
 });
+
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('loading: font scaling'), () => {
+    test('should scale text on larger font sizes', async ({ page }) => {
+      await page.setContent(
+        `
+        <style>
+          html {
+            font-size: 36px;
+          }
+        </style>
+        <ion-loading message="Loading"></ion-loading>
+      `,
+        config
+      );
+
+      const ionLoadingDidPresent = await page.spyOnEvent('ionLoadingDidPresent');
+      const loading = page.locator('ion-loading');
+
+      await loading.evaluate((el: HTMLIonLoadingElement) => el.present());
+      await ionLoadingDidPresent.next();
+
+      await expect(loading).toHaveScreenshot(screenshot(`loading-scale`));
+    });
+  });
+});

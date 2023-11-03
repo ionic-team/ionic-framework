@@ -28,6 +28,67 @@ const testAria = async (
   expect(ariaDescribedBy).toBe(expectedAriaDescribedBy);
 };
 
+configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('alert: text wrapping'), () => {
+    test('should break on words and white spaces for radios', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/28406',
+      });
+      await page.setContent(
+        `
+        <ion-alert header='Text Wrapping'></ion-alert>
+
+        <script>
+          const alert = document.querySelector('ion-alert');
+          alert.inputs = [
+            { type: 'radio', value: 'a', label: 'ThisIsAllOneReallyLongWordThatShouldWrap' },
+            { type: 'radio', value: 'b', label: 'These are separate words that should wrap' }
+          ];
+        </script>
+      `,
+        config
+      );
+
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+      const alert = page.locator('ion-alert');
+
+      await alert.evaluate((el: HTMLIonAlertElement) => el.present());
+      await ionAlertDidPresent.next();
+
+      await expect(page).toHaveScreenshot(screenshot(`alert-radio-text-wrap`));
+    });
+    test('should break on words and white spaces for checkboxes', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/28406',
+      });
+      await page.setContent(
+        `
+        <ion-alert header='Text Wrapping'></ion-alert>
+
+        <script>
+          const alert = document.querySelector('ion-alert');
+          alert.inputs = [
+            { type: 'checkbox', value: 'a', label: 'ThisIsAllOneReallyLongWordThatShouldWrap' },
+            { type: 'checkbox', value: 'b', label: 'These are separate words that should wrap' }
+          ];
+        </script>
+      `,
+        config
+      );
+
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+      const alert = page.locator('ion-alert');
+
+      await alert.evaluate((el: HTMLIonAlertElement) => el.present());
+      await ionAlertDidPresent.next();
+
+      await expect(page).toHaveScreenshot(screenshot(`alert-checkbox-text-wrap`));
+    });
+  });
+});
+
 configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
   test.describe(title('alert: a11y'), () => {
     test.beforeEach(async ({ page }) => {
@@ -59,6 +120,175 @@ configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
 
     test('should allow for manually specifying aria attributes', async ({ page }) => {
       await testAria(page, 'customAria', 'Custom title', 'Custom description');
+    });
+
+    test('should have aria-labelledby and aria-label added to the button when htmlAttributes is set', async ({
+      page,
+    }) => {
+      const didPresent = await page.spyOnEvent('ionAlertDidPresent');
+
+      const button = page.locator('#ariaLabelButton');
+      await button.click();
+
+      await didPresent.next();
+
+      const alertButton = page.locator('ion-alert .alert-button');
+
+      await expect(alertButton).toHaveAttribute('aria-labelledby', 'close-label');
+      await expect(alertButton).toHaveAttribute('aria-label', 'close button');
+    });
+
+    test('should not toggle the checkbox when pressing the Enter key', async ({ page }) => {
+      const didPresent = await page.spyOnEvent('ionAlertDidPresent');
+
+      const button = page.locator('#checkbox');
+      await button.click();
+
+      await didPresent.next();
+
+      const alertCheckbox = page.locator('ion-alert .alert-checkbox');
+      const ariaChecked = await alertCheckbox.getAttribute('aria-checked');
+
+      await expect(alertCheckbox).toHaveAttribute('aria-checked', ariaChecked!);
+
+      await alertCheckbox.press('Enter');
+      await expect(alertCheckbox).toHaveAttribute('aria-checked', ariaChecked!);
+    });
+  });
+});
+
+/**
+ * This behavior does not vary across directions
+ */
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('alert: font scaling'), () => {
+    test('should scale text on larger font sizes', async ({ page }) => {
+      await page.setContent(
+        `
+        <style>
+          html {
+            font-size: 36px;
+          }
+        </style>
+
+
+        <ion-alert header="Header" sub-header="Sub Header" message="Message"></ion-alert>
+
+        <script>
+          const alert = document.querySelector('ion-alert');
+          alert.buttons = ['Ok', 'Cancel'];
+        </script>
+      `,
+        config
+      );
+
+      const alert = page.locator('ion-alert');
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+
+      await alert.evaluate((el: HTMLIonAlertElement) => el.present());
+      await ionAlertDidPresent.next();
+
+      await expect(page).toHaveScreenshot(screenshot(`alert-scale`));
+    });
+    test('should scale text on larger font sizes with checkboxes', async ({ page }) => {
+      await page.setContent(
+        `
+        <style>
+          html {
+            font-size: 36px;
+          }
+        </style>
+
+
+        <ion-alert header="Header" sub-header="Sub Header" message="Message"></ion-alert>
+
+        <script>
+          const alert = document.querySelector('ion-alert');
+          alert.inputs = [
+            { type: 'checkbox', value: 'a', label: 'Checkbox A', checked: true },
+            { type: 'checkbox', value: 'b', label: 'Checkbox B' },
+            { type: 'checkbox', value: 'c', label: 'Checkbox C' },
+            { type: 'checkbox', value: 'd', label: 'Checkbox D' },
+          ];
+          alert.buttons = ['Ok', 'Cancel'];
+        </script>
+      `,
+        config
+      );
+
+      const alert = page.locator('ion-alert');
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+
+      await alert.evaluate((el: HTMLIonAlertElement) => el.present());
+      await ionAlertDidPresent.next();
+
+      await expect(page).toHaveScreenshot(screenshot(`alert-checkbox-scale`));
+    });
+    test('should scale text on larger font sizes with radios', async ({ page }) => {
+      await page.setContent(
+        `
+        <style>
+          html {
+            font-size: 36px;
+          }
+        </style>
+
+
+        <ion-alert header="Header" sub-header="Sub Header" message="Message"></ion-alert>
+
+        <script>
+          const alert = document.querySelector('ion-alert');
+          alert.inputs = [
+            { type: 'radio', value: 'a', label: 'Radio A', checked: true },
+            { type: 'radio', value: 'b', label: 'Radio B' },
+            { type: 'radio', value: 'c', label: 'Radio C' },
+            { type: 'radio', value: 'd', label: 'Radio D' },
+          ];
+          alert.buttons = ['Ok', 'Cancel'];
+        </script>
+      `,
+        config
+      );
+
+      const alert = page.locator('ion-alert');
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+
+      await alert.evaluate((el: HTMLIonAlertElement) => el.present());
+      await ionAlertDidPresent.next();
+
+      await expect(page).toHaveScreenshot(screenshot(`alert-radio-scale`));
+    });
+    test('should scale text on larger font sizes with text fields', async ({ page }) => {
+      await page.setContent(
+        `
+        <style>
+          html {
+            font-size: 36px;
+          }
+        </style>
+
+
+        <ion-alert header="Header" sub-header="Sub Header" message="Message"></ion-alert>
+
+        <script>
+          const alert = document.querySelector('ion-alert');
+          alert.inputs = [
+            { type: 'text', value: 'My Input', label: 'Input' },
+            { type: 'textarea', value: 'My Textarea', label: 'Textarea' },
+          ];
+          alert.buttons = ['Ok', 'Cancel'];
+        </script>
+      `,
+        config
+      );
+
+      const alert = page.locator('ion-alert');
+      const ionAlertDidPresent = await page.spyOnEvent('ionAlertDidPresent');
+
+      await alert.evaluate((el: HTMLIonAlertElement) => el.present());
+      await ionAlertDidPresent.next();
+
+      await expect(page).toHaveScreenshot(screenshot(`alert-text-fields-scale`));
     });
   });
 });

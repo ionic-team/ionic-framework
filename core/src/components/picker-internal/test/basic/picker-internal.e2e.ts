@@ -9,6 +9,14 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
     test('inline pickers should not have visual regression', async ({ page }) => {
       await page.goto(`/src/components/picker-internal/test/basic`, config);
 
+      const fullStack = page.locator('#inline button[data-value="full-stack"]');
+      const onion = page.locator('#inline button[data-value="onion"]');
+
+      await expect(fullStack).toHaveClass(/picker-item-active/);
+      await expect(onion).toHaveClass(/picker-item-active/);
+
+      await page.waitForChanges();
+
       await expect(page.locator('#inline')).toHaveScreenshot(screenshot(`picker-internal-inline-diff`));
     });
   });

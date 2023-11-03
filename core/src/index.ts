@@ -1,6 +1,7 @@
 import 'ionicons';
 
 export { createAnimation } from './utils/animation/animation';
+export { getIonPageElement } from './utils/transition';
 export { iosTransitionAnimation } from './utils/transition/ios.transition';
 export { mdTransitionAnimation } from './utils/transition/md.transition';
 export { getTimeGivenProgression } from './utils/animation/cubic-bezier';
@@ -10,6 +11,7 @@ export { componentOnReady } from './utils/helpers';
 export { isPlatform, Platforms, PlatformConfig, getPlatforms } from './utils/platform';
 export { IonicSafeString } from './utils/sanitization';
 export { IonicConfig, getMode, setupConfig } from './utils/config';
+export { openURL } from './utils/theme';
 export {
   LIFECYCLE_WILL_ENTER,
   LIFECYCLE_DID_ENTER,

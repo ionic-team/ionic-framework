@@ -1,6 +1,8 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { State, Watch, Component, Element, Event, h, Host, Method, Prop } from '@stencil/core';
 import { ENABLE_HTML_CONTENT_DEFAULT } from '@utils/config';
+import { raf } from '@utils/helpers';
+import { createLockController } from '@utils/lock-controller';
 import { printIonWarning } from '@utils/logging';
 import {
   createDelegateController,
@@ -26,7 +28,15 @@ import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
-import type { ToastButton, ToastPosition, ToastLayout } from './toast-interface';
+import { getAnimationPosition } from './animations/utils';
+import type {
+  ToastButton,
+  ToastPosition,
+  ToastLayout,
+  ToastPresentOptions,
+  ToastDismissOptions,
+  ToastAnimationPosition,
+} from './toast-interface';
 
 // TODO(FW-2832): types
 
@@ -34,6 +44,7 @@ import type { ToastButton, ToastPosition, ToastLayout } from './toast-interface'
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @part button - Any button element that is displayed inside of the toast.
+ * @part button cancel - Any button element with role "cancel" that is displayed inside of the toast.
  * @part container - The element that wraps all child elements.
  * @part header - The header text of the toast.
  * @part message - The body text of the toast.
@@ -49,10 +60,17 @@ import type { ToastButton, ToastPosition, ToastLayout } from './toast-interface'
 })
 export class Toast implements ComponentInterface, OverlayInterface {
   private readonly delegateController = createDelegateController(this);
+  private readonly lockController = createLockController();
   private readonly triggerController = createTriggerController();
-  private currentTransition?: Promise<any>;
   private customHTMLEnabled = config.get('innerHTMLTemplatesEnabled', ENABLE_HTML_CONTENT_DEFAULT);
   private durationTimeout?: ReturnType<typeof setTimeout>;
+
+  /**
+   * Holds the position of the toast calculated in the present
+   * animation, to be passed along to the dismiss animation so
+   * we don't have to calculate the position twice.
+   */
+  private lastPresentedPosition?: ToastAnimationPosition;
 
   presented = false;
 
@@ -134,9 +152,18 @@ export class Toast implements ComponentInterface, OverlayInterface {
   @Prop() keyboardClose = false;
 
   /**
-   * The position of the toast on the screen.
+   * The starting position of the toast on the screen. Can be tweaked further
+   * using the `positionAnchor` property.
    */
   @Prop() position: ToastPosition = 'bottom';
+
+  /**
+   * The element to anchor the toast's position to. Can be set as a direct reference
+   * or the ID of the element. With `position="bottom"`, the toast will sit above the
+   * chosen element. With `position="top"`, the toast will sit below the chosen element.
+   * With `position="middle"`, the value of `positionAnchor` is ignored.
+   */
+  @Prop() positionAnchor?: HTMLElement | string;
 
   /**
    * An array of buttons for the toast.
@@ -253,33 +280,40 @@ export class Toast implements ComponentInterface, OverlayInterface {
     setOverlayId(this.el);
   }
 
+  componentDidLoad() {
+    /**
+     * If toast was rendered with isOpen="true"
+     * then we should open toast immediately.
+     */
+    if (this.isOpen === true) {
+      raf(() => this.present());
+    }
+  }
+
   /**
    * Present the toast overlay after it has been created.
    */
   @Method()
   async present(): Promise<void> {
-    /**
-     * When using an inline toast
-     * and dismissing a toast it is possible to
-     * quickly present the toast while it is
-     * dismissing. We need to await any current
-     * transition to allow the dismiss to finish
-     * before presenting again.
-     */
-    if (this.currentTransition !== undefined) {
-      await this.currentTransition;
-    }
+    const unlock = await this.lockController.lock();
 
     await this.delegateController.attachViewToDom();
 
-    this.currentTransition = present<ToastPresentOptions>(
-      this,
-      'toastEnter',
-      iosEnterAnimation,
-      mdEnterAnimation,
-      this.position
-    );
-    await this.currentTransition;
+    const { el, position } = this;
+    const anchor = this.getAnchorElement();
+    const animationPosition = getAnimationPosition(position, anchor, getIonMode(this), el);
+
+    /**
+     * Cache the calculated position of the toast, so we can re-use it
+     * in the dismiss animation.
+     */
+    this.lastPresentedPosition = animationPosition;
+
+    await present<ToastPresentOptions>(this, 'toastEnter', iosEnterAnimation, mdEnterAnimation, {
+      position,
+      top: animationPosition.top,
+      bottom: animationPosition.bottom,
+    });
 
     /**
      * Content is revealed to screen readers after
@@ -288,11 +322,11 @@ export class Toast implements ComponentInterface, OverlayInterface {
      */
     this.revealContentToScreenReader = true;
 
-    this.currentTransition = undefined;
-
     if (this.duration > 0) {
       this.durationTimeout = setTimeout(() => this.dismiss(undefined, 'timeout'), this.duration);
     }
+
+    unlock();
   }
 
   /**
@@ -306,25 +340,40 @@ export class Toast implements ComponentInterface, OverlayInterface {
    */
   @Method()
   async dismiss(data?: any, role?: string): Promise<boolean> {
-    if (this.durationTimeout) {
-      clearTimeout(this.durationTimeout);
+    const unlock = await this.lockController.lock();
+
+    const { durationTimeout, position, lastPresentedPosition } = this;
+
+    if (durationTimeout) {
+      clearTimeout(durationTimeout);
     }
 
-    this.currentTransition = dismiss<ToastDismissOptions>(
+    const dismissed = await dismiss<ToastDismissOptions>(
       this,
       data,
       role,
       'toastLeave',
       iosLeaveAnimation,
       mdLeaveAnimation,
-      this.position
+      /**
+       * Fetch the cached position that was calculated back in the present
+       * animation. We always want to animate the dismiss from the same
+       * position the present stopped at, so the animation looks continuous.
+       */
+      {
+        position,
+        top: lastPresentedPosition?.top ?? '',
+        bottom: lastPresentedPosition?.bottom ?? '',
+      }
     );
-    const dismissed = await this.currentTransition;
 
     if (dismissed) {
       this.delegateController.removeViewFromDom();
       this.revealContentToScreenReader = false;
     }
+
+    this.lastPresentedPosition = undefined;
+    unlock();
 
     return dismissed;
   }
@@ -353,6 +402,51 @@ export class Toast implements ComponentInterface, OverlayInterface {
       : [];
 
     return buttons;
+  }
+
+  /**
+   * Returns the element specified by the positionAnchor prop,
+   * or undefined if prop's value is an ID string and the element
+   * is not found in the DOM.
+   */
+  private getAnchorElement(): HTMLElement | undefined {
+    const { position, positionAnchor, el } = this;
+
+    /**
+     * If positionAnchor is undefined then
+     * no anchor should be used when presenting the toast.
+     */
+    if (positionAnchor === undefined) {
+      return;
+    }
+
+    if (position === 'middle' && positionAnchor !== undefined) {
+      printIonWarning('The positionAnchor property is ignored when using position="middle".', this.el);
+      return undefined;
+    }
+
+    if (typeof positionAnchor === 'string') {
+      /**
+       * If the anchor is defined as an ID, find the element.
+       * We do this on every present so the toast doesn't need
+       * to account for the surrounding DOM changing since the
+       * last time it was presented.
+       */
+      const foundEl = document.getElementById(positionAnchor);
+      if (foundEl === null) {
+        printIonWarning(`An anchor element with an ID of "${positionAnchor}" was not found in the DOM.`, el);
+        return undefined;
+      }
+
+      return foundEl;
+    }
+
+    if (positionAnchor instanceof HTMLElement) {
+      return positionAnchor;
+    }
+
+    printIonWarning('Invalid positionAnchor value:', positionAnchor, el);
+    return undefined;
   }
 
   private async buttonClick(button: ToastButton) {
@@ -405,7 +499,14 @@ export class Toast implements ComponentInterface, OverlayInterface {
     return (
       <div class={buttonGroupsClasses}>
         {buttons.map((b) => (
-          <button type="button" class={buttonClass(b)} tabIndex={0} onClick={() => this.buttonClick(b)} part="button">
+          <button
+            {...b.htmlAttributes}
+            type="button"
+            class={buttonClass(b)}
+            tabIndex={0}
+            onClick={() => this.buttonClick(b)}
+            part={buttonPart(b)}
+          >
             <div class="toast-button-inner">
               {b.icon && (
                 <ion-icon
@@ -568,5 +669,6 @@ const buttonClass = (button: ToastButton): CssClassMap => {
   };
 };
 
-type ToastPresentOptions = ToastPosition;
-type ToastDismissOptions = ToastPosition;
+const buttonPart = (button: ToastButton): string => {
+  return isCancel(button.role) ? 'button cancel' : 'button';
+};

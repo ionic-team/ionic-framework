@@ -8,7 +8,7 @@ configs().forEach(({ title, screenshot, config }) => {
 
       await page.setIonViewport();
 
-      expect(await page.screenshot()).toMatchSnapshot(screenshot(`checkbox-legacy-basic`));
+      await expect(page).toHaveScreenshot(screenshot(`checkbox-legacy-basic`));
     });
   });
 });
@@ -66,6 +66,29 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
 
       await checkbox.evaluate((el: HTMLIonCheckboxElement) => (el.checked = true));
       await expect(ionChange).not.toHaveReceivedEvent();
+    });
+
+    test('clicking padded space within item should click the checkbox', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-item>
+          <ion-checkbox legacy="true" value="my-checkbox"></ion-checkbox>
+        </ion-item>
+      `,
+        config
+      );
+      const itemNative = page.locator('.item-native');
+      const ionChange = await page.spyOnEvent('ionChange');
+
+      // Clicks the padded space within the item
+      await itemNative.click({
+        position: {
+          x: 5,
+          y: 5,
+        },
+      });
+
+      expect(ionChange).toHaveReceivedEvent();
     });
   });
 });

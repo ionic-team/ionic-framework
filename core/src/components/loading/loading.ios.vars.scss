@@ -4,7 +4,7 @@
 // --------------------------------------------------
 
 /// @prop - Font size of the loading wrapper
-$loading-ios-font-size:                             14px !default;
+$loading-ios-font-size:                             dynamic-font(14px) !default;
 
 /// @prop - Padding top of the loading wrapper
 $loading-ios-padding-top:                           24px !default;

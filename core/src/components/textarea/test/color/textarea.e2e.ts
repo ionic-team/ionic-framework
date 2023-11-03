@@ -23,7 +23,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
         );
 
         const textarea = page.locator('ion-textarea');
-        expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-no-fill-color-start`));
+        await expect(textarea).toHaveScreenshot(screenshot(`textarea-no-fill-color-start`));
       });
       test('should set label and highlight color on focus with end label placement', async ({ page }) => {
         await page.setContent(
@@ -34,7 +34,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
         );
 
         const textarea = page.locator('ion-textarea');
-        expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-no-fill-color-end`));
+        await expect(textarea).toHaveScreenshot(screenshot(`textarea-no-fill-color-end`));
       });
       test('should set label and highlight color on focus with fixed label placement', async ({ page }) => {
         await page.setContent(
@@ -45,7 +45,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
         );
 
         const textarea = page.locator('ion-textarea');
-        expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-no-fill-color-fixed`));
+        await expect(textarea).toHaveScreenshot(screenshot(`textarea-no-fill-color-fixed`));
       });
       test('should set label and highlight color on focus with floating label placement', async ({ page }) => {
         await page.setContent(
@@ -56,7 +56,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
         );
 
         const textarea = page.locator('ion-textarea');
-        expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-no-fill-color-floating`));
+        await expect(textarea).toHaveScreenshot(screenshot(`textarea-no-fill-color-floating`));
       });
       test('should set label and highlight color on focus with stacked label placement', async ({ page }) => {
         await page.setContent(
@@ -67,7 +67,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
         );
 
         const textarea = page.locator('ion-textarea');
-        expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-no-fill-color-stacked`));
+        await expect(textarea).toHaveScreenshot(screenshot(`textarea-no-fill-color-stacked`));
       });
     });
     test.describe('textarea: fill solid', () => {
@@ -80,7 +80,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
         );
 
         const textarea = page.locator('ion-textarea');
-        expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-solid-color-start`));
+        await expect(textarea).toHaveScreenshot(screenshot(`textarea-solid-color-start`));
       });
       test('should set label and highlight color on focus with end label placement', async ({ page }) => {
         await page.setContent(
@@ -91,7 +91,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
         );
 
         const textarea = page.locator('ion-textarea');
-        expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-solid-color-end`));
+        await expect(textarea).toHaveScreenshot(screenshot(`textarea-solid-color-end`));
       });
       test('should set label and highlight color on focus with fixed label placement', async ({ page }) => {
         await page.setContent(
@@ -102,7 +102,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
         );
 
         const textarea = page.locator('ion-textarea');
-        expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-solid-color-fixed`));
+        await expect(textarea).toHaveScreenshot(screenshot(`textarea-solid-color-fixed`));
       });
       test('should set label and highlight color on focus with floating label placement', async ({ page }) => {
         await page.setContent(
@@ -113,7 +113,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
         );
 
         const textarea = page.locator('ion-textarea');
-        expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-solid-color-floating`));
+        await expect(textarea).toHaveScreenshot(screenshot(`textarea-solid-color-floating`));
       });
       test('should set label and highlight color on focus with stacked label placement', async ({ page }) => {
         await page.setContent(
@@ -124,7 +124,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
         );
 
         const textarea = page.locator('ion-textarea');
-        expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-solid-color-stacked`));
+        await expect(textarea).toHaveScreenshot(screenshot(`textarea-solid-color-stacked`));
       });
     });
     test.describe('textarea: fill outline', () => {
@@ -137,7 +137,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
         );
 
         const textarea = page.locator('ion-textarea');
-        expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-outline-color-start`));
+        await expect(textarea).toHaveScreenshot(screenshot(`textarea-outline-color-start`));
       });
       test('should set label and highlight color on focus with end label placement', async ({ page }) => {
         await page.setContent(
@@ -148,7 +148,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
         );
 
         const textarea = page.locator('ion-textarea');
-        expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-outline-color-end`));
+        await expect(textarea).toHaveScreenshot(screenshot(`textarea-outline-color-end`));
       });
       test('should set label and highlight color on focus with fixed label placement', async ({ page }) => {
         await page.setContent(
@@ -159,7 +159,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
         );
 
         const textarea = page.locator('ion-textarea');
-        expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-outline-color-fixed`));
+        await expect(textarea).toHaveScreenshot(screenshot(`textarea-outline-color-fixed`));
       });
       test('should set label and highlight color on focus with floating label placement', async ({ page }) => {
         await page.setContent(
@@ -170,7 +170,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
         );
 
         const textarea = page.locator('ion-textarea');
-        expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-outline-color-floating`));
+        await expect(textarea).toHaveScreenshot(screenshot(`textarea-outline-color-floating`));
       });
       test('should set label and highlight color on focus with stacked label placement', async ({ page }) => {
         await page.setContent(
@@ -181,7 +181,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
         );
 
         const textarea = page.locator('ion-textarea');
-        expect(await textarea.screenshot()).toMatchSnapshot(screenshot(`textarea-outline-color-stacked`));
+        await expect(textarea).toHaveScreenshot(screenshot(`textarea-outline-color-stacked`));
       });
     });
   });

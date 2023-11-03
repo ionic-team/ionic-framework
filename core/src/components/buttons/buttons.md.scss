@@ -5,15 +5,20 @@
 // --------------------------------------------------
 
 ::slotted(*) ion-button {
-  --padding-top: 0;
-  --padding-bottom: 0;
+  --padding-top: 3px;
+  --padding-bottom: 3px;
   --padding-start: 8px;
   --padding-end: 8px;
   --box-shadow: none;
 
   @include margin-horizontal(2px, 2px);
 
-  height: 32px;
+  min-height: 32px;
+}
+
+::slotted(*) .button-has-icon-only {
+  --padding-top: 0;
+  --padding-bottom: 0;
 }
 
 ::slotted(*) ion-button:not(.button-round) {
@@ -60,8 +65,8 @@
 
   @include margin(0);
 
-  width: 48px;
-  height: 48px;
+  width: 3rem;
+  height: 3rem;
 }
 
 

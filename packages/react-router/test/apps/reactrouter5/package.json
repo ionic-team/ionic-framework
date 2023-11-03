@@ -51,7 +51,7 @@
   },
   "devDependencies": {
     "concurrently": "^6.3.0",
-    "cypress": "^10.9.0",
+    "cypress": "^13.2.0",
     "serve": "^14.0.1",
     "wait-on": "^6.0.0",
     "webpack-cli": "^4.9.1"

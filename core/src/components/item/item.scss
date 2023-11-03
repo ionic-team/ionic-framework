@@ -2,6 +2,7 @@
 
 // Item
 // --------------------------------------------------
+// TODO: FW-4955
 
 :host {
   /**
@@ -45,10 +46,10 @@
    *
    * @prop --ripple-color: Color of the item ripple effect
    *
-   * @prop --highlight-height: The height of the highlight on the item
-   * @prop --highlight-color-focused: The color of the highlight on the item when focused
-   * @prop --highlight-color-valid: The color of the highlight on the item when valid
-   * @prop --highlight-color-invalid: The color of the highlight on the item when invalid
+   * @prop --highlight-height: The height of the highlight on the item. Only applies to inputs and textareas using the legacy form syntax. DEPRECATED: Highlights can be styled on `ion-input` or `ion-textarea` when using the modern form syntax.
+   * @prop --highlight-color-focused: The color of the highlight on the item when focused. Only applies to inputs and textareas using the legacy form syntax. DEPRECATED: Highlights can be styled on `ion-input` or `ion-textarea` when using the modern form syntax.
+   * @prop --highlight-color-valid: The color of the highlight on the item when valid. Only applies to inputs and textareas using the legacy form syntax. DEPRECATED: Highlights can be styled on `ion-input` or `ion-textarea` when using the modern form syntax.
+   * @prop --highlight-color-invalid: The color of the highlight on the item when invalid. Only applies to inputs and textareas using the legacy form syntax. DEPRECATED: Highlights can be styled on `ion-input` or `ion-textarea` when using the modern form syntax.
    */
   --border-radius: 0px;
   --border-width: 0px;
@@ -66,7 +67,7 @@
   --show-full-highlight: 0;
   --show-inset-highlight: 0;
   --detail-icon-color: initial;
-  --detail-icon-font-size: 20px;
+  --detail-icon-font-size: 1.25em;
   --detail-icon-opacity: 0.25;
   --color-activated: var(--color);
   --color-focused: var(--color);
@@ -172,6 +173,13 @@
   }
 }
 
+// Item: Interactive
+// --------------------------------------------------
+
+:host(.item-has-interactive-control) {
+  cursor: pointer;
+}
+
 
 // Item: Disabled
 // --------------------------------------------------
@@ -188,19 +196,27 @@
 }
 
 
+
 // Native Item
 // --------------------------------------------------
 
 .item-native {
   @include border-radius(var(--border-radius));
   @include margin(0);
-  @include padding(
-    var(--padding-top),
-    var(--padding-end),
-    var(--padding-bottom),
-    calc(var(--padding-start) + var(--ion-safe-area-left, 0px))
-  );
+  @include padding(var(--padding-top), null, var(--padding-bottom));
   @include text-inherit();
+
+  /* stylelint-disable */
+  @include ltr() {
+    padding-right: var(--padding-end);
+    padding-left: calc(var(--padding-start) + var(--ion-safe-area-left, 0px));
+  }
+
+  @include rtl() {
+    padding-right: calc(var(--padding-start) + var(--ion-safe-area-right, 0px));
+    padding-left: var(--padding-end);
+  }
+  /* stylelint-enable */
 
   display: flex;
   position: relative;
@@ -252,12 +268,19 @@ button, a {
 
 .item-inner {
   @include margin(0);
-  @include padding(
-    var(--inner-padding-top),
-    calc(var(--ion-safe-area-right, 0px) + var(--inner-padding-end)),
-    var(--inner-padding-bottom),
-    var(--inner-padding-start)
-  );
+  @include padding(var(--inner-padding-top), null, var(--inner-padding-bottom));
+
+  /* stylelint-disable */
+  @include ltr() {
+    padding-right: calc(var(--ion-safe-area-right, 0px) + var(--inner-padding-end));
+    padding-left: var(--inner-padding-start);
+  }
+
+  @include rtl() {
+    padding-right: var(--inner-padding-start);
+    padding-left: calc(var(--ion-safe-area-left, 0px) + var(--inner-padding-end));
+  }
+  /* stylelint-enable */
 
   display: flex;
 
@@ -286,12 +309,19 @@ button, a {
 
 .item-bottom {
   @include margin(0);
-  @include padding(
-    0,
-    var(--inner-padding-end),
-    0,
-    calc(var(--padding-start) + var(--ion-safe-area-left, 0px))
-  );
+  @include padding(0, null);
+
+  /* stylelint-disable */
+  @include ltr() {
+    padding-left: calc(var(--padding-start) + var(--ion-safe-area-left, 0px));
+    padding-right: calc(var(--inner-padding-end) + var(--ion-safe-area-right, 0px));
+  }
+
+  @include rtl() {
+    padding-left: calc(var(--inner-padding-end) + var(--ion-safe-area-left, 0px));
+    padding-right: calc(var(--padding-start) + var(--ion-safe-area-right, 0px));
+  }
+  /* stylelint-enable */
 
   display: flex;
 
@@ -572,7 +602,7 @@ ion-ripple-effect {
 .item-counter {
   padding-top: 5px;
 
-  font-size: 12px;
+  font-size: dynamic-font(12px);
 
   z-index: 1;
 }

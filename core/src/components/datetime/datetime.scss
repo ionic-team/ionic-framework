@@ -1,4 +1,4 @@
-@import "./datetime.vars";
+@import "../../themes/ionic.globals";
 
 // Datetime
 // --------------------------------------------------
@@ -185,13 +185,37 @@ ion-picker-column-internal {
   display: none;
 }
 
-:host(.datetime-readonly),
 :host(.datetime-disabled) {
   pointer-events: none;
+
+  .calendar-days-of-week,
+  .datetime-time {
+    opacity: 0.4;
+  }
 }
 
-:host(.datetime-disabled) {
-  opacity: 0.4;
+:host(.datetime-readonly) {
+  pointer-events: none;
+
+  /**
+   * Allow user to navigate months
+   * while in readonly mode
+   */
+  .calendar-action-buttons,
+  .calendar-body,
+  .datetime-year {
+    pointer-events: initial;
+  }
+
+  /**
+   * Disabled buttons should have full opacity
+   * in readonly mode
+   */
+
+  .calendar-day[disabled]:not(.calendar-day-constrained),
+  .datetime-action-buttons ion-button[disabled] {
+    opacity: 1;
+  }
 }
 
 /**
@@ -218,6 +242,18 @@ ion-picker-column-internal {
   display: flex;
 
   justify-content: space-between;
+}
+
+/**
+ * The confirm and clear buttons are grouped in a
+ * container so that they appear on the end opposite
+ * of the cancel button.
+ * We use display: flex so that the
+ * wrapper only takes up as much
+ * height as it needs.
+ */
+.datetime-action-buttons .datetime-action-buttons-container {
+  display: flex;
 }
 
 /**
@@ -255,6 +291,15 @@ ion-picker-column-internal {
   text-align: center;
 }
 
+.calendar-days-of-week .day-of-week {
+  /**
+   * Center the days of the week within each cell
+   * if the container size is changed as a result
+   * of Dynamic Type.
+   */
+  @include margin(0, auto);
+}
+
 // Calendar / Body
 // -----------------------------------
 :host .calendar-body {
@@ -290,6 +335,10 @@ ion-picker-column-internal {
 }
 
 :host .calendar-body .calendar-month {
+  display: flex;
+
+  flex-flow: column;
+
   /**
    * Swiping should snap to at
    * most one month at a time.
@@ -325,13 +374,31 @@ ion-picker-column-internal {
   grid-template-columns: repeat(7, 1fr);
 }
 
+:host .calendar-day-wrapper {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  // Adding a min width and min height allows
+  // it to shrink smaller than its content
+  // which keeps the calendar day highlight
+  // larger while letting the grid items shrink
+  min-width: 0;
+
+  min-height: 0;
+
+  overflow: visible;
+}
+
 /**
  * Center the day text vertically
  * and horizontally within its grid cell.
  */
-:host .calendar-day {
-  @include padding(0px, 0px, 0px, 0px);
-  @include margin(0px, 0px, 0px, 0px);
+.calendar-day {
+  @include border-radius(50%);
+  @include padding(0px);
+  @include margin(0px);
 
   display: flex;
 
@@ -362,16 +429,10 @@ ion-picker-column-internal {
   opacity: 0.4;
 }
 
-.calendar-day-highlight {
-  @include border-radius(32px, 32px, 32px, 32px);
-  @include padding(4px, 4px, 4px, 4px);
+.calendar-day:focus {
+  background: current-color(base, 0.2);
 
-  position: absolute;
-
-  width: 32px;
-  height: 32px;
-
-  z-index: -1;
+  box-shadow: 0px 0px 0px 4px current-color(base, 0.2);
 }
 
 // Time / Header

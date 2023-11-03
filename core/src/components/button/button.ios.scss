@@ -16,7 +16,7 @@
 
   @include margin($button-ios-margin-top, $button-ios-margin-end, $button-ios-margin-bottom, $button-ios-margin-start);
 
-  height: #{$button-ios-height};
+  min-height: #{$button-ios-min-height};
 
   font-size: #{$button-ios-font-size};
   font-weight: #{$button-ios-font-weight};
@@ -24,20 +24,6 @@
   letter-spacing: #{$button-ios-letter-spacing};
 }
 
-/**
- * The default buttons in a toolbar
- * have a different font size/weight
- * than buttons outside of a toolbar on iOS.
- * However, we still want the "size"/"strong"
- * properties to be usable in a toolbar, so we add
- * the .in-buttons selector such that we
- * can add the different font size/weight in a toolbar
- * but still let "size"/"strong" override it.
- */
-:host(.in-buttons) {
-  font-size: #{$toolbar-ios-button-font-size};
-  font-weight: 400;
-}
 
 // iOS Solid Button
 // --------------------------------------------------
@@ -82,6 +68,25 @@
 }
 
 
+// iOS Toolbar Buttons
+// --------------------------------------------------
+
+/**
+ * The default buttons in a toolbar
+ * have a different font size/weight
+ * than buttons outside of a toolbar on iOS.
+ * However, we still want the "size"/"strong"
+ * properties to be usable in a toolbar, so we add
+ * the .in-buttons selector such that we
+ * can add the different font size/weight in a toolbar
+ * but still let "size"/"strong" override it.
+ */
+ :host(.in-buttons) {
+   font-size: #{$toolbar-ios-button-font-size};
+   font-weight: 400;
+ }
+
+
 // iOS Button Sizes
 // --------------------------------------------------
 
@@ -92,7 +97,7 @@
   --padding-end: #{$button-ios-large-padding-end};
   --padding-bottom: #{$button-ios-large-padding-bottom};
 
-  height: #{$button-ios-large-height};
+  min-height: #{$button-ios-large-min-height};
 
   font-size: #{$button-ios-large-font-size};
 }
@@ -104,9 +109,14 @@
   --padding-end: #{$button-ios-small-padding-end};
   --padding-bottom: #{$button-ios-small-padding-bottom};
 
-  height: #{$button-ios-small-height};
+  min-height: #{$button-ios-small-min-height};
 
   font-size: #{$button-ios-small-font-size};
+}
+
+:host(.button-has-icon-only) {
+  --padding-top: 0;
+  --padding-bottom: 0;
 }
 
 
@@ -122,7 +132,7 @@
 }
 
 
-// iOS strong Button
+// iOS Strong Button
 // --------------------------------------------------
 
 :host(.button-strong) {

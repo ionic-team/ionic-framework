@@ -7,13 +7,18 @@
 $range-ios-padding-vertical: 8px !default;
 
 /// @prop - Padding start/end of the range
+// TODO FW-2997 Remove this
 $range-ios-padding-horizontal: 16px !default;
+
+/// @prop - Padding start/end of the range - modern syntax
+/**
+ * 24px was chosen so the knob and its
+ * shadow do not get cut off by the item.
+ */
+$range-ios-item-padding-horizontal: 24px !default;
 
 /// @prop - Height of the range slider
 $range-ios-slider-height: 42px !default;
-
-/// @prop - Width of the area that will select the range knob
-$range-ios-hit-width: 42px !default;
 
 /// @prop - Height of the area that will select the range knob
 $range-ios-hit-height: $range-ios-slider-height !default;
@@ -24,23 +29,14 @@ $range-ios-bar-height: 4px !default;
 /// @prop - Background of the range bar
 $range-ios-bar-background-color: var(--ion-color-step-900, #e6e6e6) !default;
 
-/// @prop - Background of the active range bar
-$range-ios-bar-active-background-color: current-color(base) !default;
-
 /// @prop - Border radius of the range bar
 $range-ios-bar-border-radius: 2px !default;
 
 /// @prop - Width of the range knob
 $range-ios-knob-width: 26px !default;
 
-/// @prop - Height of the range knob
-$range-ios-knob-height: $range-ios-knob-width !default;
-
 /// @prop - Box shadow of the range knob
 $range-ios-knob-box-shadow: 0px 0.5px 4px rgba(0, 0, 0, 0.12), 0px 6px 13px rgba(0, 0, 0, 0.12) !default;
-
-/// @prop - Border radius of the range knob
-$range-ios-knob-border-radius: 50% !default;
 
 /// @prop - Background of the range knob
 $range-ios-knob-background-color: #ffffff !default;
@@ -57,9 +53,6 @@ $range-ios-tick-border-radius: 0 !default;
 /// @prop - Background of the range tick
 $range-ios-tick-background-color: $range-ios-bar-background-color !default;
 
-/// @prop - Background of the active range tick
-$range-ios-tick-active-background-color: $range-ios-bar-active-background-color !default;
-
 /// @prop - Background of the range pin
 $range-ios-pin-background-color: transparent !default;
 
@@ -67,7 +60,7 @@ $range-ios-pin-background-color: transparent !default;
 $range-ios-pin-color: $text-color !default;
 
 /// @prop - Font size of the range pin
-$range-ios-pin-font-size: 12px !default;
+$range-ios-pin-font-size: dynamic-font(12px) !default;
 
 /// @prop - Padding top of the range pin
 $range-ios-pin-padding-top: 8px !default;

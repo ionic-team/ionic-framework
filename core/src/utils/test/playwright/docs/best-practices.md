@@ -187,17 +187,17 @@ Tests are distributed across many test runners on continuous integration (CI) to
 
 By default, we run tests on mobile viewports only (think iPhone sized viewports). However, there are some components that have different layouts on tablet viewports. Two examples are `ion-split-pane` and the card variant of `ion-modal`.
 
-For this scenario, developers must write tests that target the tablet viewport. This can be done by  using [page.setViewportSize](https://playwright.dev/docs/api/class-page#page-set-viewport-size). The Playwright test utils directory also contains a `TabletViewport` constant which can be used to take consistent tablet-sized screenshots.
+For this scenario, developers must write tests that target the tablet viewport. This can be done by using [page.setViewportSize](https://playwright.dev/docs/api/class-page#page-set-viewport-size). The Playwright test utils directory also contains a `Viewports` constant which contains some common viewport presets. Developers should feel free to add new viewports to this as is applicable.
 
 **Example:** 
 
 ```javascript
-import { configs, test, TabletViewport } from '@utils/test/playwright';
+import { configs, test, Viewports } from '@utils/test/playwright';
 
 configs().forEach(({ config, title }) => {
   test.describe(title('thing: rendering'), () => {
     test('it should do a thing on tablet viewports', async ({ page }) => {
-      await page.setViewportSize(TabletViewport);
+      await page.setViewportSize(Viewports.tablet.portrait);
 
       ...
 

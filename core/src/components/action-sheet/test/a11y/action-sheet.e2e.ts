@@ -10,16 +10,36 @@ const testAria = async (page: E2EPage, buttonID: string, expectedAriaLabelledBy:
   await button.click();
   await didPresent.next();
 
-  const alert = page.locator('ion-action-sheet');
+  const actionSheet = page.locator('ion-action-sheet');
 
   /**
    * expect().toHaveAttribute() can't check for a null value, so grab and check
    * the value manually instead.
    */
-  const ariaLabelledBy = await alert.getAttribute('aria-labelledby');
+  const ariaLabelledBy = await actionSheet.getAttribute('aria-labelledby');
 
   expect(ariaLabelledBy).toBe(expectedAriaLabelledBy);
 };
+
+const testAriaButton = async (
+  page: E2EPage,
+  buttonID: string,
+  expectedAriaLabelledBy: string,
+  expectedAriaLabel: string
+) => {
+  const didPresent = await page.spyOnEvent('ionActionSheetDidPresent');
+
+  const button = page.locator(`#${buttonID}`);
+  await button.click();
+
+  await didPresent.next();
+
+  const actionSheetButton = page.locator('ion-action-sheet .action-sheet-button');
+
+  await expect(actionSheetButton).toHaveAttribute('aria-labelledby', expectedAriaLabelledBy);
+  await expect(actionSheetButton).toHaveAttribute('aria-label', expectedAriaLabel);
+};
+
 configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
   test.describe(title('action-sheet: a11y'), () => {
     test.beforeEach(async ({ page }) => {
@@ -51,6 +71,52 @@ configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
 
     test('should allow for manually specifying aria attributes', async ({ page }) => {
       await testAria(page, 'customAria', 'Custom title');
+    });
+
+    test('should have aria-labelledby and aria-label added to the button when htmlAttributes is set', async ({
+      page,
+    }) => {
+      await testAriaButton(page, 'ariaLabelButton', 'close-label', 'close button');
+    });
+
+    test('should have aria-labelledby and aria-label added to the cancel button when htmlAttributes is set', async ({
+      page,
+    }) => {
+      await testAriaButton(page, 'ariaLabelCancelButton', 'cancel-label', 'cancel button');
+    });
+  });
+});
+
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('action-sheet: font scaling'), () => {
+    test('should scale text on larger font sizes', async ({ page }) => {
+      await page.setContent(
+        `
+        <style>
+          html {
+            font-size: 36px;
+          }
+        </style>
+
+        <ion-action-sheet></ion-action-sheet>
+
+        <script>
+          const actionSheet = document.querySelector('ion-action-sheet');
+          actionSheet.header = 'Header';
+          actionSheet.subHeader = 'Sub Header';
+          actionSheet.buttons = ['Ok', { role: 'cancel', text: 'Cancel' }];
+        </script>
+      `,
+        config
+      );
+
+      const ionActionSheetDidPresent = await page.spyOnEvent('ionActionSheetDidPresent');
+      const actionSheet = page.locator('ion-action-sheet');
+
+      await actionSheet.evaluate((el: HTMLIonActionSheetElement) => el.present());
+      await ionActionSheetDidPresent.next();
+
+      await expect(actionSheet).toHaveScreenshot(screenshot(`action-sheet-scale`));
     });
   });
 });

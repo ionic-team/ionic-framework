@@ -8,8 +8,20 @@ if (environment.production) {
   enableProdMode();
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  platformBrowserDynamic()
-  .bootstrapModule(AppModule)
-  .catch(err => console.error(err));
-});
+const isLazy = window.location.href.includes('lazy');
+
+if (isLazy) {
+  document.addEventListener('DOMContentLoaded', () => {
+    platformBrowserDynamic()
+    .bootstrapModule(AppModule)
+    .catch(err => console.error(err));
+  });
+} else {
+  /**
+   * Importing standalone and lazy modules in the same
+   * file creates side effects where manually generated components
+   * such as ion-modal do not get bootstrapped correctly. Using
+   * a dynamic import avoids this.
+   */
+  import('./main-standalone').then((module) => { module.bootstrapStandalone() });
+}

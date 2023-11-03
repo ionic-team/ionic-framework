@@ -3,7 +3,13 @@ import { Build, Component, Element, Event, Host, Method, Prop, State, Watch, for
 import type { LegacyFormController, NotchController } from '@utils/forms';
 import { createLegacyFormController, createNotchController } from '@utils/forms';
 import type { Attributes } from '@utils/helpers';
-import { inheritAriaAttributes, debounceEvent, findItemLabel, inheritAttributes } from '@utils/helpers';
+import {
+  inheritAriaAttributes,
+  debounceEvent,
+  findItemLabel,
+  inheritAttributes,
+  componentOnReady,
+} from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
 import { createSlotMutationController } from '@utils/slot-mutation-controller';
 import type { SlotMutationController } from '@utils/slot-mutation-controller';
@@ -268,9 +274,7 @@ export class Input implements ComponentInterface {
    */
   @Prop() step?: string;
 
-  /**
-   * The initial size of the control. This value is in pixels unless the value of the type attribute is `"text"` or `"password"`, in which case it is an integer number of characters. This attribute applies only when the `type` attribute is set to `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, or `"password"`, otherwise it is ignored.
-   */
+  // FW-4914 Remove this property in Ionic 8
   @Prop() size?: number;
 
   /**
@@ -432,7 +436,14 @@ export class Input implements ComponentInterface {
    * Returns the native `<input>` element used under the hood.
    */
   @Method()
-  getInputElement(): Promise<HTMLInputElement> {
+  async getInputElement(): Promise<HTMLInputElement> {
+    /**
+     * If this gets called in certain early lifecycle hooks (ex: Vue onMounted),
+     * nativeInput won't be defined yet with the custom elements build, so wait for it to load in.
+     */
+    if (!this.nativeInput) {
+      await new Promise((resolve) => componentOnReady(this.el, resolve));
+    }
     return Promise.resolve(this.nativeInput!);
   }
 
@@ -534,7 +545,7 @@ export class Input implements ComponentInterface {
      * Clear the input if the control has not been previously cleared during focus.
      * Do not clear if the user hitting enter to submit a form.
      */
-    if (!this.didInputClearOnEdit && this.hasValue() && ev.key !== 'Enter') {
+    if (!this.didInputClearOnEdit && this.hasValue() && ev.key !== 'Enter' && ev.key !== 'Tab') {
       this.value = '';
       this.emitInputChange(ev);
     }

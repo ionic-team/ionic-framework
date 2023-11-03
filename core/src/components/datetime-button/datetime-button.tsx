@@ -9,7 +9,7 @@ import type { Color } from '../../interface';
 import type { DatetimePresentation } from '../datetime/datetime-interface';
 import { getToday } from '../datetime/utils/data';
 import { getMonthAndYear, getMonthDayAndYear, getLocalizedDateTime, getLocalizedTime } from '../datetime/utils/format';
-import { is24Hour } from '../datetime/utils/helpers';
+import { getHourCycle } from '../datetime/utils/helpers';
 import { parseDate } from '../datetime/utils/parse';
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -206,6 +206,10 @@ export class DatetimeButton implements ComponentInterface {
      */
     const parsedDatetimes = parseDate(parsedValues.length > 0 ? parsedValues : [getToday()]);
 
+    if (!parsedDatetimes) {
+      return;
+    }
+
     /**
      * If developers incorrectly use multiple="true"
      * with non "date" datetimes, then just select
@@ -214,7 +218,7 @@ export class DatetimeButton implements ComponentInterface {
      * warning in the console.
      */
     const firstParsedDatetime = parsedDatetimes[0];
-    const use24Hour = is24Hour(locale, hourCycle);
+    const computedHourCycle = getHourCycle(locale, hourCycle);
 
     this.dateText = this.timeText = undefined;
 
@@ -222,7 +226,7 @@ export class DatetimeButton implements ComponentInterface {
       case 'date-time':
       case 'time-date':
         const dateText = getMonthDayAndYear(locale, firstParsedDatetime);
-        const timeText = getLocalizedTime(locale, firstParsedDatetime, use24Hour);
+        const timeText = getLocalizedTime(locale, firstParsedDatetime, computedHourCycle);
         if (preferWheel) {
           this.dateText = `${dateText} ${timeText}`;
         } else {
@@ -246,7 +250,7 @@ export class DatetimeButton implements ComponentInterface {
         }
         break;
       case 'time':
-        this.timeText = getLocalizedTime(locale, firstParsedDatetime, use24Hour);
+        this.timeText = getLocalizedTime(locale, firstParsedDatetime, computedHourCycle);
         break;
       case 'month-year':
         this.dateText = getMonthAndYear(locale, firstParsedDatetime);

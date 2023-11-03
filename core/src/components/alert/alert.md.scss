@@ -113,9 +113,7 @@
 .alert-tappable {
   position: relative;
 
-  height: $alert-md-tappable-height;
-
-  overflow: hidden;
+  min-height: $alert-md-tappable-height;
 }
 
 
@@ -130,12 +128,6 @@
   color: $alert-md-radio-label-text-color;
 
   font-size: $alert-md-radio-label-font-size;
-
-  text-overflow: ellipsis;
-
-  white-space: nowrap;
-
-  overflow: hidden;
 }
 
 // Material Design Alert Radio Unchecked Circle
@@ -200,15 +192,13 @@
 
   flex: 1;
 
+  // Required for the checkbox icon to stay on the screen without
+  // being squished when the font size scales up.
+  width: calc(100% - $alert-md-checkbox-label-padding-start);
+
   color: $alert-md-checkbox-label-text-color;
 
   font-size: $alert-md-checkbox-label-font-size;
-
-  text-overflow: ellipsis;
-
-  white-space: nowrap;
-
-  overflow: hidden;
 }
 
 

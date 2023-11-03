@@ -126,7 +126,10 @@
   justify-content: flex-end;
 
   height: 100%;
+
+  /* Fallback for browsers that do not support dvh */
   max-height: 100vh;
+  max-height: 100dvh;
 }
 
 .action-sheet-group {
@@ -139,8 +142,22 @@
   background: var(--background);
 }
 
-.action-sheet-group::-webkit-scrollbar {
-  display: none;
+/**
+  * Scrollbars on mobile devices will be hidden.
+  * Users can still scroll the content by swiping.
+  * If a user has a fine pointing device, such as a
+  * mouse or trackpad, then scrollbars will be
+  * visible. This allows users to scroll the
+  * content with their pointing device.
+  * Otherwise, the user would have to use the
+  * keyboard to navigate through the options.
+  * This may not be intuitive for users who
+  * are not familiar with keyboard navigation.
+  */
+@media (any-pointer: coarse) {
+  .action-sheet-group::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .action-sheet-group-cancel {

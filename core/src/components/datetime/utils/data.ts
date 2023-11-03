@@ -1,6 +1,6 @@
 import type { Mode } from '../../../interface';
 import type { PickerColumnItem } from '../../picker-column-internal/picker-column-internal-interfaces';
-import type { DatetimeParts } from '../datetime-interface';
+import type { DatetimeParts, DatetimeHourCycle } from '../datetime-interface';
 
 import { isAfter, isBefore, isSameDay } from './comparison';
 import {
@@ -11,7 +11,7 @@ import {
   getTodayLabel,
   getYear,
 } from './format';
-import { getNumDaysInMonth, is24Hour } from './helpers';
+import { getNumDaysInMonth, is24Hour, getHourCycle } from './helpers';
 import { getNextMonth, getPreviousMonth, getInternalHourValue } from './manipulation';
 
 /**
@@ -44,8 +44,18 @@ const minutes = [
   0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
   32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59,
 ];
+
+// h11 hour system uses 0-11. Midnight starts at 0:00am.
+const hour11 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+
+// h12 hour system uses 0-12. Midnight starts at 12:00am.
 const hour12 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+
+// h23 hour system uses 0-23. Midnight starts at 0:00.
 const hour23 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
+
+// h24 hour system uses 1-24. Midnight starts at 24:00.
+const hour24 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 0];
 
 /**
  * Given a locale and a mode,
@@ -126,20 +136,41 @@ export const getDaysOfMonth = (month: number, year: number, firstDayOfWeek: numb
 };
 
 /**
+ * Returns an array of pre-defined hour
+ * values based on the provided hourCycle.
+ */
+const getHourData = (hourCycle: DatetimeHourCycle) => {
+  switch (hourCycle) {
+    case 'h11':
+      return hour11;
+    case 'h12':
+      return hour12;
+    case 'h23':
+      return hour23;
+    case 'h24':
+      return hour24;
+    default:
+      throw new Error(`Invalid hour cycle "${hourCycle}"`);
+  }
+};
+
+/**
  * Given a local, reference datetime parts and option
  * max/min bound datetime parts, calculate the acceptable
  * hour and minute values according to the bounds and locale.
  */
 export const generateTime = (
+  locale: string,
   refParts: DatetimeParts,
-  hourCycle: 'h12' | 'h23' = 'h12',
+  hourCycle: DatetimeHourCycle = 'h12',
   minParts?: DatetimeParts,
   maxParts?: DatetimeParts,
   hourValues?: number[],
   minuteValues?: number[]
 ) => {
-  const use24Hour = hourCycle === 'h23';
-  let processedHours = use24Hour ? hour23 : hour12;
+  const computedHourCycle = getHourCycle(locale, hourCycle);
+  const use24Hour = is24Hour(computedHourCycle);
+  let processedHours = getHourData(computedHourCycle);
   let processedMinutes = minutes;
   let isAMAllowed = true;
   let isPMAllowed = true;
@@ -254,12 +285,23 @@ export const generateTime = (
  * Given DatetimeParts, generate the previous,
  * current, and and next months.
  */
-export const generateMonths = (refParts: DatetimeParts): DatetimeParts[] => {
-  return [
-    getPreviousMonth(refParts),
-    { month: refParts.month, year: refParts.year, day: refParts.day },
-    getNextMonth(refParts),
-  ];
+export const generateMonths = (refParts: DatetimeParts, forcedDate?: DatetimeParts): DatetimeParts[] => {
+  const current = { month: refParts.month, year: refParts.year, day: refParts.day };
+
+  /**
+   * If we're forcing a month to appear, and it's different from the current month,
+   * ensure it appears by replacing the next or previous month as appropriate.
+   */
+  if (forcedDate !== undefined && (refParts.month !== forcedDate.month || refParts.year !== forcedDate.year)) {
+    const forced = { month: forcedDate.month, year: forcedDate.year, day: forcedDate.day };
+    const forcedMonthIsBefore = isBefore(forced, current);
+
+    return forcedMonthIsBefore
+      ? [forced, current, getNextMonth(refParts)]
+      : [getPreviousMonth(refParts), current, forced];
+  }
+
+  return [getPreviousMonth(refParts), current, getNextMonth(refParts)];
 };
 
 export const getMonthColumnData = (
@@ -529,16 +571,18 @@ export const getCombinedDateColumnData = (
 export const getTimeColumnsData = (
   locale: string,
   refParts: DatetimeParts,
-  hourCycle?: 'h23' | 'h12',
+  hourCycle?: DatetimeHourCycle,
   minParts?: DatetimeParts,
   maxParts?: DatetimeParts,
   allowedHourValues?: number[],
   allowedMinuteValues?: number[]
 ): { [key: string]: PickerColumnItem[] } => {
-  const use24Hour = is24Hour(locale, hourCycle);
+  const computedHourCycle = getHourCycle(locale, hourCycle);
+  const use24Hour = is24Hour(computedHourCycle);
   const { hours, minutes, am, pm } = generateTime(
+    locale,
     refParts,
-    use24Hour ? 'h23' : 'h12',
+    computedHourCycle,
     minParts,
     maxParts,
     allowedHourValues,
@@ -547,7 +591,7 @@ export const getTimeColumnsData = (
 
   const hoursItems = hours.map((hour) => {
     return {
-      text: getFormattedHour(hour, use24Hour),
+      text: getFormattedHour(hour, computedHourCycle),
       value: getInternalHourValue(hour, use24Hour, refParts.ampm),
     };
   });

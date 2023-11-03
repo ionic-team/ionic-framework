@@ -4,20 +4,17 @@
 // iOS Radio
 // --------------------------------------------------
 
-/// @prop - Color of the checked radio
-$radio-ios-color-on:                  current-color(base) !default;
-
 /// @prop - Background color of focus indicator for radio when focused
 $radio-ios-background-color-focused:  ion-color(primary, tint) !default;
 
 /// @prop - Width of the radio icon
-$radio-ios-icon-width:                15px !default;
+$radio-ios-icon-width:                dynamic-font(15px) !default;
 
 /// @prop - Height of the radio icon
-$radio-ios-icon-height:               24px !default;
+$radio-ios-icon-height:               dynamic-font(24px) !default;
 
 /// @prop - Border width of the radio icon
-$radio-ios-icon-border-width:         2px !default;
+$radio-ios-icon-border-width:         dynamic-font(2px) !default;
 
 /// @prop - Border style of the radio icon
 $radio-ios-icon-border-style:         solid !default;

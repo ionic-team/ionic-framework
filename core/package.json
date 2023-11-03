@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "7.1.3",
+  "version": "7.5.3",
   "description": "Base components for Ionic",
   "keywords": [
     "ionic",
@@ -31,30 +31,30 @@
     "loader/"
   ],
   "dependencies": {
-    "@stencil/core": "^3.4.0",
-    "ionicons": "7.1.0",
+    "@stencil/core": "^4.7.0",
+    "ionicons": "^7.2.1",
     "tslib": "^2.1.0"
   },
   "devDependencies": {
-    "@axe-core/playwright": "^4.7.3",
-    "@capacitor/core": "^5.2.1",
+    "@axe-core/playwright": "^4.8.1",
+    "@capacitor/core": "^5.5.1",
     "@capacitor/haptics": "^5.0.6",
     "@capacitor/keyboard": "^5.0.6",
     "@capacitor/status-bar": "^5.0.6",
     "@ionic/eslint-config": "^0.3.0",
     "@ionic/prettier-config": "^2.0.0",
     "@jest/core": "^27.5.1",
-    "@playwright/test": "^1.36.1",
+    "@playwright/test": "^1.39.0",
     "@rollup/plugin-node-resolve": "^8.4.0",
     "@rollup/plugin-virtual": "^2.0.3",
-    "@stencil/angular-output-target": "^0.7.1",
+    "@stencil/angular-output-target": "^0.8.3",
     "@stencil/react-output-target": "^0.5.3",
-    "@stencil/sass": "^3.0.4",
+    "@stencil/sass": "^3.0.7",
     "@stencil/vue-output-target": "^0.8.6",
     "@types/jest": "^27.5.2",
     "@types/node": "^14.6.0",
-    "@typescript-eslint/eslint-plugin": "^5.17.0",
-    "@typescript-eslint/parser": "^5.17.0",
+    "@typescript-eslint/eslint-plugin": "^6.7.2",
+    "@typescript-eslint/parser": "^6.7.2",
     "clean-css-cli": "^5.6.1",
     "domino": "^2.1.6",
     "eslint": "^7.32.0",
@@ -66,11 +66,10 @@
     "jest-cli": "^27.5.1",
     "prettier": "^2.6.1",
     "rollup": "^2.26.4",
-    "sass": "^1.26.10",
+    "sass": "^1.33.0",
     "serve": "^14.0.1",
     "stylelint": "^13.13.1",
-    "stylelint-order": "^4.1.0",
-    "typescript": "^4.0.5"
+    "stylelint-order": "^4.1.0"
   },
   "scripts": {
     "build": "npm run clean && npm run build.css && stencil build --es5 --docs-json dist/docs.json",
@@ -95,6 +94,7 @@
     "test.spec": "stencil test --spec --max-workers=2",
     "test.spec.debug": "npx --node-arg=\"--inspect-brk\" stencil test --spec",
     "test.e2e": "npx playwright test",
+    "test.e2e.update-snapshots": "npm run test.e2e -- --update-snapshots",
     "test.watch": "jest --watch --no-cache",
     "test.treeshake": "node scripts/treeshaking.js dist/index.js",
     "validate": "npm run lint && npm run test && npm run build && npm run test.treeshake"
