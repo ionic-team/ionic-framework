@@ -1,5 +1,12 @@
 type CompareFn = (currentValue: any, compareValue: any) => boolean;
 
+/**
+ * Uses the compareWith param to compare two values to determine if they are equal.
+ *
+ * @param currentValue A current value of the control.
+ * @param compareValue The value to compare against.
+ * @param compareWith The function or property name to use to compare values.
+ */
 export const compareOptions = (
   currentValue: any,
   compareValue: any,
@@ -15,11 +22,11 @@ export const compareOptions = (
 };
 
 /**
- * Compares a value against the current value to determine if it is selected.
+ * Compares a value against the current value(s) to determine if it is selected.
  *
  * @param currentValue The current value of the control.
  * @param compareValue The value to compare against.
- * @param compareWith The function to use to compare values.
+ * @param compareWith The function or property name to use to compare values.
  */
 export const isOptionSelected = (
   currentValue: any[] | any,

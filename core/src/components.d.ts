@@ -2266,7 +2266,7 @@ export namespace Components {
          */
         "allowEmptySelection": boolean;
         /**
-          * This property allows developers to specify a custom function or property name for comparing objects when determining the selected option in the ion-radio-group. When not specified, the default behavior will use object equality (===) for comparison.
+          * This property allows developers to specify a custom function or property name for comparing objects when determining the selected option in the ion-radio-group. When not specified, the default behavior will use strict equality (===) for comparison.
          */
         "compareWith"?: string | RadioGroupCompareFn | null;
         /**
@@ -2688,7 +2688,7 @@ export namespace Components {
          */
         "color"?: Color;
         /**
-          * This property allows developers to specify a custom function or property name for comparing objects when determining the selected option in the ion-select. When not specified, the default behavior will use object equality (===) for comparison.
+          * This property allows developers to specify a custom function or property name for comparing objects when determining the selected option in the ion-select. When not specified, the default behavior will use strict equality (===) for comparison.
          */
         "compareWith"?: string | SelectCompareFn | null;
         /**
@@ -6946,7 +6946,7 @@ declare namespace LocalJSX {
          */
         "allowEmptySelection"?: boolean;
         /**
-          * This property allows developers to specify a custom function or property name for comparing objects when determining the selected option in the ion-radio-group. When not specified, the default behavior will use object equality (===) for comparison.
+          * This property allows developers to specify a custom function or property name for comparing objects when determining the selected option in the ion-radio-group. When not specified, the default behavior will use strict equality (===) for comparison.
          */
         "compareWith"?: string | RadioGroupCompareFn | null;
         /**
@@ -7431,7 +7431,7 @@ declare namespace LocalJSX {
          */
         "color"?: Color;
         /**
-          * This property allows developers to specify a custom function or property name for comparing objects when determining the selected option in the ion-select. When not specified, the default behavior will use object equality (===) for comparison.
+          * This property allows developers to specify a custom function or property name for comparing objects when determining the selected option in the ion-select. When not specified, the default behavior will use strict equality (===) for comparison.
          */
         "compareWith"?: string | SelectCompareFn | null;
         /**

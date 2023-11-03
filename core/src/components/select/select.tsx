@@ -84,7 +84,7 @@ export class Select implements ComponentInterface {
   /**
    * This property allows developers to specify a custom function or property
    * name for comparing objects when determining the selected option in the
-   * ion-select. When not specified, the default behavior will use object
+   * ion-select. When not specified, the default behavior will use strict
    * equality (===) for comparison.
    */
   @Prop() compareWith?: string | SelectCompareFn | null;
