@@ -54,6 +54,9 @@ jobs:
       with:
         token: ${{ secrets.IONITRON_TOKEN }}
         fetch-depth: 0
+    - uses: pnpm/action-setup@v2
+      with:
+        version: 8
     - name: Configure Identity
       # Commits from github-actions do not
       # trigger other GitHub Actions. As a result,
@@ -74,7 +77,7 @@ jobs:
     # so we do that here.
     - name: Bump Package Lock
       run: |
-        lerna exec "npm install --package-lock-only"
+        pnpm install --lockfile-only
         git add .
         git commit -m "chore(): update package lock files"
         git push

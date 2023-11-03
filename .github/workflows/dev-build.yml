@@ -10,11 +10,14 @@ jobs:
       dev-hash: ${{ steps.create-dev-hash.outputs.DEV_HASH }}
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
       # A 1 is required before the timestamp
       # as lerna will fail when there is a leading 0
       # See https://github.com/lerna/lerna/issues/2840
       - name: Install Dependencies
-        run: npm ci
+        run: pnpm install
         shell: bash
       - id: create-dev-hash
         name: Create Dev Hash
