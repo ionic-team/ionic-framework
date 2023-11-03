@@ -6,6 +6,9 @@ runs:
     - uses: actions/setup-node@v3
       with:
         node-version: 18.x
+    - uses: pnpm/action-setup@v2
+      with:
+        version: 8
     - uses: ./.github/workflows/actions/download-archive
       with:
         name: ionic-core
@@ -17,19 +20,15 @@ runs:
         path: ./packages/react
         filename: ReactBuild.zip
     - name: Install Dependencies
-      run: npm ci
-      shell: bash
-      working-directory: ./packages/react-router
-    - name: Sync
-      run: npm run sync
+      run: pnpm install
       shell: bash
       working-directory: ./packages/react-router
     - name: Lint
-      run: npm run lint
+      run: pnpm run lint
       shell: bash
       working-directory: ./packages/react-router
     - name: Build
-      run: npm run build
+      run: pnpm run build
       shell: bash
       working-directory: ./packages/react-router
     - uses: ./.github/workflows/actions/upload-archive
