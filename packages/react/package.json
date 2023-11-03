@@ -30,8 +30,7 @@
     "lint.fix": "npm run eslint -- --fix && npm run prettier -- --write --cache",
     "copy": "node scripts/copy.js",
     "test.spec": "jest --ci",
-    "test.treeshake": "node scripts/treeshaking.js dist/index.esm.js",
-    "sync": "sh ./scripts/sync.sh"
+    "test.treeshake": "node scripts/treeshaking.js dist/index.esm.js"
   },
   "main": "dist/index.js",
   "types": "dist/types/index.d.ts",

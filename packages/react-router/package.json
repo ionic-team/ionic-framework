@@ -27,8 +27,7 @@
     "eslint": "eslint src",
     "prettier": "prettier \"./src/**/*.{html,ts,tsx,js,jsx}\"",
     "lint": "npm run eslint && npm run prettier -- --write --cache",
-    "lint.fix": "npm run eslint -- --fix && npm run prettier -- --write --cache",
-    "sync": "sh ./scripts/sync.sh"
+    "lint.fix": "npm run eslint -- --fix && npm run prettier -- --write --cache"
   },
   "main": "dist/index.js",
   "types": "dist/types/index.d.ts",
