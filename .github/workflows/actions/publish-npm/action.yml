@@ -28,19 +28,15 @@ runs:
       shell: bash
     # This ensures the local version of Lerna is installed
     # and that we do not use the global Lerna version
-    - name: Install root dependencies
-      run: npm ci
+    - name: Install dependencies
+      run: pnpm install
       shell: bash
-    - name: Install Dependencies
-      run: npx lerna bootstrap --include-dependencies --scope ${{ inputs.scope }} --ignore-scripts -- --legacy-peer-deps
-      shell: bash
-      working-directory: ${{ inputs.working-directory }}
     - name: Update Version
-      run: npx lerna version ${{ inputs.version }} --yes --exact --no-changelog --no-push --no-git-tag-version --preid=${{ inputs.preid }}
+      run: pnpm exec lerna version ${{ inputs.version }} --yes --exact --no-changelog --no-push --no-git-tag-version --preid=${{ inputs.preid }}
       shell: bash
       working-directory: ${{ inputs.working-directory }}
     - name: Run Build
-      run: npm run build
+      run: pnpm run build
       shell: bash
       working-directory: ${{ inputs.working-directory }}
     - name: Prepare NPM Token
@@ -50,6 +46,6 @@ runs:
       env:
         NPM_TOKEN: ${{ inputs.token }}
     - name: Publish to NPM
-      run: npm publish ${{ inputs.folder }} --tag ${{ inputs.tag }} --provenance
+      run: pnpm publish ${{ inputs.folder }} --tag ${{ inputs.tag }} --provenance
       shell: bash
       working-directory: ${{ inputs.working-directory }}
