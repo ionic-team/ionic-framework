@@ -24,22 +24,22 @@
   },
   "homepage": "https://ionicframework.com/",
   "scripts": {
-    "build": "npm run clean && npm run build.ng && npm run build.core && npm run clean-generated",
+    "build": "pnpm run clean && pnpm run build.ng && pnpm run build.core && pnpm run clean-generated",
     "build.core": "node scripts/build-core.js",
-    "build.link": "npm run build && node scripts/link-copy.js",
+    "build.link": "pnpm run build && node scripts/link-copy.js",
     "build.ng": "ng-packagr -p ng-package.json -c tsconfig.json",
-    "build.watch": "npm run build.ng -- --watch",
+    "build.watch": "pnpm run build.ng -- --watch",
     "clean": "node scripts/clean.js",
     "clean-generated": "node ./scripts/clean-generated.js",
-    "lint": "npm run eslint && npm run prettier -- --write --cache",
-    "lint.fix": "npm run eslint -- --fix",
-    "fmt": "npm run eslint -- --fix && npm run prettier -- --write --cache",
+    "lint": "pnpm run eslint && pnpm run prettier -- --write --cache",
+    "lint.fix": "pnpm run eslint -- --fix",
+    "fmt": "pnpm run eslint -- --fix && pnpm run prettier -- --write --cache",
     "prettier": "prettier \"**/*.ts\"",
     "eslint": "eslint . --ext .ts",
-    "prerelease": "npm run validate && np prerelease --yolo --any-branch --tag next",
+    "prerelease": "pnpm run validate && np prerelease --yolo --any-branch --tag next",
     "test": "echo 'angular no tests yet'",
     "tsc": "tsc -p .",
-    "validate": "npm i && npm run lint && npm run test && npm run build"
+    "validate": "pnpm i && pnpm run lint && pnpm run test && pnpm run build"
   },
   "exports": {
     "./css/*": {
