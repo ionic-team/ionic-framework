@@ -331,8 +331,8 @@ importers:
         specifier: ^2.0.3
         version: 2.0.3(rollup@2.79.1)
       '@testing-library/jest-dom':
-        specifier: ^5.11.6
-        version: 5.11.6
+        specifier: ^6.1.4
+        version: 6.1.4(@types/jest@26.0.15)(jest@26.6.3)
       '@testing-library/react':
         specifier: ^11.2.2
         version: 11.2.2(react-dom@16.9.0)(react@16.9.0)
@@ -588,6 +588,10 @@ packages:
   /@aashutoshrathi/word-wrap@1.2.6:
     resolution: {integrity: sha512-1Yjs2SvM8TflER/OD3cOjhWWOZb58A2t7wpE2S9XfBYTiIl+XFhQG2bjy4Pu1I+EAlCNUzRDYDdFwFYUKvXcIA==}
     engines: {node: '>=0.10.0'}
+    dev: true
+
+  /@adobe/css-tools@4.3.1:
+    resolution: {integrity: sha512-/62yikz7NLScCGAAST5SHdnjaDJQBDq0M2muyRTpf2VQhw6StBg2ALiu73zSJQ4fMVLA+0uBhBHAle7Wg+2kSg==}
     dev: true
 
   /@ampproject/remapping@2.2.1:
@@ -3721,16 +3725,32 @@ packages:
       pretty-format: 26.6.2
     dev: true
 
-  /@testing-library/jest-dom@5.11.6:
-    resolution: {integrity: sha512-cVZyUNRWwUKI0++yepYpYX7uhrP398I+tGz4zOlLVlUYnZS+Svuxv4fwLeCIy7TnBYKXUaOlQr3vopxL8ZfEnA==}
-    engines: {node: '>=8', npm: '>=6', yarn: '>=1'}
+  /@testing-library/jest-dom@6.1.4(@types/jest@26.0.15)(jest@26.6.3):
+    resolution: {integrity: sha512-wpoYrCYwSZ5/AxcrjLxJmCU6I5QAJXslEeSiMQqaWmP2Kzpd1LvF/qxmAIW2qposULGWq2gw30GgVNFLSc2Jnw==}
+    engines: {node: '>=14', npm: '>=6', yarn: '>=1'}
+    peerDependencies:
+      '@jest/globals': '>= 28'
+      '@types/jest': '>= 28'
+      jest: '>= 28'
+      vitest: '>= 0.32'
+    peerDependenciesMeta:
+      '@jest/globals':
+        optional: true
+      '@types/jest':
+        optional: true
+      jest:
+        optional: true
+      vitest:
+        optional: true
     dependencies:
+      '@adobe/css-tools': 4.3.1
       '@babel/runtime': 7.23.2
-      '@types/testing-library__jest-dom': 5.14.9
-      aria-query: 4.2.2
+      '@types/jest': 26.0.15
+      aria-query: 5.0.0
       chalk: 3.0.0
-      css: 3.0.0
       css.escape: 1.5.1
+      dom-accessibility-api: 0.5.16
+      jest: 26.6.3
       lodash: 4.17.21
       redent: 3.0.0
     dev: true
@@ -4015,12 +4035,6 @@ packages:
 
   /@types/stack-utils@2.0.2:
     resolution: {integrity: sha512-g7CK9nHdwjK2n0ymT2CW698FuWJRIx+RP6embAzZ2Qi8/ilIrA1Imt2LVSeHUzKvpoi7BhmmQcXz95eS0f2JXw==}
-    dev: true
-
-  /@types/testing-library__jest-dom@5.14.9:
-    resolution: {integrity: sha512-FSYhIjFlfOpGSRyVoMBMuS3ws5ehFQODymf3vlI7U1K8c7PHwWwFY7VREfmsuzHSOnoKs/9/Y983ayOs7eRzqw==}
-    dependencies:
-      '@types/jest': 26.0.15
     dev: true
 
   /@types/tough-cookie@4.0.4:
@@ -7596,7 +7610,7 @@ packages:
       eslint-import-resolver-webpack:
         optional: true
     dependencies:
-      '@typescript-eslint/parser': 4.33.0(eslint@7.32.0)(typescript@4.7.2)
+      '@typescript-eslint/parser': 4.33.0(eslint@7.32.0)(typescript@4.8.4)
       debug: 3.2.7
       eslint: 7.32.0
       eslint-import-resolver-node: 0.3.9
@@ -7763,7 +7777,7 @@ packages:
       '@typescript-eslint/parser':
         optional: true
     dependencies:
-      '@typescript-eslint/parser': 4.33.0(eslint@7.32.0)(typescript@4.7.2)
+      '@typescript-eslint/parser': 4.33.0(eslint@7.32.0)(typescript@4.8.4)
       array-includes: 3.1.7
       array.prototype.findlastindex: 1.2.3
       array.prototype.flat: 1.3.2
