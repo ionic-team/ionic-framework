@@ -42,24 +42,6 @@
   letter-spacing: 0.0333333333em;
 }
 
-// Textarea Wrapper
-// ----------------------------------------------------------------
-
-// TODO: FW-2876 - Make this a style on :host, remove :not selector
-:host(:not(.legacy-textarea)) {
-  min-height: 56px;
-}
-
-/**
- * Floating and stacked labels should not
- * push the label down since it it
- * sits on top of the textarea.
- */
-:host(.textarea-label-placement-floating),
-:host(.textarea-label-placement-stacked) {
-  --padding-top: 0px;
-}
-
 // Textarea Label
 // ----------------------------------------------------------------
 
