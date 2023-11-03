@@ -506,3 +506,8 @@ ion-picker-column-internal {
 .calendar-month-year-toggle::after {
   @include button-state();
 }
+
+.calendar-month-year-toggle:disabled {
+  opacity: 0.3;
+  pointer-events: none;
+}
