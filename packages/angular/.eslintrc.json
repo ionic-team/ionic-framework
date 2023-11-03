@@ -1,6 +1,6 @@
 {
   "root": true,
-  "ignorePatterns": ["test/**/*"],
+  "ignorePatterns": ["test/**/*", "src/schematics/**/*"],
   "overrides": [
     {
       "files": ["*.ts"],

@@ -41,5 +41,5 @@
     }
   },
   "exclude": ["node_modules", "src/schematics"],
-  "files": ["src/index.ts", "common/src/index.ts"]
+  "include": ["src/**/*.ts", "common/src/**/*.ts", "standalone/src/**/*.ts"]
 }
