@@ -32,6 +32,11 @@
           <ion-list-header>Compare with Function</ion-list-header>
           <ion-radio-group id="compareWithFn"></ion-radio-group>
         </ion-list>
+
+        <ion-list>
+          <ion-list-header><code>null</code>&nbsp;compare with</ion-list-header>
+          <ion-radio-group id="compareWithNull" compareWith="null"></ion-radio-group>
+        </ion-list>
       </ion-content>
     </ion-app>
 
@@ -51,14 +56,12 @@
         },
       ];
 
-      const radioGroupWithString = document.querySelector('#compareWithString');
-      radioGroupWithString.value = options[1];
-
       const radioGroupWithFn = document.querySelector('#compareWithFn');
       radioGroupWithFn.compareWith = (a, b) => a.value === b.value;
-      radioGroupWithFn.value = options[1];
 
       document.querySelectorAll('ion-radio-group').forEach((radioGroup) => {
+        radioGroup.value = options[1];
+
         options.forEach((option) => {
           const radio = document.createElement('ion-radio');
 

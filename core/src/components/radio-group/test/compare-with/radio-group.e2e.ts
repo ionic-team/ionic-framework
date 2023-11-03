@@ -11,10 +11,15 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       const radioGroupWithString = page.locator('#compareWithString');
 
+      const lastRadio = radioGroupWithString.locator('ion-radio').last();
+      await lastRadio.click();
+      await page.waitForChanges();
+
       await expect(radioGroupWithString).toHaveJSProperty('value', {
-        label: 'Blue',
-        value: 'blue',
+        label: 'Green',
+        value: 'green',
       });
+      await expect(lastRadio).toHaveAttribute('aria-checked', 'true');
     });
 
     test('should correctly set value when using compareWith function', async ({ page }) => {
@@ -22,25 +27,31 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       const radioGroupWithFn = page.locator('#compareWithFn');
 
-      await expect(radioGroupWithFn).toHaveJSProperty('value', {
-        label: 'Blue',
-        value: 'blue',
-      });
-    });
-
-    test('should correctly set value to an object when clicked', async ({ page }) => {
-      await page.goto('/src/components/radio-group/test/compare-with', config);
-
-      const radioGroupWithFn = page.locator('#compareWithFn');
-
-      const firstRadio = radioGroupWithFn.locator('ion-radio').first();
-      await firstRadio.click();
+      const lastRadio = radioGroupWithFn.locator('ion-radio').last();
+      await lastRadio.click();
       await page.waitForChanges();
 
       await expect(radioGroupWithFn).toHaveJSProperty('value', {
-        label: 'Red',
-        value: 'red',
+        label: 'Green',
+        value: 'green',
       });
+      await expect(lastRadio).toHaveAttribute('aria-checked', 'true');
+    });
+
+    test('should correctly set value when using null compareWith', async ({ page }) => {
+      await page.goto('/src/components/radio-group/test/compare-with', config);
+
+      const radioGroupWithNull = page.locator('#compareWithNull');
+
+      const lastRadio = radioGroupWithNull.locator('ion-radio').last();
+      await lastRadio.click();
+      await page.waitForChanges();
+
+      await expect(radioGroupWithNull).toHaveJSProperty('value', {
+        label: 'Green',
+        value: 'green',
+      });
+      await expect(lastRadio).toHaveAttribute('aria-checked', 'true');
     });
 
     test('should work with different parameter types', async ({ page }) => {
@@ -81,11 +92,20 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         config
       );
 
+      const radioGroup = page.locator('ion-radio-group');
       const radios = page.locator('ion-radio');
 
       await expect(radios.nth(0)).toHaveAttribute('aria-checked', 'false');
       await expect(radios.nth(1)).toHaveAttribute('aria-checked', 'false');
       await expect(radios.nth(2)).toHaveAttribute('aria-checked', 'true');
+
+      await radios.nth(0).click();
+      await page.waitForChanges();
+
+      await expect(radios.nth(0)).toHaveAttribute('aria-checked', 'true');
+      await expect(radios.nth(1)).toHaveAttribute('aria-checked', 'false');
+      await expect(radios.nth(2)).toHaveAttribute('aria-checked', 'false');
+      await expect(radioGroup).toHaveJSProperty('value', 1);
     });
   });
 });
