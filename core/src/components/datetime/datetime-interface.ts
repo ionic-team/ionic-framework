@@ -34,3 +34,5 @@ export type DatetimeHighlightStyle =
 export type DatetimeHighlight = { date: string } & DatetimeHighlightStyle;
 
 export type DatetimeHighlightCallback = (dateIsoString: string) => DatetimeHighlightStyle | undefined;
+
+export type DatetimeHourCycle = 'h11' | 'h12' | 'h23' | 'h24';

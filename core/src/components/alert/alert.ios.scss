@@ -255,13 +255,19 @@
 }
 
 .alert-button {
+  /**
+   * This padding ensures that alerts
+   * with multiple buttons render on separate lines
+   * so the text does not run up against the edge of the button.
+   */
+  @include padding-horizontal($alert-ios-button-padding);
   @include margin($alert-ios-button-margin);
   @include border-radius($alert-ios-button-border-radius);
 
   flex: $alert-ios-button-flex;
 
   min-width: $alert-ios-button-min-width;
-  height: $alert-ios-button-min-height;
+  height: $alert-ios-button-height;
 
   border-top: $alert-ios-button-border-width $alert-ios-button-border-style $alert-ios-button-border-color;
   border-right: $alert-ios-button-border-width $alert-ios-button-border-style $alert-ios-button-border-color;

@@ -79,11 +79,6 @@ export interface E2EPage extends Page {
    */
   setIonViewport: (options?: SetIonViewportOptions) => Promise<void>;
   /**
-   * This provides metadata that can be used to create a unique screenshot URL.
-   * For example, we need to be able to differentiate between iOS in LTR mode and iOS in RTL mode.
-   */
-  getSnapshotSettings: () => string;
-  /**
    * After changes have been made to a component, such as an update to a property or attribute,
    * we need to wait until the changes have been applied to the DOM.
    */

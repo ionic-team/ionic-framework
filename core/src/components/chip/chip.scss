@@ -1,17 +1,18 @@
 @import "../../themes/ionic.globals";
+@import "./chip.vars";
 
 :host {
   /**
    * @prop --background: Background of the chip
    * @prop --color: Color of the chip
    */
-  --background: #{rgba($text-color-rgb, .12)};
-  --color: #{rgba($text-color-rgb, .87)};
+  --background: #{rgba($text-color-rgb, 0.12)};
+  --color: #{rgba($text-color-rgb, 0.87)};
 
   @include border-radius(16px);
   @include font-smoothing();
   @include margin(4px);
-  @include padding(7px, 12px);
+  @include padding(6px, 12px);
 
   display: inline-flex;
 
@@ -19,13 +20,12 @@
 
   align-items: center;
 
-  height: 32px;
+  min-height: 32px;
 
   background: var(--background);
   color: var(--color);
 
   font-family: $font-family-base;
-  font-size: 14px;
 
   cursor: pointer;
 
@@ -37,7 +37,7 @@
 
 :host(.chip-disabled) {
   cursor: default;
-  opacity: .4;
+  opacity: 0.4;
   pointer-events: none;
 }
 
@@ -45,18 +45,17 @@
 // ---------------------------------------------
 
 :host(.ion-color) {
-  background: current-color(base, .08);
+  background: current-color(base, 0.08);
   color: current-color(shade);
 }
 
 :host(.ion-color:focus) {
-  background: current-color(base, .12);
+  background: current-color(base, 0.12);
 }
 
 :host(.ion-color.ion-activated) {
-  background: current-color(base, .16);
+  background: current-color(base, 0.16);
 }
-
 
 // Outline Chip
 // ---------------------------------------------
@@ -67,33 +66,32 @@
 }
 
 :host(.chip-outline) {
-  border-color: rgba($text-color-rgb, .32);
+  border-color: rgba($text-color-rgb, 0.32);
 
   background: transparent;
 }
 
 :host(.chip-outline.ion-color) {
-  border-color: current-color(base, .32);
+  border-color: current-color(base, 0.32);
 }
 
 :host(.chip-outline:not(.ion-color):focus) {
-  background: rgba($text-color-rgb, .04);
+  background: rgba($text-color-rgb, 0.04);
 }
 
 :host(.chip-outline.ion-activated:not(.ion-color)) {
-  background: rgba($text-color-rgb, .08);
+  background: rgba($text-color-rgb, 0.08);
 }
-
 
 // Chip Icon
 // ---------------------------------------------
 
 ::slotted(ion-icon) {
-  font-size: 20px;
+  font-size: $chip-icon-size;
 }
 
 :host(:not(.ion-color)) ::slotted(ion-icon) {
-  color: rgba($text-color-rgb, .54);
+  color: rgba($text-color-rgb, 0.54);
 }
 
 ::slotted(ion-icon:first-child) {
@@ -104,13 +102,14 @@
   @include margin(-4px, -4px, -4px, 8px);
 }
 
-
 // Chip Avatar
 // ---------------------------------------------
 
 ::slotted(ion-avatar) {
-  width: 24px;
-  height: 24px;
+  flex-shrink: 0;
+
+  width: $chip-avatar-size;
+  height: $chip-avatar-size;
 }
 
 ::slotted(ion-avatar:first-child) {
@@ -121,7 +120,6 @@
   @include margin(-4px, -8px, -4px, 8px);
 }
 
-
 // Chip: Focus
 // ---------------------------------------------
 
@@ -130,31 +128,29 @@
 }
 
 :host(:focus) {
-  --background: #{rgba($text-color-rgb, .16)};
+  --background: #{rgba($text-color-rgb, 0.16)};
 }
-
 
 // Chip: Activated
 // ---------------------------------------------
 
 :host(.ion-activated) {
-  --background: #{rgba($text-color-rgb, .20)};
+  --background: #{rgba($text-color-rgb, 0.2)};
 }
-
 
 // Chip: Hover
 // ---------------------------------------------
 
 @media (any-hover: hover) {
   :host(:hover) {
-    --background: #{rgba($text-color-rgb, .16)};
+    --background: #{rgba($text-color-rgb, 0.16)};
   }
 
   :host(.ion-color:hover) {
-    background: current-color(base, .12);
+    background: current-color(base, 0.12);
   }
 
   :host(.chip-outline:not(.ion-color):hover) {
-    background: rgba($text-color-rgb, .04);
+    background: rgba($text-color-rgb, 0.04);
   }
 }

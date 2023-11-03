@@ -1,4 +1,6 @@
-import type { MenuI } from '../../components/menu/menu-interface';
+import { printIonWarning } from '@utils/logging';
+
+import type { MenuI, MenuControllerI } from '../../components/menu/menu-interface';
 import type { AnimationBuilder, BackButtonEvent } from '../../interface';
 import { MENU_BACK_BUTTON_PRIORITY } from '../hardware-back-button';
 import { componentOnReady } from '../helpers';
@@ -7,12 +9,12 @@ import { menuOverlayAnimation } from './animations/overlay';
 import { menuPushAnimation } from './animations/push';
 import { menuRevealAnimation } from './animations/reveal';
 
-const createMenuController = () => {
+const createMenuController = (): MenuControllerI => {
   const menuAnimations = new Map<string, AnimationBuilder>();
   const menus: MenuI[] = [];
 
   const open = async (menu?: string | null): Promise<boolean> => {
-    const menuEl = await get(menu);
+    const menuEl = await get(menu, true);
     if (menuEl) {
       return menuEl.open();
     }
@@ -20,7 +22,7 @@ const createMenuController = () => {
   };
 
   const close = async (menu?: string | null): Promise<boolean> => {
-    const menuEl = await (menu !== undefined ? get(menu) : getOpen());
+    const menuEl = await (menu !== undefined ? get(menu, true) : getOpen());
     if (menuEl !== undefined) {
       return menuEl.close();
     }
@@ -28,7 +30,7 @@ const createMenuController = () => {
   };
 
   const toggle = async (menu?: string | null): Promise<boolean> => {
-    const menuEl = await get(menu);
+    const menuEl = await get(menu, true);
     if (menuEl) {
       return menuEl.toggle();
     }
@@ -70,20 +72,48 @@ const createMenuController = () => {
     return false;
   };
 
-  const get = async (menu?: string | null): Promise<HTMLIonMenuElement | undefined> => {
+  /**
+   * Finds and returns the menu specified by "menu" if registered.
+   * @param menu - The side or ID of the desired menu
+   * @param logOnMultipleSideMenus - If true, this function will log a warning
+   * if "menu" is a side but multiple menus on the same side were found. Since this function
+   * is used in multiple places, we default this log to false so that the calling
+   * functions can choose whether or not it is appropriate to log this warning.
+   */
+  const get = async (
+    menu?: string | null,
+    logOnMultipleSideMenus: boolean = false
+  ): Promise<HTMLIonMenuElement | undefined> => {
     await waitUntilReady();
 
     if (menu === 'start' || menu === 'end') {
       // there could be more than one menu on the same side
       // so first try to get the enabled one
-      const menuRef = find((m) => m.side === menu && !m.disabled);
-      if (menuRef) {
-        return menuRef;
+      const menuRefs = menus.filter((m) => m.side === menu && !m.disabled);
+      if (menuRefs.length >= 1) {
+        if (menuRefs.length > 1 && logOnMultipleSideMenus) {
+          printIonWarning(
+            `menuController queried for a menu on the "${menu}" side, but ${menuRefs.length} menus were found. The first menu reference will be used. If this is not the behavior you want then pass the ID of the menu instead of its side.`,
+            menuRefs.map((m) => m.el)
+          );
+        }
+
+        return menuRefs[0].el;
       }
 
       // didn't find a menu side that is enabled
       // so try to get the first menu side found
-      return find((m) => m.side === menu);
+      const sideMenuRefs = menus.filter((m) => m.side === menu);
+      if (sideMenuRefs.length >= 1) {
+        if (sideMenuRefs.length > 1 && logOnMultipleSideMenus) {
+          printIonWarning(
+            `menuController queried for a menu on the "${menu}" side, but ${sideMenuRefs.length} menus were found. The first menu reference will be used. If this is not the behavior you want then pass the ID of the menu instead of its side.`,
+            sideMenuRefs.map((m) => m.el)
+          );
+        }
+
+        return sideMenuRefs[0].el;
+      }
     } else if (menu != null) {
       // the menuId was not left or right
       // so try to get the menu by its "id"
@@ -131,9 +161,6 @@ const createMenuController = () => {
 
   const _register = (menu: MenuI) => {
     if (menus.indexOf(menu) < 0) {
-      if (!menu.disabled) {
-        _setActiveMenu(menu);
-      }
       menus.push(menu);
     }
   };
@@ -143,14 +170,6 @@ const createMenuController = () => {
     if (index > -1) {
       menus.splice(index, 1);
     }
-  };
-
-  const _setActiveMenu = (menu: MenuI) => {
-    // if this menu should be enabled
-    // then find all the other menus on this same side
-    // and automatically disable other same side menus
-    const side = menu.side;
-    menus.filter((m) => m.side === side && m !== menu).forEach((m) => (m.disabled = true));
   };
 
   const _setOpen = async (menu: MenuI, shouldOpen: boolean, animated: boolean): Promise<boolean> => {
@@ -238,7 +257,6 @@ const createMenuController = () => {
     _register,
     _unregister,
     _setOpen,
-    _setActiveMenu,
   };
 };
 

@@ -17,14 +17,6 @@
   font-family: $font-family-base;
 }
 
-:host(.in-list.item-options-end:last-child) {
-  @include safe-area-horizontal("padding", null, 0.7em);
-}
-
-:host(.in-list.item-options-start:first-child) {
-  @include safe-area-horizontal("padding", 0.7em);
-}
-
 :host(.ion-color) {
   background: current-color(base);
   color: current-color(contrast);

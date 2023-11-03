@@ -16,18 +16,8 @@ $select-md-padding-bottom:      $select-md-padding-top !default;
 /// @prop - Padding start of the select
 $select-md-padding-start:       $item-md-padding-start !default;
 
-/// @prop - Color of the select icon
-$select-md-icon-color:          $text-color-step-600 !default;
-
 /// @prop - Size of the select icon
-$select-md-icon-size: 13px !default;
-
-/// @prop - Color of the select placeholder
-$select-md-placeholder-color:   $select-md-icon-color !default;
-
-/// @prop - Text Color of the selected item
-$select-md-text-color:          $text-color !default;
-
+$select-md-icon-size:           dynamic-font(13px) !default;
 /// @prop - The amount of whitespace to display on either side of the floating label
 $select-md-floating-label-padding:         4px !default;
 

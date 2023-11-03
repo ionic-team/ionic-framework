@@ -19,6 +19,7 @@ import type {
   DatetimeHighlight,
   DatetimeHighlightStyle,
   DatetimeHighlightCallback,
+  DatetimeHourCycle,
 } from './datetime-interface';
 import { isSameDay, warnIfValueOutOfBounds, isBefore, isAfter } from './utils/comparison';
 import {
@@ -33,7 +34,7 @@ import {
   getCombinedDateColumnData,
 } from './utils/data';
 import { formatValue, getLocalizedTime, getMonthAndDay, getMonthAndYear } from './utils/format';
-import { is24Hour, isLocaleDayPeriodRTL, isMonthFirstLocale, getNumDaysInMonth } from './utils/helpers';
+import { isLocaleDayPeriodRTL, isMonthFirstLocale, getNumDaysInMonth, getHourCycle } from './utils/helpers';
 import {
   calculateHourFromAMPM,
   convertDataToISO,
@@ -171,7 +172,7 @@ export class Datetime implements ComponentInterface {
   @Prop() disabled = false;
 
   /**
-   * If `true`, the datetime appears normal but is not interactive.
+   * If `true`, the datetime appears normal but the selected date cannot be changed.
    */
   @Prop() readonly = false;
 
@@ -422,7 +423,7 @@ export class Datetime implements ComponentInterface {
    * The hour cycle of the `ion-datetime`. If no value is set, this is
    * specified by the current locale.
    */
-  @Prop() hourCycle?: 'h23' | 'h12';
+  @Prop() hourCycle?: DatetimeHourCycle;
 
   /**
    * If `cover`, the `ion-datetime` will expand to cover the full width of its container.
@@ -598,6 +599,14 @@ export class Datetime implements ComponentInterface {
   };
 
   private setActiveParts = (parts: DatetimeParts, removeDate = false) => {
+    /** if the datetime component is in readonly mode,
+     * allow browsing of the calendar without changing
+     * the set value
+     */
+    if (this.readonly) {
+      return;
+    }
+
     const { multiple, minParts, maxParts, activeParts } = this;
 
     /**
@@ -1413,7 +1422,13 @@ export class Datetime implements ComponentInterface {
    */
 
   private renderFooter() {
-    const { showDefaultButtons, showClearButton } = this;
+    const { disabled, readonly, showDefaultButtons, showClearButton } = this;
+    /**
+     * The cancel, clear, and confirm buttons
+     * should not be interactive if the datetime
+     * is disabled or readonly.
+     */
+    const isButtonDisabled = disabled || readonly;
     const hasSlottedButtons = this.el.querySelector('[slot="buttons"]') !== null;
     if (!hasSlottedButtons && !showDefaultButtons && !showClearButton) {
       return;
@@ -1443,18 +1458,33 @@ export class Datetime implements ComponentInterface {
             <slot name="buttons">
               <ion-buttons>
                 {showDefaultButtons && (
-                  <ion-button id="cancel-button" color={this.color} onClick={() => this.cancel(true)}>
+                  <ion-button
+                    id="cancel-button"
+                    color={this.color}
+                    onClick={() => this.cancel(true)}
+                    disabled={isButtonDisabled}
+                  >
                     {this.cancelText}
                   </ion-button>
                 )}
-                <div>
+                <div class="datetime-action-buttons-container">
                   {showClearButton && (
-                    <ion-button id="clear-button" color={this.color} onClick={() => clearButtonClick()}>
+                    <ion-button
+                      id="clear-button"
+                      color={this.color}
+                      onClick={() => clearButtonClick()}
+                      disabled={isButtonDisabled}
+                    >
                       {this.clearText}
                     </ion-button>
                   )}
                   {showDefaultButtons && (
-                    <ion-button id="confirm-button" color={this.color} onClick={() => this.confirm(true)}>
+                    <ion-button
+                      id="confirm-button"
+                      color={this.color}
+                      onClick={() => this.confirm(true)}
+                      disabled={isButtonDisabled}
+                    >
                       {this.doneText}
                     </ion-button>
                   )}
@@ -1956,11 +1986,12 @@ export class Datetime implements ComponentInterface {
    */
 
   private renderCalendarHeader(mode: Mode) {
+    const { disabled } = this;
     const expandedIcon = mode === 'ios' ? chevronDown : caretUpSharp;
     const collapsedIcon = mode === 'ios' ? chevronForward : caretDownSharp;
 
-    const prevMonthDisabled = isPrevMonthDisabled(this.workingParts, this.minParts, this.maxParts);
-    const nextMonthDisabled = isNextMonthDisabled(this.workingParts, this.maxParts);
+    const prevMonthDisabled = disabled || isPrevMonthDisabled(this.workingParts, this.minParts, this.maxParts);
+    const nextMonthDisabled = disabled || isNextMonthDisabled(this.workingParts, this.maxParts);
 
     // don't use the inheritAttributes util because it removes dir from the host, and we still need that
     const hostDir = this.el.getAttribute('dir') || undefined;
@@ -1976,6 +2007,7 @@ export class Datetime implements ComponentInterface {
               aria-label="Show year picker"
               detail={false}
               lines="none"
+              disabled={disabled}
               onClick={() => {
                 this.toggleMonthAndYearView();
                 /**
@@ -2042,23 +2074,28 @@ export class Datetime implements ComponentInterface {
     );
   }
   private renderMonth(month: number, year: number) {
+    const { disabled, readonly } = this;
+
     const yearAllowed = this.parsedYearValues === undefined || this.parsedYearValues.includes(year);
     const monthAllowed = this.parsedMonthValues === undefined || this.parsedMonthValues.includes(month);
     const isCalMonthDisabled = !yearAllowed || !monthAllowed;
-    const swipeDisabled = isMonthDisabled(
-      {
-        month,
-        year,
-        day: null,
-      },
-      {
-        // The day is not used when checking if a month is disabled.
-        // Users should be able to access the min or max month, even if the
-        // min/max date is out of bounds (e.g. min is set to Feb 15, Feb should not be disabled).
-        minParts: { ...this.minParts, day: null },
-        maxParts: { ...this.maxParts, day: null },
-      }
-    );
+    const isDatetimeDisabled = disabled || readonly;
+    const swipeDisabled =
+      disabled ||
+      isMonthDisabled(
+        {
+          month,
+          year,
+          day: null,
+        },
+        {
+          // The day is not used when checking if a month is disabled.
+          // Users should be able to access the min or max month, even if the
+          // min/max date is out of bounds (e.g. min is set to Feb 15, Feb should not be disabled).
+          minParts: { ...this.minParts, day: null },
+          maxParts: { ...this.maxParts, day: null },
+        }
+      );
     // The working month should never have swipe disabled.
     // Otherwise the CSS scroll snap will not work and the user
     // can free-scroll the calendar.
@@ -2082,7 +2119,14 @@ export class Datetime implements ComponentInterface {
             const { el, highlightedDates, isDateEnabled, multiple } = this;
             const referenceParts = { month, day, year };
             const isCalendarPadding = day === null;
-            const { isActive, isToday, ariaLabel, ariaSelected, disabled, text } = getCalendarDayState(
+            const {
+              isActive,
+              isToday,
+              ariaLabel,
+              ariaSelected,
+              disabled: isDayDisabled,
+              text,
+            } = getCalendarDayState(
               this.locale,
               referenceParts,
               this.activeParts,
@@ -2093,7 +2137,8 @@ export class Datetime implements ComponentInterface {
             );
 
             const dateIsoString = convertDataToISO(referenceParts);
-            let isCalDayDisabled = isCalMonthDisabled || disabled;
+
+            let isCalDayDisabled = isCalMonthDisabled || isDayDisabled;
 
             if (!isCalDayDisabled && isDateEnabled !== undefined) {
               try {
@@ -2111,6 +2156,15 @@ export class Datetime implements ComponentInterface {
                 );
               }
             }
+
+            /**
+             * Some days are constrained through max & min or allowed dates
+             * and also disabled because the component is readonly or disabled.
+             * These need to be displayed differently.
+             */
+            const isCalDayConstrained = isCalDayDisabled && isDatetimeDisabled;
+
+            const isButtonDisabled = isCalDayDisabled || isDatetimeDisabled;
 
             let dateStyle: DatetimeHighlightStyle | undefined = undefined;
 
@@ -2157,11 +2211,12 @@ export class Datetime implements ComponentInterface {
                   data-year={year}
                   data-index={index}
                   data-day-of-week={dayOfWeek}
-                  disabled={isCalDayDisabled}
+                  disabled={isButtonDisabled}
                   class={{
                     'calendar-day-padding': isCalendarPadding,
                     'calendar-day': true,
                     'calendar-day-active': isActive,
+                    'calendar-day-constrained': isCalDayConstrained,
                     'calendar-day-today': isToday,
                   }}
                   part={dateParts}
@@ -2236,8 +2291,8 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderTimeOverlay() {
-    const { hourCycle, isTimePopoverOpen, locale } = this;
-    const use24Hour = is24Hour(locale, hourCycle);
+    const { disabled, hourCycle, isTimePopoverOpen, locale } = this;
+    const computedHourCycle = getHourCycle(locale, hourCycle);
     const activePart = this.getActivePartsWithFallback();
 
     return [
@@ -2250,6 +2305,7 @@ export class Datetime implements ComponentInterface {
         part={`time-button${isTimePopoverOpen ? ' active' : ''}`}
         aria-expanded="false"
         aria-haspopup="true"
+        disabled={disabled}
         onClick={async (ev) => {
           const { popoverRef } = this;
 
@@ -2270,7 +2326,7 @@ export class Datetime implements ComponentInterface {
           }
         }}
       >
-        {getLocalizedTime(locale, activePart, use24Hour)}
+        {getLocalizedTime(locale, activePart, computedHourCycle)}
       </button>,
       <ion-popover
         alignment="center"

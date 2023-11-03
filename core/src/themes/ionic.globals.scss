@@ -5,6 +5,9 @@
 // Global Color Functions
 @import "./ionic.functions.color";
 
+// Global Font Functions
+@import "./ionic.functions.font";
+
 // Global Mixins
 @import "./ionic.mixins";
 
@@ -15,9 +18,6 @@
 // Default General
 // --------------------------------------------------
 $font-family-base:                  var(--ion-font-family, inherit) !default;
-
-// Global app direction
-$app-direction: null !default;
 
 // Hairlines width
 $hairlines-width: .55px !default;
@@ -51,10 +51,8 @@ $form-control-label-stacked-scale: 0.75 !default;
 
 $z-index-menu-overlay:           1000;
 $z-index-overlay:                1001;
-$z-index-click-block:            99999;
 
 $z-index-fixed-content:          999;
-$z-index-scroll-content:         1;
 $z-index-refresher:              -1;
 
 $z-index-page-container:         0;

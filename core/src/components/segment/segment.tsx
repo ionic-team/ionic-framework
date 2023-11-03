@@ -1,6 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Listen, Prop, State, Watch, h, writeTask } from '@stencil/core';
 import type { Gesture, GestureDetail } from '@utils/gesture';
+import { raf } from '@utils/helpers';
 import { isRTL } from '@utils/rtl';
 import { createColorClasses, hostContext } from '@utils/theme';
 
@@ -83,31 +84,7 @@ export class Segment implements ComponentInterface {
      * Used by `ion-segment-button` to determine if the button should be checked.
      */
     this.ionSelect.emit({ value });
-
-    if (this.scrollable) {
-      const buttons = this.getButtons();
-      const activeButton = buttons.find((button) => button.value === value);
-      if (activeButton !== undefined) {
-        /**
-         * Scrollable segment buttons should be
-         * centered within the view including
-         * buttons that are partially offscreen.
-         */
-        activeButton.scrollIntoView({
-          behavior: 'smooth',
-          inline: 'center',
-
-          /**
-           * Segment should scroll on the
-           * horizontal axis. `block: 'nearest'`
-           * ensures that the vertical axis
-           * does not scroll if the segment
-           * as a whole is already in view.
-           */
-          block: 'nearest',
-        });
-      }
-    }
+    this.scrollActiveButtonIntoView();
   }
 
   /**
@@ -162,6 +139,20 @@ export class Segment implements ComponentInterface {
 
   async componentDidLoad() {
     this.setCheckedClasses();
+
+    /**
+     * We need to wait for the buttons to all be rendered
+     * before we can scroll.
+     */
+    raf(() => {
+      /**
+       * When the segment loads for the first
+       * time we just want to snap the active button into
+       * place instead of scroll. Smooth scrolling should only
+       * happen when the user interacts with the segment.
+       */
+      this.scrollActiveButtonIntoView(false);
+    });
 
     this.gesture = (await import('../../utils/gesture')).createGesture({
       el: this.el,
@@ -317,6 +308,57 @@ export class Segment implements ComponentInterface {
     }
     if (next < buttons.length) {
       buttons[next].classList.add('segment-button-after-checked');
+    }
+  }
+
+  private scrollActiveButtonIntoView(smoothScroll = true) {
+    const { scrollable, value, el } = this;
+
+    if (scrollable) {
+      const buttons = this.getButtons();
+      const activeButton = buttons.find((button) => button.value === value);
+      if (activeButton !== undefined) {
+        const scrollContainerBox = el.getBoundingClientRect();
+        const activeButtonBox = activeButton.getBoundingClientRect();
+
+        /**
+         * Subtract the active button x position from the scroll
+         * container x position. This will give us the x position
+         * of the active button within the scroll container.
+         */
+        const activeButtonLeft = activeButtonBox.x - scrollContainerBox.x;
+
+        /**
+         * If we just used activeButtonLeft, then the active button
+         * would be aligned with the left edge of the scroll container.
+         * Instead, we want the segment button to be centered. As a result,
+         * we subtract half of the scroll container width. This will position
+         * the left edge of the active button at the midpoint of the scroll container.
+         * We then add half of the active button width. This will position the active
+         * button such that the midpoint of the active button is at the midpoint of the
+         * scroll container.
+         */
+        const centeredX = activeButtonLeft - scrollContainerBox.width / 2 + activeButtonBox.width / 2;
+
+        /**
+         * We intentionally use scrollBy here instead of scrollIntoView
+         * to avoid a WebKit bug where accelerated animations break
+         * when using scrollIntoView. Using scrollIntoView will cause the
+         * segment container to jump during the transition and then snap into place.
+         * This is because scrollIntoView can potentially cause parent element
+         * containers to also scroll. scrollBy does not have this same behavior, so
+         * we use this API instead.
+         *
+         * Note that if there is not enough scrolling space to center the element
+         * within the scroll container, the browser will attempt
+         * to center by as much as it can.
+         */
+        el.scrollBy({
+          top: 0,
+          left: centeredX,
+          behavior: smoothScroll ? 'smooth' : 'instant',
+        });
+      }
     }
   }
 

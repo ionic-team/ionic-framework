@@ -5,7 +5,7 @@ import { configs, test } from '@utils/test/playwright';
 /**
  * This test does not check LTR vs RTL layouts
  */
-configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('toast: a11y'), () => {
     test.beforeEach(async ({ page }) => {
       await page.goto(`/src/components/toast/test/a11y`, config);
@@ -51,6 +51,140 @@ configs({ directions: ['ltr'] }).forEach(({ title, config }) => {
 
       await expect(toastButton).toHaveAttribute('aria-labelledby', 'close-label');
       await expect(toastButton).toHaveAttribute('aria-label', 'close button');
+    });
+  });
+
+  test.describe(title('toast: font scaling'), () => {
+    test('should scale header text on larger font sizes', async ({ page }) => {
+      await page.setContent(
+        `
+        <style>
+          html {
+            font-size: 310%;
+          }
+        </style>
+
+        <ion-toast is-open="true" header="Testing" message="Hello world"></ion-toast>
+      `,
+        config
+      );
+
+      const toast = page.locator('ion-toast');
+
+      await expect(toast).toBeVisible();
+
+      const toastWrapper = toast.locator('.toast-wrapper');
+      await expect(toastWrapper).toHaveScreenshot(screenshot('toast-header-scale'));
+    });
+
+    test('should scale message text on larger font sizes', async ({ page }) => {
+      await page.setContent(
+        `
+        <style>
+          html {
+            font-size: 310%;
+          }
+        </style>
+
+        <ion-toast is-open="true" message="Hello world"></ion-toast>
+      `,
+        config
+      );
+
+      const toast = page.locator('ion-toast');
+
+      await expect(toast).toBeVisible();
+
+      const toastWrapper = toast.locator('.toast-wrapper');
+      await expect(toastWrapper).toHaveScreenshot(screenshot('toast-message-scale'));
+    });
+
+    test('should scale content icon on larger font sizes', async ({ page }) => {
+      await page.setContent(
+        `
+        <style>
+          html {
+            font-size: 310%;
+          }
+        </style>
+
+        <ion-toast is-open="true" message="Hello world" icon="alert"></ion-toast>
+      `,
+        config
+      );
+
+      const toast = page.locator('ion-toast');
+
+      await expect(toast).toBeVisible();
+
+      const toastWrapper = toast.locator('.toast-wrapper');
+      await expect(toastWrapper).toHaveScreenshot(screenshot('toast-icon-scale'));
+    });
+
+    test('should scale button text on larger font sizes', async ({ page }) => {
+      await page.setContent(
+        `
+        <style>
+          html {
+            font-size: 310%;
+          }
+        </style>
+
+        <ion-toast is-open="true" message="Hello world"></ion-toast>
+      `,
+        config
+      );
+
+      const toast = page.locator('ion-toast');
+
+      toast.evaluate((el: HTMLIonToastElement) => {
+        el.buttons = [
+          {
+            text: 'Cancel',
+          },
+        ];
+      });
+
+      await expect(toast).toBeVisible();
+
+      const toastWrapper = toast.locator('.toast-wrapper');
+      await expect(toastWrapper).toHaveScreenshot(screenshot('toast-buttons-scale'));
+    });
+
+    test('should scale buttons and icons on larger font sizes', async ({ page }) => {
+      await page.setContent(
+        `
+        <style>
+          html {
+            font-size: 310%;
+          }
+        </style>
+
+        <ion-toast is-open="true" message="Hello world"></ion-toast>
+      `,
+        config
+      );
+
+      const toast = page.locator('ion-toast');
+
+      toast.evaluate((el: HTMLIonToastElement) => {
+        el.buttons = [
+          {
+            text: 'Cancel',
+            icon: 'close',
+          },
+        ];
+      });
+
+      await expect(toast).toBeVisible();
+
+      /**
+       * Linux incorrectly clips the screenshot when capturing the toast container
+       * with the inset styling.
+       *
+       * We capture the entire toast container (entire page) to avoid this issue.
+       */
+      await expect(toast).toHaveScreenshot(screenshot('toast-buttons-icon-scale'));
     });
   });
 });

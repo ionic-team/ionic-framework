@@ -16,6 +16,7 @@ $searchbar-ios-padding-bottom:                    $searchbar-ios-padding-top !de
 $searchbar-ios-padding-start:                     $searchbar-ios-padding-end !default;
 
 /// @prop - Font size of the searchbar cancel button
+// The cancel button on iOS does not scale with Dynamic Type
 $searchbar-ios-cancel-button-font-size:           16px !default;
 
 /// @prop - Color of the searchbar cancel button
@@ -25,19 +26,16 @@ $searchbar-ios-cancel-button-color:               ion-color(primary, base) !defa
 $searchbar-ios-cancel-button-background-color:    transparent !default;
 
 /// @prop - Size of the searchbar input search icon
-$searchbar-ios-input-search-icon-size:            22px !default;
+$searchbar-ios-input-search-icon-size:            dynamic-font(22px) !default;
 
 /// @prop - Color of the searchbar input search icon
 $searchbar-ios-input-search-icon-color:           $text-color-step-400 !default;
 
-/// @prop - Height of the searchbar input
-$searchbar-ios-input-height:                      36px !default;
+/// @prop - Minimum Height of the searchbar input
+$searchbar-ios-input-min-height:                      36px !default;
 
 /// @prop - Border radius of the searchbar input
 $searchbar-ios-input-border-radius:               10px !default;
-
-/// @prop - Color of the searchbar input placeholder
-$searchbar-ios-input-placeholder-color:           $text-color-step-400 !default;
 
 /// @prop - Color of the searchbar input text
 $searchbar-ios-input-text-color:                  $text-color !default;
@@ -61,4 +59,4 @@ $searchbar-ios-input-icon-opacity:                .5 !default;
 $searchbar-ios-input-clear-icon-color:            $text-color-step-400 !default;
 
 /// @prop - Size of the searchbar input clear icon
-$searchbar-ios-input-clear-icon-size:             18px !default;
+$searchbar-ios-input-clear-icon-size:             dynamic-font(18px) !default;

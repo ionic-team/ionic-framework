@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Datetime - Readonly</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+    <style>
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(250px, 1fr));
+        grid-row-gap: 20px;
+        grid-column-gap: 20px;
+      }
+      h2 {
+        font-size: 12px;
+        font-weight: normal;
+
+        color: #6f7378;
+
+        margin-top: 10px;
+        margin-left: 5px;
+      }
+      @media screen and (max-width: 800px) {
+        .grid {
+          grid-template-columns: 1fr;
+          padding: 0;
+        }
+      }
+
+      ion-datetime {
+        width: 350px;
+      }
+    </style>
+  </head>
+  <body>
+    <ion-app>
+      <ion-header translucent="true">
+        <ion-toolbar>
+          <ion-title>Datetime - Readonly</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <div class="grid">
+          <div class="grid-item">
+            <h2>Inline</h2>
+            <ion-datetime
+              id="inline-datetime"
+              presentation="date"
+              readonly
+              show-default-buttons="true"
+              show-clear-button="true"
+              multiple="true"
+            ></ion-datetime>
+          </div>
+
+          <div class="grid-item">
+            <h2>Inline - No Default Value</h2>
+            <ion-datetime id="inline-datetime-no-value" readonly></ion-datetime>
+          </div>
+        </div>
+      </ion-content>
+      <script>
+        const firstDatetime = document.querySelector('#inline-datetime');
+        firstDatetime.value = ['2023-08-03', '2023-08-13', '2023-08-29'];
+
+        firstDatetime.isDateEnabled = (dateString) => {
+          const date = new Date(dateString);
+          const utcDay = date.getUTCDay();
+
+          /**
+           * Date will be enabled if it is not
+           * Sunday or Saturday
+           */
+          return utcDay !== 0 && utcDay !== 6;
+        };
+      </script>
+    </ion-app>
+  </body>
+</html>

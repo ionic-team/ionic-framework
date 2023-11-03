@@ -4,91 +4,92 @@
 // --------------------------------------------------
 
 /// @prop - Background of the toast
-$toast-md-background:                              $text-color-step-200 !default;
+$toast-md-background: $text-color-step-200 !default;
 
 /// @prop - Box shadow of the toast
-$toast-md-box-shadow:                              0 3px 5px -1px rgba(0, 0, 0, .2), 0 6px 10px 0 rgba(0, 0, 0, .14), 0 1px 18px 0 rgba(0, 0, 0, .12) !default;
+$toast-md-box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.14),
+  0 1px 18px 0 rgba(0, 0, 0, 0.12) !default;
 
 /// @prop - Font size of the toast
-$toast-md-font-size:                               14px !default;
+$toast-md-font-size: dynamic-font(14px) !default;
 
 /// @prop - Color of the toast
-$toast-md-color:                                   $background-color-step-50 !default;
+$toast-md-color: $background-color-step-50 !default;
 
 /// @prop - Border radius of the toast wrapper
-$toast-md-border-radius:                           4px !default;
+$toast-md-border-radius: 4px !default;
 
 /// @prop - Font size of the toast message
-$toast-md-header-line-height:                      20px !default;
+$toast-md-header-line-height: dynamic-font(20px) !default;
 
 /// @prop - Font size of the toast message
-$toast-md-header-font-weight:                      500 !default;
+$toast-md-header-font-weight: 500 !default;
 
 /// @prop - Spacing between the header and the message
-$toast-md-header-margin-bottom:                    2px !default;
+$toast-md-header-margin-bottom: 2px !default;
 
 /// @prop - Font size of the toast message
-$toast-md-message-line-height:                     20px !default;
+$toast-md-message-line-height: dynamic-font(20px) !default;
 
 /// @prop - Padding top of the toast message
-$toast-md-content-padding-top:                     14px !default;
+$toast-md-content-padding-top: 14px !default;
 
 /// @prop - Padding end of the toast content
-$toast-md-content-padding-end:                     16px !default;
+$toast-md-content-padding-end: 16px !default;
 
 /// @prop - Padding bottom of the toast content
-$toast-md-content-padding-bottom:                  $toast-md-content-padding-top !default;
+$toast-md-content-padding-bottom: $toast-md-content-padding-top !default;
 
 /// @prop - Padding start of the toast content
-$toast-md-content-padding-start:                   $toast-md-content-padding-end !default;
+$toast-md-content-padding-start: $toast-md-content-padding-end !default;
 
 /// @prop - Padding top of the toast button
-$toast-md-button-padding-top:                      10px !default;
+$toast-md-button-padding-top: 10px !default;
 
 /// @prop - Padding end of the toast button
-$toast-md-button-padding-end:                      15px !default;
+$toast-md-button-padding-end: 15px !default;
 
 /// @prop - Padding bottom of the toast button
-$toast-md-button-padding-bottom:                   $toast-md-button-padding-top !default;
+$toast-md-button-padding-bottom: $toast-md-button-padding-top !default;
 
 /// @prop - Padding start of the toast button
-$toast-md-button-padding-start:                    15px !default;
+$toast-md-button-padding-start: 15px !default;
 
 /// @prop - Font size of the toast button
-$toast-md-button-font-size:                        14px !default;
+$toast-md-button-font-size: dynamic-font(14px) !default;
 
 /// @prop - Font weight of the toast button
-$toast-md-button-font-weight:                      500 !default;
+$toast-md-button-font-weight: 500 !default;
 
 /// @prop - Letter spacing of the toast button
-$toast-md-button-letter-spacing:                   0.84px !default;
+$toast-md-button-letter-spacing: 0.84px !default;
 
 /// @prop - Background color of the toast button
-$toast-md-button-background-color:                 transparent !default;
+$toast-md-button-background-color: transparent !default;
 
 /// @prop - Text transform of the toast button
-$toast-md-button-text-transform:                   uppercase !default;
+$toast-md-button-text-transform: uppercase !default;
 
 /// @prop - Opacity of the toast button background on hover
-$toast-md-button-opacity-hover:                    0.08 !default;
+$toast-md-button-opacity-hover: 0.08 !default;
 
 /// @prop - Background color of the toast button on hover
-$toast-md-button-background-color-hover:           ion-color(primary, base, $toast-md-button-opacity-hover) !default;
+$toast-md-button-background-color-hover: ion-color(primary, base, $toast-md-button-opacity-hover) !default;
 
 /// @prop - Text color of the cancel toast button
-$toast-md-button-cancel-text-color:                $background-color-step-100 !default;
+$toast-md-button-cancel-text-color: $background-color-step-100 !default;
 
 /// @prop - Background color of the cancel toast button on hover
-$toast-md-button-cancel-background-color-hover:    rgba($background-color-rgb, $toast-md-button-opacity-hover) !default;
+$toast-md-button-cancel-background-color-hover: rgba($background-color-rgb, $toast-md-button-opacity-hover) !default;
 
 /// @prop - Padding of the icon only toast button
-$toast-md-button-icon-only-padding:                9px !default;
+$toast-md-button-icon-only-padding: 9px !default;
 
 /// @prop - Width of the icon only toast button
-$toast-md-button-icon-only-width:                  36px !default;
+$toast-md-button-icon-only-width: 36px !default;
 
 /// @prop - Height of the icon only toast button
-$toast-md-button-icon-only-height:                 $toast-md-button-icon-only-width !default;
+$toast-md-button-icon-only-height: $toast-md-button-icon-only-width !default;
 
 /// @prop - Border radius of the icon only toast button
-$toast-md-button-icon-only-border-radius:          50% !default;
+$toast-md-button-icon-only-border-radius: 50% !default;

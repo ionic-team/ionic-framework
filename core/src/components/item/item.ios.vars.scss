@@ -7,7 +7,7 @@
 $item-ios-min-height:                        44px !default;
 
 /// @prop - Font size of the item
-$item-ios-font-size:                         16px !default;
+$item-ios-font-size:                         dynamic-font(16px) !default;
 
 /// @prop - Margin top of the item paragraph
 $item-ios-paragraph-margin-top:              0 !default;
@@ -22,7 +22,7 @@ $item-ios-paragraph-margin-bottom:           2px !default;
 $item-ios-paragraph-margin-start:            $item-ios-paragraph-margin-end !default;
 
 /// @prop - Font size of the item paragraph
-$item-ios-paragraph-font-size:               14px !default;
+$item-ios-paragraph-font-size:               dynamic-font(14px) !default;
 
 /// @prop - Color of the item paragraph
 $item-ios-paragraph-text-color:              rgba($text-color-rgb, .4) !default;
@@ -35,9 +35,6 @@ $item-ios-avatar-height:                     $item-ios-avatar-width !default;
 
 /// @prop - Size of the thumbnail in the item
 $item-ios-thumbnail-size:                   56px !default;
-
-/// @prop - Color of the detail arrow icon
-$item-ios-detail-icon-color:                 $item-ios-border-color !default;
 
 /// @prop - Padding top for the item content
 $item-ios-padding-top:                       10px !default;
@@ -59,9 +56,6 @@ $item-ios-border-bottom-style:               solid !default;
 
 /// @prop - Border bottom color for the item when lines are displayed
 $item-ios-border-bottom-color:               $item-ios-border-color !default;
-
-/// @prop - Border bottom for the item
-$item-ios-border-bottom:                     $item-ios-border-bottom-width $item-ios-border-bottom-style $item-ios-border-bottom-color !default;
 
 /// @prop - Color of the item input highlight
 $item-ios-input-highlight-color:             ion-color(primary, base) !default;

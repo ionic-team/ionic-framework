@@ -10,23 +10,10 @@ $checkbox-md-disabled-opacity:           $form-control-md-disabled-opacity !defa
 /// @prop - Background color of the checkbox icon when off
 $checkbox-md-icon-background-color-off:  $item-md-background !default;
 
-/// @prop - Background color of focus indicator for checkbox when focused
-$checkbox-md-background-color-focused:   ion-color(primary, tint) !default;
-
-/// @prop - Background color of the checkbox icon when on
-$checkbox-md-icon-background-color-on:   ion-color(primary, base) !default;
-
 /// @prop - Size of the checkbox icon
+/// The icon size does not use dynamic font
+/// because it does not scale in native.
 $checkbox-md-icon-size:                  18px !default;
-
-/// @prop - Width of the checkbox icon checkmark
-$checkbox-md-icon-checkmark-width:       2px !default;
-
-/// @prop - Style of the checkbox icon checkmark
-$checkbox-md-icon-checkmark-style:       solid !default;
-
-/// @prop - Color of the checkbox icon checkmark
-$checkbox-md-icon-checkmark-color:       ion-color(primary, contrast) !default;
 
 /// @prop - Border width of the checkbox icon
 $checkbox-md-icon-border-width:          2px !default;
@@ -34,14 +21,8 @@ $checkbox-md-icon-border-width:          2px !default;
 /// @prop - Border style of the checkbox icon
 $checkbox-md-icon-border-style:          solid !default;
 
-/// @prop - Border radius of the checkbox icon
-$checkbox-md-icon-border-radius:         2px !default;
-
 /// @prop - Border color of the checkbox icon when off
 $checkbox-md-icon-border-color-off:      rgb($text-color-rgb, 0.60) !default;
-
-/// @prop - Border color of the checkbox icon when on
-$checkbox-md-icon-border-color-on:       ion-color(primary, base) !default;
 
 /// @prop - Transition duration of the checkbox
 $checkbox-md-transition-duration:        180ms !default;

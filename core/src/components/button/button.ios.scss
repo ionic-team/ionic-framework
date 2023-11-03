@@ -24,20 +24,6 @@
   letter-spacing: #{$button-ios-letter-spacing};
 }
 
-/**
- * The default buttons in a toolbar
- * have a different font size/weight
- * than buttons outside of a toolbar on iOS.
- * However, we still want the "size"/"strong"
- * properties to be usable in a toolbar, so we add
- * the .in-buttons selector such that we
- * can add the different font size/weight in a toolbar
- * but still let "size"/"strong" override it.
- */
-:host(.in-buttons) {
-  font-size: #{$toolbar-ios-button-font-size};
-  font-weight: 400;
-}
 
 // iOS Solid Button
 // --------------------------------------------------
@@ -80,6 +66,25 @@
   font-size: #{$button-ios-clear-font-size};
   font-weight: #{$button-ios-clear-font-weight};
 }
+
+
+// iOS Toolbar Buttons
+// --------------------------------------------------
+
+/**
+ * The default buttons in a toolbar
+ * have a different font size/weight
+ * than buttons outside of a toolbar on iOS.
+ * However, we still want the "size"/"strong"
+ * properties to be usable in a toolbar, so we add
+ * the .in-buttons selector such that we
+ * can add the different font size/weight in a toolbar
+ * but still let "size"/"strong" override it.
+ */
+ :host(.in-buttons) {
+   font-size: #{$toolbar-ios-button-font-size};
+   font-weight: 400;
+ }
 
 
 // iOS Button Sizes
@@ -127,7 +132,7 @@
 }
 
 
-// iOS strong Button
+// iOS Strong Button
 // --------------------------------------------------
 
 :host(.button-strong) {

@@ -56,11 +56,17 @@ describe('getMonthAndDay()', () => {
 
 describe('getFormattedHour()', () => {
   it('should only add padding if using 24 hour time', () => {
-    expect(getFormattedHour(0, true)).toEqual('00');
-    expect(getFormattedHour(0, false)).toEqual('12');
+    expect(getFormattedHour(1, 'h11')).toEqual('1');
+    expect(getFormattedHour(1, 'h12')).toEqual('1');
+    expect(getFormattedHour(1, 'h23')).toEqual('01');
+    expect(getFormattedHour(1, 'h24')).toEqual('01');
+  });
 
-    expect(getFormattedHour(10, true)).toEqual('10');
-    expect(getFormattedHour(10, false)).toEqual('10');
+  it('should return correct hour value for hour cycle', () => {
+    expect(getFormattedHour(0, 'h11')).toEqual('0');
+    expect(getFormattedHour(0, 'h12')).toEqual('12');
+    expect(getFormattedHour(0, 'h23')).toEqual('00');
+    expect(getFormattedHour(0, 'h24')).toEqual('24');
   });
 });
 
@@ -111,7 +117,7 @@ describe('getLocalizedTime', () => {
       minute: 40,
     };
 
-    expect(getLocalizedTime('en-US', datetimeParts, false)).toEqual('1:40 PM');
+    expect(getLocalizedTime('en-US', datetimeParts, 'h12')).toEqual('1:40 PM');
   });
 
   it('should localize the time to AM', () => {
@@ -123,7 +129,7 @@ describe('getLocalizedTime', () => {
       minute: 40,
     };
 
-    expect(getLocalizedTime('en-US', datetimeParts, false)).toEqual('9:40 AM');
+    expect(getLocalizedTime('en-US', datetimeParts, 'h12')).toEqual('9:40 AM');
   });
 
   it('should avoid Chromium bug when using 12 hour time in a 24 hour locale', () => {
@@ -135,7 +141,7 @@ describe('getLocalizedTime', () => {
       minute: 0,
     };
 
-    expect(getLocalizedTime('en-GB', datetimeParts, false)).toEqual('12:00 am');
+    expect(getLocalizedTime('en-GB', datetimeParts, 'h12')).toEqual('12:00 am');
   });
   it('should parse time-only values correctly', () => {
     const datetimeParts = {
@@ -143,7 +149,7 @@ describe('getLocalizedTime', () => {
       minute: 40,
     };
 
-    expect(getLocalizedTime('en-US', datetimeParts, false)).toEqual('10:40 PM');
-    expect(getLocalizedTime('en-US', datetimeParts, true)).toEqual('22:40');
+    expect(getLocalizedTime('en-US', datetimeParts, 'h12')).toEqual('10:40 PM');
+    expect(getLocalizedTime('en-US', datetimeParts, 'h23')).toEqual('22:40');
   });
 });

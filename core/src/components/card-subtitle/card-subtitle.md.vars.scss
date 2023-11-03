@@ -4,7 +4,7 @@
 // --------------------------------------------------
 
 /// @prop - Font size of the card subtitle
-$card-md-subtitle-font-size:            14px !default;
+$card-md-subtitle-font-size:            dynamic-font(14px) !default;
 
 /// @prop - Padding top of the card subtitle
 $card-md-subtitle-padding-top:          0 !default;

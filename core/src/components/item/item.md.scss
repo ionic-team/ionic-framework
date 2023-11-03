@@ -1,3 +1,4 @@
+@use "sass:math";
 @import "./item";
 @import "./item.md.vars";
 @import "../label/label.md.vars";
@@ -25,7 +26,7 @@
   --highlight-color-valid: #{$item-md-input-highlight-color-valid};
   --highlight-color-invalid: #{$item-md-input-highlight-color-invalid};
 
-  font-size: $item-md-font-size;
+  font-size: dynamic-font($item-md-font-size);
   font-weight: normal;
 
   text-transform: none;
@@ -201,7 +202,13 @@
 ::slotted(ion-icon) {
   color: $item-md-icon-slot-color;
 
-  font-size: $item-md-icon-slot-font-size;
+  // The icon's font size should use em units to support
+  // font scaling but evaluate to 24px at 100% font size.
+  // The value in em units is calculated by dividing
+  // the icon's font size in pixels by the item's
+  // font size in pixels.
+  // e.g. 24px / 16px = 1.5em
+  font-size: math.div($item-md-icon-slot-font-size, $item-md-font-size) * 1em;
 }
 
 :host(.ion-color:not(.item-fill-solid):not(.item-fill-outline)) ::slotted(ion-icon) {
@@ -338,7 +345,7 @@
 
   min-height: 25px;
 
-  font-size: 12px;
+  font-size: dynamic-font(12px);
 }
 
 

@@ -28,24 +28,6 @@
   height: 18px;
 }
 
-// Input Wrapper
-// ----------------------------------------------------------------
-
-:host(:not(.legacy-input)) {
-  min-height: 44px;
-}
-
-/**
- * Since the label sits on top of the element,
- * the component needs to be taller otherwise the
- * label will appear too close to the input text.
- */
-:host(.input-label-placement-floating),
-:host(.input-label-placement-stacked) {
-  min-height: 56px;
-}
-
-
 // Input - Disabled
 // ----------------------------------------------------------------
 // The input, label, helper text, char counter and placeholder

@@ -21,7 +21,7 @@
 
   border-bottom: $datetime-ios-border-color;
 
-  font-size: 14px;
+  font-size: dynamic-font-max(14px, 1.6);
 }
 
 :host .datetime-header .datetime-title {
@@ -39,7 +39,7 @@
   --background-hover: transparent;
   --background-activated: transparent;
 
-  font-size: 16px;
+  font-size: dynamic-font-max(16px, 1.6);
   font-weight: 600;
 }
 
@@ -63,13 +63,128 @@
 
   color: $text-color-step-700;
 
-  font-size: 12px;
+  font-size: dynamic-font-max(12px, 1.6);
 
   font-weight: 600;
 
   line-height: 24px;
 
   text-transform: uppercase;
+}
+
+@supports (border-radius: mod(1px, 1px)) {
+  .calendar-days-of-week .day-of-week {
+    /**
+     * When the computed font size is 24px
+     * we want the days of the week to only
+     * show the first letter of each day.
+     *
+     * We use the modulus operator to ensure
+     * that any font size less than 24px is
+     * unchanged (i.e. 16 % 24 = 16). If the
+     * font size is 24px then the remainder
+     * will be 0.
+     */
+    $max-font-size: min(1rem, $datetime-dynamic-font-breakpoint);
+    $remainder: mod($max-font-size, $datetime-dynamic-font-breakpoint);
+
+    /**
+     * From here, we scale the remainder to get
+     * a width value larger than 20px.
+     * We then clamp the width to have a max width
+     * of 100% so that each element does not appear
+     * too wide if $width is a very large number.
+     *
+     * When the font size is >=24px then $remainder
+     * will be 0px. This results in $width being 0px
+     * since 0px * 10 is still 0px. We set a minimum
+     * width of 20px below so that the days of the
+     * week still show when the font size is >=24px
+     * and have a fixed width of 20px.
+     *
+     * The days of the week text on iOS have a maximum font size
+     * that is no larger than 20px, so setting a minimum width
+     * of 20px ensures that the text will always fit. (See font-size
+     * declaration in the .calendar-days-of-week block).
+     */
+    $width: calc($remainder * 10);
+    width: clamp(20px, #{$width}, 100%);
+
+    /**
+     * We show the first letter of the week
+     * by setting the width small such that all other
+     * letters wrap to the next line. While we do have
+     * overflow: hidden to visually hide the overflowing
+     * text, we need to explicitly set the height of the
+     * container too otherwise it will increase as the text wraps.
+     */
+    height: $datetime-dynamic-font-breakpoint;
+
+    /**
+     * The above width will cause
+     * all the other letters to overflow
+     * to other lines. The below code hides
+     * those additional letters so only
+     * the first letter is shown.
+     */
+    overflow: hidden;
+  }
+
+  .calendar-day {
+    /**
+     * We use the modulus operator to ensure
+     * that any font size less than 24px is
+     * unchanged (i.e. 16 % 24 = 16). If the
+     * font size is 24px then the remainder
+     * will be 0.
+     */
+    $maxFontSize: min(1rem, $datetime-dynamic-font-breakpoint);
+    $remainder: mod($maxFontSize, $datetime-dynamic-font-breakpoint);
+
+    /**
+     * From here, we scale the remainder. The purpose of
+     * scaling the remainder is to get a border radius
+     * large enough such that the element's
+     * shape is a circle.
+     *
+     * Note that when the font size is 24px
+     * then the remainder will be 0, so $radius
+     * will still be zero.
+     */
+    $radius: calc($remainder * 10);
+
+    /**
+     * In the event that $radius is 0
+     * we use max() to ensure a minimum
+     * border radius of 8px which will
+     * give the day button the rounded
+     * rectangle appearance.
+     * For font sizes smaller than 24px
+     * the border radius will give a circle appearance.
+     */
+    @include border-radius(max(8px, $radius));
+  }
+}
+
+/**
+ * iOS <17 has a bug where the result of mod() is
+ * used incorrectly if used inside of another CSS function such
+ * as calc(). The first set of @support checks accounts for iOS <17.
+ * We check -webkit-named-image to ensure that non-WebKit browsers are ignored.
+ * The second set of @support checks account for all other browsers that
+ * do not support mod() yet.
+ */
+@supports ((border-radius: mod(1px, 1px)) and (background: -webkit-named-image(apple-pay-logo-black)) and (not (contain-intrinsic-size: none))) or (not (border-radius: mod(1px, 1px))) {
+  .calendar-days-of-week .day-of-week {
+    width: auto;
+    height: auto;
+
+    overflow: initial;
+  }
+
+  .calendar-day {
+    @include border-radius(32px);
+  }
 }
 
 // Calendar / Body
@@ -97,7 +212,7 @@
   // will collapse instead of expanding to fill the button
   height: 0;
 
-  min-height: 16px;
+  min-height: dynamic-font(16px);
 }
 
 :host .calendar-day {
@@ -106,7 +221,7 @@
 
   height: $datetime-ios-day-height;
 
-  font-size: 20px;
+  font-size: dynamic-font-max(20px, 1.6);
 }
 
 .calendar-day.calendar-day-active {
@@ -145,7 +260,7 @@
 :host .datetime-time {
   @include padding($datetime-ios-padding * 0.5, $datetime-ios-padding, $datetime-ios-padding, $datetime-ios-padding);
 
-  font-size: 16px;
+  font-size: dynamic-font-max(16px, 1.6);
 }
 
 :host .datetime-time .time-header {

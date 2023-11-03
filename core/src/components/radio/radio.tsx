@@ -136,8 +136,7 @@ export class Radio implements ComponentInterface {
 
   /** @internal */
   @Method()
-  async setFocus(ev: any) {
-    // TODO(FW-2832): type (using Event triggers a build error due to conflict with Stencil Event import)
+  async setFocus(ev: globalThis.Event) {
     ev.stopPropagation();
     ev.preventDefault();
 
@@ -200,7 +199,11 @@ export class Radio implements ComponentInterface {
   };
 
   private onClick = () => {
-    const { radioGroup, checked } = this;
+    const { radioGroup, checked, disabled } = this;
+
+    if (disabled) {
+      return;
+    }
 
     /**
      * The legacy control uses a native input inside

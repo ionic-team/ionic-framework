@@ -1,5 +1,10 @@
 name: 'Build Ionic Core'
 description: 'Build Ionic Core'
+inputs:
+  ionicons-version:
+    description: 'The NPM tag of ionicons to install.'
+    type: string
+    required: false
 runs:
   using: 'composite'
   steps:
@@ -9,6 +14,13 @@ runs:
         node-version: 18.x
     - name: Install Dependencies
       run: npm install
+      working-directory: ./core
+      shell: bash
+    # If an Ionicons version was specified install that.
+    # Otherwise just use the version defined in the package.json.
+    - name: Install Ionicons Version
+      if: inputs.ionicons-version != ''
+      run: npm install ionicons@${{ inputs.ionicons-version }}
       working-directory: ./core
       shell: bash
     - name: Build Core
