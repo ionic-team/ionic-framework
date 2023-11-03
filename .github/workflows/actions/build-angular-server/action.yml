@@ -6,13 +6,15 @@ runs:
     - uses: actions/setup-node@v3
       with:
         node-version: 18.x
-
+    - uses: pnpm/action-setup@v2
+      with:
+        version: 8
     - name: Install Angular Server Dependencies
-      run: npm ci
+      run: pnpm install
       shell: bash
       working-directory: ./packages/angular-server
     - name: Build
-      run: npm run build.prod
+      run: pnpm run build.prod
       shell: bash
       working-directory: ./packages/angular-server
     - uses: ./.github/workflows/actions/upload-archive
