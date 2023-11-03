@@ -9,6 +9,11 @@ runs:
     - uses: pnpm/action-setup@v2
       with:
         version: 8
+    - uses: ./.github/workflows/actions/download-archive
+      with:
+        name: ionic-core
+        path: ./core
+        filename: CoreBuild.zip
     - name: Install Angular Server Dependencies
       run: pnpm install
       shell: bash
