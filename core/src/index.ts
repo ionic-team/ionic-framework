@@ -4,8 +4,8 @@ export { createAnimation } from './utils/animation/animation';
 export { getIonPageElement } from './utils/transition';
 export { iosTransitionAnimation } from './utils/transition/ios.transition';
 export { mdTransitionAnimation } from './utils/transition/md.transition';
-export { mdEnterModalAniamtion } from 'core/src/components/modal/animations/md.enter'
-export { mdLeaveModalAniamtion } from 'core/src/components/modal/animations/md.leave'
+export { mdEnterModalAnimation } from './components/modal/animations/md.enter'
+export { mdLeaveModalAnimation } from './components/modal/animations/md.leave'
 export { getTimeGivenProgression } from './utils/animation/cubic-bezier';
 export { createGesture } from './utils/gesture';
 export { initialize } from './global/ionic-global';
