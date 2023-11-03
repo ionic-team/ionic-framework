@@ -28,7 +28,7 @@ runs:
       working-directory: ./core
     - name: Test
       if: inputs.update != 'true'
-      run: pnpm run test.e2e -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }}
+      run: pnpm run test.e2e --shard=${{ inputs.shard }}/${{ inputs.totalShards }}
       shell: bash
       working-directory: ./core
     - name: Test and Update
@@ -50,7 +50,7 @@ runs:
       # which is why we not using the upload-archive
       # composite step here.
       run: |
-        pnpm run test.e2e -- --shard=${{ inputs.shard }}/${{ inputs.totalShards }} --update-snapshots
+        pnpm run test.e2e --shard=${{ inputs.shard }}/${{ inputs.totalShards }} --update-snapshots
         git add src/\*.png --force
         mkdir updated-screenshots
         cd ../ && rsync -R --progress $(git diff --name-only --cached) core/updated-screenshots

@@ -27,6 +27,6 @@ runs:
         path: ./core
         filename: CoreBuild.zip
     - name: Test
-      run: pnpm run test.spec -- --ci
+      run: pnpm run test.spec --ci
       shell: bash
       working-directory: ./core

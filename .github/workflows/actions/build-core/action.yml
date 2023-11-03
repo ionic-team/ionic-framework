@@ -27,7 +27,7 @@ runs:
       working-directory: ./core
       shell: bash
     - name: Build Core
-      run: pnpm run build -- --ci
+      run: pnpm run build --ci
       working-directory: ./core
       shell: bash
     - uses: ./.github/workflows/actions/upload-archive
