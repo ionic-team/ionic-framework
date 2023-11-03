@@ -15,8 +15,7 @@
     "build.web-types": "node ./scripts/build-web-types.js",
     "build.vetur": "node ./scripts/build-vetur.js",
     "copy": "node ./scripts/copy-css.js",
-    "copy.overlays": "node ./scripts/copy-overlays.js",
-    "sync": "sh ./scripts/sync.sh"
+    "copy.overlays": "node ./scripts/copy-overlays.js"
   },
   "main": "./dist/index.js",
   "types": "./dist/types/index.d.ts",

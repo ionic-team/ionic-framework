@@ -11,8 +11,7 @@
     "bundle": "rollup --config rollup.config.js",
     "build": "npm run clean && npm run bundle",
     "build.watch": "npm run bundle -- --watch",
-    "clean": "rimraf dist",
-    "sync": "sh ./scripts/sync.sh"
+    "clean": "rimraf dist"
   },
   "main": "./dist/index.js",
   "types": "./dist/types/index.d.ts",
