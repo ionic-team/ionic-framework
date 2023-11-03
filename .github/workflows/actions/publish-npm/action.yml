@@ -53,6 +53,6 @@ runs:
       env:
         NPM_TOKEN: ${{ inputs.token }}
     - name: Publish to NPM
-      run: git diff && pnpm publish ${{ inputs.folder }} --tag ${{ inputs.tag }} --provenance
+      run: pnpm publish ${{ inputs.folder }} --tag ${{ inputs.tag }} --provenance --no-git-checks
       shell: bash
       working-directory: ${{ inputs.working-directory }}
