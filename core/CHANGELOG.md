@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.5.4-nightly.20231103](https://github.com/ionic-team/ionic-framework/compare/v7.5.3...v7.5.4-nightly.20231103) (2023-11-03)
+
+
+### Bug Fixes
+
+* **item:** apply safe area to proper side regardless of direction ([#28403](https://github.com/ionic-team/ionic-framework/issues/28403)) ([ed040b0](https://github.com/ionic-team/ionic-framework/commit/ed040b09e9cbd4246864e690542132defc6a6578))
+
+
+
+
+
 ## [7.5.3](https://github.com/ionic-team/ionic-framework/compare/v7.5.2...v7.5.3) (2023-11-01)
 
 
