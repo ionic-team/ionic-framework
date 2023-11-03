@@ -27,7 +27,7 @@
     "test": "echo 'angular no tests yet'",
     "build": "ng-packagr -p ng-package.json -c tsconfig.json",
     "build.prod": "pnpm run clean && pnpm run build",
-    "build.watch": "pnpm run build -- --watch",
+    "build.watch": "pnpm run build --watch",
     "clean": "rm -rf ./dist",
     "lint": "eslint . --ext .ts && pnpm run prettier",
     "lint.fix": "eslint . --ext .ts --fix && pnpm run prettier.fix",

@@ -21,13 +21,13 @@
   },
   "scripts": {
     "build": "pnpm run clean && pnpm run compile",
-    "build.watch": "pnpm run compile -- --watch",
+    "build.watch": "pnpm run compile --watch",
     "clean": "rimraf dist",
     "compile": "rollup -c",
     "eslint": "eslint src",
     "prettier": "prettier \"./src/**/*.{html,ts,tsx,js,jsx}\"",
-    "lint": "pnpm run eslint && pnpm run prettier -- --write --cache",
-    "lint.fix": "pnpm run eslint -- --fix && pnpm run prettier -- --write --cache"
+    "lint": "pnpm run eslint && pnpm run prettier --write --cache",
+    "lint.fix": "pnpm run eslint --fix && pnpm run prettier --write --cache"
   },
   "main": "dist/index.js",
   "types": "dist/types/index.d.ts",
