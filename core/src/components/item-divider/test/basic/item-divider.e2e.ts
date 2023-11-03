@@ -46,5 +46,32 @@ configs().forEach(({ title, screenshot, config }) => {
       const divider = page.locator('ion-item-divider');
       await expect(divider).toHaveScreenshot(screenshot(`item-divider-icon-start`));
     });
+
+    /**
+     * This behavior needs to be tested for all modes & directions
+     * Safe padding should stay on the same side when the direction changes
+     */
+    test('should have safe area padding', async ({ page }) => {
+      await page.setContent(
+        `
+        <style>
+          :root {
+            --ion-safe-area-left: 40px;
+            --ion-safe-area-right: 20px;
+          }
+        </style>
+        <ion-list>
+          <ion-item-divider>
+            <ion-label>Item Divider</ion-label>
+          </ion-item-divider>
+        </ion-list>
+      `,
+        config
+      );
+
+      const list = page.locator('ion-list');
+
+      await expect(list).toHaveScreenshot(screenshot('item-divider-safe-area'));
+    });
   });
 });
