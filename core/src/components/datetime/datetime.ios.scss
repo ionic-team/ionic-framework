@@ -288,5 +288,7 @@
 }
 
 .calendar-month-year-toggle {
+  @include padding(8px, 16px, 8px, calc(var(--padding-start) + var(--ion-safe-area-left, 0px)));
+
   min-height: 44px;
 }

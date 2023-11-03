@@ -493,12 +493,6 @@ ion-picker-column-internal {
 }
 
 .calendar-month-year-toggle {
-  @include padding(
-    var(--padding-top),
-    16px,
-    var(--padding-bottom),
-    calc(var(--padding-start) + var(--ion-safe-area-left, 0px))
-  );
   @include text-inherit();
 
   position: relative;
