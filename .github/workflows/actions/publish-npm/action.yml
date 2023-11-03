@@ -22,15 +22,22 @@ runs:
     - uses: actions/setup-node@v3
       with:
         node-version: 18.x
+    - uses: pnpm/action-setup@v2
+      with:
+        version: 8
     # Provenance requires npm 9.5.0+
     - name: Install latest npm
       run: npm install -g npm@latest
       shell: bash
     # This ensures the local version of Lerna is installed
     # and that we do not use the global Lerna version
-    - name: Install dependencies
+    - name: Install root dependencies
       run: pnpm install
       shell: bash
+    - name: Install project dependencies
+      run: pnpm install
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
     - name: Update Version
       run: pnpm exec lerna version ${{ inputs.version }} --yes --exact --no-changelog --no-push --no-git-tag-version --preid=${{ inputs.preid }}
       shell: bash
