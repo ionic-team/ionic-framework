@@ -257,7 +257,24 @@
   @content;
 }
 
-@mixin safe-area-horizontal($prop: 'padding', $start: 0px, $end: null) {
+// Safe area horizontal
+// --------------------------------------------------------------------------------
+// Adds styles to the left and right of the element to account for the safe area.
+// Safe area is dependent to the device direction, not the app direction.
+// It is important to apply the styles to the correct side of the element.
+// `start` will apply the styles to the left in ltr and right in rtl.
+// `end` will apply the styles to the right in ltr and left in rtl.
+//
+// @param {string} $prop - property to add
+// @param {string} $start - amount to add to start. Default: null
+// This amount will be added to `ion-safe-area-left` in ltr and `ion-safe-area-right` in rtl.
+// - Example: 10px
+// @param {string} $end - amount to add to end. Default: null
+// This amount will be added to `ion-safe-area-right` in ltr and `ion-safe-area-left` in rtl.
+// - Example: 10px
+// --------------------------------------------------------------------------------
+
+@mixin safe-area-horizontal($prop: 'padding', $start: null, $end: null) {
   @include ltr() {
     @if $start != null {
       #{$prop}-left: calc(var(--ion-safe-area-left, 0) + #{$start});
@@ -268,7 +285,7 @@
   }
 
   @include rtl() {
-    @if $start != null && $end != null {
+    @if $start != null and $end != null {
       #{$prop}-left: calc(var(--ion-safe-area-left, 0) + #{$end});
       #{$prop}-right: calc(var(--ion-safe-area-right, 0) + #{$start});
     } @else if $start != null {

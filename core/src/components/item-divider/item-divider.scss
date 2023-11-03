@@ -71,9 +71,9 @@
     var(--inner-padding-top),
     null,
     var(--inner-padding-bottom),
-    var(--inner-padding-start)
+    null
   );
-  @include safe-area-horizontal("padding", null, var(--inner-padding-end));
+  @include safe-area-horizontal("padding", var(--inner-padding-start), var(--inner-padding-end));
 
   display: flex;
 
