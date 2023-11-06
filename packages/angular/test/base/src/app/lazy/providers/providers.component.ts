@@ -88,4 +88,12 @@ export class ProvidersComponent {
     const menus = await this.menuCtrl.getMenus();
     this.registeredMenuCount = menus.length;
   }
+
+  async openActionSheet() {
+    const actionSheet = await this.actionSheetCtrl.create({
+      buttons: ['Button']
+    });
+
+    await actionSheet.present();
+  }
 }
