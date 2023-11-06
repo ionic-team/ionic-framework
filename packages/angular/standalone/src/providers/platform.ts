@@ -1,4 +1,5 @@
-import { DOCUMENT, Injectable, NgZone, Inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Injectable, NgZone, Inject } from '@angular/core';
 import { Platform as PlatformBase } from '@ionic/angular/common';
 import { isPlatform, getPlatforms } from '@ionic/core/components';
 
