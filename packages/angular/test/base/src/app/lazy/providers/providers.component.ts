@@ -24,7 +24,7 @@ export class ProvidersComponent {
   registeredMenuCount = 0;
 
   constructor(
-    actionSheetCtrl: ActionSheetController,
+    private actionSheetCtrl: ActionSheetController,
     alertCtrl: AlertController,
     loadingCtrl: LoadingController,
     private menuCtrl: MenuController,
