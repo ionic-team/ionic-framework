@@ -1,14 +1,10 @@
-import { Injectable } from '@angular/core';
 import type { ActionSheetOptions } from '@ionic/core/components';
-import { actionSheetController } from '@ionic/core/components';
 
+import type { ControllerShape } from '../utils/overlay';
 import { OverlayBaseController } from '../utils/overlay';
 
-@Injectable({
-  providedIn: 'root',
-})
 export class ActionSheetController extends OverlayBaseController<ActionSheetOptions, HTMLIonActionSheetElement> {
-  constructor() {
+  constructor(protected actionSheetController: ControllerShape<ActionSheetOptions, HTMLIonActionSheetElement>) {
     super(actionSheetController);
   }
 }
