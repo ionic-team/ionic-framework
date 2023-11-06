@@ -1,16 +1,20 @@
-import { Injectable } from '@angular/core';
-import type { Animation } from '@ionic/core/components';
-import { createAnimation, getTimeGivenProgression } from '@ionic/core/components';
+import type {
+  Animation,
+  createAnimation as _createAnimation,
+  getTimeGivenProgression as _getTimeGivenProgression,
+} from '@ionic/core/components';
 
-@Injectable({
-  providedIn: 'root',
-})
 export class AnimationController {
+  constructor(
+    private createAnimation: typeof _createAnimation,
+    private getTimeGivenProgression: typeof _getTimeGivenProgression
+  ) {}
+
   /**
    * Create a new animation
    */
   create(animationId?: string): Animation {
-    return createAnimation(animationId);
+    return this.createAnimation(animationId);
   }
 
   /**
@@ -28,6 +32,6 @@ export class AnimationController {
    * during a drag, to another easing when `progressEnd` is called)
    */
   easingTime(p0: number[], p1: number[], p2: number[], p3: number[], progression: number): number[] {
-    return getTimeGivenProgression(p0, p1, p2, p3, progression);
+    return this.getTimeGivenProgression(p0, p1, p2, p3, progression);
   }
 }
