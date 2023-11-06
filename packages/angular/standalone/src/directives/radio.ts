@@ -1,16 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  EventEmitter,
-  HostListener,
-  Injector,
-  NgZone,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, NgZone } from '@angular/core';
 import type { OnInit } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ValueAccessor } from '@ionic/angular/common';
 import type { Components } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-radio.js';
 
@@ -22,9 +11,9 @@ import { defineCustomElement } from '@ionic/core/components/ion-radio.js';
  * class) causes ng-packagr to output multiple component variables
  * which breaks treeshaking.
  * For example, the following would be generated:
- * let IonRadio = IonRadio_1 = class IonRadio extends ValueAccessor {
+ * let IonRadio = IonRadio_1 = class IonRadio {
  * Instead, we want only want the class generated:
- * class IonRadio extends ValueAccessor {
+ * class IonRadio {
  */
 import { proxyInputs, proxyOutputs } from './angular-component-lib/utils';
 
@@ -36,19 +25,11 @@ const RADIO_INPUTS = ['color', 'disabled', 'justify', 'labelPlacement', 'legacy'
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: RADIO_INPUTS,
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: IonRadio,
-      multi: true,
-    },
-  ],
   standalone: true,
 })
-export class IonRadio extends ValueAccessor implements OnInit {
+export class IonRadio implements OnInit {
   protected el: HTMLElement;
-  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone, injector: Injector) {
-    super(injector, r);
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     defineCustomElement();
     c.detach();
     this.el = r.nativeElement;
@@ -62,15 +43,6 @@ export class IonRadio extends ValueAccessor implements OnInit {
      * we need to run the proxy in ngOnInit.
      */
     proxyInputs(IonRadio, RADIO_INPUTS);
-  }
-
-  @HostListener('ionSelect', ['$event.target'])
-  handleIonSelect(el: any): void {
-    /**
-     * The `el` type is any to access the `checked` state property
-     * that is not exposed on the type interface.
-     */
-    this.handleValueChange(el, el.checked);
   }
 }
 

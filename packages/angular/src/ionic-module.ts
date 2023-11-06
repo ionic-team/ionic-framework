@@ -13,7 +13,6 @@ import { appInitialize } from './app-initialize';
 import {
   BooleanValueAccessorDirective,
   NumericValueAccessorDirective,
-  RadioValueAccessorDirective,
   SelectValueAccessorDirective,
   TextValueAccessorDirective,
 } from './directives/control-value-accessors';
@@ -41,7 +40,6 @@ const DECLARATIONS = [
   // ngModel accessors
   BooleanValueAccessorDirective,
   NumericValueAccessorDirective,
-  RadioValueAccessorDirective,
   SelectValueAccessorDirective,
   TextValueAccessorDirective,
 

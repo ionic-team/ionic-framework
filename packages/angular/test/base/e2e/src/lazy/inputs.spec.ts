@@ -5,6 +5,7 @@ describe('Inputs', () => {
 
   it('should have default value', () => {
     cy.get('ion-checkbox').should('have.prop', 'checked').and('equal', true);
+    cy.get('ion-radio-group').should('have.prop', 'value').and('equal', 'nes');
     cy.get('ion-toggle').should('have.prop', 'checked').and('equal', true);
     cy.get('ion-input').should('have.prop', 'value').and('equal', 'some text');
     cy.get('ion-datetime').should('have.prop', 'value').and('equal', '1994-03-15');
@@ -15,6 +16,7 @@ describe('Inputs', () => {
     cy.get('#reset-button').click();
 
     cy.get('ion-checkbox').should('have.prop', 'checked').and('equal', false);
+    cy.get('ion-radio-group').should('not.have.prop', 'value');
     cy.get('ion-toggle').should('have.prop', 'checked').and('equal', false);
     /**
      * The `value` property gets set to undefined
@@ -32,6 +34,7 @@ describe('Inputs', () => {
     cy.get('#set-button').click();
 
     cy.get('ion-checkbox').should('have.prop', 'checked').and('equal', true);
+    cy.get('ion-radio-group').should('have.prop', 'value').and('equal', 'nes');
     cy.get('ion-toggle').should('have.prop', 'checked').and('equal', true);
     cy.get('ion-input').should('have.prop', 'value').and('equal', 'some text');
     cy.get('ion-datetime').should('have.prop', 'value').and('equal', '1994-03-15');
@@ -42,6 +45,7 @@ describe('Inputs', () => {
     cy.get('#reset-button').click();
 
     cy.get('ion-checkbox#first-checkbox').click();
+    cy.get('ion-radio').first().click();
     cy.get('ion-toggle').first().click();
 
     cy.get('ion-input').eq(0).type('hola');
@@ -58,6 +62,7 @@ describe('Inputs', () => {
     cy.get('ion-alert .alert-button:not(.alert-button-role-cancel)').click();
 
     cy.get('#checkbox-note').should('have.text', 'true');
+    cy.get('#radio-note').should('have.text', 'nes');
     cy.get('#toggle-note').should('have.text', 'true');
     cy.get('#input-note').should('have.text', 'hola');
     cy.get('#datetime-note').should('have.text', '1994-03-14');
