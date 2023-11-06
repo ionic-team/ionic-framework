@@ -21,13 +21,12 @@
   },
   "scripts": {
     "build": "npm run clean && npm run compile",
-    "clean": "rimraf dist dist-transpiled",
-    "compile": "npm run tsc && rollup -c",
+    "clean": "rimraf dist",
+    "compile": "rollup -c",
     "eslint": "eslint src",
     "prettier": "prettier \"./src/**/*.{html,ts,tsx,js,jsx}\"",
     "lint": "npm run eslint && npm run prettier -- --write --cache",
     "lint.fix": "npm run eslint -- --fix && npm run prettier -- --write --cache",
-    "tsc": "tsc -p .",
     "sync": "sh ./scripts/sync.sh"
   },
   "main": "dist/index.js",
@@ -49,6 +48,7 @@
     "@ionic/eslint-config": "^0.3.0",
     "@ionic/prettier-config": "^2.0.0",
     "@rollup/plugin-node-resolve": "^8.1.0",
+    "@rollup/plugin-typescript": "^11.1.5",
     "@types/node": "^14.0.14",
     "@types/react": "16.14.0",
     "@types/react-dom": "^16.9.0",
