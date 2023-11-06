@@ -68,7 +68,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config, scree
 
       await page.waitForSelector('.datetime-ready');
       const calendarMonthYear = page.locator('ion-datetime .calendar-month-year');
-      const monthYearButton = page.locator('.calendar-month-year ion-item');
+      const monthYearButton = page.locator('.calendar-month-year-toggle');
       await expect(calendarMonthYear).toHaveText('February 2022');
 
       await page.keyboard.press(tabKey);
@@ -114,7 +114,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config, scree
       const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
 
       const datetime = page.locator('ion-datetime');
-      const monthYearButton = page.locator('.calendar-month-year ion-item');
+      const monthYearButton = page.locator('.calendar-month-year-toggle');
       const prevButton = page.locator('.calendar-next-prev ion-button:nth-child(1)');
       const nextButton = page.locator('.calendar-next-prev ion-button:nth-child(2)');
       const calendarMonthYear = page.locator('ion-datetime .calendar-month-year');
