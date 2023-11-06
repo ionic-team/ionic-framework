@@ -32,7 +32,6 @@ export {
   DomController,
   NavController,
   Config,
-  Platform,
   AngularDelegate,
   NavParams,
   IonicRouteStrategy,
@@ -42,6 +41,7 @@ export {
   ViewDidLeave,
 } from '@ionic/angular/common';
 export { MenuController } from './providers/menu-controller';
+export { Platform } from './providers/platform';
 
 // PACKAGE MODULE
 export { IonicModule } from './ionic-module';

@@ -1,7 +1,12 @@
 import { DOCUMENT } from '@angular/common';
-import { NgZone, Inject, Injectable } from '@angular/core';
-import { getPlatforms, isPlatform } from '@ionic/core/components';
-import type { BackButtonEventDetail, KeyboardEventDetail, Platforms } from '@ionic/core/components';
+import { NgZone, Inject } from '@angular/core';
+import type {
+  getPlatforms as _getPlatforms,
+  isPlatform as _isPlatform,
+  BackButtonEventDetail,
+  KeyboardEventDetail,
+  Platforms,
+} from '@ionic/core/components';
 import { Subscription, Subject } from 'rxjs';
 
 // TODO(FW-2827): types
@@ -13,9 +18,6 @@ export interface BackButtonEmitter extends Subject<BackButtonEventDetail> {
   ): Subscription;
 }
 
-@Injectable({
-  providedIn: 'root',
-})
 export class Platform {
   private _readyPromise: Promise<string>;
   private win: any;
@@ -59,7 +61,12 @@ export class Platform {
    */
   resize = new Subject<void>();
 
-  constructor(@Inject(DOCUMENT) private doc: any, zone: NgZone) {
+  constructor(
+    @Inject(DOCUMENT) private doc: any,
+    zone: NgZone,
+    private isPlatform: typeof _isPlatform,
+    private getPlatforms: typeof _getPlatforms
+  ) {
     zone.run(() => {
       this.win = doc.defaultView;
       this.backButton.subscribeWithPriority = function (priority, callback) {
@@ -138,7 +145,7 @@ export class Platform {
    *
    */
   is(platformName: Platforms): boolean {
-    return isPlatform(this.win, platformName);
+    return this.isPlatform(this.win, platformName);
   }
 
   /**
@@ -161,7 +168,7 @@ export class Platform {
    * ```
    */
   platforms(): string[] {
-    return getPlatforms(this.win);
+    return this.getPlatforms(this.win);
   }
 
   /**

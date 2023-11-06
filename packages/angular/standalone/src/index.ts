@@ -6,6 +6,7 @@ export { IonRouterLink, IonRouterLinkWithHref } from './navigation/router-link-d
 export { IonTabs } from './navigation/tabs';
 export { provideIonicAngular } from './providers/ionic-angular';
 export { MenuController } from './providers/menu-controller';
+export { Platform } from './providers/platform';
 export {
   ActionSheetController,
   AlertController,
@@ -19,7 +20,6 @@ export {
   DomController,
   NavController,
   Config,
-  Platform,
   NavParams,
   IonicRouteStrategy,
   ViewWillEnter,
