@@ -34,7 +34,13 @@
 // -----------------------------------------
 
 .searchbar-cancel-button {
-  @include position(0, null, null, 5px);
+  /**
+   * The left edge of the cancel button
+   * should align with the left edge
+   * of the back button if the searchbar
+   * is used in a toolbar.
+   */
+  @include position(0, null, null, 8px);
 
   background-color: $searchbar-md-cancel-button-background-color;
 
