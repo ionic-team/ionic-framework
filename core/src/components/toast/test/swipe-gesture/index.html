@@ -20,6 +20,21 @@
         <ion-button id="middle">Open Middle Toast</ion-button>
         <ion-button id="bottom">Open Bottom Toast</ion-button>
 
+        <ion-button id="top-anchor">Open Top Toast with Anchor</ion-button>
+        <ion-button id="bottom-anchor">Open Bottom Toast with Anchor</ion-button>
+
+        <ion-fab id="bottom-fab" horizontal="end" vertical="bottom">
+          <ion-fab-button>
+            <ion-icon name="add"></ion-icon>
+          </ion-fab-button>
+        </ion-fab>
+
+        <ion-fab id="top-fab" horizontal="end" vertical="top">
+          <ion-fab-button>
+            <ion-icon name="add"></ion-icon>
+          </ion-fab-button>
+        </ion-fab>
+
         <ion-toast
           id="top-toast"
           position="top"
@@ -40,6 +55,22 @@
           trigger="bottom"
           message="Hello World"
           swipe-gesture="vertical"
+        ></ion-toast>
+        <ion-toast
+          id="bottom-anchor-toast"
+          position="bottom"
+          trigger="bottom-anchor"
+          message="Hello World"
+          swipe-gesture="vertical"
+          position-anchor="bottom-fab"
+        ></ion-toast>
+        <ion-toast
+          id="top-anchor-toast"
+          position="top"
+          trigger="top-anchor"
+          message="Hello World"
+          swipe-gesture="vertical"
+          position-anchor="top-fab"
         ></ion-toast>
       </ion-content>
     </ion-app>
