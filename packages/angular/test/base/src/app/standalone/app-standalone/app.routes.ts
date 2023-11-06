@@ -14,6 +14,7 @@ export const routes: Routes = [
       { path: 'router-link', loadComponent: () => import('../router-link/router-link.component').then(c => c.RouterLinkComponent) },
       { path: 'nav', loadComponent: () => import('../nav/nav.component').then(c => c.NavComponent) },
       { path: 'providers', loadComponent: () => import('../providers/providers.component').then(c => c.ProvidersComponent) },
+      { path: 'providers/platform', loadComponent: () => import('../platform/platform.component').then(c => c.PlatformComponent) },
       { path: 'overlay-controllers', loadComponent: () => import('../overlay-controllers/overlay-controllers.component').then(c => c.OverlayControllersComponent) },
       { path: 'button', loadComponent: () => import('../button/button.component').then(c => c.ButtonComponent) },
       { path: 'icon', loadComponent: () => import('../icon/icon.component').then(c => c.IconComponent) },
