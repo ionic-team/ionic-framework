@@ -200,7 +200,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
 });
 
 configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
-  test.describe.only(title('searchbar: cancel button alignment'), () => {
+  test.describe(title('searchbar: cancel button alignment'), () => {
     test('should align with the back button when used in a toolbar', async ({ page }, testInfo) => {
       testInfo.annotations.push({
         type: 'issue',
