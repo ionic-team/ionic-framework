@@ -7,6 +7,7 @@ export { IonTabs } from './navigation/tabs';
 export { provideIonicAngular } from './providers/ionic-angular';
 export { ActionSheetController } from './providers/action-sheet-controller';
 export { AnimationController } from './providers/animation-controller';
+export { GestureController } from './providers/gesture-controller';
 export { MenuController } from './providers/menu-controller';
 export { ModalController } from './providers/modal-controller';
 export { PopoverController } from './providers/popover-controller';
@@ -15,7 +16,6 @@ export {
   AlertController,
   LoadingController,
   PickerController,
-  GestureController,
   DomController,
   NavController,
   Config,

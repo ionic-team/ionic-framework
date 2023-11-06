@@ -23,7 +23,6 @@ export {
   AlertController,
   LoadingController,
   PickerController,
-  GestureController,
   DomController,
   NavController,
   Config,
@@ -38,10 +37,12 @@ export {
 } from '@ionic/angular/common';
 export { AnimationController } from './providers/animation-controller';
 export { ActionSheetController } from './providers/action-sheet-controller';
+export { GestureController } from './providers/gesture-controller';
 export { MenuController } from './providers/menu-controller';
 export { ModalController } from './providers/modal-controller';
 export { PopoverController } from './providers/popover-controller';
 export { ToastController } from './providers/toast-controller';
+
 
 // PACKAGE MODULE
 export { IonicModule } from './ionic-module';

@@ -1,12 +1,8 @@
-import { NgZone, Injectable } from '@angular/core';
-import type { Gesture, GestureConfig } from '@ionic/core/components';
-import { createGesture } from '@ionic/core/components';
+import { NgZone } from '@angular/core';
+import type { Gesture, GestureConfig, createGesture as _createGesture } from '@ionic/core/components';
 
-@Injectable({
-  providedIn: 'root',
-})
 export class GestureController {
-  constructor(private zone: NgZone) {}
+  constructor(private zone: NgZone, private createGesture: typeof _createGesture) {}
   /**
    * Create a new gesture
    */
@@ -20,6 +16,6 @@ export class GestureController {
       });
     }
 
-    return createGesture(opts);
+    return this.createGesture(opts);
   }
 }
