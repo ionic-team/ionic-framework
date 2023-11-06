@@ -218,7 +218,7 @@ export const createSwipeToDismissGesture = (
 
       /**
        * Compute the remaining amount of pixels the
-       * to toast needs to move to be fully dismissed.
+       * toast needs to move to be fully dismissed.
        */
       remainingDistance = endOffset - startOffset;
     } else {
