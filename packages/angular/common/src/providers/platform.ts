@@ -62,7 +62,7 @@ export class Platform {
   resize = new Subject<void>();
 
   constructor(
-    @Inject(DOCUMENT) private doc: any,
+    @Inject(DOCUMENT) protected doc: any,
     zone: NgZone,
     private isPlatform: typeof _isPlatform,
     private getPlatforms: typeof _getPlatforms
