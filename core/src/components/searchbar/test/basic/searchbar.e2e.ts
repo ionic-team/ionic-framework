@@ -198,3 +198,33 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, screenshot, c
     });
   });
 });
+
+configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe.only(title('searchbar: cancel button alignment'), () => {
+    test('should align with the back button when used in a toolbar', async ({ page }, testInfo) => {
+      testInfo.annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/28468',
+      });
+      await page.setContent(
+        `
+        <ion-header>
+          <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-back-button default-href="#"></ion-back-button>
+          </ion-buttons>
+          <ion-title>Test</ion-title>
+          </ion-toolbar>
+          <ion-toolbar>
+            <ion-searchbar show-cancel-button="always"></ion-searchbar>
+          </ion-toolbar>
+        </ion-header>
+      `,
+        config
+      );
+
+      const header = page.locator('ion-header');
+      await expect(header).toHaveScreenshot(screenshot(`searchbar-back-button-align`));
+    });
+  });
+});
