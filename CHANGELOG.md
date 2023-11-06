@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.5.4-nightly.20231106](https://github.com/ionic-team/ionic-framework/compare/v7.5.3...v7.5.4-nightly.20231106) (2023-11-06)
+
+
+### Bug Fixes
+
+* **item:** apply safe area to proper side regardless of direction ([#28403](https://github.com/ionic-team/ionic-framework/issues/28403)) ([ed040b0](https://github.com/ionic-team/ionic-framework/commit/ed040b09e9cbd4246864e690542132defc6a6578))
+* **list:** remove border from last item with item-sliding ([#28439](https://github.com/ionic-team/ionic-framework/issues/28439)) ([cafafcc](https://github.com/ionic-team/ionic-framework/commit/cafafcc9d166ef536dcb73edd522c8f2a0fb95b6)), closes [#28435](https://github.com/ionic-team/ionic-framework/issues/28435)
+
+
+
+
+
 ## [7.5.3](https://github.com/ionic-team/ionic-framework/compare/v7.5.2...v7.5.3) (2023-11-01)
 
 
