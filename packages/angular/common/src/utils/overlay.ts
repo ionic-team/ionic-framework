@@ -1,6 +1,6 @@
 // TODO(FW-2827): types
 
-export interface ControllerShape<Opts, HTMLElm> {
+interface ControllerShape<Opts, HTMLElm> {
   create(options: Opts): Promise<HTMLElm>;
   dismiss(data?: any, role?: string, id?: string): Promise<boolean>;
   getTop(): Promise<HTMLElm | undefined>;
