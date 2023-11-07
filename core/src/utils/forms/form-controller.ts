@@ -48,11 +48,6 @@ export type LegacyFormController = {
 };
 
 const hasLabelSlot = (controlEl: HTMLElement) => {
-  const root = controlEl.shadowRoot;
-  if (root === null) {
-    return false;
-  }
-
   /**
    * Components that have a named label slot
    * also have other slots, so we need to query for
@@ -74,5 +69,5 @@ const hasLabelSlot = (controlEl: HTMLElement) => {
   return false;
 };
 
-const NAMED_LABEL_SLOT_COMPONENTS = ['ION-RANGE'];
+const NAMED_LABEL_SLOT_COMPONENTS = ['ION-INPUT', 'ION-TEXTAREA', 'ION-SELECT', 'ION-RANGE'];
 const UNNAMED_LABEL_SLOT_COMPONENTS = ['ION-TOGGLE', 'ION-CHECKBOX', 'ION-RADIO'];
