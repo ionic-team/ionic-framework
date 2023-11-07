@@ -4,7 +4,6 @@ export { LoadingController } from './providers/loading-controller';
 export { MenuController } from './providers/menu-controller';
 export { ModalController } from './providers/modal-controller';
 export { PickerController } from './providers/picker-controller';
-export { PopoverController } from './providers/popover-controller';
 export { ToastController } from './providers/toast-controller';
 
 export { AnimationController } from './providers/animation-controller';
@@ -39,5 +38,6 @@ export * from './directives/control-value-accessors';
 export { ProxyCmp } from './utils/proxy';
 
 export { IonicRouteStrategy } from './utils/routing';
+export { OverlayBaseController } from './utils/overlay';
 
 export { raf } from './utils/util';

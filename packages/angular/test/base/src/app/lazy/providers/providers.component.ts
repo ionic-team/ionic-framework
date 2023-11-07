@@ -28,7 +28,7 @@ export class ProvidersComponent {
     alertCtrl: AlertController,
     loadingCtrl: LoadingController,
     private menuCtrl: MenuController,
-    pickerCtrl: PickerController,
+    private pickerCtrl: PickerController,
     modalCtrl: ModalController,
     platform: Platform,
     popoverCtrl: PopoverController,
