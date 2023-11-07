@@ -1,11 +1,6 @@
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { ModuleWithProviders, APP_INITIALIZER, NgModule, NgZone } from '@angular/core';
-import {
-  PopoverController,
-  ConfigToken,
-  AngularDelegate,
-  provideComponentInputBinding,
-} from '@ionic/angular/common';
+import { PopoverController, ConfigToken, AngularDelegate, provideComponentInputBinding } from '@ionic/angular/common';
 import { IonicConfig } from '@ionic/core';
 
 import { appInitialize } from './app-initialize';
