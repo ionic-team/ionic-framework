@@ -7,8 +7,8 @@ import {
   HostListener,
   Injector,
   NgZone,
+  forwardRef,
 } from '@angular/core';
-import type { OnInit } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValueAccessor } from '@ionic/angular/common';
 import type {
@@ -19,19 +19,7 @@ import type {
 } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-range.js';
 
-/**
- * Value accessor components should not use ProxyCmp
- * and should call defineCustomElement and proxyInputs
- * manually instead. Using both the @ProxyCmp and @Component
- * decorators and useExisting (where useExisting refers to the
- * class) causes ng-packagr to output multiple component variables
- * which breaks treeshaking.
- * For example, the following would be generated:
- * let IonRange = IonRange_1 = class IonRange extends ValueAccessor {
- * Instead, we want only want the class generated:
- * class IonRange extends ValueAccessor {
- */
-import { proxyInputs, proxyOutputs } from './angular-component-lib/utils';
+import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 
 const RANGE_INPUTS = [
   'activeBarStart',
@@ -54,42 +42,44 @@ const RANGE_INPUTS = [
   'value',
 ];
 
+/**
+ * Pulling the provider into an object and using PURE works
+ * around an ng-packagr issue that causes
+ * components with multiple decorators and
+ * a provider to be re-assigned. This re-assignment
+ * is not supported by Webpack and causes treeshaking
+ * to not work on these kinds of components.
+ */
+const accessorProvider = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: /*@__PURE__*/ forwardRef(() => IonRange),
+  multi: true,
+};
+
+@ProxyCmp({
+  defineCustomElementFn: defineCustomElement,
+  inputs: RANGE_INPUTS,
+})
 @Component({
   selector: 'ion-range',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: RANGE_INPUTS,
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: IonRange,
-      multi: true,
-    },
-  ],
+  providers: [accessorProvider],
   standalone: true,
 })
-export class IonRange extends ValueAccessor implements OnInit {
+export class IonRange extends ValueAccessor {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone, injector: Injector) {
     super(injector, r);
-    defineCustomElement();
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['ionChange', 'ionInput', 'ionFocus', 'ionBlur', 'ionKnobMoveStart', 'ionKnobMoveEnd']);
   }
 
-  ngOnInit(): void {
-    /**
-     * Data-bound input properties are set
-     * by Angular after the constructor, so
-     * we need to run the proxy in ngOnInit.
-     */
-    proxyInputs(IonRange, RANGE_INPUTS);
-  }
-
-  @HostListener('ionChange', ['$event.target'])
-  handleIonChange(el: HTMLIonRangeElement): void {
+  @HostListener('ionInput', ['$event.target'])
+  handleIonInput(el: HTMLIonRangeElement): void {
     this.handleValueChange(el, el.value);
   }
 }

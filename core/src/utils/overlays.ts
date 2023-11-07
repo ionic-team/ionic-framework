@@ -1,4 +1,5 @@
 import { doc } from '@utils/browser';
+import type { BackButtonEvent } from '@utils/hardware-back-button';
 
 import { config } from '../global/config';
 import { getIonMode } from '../global/ionic-global';
@@ -7,7 +8,6 @@ import type {
   AlertOptions,
   Animation,
   AnimationBuilder,
-  BackButtonEvent,
   FrameworkDelegate,
   HTMLIonOverlayElement,
   IonicConfig,

@@ -1,5 +1,6 @@
 import type { ComponentInterface } from '@stencil/core';
 import { Build, Component, Element, Host, Method, h } from '@stencil/core';
+import type { FocusVisibleUtility } from '@utils/focus-visible';
 import { isPlatform } from '@utils/platform';
 
 import { config } from '../../global/config';
@@ -10,7 +11,7 @@ import { getIonMode } from '../../global/ionic-global';
   styleUrl: 'app.scss',
 })
 export class App implements ComponentInterface {
-  private focusVisible?: any; // TODO(FW-2832): type
+  private focusVisible?: FocusVisibleUtility;
 
   @Element() el!: HTMLElement;
 

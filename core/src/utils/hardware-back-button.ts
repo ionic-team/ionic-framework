@@ -1,7 +1,11 @@
-import type { BackButtonEvent } from '../interface';
-
 // TODO(FW-2832): type
 type Handler = (processNextHandler: () => void) => Promise<any> | void | null;
+
+export interface BackButtonEventDetail {
+  register(priority: number, handler: (processNextHandler: () => void) => Promise<any> | void): void;
+}
+
+export type BackButtonEvent = CustomEvent<BackButtonEventDetail>;
 
 interface HandlerRegister {
   priority: number;
