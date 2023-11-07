@@ -25,7 +25,6 @@ export {
   LoadingController,
   ModalController,
   PickerController,
-  PopoverController,
   ToastController,
   AnimationController,
   GestureController,
@@ -42,6 +41,7 @@ export {
   ViewDidLeave,
 } from '@ionic/angular/common';
 export { MenuController } from './providers/menu-controller';
+export { PopoverController } from './providers/popover-controller';
 
 // PACKAGE MODULE
 export { IonicModule } from './ionic-module';

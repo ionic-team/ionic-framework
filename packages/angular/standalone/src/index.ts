@@ -6,13 +6,13 @@ export { IonRouterLink, IonRouterLinkWithHref } from './navigation/router-link-d
 export { IonTabs } from './navigation/tabs';
 export { provideIonicAngular } from './providers/ionic-angular';
 export { MenuController } from './providers/menu-controller';
+export { PopoverController } from './providers/popover-controller';
 export {
   ActionSheetController,
   AlertController,
   LoadingController,
   ModalController,
   PickerController,
-  PopoverController,
   ToastController,
   AnimationController,
   GestureController,
