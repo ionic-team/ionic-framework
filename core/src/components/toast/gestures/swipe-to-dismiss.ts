@@ -132,7 +132,6 @@ export const createSwipeToDismissGesture = (
   };
 
   const onMove = (detail: GestureDetail) => {
-    // TODO Need to add logic for when user drags in opposite direction
     const step = STEP_OFFSET + computeStep(detail.deltaY);
     swipeAnimation.progressStep(step);
   };
