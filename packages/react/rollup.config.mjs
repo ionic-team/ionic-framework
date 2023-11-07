@@ -1,12 +1,12 @@
-import sourcemaps from 'rollup-plugin-sourcemaps';
-import resolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
 
 export default {
   input: 'src/index.ts',
   output: [
     {
-      file: 'dist/index.js',
+      dir: 'dist/',
+      entryFileNames: '[name].js',
+      chunkFileNames: '[name]-[hash].js',
       format: 'es',
       sourcemap: true,
     }
@@ -14,7 +14,5 @@ export default {
   external: (id) => !/^(\.|\/)/.test(id),
   plugins: [
     typescript(),
-    resolve(),
-    sourcemaps()
   ],
 };
