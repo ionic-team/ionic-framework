@@ -4,12 +4,13 @@ import type { Provider } from '@angular/core';
 import {
   AngularDelegate,
   ConfigToken,
-  ModalController,
   PopoverController,
   provideComponentInputBinding,
 } from '@ionic/angular/common';
 import { initialize } from '@ionic/core/components';
 import type { IonicConfig } from '@ionic/core/components';
+
+import { ModalController } from './modal-controller';
 
 export const provideIonicAngular = (config?: IonicConfig): Provider[] => {
   /**
