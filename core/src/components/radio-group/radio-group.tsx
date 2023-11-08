@@ -52,7 +52,7 @@ export class RadioGroup implements ComponentInterface {
   @Event() ionValueChange!: EventEmitter<RadioGroupChangeEventDetail>;
 
   componentDidLoad() {
-    this.setRadioTabindex(this.value);
+    this.valueChanged(this.value);
   }
 
   private setRadioTabindex = (value: any | undefined) => {
