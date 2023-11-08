@@ -3,7 +3,7 @@ type CompareFn = (currentValue: any, compareValue: any) => boolean;
 /**
  * Uses the compareWith param to compare two values to determine if they are equal.
  *
- * @param currentValue A current value of the control.
+ * @param currentValue The current value of the control.
  * @param compareValue The value to compare against.
  * @param compareWith The function or property name to use to compare values.
  */
