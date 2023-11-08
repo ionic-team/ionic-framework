@@ -63,6 +63,7 @@ configs().forEach(({ title, screenshot, config }) => {
         <ion-list>
           <ion-item-divider>
             <ion-label>Item Divider</ion-label>
+            <ion-button slot="end">Button</ion-button>
           </ion-item-divider>
         </ion-list>
       `,
