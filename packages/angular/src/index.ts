@@ -20,7 +20,6 @@ export * from './directives/validators';
 
 // PROVIDERS
 export {
-  ActionSheetController,
   AlertController,
   LoadingController,
   PickerController,
@@ -42,6 +41,7 @@ export {
 } from '@ionic/angular/common';
 export { ModalController } from './providers/modal-controller';
 export { MenuController } from './providers/menu-controller';
+export { ActionSheetController } from './providers/action-sheet-controller';
 
 // PACKAGE MODULE
 export { IonicModule } from './ionic-module';
