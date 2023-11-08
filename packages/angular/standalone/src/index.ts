@@ -6,6 +6,7 @@ export { IonRouterLink, IonRouterLinkWithHref } from './navigation/router-link-d
 export { IonTabs } from './navigation/tabs';
 export { provideIonicAngular } from './providers/ionic-angular';
 export { MenuController } from './providers/menu-controller';
+export { ToastController } from './providers/toast-controller';
 export {
   ActionSheetController,
   AlertController,
@@ -13,7 +14,6 @@ export {
   ModalController,
   PickerController,
   PopoverController,
-  ToastController,
   AnimationController,
   GestureController,
   DomController,
