@@ -24,7 +24,7 @@ export class ProvidersComponent {
   registeredMenuCount = 0;
 
   constructor(
-    actionSheetCtrl: ActionSheetController,
+    private actionSheetCtrl: ActionSheetController,
     alertCtrl: AlertController,
     loadingCtrl: LoadingController,
     private menuCtrl: MenuController,
@@ -87,5 +87,13 @@ export class ProvidersComponent {
   async setMenuCount() {
     const menus = await this.menuCtrl.getMenus();
     this.registeredMenuCount = menus.length;
+  }
+
+  async openActionSheet() {
+    const actionSheet = await this.actionSheetCtrl.create({
+      buttons: ['Button']
+    });
+
+    await actionSheet.present();
   }
 }

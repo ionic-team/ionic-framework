@@ -5,10 +5,10 @@ export { IonRouterOutlet } from './navigation/router-outlet';
 export { IonRouterLink, IonRouterLinkWithHref } from './navigation/router-link-delegate';
 export { IonTabs } from './navigation/tabs';
 export { provideIonicAngular } from './providers/ionic-angular';
+export { ActionSheetController } from './providers/action-sheet-controller';
 export { MenuController } from './providers/menu-controller';
 export { ToastController } from './providers/toast-controller';
 export {
-  ActionSheetController,
   AlertController,
   LoadingController,
   ModalController,

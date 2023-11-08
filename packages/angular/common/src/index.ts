@@ -1,4 +1,3 @@
-export { ActionSheetController } from './providers/action-sheet-controller';
 export { AlertController } from './providers/alert-controller';
 export { LoadingController } from './providers/loading-controller';
 export { MenuController } from './providers/menu-controller';
@@ -38,6 +37,7 @@ export * from './directives/control-value-accessors';
 export { ProxyCmp } from './utils/proxy';
 
 export { IonicRouteStrategy } from './utils/routing';
+export { OverlayBaseController } from './utils/overlay';
 
 export { OverlayBaseController } from './utils/overlay';
 
