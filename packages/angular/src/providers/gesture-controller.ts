@@ -1,12 +1,25 @@
 import { Injectable, NgZone } from '@angular/core';
-import { GestureController as GestureControllerBase } from '@ionic/angular/common';
+import type { Gesture, GestureConfig } from '@ionic/core';
 import { createGesture } from '@ionic/core';
 
 @Injectable({
   providedIn: 'root',
 })
-export class GestureController extends GestureControllerBase {
-  constructor(ngZone: NgZone) {
-    super(ngZone, createGesture);
+export class GestureController {
+  constructor(private zone: NgZone) {}
+  /**
+   * Create a new gesture
+   */
+  create(opts: GestureConfig, runInsideAngularZone = false): Gesture {
+    if (runInsideAngularZone) {
+      Object.getOwnPropertyNames(opts).forEach((key) => {
+        if (typeof opts[key] === 'function') {
+          const fn = opts[key];
+          opts[key] = (...props: any[]) => this.zone.run(() => fn(...props));
+        }
+      });
+    }
+
+    return createGesture(opts);
   }
 }
