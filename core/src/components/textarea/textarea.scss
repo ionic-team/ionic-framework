@@ -307,11 +307,7 @@
 // ----------------------------------------------------------------
 
 .native-wrapper {
-  display: flex;
-
   position: relative;
-
-  flex-grow: 1;
 
   width: 100%;
 
@@ -329,14 +325,11 @@
   @include padding(var(--padding-top), 0px, var(--padding-bottom), 0px);
 }
 
-// TODO: FW-2876 - Remove this
-.textarea-legacy-wrapper {
-  display: grid;
-}
-
 .native-wrapper,
 // TODO: FW-2876 - Remove this selector, keep .native-wrapper
 .textarea-legacy-wrapper {
+  display: grid;
+
   min-width: inherit;
   max-width: inherit;
   min-height: inherit;
@@ -392,6 +385,12 @@
   grid-area: 1 / 1 / 2 / 2;
 
   word-break: break-word;
+}
+
+.textarea-wrapper-inner {
+  display: flex;
+
+  width: 100%;
 }
 
 // Textarea Highlight

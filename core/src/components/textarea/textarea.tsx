@@ -742,36 +742,38 @@ Developers can use the "legacy" property to continue using the legacy form marku
          */}
         <label class="textarea-wrapper" htmlFor={inputId}>
           {this.renderLabelContainer()}
-          <div class="native-wrapper" ref={(el) => (this.textareaWrapper = el)}>
+          <div class="textarea-wrapper-inner">
             <slot name="start"></slot>
-            <textarea
-              class="native-textarea"
-              ref={(el) => (this.nativeInput = el)}
-              id={inputId}
-              disabled={disabled}
-              autoCapitalize={this.autocapitalize}
-              autoFocus={this.autofocus}
-              enterKeyHint={this.enterkeyhint}
-              inputMode={this.inputmode}
-              minLength={this.minlength}
-              maxLength={this.maxlength}
-              name={this.name}
-              placeholder={this.placeholder || ''}
-              readOnly={this.readonly}
-              required={this.required}
-              spellcheck={this.spellcheck}
-              cols={this.cols}
-              rows={this.rows}
-              wrap={this.wrap}
-              onInput={this.onInput}
-              onChange={this.onChange}
-              onBlur={this.onBlur}
-              onFocus={this.onFocus}
-              onKeyDown={this.onKeyDown}
-              {...this.inheritedAttributes}
-            >
-              {value}
-            </textarea>
+            <div class="native-wrapper" ref={(el) => (this.textareaWrapper = el)}>
+              <textarea
+                class="native-textarea"
+                ref={(el) => (this.nativeInput = el)}
+                id={inputId}
+                disabled={disabled}
+                autoCapitalize={this.autocapitalize}
+                autoFocus={this.autofocus}
+                enterKeyHint={this.enterkeyhint}
+                inputMode={this.inputmode}
+                minLength={this.minlength}
+                maxLength={this.maxlength}
+                name={this.name}
+                placeholder={this.placeholder || ''}
+                readOnly={this.readonly}
+                required={this.required}
+                spellcheck={this.spellcheck}
+                cols={this.cols}
+                rows={this.rows}
+                wrap={this.wrap}
+                onInput={this.onInput}
+                onChange={this.onChange}
+                onBlur={this.onBlur}
+                onFocus={this.onFocus}
+                onKeyDown={this.onKeyDown}
+                {...this.inheritedAttributes}
+              >
+                {value}
+              </textarea>
+            </div>
             <slot name="end"></slot>
           </div>
           {shouldRenderHighlight && <div class="textarea-highlight"></div>}
