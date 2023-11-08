@@ -39,6 +39,4 @@ export { ProxyCmp } from './utils/proxy';
 export { IonicRouteStrategy } from './utils/routing';
 export { OverlayBaseController } from './utils/overlay';
 
-export { OverlayBaseController } from './utils/overlay';
-
 export { raf } from './utils/util';
