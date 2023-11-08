@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import type { ActionSheetOptions } from '@ionic/core/components';
-import { actionSheetController } from '@ionic/core/components';
-
-import { OverlayBaseController } from '../utils/overlay';
+import { OverlayBaseController } from '@ionic/angular/common';
+import type { ActionSheetOptions } from '@ionic/core';
+import { actionSheetController } from '@ionic/core';
 
 @Injectable({
   providedIn: 'root',
