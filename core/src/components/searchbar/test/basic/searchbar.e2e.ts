@@ -210,10 +210,10 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, co
         `
         <ion-header>
           <ion-toolbar>
-          <ion-buttons slot="start">
-            <ion-back-button default-href="#"></ion-back-button>
-          </ion-buttons>
-          <ion-title>Test</ion-title>
+            <ion-buttons slot="start">
+              <ion-back-button default-href="#"></ion-back-button>
+            </ion-buttons>
+            <ion-title>Test</ion-title>
           </ion-toolbar>
           <ion-toolbar>
             <ion-searchbar show-cancel-button="always"></ion-searchbar>
