@@ -3,7 +3,6 @@ export { LoadingController } from './providers/loading-controller';
 export { MenuController } from './providers/menu-controller';
 export { PickerController } from './providers/picker-controller';
 
-export { AnimationController } from './providers/animation-controller';
 export { GestureController } from './providers/gesture-controller';
 export { DomController } from './providers/dom-controller';
 export { NavController } from './providers/nav-controller';
