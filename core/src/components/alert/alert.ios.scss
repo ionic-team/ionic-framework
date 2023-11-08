@@ -90,6 +90,8 @@
   @include margin($alert-ios-input-margin-top, null, null, null);
   @include padding($alert-ios-input-padding-top, $alert-ios-input-padding-end, $alert-ios-input-padding-bottom, $alert-ios-input-padding-start);
 
+  min-height: 32px;
+  
   border: $alert-ios-input-border;
 
   background-color: $alert-ios-input-background-color;
