@@ -4,7 +4,7 @@ import { renderHiddenInput } from '@utils/helpers';
 
 import { getIonMode } from '../../global/ionic-global';
 
-import type { RadioGroupChangeEventDetail } from './radio-group-interface';
+import type { RadioGroupChangeEventDetail, RadioGroupCompareFn } from './radio-group-interface';
 
 @Component({
   tag: 'ion-radio-group',
@@ -20,6 +20,14 @@ export class RadioGroup implements ComponentInterface {
    * If `true`, the radios can be deselected.
    */
   @Prop() allowEmptySelection = false;
+
+  /**
+   * This property allows developers to specify a custom function or property
+   * name for comparing objects when determining the selected option in the
+   * ion-radio-group. When not specified, the default behavior will use strict
+   * equality (===) for comparison.
+   */
+  @Prop() compareWith?: string | RadioGroupCompareFn | null;
 
   /**
    * The name of the control, which is submitted with the form data.

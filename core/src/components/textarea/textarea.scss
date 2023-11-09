@@ -67,6 +67,29 @@
   box-sizing: border-box;
 }
 
+// Textarea Wrapper
+// ----------------------------------------------------------------
+
+// TODO: FW-2876 - Make this style a :host style, remove :not selector
+:host(:not(.legacy-textarea)) {
+  min-height: 44px;
+}
+
+/**
+ * Since the label sits on top of the element,
+ * the component needs to be taller otherwise the
+ * label will appear too close to the textarea text.
+ * Also, floating and stacked labels should not
+ * push the label down since it it
+ * sits on top of the textarea.
+ */
+:host(.textarea-label-placement-floating),
+:host(.textarea-label-placement-stacked) {
+  --padding-top: 0px;
+
+  min-height: 56px;
+}
+
 /**
  * When the cols property is set we should
  * respect that width instead of defaulting

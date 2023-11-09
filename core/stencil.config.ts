@@ -201,13 +201,13 @@ export const config: Config = {
           externalEvent: 'ionChange'
         },
         {
-          elements: ['ion-datetime', 'ion-radio-group', 'ion-radio', 'ion-range', 'ion-segment', 'ion-segment-button', 'ion-select', 'ion-accordion-group'],
+          elements: ['ion-datetime', 'ion-radio-group', 'ion-radio', 'ion-segment', 'ion-segment-button', 'ion-select', 'ion-accordion-group'],
           targetAttr: 'value',
           event: 'v-ion-change',
           externalEvent: 'ionChange'
         },
         {
-          elements: ['ion-input', 'ion-searchbar', 'ion-textarea'],
+          elements: ['ion-input', 'ion-searchbar', 'ion-textarea', 'ion-range'],
           targetAttr: 'value',
           event: 'v-ion-input',
           externalEvent: 'ionInput'

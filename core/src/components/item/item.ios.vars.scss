@@ -36,9 +36,6 @@ $item-ios-avatar-height:                     $item-ios-avatar-width !default;
 /// @prop - Size of the thumbnail in the item
 $item-ios-thumbnail-size:                   56px !default;
 
-/// @prop - Color of the detail arrow icon
-$item-ios-detail-icon-color:                 $item-ios-border-color !default;
-
 /// @prop - Padding top for the item content
 $item-ios-padding-top:                       10px !default;
 
@@ -59,9 +56,6 @@ $item-ios-border-bottom-style:               solid !default;
 
 /// @prop - Border bottom color for the item when lines are displayed
 $item-ios-border-bottom-color:               $item-ios-border-color !default;
-
-/// @prop - Border bottom for the item
-$item-ios-border-bottom:                     $item-ios-border-bottom-width $item-ios-border-bottom-style $item-ios-border-bottom-color !default;
 
 /// @prop - Color of the item input highlight
 $item-ios-input-highlight-color:             ion-color(primary, base) !default;
