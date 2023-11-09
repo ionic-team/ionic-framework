@@ -84,7 +84,15 @@
   font-weight: normal;
 }
 
-.alert-message {
+/**
+ * Alert has a maximum height in scenarios
+ * such as the MD alert on tablet devices.
+ * As a result, we need to make sure the inner
+ * containers can scroll otherwise content
+ * may be cut off.
+ */
+.alert-message,
+.alert-input-group {
   box-sizing: border-box;
   -webkit-overflow-scrolling: touch;
   overflow-y: auto;

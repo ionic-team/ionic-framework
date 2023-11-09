@@ -282,3 +282,25 @@
 .alert-button-inner {
   justify-content: $alert-md-button-group-justify-content;
 }
+
+/**
+ * MD alerts should scale up to 560px x 560px
+ * on tablet dimensions.
+ */
+@media screen and (min-width: 768px) {
+  :host {
+    --max-width: #{$alert-md-max-width-tablet};
+    --max-height: #{$alert-md-max-height-tablet};
+  }
+
+  /**
+   * Alerts on MD can expand vertically up to
+   * a total maximum height. The max-height set
+   * for mobile phones prevents this from happening.
+   */
+  .alert-message,
+  .alert-radio-group,
+  .alert-checkbox-group {
+    max-height: initial;
+  }
+}

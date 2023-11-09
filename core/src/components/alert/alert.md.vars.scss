@@ -10,6 +10,12 @@ $alert-md-font-size:                          dynamic-font(14px) !default;
 /// @prop - Max width of the alert
 $alert-md-max-width:                          280px !default;
 
+/// @prop - Max width of the alert on a tablet
+$alert-md-max-width-tablet:                          560px !default;
+
+/// @prop - Max width of the alert on a tablet
+$alert-md-max-height-tablet:                          $alert-md-max-width-tablet !default;
+
 /// @prop - Border radius of the alert
 $alert-md-border-radius:                      4px !default;
 
