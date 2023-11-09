@@ -1,7 +1,6 @@
 export { AlertController } from './providers/alert-controller';
 export { LoadingController } from './providers/loading-controller';
 export { MenuController } from './providers/menu-controller';
-export { ModalController } from './providers/modal-controller';
 export { PickerController } from './providers/picker-controller';
 
 export { AnimationController } from './providers/animation-controller';
