@@ -743,7 +743,16 @@ Developers can use the "legacy" property to continue using the legacy form marku
         <label class="textarea-wrapper" htmlFor={inputId}>
           {this.renderLabelContainer()}
           <div class="textarea-wrapper-inner">
-            <slot name="start"></slot>
+            {/**
+             * Some elements have their own padding styles which may
+             * interfere with slot content alignment (such as icon-
+             * only buttons setting --padding-top=0). To avoid this,
+             * we wrap both the start and end slots in separate
+             * elements and apply our padding styles to that instead.
+             */}
+            <div class="start-slot-wrapper">
+              <slot name="start"></slot>
+            </div>
             <div class="native-wrapper" ref={(el) => (this.textareaWrapper = el)}>
               <textarea
                 class="native-textarea"
@@ -774,7 +783,9 @@ Developers can use the "legacy" property to continue using the legacy form marku
                 {value}
               </textarea>
             </div>
-            <slot name="end"></slot>
+            <div class="end-slot-wrapper">
+              <slot name="end"></slot>
+            </div>
           </div>
           {shouldRenderHighlight && <div class="textarea-highlight"></div>}
         </label>
