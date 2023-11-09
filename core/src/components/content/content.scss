@@ -54,10 +54,6 @@
   color: current-color(contrast);
 }
 
-:host(.outer-content) {
-  --background: #{$background-color-step-50};
-}
-
 #background-content {
   @include position(calc(var(--offset-top) * -1), 0px,calc(var(--offset-bottom) * -1), 0px);
 
