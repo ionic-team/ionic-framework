@@ -22,7 +22,6 @@ export * from './directives/validators';
 export {
   AlertController,
   LoadingController,
-  ModalController,
   PickerController,
   ToastController,
   AnimationController,
@@ -39,6 +38,7 @@ export {
   ViewDidEnter,
   ViewDidLeave,
 } from '@ionic/angular/common';
+export { ModalController } from './providers/modal-controller';
 export { MenuController } from './providers/menu-controller';
 export { PopoverController } from './providers/popover-controller';
 export { ActionSheetController } from './providers/action-sheet-controller';
