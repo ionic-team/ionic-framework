@@ -8,6 +8,7 @@ export interface IonRouteProps {
   show?: boolean;
   render: (props?: any) => JSX.Element; // TODO(FW-2959): type
   disableIonPageManagement?: boolean;
+  allowMultipleInstances?: boolean;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface

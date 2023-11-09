@@ -137,6 +137,8 @@ export class ReactRouterViewStack extends ViewStacks {
     return { viewItem, match };
 
     function matchView(v: ViewItem) {
+      let matchPathname;
+
       if (mustBeIonRoute && !v.ionRoute) {
         return false;
       }
@@ -146,7 +148,12 @@ export class ReactRouterViewStack extends ViewStacks {
         component: v.routeData.childProps.component,
       };
       const myMatch = matchPath(pathname, matchProps);
-      if (myMatch) {
+      
+      if (v.routeData.childProps.allowMultipleInstances) {
+        matchPathname = v.routeData.match.url !== pathname;
+      }
+
+      if (myMatch && !matchPathname) {
         viewItem = v;
         match = myMatch;
         return true;
