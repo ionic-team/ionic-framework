@@ -1,7 +1,7 @@
 import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h, forceUpdate } from '@stencil/core';
 import type { LegacyFormController, NotchController } from '@utils/forms';
-import { createLegacyFormController, createNotchController } from '@utils/forms';
+import { compareOptions, createLegacyFormController, createNotchController, isOptionSelected } from '@utils/forms';
 import { findItemLabel, focusElement, getAriaLabel, renderHiddenInput, inheritAttributes } from '@utils/helpers';
 import type { Attributes } from '@utils/helpers';
 import { printIonWarning } from '@utils/logging';
@@ -82,7 +82,10 @@ export class Select implements ComponentInterface {
   @Prop({ reflect: true }) color?: Color;
 
   /**
-   * A property name or function used to compare object values
+   * This property allows developers to specify a custom function or property
+   * name for comparing objects when determining the selected option in the
+   * ion-select. When not specified, the default behavior will use strict
+   * equality (===) for comparison.
    */
   @Prop() compareWith?: string | SelectCompareFn | null;
 
@@ -1076,21 +1079,6 @@ Developers can use the "legacy" property to continue using the legacy form marku
   }
 }
 
-const isOptionSelected = (
-  currentValue: any[] | any,
-  compareValue: any,
-  compareWith?: string | SelectCompareFn | null
-) => {
-  if (currentValue === undefined) {
-    return false;
-  }
-  if (Array.isArray(currentValue)) {
-    return currentValue.some((val) => compareOptions(val, compareValue, compareWith));
-  } else {
-    return compareOptions(currentValue, compareValue, compareWith);
-  }
-};
-
 const getOptionValue = (el: HTMLIonSelectOptionElement) => {
   const value = el.value;
   return value === undefined ? el.textContent || '' : value;
@@ -1104,20 +1092,6 @@ const parseValue = (value: any) => {
     return value.join(',');
   }
   return value.toString();
-};
-
-const compareOptions = (
-  currentValue: any,
-  compareValue: any,
-  compareWith?: string | SelectCompareFn | null
-): boolean => {
-  if (typeof compareWith === 'function') {
-    return compareWith(currentValue, compareValue);
-  } else if (typeof compareWith === 'string') {
-    return currentValue[compareWith] === compareValue[compareWith];
-  } else {
-    return Array.isArray(compareValue) ? compareValue.includes(currentValue) : currentValue === compareValue;
-  }
 };
 
 const generateText = (

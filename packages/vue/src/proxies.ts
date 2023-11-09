@@ -596,6 +596,7 @@ export const IonRadio = /*@__PURE__*/ defineContainer<JSX.IonRadio, JSX.IonRadio
 
 export const IonRadioGroup = /*@__PURE__*/ defineContainer<JSX.IonRadioGroup, JSX.IonRadioGroup["value"]>('ion-radio-group', defineIonRadioGroup, [
   'allowEmptySelection',
+  'compareWith',
   'name',
   'value',
   'ionChange',
@@ -630,7 +631,7 @@ export const IonRange = /*@__PURE__*/ defineContainer<JSX.IonRange, JSX.IonRange
   'ionKnobMoveStart',
   'ionKnobMoveEnd'
 ],
-'value', 'v-ion-change', 'ionChange');
+'value', 'v-ion-input', 'ionInput');
 
 
 export const IonRefresher = /*@__PURE__*/ defineContainer<JSX.IonRefresher>('ion-refresher', defineIonRefresher, [

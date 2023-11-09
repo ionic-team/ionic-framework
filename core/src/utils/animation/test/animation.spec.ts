@@ -4,6 +4,23 @@ import { processKeyframes } from '../animation-utils';
 import { getTimeGivenProgression } from '../cubic-bezier';
 
 describe('Animation Class', () => {
+  describe('progressEnd callbacks', () => {
+    test('coerced state should be reset before onFinish runs', (done) => {
+      const el = document.createElement('div');
+      const animation = createAnimation()
+        .addElement(el)
+        .fromTo('transform', 'translateX(0px)', 'translateX(100px)')
+        .duration(50);
+
+      animation
+        .onFinish(() => {
+          expect(animation.getDirection()).toBe('normal');
+          expect(animation.getDuration()).toBe(50);
+          done();
+        })
+        .progressEnd(0, 0.5, 10);
+    });
+  });
   describe('play()', () => {
     it('should resolve when the animation is cancelled', async () => {
       // Tell Jest to expect 1 assertion for async code

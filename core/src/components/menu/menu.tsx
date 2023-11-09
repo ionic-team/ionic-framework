@@ -33,7 +33,7 @@ const focusableQueryString =
   shadow: true,
 })
 export class Menu implements ComponentInterface, MenuI {
-  private animation?: any; // TODO(FW-2832): type
+  private animation?: Animation;
   private lastOnEnd = 0;
   private gesture?: Gesture;
   private blocker = GESTURE_CONTROLLER.createBlocker({ disableScroll: true });
@@ -289,6 +289,20 @@ export class Menu implements ComponentInterface, MenuI {
 
   @Listen('ionSplitPaneVisible', { target: 'body' })
   onSplitPaneChanged(ev: CustomEvent) {
+    const { target } = ev;
+    const closestSplitPane = this.el.closest('ion-split-pane');
+
+    /**
+     * Menu listens on the body for "ionSplitPaneVisible".
+     * However, this means the callback will run any time
+     * a SplitPane changes visibility. As a result, we only want
+     * Menu's visibility state to update if its parent SplitPane
+     * changes visibility.
+     */
+    if (target !== closestSplitPane) {
+      return;
+    }
+
     this.isPaneVisible = ev.detail.isPane(this.el);
     this.updateState();
   }
@@ -477,11 +491,11 @@ export class Menu implements ComponentInterface, MenuI {
       this.animation = undefined;
     }
     // Create new animation
-    this.animation = await menuController._createAnimation(this.type!, this);
+    const animation = (this.animation = await menuController._createAnimation(this.type!, this));
     if (!config.getBoolean('animated', true)) {
-      this.animation.duration(0);
+      animation.duration(0);
     }
-    this.animation.fill('both');
+    animation.fill('both');
   }
 
   private async startAnimation(shouldOpen: boolean, animated: boolean): Promise<void> {
