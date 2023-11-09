@@ -667,10 +667,10 @@
   @include margin(8px, 0px, 0px, 0px);
 }
 
-:host(.textarea-label-placement-stacked) ::slotted([slot='start']),
-:host(.textarea-label-placement-stacked) ::slotted([slot='end']),
-:host(.textarea-label-placement-floating) ::slotted([slot='start']),
-:host(.textarea-label-placement-floating) ::slotted([slot='end']) {
+:host(.textarea-label-placement-stacked) ::slotted([slot="start"]),
+:host(.textarea-label-placement-stacked) ::slotted([slot="end"]),
+:host(.textarea-label-placement-floating) ::slotted([slot="start"]),
+:host(.textarea-label-placement-floating) ::slotted([slot="end"]) {
   margin-top: 8px;
 }
 
@@ -717,20 +717,20 @@
 
   display: flex;
 
-  align-self: start;
-
   flex-shrink: 0;
+
+  align-self: start;
 }
 
-::slotted([slot='start']),
-::slotted([slot='end']) {
+::slotted([slot="start"]),
+::slotted([slot="end"]) {
   margin-top: 0; // ensure slot content is vertically aligned with label
 }
 
-::slotted([slot='start']) {
+::slotted([slot="start"]) {
   margin-inline-end: $form-control-label-margin;
 }
 
-::slotted([slot='end']) {
+::slotted([slot="end"]) {
   margin-inline-start: $form-control-label-margin;
 }

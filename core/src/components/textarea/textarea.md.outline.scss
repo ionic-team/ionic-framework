@@ -112,10 +112,10 @@
   @include margin(12px, 0px, 0px, 0px);
 }
 
-:host(.textarea-fill-outline.textarea-label-placement-stacked) ::slotted([slot='start']),
-:host(.textarea-fill-outline.textarea-label-placement-stacked) ::slotted([slot='end']),
-:host(.textarea-fill-outline.textarea-label-placement-floating) ::slotted([slot='start']),
-:host(.textarea-fill-outline.textarea-label-placement-floating) ::slotted([slot='end']) {
+:host(.textarea-fill-outline.textarea-label-placement-stacked) ::slotted([slot="start"]),
+:host(.textarea-fill-outline.textarea-label-placement-stacked) ::slotted([slot="end"]),
+:host(.textarea-fill-outline.textarea-label-placement-floating) ::slotted([slot="start"]),
+:host(.textarea-fill-outline.textarea-label-placement-floating) ::slotted([slot="end"]) {
   margin-top: 12px;
 }
 

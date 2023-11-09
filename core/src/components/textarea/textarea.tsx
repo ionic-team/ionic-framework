@@ -700,7 +700,7 @@ Developers can use the "legacy" property to continue using the legacy form marku
     const inItem = hostContext('ion-item', this.el);
     const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;
 
-    const hasValue =  this.hasValue();
+    const hasValue = this.hasValue();
     const hasStartEndSlots = el.querySelector('[slot="start"], [slot="end"]') !== null;
 
     /**
