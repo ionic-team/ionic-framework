@@ -2,7 +2,6 @@ export { AlertController } from './providers/alert-controller';
 export { LoadingController } from './providers/loading-controller';
 export { MenuController } from './providers/menu-controller';
 export { PickerController } from './providers/picker-controller';
-export { ToastController } from './providers/toast-controller';
 
 export { AnimationController } from './providers/animation-controller';
 export { GestureController } from './providers/gesture-controller';

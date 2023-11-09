@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import type { ToastOptions } from '@ionic/core/components';
-import { toastController } from '@ionic/core/components';
-
-import { OverlayBaseController } from '../utils/overlay';
+import { OverlayBaseController } from '@ionic/angular/common';
+import type { ToastOptions } from '@ionic/core';
+import { toastController } from '@ionic/core';
 
 @Injectable({
   providedIn: 'root',
