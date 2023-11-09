@@ -7,13 +7,13 @@ export { IonTabs } from './navigation/tabs';
 export { provideIonicAngular } from './providers/ionic-angular';
 export { ActionSheetController } from './providers/action-sheet-controller';
 export { MenuController } from './providers/menu-controller';
+export { PopoverController } from './providers/popover-controller';
 export { ToastController } from './providers/toast-controller';
 export {
   AlertController,
   LoadingController,
   ModalController,
   PickerController,
-  PopoverController,
   AnimationController,
   GestureController,
   DomController,

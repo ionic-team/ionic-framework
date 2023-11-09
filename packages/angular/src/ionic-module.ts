@@ -1,12 +1,6 @@
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { ModuleWithProviders, APP_INITIALIZER, NgModule, NgZone } from '@angular/core';
-import {
-  ModalController,
-  PopoverController,
-  ConfigToken,
-  AngularDelegate,
-  provideComponentInputBinding,
-} from '@ionic/angular/common';
+import { ModalController, ConfigToken, AngularDelegate, provideComponentInputBinding } from '@ionic/angular/common';
 import { IonicConfig } from '@ionic/core';
 
 import { appInitialize } from './app-initialize';
@@ -29,6 +23,7 @@ import { IonModal } from './directives/overlays/modal';
 import { IonPopover } from './directives/overlays/popover';
 import { DIRECTIVES } from './directives/proxies-list';
 import { IonMaxValidator, IonMinValidator } from './directives/validators';
+import { PopoverController } from './providers/popover-controller';
 
 const DECLARATIONS = [
   // generated proxies
