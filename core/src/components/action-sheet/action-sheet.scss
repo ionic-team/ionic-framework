@@ -128,8 +128,8 @@
   height: 100%;
 
   /* Fallback for browsers that do not support dvh */
-  max-height: 100vh;
-  max-height: 100dvh;
+  max-height: calc(100vh - (var(--ion-safe-area-top, 0) + var(--ion-safe-area-bottom, 0)));
+  max-height: calc(100dvh - (var(--ion-safe-area-top, 0) + var(--ion-safe-area-bottom, 0)));
 }
 
 .action-sheet-group {
