@@ -43,7 +43,6 @@ export { ModalController } from './providers/modal-controller';
 export { PopoverController } from './providers/popover-controller';
 export { ToastController } from './providers/toast-controller';
 
-
 // PACKAGE MODULE
 export { IonicModule } from './ionic-module';
 
