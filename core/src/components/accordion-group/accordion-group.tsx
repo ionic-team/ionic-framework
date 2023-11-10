@@ -180,6 +180,16 @@ export class AccordionGroup implements ComponentInterface {
     if (this.readonly) {
       this.readonlyChanged();
     }
+    /**
+     * There's an issue when assigning a value to the accordion group
+     * within the Angular primary content (rendering within the
+     * app component template). When the template is isolated to a route,
+     * the value is assigned correctly.
+     * To address this issue, we need to ensure that the watcher is
+     * called after the component has finished loading,
+     * allowing the emit to be dispatched correctly.
+     */
+    this.valueChanged();
   }
 
   /**
