@@ -2416,6 +2416,9 @@ export namespace Components {
           * If `true`, the reorder will be hidden.
          */
         "disabled": boolean;
+        "longPress": boolean;
+        "longPressDuration": number;
+        "longPressMaxThreshold": number;
     }
     interface IonRippleEffect {
         /**
@@ -7108,6 +7111,9 @@ declare namespace LocalJSX {
           * If `true`, the reorder will be hidden.
          */
         "disabled"?: boolean;
+        "longPress"?: boolean;
+        "longPressDuration"?: number;
+        "longPressMaxThreshold"?: number;
         /**
           * Event that needs to be listened to in order to complete the reorder action. Once the event has been emitted, the `complete()` method then needs to be called in order to finalize the reorder action.
          */

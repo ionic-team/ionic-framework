@@ -51,6 +51,15 @@ export class ReorderGroup implements ComponentInterface {
     }
   }
 
+  // boolean to enable/disable the long press gesture
+  @Prop() longPress = false;
+
+  // the amount of time in milliseconds that the user must press and hold before the reorder is initiated
+  @Prop() longPressDuration = 250;
+
+  // the amount of pixels that the pointer must move before the reorder is initiated
+  @Prop() longPressMaxThreshold = 10;
+
   /**
    * Event that needs to be listened to in order to complete the reorder action.
    * Once the event has been emitted, the `complete()` method then needs
@@ -63,18 +72,37 @@ export class ReorderGroup implements ComponentInterface {
     if (contentEl) {
       this.scrollEl = await getScrollElement(contentEl);
     }
-    this.gesture = (await import('../../utils/gesture')).createGesture({
-      el: this.el,
-      gestureName: 'reorder',
-      gesturePriority: 110,
-      threshold: 0,
-      direction: 'y',
-      passive: false,
-      canStart: (detail) => this.canStart(detail),
-      onStart: (ev) => this.onStart(ev),
-      onMove: (ev) => this.onMove(ev),
-      onEnd: () => this.onEnd(),
-    });
+    if (this.longPress) {
+      this.gesture = (await import('../../utils/gesture/long-press')).createPressRecognizer({
+        el: this.el,
+        gestureName: 'reorder',
+        gesturePriority: 110,
+        threshold: 0,
+        direction: 'y',
+        passive: false,
+        time: this.longPressDuration,
+        maxThreshold: this.longPressMaxThreshold,
+        canStart: (detail) => this.canStart(detail),
+        onPressHandler: (ev) => {
+          this.onStart(ev);
+        },
+        onMove: (ev) => this.onMove(ev),
+        onEnd: () => this.onEnd(),
+      });
+    } else {
+      this.gesture = (await import('../../utils/gesture')).createGesture({
+        el: this.el,
+        gestureName: 'reorder',
+        gesturePriority: 110,
+        threshold: 0,
+        direction: 'y',
+        passive: false,
+        canStart: (detail) => this.canStart(detail),
+        onStart: (ev) => this.onStart(ev),
+        onMove: (ev) => this.onMove(ev),
+        onEnd: () => this.onEnd(),
+      });
+    }
 
     this.disabledChanged();
   }

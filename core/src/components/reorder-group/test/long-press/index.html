@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Reorder - Basic</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
+    <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
+    <script src="../../../../../scripts/testing/scripts.js"></script>
+    <script nomodule src="../../../../../dist/ionic/ionic.js"></script>
+    <script type="module" src="../../../../../dist/ionic/ionic.esm.js"></script>
+  </head>
+
+  <body>
+    <ion-app>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Reorder - Long Press</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content id="content">
+        <p>Reorder with icons</p>
+        <ion-list>
+          <ion-reorder-group id="reorder-icons" long-press="true" disabled="false">
+            <ion-item button>
+              <ion-label> Item 1 (default ion-reorder) </ion-label>
+              <ion-reorder slot="end"></ion-reorder>
+            </ion-item>
+
+            <ion-item-sliding>
+              <ion-item button>
+                <ion-label> Item 2 (default ion-reorder with ion-item-sliding) </ion-label>
+                <ion-reorder slot="end"></ion-reorder>
+              </ion-item>
+              <ion-item-options side="start">
+                <ion-item-option>Favorite</ion-item-option>
+                <ion-item-option color="danger">Share</ion-item-option>
+              </ion-item-options>
+
+              <ion-item-options side="end">
+                <ion-item-option>Unread</ion-item-option>
+              </ion-item-options>
+            </ion-item-sliding>
+          </ion-reorder-group>
+        </ion-list>
+        <p>Reorder with wrapper</p>
+        <ion-list>
+          <ion-reorder-group id="reorder-wrappers" disabled="false" long-press="true" long-press-duration="500">
+            <ion-reorder>
+              <ion-item>
+                <ion-label> Item 1 </ion-label>
+              </ion-item>
+            </ion-reorder>
+
+            <ion-reorder>
+              <ion-item>
+                <ion-label> Item 2 </ion-label>
+              </ion-item>
+            </ion-reorder>
+
+            <ion-reorder>
+              <ion-item>
+                <ion-label> Item 3 </ion-label>
+              </ion-item>
+            </ion-reorder>
+
+            <ion-reorder>
+              <ion-item>
+                <ion-label> Item 4 </ion-label>
+              </ion-item>
+            </ion-reorder>
+
+            <ion-reorder>
+              <ion-item>
+                <ion-label> Item 5 </ion-label>
+              </ion-item>
+            </ion-reorder>
+          </ion-reorder-group>
+        </ion-list>
+      </ion-content>
+    </ion-app>
+
+    <script>
+      const reorderGroup = document.getElementById('reorder-icons');
+      reorderGroup.addEventListener('ionItemReorder', ({ detail }) => {
+        console.log('Dragged from index', detail.from, 'to', detail.to);
+
+        detail.complete();
+      });
+      const reorderGroup2 = document.getElementById('reorder-wrappers');
+      reorderGroup2.addEventListener('ionItemReorder', ({ detail }) => {
+        console.log('Dragged from index', detail.from, 'to', detail.to);
+
+        detail.complete();
+      });
+    </script>
+  </body>
+</html>
