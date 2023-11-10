@@ -23,7 +23,6 @@ export {
   AlertController,
   LoadingController,
   PickerController,
-  AnimationController,
   GestureController,
   DomController,
   NavController,
@@ -37,6 +36,7 @@ export {
   ViewDidEnter,
   ViewDidLeave,
 } from '@ionic/angular/common';
+export { AnimationController } from './providers/animation-controller';
 export { ActionSheetController } from './providers/action-sheet-controller';
 export { MenuController } from './providers/menu-controller';
 export { ModalController } from './providers/modal-controller';
