@@ -2044,6 +2044,10 @@ export namespace Components {
          */
         "color"?: Color;
         /**
+          * If `true`, the user cannot interact with the picker.
+         */
+        "disabled": boolean;
+        /**
           * A list of options to be displayed in the picker
          */
         "items": PickerColumnItem[];
@@ -6683,6 +6687,10 @@ declare namespace LocalJSX {
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
         "color"?: Color;
+        /**
+          * If `true`, the user cannot interact with the picker.
+         */
+        "disabled"?: boolean;
         /**
           * A list of options to be displayed in the picker
          */

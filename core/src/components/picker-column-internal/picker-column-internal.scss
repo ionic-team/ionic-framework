@@ -77,6 +77,14 @@
   cursor: default;
 }
 
+:host(.picker-column-disabled) {
+  overflow-y: hidden;
+
+  .picker-item {
+    opacity: 0.4;
+  }
+}
+
 :host .picker-item.picker-item-disabled {
   opacity: 0.4;
 }
@@ -86,7 +94,7 @@
 }
 
 @media (any-hover: hover) {
-  :host(:focus) {
+  :host(:focus:not(.picker-column-disabled)) {
     outline: none;
 
     background: current-color(base, 0.2);

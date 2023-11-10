@@ -99,5 +99,20 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config, scree
 
       await expect(calendarMonthYear).toHaveText('February 2022');
     });
+
+    test('picker should be disabled in prefer wheel mode', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-datetime id="inline-datetime-wheel" disabled prefer-wheel value="2022-04-21T00:00:00"></ion-datetime>
+    `,
+        config
+      );
+
+      await page.waitForSelector('.datetime-ready');
+
+      for (const column of await page.locator('ion-picker-column-internal').all()) {
+        await expect(column).toHaveAttribute('disabled');
+      }
+    });
   });
 });
