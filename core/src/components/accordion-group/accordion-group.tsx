@@ -181,13 +181,13 @@ export class AccordionGroup implements ComponentInterface {
       this.readonlyChanged();
     }
     /**
-     * There's an issue when assigning a value to the accordion group
-     * within the Angular primary content (rendering within the
-     * app component template). When the template is isolated to a route,
-     * the value is assigned correctly.
-     * To address this issue, we need to ensure that the watcher is
-     * called after the component has finished loading,
-     * allowing the emit to be dispatched correctly.
+     * When binding values in frameworks such as Angular
+     * it is possible for the value to be set after the Web Component
+     * initializes but before the value watcher is set up in Stencil.
+     * As a result, the watcher callback may not be fired.
+     * We work around this by manually calling the watcher
+     * callback when the component has loaded and the watcher
+     * is configured.
      */
     this.valueChanged();
   }
