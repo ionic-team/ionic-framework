@@ -88,3 +88,15 @@ function warnIfAnchorIsHidden(positionAnchor: HTMLElement, toast: HTMLElement) {
     );
   }
 }
+
+/**
+ * Returns the top offset required to place
+ * the toast in the middle of the screen.
+ * Only needed when position="toast".
+ * @param toastHeight - The height of the ion-toast element
+ * @param wrapperHeight - The height of the .toast-wrapper element
+ * inside the toast's shadow root.
+ */
+export const getOffsetForMiddlePosition = (toastHeight: number, wrapperHeight: number) => {
+  return Math.floor(toastHeight / 2 - wrapperHeight / 2);
+};

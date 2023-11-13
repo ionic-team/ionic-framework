@@ -3,6 +3,7 @@ import { newSpecPage } from '@stencil/core/testing';
 import { Toast } from '../toast';
 import { config } from '../../../global/config';
 import { toastController } from '../../../utils/overlays';
+import { createAnimation } from '@utils/animation/animation';
 
 describe('toast: custom html', () => {
   it('should not allow for custom html by default', async () => {
@@ -91,32 +92,6 @@ describe('toast: a11y smoke test', () => {
   });
 });
 
-describe('toast: duration config', () => {
-  it('should have duration set to 0', async () => {
-    const page = await newSpecPage({
-      components: [Toast],
-      html: `<ion-toast></ion-toast>`,
-    });
-
-    const toast = page.body.querySelector('ion-toast');
-
-    expect(toast.duration).toBe(0);
-  });
-
-  it('should have duration set to 5000', async () => {
-    config.reset({ toastDuration: 5000 });
-
-    const page = await newSpecPage({
-      components: [Toast],
-      html: `<ion-toast></ion-toast>`,
-    });
-
-    const toast = page.body.querySelector('ion-toast');
-
-    expect(toast.duration).toBe(5000);
-  });
-});
-
 describe('toast: htmlAttributes', () => {
   it('should correctly inherit attributes on host', async () => {
     const page = await newSpecPage({
@@ -142,5 +117,101 @@ describe('toast: button cancel', () => {
     const buttonCancel = toast?.shadowRoot?.querySelector('.toast-button-cancel');
 
     expect(buttonCancel.getAttribute('part')).toBe('button cancel');
+  });
+});
+
+describe('toast: swipe gesture', () => {
+  describe('prefersSwipeGesture()', () => {
+    let toast: Toast;
+    beforeEach(() => {
+      toast = new Toast();
+    });
+    it('should return true if set to a valid swipe value', () => {
+      toast.swipeGesture = 'vertical';
+      expect(toast.prefersSwipeGesture()).toBe(true);
+    });
+    it('should return false if set to undefined', () => {
+      toast.swipeGesture = undefined;
+      expect(toast.prefersSwipeGesture()).toBe(false);
+    });
+    it('should return false if set to null', () => {
+      toast.swipeGesture = null;
+      expect(toast.prefersSwipeGesture()).toBe(false);
+    });
+    it('should return false if set to invalid string', () => {
+      toast.swipeGesture = 'limit'; // `'limit'` doesn't exist
+      expect(toast.prefersSwipeGesture()).toBe(false);
+    });
+  });
+  describe('swipeGesture property', () => {
+    let toast: Toast;
+    beforeEach(() => {
+      toast = new Toast();
+      // Stub the enter animation so we aren't querying elements in the DOM that may not exist
+      toast.enterAnimation = () => createAnimation();
+    });
+    it('should not create a swipe gesture on present if swipeGesture is undefined', async () => {
+      expect(toast.gesture).toBe(undefined);
+
+      await toast.present();
+
+      expect(toast.gesture).toBe(undefined);
+    });
+    it('should create a swipe gesture on present', async () => {
+      toast.swipeGesture = 'vertical';
+
+      expect(toast.gesture).toBe(undefined);
+
+      await toast.present();
+
+      expect(toast.gesture).not.toBe(undefined);
+    });
+    it('should destroy a swipe gesture on dismiss', async () => {
+      toast.swipeGesture = 'vertical';
+
+      await toast.present();
+
+      expect(toast.gesture).not.toBe(undefined);
+
+      await toast.dismiss();
+
+      expect(toast.gesture).toBe(undefined);
+    });
+    it('should create a swipe gesture if swipeGesture is set after present', async () => {
+      await toast.present();
+      expect(toast.gesture).toBe(undefined);
+
+      /**
+       * Manually invoke the watch
+       * callback synchronously.
+       */
+      toast.swipeGesture = 'vertical';
+      toast.swipeGestureChanged();
+
+      expect(toast.gesture).not.toBe(undefined);
+    });
+    it('should destroy a swipe gesture if swipeGesture is cleared after present', async () => {
+      toast.swipeGesture = 'vertical';
+
+      await toast.present();
+      expect(toast.gesture).not.toBe(undefined);
+
+      /**
+       * Manually invoke the watch
+       * callback synchronously.
+       */
+      toast.swipeGesture = undefined;
+      toast.swipeGestureChanged();
+
+      expect(toast.gesture).toBe(undefined);
+    });
+    it('should not create a swipe gesture if the toast is not presented', async () => {
+      expect(toast.gesture).toBe(undefined);
+
+      toast.swipeGesture = 'vertical';
+      toast.swipeGestureChanged();
+
+      expect(toast.gesture).toBe(undefined);
+    });
   });
 });
