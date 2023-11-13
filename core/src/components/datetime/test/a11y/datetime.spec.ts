@@ -1,7 +1,6 @@
 import type { SpecPage } from '@stencil/core/testing';
 import { newSpecPage } from '@stencil/core/testing';
 
-import { Item } from '../../../item/item';
 import { Datetime } from '../../datetime';
 
 describe('datetime', () => {
@@ -20,7 +19,7 @@ describe('datetime', () => {
 
     beforeEach(async () => {
       page = await newSpecPage({
-        components: [Datetime, Item],
+        components: [Datetime],
         html: `<ion-datetime></ion-datetime>`,
       });
     });
