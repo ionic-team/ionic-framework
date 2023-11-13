@@ -500,7 +500,16 @@ export class Datetime implements ComponentInterface {
     if (activeParts !== undefined || !isCalendarPicker) {
       const activePartsIsArray = Array.isArray(activeParts);
       if (activePartsIsArray && activeParts.length === 0) {
-        this.setValue(undefined);
+        if (this.preferWheel) {
+          /**
+           * If the datetime is using a wheel picker, but there
+           * is no active parts, then the user has confirmed the
+           * initial value (working parts) presented to them.
+           */
+          this.setValue(convertDataToISO(this.workingParts));
+        } else {
+          this.setValue(undefined);
+        }
       } else {
         this.setValue(convertDataToISO(activeParts));
       }
