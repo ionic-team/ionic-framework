@@ -1,24 +1,27 @@
+import type { JsonObject } from '@angular-devkit/core';
 import { WorkspaceDefinition } from '@angular-devkit/core/src/workspace';
 import { Tree, SchematicsException } from '@angular-devkit/schematics';
 import { parse } from 'jsonc-parser';
 
-const CONFIG_PATH = 'angular.json';
+const ANGULAR_JSON_PATH = 'angular.json';
 
-// TODO(FW-2827): types
-
-export function readConfig(host: Tree): any {
-  const sourceText = host.read(CONFIG_PATH)?.toString('utf-8');
-  return JSON.parse(sourceText);
+export function readConfig(host: Tree): JsonObject {
+  return host.readJson(ANGULAR_JSON_PATH) as JsonObject;
 }
 
-export function writeConfig(host: Tree, config: JSON): void {
-  host.overwrite(CONFIG_PATH, JSON.stringify(config, null, 2));
+export function writeConfig(host: Tree, config: JsonObject): void {
+  host.overwrite(ANGULAR_JSON_PATH, JSON.stringify(config, null, 2));
 }
 
 function isAngularBrowserProject(projectConfig: any): boolean {
   if (projectConfig.projectType === 'application') {
     const buildConfig = projectConfig.architect.build;
-    return buildConfig.builder === '@angular-devkit/build-angular:browser';
+    // Angular 16 and lower
+    const legacyAngularBuilder = buildConfig.builder === '@angular-devkit/build-angular:browser';
+    // Angular 17+
+    const modernAngularBuilder = buildConfig.builder === '@angular-devkit/build-angular:application';
+
+    return legacyAngularBuilder || modernAngularBuilder;
   }
 
   return false;
@@ -38,7 +41,7 @@ export function getDefaultAngularAppName(config: any): string {
   return projectNames[0];
 }
 
-export function getAngularAppConfig(config: any, projectName: string): any | never {
+function getAngularJson(config: any, projectName: string): any | never {
   // eslint-disable-next-line no-prototype-builtins
   if (!config.projects.hasOwnProperty(projectName)) {
     throw new SchematicsException(`Could not find project: ${projectName}`);
@@ -59,8 +62,8 @@ export function getAngularAppConfig(config: any, projectName: string): any | nev
 
 export function addStyle(host: Tree, projectName: string, stylePath: string): void {
   const config = readConfig(host);
-  const appConfig = getAngularAppConfig(config, projectName);
-  appConfig.architect.build.options.styles.push({
+  const angularJson = getAngularJson(config, projectName);
+  angularJson.architect.build.options.styles.push({
     input: stylePath,
   });
   writeConfig(host, config);
@@ -73,8 +76,8 @@ export function addAsset(
   asset: string | { glob: string; input: string; output: string }
 ): void {
   const config = readConfig(host);
-  const appConfig = getAngularAppConfig(config, projectName);
-  const target = appConfig.architect[architect];
+  const angularJson = getAngularJson(config, projectName);
+  const target = angularJson.architect[architect];
   if (target) {
     target.options.assets.push(asset);
     writeConfig(host, config);
@@ -88,8 +91,8 @@ export function addArchitectBuilder(
   builderOpts: any
 ): void | never {
   const config = readConfig(host);
-  const appConfig = getAngularAppConfig(config, projectName);
-  appConfig.architect[builderName] = builderOpts;
+  const angularJson = getAngularJson(config, projectName);
+  angularJson.architect[builderName] = builderOpts;
   writeConfig(host, config);
 }
 

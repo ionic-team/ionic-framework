@@ -12,9 +12,11 @@ import {
   url,
 } from '@angular-devkit/schematics';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
+import { addRootProvider } from '@schematics/angular/utility';
 import { getWorkspace } from '@schematics/angular/utility/workspace';
 
-import { addModuleImportToRootModule } from './../utils/ast';
+import { addIonicModuleImportToNgModule } from '../utils/ast';
+
 import { addArchitectBuilder, addAsset, addStyle, getDefaultAngularAppName } from './../utils/config';
 import { addPackageToPackageJson } from './../utils/package';
 import { Schema as IonAddOptions } from './schema';
@@ -33,9 +35,36 @@ function addIonicAngularToolkitToPackageJson(): Rule {
   };
 }
 
+/**
+ * Adds the `IonicModule.forRoot()` usage to the project's `AppModule`.
+ * If the project does not use modules this will operate as a noop.
+ * @param projectSourceRoot The source root path of the project.
+ */
 function addIonicAngularModuleToAppModule(projectSourceRoot: Path): Rule {
   return (host: Tree) => {
-    addModuleImportToRootModule(host, projectSourceRoot, 'IonicModule.forRoot()', '@ionic/angular');
+    const appModulePath = `${projectSourceRoot}/app/app.module.ts`;
+    if (host.exists(appModulePath)) {
+      addIonicModuleImportToNgModule(host, appModulePath);
+    }
+    return host;
+  };
+}
+
+/**
+ * Adds the `provideIonicAngular` usage to the project's app config.
+ * If the project does not use an app config this will operate as a noop.
+ * @param projectName The name of the project.
+ * @param projectSourceRoot The source root path of the project.
+ */
+function addProvideIonicAngular(projectName: string, projectSourceRoot: Path): Rule {
+  return (host: Tree) => {
+    const appConfig = `${projectSourceRoot}/app/app.config.ts`;
+    if (host.exists(appConfig)) {
+      addRootProvider(
+        projectName,
+        ({ code, external }) => code`${external('provideIonicAngular', '@ionic/angular/standalone')}({})`
+      );
+    }
     return host;
   };
 }
@@ -63,15 +92,24 @@ function addIonicStyles(projectName: string, projectSourceRoot: Path): Rule {
   };
 }
 
-function addIonicons(projectName: string): Rule {
+function addIonicons(projectName: string, projectSourceRoot: Path): Rule {
   return (host: Tree) => {
-    const ioniconsGlob = {
-      glob: '**/*.svg',
-      input: 'node_modules/ionicons/dist/ionicons/svg',
-      output: './svg',
-    };
-    addAsset(host, projectName, 'build', ioniconsGlob);
-    addAsset(host, projectName, 'test', ioniconsGlob);
+    const hasAppModule = host.exists(`${projectSourceRoot}/app/app.module.ts`);
+
+    if (hasAppModule) {
+      /**
+       * Add Ionicons to the `angular.json` file only if the project
+       * is using the lazy build of `@ionic/angular` with modules.
+       */
+      const ioniconsGlob = {
+        glob: '**/*.svg',
+        input: 'node_modules/ionicons/dist/ionicons/svg',
+        output: './svg',
+      };
+      addAsset(host, projectName, 'build', ioniconsGlob);
+      addAsset(host, projectName, 'test', ioniconsGlob);
+    }
+
     return host;
   };
 }
@@ -130,9 +168,10 @@ export default function ngAdd(options: IonAddOptions): Rule {
       addIonicAngularToPackageJson(),
       addIonicAngularToolkitToPackageJson(),
       addIonicAngularModuleToAppModule(sourcePath),
+      addProvideIonicAngular(options.project, sourcePath),
       addIonicBuilder(options.project),
       addIonicStyles(options.project, sourcePath),
-      addIonicons(options.project),
+      addIonicons(options.project, sourcePath),
       mergeWith(rootTemplateSource),
       // install freshly added dependencies
       installNodeDeps(),
