@@ -4,24 +4,10 @@ import type { App, Plugin } from "vue";
 
 // TODO(FW-2969): types
 
-/**
- * We need to make sure that the web component fires an event
- * that will not conflict with the user's @ionChange binding,
- * otherwise the binding's callback will fire before any
- * v-model values have been updated.
- */
 const toKebabCase = (eventName: string) => {
-  const kebabConvert = (name: string) =>
-    name.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, "$1-$2").toLowerCase();
-
-  switch (eventName) {
-    case "ionInput":
-      return "v-ion-input";
-    case "ionChange":
-      return "v-ion-change";
-    default:
-      return kebabConvert(eventName);
-  }
+  return eventName
+    .replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, "$1-$2")
+    .toLowerCase();
 };
 
 const getHelperFunctions = () => {
