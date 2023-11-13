@@ -501,13 +501,19 @@ ion-picker-column-internal {
 
   background: var(--background);
   color: var(--color);
+
+  &::after {
+    @include button-state();
+  }
+
+  &:disabled {
+    opacity: 0.3;
+    pointer-events: none;
+  }
 }
 
-.calendar-month-year-toggle::after {
-  @include button-state();
-}
-
-.calendar-month-year-toggle:disabled {
-  opacity: 0.3;
-  pointer-events: none;
+.calendar-month-year-toggle label {
+  display: inline-flex;
+  
+  align-items: center;
 }
