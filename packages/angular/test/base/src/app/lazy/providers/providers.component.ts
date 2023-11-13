@@ -28,7 +28,7 @@ export class ProvidersComponent {
     alertCtrl: AlertController,
     loadingCtrl: LoadingController,
     private menuCtrl: MenuController,
-    pickerCtrl: PickerController,
+    private pickerCtrl: PickerController,
     modalCtrl: ModalController,
     platform: Platform,
     popoverCtrl: PopoverController,
@@ -95,5 +95,19 @@ export class ProvidersComponent {
     });
 
     await actionSheet.present();
+  }
+
+  async openPicker() {
+    const picker = await this.pickerCtrl.create({
+      columns: [],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+      ]
+    });
+
+    await picker.present();
   }
 }
