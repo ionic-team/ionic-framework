@@ -14,6 +14,8 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 ## Version 8.x
 
 - [Browser and Platform Support](#version-8x-browser-platform-support)
+- [Components](#version-8x-components)
+  - [Content](#version-8x-content)
 
 <h2 id="version-8x-browser-platform-support">Browser and Platform Support</h2>
 
@@ -39,3 +41,9 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 | -------- | ---------------------- |
 | iOS      | 15+                    |
 | Android  | 5.1+ with Chromium 89+ |
+
+<h2 id="version-8x-components">Components</h2>
+
+<h4 id="version-8x-content">Content</h4>
+
+- Content no longer sets the `--background` custom property when the `.outer-content` class is set on the host.
