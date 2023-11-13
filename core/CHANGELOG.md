@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.5.5-nightly.20231113](https://github.com/ionic-team/ionic-framework/compare/v7.5.4...v7.5.5-nightly.20231113) (2023-11-13)
+
+
+### Bug Fixes
+
+* **header:** collapsible large title does not flicker when collapse prop not reflected ([#28472](https://github.com/ionic-team/ionic-framework/issues/28472)) ([8227b0e](https://github.com/ionic-team/ionic-framework/commit/8227b0ee6d5250e122a34a83c644f8a74fbbafd5)), closes [#28466](https://github.com/ionic-team/ionic-framework/issues/28466)
+* **item-divider:** apply safe area to proper side regardless of direction ([#28420](https://github.com/ionic-team/ionic-framework/issues/28420)) ([4513e0c](https://github.com/ionic-team/ionic-framework/commit/4513e0c6b066d4990800c707e1d97f69c8fcfb0c))
+* **radio-group:** emit value change on componentDidLoad ([#28488](https://github.com/ionic-team/ionic-framework/issues/28488)) ([73b8bfd](https://github.com/ionic-team/ionic-framework/commit/73b8bfde3f060490958c10f58d0f68de80cb957f)), closes [#28356](https://github.com/ionic-team/ionic-framework/issues/28356)
+* **searchbar:** cancel icon aligns with back button ([#28478](https://github.com/ionic-team/ionic-framework/issues/28478)) ([c053fd9](https://github.com/ionic-team/ionic-framework/commit/c053fd9c68d9b1add1335db80be962215946a0b1)), closes [#28468](https://github.com/ionic-team/ionic-framework/issues/28468)
+
+
+
+
+
 ## [7.5.4](https://github.com/ionic-team/ionic-framework/compare/v7.5.3...v7.5.4) (2023-11-08)
 
 
