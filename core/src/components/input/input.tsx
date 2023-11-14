@@ -709,6 +709,8 @@ export class Input implements ComponentInterface {
      * other when the label isn't floating above the input. This doesn't
      * apply to the outline fill, but this was not accounted for to keep
      * things consistent.
+     * 
+     * TODO(FW-5592): Remove hasStartEndSlots condition
      */
     const labelShouldFloat =
       labelPlacement === 'stacked' || (labelPlacement === 'floating' && (hasValue || hasFocus || hasStartEndSlots));
