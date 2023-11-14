@@ -16,8 +16,8 @@ const mockVisualViewport = (
   win: Window,
   visualViewport: any = { width: 320, height: 568 },
   layoutViewport = { innerWidth: 320, innerHeight: 568 }
-): any => {
-  win.visualViewport = {
+) => {
+  (win as any).visualViewport = {
     width: 320,
     height: 568,
     offsetTop: 0,
@@ -29,26 +29,32 @@ const mockVisualViewport = (
     onscroll: undefined,
   };
 
-  win.visualViewport = Object.assign(win.visualViewport, visualViewport);
+  (win as any).visualViewport = Object.assign(win.visualViewport!, visualViewport);
   win = Object.assign(win, layoutViewport);
-  win.dispatchEvent = jest.fn();
+
+  const mockDispatchEvent = jest.fn();
+
+  win.dispatchEvent = mockDispatchEvent;
 
   trackViewportChanges(win);
 
-  return win;
+  return {
+    win,
+    mockDispatchEvent,
+  };
 };
 
 const mockCapacitor = (win: Window) => {
-  win.Capacitor = {
+  (win as any).Capacitor = {
     isPluginAvailable: () => false,
   };
 };
 
 const resizeVisualViewport = (win: Window, visualViewport: any = {}) => {
-  win.visualViewport = Object.assign(win.visualViewport, visualViewport);
+  (win as any).visualViewport = Object.assign((win as any).visualViewport, visualViewport);
 
-  if (win.visualViewport.onresize) {
-    win.visualViewport.onresize();
+  if (win.visualViewport!.onresize) {
+    win.visualViewport!.onresize({} as any);
   } else {
     trackViewportChanges(win);
   }
@@ -87,62 +93,64 @@ describe('Keyboard Assist Tests', () => {
 
   describe('setKeyboardOpen()', () => {
     it('should dispatch the keyboard open event on the window', () => {
-      window.dispatchEvent = jest.fn();
+      const mockDispatchEvent = jest.fn();
+      window.dispatchEvent = mockDispatchEvent;
 
       setKeyboardOpen(window);
 
-      expect(window.dispatchEvent.mock.calls.length).toEqual(1);
-      expect(window.dispatchEvent.mock.calls[0][0].type).toEqual(KEYBOARD_DID_OPEN);
+      expect(mockDispatchEvent.mock.calls.length).toEqual(1);
+      expect(mockDispatchEvent.mock.calls[0][0].type).toEqual(KEYBOARD_DID_OPEN);
     });
   });
 
   describe('setKeyboardClose()', () => {
     it('should dispatch the keyboard close event on the window', () => {
-      window.dispatchEvent = jest.fn();
+      const mockDispatchEvent = jest.fn();
+      window.dispatchEvent = mockDispatchEvent;
 
       setKeyboardClose(window);
 
-      expect(window.dispatchEvent.mock.calls.length).toEqual(1);
-      expect(window.dispatchEvent.mock.calls[0][0].type).toEqual(KEYBOARD_DID_CLOSE);
+      expect(mockDispatchEvent.mock.calls.length).toEqual(1);
+      expect(mockDispatchEvent.mock.calls[0][0].type).toEqual(KEYBOARD_DID_CLOSE);
     });
   });
 
   describe('keyboardDidOpen()', () => {
     beforeEach(() => {
-      resetKeyboardAssist(window);
+      resetKeyboardAssist();
       mockVisualViewport(window);
     });
 
     it('should return true when visual viewport height < layout viewport height and meets or exceeds the keyboard threshold', () => {
       resizeVisualViewport(window, { height: 200 });
 
-      expect(keyboardDidOpen(window)).toEqual(true);
+      expect(keyboardDidOpen()).toEqual(true);
     });
 
     it('should return true if the layout and visual viewports resize', () => {
       resizeLayoutViewport(window, { width: 320, height: 300 });
       resizeVisualViewport(window, { width: 320, height: 300 });
 
-      expect(keyboardDidOpen(window)).toEqual(true);
+      expect(keyboardDidOpen()).toEqual(true);
     });
 
     it('should return false when visual viewport height < layout viewport heigh but does not meet the keyboard threshold', () => {
       resizeVisualViewport(window, { height: 500 });
 
-      expect(keyboardDidOpen(window)).toEqual(false);
+      expect(keyboardDidOpen()).toEqual(false);
     });
 
     it('should return false on orientation change', () => {
       resizeVisualViewport(window, { width: 320, height: 250 });
       resizeVisualViewport(window, { width: 250, height: 320 });
 
-      expect(keyboardDidOpen(window)).toEqual(false);
+      expect(keyboardDidOpen()).toEqual(false);
     });
 
     it('should return false when both the visual and layout viewports change', () => {
-      resizeVisualViewport(window, { width: 250, height: 320 }, { innerWidth: 250, innerHeight: 320 });
+      resizeVisualViewport(window, { width: 250, height: 320 });
 
-      expect(keyboardDidOpen(window)).toEqual(false);
+      expect(keyboardDidOpen()).toEqual(false);
     });
 
     it('should return true when the keyboard shows even if the user is zoomed in', () => {
@@ -152,13 +160,13 @@ describe('Keyboard Assist Tests', () => {
       // User taps input and keyboard appears
       resizeVisualViewport(window, { width: 160, height: 184, scale: 2 });
 
-      expect(keyboardDidOpen(window)).toEqual(true);
+      expect(keyboardDidOpen()).toEqual(true);
     });
   });
 
   describe('keyboardDidClose()', () => {
     beforeEach(() => {
-      resetKeyboardAssist(window);
+      resetKeyboardAssist();
       mockVisualViewport(window);
     });
 
@@ -222,54 +230,67 @@ describe('Keyboard Assist Tests', () => {
 });
 
 describe('Keyboard Assist Integration', () => {
+  let mockDispatchEvent: jest.Mock<any, any>;
+
   beforeEach(() => {
-    resetKeyboardAssist(window);
-    mockVisualViewport(window);
+    resetKeyboardAssist();
+    mockDispatchEvent = mockVisualViewport(window).mockDispatchEvent;
     startKeyboardAssist(window);
   });
+
+  afterEach(() => {
+    mockDispatchEvent.mockReset();
+  })
 
   it('should properly set the keyboard to be open', () => {
     resizeVisualViewport(window, { width: 320, height: 350 });
 
-    expect(window.dispatchEvent.mock.calls.length).toEqual(1);
-    expect(window.dispatchEvent.mock.calls[0][0].type).toEqual(KEYBOARD_DID_OPEN);
+    expect(mockDispatchEvent.mock.calls.length).toEqual(1);
+    expect(mockDispatchEvent.mock.calls[0][0].type).toEqual(KEYBOARD_DID_OPEN);
   });
 
   it('should properly set the keyboard to be closed', () => {
     resizeVisualViewport(window, { width: 320, height: 350 });
     resizeVisualViewport(window, { width: 320, height: 568 });
 
-    expect(window.dispatchEvent.mock.calls.length).toEqual(2);
-    expect(window.dispatchEvent.mock.calls[1][0].type).toEqual(KEYBOARD_DID_CLOSE);
+    expect(mockDispatchEvent.mock.calls.length).toEqual(2);
+    expect(mockDispatchEvent.mock.calls[1][0].type).toEqual(KEYBOARD_DID_CLOSE);
   });
 
   it('should properly set the keyboard to be resized', () => {
     resizeVisualViewport(window, { width: 320, height: 350 });
     resizeVisualViewport(window, { width: 320, height: 360 });
 
-    expect(window.dispatchEvent.mock.calls.length).toEqual(2);
-    expect(window.dispatchEvent.mock.calls[0][0].type).toEqual(KEYBOARD_DID_OPEN);
-    expect(window.dispatchEvent.mock.calls[1][0].type).toEqual(KEYBOARD_DID_OPEN);
+    expect(mockDispatchEvent.mock.calls.length).toEqual(2);
+    expect(mockDispatchEvent.mock.calls[0][0].type).toEqual(KEYBOARD_DID_OPEN);
+    expect(mockDispatchEvent.mock.calls[1][0].type).toEqual(KEYBOARD_DID_OPEN);
   });
 
   it('should not set keyboard open on orientation change', () => {
     resizeVisualViewport(window, { width: 568, height: 320 });
-    expect(window.dispatchEvent.mock.calls.length).toEqual(0);
+    expect(mockDispatchEvent.mock.calls.length).toEqual(0);
   });
 });
 
 describe('Keyboard Assist with Capacitor', () => {
+
+  let mockDispatchEvent: jest.Mock<any, any>;
+
   beforeEach(() => {
-    resetKeyboardAssist(window);
+    resetKeyboardAssist();
     mockCapacitor(window);
-    mockVisualViewport(window);
+    mockDispatchEvent = mockVisualViewport(window).mockDispatchEvent;
     startKeyboardAssist(window);
   });
+
+  afterEach(() => {
+    mockDispatchEvent.mockReset();
+  })
 
   it('should attach visual viewport listeners when Capacitor is available but the Keyboard plugin is not', () => {
     resizeVisualViewport(window, { width: 320, height: 350 });
 
-    expect(window.dispatchEvent.mock.calls.length).toEqual(1);
-    expect(window.dispatchEvent.mock.calls[0][0].type).toEqual(KEYBOARD_DID_OPEN);
+    expect(mockDispatchEvent.mock.calls.length).toEqual(1);
+    expect(mockDispatchEvent.mock.calls[0][0].type).toEqual(KEYBOARD_DID_OPEN);
   });
 });
