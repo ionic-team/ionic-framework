@@ -17,7 +17,14 @@ import { getWorkspace } from '@schematics/angular/utility/workspace';
 
 import { addIonicModuleImportToNgModule } from '../utils/ast';
 
-import { addArchitectBuilder, addAsset, addStyle, getDefaultAngularAppName } from './../utils/config';
+import {
+  addArchitectBuilder,
+  addAsset,
+  addCli,
+  addSchematics,
+  addStyle,
+  getDefaultAngularAppName,
+} from './../utils/config';
 import { addPackageToPackageJson } from './../utils/package';
 import { Schema as IonAddOptions } from './schema';
 
@@ -31,6 +38,23 @@ function addIonicAngularToPackageJson(): Rule {
 function addIonicAngularToolkitToPackageJson(): Rule {
   return (host: Tree) => {
     addPackageToPackageJson(host, 'devDependencies', '@ionic/angular-toolkit', 'latest');
+    return host;
+  };
+}
+
+/**
+ * Adds the @ionic/angular-toolkit schematics and cli configuration to the project's `angular.json` file.
+ * @param projectName The name of the project.
+ */
+function addIonicAngularToolkitToAngularJson(): Rule {
+  return (host: Tree) => {
+    addCli(host, '@ionic/angular-toolkit');
+    addSchematics(host, '@ionic/angular-toolkit:component', {
+      styleext: 'scss',
+    });
+    addSchematics(host, '@ionic/angular-toolkit:page', {
+      styleext: 'scss',
+    });
     return host;
   };
 }
@@ -167,6 +191,7 @@ export default function ngAdd(options: IonAddOptions): Rule {
       // @ionic/angular
       addIonicAngularToPackageJson(),
       addIonicAngularToolkitToPackageJson(),
+      addIonicAngularToolkitToAngularJson(),
       addIonicAngularModuleToAppModule(sourcePath),
       addProvideIonicAngular(options.project, sourcePath),
       addIonicBuilder(options.project),

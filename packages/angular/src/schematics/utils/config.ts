@@ -5,8 +5,8 @@ import { parse } from 'jsonc-parser';
 
 const ANGULAR_JSON_PATH = 'angular.json';
 
-export function readConfig(host: Tree): JsonObject {
-  return host.readJson(ANGULAR_JSON_PATH) as JsonObject;
+export function readConfig<T extends JsonObject = JsonObject>(host: Tree): T {
+  return host.readJson(ANGULAR_JSON_PATH) as T;
 }
 
 export function writeConfig(host: Tree, config: JsonObject): void {
@@ -94,6 +94,34 @@ export function addArchitectBuilder(
   const angularJson = getAngularJson(config, projectName);
   angularJson.architect[builderName] = builderOpts;
   writeConfig(host, config);
+}
+
+export function addCli(host: Tree, collectionName: any): void | never {
+  const angularJson = readConfig<any>(host);
+
+  if (angularJson.cli === undefined) {
+    angularJson.cli = {};
+  }
+
+  if (angularJson.cli.schematicCollections === undefined) {
+    angularJson.cli.schematicCollections = [];
+  }
+
+  angularJson.cli.schematicCollections.push(collectionName);
+
+  writeConfig(host, angularJson);
+}
+
+export function addSchematics(host: Tree, schematicName: string, schematicOpts: any): void | never {
+  const angularJson = readConfig<any>(host);
+
+  if (angularJson.schematics === undefined) {
+    angularJson.schematics = {};
+  }
+
+  angularJson.schematics[schematicName] = schematicOpts;
+
+  writeConfig(host, angularJson);
 }
 
 export function getWorkspacePath(host: Tree): string {
