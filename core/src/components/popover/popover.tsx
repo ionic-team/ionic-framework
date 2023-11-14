@@ -370,6 +370,8 @@ export class Popover implements ComponentInterface, PopoverInterface {
         this.dismiss(undefined, undefined, false);
       });
     }
+
+    this.configureTriggerInteraction();
   }
 
   /**
