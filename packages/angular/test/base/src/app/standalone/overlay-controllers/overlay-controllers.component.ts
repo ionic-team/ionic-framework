@@ -7,7 +7,11 @@ import { ModalController, PickerController, PopoverController } from '@ionic/ang
   standalone: true,
 })
 export class OverlayControllersComponent {
-  constructor(private modalCtrl: ModalController, private pickerCtrl: PickerController, private popoverCtrl: PopoverController) {}
+  constructor(
+    private modalCtrl: ModalController,
+    private pickerCtrl: PickerController,
+    private popoverCtrl: PopoverController
+  ) {}
 
   async openModal() {
     const modal = await this.modalCtrl.create({
@@ -17,10 +21,15 @@ export class OverlayControllersComponent {
     await modal.present();
   }
 
-  async openPicker(ev: MouseEvent) {
+  async openPicker() {
     const picker = await this.pickerCtrl.create({
-      component: DialogComponent,
-      event: ev
+      columns: [],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+      ],
     });
 
     await picker.present();
