@@ -37,12 +37,13 @@ describe('ion-datetime disabled', () => {
 
     await page.waitForChanges();
 
-    const columns = await page.body.querySelectorAll('ion-picker-column-internal');
+    const datetime = page.body.querySelector('ion-datetime')!;
+    const columns = datetime.shadowRoot!.querySelectorAll('ion-picker-column-internal');
 
     await expect(columns.length).toEqual(4);
 
     columns.forEach((column) => {
-      expect(column.getAttribute('disabled')).toBe('true');
+      expect(column.getAttribute('disabled')).not.toBeNull();
     });
   });
 });
