@@ -95,13 +95,18 @@ describe('modal: canDismiss', () => {
       /**
        * Card modal is only available on iOS
        */
-      setMode((elm) => 'ios');
+      setMode(() => 'ios');
     });
     it('should dismiss when canDismiss is true', async () => {
       const page = await newSpecPage({
         components: [Content, Modal],
         template: () => (
-          <ion-modal overlayIndex={1} presentingElement={document.createElement('div')} animated={false} canDismiss={true}>
+          <ion-modal
+            overlayIndex={1}
+            presentingElement={document.createElement('div')}
+            animated={false}
+            canDismiss={true}
+          >
             <ion-content>Test Content</ion-content>
           </ion-modal>
         ),
@@ -121,7 +126,12 @@ describe('modal: canDismiss', () => {
       const page = await newSpecPage({
         components: [Content, Modal],
         template: () => (
-          <ion-modal overlayIndex={1} presentingElement={document.createElement('div')} animated={false} canDismiss={false}>
+          <ion-modal
+            overlayIndex={1}
+            presentingElement={document.createElement('div')}
+            animated={false}
+            canDismiss={false}
+          >
             <ion-content>Test Content</ion-content>
           </ion-modal>
         ),
@@ -200,7 +210,13 @@ describe('modal: canDismiss', () => {
       const page = await newSpecPage({
         components: [Modal],
         template: () => (
-          <ion-modal overlayIndex={1} breakpoints={[0, 1]} initialBreakpoint={1} animated={false} canDismiss={true}></ion-modal>
+          <ion-modal
+            overlayIndex={1}
+            breakpoints={[0, 1]}
+            initialBreakpoint={1}
+            animated={false}
+            canDismiss={true}
+          ></ion-modal>
         ),
       });
 
@@ -218,7 +234,13 @@ describe('modal: canDismiss', () => {
       const page = await newSpecPage({
         components: [Modal],
         template: () => (
-          <ion-modal overlayIndex={1} breakpoints={[0, 1]} initialBreakpoint={1} animated={false} canDismiss={false}></ion-modal>
+          <ion-modal
+            overlayIndex={1}
+            breakpoints={[0, 1]}
+            initialBreakpoint={1}
+            animated={false}
+            canDismiss={false}
+          ></ion-modal>
         ),
       });
 
