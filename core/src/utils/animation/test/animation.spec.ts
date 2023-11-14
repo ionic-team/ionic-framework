@@ -428,9 +428,15 @@ describe('cubic-bezier conversion', () => {
         [1, 1],
       ];
 
-      shouldApproximatelyEqual(getTimeGivenProgression(equation[0], equation[1], equation[2], equation[3], 0.5), [0.16]);
-      shouldApproximatelyEqual(getTimeGivenProgression(equation[0], equation[1], equation[2], equation[3], 0.97), [0.56]);
-      shouldApproximatelyEqual(getTimeGivenProgression(equation[0], equation[1], equation[2], equation[3], 0.33), [0.11]);
+      shouldApproximatelyEqual(getTimeGivenProgression(equation[0], equation[1], equation[2], equation[3], 0.5), [
+        0.16,
+      ]);
+      shouldApproximatelyEqual(getTimeGivenProgression(equation[0], equation[1], equation[2], equation[3], 0.97), [
+        0.56,
+      ]);
+      shouldApproximatelyEqual(getTimeGivenProgression(equation[0], equation[1], equation[2], equation[3], 0.33), [
+        0.11,
+      ]);
     });
 
     it('cubic-bezier(1, 0, 0.68, 0.28)', () => {
@@ -441,9 +447,15 @@ describe('cubic-bezier conversion', () => {
         [1, 1],
       ];
 
-      shouldApproximatelyEqual(getTimeGivenProgression(equation[0], equation[1], equation[2], equation[3], 0.08), [0.6]);
-      shouldApproximatelyEqual(getTimeGivenProgression(equation[0], equation[1], equation[2], equation[3], 0.5), [0.84]);
-      shouldApproximatelyEqual(getTimeGivenProgression(equation[0], equation[1], equation[2], equation[3], 0.94), [0.98]);
+      shouldApproximatelyEqual(getTimeGivenProgression(equation[0], equation[1], equation[2], equation[3], 0.08), [
+        0.6,
+      ]);
+      shouldApproximatelyEqual(getTimeGivenProgression(equation[0], equation[1], equation[2], equation[3], 0.5), [
+        0.84,
+      ]);
+      shouldApproximatelyEqual(getTimeGivenProgression(equation[0], equation[1], equation[2], equation[3], 0.94), [
+        0.98,
+      ]);
     });
 
     it('cubic-bezier(0.4, 0, 0.6, 1)', () => {
@@ -454,9 +466,15 @@ describe('cubic-bezier conversion', () => {
         [1, 1],
       ];
 
-      shouldApproximatelyEqual(getTimeGivenProgression(equation[0], equation[1], equation[2], equation[3], 0.39), [0.43]);
-      shouldApproximatelyEqual(getTimeGivenProgression(equation[0], equation[1], equation[2], equation[3], 0.03), [0.11]);
-      shouldApproximatelyEqual(getTimeGivenProgression(equation[0], equation[1], equation[2], equation[3], 0.89), [0.78]);
+      shouldApproximatelyEqual(getTimeGivenProgression(equation[0], equation[1], equation[2], equation[3], 0.39), [
+        0.43,
+      ]);
+      shouldApproximatelyEqual(getTimeGivenProgression(equation[0], equation[1], equation[2], equation[3], 0.03), [
+        0.11,
+      ]);
+      shouldApproximatelyEqual(getTimeGivenProgression(equation[0], equation[1], equation[2], equation[3], 0.89), [
+        0.78,
+      ]);
     });
 
     it('cubic-bezier(0, 0, 0.2, 1)', () => {
@@ -467,9 +485,15 @@ describe('cubic-bezier conversion', () => {
         [1, 1],
       ];
 
-      shouldApproximatelyEqual(getTimeGivenProgression(equation[0], equation[1], equation[2], equation[3], 0.95), [0.71]);
-      shouldApproximatelyEqual(getTimeGivenProgression(equation[0], equation[1], equation[2], equation[3], 0.1), [0.03]);
-      shouldApproximatelyEqual(getTimeGivenProgression(equation[0], equation[1], equation[2], equation[3], 0.7), [0.35]);
+      shouldApproximatelyEqual(getTimeGivenProgression(equation[0], equation[1], equation[2], equation[3], 0.95), [
+        0.71,
+      ]);
+      shouldApproximatelyEqual(getTimeGivenProgression(equation[0], equation[1], equation[2], equation[3], 0.1), [
+        0.03,
+      ]);
+      shouldApproximatelyEqual(getTimeGivenProgression(equation[0], equation[1], equation[2], equation[3], 0.7), [
+        0.35,
+      ]);
     });
 
     it('cubic-bezier(0.32, 0.72, 0, 1) (with out of bounds progression)', () => {
@@ -492,7 +516,10 @@ describe('cubic-bezier conversion', () => {
         [1, 1],
       ];
 
-      shouldApproximatelyEqual(getTimeGivenProgression(equation[0], equation[1], equation[2], equation[3], 1.02), [0.35, 0.87]);
+      shouldApproximatelyEqual(
+        getTimeGivenProgression(equation[0], equation[1], equation[2], equation[3], 1.02),
+        [0.35, 0.87]
+      );
     });
 
     it('cubic-bezier(0.32, 0.72, 0, 1) (with out of bounds progression)', () => {

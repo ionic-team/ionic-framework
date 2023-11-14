@@ -256,33 +256,41 @@ describe('matchesRedirect', () => {
     expect(matchesRedirect([''], { from: [''], to: { segments: [''] } })).toBeTruthy();
     expect(matchesRedirect([''], { from: ['*'], to: { segments: [''] } })).toBeTruthy();
 
-    expect(matchesRedirect([''], { from: ['hola'], to: { segments: []} })).toBeFalsy();
-    expect(matchesRedirect([''], { from: ['hola', '*'], to: { segments: ['']} })).toBeFalsy();
+    expect(matchesRedirect([''], { from: ['hola'], to: { segments: [] } })).toBeFalsy();
+    expect(matchesRedirect([''], { from: ['hola', '*'], to: { segments: [''] } })).toBeFalsy();
   });
 
   it('should match simple segment redirect', () => {
-    expect(matchesRedirect(['workouts'], { from: ['workouts'], to: { segments: ['']} })).toBeTruthy();
-    expect(matchesRedirect(['workouts'], { from: ['*'], to: { segments: ['']} })).toBeTruthy();
-    expect(matchesRedirect(['workouts', 'hola'], { from: ['workouts', '*'], to: { segments: ['']} })).toBeTruthy();
-    expect(matchesRedirect(['workouts', 'hola'], { from: ['workouts', 'hola'], to: { segments: ['']} })).toBeTruthy();
+    expect(matchesRedirect(['workouts'], { from: ['workouts'], to: { segments: [''] } })).toBeTruthy();
+    expect(matchesRedirect(['workouts'], { from: ['*'], to: { segments: [''] } })).toBeTruthy();
+    expect(matchesRedirect(['workouts', 'hola'], { from: ['workouts', '*'], to: { segments: [''] } })).toBeTruthy();
+    expect(matchesRedirect(['workouts', 'hola'], { from: ['workouts', 'hola'], to: { segments: [''] } })).toBeTruthy();
 
-    expect(matchesRedirect(['workouts'], { from: ['workouts', '*'], to: { segments: ['']} })).toBeFalsy();
-    expect(matchesRedirect(['workouts', 'hola'], { from: ['workouts'], to: { segments: ['']} })).toBeFalsy();
-    expect(matchesRedirect(['workouts', 'hola'], { from: ['workouts', 'adios'], to: { segments: ['']} })).toBeFalsy();
+    expect(matchesRedirect(['workouts'], { from: ['workouts', '*'], to: { segments: [''] } })).toBeFalsy();
+    expect(matchesRedirect(['workouts', 'hola'], { from: ['workouts'], to: { segments: [''] } })).toBeFalsy();
+    expect(matchesRedirect(['workouts', 'hola'], { from: ['workouts', 'adios'], to: { segments: [''] } })).toBeFalsy();
   });
 
   it('should match long route', () => {
-    expect(matchesRedirect(['workouts', 'path', 'to'], { from: ['*'], to: { segments: ['']} })).toBeTruthy();
-    expect(matchesRedirect(['workouts', 'path', 'to'], { from: ['workouts', '*'], to: { segments: ['']} })).toBeTruthy();
-    expect(matchesRedirect(['workouts', 'path', 'to'], { from: ['workouts', 'path', '*'], to: { segments: ['']} })).toBeTruthy();
-    expect(matchesRedirect(['workouts', 'path', 'to'], { from: ['workouts', 'path', 'to'], to: { segments: ['']} })).toBeTruthy();
-
-    expect(matchesRedirect(['workouts', 'path', 'to'], { from: ['login'], to: { segments: ['']} })).toBeFalsy();
-    expect(matchesRedirect(['workouts', 'path', 'to'], { from: ['login', '*'], to: { segments: ['']} })).toBeFalsy();
-    expect(matchesRedirect(['workouts', 'path', 'to'], { from: ['workouts'], to: { segments: ['']} })).toBeFalsy();
-    expect(matchesRedirect(['workouts', 'path', 'to'], { from: ['workouts', 'path'], to: { segments: ['']} })).toBeFalsy();
+    expect(matchesRedirect(['workouts', 'path', 'to'], { from: ['*'], to: { segments: [''] } })).toBeTruthy();
     expect(
-      matchesRedirect(['workouts', 'path', 'to'], { from: ['workouts', 'path', 'to', '*'], to: { segments: ['']} })
+      matchesRedirect(['workouts', 'path', 'to'], { from: ['workouts', '*'], to: { segments: [''] } })
+    ).toBeTruthy();
+    expect(
+      matchesRedirect(['workouts', 'path', 'to'], { from: ['workouts', 'path', '*'], to: { segments: [''] } })
+    ).toBeTruthy();
+    expect(
+      matchesRedirect(['workouts', 'path', 'to'], { from: ['workouts', 'path', 'to'], to: { segments: [''] } })
+    ).toBeTruthy();
+
+    expect(matchesRedirect(['workouts', 'path', 'to'], { from: ['login'], to: { segments: [''] } })).toBeFalsy();
+    expect(matchesRedirect(['workouts', 'path', 'to'], { from: ['login', '*'], to: { segments: [''] } })).toBeFalsy();
+    expect(matchesRedirect(['workouts', 'path', 'to'], { from: ['workouts'], to: { segments: [''] } })).toBeFalsy();
+    expect(
+      matchesRedirect(['workouts', 'path', 'to'], { from: ['workouts', 'path'], to: { segments: [''] } })
+    ).toBeFalsy();
+    expect(
+      matchesRedirect(['workouts', 'path', 'to'], { from: ['workouts', 'path', 'to', '*'], to: { segments: [''] } })
     ).toBeFalsy();
   });
 

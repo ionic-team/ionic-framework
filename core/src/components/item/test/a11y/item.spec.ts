@@ -5,7 +5,6 @@ import { RadioGroup } from '../../../radio-group/radio-group';
 import { Radio } from '../../../radio/radio';
 import { Item } from '../../item';
 
-
 describe('ion-item', () => {
   it('should not have a role when used without list', async () => {
     const page = await newSpecPage({

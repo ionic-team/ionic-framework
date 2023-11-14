@@ -240,7 +240,7 @@ describe('Keyboard Assist Integration', () => {
 
   afterEach(() => {
     mockDispatchEvent.mockReset();
-  })
+  });
 
   it('should properly set the keyboard to be open', () => {
     resizeVisualViewport(window, { width: 320, height: 350 });
@@ -273,7 +273,6 @@ describe('Keyboard Assist Integration', () => {
 });
 
 describe('Keyboard Assist with Capacitor', () => {
-
   let mockDispatchEvent: jest.Mock<any, any>;
 
   beforeEach(() => {
@@ -285,7 +284,7 @@ describe('Keyboard Assist with Capacitor', () => {
 
   afterEach(() => {
     mockDispatchEvent.mockReset();
-  })
+  });
 
   it('should attach visual viewport listeners when Capacitor is available but the Keyboard plugin is not', () => {
     resizeVisualViewport(window, { width: 320, height: 350 });

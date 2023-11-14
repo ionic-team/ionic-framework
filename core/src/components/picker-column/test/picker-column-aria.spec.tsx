@@ -19,7 +19,7 @@ describe('picker-column', () => {
           text: 'Java',
         },
       ],
-      name: 'programmingLanguages'
+      name: 'programmingLanguages',
     };
 
     const page = await newSpecPage({
