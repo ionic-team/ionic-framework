@@ -58,10 +58,7 @@ export class ReorderGroup implements ComponentInterface {
   @Prop() longPress = false;
 
   // the amount of time in milliseconds that the user must press and hold before the reorder is initiated
-  @Prop() longPressDuration = 250;
-
-  // the amount of pixels that the pointer must move before the reorder is initiated
-  @Prop() longPressMaxThreshold = 10;
+  @Prop() longPressDuration = this.longPress ? 5000 : 0;
 
   /**
    * Event that needs to be listened to in order to complete the reorder action.
@@ -137,60 +134,52 @@ export class ReorderGroup implements ComponentInterface {
   private onStart(ev: GestureDetail) {
     ev.event.preventDefault();
 
-    if (this.longPress) {
+    this.clearGestureTimeout();
+
+    this.longPressTimeout = setTimeout(() => {
+      this.pressed = true;
       this.clearGestureTimeout();
 
-      this.longPressTimeout = setTimeout(() => {
-        this.pressed = true;
-        this.clearGestureTimeout();
+      const item = (this.selectedItemEl = ev.data);
+      const heights = this.cachedHeights;
+      heights.length = 0;
+      const el = this.el;
+      const children: any = el.children;
+      if (!children || children.length === 0) {
+        return;
+      }
 
-        this.selectingItem(ev);
-      }, this.longPressDuration || 500);
-    } else {
-      this.selectingItem(ev);
-    }
-  }
+      let sum = 0;
+      for (let i = 0; i < children.length; i++) {
+        const child = children[i];
+        sum += child.offsetHeight;
+        heights.push(sum);
+        child.$ionIndex = i;
+      }
 
-  private selectingItem(ev: GestureDetail) {
-    const item = (this.selectedItemEl = ev.data);
-    const heights = this.cachedHeights;
-    heights.length = 0;
-    const el = this.el;
-    const children: any = el.children;
-    if (!children || children.length === 0) {
-      return;
-    }
+      const box = el.getBoundingClientRect();
+      this.containerTop = box.top;
+      this.containerBottom = box.bottom;
 
-    let sum = 0;
-    for (let i = 0; i < children.length; i++) {
-      const child = children[i];
-      sum += child.offsetHeight;
-      heights.push(sum);
-      child.$ionIndex = i;
-    }
+      if (this.scrollEl) {
+        const scrollBox = this.scrollEl.getBoundingClientRect();
+        this.scrollElInitial = this.scrollEl.scrollTop;
+        this.scrollElTop = scrollBox.top + AUTO_SCROLL_MARGIN;
+        this.scrollElBottom = scrollBox.bottom - AUTO_SCROLL_MARGIN;
+      } else {
+        this.scrollElInitial = 0;
+        this.scrollElTop = 0;
+        this.scrollElBottom = 0;
+      }
 
-    const box = el.getBoundingClientRect();
-    this.containerTop = box.top;
-    this.containerBottom = box.bottom;
+      this.lastToIndex = indexForItem(item);
+      this.selectedItemHeight = item.offsetHeight;
+      this.state = ReorderGroupState.Active;
 
-    if (this.scrollEl) {
-      const scrollBox = this.scrollEl.getBoundingClientRect();
-      this.scrollElInitial = this.scrollEl.scrollTop;
-      this.scrollElTop = scrollBox.top + AUTO_SCROLL_MARGIN;
-      this.scrollElBottom = scrollBox.bottom - AUTO_SCROLL_MARGIN;
-    } else {
-      this.scrollElInitial = 0;
-      this.scrollElTop = 0;
-      this.scrollElBottom = 0;
-    }
+      item.classList.add(ITEM_REORDER_SELECTED);
 
-    this.lastToIndex = indexForItem(item);
-    this.selectedItemHeight = item.offsetHeight;
-    this.state = ReorderGroupState.Active;
-
-    item.classList.add(ITEM_REORDER_SELECTED);
-
-    hapticSelectionStart();
+      hapticSelectionStart();
+    }, this.longPressDuration); // this will be 0 if not longpress
   }
 
   private clearGestureTimeout = () => {
@@ -229,10 +218,6 @@ export class ReorderGroup implements ComponentInterface {
 
     // Update selected item position
     selectedItem.style.transform = `translateY(${deltaY}px)`;
-
-    if (Math.abs(ev.deltaX) + Math.abs(ev.deltaY) <= this.longPressMaxThreshold) {
-      return;
-    }
 
     this.clearGestureTimeout();
   }
