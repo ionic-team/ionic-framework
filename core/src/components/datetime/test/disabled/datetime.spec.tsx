@@ -1,9 +1,32 @@
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 
-import { Datetime } from '../../datetime/datetime';
+import { Datetime } from '../../../datetime/datetime';
 
 describe('ion-datetime disabled', () => {
+  beforeEach(() => {
+    // IntersectionObserver isn't available in test environment
+    global.IntersectionObserver = class IntersectionObserver {
+      constructor() {}
+
+      disconnect() {
+        return null;
+      }
+
+      observe() {
+        return null;
+      }
+
+      takeRecords() {
+        return null;
+      }
+
+      unobserve() {
+        return null;
+      }
+    };
+  });
+
   it('picker should be disabled in prefer wheel mode', async () => {
     const page = await newSpecPage({
       components: [Datetime],
@@ -12,10 +35,14 @@ describe('ion-datetime disabled', () => {
       ),
     });
 
-    await page.waitForSelector('.datetime-ready');
+    await page.waitForChanges();
 
-    for (const column of await page.locator('ion-picker-column-internal').all()) {
-      await expect(column).toHaveAttribute('disabled');
-    }
+    const columns = await page.body.querySelectorAll('ion-picker-column-internal');
+
+    await expect(columns.length).toEqual(4);
+
+    columns.forEach((column) => {
+      expect(column.getAttribute('disabled')).toBe('true');
+    });
   });
 });
