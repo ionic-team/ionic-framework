@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.5.5-nightly.20231114](https://github.com/ionic-team/ionic-framework/compare/v7.5.4...v7.5.5-nightly.20231114) (2023-11-14)
+
+
+### Bug Fixes
+
+* **accordion-group:** correct accordion is open on load ([#28510](https://github.com/ionic-team/ionic-framework/issues/28510)) ([a000dd2](https://github.com/ionic-team/ionic-framework/commit/a000dd2c0b65be8ab5b2ad19f2748fbca13d5085)), closes [#28506](https://github.com/ionic-team/ionic-framework/issues/28506)
+* **action-sheet:** adjust height for safe area with scrollable options ([#28504](https://github.com/ionic-team/ionic-framework/issues/28504)) ([900267e](https://github.com/ionic-team/ionic-framework/commit/900267eb36c36f2af63435f6b46acca52b3bdab7)), closes [#27777](https://github.com/ionic-team/ionic-framework/issues/27777)
+* **header:** collapsible large title does not flicker when collapse prop not reflected ([#28472](https://github.com/ionic-team/ionic-framework/issues/28472)) ([8227b0e](https://github.com/ionic-team/ionic-framework/commit/8227b0ee6d5250e122a34a83c644f8a74fbbafd5)), closes [#28466](https://github.com/ionic-team/ionic-framework/issues/28466)
+* **item-divider:** apply safe area to proper side regardless of direction ([#28420](https://github.com/ionic-team/ionic-framework/issues/28420)) ([4513e0c](https://github.com/ionic-team/ionic-framework/commit/4513e0c6b066d4990800c707e1d97f69c8fcfb0c))
+* **radio-group:** emit value change on componentDidLoad ([#28488](https://github.com/ionic-team/ionic-framework/issues/28488)) ([73b8bfd](https://github.com/ionic-team/ionic-framework/commit/73b8bfde3f060490958c10f58d0f68de80cb957f)), closes [#28356](https://github.com/ionic-team/ionic-framework/issues/28356)
+* **searchbar:** cancel icon aligns with back button ([#28478](https://github.com/ionic-team/ionic-framework/issues/28478)) ([c053fd9](https://github.com/ionic-team/ionic-framework/commit/c053fd9c68d9b1add1335db80be962215946a0b1)), closes [#28468](https://github.com/ionic-team/ionic-framework/issues/28468)
+
+
+
+
+
 ## [7.5.4](https://github.com/ionic-team/ionic-framework/compare/v7.5.3...v7.5.4) (2023-11-08)
 
 
