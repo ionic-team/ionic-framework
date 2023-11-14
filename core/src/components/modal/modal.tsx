@@ -335,6 +335,7 @@ export class Modal implements ComponentInterface, OverlayInterface {
   connectedCallback() {
     const { el } = this;
     prepareOverlay(el);
+    this.triggerChanged();
   }
 
   disconnectedCallback() {
