@@ -38,6 +38,8 @@ export class ReorderGroup implements ComponentInterface {
 
   private longPressTimeout: any;
   private pressed = false;
+  // the amount of time in milliseconds that the user must press and hold before the reorder is initiated
+  private longPressDuration = 500;
 
   @State() state = ReorderGroupState.Idle;
 
@@ -56,9 +58,6 @@ export class ReorderGroup implements ComponentInterface {
 
   // boolean to enable/disable the long press gesture
   @Prop() longPress = false;
-
-  // the amount of time in milliseconds that the user must press and hold before the reorder is initiated
-  @Prop() longPressDuration = this.longPress ? 5000 : 0;
 
   /**
    * Event that needs to be listened to in order to complete the reorder action.
@@ -134,8 +133,6 @@ export class ReorderGroup implements ComponentInterface {
   private onStart(ev: GestureDetail) {
     ev.event.preventDefault();
 
-    this.clearGestureTimeout();
-
     this.longPressTimeout = setTimeout(() => {
       this.pressed = true;
       this.clearGestureTimeout();
@@ -179,7 +176,7 @@ export class ReorderGroup implements ComponentInterface {
       item.classList.add(ITEM_REORDER_SELECTED);
 
       hapticSelectionStart();
-    }, this.longPressDuration); // this will be 0 if not longpress
+    }, this.longPress ? this.longPressDuration : 0);
   }
 
   private clearGestureTimeout = () => {
