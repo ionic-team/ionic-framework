@@ -1,11 +1,9 @@
 describe('Navigation', () => {
   beforeEach(() => {
-    cy.visit('/lazy/navigation');
+    cy.visit('/lazy/navigation/page1?ionic:_testing=true');
   })
 
   it('should navigate correctly', () => {
-    cy.visit('/lazy/navigation/page1');
-    cy.wait(2000);
     cy.testStack('ion-router-outlet', ['app-navigation-page2', 'app-navigation-page1']);
 
     cy.get('app-navigation-page2').should('have.attr', 'aria-hidden').and('equal', 'true');
