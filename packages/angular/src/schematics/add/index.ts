@@ -138,6 +138,28 @@ function addIonicons(projectName: string, projectSourceRoot: Path): Rule {
   };
 }
 
+function addIonicConfig(): Rule {
+  return (host: Tree) => {
+    const ionicConfig = `ionic.config.json`;
+    if (!host.exists(ionicConfig)) {
+      host.create(
+        ionicConfig,
+        JSON.stringify(
+          {
+            name: 'ionic-app',
+            app_id: '',
+            type: 'angular',
+            integrations: {},
+          },
+          null,
+          2
+        )
+      );
+    }
+    return host;
+  };
+}
+
 function addIonicBuilder(projectName: string): Rule {
   return (host: Tree) => {
     addArchitectBuilder(host, projectName, 'ionic-cordova-serve', {
@@ -197,6 +219,7 @@ export default function ngAdd(options: IonAddOptions): Rule {
       addIonicBuilder(options.project),
       addIonicStyles(options.project, sourcePath),
       addIonicons(options.project, sourcePath),
+      addIonicConfig(),
       mergeWith(rootTemplateSource),
       // install freshly added dependencies
       installNodeDeps(),
