@@ -288,7 +288,11 @@
 }
 
 .calendar-month-year-toggle {
-  @include padding(8px, 16px, 8px, calc(var(--padding-start) + var(--ion-safe-area-left, 0px)));
+  @include padding(0px, 16px, 0px, calc(var(--padding-start) + var(--ion-safe-area-left, 0px)));
 
   min-height: 44px;
+}
+
+.calendar-month-year-toggle label {
+  @include margin(10px, 8px, 10px, 0);
 }
