@@ -1,3 +1,4 @@
+import type { DatetimeParts } from '../datetime-interface';
 import {
   generateMonths,
   getDaysOfWeek,
@@ -364,7 +365,7 @@ describe('generateTime()', () => {
         year: undefined,
         hour: 19,
         minute: 50,
-      };
+      } as unknown as DatetimeParts;
 
       const minParts = {
         day: undefined,
@@ -372,7 +373,7 @@ describe('generateTime()', () => {
         year: undefined,
         hour: 19,
         minute: 50,
-      };
+      } as unknown as DatetimeParts;
 
       const { hours } = generateTime('en-US', refValue, 'h23', minParts);
 
@@ -387,7 +388,7 @@ describe('generateTime()', () => {
           year: undefined,
           hour: 20,
           minute: 22,
-        };
+        } as unknown as DatetimeParts;
 
         const minParts = {
           day: undefined,
@@ -395,7 +396,7 @@ describe('generateTime()', () => {
           year: undefined,
           hour: 19,
           minute: 30,
-        };
+        } as unknown as DatetimeParts;
 
         const { hours, minutes } = generateTime('en-US', refValue, 'h23', minParts);
 
@@ -411,7 +412,7 @@ describe('generateTime()', () => {
         year: undefined,
         hour: 20,
         minute: 30,
-      };
+      } as unknown as DatetimeParts;
 
       const minParts = {
         day: undefined,
@@ -419,7 +420,7 @@ describe('generateTime()', () => {
         year: undefined,
         hour: 19,
         minute: 30,
-      };
+      } as unknown as DatetimeParts;
 
       const maxParts = {
         day: undefined,
@@ -427,7 +428,7 @@ describe('generateTime()', () => {
         year: undefined,
         hour: 20,
         minute: 40,
-      };
+      } as unknown as DatetimeParts;
 
       const { hours } = generateTime('en-US', refValue, 'h23', minParts, maxParts);
 
@@ -441,7 +442,7 @@ describe('generateTime()', () => {
         year: undefined,
         hour: 13,
         minute: 0,
-      };
+      } as unknown as DatetimeParts;
 
       const maxParts = {
         day: undefined,
@@ -449,7 +450,7 @@ describe('generateTime()', () => {
         year: undefined,
         hour: 13,
         minute: 2,
-      };
+      } as unknown as DatetimeParts;
 
       const { minutes } = generateTime('en-US', refValue, 'h23', undefined, maxParts);
 
@@ -463,7 +464,7 @@ describe('generateTime()', () => {
         year: undefined,
         hour: 12,
         minute: 0,
-      };
+      } as unknown as DatetimeParts;
 
       const maxParts = {
         day: undefined,
@@ -471,7 +472,7 @@ describe('generateTime()', () => {
         year: undefined,
         hour: 13,
         minute: 2,
-      };
+      } as unknown as DatetimeParts;
 
       const { minutes } = generateTime('en-US', refValue, 'h23', undefined, maxParts);
 

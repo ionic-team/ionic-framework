@@ -1,6 +1,7 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { InfiniteScrollContent } from '../infinite-scroll-content';
+
 import { config } from '../../../global/config';
+import { InfiniteScrollContent } from '../infinite-scroll-content';
 
 describe('infinite-scroll-content: custom html', () => {
   it('should not allow for custom html by default', async () => {
@@ -9,7 +10,7 @@ describe('infinite-scroll-content: custom html', () => {
       html: `<ion-infinite-scroll-content loading-text="<button class='custom-html'>Custom Text</button>"></ion-infinite-scroll-content>`,
     });
 
-    const content = page.body.querySelector('.infinite-loading-text');
+    const content = page.body.querySelector('.infinite-loading-text')!;
     expect(content.textContent).toContain('Custom Text');
     expect(content.querySelector('button.custom-html')).toBe(null);
   });
@@ -21,7 +22,7 @@ describe('infinite-scroll-content: custom html', () => {
       html: `<ion-infinite-scroll-content loading-text="<button class='custom-html'>Custom Text</button>"></ion-infinite-scroll-content>`,
     });
 
-    const content = page.body.querySelector('.infinite-loading-text');
+    const content = page.body.querySelector('.infinite-loading-text')!;
     expect(content.textContent).toContain('Custom Text');
     expect(content.querySelector('button.custom-html')).not.toBe(null);
   });
@@ -33,7 +34,7 @@ describe('infinite-scroll-content: custom html', () => {
       html: `<ion-infinite-scroll-content loading-text="<button class='custom-html'>Custom Text2</button>"></ion-infinite-scroll-content>`,
     });
 
-    const content = page.body.querySelector('.infinite-loading-text');
+    const content = page.body.querySelector('.infinite-loading-text')!;
     expect(content.textContent).toContain('Custom Text');
     expect(content.querySelector('button.custom-html')).toBe(null);
   });
