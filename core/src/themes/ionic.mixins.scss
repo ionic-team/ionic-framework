@@ -1,3 +1,38 @@
+
+/**
+ * A heuristic that applies CSS to tablet
+ * viewports.
+ * Usage:
+
+  @include tablet-viewport() {
+    :host {
+      background-color: green;
+    }
+  }
+ */
+@mixin tablet-viewport() {
+  @media screen and (min-width: 768px) {
+    @content;
+  }
+}
+
+/**
+ * A heuristic that applies CSS to mobile
+ * viewports (i.e. phones, not tablets).
+ * Usage:
+
+  @include mobile-viewport() {
+    :host {
+      background-color: blue;
+    }
+  }
+ */
+@mixin mobile-viewport() {
+  @media screen and (max-width: 767px) {
+    @content;
+  }
+}
+
 @mixin input-cover() {
   @include position(0, null, null, 0);
   @include margin(0);
@@ -217,7 +252,7 @@
       $restSelectors: append($restSelectors, $selector, comma);
     }
   }
-  
+
   // Supported by Chrome.
   @if length($hostContextSelectors) > 0 {
     @at-root #{$hostContextSelectors} {

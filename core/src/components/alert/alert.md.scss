@@ -60,7 +60,7 @@
  * a total maximum height. We only want to set a max-height
  * on mobile phones.
  */
-@media screen and (max-width: 767px) {
+@include mobile-viewport() {
   .alert-message {
     max-height: $alert-md-content-max-height;
   }
@@ -122,7 +122,7 @@
  * a total maximum height. We only want to set a max-height
  * on mobile phones.
  */
-@media screen and (max-width: 767px) {
+@include mobile-viewport() {
   .alert-radio-group,
   .alert-checkbox-group {
     max-height: $alert-md-content-max-height;
@@ -306,7 +306,7 @@
  * MD alerts should scale up to 560px x 560px
  * on tablet dimensions.
  */
-@media screen and (min-width: 768px) {
+@include tablet-viewport() {
   :host {
     --max-width: #{$alert-md-max-width-tablet};
     --max-height: #{$alert-md-max-height-tablet};
