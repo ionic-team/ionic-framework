@@ -60,7 +60,7 @@ function addProvideIonicAngular(projectName: string, projectSourceRoot: Path): R
   return (host: Tree) => {
     const appConfig = `${projectSourceRoot}/app/app.config.ts`;
     if (host.exists(appConfig)) {
-      addRootProvider(
+      return addRootProvider(
         projectName,
         ({ code, external }) => code`${external('provideIonicAngular', '@ionic/angular/standalone')}({})`
       );
