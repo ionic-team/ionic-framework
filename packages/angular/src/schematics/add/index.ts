@@ -140,7 +140,7 @@ function addIonicons(projectName: string, projectSourceRoot: Path): Rule {
 
 function addIonicConfig(): Rule {
   return (host: Tree) => {
-    const ionicConfig = `ionic.config.json`;
+    const ionicConfig = 'ionic.config.json';
     if (!host.exists(ionicConfig)) {
       host.create(
         ionicConfig,
