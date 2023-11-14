@@ -36,6 +36,9 @@ export class ReorderGroup implements ComponentInterface {
   private containerTop = 0;
   private containerBottom = 0;
 
+  private longPressTimeout: any;
+  private pressed = false;
+
   @State() state = ReorderGroupState.Idle;
 
   @Element() el!: HTMLElement;
@@ -72,37 +75,18 @@ export class ReorderGroup implements ComponentInterface {
     if (contentEl) {
       this.scrollEl = await getScrollElement(contentEl);
     }
-    if (this.longPress) {
-      this.gesture = (await import('../../utils/gesture/long-press')).createPressRecognizer({
-        el: this.el,
-        gestureName: 'reorder',
-        gesturePriority: 110,
-        threshold: 0,
-        direction: 'y',
-        passive: false,
-        time: this.longPressDuration,
-        maxThreshold: this.longPressMaxThreshold,
-        canStart: (detail) => this.canStart(detail),
-        onPressHandler: (ev) => {
-          this.onStart(ev);
-        },
-        onMove: (ev) => this.onMove(ev),
-        onEnd: () => this.onEnd(),
-      });
-    } else {
-      this.gesture = (await import('../../utils/gesture')).createGesture({
-        el: this.el,
-        gestureName: 'reorder',
-        gesturePriority: 110,
-        threshold: 0,
-        direction: 'y',
-        passive: false,
-        canStart: (detail) => this.canStart(detail),
-        onStart: (ev) => this.onStart(ev),
-        onMove: (ev) => this.onMove(ev),
-        onEnd: () => this.onEnd(),
-      });
-    }
+    this.gesture = (await import('../../utils/gesture')).createGesture({
+      el: this.el,
+      gestureName: 'reorder',
+      gesturePriority: 110,
+      threshold: 0,
+      direction: 'y',
+      passive: false,
+      canStart: (detail) => this.canStart(detail),
+      onStart: (ev) => this.onStart(ev),
+      onMove: (ev) => this.onMove(ev),
+      onEnd: () => this.onEnd(),
+    });
 
     this.disabledChanged();
   }
@@ -153,6 +137,21 @@ export class ReorderGroup implements ComponentInterface {
   private onStart(ev: GestureDetail) {
     ev.event.preventDefault();
 
+    if (this.longPress) {
+      this.clearGestureTimeout();
+
+      this.longPressTimeout = setTimeout(() => {
+        this.pressed = true;
+        this.clearGestureTimeout();
+
+        this.selectingItem(ev);
+      }, this.longPressDuration || 500);
+    } else {
+      this.selectingItem(ev);
+    }
+  }
+
+  private selectingItem(ev: GestureDetail) {
     const item = (this.selectedItemEl = ev.data);
     const heights = this.cachedHeights;
     heights.length = 0;
@@ -194,9 +193,20 @@ export class ReorderGroup implements ComponentInterface {
     hapticSelectionStart();
   }
 
+  private clearGestureTimeout = () => {
+    if (this.longPressTimeout) {
+      clearTimeout(this.longPressTimeout);
+      this.longPressTimeout = undefined;
+    }
+  };
+
   private onMove(ev: GestureDetail) {
     const selectedItem = this.selectedItemEl;
     if (!selectedItem) {
+      return;
+    }
+
+    if (this.longPress && !this.pressed) {
       return;
     }
     // Scroll if we reach the scroll margins
@@ -219,6 +229,12 @@ export class ReorderGroup implements ComponentInterface {
 
     // Update selected item position
     selectedItem.style.transform = `translateY(${deltaY}px)`;
+
+    if (Math.abs(ev.deltaX) + Math.abs(ev.deltaY) <= this.longPressMaxThreshold) {
+      return;
+    }
+
+    this.clearGestureTimeout();
   }
 
   private onEnd() {
@@ -243,6 +259,13 @@ export class ReorderGroup implements ComponentInterface {
     }
 
     hapticSelectionEnd();
+
+    if (this.longPress && !this.pressed) {
+      return;
+    }
+
+    this.pressed = false;
+    this.clearGestureTimeout();
   }
 
   private completeReorder(listOrReorder?: boolean | any[]): any {
