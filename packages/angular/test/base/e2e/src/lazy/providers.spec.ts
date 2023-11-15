@@ -33,5 +33,11 @@ describe('Providers', () => {
     cy.get('#set-menu-count').click();
     cy.get('#registered-menu-count').should('have.text', '1');
   });
+
+  it('should open an action sheet', () => {
+    cy.get('button#open-action-sheet').click();
+
+    cy.get('ion-action-sheet').should('be.visible');
+  });
 });
 

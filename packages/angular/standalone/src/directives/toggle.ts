@@ -7,26 +7,14 @@ import {
   HostListener,
   Injector,
   NgZone,
+  forwardRef,
 } from '@angular/core';
-import type { OnInit } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ValueAccessor, setIonicClasses } from '@ionic/angular/common';
 import type { ToggleChangeEventDetail, Components } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-toggle.js';
 
-/**
- * Value accessor components should not use ProxyCmp
- * and should call defineCustomElement and proxyInputs
- * manually instead. Using both the @ProxyCmp and @Component
- * decorators and useExisting (where useExisting refers to the
- * class) causes ng-packagr to output multiple component variables
- * which breaks treeshaking.
- * For example, the following would be generated:
- * let IonToggle = IonToggle_1 = class IonToggle extends ValueAccessor {
- * Instead, we want only want the class generated:
- * class IonToggle extends ValueAccessor {
- */
-import { proxyInputs, proxyOutputs } from './angular-component-lib/utils';
+import { ProxyCmp, proxyOutputs } from './angular-component-lib/utils';
 
 const TOGGLE_INPUTS = [
   'checked',
@@ -41,38 +29,40 @@ const TOGGLE_INPUTS = [
   'value',
 ];
 
+/**
+ * Pulling the provider into an object and using PURE works
+ * around an ng-packagr issue that causes
+ * components with multiple decorators and
+ * a provider to be re-assigned. This re-assignment
+ * is not supported by Webpack and causes treeshaking
+ * to not work on these kinds of components.
+ */
+const accessorProvider = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: /*@__PURE__*/ forwardRef(() => IonToggle),
+  multi: true,
+};
+
+@ProxyCmp({
+  defineCustomElementFn: defineCustomElement,
+  inputs: TOGGLE_INPUTS,
+})
 @Component({
   selector: 'ion-toggle',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: TOGGLE_INPUTS,
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: IonToggle,
-      multi: true,
-    },
-  ],
+  providers: [accessorProvider],
   standalone: true,
 })
-export class IonToggle extends ValueAccessor implements OnInit {
+export class IonToggle extends ValueAccessor {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone, injector: Injector) {
     super(injector, r);
-    defineCustomElement();
     c.detach();
     this.el = r.nativeElement;
     proxyOutputs(this, this.el, ['ionChange', 'ionFocus', 'ionBlur']);
-  }
-
-  ngOnInit(): void {
-    /**
-     * Data-bound input properties are set
-     * by Angular after the constructor, so
-     * we need to run the proxy in ngOnInit.
-     */
-    proxyInputs(IonToggle, TOGGLE_INPUTS);
   }
 
   writeValue(value: boolean): void {
