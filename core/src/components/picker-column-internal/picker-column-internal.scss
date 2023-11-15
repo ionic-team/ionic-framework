@@ -79,12 +79,9 @@
 
 :host(.picker-column-disabled) {
   overflow-y: hidden;
-
-  .picker-item {
-    opacity: 0.4;
-  }
 }
 
+:host(.picker-column-disabled) .picker-item,
 :host .picker-item.picker-item-disabled {
   opacity: 0.4;
 }
