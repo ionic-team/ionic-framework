@@ -58,7 +58,6 @@ const getAngularOutputTargets = () => {
         'ion-textarea',
         'ion-searchbar',
         'ion-datetime',
-        'ion-radio',
         'ion-segment',
         'ion-checkbox',
         'ion-toggle',

@@ -53,6 +53,7 @@ import { defineCustomElement as defineIonNavLink } from '@ionic/core/components/
 import { defineCustomElement as defineIonNote } from '@ionic/core/components/ion-note.js';
 import { defineCustomElement as defineIonPicker } from '@ionic/core/components/ion-picker.js';
 import { defineCustomElement as defineIonProgressBar } from '@ionic/core/components/ion-progress-bar.js';
+import { defineCustomElement as defineIonRadio } from '@ionic/core/components/ion-radio.js';
 import { defineCustomElement as defineIonRefresher } from '@ionic/core/components/ion-refresher.js';
 import { defineCustomElement as defineIonRefresherContent } from '@ionic/core/components/ion-refresher-content.js';
 import { defineCustomElement as defineIonReorder } from '@ionic/core/components/ion-reorder.js';
@@ -1492,6 +1493,40 @@ export class IonProgressBar {
 
 
 export declare interface IonProgressBar extends Components.IonProgressBar {}
+
+
+@ProxyCmp({
+  defineCustomElementFn: defineIonRadio,
+  inputs: ['alignment', 'color', 'disabled', 'justify', 'labelPlacement', 'legacy', 'mode', 'name', 'value']
+})
+@Component({
+  selector: 'ion-radio',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['alignment', 'color', 'disabled', 'justify', 'labelPlacement', 'legacy', 'mode', 'name', 'value'],
+  standalone: true
+})
+export class IonRadio {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionFocus', 'ionBlur']);
+  }
+}
+
+
+export declare interface IonRadio extends Components.IonRadio {
+  /**
+   * Emitted when the radio button has focus.
+   */
+  ionFocus: EventEmitter<CustomEvent<void>>;
+  /**
+   * Emitted when the radio button loses focus.
+   */
+  ionBlur: EventEmitter<CustomEvent<void>>;
+}
 
 
 @ProxyCmp({
