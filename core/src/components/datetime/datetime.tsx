@@ -492,7 +492,7 @@ export class Datetime implements ComponentInterface {
    */
   @Method()
   async confirm(closeOverlay = false) {
-    const { isCalendarPicker, activeParts } = this;
+    const { isCalendarPicker, activeParts, preferWheel, workingParts } = this;
 
     /**
      * We only update the value if the presentation is not a calendar picker.
@@ -500,13 +500,13 @@ export class Datetime implements ComponentInterface {
     if (activeParts !== undefined || !isCalendarPicker) {
       const activePartsIsArray = Array.isArray(activeParts);
       if (activePartsIsArray && activeParts.length === 0) {
-        if (this.preferWheel) {
+        if (preferWheel) {
           /**
-           * If the datetime is using a wheel picker, but there
-           * is no active parts, then the user has confirmed the
+           * If the datetime is using a wheel picker, but the
+           * active parts are empty, then the user has confirmed the
            * initial value (working parts) presented to them.
            */
-          this.setValue(convertDataToISO(this.workingParts));
+          this.setValue(convertDataToISO(workingParts));
         } else {
           this.setValue(undefined);
         }
