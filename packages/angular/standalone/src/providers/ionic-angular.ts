@@ -1,15 +1,12 @@
 import { DOCUMENT } from '@angular/common';
 import { APP_INITIALIZER } from '@angular/core';
 import type { Provider } from '@angular/core';
-import {
-  AngularDelegate,
-  ConfigToken,
-  ModalController,
-  PopoverController,
-  provideComponentInputBinding,
-} from '@ionic/angular/common';
+import { AngularDelegate, ConfigToken, provideComponentInputBinding } from '@ionic/angular/common';
 import { initialize } from '@ionic/core/components';
 import type { IonicConfig } from '@ionic/core/components';
+
+import { ModalController } from './modal-controller';
+import { PopoverController } from './popover-controller';
 
 export const provideIonicAngular = (config?: IonicConfig): Provider[] => {
   /**

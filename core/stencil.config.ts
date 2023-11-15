@@ -197,20 +197,17 @@ export const config: Config = {
         {
           elements: ['ion-checkbox', 'ion-toggle'],
           targetAttr: 'checked',
-          event: 'v-ion-change',
-          externalEvent: 'ionChange'
+          event: 'ion-change'
         },
         {
           elements: ['ion-datetime', 'ion-radio-group', 'ion-radio', 'ion-range', 'ion-segment', 'ion-segment-button', 'ion-select', 'ion-accordion-group'],
           targetAttr: 'value',
-          event: 'v-ion-change',
-          externalEvent: 'ionChange'
+          event: 'ion-change',
         },
         {
           elements: ['ion-input', 'ion-searchbar', 'ion-textarea'],
           targetAttr: 'value',
-          event: 'v-ion-input',
-          externalEvent: 'ionInput'
+          event: 'ion-input',
         }
       ],
     }),

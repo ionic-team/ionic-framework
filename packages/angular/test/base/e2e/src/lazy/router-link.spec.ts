@@ -1,6 +1,6 @@
 describe('Router Link', () => {
   beforeEach(() => {
-    cy.visit('/lazy/router-link');
+    cy.visit('/lazy/router-link?ionic:_testing=true');
   });
 
   describe('router-link params and fragments', () => {
@@ -9,7 +9,6 @@ describe('Router Link', () => {
     const id = 'MyPageID==';
 
     it('should go to a page with properly encoded values', () => {
-      cy.visit('/lazy/router-link?ionic:_testing=true');
       cy.get('#queryParamsFragment').click();
 
       const expectedPath = `${encodeURIComponent(id)}`;
@@ -24,7 +23,6 @@ describe('Router Link', () => {
     });
 
     it('should return to a page with preserved query param and fragment', () => {
-      cy.visit('/lazy/router-link?ionic:_testing=true');
       cy.get('#queryParamsFragment').click();
       cy.get('#goToPage3').click();
 
@@ -150,7 +148,6 @@ function testForward() {
 }
 
 function testRoot() {
-  cy.wait(200);
   cy.testStack('ion-router-outlet', ['app-router-link-page']);
   cy.testLifeCycle('app-router-link-page', {
     ionViewWillEnter: 1,
@@ -161,7 +158,6 @@ function testRoot() {
   cy.get('app-router-link-page #canGoBack').should('have.text', 'false');
 
   cy.go('back');
-  cy.wait(100);
   cy.testStack('ion-router-outlet', ['app-router-link']);
   cy.testLifeCycle('app-router-link', {
     ionViewWillEnter: 1,
@@ -172,7 +168,6 @@ function testRoot() {
 }
 
 function testBack() {
-  cy.wait(500);
   cy.testStack('ion-router-outlet', ['app-router-link-page']);
   cy.testLifeCycle('app-router-link-page', {
     ionViewWillEnter: 1,
@@ -183,7 +178,6 @@ function testBack() {
   cy.get('app-router-link-page #canGoBack').should('have.text', 'false');
 
   cy.go('back');
-  cy.wait(500);
   cy.testStack('ion-router-outlet', ['app-router-link']);
   cy.testLifeCycle('app-router-link', {
     ionViewWillEnter: 1,

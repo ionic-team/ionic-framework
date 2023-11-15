@@ -20,15 +20,9 @@ export * from './directives/validators';
 
 // PROVIDERS
 export {
-  ActionSheetController,
   AlertController,
   LoadingController,
-  ModalController,
   PickerController,
-  PopoverController,
-  ToastController,
-  AnimationController,
-  GestureController,
   DomController,
   NavController,
   Config,
@@ -41,7 +35,13 @@ export {
   ViewDidEnter,
   ViewDidLeave,
 } from '@ionic/angular/common';
+export { AnimationController } from './providers/animation-controller';
+export { ActionSheetController } from './providers/action-sheet-controller';
+export { GestureController } from './providers/gesture-controller';
 export { MenuController } from './providers/menu-controller';
+export { ModalController } from './providers/modal-controller';
+export { PopoverController } from './providers/popover-controller';
+export { ToastController } from './providers/toast-controller';
 
 // PACKAGE MODULE
 export { IonicModule } from './ionic-module';
