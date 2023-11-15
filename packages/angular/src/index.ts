@@ -20,7 +20,6 @@ export * from './directives/validators';
 
 // PROVIDERS
 export {
-  AlertController,
   LoadingController,
   PickerController,
   DomController,
@@ -35,6 +34,7 @@ export {
   ViewDidEnter,
   ViewDidLeave,
 } from '@ionic/angular/common';
+export { AlertController } from './providers/alert-controller';
 export { AnimationController } from './providers/animation-controller';
 export { ActionSheetController } from './providers/action-sheet-controller';
 export { GestureController } from './providers/gesture-controller';

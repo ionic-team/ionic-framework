@@ -1,7 +1,13 @@
 describe('Overlay Controllers', () => {
   beforeEach(() => {
     cy.visit('/standalone/overlay-controllers');
-  })
+  });
+
+  it('should present an alert', () => {
+    cy.get('button#open-alert').click();
+
+    cy.get('ion-alert').should('be.visible');
+  });
 
   it('should present a modal', () => {
     cy.get('button#open-modal').click();
@@ -14,4 +20,4 @@ describe('Overlay Controllers', () => {
 
     cy.get('ion-popover app-dialog-content').should('be.visible');
   });
-})
+});

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ModalController, PopoverController } from '@ionic/angular/standalone';
+import { AlertController, ModalController, PopoverController } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-overlay-controllers',
@@ -7,7 +7,25 @@ import { ModalController, PopoverController } from '@ionic/angular/standalone';
   standalone: true,
 })
 export class OverlayControllersComponent {
-  constructor(private modalCtrl: ModalController, private popoverCtrl: PopoverController) {}
+  constructor(
+    private alertCtrl: AlertController,
+    private modalCtrl: ModalController,
+    private popoverCtrl: PopoverController
+  ) {}
+
+  async openAlert() {
+    const alert = await this.alertCtrl.create({
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+      ],
+      header: 'Alert!',
+    });
+
+    await alert.present();
+  }
 
   async openModal() {
     const modal = await this.modalCtrl.create({

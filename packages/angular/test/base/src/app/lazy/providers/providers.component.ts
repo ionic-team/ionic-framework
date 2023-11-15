@@ -10,7 +10,6 @@ import {
   templateUrl: './providers.component.html',
 })
 export class ProvidersComponent {
-
   isLoaded = false;
   isReady = false;
   isResumed = false;
@@ -25,7 +24,7 @@ export class ProvidersComponent {
 
   constructor(
     private actionSheetCtrl: ActionSheetController,
-    alertCtrl: AlertController,
+    private alertCtrl: AlertController,
     loadingCtrl: LoadingController,
     private menuCtrl: MenuController,
     pickerCtrl: PickerController,
@@ -95,5 +94,19 @@ export class ProvidersComponent {
     });
 
     await actionSheet.present();
+  }
+
+  async openAlert() {
+    const alert = await this.alertCtrl.create({
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+      ],
+      header: 'Alert!',
+    });
+
+    await alert.present();
   }
 }
