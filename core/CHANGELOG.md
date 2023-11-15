@@ -15,6 +15,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * **radio-group:** emit value change on componentDidLoad ([#28488](https://github.com/ionic-team/ionic-framework/issues/28488)) ([73b8bfd](https://github.com/ionic-team/ionic-framework/commit/73b8bfde3f060490958c10f58d0f68de80cb957f)), closes [#28356](https://github.com/ionic-team/ionic-framework/issues/28356)
 * **searchbar:** cancel icon aligns with back button ([#28478](https://github.com/ionic-team/ionic-framework/issues/28478)) ([c053fd9](https://github.com/ionic-team/ionic-framework/commit/c053fd9c68d9b1add1335db80be962215946a0b1)), closes [#28468](https://github.com/ionic-team/ionic-framework/issues/28468)
 
+> [!NOTE]
+> Ionic Vue developers utilizing the `v-ion-change` or `v-ion-input` workaround for https://github.com/ionic-team/ionic-framework/issues/27292 should remove this workaround when updating to Ionic v7.5.5.
+
 
 
 
