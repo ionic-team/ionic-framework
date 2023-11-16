@@ -764,8 +764,15 @@ export class Select implements ComponentInterface {
   }
 
   private onClick = (ev: UIEvent) => {
-    this.setFocus();
-    this.open(ev);
+    const targetElSlot = (ev.target as HTMLElement).getAttribute('slot');
+    if (targetElSlot === 'start' || targetElSlot === 'end') {
+      // prevent clicks to the slots from opening the select
+      ev.stopPropagation();
+      ev.preventDefault();
+    } else {
+      this.setFocus();
+      this.open(ev);
+    }
   };
 
   private onFocus = () => {
@@ -893,7 +900,6 @@ export class Select implements ComponentInterface {
 
     return (
       <Host
-        onClick={this.onClick}
         class={createColorClasses(this.color, {
           [mode]: true,
           'in-item': inItem,
@@ -912,7 +918,7 @@ export class Select implements ComponentInterface {
           [`select-label-placement-${labelPlacement}`]: true,
         })}
       >
-        <label class="select-wrapper" id="select-label">
+        <label class="select-wrapper" id="select-label" onClick={this.onClick}>
           {this.renderLabelContainer()}
           <div class="select-wrapper-inner">
             <slot name="start"></slot>
