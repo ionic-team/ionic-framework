@@ -27,7 +27,7 @@
 // iOS Card Modal
 // --------------------------------------------------
 
-@media screen and (max-width: 767px) {
+@include mobile-viewport() {
   @supports (width: max(0px, 1px)) {
     :host(.modal-card) {
       --height: calc(100% - max(30px, var(--ion-safe-area-top)) - 10px);
@@ -60,7 +60,7 @@
   }
 }
 
-@media screen and (min-width: 768px) {
+@include tablet-viewport() {
   :host(.modal-card) {
     --width: calc(100% - 120px);
     --height: calc(100% - (120px + var(--ion-safe-area-top) + var(--ion-safe-area-bottom)));
