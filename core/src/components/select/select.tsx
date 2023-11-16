@@ -33,7 +33,9 @@ import type { SelectChangeEventDetail, SelectInterface, SelectCompareFn } from '
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @slot label - The label text to associate with the select. Use the `labelPlacement` property to control where the label is placed relative to the select. Use this if you need to render a label with custom HTML.
- *
+ * @slot start - Content to display at the leading edge of the select.
+ * @slot end - Content to display at the trailing edge of the select.
+ * 
  * @part placeholder - The text displayed in the select when there is no value.
  * @part text - The displayed value of the select.
  * @part icon - The select icon container.
@@ -912,10 +914,14 @@ export class Select implements ComponentInterface {
       >
         <label class="select-wrapper" id="select-label">
           {this.renderLabelContainer()}
-          <div class="native-wrapper" ref={(el) => (this.nativeWrapperEl = el)} part="container">
-            {this.renderSelectText()}
-            {!hasFloatingOrStackedLabel && this.renderSelectIcon()}
-            {this.renderListbox()}
+          <div class="select-wrapper-inner">
+            <slot name="start"></slot>
+            <div class="native-wrapper" ref={(el) => (this.nativeWrapperEl = el)} part="container">
+              {this.renderSelectText()}
+              {!hasFloatingOrStackedLabel && this.renderSelectIcon()}
+              {this.renderListbox()}
+            </div>
+            <slot name="end"></slot>
           </div>
           {/**
            * The icon in a floating/stacked select
