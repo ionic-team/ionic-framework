@@ -10,8 +10,6 @@ import { defineCustomElement } from '@ionic/core/components/ion-picker.js';
 export class PickerController extends OverlayBaseController<PickerOptions, HTMLIonPickerElement> {
   constructor() {
     super(pickerController);
-
-    // TODO: FW-5415 may remove the need for this
     defineCustomElement();
   }
 }
