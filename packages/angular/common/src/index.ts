@@ -1,4 +1,3 @@
-export { AlertController } from './providers/alert-controller';
 export { LoadingController } from './providers/loading-controller';
 export { MenuController } from './providers/menu-controller';
 export { DomController } from './providers/dom-controller';
