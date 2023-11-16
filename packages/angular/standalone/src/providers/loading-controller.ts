@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { OverlayBaseController } from '@ionic/angular/common';
-import type { LoadingOptions } from '@ionic/core';
-import { loadingController } from '@ionic/core';
+import type { LoadingOptions } from '@ionic/core/components';
+import { loadingController } from '@ionic/core/components';
 import { defineCustomElement } from '@ionic/core/components/ion-loading.js';
 
 @Injectable({
