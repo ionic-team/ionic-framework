@@ -1,11 +1,20 @@
 import { Location } from '@angular/common';
-import { ViewChild, ViewContainerRef, Component, Attribute, Optional, SkipSelf, ElementRef, NgZone } from '@angular/core';
+import {
+  ViewChild,
+  ViewContainerRef,
+  Component,
+  Attribute,
+  Optional,
+  SkipSelf,
+  ElementRef,
+  NgZone,
+} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IonRouterOutlet as IonRouterOutletBase } from '@ionic/angular/common';
 
 @Component({
   selector: 'ion-router-outlet',
-  template: '<ng-container #outletContent><ng-content></ng-content></ng-container>'
+  template: '<ng-container #outletContent><ng-content></ng-content></ng-container>',
 })
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
 export class IonRouterOutlet extends IonRouterOutletBase {
