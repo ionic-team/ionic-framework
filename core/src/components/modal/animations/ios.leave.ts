@@ -34,7 +34,9 @@ export const iosLeaveAnimation = (baseEl: HTMLElement, opts: ModalAnimationOptio
     .duration(duration)
     .addAnimation(wrapperAnimation);
 
-  if (presentingEl) {
+  const appEl = baseEl.closest('ion-app');
+
+  if (presentingEl && appEl) {
     const isMobile = window.innerWidth < 768;
     const hasCardModal =
       presentingEl.tagName === 'ION-MODAL' && (presentingEl as HTMLIonModalElement).presentingElement !== undefined;
@@ -52,14 +54,12 @@ export const iosLeaveAnimation = (baseEl: HTMLElement, opts: ModalAnimationOptio
         presentingEl.style.setProperty('overflow', '');
 
         const numModals = (
-          Array.from(bodyEl.querySelectorAll('ion-modal:not(.overlay-hidden)')) as HTMLIonModalElement[]
+          Array.from(appEl.querySelectorAll('ion-modal:not(.overlay-hidden)')) as HTMLIonModalElement[]
         ).filter((m) => m.presentingElement !== undefined).length;
         if (numModals <= 1) {
-          bodyEl.style.setProperty('background-color', '');
+          appEl.style.setProperty('background-color', '');
         }
       });
-
-    const bodyEl = document.body;
 
     if (isMobile) {
       const transformOffset = !CSS.supports('width', 'max(0px, 1px)') ? '30px' : 'max(30px, var(--ion-safe-area-top))';

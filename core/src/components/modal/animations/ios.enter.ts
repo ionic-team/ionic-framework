@@ -51,9 +51,9 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts: ModalAnimationOptio
       overflow: 'hidden',
     });
 
-    const bodyEl = document.body;
+    const appEl = baseEl.closest('ion-app');
 
-    if (isMobile) {
+    if (isMobile && appEl) {
       /**
        * Fallback for browsers that does not support `max()` (ex: Firefox)
        * No need to worry about statusbar padding since engines like Gecko
@@ -68,7 +68,7 @@ export const iosEnterAnimation = (baseEl: HTMLElement, opts: ModalAnimationOptio
         .afterStyles({
           transform: finalTransform,
         })
-        .beforeAddWrite(() => bodyEl.style.setProperty('background-color', 'black'))
+        .beforeAddWrite(() => appEl.style.setProperty('background-color', 'black'))
         .addElement(presentingEl)
         .keyframes([
           { offset: 0, filter: 'contrast(1)', transform: 'translateY(0px) scale(1)', borderRadius: '0px' },
