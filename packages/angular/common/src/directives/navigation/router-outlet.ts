@@ -116,6 +116,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     router: Router,
     zone: NgZone,
     activatedRoute: ActivatedRoute,
+    protected outletContent: ViewContainerRef,
     @SkipSelf() @Optional() readonly parentOutlet?: IonRouterOutlet
   ) {
     this.nativeEl = elementRef.nativeElement;
@@ -276,8 +277,15 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const component = snapshot.routeConfig!.component ?? snapshot.component;
 
-      cmpRef = this.activated = this.location.createComponent(component, {
-        index: this.location.length,
+      /**
+       * View components need to be added as a child of ion-router-outlet.
+       * However, createComponent mounts components as siblings of the
+       * ViewContainerRef. As a result, outletContent must reference
+       * an ng-container inside of ion-router-outlet and not
+       * ion-router-outlet itself.
+       */
+      cmpRef = this.activated = this.outletContent.createComponent(component, {
+        index: this.outletContent.length,
         injector,
         environmentInjector: environmentInjector ?? this.environmentInjector,
       });
