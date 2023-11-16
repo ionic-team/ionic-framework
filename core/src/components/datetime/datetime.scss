@@ -280,6 +280,8 @@ ion-picker-column-internal {
 
 :host .calendar-action-buttons .calendar-month-year-toggle ion-icon {
   @include padding(0, 0, 0, 4px);
+
+  flex-shrink: 0;
 }
 
 // Calendar / Header / Days of Week
@@ -490,6 +492,10 @@ ion-picker-column-internal {
 // -----------------------------------
 :host(.show-month-and-year) .calendar-action-buttons .calendar-month-year-toggle {
   --color: #{current-color(base)};
+}
+
+.calendar-month-year {
+  min-width: 0;
 }
 
 .calendar-month-year-toggle {
