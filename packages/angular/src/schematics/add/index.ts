@@ -138,17 +138,20 @@ function addIonicons(projectName: string, projectSourceRoot: Path): Rule {
   };
 }
 
-function addIonicConfig(): Rule {
+function addIonicConfig(projectSourceRoot: string): Rule {
   return (host: Tree) => {
     const ionicConfig = 'ionic.config.json';
     if (!host.exists(ionicConfig)) {
+      const hasAppModule = host.exists(`${projectSourceRoot}/app/app.module.ts`);
+      const type = hasAppModule ? 'angular' : 'angular-standalone';
+
       host.create(
         ionicConfig,
         JSON.stringify(
           {
             name: 'ionic-app',
             app_id: '',
-            type: 'angular',
+            type,
             integrations: {},
           },
           null,
@@ -219,7 +222,7 @@ export default function ngAdd(options: IonAddOptions): Rule {
       addIonicBuilder(options.project),
       addIonicStyles(options.project, sourcePath),
       addIonicons(options.project, sourcePath),
-      addIonicConfig(),
+      addIonicConfig(sourcePath),
       mergeWith(rootTemplateSource),
       // install freshly added dependencies
       installNodeDeps(),
