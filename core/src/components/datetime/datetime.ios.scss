@@ -34,13 +34,21 @@
 
 // Calendar / Header / Action Buttons
 // -----------------------------------
-:host .calendar-action-buttons .calendar-month-year-toggle {
-  --padding-start: #{$datetime-ios-padding};
-  --background-hover: transparent;
-  --background-activated: transparent;
+.calendar-month-year-toggle {
+  @include padding(0px, 16px, 0px, #{$datetime-ios-padding});
+
+  min-height: 44px;
 
   font-size: dynamic-font-max(16px, 1.6);
   font-weight: 600;
+
+  &.ion-focused::after {
+    opacity: 0.15;
+  }
+}
+
+.calendar-month-year-toggle label {
+  @include margin(10px, 8px, 10px, 0);
 }
 
 :host .calendar-action-buttons .calendar-month-year-toggle ion-icon,
@@ -285,14 +293,4 @@
 
 :host .datetime-action-buttons {
   width: 100%;
-}
-
-.calendar-month-year-toggle {
-  @include padding(0px, 16px, 0px, calc(var(--padding-start) + var(--ion-safe-area-left, 0px)));
-
-  min-height: 44px;
-}
-
-.calendar-month-year-toggle label {
-  @include margin(10px, 8px, 10px, 0);
 }

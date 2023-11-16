@@ -504,12 +504,24 @@ ion-picker-column-internal {
   position: relative;
 
   border: 0;
+  
+  outline: none;
 
   background: var(--background);
   color: var(--color);
 
+  z-index: 1;
+
   &::after {
     @include button-state();
+
+    transition: opacity 15ms linear, background-color 15ms linear;
+
+    z-index: -1;
+  }
+
+  &.ion-focused::after {
+    background: currentColor;
   }
 
   &:disabled {
@@ -520,6 +532,6 @@ ion-picker-column-internal {
 
 .calendar-month-year-toggle label {
   display: inline-flex;
-  
+
   align-items: center;
 }

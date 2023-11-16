@@ -526,12 +526,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       await expect(datetime).toHaveScreenshot(screenshot(`datetime-focus-calendar-day`));
     });
   });
-});
 
-/**
- * This behavior is specific to MD and is not affected by direction.
- */
-configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
   test.describe(title('datetime: calendar month toggle'), () => {
     test('should have focus styles', async ({ page }) => {
       await page.setContent('<ion-datetime value="2021-01-01"></ion-datetime>', config);

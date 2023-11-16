@@ -30,13 +30,38 @@
 
 // Calendar / Header / Action Buttons
 // -----------------------------------
-:host .datetime-calendar .calendar-action-buttons .calendar-month-year-toggle {
-  --padding-start: #{$datetime-md-header-padding};
-}
 
 :host .calendar-action-buttons .calendar-month-year-toggle,
 :host .calendar-action-buttons ion-button {
   --color: #{$text-color-step-350};
+}
+
+.calendar-month-year-toggle {
+  @include padding(12px, 16px, 12px, #{$datetime-md-header-padding});
+
+  min-height: 48px;
+
+  background: transparent;
+
+  z-index: 1;
+
+  &.ion-focused::after {
+    opacity: 0.04;
+  }
+}
+
+.calendar-month-year-toggle ion-ripple-effect {
+  color: currentColor;
+}
+
+@media (any-hover: hover) {
+  .calendar-month-year-toggle.ion-activatable:not(.ion-focused):hover {
+    &::after {
+      background: currentColor;
+
+      opacity: 0.04;
+    }
+  }
 }
 
 // Calendar / Header / Days of Week
@@ -64,7 +89,6 @@
    * if necessary.
    */
   grid-template-rows: repeat(6, 1fr);
-
 }
 
 // Individual day button in month
@@ -139,44 +163,4 @@
 
 :host .datetime-view-buttons ion-button {
   color: $text-color-step-200;
-}
-
-.calendar-month-year-toggle {
-  @include padding(12px, 16px, 12px, calc(var(--padding-start) + var(--ion-safe-area-left, 0px)));
-
-  min-height: 48px;
-
-  outline: none;
-
-  background: transparent;
-
-  z-index: 1;
-
-  &::after {
-    @include button-state();
-
-    transition: opacity 15ms linear, background-color 15ms linear;
-
-    z-index: -1;
-  }
-
-  &.ion-focused::after {
-    background: currentColor;
-
-    opacity: 0.04;
-  }
-}
-
-.calendar-month-year-toggle ion-ripple-effect {
-  color: currentColor;
-}
-
-@media (any-hover: hover) {
-  .calendar-month-year-toggle.ion-activatable:not(.ion-focused):hover {
-    &::after {
-      background: currentColor;
-
-      opacity: 0.04;
-    }
-  }
 }
