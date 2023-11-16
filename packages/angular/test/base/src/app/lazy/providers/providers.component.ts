@@ -1,8 +1,17 @@
 import { Component, NgZone } from '@angular/core';
 import {
-  Platform, ModalController, AlertController, ActionSheetController,
-  PopoverController, ToastController, PickerController, MenuController,
-  LoadingController, NavController, DomController, Config
+  Platform,
+  ModalController,
+  AlertController,
+  ActionSheetController,
+  PopoverController,
+  ToastController,
+  PickerController,
+  MenuController,
+  LoadingController,
+  NavController,
+  DomController,
+  Config,
 } from '@ionic/angular';
 
 @Component({
@@ -27,7 +36,7 @@ export class ProvidersComponent {
     private alertCtrl: AlertController,
     loadingCtrl: LoadingController,
     private menuCtrl: MenuController,
-    pickerCtrl: PickerController,
+    private pickerCtrl: PickerController,
     modalCtrl: ModalController,
     platform: Platform,
     popoverCtrl: PopoverController,
@@ -39,11 +48,21 @@ export class ProvidersComponent {
   ) {
     // test all providers load
     if (
-      actionSheetCtrl && alertCtrl && loadingCtrl && menuCtrl && pickerCtrl &&
-      modalCtrl && platform && popoverCtrl && toastCtrl && navCtrl && domCtrl && config
-      ) {
-        this.isLoaded = true;
-      }
+      actionSheetCtrl &&
+      alertCtrl &&
+      loadingCtrl &&
+      menuCtrl &&
+      pickerCtrl &&
+      modalCtrl &&
+      platform &&
+      popoverCtrl &&
+      toastCtrl &&
+      navCtrl &&
+      domCtrl &&
+      config
+    ) {
+      this.isLoaded = true;
+    }
 
     // test platform ready()
     platform.ready().then(() => {
@@ -90,7 +109,7 @@ export class ProvidersComponent {
 
   async openActionSheet() {
     const actionSheet = await this.actionSheetCtrl.create({
-      buttons: ['Button']
+      buttons: ['Button'],
     });
 
     await actionSheet.present();
@@ -108,5 +127,19 @@ export class ProvidersComponent {
     });
 
     await alert.present();
+  }
+
+  async openPicker() {
+    const picker = await this.pickerCtrl.create({
+      columns: [],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+      ],
+    });
+
+    await picker.present();
   }
 }

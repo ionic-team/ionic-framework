@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AlertController, ModalController, PopoverController } from '@ionic/angular/standalone';
+import { AlertController, ModalController, PickerController, PopoverController } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-overlay-controllers',
@@ -10,6 +10,7 @@ export class OverlayControllersComponent {
   constructor(
     private alertCtrl: AlertController,
     private modalCtrl: ModalController,
+    private pickerCtrl: PickerController,
     private popoverCtrl: PopoverController
   ) {}
 
@@ -29,16 +30,30 @@ export class OverlayControllersComponent {
 
   async openModal() {
     const modal = await this.modalCtrl.create({
-      component: DialogComponent
+      component: DialogComponent,
     });
 
     await modal.present();
   }
 
+  async openPicker() {
+    const picker = await this.pickerCtrl.create({
+      columns: [],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+      ],
+    });
+
+    await picker.present();
+  }
+
   async openPopover(ev: MouseEvent) {
     const popover = await this.popoverCtrl.create({
       component: DialogComponent,
-      event: ev
+      event: ev,
     });
 
     await popover.present();
@@ -50,5 +65,4 @@ export class OverlayControllersComponent {
   template: '<div class="ion-padding">Dialog Content</div>',
   standalone: true,
 })
-class DialogComponent {
-}
+class DialogComponent {}

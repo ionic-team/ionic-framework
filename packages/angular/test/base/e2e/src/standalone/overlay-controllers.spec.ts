@@ -15,6 +15,12 @@ describe('Overlay Controllers', () => {
     cy.get('ion-modal app-dialog-content').should('be.visible');
   });
 
+  it('should present a picker', () => {
+    cy.get('button#open-picker').click();
+
+    cy.get('ion-picker .picker-button').should('be.visible');
+  });
+
   it('should present a popover', () => {
     cy.get('button#open-popover').click();
 
