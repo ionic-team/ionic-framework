@@ -1,6 +1,7 @@
 import type { JsonObject } from '@angular-devkit/core';
 import { WorkspaceDefinition } from '@angular-devkit/core/src/workspace';
 import { Tree, SchematicsException } from '@angular-devkit/schematics';
+import type { SchematicOptions } from '@angular/cli/lib/config/workspace-schema';
 import { parse } from 'jsonc-parser';
 
 const ANGULAR_JSON_PATH = 'angular.json';
@@ -96,7 +97,11 @@ export function addArchitectBuilder(
   writeConfig(host, config);
 }
 
-export function addCli(host: Tree, collectionName: any): void | never {
+/**
+ * Updates the angular.json to add an additional schematic collection
+ * to the CLI configuration.
+ */
+export function addCli(host: Tree, collectionName: string): void | never {
   const angularJson = readConfig<any>(host);
 
   if (angularJson.cli === undefined) {
@@ -112,7 +117,7 @@ export function addCli(host: Tree, collectionName: any): void | never {
   writeConfig(host, angularJson);
 }
 
-export function addSchematics(host: Tree, schematicName: string, schematicOpts: any): void | never {
+export function addSchematics(host: Tree, schematicName: string, schematicOpts: SchematicOptions): void | never {
   const angularJson = readConfig<any>(host);
 
   if (angularJson.schematics === undefined) {
