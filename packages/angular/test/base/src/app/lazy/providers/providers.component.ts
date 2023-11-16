@@ -34,7 +34,7 @@ export class ProvidersComponent {
   constructor(
     private actionSheetCtrl: ActionSheetController,
     private alertCtrl: AlertController,
-    loadingCtrl: LoadingController,
+    private loadingCtrl: LoadingController,
     private menuCtrl: MenuController,
     private pickerCtrl: PickerController,
     modalCtrl: ModalController,
@@ -127,6 +127,15 @@ export class ProvidersComponent {
     });
 
     await alert.present();
+  }
+
+  async openLoading() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Loading...',
+      duration: 2000,
+    });
+
+    await loading.present();
   }
 
   async openPicker() {
