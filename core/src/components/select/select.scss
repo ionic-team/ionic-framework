@@ -533,10 +533,7 @@ button {
 /**
  * This makes the label sit above the input.
  */
-:host(.select-label-placement-stacked) .label-text-wrapper,
-:host(.select-expanded.select-label-placement-floating) .label-text-wrapper,
-:host(.ion-focused.select-label-placement-floating) .label-text-wrapper,
-:host(.has-value.select-label-placement-floating) .label-text-wrapper {
+:host(.label-floating) .label-text-wrapper {
   @include transform(translateY(50%), scale(#{$form-control-label-stacked-scale}));
 
   /**

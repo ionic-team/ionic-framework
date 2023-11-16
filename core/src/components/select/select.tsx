@@ -864,7 +864,30 @@ export class Select implements ComponentInterface {
     const inItem = hostContext('ion-item', this.el);
     const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;
 
+    const hasValue = this.hasValue();
+    const hasStartEndSlots = el.querySelector('[slot="start"], [slot="end"]') !== null;
+
     renderHiddenInput(true, el, name, parseValue(value), disabled);
+
+    /**
+     * If the label is stacked, it should always sit above the select.
+     * For floating labels, the label should move above the select if
+     * the select has a value, is open, or has anything in either
+     * the start or end slot.
+     *
+     * If there is content in the start slot, the label would overlap
+     * it if not forced to float. This is also applied to the end slot
+     * because with the default or solid fills, the select is not
+     * vertically centered in the container, but the label is. This
+     * causes the slots and label to appear vertically offset from each
+     * other when the label isn't floating above the input. This doesn't
+     * apply to the outline fill, but this was not accounted for to keep
+     * things consistent.
+     *
+     * TODO(FW-5592): Remove hasStartEndSlots condition
+     */
+    const labelShouldFloat =
+      labelPlacement === 'stacked' || (labelPlacement === 'floating' && (hasValue || isExpanded || hasStartEndSlots));
 
     return (
       <Host
@@ -876,7 +899,8 @@ export class Select implements ComponentInterface {
           'select-disabled': disabled,
           'select-expanded': isExpanded,
           'has-expanded-icon': expandedIcon !== undefined,
-          'has-value': this.hasValue(),
+          'has-value': hasValue,
+          'label-floating': labelShouldFloat,
           'has-placeholder': placeholder !== undefined,
           'ion-focusable': true,
           [`select-${rtl}`]: true,
