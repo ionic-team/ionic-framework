@@ -2,13 +2,13 @@
 /**
  * A heuristic that applies CSS to tablet
  * viewports.
+ *
  * Usage:
-
-  @include tablet-viewport() {
-    :host {
-      background-color: green;
-    }
-  }
+ * @include tablet-viewport() {
+ *   :host {
+ *     background-color: green;
+ *   }
+ * }
  */
 @mixin tablet-viewport() {
   @media screen and (min-width: 768px) {
