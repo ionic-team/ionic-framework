@@ -19,13 +19,13 @@
 /**
  * A heuristic that applies CSS to mobile
  * viewports (i.e. phones, not tablets).
+ *
  * Usage:
-
-  @include mobile-viewport() {
-    :host {
-      background-color: blue;
-    }
-  }
+ * @include mobile-viewport() {
+ *   :host {
+ *     background-color: blue;
+ *   }
+ * }
  */
 @mixin mobile-viewport() {
   @media screen and (max-width: 767px) {
