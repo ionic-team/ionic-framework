@@ -1,7 +1,6 @@
 export { AlertController } from './providers/alert-controller';
 export { LoadingController } from './providers/loading-controller';
 export { MenuController } from './providers/menu-controller';
-export { PickerController } from './providers/picker-controller';
 export { DomController } from './providers/dom-controller';
 export { NavController } from './providers/nav-controller';
 
