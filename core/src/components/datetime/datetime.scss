@@ -48,7 +48,7 @@ ion-picker-column-internal {
 }
 
 /**
- * This ensures that the picker is apppropriately
+ * This ensures that the picker is appropriately
  * sized and never truncates the text.
  */
 :host(.datetime-size-fixed.datetime-prefer-wheel) {
@@ -269,7 +269,7 @@ ion-picker-column-internal {
 
 :host .calendar-action-buttons .calendar-month-year-toggle,
 :host .calendar-action-buttons ion-button {
-  --background: translucent;
+  --background: transparent;
 }
 
 :host .calendar-action-buttons .calendar-month-year-toggle ion-label {

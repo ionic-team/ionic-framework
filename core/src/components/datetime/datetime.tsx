@@ -2003,6 +2003,7 @@ export class Datetime implements ComponentInterface {
               class={{
                 'calendar-month-year-toggle': true,
                 'ion-activatable': true,
+                'ion-focusable': true,
               }}
               part="month-year-button"
               disabled={disabled}

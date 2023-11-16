@@ -145,6 +145,26 @@
   @include padding(12px, 16px, 12px, calc(var(--padding-start) + var(--ion-safe-area-left, 0px)));
 
   min-height: 48px;
+
+  outline: none;
+
+  background: transparent;
+
+  z-index: 1;
+
+  &::after {
+    @include button-state();
+
+    transition: opacity 15ms linear, background-color 15ms linear;
+
+    z-index: -1;
+  }
+
+  &.ion-focused::after {
+    background: currentColor;
+
+    opacity: 0.04;
+  }
 }
 
 .calendar-month-year-toggle ion-ripple-effect {
