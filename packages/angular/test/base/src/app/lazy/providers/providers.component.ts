@@ -1,8 +1,17 @@
 import { Component, NgZone } from '@angular/core';
 import {
-  Platform, ModalController, AlertController, ActionSheetController,
-  PopoverController, ToastController, PickerController, MenuController,
-  LoadingController, NavController, DomController, Config
+  Platform,
+  ModalController,
+  AlertController,
+  ActionSheetController,
+  PopoverController,
+  ToastController,
+  PickerController,
+  MenuController,
+  LoadingController,
+  NavController,
+  DomController,
+  Config,
 } from '@ionic/angular';
 
 @Component({
@@ -10,7 +19,6 @@ import {
   templateUrl: './providers.component.html',
 })
 export class ProvidersComponent {
-
   isLoaded = false;
   isReady = false;
   isResumed = false;
@@ -25,10 +33,10 @@ export class ProvidersComponent {
 
   constructor(
     private actionSheetCtrl: ActionSheetController,
-    alertCtrl: AlertController,
+    private alertCtrl: AlertController,
     loadingCtrl: LoadingController,
     private menuCtrl: MenuController,
-    pickerCtrl: PickerController,
+    private pickerCtrl: PickerController,
     modalCtrl: ModalController,
     platform: Platform,
     popoverCtrl: PopoverController,
@@ -40,11 +48,21 @@ export class ProvidersComponent {
   ) {
     // test all providers load
     if (
-      actionSheetCtrl && alertCtrl && loadingCtrl && menuCtrl && pickerCtrl &&
-      modalCtrl && platform && popoverCtrl && toastCtrl && navCtrl && domCtrl && config
-      ) {
-        this.isLoaded = true;
-      }
+      actionSheetCtrl &&
+      alertCtrl &&
+      loadingCtrl &&
+      menuCtrl &&
+      pickerCtrl &&
+      modalCtrl &&
+      platform &&
+      popoverCtrl &&
+      toastCtrl &&
+      navCtrl &&
+      domCtrl &&
+      config
+    ) {
+      this.isLoaded = true;
+    }
 
     // test platform ready()
     platform.ready().then(() => {
@@ -91,9 +109,37 @@ export class ProvidersComponent {
 
   async openActionSheet() {
     const actionSheet = await this.actionSheetCtrl.create({
-      buttons: ['Button']
+      buttons: ['Button'],
     });
 
     await actionSheet.present();
+  }
+
+  async openAlert() {
+    const alert = await this.alertCtrl.create({
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+      ],
+      header: 'Alert!',
+    });
+
+    await alert.present();
+  }
+
+  async openPicker() {
+    const picker = await this.pickerCtrl.create({
+      columns: [],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+      ],
+    });
+
+    await picker.present();
   }
 }
