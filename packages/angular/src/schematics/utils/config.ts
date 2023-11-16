@@ -118,7 +118,11 @@ export function addCli(host: Tree, collectionName: string): void | never {
 }
 
 // TODO can remove [property: string]: any; when upgrading @angular/cli dev-dep to v16 or later
-export function addSchematics(host: Tree, schematicName: string, schematicOpts: SchematicOptions & { [property: string]: any }): void | never {
+export function addSchematics(
+  host: Tree,
+  schematicName: string,
+  schematicOpts: SchematicOptions & { [property: string]: any }
+): void | never {
   const angularJson = readConfig<any>(host);
 
   if (angularJson.schematics === undefined) {
