@@ -9,6 +9,12 @@ describe('Overlay Controllers', () => {
     cy.get('ion-alert').should('be.visible');
   });
 
+  it('should present a loading indicator', () => {
+    cy.get('button#open-loading').click();
+
+    cy.get('ion-loading').should('be.visible');
+  });
+
   it('should present a modal', () => {
     cy.get('button#open-modal').click();
 

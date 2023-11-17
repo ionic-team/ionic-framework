@@ -46,6 +46,12 @@ describe('Providers', () => {
     cy.get('ion-alert').should('be.visible');
   });
 
+  it('should open a loading-indicator', () => {
+    cy.get('button#open-loading').click();
+
+    cy.get('ion-loading').should('be.visible');
+  });
+
   it('should open a picker', () => {
     cy.get('button#open-picker').click();
 
