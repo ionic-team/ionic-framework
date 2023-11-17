@@ -72,16 +72,18 @@
 
 :host .picker-item-empty,
 :host .picker-item.picker-item-disabled {
-  scroll-snap-align: none;
-
   cursor: default;
+}
+
+:host .picker-item-empty,
+:host(:not(.picker-column-disabled)) .picker-item.picker-item-disabled {
+  scroll-snap-align: none;
 }
 
 :host(.picker-column-disabled) {
   overflow-y: hidden;
 }
 
-:host(.picker-column-disabled) .picker-item,
 :host .picker-item.picker-item-disabled {
   opacity: 0.4;
 }
