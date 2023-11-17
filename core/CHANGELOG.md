@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.5.6-nightly.20231117](https://github.com/ionic-team/ionic-framework/compare/v7.5.5...v7.5.6-nightly.20231117) (2023-11-17)
+
+
+### Bug Fixes
+
+* **alert:** match MD spec on tablet  ([#28501](https://github.com/ionic-team/ionic-framework/issues/28501)) ([6a2be9f](https://github.com/ionic-team/ionic-framework/commit/6a2be9fa3c12a893d98dc139a1575a6e7e3c7c26)), closes [#23977](https://github.com/ionic-team/ionic-framework/issues/23977)
+
+
+
+
+
 ## [7.5.5](https://github.com/ionic-team/ionic-framework/compare/v7.5.4...v7.5.5) (2023-11-15)
 
 
