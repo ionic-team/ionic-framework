@@ -413,9 +413,13 @@ export class PickerColumnInternal implements ComponentInterface {
   };
 
   get activeItem() {
-    return getElementRoot(this.el).querySelector(
-      `.picker-item[data-value="${this.value}"]:not(.picker-item-disabled)`
-    ) as HTMLElement | null;
+    // If the whole picker column is disabled, the current value should appear active
+    // If the current value item is specifically disabled, it should not appear active
+    const selector = `.picker-item[data-value="${this.value}"]:not(${
+      this.disabled ? '.picker-item-empty' : '.picker-item-disabled'
+    }})`;
+
+    return getElementRoot(this.el).querySelector(selector) as HTMLElement | null;
   }
 
   render() {
@@ -433,7 +437,7 @@ export class PickerColumnInternal implements ComponentInterface {
       <Host
         exportparts={`${PICKER_ITEM_PART}, ${PICKER_ITEM_ACTIVE_PART}`}
         disabled={pickerDisabled}
-        tabindex={0}
+        tabindex={pickerDisabled ? null : 0}
         class={createColorClasses(color, {
           [mode]: true,
           ['picker-column-active']: isActive,
@@ -468,7 +472,7 @@ export class PickerColumnInternal implements ComponentInterface {
               tabindex="-1"
               class={{
                 'picker-item': true,
-                'picker-item-disabled': item.disabled || false,
+                'picker-item-disabled': isItemDisabled,
               }}
               data-value={item.value}
               data-index={index}

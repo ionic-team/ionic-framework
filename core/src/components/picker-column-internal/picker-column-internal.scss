@@ -91,7 +91,7 @@
 }
 
 @media (any-hover: hover) {
-  :host(:focus:not(.picker-column-disabled)) {
+  :host(:focus) {
     outline: none;
 
     background: current-color(base, 0.2);
