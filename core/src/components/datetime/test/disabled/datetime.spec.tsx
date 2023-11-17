@@ -6,25 +6,13 @@ import { Datetime } from '../../../datetime/datetime';
 describe('ion-datetime disabled', () => {
   beforeEach(() => {
     // IntersectionObserver isn't available in test environment
-    global.IntersectionObserver = class IntersectionObserver {
-      constructor() {}
-
-      disconnect() {
-        return null;
-      }
-
-      observe() {
-        return null;
-      }
-
-      takeRecords() {
-        return null;
-      }
-
-      unobserve() {
-        return null;
-      }
-    };
+    const mockIntersectionObserver = jest.fn();
+    mockIntersectionObserver.mockReturnValue({
+      observe: () => null,
+      unobserve: () => null,
+      disconnect: () => null,
+    });
+    global.IntersectionObserver = mockIntersectionObserver;
   });
 
   it('picker should be disabled in prefer wheel mode', async () => {
