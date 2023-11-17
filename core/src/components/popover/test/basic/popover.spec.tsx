@@ -7,10 +7,10 @@ describe('popover: htmlAttributes inheritance', () => {
   it('should correctly inherit attributes on host', async () => {
     const page = await newSpecPage({
       components: [Popover],
-      template: () => <ion-popover htmlAttributes={{ 'data-testid': 'basic-popover' }}></ion-popover>,
+      template: () => <ion-popover overlayIndex={1} htmlAttributes={{ 'data-testid': 'basic-popover' }}></ion-popover>,
     });
 
-    const popover = page.body.querySelector('ion-popover');
+    const popover = page.body.querySelector('ion-popover')!;
 
     await expect(popover.getAttribute('data-testid')).toBe('basic-popover');
   });

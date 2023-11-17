@@ -1,6 +1,7 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { Input } from '../../input';
+
 import { Item } from '../../../item/item';
+import { Input } from '../../input';
 
 it('should render as modern when label is set asynchronously', async () => {
   const page = await newSpecPage({
@@ -12,7 +13,7 @@ it('should render as modern when label is set asynchronously', async () => {
     `,
   });
 
-  const input = page.body.querySelector('ion-input');
+  const input = page.body.querySelector('ion-input')!;
 
   // Template should be modern
   expect(input.classList.contains('legacy-input')).toBe(false);
