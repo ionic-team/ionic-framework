@@ -10,7 +10,7 @@ inputs:
   component:
     description: 'The component to update the reference snapshots'
   component-folder:
-    description: 'The component folder to update the reference snapshots'
+    description: 'Determines if reference snapshots should be updated for all files in the component folder or just the files that have the component name in them'
     type: boolean
 
 runs:
