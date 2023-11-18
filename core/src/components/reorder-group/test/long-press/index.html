@@ -25,7 +25,7 @@
       <ion-content id="content">
         <p>Reorder with icons</p>
         <ion-list>
-          <ion-reorder-group id="reorder-icons" long-press="true" disabled="false">
+          <ion-reorder-group id="reorder-icons" activate="press" disabled="false">
             <ion-item button>
               <ion-label> Item 1 (default ion-reorder) </ion-label>
               <ion-reorder slot="end"></ion-reorder>
@@ -49,7 +49,7 @@
         </ion-list>
         <p>Reorder with wrapper</p>
         <ion-list>
-          <ion-reorder-group id="reorder-wrappers" disabled="false" long-press="true" long-press-duration="500">
+          <ion-reorder-group id="reorder-wrappers" disabled="false" activate="press" long-press-duration="5000">
             <ion-reorder>
               <ion-item>
                 <ion-label> Item 1 </ion-label>
@@ -57,29 +57,20 @@
             </ion-reorder>
 
             <ion-reorder>
-              <ion-item>
-                <ion-label> Item 2 </ion-label>
-              </ion-item>
+              <ion-item-sliding>
+                <ion-item button>
+                  <ion-label> Item 2 (default ion-reorder with ion-item-sliding) </ion-label>
+                </ion-item>
+                <ion-item-options side="start">
+                  <ion-item-option>Favorite</ion-item-option>
+                  <ion-item-option color="danger">Share</ion-item-option>
+                </ion-item-options>
+  
+                <ion-item-options side="end">
+                  <ion-item-option>Unread</ion-item-option>
+                </ion-item-options>
+              </ion-item-sliding>
             </ion-reorder>
-
-            <ion-reorder>
-              <ion-item>
-                <ion-label> Item 3 </ion-label>
-              </ion-item>
-            </ion-reorder>
-
-            <ion-reorder>
-              <ion-item>
-                <ion-label> Item 4 </ion-label>
-              </ion-item>
-            </ion-reorder>
-
-            <ion-reorder>
-              <ion-item>
-                <ion-label> Item 5 </ion-label>
-              </ion-item>
-            </ion-reorder>
-          </ion-reorder-group>
         </ion-list>
       </ion-content>
     </ion-app>

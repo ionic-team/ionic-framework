@@ -56,8 +56,10 @@ export class ReorderGroup implements ComponentInterface {
     }
   }
 
-  // boolean to enable/disable the long press gesture
-  @Prop() longPress = false;
+  // default is `tap` to maintain backwards compatibility
+  // `tap` will initiate the reorder immediately
+  // `press` will initiate the reorder after the `longPressDuration`
+  @Prop() activate: 'tap' | 'press' = 'tap'
 
   /**
    * Event that needs to be listened to in order to complete the reorder action.
@@ -133,11 +135,22 @@ export class ReorderGroup implements ComponentInterface {
   private onStart(ev: GestureDetail) {
     ev.event.preventDefault();
 
-    this.longPressTimeout = setTimeout(() => {
-      this.pressed = true;
-      this.clearGestureTimeout();
+    if (this.activate === 'press') {
+      this.longPressTimeout = setTimeout(() => {
+        this.pressed = true;
+        this.clearGestureTimeout();
+  console.log('hits')
+        this.selectingItem(ev);
+        
+      }, this.longPressDuration);
+    } else {
+      console.log('nope')
+      this.selectingItem(ev);
+    }
+  }
 
-      const item = (this.selectedItemEl = ev.data);
+  private selectingItem(ev: GestureDetail) {
+    const item = (this.selectedItemEl = ev.data);
       const heights = this.cachedHeights;
       heights.length = 0;
       const el = this.el;
@@ -176,7 +189,6 @@ export class ReorderGroup implements ComponentInterface {
       item.classList.add(ITEM_REORDER_SELECTED);
 
       hapticSelectionStart();
-    }, this.longPress ? this.longPressDuration : 0);
   }
 
   private clearGestureTimeout = () => {
@@ -192,7 +204,7 @@ export class ReorderGroup implements ComponentInterface {
       return;
     }
 
-    if (this.longPress && !this.pressed) {
+    if (this.activate === 'press' && !this.pressed) {
       return;
     }
     // Scroll if we reach the scroll margins
@@ -242,7 +254,7 @@ export class ReorderGroup implements ComponentInterface {
 
     hapticSelectionEnd();
 
-    if (this.longPress && !this.pressed) {
+    if (this.activate === 'press' && !this.pressed) {
       return;
     }
 
@@ -252,6 +264,7 @@ export class ReorderGroup implements ComponentInterface {
 
   private completeReorder(listOrReorder?: boolean | any[]): any {
     const selectedItemEl = this.selectedItemEl;
+    console.log('end')
     if (selectedItemEl && this.state === ReorderGroupState.Complete) {
       const children = this.el.children as any;
       const len = children.length;
