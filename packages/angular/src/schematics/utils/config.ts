@@ -117,7 +117,7 @@ export function addCli(host: Tree, collectionName: string): void | never {
   writeConfig(host, angularJson);
 }
 
-// TODO can remove [property: string]: any; when upgrading @angular/cli dev-dep to v16 or later
+// TODO(FW-5639): can remove [property: string]: any; when upgrading @angular/cli dev-dep to v16 or later
 export function addSchematics(
   host: Tree,
   schematicName: string,
