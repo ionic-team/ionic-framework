@@ -415,9 +415,7 @@ export class PickerColumnInternal implements ComponentInterface {
   get activeItem() {
     // If the whole picker column is disabled, the current value should appear active
     // If the current value item is specifically disabled, it should not appear active
-    const selector = `.picker-item[data-value="${this.value}"]:not(${
-      this.disabled ? '.picker-item-empty' : '.picker-item-disabled'
-    })`;
+    const selector = `.picker-item[data-value="${this.value}"]${this.disabled ? '' : ':not(.picker-item-disabled)'}`;
 
     return getElementRoot(this.el).querySelector(selector) as HTMLElement | null;
   }
