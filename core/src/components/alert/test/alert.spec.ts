@@ -1,6 +1,7 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { Alert } from '../alert';
+
 import { config } from '../../../global/config';
+import { Alert } from '../alert';
 
 describe('alert: custom html', () => {
   it('should not allow for custom html by default', async () => {
@@ -9,7 +10,7 @@ describe('alert: custom html', () => {
       html: `<ion-alert message="<button class='custom-html'>Custom Text</button>"></ion-alert>`,
     });
 
-    const content = page.body.querySelector('.alert-message');
+    const content = page.body.querySelector('.alert-message')!;
     expect(content.textContent).toContain('Custom Text');
     expect(content.querySelector('button.custom-html')).toBe(null);
   });
@@ -21,7 +22,7 @@ describe('alert: custom html', () => {
       html: `<ion-alert message="<button class='custom-html'>Custom Text</button>"></ion-alert>`,
     });
 
-    const content = page.body.querySelector('.alert-message');
+    const content = page.body.querySelector('.alert-message')!;
     expect(content.textContent).toContain('Custom Text');
     expect(content.querySelector('button.custom-html')).not.toBe(null);
   });
@@ -33,7 +34,7 @@ describe('alert: custom html', () => {
       html: `<ion-alert message="<button class='custom-html'>Custom Text</button>"></ion-alert>`,
     });
 
-    const content = page.body.querySelector('.alert-message');
+    const content = page.body.querySelector('.alert-message')!;
     expect(content.textContent).toContain('Custom Text');
     expect(content.querySelector('button.custom-html')).toBe(null);
   });

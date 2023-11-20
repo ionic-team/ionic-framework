@@ -20,7 +20,6 @@ export * from './directives/validators';
 
 // PROVIDERS
 export {
-  LoadingController,
   DomController,
   NavController,
   Config,
@@ -37,6 +36,7 @@ export { AlertController } from './providers/alert-controller';
 export { AnimationController } from './providers/animation-controller';
 export { ActionSheetController } from './providers/action-sheet-controller';
 export { GestureController } from './providers/gesture-controller';
+export { LoadingController } from './providers/loading-controller';
 export { MenuController } from './providers/menu-controller';
 export { ModalController } from './providers/modal-controller';
 export { PickerController } from './providers/picker-controller';

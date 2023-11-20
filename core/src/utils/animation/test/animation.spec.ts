@@ -108,7 +108,7 @@ describe('Animation Class', () => {
       animation.play();
 
       animation.progressStart();
-      animation.progressEnd(1);
+      animation.progressEnd(1, 0);
 
       expect(animation.isRunning()).toEqual(true);
     });
@@ -125,9 +125,9 @@ describe('Animation Class', () => {
       await animation.play();
 
       animation.progressStart();
-      animation.progressEnd(0);
+      animation.progressEnd(0, 0);
 
-      await new Promise((resolve) => {
+      await new Promise<void>((resolve) => {
         animation.onFinish(() => {
           expect(animation.isRunning()).toEqual(false);
           resolve();
@@ -161,8 +161,8 @@ describe('Animation Class', () => {
       const el = document.createElement('p');
       animation.addElement(el);
 
-      animation.addElement(null);
-      animation.addElement(undefined);
+      animation.addElement(null as any);
+      animation.addElement(undefined as any);
 
       expect(animation.elements.length).toEqual(1);
     });
@@ -188,8 +188,8 @@ describe('Animation Class', () => {
     });
 
     it('should not error when trying to add null or undefined', () => {
-      animation.addAnimation(null);
-      animation.addAnimation(undefined);
+      animation.addAnimation(null as any);
+      animation.addAnimation(undefined as any);
 
       expect(animation.childAnimations.length).toEqual(0);
     });
@@ -312,7 +312,7 @@ describe('Animation Class', () => {
       animation.progressStart(true);
       expect(animation.getEasing()).toEqual('linear');
 
-      animation.progressEnd();
+      animation.progressEnd(0, 0);
       expect(animation.getEasing()).toEqual('ease-in-out');
     });
 
@@ -428,9 +428,15 @@ describe('cubic-bezier conversion', () => {
         [1, 1],
       ];
 
-      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.5), [0.16]);
-      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.97), [0.56]);
-      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.33), [0.11]);
+      shouldApproximatelyEqual(getTimeGivenProgression(equation[0], equation[1], equation[2], equation[3], 0.5), [
+        0.16,
+      ]);
+      shouldApproximatelyEqual(getTimeGivenProgression(equation[0], equation[1], equation[2], equation[3], 0.97), [
+        0.56,
+      ]);
+      shouldApproximatelyEqual(getTimeGivenProgression(equation[0], equation[1], equation[2], equation[3], 0.33), [
+        0.11,
+      ]);
     });
 
     it('cubic-bezier(1, 0, 0.68, 0.28)', () => {
@@ -441,9 +447,15 @@ describe('cubic-bezier conversion', () => {
         [1, 1],
       ];
 
-      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.08), [0.6]);
-      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.5), [0.84]);
-      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.94), [0.98]);
+      shouldApproximatelyEqual(getTimeGivenProgression(equation[0], equation[1], equation[2], equation[3], 0.08), [
+        0.6,
+      ]);
+      shouldApproximatelyEqual(getTimeGivenProgression(equation[0], equation[1], equation[2], equation[3], 0.5), [
+        0.84,
+      ]);
+      shouldApproximatelyEqual(getTimeGivenProgression(equation[0], equation[1], equation[2], equation[3], 0.94), [
+        0.98,
+      ]);
     });
 
     it('cubic-bezier(0.4, 0, 0.6, 1)', () => {
@@ -454,9 +466,15 @@ describe('cubic-bezier conversion', () => {
         [1, 1],
       ];
 
-      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.39), [0.43]);
-      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.03), [0.11]);
-      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.89), [0.78]);
+      shouldApproximatelyEqual(getTimeGivenProgression(equation[0], equation[1], equation[2], equation[3], 0.39), [
+        0.43,
+      ]);
+      shouldApproximatelyEqual(getTimeGivenProgression(equation[0], equation[1], equation[2], equation[3], 0.03), [
+        0.11,
+      ]);
+      shouldApproximatelyEqual(getTimeGivenProgression(equation[0], equation[1], equation[2], equation[3], 0.89), [
+        0.78,
+      ]);
     });
 
     it('cubic-bezier(0, 0, 0.2, 1)', () => {
@@ -467,9 +485,15 @@ describe('cubic-bezier conversion', () => {
         [1, 1],
       ];
 
-      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.95), [0.71]);
-      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.1), [0.03]);
-      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 0.7), [0.35]);
+      shouldApproximatelyEqual(getTimeGivenProgression(equation[0], equation[1], equation[2], equation[3], 0.95), [
+        0.71,
+      ]);
+      shouldApproximatelyEqual(getTimeGivenProgression(equation[0], equation[1], equation[2], equation[3], 0.1), [
+        0.03,
+      ]);
+      shouldApproximatelyEqual(getTimeGivenProgression(equation[0], equation[1], equation[2], equation[3], 0.7), [
+        0.35,
+      ]);
     });
 
     it('cubic-bezier(0.32, 0.72, 0, 1) (with out of bounds progression)', () => {
@@ -480,8 +504,8 @@ describe('cubic-bezier conversion', () => {
         [1, 1],
       ];
 
-      expect(getTimeGivenProgression(...equation, 1.32)[0]).toBeUndefined();
-      expect(getTimeGivenProgression(...equation, -0.32)[0]).toBeUndefined();
+      expect(getTimeGivenProgression(equation[0], equation[1], equation[2], equation[3], 1.32)[0]).toBeUndefined();
+      expect(getTimeGivenProgression(equation[0], equation[1], equation[2], equation[3], -0.32)[0]).toBeUndefined();
     });
 
     it('cubic-bezier(0.21, 1.71, 0.88, 0.9) (multiple solutions)', () => {
@@ -492,7 +516,10 @@ describe('cubic-bezier conversion', () => {
         [1, 1],
       ];
 
-      shouldApproximatelyEqual(getTimeGivenProgression(...equation, 1.02), [0.35, 0.87]);
+      shouldApproximatelyEqual(
+        getTimeGivenProgression(equation[0], equation[1], equation[2], equation[3], 1.02),
+        [0.35, 0.87]
+      );
     });
 
     it('cubic-bezier(0.32, 0.72, 0, 1) (with out of bounds progression)', () => {
@@ -503,8 +530,8 @@ describe('cubic-bezier conversion', () => {
         [1, 1],
       ];
 
-      expect(getTimeGivenProgression(...equation, 1.32)).toEqual([]);
-      expect(getTimeGivenProgression(...equation, -0.32)).toEqual([]);
+      expect(getTimeGivenProgression(equation[0], equation[1], equation[2], equation[3], 1.32)).toEqual([]);
+      expect(getTimeGivenProgression(equation[0], equation[1], equation[2], equation[3], -0.32)).toEqual([]);
     });
   });
 });

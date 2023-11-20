@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
+import { OverlayBaseController } from '@ionic/angular/common';
 import type { LoadingOptions } from '@ionic/core/components';
 import { loadingController } from '@ionic/core/components';
-
-import { OverlayBaseController } from '../utils/overlay';
+import { defineCustomElement } from '@ionic/core/components/ion-loading.js';
 
 @Injectable({
   providedIn: 'root',
@@ -10,5 +10,8 @@ import { OverlayBaseController } from '../utils/overlay';
 export class LoadingController extends OverlayBaseController<LoadingOptions, HTMLIonLoadingElement> {
   constructor() {
     super(loadingController);
+
+    // TODO: FW-5415 may remove the need for this
+    defineCustomElement();
   }
 }

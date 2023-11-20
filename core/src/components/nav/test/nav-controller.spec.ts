@@ -1,6 +1,5 @@
 import { newSpecPage } from '@stencil/core/testing';
 
-import { Config } from '../../../global/config';
 import type { ComponentProps } from '../../../interface';
 import { Nav } from '../nav';
 import type { NavOptions } from '../nav-interface';
@@ -197,7 +196,6 @@ describe('NavController', () => {
         .insert(-1, null as any, null, null, trnsDone)
         .then(() => {
           fail('it should not succeed');
-          done();
         })
         .catch((err: Error) => {
           const hasCompleted = false;
@@ -252,7 +250,6 @@ describe('NavController', () => {
         .pop(null, trnsDone)
         .then(() => {
           fail('it should not succeed');
-          done();
         })
         .catch((err: any) => {
           const hasCompleted = false;
@@ -819,15 +816,10 @@ describe('NavController', () => {
 
   beforeEach(async () => {
     trnsDone = jest.fn();
-    const config = new Config();
-    config.reset({ animated: false });
     const page = await newSpecPage({
       components: [Nav],
       html: `<ion-nav></ion-nav>`,
       autoApplyChanges: true,
-      context: {
-        config,
-      },
     });
     nav = page.rootInstance;
   });
@@ -848,7 +840,7 @@ describe('NavController', () => {
         pause: jest.fn(),
         cancel: jest.fn(),
         onfinish: undefined,
-      };
+      } as any;
 
       animation.play = () => {
         if (animation.onfinish) {
