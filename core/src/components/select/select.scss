@@ -554,3 +554,18 @@ button {
    */
   max-width: calc(100% / #{$form-control-label-stacked-scale});
 }
+
+// Start/End Slots
+// ----------------------------------------------------------------
+
+::slotted([slot="start"]), ::slotted([slot="end"]) {
+  flex-shrink: 0;
+}
+
+::slotted([slot="start"]) {
+  margin-inline-end: $form-control-label-margin;
+}
+
+::slotted([slot="end"]) {
+  margin-inline-start: $form-control-label-margin;
+}
