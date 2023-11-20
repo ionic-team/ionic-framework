@@ -49,7 +49,7 @@ This section details the desktop browser, JavaScript framework, and mobile platf
 
 - Content no longer sets the `--background` custom property when the `.outer-content` class is set on the host.
 
-<h4 id="version-8x-content">Datetime</h4>
+<h4 id="version-8x-datetime">Datetime</h4>
 
 - The CSS shadow part for `month-year-button` has been changed to target a `button` element instead of `ion-item`. Developers should verify their UI renders as expected for the month/year toggle button inside of `ion-datetime`.
    - Developers using the CSS variables available on `ion-item` will need to migrate their CSS to use CSS properties. For example:
