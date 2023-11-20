@@ -267,7 +267,10 @@ ion-picker-column-internal {
   justify-content: space-between;
 }
 
-:host .calendar-action-buttons .calendar-month-year-toggle,
+:host .calendar-action-buttons .calendar-month-year-toggle {
+  background: transparent;
+}
+
 :host .calendar-action-buttons ion-button {
   --background: transparent;
 }
@@ -491,7 +494,7 @@ ion-picker-column-internal {
 // Year Picker
 // -----------------------------------
 :host(.show-month-and-year) .calendar-action-buttons .calendar-month-year-toggle {
-  --color: #{current-color(base)};
+  color: #{current-color(base)};
 }
 
 .calendar-month-year {
@@ -506,9 +509,6 @@ ion-picker-column-internal {
   border: 0;
   
   outline: none;
-
-  background: var(--background);
-  color: var(--color);
 
   z-index: 1;
 
