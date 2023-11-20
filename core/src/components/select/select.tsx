@@ -924,17 +924,19 @@ export class Select implements ComponentInterface {
             <slot name="start"></slot>
             <div class="native-wrapper" ref={(el) => (this.nativeWrapperEl = el)} part="container">
               {this.renderSelectText()}
-              {!hasFloatingOrStackedLabel && this.renderSelectIcon()}
               {this.renderListbox()}
             </div>
             <slot name="end"></slot>
+            {!hasFloatingOrStackedLabel && this.renderSelectIcon()}
           </div>
           {/**
            * The icon in a floating/stacked select
            * must be centered with the entire select,
-           * not just the native control. As a result,
-           * we need to render the icon outside of
-           * the native wrapper.
+           * while the start/end slots and native control
+           * are vertically offset in the default or
+           * solid fills. As a result, we render the
+           * icon outside the inner wrapper, which holds
+           * those components.
            */}
           {hasFloatingOrStackedLabel && this.renderSelectIcon()}
           {shouldRenderHighlight && <div class="select-highlight"></div>}
