@@ -424,23 +424,52 @@ export const validateParts = (
  * Returns the closest date to refParts
  * that also meets the constraints of
  * the *Values params.
- * @param refParts The reference date
- * @param monthValues The allowed month values
- * @param dayValues The allowed day (of the month) values
- * @param yearValues The allowed year values
- * @param hourValues The allowed hour values
- * @param minuteValues The allowed minute values
  */
-export const getClosestValidDate = (
-  refParts: DatetimeParts,
-  monthValues?: number[],
-  dayValues?: number[],
-  yearValues?: number[],
-  hourValues?: number[],
-  minuteValues?: number[]
-) => {
+export const getClosestValidDate = ({
+  refParts,
+  monthValues,
+  dayValues,
+  yearValues,
+  hourValues,
+  minuteValues,
+  minParts,
+  maxParts,
+}: {
+  /**
+   * The reference date
+   */
+  refParts: DatetimeParts;
+  /**
+   * The allowed month values
+   */
+  monthValues?: number[];
+  /**
+   * The allowed day (of the month) values
+   */
+  dayValues?: number[];
+  /**
+   * The allowed year values
+   */
+  yearValues?: number[];
+  /**
+   * The allowed hour values
+   */
+  hourValues?: number[];
+  /**
+   * The allowed minute values
+   */
+  minuteValues?: number[];
+  /**
+   * The minimum date that can be returned
+   */
+  minParts?: DatetimeParts;
+  /**
+   * The maximum date that can be returned
+   */
+  maxParts?: DatetimeParts;
+}) => {
   const { hour, minute, day, month, year } = refParts;
-  const copyParts = { ...refParts, dayOfWeek: undefined };
+  const copyParts = clampDate({ ...refParts, dayOfWeek: undefined }, minParts, maxParts);
 
   if (monthValues !== undefined) {
     copyParts.month = findClosestValue(month, monthValues);

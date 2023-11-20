@@ -1352,10 +1352,20 @@ export class Datetime implements ComponentInterface {
     const dayValues = (this.parsedDayValues = convertToArrayOfNumbers(this.dayValues));
 
     const todayParts = (this.todayParts = parseDate(getToday())!);
-    this.defaultParts = getClosestValidDate(todayParts, monthValues, dayValues, yearValues, hourValues, minuteValues);
 
     this.processMinParts();
     this.processMaxParts();
+
+    this.defaultParts = getClosestValidDate({
+      refParts: todayParts,
+      monthValues,
+      dayValues,
+      yearValues,
+      hourValues,
+      minuteValues,
+      minParts: this.minParts,
+      maxParts: this.maxParts,
+    });
 
     this.processValue(this.value);
 
