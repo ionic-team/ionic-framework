@@ -10,8 +10,6 @@ import { defineCustomElement } from '@ionic/core/components/ion-loading.js';
 export class LoadingController extends OverlayBaseController<LoadingOptions, HTMLIonLoadingElement> {
   constructor() {
     super(loadingController);
-
-    // TODO: FW-5415 may remove the need for this
     defineCustomElement();
   }
 }
