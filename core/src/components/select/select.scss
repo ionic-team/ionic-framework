@@ -157,6 +157,8 @@ button {
   @include margin(0, 0, 0, $select-icon-margin-start);
 
   position: relative;
+
+  flex-shrink: 0;
 }
 
 /**
