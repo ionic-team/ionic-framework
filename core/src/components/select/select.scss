@@ -272,8 +272,6 @@ button {
 :host(.select-label-placement-stacked) .select-wrapper-inner,
 :host(.select-label-placement-floating) .select-wrapper-inner {
   flex-grow: 1;
-
-  width: 100%;
 }
 
 // Select Highlight
