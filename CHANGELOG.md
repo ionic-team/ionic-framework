@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.5.6](https://github.com/ionic-team/ionic-framework/compare/v7.5.5...v7.5.6) (2023-11-21)
+
+
+### Bug Fixes
+
+* **alert:** match MD spec on tablet  ([#28501](https://github.com/ionic-team/ionic-framework/issues/28501)) ([6a2be9f](https://github.com/ionic-team/ionic-framework/commit/6a2be9fa3c12a893d98dc139a1575a6e7e3c7c26)), closes [#23977](https://github.com/ionic-team/ionic-framework/issues/23977)
+* **angular:** ng add @ionic/angular in standalone projects ([#28523](https://github.com/ionic-team/ionic-framework/issues/28523)) ([c07312e](https://github.com/ionic-team/ionic-framework/commit/c07312e5ed931f6f825ccf083c9dead9fa815843)), closes [#28514](https://github.com/ionic-team/ionic-framework/issues/28514)
+* **angular:** overlays are defined when using standalone controllers ([#28560](https://github.com/ionic-team/ionic-framework/issues/28560)) ([9453132](https://github.com/ionic-team/ionic-framework/commit/9453132aa8952b4adfa1326e61138b329e254f76)), closes [#28385](https://github.com/ionic-team/ionic-framework/issues/28385)
+* **datetime:** updating value with min scrolls to new value ([#28549](https://github.com/ionic-team/ionic-framework/issues/28549)) ([388d19e](https://github.com/ionic-team/ionic-framework/commit/388d19e04f83f85abd4602adb04cc71ac575764a)), closes [#28548](https://github.com/ionic-team/ionic-framework/issues/28548)
+
+
+
+
+
+## [7.5.5](https://github.com/ionic-team/ionic-framework/compare/v7.5.4...v7.5.5) (2023-11-15)
+
+
+### Bug Fixes
+
+* **accordion-group:** correct accordion is open on load ([#28510](https://github.com/ionic-team/ionic-framework/issues/28510)) ([a000dd2](https://github.com/ionic-team/ionic-framework/commit/a000dd2c0b65be8ab5b2ad19f2748fbca13d5085)), closes [#28506](https://github.com/ionic-team/ionic-framework/issues/28506)
+* **action-sheet:** adjust height for safe area with scrollable options ([#28504](https://github.com/ionic-team/ionic-framework/issues/28504)) ([900267e](https://github.com/ionic-team/ionic-framework/commit/900267eb36c36f2af63435f6b46acca52b3bdab7)), closes [#27777](https://github.com/ionic-team/ionic-framework/issues/27777)
+* **header:** collapsible large title does not flicker when collapse prop not reflected ([#28472](https://github.com/ionic-team/ionic-framework/issues/28472)) ([8227b0e](https://github.com/ionic-team/ionic-framework/commit/8227b0ee6d5250e122a34a83c644f8a74fbbafd5)), closes [#28466](https://github.com/ionic-team/ionic-framework/issues/28466)
+* **item-divider:** apply safe area to proper side regardless of direction ([#28420](https://github.com/ionic-team/ionic-framework/issues/28420)) ([4513e0c](https://github.com/ionic-team/ionic-framework/commit/4513e0c6b066d4990800c707e1d97f69c8fcfb0c))
+* **radio-group:** emit value change on componentDidLoad ([#28488](https://github.com/ionic-team/ionic-framework/issues/28488)) ([73b8bfd](https://github.com/ionic-team/ionic-framework/commit/73b8bfde3f060490958c10f58d0f68de80cb957f)), closes [#28356](https://github.com/ionic-team/ionic-framework/issues/28356)
+* **searchbar:** cancel icon aligns with back button ([#28478](https://github.com/ionic-team/ionic-framework/issues/28478)) ([c053fd9](https://github.com/ionic-team/ionic-framework/commit/c053fd9c68d9b1add1335db80be962215946a0b1)), closes [#28468](https://github.com/ionic-team/ionic-framework/issues/28468)
+
+
+
+
+
 ## [7.5.4](https://github.com/ionic-team/ionic-framework/compare/v7.5.3...v7.5.4) (2023-11-08)
 
 

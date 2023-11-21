@@ -1141,7 +1141,7 @@ export class Datetime implements ComponentInterface {
    * so we need to re-init behavior with the new elements.
    */
   componentDidRender() {
-    const { presentation, prevPresentation, calendarBodyRef, minParts, preferWheel } = this;
+    const { presentation, prevPresentation, calendarBodyRef, minParts, preferWheel, forceRenderDate } = this;
 
     /**
      * TODO(FW-2165)
@@ -1159,7 +1159,20 @@ export class Datetime implements ComponentInterface {
     const hasCalendarGrid = !preferWheel && ['date-time', 'time-date', 'date'].includes(presentation);
     if (minParts !== undefined && hasCalendarGrid && calendarBodyRef) {
       const workingMonth = calendarBodyRef.querySelector('.calendar-month:nth-of-type(1)');
-      if (workingMonth) {
+      /**
+       * We need to make sure the datetime is not in the process
+       * of scrolling to a new datetime value if the value
+       * is updated programmatically.
+       * Otherwise, the datetime will appear to not scroll at all because
+       * we are resetting the scroll position to the center of the view.
+       * Prior to the datetime's value being updated programmatically,
+       * the calendarBodyRef is scrolled such that the middle month is centered
+       * in the view. The below code updates the scroll position so the middle
+       * month is also centered in the view. Since the scroll position did not change,
+       * the scroll callback in this file does not fire,
+       * and the resolveForceDateScrolling promise never resolves.
+       */
+      if (workingMonth && forceRenderDate === undefined) {
         calendarBodyRef.scrollLeft = workingMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
       }
     }

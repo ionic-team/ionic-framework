@@ -2,6 +2,7 @@ import { Injector, inject, EnvironmentInjector } from '@angular/core';
 import { AngularDelegate, OverlayBaseController } from '@ionic/angular/common';
 import type { PopoverOptions } from '@ionic/core/components';
 import { popoverController } from '@ionic/core/components';
+import { defineCustomElement } from '@ionic/core/components/ion-popover.js';
 
 export class PopoverController extends OverlayBaseController<PopoverOptions, HTMLIonPopoverElement> {
   private angularDelegate = inject(AngularDelegate);
@@ -10,6 +11,7 @@ export class PopoverController extends OverlayBaseController<PopoverOptions, HTM
 
   constructor() {
     super(popoverController);
+    defineCustomElement();
   }
 
   create(opts: PopoverOptions): Promise<HTMLIonPopoverElement> {

@@ -52,9 +52,18 @@
 }
 
 .alert-message {
-  max-height: $alert-md-content-max-height;
-
   font-size: $alert-md-message-font-size;
+}
+
+/**
+ * MD Alerts on tablets can expand vertically up to
+ * a total maximum height. We only want to set a max-height
+ * on mobile phones.
+ */
+@include mobile-viewport() {
+  .alert-message {
+    max-height: $alert-md-content-max-height;
+  }
 }
 
 .alert-message:empty {
@@ -102,12 +111,22 @@
 .alert-checkbox-group {
   position: relative;
 
-  max-height: $alert-md-content-max-height;
-
   border-top: $alert-md-list-border-top;
   border-bottom: $alert-md-list-border-bottom;
 
   overflow: auto;
+}
+
+/**
+ * MD Alerts on tablets can expand vertically up to
+ * a total maximum height. We only want to set a max-height
+ * on mobile phones.
+ */
+@include mobile-viewport() {
+  .alert-radio-group,
+  .alert-checkbox-group {
+    max-height: $alert-md-content-max-height;
+  }
 }
 
 .alert-tappable {
@@ -281,4 +300,15 @@
 
 .alert-button-inner {
   justify-content: $alert-md-button-group-justify-content;
+}
+
+/**
+ * MD alerts should scale up to 560px x 560px
+ * on tablet dimensions.
+ */
+@include tablet-viewport() {
+  :host {
+    --max-width: #{$alert-md-max-width-tablet};
+    --max-height: #{$alert-md-max-height-tablet};
+  }
 }

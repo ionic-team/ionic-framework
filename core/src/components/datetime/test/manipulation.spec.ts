@@ -1,3 +1,4 @@
+import type { DatetimeParts } from '../datetime-interface';
 import {
   getPreviousYear,
   getNextYear,
@@ -103,31 +104,31 @@ describe('getInternalHourValue()', () => {
 
 describe('calculateHourFromAMPM()', () => {
   it('should correctly convert from AM to PM', () => {
-    expect(calculateHourFromAMPM({ hour: 12, ampm: 'am' }, 'pm')).toEqual(12);
-    expect(calculateHourFromAMPM({ hour: 1, ampm: 'am' }, 'pm')).toEqual(13);
-    expect(calculateHourFromAMPM({ hour: 2, ampm: 'am' }, 'pm')).toEqual(14);
-    expect(calculateHourFromAMPM({ hour: 3, ampm: 'am' }, 'pm')).toEqual(15);
-    expect(calculateHourFromAMPM({ hour: 4, ampm: 'am' }, 'pm')).toEqual(16);
-    expect(calculateHourFromAMPM({ hour: 5, ampm: 'am' }, 'pm')).toEqual(17);
-    expect(calculateHourFromAMPM({ hour: 6, ampm: 'am' }, 'pm')).toEqual(18);
-    expect(calculateHourFromAMPM({ hour: 7, ampm: 'am' }, 'pm')).toEqual(19);
-    expect(calculateHourFromAMPM({ hour: 8, ampm: 'am' }, 'pm')).toEqual(20);
-    expect(calculateHourFromAMPM({ hour: 9, ampm: 'am' }, 'pm')).toEqual(21);
-    expect(calculateHourFromAMPM({ hour: 10, ampm: 'am' }, 'pm')).toEqual(22);
-    expect(calculateHourFromAMPM({ hour: 11, ampm: 'am' }, 'pm')).toEqual(23);
+    expect(calculateHourFromAMPM({ hour: 12, ampm: 'am' } as DatetimeParts, 'pm')).toEqual(12);
+    expect(calculateHourFromAMPM({ hour: 1, ampm: 'am' } as DatetimeParts, 'pm')).toEqual(13);
+    expect(calculateHourFromAMPM({ hour: 2, ampm: 'am' } as DatetimeParts, 'pm')).toEqual(14);
+    expect(calculateHourFromAMPM({ hour: 3, ampm: 'am' } as DatetimeParts, 'pm')).toEqual(15);
+    expect(calculateHourFromAMPM({ hour: 4, ampm: 'am' } as DatetimeParts, 'pm')).toEqual(16);
+    expect(calculateHourFromAMPM({ hour: 5, ampm: 'am' } as DatetimeParts, 'pm')).toEqual(17);
+    expect(calculateHourFromAMPM({ hour: 6, ampm: 'am' } as DatetimeParts, 'pm')).toEqual(18);
+    expect(calculateHourFromAMPM({ hour: 7, ampm: 'am' } as DatetimeParts, 'pm')).toEqual(19);
+    expect(calculateHourFromAMPM({ hour: 8, ampm: 'am' } as DatetimeParts, 'pm')).toEqual(20);
+    expect(calculateHourFromAMPM({ hour: 9, ampm: 'am' } as DatetimeParts, 'pm')).toEqual(21);
+    expect(calculateHourFromAMPM({ hour: 10, ampm: 'am' } as DatetimeParts, 'pm')).toEqual(22);
+    expect(calculateHourFromAMPM({ hour: 11, ampm: 'am' } as DatetimeParts, 'pm')).toEqual(23);
 
-    expect(calculateHourFromAMPM({ hour: 13, ampm: 'pm' }, 'am')).toEqual(1);
-    expect(calculateHourFromAMPM({ hour: 14, ampm: 'pm' }, 'am')).toEqual(2);
-    expect(calculateHourFromAMPM({ hour: 15, ampm: 'pm' }, 'am')).toEqual(3);
-    expect(calculateHourFromAMPM({ hour: 16, ampm: 'pm' }, 'am')).toEqual(4);
-    expect(calculateHourFromAMPM({ hour: 17, ampm: 'pm' }, 'am')).toEqual(5);
-    expect(calculateHourFromAMPM({ hour: 18, ampm: 'pm' }, 'am')).toEqual(6);
-    expect(calculateHourFromAMPM({ hour: 19, ampm: 'pm' }, 'am')).toEqual(7);
-    expect(calculateHourFromAMPM({ hour: 20, ampm: 'pm' }, 'am')).toEqual(8);
-    expect(calculateHourFromAMPM({ hour: 21, ampm: 'pm' }, 'am')).toEqual(9);
-    expect(calculateHourFromAMPM({ hour: 22, ampm: 'pm' }, 'am')).toEqual(10);
-    expect(calculateHourFromAMPM({ hour: 23, ampm: 'pm' }, 'am')).toEqual(11);
-    expect(calculateHourFromAMPM({ hour: 0, ampm: 'pm' }, 'am')).toEqual(12);
+    expect(calculateHourFromAMPM({ hour: 13, ampm: 'pm' } as DatetimeParts, 'am')).toEqual(1);
+    expect(calculateHourFromAMPM({ hour: 14, ampm: 'pm' } as DatetimeParts, 'am')).toEqual(2);
+    expect(calculateHourFromAMPM({ hour: 15, ampm: 'pm' } as DatetimeParts, 'am')).toEqual(3);
+    expect(calculateHourFromAMPM({ hour: 16, ampm: 'pm' } as DatetimeParts, 'am')).toEqual(4);
+    expect(calculateHourFromAMPM({ hour: 17, ampm: 'pm' } as DatetimeParts, 'am')).toEqual(5);
+    expect(calculateHourFromAMPM({ hour: 18, ampm: 'pm' } as DatetimeParts, 'am')).toEqual(6);
+    expect(calculateHourFromAMPM({ hour: 19, ampm: 'pm' } as DatetimeParts, 'am')).toEqual(7);
+    expect(calculateHourFromAMPM({ hour: 20, ampm: 'pm' } as DatetimeParts, 'am')).toEqual(8);
+    expect(calculateHourFromAMPM({ hour: 21, ampm: 'pm' } as DatetimeParts, 'am')).toEqual(9);
+    expect(calculateHourFromAMPM({ hour: 22, ampm: 'pm' } as DatetimeParts, 'am')).toEqual(10);
+    expect(calculateHourFromAMPM({ hour: 23, ampm: 'pm' } as DatetimeParts, 'am')).toEqual(11);
+    expect(calculateHourFromAMPM({ hour: 0, ampm: 'pm' } as DatetimeParts, 'am')).toEqual(12);
   });
 });
 

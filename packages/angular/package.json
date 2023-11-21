@@ -1,6 +1,6 @@
 {
   "name": "@ionic/angular",
-  "version": "7.5.4",
+  "version": "7.5.6",
   "description": "Angular specific wrappers for @ionic/core",
   "keywords": [
     "ionic",
@@ -48,7 +48,7 @@
     }
   },
   "dependencies": {
-    "@ionic/core": "^7.5.4",
+    "@ionic/core": "^7.5.6",
     "ionicons": "^7.0.0",
     "jsonc-parser": "^3.0.0",
     "tslib": "^2.3.0"
@@ -61,11 +61,12 @@
     "zone.js": ">=0.11.0"
   },
   "devDependencies": {
-    "@angular-devkit/core": "^14.0.0",
-    "@angular-devkit/schematics": "^14.0.0",
+    "@angular-devkit/core": "^17.0.0",
+    "@angular-devkit/schematics": "^17.0.0",
     "@angular-eslint/eslint-plugin": "^14.0.0",
     "@angular-eslint/eslint-plugin-template": "^14.0.0",
     "@angular-eslint/template-parser": "^14.0.0",
+    "@angular/cli": "^14.0.0",
     "@angular/common": "^14.0.0",
     "@angular/compiler": "^14.0.0",
     "@angular/compiler-cli": "^14.0.0",
@@ -76,7 +77,7 @@
     "@angular/router": "^14.0.0",
     "@ionic/eslint-config": "^0.3.0",
     "@ionic/prettier-config": "^2.0.0",
-    "@schematics/angular": "^14.0.0",
+    "@schematics/angular": "^17.0.0",
     "@types/node": "12.12.5",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",

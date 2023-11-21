@@ -9,14 +9,14 @@ it('should disable segment buttons added to disabled segment async', async () =>
     html: `<ion-segment disabled="true"></ion-segment>`,
   });
 
-  const segment = page.body.querySelector('ion-segment');
+  const segment = page.body.querySelector('ion-segment')!;
   segment.innerHTML = `
     <ion-segment-button>
       <ion-label>Segment Button</ion-label>
     </ion-segment-button>`;
   await page.waitForChanges();
 
-  const segmentButton = page.body.querySelector('ion-segment-button');
+  const segmentButton = page.body.querySelector('ion-segment-button')!;
   expect(segmentButton.disabled).toBe(true);
 });
 
@@ -32,7 +32,7 @@ it('should set checked state when value is set asynchronously', async () => {
     `,
   });
 
-  const segmentButton = page.root.querySelector('ion-segment-button');
+  const segmentButton = page.body.querySelector('ion-segment-button')!;
 
   expect(segmentButton.classList.contains('segment-button-checked')).toBe(false);
 

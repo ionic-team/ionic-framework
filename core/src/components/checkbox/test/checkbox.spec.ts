@@ -11,7 +11,7 @@ describe('ion-checkbox: disabled', () => {
       `,
     });
 
-    const checkbox = page.body.querySelector('ion-checkbox');
+    const checkbox = page.body.querySelector('ion-checkbox')!;
 
     expect(checkbox.checked).toBe(false);
 
