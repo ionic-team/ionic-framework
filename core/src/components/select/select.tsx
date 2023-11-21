@@ -768,12 +768,12 @@ export class Select implements ComponentInterface {
     const targetElSlot = target.getAttribute('slot');
 
     /**
+     * Prevent clicks to the start/end slots from opening the select.
      * We ensure the target isn't this element in case the select is slotted
      * in, for example, an item. This would prevent the select from ever
      * being opened since the element itself has slot="start"/"end".
      */
     if (target !== this.el && (targetElSlot === 'start' || targetElSlot === 'end')) {
-      // prevent clicks to the slots from opening the select
       ev.stopPropagation();
       ev.preventDefault();
     } else {
