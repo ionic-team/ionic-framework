@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.5.6](https://github.com/ionic-team/ionic-framework/compare/v7.5.5...v7.5.6) (2023-11-21)
+
+
+### Bug Fixes
+
+* **angular:** ng add @ionic/angular in standalone projects ([#28523](https://github.com/ionic-team/ionic-framework/issues/28523)) ([c07312e](https://github.com/ionic-team/ionic-framework/commit/c07312e5ed931f6f825ccf083c9dead9fa815843)), closes [#28514](https://github.com/ionic-team/ionic-framework/issues/28514)
+* **angular:** overlays are defined when using standalone controllers ([#28560](https://github.com/ionic-team/ionic-framework/issues/28560)) ([9453132](https://github.com/ionic-team/ionic-framework/commit/9453132aa8952b4adfa1326e61138b329e254f76)), closes [#28385](https://github.com/ionic-team/ionic-framework/issues/28385)
+
+
+
+
+
 ## [7.5.5](https://github.com/ionic-team/ionic-framework/compare/v7.5.4...v7.5.5) (2023-11-15)
 
 **Note:** Version bump only for package @ionic/angular
