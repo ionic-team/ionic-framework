@@ -263,6 +263,8 @@ button {
   display: flex;
 
   align-items: center;
+
+  overflow: hidden;
 }
 
 :host(.select-label-placement-stacked) .select-wrapper-inner,
