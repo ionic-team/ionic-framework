@@ -169,9 +169,6 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
     test('disabled column should not have visual regressions', async ({ page }) => {
       const disabledColumn = page.locator('#column-disabled');
-      await disabledColumn.evaluate((el: HTMLIonPickerColumnInternalElement) => {
-        el.value = 11;
-      });
       await page.waitForChanges();
 
       await expect(disabledColumn).toHaveScreenshot(screenshot('picker-internal-disabled-column'));
