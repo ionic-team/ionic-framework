@@ -55,9 +55,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         config
       );
 
-      const pickerItems = page.locator(
-        'ion-picker-column-internal .picker-item:not(.picker-item-empty, .picker-item-disabled)'
-      );
+      const pickerItems = page.locator('ion-picker-column-internal .picker-item:not(.picker-item-empty, [disabled])');
 
       expect(await pickerItems.count()).toBe(3);
     });
@@ -80,7 +78,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         config
       );
 
-      const disabledItem = page.locator('ion-picker-column-internal .picker-item.picker-item-disabled');
+      const disabledItem = page.locator('ion-picker-column-internal .picker-item[disabled]');
       await expect(disabledItem).not.toBeEnabled();
     });
     test('disabled picker item should not be considered active', async ({ page }) => {
@@ -130,7 +128,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await page.waitForChanges();
 
       const disabledItem = page.locator('ion-picker-column-internal .picker-item[data-value="b"]');
-      await expect(disabledItem).toHaveClass(/picker-item-disabled/);
+      await expect(disabledItem).toBeDisabled();
       await expect(disabledItem).not.toHaveClass(/picker-item-active/);
     });
     test('defaulting the value to a disabled item should not cause that item to be active', async ({ page }) => {
@@ -154,7 +152,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       );
 
       const disabledItem = page.locator('ion-picker-column-internal .picker-item[data-value="b"]');
-      await expect(disabledItem).toHaveClass(/picker-item-disabled/);
+      await expect(disabledItem).toBeDisabled();
       await expect(disabledItem).not.toHaveClass(/picker-item-active/);
     });
   });

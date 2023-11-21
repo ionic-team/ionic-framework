@@ -31,7 +31,7 @@ describe('ion-datetime disabled', () => {
     await expect(columns.length).toEqual(4);
 
     columns.forEach((column) => {
-      expect(column.getAttribute('disabled')).not.toBeNull();
+      expect(column.hasAttribute('disabled')).toBe(true);
     });
   });
 });

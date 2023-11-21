@@ -439,7 +439,6 @@ export class PickerColumnInternal implements ComponentInterface {
         class={createColorClasses(color, {
           [mode]: true,
           ['picker-column-active']: isActive,
-          ['picker-column-disabled']: pickerDisabled,
           ['picker-column-numeric-input']: numericInput,
         })}
       >
@@ -470,7 +469,6 @@ export class PickerColumnInternal implements ComponentInterface {
               tabindex="-1"
               class={{
                 'picker-item': true,
-                'picker-item-disabled': isItemDisabled,
               }}
               data-value={item.value}
               data-index={index}
