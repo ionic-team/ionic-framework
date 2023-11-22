@@ -271,12 +271,6 @@ ion-picker-column-internal {
   --background: transparent;
 }
 
-:host .calendar-action-buttons .calendar-month-year-toggle ion-icon {
-  @include padding(0, 0, 0, 4px);
-
-  flex-shrink: 0;
-}
-
 // Calendar / Header / Days of Week
 // -----------------------------------
 :host .calendar-days-of-week {
@@ -520,6 +514,12 @@ ion-picker-column-internal {
     opacity: 0.3;
     pointer-events: none;
   }
+}
+
+.calendar-month-year-toggle ion-icon {
+  @include padding(0, 0, 0, 4px);
+
+  flex-shrink: 0;
 }
 
 .calendar-month-year-toggle label {
