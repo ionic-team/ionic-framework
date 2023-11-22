@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.5.7-nightly.20231122](https://github.com/ionic-team/ionic-framework/compare/v7.5.6...v7.5.7-nightly.20231122) (2023-11-22)
+
+
+### Bug Fixes
+
+* **alert:** date inputs render correctly in mobile safari ([#28495](https://github.com/ionic-team/ionic-framework/issues/28495)) ([b833f0e](https://github.com/ionic-team/ionic-framework/commit/b833f0e826ddd261230e2e29b70e2dc884d8cb04)), closes [#28494](https://github.com/ionic-team/ionic-framework/issues/28494)
+
+
+
+
+
 ## [7.5.6](https://github.com/ionic-team/ionic-framework/compare/v7.5.5...v7.5.6) (2023-11-21)
 
 
