@@ -9,6 +9,7 @@ export interface ToastOptions {
   buttons?: (ToastButton | string)[];
   position?: 'top' | 'bottom' | 'middle';
   positionAnchor?: HTMLElement | string;
+  swipeGesture?: ToastSwipeGestureDirection;
   translucent?: boolean;
   animated?: boolean;
   icon?: string;
