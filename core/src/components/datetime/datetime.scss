@@ -271,12 +271,6 @@ ion-picker-column-internal {
   --background: transparent;
 }
 
-:host .calendar-action-buttons .calendar-month-year-toggle ion-label {
-  display: flex;
-
-  align-items: center;
-}
-
 :host .calendar-action-buttons .calendar-month-year-toggle ion-icon {
   @include padding(0, 0, 0, 4px);
 
