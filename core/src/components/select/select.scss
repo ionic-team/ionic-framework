@@ -158,6 +158,11 @@ button {
 
   position: relative;
 
+  /**
+   * Prevent the icon from shrinking when the label and/or
+   * selected item text is long enough to fill the rest of
+   * the container.
+   */
   flex-shrink: 0;
 }
 
@@ -271,6 +276,12 @@ button {
 
 :host(.select-label-placement-stacked) .select-wrapper-inner,
 :host(.select-label-placement-floating) .select-wrapper-inner {
+  /**
+   * When using a stacked/floating label, the inner wrapper is
+   * stacked vertically under the label container. This line
+   * ensures that the inner wrapper fills all the remaining height
+   * of the component.
+   */
   flex-grow: 1;
 }
 
@@ -562,6 +573,11 @@ button {
 // ----------------------------------------------------------------
 
 ::slotted([slot="start"]), ::slotted([slot="end"]) {
+  /**
+   * Prevent the slots from shrinking when the label and/or
+   * selected item text is long enough to fill the rest of
+   * the container.
+   */
   flex-shrink: 0;
 }
 
