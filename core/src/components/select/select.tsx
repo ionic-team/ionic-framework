@@ -765,21 +765,20 @@ export class Select implements ComponentInterface {
 
   private onClick = (ev: UIEvent) => {
     const target = ev.target as HTMLElement;
-    const closestSlot = target.closest('[slot]');
-    const slotName = closestSlot === null ? '' : closestSlot.getAttribute('slot');
+    const closestSlot = target.closest('[slot="start"], [slot="end"]');
 
-    /**
-     * Prevent clicks to the start/end slots from opening the select.
-     * We ensure the target isn't this element in case the select is slotted
-     * in, for example, an item. This would prevent the select from ever
-     * being opened since the element itself has slot="start"/"end".
-     */
-    if (target !== this.el && (slotName === 'start' || slotName === 'end')) {
-      ev.stopPropagation();
-      ev.preventDefault();
-    } else {
+    if (target === this.el || closestSlot === null) {
       this.setFocus();
       this.open(ev);
+    } else {
+      /**
+       * Prevent clicks to the start/end slots from opening the select.
+       * We ensure the target isn't this element in case the select is slotted
+       * in, for example, an item. This would prevent the select from ever
+       * being opened since the element itself has slot="start"/"end".
+       */
+      ev.stopPropagation();
+      ev.preventDefault();
     }
   };
 
