@@ -766,7 +766,7 @@ export class Select implements ComponentInterface {
   private onClick = (ev: UIEvent) => {
     const target = ev.target as HTMLElement;
     const closestSlot = target.closest('[slot]');
-    const slotName = closestSlot === null ? "" : closestSlot.getAttribute('slot');
+    const slotName = closestSlot === null ? '' : closestSlot.getAttribute('slot');
 
     /**
      * Prevent clicks to the start/end slots from opening the select.
