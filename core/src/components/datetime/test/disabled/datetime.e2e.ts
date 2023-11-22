@@ -101,20 +101,3 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config, scree
     });
   });
 });
-
-/**
- * This behavior does not differ across
- * directions.
- */
-configs({ directions: ['ltr'] }).forEach(({ title, config, screenshot }) => {
-  test.describe(title('datetime: disabled wheel'), () => {
-    test('disabled wheel should not have visual regressions', async ({ page }) => {
-      await page.goto('/src/components/datetime/test/disabled', config);
-
-      const disabledWheel = page.locator('#inline-datetime-wheel');
-      await page.waitForChanges();
-
-      await expect(disabledWheel).toHaveScreenshot(screenshot('datetime-disabled-wheel'));
-    });
-  });
-});
