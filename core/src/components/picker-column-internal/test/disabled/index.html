@@ -45,26 +45,39 @@
       <ion-content class="ion-padding">
         <div class="grid">
           <div class="grid-item">
-            <h2>Default</h2>
+            <h2>Even items disabled</h2>
             <ion-picker-internal>
-              <ion-picker-column-internal id="default"></ion-picker-column-internal>
+              <ion-picker-column-internal id="half-disabled"></ion-picker-column-internal>
+            </ion-picker-internal>
+          </div>
+          <div class="grid-item">
+            <h2>Column disabled</h2>
+            <ion-picker-internal>
+              <ion-picker-column-internal id="column-disabled" value="11" disabled></ion-picker-column-internal>
             </ion-picker-internal>
           </div>
         </div>
       </ion-content>
       <script>
-        const defaultPickerColumn = document.getElementById('default');
-
-        const items = Array(24)
+        const halfDisabledPicker = document.getElementById('half-disabled');
+        const halfDisabledItems = Array(24)
           .fill()
           .map((_, i) => ({
             text: `${i}`,
             value: i,
             disabled: i % 2 === 0,
           }));
+        halfDisabledPicker.items = halfDisabledItems;
+        halfDisabledPicker.value = 12;
 
-        defaultPickerColumn.items = items;
-        defaultPickerColumn.value = 12;
+        const fullDisabledPicker = document.getElementById('column-disabled');
+        const items = Array(24)
+          .fill()
+          .map((_, i) => ({
+            text: `${i}`,
+            value: i,
+          }));
+        fullDisabledPicker.items = items;
       </script>
     </ion-app>
   </body>

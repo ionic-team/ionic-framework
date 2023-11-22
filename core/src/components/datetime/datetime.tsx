@@ -1538,7 +1538,7 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderCombinedDatePickerColumn() {
-    const { defaultParts, workingParts, locale, minParts, maxParts, todayParts, isDateEnabled } = this;
+    const { defaultParts, disabled, workingParts, locale, minParts, maxParts, todayParts, isDateEnabled } = this;
 
     const activePart = this.getActivePartsWithFallback();
 
@@ -1617,6 +1617,7 @@ export class Datetime implements ComponentInterface {
       <ion-picker-column-internal
         class="date-column"
         color={this.color}
+        disabled={disabled}
         items={items}
         value={todayString}
         onIonChange={(ev: CustomEvent) => {
@@ -1728,7 +1729,7 @@ export class Datetime implements ComponentInterface {
       return [];
     }
 
-    const { workingParts } = this;
+    const { disabled, workingParts } = this;
 
     const activePart = this.getActivePartsWithFallback();
 
@@ -1736,6 +1737,7 @@ export class Datetime implements ComponentInterface {
       <ion-picker-column-internal
         class="day-column"
         color={this.color}
+        disabled={disabled}
         items={days}
         value={(workingParts.day !== null ? workingParts.day : this.defaultParts.day) ?? undefined}
         onIonChange={(ev: CustomEvent) => {
@@ -1772,7 +1774,7 @@ export class Datetime implements ComponentInterface {
       return [];
     }
 
-    const { workingParts } = this;
+    const { disabled, workingParts } = this;
 
     const activePart = this.getActivePartsWithFallback();
 
@@ -1780,6 +1782,7 @@ export class Datetime implements ComponentInterface {
       <ion-picker-column-internal
         class="month-column"
         color={this.color}
+        disabled={disabled}
         items={months}
         value={workingParts.month}
         onIonChange={(ev: CustomEvent) => {
@@ -1815,7 +1818,7 @@ export class Datetime implements ComponentInterface {
       return [];
     }
 
-    const { workingParts } = this;
+    const { disabled, workingParts } = this;
 
     const activePart = this.getActivePartsWithFallback();
 
@@ -1823,6 +1826,7 @@ export class Datetime implements ComponentInterface {
       <ion-picker-column-internal
         class="year-column"
         color={this.color}
+        disabled={disabled}
         items={years}
         value={workingParts.year}
         onIonChange={(ev: CustomEvent) => {
@@ -1888,7 +1892,7 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderHourPickerColumn(hoursData: PickerColumnItem[]) {
-    const { workingParts } = this;
+    const { disabled, workingParts } = this;
     if (hoursData.length === 0) return [];
 
     const activePart = this.getActivePartsWithFallback();
@@ -1896,6 +1900,7 @@ export class Datetime implements ComponentInterface {
     return (
       <ion-picker-column-internal
         color={this.color}
+        disabled={disabled}
         value={activePart.hour}
         items={hoursData}
         numericInput
@@ -1916,7 +1921,7 @@ export class Datetime implements ComponentInterface {
     );
   }
   private renderMinutePickerColumn(minutesData: PickerColumnItem[]) {
-    const { workingParts } = this;
+    const { disabled, workingParts } = this;
     if (minutesData.length === 0) return [];
 
     const activePart = this.getActivePartsWithFallback();
@@ -1924,6 +1929,7 @@ export class Datetime implements ComponentInterface {
     return (
       <ion-picker-column-internal
         color={this.color}
+        disabled={disabled}
         value={activePart.minute}
         items={minutesData}
         numericInput
@@ -1944,7 +1950,7 @@ export class Datetime implements ComponentInterface {
     );
   }
   private renderDayPeriodPickerColumn(dayPeriodData: PickerColumnItem[]) {
-    const { workingParts } = this;
+    const { disabled, workingParts } = this;
     if (dayPeriodData.length === 0) {
       return [];
     }
@@ -1956,6 +1962,7 @@ export class Datetime implements ComponentInterface {
       <ion-picker-column-internal
         style={isDayPeriodRTL ? { order: '-1' } : {}}
         color={this.color}
+        disabled={disabled}
         value={activePart.ampm}
         items={dayPeriodData}
         onIonChange={(ev: CustomEvent) => {
