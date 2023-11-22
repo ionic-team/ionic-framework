@@ -2010,7 +2010,7 @@ export class Datetime implements ComponentInterface {
               aria-label={this.showMonthAndYear ? 'Hide year picker' : 'Show year picker'}
               onClick={() => this.toggleMonthAndYearView()}
             >
-              <label>
+              <span id="toggle-wrapper">
                 {getMonthAndYear(this.locale, this.workingParts)}
                 <ion-icon
                   aria-hidden="true"
@@ -2018,7 +2018,7 @@ export class Datetime implements ComponentInterface {
                   lazy={false}
                   flipRtl={true}
                 ></ion-icon>
-              </label>
+              </span>
               {mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
             </button>
           </div>

@@ -496,6 +496,8 @@ ion-picker-column-internal {
 
   background: transparent;
 
+  cursor: pointer;
+
   z-index: 1;
 
   &::after {
@@ -522,7 +524,7 @@ ion-picker-column-internal {
   flex-shrink: 0;
 }
 
-.calendar-month-year-toggle label {
+.calendar-month-year-toggle #toggle-wrapper {
   display: inline-flex;
 
   align-items: center;
