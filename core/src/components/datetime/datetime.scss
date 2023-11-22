@@ -267,10 +267,6 @@ ion-picker-column-internal {
   justify-content: space-between;
 }
 
-:host .calendar-action-buttons .calendar-month-year-toggle {
-  background: transparent;
-}
-
 :host .calendar-action-buttons ion-button {
   --background: transparent;
 }
@@ -507,8 +503,10 @@ ion-picker-column-internal {
   position: relative;
 
   border: 0;
-  
+
   outline: none;
+
+  background: transparent;
 
   z-index: 1;
 
