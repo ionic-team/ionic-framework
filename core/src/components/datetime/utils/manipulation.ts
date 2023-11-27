@@ -469,14 +469,37 @@ export const getClosestValidDate = ({
   maxParts?: DatetimeParts;
 }) => {
   const { hour, minute, day, month, year } = refParts;
-  const copyParts = clampDate({ ...refParts, dayOfWeek: undefined }, minParts, maxParts);
+  const copyParts = { ...refParts, dayOfWeek: undefined };
+
+  if (yearValues !== undefined) {
+    // Filters out years that are out of the min/max bounds
+    const filteredYears = yearValues.filter((year) => {
+      if (minParts !== undefined && year < minParts.year) {
+        return false;
+      }
+
+      if (maxParts !== undefined && year > maxParts.year) {
+        return false;
+      }
+
+      return true;
+    });
+    copyParts.year = findClosestValue(year, filteredYears);
+  }
 
   if (monthValues !== undefined) {
     // Filters out months that are out of the min/max bounds
-    const filteredMonths = monthValues.filter(
-      (month) =>
-        !(minParts !== undefined && month < minParts.month!) && !(maxParts !== undefined && month > maxParts.month!)
-    );
+    const filteredMonths = monthValues.filter((month) => {
+      if (minParts !== undefined && copyParts.year === minParts.year && month < minParts.month) {
+        return false;
+      }
+
+      if (maxParts !== undefined && copyParts.year === maxParts.year && month > maxParts.month) {
+        return false;
+      }
+
+      return true;
+    });
     copyParts.month = findClosestValue(month, filteredMonths);
   }
 
@@ -484,23 +507,15 @@ export const getClosestValidDate = ({
   if (day !== null && dayValues !== undefined) {
     // Filters out days that are out of the min/max bounds
     const filteredDays = dayValues.filter((day) => {
-      if (minParts && isBefore({ ...copyParts, day }, minParts)) {
+      if (minParts !== undefined && isBefore({ ...copyParts, day }, minParts)) {
         return false;
       }
-      if (maxParts && isAfter({ ...copyParts, day }, maxParts)) {
+      if (maxParts !== undefined && isAfter({ ...copyParts, day }, maxParts)) {
         return false;
       }
       return true;
     });
     copyParts.day = findClosestValue(day, filteredDays);
-  }
-
-  if (yearValues !== undefined) {
-    // Filters out years that are out of the min/max bounds
-    const filteredYears = yearValues.filter(
-      (year) => !(minParts !== undefined && year < minParts.year!) && !(maxParts !== undefined && year > maxParts.year!)
-    );
-    copyParts.year = findClosestValue(year, filteredYears);
   }
 
   if (hour !== undefined && hourValues !== undefined) {
@@ -521,10 +536,20 @@ export const getClosestValidDate = ({
   if (minute !== undefined && minuteValues !== undefined) {
     // Filters out minutes that are out of the min/max bounds
     const filteredMinutes = minuteValues.filter((minute) => {
-      if (minParts?.minute !== undefined && isSameDay(copyParts, minParts) && minute < minParts.minute) {
+      if (
+        minParts?.minute !== undefined &&
+        isSameDay(copyParts, minParts) &&
+        copyParts.hour === minParts.hour &&
+        minute < minParts.minute
+      ) {
         return false;
       }
-      if (maxParts?.minute !== undefined && isSameDay(copyParts, maxParts) && minute > maxParts.minute) {
+      if (
+        maxParts?.minute !== undefined &&
+        isSameDay(copyParts, maxParts) &&
+        copyParts.hour === maxParts.hour &&
+        minute > maxParts.minute
+      ) {
         return false;
       }
       return true;

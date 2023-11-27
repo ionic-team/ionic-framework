@@ -649,4 +649,70 @@ describe('getClosestValidDate()', () => {
       })
     ).toEqual(expected);
   });
+
+  it('should only clamp minutes if within the same day and hour as min/max', () => {
+    // April 2, 2020 9:16 AM
+    const refParts = { month: 4, day: 2, year: 2020, hour: 9, minute: 16 };
+    // September 10, 2021 10:10 AM
+    const minParts = { month: 9, day: 10, year: 2021, hour: 10, minute: 10 };
+    // September 10, 2021 11:15 AM
+    const maxParts = { month: 9, day: 10, year: 2021, hour: 11, minute: 15 };
+
+    // September 10, 2021 10:16 AM
+    const expected = {
+      month: 9,
+      day: 10,
+      year: 2021,
+      hour: 10,
+      minute: 16,
+      ampm: 'am',
+      dayOfWeek: undefined,
+    };
+
+    expect(
+      getClosestValidDate({
+        refParts,
+        monthValues: [4, 9, 11],
+        dayValues: [10, 12, 13, 14],
+        yearValues: [2020, 2021, 2023],
+        hourValues: [9, 10, 11],
+        minuteValues: [10, 15, 16],
+        minParts,
+        maxParts,
+      })
+    ).toEqual(expected);
+  });
+
+  it('should return the closest valid date after adjusting the allowed year', () => {
+    // April 2, 2022 9:16 AM
+    const refParts = { month: 4, day: 2, year: 2022, hour: 9, minute: 16 };
+    // September 10, 2021 10:10 AM
+    const minParts = { month: 9, day: 10, year: 2021, hour: 10, minute: 10 };
+    // September 10, 2023 11:15 AM
+    const maxParts = { month: 9, day: 10, year: 2023, hour: 11, minute: 15 };
+
+    // April 2, 2022 9:16 AM
+    const expected = {
+      month: 4,
+      day: 2,
+      year: 2022,
+      hour: 9,
+      minute: 16,
+      ampm: 'am',
+      dayOfWeek: undefined,
+    };
+
+    expect(
+      getClosestValidDate({
+        refParts,
+        monthValues: [4, 9, 11],
+        dayValues: [2, 10, 12, 13, 14],
+        yearValues: [2020, 2021, 2022, 2023],
+        hourValues: [9, 10, 11],
+        minuteValues: [10, 15, 16],
+        minParts,
+        maxParts,
+      })
+    ).toEqual(expected);
+  });
 });
