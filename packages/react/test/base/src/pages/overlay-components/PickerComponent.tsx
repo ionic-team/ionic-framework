@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IonButton, IonContent, IonPage, IonPicker } from '@ionic/react';
+import { IonButton, IonContent, IonPage, IonPickerLegacy } from '@ionic/react';
 
 const PickerComponent: React.FC = () => {
   const [show, setShow] = useState(false);
@@ -7,7 +7,7 @@ const PickerComponent: React.FC = () => {
   return (
     <IonPage>
       <IonContent>
-        <IonPicker
+        <IonPickerLegacy
           isOpen={show}
           buttons={[
             {
