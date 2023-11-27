@@ -23,6 +23,7 @@ import type { ToggleChangeEventDetail } from './toggle-interface';
  *
  * @part track - The background track of the toggle.
  * @part handle - The toggle handle, or knob, used to change the checked state.
+ * @part label - The label text describing the select.
  */
 @Component({
   tag: 'ion-toggle',
@@ -377,6 +378,7 @@ export class Toggle implements ComponentInterface {
               'label-text-wrapper': true,
               'label-text-wrapper-hidden': !this.hasLabel,
             }}
+            part="label"
           >
             <slot></slot>
           </div>
