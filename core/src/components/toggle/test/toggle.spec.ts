@@ -40,6 +40,19 @@ describe('toggle', () => {
       expect(t.enableOnOffLabels).toBe(true);
     });
   });
+
+  describe('shadow parts', () => {
+    it('should have shadow parts', async () => {
+      const page = await newSpecPage({
+        components: [Toggle],
+        html: `<ion-toggle></ion-toggle>`,
+      });
+      const toggle = page.body.querySelector('ion-toggle')!;
+      expect(toggle.shadowRoot!.querySelector('[part="label"]')).not.toBe(null);
+      expect(toggle.shadowRoot!.querySelector('[part="track"]')).not.toBe(null);
+      expect(toggle.shadowRoot!.querySelector('[part="handle"]')).not.toBe(null);
+    });
+  });
 });
 
 describe('ion-toggle: disabled', () => {
