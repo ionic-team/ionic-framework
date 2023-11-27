@@ -47,7 +47,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       const tabKey = browserName === 'webkit' ? 'Alt+Tab' : 'Tab';
 
       const datetime = page.locator('ion-datetime');
-      const monthYearButton = page.locator('.calendar-month-year ion-item');
+      const monthYearButton = page.locator('.calendar-month-year-toggle');
       const prevButton = page.locator('.calendar-next-prev ion-button:nth-child(1)');
       const nextButton = page.locator('.calendar-next-prev ion-button:nth-child(2)');
 
