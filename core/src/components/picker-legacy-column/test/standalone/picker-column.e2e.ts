@@ -4,7 +4,7 @@ import { configs, test } from '@utils/test/playwright';
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('picker-column'), () => {
     test.beforeEach(async ({ page }) => {
-      await page.goto(`/src/components/picker-column-legacy/test/standalone`, config);
+      await page.goto(`/src/components/picker-legacy-column/test/standalone`, config);
     });
 
     test('should present picker without ion-app', async ({ page }) => {
