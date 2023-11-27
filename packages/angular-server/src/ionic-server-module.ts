@@ -45,7 +45,7 @@ export function hydrateIonicComponents(doc: any, appId: any) {
         'ion-tab',
 
         // auxiliar
-        'ion-picker-column',
+        'ion-picker-legacy-column',
       ],
     }).then((hydrateResults) => {
       hydrateResults.diagnostics.forEach((d) => {

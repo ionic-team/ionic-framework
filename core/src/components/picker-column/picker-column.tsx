@@ -18,7 +18,7 @@ import type { PickerColumn } from '../picker/picker-interface';
     md: 'picker-column.md.scss',
   },
 })
-export class PickerLegacyColumnCmp implements ComponentInterface {
+export class PickerColumnCmp implements ComponentInterface {
   private bounceFrom!: number;
   private lastIndex?: number;
   private minY!: number;

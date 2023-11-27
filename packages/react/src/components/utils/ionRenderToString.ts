@@ -28,7 +28,7 @@ export async function ionRenderToString(html: string, userAgent: string, options
         'ion-tab',
 
         // auxiliary
-        'ion-picker-column',
+        'ion-picker-legacy-column',
       ],
       userAgent,
     },

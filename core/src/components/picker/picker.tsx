@@ -37,7 +37,7 @@ import type { PickerButton, PickerColumn } from './picker-interface';
   },
   scoped: true,
 })
-export class PickerLegacy implements ComponentInterface, OverlayInterface {
+export class Picker implements ComponentInterface, OverlayInterface {
   private readonly delegateController = createDelegateController(this);
   private readonly lockController = createLockController();
   private readonly triggerController = createTriggerController();
@@ -371,7 +371,7 @@ export class PickerLegacy implements ComponentInterface, OverlayInterface {
 
           <div class="picker-columns">
             <div class="picker-above-highlight"></div>
-            {this.presented && this.columns.map((c) => <ion-picker-column col={c}></ion-picker-column>)}
+            {this.presented && this.columns.map((c) => <ion-picker-legacy-column col={c}></ion-picker-legacy-column>)}
             <div class="picker-below-highlight"></div>
           </div>
         </div>

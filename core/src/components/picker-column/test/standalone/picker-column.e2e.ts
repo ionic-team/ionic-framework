@@ -28,7 +28,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       const ionPickerDidPresent = await page.spyOnEvent('ionPickerDidPresent');
       const ionPickerColChangeEvent = await page.spyOnEvent('ionPickerColChange');
 
-      const column = page.locator('ion-picker-column');
+      const column = page.locator('ion-picker-legacy-column');
       const secondOption = column.locator('.picker-opt').nth(1);
 
       await page.click('#single-column-button');
