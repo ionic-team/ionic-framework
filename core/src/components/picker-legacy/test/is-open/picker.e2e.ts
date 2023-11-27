@@ -18,7 +18,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await ionPickerDidPresent.next();
       await expect(picker).toBeVisible();
 
-      await picker.evaluate((el: HTMLIonPickerElement) => (el.isOpen = false));
+      await picker.evaluate((el: HTMLIonPickerLegacyElement) => (el.isOpen = false));
 
       await ionPickerDidDismiss.next();
       await expect(picker).toBeHidden();

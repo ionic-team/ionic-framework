@@ -6,7 +6,7 @@ import { pickerController } from '@ionic/core';
 @Injectable({
   providedIn: 'root',
 })
-export class PickerController extends OverlayBaseController<PickerOptions, HTMLIonPickerElement> {
+export class PickerController extends OverlayBaseController<PickerOptions, HTMLIonPickerLegacyElement> {
   constructor() {
     super(pickerController);
   }

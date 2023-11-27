@@ -45,7 +45,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
   private durationTimeout?: ReturnType<typeof setTimeout>;
   lastFocus?: HTMLElement;
 
-  @Element() el!: HTMLIonPickerElement;
+  @Element() el!: HTMLIonPickerLegacyElement;
 
   @State() presented = false;
 

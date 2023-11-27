@@ -7,7 +7,7 @@ it('picker should be assigned an incrementing id', async () => {
     components: [Picker],
     html: `<ion-picker-legacy is-open="true"></ion-picker-legacy>`,
   });
-  let picker: HTMLIonPickerElement;
+  let picker: HTMLIonPickerLegacyElement;
 
   picker = page.body.querySelector('ion-picker-legacy')!;
 

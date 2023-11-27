@@ -7,7 +7,7 @@ import { defineCustomElement } from '@ionic/core/components/ion-picker-legacy.js
 @Injectable({
   providedIn: 'root',
 })
-export class PickerController extends OverlayBaseController<PickerOptions, HTMLIonPickerElement> {
+export class PickerController extends OverlayBaseController<PickerOptions, HTMLIonPickerLegacyElement> {
   constructor() {
     super(pickerController);
     defineCustomElement();

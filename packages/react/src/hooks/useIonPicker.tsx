@@ -11,7 +11,7 @@ import { useController } from './useController';
  * @returns Returns the present and dismiss methods in an array
  */
 export function useIonPicker(): UseIonPickerResult {
-  const controller = useController<PickerOptions, HTMLIonPickerElement>(
+  const controller = useController<PickerOptions, HTMLIonPickerLegacyElement>(
     'IonPicker',
     pickerController,
     defineCustomElement
