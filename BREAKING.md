@@ -17,6 +17,7 @@ This is a comprehensive list of the breaking changes introduced in the major ver
 - [Components](#version-8x-components)
   - [Content](#version-8x-content)
   - [Datetime](#version-8x-datetime)
+  - [Picker](#version-8x-picker)
 
 <h2 id="version-8x-browser-platform-support">Browser and Platform Support</h2>
 
@@ -60,3 +61,6 @@ This section details the desktop browser, JavaScript framework, and mobile platf
       +  background: red;
       }
       ```
+<h2 id="version-8x-picker">Picker</h2>
+
+- `ion-picker` and `ion-picker-column` have been renamed to `ion-picker-legacy` and `ion-picker-legacy-column`, respectively. Both tag names and component import names have been updated to follow this new format. This change was made to accommodate the new inline picker component while allowing developers to continue to use the legacy picker during this migration period.
