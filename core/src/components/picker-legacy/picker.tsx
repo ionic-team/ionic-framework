@@ -2,6 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 import { raf } from '@utils/helpers';
 import { createLockController } from '@utils/lock-controller';
+import { printIonWarning } from '@utils/logging';
 import {
   createDelegateController,
   createTriggerController,
@@ -15,7 +16,6 @@ import {
   setOverlayId,
 } from '@utils/overlays';
 import { getClassMap } from '@utils/theme';
-import { printIonWarning } from '@utils/logging';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { AnimationBuilder, CssClassMap, OverlayInterface, FrameworkDelegate } from '../../interface';
@@ -203,7 +203,10 @@ export class Picker implements ComponentInterface, OverlayInterface {
   }
 
   componentDidLoad() {
-    printIonWarning('ion-picker-legacy and ion-picker-legacy-column have been deprecated in favor of the ion-picker and ion-picker-column components. These new components display inline with your page content allowing for more presentation flexibility than before.', this.el);
+    printIonWarning(
+      'ion-picker-legacy and ion-picker-legacy-column have been deprecated in favor of the ion-picker and ion-picker-column components. These new components display inline with your page content allowing for more presentation flexibility than before.',
+      this.el
+    );
 
     /**
      * If picker was rendered with isOpen="true"
