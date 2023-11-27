@@ -30,14 +30,14 @@ import type { PickerButton, PickerColumn } from './picker-interface';
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
 @Component({
-  tag: 'ion-picker',
+  tag: 'ion-picker-legacy',
   styleUrls: {
     ios: 'picker.ios.scss',
     md: 'picker.md.scss',
   },
   scoped: true,
 })
-export class Picker implements ComponentInterface, OverlayInterface {
+export class PickerLegacy implements ComponentInterface, OverlayInterface {
   private readonly delegateController = createDelegateController(this);
   private readonly lockController = createLockController();
   private readonly triggerController = createTriggerController();
