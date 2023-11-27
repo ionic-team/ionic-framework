@@ -38,6 +38,8 @@ import type { TextareaChangeEventDetail, TextareaInputEventDetail } from './text
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @slot label - The label text to associate with the textarea. Use the `labelPlacement` property to control where the label is placed relative to the textarea. Use this if you need to render a label with custom HTML. (EXPERIMENTAL)
+ * @slot start - Content to display at the leading edge of the textarea. (EXPERIMENTAL)
+ * @slot end - Content to display at the trailing edge of the textarea. (EXPERIMENTAL)
  */
 @Component({
   tag: 'ion-textarea',
@@ -316,7 +318,7 @@ export class Textarea implements ComponentInterface {
   connectedCallback() {
     const { el } = this;
     this.legacyFormController = createLegacyFormController(el);
-    this.slotMutationController = createSlotMutationController(el, 'label', () => forceUpdate(this));
+    this.slotMutationController = createSlotMutationController(el, ['label', 'start', 'end'], () => forceUpdate(this));
     this.notchController = createNotchController(
       el,
       () => this.notchSpacerEl,
@@ -705,55 +707,100 @@ Developers can use the "legacy" property to continue using the legacy form marku
   }
 
   private renderTextarea() {
-    const { inputId, disabled, fill, shape, labelPlacement } = this;
+    const { inputId, disabled, fill, shape, labelPlacement, el, hasFocus } = this;
     const mode = getIonMode(this);
     const value = this.getValue();
     const inItem = hostContext('ion-item', this.el);
     const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;
 
+    const hasValue = this.hasValue();
+    const hasStartEndSlots = el.querySelector('[slot="start"], [slot="end"]') !== null;
+
+    /**
+     * If the label is stacked, it should always sit above the textarea.
+     * For floating labels, the label should move above the textarea if
+     * the textarea has a value, is focused, or has anything in either
+     * the start or end slot.
+     *
+     * If there is content in the start slot, the label would overlap
+     * it if not forced to float. This is also applied to the end slot
+     * because with the default or solid fills, the textarea is not
+     * vertically centered in the container, but the label is. This
+     * causes the slots and label to appear vertically offset from each
+     * other when the label isn't floating above the input. This doesn't
+     * apply to the outline fill, but this was not accounted for to keep
+     * things consistent.
+     *
+     * TODO(FW-5592): Remove hasStartEndSlots condition
+     */
+    const labelShouldFloat =
+      labelPlacement === 'stacked' || (labelPlacement === 'floating' && (hasValue || hasFocus || hasStartEndSlots));
+
     return (
       <Host
         class={createColorClasses(this.color, {
           [mode]: true,
-          'has-value': this.hasValue(),
-          'has-focus': this.hasFocus,
+          'has-value': hasValue,
+          'has-focus': hasFocus,
+          'label-floating': labelShouldFloat,
           [`textarea-fill-${fill}`]: fill !== undefined,
           [`textarea-shape-${shape}`]: shape !== undefined,
           [`textarea-label-placement-${labelPlacement}`]: true,
           'textarea-disabled': disabled,
         })}
       >
-        <label class="textarea-wrapper">
+        {/**
+         * htmlFor is needed so that clicking the label always focuses
+         * the textarea. Otherwise, if the start slot has something
+         * interactable, clicking the label would focus that instead
+         * since it comes before the textarea in the DOM.
+         */}
+        <label class="textarea-wrapper" htmlFor={inputId}>
           {this.renderLabelContainer()}
-          <div class="native-wrapper" ref={(el) => (this.textareaWrapper = el)}>
-            <textarea
-              class="native-textarea"
-              ref={(el) => (this.nativeInput = el)}
-              id={inputId}
-              disabled={disabled}
-              autoCapitalize={this.autocapitalize}
-              autoFocus={this.autofocus}
-              enterKeyHint={this.enterkeyhint}
-              inputMode={this.inputmode}
-              minLength={this.minlength}
-              maxLength={this.maxlength}
-              name={this.name}
-              placeholder={this.placeholder || ''}
-              readOnly={this.readonly}
-              required={this.required}
-              spellcheck={this.spellcheck}
-              cols={this.cols}
-              rows={this.rows}
-              wrap={this.wrap}
-              onInput={this.onInput}
-              onChange={this.onChange}
-              onBlur={this.onBlur}
-              onFocus={this.onFocus}
-              onKeyDown={this.onKeyDown}
-              {...this.inheritedAttributes}
-            >
-              {value}
-            </textarea>
+          <div class="textarea-wrapper-inner">
+            {/**
+             * Some elements have their own padding styles which may
+             * interfere with slot content alignment (such as icon-
+             * only buttons setting --padding-top=0). To avoid this,
+             * we wrap both the start and end slots in separate
+             * elements and apply our padding styles to that instead.
+             */}
+            <div class="start-slot-wrapper">
+              <slot name="start"></slot>
+            </div>
+            <div class="native-wrapper" ref={(el) => (this.textareaWrapper = el)}>
+              <textarea
+                class="native-textarea"
+                ref={(el) => (this.nativeInput = el)}
+                id={inputId}
+                disabled={disabled}
+                autoCapitalize={this.autocapitalize}
+                autoFocus={this.autofocus}
+                enterKeyHint={this.enterkeyhint}
+                inputMode={this.inputmode}
+                minLength={this.minlength}
+                maxLength={this.maxlength}
+                name={this.name}
+                placeholder={this.placeholder || ''}
+                readOnly={this.readonly}
+                required={this.required}
+                spellcheck={this.spellcheck}
+                cols={this.cols}
+                rows={this.rows}
+                wrap={this.wrap}
+                onInput={this.onInput}
+                onChange={this.onChange}
+                onBlur={this.onBlur}
+                onFocus={this.onFocus}
+                onKeyDown={this.onKeyDown}
+                {...this.inheritedAttributes}
+              >
+                {value}
+              </textarea>
+            </div>
+            <div class="end-slot-wrapper">
+              <slot name="end"></slot>
+            </div>
           </div>
           {shouldRenderHighlight && <div class="textarea-highlight"></div>}
         </label>
