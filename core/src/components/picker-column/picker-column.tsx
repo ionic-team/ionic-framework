@@ -12,13 +12,13 @@ import type { PickerColumn } from '../picker/picker-interface';
  * @internal
  */
 @Component({
-  tag: 'ion-picker-column',
+  tag: 'ion-picker-legacy-column',
   styleUrls: {
     ios: 'picker-column.ios.scss',
     md: 'picker-column.md.scss',
   },
 })
-export class PickerColumnCmp implements ComponentInterface {
+export class PickerLegacyColumnCmp implements ComponentInterface {
   private bounceFrom!: number;
   private lastIndex?: number;
   private minY!: number;
