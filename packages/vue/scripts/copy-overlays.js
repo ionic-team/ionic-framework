@@ -17,7 +17,7 @@ function generateOverlays() {
     },
     {
       tag: 'ion-picker-legacy',
-      name: 'IonPicker'
+      name: 'IonPickerLegacy'
     },
     {
       tag: 'ion-toast',
