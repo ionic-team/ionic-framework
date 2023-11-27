@@ -11,7 +11,7 @@ import { defineCustomElement as defineIonActionSheetCustomElement } from "@ionic
 import { defineCustomElement as defineIonAlertCustomElement } from "@ionic/core/components/ion-alert.js";
 import { defineCustomElement as defineIonLoadingCustomElement } from "@ionic/core/components/ion-loading.js";
 import { defineCustomElement as defineIonModalCustomElement } from "@ionic/core/components/ion-modal.js";
-import { defineCustomElement as defineIonPickerCustomElement } from "@ionic/core/components/ion-picker.js";
+import { defineCustomElement as defineIonPickerCustomElement } from "@ionic/core/components/ion-picker-legacy.js";
 import { defineCustomElement as defineIonPopoverCustomElement } from "@ionic/core/components/ion-popover.js";
 import { defineCustomElement as defineIonToastCustomElement } from "@ionic/core/components/ion-toast.js";
 

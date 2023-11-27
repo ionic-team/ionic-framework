@@ -15,7 +15,7 @@ configs().forEach(({ title, screenshot, config }) => {
       await expect(page).toHaveScreenshot(screenshot(`picker-basic`));
 
       await page.click('.picker-opt:nth-child(2)');
-      await page.click('ion-picker .save-btn');
+      await page.click('ion-picker-legacy .save-btn');
       await didDismiss.next();
 
       await page.click('#basic');

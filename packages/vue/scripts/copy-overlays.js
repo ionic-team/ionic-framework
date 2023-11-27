@@ -16,7 +16,7 @@ function generateOverlays() {
       name: 'IonLoading'
     },
     {
-      tag: 'ion-picker',
+      tag: 'ion-picker-legacy',
       name: 'IonPicker'
     },
     {

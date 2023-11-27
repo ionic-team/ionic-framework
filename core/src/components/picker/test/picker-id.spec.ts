@@ -5,11 +5,11 @@ import { Picker } from '../picker';
 it('picker should be assigned an incrementing id', async () => {
   const page = await newSpecPage({
     components: [Picker],
-    html: `<ion-picker is-open="true"></ion-picker>`,
+    html: `<ion-picker-legacy is-open="true"></ion-picker-legacy>`,
   });
   let picker: HTMLIonPickerElement;
 
-  picker = page.body.querySelector('ion-picker')!;
+  picker = page.body.querySelector('ion-picker-legacy')!;
 
   expect(picker).not.toBe(null);
   expect(picker.getAttribute('id')).toBe('ion-overlay-1');
@@ -19,12 +19,12 @@ it('picker should be assigned an incrementing id', async () => {
   await page.waitForChanges();
 
   // Create a new picker to verify the id is incremented
-  picker = document.createElement('ion-picker');
+  picker = document.createElement('ion-picker-legacy');
   picker.isOpen = true;
   page.body.appendChild(picker);
   await page.waitForChanges();
 
-  picker = page.body.querySelector('ion-picker')!;
+  picker = page.body.querySelector('ion-picker-legacy')!;
 
   expect(picker.getAttribute('id')).toBe('ion-overlay-2');
 
@@ -35,7 +35,7 @@ it('picker should be assigned an incrementing id', async () => {
   picker.isOpen = true;
   await page.waitForChanges();
 
-  picker = page.body.querySelector('ion-picker')!;
+  picker = page.body.querySelector('ion-picker-legacy')!;
 
   expect(picker.getAttribute('id')).toBe('ion-overlay-2');
 });

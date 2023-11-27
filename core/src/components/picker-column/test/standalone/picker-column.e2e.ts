@@ -10,7 +10,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     test('should present picker without ion-app', async ({ page }) => {
       const ionPickerDidPresent = await page.spyOnEvent('ionPickerDidPresent');
 
-      const picker = page.locator('ion-picker');
+      const picker = page.locator('ion-picker-legacy');
 
       await page.click('#single-column-button');
 

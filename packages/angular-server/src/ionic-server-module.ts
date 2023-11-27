@@ -28,7 +28,7 @@ export function hydrateIonicComponents(doc: any, appId: any) {
         'ion-alert',
         'ion-loading',
         'ion-modal',
-        'ion-picker',
+        'ion-picker-legacy',
         'ion-popover',
         'ion-toast',
         'ion-toast',

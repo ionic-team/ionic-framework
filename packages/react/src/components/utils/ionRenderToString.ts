@@ -12,7 +12,7 @@ export async function ionRenderToString(html: string, userAgent: string, options
         'ion-alert',
         'ion-loading',
         'ion-modal',
-        'ion-picker',
+        'ion-picker-legacy',
         'ion-popover',
         'ion-toast',
 

@@ -11,7 +11,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       const ionPickerDidPresent = await page.spyOnEvent('ionPickerDidPresent');
       const ionPickerDidDismiss = await page.spyOnEvent('ionPickerDidDismiss');
-      const picker = page.locator('ion-picker');
+      const picker = page.locator('ion-picker-legacy');
 
       await page.click('#default');
 
@@ -25,8 +25,8 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     });
 
     test('should open if isOpen is true on load', async ({ page }) => {
-      await page.setContent('<ion-picker is-open="true"></ion-picker>', config);
-      await expect(page.locator('ion-picker')).toBeVisible();
+      await page.setContent('<ion-picker-legacy is-open="true"></ion-picker-legacy>', config);
+      await expect(page.locator('ion-picker-legacy')).toBeVisible();
     });
   });
 });
