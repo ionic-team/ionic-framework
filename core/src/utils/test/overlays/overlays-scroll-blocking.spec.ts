@@ -65,8 +65,8 @@ describe('overlays: scroll blocking', () => {
       `,
     });
 
-    const modalOne = page.body.querySelector('#one')!;
-    const modalTwo = page.body.querySelector('#two')!;
+    const modalOne = page.body.querySelector('#one') as HTMLIonModalElement;
+    const modalTwo = page.body.querySelector('#two') as HTMLIonModalElement;
     const body = page.doc.querySelector('body')!;
 
     await modalOne.present();

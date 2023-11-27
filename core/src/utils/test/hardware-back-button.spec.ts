@@ -1,3 +1,4 @@
+import type { BackButtonEvent } from '../../../src/interface';
 import { startHardwareBackButton } from '../hardware-back-button';
 
 describe('Hardware Back Button', () => {
@@ -5,7 +6,7 @@ describe('Hardware Back Button', () => {
   it('should call handler', () => {
     const cbSpy = jest.fn();
     document.addEventListener('ionBackButton', (ev) => {
-      ev.detail.register(0, cbSpy);
+      (ev as BackButtonEvent).detail.register(0, cbSpy);
     });
 
     dispatchBackButtonEvent();
@@ -16,8 +17,8 @@ describe('Hardware Back Button', () => {
     const cbSpy = jest.fn();
     const cbSpyTwo = jest.fn();
     document.addEventListener('ionBackButton', (ev) => {
-      ev.detail.register(100, cbSpy);
-      ev.detail.register(99, cbSpyTwo);
+      (ev as BackButtonEvent).detail.register(100, cbSpy);
+      (ev as BackButtonEvent).detail.register(99, cbSpyTwo);
     });
 
     dispatchBackButtonEvent();
@@ -29,8 +30,8 @@ describe('Hardware Back Button', () => {
     const cbSpy = jest.fn();
     const cbSpyTwo = jest.fn();
     document.addEventListener('ionBackButton', (ev) => {
-      ev.detail.register(100, cbSpy);
-      ev.detail.register(100, cbSpyTwo);
+      (ev as BackButtonEvent).detail.register(100, cbSpy);
+      (ev as BackButtonEvent).detail.register(100, cbSpyTwo);
     });
 
     dispatchBackButtonEvent();
@@ -39,13 +40,13 @@ describe('Hardware Back Button', () => {
   });
 
   it('should call multiple callbacks', () => {
-    const cbSpy = (processNextHandler) => {
+    const cbSpy = (processNextHandler: () => void) => {
       processNextHandler();
     };
     const cbSpyTwo = jest.fn();
     document.addEventListener('ionBackButton', (ev) => {
-      ev.detail.register(100, cbSpy);
-      ev.detail.register(99, cbSpyTwo);
+      (ev as BackButtonEvent).detail.register(100, cbSpy);
+      (ev as BackButtonEvent).detail.register(99, cbSpyTwo);
     });
 
     dispatchBackButtonEvent();
