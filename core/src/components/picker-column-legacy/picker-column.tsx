@@ -6,7 +6,7 @@ import { getClassMap } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Gesture, GestureDetail } from '../../interface';
-import type { PickerColumn } from '../picker/picker-interface';
+import type { PickerColumn } from '../picker-legacy/picker-interface';
 
 /**
  * @internal
