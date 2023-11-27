@@ -63,4 +63,6 @@ This section details the desktop browser, JavaScript framework, and mobile platf
       ```
 <h2 id="version-8x-picker">Picker</h2>
 
-- `ion-picker` and `ion-picker-column` have been renamed to `ion-picker-legacy` and `ion-picker-legacy-column`, respectively. Both tag names and component import names have been updated to follow this new format. This change was made to accommodate the new inline picker component while allowing developers to continue to use the legacy picker during this migration period.
+- `ion-picker` and `ion-picker-column` have been renamed to `ion-picker-legacy` and `ion-picker-legacy-column`, respectively. This change was made to accommodate the new inline picker component while allowing developers to continue to use the legacy picker during this migration period.
+  - Only the component names have been changed. Usages such as `ion-picker` or `IonPicker` should be changed to `ion-picker-legacy` and `IonPickerLegacy`, respectively.
+  - Non-component usages such as `pickerController` or `useIonPicker` remain unchanged.The new picker displays inline with your page content and does not have equivalents for these non-component usages. 
