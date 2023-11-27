@@ -53,6 +53,10 @@ export const modalController = /*@__PURE__*/ createController<ModalOptions, HTML
 export const pickerController = /*@__PURE__*/ createController<PickerOptions, HTMLIonPickerLegacyElement>(
   'ion-picker-legacy'
 );
+
+/**
+ * @deprecated Use the inline ion-picker component instead.
+ */
 export const popoverController = /*@__PURE__*/ createController<PopoverOptions, HTMLIonPopoverElement>('ion-popover');
 export const toastController = /*@__PURE__*/ createController<ToastOptions, HTMLIonToastElement>('ion-toast');
 

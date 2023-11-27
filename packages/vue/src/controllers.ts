@@ -71,6 +71,10 @@ const loadingController = /*@__PURE__*/ createController(
   defineIonLoadingCustomElement,
   loadingCtrl
 );
+
+/**
+ * @deprecated Use the inline ion-picker component instead.
+ */
 const pickerController = /*@__PURE__*/ createController(
   defineIonPickerCustomElement,
   pickerCtrl

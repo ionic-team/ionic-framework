@@ -9,6 +9,7 @@ import { useController } from './useController';
 /**
  * A hook for presenting/dismissing an IonPicker component
  * @returns Returns the present and dismiss methods in an array
+ * @deprecated Use the inline ion-picker component instead.
  */
 export function useIonPicker(): UseIonPickerResult {
   const controller = useController<PickerOptions, HTMLIonPickerLegacyElement>(
