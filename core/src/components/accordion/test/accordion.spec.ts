@@ -1,8 +1,8 @@
 import { newSpecPage } from '@stencil/core/testing';
 
-import { AccordionGroup } from '../../accordion-group/accordion-group.tsx';
-import { Item } from '../../item/item.tsx';
-import { Accordion } from '../accordion.tsx';
+import { AccordionGroup } from '../../accordion-group/accordion-group';
+import { Item } from '../../item/item';
+import { Accordion } from '../accordion';
 
 it('should open correct accordions when accordion group value is set', async () => {
   const page = await newSpecPage({
@@ -25,7 +25,7 @@ it('should open correct accordions when accordion group value is set', async () 
     `,
   });
 
-  const accordionGroup = page.body.querySelector('ion-accordion-group');
+  const accordionGroup = page.body.querySelector('ion-accordion-group')!;
   const accordions = accordionGroup.querySelectorAll('ion-accordion');
 
   accordions.forEach((accordion) => {
@@ -61,7 +61,7 @@ it('should open correct accordions when accordion value is set', async () => {
     `,
   });
 
-  const accordionGroup = page.body.querySelector('ion-accordion-group');
+  const accordionGroup = page.body.querySelector('ion-accordion-group')!;
   const accordions = accordionGroup.querySelectorAll('ion-accordion');
 
   accordions.forEach((accordion) => {
@@ -97,7 +97,7 @@ it('should open more than one accordion when multiple="true"', async () => {
     `,
   });
 
-  const accordionGroup = page.body.querySelector('ion-accordion-group');
+  const accordionGroup = page.body.querySelector('ion-accordion-group')!;
   const accordions = accordionGroup.querySelectorAll('ion-accordion');
 
   accordions.forEach((accordion) => {
@@ -133,7 +133,7 @@ it('should render with accordion open', async () => {
     `,
   });
 
-  const accordionGroup = page.body.querySelector('ion-accordion-group');
+  const accordionGroup = page.body.querySelector('ion-accordion-group')!;
   const accordions = accordionGroup.querySelectorAll('ion-accordion');
 
   expect(accordions[0].classList.contains('accordion-collapsed')).toEqual(false);
@@ -162,7 +162,7 @@ it('should accept a string when multiple="true"', async () => {
     `,
   });
 
-  const accordionGroup = page.body.querySelector('ion-accordion-group');
+  const accordionGroup = page.body.querySelector('ion-accordion-group')!;
   const accordions = accordionGroup.querySelectorAll('ion-accordion');
 
   expect(accordions[0].classList.contains('accordion-collapsed')).toEqual(false);
@@ -183,8 +183,8 @@ it('should set default values if not provided', async () => {
     `,
   });
 
-  const accordionGroup = page.body.querySelector('ion-accordion-group');
-  const accordion = accordionGroup.querySelector('ion-accordion');
+  const accordionGroup = page.body.querySelector('ion-accordion-group')!;
+  const accordion = accordionGroup.querySelector('ion-accordion')!;
 
   /**
    * ID is determined via an auto incrementing counter

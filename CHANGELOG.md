@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.5.6](https://github.com/ionic-team/ionic-framework/compare/v7.5.5...v7.5.6) (2023-11-21)
+
+
+### Bug Fixes
+
+* **alert:** match MD spec on tablet  ([#28501](https://github.com/ionic-team/ionic-framework/issues/28501)) ([6a2be9f](https://github.com/ionic-team/ionic-framework/commit/6a2be9fa3c12a893d98dc139a1575a6e7e3c7c26)), closes [#23977](https://github.com/ionic-team/ionic-framework/issues/23977)
+* **angular:** ng add @ionic/angular in standalone projects ([#28523](https://github.com/ionic-team/ionic-framework/issues/28523)) ([c07312e](https://github.com/ionic-team/ionic-framework/commit/c07312e5ed931f6f825ccf083c9dead9fa815843)), closes [#28514](https://github.com/ionic-team/ionic-framework/issues/28514)
+* **angular:** overlays are defined when using standalone controllers ([#28560](https://github.com/ionic-team/ionic-framework/issues/28560)) ([9453132](https://github.com/ionic-team/ionic-framework/commit/9453132aa8952b4adfa1326e61138b329e254f76)), closes [#28385](https://github.com/ionic-team/ionic-framework/issues/28385)
+* **datetime:** updating value with min scrolls to new value ([#28549](https://github.com/ionic-team/ionic-framework/issues/28549)) ([388d19e](https://github.com/ionic-team/ionic-framework/commit/388d19e04f83f85abd4602adb04cc71ac575764a)), closes [#28548](https://github.com/ionic-team/ionic-framework/issues/28548)
+
+
+
+
+
 ## [7.5.5](https://github.com/ionic-team/ionic-framework/compare/v7.5.4...v7.5.5) (2023-11-15)
 
 

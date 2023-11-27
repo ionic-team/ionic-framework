@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "7.5.5",
+  "version": "7.5.6",
   "description": "Base components for Ionic",
   "keywords": [
     "ionic",
@@ -64,6 +64,7 @@
     "jest": "^29.7.0",
     "jest-cli": "^29.7.0",
     "prettier": "^2.6.1",
+    "puppeteer": "21.1.1",
     "rollup": "^2.26.4",
     "sass": "^1.33.0",
     "serve": "^14.0.1",
