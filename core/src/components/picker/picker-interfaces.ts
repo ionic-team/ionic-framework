@@ -1,9 +1,9 @@
-export interface PickerInternalChangeEventDetail {
+export interface PickerChangeEventDetail {
   useInputMode: boolean;
-  inputModeColumn?: HTMLIonPickerColumnInternalElement;
+  inputModeColumn?: HTMLIonPickerColumnElement;
 }
 
-export interface PickerInternalCustomEvent extends CustomEvent {
-  target: HTMLIonPickerInternalElement;
-  detail: PickerInternalChangeEventDetail;
+export interface PickerCustomEvent extends CustomEvent {
+  target: HTMLIonPickerElement;
+  detail: PickerChangeEventDetail;
 }

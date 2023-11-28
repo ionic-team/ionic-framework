@@ -3,7 +3,7 @@ import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
 configs().forEach(({ title, config }) => {
-  test.describe(title('picker-internal: a11y'), () => {
+  test.describe(title('picker: a11y'), () => {
     test('should not have accessibility violations', async ({ page }) => {
       await page.goto(`/src/components/picker/test/a11y`, config);
 

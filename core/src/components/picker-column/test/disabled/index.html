@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
-    <title>Picker Column Internal - Basic</title>
+    <title>Picker Column - Basic</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
     <link href="../../../../../css/ionic.bundle.css" rel="stylesheet" />
     <link href="../../../../../scripts/testing/styles.css" rel="stylesheet" />
@@ -39,22 +39,22 @@
     <ion-app>
       <ion-header translucent="true">
         <ion-toolbar>
-          <ion-title>Picker Column Internal - Disabled</ion-title>
+          <ion-title>Picker Column - Disabled</ion-title>
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
         <div class="grid">
           <div class="grid-item">
             <h2>Even items disabled</h2>
-            <ion-picker-internal>
-              <ion-picker-column-internal id="half-disabled"></ion-picker-column-internal>
-            </ion-picker-internal>
+            <ion-picker>
+              <ion-picker-column id="half-disabled"></ion-picker-column>
+            </ion-picker>
           </div>
           <div class="grid-item">
             <h2>Column disabled</h2>
-            <ion-picker-internal>
-              <ion-picker-column-internal id="column-disabled" value="11" disabled></ion-picker-column-internal>
-            </ion-picker-internal>
+            <ion-picker>
+              <ion-picker-column id="column-disabled" value="11" disabled></ion-picker-column>
+            </ion-picker>
           </div>
         </div>
       </ion-content>

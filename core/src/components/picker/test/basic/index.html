@@ -53,33 +53,33 @@
         <div class="grid">
           <div class="grid-item">
             <h2>Inline</h2>
-            <ion-picker-internal id="inline">
-              <ion-picker-column-internal id="first"></ion-picker-column-internal>
-              <ion-picker-column-internal id="second"></ion-picker-column-internal>
-            </ion-picker-internal>
+            <ion-picker id="inline">
+              <ion-picker-column id="first"></ion-picker-column>
+              <ion-picker-column id="second"></ion-picker-column>
+            </ion-picker>
           </div>
           <div class="grid-item">
             <h2>One Numeric Input</h2>
-            <ion-picker-internal>
-              <ion-picker-column-internal numeric-input="true" id="numeric-first"></ion-picker-column-internal>
-              <ion-picker-column-internal id="numeric-second"></ion-picker-column-internal>
-            </ion-picker-internal>
+            <ion-picker>
+              <ion-picker-column numeric-input="true" id="numeric-first"></ion-picker-column>
+              <ion-picker-column id="numeric-second"></ion-picker-column>
+            </ion-picker>
           </div>
           <div class="grid-item">
             <h2>Two Numeric Input</h2>
-            <ion-picker-internal>
-              <ion-picker-column-internal numeric-input="true" id="dual-numeric-first"></ion-picker-column-internal>
-              <ion-picker-column-internal numeric-input="true" id="dual-numeric-second"></ion-picker-column-internal>
-            </ion-picker-internal>
+            <ion-picker>
+              <ion-picker-column numeric-input="true" id="dual-numeric-first"></ion-picker-column>
+              <ion-picker-column numeric-input="true" id="dual-numeric-second"></ion-picker-column>
+            </ion-picker>
           </div>
           <div class="grid-item">
             <h2>Popover</h2>
             <ion-button id="popover">Open Picker</ion-button>
             <ion-popover trigger="popover">
-              <ion-picker-internal>
-                <ion-picker-column-internal id="popover-first"></ion-picker-column-internal>
-                <ion-picker-column-internal id="popover-second"></ion-picker-column-internal>
-              </ion-picker-internal>
+              <ion-picker>
+                <ion-picker-column id="popover-first"></ion-picker-column>
+                <ion-picker-column id="popover-second"></ion-picker-column>
+              </ion-picker>
             </ion-popover>
           </div>
           <div class="grid-item">
@@ -94,10 +94,10 @@
                 </ion-toolbar>
               </ion-header>
               <ion-content force-overscroll="false">
-                <ion-picker-internal>
-                  <ion-picker-column-internal id="modal-first"></ion-picker-column-internal>
-                  <ion-picker-column-internal id="modal-second"></ion-picker-column-internal>
-                </ion-picker-internal>
+                <ion-picker>
+                  <ion-picker-column id="modal-first"></ion-picker-column>
+                  <ion-picker-column id="modal-second"></ion-picker-column>
+                </ion-picker>
               </ion-content>
             </ion-modal>
           </div>
@@ -106,7 +106,7 @@
     </ion-app>
 
     <script>
-      const column = document.querySelector('ion-picker-column-internal#numeric-first');
+      const column = document.querySelector('ion-picker-column#numeric-first');
       column.addEventListener('ionChange', (ev) => {
         console.log('Column change', ev.detail);
       });

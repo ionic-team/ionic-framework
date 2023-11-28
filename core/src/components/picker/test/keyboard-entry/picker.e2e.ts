@@ -6,16 +6,16 @@ import type { E2ELocator } from '@utils/test/playwright/page/utils/locator';
  * This behavior does not vary across modes/directions.
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
-  test.describe(title('picker-internal: keyboard entry'), () => {
+  test.describe(title('picker: keyboard entry'), () => {
     test('should scroll to and update the value prop for a single column', async ({ page }) => {
       await page.setContent(
         `
-        <ion-picker-internal>
-          <ion-picker-column-internal></ion-picker-column-internal>
-        </ion-picker-internal>
+        <ion-picker>
+          <ion-picker-column></ion-picker-column>
+        </ion-picker>
 
         <script>
-          const column = document.querySelector('ion-picker-column-internal');
+          const column = document.querySelector('ion-picker-column');
           column.items = [
             { text: '01', value: 1 },
             { text: '02', value: 2 },
@@ -30,7 +30,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         config
       );
 
-      const column = page.locator('ion-picker-column-internal');
+      const column = page.locator('ion-picker-column');
       const ionChange = await page.spyOnEvent('ionChange');
       await column.focus();
 
@@ -43,13 +43,13 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     test('should scroll to and update the value prop for multiple columns', async ({ page }) => {
       await page.setContent(
         `
-        <ion-picker-internal>
-          <ion-picker-column-internal id="first"></ion-picker-column-internal>
-          <ion-picker-column-internal id="second"></ion-picker-column-internal>
-        </ion-picker-internal>
+        <ion-picker>
+          <ion-picker-column id="first"></ion-picker-column>
+          <ion-picker-column id="second"></ion-picker-column>
+        </ion-picker>
 
         <script>
-          const firstColumn = document.querySelector('ion-picker-column-internal#first');
+          const firstColumn = document.querySelector('ion-picker-column#first');
           firstColumn.items = [
             { text: '01', value: 1 },
             { text: '02', value: 2 },
@@ -60,7 +60,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
           firstColumn.value = 5;
           firstColumn.numericInput = true;
 
-          const secondColumn = document.querySelector('ion-picker-column-internal#second');
+          const secondColumn = document.querySelector('ion-picker-column#second');
           secondColumn.items = [
             { text: '20', value: 20 },
             { text: '21', value: 21 },
@@ -75,9 +75,9 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         config
       );
 
-      const firstColumn = page.locator('ion-picker-column-internal#first');
-      const secondColumn = page.locator('ion-picker-column-internal#second');
-      const highlight = page.locator('ion-picker-internal .picker-highlight');
+      const firstColumn = page.locator('ion-picker-column#first');
+      const secondColumn = page.locator('ion-picker-column#second');
+      const highlight = page.locator('ion-picker .picker-highlight');
       const firstIonChange = await (firstColumn as E2ELocator).spyOnEvent('ionChange');
       const secondIonChange = await (secondColumn as E2ELocator).spyOnEvent('ionChange');
 
@@ -103,12 +103,12 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     test('should select 00', async ({ page }) => {
       await page.setContent(
         `
-        <ion-picker-internal>
-          <ion-picker-column-internal></ion-picker-column-internal>
-        </ion-picker-internal>
+        <ion-picker>
+          <ion-picker-column></ion-picker-column>
+        </ion-picker>
 
         <script>
-          const column = document.querySelector('ion-picker-column-internal');
+          const column = document.querySelector('ion-picker-column');
           column.items = [
             { text: '00', value: 12 },
             { text: '01', value: 1 },
@@ -124,7 +124,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         config
       );
 
-      const column = page.locator('ion-picker-column-internal');
+      const column = page.locator('ion-picker-column');
       const ionChange = await page.spyOnEvent('ionChange');
       await column.focus();
 

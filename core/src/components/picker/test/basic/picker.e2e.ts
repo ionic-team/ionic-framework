@@ -5,9 +5,9 @@ import { configs, test } from '@utils/test/playwright';
  * This behavior does not vary across directions.
  */
 configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('picker-internal: rendering'), () => {
+  test.describe(title('picker: rendering'), () => {
     test('inline pickers should not have visual regression', async ({ page }) => {
-      await page.goto(`/src/components/picker-internal/test/basic`, config);
+      await page.goto(`/src/components/picker/test/basic`, config);
 
       const fullStack = page.locator('#inline button[data-value="full-stack"]');
       const onion = page.locator('#inline button[data-value="onion"]');
@@ -21,18 +21,18 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
     });
   });
 
-  test.describe(title('picker-internal: overlay rendering'), () => {
+  test.describe(title('picker: overlay rendering'), () => {
     test('popover: should not have visual regression', async ({ page }) => {
-      await page.goto(`/src/components/picker-internal/test/basic`, config);
+      await page.goto(`/src/components/picker/test/basic`, config);
 
       const button = page.locator('#popover');
       const didPresent = await page.spyOnEvent('ionPopoverDidPresent');
-      const pickerInternal = page.locator('ion-popover ion-picker-internal');
+      const picker = page.locator('ion-popover ion-picker');
 
       await button.click();
       await didPresent.next();
 
-      await expect(pickerInternal).toBeVisible();
+      await expect(picker).toBeVisible();
 
       const popoverContent = page.locator('ion-popover .ion-delegate-host');
 
@@ -49,16 +49,16 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
     });
 
     test('modal: should not have visual regression', async ({ page }) => {
-      await page.goto('/src/components/picker-internal/test/basic', config);
+      await page.goto('/src/components/picker/test/basic', config);
 
       const button = page.locator('#modal');
       const didPresent = await page.spyOnEvent('ionModalDidPresent');
-      const pickerInternal = page.locator('ion-modal ion-picker-internal');
+      const picker = page.locator('ion-modal ion-picker');
 
       await button.click();
       await didPresent.next();
 
-      await expect(pickerInternal).toBeVisible();
+      await expect(picker).toBeVisible();
 
       const modalContent = page.locator('ion-modal .ion-delegate-host');
 
@@ -80,17 +80,17 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
  * This behavior does not vary across modes/directions.
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
-  test.describe(title('picker-internal: focus'), () => {
+  test.describe(title('picker: focus'), () => {
     test.beforeEach(async ({ page }) => {
       await page.setContent(
         `
-        <ion-picker-internal>
-          <ion-picker-column-internal value="full-stack" id="first"></ion-picker-column-internal>
-          <ion-picker-column-internal value="onion" id="second"></ion-picker-column-internal>
-        </ion-picker-internal>
+        <ion-picker>
+          <ion-picker-column value="full-stack" id="first"></ion-picker-column>
+          <ion-picker-column value="onion" id="second"></ion-picker-column>
+        </ion-picker>
 
         <script>
-          const columns = document.querySelectorAll('ion-picker-column-internal');
+          const columns = document.querySelectorAll('ion-picker-column');
           columns[0].items = [
             { text: 'Minified', value: 'minified' },
             { text: 'Responsive', value: 'responsive' },
@@ -113,8 +113,8 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     });
 
     test('tabbing should correctly move focus between columns', async ({ page }) => {
-      const firstColumn = page.locator('ion-picker-column-internal#first');
-      const secondColumn = page.locator('ion-picker-column-internal#second');
+      const firstColumn = page.locator('ion-picker-column#first');
+      const secondColumn = page.locator('ion-picker-column#second');
 
       // Focus first column
       await page.keyboard.press('Tab');
@@ -128,8 +128,8 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     });
 
     test('tabbing should correctly move focus back', async ({ page }) => {
-      const firstColumn = page.locator('ion-picker-column-internal#first');
-      const secondColumn = page.locator('ion-picker-column-internal#second');
+      const firstColumn = page.locator('ion-picker-column#first');
+      const secondColumn = page.locator('ion-picker-column#second');
 
       await secondColumn.focus();
       await expect(secondColumn).toBeFocused();

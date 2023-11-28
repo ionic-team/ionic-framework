@@ -1527,7 +1527,7 @@ export class Datetime implements ComponentInterface {
       forcePresentation === 'time-date'
         ? [this.renderTimePickerColumns(forcePresentation), this.renderDatePickerColumns(forcePresentation)]
         : [this.renderDatePickerColumns(forcePresentation), this.renderTimePickerColumns(forcePresentation)];
-    return <ion-picker-internal>{renderArray}</ion-picker-internal>;
+    return <ion-picker>{renderArray}</ion-picker>;
   }
 
   private renderDatePickerColumns(forcePresentation: string) {
@@ -1613,7 +1613,7 @@ export class Datetime implements ComponentInterface {
         : `${defaultParts.year}-${defaultParts.month}-${defaultParts.day}`;
 
     return (
-      <ion-picker-column-internal
+      <ion-picker-column
         class="date-column"
         color={this.color}
         disabled={disabled}
@@ -1647,7 +1647,7 @@ export class Datetime implements ComponentInterface {
 
           ev.stopPropagation();
         }}
-      ></ion-picker-column-internal>
+      ></ion-picker-column>
     );
   }
 
@@ -1733,7 +1733,7 @@ export class Datetime implements ComponentInterface {
     const activePart = this.getActivePartsWithFallback();
 
     return (
-      <ion-picker-column-internal
+      <ion-picker-column
         class="day-column"
         color={this.color}
         disabled={disabled}
@@ -1764,7 +1764,7 @@ export class Datetime implements ComponentInterface {
 
           ev.stopPropagation();
         }}
-      ></ion-picker-column-internal>
+      ></ion-picker-column>
     );
   }
 
@@ -1778,7 +1778,7 @@ export class Datetime implements ComponentInterface {
     const activePart = this.getActivePartsWithFallback();
 
     return (
-      <ion-picker-column-internal
+      <ion-picker-column
         class="month-column"
         color={this.color}
         disabled={disabled}
@@ -1809,7 +1809,7 @@ export class Datetime implements ComponentInterface {
 
           ev.stopPropagation();
         }}
-      ></ion-picker-column-internal>
+      ></ion-picker-column>
     );
   }
   private renderYearPickerColumn(years: PickerColumnItem[]) {
@@ -1822,7 +1822,7 @@ export class Datetime implements ComponentInterface {
     const activePart = this.getActivePartsWithFallback();
 
     return (
-      <ion-picker-column-internal
+      <ion-picker-column
         class="year-column"
         color={this.color}
         disabled={disabled}
@@ -1853,7 +1853,7 @@ export class Datetime implements ComponentInterface {
 
           ev.stopPropagation();
         }}
-      ></ion-picker-column-internal>
+      ></ion-picker-column>
     );
   }
   private renderTimePickerColumns(forcePresentation: string) {
@@ -1897,7 +1897,7 @@ export class Datetime implements ComponentInterface {
     const activePart = this.getActivePartsWithFallback();
 
     return (
-      <ion-picker-column-internal
+      <ion-picker-column
         color={this.color}
         disabled={disabled}
         value={activePart.hour}
@@ -1916,7 +1916,7 @@ export class Datetime implements ComponentInterface {
 
           ev.stopPropagation();
         }}
-      ></ion-picker-column-internal>
+      ></ion-picker-column>
     );
   }
   private renderMinutePickerColumn(minutesData: PickerColumnItem[]) {
@@ -1926,7 +1926,7 @@ export class Datetime implements ComponentInterface {
     const activePart = this.getActivePartsWithFallback();
 
     return (
-      <ion-picker-column-internal
+      <ion-picker-column
         color={this.color}
         disabled={disabled}
         value={activePart.minute}
@@ -1945,7 +1945,7 @@ export class Datetime implements ComponentInterface {
 
           ev.stopPropagation();
         }}
-      ></ion-picker-column-internal>
+      ></ion-picker-column>
     );
   }
   private renderDayPeriodPickerColumn(dayPeriodData: PickerColumnItem[]) {
@@ -1958,7 +1958,7 @@ export class Datetime implements ComponentInterface {
     const isDayPeriodRTL = isLocaleDayPeriodRTL(this.locale);
 
     return (
-      <ion-picker-column-internal
+      <ion-picker-column
         style={isDayPeriodRTL ? { order: '-1' } : {}}
         color={this.color}
         disabled={disabled}
@@ -1981,7 +1981,7 @@ export class Datetime implements ComponentInterface {
 
           ev.stopPropagation();
         }}
-      ></ion-picker-column-internal>
+      ></ion-picker-column>
     );
   }
 
@@ -2345,7 +2345,7 @@ export class Datetime implements ComponentInterface {
            * This will correctly scroll the element position to the correct time value,
            * before the popover is fully presented.
            */
-          const cols = (ev.target! as HTMLElement).querySelectorAll('ion-picker-column-internal');
+          const cols = (ev.target! as HTMLElement).querySelectorAll('ion-picker-column');
           // TODO (FW-615): Potentially remove this when intersection observers are fixed in picker column
           cols.forEach((col) => col.scrollActiveItemIntoView());
         }}

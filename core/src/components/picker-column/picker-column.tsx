@@ -7,7 +7,7 @@ import { createColorClasses } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Color } from '../../interface';
-import type { PickerInternalCustomEvent } from '../picker/picker-interfaces';
+import type { PickerCustomEvent } from '../picker/picker-interfaces';
 
 import type { PickerColumnItem } from './picker-column-interfaces';
 
@@ -16,24 +16,24 @@ import type { PickerColumnItem } from './picker-column-interfaces';
  * @internal
  */
 @Component({
-  tag: 'ion-picker-column-internal',
+  tag: 'ion-picker-column',
   styleUrls: {
     ios: 'picker-column.ios.scss',
     md: 'picker-column.md.scss',
   },
   shadow: true,
 })
-export class PickerColumnInternal implements ComponentInterface {
+export class PickerColumn implements ComponentInterface {
   private destroyScrollListener?: () => void;
   private isScrolling = false;
   private scrollEndCallback?: () => void;
   private isColumnVisible = false;
-  private parentEl?: HTMLIonPickerInternalElement | null;
+  private parentEl?: HTMLIonPickerElement | null;
   private canExitInputMode = true;
 
   @State() isActive = false;
 
-  @Element() el!: HTMLIonPickerColumnInternalElement;
+  @Element() el!: HTMLIonPickerColumnElement;
 
   /**
    * If `true`, the user cannot interact with the picker.
@@ -123,7 +123,7 @@ export class PickerColumnInternal implements ComponentInterface {
     };
     new IntersectionObserver(visibleCallback, { threshold: 0.001 }).observe(this.el);
 
-    const parentEl = (this.parentEl = this.el.closest('ion-picker-internal') as HTMLIonPickerInternalElement | null);
+    const parentEl = (this.parentEl = this.el.closest('ion-picker') as HTMLIonPickerElement | null);
     if (parentEl !== null) {
       // TODO(FW-2832): type
       parentEl.addEventListener('ionInputModeChange', (ev: any) => this.inputModeChange(ev));
@@ -215,7 +215,7 @@ export class PickerColumnInternal implements ComponentInterface {
    * needs to check if it is the one being made available
    * for text entry.
    */
-  private inputModeChange = (ev: PickerInternalCustomEvent) => {
+  private inputModeChange = (ev: PickerCustomEvent) => {
     if (!this.numericInput) {
       return;
     }
@@ -428,7 +428,7 @@ export class PickerColumnInternal implements ComponentInterface {
      * exportparts is needed so ion-datetime can expose the parts
      * from two layers of shadow nesting. If this causes problems,
      * the attribute can be moved to datetime.tsx and set on every
-     * instance of ion-picker-column-internal there instead.
+     * instance of ion-picker-column there instead.
      */
 
     return (
