@@ -6,4 +6,4 @@ import { createInlineOverlayComponent } from './createInlineOverlayComponent';
 export const IonPickerLegacy = /*@__PURE__*/ createInlineOverlayComponent<
   JSX.IonPickerLegacy,
   HTMLIonPickerLegacyElement
->('ion-picker', defineCustomElement);
+>('ion-picker-legacy', defineCustomElement);
