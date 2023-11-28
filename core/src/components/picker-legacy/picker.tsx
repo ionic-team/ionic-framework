@@ -204,7 +204,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
 
   componentDidLoad() {
     printIonWarning(
-      'ion-picker-legacy and ion-picker-legacy-column have been deprecated in favor of the ion-picker and ion-picker-column components. These new components display inline with your page content allowing for more presentation flexibility than before.',
+      'ion-picker-legacy and ion-picker-legacy-column have been deprecated in favor of new versions of the ion-picker and ion-picker-column components. These new components display inline with your page content allowing for more presentation flexibility than before.',
       this.el
     );
 
