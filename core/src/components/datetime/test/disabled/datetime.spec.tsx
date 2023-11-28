@@ -2,8 +2,8 @@ import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 
 import { Datetime } from '../../../datetime/datetime';
-import { PickerColumnInternal } from '../../../picker-column-internal/picker-column-internal';
-import { PickerInternal } from '../../../picker-internal/picker-internal';
+import { PickerColumnInternal } from '../../../picker-column/picker-column';
+import { PickerInternal } from '../../../picker/picker';
 
 describe('ion-datetime disabled', () => {
   beforeEach(() => {

@@ -9,7 +9,7 @@ import { caretDownSharp, caretUpSharp, chevronBack, chevronDown, chevronForward 
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Color, Mode, StyleEventDetail } from '../../interface';
-import type { PickerColumnItem } from '../picker-column-internal/picker-column-internal-interfaces';
+import type { PickerColumnItem } from '../picker-column/picker-column-interfaces';
 
 import type {
   DatetimePresentation,

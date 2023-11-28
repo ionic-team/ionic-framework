@@ -1,5 +1,5 @@
 import type { Mode } from '../../../interface';
-import type { PickerColumnItem } from '../../picker-column-internal/picker-column-internal-interfaces';
+import type { PickerColumnItem } from '../../picker-column/picker-column-interfaces';
 import type { DatetimeParts, DatetimeHourCycle } from '../datetime-interface';
 
 import { isAfter, isBefore, isSameDay } from './comparison';

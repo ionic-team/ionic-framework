@@ -2,7 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Listen, Method, Host, h } from '@stencil/core';
 import { getElementRoot } from '@utils/helpers';
 
-import type { PickerInternalChangeEventDetail } from './picker-internal-interfaces';
+import type { PickerInternalChangeEventDetail } from './picker-interfaces';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -11,8 +11,8 @@ import type { PickerInternalChangeEventDetail } from './picker-internal-interfac
 @Component({
   tag: 'ion-picker-internal',
   styleUrls: {
-    ios: 'picker-internal.ios.scss',
-    md: 'picker-internal.md.scss',
+    ios: 'picker.ios.scss',
+    md: 'picker.md.scss',
   },
   shadow: true,
 })

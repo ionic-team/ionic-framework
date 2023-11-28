@@ -26,7 +26,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       );
 
       const picker = page.locator('ion-picker-internal');
-      await expect(picker).toHaveScreenshot(screenshot(`picker-internal-disabled`));
+      await expect(picker).toHaveScreenshot(screenshot(`picker-disabled`));
     });
   });
 });
@@ -171,7 +171,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       const disabledColumn = page.locator('#column-disabled');
       await page.waitForChanges();
 
-      await expect(disabledColumn).toHaveScreenshot(screenshot('picker-internal-disabled-column'));
+      await expect(disabledColumn).toHaveScreenshot(screenshot('picker-disabled-column'));
     });
   });
 });

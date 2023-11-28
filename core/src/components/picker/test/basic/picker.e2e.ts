@@ -17,7 +17,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       await page.waitForChanges();
 
-      await expect(page.locator('#inline')).toHaveScreenshot(screenshot(`picker-internal-inline-diff`));
+      await expect(page.locator('#inline')).toHaveScreenshot(screenshot(`picker-inline-diff`));
     });
   });
 
@@ -36,7 +36,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       const popoverContent = page.locator('ion-popover .ion-delegate-host');
 
-      await expect(popoverContent).toHaveScreenshot(screenshot(`picker-internal-popover-diff`), {
+      await expect(popoverContent).toHaveScreenshot(screenshot(`picker-popover-diff`), {
         /**
          * Animations must be enabled to capture the screenshot.
          * By default, animations are disabled with toHaveScreenshot,
@@ -62,7 +62,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
 
       const modalContent = page.locator('ion-modal .ion-delegate-host');
 
-      await expect(modalContent).toHaveScreenshot(screenshot(`picker-internal-modal-diff`), {
+      await expect(modalContent).toHaveScreenshot(screenshot(`picker-modal-diff`), {
         /**
          * Animations must be enabled to capture the screenshot.
          * By default, animations are disabled with toHaveScreenshot,

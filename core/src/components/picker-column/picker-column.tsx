@@ -7,9 +7,9 @@ import { createColorClasses } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Color } from '../../interface';
-import type { PickerInternalCustomEvent } from '../picker-internal/picker-internal-interfaces';
+import type { PickerInternalCustomEvent } from '../picker/picker-interfaces';
 
-import type { PickerColumnItem } from './picker-column-internal-interfaces';
+import type { PickerColumnItem } from './picker-column-interfaces';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
@@ -18,8 +18,8 @@ import type { PickerColumnItem } from './picker-column-internal-interfaces';
 @Component({
   tag: 'ion-picker-column-internal',
   styleUrls: {
-    ios: 'picker-column-internal.ios.scss',
-    md: 'picker-column-internal.md.scss',
+    ios: 'picker-column.ios.scss',
+    md: 'picker-column.md.scss',
   },
   shadow: true,
 })
