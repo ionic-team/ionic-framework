@@ -1418,6 +1418,64 @@ export declare interface IonNote extends Components.IonNote {}
 
 
 @ProxyCmp({
+  inputs: ['mode']
+})
+@Component({
+  selector: 'ion-picker',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['mode'],
+})
+export class IonPicker {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionInputModeChange']);
+  }
+}
+
+
+import type { PickerChangeEventDetail as IIonPickerPickerChangeEventDetail } from '@ionic/core';
+
+export declare interface IonPicker extends Components.IonPicker {
+
+  ionInputModeChange: EventEmitter<CustomEvent<IIonPickerPickerChangeEventDetail>>;
+}
+
+
+@ProxyCmp({
+  inputs: ['color', 'disabled', 'items', 'mode', 'value']
+})
+@Component({
+  selector: 'ion-picker-column',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['color', 'disabled', 'items', 'mode', 'value'],
+})
+export class IonPickerColumn {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionChange']);
+  }
+}
+
+
+import type { PickerColumnItem as IIonPickerColumnPickerColumnItem } from '@ionic/core';
+
+export declare interface IonPickerColumn extends Components.IonPickerColumn {
+  /**
+   * Emitted when the value has changed.
+   */
+  ionChange: EventEmitter<CustomEvent<IIonPickerColumnPickerColumnItem>>;
+}
+
+
+@ProxyCmp({
   inputs: ['animated', 'backdropDismiss', 'buttons', 'columns', 'cssClass', 'duration', 'enterAnimation', 'htmlAttributes', 'isOpen', 'keyboardClose', 'leaveAnimation', 'mode', 'showBackdrop', 'trigger'],
   methods: ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss', 'getColumn']
 })
