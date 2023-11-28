@@ -2069,6 +2069,16 @@ export namespace Components {
          */
         "value"?: string | number;
     }
+    interface IonPickerColumnOption {
+        /**
+          * If `true`, the user cannot interact with the select option.
+         */
+        "disabled": boolean;
+        /**
+          * The text value of the option.
+         */
+        "value"?: any | null;
+    }
     interface IonPickerInternal {
         "exitInputMode": () => Promise<void>;
         /**
@@ -4077,6 +4087,12 @@ declare global {
         prototype: HTMLIonPickerColumnInternalElement;
         new (): HTMLIonPickerColumnInternalElement;
     };
+    interface HTMLIonPickerColumnOptionElement extends Components.IonPickerColumnOption, HTMLStencilElement {
+    }
+    var HTMLIonPickerColumnOptionElement: {
+        prototype: HTMLIonPickerColumnOptionElement;
+        new (): HTMLIonPickerColumnOptionElement;
+    };
     interface HTMLIonPickerInternalElementEventMap {
         "ionInputModeChange": PickerInternalChangeEventDetail;
     }
@@ -4648,6 +4664,7 @@ declare global {
         "ion-picker": HTMLIonPickerElement;
         "ion-picker-column": HTMLIonPickerColumnElement;
         "ion-picker-column-internal": HTMLIonPickerColumnInternalElement;
+        "ion-picker-column-option": HTMLIonPickerColumnOptionElement;
         "ion-picker-internal": HTMLIonPickerInternalElement;
         "ion-popover": HTMLIonPopoverElement;
         "ion-progress-bar": HTMLIonProgressBarElement;
@@ -6712,6 +6729,16 @@ declare namespace LocalJSX {
          */
         "value"?: string | number;
     }
+    interface IonPickerColumnOption {
+        /**
+          * If `true`, the user cannot interact with the select option.
+         */
+        "disabled"?: boolean;
+        /**
+          * The text value of the option.
+         */
+        "value"?: any | null;
+    }
     interface IonPickerInternal {
         /**
           * The mode determines which platform styles to use.
@@ -8087,6 +8114,7 @@ declare namespace LocalJSX {
         "ion-picker": IonPicker;
         "ion-picker-column": IonPickerColumn;
         "ion-picker-column-internal": IonPickerColumnInternal;
+        "ion-picker-column-option": IonPickerColumnOption;
         "ion-picker-internal": IonPickerInternal;
         "ion-popover": IonPopover;
         "ion-progress-bar": IonProgressBar;
@@ -8184,6 +8212,7 @@ declare module "@stencil/core" {
             "ion-picker": LocalJSX.IonPicker & JSXBase.HTMLAttributes<HTMLIonPickerElement>;
             "ion-picker-column": LocalJSX.IonPickerColumn & JSXBase.HTMLAttributes<HTMLIonPickerColumnElement>;
             "ion-picker-column-internal": LocalJSX.IonPickerColumnInternal & JSXBase.HTMLAttributes<HTMLIonPickerColumnInternalElement>;
+            "ion-picker-column-option": LocalJSX.IonPickerColumnOption & JSXBase.HTMLAttributes<HTMLIonPickerColumnOptionElement>;
             "ion-picker-internal": LocalJSX.IonPickerInternal & JSXBase.HTMLAttributes<HTMLIonPickerInternalElement>;
             "ion-popover": LocalJSX.IonPopover & JSXBase.HTMLAttributes<HTMLIonPopoverElement>;
             "ion-progress-bar": LocalJSX.IonProgressBar & JSXBase.HTMLAttributes<HTMLIonProgressBarElement>;
