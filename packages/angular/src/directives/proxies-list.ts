@@ -51,6 +51,7 @@ export const DIRECTIVES = [
   d.IonMenuToggle,
   d.IonNavLink,
   d.IonNote,
+  d.IonPickerColumnOption,
   d.IonPickerLegacy,
   d.IonProgressBar,
   d.IonRadio,

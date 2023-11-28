@@ -51,6 +51,7 @@ import { defineCustomElement as defineIonMenuButton } from '@ionic/core/componen
 import { defineCustomElement as defineIonMenuToggle } from '@ionic/core/components/ion-menu-toggle.js';
 import { defineCustomElement as defineIonNavLink } from '@ionic/core/components/ion-nav-link.js';
 import { defineCustomElement as defineIonNote } from '@ionic/core/components/ion-note.js';
+import { defineCustomElement as defineIonPickerColumnOption } from '@ionic/core/components/ion-picker-column-option.js';
 import { defineCustomElement as defineIonPickerLegacy } from '@ionic/core/components/ion-picker-legacy.js';
 import { defineCustomElement as defineIonProgressBar } from '@ionic/core/components/ion-progress-bar.js';
 import { defineCustomElement as defineIonRadio } from '@ionic/core/components/ion-radio.js';
@@ -1404,6 +1405,30 @@ export class IonNote {
 
 
 export declare interface IonNote extends Components.IonNote {}
+
+
+@ProxyCmp({
+  defineCustomElementFn: defineIonPickerColumnOption,
+  inputs: ['disabled', 'value']
+})
+@Component({
+  selector: 'ion-picker-column-option',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['disabled', 'value'],
+  standalone: true
+})
+export class IonPickerColumnOption {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+  }
+}
+
+
+export declare interface IonPickerColumnOption extends Components.IonPickerColumnOption {}
 
 
 @ProxyCmp({

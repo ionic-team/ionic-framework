@@ -906,6 +906,10 @@ ion-note,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "second
 ion-note,prop,mode,"ios" | "md",undefined,false,false
 ion-note,css-prop,--color
 
+ion-picker-column-option,shadow
+ion-picker-column-option,prop,disabled,boolean,false,false,false
+ion-picker-column-option,prop,value,any,undefined,false,false
+
 ion-picker-legacy,scoped
 ion-picker-legacy,prop,animated,boolean,true,false,false
 ion-picker-legacy,prop,backdropDismiss,boolean,true,false,false
