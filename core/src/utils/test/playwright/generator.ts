@@ -32,11 +32,11 @@ interface TestConfigOption {
 const generateTitle = (title: string, config: TestConfig): string => {
   const { mode, direction, theme } = config;
 
-  if (theme === 'dark') {
-    return `${title} - ${mode}/${direction}/dark`;
+  if (theme === 'light') {
+    return `${title} - ${mode}/${direction}`;
   }
 
-  return `${title} - ${mode}/${direction}`;
+  return `${title} - ${mode}/${direction}/${theme}`;
 };
 
 /**
@@ -46,11 +46,11 @@ const generateTitle = (title: string, config: TestConfig): string => {
 const generateScreenshotName = (fileName: string, config: TestConfig): string => {
   const { mode, direction, theme } = config;
 
-  if (theme === 'dark') {
-    return `${fileName}-${mode}-${direction}-dark.png`;
+  if (theme === 'light') {
+    return `${fileName}-${mode}-${direction}.png`;
   }
 
-  return `${fileName}-${mode}-${direction}.png`;
+  return `${fileName}-${mode}-${direction}-${theme}.png`;
 };
 
 /**
