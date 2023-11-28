@@ -308,7 +308,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
           await page.waitForSelector('.datetime-ready');
 
-          const columns = page.locator('ion-picker-column-internal');
+          const columns = page.locator('ion-picker-column');
 
           await expect(columns.nth(0)).toHaveClass(/month-column/);
           await expect(columns.nth(1)).toHaveClass(/day-column/);
@@ -329,7 +329,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
 
           await page.waitForSelector('.datetime-ready');
 
-          const columns = page.locator('ion-picker-column-internal');
+          const columns = page.locator('ion-picker-column');
 
           await expect(columns.nth(0)).toHaveClass(/day-column/);
           await expect(columns.nth(1)).toHaveClass(/month-column/);

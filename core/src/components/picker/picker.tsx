@@ -2,32 +2,31 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Listen, Method, Host, h } from '@stencil/core';
 import { getElementRoot } from '@utils/helpers';
 
-import type { PickerInternalChangeEventDetail } from './picker-internal-interfaces';
+import type { PickerChangeEventDetail } from './picker-interfaces';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
- * @internal
  */
 @Component({
-  tag: 'ion-picker-internal',
+  tag: 'ion-picker',
   styleUrls: {
-    ios: 'picker-internal.ios.scss',
-    md: 'picker-internal.md.scss',
+    ios: 'picker.ios.scss',
+    md: 'picker.md.scss',
   },
   shadow: true,
 })
-export class PickerInternal implements ComponentInterface {
+export class Picker implements ComponentInterface {
   private inputEl?: HTMLInputElement;
   private useInputMode = false;
-  private inputModeColumn?: HTMLIonPickerColumnInternalElement;
+  private inputModeColumn?: HTMLIonPickerColumnElement;
   private highlightEl?: HTMLElement;
   private actionOnClick?: () => void;
   private destroyKeypressListener?: () => void;
   private singleColumnSearchTimeout?: ReturnType<typeof setTimeout>;
 
-  @Element() el!: HTMLIonPickerInternalElement;
+  @Element() el!: HTMLIonPickerElement;
 
-  @Event() ionInputModeChange!: EventEmitter<PickerInternalChangeEventDetail>;
+  @Event() ionInputModeChange!: EventEmitter<PickerChangeEventDetail>;
 
   /**
    * When the picker is interacted with
@@ -78,7 +77,7 @@ export class PickerInternal implements ComponentInterface {
     // TODO(FW-2832): type
     const { relatedTarget } = ev;
 
-    if (!relatedTarget || (relatedTarget.tagName !== 'ION-PICKER-COLUMN-INTERNAL' && relatedTarget !== this.inputEl)) {
+    if (!relatedTarget || (relatedTarget.tagName !== 'ION-PICKER-COLUMN' && relatedTarget !== this.inputEl)) {
       this.exitInputMode();
     }
   };
@@ -98,7 +97,7 @@ export class PickerInternal implements ComponentInterface {
      * make sure that this function only ever runs when
      * focusing a picker column.
      */
-    if (target.tagName !== 'ION-PICKER-COLUMN-INTERNAL') {
+    if (target.tagName !== 'ION-PICKER-COLUMN') {
       return;
     }
 
@@ -116,7 +115,7 @@ export class PickerInternal implements ComponentInterface {
      * we should enter/exit input mode automatically.
      */
     if (!this.actionOnClick) {
-      const columnEl = target as HTMLIonPickerColumnInternalElement;
+      const columnEl = target as HTMLIonPickerColumnElement;
       const allowInput = columnEl.numericInput;
       if (allowInput) {
         this.enterInputMode(columnEl, false);
@@ -167,7 +166,7 @@ export class PickerInternal implements ComponentInterface {
          * since we just tapped the highlight and
          * not a column.
          */
-        if ((ev.target as HTMLElement).tagName === 'ION-PICKER-COLUMN-INTERNAL') {
+        if ((ev.target as HTMLElement).tagName === 'ION-PICKER-COLUMN') {
           /**
            * If user taps 2 different columns
            * then we should just switch to input mode
@@ -180,7 +179,7 @@ export class PickerInternal implements ComponentInterface {
             };
           } else {
             this.actionOnClick = () => {
-              this.enterInputMode(ev.target as HTMLIonPickerColumnInternalElement);
+              this.enterInputMode(ev.target as HTMLIonPickerColumnElement);
             };
           }
         } else {
@@ -198,8 +197,8 @@ export class PickerInternal implements ComponentInterface {
          * If there is only 1 numeric input column
          * then we should skip multi column input.
          */
-        const columns = el.querySelectorAll('ion-picker-column-internal.picker-column-numeric-input');
-        const columnEl = columns.length === 1 ? (ev.target as HTMLIonPickerColumnInternalElement) : undefined;
+        const columns = el.querySelectorAll('ion-picker-column.picker-column-numeric-input');
+        const columnEl = columns.length === 1 ? (ev.target as HTMLIonPickerColumnElement) : undefined;
         this.actionOnClick = () => {
           this.enterInputMode(columnEl);
         };
@@ -226,7 +225,7 @@ export class PickerInternal implements ComponentInterface {
    * users from having any visual indication of which
    * column is focused.
    */
-  private enterInputMode = (columnEl?: HTMLIonPickerColumnInternalElement, focusInput = true) => {
+  private enterInputMode = (columnEl?: HTMLIonPickerColumnElement, focusInput = true) => {
     const { inputEl, el } = this;
     if (!inputEl) {
       return;
@@ -236,7 +235,7 @@ export class PickerInternal implements ComponentInterface {
      * Only active input mode if there is at
      * least one column that accepts numeric input.
      */
-    const hasInputColumn = el.querySelector('ion-picker-column-internal.picker-column-numeric-input');
+    const hasInputColumn = el.querySelector('ion-picker-column.picker-column-numeric-input');
     if (!hasInputColumn) {
       return;
     }
@@ -397,7 +396,7 @@ export class PickerInternal implements ComponentInterface {
    * or trailing zeros when looking at the item text.
    */
   private searchColumn = (
-    colEl: HTMLIonPickerColumnInternalElement,
+    colEl: HTMLIonPickerColumnElement,
     value: string,
     zeroBehavior: 'start' | 'end' = 'start'
   ) => {
@@ -415,9 +414,7 @@ export class PickerInternal implements ComponentInterface {
       return;
     }
 
-    const numericPickers = Array.from(el.querySelectorAll('ion-picker-column-internal')).filter(
-      (col) => col.numericInput
-    );
+    const numericPickers = Array.from(el.querySelectorAll('ion-picker-column')).filter((col) => col.numericInput);
 
     const firstColumn = numericPickers[0];
     const lastColumn = numericPickers[1];

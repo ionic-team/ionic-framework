@@ -1,6 +1,6 @@
 @import "../../themes/ionic.globals";
 
-// Picker Internal
+// Picker
 // --------------------------------------------------
 
 :host {
@@ -81,14 +81,14 @@
   @include visually-hidden();
 }
 
-:host ::slotted(ion-picker-column-internal:first-of-type) {
+:host ::slotted(ion-picker-column:first-of-type) {
   text-align: start;
 }
 
-:host ::slotted(ion-picker-column-internal:last-of-type) {
+:host ::slotted(ion-picker-column:last-of-type) {
   text-align: end;
 }
 
-:host ::slotted(ion-picker-column-internal:only-child) {
+:host ::slotted(ion-picker-column:only-child) {
   text-align: center;
 }

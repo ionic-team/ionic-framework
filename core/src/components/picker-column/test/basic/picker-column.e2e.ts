@@ -5,33 +5,33 @@ import { configs, test } from '@utils/test/playwright';
  * This behavior does not vary across modes/directions.
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
-  test.describe(title('picker-column-internal'), () => {
+  test.describe(title('picker-column'), () => {
     test.beforeEach(async ({ page }) => {
-      await page.goto('/src/components/picker-column-internal/test/basic', config);
+      await page.goto('/src/components/picker-column/test/basic', config);
     });
 
     test('should render a picker item for each item', async ({ page }) => {
-      const columns = page.locator('ion-picker-column-internal .picker-item:not(.picker-item-empty)');
+      const columns = page.locator('ion-picker-column .picker-item:not(.picker-item-empty)');
       await expect(columns).toHaveCount(24);
     });
 
     test('should render 6 empty picker items', async ({ page }) => {
-      const columns = page.locator('ion-picker-column-internal .picker-item-empty');
+      const columns = page.locator('ion-picker-column .picker-item-empty');
       await expect(columns).toHaveCount(6);
     });
 
     test('should not have an active item when value is not set', async ({ page }) => {
-      const activeColumn = page.locator('ion-picker-column-internal .picker-item-active');
+      const activeColumn = page.locator('ion-picker-column .picker-item-active');
       await expect(activeColumn).toHaveCount(0);
     });
 
     test('should have an active item when value is set', async ({ page }) => {
-      await page.locator('#default').evaluate((el: HTMLIonPickerColumnInternalElement) => {
+      await page.locator('#default').evaluate((el: HTMLIonPickerColumnElement) => {
         el.value = '12';
       });
       await page.waitForChanges();
 
-      const activeColumn = page.locator('ion-picker-column-internal .picker-item-active');
+      const activeColumn = page.locator('ion-picker-column .picker-item-active');
 
       expect(activeColumn).not.toBeNull();
     });
@@ -40,12 +40,12 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     test.skip('scrolling should change the active item', async ({ page, skip }) => {
       skip.browser('firefox', 'https://bugzilla.mozilla.org/show_bug.cgi?id=1766890');
 
-      await page.locator('#default').evaluate((el: HTMLIonPickerColumnInternalElement) => {
+      await page.locator('#default').evaluate((el: HTMLIonPickerColumnElement) => {
         el.scrollTop = 801;
       });
       await page.waitForChanges();
 
-      const activeColumn = page.locator('ion-picker-column-internal .picker-item-active');
+      const activeColumn = page.locator('ion-picker-column .picker-item-active');
 
       expect(await activeColumn?.innerText()).toEqual('23');
     });
@@ -55,7 +55,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       const ionChangeSpy = await page.spyOnEvent('ionChange');
 
-      await page.locator('#default').evaluate((el: HTMLIonPickerColumnInternalElement) => {
+      await page.locator('#default').evaluate((el: HTMLIonPickerColumnElement) => {
         el.value = '12';
       });
 
@@ -68,7 +68,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       const ionChangeSpy = await page.spyOnEvent('ionChange');
 
-      await page.locator('#default').evaluate((el: HTMLIonPickerColumnInternalElement) => {
+      await page.locator('#default').evaluate((el: HTMLIonPickerColumnElement) => {
         el.scrollTo(0, el.scrollHeight);
       });
       await page.waitForChanges();

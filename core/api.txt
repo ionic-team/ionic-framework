@@ -906,6 +906,18 @@ ion-note,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "second
 ion-note,prop,mode,"ios" | "md",undefined,false,false
 ion-note,css-prop,--color
 
+ion-picker,shadow
+ion-picker,prop,mode,"ios" | "md",undefined,false,false
+ion-picker,event,ionInputModeChange,PickerChangeEventDetail,true
+
+ion-picker-column,shadow
+ion-picker-column,prop,color,"danger" | "dark" | "light" | "medium" | "primary" | "secondary" | "success" | "tertiary" | "warning" | string & Record<never, never> | undefined,'primary',false,true
+ion-picker-column,prop,disabled,boolean,false,false,false
+ion-picker-column,prop,items,PickerColumnItem[],[],false,false
+ion-picker-column,prop,mode,"ios" | "md",undefined,false,false
+ion-picker-column,prop,value,number | string | undefined,undefined,false,false
+ion-picker-column,event,ionChange,PickerColumnItem,true
+
 ion-picker-legacy,scoped
 ion-picker-legacy,prop,animated,boolean,true,false,false
 ion-picker-legacy,prop,backdropDismiss,boolean,true,false,false

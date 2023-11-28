@@ -51,7 +51,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         config
       );
 
-      const items = page.locator('ion-picker-column-internal:first-of-type .picker-item:not(.picker-item-empty)');
+      const items = page.locator('ion-picker-column:first-of-type .picker-item:not(.picker-item-empty)');
       await expect(items).toHaveText(['1', '2', '3']);
     });
     test('should render correct minutes', async ({ page }) => {
@@ -62,7 +62,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
         config
       );
 
-      const items = page.locator('ion-picker-column-internal:nth-of-type(2) .picker-item:not(.picker-item-empty)');
+      const items = page.locator('ion-picker-column:nth-of-type(2) .picker-item:not(.picker-item-empty)');
       await expect(items).toHaveText(['01', '02', '03']);
     });
     test('should adjust default parts for allowed hour and minute values', async ({ page }) => {
@@ -93,13 +93,11 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       await page.waitForSelector('.datetime-ready');
 
-      const minuteItems = page.locator(
-        'ion-picker-column-internal:nth-of-type(2) .picker-item:not(.picker-item-empty)'
-      );
+      const minuteItems = page.locator('ion-picker-column:nth-of-type(2) .picker-item:not(.picker-item-empty)');
       await expect(minuteItems).toHaveText(['00', '15', '30', '45']);
       await expect(minuteItems.nth(1)).toHaveClass(/picker-item-active/);
 
-      const hourItems = page.locator('ion-picker-column-internal:nth-of-type(1) .picker-item:not(.picker-item-empty)');
+      const hourItems = page.locator('ion-picker-column:nth-of-type(1) .picker-item:not(.picker-item-empty)');
       await expect(hourItems).toHaveText(['2']);
       await expect(hourItems.nth(0)).toHaveClass(/picker-item-active/);
 
@@ -107,7 +105,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
        * Since the allowed hour is 2AM, the time period
        * should switch from PM to AM.
        */
-      const ampmItems = page.locator('ion-picker-column-internal:nth-of-type(3) .picker-item:not(.picker-item-empty)');
+      const ampmItems = page.locator('ion-picker-column:nth-of-type(3) .picker-item:not(.picker-item-empty)');
       await expect(ampmItems).toHaveText(['AM', 'PM']);
       await expect(ampmItems.nth(0)).toHaveClass(/picker-item-active/);
     });
