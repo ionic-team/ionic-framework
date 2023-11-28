@@ -1,5 +1,6 @@
 export type Mode = 'ios' | 'md';
 export type Direction = 'ltr' | 'rtl';
+export type Theme = 'light' | 'dark';
 
 export type TitleFn = (title: string) => string;
 export type ScreenshotFn = (fileName: string) => string;
@@ -7,6 +8,7 @@ export type ScreenshotFn = (fileName: string) => string;
 export interface TestConfig {
   mode: Mode;
   direction: Direction;
+  theme: Theme;
 }
 
 interface TestUtilities {
@@ -18,6 +20,7 @@ interface TestUtilities {
 interface TestConfigOption {
   modes?: Mode[];
   directions?: Direction[];
+  themes?: Theme[];
 }
 
 /**
@@ -27,7 +30,11 @@ interface TestConfigOption {
  * each test title is unique.
  */
 const generateTitle = (title: string, config: TestConfig): string => {
-  const { mode, direction } = config;
+  const { mode, direction, theme } = config;
+
+  if (theme === 'dark') {
+    return `${title} - ${mode}/${direction}/dark`;
+  }
 
   return `${title} - ${mode}/${direction}`;
 };
@@ -37,7 +44,11 @@ const generateTitle = (title: string, config: TestConfig): string => {
  * and a test config.
  */
 const generateScreenshotName = (fileName: string, config: TestConfig): string => {
-  const { mode, direction } = config;
+  const { mode, direction, theme } = config;
+
+  if (theme === 'dark') {
+    return `${fileName}-${mode}-${direction}-dark.png`;
+  }
 
   return `${fileName}-${mode}-${direction}.png`;
 };
@@ -54,12 +65,15 @@ export const configs = (testConfig: TestConfigOption = DEFAULT_TEST_CONFIG_OPTIO
    * If certain options are not provided,
    * fall back to the defaults.
    */
-  const processedMode: Mode[] = modes ?? DEFAULT_MODES;
-  const processedDirection: Direction[] = directions ?? DEFAULT_DIRECTIONS;
+  const processedMode = modes ?? DEFAULT_MODES;
+  const processedDirection = directions ?? DEFAULT_DIRECTIONS;
+  const processedTheme = testConfig.themes ?? DEFAULT_THEMES;
 
-  processedMode.forEach((mode: Mode) => {
-    processedDirection.forEach((direction: Direction) => {
-      configs.push({ mode, direction });
+  processedMode.forEach((mode) => {
+    processedDirection.forEach((direction) => {
+      processedTheme.forEach((theme) => {
+        configs.push({ mode, direction, theme });
+      });
     });
   });
 
@@ -74,6 +88,7 @@ export const configs = (testConfig: TestConfigOption = DEFAULT_TEST_CONFIG_OPTIO
 
 const DEFAULT_MODES: Mode[] = ['ios', 'md'];
 const DEFAULT_DIRECTIONS: Direction[] = ['ltr', 'rtl'];
+const DEFAULT_THEMES: Theme[] = ['light'];
 
 const DEFAULT_TEST_CONFIG_OPTION = {
   modes: DEFAULT_MODES,
