@@ -25,12 +25,12 @@
         <ion-button id="default" onclick="openPicker()">Open Picker</ion-button>
         <ion-button id="timeout" onclick="openPicker(500)">Open Picker, Close After 500ms</ion-button>
 
-        <ion-picker></ion-picker>
+        <ion-picker-legacy></ion-picker-legacy>
       </ion-content>
     </ion-app>
 
     <script>
-      const picker = document.querySelector('ion-picker');
+      const picker = document.querySelector('ion-picker-legacy');
       picker.buttons = [{ text: 'Ok' }, { text: 'Cancel', role: 'cancel' }];
       picker.columns = [
         {

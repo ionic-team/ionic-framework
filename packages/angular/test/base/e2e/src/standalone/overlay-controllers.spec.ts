@@ -24,7 +24,7 @@ describe('Overlay Controllers', () => {
   it('should present a picker', () => {
     cy.get('button#open-picker').click();
 
-    cy.get('ion-picker .picker-button').should('be.visible');
+    cy.get('ion-picker-legacy .picker-button').should('be.visible');
   });
 
   it('should present a popover', () => {

@@ -9,10 +9,10 @@ describe('picker-column', () => {
 
     const page = await newSpecPage({
       components: [PickerColumnCmp],
-      template: () => <ion-picker-column col={col}></ion-picker-column>,
+      template: () => <ion-picker-legacy-column col={col}></ion-picker-legacy-column>,
     });
 
-    const pickerCol = page.body.querySelector('ion-picker-column')!;
+    const pickerCol = page.body.querySelector('ion-picker-legacy-column')!;
     expect(pickerCol.classList.contains('test-class')).toBe(true);
   });
 });

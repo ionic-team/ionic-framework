@@ -6,13 +6,13 @@ import { getClassMap } from '@utils/theme';
 
 import { getIonMode } from '../../global/ionic-global';
 import type { Gesture, GestureDetail } from '../../interface';
-import type { PickerColumn } from '../picker/picker-interface';
+import type { PickerColumn } from '../picker-legacy/picker-interface';
 
 /**
  * @internal
  */
 @Component({
-  tag: 'ion-picker-column',
+  tag: 'ion-picker-legacy-column',
   styleUrls: {
     ios: 'picker-column.ios.scss',
     md: 'picker-column.md.scss',

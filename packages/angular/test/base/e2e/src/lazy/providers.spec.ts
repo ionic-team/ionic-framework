@@ -55,6 +55,6 @@ describe('Providers', () => {
   it('should open a picker', () => {
     cy.get('button#open-picker').click();
 
-    cy.get('ion-picker').should('be.visible');
+    cy.get('ion-picker-legacy').should('be.visible');
   });
 });

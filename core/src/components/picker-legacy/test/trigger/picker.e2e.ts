@@ -7,7 +7,7 @@ import { configs, test } from '@utils/test/playwright';
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('picker: trigger'), () => {
     test.beforeEach(async ({ page }) => {
-      await page.goto('/src/components/picker/test/trigger', config);
+      await page.goto('/src/components/picker-legacy/test/trigger', config);
     });
 
     test('should open the picker', async ({ page }) => {

@@ -4,13 +4,13 @@ import { configs, test } from '@utils/test/playwright';
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {
   test.describe(title('picker-column'), () => {
     test.beforeEach(async ({ page }) => {
-      await page.goto(`/src/components/picker-column/test/standalone`, config);
+      await page.goto(`/src/components/picker-legacy-column/test/standalone`, config);
     });
 
     test('should present picker without ion-app', async ({ page }) => {
       const ionPickerDidPresent = await page.spyOnEvent('ionPickerDidPresent');
 
-      const picker = page.locator('ion-picker');
+      const picker = page.locator('ion-picker-legacy');
 
       await page.click('#single-column-button');
 
@@ -28,7 +28,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       const ionPickerDidPresent = await page.spyOnEvent('ionPickerDidPresent');
       const ionPickerColChangeEvent = await page.spyOnEvent('ionPickerColChange');
 
-      const column = page.locator('ion-picker-column');
+      const column = page.locator('ion-picker-legacy-column');
       const secondOption = column.locator('.picker-opt').nth(1);
 
       await page.click('#single-column-button');
