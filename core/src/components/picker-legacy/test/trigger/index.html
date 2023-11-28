@@ -25,8 +25,18 @@
         <ion-button id="default">Open Picker</ion-button>
         <ion-button id="timeout">Open Picker, Close After 500ms</ion-button>
 
-        <ion-picker id="default-picker" trigger="default" header="Picker" message="Hello World!"></ion-picker>
-        <ion-picker id="timeout-picker" trigger="timeout" header="Picker" message="Hello World!"></ion-picker>
+        <ion-picker-legacy
+          id="default-picker"
+          trigger="default"
+          header="Picker"
+          message="Hello World!"
+        ></ion-picker-legacy>
+        <ion-picker-legacy
+          id="timeout-picker"
+          trigger="timeout"
+          header="Picker"
+          message="Hello World!"
+        ></ion-picker-legacy>
       </ion-content>
     </ion-app>
 

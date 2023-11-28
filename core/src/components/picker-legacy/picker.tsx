@@ -2,6 +2,7 @@ import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import { Component, Element, Event, Host, Method, Prop, State, Watch, h } from '@stencil/core';
 import { raf } from '@utils/helpers';
 import { createLockController } from '@utils/lock-controller';
+import { printIonWarning } from '@utils/logging';
 import {
   createDelegateController,
   createTriggerController,
@@ -30,7 +31,7 @@ import type { PickerButton, PickerColumn } from './picker-interface';
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
 @Component({
-  tag: 'ion-picker',
+  tag: 'ion-picker-legacy',
   styleUrls: {
     ios: 'picker.ios.scss',
     md: 'picker.md.scss',
@@ -45,7 +46,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
   private durationTimeout?: ReturnType<typeof setTimeout>;
   lastFocus?: HTMLElement;
 
-  @Element() el!: HTMLIonPickerElement;
+  @Element() el!: HTMLIonPickerLegacyElement;
 
   @State() presented = false;
 
@@ -202,6 +203,11 @@ export class Picker implements ComponentInterface, OverlayInterface {
   }
 
   componentDidLoad() {
+    printIonWarning(
+      'ion-picker-legacy and ion-picker-legacy-column have been deprecated in favor of new versions of the ion-picker and ion-picker-column components. These new components display inline with your page content allowing for more presentation flexibility than before.',
+      this.el
+    );
+
     /**
      * If picker was rendered with isOpen="true"
      * then we should open picker immediately.
@@ -371,7 +377,7 @@ export class Picker implements ComponentInterface, OverlayInterface {
 
           <div class="picker-columns">
             <div class="picker-above-highlight"></div>
-            {this.presented && this.columns.map((c) => <ion-picker-column col={c}></ion-picker-column>)}
+            {this.presented && this.columns.map((c) => <ion-picker-legacy-column col={c}></ion-picker-legacy-column>)}
             <div class="picker-below-highlight"></div>
           </div>
         </div>

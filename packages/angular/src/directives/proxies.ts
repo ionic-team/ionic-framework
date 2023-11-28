@@ -1422,13 +1422,13 @@ export declare interface IonNote extends Components.IonNote {}
   methods: ['present', 'dismiss', 'onDidDismiss', 'onWillDismiss', 'getColumn']
 })
 @Component({
-  selector: 'ion-picker',
+  selector: 'ion-picker-legacy',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['animated', 'backdropDismiss', 'buttons', 'columns', 'cssClass', 'duration', 'enterAnimation', 'htmlAttributes', 'isOpen', 'keyboardClose', 'leaveAnimation', 'mode', 'showBackdrop', 'trigger'],
 })
-export class IonPicker {
+export class IonPickerLegacy {
   protected el: HTMLElement;
   constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
     c.detach();
@@ -1438,9 +1438,9 @@ export class IonPicker {
 }
 
 
-import type { OverlayEventDetail as IIonPickerOverlayEventDetail } from '@ionic/core';
+import type { OverlayEventDetail as IIonPickerLegacyOverlayEventDetail } from '@ionic/core';
 
-export declare interface IonPicker extends Components.IonPicker {
+export declare interface IonPickerLegacy extends Components.IonPickerLegacy {
   /**
    * Emitted after the picker has presented.
    */
@@ -1452,11 +1452,11 @@ export declare interface IonPicker extends Components.IonPicker {
   /**
    * Emitted before the picker has dismissed.
    */
-  ionPickerWillDismiss: EventEmitter<CustomEvent<IIonPickerOverlayEventDetail>>;
+  ionPickerWillDismiss: EventEmitter<CustomEvent<IIonPickerLegacyOverlayEventDetail>>;
   /**
    * Emitted after the picker has dismissed.
    */
-  ionPickerDidDismiss: EventEmitter<CustomEvent<IIonPickerOverlayEventDetail>>;
+  ionPickerDidDismiss: EventEmitter<CustomEvent<IIonPickerLegacyOverlayEventDetail>>;
   /**
    * Emitted after the picker has presented.
 Shorthand for ionPickerWillDismiss.
@@ -1471,12 +1471,12 @@ Shorthand for ionPickerWillPresent.
    * Emitted before the picker has dismissed.
 Shorthand for ionPickerWillDismiss.
    */
-  willDismiss: EventEmitter<CustomEvent<IIonPickerOverlayEventDetail>>;
+  willDismiss: EventEmitter<CustomEvent<IIonPickerLegacyOverlayEventDetail>>;
   /**
    * Emitted after the picker has dismissed.
 Shorthand for ionPickerDidDismiss.
    */
-  didDismiss: EventEmitter<CustomEvent<IIonPickerOverlayEventDetail>>;
+  didDismiss: EventEmitter<CustomEvent<IIonPickerLegacyOverlayEventDetail>>;
 }
 
 

@@ -15,10 +15,12 @@ describe('picker-column: dynamic options', () => {
 
     const page = await newSpecPage({
       components: [PickerColumnCmp],
-      template: () => <ion-picker-column col={{ options: defaultOptions, name: 'animals' }}></ion-picker-column>,
+      template: () => (
+        <ion-picker-legacy-column col={{ options: defaultOptions, name: 'animals' }}></ion-picker-legacy-column>
+      ),
     });
 
-    const pickerCol = page.body.querySelector('ion-picker-column')!;
+    const pickerCol = page.body.querySelector('ion-picker-legacy-column')!;
 
     pickerCol.col = {
       options: [...defaultOptions, { text: 'Carrot', value: 'carrot' }],
