@@ -2,6 +2,9 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
+/**
+ * This behavior does not vary across directions
+ */
 configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
   test.describe(title('picker column option: a11y'), () => {
     test('should not have accessibility violations', async ({ page }) => {
