@@ -7,15 +7,13 @@ import { configs, test } from '@utils/test/playwright';
  */
 configs({ modes: ['md', 'ios'], directions: ['ltr'], themes: ['light'] }).forEach(({ config, title }) => {
   test.describe(title('theme'), () => {
-    test.beforeAll(({ skip }) => {
-      skip.browser('firefox');
-      skip.browser('webkit');
-    });
-
     const colors = ['primary', 'secondary', 'tertiary', 'success', 'warning', 'danger', 'medium', 'dark'];
 
     for (const color of colors) {
-      test(`color "${color}" should pass AA guidelines`, async ({ page }) => {
+      test(`color "${color}" should pass AA guidelines`, async ({ page, skip }) => {
+        skip.browser('firefox');
+        skip.browser('webkit');
+
         await page.setContent(
           `
           <style>
@@ -37,15 +35,13 @@ configs({ modes: ['md', 'ios'], directions: ['ltr'], themes: ['light'] }).forEac
 
 configs({ modes: ['md', 'ios'], directions: ['ltr'], themes: ['dark'] }).forEach(({ config, title }) => {
   test.describe(title('theme'), () => {
-    test.beforeAll(({ skip }) => {
-      skip.browser('firefox');
-      skip.browser('webkit');
-    });
-
     const colors = ['primary', 'secondary', 'tertiary', 'success', 'warning', 'danger', 'light', 'medium', 'dark'];
 
     for (const color of colors) {
-      test(`color "${color}" should pass AA guidelines`, async ({ page }) => {
+      test(`color "${color}" should pass AA guidelines`, async ({ page, skip }) => {
+        skip.browser('firefox');
+        skip.browser('webkit');
+
         await page.setContent(
           `
         <style>
