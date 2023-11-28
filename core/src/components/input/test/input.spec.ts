@@ -1,4 +1,5 @@
 import { newSpecPage } from '@stencil/core/testing';
+
 import { Input } from '../input';
 
 describe('input: rendering', () => {
@@ -8,7 +9,7 @@ describe('input: rendering', () => {
       html: '<ion-input title="my title" tabindex="-1" data-form-type="password"></ion-input>',
     });
 
-    const nativeEl = page.body.querySelector('ion-input input');
+    const nativeEl = page.body.querySelector('ion-input input')!;
     expect(nativeEl.getAttribute('title')).toBe('my title');
     expect(nativeEl.getAttribute('tabindex')).toBe('-1');
     expect(nativeEl.getAttribute('data-form-type')).toBe('password');
@@ -63,9 +64,9 @@ describe('input: label rendering', () => {
       `,
     });
 
-    const input = page.body.querySelector('ion-input');
+    const input = page.body.querySelector('ion-input')!;
 
-    const labelText = input.querySelector('.label-text-wrapper');
+    const labelText = input.querySelector('.label-text-wrapper')!;
 
     expect(labelText.textContent).toBe('Label Prop Text');
   });
@@ -77,9 +78,9 @@ describe('input: label rendering', () => {
       `,
     });
 
-    const input = page.body.querySelector('ion-input');
+    const input = page.body.querySelector('ion-input')!;
 
-    const labelText = input.querySelector('.label-text-wrapper');
+    const labelText = input.querySelector('.label-text-wrapper')!;
 
     expect(labelText.textContent).toBe('Label Slot Text');
   });
@@ -91,9 +92,9 @@ describe('input: label rendering', () => {
       `,
     });
 
-    const input = page.body.querySelector('ion-input');
+    const input = page.body.querySelector('ion-input')!;
 
-    const labelText = input.querySelector('.label-text-wrapper');
+    const labelText = input.querySelector('.label-text-wrapper')!;
 
     expect(labelText.textContent).toBe('Label Prop Text');
   });

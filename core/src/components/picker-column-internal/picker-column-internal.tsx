@@ -36,6 +36,11 @@ export class PickerColumnInternal implements ComponentInterface {
   @Element() el!: HTMLIonPickerColumnInternalElement;
 
   /**
+   * If `true`, the user cannot interact with the picker.
+   */
+  @Prop() disabled = false;
+
+  /**
    * A list of options to be displayed in the picker
    */
   @Prop() items: PickerColumnItem[] = [];
@@ -408,13 +413,15 @@ export class PickerColumnInternal implements ComponentInterface {
   };
 
   get activeItem() {
-    return getElementRoot(this.el).querySelector(
-      `.picker-item[data-value="${this.value}"]:not([disabled])`
-    ) as HTMLElement | null;
+    // If the whole picker column is disabled, the current value should appear active
+    // If the current value item is specifically disabled, it should not appear active
+    const selector = `.picker-item[data-value="${this.value}"]${this.disabled ? '' : ':not([disabled])'}`;
+
+    return getElementRoot(this.el).querySelector(selector) as HTMLElement | null;
   }
 
   render() {
-    const { items, color, isActive, numericInput } = this;
+    const { items, color, disabled: pickerDisabled, isActive, numericInput } = this;
     const mode = getIonMode(this);
 
     /**
@@ -423,10 +430,12 @@ export class PickerColumnInternal implements ComponentInterface {
      * the attribute can be moved to datetime.tsx and set on every
      * instance of ion-picker-column-internal there instead.
      */
+
     return (
       <Host
         exportparts={`${PICKER_ITEM_PART}, ${PICKER_ITEM_ACTIVE_PART}`}
-        tabindex={0}
+        disabled={pickerDisabled}
+        tabindex={pickerDisabled ? null : 0}
         class={createColorClasses(color, {
           [mode]: true,
           ['picker-column-active']: isActive,
@@ -443,6 +452,8 @@ export class PickerColumnInternal implements ComponentInterface {
           &nbsp;
         </div>
         {items.map((item, index) => {
+          const isItemDisabled = pickerDisabled || item.disabled || false;
+
           {
             /*
             Users should be able to tab
@@ -458,14 +469,13 @@ export class PickerColumnInternal implements ComponentInterface {
               tabindex="-1"
               class={{
                 'picker-item': true,
-                'picker-item-disabled': item.disabled || false,
               }}
               data-value={item.value}
               data-index={index}
               onClick={(ev: Event) => {
                 this.centerPickerItemInView(ev.target as HTMLElement, true);
               }}
-              disabled={item.disabled}
+              disabled={isItemDisabled}
               part={PICKER_ITEM_PART}
             >
               {item.text}

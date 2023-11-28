@@ -1,7 +1,7 @@
 describe('Providers', () => {
   beforeEach(() => {
     cy.visit('/lazy/providers');
-  })
+  });
 
   it('should load all providers', () => {
     cy.get('#is-loaded').should('have.text', 'true');
@@ -26,12 +26,35 @@ describe('Providers', () => {
     cy.visit('/lazy/providers?firstParam=abc&secondParam=true');
 
     cy.get('#query-params').should('have.text', 'firstParam: abc, firstParam: true');
-  })
+  });
 
   // https://github.com/ionic-team/ionic-framework/issues/28337
   it('should register menus correctly', () => {
     cy.get('#set-menu-count').click();
     cy.get('#registered-menu-count').should('have.text', '1');
   });
-});
 
+  it('should open an action sheet', () => {
+    cy.get('button#open-action-sheet').click();
+
+    cy.get('ion-action-sheet').should('be.visible');
+  });
+
+  it('should open an alert', () => {
+    cy.get('button#open-alert').click();
+
+    cy.get('ion-alert').should('be.visible');
+  });
+
+  it('should open a loading-indicator', () => {
+    cy.get('button#open-loading').click();
+
+    cy.get('ion-loading').should('be.visible');
+  });
+
+  it('should open a picker', () => {
+    cy.get('button#open-picker').click();
+
+    cy.get('ion-picker').should('be.visible');
+  });
+});

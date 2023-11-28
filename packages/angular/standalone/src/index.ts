@@ -5,17 +5,17 @@ export { IonRouterOutlet } from './navigation/router-outlet';
 export { IonRouterLink, IonRouterLinkWithHref } from './navigation/router-link-delegate';
 export { IonTabs } from './navigation/tabs';
 export { provideIonicAngular } from './providers/ionic-angular';
+export { ActionSheetController } from './providers/action-sheet-controller';
+export { AlertController } from './providers/alert-controller';
+export { AnimationController } from './providers/animation-controller';
+export { GestureController } from './providers/gesture-controller';
+export { LoadingController } from './providers/loading-controller';
 export { MenuController } from './providers/menu-controller';
+export { ModalController } from './providers/modal-controller';
+export { PickerController } from './providers/picker-controller';
+export { PopoverController } from './providers/popover-controller';
+export { ToastController } from './providers/toast-controller';
 export {
-  ActionSheetController,
-  AlertController,
-  LoadingController,
-  ModalController,
-  PickerController,
-  PopoverController,
-  ToastController,
-  AnimationController,
-  GestureController,
   DomController,
   NavController,
   Config,

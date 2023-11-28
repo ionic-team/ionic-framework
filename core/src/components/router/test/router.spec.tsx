@@ -18,19 +18,21 @@ describe('ionic-conference-app', () => {
     expect(getRouteIDs('/about', routes)).toEqual(['page-tabs', 'page-about']);
     expect(getRouteIDs('/tutorial', routes)).toEqual(['page-tutorial']);
 
-    expect(getRoutePath([{ id: 'PAGE-TABS' }, { id: 'tab-schedule' }, { id: 'page-schedule' }], routes)).toEqual('/');
+    expect(
+      getRoutePath([{ id: 'PAGE-TABS' }, { id: 'tab-schedule' }, { id: 'page-schedule' }] as RouteID[], routes)
+    ).toEqual('/');
 
-    expect(getRoutePath([{ id: 'page-tabs' }, { id: 'TAB-SPEAKER' }], routes)).toEqual('/speaker');
+    expect(getRoutePath([{ id: 'page-tabs' }, { id: 'TAB-SPEAKER' }] as RouteID[], routes)).toEqual('/speaker');
 
-    expect(getRoutePath([{ id: 'page-tabs' }, { id: 'TAB-SPEAKER' }, { id: 'page-speaker-list' }], routes)).toEqual(
-      '/speaker'
-    );
+    expect(
+      getRoutePath([{ id: 'page-tabs' }, { id: 'TAB-SPEAKER' }, { id: 'page-speaker-list' }] as RouteID[], routes)
+    ).toEqual('/speaker');
 
-    expect(getRoutePath([{ id: 'page-tabs' }, { id: 'PAGE-MAP' }], routes)).toEqual('/map');
+    expect(getRoutePath([{ id: 'page-tabs' }, { id: 'PAGE-MAP' }] as RouteID[], routes)).toEqual('/map');
 
-    expect(getRoutePath([{ id: 'page-tabs' }, { id: 'page-about' }], routes)).toEqual('/about');
+    expect(getRoutePath([{ id: 'page-tabs' }, { id: 'page-about' }] as RouteID[], routes)).toEqual('/about');
 
-    expect(getRoutePath([{ id: 'page-tutorial' }], routes)).toEqual('/tutorial');
+    expect(getRoutePath([{ id: 'page-tutorial' }] as RouteID[], routes)).toEqual('/tutorial');
   });
 
   let win: Window;
