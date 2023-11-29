@@ -11,6 +11,8 @@
 # In each subsection folders are ordered first by depth, then alphabetically.
 # This should make it easy to add new rules without breaking existing ones.
 
+* @ionic-team/framework
+
 # Frameworks
 
 ## Angular

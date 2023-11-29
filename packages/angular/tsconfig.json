@@ -27,7 +27,7 @@
     "pretty": true,
     "removeComments": false,
     "importHelpers": true,
-    "rootDir": "src",
+    "rootDir": "./",
     "strictPropertyInitialization": false,
     "target": "es2015",
     "baseUrl": ".",
@@ -41,5 +41,5 @@
     }
   },
   "exclude": ["node_modules", "src/schematics"],
-  "files": ["src/index.ts", "common/src/index.ts"]
+  "files": ["src/index.ts", "common/src/index.ts", "standalone/src/index.ts"]
 }

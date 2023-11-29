@@ -13,7 +13,7 @@
     "noImplicitReturns": false,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "outDir": "dist-transpiled",
+    "outDir": "dist",
     "declarationDir": "dist/types",
     "removeComments": false,
     "sourceMap": true,
