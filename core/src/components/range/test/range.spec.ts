@@ -229,4 +229,21 @@ describe('range: item adjustments', () => {
     expect(range.classList.contains('range-item-start-adjustment')).toBe(false);
     expect(range.classList.contains('range-item-end-adjustment')).toBe(false);
   });
+
+  describe('shadow parts', () => {
+    it('should have shadow parts', async () => {
+      const page = await newSpecPage({
+        components: [Range],
+        html: `<ion-range pin="true" snaps="true" value="50" label="Label"></ion-range>`,
+      });
+      const range = page.body.querySelector('ion-range')!;
+      expect(range.shadowRoot!.querySelector('[part="label"]')).not.toBe(null);
+      expect(range.shadowRoot!.querySelector('[part="pin"]')).not.toBe(null);
+      expect(range.shadowRoot!.querySelector('[part="knob"]')).not.toBe(null);
+      expect(range.shadowRoot!.querySelector('[part="bar"]')).not.toBe(null);
+      expect(range.shadowRoot!.querySelector('[part="bar-active"]')).not.toBe(null);
+      expect(range.shadowRoot!.querySelector('[part="tick"]')).not.toBe(null);
+      expect(range.shadowRoot!.querySelector('[part="tick-active"]')).not.toBe(null);
+    });
+  });
 });
