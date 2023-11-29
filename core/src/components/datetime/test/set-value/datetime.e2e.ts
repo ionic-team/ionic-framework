@@ -66,6 +66,11 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     test('should scroll to new month when value is initially set and then updated with multiple selection', async ({
       page,
     }) => {
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://github.com/ionic-team/ionic-framework/issues/28602',
+      });
+
       await page.setContent(
         `
         <ion-datetime multiple="true" presentation="date"></ion-datetime>
