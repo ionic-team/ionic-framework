@@ -100,3 +100,69 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ config, title }) => 
     });
   });
 });
+
+/**
+ * This behavior needs to be tested in both modes but does not vary
+ * across directions due to the component only applying safe area
+ * to the top and bottom
+ */
+configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
+  test.describe(title('action-sheet: basic'), () => {
+    test.describe('safe area', () => {
+      test('should have padding added by the safe area', async ({ page }, testInfo) => {
+        testInfo.annotations.push({
+          type: 'issue',
+          description: 'https://github.com/ionic-team/ionic-framework/issues/27777',
+        });
+        await page.setContent(
+          `
+          <style>
+            :root {
+              --ion-safe-area-top: 60px;
+              --ion-safe-area-bottom: 40px;
+            }
+          </style>
+
+          <ion-action-sheet></ion-action-sheet>
+
+          <script>
+            const actionSheet = document.querySelector('ion-action-sheet');
+            actionSheet.header = 'Header';
+            actionSheet.subHeader = 'Sub Header';
+            actionSheet.buttons = [
+              'Add Reaction',
+              'Copy Text',
+              'Share Text',
+              'Copy Link to Message',
+              'Remind Me',
+              'Pin File',
+              'Star File',
+              'Mark Unread',
+              'Mark Read',
+              'Edit Title',
+              'Erase Title',
+              'Save Image',
+              'Copy Image',
+              'Erase Image',
+              'Delete File',
+              {
+                text: 'Cancel',
+                role: 'cancel'
+              },
+            ];
+          </script>
+        `,
+          config
+        );
+
+        const ionActionSheetDidPresent = await page.spyOnEvent('ionActionSheetDidPresent');
+        const actionSheet = page.locator('ion-action-sheet');
+
+        await actionSheet.evaluate((el: HTMLIonActionSheetElement) => el.present());
+        await ionActionSheetDidPresent.next();
+
+        await expect(actionSheet).toHaveScreenshot(screenshot(`action-sheet-safe-area`));
+      });
+    });
+  });
+});

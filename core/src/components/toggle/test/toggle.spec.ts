@@ -64,7 +64,7 @@ describe('ion-toggle: disabled', () => {
       `,
     });
 
-    const toggle = page.body.querySelector('ion-toggle');
+    const toggle = page.body.querySelector('ion-toggle')!;
 
     expect(toggle.checked).toBe(false);
 

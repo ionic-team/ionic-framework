@@ -1,4 +1,5 @@
 import { newSpecPage } from '@stencil/core/testing';
+
 import { Button } from '../../button';
 
 describe('Button: Hidden Form Button', () => {
@@ -15,8 +16,7 @@ describe('Button: Hidden Form Button', () => {
       return page.body.querySelectorAll('form button');
     };
 
-    const form = page.body.querySelectorAll('form');
-    const button = page.body.querySelector('ion-button');
+    const button = page.body.querySelector('ion-button')!;
 
     await page.waitForChanges();
 
