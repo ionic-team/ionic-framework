@@ -42,17 +42,27 @@ configs({ modes: ['md', 'ios'], directions: ['ltr'], themes: ['dark'] }).forEach
         skip.browser('firefox');
         skip.browser('webkit');
 
-        await page.setContent(
-          `
-        <style>
-          body {
-            background-color: var(--ion-background-color);
-          }
-        </style>
-        <p style="color: var(--ion-color-${color});">Hello World</p>
-      `,
-          config
-        );
+        await page.setContent(`<p class="ion-color ion-color-${color}">Hello World</p>`, config);
+
+        const results = await new AxeBuilder({ page }).analyze();
+        expect(results.violations).toEqual([]);
+      });
+
+      test(`shade color "${color}" should pass AA guidelines`, async ({ page, skip }) => {
+        skip.browser('firefox');
+        skip.browser('webkit');
+
+        await page.setContent(`<p class="ion-color-shade ion-color-${color}">Hello World</p>`, config);
+
+        const results = await new AxeBuilder({ page }).analyze();
+        expect(results.violations).toEqual([]);
+      });
+
+      test(`tint color "${color}" should pass AA guidelines`, async ({ page, skip }) => {
+        skip.browser('firefox');
+        skip.browser('webkit');
+
+        await page.setContent(`<p class="ion-color-tint ion-color-${color}">Hello World</p>`, config);
 
         const results = await new AxeBuilder({ page }).analyze();
         expect(results.violations).toEqual([]);

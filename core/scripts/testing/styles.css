@@ -48,3 +48,19 @@ html.ios.ios {
   --ion-font-family: -apple-system, BlinkMacSystemFont, "iosTestingFont", sans-serif;
   font-family: -apple-system, BlinkMacSystemFont, "iosTestingFont", sans-serif;
 }
+
+.ion-background {
+  background: var(--ion-color-base);
+}
+
+.ion-color {
+  color: var(--ion-color-base);
+}
+
+.ion-color-shade {
+  color: var(--ion-color-shade);
+}
+
+.ion-color-tint {
+  color: var(--ion-color-tint);
+}
