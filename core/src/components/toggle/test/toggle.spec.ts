@@ -45,7 +45,7 @@ describe('toggle', () => {
     it('should have shadow parts', async () => {
       const page = await newSpecPage({
         components: [Toggle],
-        html: `<ion-toggle></ion-toggle>`,
+        html: `<ion-toggle>Label</ion-toggle>`,
       });
       const toggle = page.body.querySelector('ion-toggle')!;
       expect(toggle.shadowRoot!.querySelector('[part="label"]')).not.toBe(null);
