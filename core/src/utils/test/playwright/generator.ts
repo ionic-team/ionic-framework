@@ -3,11 +3,11 @@ export type Direction = 'ltr' | 'rtl';
 /**
  * The theme to use for the playwright test.
  *
- * - `default`: The fallback theme values.
+ * - `none`: The fallback theme values. Theme stylesheet will not be included.
  * - `light`: The light theme values.
  * - `dark`: The dark theme values.
  */
-export type Theme = 'default' | 'light' | 'dark';
+export type Theme = 'none' | 'light' | 'dark';
 
 export type TitleFn = (title: string) => string;
 export type ScreenshotFn = (fileName: string) => string;
@@ -39,12 +39,12 @@ interface TestConfigOption {
 const generateTitle = (title: string, config: TestConfig): string => {
   const { mode, direction, theme } = config;
 
-  if (theme === 'default') {
+  if (theme === 'none') {
     /**
      * Ionic has many existing tests that existed prior to
      * the introduction of theme testing. To maintain backwards
      * compatibility, we will not include the theme in the test
-     * title if the theme is the default theme.
+     * title if the theme is set to none.
      */
     return `${title} - ${mode}/${direction}`;
   }
@@ -59,12 +59,12 @@ const generateTitle = (title: string, config: TestConfig): string => {
 const generateScreenshotName = (fileName: string, config: TestConfig): string => {
   const { mode, direction, theme } = config;
 
-  if (theme === 'default') {
+  if (theme === 'none') {
     /**
      * Ionic has many existing tests that existed prior to
      * the introduction of theme testing. To maintain backwards
      * compatibility, we will not include the theme in the screenshot
-     * name if the theme is the default theme.
+     * name if the theme is set to none.
      */
     return `${fileName}-${mode}-${direction}.png`;
   }
@@ -107,7 +107,7 @@ export const configs = (testConfig: TestConfigOption = DEFAULT_TEST_CONFIG_OPTIO
 
 const DEFAULT_MODES: Mode[] = ['ios', 'md'];
 const DEFAULT_DIRECTIONS: Direction[] = ['ltr', 'rtl'];
-const DEFAULT_THEMES: Theme[] = ['default'];
+const DEFAULT_THEMES: Theme[] = ['none'];
 
 const DEFAULT_TEST_CONFIG_OPTION = {
   modes: DEFAULT_MODES,
