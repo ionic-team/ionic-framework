@@ -4,13 +4,21 @@
 // --------------------------------------------------
 
 :host {
-  @include padding(0px, 16px, 0px, 16px);
+  display: flex;
+
+  flex: 1;
+  justify-content: center;
 
   height: 200px;
 
+  font-size: 22px;
+}
+
+.picker-opts {
+  @include padding(0px, 16px, 0px, 16px);
+
   outline: none;
 
-  font-size: 22px;
   scroll-snap-type: y mandatory;
 
   /**
@@ -29,8 +37,27 @@
 /**
  * Hide scrollbars on Chrome and Safari
  */
-:host::-webkit-scrollbar {
+.picker-opts::-webkit-scrollbar {
   display: none;
+}
+
+::slotted([slot='prefix']), ::slotted([slot='suffix']) {
+  display: flex;
+
+  flex: 1;
+  align-items: center;
+}
+
+::slotted([slot='prefix']) {
+  justify-content: end;
+
+  padding-right: 16px;
+}
+
+::slotted([slot='suffix']) {
+  justify-content: start;
+
+  padding-left: 16px;
 }
 
 :host .picker-item {
@@ -93,7 +120,7 @@
 }
 
 @media (any-hover: hover) {
-  :host(:focus) {
+  :host(:focus) .picker-opts {
     outline: none;
 
     background: current-color(base, 0.2);
