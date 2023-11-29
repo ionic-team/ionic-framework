@@ -34,8 +34,8 @@ export class PickerColumnOption implements ComponentInterface {
   @Prop() value?: any | null;
 
   /**
-   * The aria-label of the option has changed
-   * and needs to be updated within the component.
+   * The aria-label of the option has changed after the
+   * first render and needs to be updated within the component.
    *
    * @param ariaLbl The new aria-label value.
    */
@@ -46,6 +46,10 @@ export class PickerColumnOption implements ComponentInterface {
 
   componentWillLoad() {
     const inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
+    /**
+     * The initial value of `aria-label` needs to be set for
+     * the first render.
+     */
     this.ariaLabel = inheritedAttributes['aria-label'] || null;
   }
 
