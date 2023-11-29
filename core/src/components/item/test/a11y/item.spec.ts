@@ -1,8 +1,9 @@
-import { Radio } from '../../../radio/radio.tsx';
-import { RadioGroup } from '../../../radio-group/radio-group.tsx';
-import { Item } from '../../item.tsx';
-import { List } from '../../../list/list.tsx';
 import { newSpecPage } from '@stencil/core/testing';
+
+import { List } from '../../../list/list';
+import { RadioGroup } from '../../../radio-group/radio-group';
+import { Radio } from '../../../radio/radio';
+import { Item } from '../../item';
 
 describe('ion-item', () => {
   it('should not have a role when used without list', async () => {
@@ -11,7 +12,7 @@ describe('ion-item', () => {
       html: `<ion-item>Hello World</ion-item>`,
     });
 
-    const item = page.body.querySelector('ion-item');
+    const item = page.body.querySelector('ion-item')!;
     expect(item.getAttribute('role')).toBe(null);
   });
 
@@ -27,7 +28,7 @@ describe('ion-item', () => {
       `,
     });
 
-    const item = page.body.querySelector('ion-item');
+    const item = page.body.querySelector('ion-item')!;
     expect(item.getAttribute('role')).toBe('listitem');
   });
 
@@ -45,7 +46,7 @@ describe('ion-item', () => {
       `,
     });
 
-    const item = page.body.querySelector('ion-item');
+    const item = page.body.querySelector('ion-item')!;
     expect(item.getAttribute('role')).toBe(null);
   });
 });

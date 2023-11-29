@@ -65,7 +65,7 @@ describe('sanitizeDOMString', () => {
 });
 
 const enableSanitizer = (enable = true) => {
-  window.Ionic = {};
-  window.Ionic.config = {};
-  window.Ionic.config.sanitizerEnabled = enable;
+  (window as any).Ionic = {};
+  (window as any).Ionic.config = {};
+  (window as any).Ionic.config.sanitizerEnabled = enable;
 };

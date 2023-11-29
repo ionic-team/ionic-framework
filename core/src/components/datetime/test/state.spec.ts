@@ -84,13 +84,13 @@ describe('isPrevMonthDisabled()', () => {
     // Date month and year is the same as min month and year
     expect(isPrevMonthDisabled({ month: 1, year: 2021, day: null }, { month: 1, year: 2021, day: null })).toEqual(true);
     // Date year is the same as min year (month not provided)
-    expect(isPrevMonthDisabled({ month: 1, year: 2021, day: null }, { year: 2021, month: null, day: null })).toEqual(
-      true
-    );
+    expect(
+      isPrevMonthDisabled({ month: 1, year: 2021, day: null }, { year: 2021, month: null, day: null } as any)
+    ).toEqual(true);
     // Date year is less than the min year (month not provided)
-    expect(isPrevMonthDisabled({ month: 5, year: 2021, day: null }, { year: 2022, month: null, day: null })).toEqual(
-      true
-    );
+    expect(
+      isPrevMonthDisabled({ month: 5, year: 2021, day: null }, { year: 2022, month: null, day: null } as any)
+    ).toEqual(true);
 
     // Date is above the maximum bounds and the previous month does not does not fall within the
     // min-max range.
@@ -118,12 +118,12 @@ describe('isPrevMonthDisabled()', () => {
     expect(isPrevMonthDisabled({ month: 12, year: 2021, day: null })).toEqual(false);
     // Date year is the same as min year,
     // but can navigate to a previous month without reducing the year.
-    expect(isPrevMonthDisabled({ month: 12, year: 2021, day: null }, { year: 2021, month: null, day: null })).toEqual(
-      false
-    );
-    expect(isPrevMonthDisabled({ month: 2, year: 2021, day: null }, { year: 2021, month: null, day: null })).toEqual(
-      false
-    );
+    expect(
+      isPrevMonthDisabled({ month: 12, year: 2021, day: null }, { year: 2021, month: null, day: null } as any)
+    ).toEqual(false);
+    expect(
+      isPrevMonthDisabled({ month: 2, year: 2021, day: null }, { year: 2021, month: null, day: null } as any)
+    ).toEqual(false);
   });
 });
 

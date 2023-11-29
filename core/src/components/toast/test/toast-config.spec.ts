@@ -9,7 +9,7 @@ describe('toast: duration config', () => {
       html: `<ion-toast></ion-toast>`,
     });
 
-    const toast = page.body.querySelector('ion-toast');
+    const toast = page.body.querySelector('ion-toast')!;
 
     expect(toast.duration).toBe(0);
   });
@@ -22,7 +22,7 @@ describe('toast: duration config', () => {
       html: `<ion-toast></ion-toast>`,
     });
 
-    const toast = page.body.querySelector('ion-toast');
+    const toast = page.body.querySelector('ion-toast')!;
 
     expect(toast.duration).toBe(5000);
   });

@@ -42,7 +42,8 @@ describe('parseDate()', () => {
    * See https://github.com/ionic-team/ionic-framework/commit/3fb4caf21ffac12f765c4c80bf1850e05d211c6a
    */
   it('should return the correct time zone offset', () => {
-    expect(parseDate('2022-12-15T13:47:30-02:00').tzOffset).toEqual(undefined);
+    // Casting as any since `tzOffset` does not exist on DatetimeParts
+    expect((parseDate('2022-12-15T13:47:30-02:00') as any)?.tzOffset).toEqual(undefined);
   });
 
   it('should parse an array of dates', () => {
@@ -162,8 +163,8 @@ describe('parseMinParts()', () => {
       minute: 4,
       hour: 2,
     };
-    expect(parseMinParts(undefined, today)).toEqual(undefined);
-    expect(parseMinParts(null, today)).toEqual(undefined);
+    expect(parseMinParts(undefined as any, today)).toEqual(undefined);
+    expect(parseMinParts(null as any, today)).toEqual(undefined);
     expect(parseMinParts('foo', today)).toEqual(undefined);
   });
 });
@@ -225,8 +226,8 @@ describe('parseMaxParts()', () => {
       minute: 4,
       hour: 2,
     };
-    expect(parseMaxParts(undefined, today)).toEqual(undefined);
-    expect(parseMaxParts(null, today)).toEqual(undefined);
+    expect(parseMaxParts(undefined as any, today)).toEqual(undefined);
+    expect(parseMaxParts(null as any, today)).toEqual(undefined);
     expect(parseMaxParts('foo', today)).toEqual(undefined);
   });
 });

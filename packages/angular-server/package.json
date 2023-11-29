@@ -1,6 +1,6 @@
 {
   "name": "@ionic/angular-server",
-  "version": "7.5.3",
+  "version": "7.5.6",
   "description": "Angular SSR Module for Ionic",
   "keywords": [
     "ionic",
@@ -27,6 +27,7 @@
     "test": "echo 'angular no tests yet'",
     "build": "ng-packagr -p ng-package.json -c tsconfig.json",
     "build.prod": "npm run clean && npm run build",
+    "build.watch": "npm run build -- --watch",
     "clean": "rm -rf ./dist",
     "lint": "eslint . --ext .ts && npm run prettier",
     "lint.fix": "eslint . --ext .ts --fix && npm run prettier.fix",
@@ -61,6 +62,6 @@
   },
   "prettier": "@ionic/prettier-config",
   "dependencies": {
-    "@ionic/core": "^7.5.3"
+    "@ionic/core": "^7.5.6"
   }
 }
