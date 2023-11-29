@@ -1,4 +1,5 @@
 import { newSpecPage } from '@stencil/core/testing';
+
 import { Textarea } from '../textarea';
 
 it('should inherit attributes', async () => {
@@ -7,7 +8,7 @@ it('should inherit attributes', async () => {
     html: '<ion-textarea title="my title" tabindex="-1" data-form-type="password"></ion-textarea>',
   });
 
-  const nativeEl = page.body.querySelector('ion-textarea textarea');
+  const nativeEl = page.body.querySelector('ion-textarea textarea')!;
   expect(nativeEl.getAttribute('title')).toBe('my title');
   expect(nativeEl.getAttribute('tabindex')).toBe('-1');
   expect(nativeEl.getAttribute('data-form-type')).toBe('password');
@@ -31,9 +32,9 @@ describe('textarea: label rendering', () => {
       `,
     });
 
-    const textarea = page.body.querySelector('ion-textarea');
+    const textarea = page.body.querySelector('ion-textarea')!;
 
-    const labelText = textarea.querySelector('.label-text-wrapper');
+    const labelText = textarea.querySelector('.label-text-wrapper')!;
 
     expect(labelText.textContent).toBe('Label Prop Text');
   });
@@ -45,9 +46,9 @@ describe('textarea: label rendering', () => {
       `,
     });
 
-    const textarea = page.body.querySelector('ion-textarea');
+    const textarea = page.body.querySelector('ion-textarea')!;
 
-    const labelText = textarea.querySelector('.label-text-wrapper');
+    const labelText = textarea.querySelector('.label-text-wrapper')!;
 
     expect(labelText.textContent).toBe('Label Prop Slot');
   });
@@ -59,9 +60,9 @@ describe('textarea: label rendering', () => {
       `,
     });
 
-    const textarea = page.body.querySelector('ion-textarea');
+    const textarea = page.body.querySelector('ion-textarea')!;
 
-    const labelText = textarea.querySelector('.label-text-wrapper');
+    const labelText = textarea.querySelector('.label-text-wrapper')!;
 
     expect(labelText.textContent).toBe('Label Prop Text');
   });

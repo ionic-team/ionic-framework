@@ -1,3 +1,4 @@
+import type { DatetimeParts } from '../datetime-interface';
 import {
   generateDayAriaLabel,
   getMonthAndDay,
@@ -109,7 +110,7 @@ describe('getLocalizedDayPeriod', () => {
 
 describe('getLocalizedTime', () => {
   it('should localize the time to PM', () => {
-    const datetimeParts = {
+    const datetimeParts: DatetimeParts = {
       day: 1,
       month: 1,
       year: 2022,
@@ -121,7 +122,7 @@ describe('getLocalizedTime', () => {
   });
 
   it('should localize the time to AM', () => {
-    const datetimeParts = {
+    const datetimeParts: DatetimeParts = {
       day: 1,
       month: 1,
       year: 2022,
@@ -133,7 +134,7 @@ describe('getLocalizedTime', () => {
   });
 
   it('should avoid Chromium bug when using 12 hour time in a 24 hour locale', () => {
-    const datetimeParts = {
+    const datetimeParts: DatetimeParts = {
       day: 1,
       month: 1,
       year: 2022,
@@ -144,12 +145,12 @@ describe('getLocalizedTime', () => {
     expect(getLocalizedTime('en-GB', datetimeParts, 'h12')).toEqual('12:00 am');
   });
   it('should parse time-only values correctly', () => {
-    const datetimeParts = {
+    const datetimeParts: Partial<DatetimeParts> = {
       hour: 22,
       minute: 40,
     };
 
-    expect(getLocalizedTime('en-US', datetimeParts, 'h12')).toEqual('10:40 PM');
-    expect(getLocalizedTime('en-US', datetimeParts, 'h23')).toEqual('22:40');
+    expect(getLocalizedTime('en-US', datetimeParts as DatetimeParts, 'h12')).toEqual('10:40 PM');
+    expect(getLocalizedTime('en-US', datetimeParts as DatetimeParts, 'h23')).toEqual('22:40');
   });
 });

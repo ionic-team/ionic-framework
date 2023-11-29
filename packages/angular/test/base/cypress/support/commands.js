@@ -41,11 +41,21 @@ Cypress.Commands.add('ionSwipeToGoBack', (complete = false, selector = 'ion-rout
   cy.wait(150);
 });
 
+/**
+ * getStack is a query because it has automatic
+ * retries built in which will let us account for
+ * async routing without having to use
+ * arbitrary cy.wait calls.
+ */
+Cypress.Commands.addQuery('getStack', (selector) => {
+  return () => {
+    const el = cy.$$(selector);
+    return Array.from(el.children()).map((el) => el.tagName.toLowerCase());
+  }
+});
+
 Cypress.Commands.add('testStack', (selector, expected) => {
-  cy.document().then((doc) => {
-    const children = Array.from(doc.querySelector(selector).children).map((el) => el.tagName.toLowerCase());
-    expect(children).to.deep.equal(expected);
-  });
+  cy.getStack(selector).should('deep.equal', expected);
 });
 
 Cypress.Commands.add('testLifeCycle', (selector, expected) => {

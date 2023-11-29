@@ -60,7 +60,16 @@ export class RadioGroup implements ComponentInterface {
   @Event() ionValueChange!: EventEmitter<RadioGroupChangeEventDetail>;
 
   componentDidLoad() {
-    this.setRadioTabindex(this.value);
+    /**
+     * There's an issue when assigning a value to the radio group
+     * within the Angular primary content (rendering within the
+     * app component template). When the template is isolated to a route,
+     * the value is assigned correctly.
+     * To address this issue, we need to ensure that the watcher is
+     * called after the component has finished loading,
+     * allowing the emit to be dispatched correctly.
+     */
+    this.valueChanged(this.value);
   }
 
   private setRadioTabindex = (value: any | undefined) => {

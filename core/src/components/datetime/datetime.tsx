@@ -1132,7 +1132,7 @@ export class Datetime implements ComponentInterface {
    * so we need to re-init behavior with the new elements.
    */
   componentDidRender() {
-    const { presentation, prevPresentation, calendarBodyRef, minParts, preferWheel } = this;
+    const { presentation, prevPresentation, calendarBodyRef, minParts, preferWheel, forceRenderDate } = this;
 
     /**
      * TODO(FW-2165)
@@ -1150,7 +1150,20 @@ export class Datetime implements ComponentInterface {
     const hasCalendarGrid = !preferWheel && ['date-time', 'time-date', 'date'].includes(presentation);
     if (minParts !== undefined && hasCalendarGrid && calendarBodyRef) {
       const workingMonth = calendarBodyRef.querySelector('.calendar-month:nth-of-type(1)');
-      if (workingMonth) {
+      /**
+       * We need to make sure the datetime is not in the process
+       * of scrolling to a new datetime value if the value
+       * is updated programmatically.
+       * Otherwise, the datetime will appear to not scroll at all because
+       * we are resetting the scroll position to the center of the view.
+       * Prior to the datetime's value being updated programmatically,
+       * the calendarBodyRef is scrolled such that the middle month is centered
+       * in the view. The below code updates the scroll position so the middle
+       * month is also centered in the view. Since the scroll position did not change,
+       * the scroll callback in this file does not fire,
+       * and the resolveForceDateScrolling promise never resolves.
+       */
+      if (workingMonth && forceRenderDate === undefined) {
         calendarBodyRef.scrollLeft = workingMonth.clientWidth * (isRTL(this.el) ? -1 : 1);
       }
     }
@@ -1525,7 +1538,7 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderCombinedDatePickerColumn() {
-    const { defaultParts, workingParts, locale, minParts, maxParts, todayParts, isDateEnabled } = this;
+    const { defaultParts, disabled, workingParts, locale, minParts, maxParts, todayParts, isDateEnabled } = this;
 
     const activePart = this.getActivePartsWithFallback();
 
@@ -1604,6 +1617,7 @@ export class Datetime implements ComponentInterface {
       <ion-picker-column-internal
         class="date-column"
         color={this.color}
+        disabled={disabled}
         items={items}
         value={todayString}
         onIonChange={(ev: CustomEvent) => {
@@ -1715,7 +1729,7 @@ export class Datetime implements ComponentInterface {
       return [];
     }
 
-    const { workingParts } = this;
+    const { disabled, workingParts } = this;
 
     const activePart = this.getActivePartsWithFallback();
 
@@ -1723,6 +1737,7 @@ export class Datetime implements ComponentInterface {
       <ion-picker-column-internal
         class="day-column"
         color={this.color}
+        disabled={disabled}
         items={days}
         value={(workingParts.day !== null ? workingParts.day : this.defaultParts.day) ?? undefined}
         onIonChange={(ev: CustomEvent) => {
@@ -1759,7 +1774,7 @@ export class Datetime implements ComponentInterface {
       return [];
     }
 
-    const { workingParts } = this;
+    const { disabled, workingParts } = this;
 
     const activePart = this.getActivePartsWithFallback();
 
@@ -1767,6 +1782,7 @@ export class Datetime implements ComponentInterface {
       <ion-picker-column-internal
         class="month-column"
         color={this.color}
+        disabled={disabled}
         items={months}
         value={workingParts.month}
         onIonChange={(ev: CustomEvent) => {
@@ -1802,7 +1818,7 @@ export class Datetime implements ComponentInterface {
       return [];
     }
 
-    const { workingParts } = this;
+    const { disabled, workingParts } = this;
 
     const activePart = this.getActivePartsWithFallback();
 
@@ -1810,6 +1826,7 @@ export class Datetime implements ComponentInterface {
       <ion-picker-column-internal
         class="year-column"
         color={this.color}
+        disabled={disabled}
         items={years}
         value={workingParts.year}
         onIonChange={(ev: CustomEvent) => {
@@ -1875,7 +1892,7 @@ export class Datetime implements ComponentInterface {
   }
 
   private renderHourPickerColumn(hoursData: PickerColumnItem[]) {
-    const { workingParts } = this;
+    const { disabled, workingParts } = this;
     if (hoursData.length === 0) return [];
 
     const activePart = this.getActivePartsWithFallback();
@@ -1883,6 +1900,7 @@ export class Datetime implements ComponentInterface {
     return (
       <ion-picker-column-internal
         color={this.color}
+        disabled={disabled}
         value={activePart.hour}
         items={hoursData}
         numericInput
@@ -1903,7 +1921,7 @@ export class Datetime implements ComponentInterface {
     );
   }
   private renderMinutePickerColumn(minutesData: PickerColumnItem[]) {
-    const { workingParts } = this;
+    const { disabled, workingParts } = this;
     if (minutesData.length === 0) return [];
 
     const activePart = this.getActivePartsWithFallback();
@@ -1911,6 +1929,7 @@ export class Datetime implements ComponentInterface {
     return (
       <ion-picker-column-internal
         color={this.color}
+        disabled={disabled}
         value={activePart.minute}
         items={minutesData}
         numericInput
@@ -1931,7 +1950,7 @@ export class Datetime implements ComponentInterface {
     );
   }
   private renderDayPeriodPickerColumn(dayPeriodData: PickerColumnItem[]) {
-    const { workingParts } = this;
+    const { disabled, workingParts } = this;
     if (dayPeriodData.length === 0) {
       return [];
     }
@@ -1943,6 +1962,7 @@ export class Datetime implements ComponentInterface {
       <ion-picker-column-internal
         style={isDayPeriodRTL ? { order: '-1' } : {}}
         color={this.color}
+        disabled={disabled}
         value={activePart.ampm}
         items={dayPeriodData}
         onIonChange={(ev: CustomEvent) => {
