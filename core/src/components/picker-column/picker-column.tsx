@@ -443,7 +443,6 @@ export class PickerColumn implements ComponentInterface {
       <Host
         exportparts={`${PICKER_ITEM_PART}, ${PICKER_ITEM_ACTIVE_PART}`}
         disabled={pickerDisabled}
-        tabindex={pickerDisabled ? null : 0}
         class={createColorClasses(color, {
           [mode]: true,
           ['picker-column-active']: isActive,
@@ -453,6 +452,7 @@ export class PickerColumn implements ComponentInterface {
         <slot name="prefix"></slot>
         <div
           class="picker-opts"
+          tabindex={pickerDisabled ? undefined : 0}
           ref={(el) => {
             this.scrollEl = el;
           }}
