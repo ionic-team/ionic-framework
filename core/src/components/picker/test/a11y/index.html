@@ -15,13 +15,13 @@
       <ion-content>
         <h1>Picker - a11y</h1>
 
-        <ion-picker-internal>
-          <ion-picker-column-internal color="tertiary" value="3"></ion-picker-column-internal>
-        </ion-picker-internal>
+        <ion-picker>
+          <ion-picker-column color="tertiary" value="3"></ion-picker-column>
+        </ion-picker>
       </ion-content>
 
       <script>
-        const column = document.querySelector('ion-picker-column-internal');
+        const column = document.querySelector('ion-picker-column');
         column.items = [
           { text: 'First', value: '1' },
           { text: 'Second', value: '2' },

@@ -23,8 +23,8 @@ import { MenuChangeEventDetail, Side } from "./components/menu/menu-interface";
 import { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
 import { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
 import { ViewController } from "./components/nav/view-controller";
-import { PickerColumnItem } from "./components/picker-column-internal/picker-column-internal-interfaces";
-import { PickerInternalChangeEventDetail } from "./components/picker-internal/picker-internal-interfaces";
+import { PickerChangeEventDetail } from "./components/picker/picker-interfaces";
+import { PickerColumnItem } from "./components/picker-column/picker-column-interfaces";
 import { PickerButton, PickerColumn } from "./components/picker-legacy/picker-interface";
 import { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from "./components/popover/popover-interface";
 import { RadioGroupChangeEventDetail } from "./components/radio-group/radio-group-interface";
@@ -59,8 +59,8 @@ export { MenuChangeEventDetail, Side } from "./components/menu/menu-interface";
 export { ModalBreakpointChangeEventDetail, ModalHandleBehavior } from "./components/modal/modal-interface";
 export { NavComponent, NavComponentWithProps, NavOptions, RouterOutletOptions, SwipeGestureHandler, TransitionDoneFn, TransitionInstruction } from "./components/nav/nav-interface";
 export { ViewController } from "./components/nav/view-controller";
-export { PickerColumnItem } from "./components/picker-column-internal/picker-column-internal-interfaces";
-export { PickerInternalChangeEventDetail } from "./components/picker-internal/picker-internal-interfaces";
+export { PickerChangeEventDetail } from "./components/picker/picker-interfaces";
+export { PickerColumnItem } from "./components/picker-column/picker-column-interfaces";
 export { PickerButton, PickerColumn } from "./components/picker-legacy/picker-interface";
 export { PopoverSize, PositionAlign, PositionReference, PositionSide, TriggerAction } from "./components/popover/popover-interface";
 export { RadioGroupChangeEventDetail } from "./components/radio-group/radio-group-interface";
@@ -1948,7 +1948,14 @@ export namespace Components {
          */
         "mode"?: "ios" | "md";
     }
-    interface IonPickerColumnInternal {
+    interface IonPicker {
+        "exitInputMode": () => Promise<void>;
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+    }
+    interface IonPickerColumn {
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
@@ -1988,13 +1995,6 @@ export namespace Components {
           * The text value of the option.
          */
         "value"?: any | null;
-    }
-    interface IonPickerInternal {
-        "exitInputMode": () => Promise<void>;
-        /**
-          * The mode determines which platform styles to use.
-         */
-        "mode"?: "ios" | "md";
     }
     interface IonPickerLegacy {
         /**
@@ -3332,13 +3332,13 @@ export interface IonNavCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLIonNavElement;
 }
-export interface IonPickerColumnInternalCustomEvent<T> extends CustomEvent<T> {
+export interface IonPickerCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLIonPickerColumnInternalElement;
+    target: HTMLIonPickerElement;
 }
-export interface IonPickerInternalCustomEvent<T> extends CustomEvent<T> {
+export interface IonPickerColumnCustomEvent<T> extends CustomEvent<T> {
     detail: T;
-    target: HTMLIonPickerInternalElement;
+    target: HTMLIonPickerColumnElement;
 }
 export interface IonPickerLegacyCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -4029,45 +4029,45 @@ declare global {
         prototype: HTMLIonNoteElement;
         new (): HTMLIonNoteElement;
     };
-    interface HTMLIonPickerColumnInternalElementEventMap {
-        "ionChange": PickerColumnItem;
+    interface HTMLIonPickerElementEventMap {
+        "ionInputModeChange": PickerChangeEventDetail;
     }
-    interface HTMLIonPickerColumnInternalElement extends Components.IonPickerColumnInternal, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonPickerColumnInternalElementEventMap>(type: K, listener: (this: HTMLIonPickerColumnInternalElement, ev: IonPickerColumnInternalCustomEvent<HTMLIonPickerColumnInternalElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+    interface HTMLIonPickerElement extends Components.IonPicker, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLIonPickerElementEventMap>(type: K, listener: (this: HTMLIonPickerElement, ev: IonPickerCustomEvent<HTMLIonPickerElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
         addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonPickerColumnInternalElementEventMap>(type: K, listener: (this: HTMLIonPickerColumnInternalElement, ev: IonPickerColumnInternalCustomEvent<HTMLIonPickerColumnInternalElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLIonPickerElementEventMap>(type: K, listener: (this: HTMLIonPickerElement, ev: IonPickerCustomEvent<HTMLIonPickerElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
         removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
         removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
         removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
-    var HTMLIonPickerColumnInternalElement: {
-        prototype: HTMLIonPickerColumnInternalElement;
-        new (): HTMLIonPickerColumnInternalElement;
+    var HTMLIonPickerElement: {
+        prototype: HTMLIonPickerElement;
+        new (): HTMLIonPickerElement;
+    };
+    interface HTMLIonPickerColumnElementEventMap {
+        "ionChange": PickerColumnItem;
+    }
+    interface HTMLIonPickerColumnElement extends Components.IonPickerColumn, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLIonPickerColumnElementEventMap>(type: K, listener: (this: HTMLIonPickerColumnElement, ev: IonPickerColumnCustomEvent<HTMLIonPickerColumnElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLIonPickerColumnElementEventMap>(type: K, listener: (this: HTMLIonPickerColumnElement, ev: IonPickerColumnCustomEvent<HTMLIonPickerColumnElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLIonPickerColumnElement: {
+        prototype: HTMLIonPickerColumnElement;
+        new (): HTMLIonPickerColumnElement;
     };
     interface HTMLIonPickerColumnOptionElement extends Components.IonPickerColumnOption, HTMLStencilElement {
     }
     var HTMLIonPickerColumnOptionElement: {
         prototype: HTMLIonPickerColumnOptionElement;
         new (): HTMLIonPickerColumnOptionElement;
-    };
-    interface HTMLIonPickerInternalElementEventMap {
-        "ionInputModeChange": PickerInternalChangeEventDetail;
-    }
-    interface HTMLIonPickerInternalElement extends Components.IonPickerInternal, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLIonPickerInternalElementEventMap>(type: K, listener: (this: HTMLIonPickerInternalElement, ev: IonPickerInternalCustomEvent<HTMLIonPickerInternalElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLIonPickerInternalElementEventMap>(type: K, listener: (this: HTMLIonPickerInternalElement, ev: IonPickerInternalCustomEvent<HTMLIonPickerInternalElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
-    }
-    var HTMLIonPickerInternalElement: {
-        prototype: HTMLIonPickerInternalElement;
-        new (): HTMLIonPickerInternalElement;
     };
     interface HTMLIonPickerLegacyElementEventMap {
         "ionPickerDidPresent": void;
@@ -4661,9 +4661,9 @@ declare global {
         "ion-nav": HTMLIonNavElement;
         "ion-nav-link": HTMLIonNavLinkElement;
         "ion-note": HTMLIonNoteElement;
-        "ion-picker-column-internal": HTMLIonPickerColumnInternalElement;
+        "ion-picker": HTMLIonPickerElement;
+        "ion-picker-column": HTMLIonPickerColumnElement;
         "ion-picker-column-option": HTMLIonPickerColumnOptionElement;
-        "ion-picker-internal": HTMLIonPickerInternalElement;
         "ion-picker-legacy": HTMLIonPickerLegacyElement;
         "ion-picker-legacy-column": HTMLIonPickerLegacyColumnElement;
         "ion-popover": HTMLIonPopoverElement;
@@ -6596,7 +6596,14 @@ declare namespace LocalJSX {
          */
         "mode"?: "ios" | "md";
     }
-    interface IonPickerColumnInternal {
+    interface IonPicker {
+        /**
+          * The mode determines which platform styles to use.
+         */
+        "mode"?: "ios" | "md";
+        "onIonInputModeChange"?: (event: IonPickerCustomEvent<PickerChangeEventDetail>) => void;
+    }
+    interface IonPickerColumn {
         /**
           * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
          */
@@ -6620,7 +6627,7 @@ declare namespace LocalJSX {
         /**
           * Emitted when the value has changed.
          */
-        "onIonChange"?: (event: IonPickerColumnInternalCustomEvent<PickerColumnItem>) => void;
+        "onIonChange"?: (event: IonPickerColumnCustomEvent<PickerColumnItem>) => void;
         /**
           * The selected option in the picker.
          */
@@ -6635,13 +6642,6 @@ declare namespace LocalJSX {
           * The text value of the option.
          */
         "value"?: any | null;
-    }
-    interface IonPickerInternal {
-        /**
-          * The mode determines which platform styles to use.
-         */
-        "mode"?: "ios" | "md";
-        "onIonInputModeChange"?: (event: IonPickerInternalCustomEvent<PickerInternalChangeEventDetail>) => void;
     }
     interface IonPickerLegacy {
         /**
@@ -8111,9 +8111,9 @@ declare namespace LocalJSX {
         "ion-nav": IonNav;
         "ion-nav-link": IonNavLink;
         "ion-note": IonNote;
-        "ion-picker-column-internal": IonPickerColumnInternal;
+        "ion-picker": IonPicker;
+        "ion-picker-column": IonPickerColumn;
         "ion-picker-column-option": IonPickerColumnOption;
-        "ion-picker-internal": IonPickerInternal;
         "ion-picker-legacy": IonPickerLegacy;
         "ion-picker-legacy-column": IonPickerLegacyColumn;
         "ion-popover": IonPopover;
@@ -8209,9 +8209,9 @@ declare module "@stencil/core" {
             "ion-nav": LocalJSX.IonNav & JSXBase.HTMLAttributes<HTMLIonNavElement>;
             "ion-nav-link": LocalJSX.IonNavLink & JSXBase.HTMLAttributes<HTMLIonNavLinkElement>;
             "ion-note": LocalJSX.IonNote & JSXBase.HTMLAttributes<HTMLIonNoteElement>;
-            "ion-picker-column-internal": LocalJSX.IonPickerColumnInternal & JSXBase.HTMLAttributes<HTMLIonPickerColumnInternalElement>;
+            "ion-picker": LocalJSX.IonPicker & JSXBase.HTMLAttributes<HTMLIonPickerElement>;
+            "ion-picker-column": LocalJSX.IonPickerColumn & JSXBase.HTMLAttributes<HTMLIonPickerColumnElement>;
             "ion-picker-column-option": LocalJSX.IonPickerColumnOption & JSXBase.HTMLAttributes<HTMLIonPickerColumnOptionElement>;
-            "ion-picker-internal": LocalJSX.IonPickerInternal & JSXBase.HTMLAttributes<HTMLIonPickerInternalElement>;
             "ion-picker-legacy": LocalJSX.IonPickerLegacy & JSXBase.HTMLAttributes<HTMLIonPickerLegacyElement>;
             "ion-picker-legacy-column": LocalJSX.IonPickerLegacyColumn & JSXBase.HTMLAttributes<HTMLIonPickerLegacyColumnElement>;
             "ion-popover": LocalJSX.IonPopover & JSXBase.HTMLAttributes<HTMLIonPopoverElement>;

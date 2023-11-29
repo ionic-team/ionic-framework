@@ -51,8 +51,8 @@
 /core/src/components/nav/ @sean-perkins
 /core/src/components/nav-link/ @sean-perkins
 
-/core/src/components/picker-internal/ @liamdebeasi
-/core/src/components/picker-column-internal/ @liamdebeasi
+/core/src/components/picker/ @liamdebeasi
+/core/src/components/picker-column/ @liamdebeasi
 
 /core/src/components/radio/ @amandaejohnston
 /core/src/components/radio-group/ @amandaejohnston

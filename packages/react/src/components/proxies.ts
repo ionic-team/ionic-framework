@@ -44,6 +44,8 @@ import { defineCustomElement as defineIonMenuToggle } from '@ionic/core/componen
 import { defineCustomElement as defineIonNav } from '@ionic/core/components/ion-nav.js';
 import { defineCustomElement as defineIonNavLink } from '@ionic/core/components/ion-nav-link.js';
 import { defineCustomElement as defineIonNote } from '@ionic/core/components/ion-note.js';
+import { defineCustomElement as defineIonPicker } from '@ionic/core/components/ion-picker.js';
+import { defineCustomElement as defineIonPickerColumn } from '@ionic/core/components/ion-picker-column.js';
 import { defineCustomElement as defineIonPickerColumnOption } from '@ionic/core/components/ion-picker-column-option.js';
 import { defineCustomElement as defineIonProgressBar } from '@ionic/core/components/ion-progress-bar.js';
 import { defineCustomElement as defineIonRadio } from '@ionic/core/components/ion-radio.js';
@@ -110,6 +112,8 @@ export const IonMenuToggle = /*@__PURE__*/createReactComponent<JSX.IonMenuToggle
 export const IonNav = /*@__PURE__*/createReactComponent<JSX.IonNav, HTMLIonNavElement>('ion-nav', undefined, undefined, defineIonNav);
 export const IonNavLink = /*@__PURE__*/createReactComponent<JSX.IonNavLink, HTMLIonNavLinkElement>('ion-nav-link', undefined, undefined, defineIonNavLink);
 export const IonNote = /*@__PURE__*/createReactComponent<JSX.IonNote, HTMLIonNoteElement>('ion-note', undefined, undefined, defineIonNote);
+export const IonPicker = /*@__PURE__*/createReactComponent<JSX.IonPicker, HTMLIonPickerElement>('ion-picker', undefined, undefined, defineIonPicker);
+export const IonPickerColumn = /*@__PURE__*/createReactComponent<JSX.IonPickerColumn, HTMLIonPickerColumnElement>('ion-picker-column', undefined, undefined, defineIonPickerColumn);
 export const IonPickerColumnOption = /*@__PURE__*/createReactComponent<JSX.IonPickerColumnOption, HTMLIonPickerColumnOptionElement>('ion-picker-column-option', undefined, undefined, defineIonPickerColumnOption);
 export const IonProgressBar = /*@__PURE__*/createReactComponent<JSX.IonProgressBar, HTMLIonProgressBarElement>('ion-progress-bar', undefined, undefined, defineIonProgressBar);
 export const IonRadio = /*@__PURE__*/createReactComponent<JSX.IonRadio, HTMLIonRadioElement>('ion-radio', undefined, undefined, defineIonRadio);

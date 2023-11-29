@@ -1,5 +1,5 @@
 import type { Mode } from '../../../interface';
-import type { PickerColumnItem } from '../../picker-column-internal/picker-column-internal-interfaces';
+import type { PickerColumnItem } from '../../picker-column/picker-column-interfaces';
 import type { DatetimeParts, DatetimeHourCycle } from '../datetime-interface';
 
 import { isAfter, isBefore, isSameDay } from './comparison';
@@ -380,7 +380,7 @@ export const getMonthColumnData = (
  * @param minParts The minimum bound on the date that can be returned
  * @param maxParts The maximum bound on the date that can be returned
  * @param dayValues The allowed date values
- * @returns Date data to be used in ion-picker-column-internal
+ * @returns Date data to be used in ion-picker-column
  */
 export const getDayColumnData = (
   locale: string,

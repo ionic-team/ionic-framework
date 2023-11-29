@@ -51,6 +51,8 @@ import { defineCustomElement as defineIonMenuButton } from '@ionic/core/componen
 import { defineCustomElement as defineIonMenuToggle } from '@ionic/core/components/ion-menu-toggle.js';
 import { defineCustomElement as defineIonNavLink } from '@ionic/core/components/ion-nav-link.js';
 import { defineCustomElement as defineIonNote } from '@ionic/core/components/ion-note.js';
+import { defineCustomElement as defineIonPicker } from '@ionic/core/components/ion-picker.js';
+import { defineCustomElement as defineIonPickerColumn } from '@ionic/core/components/ion-picker-column.js';
 import { defineCustomElement as defineIonPickerColumnOption } from '@ionic/core/components/ion-picker-column-option.js';
 import { defineCustomElement as defineIonPickerLegacy } from '@ionic/core/components/ion-picker-legacy.js';
 import { defineCustomElement as defineIonProgressBar } from '@ionic/core/components/ion-progress-bar.js';
@@ -1405,6 +1407,68 @@ export class IonNote {
 
 
 export declare interface IonNote extends Components.IonNote {}
+
+
+@ProxyCmp({
+  defineCustomElementFn: defineIonPicker,
+  inputs: ['mode']
+})
+@Component({
+  selector: 'ion-picker',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['mode'],
+  standalone: true
+})
+export class IonPicker {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionInputModeChange']);
+  }
+}
+
+
+import type { PickerChangeEventDetail as IIonPickerPickerChangeEventDetail } from '@ionic/core/components';
+
+export declare interface IonPicker extends Components.IonPicker {
+
+  ionInputModeChange: EventEmitter<CustomEvent<IIonPickerPickerChangeEventDetail>>;
+}
+
+
+@ProxyCmp({
+  defineCustomElementFn: defineIonPickerColumn,
+  inputs: ['color', 'disabled', 'items', 'mode', 'value']
+})
+@Component({
+  selector: 'ion-picker-column',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '<ng-content></ng-content>',
+  // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
+  inputs: ['color', 'disabled', 'items', 'mode', 'value'],
+  standalone: true
+})
+export class IonPickerColumn {
+  protected el: HTMLElement;
+  constructor(c: ChangeDetectorRef, r: ElementRef, protected z: NgZone) {
+    c.detach();
+    this.el = r.nativeElement;
+    proxyOutputs(this, this.el, ['ionChange']);
+  }
+}
+
+
+import type { PickerColumnItem as IIonPickerColumnPickerColumnItem } from '@ionic/core/components';
+
+export declare interface IonPickerColumn extends Components.IonPickerColumn {
+  /**
+   * Emitted when the value has changed.
+   */
+  ionChange: EventEmitter<CustomEvent<IIonPickerColumnPickerColumnItem>>;
+}
 
 
 @ProxyCmp({

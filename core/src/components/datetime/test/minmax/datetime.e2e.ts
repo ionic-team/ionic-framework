@@ -109,12 +109,8 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, config }) => 
         await page.click('.time-body');
         await ionPopoverDidPresent.next();
 
-        const hours = page.locator(
-          'ion-popover ion-picker-column-internal:nth-child(1) .picker-item:not(.picker-item-empty)'
-        );
-        const minutes = page.locator(
-          'ion-popover ion-picker-column-internal:nth-child(2) .picker-item:not(.picker-item-empty)'
-        );
+        const hours = page.locator('ion-popover ion-picker-column:nth-child(1) .picker-item:not(.picker-item-empty)');
+        const minutes = page.locator('ion-popover ion-picker-column:nth-child(2) .picker-item:not(.picker-item-empty)');
 
         expect(await hours.count()).toBe(12);
         expect(await minutes.count()).toBe(60);
@@ -219,7 +215,7 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, config }) => 
       );
 
       const hourPickerItems = page.locator(
-        'ion-datetime ion-picker-column-internal:first-of-type .picker-item:not(.picker-item-empty)'
+        'ion-datetime ion-picker-column:first-of-type .picker-item:not(.picker-item-empty)'
       );
       await expect(hourPickerItems).toHaveText(['8', '9', '10', '11']);
     });
@@ -243,7 +239,7 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, config }) => 
       );
 
       const hourPickerItems = page.locator(
-        'ion-datetime ion-picker-column-internal:first-of-type .picker-item:not(.picker-item-empty)'
+        'ion-datetime ion-picker-column:first-of-type .picker-item:not(.picker-item-empty)'
       );
       await expect(hourPickerItems).toHaveText(['12', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11']);
     });
@@ -360,9 +356,7 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, config }) => 
 
         await ionPopoverDidPresent.next();
 
-        const hours = page.locator(
-          'ion-popover ion-picker-column-internal:nth-child(1) .picker-item:not(.picker-item-empty)'
-        );
+        const hours = page.locator('ion-popover ion-picker-column:nth-child(1) .picker-item:not(.picker-item-empty)');
 
         await expect(await hours.count()).toBe(4);
       });
