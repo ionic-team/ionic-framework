@@ -1,5 +1,5 @@
 import type { Page, TestInfo } from '@playwright/test';
-import type { E2EPageOptions, Mode, Direction } from '@utils/test/playwright';
+import type { E2EPageOptions, Mode, Direction, Theme } from '@utils/test/playwright';
 
 /**
  * Overwrites the default Playwright page.setContent method.
@@ -19,13 +19,16 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
 
   let mode: Mode;
   let direction: Direction;
+  let theme: Theme;
 
   if (options == undefined) {
     mode = testInfo.project.metadata.mode;
     direction = testInfo.project.metadata.rtl ? 'rtl' : 'ltr';
+    theme = testInfo.project.metadata.theme;
   } else {
     mode = options.mode;
     direction = options.direction;
+    theme = options.theme;
   }
 
   const baseUrl = process.env.PLAYWRIGHT_TEST_BASE_URL;
@@ -39,6 +42,7 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
         <link href="${baseUrl}/css/ionic.bundle.css" rel="stylesheet" />
         <link href="${baseUrl}/scripts/testing/styles.css" rel="stylesheet" />
+        ${theme !== 'light' ? `<link href="${baseUrl}/scripts/testing/themes/${theme}.css" rel="stylesheet" />` : ''}
         <script src="${baseUrl}/scripts/testing/scripts.js"></script>
         <script type="module" src="${baseUrl}/dist/ionic/ionic.esm.js"></script>
         <script>
@@ -54,6 +58,11 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
       </body>
     </html>
   `;
+
+  testInfo.annotations.push({
+    type: 'theme',
+    description: theme,
+  });
 
   if (baseUrl) {
     await page.route(baseUrl, (route) => {
