@@ -41,5 +41,21 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       const list = page.locator('ion-list');
       await expect(list).toHaveScreenshot(screenshot(`select-inset-list-no-fill`));
     });
+    test('should render correctly in an item inside of a flex container', async ({ page }) => {
+      await page.setContent(
+        `
+        <div id="container" style="display: flex">
+          <ion-item>
+            <ion-select label="Fruit" value="apple">
+              <ion-select-option value="apple">Apple</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+      `,
+        config
+      );
+      const container = page.locator('#container');
+      await expect(container).toHaveScreenshot(screenshot(`select-item-flex-container`));
+    });
   });
 });

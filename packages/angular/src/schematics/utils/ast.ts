@@ -1,14 +1,13 @@
-import { normalize } from '@angular-devkit/core';
-import { Tree, SchematicsException } from '@angular-devkit/schematics';
+import type { Tree } from '@angular-devkit/schematics';
+import { SchematicsException } from '@angular-devkit/schematics';
+import { addSymbolToNgModuleMetadata, insertImport } from '@schematics/angular/utility/ast-utils';
+import { applyToUpdateRecorder } from '@schematics/angular/utility/change';
 import * as ts from 'typescript';
-
-import { addImportToModule } from './devkit-utils/ast-utils';
-import { InsertChange } from './devkit-utils/change';
 
 /**
  * Reads file given path and returns TypeScript source file.
  */
-export function getSourceFile(host: Tree, path: string): ts.SourceFile {
+function getSourceFile(host: Tree, path: string): ts.SourceFile {
   const buffer = host.read(path);
   if (!buffer) {
     throw new SchematicsException(`Could not find file for path: ${path}`);
@@ -21,32 +20,17 @@ export function getSourceFile(host: Tree, path: string): ts.SourceFile {
 /**
  * Import and add module to root app module.
  */
-export function addModuleImportToRootModule(
-  host: Tree,
-  projectSourceRoot: string,
-  moduleName: string,
-  importSrc: string
-): void {
-  addModuleImportToModule(host, normalize(`${projectSourceRoot}/app/app.module.ts`), moduleName, importSrc);
-}
-
-/**
- * Import and add module to specific module path.
- * @param host the tree we are updating
- * @param modulePath src location of the module to import
- * @param moduleName name of module to import
- * @param src src location to import
- */
-export function addModuleImportToModule(host: Tree, modulePath: string, moduleName: string, src: string): void {
-  const moduleSource = getSourceFile(host, modulePath);
-  const changes = addImportToModule(moduleSource, modulePath, moduleName, src);
+export function addIonicModuleImportToNgModule(host: Tree, modulePath: string): void {
   const recorder = host.beginUpdate(modulePath);
+  const moduleSource = getSourceFile(host, modulePath) as any;
 
-  changes.forEach((change) => {
-    if (change instanceof InsertChange) {
-      recorder.insertLeft(change.pos, change.toAdd);
-    }
-  });
+  const ionicModuleChange = insertImport(moduleSource, modulePath, 'IonicModule', '@ionic/angular');
+
+  applyToUpdateRecorder(recorder, [ionicModuleChange]);
+
+  const metadataChange = addSymbolToNgModuleMetadata(moduleSource, modulePath, 'imports', 'IonicModule.forRoot({})');
+
+  applyToUpdateRecorder(recorder, metadataChange);
 
   host.commitUpdate(recorder);
 }
