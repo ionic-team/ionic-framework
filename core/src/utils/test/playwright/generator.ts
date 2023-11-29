@@ -1,6 +1,13 @@
 export type Mode = 'ios' | 'md';
 export type Direction = 'ltr' | 'rtl';
-export type Theme = 'light' | 'dark';
+/**
+ * The theme to use for the playwright test.
+ *
+ * - `default`: The fallback theme values.
+ * - `light`: The light theme values.
+ * - `dark`: The dark theme values.
+ */
+export type Theme = 'default' | 'light' | 'dark';
 
 export type TitleFn = (title: string) => string;
 export type ScreenshotFn = (fileName: string) => string;
@@ -32,7 +39,13 @@ interface TestConfigOption {
 const generateTitle = (title: string, config: TestConfig): string => {
   const { mode, direction, theme } = config;
 
-  if (theme === 'light') {
+  if (theme === 'default') {
+    /**
+     * Ionic has many existing tests that existed prior to
+     * the introduction of theme testing. To maintain backwards
+     * compatibility, we will not include the theme in the test
+     * title if the theme is the default theme.
+     */
     return `${title} - ${mode}/${direction}`;
   }
 
@@ -46,7 +59,13 @@ const generateTitle = (title: string, config: TestConfig): string => {
 const generateScreenshotName = (fileName: string, config: TestConfig): string => {
   const { mode, direction, theme } = config;
 
-  if (theme === 'light') {
+  if (theme === 'default') {
+    /**
+     * Ionic has many existing tests that existed prior to
+     * the introduction of theme testing. To maintain backwards
+     * compatibility, we will not include the theme in the screenshot
+     * name if the theme is the default theme.
+     */
     return `${fileName}-${mode}-${direction}.png`;
   }
 
@@ -88,7 +107,7 @@ export const configs = (testConfig: TestConfigOption = DEFAULT_TEST_CONFIG_OPTIO
 
 const DEFAULT_MODES: Mode[] = ['ios', 'md'];
 const DEFAULT_DIRECTIONS: Direction[] = ['ltr', 'rtl'];
-const DEFAULT_THEMES: Theme[] = ['light'];
+const DEFAULT_THEMES: Theme[] = ['default'];
 
 const DEFAULT_TEST_CONFIG_OPTION = {
   modes: DEFAULT_MODES,
