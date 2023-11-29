@@ -41,22 +41,26 @@
   display: none;
 }
 
-::slotted([slot='prefix']), ::slotted([slot='suffix']) {
+::slotted([slot="prefix"]), ::slotted([slot="suffix"]) {
   display: flex;
 
   flex: 1;
   align-items: center;
 }
 
-::slotted([slot='prefix']) {
+::slotted([slot="prefix"]) {
   justify-content: end;
 
+  // The prefix's location is not RTL-aware, so we need an explicit right padding.
+  /* stylelint-disable-next-line property-disallowed-list */
   padding-right: 16px;
 }
 
-::slotted([slot='suffix']) {
+::slotted([slot="suffix"]) {
   justify-content: start;
 
+  // The suffix's location is not RTL-aware, so we need an explicit left padding.
+  /* stylelint-disable-next-line property-disallowed-list */
   padding-left: 16px;
 }
 

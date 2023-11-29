@@ -2,7 +2,7 @@
 @import "../../themes/ionic.globals.md";
 
 :host .picker-item-active,
-::slotted([slot='prefix']),
-::slotted([slot='suffix']) {
+::slotted([slot="prefix"]),
+::slotted([slot="suffix"]) {
   color: current-color(base);
 }

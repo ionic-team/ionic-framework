@@ -448,7 +448,12 @@ export class PickerColumn implements ComponentInterface {
         })}
       >
         <slot name="prefix"></slot>
-        <div class="picker-opts" ref={(el) => {this.scrollEl = el}}>
+        <div
+          class="picker-opts"
+          ref={(el) => {
+            this.scrollEl = el;
+          }}
+        >
           <div class="picker-item picker-item-empty" aria-hidden="true">
             &nbsp;
           </div>
