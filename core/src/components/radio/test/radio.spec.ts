@@ -31,6 +31,23 @@ describe('ion-radio', () => {
 
     expect(radio.classList.contains('radio-checked')).toBe(true);
   });
+
+  it('should render the radio with shadow parts', async () => {
+    const page = await newSpecPage({
+      components: [Radio, RadioGroup],
+      html: `
+        <ion-radio-group>
+          <ion-radio value="value"></ion-radio>
+        </ion-radio-group>
+      `,
+    });
+
+    const radio = page.body.querySelector('ion-radio')!;
+
+    expect(radio.shadowRoot!.querySelector('[part="container"]')).not.toBe(null);
+    expect(radio.shadowRoot!.querySelector('[part="label"]')).not.toBe(null);
+    expect(radio.shadowRoot!.querySelector('[part="mark"]')).not.toBe(null);
+  });
 });
 
 describe('ion-radio: disabled', () => {

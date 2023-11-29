@@ -15,6 +15,7 @@ import type { Color, StyleEventDetail } from '../../interface';
  * @slot - The label text to associate with the radio. Use the "labelPlacement" property to control where the label is placed relative to the radio.
  *
  * @part container - The container for the radio mark.
+ * @part label - The label text describing the radio.
  * @part mark - The checkmark or dot used to indicate the checked state.
  */
 @Component({
@@ -297,6 +298,7 @@ export class Radio implements ComponentInterface {
               'label-text-wrapper': true,
               'label-text-wrapper-hidden': !hasLabel,
             }}
+            part="label"
           >
             <slot></slot>
           </div>
