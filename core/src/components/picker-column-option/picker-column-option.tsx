@@ -1,7 +1,6 @@
 import type { ComponentInterface } from '@stencil/core';
-import { Component, Element, Host, Prop, h } from '@stencil/core';
-import type { Attributes } from '@utils/helpers';
-import { inheritAriaAttributes } from '@utils/helpers';
+import { Component, Element, Host, Prop, State, Watch, h } from '@stencil/core';
+import { inheritAttributes } from '@utils/helpers';
 
 import { getIonMode } from '../../global/ionic-global';
 
@@ -12,9 +11,17 @@ import { getIonMode } from '../../global/ionic-global';
 export class PickerColumnOption implements ComponentInterface {
   private optionId = `ion-picker-opt-${pickerOptionIds++}`;
 
-  private inheritedAttributes: Attributes = {};
-
   @Element() el!: HTMLElement;
+
+  /**
+   * The aria-label of the option.
+   *
+   * If the value changes, then it will trigger a
+   * re-render of the picker since it's a @State variable.
+   * Otherwise, the `aria-label` attribute cannot be updated
+   * after the component is loaded.
+   */
+  @State() ariaLabel?: string | null = null;
 
   /**
    * If `true`, the user cannot interact with the select option.
@@ -26,13 +33,24 @@ export class PickerColumnOption implements ComponentInterface {
    */
   @Prop() value?: any | null;
 
+  /**
+   * The aria-label of the option has changed
+   * and needs to be updated within the component.
+   *
+   * @param ariaLbl The new aria-label value.
+   */
+  @Watch('aria-label')
+  onAriaLabelChange(ariaLbl: string) {
+    this.ariaLabel = ariaLbl;
+  }
+
   componentWillLoad() {
-    this.inheritedAttributes = inheritAriaAttributes(this.el);
+    const inheritedAttributes = inheritAttributes(this.el, ['aria-label']);
+    this.ariaLabel = inheritedAttributes['aria-label'] || null;
   }
 
   render() {
-    const { value, disabled, inheritedAttributes } = this;
-    const ariaLabel = inheritedAttributes['aria-label'] || null;
+    const { value, disabled, ariaLabel } = this;
 
     return (
       <Host id={this.optionId} class={getIonMode(this)}>
