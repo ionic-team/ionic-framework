@@ -62,5 +62,29 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       const calendarHeader = datetime.locator('.calendar-month-year');
       await expect(calendarHeader).toHaveText(/May 2021/);
     });
+
+    test('should scroll to new month when value is initially set and then updated with multiple selection', async ({
+      page,
+    }) => {
+      await page.setContent(
+        `
+        <ion-datetime multiple="true" presentation="date"></ion-datetime>
+        <script>
+          const datetime = document.querySelector('ion-datetime');
+          datetime.value = ['2021-04-25'];
+        </script>
+      `,
+        config
+      );
+
+      await page.waitForSelector('.datetime-ready');
+
+      const datetime = page.locator('ion-datetime');
+      await datetime.evaluate((el: HTMLIonDatetimeElement) => (el.value = '2021-05-25T12:40:00.000Z'));
+      await page.waitForChanges();
+
+      const calendarHeader = datetime.locator('.calendar-month-year');
+      await expect(calendarHeader).toHaveText(/May 2021/);
+    });
   });
 });
