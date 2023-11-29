@@ -13,6 +13,9 @@ import type { PickerColumnItem } from './picker-column-interfaces';
 
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
+ * 
+ * @slot prefix - Content to show on the left side of the picker options.
+ * @slot suffix - Content to show on the right side of the picker options.
  */
 @Component({
   tag: 'ion-picker-column',
