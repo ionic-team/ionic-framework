@@ -268,7 +268,7 @@ export class PickerColumn implements ComponentInterface {
     const { el } = this;
 
     let timeout: ReturnType<typeof setTimeout> | undefined;
-    let activeEl: HTMLElement | null = this.activeItem;
+    let activeEl: HTMLElement | undefined = this.activeItem;
 
     const scrollCallback = () => {
       raf(() => {
@@ -292,7 +292,7 @@ export class PickerColumn implements ComponentInterface {
 
         const activeElement = el.shadowRoot!.elementFromPoint(centerX, centerY) as HTMLButtonElement | null;
 
-        if (activeEl !== null) {
+        if (activeEl !== undefined) {
           this.setPickerItemActiveState(activeEl, false);
         }
 
@@ -410,11 +410,19 @@ export class PickerColumn implements ComponentInterface {
   };
 
   get activeItem() {
-    // If the whole picker column is disabled, the current value should appear active
-    // If the current value item is specifically disabled, it should not appear active
-    const selector = `.picker-item[data-value="${this.value}"]${this.disabled ? '' : ':not([disabled])'}`;
+    const { value } = this;
+    const options = Array.from(this.el.querySelectorAll('ion-picker-column-option') as NodeListOf<HTMLIonPickerColumnOptionElement>);
+    return options.find((option: HTMLIonPickerColumnOptionElement) => {
+      /**
+       * If the whole picker column is disabled, the current value should appear active
+       * If the current value item is specifically disabled, it should not appear active
+       */
+      if (!this.disabled && option.disabled) {
+        return false;
+      }
 
-    return getElementRoot(this.el).querySelector(selector) as HTMLElement | null;
+      return option.value === value;
+    }) as HTMLElement | undefined
   }
 
   render() {
