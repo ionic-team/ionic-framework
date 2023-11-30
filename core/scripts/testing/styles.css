@@ -53,6 +53,18 @@ html.ios.ios {
   background: var(--ion-color-base);
 }
 
+.ion-background-opacity-08 {
+  background: rgba(var(--ion-color-base-rgb), 0.08);
+}
+
+.ion-background-opacity-12 {
+  background: rgba(var(--ion-color-base-rgb), 0.12);
+}
+
+.ion-background-opacity-16 {
+  background: rgba(var(--ion-color-base-rgb), 0.16);
+}
+
 .ion-color {
   color: var(--ion-color-base);
 }
