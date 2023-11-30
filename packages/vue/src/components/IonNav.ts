@@ -36,22 +36,22 @@ IonNav.name = "IonNav";
 IonNav.props = {
   animated: {
     type: Boolean,
-    default: true
+    default: true,
   },
   animation: {
     type: Function,
-    default: undefined
+    default: undefined,
   },
   root: {
     type: [Function, Object, String],
-    default: undefined
+    default: undefined,
   },
   rootParams: {
     type: Object,
-    default: undefined
+    default: undefined,
   },
   swipeGesture: {
     type: Boolean,
-    default: undefined
-  }
-}
+    default: undefined,
+  },
+};
