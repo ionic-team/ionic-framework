@@ -39,11 +39,12 @@
   scroll-snap-align: center;
 }
 
-:host .picker-item-empty {
+.picker-item-empty {
   cursor: default;
+
+  scroll-snap-align: none;
 }
 
-:host .picker-item-empty,
 :host(:not([disabled])) ::slotted(ion-picker-column-option.option-disabled) {
   scroll-snap-align: none;
 }
