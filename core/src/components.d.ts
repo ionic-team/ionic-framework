@@ -1986,6 +1986,16 @@ export namespace Components {
          */
         "value"?: string | number;
     }
+    interface IonPickerColumnOption {
+        /**
+          * If `true`, the user cannot interact with the picker column option.
+         */
+        "disabled": boolean;
+        /**
+          * The text value of the option.
+         */
+        "value"?: any | null;
+    }
     interface IonPickerLegacy {
         /**
           * If `true`, the picker will animate.
@@ -4053,6 +4063,12 @@ declare global {
         prototype: HTMLIonPickerColumnElement;
         new (): HTMLIonPickerColumnElement;
     };
+    interface HTMLIonPickerColumnOptionElement extends Components.IonPickerColumnOption, HTMLStencilElement {
+    }
+    var HTMLIonPickerColumnOptionElement: {
+        prototype: HTMLIonPickerColumnOptionElement;
+        new (): HTMLIonPickerColumnOptionElement;
+    };
     interface HTMLIonPickerLegacyElementEventMap {
         "ionPickerDidPresent": void;
         "ionPickerWillPresent": void;
@@ -4647,6 +4663,7 @@ declare global {
         "ion-note": HTMLIonNoteElement;
         "ion-picker": HTMLIonPickerElement;
         "ion-picker-column": HTMLIonPickerColumnElement;
+        "ion-picker-column-option": HTMLIonPickerColumnOptionElement;
         "ion-picker-legacy": HTMLIonPickerLegacyElement;
         "ion-picker-legacy-column": HTMLIonPickerLegacyColumnElement;
         "ion-popover": HTMLIonPopoverElement;
@@ -6616,6 +6633,16 @@ declare namespace LocalJSX {
          */
         "value"?: string | number;
     }
+    interface IonPickerColumnOption {
+        /**
+          * If `true`, the user cannot interact with the picker column option.
+         */
+        "disabled"?: boolean;
+        /**
+          * The text value of the option.
+         */
+        "value"?: any | null;
+    }
     interface IonPickerLegacy {
         /**
           * If `true`, the picker will animate.
@@ -8086,6 +8113,7 @@ declare namespace LocalJSX {
         "ion-note": IonNote;
         "ion-picker": IonPicker;
         "ion-picker-column": IonPickerColumn;
+        "ion-picker-column-option": IonPickerColumnOption;
         "ion-picker-legacy": IonPickerLegacy;
         "ion-picker-legacy-column": IonPickerLegacyColumn;
         "ion-popover": IonPopover;
@@ -8183,6 +8211,7 @@ declare module "@stencil/core" {
             "ion-note": LocalJSX.IonNote & JSXBase.HTMLAttributes<HTMLIonNoteElement>;
             "ion-picker": LocalJSX.IonPicker & JSXBase.HTMLAttributes<HTMLIonPickerElement>;
             "ion-picker-column": LocalJSX.IonPickerColumn & JSXBase.HTMLAttributes<HTMLIonPickerColumnElement>;
+            "ion-picker-column-option": LocalJSX.IonPickerColumnOption & JSXBase.HTMLAttributes<HTMLIonPickerColumnOptionElement>;
             "ion-picker-legacy": LocalJSX.IonPickerLegacy & JSXBase.HTMLAttributes<HTMLIonPickerLegacyElement>;
             "ion-picker-legacy-column": LocalJSX.IonPickerLegacyColumn & JSXBase.HTMLAttributes<HTMLIonPickerLegacyColumnElement>;
             "ion-popover": LocalJSX.IonPopover & JSXBase.HTMLAttributes<HTMLIonPopoverElement>;
