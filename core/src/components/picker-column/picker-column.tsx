@@ -454,7 +454,6 @@ export class PickerColumn implements ComponentInterface {
       <Host
         exportparts={`${PICKER_ITEM_PART}, ${PICKER_ITEM_ACTIVE_PART}`}
         disabled={pickerDisabled}
-        onFocus={() => this.setFocus()}
         class={createColorClasses(color, {
           [mode]: true,
           ['picker-column-active']: isActive,
