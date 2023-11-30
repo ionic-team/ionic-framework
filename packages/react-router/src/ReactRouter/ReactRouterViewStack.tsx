@@ -12,7 +12,6 @@ export class ReactRouterViewStack extends ViewStacks {
     this.findLeavingViewItemByRouteInfo = this.findLeavingViewItemByRouteInfo.bind(this);
     this.getChildrenToRender = this.getChildrenToRender.bind(this);
     this.findViewItemByPathname = this.findViewItemByPathname.bind(this);
-    this.findViewItemByPath = this.findViewItemByPath.bind(this);
   }
 
   createViewItem(outletId: string, reactElement: React.ReactElement, routeInfo: RouteInfo, page?: HTMLElement) {
