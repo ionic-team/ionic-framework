@@ -6,7 +6,6 @@
 :host {
   display: flex;
 
-  flex: 1;
   justify-content: center;
 
   height: 200px;
@@ -30,8 +29,6 @@
 
   // Hide scrollbars on Firefox
   scrollbar-width: none;
-
-  text-align: center;
 }
 
 /**
