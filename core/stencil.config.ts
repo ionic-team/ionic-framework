@@ -252,6 +252,7 @@ export const config: Config = {
       "@utils/test": ["<rootDir>/src/utils/test/utils"],
       "@utils/logging": ["<rootDir>/src/utils/logging"],
     },
+    setupFilesAfterEnv: ['./setupJest.js']
   },
   preamble: '(C) Ionic http://ionicframework.com - MIT License',
   globalScript: 'src/global/ionic-global.ts',
