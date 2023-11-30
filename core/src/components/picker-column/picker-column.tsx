@@ -426,15 +426,8 @@ export class PickerColumn implements ComponentInterface {
   }
 
   render() {
-    const { items, color, disabled: pickerDisabled, isActive, numericInput } = this;
+    const { color, disabled: pickerDisabled, isActive, numericInput } = this;
     const mode = getIonMode(this);
-
-    /**
-     * exportparts is needed so ion-datetime can expose the parts
-     * from two layers of shadow nesting. If this causes problems,
-     * the attribute can be moved to datetime.tsx and set on every
-     * instance of ion-picker-column there instead.
-     */
 
     return (
       <Host
