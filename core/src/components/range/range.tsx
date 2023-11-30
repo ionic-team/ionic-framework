@@ -37,6 +37,7 @@ import type {
  * @part knob - The handle that is used to drag the range.
  * @part bar - The inactive part of the bar.
  * @part bar-active - The active part of the bar.
+ * @part label - The label text describing the range.
  */
 @Component({
   tag: 'ion-range',
@@ -675,6 +676,7 @@ Developers can dismiss this warning by removing their usage of the "legacy" prop
               'label-text-wrapper': true,
               'label-text-wrapper-hidden': !hasLabel,
             }}
+            part="label"
           >
             {label !== undefined ? <div class="label-text">{label}</div> : <slot name="label"></slot>}
           </div>
