@@ -48,21 +48,14 @@ configs({ modes: ['md', 'ios'], directions: ['ltr'], themes: ['dark'] }).forEach
         expect(results.violations).toEqual([]);
       });
 
-      test(`shade color "${color}" should pass AA guidelines`, async ({ page, skip }) => {
+      test(`contrast color on "${color}" background should pass AA guidelines`, async ({ page, skip }) => {
         skip.browser('firefox');
         skip.browser('webkit');
 
-        await page.setContent(`<p class="ion-color-shade ion-color-${color}">Hello World</p>`, config);
-
-        const results = await new AxeBuilder({ page }).analyze();
-        expect(results.violations).toEqual([]);
-      });
-
-      test(`tint color "${color}" should pass AA guidelines`, async ({ page, skip }) => {
-        skip.browser('firefox');
-        skip.browser('webkit');
-
-        await page.setContent(`<p class="ion-color-tint ion-color-${color}">Hello World</p>`, config);
+        await page.setContent(
+          `<p class="ion-color-contrast ion-background ion-color-${color}">Hello World</p>`,
+          config
+        );
 
         const results = await new AxeBuilder({ page }).analyze();
         expect(results.violations).toEqual([]);

@@ -57,6 +57,10 @@ html.ios.ios {
   color: var(--ion-color-base);
 }
 
+.ion-color-contrast {
+  color: var(--ion-color-contrast);
+}
+
 .ion-color-shade {
   color: var(--ion-color-shade);
 }
