@@ -35,11 +35,13 @@ const colors = ['primary', 'secondary', 'tertiary', 'success', 'warning', 'dange
 
 configs({ modes: ['md', 'ios'], directions: ['ltr'], themes: ['dark'] }).forEach(({ config, title }) => {
   test.describe(title('theme'), () => {
-    for (const color of colors) {
-      test(`color "${color}" should pass AA guidelines`, async ({ page, skip }) => {
-        skip.browser('firefox');
-        skip.browser('webkit');
+    test.beforeEach(({ skip }) => {
+      skip.browser('firefox', 'Color contrast ratio is consistent across browsers');
+      skip.browser('webkit', 'Color contrast ratio is consistent across browsers');
+    });
 
+    for (const color of colors) {
+      test(`color "${color}" should pass AA guidelines`, async ({ page }) => {
         await page.setContent(
           `${styleTestHelpers}
           <main>
@@ -52,10 +54,7 @@ configs({ modes: ['md', 'ios'], directions: ['ltr'], themes: ['dark'] }).forEach
         expect(results.violations).toEqual([]);
       });
 
-      test(`contrast color on "${color}" background should pass AA guidelines`, async ({ page, skip }) => {
-        skip.browser('firefox');
-        skip.browser('webkit');
-
+      test(`contrast color on "${color}" background should pass AA guidelines`, async ({ page }) => {
         await page.setContent(
           `${styleTestHelpers}
           <main>
@@ -68,10 +67,7 @@ configs({ modes: ['md', 'ios'], directions: ['ltr'], themes: ['dark'] }).forEach
         expect(results.violations).toEqual([]);
       });
 
-      test(`color "${color}" on 0.08 opacity background should pass AA guidelines`, async ({ page, skip }) => {
-        skip.browser('firefox');
-        skip.browser('webkit');
-
+      test(`color "${color}" on 0.08 opacity background should pass AA guidelines`, async ({ page }) => {
         await page.setContent(
           `${styleTestHelpers}
           <main>
@@ -84,10 +80,7 @@ configs({ modes: ['md', 'ios'], directions: ['ltr'], themes: ['dark'] }).forEach
         expect(results.violations).toEqual([]);
       });
 
-      test(`color "${color}" on 0.12 opacity background should pass AA guidelines`, async ({ page, skip }) => {
-        skip.browser('firefox');
-        skip.browser('webkit');
-
+      test(`color "${color}" on 0.12 opacity background should pass AA guidelines`, async ({ page }) => {
         await page.setContent(
           `${styleTestHelpers}
           <main>
@@ -100,10 +93,7 @@ configs({ modes: ['md', 'ios'], directions: ['ltr'], themes: ['dark'] }).forEach
         expect(results.violations).toEqual([]);
       });
 
-      test(`color "${color}" on 0.16 opacity background should pass AA guidelines`, async ({ page, skip }) => {
-        skip.browser('firefox');
-        skip.browser('webkit');
-
+      test(`color "${color}" on 0.16 opacity background should pass AA guidelines`, async ({ page }) => {
         await page.setContent(
           `${styleTestHelpers}
           <main>
