@@ -44,9 +44,9 @@ describe('ion-radio', () => {
 
     const radio = page.body.querySelector('ion-radio')!;
 
-    expect(radio.shadowRoot!.querySelector('[part="container"]')).not.toBe(null);
-    expect(radio.shadowRoot!.querySelector('[part="label"]')).not.toBe(null);
-    expect(radio.shadowRoot!.querySelector('[part="mark"]')).not.toBe(null);
+    expect(radio).toHaveShadowPart('container');
+    expect(radio).toHaveShadowPart('label');
+    expect(radio).toHaveShadowPart('mark');
   });
 });
 
