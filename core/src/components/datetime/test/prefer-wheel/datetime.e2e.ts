@@ -633,6 +633,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
         await page.waitForSelector('.datetime-ready');
 
         const dateColumn = page.locator('.date-column');
+        const dateColumnScrollEl = dateColumn.locator('.picker-opts');
         const dateValues = dateColumn.locator('.picker-item:not(.picker-item-empty)');
 
         expect(await dateValues.count()).toBe(90);
@@ -641,7 +642,7 @@ configs({ modes: ['md'], directions: ['ltr'] }).forEach(({ title, config }) => {
          * Select 1st item to change the dates rendered
          */
         await expect(dateValues.nth(0)).toHaveAttribute('data-value', '2022-1-1');
-        await dateColumn.evaluate((el: HTMLElement) => (el.scrollTop = 0));
+        await dateColumnScrollEl.evaluate((el: HTMLElement) => (el.scrollTop = 0));
         await page.waitForChanges();
 
         await expect(dateValues.nth(0)).toHaveAttribute('data-value', '2021-12-1');
