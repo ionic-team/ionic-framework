@@ -54,9 +54,7 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
         </script>
       </head>
       <body>
-        <main>
         ${html}
-        </main>
       </body>
     </html>
   `;

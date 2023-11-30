@@ -41,9 +41,10 @@ configs({ modes: ['md', 'ios'], directions: ['ltr'], themes: ['dark'] }).forEach
         skip.browser('webkit');
 
         await page.setContent(
-          `
-          ${styleTestHelpers}
-          <p class="ion-color ion-color-${color}">Hello World</p>`,
+          `${styleTestHelpers}
+          <main>
+            <p class="ion-color ion-color-${color}">Hello World</p>
+          </main>`,
           config
         );
 
@@ -57,7 +58,9 @@ configs({ modes: ['md', 'ios'], directions: ['ltr'], themes: ['dark'] }).forEach
 
         await page.setContent(
           `${styleTestHelpers}
-          <p class="ion-color-contrast ion-background ion-color-${color}">Hello World</p>`,
+          <main>
+            <p class="ion-color-contrast ion-background ion-color-${color}">Hello World</p>
+          </main>`,
           config
         );
 
@@ -71,7 +74,9 @@ configs({ modes: ['md', 'ios'], directions: ['ltr'], themes: ['dark'] }).forEach
 
         await page.setContent(
           `${styleTestHelpers}
-          <p class="ion-color ion-color-${color} ion-background-opacity-08">Hello World</p>`,
+          <main>
+            <p class="ion-color ion-color-${color} ion-background-opacity-08">Hello World</p>
+          </main>`,
           config
         );
 
@@ -85,7 +90,9 @@ configs({ modes: ['md', 'ios'], directions: ['ltr'], themes: ['dark'] }).forEach
 
         await page.setContent(
           `${styleTestHelpers}
-          <p class="ion-color ion-color-${color} ion-background-opacity-12">Hello World</p>`,
+          <main>
+            <p class="ion-color ion-color-${color} ion-background-opacity-12">Hello World</p>
+          </main>`,
           config
         );
 
@@ -99,7 +106,9 @@ configs({ modes: ['md', 'ios'], directions: ['ltr'], themes: ['dark'] }).forEach
 
         await page.setContent(
           `${styleTestHelpers}
-          <p class="ion-color ion-color-${color} ion-background-opacity-16">Hello World</p>`,
+          <main>
+            <p class="ion-color ion-color-${color} ion-background-opacity-16">Hello World</p>
+          </main>`,
           config
         );
 
