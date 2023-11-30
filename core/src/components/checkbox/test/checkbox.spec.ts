@@ -13,9 +13,9 @@ describe('ion-checkbox: shadow parts', () => {
 
     const checkbox = page.body.querySelector('ion-checkbox')!;
 
-    expect(checkbox.shadowRoot!.querySelector('[part="container"]')).not.toBe(null);
-    expect(checkbox.shadowRoot!.querySelector('[part="label"]')).not.toBe(null);
-    expect(checkbox.shadowRoot!.querySelector('[part="mark"]')).not.toBe(null);
+    expect(checkbox).toHaveShadowPart('container');
+    expect(checkbox).toHaveShadowPart('label');
+    expect(checkbox).toHaveShadowPart('mark');
   });
 });
 
