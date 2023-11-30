@@ -35,7 +35,7 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
 
   const output = `
     <!DOCTYPE html>
-    <html dir="${direction}" lang="en" class="${theme}">
+    <html dir="${direction}" lang="en">
       <head>
         <title>Ionic Playwright Test</title>
         <meta charset="UTF-8" />
