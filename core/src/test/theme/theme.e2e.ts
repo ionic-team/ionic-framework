@@ -2,16 +2,50 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
+const styleTestHelpers = `
+  <style>
+    .ion-background {
+      background: var(--ion-color-base);
+    }
+    .ion-background-opacity-08 {
+      background: rgba(var(--ion-color-base-rgb), 0.08);
+    }
+    .ion-background-opacity-12 {
+      background: rgba(var(--ion-color-base-rgb), 0.12);
+    }
+    .ion-background-opacity-16 {
+      background: rgba(var(--ion-color-base-rgb), 0.16);
+    }
+    .ion-color {
+      color: var(--ion-color-base);
+    }
+    .ion-color-contrast {
+      color: var(--ion-color-contrast);
+    }
+    .ion-color-shade {
+      color: var(--ion-color-shade);
+    }
+    .ion-color-tint {
+      color: var(--ion-color-tint);
+    }
+  </style>
+`;
+
+const colors = ['primary', 'secondary', 'tertiary', 'success', 'warning', 'danger', 'light', 'medium', 'dark'];
+
 configs({ modes: ['md', 'ios'], directions: ['ltr'], themes: ['dark'] }).forEach(({ config, title }) => {
   test.describe(title('theme'), () => {
-    const colors = ['primary', 'secondary', 'tertiary', 'success', 'warning', 'danger', 'light', 'medium', 'dark'];
-
     for (const color of colors) {
       test(`color "${color}" should pass AA guidelines`, async ({ page, skip }) => {
         skip.browser('firefox');
         skip.browser('webkit');
 
-        await page.setContent(`<p class="ion-color ion-color-${color}">Hello World</p>`, config);
+        await page.setContent(
+          `
+          ${styleTestHelpers}
+          <p class="ion-color ion-color-${color}">Hello World</p>`,
+          config
+        );
 
         const results = await new AxeBuilder({ page }).analyze();
         expect(results.violations).toEqual([]);
@@ -22,7 +56,8 @@ configs({ modes: ['md', 'ios'], directions: ['ltr'], themes: ['dark'] }).forEach
         skip.browser('webkit');
 
         await page.setContent(
-          `<p class="ion-color-contrast ion-background ion-color-${color}">Hello World</p>`,
+          `${styleTestHelpers}
+          <p class="ion-color-contrast ion-background ion-color-${color}">Hello World</p>`,
           config
         );
 
@@ -35,7 +70,8 @@ configs({ modes: ['md', 'ios'], directions: ['ltr'], themes: ['dark'] }).forEach
         skip.browser('webkit');
 
         await page.setContent(
-          `<p class="ion-color ion-color-${color} ion-background-opacity-08">Hello World</p>`,
+          `${styleTestHelpers}
+          <p class="ion-color ion-color-${color} ion-background-opacity-08">Hello World</p>`,
           config
         );
 
@@ -48,7 +84,8 @@ configs({ modes: ['md', 'ios'], directions: ['ltr'], themes: ['dark'] }).forEach
         skip.browser('webkit');
 
         await page.setContent(
-          `<p class="ion-color ion-color-${color} ion-background-opacity-12">Hello World</p>`,
+          `${styleTestHelpers}
+          <p class="ion-color ion-color-${color} ion-background-opacity-12">Hello World</p>`,
           config
         );
 
@@ -61,7 +98,8 @@ configs({ modes: ['md', 'ios'], directions: ['ltr'], themes: ['dark'] }).forEach
         skip.browser('webkit');
 
         await page.setContent(
-          `<p class="ion-color ion-color-${color} ion-background-opacity-16">Hello World</p>`,
+          `${styleTestHelpers}
+          <p class="ion-color ion-color-${color} ion-background-opacity-16">Hello World</p>`,
           config
         );
 
