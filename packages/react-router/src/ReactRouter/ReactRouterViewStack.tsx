@@ -153,7 +153,8 @@ export class ReactRouterViewStack extends ViewStacks {
          *
          * To validate this, we need to check if the path and url match the view item's route data.
          */
-        if (match.path === v.routeData?.match?.path && match.url === v.routeData?.match?.url) {
+        const hasParameter = match.path.includes(':');
+        if (!hasParameter || (hasParameter && match.url === v.routeData?.match?.url)) {
           viewItem = v;
           return true;
         }

@@ -43,10 +43,5 @@ export const matchPath = ({
     return false;
   }
 
-  const hasParameter = match.path.includes(':');
-  if (hasParameter && pathname !== match.url) {
-    return false;
-  }
-
   return match;
 };
