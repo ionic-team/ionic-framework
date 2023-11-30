@@ -4,6 +4,7 @@ import { inheritAttributes } from '@utils/helpers';
 
 @Component({
   tag: 'ion-picker-column-option',
+  styleUrl: 'picker-column-option.scss',
   shadow: true,
 })
 export class PickerColumnOption implements ComponentInterface {
@@ -22,7 +23,7 @@ export class PickerColumnOption implements ComponentInterface {
   /**
    * If `true`, the user cannot interact with the picker column option.
    */
-  @Prop() disabled = false;
+  @Prop({ reflect: true }) disabled = false;
 
   /**
    * The text value of the option.
@@ -53,7 +54,11 @@ export class PickerColumnOption implements ComponentInterface {
     const { value, disabled, ariaLabel } = this;
 
     return (
-      <Host>
+      <Host
+        class={{
+          'option-disabled': !!disabled
+        }}
+      >
         <button
           tabindex="-1"
           aria-label={ariaLabel}

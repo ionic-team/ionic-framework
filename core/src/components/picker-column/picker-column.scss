@@ -33,50 +33,18 @@
   display: none;
 }
 
-:host .picker-item {
-  @include padding(0);
-  @include margin(0);
-
+::slotted(ion-picker-column-option) {
   display: block;
-
-  width: 100%;
-
-  height: 34px;
-
-  border: 0px;
-
-  outline: none;
-
-  background: transparent;
-
-  color: inherit;
-
-  font-family: $font-family-base;
-
-  font-size: inherit;
-
-  line-height: 34px;
-
-  text-align: inherit;
-
-  text-overflow: ellipsis;
-
-  white-space: nowrap;
-
-  cursor: pointer;
-
-  overflow: hidden;
 
   scroll-snap-align: center;
 }
 
-:host .picker-item-empty,
-:host .picker-item[disabled] {
+:host .picker-item-empty {
   cursor: default;
 }
 
 :host .picker-item-empty,
-:host(:not([disabled])) .picker-item[disabled] {
+:host(:not([disabled])) ::slotted(ion-picker-column-option.option-disabled) {
   scroll-snap-align: none;
 }
 
@@ -84,11 +52,7 @@
   overflow-y: hidden;
 }
 
-:host .picker-item[disabled] {
-  opacity: 0.4;
-}
-
-:host(.picker-column-active) .picker-item.picker-item-active {
+::slotted(ion-picker-column-option.picker-item-active) {
   color: current-color(base);
 }
 

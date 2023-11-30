@@ -47,7 +47,24 @@
           <div class="grid-item">
             <h2>Default</h2>
             <ion-picker>
-              <ion-picker-column id="default"></ion-picker-column>
+              <ion-picker-column id="default">
+                <ion-picker-column-option value="0">0</ion-picker-column-option>
+                <ion-picker-column-option value="1">1</ion-picker-column-option>
+                <ion-picker-column-option value="2">2</ion-picker-column-option>
+                <ion-picker-column-option value="3">3</ion-picker-column-option>
+                <ion-picker-column-option value="4">4</ion-picker-column-option>
+                <ion-picker-column-option value="5">5</ion-picker-column-option>
+                <ion-picker-column-option value="6">6</ion-picker-column-option>
+                <ion-picker-column-option value="7">7</ion-picker-column-option>
+                <ion-picker-column-option value="8">8</ion-picker-column-option>
+                <ion-picker-column-option value="9">9</ion-picker-column-option>
+                <ion-picker-column-option value="10">10</ion-picker-column-option>
+                <ion-picker-column-option value="11">11</ion-picker-column-option>
+                <ion-picker-column-option value="12">12</ion-picker-column-option>
+                <ion-picker-column-option value="13" disabled="true">13</ion-picker-column-option>
+                <ion-picker-column-option value="14">14</ion-picker-column-option>
+                <ion-picker-column-option value="15">15</ion-picker-column-option>
+              </ion-picker-column>
             </ion-picker>
           </div>
         </div>
@@ -61,6 +78,8 @@
             text: `${i}`,
             value: i,
           }));
+
+
 
         defaultPickerColumn.items = items;
       </script>
