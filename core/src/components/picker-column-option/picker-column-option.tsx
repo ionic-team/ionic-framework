@@ -2,15 +2,11 @@ import type { ComponentInterface } from '@stencil/core';
 import { Component, Element, Host, Prop, State, Watch, h } from '@stencil/core';
 import { inheritAttributes } from '@utils/helpers';
 
-import { getIonMode } from '../../global/ionic-global';
-
 @Component({
   tag: 'ion-picker-column-option',
   shadow: true,
 })
 export class PickerColumnOption implements ComponentInterface {
-  private optionId = `ion-picker-opt-${pickerOptionIds++}`;
-
   @Element() el!: HTMLElement;
 
   /**
@@ -24,7 +20,7 @@ export class PickerColumnOption implements ComponentInterface {
   @State() ariaLabel?: string | null = null;
 
   /**
-   * If `true`, the user cannot interact with the select option.
+   * If `true`, the user cannot interact with the picker column option.
    */
   @Prop() disabled = false;
 
@@ -57,7 +53,7 @@ export class PickerColumnOption implements ComponentInterface {
     const { value, disabled, ariaLabel } = this;
 
     return (
-      <Host id={this.optionId} class={getIonMode(this)}>
+      <Host>
         <button
           tabindex="-1"
           aria-label={ariaLabel}
@@ -73,5 +69,3 @@ export class PickerColumnOption implements ComponentInterface {
     );
   }
 }
-
-let pickerOptionIds = 0;

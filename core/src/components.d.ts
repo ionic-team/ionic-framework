@@ -1988,7 +1988,7 @@ export namespace Components {
     }
     interface IonPickerColumnOption {
         /**
-          * If `true`, the user cannot interact with the select option.
+          * If `true`, the user cannot interact with the picker column option.
          */
         "disabled": boolean;
         /**
@@ -6635,7 +6635,7 @@ declare namespace LocalJSX {
     }
     interface IonPickerColumnOption {
         /**
-          * If `true`, the user cannot interact with the select option.
+          * If `true`, the user cannot interact with the picker column option.
          */
         "disabled"?: boolean;
         /**
