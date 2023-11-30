@@ -1077,6 +1077,7 @@ ion-range,css-prop,--pin-color
 ion-range,part,bar
 ion-range,part,bar-active
 ion-range,part,knob
+ion-range,part,label
 ion-range,part,pin
 ion-range,part,tick
 ion-range,part,tick-active
@@ -1514,6 +1515,7 @@ ion-toggle,css-prop,--handle-width
 ion-toggle,css-prop,--track-background
 ion-toggle,css-prop,--track-background-checked
 ion-toggle,part,handle
+ion-toggle,part,label
 ion-toggle,part,track
 
 ion-toolbar,shadow
