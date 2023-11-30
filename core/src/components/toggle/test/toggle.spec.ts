@@ -48,9 +48,9 @@ describe('toggle', () => {
         html: `<ion-toggle>Label</ion-toggle>`,
       });
       const toggle = page.body.querySelector('ion-toggle')!;
-      expect(toggle.shadowRoot!.querySelector('[part="label"]')).not.toBe(null);
-      expect(toggle.shadowRoot!.querySelector('[part="track"]')).not.toBe(null);
-      expect(toggle.shadowRoot!.querySelector('[part="handle"]')).not.toBe(null);
+      expect(toggle).toHaveShadowPart('label');
+      expect(toggle).toHaveShadowPart('track');
+      expect(toggle).toHaveShadowPart('handle');
     });
   });
 });
