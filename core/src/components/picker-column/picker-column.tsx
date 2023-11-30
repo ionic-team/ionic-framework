@@ -24,7 +24,7 @@ import type { PickerColumnItem } from './picker-column-interfaces';
     md: 'picker-column.md.scss',
   },
   shadow: {
-    delegatesFocus: true
+    delegatesFocus: true,
   },
 })
 export class PickerColumn implements ComponentInterface {
