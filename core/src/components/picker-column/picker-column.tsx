@@ -70,7 +70,7 @@ export class PickerColumn implements ComponentInterface {
   /**
    * Emitted when the value has changed.
    */
-  @Event() ionChange!: EventEmitter<PickerColumnItem>;
+  @Event() ionChange!: EventEmitter<string | number>;
 
   @Watch('value')
   valueChange() {
@@ -130,20 +130,23 @@ export class PickerColumn implements ComponentInterface {
   }
 
   componentDidRender() {
-    const { activeItem, items, isColumnVisible, value } = this;
+    const { activeItem, isColumnVisible, value } = this;
 
     if (isColumnVisible) {
       if (activeItem) {
         this.scrollActiveItemIntoView();
-      } else if (items[0]?.value !== value) {
-        /**
-         * If the picker column does not have an active item and the current value
-         * does not match the first item in the picker column, that means
-         * the value is out of bounds. In this case, we assign the value to the
-         * first item to match the scroll position of the column.
-         *
-         */
-        this.setValue(items[0].value);
+      } else {
+        const firstItem = this.el.querySelector('ion-picker-column-option');
+        if (firstItem !== null && firstItem.value !== value) {
+          /**
+           * If the picker column does not have an active item and the current value
+           * does not match the first item in the picker column, that means
+           * the value is out of bounds. In this case, we assign the value to the
+           * first item to match the scroll position of the column.
+           *
+           */
+          this.setValue(firstItem.value);
+        }
       }
     }
   }
@@ -167,12 +170,8 @@ export class PickerColumn implements ComponentInterface {
    */
   @Method()
   async setValue(value?: string | number) {
-    const { items } = this;
     this.value = value;
-    const findItem = items.find((item) => item.value === value && item.disabled !== true);
-    if (findItem) {
-      this.ionChange.emit(findItem);
-    }
+    this.ionChange.emit(value);
   }
 
   private centerPickerItemInView = (target: HTMLElement, smooth = true, canExitInputMode = true) => {
@@ -350,22 +349,8 @@ export class PickerColumn implements ComponentInterface {
            */
           this.canExitInputMode = true;
 
-          const dataIndex = activeElement.getAttribute('data-index');
-
-          /**
-           * If no value it is
-           * possible we hit one of the
-           * empty padding columns.
-           */
-          if (dataIndex === null) {
-            return;
-          }
-
-          const index = parseInt(dataIndex, 10);
-          const selectedItem = this.items[index];
-
-          if (selectedItem.value !== this.value) {
-            this.setValue(selectedItem.value);
+          if (activeElement.value !== this.value) {
+            this.setValue(activeElement.value);
           }
         }, 250);
       });
