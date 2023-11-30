@@ -16,6 +16,11 @@
 }
 
 .picker-opts {
+  /**
+   * This padding must be set here and not on the
+   * host to ensure that the focus highlight on the
+   * column is not overly narrow.
+   */
   @include padding(0px, 16px, 0px, 16px);
 
   outline: none;
@@ -33,6 +38,19 @@
   scrollbar-width: none;
 
   text-align: inherit;
+
+  /**
+   * When using reactive data, such as in datetime's
+   * wheel picker, there may be layout shifts between
+   * individual columns in a picker as the columns
+   * shrink to fit the widest item in the column.
+   * Setting a minimum width avoids this layout shifting.
+   *
+   * Note that we need this min-width set on the same
+   * element as the vertical padding (i.e. not on the
+   * host).
+   */
+  min-width: 26px;
 }
 
 /**
