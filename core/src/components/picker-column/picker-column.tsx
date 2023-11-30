@@ -23,9 +23,7 @@ import type { PickerColumnItem } from './picker-column-interfaces';
     ios: 'picker-column.ios.scss',
     md: 'picker-column.md.scss',
   },
-  shadow: {
-    delegatesFocus: true,
-  },
+  shadow: true,
 })
 export class PickerColumn implements ComponentInterface {
   private scrollEl?: HTMLDivElement | null;
@@ -178,6 +176,17 @@ export class PickerColumn implements ComponentInterface {
     const findItem = items.find((item) => item.value === value && item.disabled !== true);
     if (findItem) {
       this.ionChange.emit(findItem);
+    }
+  }
+
+  /**
+   * Sets focus on the scrollable container within the picker column.
+   * Use this method instead of the global `pickerColumn.focus()`.
+   */
+  @Method()
+  async setFocus() {
+    if (this.scrollEl) {
+      this.scrollEl.focus();
     }
   }
 
@@ -445,6 +454,7 @@ export class PickerColumn implements ComponentInterface {
       <Host
         exportparts={`${PICKER_ITEM_PART}, ${PICKER_ITEM_ACTIVE_PART}`}
         disabled={pickerDisabled}
+        onFocus={() => this.setFocus()}
         class={createColorClasses(color, {
           [mode]: true,
           ['picker-column-active']: isActive,

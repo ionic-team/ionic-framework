@@ -1978,6 +1978,10 @@ export namespace Components {
         "numericInput": boolean;
         "scrollActiveItemIntoView": () => Promise<void>;
         /**
+          * Sets focus on the scrollable container within the picker column. Use this method instead of the global `pickerColumn.focus()`.
+         */
+        "setFocus": () => Promise<void>;
+        /**
           * Sets the value prop and fires the ionChange event. This is used when we need to fire ionChange from user-generated events that cannot be caught with normal input/change event listeners.
          */
         "setValue": (value?: string | number) => Promise<void>;
