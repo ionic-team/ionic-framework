@@ -38,6 +38,12 @@
 
   outline: none;
 
+  /**
+   * Added so that text-align can be set on the host
+   * from external components. For example, datetime
+   * changes the alignment of specific columns in its
+   * wheel pickers.
+   */
   text-align: inherit;
 
   scroll-snap-type: y mandatory;
@@ -70,7 +76,11 @@
 ::slotted([slot="prefix"]) {
   justify-content: end;
 
-  // The prefix's location is not RTL-aware, so we need an explicit right padding.
+  /**
+   * The prefix's location is not RTL-aware, so we need an explicit right padding.
+   * This is added in addition to the column's own padding so that there is white
+   * space between the slot and the column's focus highlight.
+   */
   /* stylelint-disable-next-line property-disallowed-list */
   padding-right: 16px;
 }
@@ -78,7 +88,11 @@
 ::slotted([slot="suffix"]) {
   justify-content: start;
 
-  // The suffix's location is not RTL-aware, so we need an explicit left padding.
+  /**
+   * The suffix's location is not RTL-aware, so we need an explicit left padding.
+   * This is added in addition to the column's own padding so that there is white
+   * space between the slot and the column's focus highlight.
+   */
   /* stylelint-disable-next-line property-disallowed-list */
   padding-left: 16px;
 }
