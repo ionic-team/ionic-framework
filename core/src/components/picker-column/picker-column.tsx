@@ -396,7 +396,9 @@ export class PickerColumn implements ComponentInterface {
 
   get activeItem() {
     const { value } = this;
-    const options = Array.from(this.el.querySelectorAll('ion-picker-column-option') as NodeListOf<HTMLIonPickerColumnOptionElement>);
+    const options = Array.from(
+      this.el.querySelectorAll('ion-picker-column-option') as NodeListOf<HTMLIonPickerColumnOptionElement>
+    );
     return options.find((option: HTMLIonPickerColumnOptionElement) => {
       /**
        * If the whole picker column is disabled, the current value should appear active
@@ -407,7 +409,7 @@ export class PickerColumn implements ComponentInterface {
       }
 
       return option.value === value;
-    }) as HTMLElement | undefined
+    }) as HTMLElement | undefined;
   }
 
   render() {

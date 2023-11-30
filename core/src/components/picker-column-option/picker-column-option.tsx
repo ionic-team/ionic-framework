@@ -56,7 +56,7 @@ export class PickerColumnOption implements ComponentInterface {
     return (
       <Host
         class={{
-          'option-disabled': !!disabled
+          'option-disabled': !!disabled,
         }}
       >
         <button
