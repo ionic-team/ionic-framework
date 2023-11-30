@@ -23,7 +23,9 @@ import type { PickerColumnItem } from './picker-column-interfaces';
     ios: 'picker-column.ios.scss',
     md: 'picker-column.md.scss',
   },
-  shadow: true,
+  shadow: {
+    delegatesFocus: true
+  },
 })
 export class PickerColumn implements ComponentInterface {
   private scrollEl?: HTMLDivElement | null;
