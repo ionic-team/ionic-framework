@@ -1516,6 +1516,7 @@ ion-toggle,css-prop,--handle-width
 ion-toggle,css-prop,--track-background
 ion-toggle,css-prop,--track-background-checked
 ion-toggle,part,handle
+ion-toggle,part,label
 ion-toggle,part,track
 
 ion-toolbar,shadow
