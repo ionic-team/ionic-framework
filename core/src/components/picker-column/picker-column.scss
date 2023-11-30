@@ -23,22 +23,6 @@
    */
   @include padding(0px, 16px, 0px, 16px);
 
-  outline: none;
-
-  scroll-snap-type: y mandatory;
-
-  /**
-   * Need to explicitly set overflow-x: hidden
-   * for older implementations of scroll snapping.
-   */
-  overflow-x: hidden;
-  overflow-y: scroll;
-
-  // Hide scrollbars on Firefox
-  scrollbar-width: none;
-
-  text-align: inherit;
-
   /**
    * When using reactive data, such as in datetime's
    * wheel picker, there may be layout shifts between
@@ -51,6 +35,22 @@
    * host).
    */
   min-width: 26px;
+
+  outline: none;
+
+  text-align: inherit;
+
+  scroll-snap-type: y mandatory;
+
+  /**
+   * Need to explicitly set overflow-x: hidden
+   * for older implementations of scroll snapping.
+   */
+  overflow-x: hidden;
+  overflow-y: scroll;
+
+  // Hide scrollbars on Firefox
+  scrollbar-width: none;
 }
 
 /**
