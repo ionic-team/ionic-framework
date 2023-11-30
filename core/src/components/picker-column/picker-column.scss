@@ -11,6 +11,8 @@
   height: 200px;
 
   font-size: 22px;
+
+  text-align: center;
 }
 
 .picker-opts {
@@ -29,6 +31,8 @@
 
   // Hide scrollbars on Firefox
   scrollbar-width: none;
+
+  text-align: inherit;
 }
 
 /**
