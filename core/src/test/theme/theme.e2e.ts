@@ -31,9 +31,12 @@ const styleTestHelpers = `
   </style>
 `;
 
-const colors = ['primary', 'secondary', 'tertiary', 'success', 'warning', 'danger', 'light', 'medium', 'dark'];
-
+/**
+ * All colors besides `light` should be tested against a dark background on dark theme.
+ */
 configs({ modes: ['md', 'ios'], directions: ['ltr'], themes: ['dark'] }).forEach(({ config, title }) => {
+  const colors = ['primary', 'secondary', 'tertiary', 'success', 'warning', 'danger', 'medium', 'dark'];
+
   test.describe(title('theme'), () => {
     test.beforeEach(({ skip }) => {
       skip.browser('firefox', 'Color contrast ratio is consistent across browsers');
