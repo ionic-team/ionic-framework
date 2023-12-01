@@ -111,3 +111,104 @@ configs({ modes: ['md', 'ios'], directions: ['ltr'], themes: ['dark'] }).forEach
     }
   });
 });
+
+/**
+ * `light` color should be tested against a white background on dark theme. The mode doesn't matter here
+ * since we are testing against a consistent background color.
+ */
+configs({ modes: ['md'], directions: ['ltr'], themes: ['dark'] }).forEach(({ config, title }) => {
+  test.describe(title('theme'), () => {
+    test(`color light should pass AA guidelines on a white background`, async ({ page, skip }) => {
+      skip.browser('firefox', 'Color contrast ratio is consistent across browsers');
+      skip.browser('webkit', 'Color contrast ratio is consistent across browsers');
+
+      await page.setContent(
+        `${styleTestHelpers}
+          <style>
+            .md body {
+              --ion-background-color: #ffffff;
+            }
+          </style>
+          <main>
+            <p class="ion-color ion-color-light">Hello World</p>
+          </main>`,
+        config
+      );
+
+      const results = await new AxeBuilder({ page }).analyze();
+      expect(results.violations).toEqual([]);
+    });
+
+    test(`contrast color on "light" background should pass AA guidelines`, async ({ page }) => {
+      await page.setContent(
+        `${styleTestHelpers}
+        <style>
+          .md body {
+            --ion-background-color: #ffffff;
+          }
+        </style>
+        <main>
+          <p class="ion-color-contrast ion-background ion-color-light">Hello World</p>
+        </main>`,
+        config
+      );
+
+      const results = await new AxeBuilder({ page }).analyze();
+      expect(results.violations).toEqual([]);
+    });
+
+    test(`color "light" on 0.08 opacity background should pass AA guidelines`, async ({ page }) => {
+      await page.setContent(
+        `${styleTestHelpers}
+        <style>
+          .md body {
+            --ion-background-color: #ffffff;
+          }
+        </style>
+        <main>
+          <p class="ion-color ion-color-light ion-background-opacity-08">Hello World</p>
+        </main>`,
+        config
+      );
+
+      const results = await new AxeBuilder({ page }).analyze();
+      expect(results.violations).toEqual([]);
+    });
+
+    test(`color "light" on 0.12 opacity background should pass AA guidelines`, async ({ page }) => {
+      await page.setContent(
+        `${styleTestHelpers}
+        <style>
+          .md body {
+            --ion-background-color: #ffffff;
+          }
+        </style>
+        <main>
+          <p class="ion-color ion-color-light ion-background-opacity-12">Hello World</p>
+        </main>`,
+        config
+      );
+
+      const results = await new AxeBuilder({ page }).analyze();
+      expect(results.violations).toEqual([]);
+    });
+
+    test(`color "light" on 0.16 opacity background should pass AA guidelines`, async ({ page }) => {
+      await page.setContent(
+        `${styleTestHelpers}
+        <style>
+          .md body {
+            --ion-background-color: #ffffff;
+          }
+        </style>
+        <main>
+          <p class="ion-color ion-color-light ion-background-opacity-16">Hello World</p>
+        </main>`,
+        config
+      );
+
+      const results = await new AxeBuilder({ page }).analyze();
+      expect(results.violations).toEqual([]);
+    });
+  });
+});
