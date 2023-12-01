@@ -70,7 +70,7 @@ export class PickerColumn implements ComponentInterface {
   /**
    * Emitted when the value has changed.
    */
-  @Event() ionChange!: EventEmitter<PickerColumnItem>;
+  @Event() ionChange!: EventEmitter<string | number | undefined>;
 
   @Watch('value')
   valueChange() {
@@ -101,7 +101,9 @@ export class PickerColumn implements ComponentInterface {
          * Because this initial call to scrollActiveItemIntoView has to fire before
          * the scroll listener is set up, we need to manage the active class manually.
          */
-        const oldActive = getElementRoot(el).querySelector(`.${PICKER_ITEM_ACTIVE_CLASS}`);
+        const oldActive = getElementRoot(el).querySelector(
+          `.${PICKER_ITEM_ACTIVE_CLASS}`
+        ) as HTMLIonPickerColumnOptionElement | null;
         if (oldActive) {
           this.setPickerItemActiveState(oldActive, false);
         }
@@ -130,12 +132,14 @@ export class PickerColumn implements ComponentInterface {
   }
 
   componentDidRender() {
-    const { activeItem, items, isColumnVisible, value } = this;
+    const { el, activeItem, isColumnVisible, value } = this;
 
     if (isColumnVisible) {
       if (activeItem) {
         this.scrollActiveItemIntoView();
-      } else if (items[0]?.value !== value) {
+      } else {
+        const firstOption = el.querySelector('ion-picker-column-option');
+
         /**
          * If the picker column does not have an active item and the current value
          * does not match the first item in the picker column, that means
@@ -143,7 +147,9 @@ export class PickerColumn implements ComponentInterface {
          * first item to match the scroll position of the column.
          *
          */
-        this.setValue(items[0].value);
+        if (firstOption !== null && firstOption.value !== value) {
+          this.setValue(firstOption.value);
+        }
       }
     }
   }
@@ -167,12 +173,8 @@ export class PickerColumn implements ComponentInterface {
    */
   @Method()
   async setValue(value?: string | number) {
-    const { items } = this;
     this.value = value;
-    const findItem = items.find((item) => item.value === value && item.disabled !== true);
-    if (findItem) {
-      this.ionChange.emit(findItem);
-    }
+    this.ionChange.emit(value);
   }
 
   private centerPickerItemInView = (target: HTMLElement, smooth = true, canExitInputMode = true) => {
@@ -199,7 +201,7 @@ export class PickerColumn implements ComponentInterface {
     }
   };
 
-  private setPickerItemActiveState = (item: Element, isActive: boolean) => {
+  private setPickerItemActiveState = (item: HTMLIonPickerColumnOptionElement, isActive: boolean) => {
     if (isActive) {
       item.classList.add(PICKER_ITEM_ACTIVE_CLASS);
       item.part.add(PICKER_ITEM_ACTIVE_PART);
@@ -270,7 +272,7 @@ export class PickerColumn implements ComponentInterface {
     const { el } = this;
 
     let timeout: ReturnType<typeof setTimeout> | undefined;
-    let activeEl: HTMLElement | null = this.activeItem;
+    let activeEl: HTMLIonPickerColumnOptionElement | undefined = this.activeItem;
 
     const scrollCallback = () => {
       raf(() => {
@@ -292,13 +294,24 @@ export class PickerColumn implements ComponentInterface {
         const centerX = bbox.x + bbox.width / 2;
         const centerY = bbox.y + bbox.height / 2;
 
-        const activeElement = el.shadowRoot!.elementFromPoint(centerX, centerY) as HTMLButtonElement | null;
+        const newActiveElement = el.shadowRoot!.elementFromPoint(
+          centerX,
+          centerY
+        ) as HTMLIonPickerColumnOptionElement | null;
 
-        if (activeEl !== null) {
+        if (activeEl !== undefined) {
           this.setPickerItemActiveState(activeEl, false);
         }
 
-        if (activeElement === null || activeElement.disabled) {
+        /**
+         * This null check is important because activeEl
+         * can be undefined but newActiveElement can be
+         * null since we are using a querySelector.
+         * newActiveElement !== activeEl would return true
+         * below if newActiveElement was null but activeEl
+         * was undefined.
+         */
+        if (newActiveElement === null || newActiveElement.disabled) {
           return;
         }
 
@@ -306,7 +319,7 @@ export class PickerColumn implements ComponentInterface {
          * If we are selecting a new value,
          * we need to run haptics again.
          */
-        if (activeElement !== activeEl) {
+        if (newActiveElement !== activeEl) {
           enableHaptics && hapticSelectionChanged();
 
           if (this.canExitInputMode) {
@@ -325,8 +338,8 @@ export class PickerColumn implements ComponentInterface {
           }
         }
 
-        activeEl = activeElement;
-        this.setPickerItemActiveState(activeElement, true);
+        activeEl = newActiveElement;
+        this.setPickerItemActiveState(newActiveElement, true);
 
         timeout = setTimeout(() => {
           this.isScrolling = false;
@@ -352,23 +365,7 @@ export class PickerColumn implements ComponentInterface {
            */
           this.canExitInputMode = true;
 
-          const dataIndex = activeElement.getAttribute('data-index');
-
-          /**
-           * If no value it is
-           * possible we hit one of the
-           * empty padding columns.
-           */
-          if (dataIndex === null) {
-            return;
-          }
-
-          const index = parseInt(dataIndex, 10);
-          const selectedItem = this.items[index];
-
-          if (selectedItem.value !== this.value) {
-            this.setValue(selectedItem.value);
-          }
+          this.setValue(newActiveElement.value);
         }, 250);
       });
     };
@@ -412,15 +409,25 @@ export class PickerColumn implements ComponentInterface {
   };
 
   get activeItem() {
-    // If the whole picker column is disabled, the current value should appear active
-    // If the current value item is specifically disabled, it should not appear active
-    const selector = `.picker-item[data-value="${this.value}"]${this.disabled ? '' : ':not([disabled])'}`;
+    const { value } = this;
+    const options = Array.from(
+      this.el.querySelectorAll('ion-picker-column-option') as NodeListOf<HTMLIonPickerColumnOptionElement>
+    );
+    return options.find((option: HTMLIonPickerColumnOptionElement) => {
+      /**
+       * If the whole picker column is disabled, the current value should appear active
+       * If the current value item is specifically disabled, it should not appear active
+       */
+      if (!this.disabled && option.disabled) {
+        return false;
+      }
 
-    return getElementRoot(this.el).querySelector(selector) as HTMLElement | null;
+      return option.value === value;
+    }) as HTMLIonPickerColumnOptionElement | undefined;
   }
 
   render() {
-    const { items, color, disabled: pickerDisabled, isActive, numericInput } = this;
+    const { color, disabled: pickerDisabled, isActive, numericInput } = this;
     const mode = getIonMode(this);
 
     /**
