@@ -65,6 +65,20 @@ export class PickerColumnOption implements ComponentInterface {
   }
 
   /**
+   * The column options can load at any time
+   * so the selected option needs to tell the
+   * parent picker column when it is loaded
+   * so the picker column can ensure it is
+   * centered in the view.
+   */
+  componentDidLoad() {
+    const parentPickerColumn = this.el.closest('ion-picker-column');
+    if (parentPickerColumn !== null && this.value === parentPickerColumn.value) {
+      parentPickerColumn.scrollActiveItemIntoView();
+    }
+  }
+
+  /**
    * When an option is clicked update the
    * parent picker column value. This
    * component will handle centering the option
