@@ -15,6 +15,13 @@ import type { Color } from '../../interface';
   shadow: true,
 })
 export class PickerColumnOption implements ComponentInterface {
+  /**
+   * We keep track of the parent picker column
+   * so we can update the value of it when
+   * clicking an enable option.
+   */
+  private pickerColumn: HTMLIonPickerColumnElement | null = null;
+
   @Element() el!: HTMLElement;
 
   /**
@@ -64,6 +71,14 @@ export class PickerColumnOption implements ComponentInterface {
     this.ariaLabel = inheritedAttributes['aria-label'] || null;
   }
 
+  connectedCallback() {
+    this.pickerColumn = this.el.closest('ion-picker-column');
+  }
+
+  disconnectedCallback() {
+    this.pickerColumn = null;
+  }
+
   /**
    * The column options can load at any time
    * so the selected option needs to tell the
@@ -72,9 +87,9 @@ export class PickerColumnOption implements ComponentInterface {
    * centered in the view.
    */
   componentDidLoad() {
-    const parentPickerColumn = this.el.closest('ion-picker-column');
-    if (parentPickerColumn !== null && this.value === parentPickerColumn.value) {
-      parentPickerColumn.scrollActiveItemIntoView();
+    const { pickerColumn } = this;
+    if (pickerColumn !== null && this.value === pickerColumn.value) {
+      pickerColumn.scrollActiveItemIntoView();
     }
   }
 
@@ -85,9 +100,9 @@ export class PickerColumnOption implements ComponentInterface {
    * in the column view.
    */
   onClick() {
-    const parentPickerColumn = this.el.closest('ion-picker-column');
-    if (parentPickerColumn !== null) {
-      parentPickerColumn.setValue(this.value);
+    const { pickerColumn } = this;
+    if (pickerColumn !== null) {
+      pickerColumn.setValue(this.value);
     }
   }
 
