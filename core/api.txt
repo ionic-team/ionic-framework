@@ -1030,6 +1030,7 @@ ion-radio,css-prop,--color
 ion-radio,css-prop,--color-checked
 ion-radio,css-prop,--inner-border-radius
 ion-radio,part,container
+ion-radio,part,label
 ion-radio,part,mark
 
 ion-radio-group,none
