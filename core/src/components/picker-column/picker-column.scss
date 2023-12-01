@@ -6,6 +6,8 @@
 :host {
   display: flex;
 
+  align-items: center;
+
   justify-content: center;
 
   height: 200px;
@@ -35,6 +37,7 @@
    * host).
    */
   min-width: 26px;
+  max-height: 200px;
 
   outline: none;
 
@@ -67,9 +70,13 @@
 }
 
 ::slotted([slot="prefix"]), ::slotted([slot="suffix"]) {
-  display: flex;
+  max-width: 200px;
 
-  align-items: center;
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  overflow: hidden;
 }
 
 ::slotted([slot="prefix"]) {

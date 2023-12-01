@@ -27,7 +27,7 @@
         <ion-picker>
           <ion-picker-column>
             <div slot="prefix">Prefix</div>
-            <div slot="suffix">Long Suffix Long Suffix<br/>Long Suffix Long Suffix</div>
+            <div slot="suffix">Long Suffix Long Suffix Long Suffix</div>
           </ion-picker-column>
         </ion-picker>
       </ion-content>
@@ -40,8 +40,8 @@
             text: `${i}`,
             value: i,
           }));
-        
-        pickerColumns.forEach(col => {
+
+        pickerColumns.forEach((col) => {
           col.items = [...items];
         });
       </script>
