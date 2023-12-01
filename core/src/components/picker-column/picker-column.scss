@@ -33,6 +33,17 @@
   display: none;
 }
 
+::slotted(ion-picker-column-option) {
+  display: block;
+
+  scroll-snap-align: center;
+}
+
+.picker-item-empty,
+:host(:not([disabled])) ::slotted(ion-picker-column-option.option-disabled) {
+  scroll-snap-align: none;
+}
+
 :host .picker-item {
   @include padding(0);
   @include margin(0);

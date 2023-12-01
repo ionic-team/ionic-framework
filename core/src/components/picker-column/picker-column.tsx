@@ -450,37 +450,7 @@ export class PickerColumn implements ComponentInterface {
         <div class="picker-item picker-item-empty" aria-hidden="true">
           &nbsp;
         </div>
-        {items.map((item, index) => {
-          const isItemDisabled = pickerDisabled || item.disabled || false;
-
-          {
-            /*
-            Users should be able to tab
-            between multiple columns. As a result,
-            we set tabindex here so that tabbing switches
-            between columns instead of buttons. Users
-            can still use arrow keys on the keyboard to
-            navigate the column up and down.
-          */
-          }
-          return (
-            <button
-              tabindex="-1"
-              class={{
-                'picker-item': true,
-              }}
-              data-value={item.value}
-              data-index={index}
-              onClick={(ev: Event) => {
-                this.centerPickerItemInView(ev.target as HTMLElement, true);
-              }}
-              disabled={isItemDisabled}
-              part={PICKER_ITEM_PART}
-            >
-              {item.text}
-            </button>
-          );
-        })}
+        <slot></slot>
         <div class="picker-item picker-item-empty" aria-hidden="true">
           &nbsp;
         </div>
@@ -495,6 +465,6 @@ export class PickerColumn implements ComponentInterface {
   }
 }
 
-const PICKER_ITEM_ACTIVE_CLASS = 'picker-item-active';
+const PICKER_ITEM_ACTIVE_CLASS = 'option-active';
 const PICKER_ITEM_PART = 'wheel-item';
 const PICKER_ITEM_ACTIVE_PART = 'active';
