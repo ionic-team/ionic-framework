@@ -138,11 +138,11 @@
   --border-radius: 16px;
 }
 
-// Select Native Wrapper
+// Select Inner Wrapper
 // ----------------------------------------------------------------
 
-:host(.select-label-placement-stacked) .native-wrapper,
-:host(.select-label-placement-floating) .native-wrapper {
+:host(.select-label-placement-stacked) .select-wrapper-inner,
+:host(.select-label-placement-floating) .select-wrapper-inner {
   width: calc(100% - $select-md-icon-size - $select-icon-margin-start);
 }
 

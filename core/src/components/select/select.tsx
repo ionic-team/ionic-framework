@@ -33,6 +33,8 @@ import type { SelectChangeEventDetail, SelectInterface, SelectCompareFn } from '
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  *
  * @slot label - The label text to associate with the select. Use the `labelPlacement` property to control where the label is placed relative to the select. Use this if you need to render a label with custom HTML.
+ * @slot start - Content to display at the leading edge of the select.
+ * @slot end - Content to display at the trailing edge of the select.
  *
  * @part placeholder - The text displayed in the select when there is no value.
  * @part text - The displayed value of the select.
@@ -762,8 +764,22 @@ export class Select implements ComponentInterface {
   }
 
   private onClick = (ev: UIEvent) => {
-    this.setFocus();
-    this.open(ev);
+    const target = ev.target as HTMLElement;
+    const closestSlot = target.closest('[slot="start"], [slot="end"]');
+
+    if (target === this.el || closestSlot === null) {
+      this.setFocus();
+      this.open(ev);
+    } else {
+      /**
+       * Prevent clicks to the start/end slots from opening the select.
+       * We ensure the target isn't this element in case the select is slotted
+       * in, for example, an item. This would prevent the select from ever
+       * being opened since the element itself has slot="start"/"end".
+       */
+      ev.stopPropagation();
+      ev.preventDefault();
+    }
   };
 
   private onFocus = () => {
@@ -864,7 +880,30 @@ export class Select implements ComponentInterface {
     const inItem = hostContext('ion-item', this.el);
     const shouldRenderHighlight = mode === 'md' && fill !== 'outline' && !inItem;
 
+    const hasValue = this.hasValue();
+    const hasStartEndSlots = el.querySelector('[slot="start"], [slot="end"]') !== null;
+
     renderHiddenInput(true, el, name, parseValue(value), disabled);
+
+    /**
+     * If the label is stacked, it should always sit above the select.
+     * For floating labels, the label should move above the select if
+     * the select has a value, is open, or has anything in either
+     * the start or end slot.
+     *
+     * If there is content in the start slot, the label would overlap
+     * it if not forced to float. This is also applied to the end slot
+     * because with the default or solid fills, the select is not
+     * vertically centered in the container, but the label is. This
+     * causes the slots and label to appear vertically offset from each
+     * other when the label isn't floating above the input. This doesn't
+     * apply to the outline fill, but this was not accounted for to keep
+     * things consistent.
+     *
+     * TODO(FW-5592): Remove hasStartEndSlots condition
+     */
+    const labelShouldFloat =
+      labelPlacement === 'stacked' || (labelPlacement === 'floating' && (hasValue || isExpanded || hasStartEndSlots));
 
     return (
       <Host
@@ -876,7 +915,8 @@ export class Select implements ComponentInterface {
           'select-disabled': disabled,
           'select-expanded': isExpanded,
           'has-expanded-icon': expandedIcon !== undefined,
-          'has-value': this.hasValue(),
+          'has-value': hasValue,
+          'label-floating': labelShouldFloat,
           'has-placeholder': placeholder !== undefined,
           'ion-focusable': true,
           [`select-${rtl}`]: true,
@@ -888,17 +928,23 @@ export class Select implements ComponentInterface {
       >
         <label class="select-wrapper" id="select-label">
           {this.renderLabelContainer()}
-          <div class="native-wrapper" ref={(el) => (this.nativeWrapperEl = el)} part="container">
-            {this.renderSelectText()}
+          <div class="select-wrapper-inner">
+            <slot name="start"></slot>
+            <div class="native-wrapper" ref={(el) => (this.nativeWrapperEl = el)} part="container">
+              {this.renderSelectText()}
+              {this.renderListbox()}
+            </div>
+            <slot name="end"></slot>
             {!hasFloatingOrStackedLabel && this.renderSelectIcon()}
-            {this.renderListbox()}
           </div>
           {/**
            * The icon in a floating/stacked select
            * must be centered with the entire select,
-           * not just the native control. As a result,
-           * we need to render the icon outside of
-           * the native wrapper.
+           * while the start/end slots and native control
+           * are vertically offset in the default or
+           * solid fills. As a result, we render the
+           * icon outside the inner wrapper, which holds
+           * those components.
            */}
           {hasFloatingOrStackedLabel && this.renderSelectIcon()}
           {shouldRenderHighlight && <div class="select-highlight"></div>}
