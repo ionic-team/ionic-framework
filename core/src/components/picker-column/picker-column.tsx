@@ -169,7 +169,9 @@ export class PickerColumn implements ComponentInterface {
    */
   @Method()
   async setValue(value?: string | number) {
-    if (this.value === value) { return; }
+    if (this.value === value) {
+      return;
+    }
 
     this.value = value;
     this.ionChange.emit(value);

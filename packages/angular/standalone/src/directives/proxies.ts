@@ -1461,13 +1461,11 @@ export class IonPickerColumn {
 }
 
 
-import type { PickerColumnItem as IIonPickerColumnPickerColumnItem } from '@ionic/core/components';
-
 export declare interface IonPickerColumn extends Components.IonPickerColumn {
   /**
    * Emitted when the value has changed.
    */
-  ionChange: EventEmitter<CustomEvent<IIonPickerColumnPickerColumnItem>>;
+  ionChange: EventEmitter<CustomEvent<string | number | undefined>>;
 }
 
 
