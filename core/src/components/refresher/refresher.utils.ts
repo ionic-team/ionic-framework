@@ -195,23 +195,6 @@ export const translateElement = (el?: HTMLElement, value?: string, duration = 20
 // Utils
 // -----------------------------
 
-export const shouldUseNativeRefresher = async (referenceEl: HTMLIonRefresherElement, mode: string) => {
-  const refresherContent = referenceEl.querySelector('ion-refresher-content');
-  if (!refresherContent) {
-    return Promise.resolve(false);
-  }
-
-  await new Promise((resolve) => componentOnReady(refresherContent, resolve));
-
-  const pullingSpinner = referenceEl.querySelector('ion-refresher-content .refresher-pulling ion-spinner');
-  const refreshingSpinner = referenceEl.querySelector('ion-refresher-content .refresher-refreshing ion-spinner');
-
-  return (
-    (pullingSpinner !== null && refreshingSpinner !== null && mode === 'ios' && supportsRubberBandScrolling()) ||
-    mode === 'md'
-  );
-};
-
 /**
  * In order to use the native iOS refresher the device must support rubber band scrolling.
  * The ios + mobile platform check ensures that desktop Safari is not included. Desktop Safari
@@ -231,5 +214,23 @@ export const shouldUseNativeRefresher = async (referenceEl: HTMLIonRefresherElem
 export const supportsRubberBandScrolling = () => {
   return (
     isPlatform('ios') && isPlatform('mobile') && CSS.supports('background: -webkit-named-image(apple-pay-logo-black)')
+  );
+};
+
+export const shouldUseNativeRefresher = async (referenceEl: HTMLIonRefresherElement, mode: string) => {
+  const refresherContent = referenceEl.querySelector('ion-refresher-content');
+  if (!refresherContent) {
+    return Promise.resolve(false);
+  }
+
+  await new Promise((resolve) => componentOnReady(refresherContent, resolve));
+
+  const pullingSpinner = referenceEl.querySelector('ion-refresher-content .refresher-pulling ion-spinner');
+  const refreshingSpinner = referenceEl.querySelector('ion-refresher-content .refresher-refreshing ion-spinner');
+
+  return (
+    pullingSpinner !== null &&
+    refreshingSpinner !== null &&
+    ((mode === 'ios' && supportsRubberBandScrolling()) || mode === 'md')
   );
 };
