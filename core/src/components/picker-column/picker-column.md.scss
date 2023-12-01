@@ -1,6 +1,7 @@
 @import "./picker-column.scss";
 @import "../../themes/ionic.globals.md";
 
+// TODO FW-5580 remove this
 :host .picker-item-active {
   color: current-color(base);
 }

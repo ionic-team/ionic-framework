@@ -14,6 +14,8 @@ import type { PickerColumnItem } from './picker-column-interfaces';
 /**
  * @virtualProp {"ios" | "md"} mode - The mode determines which platform styles to use.
  */
+// TODO FW-5580 we can likely go back to a single stylesheet here
+// the per-mode styles were moved to ion-picker-column-option
 @Component({
   tag: 'ion-picker-column',
   styleUrls: {
