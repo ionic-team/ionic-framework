@@ -53,7 +53,7 @@
           <div class="grid-item">
             <h2>Column disabled</h2>
             <ion-picker>
-              <ion-picker-column id="column-disabled" value="11" disabled></ion-picker-column>
+              <ion-picker-column id="column-disabled" disabled></ion-picker-column>
             </ion-picker>
           </div>
         </div>
@@ -82,6 +82,7 @@
 
             fullDisabledPicker.appendChild(option);
           });
+          fullDisabledPicker.value = 11;
       </script>
     </ion-app>
   </body>
