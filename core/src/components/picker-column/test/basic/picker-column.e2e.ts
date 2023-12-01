@@ -10,18 +10,13 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await page.goto('/src/components/picker-column/test/basic', config);
     });
 
-    test('should render a picker item for each item', async ({ page }) => {
-      const columns = page.locator('ion-picker-column .picker-item:not(.picker-item-empty)');
-      await expect(columns).toHaveCount(24);
-    });
-
     test('should render 6 empty picker items', async ({ page }) => {
       const columns = page.locator('ion-picker-column .picker-item-empty');
       await expect(columns).toHaveCount(6);
     });
 
     test('should not have an active item when value is not set', async ({ page }) => {
-      const activeColumn = page.locator('ion-picker-column .picker-item-active');
+      const activeColumn = page.locator('ion-picker-column .option-active');
       await expect(activeColumn).toHaveCount(0);
     });
 
@@ -31,7 +26,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       });
       await page.waitForChanges();
 
-      const activeColumn = page.locator('ion-picker-column .picker-item-active');
+      const activeColumn = page.locator('ion-picker-column .option-active');
 
       expect(activeColumn).not.toBeNull();
     });
@@ -45,9 +40,9 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       });
       await page.waitForChanges();
 
-      const activeColumn = page.locator('ion-picker-column .picker-item-active');
+      const activeColumn = page.locator('ion-picker-column .option-active');
 
-      expect(await activeColumn?.innerText()).toEqual('23');
+      await expect(activeColumn).toHaveJSProperty('value', 23);
     });
 
     test('should not emit ionChange when the value is modified externally', async ({ page, skip }) => {

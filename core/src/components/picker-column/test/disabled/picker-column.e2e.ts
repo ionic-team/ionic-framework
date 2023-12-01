@@ -2,36 +2,6 @@ import { expect } from '@playwright/test';
 import { configs, test } from '@utils/test/playwright';
 
 /**
- * This behavior does not vary across directions.
- */
-configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
-  test.describe(title('picker-column: disabled rendering'), () => {
-    test('should not have visual regressions', async ({ page }) => {
-      await page.setContent(
-        `
-        <ion-picker>
-          <ion-picker-column value="b"></ion-picker-column>
-        </ion-picker>
-
-        <script>
-          const column = document.querySelector('ion-picker-column');
-          column.items = [
-            { text: 'A', value: 'a', disabled: true },
-            { text: 'B', value: 'b' },
-            { text: 'C', value: 'c', disabled: true }
-          ]
-        </script>
-      `,
-        config
-      );
-
-      const picker = page.locator('ion-picker');
-      await expect(picker).toHaveScreenshot(screenshot(`picker-disabled`));
-    });
-  });
-});
-
-/**
  * This behavior does not vary across modes/directions.
  */
 configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => {

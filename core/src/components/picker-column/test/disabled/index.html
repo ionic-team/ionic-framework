@@ -53,31 +53,36 @@
           <div class="grid-item">
             <h2>Column disabled</h2>
             <ion-picker>
-              <ion-picker-column id="column-disabled" value="11" disabled></ion-picker-column>
+              <ion-picker-column id="column-disabled" disabled="true"></ion-picker-column>
             </ion-picker>
           </div>
         </div>
       </ion-content>
       <script>
         const halfDisabledPicker = document.getElementById('half-disabled');
-        const halfDisabledItems = Array(24)
+        Array(24)
           .fill()
-          .map((_, i) => ({
-            text: `${i}`,
-            value: i,
-            disabled: i % 2 === 0,
-          }));
-        halfDisabledPicker.items = halfDisabledItems;
-        halfDisabledPicker.value = 12;
+          .forEach((_, i) => {
+            const option = document.createElement('ion-picker-column-option');
+            option.value = i;
+            option.textContent = i;
+            option.disabled = i % 2 === 0;
+
+            halfDisabledPicker.appendChild(option);
+          });
+        halfDisabledPicker.value = 4;
 
         const fullDisabledPicker = document.getElementById('column-disabled');
-        const items = Array(24)
+        Array(24)
           .fill()
-          .map((_, i) => ({
-            text: `${i}`,
-            value: i,
-          }));
-        fullDisabledPicker.items = items;
+          .forEach((_, i) => {
+            const option = document.createElement('ion-picker-column-option');
+            option.value = i;
+            option.textContent = i;
+
+            fullDisabledPicker.appendChild(option);
+          });
+        fullDisabledPicker.value = 11;
       </script>
     </ion-app>
   </body>
