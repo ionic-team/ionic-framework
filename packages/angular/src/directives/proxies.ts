@@ -1476,14 +1476,14 @@ export declare interface IonPickerColumn extends Components.IonPickerColumn {
 
 
 @ProxyCmp({
-  inputs: ['disabled', 'value']
+  inputs: ['color', 'disabled', 'value']
 })
 @Component({
   selector: 'ion-picker-column-option',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
-  inputs: ['disabled', 'value'],
+  inputs: ['color', 'disabled', 'value'],
 })
 export class IonPickerColumnOption {
   protected el: HTMLElement;
