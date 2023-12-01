@@ -134,22 +134,18 @@ export class PickerColumn implements ComponentInterface {
   componentDidRender() {
     const { el, activeItem, isColumnVisible, value } = this;
 
-    if (isColumnVisible) {
-      if (activeItem) {
-        this.scrollActiveItemIntoView();
-      } else {
-        const firstOption = el.querySelector('ion-picker-column-option');
+    if (isColumnVisible && !activeItem) {
+      const firstOption = el.querySelector('ion-picker-column-option');
 
-        /**
-         * If the picker column does not have an active item and the current value
-         * does not match the first item in the picker column, that means
-         * the value is out of bounds. In this case, we assign the value to the
-         * first item to match the scroll position of the column.
-         *
-         */
-        if (firstOption !== null && firstOption.value !== value) {
-          this.setValue(firstOption.value);
-        }
+      /**
+       * If the picker column does not have an active item and the current value
+       * does not match the first item in the picker column, that means
+       * the value is out of bounds. In this case, we assign the value to the
+       * first item to match the scroll position of the column.
+       *
+       */
+      if (firstOption !== null && firstOption.value !== value) {
+        this.setValue(firstOption.value);
       }
     }
   }
@@ -173,6 +169,8 @@ export class PickerColumn implements ComponentInterface {
    */
   @Method()
   async setValue(value?: string | number) {
+    if (this.value === value) { return; }
+
     this.value = value;
     this.ionChange.emit(value);
   }
