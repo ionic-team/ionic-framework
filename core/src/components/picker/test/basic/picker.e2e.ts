@@ -9,11 +9,11 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
     test('inline pickers should not have visual regression', async ({ page }) => {
       await page.goto(`/src/components/picker/test/basic`, config);
 
-      const fullStack = page.locator('#inline button[data-value="full-stack"]');
-      const onion = page.locator('#inline button[data-value="onion"]');
+      const fullStack = page.locator('#inline ion-picker-column-option[data-test-value="full-stack"]');
+      const onion = page.locator('#inline ion-picker-column-option[data-test-value="onion"]');
 
-      await expect(fullStack).toHaveClass(/picker-item-active/);
-      await expect(onion).toHaveClass(/picker-item-active/);
+      await expect(fullStack).toHaveClass(/option-active/);
+      await expect(onion).toHaveClass(/option-active/);
 
       await page.waitForChanges();
 
@@ -85,28 +85,21 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       await page.setContent(
         `
         <ion-picker>
-          <ion-picker-column value="full-stack" id="first"></ion-picker-column>
-          <ion-picker-column value="onion" id="second"></ion-picker-column>
+          <ion-picker-column value="full-stack" id="first">
+            <ion-picker-column-option value="minified">Minified</ion-picker-column-option>
+            <ion-picker-column-option value="responsive">Responsive</ion-picker-column-option>
+            <ion-picker-column-option value="full-stack">Full Stack</ion-picker-column-option>
+            <ion-picker-column-option value="mobile-first">Mobile First</ion-picker-column-option>
+            <ion-picker-column-option value="serverless">Serverless</ion-picker-column-option>
+          </ion-picker-column>
+          <ion-picker-column value="onion" id="second">
+            <ion-picker-column-option value="tomato">Tomato</ion-picker-column-option>
+            <ion-picker-column-option value="avocado">Avocado</ion-picker-column-option>
+            <ion-picker-column-option value="onion">Onion</ion-picker-column-option>
+            <ion-picker-column-option value="potato">Potato</ion-picker-column-option>
+            <ion-picker-column-option value="artichoke">Artichoke</ion-picker-column-option>
+          </ion-picker-column>
         </ion-picker>
-
-        <script>
-          const columns = document.querySelectorAll('ion-picker-column');
-          columns[0].items = [
-            { text: 'Minified', value: 'minified' },
-            { text: 'Responsive', value: 'responsive' },
-            { text: 'Full Stack', value: 'full-stack' },
-            { text: 'Mobile First', value: 'mobile-first' },
-            { text: 'Serverless', value: 'serverless' },
-          ]
-
-          columns[1].items = [
-            { text: 'Tomato', value: 'tomato' },
-            { text: 'Avocado', value: 'avocado' },
-            { text: 'Onion', value: 'onion' },
-            { text: 'Potato', value: 'potato' },
-            { text: 'Artichoke', value: 'artichoke' },
-          ];
-        </script>
       `,
         config
       );
