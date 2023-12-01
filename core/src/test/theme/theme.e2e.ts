@@ -34,7 +34,7 @@ const styleTestHelpers = `
 /**
  * All colors besides `light` should be tested against a dark background on dark theme.
  */
-configs({ modes: ['md', 'ios'], directions: ['ltr'], themes: ['dark'] }).forEach(({ config, title }) => {
+configs({ modes: ['md', 'ios'], directions: ['ltr'], themes: ['light', 'dark'] }).forEach(({ config, title }) => {
   const colors = ['primary', 'secondary', 'tertiary', 'success', 'warning', 'danger', 'medium', 'dark'];
 
   test.describe(title('theme'), () => {
@@ -113,20 +113,22 @@ configs({ modes: ['md', 'ios'], directions: ['ltr'], themes: ['dark'] }).forEach
 });
 
 /**
- * `light` color should be tested against a white background on dark theme. The mode doesn't matter here
- * since we are testing against a consistent background color.
+ * The `light` color should be tested against a black background for light theme and a white background for dark theme.
+ * The mode doesn't matter here since we are testing against a consistent background color.
  */
-configs({ modes: ['md'], directions: ['ltr'], themes: ['dark'] }).forEach(({ config, title }) => {
-  test.describe(title('theme'), () => {
-    test(`color light should pass AA guidelines on a white background`, async ({ page, skip }) => {
+configs({ modes: ['md'], directions: ['ltr'], themes: ['light', 'dark'] }).forEach(({ config, title }) => {
+  test.describe(title('theme: light color'), () => {
+    test.beforeEach(({ skip }) => {
       skip.browser('firefox', 'Color contrast ratio is consistent across browsers');
       skip.browser('webkit', 'Color contrast ratio is consistent across browsers');
+    });
 
+    test(`color light should pass AA guidelines on a white background`, async ({ page }) => {
       await page.setContent(
         `${styleTestHelpers}
           <style>
             .md body {
-              --ion-background-color: #ffffff;
+              --ion-background-color: var(--ion-text-color, #000);
             }
           </style>
           <main>
@@ -144,7 +146,7 @@ configs({ modes: ['md'], directions: ['ltr'], themes: ['dark'] }).forEach(({ con
         `${styleTestHelpers}
         <style>
           .md body {
-            --ion-background-color: #ffffff;
+            --ion-background-color: var(--ion-text-color, #000);
           }
         </style>
         <main>
@@ -162,7 +164,7 @@ configs({ modes: ['md'], directions: ['ltr'], themes: ['dark'] }).forEach(({ con
         `${styleTestHelpers}
         <style>
           .md body {
-            --ion-background-color: #ffffff;
+            --ion-background-color: var(--ion-text-color, #000);
           }
         </style>
         <main>
@@ -180,7 +182,7 @@ configs({ modes: ['md'], directions: ['ltr'], themes: ['dark'] }).forEach(({ con
         `${styleTestHelpers}
         <style>
           .md body {
-            --ion-background-color: #ffffff;
+            --ion-background-color: var(--ion-text-color, #000);
           }
         </style>
         <main>
@@ -198,7 +200,7 @@ configs({ modes: ['md'], directions: ['ltr'], themes: ['dark'] }).forEach(({ con
         `${styleTestHelpers}
         <style>
           .md body {
-            --ion-background-color: #ffffff;
+            --ion-background-color: var(--ion-text-color, #000);
           }
         </style>
         <main>
