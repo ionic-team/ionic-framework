@@ -64,6 +64,19 @@ export class PickerColumnOption implements ComponentInterface {
     this.ariaLabel = inheritedAttributes['aria-label'] || null;
   }
 
+  /**
+   * When an option is clicked update the
+   * parent picker column value. This
+   * component will handle centering the option
+   * in the column view.
+   */
+  onClick() {
+    const parentPickerColumn = this.el.closest('ion-picker-column');
+    if (parentPickerColumn !== null) {
+      parentPickerColumn.setValue(this.value);
+    }
+  }
+
   render() {
     const { color, value, disabled, ariaLabel } = this;
     const mode = getIonMode(this);
@@ -75,7 +88,12 @@ export class PickerColumnOption implements ComponentInterface {
           ['option-disabled']: disabled,
         })}
       >
-        <button tabindex="-1" aria-label={ariaLabel} disabled={disabled}>
+        <button
+          tabindex="-1"
+          aria-label={ariaLabel}
+          disabled={disabled}
+          onClick={() => this.onClick()}
+        >
           <slot>{value}</slot>
         </button>
       </Host>
