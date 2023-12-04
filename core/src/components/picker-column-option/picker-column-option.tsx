@@ -67,6 +67,7 @@ export class PickerColumnOption implements ComponentInterface {
     /**
      * The initial value of `aria-label` needs to be set for
      * the first render.
+
      */
     this.ariaLabel = inheritedAttributes['aria-label'] || null;
   }
@@ -81,14 +82,20 @@ export class PickerColumnOption implements ComponentInterface {
 
   /**
    * The column options can load at any time
-   * so the selected option needs to tell the
+   * so the options needs to tell the
    * parent picker column when it is loaded
    * so the picker column can ensure it is
    * centered in the view.
+   *
+   * We intentionally run this for every
+   * option. If we only ran this from
+   * the selected option then if the newly
+   * loaded options were not selected then
+   * scrollActiveItemIntoView would not be called.
    */
   componentDidLoad() {
     const { pickerColumn } = this;
-    if (pickerColumn !== null && this.value === pickerColumn.value) {
+    if (pickerColumn !== null) {
       pickerColumn.scrollActiveItemIntoView();
     }
   }
