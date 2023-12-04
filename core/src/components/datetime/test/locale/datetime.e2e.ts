@@ -22,7 +22,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         await datetimeFixture.expectLocalizedDatePicker(screenshot);
       });
 
-      test.only('month/year picker should not have visual regressions', async () => {
+      test('month/year picker should not have visual regressions', async () => {
         await datetimeFixture.goto(config, 'en-US', 'month-year');
         await datetimeFixture.expectLocalizedMonthYearPicker(screenshot);
       });
