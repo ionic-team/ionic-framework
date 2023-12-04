@@ -6,17 +6,17 @@
 # https://github.com/actions/labeler
 
 'package: core':
-  - changed-files:
-    - any-glob-to-any-file: ['core/**/*']
+- changed-files:
+  - any-glob-to-any-file: ['core/**/*']
 
 'package: angular':
-  - changed-files:
-    - any-glob-to-any-file: ['packages/angular/**/*', 'packages/angular-*/**/*']
+- changed-files:
+  - any-glob-to-any-file: ['packages/angular/**/*', 'packages/angular-*/**/*']
 
 'package: react':
-  - changed-files:
-    - any-glob-to-any-file: ['packages/react/**/*', 'packages/react-*/**/*']
+- changed-files:
+  - any-glob-to-any-file: ['packages/react/**/*', 'packages/react-*/**/*']
 
 'package: vue':
-  - changed-files:
-    - any-glob-to-any-file: ['packages/vue/**/*', 'packages/vue-*/**/*']
+- changed-files:
+  - any-glob-to-any-file: ['packages/vue/**/*', 'packages/vue-*/**/*']
