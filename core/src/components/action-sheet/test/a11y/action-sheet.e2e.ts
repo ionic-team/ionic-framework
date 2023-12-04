@@ -40,12 +40,11 @@ const testAriaButton = async (
   await expect(actionSheetButton).toHaveAttribute('aria-label', expectedAriaLabel);
 };
 
-configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
-  test.describe(title('action-sheet: a11y'), () => {
-    test.beforeEach(async ({ page }) => {
-      await page.goto(`/src/components/action-sheet/test/a11y`, config);
-    });
+configs({ directions: ['ltr'], themes: ['dark'] }).forEach(({ config, title }) => {
+  test.describe(title('action-sheet: Axe testing'), () => {
     test('should not have accessibility violations when header is defined', async ({ page }) => {
+      await page.goto(`/src/components/action-sheet/test/a11y`, config);
+
       const button = page.locator('#bothHeaders');
       const didPresent = await page.spyOnEvent('ionActionSheetDidPresent');
 
@@ -53,12 +52,20 @@ configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
       await didPresent.next();
 
       /**
-       * action-sheet overlays the entire screen, so
-       * Axe will be unable to verify color contrast
-       * on elements under the backdrop.
+       * We need to only include the overlay itself, since action-sheet
+       * covers the whole page and content under the backdrop will fail
+       * color contrast tests.
        */
-      const results = await new AxeBuilder({ page }).disableRules('color-contrast').analyze();
+      const results = await new AxeBuilder({ page }).include('.action-sheet-wrapper').analyze();
       expect(results.violations).toEqual([]);
+    });
+  });
+});
+
+configs({ directions: ['ltr'] }).forEach(({ config, title }) => {
+  test.describe(title('action-sheet: aria attributes'), () => {
+    test.beforeEach(async ({ page }) => {
+      await page.goto(`/src/components/action-sheet/test/a11y`, config);
     });
 
     test('should have aria-labelledby when header is set', async ({ page }) => {
