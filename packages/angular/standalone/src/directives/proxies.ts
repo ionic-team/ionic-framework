@@ -1465,7 +1465,7 @@ export declare interface IonPickerColumn extends Components.IonPickerColumn {
   /**
    * Emitted when the value has changed.
    */
-  ionChange: EventEmitter<CustomEvent<string | number | undefined>>;
+  ionChange: EventEmitter<CustomEvent<{ value: string | number | undefined }>>;
 }
 
 

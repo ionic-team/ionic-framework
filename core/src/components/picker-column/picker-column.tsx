@@ -72,7 +72,7 @@ export class PickerColumn implements ComponentInterface {
   /**
    * Emitted when the value has changed.
    */
-  @Event() ionChange!: EventEmitter<string | number | undefined>;
+  @Event() ionChange!: EventEmitter<{ value: string | number | undefined }>;
 
   @Watch('value')
   valueChange() {
@@ -176,7 +176,7 @@ export class PickerColumn implements ComponentInterface {
     }
 
     this.value = value;
-    this.ionChange.emit(value);
+    this.ionChange.emit({ value });
   }
 
   private centerPickerItemInView = (target: HTMLElement, smooth = true, canExitInputMode = true) => {
