@@ -28,5 +28,31 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
       const picker = page.locator('ion-picker');
       await expect(picker).toHaveScreenshot(screenshot(`picker-prefix-suffix`));
     });
+
+    test('should not have visual regressions with a long prefix and suffix', async ({ page }) => {
+      await page.setContent(
+        `
+        <ion-picker>
+          <ion-picker-column value="b">
+            <div slot="prefix">Long prefix long prefix long prefix</div>
+            <div slot="suffix">Long suffix long suffix long suffix</div>
+          </ion-picker-column>
+        </ion-picker>
+
+        <script>
+          const column = document.querySelector('ion-picker-column');
+          column.items = [
+            { text: 'A', value: 'a' },
+            { text: 'B', value: 'b' },
+            { text: 'C', value: 'c' }
+          ]
+        </script>
+      `,
+        config
+      );
+
+      const picker = page.locator('ion-picker');
+      await expect(picker).toHaveScreenshot(screenshot(`picker-long-prefix-suffix`));
+    });
   });
 });
