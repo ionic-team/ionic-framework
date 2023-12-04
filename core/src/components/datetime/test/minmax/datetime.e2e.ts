@@ -304,7 +304,7 @@ configs({ directions: ['ltr'], modes: ['ios'] }).forEach(({ title, config }) => 
         );
 
         const datetime = page.locator('ion-datetime');
-        const monthColumnItems = page.locator('ion-datetime .month-column .picker-item:not(.picker-item-empty)');
+        const monthColumnItems = page.locator('ion-datetime .month-column ion-picker-column-option');
         const ionChange = await page.spyOnEvent('ionChange');
 
         await page.waitForSelector('.datetime-ready');
