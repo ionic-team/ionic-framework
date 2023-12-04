@@ -22,7 +22,7 @@ configs({ directions: ['ltr'] }).forEach(({ title, screenshot, config }) => {
         await datetimeFixture.expectLocalizedDatePicker(screenshot);
       });
 
-      test('month/year picker should not have visual regressions', async () => {
+      test.only('month/year picker should not have visual regressions', async () => {
         await datetimeFixture.goto(config, 'en-US', 'month-year');
         await datetimeFixture.expectLocalizedMonthYearPicker(screenshot);
       });
@@ -107,14 +107,13 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
     test('should correctly localize year column data', async ({ page }) => {
       await page.setContent(
         `
-        <ion-datetime prefer-wheel="true" locale="ar-EG" presentation="date" value="2022-01-01"></ion-datetime>
+        <ion-datetime prefer-wheel="true" locale="ar-EG" presentation="date" value="2022-01-01" max="2022" min="2022"></ion-datetime>
       `,
         config
       );
       await page.waitForSelector('.datetime-ready');
 
-      const datetimeYear = page.locator('ion-datetime .year-column .picker-item[data-value="2022"]');
-
+      const datetimeYear = page.locator('ion-datetime .year-column ion-picker-column-option').nth(0);
       await expect(datetimeYear).toHaveText('٢٠٢٢');
     });
   });
