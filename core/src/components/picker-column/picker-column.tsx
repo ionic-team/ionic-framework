@@ -341,14 +341,6 @@ export class PickerColumn implements ComponentInterface {
           this.setPickerItemActiveState(activeEl, false);
         }
 
-        /**
-         * This null check is important because activeEl
-         * can be undefined but newActiveElement can be
-         * null since we are using a querySelector.
-         * newActiveElement !== activeEl would return true
-         * below if newActiveElement was null but activeEl
-         * was undefined.
-         */
         if (newActiveElement === undefined || newActiveElement.disabled) {
           return;
         }
