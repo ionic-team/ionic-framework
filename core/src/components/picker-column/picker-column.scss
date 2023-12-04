@@ -80,27 +80,23 @@
 }
 
 ::slotted([slot="prefix"]) {
-  justify-content: end;
-
   /**
-   * The prefix's location is not RTL-aware, so we need an explicit right padding.
    * This is added in addition to the column's own padding so that there is white
    * space between the slot and the column's focus highlight.
    */
-  /* stylelint-disable-next-line property-disallowed-list */
-  padding-right: 16px;
+  @include padding(0, 8px);
+  
+  justify-content: end;
 }
 
 ::slotted([slot="suffix"]) {
-  justify-content: start;
-
   /**
-   * The suffix's location is not RTL-aware, so we need an explicit left padding.
    * This is added in addition to the column's own padding so that there is white
    * space between the slot and the column's focus highlight.
    */
-  /* stylelint-disable-next-line property-disallowed-list */
-  padding-left: 16px;
+  @include padding(0, 8px);
+  
+  justify-content: start;
 }
 
 :host .picker-item {
