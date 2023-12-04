@@ -43,20 +43,27 @@ const testAriaButton = async (
 configs({ directions: ['ltr'], themes: ['dark'] }).forEach(({ config, title }) => {
   test.describe(title('action-sheet: Axe testing'), () => {
     test('should not have accessibility violations when header is defined', async ({ page }) => {
-      await page.goto(`/src/components/action-sheet/test/a11y`, config);
+      await page.setContent(
+        `
+          <ion-action-sheet></ion-action-sheet>
 
-      const button = page.locator('#bothHeaders');
-      const didPresent = await page.spyOnEvent('ionActionSheetDidPresent');
+          <script>
+            const actionSheet = document.querySelector('ion-action-sheet');
+            actionSheet.header = 'Header';
+            actionSheet.subHeader = 'Subtitle';
+            actionSheet.buttons = ['Confirm'];
+          </script>
+        `,
+        config
+      );
 
-      await button.click();
-      await didPresent.next();
+      const ionActionSheetDidPresent = await page.spyOnEvent('ionActionSheetDidPresent');
+      const actionSheet = page.locator('ion-action-sheet');
 
-      /**
-       * We need to only include the overlay itself, since action-sheet
-       * covers the whole page and content under the backdrop will fail
-       * color contrast tests.
-       */
-      const results = await new AxeBuilder({ page }).include('.action-sheet-wrapper').analyze();
+      await actionSheet.evaluate((el: HTMLIonActionSheetElement) => el.present());
+      await ionActionSheetDidPresent.next();
+
+      const results = await new AxeBuilder({ page }).analyze();
       expect(results.violations).toEqual([]);
     });
   });
