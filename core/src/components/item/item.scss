@@ -51,7 +51,15 @@
    * @prop --highlight-color-valid: The color of the highlight on the item when valid. Only applies to inputs and textareas using the legacy form syntax. DEPRECATED: Highlights can be styled on `ion-input` or `ion-textarea` when using the modern form syntax.
    * @prop --highlight-color-invalid: The color of the highlight on the item when invalid. Only applies to inputs and textareas using the legacy form syntax. DEPRECATED: Highlights can be styled on `ion-input` or `ion-textarea` when using the modern form syntax.
    */
-  --inner-min-width: 50px;
+
+  /**
+   * We change the minimum width as the
+   * font size changes. Using a fixed minimum
+   * width means that fewer and fewer characters
+   * can be displayed in the same space as the
+   * text grows.
+   */
+  --inner-min-width: 7rem;
   --border-radius: 0px;
   --border-width: 0px;
   --border-style: solid;
