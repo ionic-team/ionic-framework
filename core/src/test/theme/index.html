@@ -12,6 +12,7 @@
     <script src="../../../../scripts/testing/scripts.js"></script>
     <script nomodule src="../../../../dist/ionic/ionic.js"></script>
     <script type="module" src="../../../../dist/ionic/ionic.esm.js"></script>
+    <link id="theme" rel="stylesheet" />
 
     <style>
       .container {
@@ -84,7 +85,17 @@
     <ion-app>
       <ion-header>
         <ion-toolbar>
-          <ion-title>Theme - Light</ion-title>
+          <ion-title>Theme</ion-title>
+        </ion-toolbar>
+        <ion-toolbar>
+          <ion-segment value="default" class="theme-picker">
+            <ion-segment-button value="default">
+              <ion-label>Default (Light)</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="dark">
+              <ion-label>Dark</ion-label>
+            </ion-segment-button>
+          </ion-segment>
         </ion-toolbar>
       </ion-header>
 
@@ -307,5 +318,32 @@
         </div>
       </ion-content>
     </ion-app>
+
+    <script>
+      const themePicker = document.querySelector('.theme-picker');
+
+      themePicker.addEventListener('ionChange', (ev) => {
+        const theme = event.detail && event.detail.value;
+        toggleTheme(theme);
+      });
+
+      function toggleTheme(theme) {
+        var cssFile = `/scripts/testing/themes/${theme}.css`;
+
+        var oldLink = document.getElementById('theme');
+
+        if (theme == 'default') {
+          oldLink.setAttribute('href', '');
+        } else {
+          var newLink = document.createElement('link');
+          newLink.setAttribute('id', 'theme');
+          newLink.setAttribute('rel', 'stylesheet');
+          newLink.setAttribute('type', 'text/css');
+          newLink.setAttribute('href', cssFile);
+
+          document.getElementsByTagName('head').item(0).replaceChild(newLink, oldLink);
+        }
+      }
+    </script>
   </body>
 </html>
