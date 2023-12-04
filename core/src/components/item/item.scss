@@ -51,7 +51,7 @@
    * @prop --highlight-color-valid: The color of the highlight on the item when valid. Only applies to inputs and textareas using the legacy form syntax. DEPRECATED: Highlights can be styled on `ion-input` or `ion-textarea` when using the modern form syntax.
    * @prop --highlight-color-invalid: The color of the highlight on the item when invalid. Only applies to inputs and textareas using the legacy form syntax. DEPRECATED: Highlights can be styled on `ion-input` or `ion-textarea` when using the modern form syntax.
    */
-  --min-width: 50px;
+  --inner-min-width: 50px;
   --border-radius: 0px;
   --border-width: 0px;
   --border-style: solid;
@@ -241,7 +241,6 @@
 
   width: 100%;
   min-height: var(--min-height);
-  min-width: var(--min-width);
 
   transition: var(--transition);
 
@@ -324,12 +323,6 @@ button, a {
   align-items: inherit;
   align-self: stretch;
 
-  // Max width must be set to 100%, otherwise the
-  // elements will overflow this container instead
-  // of wrapping
-  max-width: 100%;
-  min-height: inherit;
-
   /**
    * The min-width defines when the
    * content in the default slot should
@@ -337,7 +330,13 @@ button, a {
    * container. At this point the entire
    * container will wrap to the next line.
    */
-  min-width: inherit;
+  min-width: var(--inner-min-width);
+
+  // Max width must be set to 100%, otherwise the
+  // elements will overflow this container instead
+  // of wrapping
+  max-width: 100%;
+  min-height: inherit;
 
   border-width: var(--inner-border-width);
   border-style: var(--border-style);
