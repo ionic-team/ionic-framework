@@ -1612,7 +1612,6 @@ export class Datetime implements ComponentInterface {
         ? `${workingParts.year}-${workingParts.month}-${workingParts.day}`
         : `${defaultParts.year}-${defaultParts.month}-${defaultParts.day}`;
 
-        console.log('hi there', items)
     return (
       <ion-picker-column
         class="date-column"
@@ -1649,7 +1648,9 @@ export class Datetime implements ComponentInterface {
         }}
       >
         {items.map((item: PickerColumnItem) => (
-          <ion-picker-column-option key={item.value} disabled={item.disabled} value={item.value}>{item.text}</ion-picker-column-option>
+          <ion-picker-column-option key={item.value} disabled={item.disabled} value={item.value}>
+            {item.text}
+          </ion-picker-column-option>
         ))}
       </ion-picker-column>
     );
@@ -1769,7 +1770,9 @@ export class Datetime implements ComponentInterface {
         }}
       >
         {days.map((day: PickerColumnItem) => (
-          <ion-picker-column-option key={day.value} disabled={day.disabled} value={day.value}>{day.text}</ion-picker-column-option>
+          <ion-picker-column-option key={day.value} disabled={day.disabled} value={day.value}>
+            {day.text}
+          </ion-picker-column-option>
         ))}
       </ion-picker-column>
     );
@@ -1817,7 +1820,9 @@ export class Datetime implements ComponentInterface {
         }}
       >
         {months.map((month: PickerColumnItem) => (
-          <ion-picker-column-option key={month.value} disabled={month.disabled} value={month.value}>{month.text}</ion-picker-column-option>
+          <ion-picker-column-option key={month.value} disabled={month.disabled} value={month.value}>
+            {month.text}
+          </ion-picker-column-option>
         ))}
       </ion-picker-column>
     );
@@ -1864,7 +1869,9 @@ export class Datetime implements ComponentInterface {
         }}
       >
         {years.map((year: PickerColumnItem) => (
-          <ion-picker-column-option key={year.value} disabled={year.disabled} value={year.value}>{year.text}</ion-picker-column-option>
+          <ion-picker-column-option key={year.value} disabled={year.disabled} value={year.value}>
+            {year.text}
+          </ion-picker-column-option>
         ))}
       </ion-picker-column>
     );
@@ -1930,7 +1937,9 @@ export class Datetime implements ComponentInterface {
         }}
       >
         {hoursData.map((hour: PickerColumnItem) => (
-          <ion-picker-column-option key={hour.value} disabled={hour.disabled} value={hour.value}>{hour.text}</ion-picker-column-option>
+          <ion-picker-column-option key={hour.value} disabled={hour.disabled} value={hour.value}>
+            {hour.text}
+          </ion-picker-column-option>
         ))}
       </ion-picker-column>
     );
@@ -1962,7 +1971,9 @@ export class Datetime implements ComponentInterface {
         }}
       >
         {minutesData.map((minute: PickerColumnItem) => (
-          <ion-picker-column-option key={minute.value} disabled={minute.disabled} value={minute.value}>{minute.text}</ion-picker-column-option>
+          <ion-picker-column-option key={minute.value} disabled={minute.disabled} value={minute.value}>
+            {minute.text}
+          </ion-picker-column-option>
         ))}
       </ion-picker-column>
     );
@@ -2001,7 +2012,9 @@ export class Datetime implements ComponentInterface {
         }}
       >
         {dayPeriodData.map((dayPeriod: PickerColumnItem) => (
-          <ion-picker-column-option key={dayPeriod.value} disabled={dayPeriod.disabled} value={dayPeriod.value}>{dayPeriod.text}</ion-picker-column-option>
+          <ion-picker-column-option key={dayPeriod.value} disabled={dayPeriod.disabled} value={dayPeriod.value}>
+            {dayPeriod.text}
+          </ion-picker-column-option>
         ))}
       </ion-picker-column>
     );
