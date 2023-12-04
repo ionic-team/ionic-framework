@@ -7,19 +7,16 @@
 
 'package: core':
   - changed-files:
-    - core/**/*
+    - any-glob-to-any-file: ['core/**/*']
 
 'package: angular':
   - changed-files:
-    - packages/angular/**/*
-    - packages/angular-*/**/*
+    - any-glob-to-any-file: ['packages/angular/**/*', 'packages/angular-*/**/*']
 
 'package: react':
   - changed-files:
-    - packages/react/**/*
-    - packages/react-*/**/*
+    - any-glob-to-any-file: ['packages/react/**/*', 'packages/react-*/**/*']
 
 'package: vue':
   - changed-files:
-    - packages/vue/**/*
-    - packages/vue-*/**/*
+    - any-glob-to-any-file: ['packages/vue/**/*', 'packages/vue-*/**/*']
