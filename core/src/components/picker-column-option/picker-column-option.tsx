@@ -118,7 +118,7 @@ export class PickerColumnOption implements ComponentInterface {
         })}
       >
         <button tabindex="-1" aria-label={ariaLabel} disabled={disabled} onClick={() => this.onClick()}>
-          <slot>{value}</slot>
+          <slot></slot>
         </button>
       </Host>
     );
