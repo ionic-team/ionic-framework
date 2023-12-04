@@ -65,7 +65,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       const items = page.locator('ion-picker-column:nth-of-type(2) ion-picker-column-option');
       await expect(items).toHaveText(['01', '02', '03']);
     });
-    test.only('should adjust default parts for allowed hour and minute values', async ({ page }) => {
+    test('should adjust default parts for allowed hour and minute values', async ({ page }) => {
       /**
        * Mock today's date for testing.
        * Playwright does not support this natively
@@ -96,13 +96,12 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
       const minuteColumn = page.locator('ion-picker-column').nth(1);
       const minuteItems = minuteColumn.locator('ion-picker-column-option');
 
-      const text = await minuteItems.nth(1).textContent();
-      await expect(minuteItems).toHaveText(['00', '15', '30', '45'], { useInnerText: true });
+      await expect(minuteItems).toHaveText(['00', '15', '30', '45']);
       await expect(minuteColumn).toHaveJSProperty('value', 15);
 
       const hourColumn = page.locator('ion-picker-column').nth(0);
       const hourItems = hourColumn.locator('ion-picker-column-option');
-      await expect(hourItems).toHaveText(['2'], { useInnerText: true });
+      await expect(hourItems).toHaveText(['2']);
       await expect(hourColumn).toHaveJSProperty('value', 2);
 
       /**
@@ -111,7 +110,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
        */
       const ampmColumn = page.locator('ion-picker-column').nth(2);
       const ampmItems = ampmColumn.locator('ion-picker-column-option');
-      await expect(ampmItems).toHaveText(['AM', 'PM'], { useInnerText: true });
+      await expect(ampmItems).toHaveText(['AM', 'PM']);
       await expect(ampmColumn).toHaveJSProperty('value', 'am');
     });
     test('should adjust default parts month for allowed month values', async ({ page }) => {
@@ -144,7 +143,7 @@ configs({ modes: ['ios'], directions: ['ltr'] }).forEach(({ title, config }) => 
 
       const monthItems = page.locator('.month-column ion-picker-column-option');
       await expect(monthItems).toHaveText(['January']);
-      await expect(monthItems.nth(0)).toHaveClass(/picker-item-active/);
+      await expect(monthItems.nth(0)).toHaveClass(/option-active/);
     });
     test('today date highlight should persist even if disallowed from dayValues', async ({ page }) => {
       /**
