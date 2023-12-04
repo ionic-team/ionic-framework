@@ -1769,7 +1769,7 @@ export class Datetime implements ComponentInterface {
         }}
       >
         {days.map((day: PickerColumnItem) => (
-          <ion-picker-column-option disabled={item.disabled} value={day.value}>{day.text}</ion-picker-column-option>
+          <ion-picker-column-option disabled={day.disabled} value={day.value}>{day.text}</ion-picker-column-option>
         ))}
       </ion-picker-column>
     );
