@@ -315,6 +315,7 @@ ion-checkbox,css-prop,--checkmark-width
 ion-checkbox,css-prop,--size
 ion-checkbox,css-prop,--transition
 ion-checkbox,part,container
+ion-checkbox,part,label
 ion-checkbox,part,mark
 
 ion-chip,shadow
@@ -1029,6 +1030,7 @@ ion-radio,css-prop,--color
 ion-radio,css-prop,--color-checked
 ion-radio,css-prop,--inner-border-radius
 ion-radio,part,container
+ion-radio,part,label
 ion-radio,part,mark
 
 ion-radio-group,none
