@@ -5,10 +5,21 @@
 # For more information, see:
 # https://github.com/actions/labeler
 
-'package: core': ['core/**/*']
+'package: core':
+  - changed-files:
+    - core/**/*
 
-'package: angular': ['packages/angular/**/*', 'packages/angular-*/**/*']
+'package: angular':
+  - changed-files:
+    - packages/angular/**/*
+    - packages/angular-*/**/*
 
-'package: react': ['packages/react/**/*', 'packages/react-*/**/*']
+'package: react':
+  - changed-files:
+    - packages/react/**/*
+    - packages/react-*/**/*
 
-'package: vue': ['packages/vue/**/*', 'packages/vue-*/**/*']
+'package: vue':
+  - changed-files:
+    - packages/vue/**/*
+    - packages/vue-*/**/*
